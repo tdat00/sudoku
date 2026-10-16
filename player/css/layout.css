@@ -1,0 +1,342 @@
+/*
+ * Page frame (design.md 8.1): header, the welcome screen and the two layouts of a puzzle on screen.
+ *   >= 60rem    two columns: the board (status bar above it) | the side panel (play tools, pad, info, recent)
+ *   <  60rem    one column: board, then the side panel; the info card and the recent list are collapsible
+ * The play UI itself (tools, pad, hint card, status bar) is styled by play.css.
+ */
+
+:root {
+  --sg-layout-max-width: 84rem;
+  --sg-side-width: 25rem;
+}
+
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.icon {
+  display: inline-block;
+  flex: none;
+  width: 1.25em;
+  height: 1.25em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon--brand {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--sg-color-accent);
+}
+
+.icon--xl {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* ---- Header ---- */
+.app-header {
+  background: var(--sg-color-surface);
+  border-bottom: 1px solid var(--sg-color-divider);
+}
+
+.app-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-2) var(--sg-space-4);
+  max-width: var(--sg-layout-max-width);
+  margin-inline: auto;
+  padding: var(--sg-space-3) var(--sg-space-4);
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sg-space-3);
+  min-width: 0;
+}
+
+.app-title {
+  margin: 0;
+  font-size: var(--sg-font-size-xl);
+  letter-spacing: -0.01em;
+}
+
+.app-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sg-space-2) var(--sg-space-3);
+}
+
+.noscript {
+  margin: var(--sg-space-4);
+  padding: var(--sg-space-3) var(--sg-space-4);
+  border: 1px solid var(--sg-color-danger);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-danger-bg);
+}
+
+/* ---- Main ---- */
+.app-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-4);
+  max-width: var(--sg-layout-max-width);
+  margin-inline: auto;
+  padding: var(--sg-space-4);
+  min-width: 0;
+}
+
+/* ---- Welcome (no puzzle on the board) ---- */
+.welcome {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sg-space-4);
+  align-items: start;
+}
+
+.welcome[hidden] {
+  display: none;
+}
+
+.welcome__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  padding: var(--sg-space-5);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
+}
+
+.welcome__title {
+  margin: 0;
+  font-size: var(--sg-font-size-xl);
+}
+
+.welcome__lead,
+.welcome__note {
+  margin: 0;
+}
+
+.welcome__note {
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.welcome__steps {
+  margin: 0;
+  padding-inline-start: var(--sg-space-5);
+}
+
+.welcome__steps li + li {
+  margin-top: var(--sg-space-2);
+}
+
+.welcome__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sg-space-2) var(--sg-space-3);
+}
+
+.welcome__recent:empty {
+  display: none;
+}
+
+@media (min-width: 60rem) {
+  .welcome {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+
+/* ---- A puzzle on screen ---- */
+.player-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sg-space-4);
+  align-items: start;
+}
+
+.player-layout[hidden] {
+  display: none;
+}
+
+.board-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  min-width: 0;
+}
+
+.board-heading {
+  margin: 0;
+  font-size: var(--sg-font-size-lg);
+  overflow-wrap: anywhere;
+}
+
+.board-frame {
+  display: flex;
+  justify-content: center;
+  padding: var(--sg-space-3);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
+}
+
+.board-svg {
+  width: 100%;
+  height: auto;
+  max-height: 78vh;
+}
+
+.board-legend:not(:empty) {
+  padding: var(--sg-space-2) var(--sg-space-4);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  min-width: 0;
+}
+
+.side__info,
+.side__recent {
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+}
+
+@media (min-width: 60rem) {
+  .player-layout {
+    grid-template-columns: minmax(0, 1fr) var(--sg-side-width);
+  }
+
+  .side {
+    position: sticky;
+    top: var(--sg-space-4);
+  }
+
+  .board-svg {
+    max-height: calc(100vh - 12rem);
+  }
+}
+
+/* ---- Status line ---- */
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sg-space-1) var(--sg-space-2);
+  min-height: 2.5rem;
+  padding: var(--sg-space-2) var(--sg-space-4);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface-2);
+}
+
+.status-row__label {
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 600;
+}
+
+.status-row__text {
+  flex: 1 1 12rem;
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.status-row[data-state="error"] {
+  border-color: var(--sg-color-danger);
+  background: var(--sg-color-danger-bg);
+}
+
+.status-row[data-state="error"] .status-row__label::before {
+  content: "\26A0\FE0E";
+  margin-inline-end: var(--sg-space-1);
+}
+
+/* ---- Drag and drop overlay ---- */
+.drop-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--sg-z-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--sg-space-4);
+  background: var(--sg-color-backdrop);
+  pointer-events: none;
+}
+
+.drop-overlay[hidden] {
+  display: none;
+}
+
+.drop-overlay__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sg-space-2);
+  max-width: 28rem;
+  padding: var(--sg-space-6);
+  border: 3px dashed var(--sg-color-accent);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  text-align: center;
+}
+
+.drop-overlay__card p {
+  margin: 0;
+}
+
+.drop-overlay__title {
+  font-size: var(--sg-font-size-lg);
+  font-weight: 700;
+}
+
+.drop-overlay__hint {
+  color: var(--sg-color-text-muted);
+}
+
+/* ---- Narrow header: icon-only buttons ---- */
+@media (max-width: 47.99rem) {
+  .app-tools .btn__label {
+    display: none;
+  }
+
+  #btn-open .btn__label {
+    display: inline;
+  }
+
+  .app-header__inner {
+    padding-block: var(--sg-space-2);
+  }
+
+  .app-main {
+    padding: var(--sg-space-3);
+  }
+
+  .welcome__card {
+    padding: var(--sg-space-4);
+  }
+}
+
+body.is-modal-open {
+  overflow: hidden;
+}

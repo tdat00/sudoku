@@ -49,6 +49,11 @@ const SOURCE_FILES = [
   'js/core/classic-model.js',
   'js/ui/exchange.js',
   'js/ui/importer.js',
+  'js/ui/i18n.js',
+  'js/ui/locale.en.js',
+  'js/ui/locale.vi.js',
+  'js/ui/locale.shell.js',
+  'js/ui/store.js',
 ];
 
 const fs = require('fs');
