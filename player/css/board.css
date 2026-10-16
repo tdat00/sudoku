@@ -1,0 +1,349 @@
+/*
+ * Board styles (SVG board of js/ui/board-view.js and the symbol legend of js/ui/symbols.js).
+ * Only var(--sg-board-*) tokens (css/tokens-board.css) and the generic --sg-color-focus, --sg-color-text,
+ * --sg-font-family and --sg-space-* are used; no colour literals here.
+ *
+ * A board is an <svg class="sgb">; the cell classes follow design.md section 8.5:
+ *   .cell--placing .cell--backtrack .cell--removed   one-shot animations of a changed cell
+ *   .hl.cell--probing .cell--technique .cell--restored .cell--selected   highlight frames (layer-overlay)
+ *   .board--done                                      the "bounce" of a finished board
+ * Keep the static rules in step with `staticCss()` of board-view.js (the standalone SVG export).
+ */
+
+.sgb {
+  display: block;
+  font-family: var(--sg-font-family);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.sgb .layer-regions,
+.sgb .layer-cages,
+.sgb .layer-ineq,
+.sgb .layer-values,
+.sgb .layer-grid,
+.sgb .layer-overlay {
+  pointer-events: none;
+}
+
+.sgb .is-hidden {
+  display: none;
+}
+
+/* ---- Regions and overlays ---- */
+.sgb .paper { fill: var(--sg-board-paper); }
+
+.sgb .reg--1 { fill: var(--sg-board-region-1); }
+.sgb .reg--2 { fill: var(--sg-board-region-2); }
+.sgb .reg--3 { fill: var(--sg-board-region-3); }
+.sgb .reg--4 { fill: var(--sg-board-region-4); }
+.sgb .reg--5 { fill: var(--sg-board-region-5); }
+.sgb .reg--6 { fill: var(--sg-board-region-6); }
+.sgb .reg--7 { fill: var(--sg-board-region-7); }
+.sgb .reg--8 { fill: var(--sg-board-region-8); }
+.sgb .reg--9 { fill: var(--sg-board-region-9); }
+
+/* Overlays are translucent and each one is its own path, so overlapping ones blend. */
+.sgb .ov { fill: var(--sg-board-overlay-overlap); }
+.sgb .ov--diag { fill: var(--sg-board-overlay-diag); }
+.sgb .ov--window { fill: var(--sg-board-overlay-window); }
+.sgb .ov--overlap { fill: var(--sg-board-overlay-overlap); }
+.sgb .ov--wordLine { fill: var(--sg-board-overlay-word); }
+.sgb .ov--cage0 { fill: var(--sg-board-cage-0); }
+.sgb .ov--cage1 { fill: var(--sg-board-cage-1); }
+.sgb .ov--cage2 { fill: var(--sg-board-cage-2); }
+.sgb .ov--cage3 { fill: var(--sg-board-cage-3); }
+.sgb .ov--cage4 { fill: var(--sg-board-cage-4); }
+
+/* ---- Cells ---- */
+.sgb .cell {
+  fill: transparent;
+  stroke: none;
+  pointer-events: none;
+}
+
+.sgb.board--interactive .cell {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.sgb.board--interactive .cell:hover { fill: var(--sg-board-hover); }
+
+.sgb .cell:focus { outline: none; }
+
+/* Keyboard focus ring of a cell (js/ui/a11y.js moves it; two-tone so it shows on any cell colour). */
+.sgb .a11y-ring {
+  display: none;
+  fill: none;
+  pointer-events: none;
+}
+
+.sgb .a11y-ring.is-on { display: inline; }
+.sgb .a11y-ring__halo { stroke: var(--sg-board-paper); stroke-width: 6; }
+.sgb .a11y-ring__line { stroke: var(--sg-board-focus); stroke-width: 3; }
+
+/* Colour mode: the palette fill of a cell (keep after :hover so a symbol colour wins). */
+.sgb .cell--c1, .sgb-sw .cell--c1 { fill: var(--sg-board-sym-1); }
+.sgb .cell--c2, .sgb-sw .cell--c2 { fill: var(--sg-board-sym-2); }
+.sgb .cell--c3, .sgb-sw .cell--c3 { fill: var(--sg-board-sym-3); }
+.sgb .cell--c4, .sgb-sw .cell--c4 { fill: var(--sg-board-sym-4); }
+.sgb .cell--c5, .sgb-sw .cell--c5 { fill: var(--sg-board-sym-5); }
+.sgb .cell--c6, .sgb-sw .cell--c6 { fill: var(--sg-board-sym-6); }
+.sgb .cell--c7, .sgb-sw .cell--c7 { fill: var(--sg-board-sym-7); }
+.sgb .cell--c8, .sgb-sw .cell--c8 { fill: var(--sg-board-sym-8); }
+.sgb .cell--c9, .sgb-sw .cell--c9 { fill: var(--sg-board-sym-9); }
+.sgb .cell--c10, .sgb-sw .cell--c10 { fill: var(--sg-board-sym-10); }
+.sgb .cell--c11, .sgb-sw .cell--c11 { fill: var(--sg-board-sym-11); }
+.sgb .cell--c12, .sgb-sw .cell--c12 { fill: var(--sg-board-sym-12); }
+.sgb .cell--c13, .sgb-sw .cell--c13 { fill: var(--sg-board-sym-13); }
+.sgb .cell--c14, .sgb-sw .cell--c14 { fill: var(--sg-board-sym-14); }
+.sgb .cell--c15, .sgb-sw .cell--c15 { fill: var(--sg-board-sym-15); }
+.sgb .cell--c16, .sgb-sw .cell--c16 { fill: var(--sg-board-sym-16); }
+.sgb .cell--sol { fill-opacity: 0.45; }
+
+/* ---- Grid lines ---- */
+.sgb .grid-thin {
+  fill: none;
+  stroke: var(--sg-board-line-thin);
+  stroke-width: var(--sg-board-width-thin);
+}
+
+.sgb .grid-thick {
+  fill: none;
+  stroke: var(--sg-board-line-thick);
+  stroke-width: var(--sg-board-width-thick);
+  stroke-linecap: square;
+}
+
+.sgb .grid-sub {
+  fill: none;
+  stroke: var(--sg-board-line-subgrid);
+  stroke-width: var(--sg-board-width-subgrid);
+}
+
+.sgb .coord {
+  fill: var(--sg-board-ink-coord);
+  font-size: 10px;
+}
+
+/* ---- Killer cages and Greater-Than signs ---- */
+.sgb .cage-line {
+  fill: none;
+  stroke: var(--sg-board-cage-line);
+  stroke-width: var(--sg-board-cage-width);
+  stroke-dasharray: var(--sg-board-cage-dash);
+  stroke-linejoin: round;
+}
+
+.sgb .cage-sum {
+  fill: var(--sg-board-ink-sum);
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.sgb .sign {
+  fill: none;
+  stroke: var(--sg-board-sign);
+  stroke-width: var(--sg-board-sign-width);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---- Values ---- */
+.sgb .val {
+  text-anchor: middle;
+}
+
+.sgb .val--given {
+  fill: var(--sg-board-ink-given);
+  font-weight: var(--sg-board-weight-given);
+}
+
+.sgb .val--placed {
+  fill: var(--sg-board-ink-placed);
+  font-weight: var(--sg-board-weight-placed);
+}
+
+.sgb .val--solution {
+  fill: var(--sg-board-ink-solution);
+  font-style: italic;
+  font-weight: var(--sg-board-weight-placed);
+}
+
+/* Two- and three-character labels (mega12 numbers) scale down from the layer font size. */
+.sgb .val--l2 { font-size: 0.78em; }
+.sgb .val--l3 { font-size: 0.6em; }
+
+.sgb .sym { stroke: none; }
+.sgb .sym--given { fill: var(--sg-board-ink-given); }
+.sgb .sym--placed { fill: var(--sg-board-ink-placed); }
+.sgb .sym--solution { fill: var(--sg-board-ink-solution); opacity: 0.7; }
+
+/* Colour mode: a two-tone symbol (light inside, dark outline) is visible on every palette colour. */
+.sgb .sym--aux {
+  fill: var(--sg-board-sym-ink);
+  stroke: var(--sg-board-sym-edge);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+
+.sgb .sym--off { display: none; }
+
+/* ---- Highlight frames (layer-overlay) ---- */
+.sgb .hl {
+  fill: none;
+  stroke-width: 3;
+  pointer-events: none;
+}
+
+.sgb .hl.cell--probing { stroke: var(--sg-board-probe); }
+
+.sgb .hl.cell--technique {
+  stroke: var(--sg-board-technique);
+  fill: var(--sg-board-technique-fill);
+}
+
+.sgb .hl.cell--restored {
+  stroke: var(--sg-board-restore);
+  fill: var(--sg-board-restore);
+  fill-opacity: 0;
+  stroke-opacity: 0;
+}
+
+.sgb .hl.cell--selected {
+  stroke: var(--sg-board-selected);
+  fill: var(--sg-board-selected-fill);
+}
+
+/* ---- Animations (design.md section 8.5) ---- */
+@keyframes sgb-place {
+  from { opacity: 0; transform: scale(0.55); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes sgb-remove {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.7); }
+}
+
+@keyframes sgb-backtrack {
+  from { fill: var(--sg-board-backtrack); fill-opacity: 0.6; }
+  to { fill: var(--sg-board-backtrack); fill-opacity: 0; }
+}
+
+@keyframes sgb-probe {
+  0%, 100% { stroke-opacity: 1; }
+  50% { stroke-opacity: 0.25; }
+}
+
+@keyframes sgb-technique {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes sgb-restored {
+  from { fill-opacity: 0.55; stroke-opacity: 1; }
+  to { fill-opacity: 0; stroke-opacity: 0; }
+}
+
+@keyframes sgb-done {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.025); }
+}
+
+.sgb .cell--placing {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sgb-place var(--sg-board-dur-placing) ease-out both;
+}
+
+.sgb .cell--removed {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sgb-remove var(--sg-board-dur-removed) ease-in forwards;
+}
+
+.sgb .cell--backtrack {
+  animation: sgb-backtrack var(--sg-board-dur-backtrack) ease-out both;
+}
+
+.sgb .hl.cell--probing { animation: sgb-probe var(--sg-board-dur-probing) ease-in-out 1; }
+.sgb .hl.cell--technique { animation: sgb-technique var(--sg-board-dur-technique) ease-out both; }
+.sgb .hl.cell--restored { animation: sgb-restored var(--sg-board-dur-restored) ease-out forwards; }
+
+.sgb.board--done {
+  transform-origin: center;
+  animation: sgb-done var(--sg-board-dur-done) ease-in-out 1;
+}
+
+/* No motion: reduced-motion preference, Settings "motion off", or animate: false. */
+@media (prefers-reduced-motion: reduce) {
+  .sgb,
+  .sgb * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .sgb .hl.cell--restored { display: none; }
+}
+
+:root[data-motion="off"] .sgb,
+:root[data-motion="off"] .sgb *,
+.sgb[data-animate="off"],
+.sgb[data-animate="off"] * {
+  animation: none !important;
+  transition: none !important;
+}
+
+:root[data-motion="off"] .sgb .hl.cell--restored,
+.sgb[data-animate="off"] .hl.cell--restored {
+  display: none;
+}
+
+/* ---- Symbol legend ---- */
+.sgb-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sg-space-2) var(--sg-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sgb-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sg-space-2);
+}
+
+.sgb-legend__text::first-letter { text-transform: uppercase; }
+
+.sgb-sw { flex: none; }
+
+.sgb-sw-fill {
+  stroke: var(--sg-board-line-thin);
+  stroke-width: 1;
+}
+
+.sgb-sw-text {
+  fill: var(--sg-color-text);
+  font-family: var(--sg-font-family);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.sgb-sw .sym-shape { fill: var(--sg-color-text); }
+
+.sgb-sw .sym-aux {
+  fill: var(--sg-board-sym-ink);
+  stroke: var(--sg-board-sym-edge);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+
+/* ---- Forced colours (Windows high contrast): the focus ring takes the system colours ---- */
+@media (forced-colors: active) {
+  .sgb .a11y-ring__halo { stroke: Canvas; }
+  .sgb .a11y-ring__line { stroke: Highlight; }
+}

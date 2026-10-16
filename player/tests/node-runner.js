@@ -54,6 +54,10 @@ const SOURCE_FILES = [
   'js/ui/locale.vi.js',
   'js/ui/locale.shell.js',
   'js/ui/store.js',
+  'js/ui/theme.js',
+  'js/ui/symbols.js',
+  'js/ui/board-view.js',
+  'js/ui/a11y.js',
 ];
 
 const fs = require('fs');
