@@ -48,6 +48,7 @@ const SOURCE_FILES = [
   'js/core/model-aids.js',
   'js/core/classic-model.js',
   'js/ui/exchange.js',
+  'js/ui/importer.js',
 ];
 
 const fs = require('fs');
