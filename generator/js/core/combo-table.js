@@ -1,0 +1,404 @@
+/**
+ * Cage sum combinations and cage propagation (design.md section 6.3, rule P4).
+ *
+ * 1. The combination table. `SG.comboTable.table[size][sum]` lists, as bit masks, every set of `size`
+ *    pairwise distinct digits from 1..9 whose sum is `sum`. It is built once when this file loads (512
+ *    masks in all, a few KB) and every lookup is a plain array access. This is the one optimisation that
+ *    makes Killer affordable: instead of reasoning about numbers, a cage is reduced to a handful of digit
+ *    sets, and a cage cell can only ever hold a digit that occurs in one of them.
+ *
+ * 2. The cage propagation extension. `SG.comboTable.enablePropagation(variantId)` registers it with
+ *    `SG.constraints.registerExtension` (see the header of constraints.js), so cage sums work in the DFS
+ *    solver and in the digger without constraints.js knowing anything about Killer. Per cage it applies,
+ *    until nothing changes:
+ *      - bounds:       sum - (largest the others can be) <= cell <= sum - (smallest the others can be);
+ *      - combinations: only digit sets of the table that fit the candidates of the cells survive, and the
+ *                      cells keep only the union of those sets (digits already fixed in the cage leave the
+ *                      other cells);
+ *      - forced digits: a digit that is in every surviving set and fits one cell only is placed there.
+ *    The extension is registered on demand (when the first Killer model with cages is built) and only acts
+ *    on the models of the variants that asked for it; every other model is skipped, so the other variants
+ *    pay nothing for it and a plain board that merely carries a `cages` list is not affected.
+ *
+ * Soundness note. Every rule only removes digits that no assignment satisfying the cage can use. A
+ * complete assignment passes the extension only when each cage sum is exact and (for a distinct cage) no
+ * digit repeats, so the DFS solver counts solutions correctly even when the cage cells are not peers of
+ * each other.
+ */
+(function (root) {
+  'use strict';
+
+  const SG = root.SG = root.SG || {};
+
+  // Keep the first instance on repeated loads so that the extension is registered only once.
+  if (SG.comboTable && typeof SG.comboTable.masks === 'function') return;
+
+  const popcount = SG.bits.popcount;
+
+  /** Digits the table covers. A cage of a bigger board falls back to bounds only. */
+  const TABLE_DIGITS = 9;
+  /** 1 + 2 + ... + 9. */
+  const MAX_SUM = 45;
+
+  const EMPTY = Object.freeze([]);
+
+  // ---------------------------------------------------------------------------------------------
+  // The table
+  // ---------------------------------------------------------------------------------------------
+
+  /**
+   * comboTable[size][sum] = frozen array of masks, ascending. Sizes 0..9, sums 0..45; an impossible pair
+   * (size 2, sum 2) holds an empty array.
+   * @type {ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>}
+   */
+  const comboTable = (function build() {
+    const lists = [];
+    for (let size = 0; size <= TABLE_DIGITS; size++) {
+      const row = [];
+      for (let sum = 0; sum <= MAX_SUM; sum++) row.push([]);
+      lists.push(row);
+    }
+    for (let mask = 0; mask < (1 << TABLE_DIGITS); mask++) {
+      let sum = 0;
+      for (let d = 1; d <= TABLE_DIGITS; d++) if ((mask & (1 << (d - 1))) !== 0) sum += d;
+      lists[popcount(mask)][sum].push(mask);
+    }
+    return Object.freeze(lists.map(function (row) {
+      return Object.freeze(row.map(function (list) { return Object.freeze(list); }));
+    }));
+  })();
+
+  /** Tables restricted to the digits 1..D, built on demand for a board with D < 9. */
+  const restricted = new Map();
+
+  function tableFor(digits) {
+    if (digits >= TABLE_DIGITS) return comboTable;
+    let t = restricted.get(digits);
+    if (t === undefined) {
+      const limit = 1 << digits;
+      t = comboTable.map(function (row) {
+        return row.map(function (list) {
+          return Object.freeze(list.filter(function (mask) { return mask < limit; }));
+        });
+      });
+      restricted.set(digits, t);
+    }
+    return t;
+  }
+
+  /**
+   * Digit sets that make `sum` out of `size` distinct digits.
+   * @param {number} size    Number of cells, 0..9.
+   * @param {number} sum
+   * @param {number} [digits=9]  Largest digit of the board (at most 9).
+   * @returns {ReadonlyArray<number>} Masks (bit v - 1 = digit v), ascending; empty when impossible.
+   */
+  function masks(size, sum, digits) {
+    if (!(size >= 0 && size <= TABLE_DIGITS && sum >= 0 && sum <= MAX_SUM)) return EMPTY;
+    return tableFor(digits === undefined ? TABLE_DIGITS : digits)[size][sum];
+  }
+
+  /**
+   * @param {number} size
+   * @param {number} sum
+   * @param {number} [digits=9]
+   * @returns {number} Mask of every digit that occurs in at least one combination (0 when there is none).
+   */
+  function union(size, sum, digits) {
+    const list = masks(size, sum, digits);
+    let u = 0;
+    for (let i = 0; i < list.length; i++) u |= list[i];
+    return u;
+  }
+
+  /**
+   * @param {number} size
+   * @param {number} sum
+   * @param {number} [digits=9]
+   * @returns {number} Mask of the digits that occur in every combination (0 when there is none).
+   */
+  function common(size, sum, digits) {
+    const list = masks(size, sum, digits);
+    if (list.length === 0) return 0;
+    let c = list[0];
+    for (let i = 1; i < list.length; i++) c &= list[i];
+    return c;
+  }
+
+  /** Smallest sum of `size` distinct digits. */
+  function minSum(size) {
+    return size * (size + 1) / 2;
+  }
+
+  /** Largest sum of `size` distinct digits taken from 1..digits. */
+  function maxSum(size, digits) {
+    const d = digits === undefined ? TABLE_DIGITS : digits;
+    return size * d - size * (size - 1) / 2;
+  }
+
+  // ---------------------------------------------------------------------------------------------
+  // Cage index of a model
+  // ---------------------------------------------------------------------------------------------
+
+  /**
+   * @typedef {Object} CageIndex  Flat typed-array view of `model.cages` (for propagation and techniques).
+   * @property {number} count
+   * @property {Int32Array} cageOf    Per cell: index of its cage, -1 for a cell outside every cage.
+   * @property {Int32Array} start     count + 1 offsets into `cells`.
+   * @property {Int32Array} cells     The cells of all cages, back to back, in cage order.
+   * @property {Int32Array} size      Cells per cage.
+   * @property {Int32Array} sum       Sum of each cage.
+   * @property {Uint8Array} distinct  1 when the digits of the cage must all differ.
+   */
+
+  const indexes = new WeakMap();
+
+  /**
+   * @param {PuzzleModel} model
+   * @returns {CageIndex} Cached per model (models are immutable). Do not modify the arrays.
+   */
+  function cageIndex(model) {
+    let index = indexes.get(model);
+    if (index !== undefined) return index;
+    const cages = model.cages || [];
+    const count = cages.length;
+    const start = new Int32Array(count + 1);
+    let total = 0;
+    let k;
+    for (k = 0; k < count; k++) {
+      start[k] = total;
+      total += cages[k].cells.length;
+    }
+    start[count] = total;
+    const cells = new Int32Array(total);
+    const cageOf = new Int32Array(model.cellCount).fill(-1);
+    const size = new Int32Array(count);
+    const sum = new Int32Array(count);
+    const distinct = new Uint8Array(count);
+    for (k = 0; k < count; k++) {
+      const list = cages[k].cells;
+      size[k] = list.length;
+      sum[k] = cages[k].sum;
+      distinct[k] = cages[k].distinct ? 1 : 0;
+      for (let i = 0; i < list.length; i++) {
+        cells[start[k] + i] = list[i];
+        if (cageOf[list[i]] === -1) cageOf[list[i]] = k;
+      }
+    }
+    index = {
+      count: count, cageOf: cageOf, start: start, cells: cells, size: size, sum: sum, distinct: distinct
+    };
+    indexes.set(model, index);
+    return index;
+  }
+
+  // ---------------------------------------------------------------------------------------------
+  // Propagation extension
+  // ---------------------------------------------------------------------------------------------
+
+  /** Digit of the lowest set bit of a non-empty mask. */
+  function lowDigit(m) {
+    return 32 - Math.clz32(m & -m);
+  }
+
+  /** Digit of the highest set bit of a non-empty mask. */
+  function highDigit(m) {
+    return 32 - Math.clz32(m);
+  }
+
+  /**
+   * Runs the cage rules once on cage `k`.
+   * @returns {boolean} false on a contradiction.
+   */
+  function propagateCage(data, cand, k, ctx) {
+    const index = data.index;
+    const cells = index.cells;
+    const s = index.start[k];
+    const e = index.start[k + 1];
+    const target = index.sum[k];
+    const distinct = index.distinct[k] === 1;
+    let lo = 0;
+    let hi = 0;
+    let i;
+    let m;
+    for (i = s; i < e; i++) {
+      m = cand[cells[i]];
+      lo += lowDigit(m);
+      hi += highDigit(m);
+    }
+    if (target < lo || target > hi) return false;
+
+    // Bounds: a cell cannot exceed what is left when the others are as small as possible, and the other way.
+    const n = e - s;
+    if (n === 1) return ctx.restrict(cells[s], 1 << (target - 1));
+    for (i = s; i < e; i++) {
+      const c = cells[i];
+      m = cand[c];
+      let minV = target - (hi - highDigit(m));
+      let maxV = target - (lo - lowDigit(m));
+      if (minV < 1) minV = 1;
+      if (maxV > data.digits) maxV = data.digits;
+      if (minV > maxV) return false;
+      if (minV > 1 || maxV < data.digits) {
+        if (!ctx.restrict(c, ((1 << maxV) - 1) & ~((1 << (minV - 1)) - 1))) return false;
+      }
+    }
+
+    const list = data.masks[k];
+    if (list === null) return true;
+
+    // Combinations that still fit the candidates; `fixed` holds the digits of cells that are already decided.
+    let unionMask = 0;
+    let fixed = 0;
+    for (i = s; i < e; i++) {
+      m = cand[cells[i]];
+      unionMask |= m;
+      if ((m & (m - 1)) === 0) {
+        if ((fixed & m) !== 0) return false;
+        fixed |= m;
+      }
+    }
+    let valid = 0;
+    let always = -1;
+    for (let j = 0; j < list.length; j++) {
+      const cm = list[j];
+      if ((cm & ~unionMask) !== 0 || (cm & fixed) !== fixed) continue;
+      let fits = true;
+      for (i = s; i < e; i++) {
+        if ((cand[cells[i]] & cm) === 0) {
+          fits = false;
+          break;
+        }
+      }
+      if (fits) {
+        valid |= cm;
+        always &= cm;
+      }
+    }
+    if (valid === 0) return false;
+    for (i = s; i < e; i++) {
+      const c = cells[i];
+      m = cand[c];
+      if (!ctx.restrict(c, (m & (m - 1)) === 0 ? valid : valid & ~fixed)) return false;
+    }
+
+    // A digit that every combination needs, and that only one cell can still take, goes into that cell.
+    let needed = always & ~fixed;
+    while (needed !== 0) {
+      const bit = needed & -needed;
+      needed ^= bit;
+      let at = -1;
+      let places = 0;
+      for (i = s; i < e; i++) {
+        if ((cand[cells[i]] & bit) !== 0) {
+          at = cells[i];
+          places++;
+        }
+      }
+      if (places === 0) return false;
+      if (places === 1 && !ctx.restrict(at, bit)) return false;
+    }
+    return true;
+  }
+
+  const cageExtension = {
+    id: 'cage',
+
+    prepare: function prepare(model) {
+      if (!model.cages || model.cages.length === 0 || !variantUsesCages(model)) return null;
+      const index = cageIndex(model);
+      const digits = model.digits;
+      const tables = new Array(index.count);
+      for (let k = 0; k < index.count; k++) {
+        tables[k] = index.distinct[k] === 1 && digits <= TABLE_DIGITS
+          ? masks(index.size[k], index.sum[k], digits) : null;
+      }
+      return {
+        index: index,
+        digits: digits,
+        masks: tables,
+        // Scratch of one propagate call; always left clean, so a state still carries all there is to know.
+        dirty: new Uint8Array(index.count),
+        queue: new Int32Array(index.count)
+      };
+    },
+
+    propagate: function propagate(model, state, data, ctx) {
+      const cageOf = data.index.cageOf;
+      const dirty = data.dirty;
+      const queue = data.queue;
+      const cand = state.candidates;
+      let count = 0;
+      let i;
+      for (i = 0; i < ctx.changedCount; i++) {
+        const k = cageOf[ctx.changed[i]];
+        if (k >= 0 && dirty[k] === 0) {
+          dirty[k] = 1;
+          queue[count++] = k;
+        }
+      }
+      for (i = 0; i < count; i++) {
+        dirty[queue[i]] = 0;
+        if (!propagateCage(data, cand, queue[i], ctx)) {
+          for (let j = i + 1; j < count; j++) dirty[queue[j]] = 0;
+          return false;
+        }
+      }
+      return true;
+    }
+  };
+
+  /**
+   * Cage sums are enforced for the models of the variants that asked for it, see `enablePropagation`.
+   */
+  function variantUsesCages(model) {
+    return enabledVariants.has(model.variantId);
+  }
+
+  /** Variants whose models get their cage sums enforced (see `enablePropagation`). */
+  const enabledVariants = new Set();
+
+  /**
+   * Registers the cage propagation with `SG.constraints` and switches it on for the models of one variant.
+   * Nothing is registered until a variant asks for it (the Killer variant does it when it builds a model
+   * with cages), and a model of any other variant (a hand-made test board that merely carries a `cages`
+   * list, for instance) is left alone, so classic variants never see the extension. Calling it again for
+   * the same variant does nothing. Code that builds a Killer model by other means must call it before it
+   * solves with `SG.dfs` (`SG.killer.modelFromCages` does).
+   * @param {string} variantId  The `variantId` of the models that carry cages.
+   * @returns {boolean} True when this call changed anything.
+   */
+  function enablePropagation(variantId) {
+    if (enabledVariants.has(variantId)) return false;
+    enabledVariants.add(variantId);
+    // Models prepared before may have been skipped; registering again makes the engine prepare them anew.
+    SG.constraints.unregisterExtension(cageExtension.id);
+    SG.constraints.registerExtension(cageExtension);
+    return true;
+  }
+
+  /**
+   * Removes the cage propagation again and forgets every variant (for tests).
+   * @returns {boolean} True when it was registered.
+   */
+  function disablePropagation() {
+    enabledVariants.clear();
+    return SG.constraints.unregisterExtension(cageExtension.id);
+  }
+
+  SG.comboTable = {
+    /** Digits the table covers (9). */
+    DIGITS: TABLE_DIGITS,
+    /** comboTable[size][sum] = masks of the digit sets, see the file header. */
+    table: comboTable,
+    masks: masks,
+    union: union,
+    common: common,
+    minSum: minSum,
+    maxSum: maxSum,
+    cageIndex: cageIndex,
+    enablePropagation: enablePropagation,
+    disablePropagation: disablePropagation,
+    extension: cageExtension
+  };
+})(typeof self !== 'undefined' ? self : globalThis);
