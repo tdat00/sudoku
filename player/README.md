@@ -79,15 +79,18 @@ recorded in [`docs/qa.md`](./docs/qa.md).
 
 ### Deploy on GitHub Pages
 
-Repository **Settings → Pages → Build and deployment → Deploy from a branch → `main` / `/ (root)`**. The site
-is then at `https://<user>.github.io/sudoku-player/`. Sudoku Generator's “Play online” button needs that address;
-the page reads the generator's address from `<meta name="sg-generator-url">` in `index.html`
-(default `https://tdat00.github.io/sudoku-generator/`).
+Choose **Settings → Pages → Build and deployment → Source → GitHub Actions**. The
+[deployment workflow](.github/workflows/pages.yml) runs the Node 24 tests and publishes the app after every
+push to `main`; you can also run it manually from the **Actions** tab. Only the app files and licence are
+published, not the tests or working notes. The live app is at
+**[tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)**. Sudoku Generator's “Play online”
+button needs that address; the page reads the generator's address from `<meta name="sg-generator-url">` in
+`index.html` (default `https://tdat00.github.io/sudoku-generator/`).
 
 ### More
 
 [`design.md`](./design.md) (architecture, formats, accessibility, testing, risks) ·
-[`task.md`](./task.md) (the plan and its status) · [`memory.md`](./memory.md) (how to resume the work) ·
+[`task.md`](./task.md) (the plan and its status) ·
 License: MIT.
 
 ## Tiếng Việt
@@ -167,13 +170,16 @@ Lần chạy trình duyệt (Edge không giao diện qua giao thức DevTools) �
 
 ### Đưa lên GitHub Pages
 
-Kho mã **Settings → Pages → Build and deployment → Deploy from a branch → `main` / `/ (root)`**. Trang sẽ ở
-`https://<tên-người-dùng>.github.io/sudoku-player/`. Nút “Chơi trực tuyến” của Trình sinh đề cần địa chỉ này; trang
-đọc địa chỉ của Trình sinh đề từ `<meta name="sg-generator-url">` trong `index.html` (mặc định
-`https://tdat00.github.io/sudoku-generator/`).
+Chọn **Settings → Pages → Build and deployment → Source → GitHub Actions**.
+[Workflow triển khai](.github/workflows/pages.yml) chạy các kiểm thử trên Node 24 và xuất bản ứng dụng sau mỗi
+lần đẩy lên `main`; bạn cũng có thể chạy thủ công từ thẻ **Actions**. Chỉ các tệp ứng dụng và giấy phép được
+xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng trực tuyến tại
+**[tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)**. Nút “Chơi trực tuyến” của Trình
+sinh đề cần địa chỉ này; trang đọc địa chỉ của Trình sinh đề từ `<meta name="sg-generator-url">` trong
+`index.html` (mặc định `https://tdat00.github.io/sudoku-generator/`).
 
 ### Xem thêm
 
 [`design.md`](./design.md) (kiến trúc, định dạng, khả năng tiếp cận, kiểm thử, rủi ro) ·
-[`task.md`](./task.md) (kế hoạch và tiến độ) · [`memory.md`](./memory.md) (cách tiếp tục công việc) ·
+[`task.md`](./task.md) (kế hoạch và tiến độ) ·
 Giấy phép: MIT.

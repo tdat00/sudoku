@@ -252,7 +252,7 @@
       ready();
       var env = needNode();
       var text = read('README.md');
-      ['node tests/node-runner.js', 'file://', 'python -m http.server', 'GitHub Pages', 'Deploy from a branch']
+      ['node tests/node-runner.js', 'file://', 'python -m http.server', 'GitHub Pages', 'GitHub Actions']
         .forEach(function (part) { expect(text).toContain(part); });
       (text.match(/\]\(\.\/([\w./-]+)\)/g) || []).forEach(function (link) {
         var rel = /\(\.\/([\w./-]+)\)/.exec(link)[1];
