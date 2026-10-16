@@ -67,7 +67,7 @@
   }
 
   describe('progress: saving and loading a game', function () {
-    it('keeps the state, the percentage and the symbol mode of a puzzle, and says when it is not there', function () {
+    it('keeps the state, percentage and symbol mode of a puzzle, and says when it is not there', function () {
       ready();
       var p = make().progress;
       expect(p.loadProgress(id(1))).toBeNull();
@@ -159,8 +159,8 @@
     it('stores a document with its meta and gives it back', function () {
       ready();
       var p = make().progress;
-      expect(p.savePuzzle(id(1), { format: 'sudoku-generator/puzzle', n: 1 }, { variantId: 'classic9', clues: 30 }))
-        .toBe('ok');
+      var meta = { variantId: 'classic9', clues: 30 };
+      expect(p.savePuzzle(id(1), { format: 'sudoku-generator/puzzle', n: 1 }, meta)).toBe('ok');
       var got = p.loadPuzzle(id(1));
       expect(got.doc.n).toBe(1);
       expect(got.meta.clues).toBe(30);
@@ -213,7 +213,8 @@
     it('drops a meta that is too big instead of the puzzle', function () {
       ready();
       var p = make().progress;
-      expect(p.savePuzzle(id(1), { n: 1 }, { text: new Array(PG.LIMITS.metaBytes + 10).join('m') })).toBe('ok');
+      var big = { text: new Array(PG.LIMITS.metaBytes + 10).join('m') };
+      expect(p.savePuzzle(id(1), { n: 1 }, big)).toBe('ok');
       expect(p.loadPuzzle(id(1)).meta).toBeNull();
     });
   });
@@ -310,12 +311,13 @@
     it('one entry that does not fit at all reports "quota" and never throws', function () {
       ready();
       var m = make({ limit: 300 });
-      var status = m.progress.saveProgress(id(1), record(5, { state: state({ values: new Array(500).fill(1) }) }));
+      var heavy = state({ values: new Array(500).fill(1) });
+      var status = m.progress.saveProgress(id(1), record(5, { state: heavy }));
       expect(status).toBe('quota');
       expect(function () { m.progress.recent(); m.progress.progressList(); }).not.toThrow();
     });
 
-    it('blocked storage: nothing throws, the session works from memory, persistent() says false', function () {
+    it('blocked storage: nothing throws, the session lives in memory, persistent() is false', function () {
       ready();
       var m = make({ blocked: true });
       expect(m.progress.saveProgress(id(1), record(33))).toBe('blocked');
@@ -339,7 +341,7 @@
   });
 
   describe('progress: the same puzzle is found again', function () {
-    it('the id of a puzzle is the same for the same variant and clues, and differs when a clue differs', function () {
+    it('a puzzle id is the same for the same variant and clues, and differs with a clue', function () {
       ready();
       if (SG.testkit.document('classic9') === null) SG.test.skip('the puzzle fixtures cannot be read here');
       var a = SG.importer.openDocument(SG.testkit.document('classic9'));

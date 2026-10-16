@@ -54,7 +54,8 @@
     it('the structure of the variants shows up in the geometry', function () {
       ready();
       expect(B.geometry(SG.testkit.model('jigsaw9')).regions.length).toBe(9);
-      expect(B.geometry(SG.testkit.model('killer')).cages.length).toBe(SG.testkit.model('killer').cages.length);
+      var killer = SG.testkit.model('killer');
+      expect(B.geometry(killer).cages.length).toBe(killer.cages.length);
       expect(B.geometry(SG.testkit.model('greaterThan')).signs.length).toBe(
         SG.testkit.model('greaterThan').inequalities.length);
       expect(B.geometry(SG.testkit.model('diagonalX')).overlays.length).toBe(2);
@@ -108,7 +109,7 @@
       expect(/data-cell="0"[^>]*>2<\/text>/.test(html)).toBe(true);
     });
 
-    it('colour mode paints a palette class on the cells and keeps a shape unless told otherwise', function () {
+    it('colour mode paints a palette class and keeps a shape unless told otherwise', function () {
       ready();
       var model = SG.testkit.model('classic4');
       var values = new Int32Array(16);

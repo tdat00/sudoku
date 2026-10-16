@@ -283,14 +283,18 @@
       const textClass = textEl ? textEl.getAttribute('class') || '' : '';
       const kind = /\bval--(given|placed|solution)\b/.exec(textClass);
       const color = /\bcell--c(\d+)\b/.exec(rect.getAttribute('class') || '');
+      // An entry of the player (play.js) is on its own layer; the cell carries its text.
+      const user = rect.getAttribute('data-user');
       let shape = null;
       if (useEl && (useEl.getAttribute('class') || '').indexOf('sym--off') === -1) {
         const href = useEl.getAttribute('href') || '';
         shape = href.slice(href.lastIndexOf('-') + 1);
       }
+      const shown = textEl ? textEl.textContent : '';
+      const entry = shown === '' && user !== null && user !== '';
       return {
-        text: textEl ? textEl.textContent : '',
-        kind: kind === null ? 'placed' : kind[1],
+        text: entry ? user : shown,
+        kind: kind === null || entry ? 'placed' : kind[1],
         colorIndex: color === null ? null : Number(color[1]) - 1,
         shape: shape
       };
@@ -415,7 +419,9 @@
           attributeFilter: ['class', 'href'] });
       }
       if (cells !== null) {
-        valueObserver.observe(cells, { subtree: true, attributes: true, attributeFilter: ['class'] });
+        valueObserver.observe(cells, {
+          subtree: true, attributes: true, attributeFilter: ['class', 'data-user']
+        });
       }
     }
 
@@ -887,8 +893,8 @@
       'a11y.settings.theme.light': 'Light',
       'a11y.settings.theme.dark': 'Dark',
       'a11y.settings.theme.highContrast': 'High contrast',
-      'a11y.settings.theme.hint': 'Automatic follows the light or dark setting of your device, and then none ' +
-        'of the theme buttons in the header is shown as pressed.',
+      'a11y.settings.theme.hint': 'Automatic follows the light or dark setting of your device, and then ' +
+        'none of the theme buttons in the header is shown as pressed.',
       'a11y.settings.font.legend': 'Text size',
       'a11y.settings.font.small': 'Smaller text',
       'a11y.settings.font.normal': 'Normal text size',
@@ -897,15 +903,15 @@
       'a11y.settings.motion.hint': 'Turns off the cell animations and the smooth colour changes.',
       'a11y.settings.motion.system': 'Your device already asks for reduced motion, so animations stay off.',
       'a11y.settings.aux.label': 'Show a symbol on colours',
-      'a11y.settings.aux.hint': 'The colour symbol set also draws a shape in every cell, so the values ' +
-        'can be told apart without telling the colours apart.',
+      'a11y.settings.aux.hint': 'The colour symbol set also draws a shape in every cell, so the values can ' +
+        'be told apart without telling the colours apart.',
       'a11y.settings.notes.hint': 'When you enter a symbol, it disappears from the notes of the cells that ' +
         'see it. Switch this off to keep every note until you erase it.',
       'a11y.settings.coords.label': 'Show row and column numbers',
       'a11y.settings.coords.hint': 'Adds numbers and letters around the board.',
       'a11y.settings.keys': 'Keyboard: Tab moves between the areas of the page. On the board, the arrow ' +
-        'keys, Home, End, Page Up and Page Down move between cells, and typing a digit or a letter fills the ' +
-        'selected cell.',
+        'keys, Home, End, Page Up and Page Down move between cells, and typing a digit or a letter fills ' +
+        'the selected cell.',
       'a11y.settings.reset': 'Reset to defaults'
     },
     vi: {

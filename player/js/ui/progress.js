@@ -1,6 +1,6 @@
 /**
- * Saved progress (design.md section 7): `SG.progress`. What the player keeps in the browser so that a reload or a
- * return visit carries on where the person was, all through the safe storage of `SG.store` (every access in
+ * Saved progress (design.md section 7): `SG.progress`. What the player keeps in the browser so that a reload
+ * or a return visit carries on where the person was, all through the safe storage of `SG.store` (every access in
  * try / catch, blocked storage = memory for the session):
  *
  *   sg.player.progress.v1  { version, entries: [{ id, at, symbolMode, percent, solved, state }] }, LRU of 20;
@@ -20,8 +20,8 @@
  *   KEYS, VERSION, LIMITS            the constants above
  *   validId(id)                      whether `id` looks like a puzzle id
  *   trimState(state)                 a copy of a saved game with the history cut to the limits
- *   createProgress(storage?, now?)   -> progress; `storage` from `SG.store.createStorage` (default: the shared
- *                                    one), `now()` a clock in ms (default Date.now)
+ *   createProgress(storage?, now?)   -> progress; `storage` from `SG.store.createStorage` (default: the
+ *                                    shared one), `now()` a clock in ms (default Date.now)
  *   instance()                       the shared progress of the page
  * progress:
  *   saveProgress(id, { symbolMode, percent, solved, state }) -> 'ok' | 'quota' | 'blocked' | 'invalid'
@@ -166,14 +166,16 @@
         solved: record.solved === true,
         state: trimState(record.state)
       };
-      const list = readEntries(KEYS.progress, validProgressEntry).filter(function (e) { return e.id !== id; });
+      const list = readEntries(KEYS.progress, validProgressEntry)
+        .filter(function (e) { return e.id !== id; });
       list.unshift(entry);
       return writeEntries(KEYS.progress, list.slice(0, LIMITS.progressEntries), id);
     }
 
     function loadProgress(id) {
       if (!validId(id)) return null;
-      const found = readEntries(KEYS.progress, validProgressEntry).filter(function (e) { return e.id === id; });
+      const found = readEntries(KEYS.progress, validProgressEntry)
+        .filter(function (e) { return e.id === id; });
       return found.length > 0 ? found[0] : null;
     }
 

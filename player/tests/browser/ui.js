@@ -1,0 +1,174 @@
+'use strict';
+// Browser run: the first-visit tour, a keyboard-only walk, Settings, Help, language and themes.
+// Usage: node tests/browser/ui.js
+const fs = require('fs');
+const path = require('path');
+const { launch, newPage, serve, sleep, ROOT } = require('./lib.js');
+
+const base = 'http://127.0.0.1:8769/index.html';
+const checks = [];
+function check(name, ok, detail) {
+  checks.push({ name, ok });
+  console.log((ok ? 'ok   ' : 'FAIL ') + name + (detail !== undefined ? '  ' + detail : ''));
+}
+const describeActive = '(function(){var a=document.activeElement;if(!a)return "none";return a.tagName.toLowerCase()+(a.id?"#"+a.id:"")+(a.getAttribute("role")?"["+a.getAttribute("role")+"]":"")+(a.getAttribute("data-cell")?"{cell "+a.getAttribute("data-cell")+"}":"");})()';
+
+(async function () {
+  const server = await serve(8769);
+  const browser = await launch({ port: 9338, name: 'q6' });
+  try {
+    const page = await newPage(browser);
+    await page.goto(base, 800);
+    await page.eval('localStorage.clear()');
+    await page.goto('about:blank', 50);
+
+    // ---- first visit: the tour (welcome screen, clean storage)
+    await page.goto(base, 1500);
+    check('the tour starts on the first visit to the welcome screen', await page.eval('!!document.getElementById("tour-card")'));
+    check('the tour does not take the focus', await page.eval('!document.getElementById("tour-card").contains(document.activeElement)'));
+    check('step 1 marks the Open button', await page.eval('document.getElementById("btn-open").classList.contains("tour-target")'));
+    await page.click('#tour-card .btn--primary');
+    await page.click('#tour-card .btn--primary');
+    await page.click('#tour-card .btn--primary');
+    check('step 4 marks Settings and Help', await page.eval('document.getElementById("btn-settings").classList.contains("tour-target") && document.getElementById("btn-help").classList.contains("tour-target")'));
+    check('step counter reads 4 of 4', (await page.eval('document.querySelector(".tour__progress").textContent')) === 'Step 4 of 4');
+    await page.shot('ui-tour-step4');
+    await page.click('#tour-card .btn--primary');
+    check('Done closes the tour and remembers it', await page.eval('!document.getElementById("tour-card") && localStorage.getItem("sg.player.tour.v1") === "1"'));
+    await page.goto(base, 1500);
+    check('the tour is not shown again', await page.eval('!document.getElementById("tour-card")'));
+    await page.eval('localStorage.clear()');
+    await page.goto('about:blank', 50);
+    await page.goto(base, 1500);
+    await page.eval('localStorage.clear()');
+    await page.goto('about:blank', 50);
+    await page.goto(base, 1500);
+    await page.click('#tour-card .tour__skip');
+    check('Skip tour closes it and remembers it', await page.eval('!document.getElementById("tour-card") && localStorage.getItem("sg.player.tour.v1") === "1"'));
+    await page.eval('localStorage.clear()');
+    await page.goto('about:blank', 50);
+    await page.goto(base, 1500);
+    await page.eval('document.getElementById("btn-open").click()');
+    await sleep(300);
+    check('opening a dialog ends the tour', await page.eval('!document.getElementById("tour-card")'));
+    await page.key('Escape');
+
+    // ---- keyboard-only
+    const tok = await page.eval('SG.exchange.encode(' + fs.readFileSync(path.join(ROOT, 'tests/fixtures/puzzles/classic9.json'), 'utf8') + ')');
+    await page.goto('about:blank', 50);
+    await page.goto(base + '#puzzle=' + tok, 1500);
+    await page.eval('document.activeElement && document.activeElement.blur()');
+    const order = [];
+    for (let i = 0; i < 24; i++) {
+      await page.key('Tab');
+      order.push(await page.eval(describeActive));
+    }
+    console.log('tab order:', order.join(' > '));
+    check('the skip link is the first stop', order[0] === 'a#skip-link');
+    check('the board is one tab stop (a gridcell)', order.filter(function (s) { return s.indexOf('[gridcell]') !== -1; }).length === 1);
+    check('every tab stop is a real control', order.every(function (s) { return s !== 'body' && s !== 'none'; }));
+    await page.eval('document.getElementById("skip-link").focus()');
+    await page.key('Enter');
+    check('the skip link moves the focus to the main area', await page.eval('document.activeElement.id === "main"'));
+    // focus the board and play with the keyboard
+    await page.eval('SG.a11y.getGrid().focusCell(0)');
+    await page.key('ArrowRight');
+    await page.key('ArrowDown');
+    check('arrow keys move between cells', (await page.eval(describeActive)) === 'rect[gridcell]{cell 10}');
+    await page.key('End');
+    check('End goes to the end of the row', (await page.eval(describeActive)) === 'rect[gridcell]{cell 17}');
+    await page.key('Home', { ctrl: true });
+    check('Ctrl+Home goes to the first cell', (await page.eval(describeActive)) === 'rect[gridcell]{cell 0}');
+    await page.key('PageDown');
+    check('Page Down moves a box down', (await page.eval(describeActive)) === 'rect[gridcell]{cell 27}');
+    const label = await page.eval('document.activeElement.getAttribute("aria-label")');
+    check('cells have a translated label', /Row 4, column 1/.test(label), label);
+    const cell = await page.eval('(function(){var g=SG.play.getGame();for(var i=0;i<g.cellCount;i++) if(!g.isGiven(i)) return i;})()');
+    await page.eval('SG.a11y.getGrid().focusCell(' + cell + ')');
+    const sol = await page.eval('SG.app.getPuzzle().solution[' + cell + ']');
+    await page.key(String(sol));
+    check('typing a digit on the focused cell enters it', await page.eval('SG.play.getGame().userValue(' + cell + ')') === sol);
+    check('the label of the cell follows the entry', /value/.test(await page.eval('SG.a11y.getGrid().labelOf(' + cell + ')')));
+
+    // ---- Settings dialog
+    await page.click('#btn-settings');
+    await page.waitFor('!!document.querySelector("dialog.modal[open]")', 2000);
+    const sets = await page.eval('Array.from(document.querySelectorAll("dialog.modal[open] fieldset legend, dialog.modal[open] .switch__text")).map(function(e){return e.textContent;})');
+    check('Settings lists language, theme, text size, motion, symbol, check mode, notes, coordinates', sets.length >= 8, JSON.stringify(sets));
+    await page.shot('ui-settings');
+    await page.click('dialog.modal[open] input[name="sg-theme"][value="dark"]');
+    check('dark theme applies', await page.eval('document.documentElement.getAttribute("data-theme")') === 'dark');
+    await page.click('dialog.modal[open] input[name="sg-fontSize"][value="large"]');
+    check('large text applies', await page.eval('document.documentElement.style.getPropertyValue("--sg-font-size-base")') === '125%');
+    await page.click('dialog.modal[open] input[name="sg-check"][value="live"]');
+    check('check mode is stored', await page.eval('JSON.parse(localStorage.getItem("sg.player.prefs.v1")).check') === 'live');
+    check('and the play options follow', await page.eval('document.querySelector(".play__options select").value') === 'live');
+    await page.click('dialog.modal[open] input[data-setting="showCoords"]');
+    check('coordinates switch on', await page.eval('SG.app.getBoard().getGeometry().coords !== null && !!document.querySelector("#board-svg .coord")'));
+    check('the play overlay follows the new geometry', await page.eval('document.querySelectorAll("#board-svg .layer-play .pl-cell").length') === 81);
+    await page.click('dialog.modal[open] input[data-setting="autoNotes"]');
+    check('notes behaviour is stored', await page.eval('JSON.parse(localStorage.getItem("sg.player.prefs.v1")).autoNotes') === false);
+    await page.click('dialog.modal[open] input[name="sg-lang"][value="vi"]');
+    check('language switches to Vietnamese at once', await page.eval('document.documentElement.lang') === 'vi' && (await page.eval('document.querySelector("#btn-open .btn__label").textContent')) === 'Mở đề');
+    await page.shot('ui-settings-vi');
+    await page.click('dialog.modal[open] .btn--secondary');
+    check('Reset to defaults keeps the language', await page.eval('(function(){var s=JSON.parse(localStorage.getItem("sg.player.prefs.v1"));return s.theme==="auto"&&s.check==="conflicts"&&s.autoNotes===true&&s.lang==="vi";})()'));
+    await page.key('Escape');
+    await sleep(200);
+    check('Escape closes the dialog and focus returns to the opener', await page.eval('document.activeElement.id === "btn-settings"'));
+
+    // ---- Help dialog (Vietnamese now)
+    await page.click('#btn-help');
+    await page.waitFor('!!document.querySelector("dialog.modal[open]")', 2000);
+    check('Help opens in Vietnamese', await page.eval('document.querySelector("dialog.modal[open] .modal__title").textContent') === 'Trợ giúp');
+    const tabs = await page.eval('Array.from(document.querySelectorAll("dialog.modal[open] [role=tab]")).map(function(t){return t.textContent;})');
+    check('five tabs', tabs.length === 5, tabs.join(' | '));
+    await page.shot('ui-help-how-vi');
+    await page.click('#help-tab-variants');
+    check('the Variants tab lists all 15 variants', await page.eval('document.querySelectorAll("#help-panel-variants .help-variant").length') === 15);
+    await page.eval('document.querySelector("#help-variant-killer").open = true');
+    await page.shot('ui-help-variants-vi');
+    await page.click('#help-tab-hints');
+    check('the Hints tab lists the 26 techniques with descriptions', await page.eval('document.querySelectorAll("#help-panel-hints .help-technique").length') === 26 && await page.eval('Array.from(document.querySelectorAll("#help-panel-hints .help-technique__desc")).every(function(e){return e.textContent.length>10;})'));
+    await page.shot('ui-help-hints-vi');
+    await page.click('#help-tab-keys');
+    check('the Keyboard tab has the shortcuts', await page.eval('document.querySelectorAll("#help-panel-keys kbd").length') > 15);
+    await page.click('#help-tab-about');
+    check('About lists the storage keys', await page.eval('document.querySelectorAll("#help-panel-about .help-storage code").length') === 5);
+    await page.shot('ui-help-about-vi');
+    // arrow keys on the tab list
+    await page.eval('document.getElementById("help-tab-about").focus()');
+    await page.key('ArrowRight');
+    check('arrow keys move between tabs (wraps)', await page.eval('document.activeElement.id') === 'help-tab-how');
+    await page.click('#help-tab-about');
+    await page.click('#help-delete');
+    check('delete asks to be confirmed', /lần nữa/.test(await page.eval('document.getElementById("help-delete").textContent')));
+    await page.click('#help-delete');
+    await sleep(200);
+    check('delete clears puzzles, progress and the tour flag but not the preferences', await page.eval('localStorage.getItem("sg.player.puzzles.v1") === null && localStorage.getItem("sg.player.progress.v1") === null && localStorage.getItem("sg.player.prefs.v1") !== null'));
+    await page.key('Escape');
+    await sleep(200);
+
+    // ---- theme buttons in the header and ?lang=
+    await page.click('#theme-switch [data-theme-value="high-contrast"]');
+    check('high-contrast theme from the header', await page.eval('document.documentElement.getAttribute("data-theme")') === 'high-contrast');
+    await page.shot('ui-high-contrast-vi');
+    await page.click('#theme-switch [data-theme-value="light"]');
+    await page.click('#lang-switch [data-lang="en"]');
+    check('language button switches back to English', await page.eval('document.documentElement.lang') === 'en');
+    await page.goto('about:blank', 50);
+    await page.goto(base + '?lang=vi', 1200);
+    check('?lang=vi wins over the stored language', await page.eval('document.documentElement.lang') === 'vi');
+    check('and is not stored', await page.eval('JSON.parse(localStorage.getItem("sg.player.prefs.v1") || "{}").lang') !== 'vi');
+
+    console.log('console errors:', JSON.stringify(page.errors));
+    check('no console errors', page.errors.length === 0);
+    page.close();
+  } finally {
+    await browser.close();
+    server.close();
+  }
+  const failed = checks.filter(function (c) { return !c.ok; });
+  console.log('\n' + (checks.length - failed.length) + '/' + checks.length + ' checks passed');
+  if (failed.length > 0) process.exitCode = 1;
+})().catch(function (err) { console.error('FAILED', err); process.exit(1); });

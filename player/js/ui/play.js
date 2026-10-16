@@ -1240,8 +1240,8 @@
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const CLOCK_MS = 500;
   const RESET_ARM_MS = 4000;
-  const WIDE_PAD_COLS = 9;
-  const NARROW_PAD_COLS = 6;
+  const WIDE_PAD_COLS = 6;
+  const NARROW_PAD_COLS = 5;
   const CELL_UNITS = 40;
   const NOTE_MARGIN = 3;
   const NOTE_TOP_CAGE = 11;
@@ -1317,7 +1317,6 @@
     let reader = null;
     let message = null;
     let clockTimer = null;
-    let addedTabindex = false;
     let resetTimer = null;
     let padSig = '';
     let wordHidden = false;
@@ -1660,9 +1659,10 @@
       const el = board !== null ? board.getCellElement(i) : null;
       if (el === null) return;
       let text = '';
-      if (v > 0) {
-        text = tr('play.cell.entry', { symbol: valueText(game.model, v, currentMode()) });
-      } else if (mask !== 0) {
+      // The grid labels (a11y.js) read the entry from here: the value layer of the board only has the clues.
+      if (v > 0) el.setAttribute('data-user', valueText(game.model, v, currentMode()));
+      else el.removeAttribute('data-user');
+      if (v === 0 && mask !== 0) {
         const names = [];
         for (let d = 1; d <= game.digits; d++) {
           if ((mask & bitOf(d)) !== 0) names.push(valueText(game.model, d, currentMode()));
@@ -1677,7 +1677,9 @@
       if (board === null || game === null) return;
       for (let i = 0; i < game.cellCount; i++) {
         const el = board.getCellElement(i);
-        if (el !== null) el.removeAttribute('aria-description');
+        if (el === null) continue;
+        el.removeAttribute('aria-description');
+        el.removeAttribute('data-user');
       }
     }
 
@@ -2340,10 +2342,6 @@
       reader = createKeyReader(typedLabels(game.model, currentMode()));
       active = true;
       unsubscribeGame = game.subscribe(onGameChange);
-      if (svg.getAttribute('tabindex') === null && svg.querySelector('[tabindex]') === null) {
-        svg.setAttribute('tabindex', '0');
-        addedTabindex = true;
-      }
       svg.classList.add('play-on');
       listen(svg, 'click', onBoardClick);
       // On the document, not on the svg: Blink makes an SVG element with a focus listener focusable, which
@@ -2394,11 +2392,7 @@
       notesMode = false;
       clearDescriptions();
       removeLayer();
-      if (svg !== null) {
-        svg.classList.remove('play-on');
-        if (addedTabindex) svg.removeAttribute('tabindex');
-      }
-      addedTabindex = false;
+      if (svg !== null) svg.classList.remove('play-on');
       if (board !== null && wordHidden) board.setLayerVisible('word', true);
       wordHidden = false;
       renderLegend();

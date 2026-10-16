@@ -43,7 +43,8 @@
    */
   function build(digits) {
     if (variantIdOf(digits) === null) {
-      throw new SG.errors.GenerationError('model.invalidSpec', { reason: 'no classic board of size ' + digits });
+      throw new SG.errors.GenerationError('model.invalidSpec',
+        { reason: 'no classic board of size ' + digits });
     }
     const size = SIZES[digits];
     const boxRows = size.boxRows;

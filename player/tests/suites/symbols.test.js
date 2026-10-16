@@ -22,8 +22,8 @@
   describe('symbols: modes offered by a board', function () {
     it('classic and every 9-symbol variant offer digits, letters, colours and shapes', function () {
       ready();
-      ['classic4', 'classic6', 'classic9', 'diagonalX', 'hyper', 'jigsaw9', 'killer', 'greaterThan', 'samurai',
-        'sohei', 'butterfly', 'flower'].forEach(function (id) {
+      ['classic4', 'classic6', 'classic9', 'diagonalX', 'hyper', 'jigsaw9', 'killer', 'greaterThan',
+        'samurai', 'sohei', 'butterfly', 'flower'].forEach(function (id) {
         expect(S.modesFor(SG.testkit.model(id))).toEqual(['digits', 'letters', 'colors', 'shapes']);
       });
     });

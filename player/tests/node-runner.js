@@ -60,6 +60,8 @@ const SOURCE_FILES = [
   'js/ui/a11y.js',
   'js/ui/progress.js',
   'js/ui/play.js',
+  'js/ui/help.js',
+  'js/ui/app.js'
 ];
 
 const fs = require('fs');

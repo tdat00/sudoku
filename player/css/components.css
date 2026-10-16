@@ -384,7 +384,8 @@ input[type="range"]:disabled {
 }
 
 /* ---- Switch: <label class="switch"><input class="switch__input" type="checkbox" role="switch">
-        <span class="switch__track" aria-hidden="true"></span><span class="switch__text">…</span></label> ---- */
+        <span class="switch__track" aria-hidden="true"></span><span class="switch__text">…</span></label>
+   ---- */
 .switch {
   position: relative;
   display: inline-flex;
@@ -680,6 +681,14 @@ progress.progress::-moz-progress-bar {
   pointer-events: none;
 }
 
+/* While a dialog is open the toasts sit under its panel (a11y.js moves them in), not over its buttons. */
+.modal > .toast-root {
+  position: static;
+  align-items: stretch;
+  width: min(100%, 30rem);
+  margin-top: var(--sg-space-3);
+}
+
 .toast {
   display: flex;
   align-items: flex-start;
@@ -941,5 +950,164 @@ dialog.modal:not([open]) {
   .segmented__btn:is([aria-pressed="true"], [aria-checked="true"], .is-active) {
     border-width: 3px;
     text-decoration: underline;
+  }
+}
+
+/* ---- Player: info card, recent list, open dialog, errors ---- */
+.modal__lead {
+  max-width: 62ch;
+  margin: 0 0 var(--sg-space-3);
+}
+
+.info-list {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--sg-space-1) var(--sg-space-3);
+  margin: 0;
+}
+
+.info-list__term {
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.info-list__value {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.info-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-1);
+  margin-top: var(--sg-space-3);
+}
+
+.info-progress__label {
+  font-size: var(--sg-font-size-sm);
+  font-weight: 600;
+}
+
+.info-note {
+  margin: var(--sg-space-2) 0 0;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recent-item {
+  display: flex;
+  align-items: stretch;
+  gap: var(--sg-space-1);
+}
+
+.recent-item__open {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface);
+  color: var(--sg-color-text);
+  text-align: start;
+}
+
+.recent-item__open:hover {
+  background: var(--sg-color-hover);
+}
+
+.recent-item.is-current .recent-item__open {
+  border-color: var(--sg-color-accent);
+  box-shadow: inset 3px 0 0 var(--sg-color-accent);
+}
+
+.recent-item__name {
+  font-weight: 600;
+}
+
+.recent-item__meta {
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.recent-item__remove {
+  flex: none;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.recent-empty {
+  margin: 0;
+  color: var(--sg-color-text-muted);
+}
+
+.welcome__recent-title {
+  margin: 0 0 var(--sg-space-2);
+  font-size: var(--sg-font-size-lg);
+}
+
+.open-file {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sg-space-2);
+  margin-bottom: var(--sg-space-3);
+}
+
+.open-drop {
+  margin: 0 0 var(--sg-space-4);
+  padding: var(--sg-space-3);
+  border: 2px dashed var(--sg-color-border);
+  border-radius: var(--sg-radius-3);
+  color: var(--sg-color-text-muted);
+  text-align: center;
+}
+
+.open-text {
+  width: 100%;
+  min-height: 7rem;
+  font-family: var(--sg-font-family);
+  font-size: var(--sg-font-size-sm);
+}
+
+.open-errors {
+  margin-top: var(--sg-space-2);
+}
+
+.open-errors[hidden] {
+  display: none;
+}
+
+.error-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  margin: 0;
+  padding-inline-start: var(--sg-space-5);
+  list-style: disc;
+}
+
+@media (forced-colors: active) {
+  .recent-item__open {
+    border-color: ButtonText;
+  }
+
+  .recent-item.is-current .recent-item__open {
+    border-color: Highlight;
+    border-width: 3px;
   }
 }

@@ -81,7 +81,9 @@
     const out = Object.assign({}, base || DEFAULTS);
     if (input === null || typeof input !== 'object') return out;
     FIELDS.forEach(function (name) {
-      if (Object.prototype.hasOwnProperty.call(input, name) && VALID[name](input[name])) out[name] = input[name];
+      if (Object.prototype.hasOwnProperty.call(input, name) && VALID[name](input[name])) {
+        out[name] = input[name];
+      }
     });
     return out;
   }
@@ -230,8 +232,9 @@
       set: function set(patch, meta) {
         const next = sanitize(patch, state);
         const changed = FIELDS.filter(function (name) {
-          return patch !== null && typeof patch === 'object' && Object.prototype.hasOwnProperty.call(patch, name) &&
-            next[name] !== state[name];
+          const given = patch !== null && typeof patch === 'object' &&
+            Object.prototype.hasOwnProperty.call(patch, name);
+          return given && next[name] !== state[name];
         });
         if (changed.length === 0) return Object.assign({}, state);
         state = next;
@@ -266,7 +269,9 @@
         return Object.assign({}, state);
       },
       reset: function reset() {
-        const keys = FIELDS.filter(function (name) { return name !== 'lang' && state[name] !== DEFAULTS[name]; });
+        const keys = FIELDS.filter(function (name) {
+          return name !== 'lang' && state[name] !== DEFAULTS[name];
+        });
         state = Object.assign(defaults(), { lang: state.lang });
         save();
         if (keys.length > 0) notify(keys, { source: 'reset' });

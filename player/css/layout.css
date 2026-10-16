@@ -137,6 +137,7 @@
 .welcome__steps {
   margin: 0;
   padding-inline-start: var(--sg-space-5);
+  list-style: decimal;
 }
 
 .welcome__steps li + li {
@@ -156,6 +157,11 @@
 @media (min-width: 60rem) {
   .welcome {
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+
+  .welcome:has(.welcome__recent:empty) {
+    grid-template-columns: minmax(0, 46rem);
+    justify-content: center;
   }
 }
 
@@ -232,11 +238,15 @@
   }
 
   .board-svg {
-    max-height: calc(100vh - 12rem);
+    max-height: calc(100vh - 15.5rem);
   }
 }
 
 /* ---- Status line ---- */
+.status-row:has(.status-row__text:empty) {
+  display: none;
+}
+
 .status-row {
   display: flex;
   flex-wrap: wrap;

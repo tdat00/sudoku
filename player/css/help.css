@@ -1,0 +1,332 @@
+/*
+ * Help dialog and the first-visit tour (js/ui/help.js). Only var(--sg-*) tokens: no colour literals.
+ *
+ *   .help-tabs / .help-tab       the tablist of the dialog; .help-panels / .help-panel the tab panels
+ *   .help-variant                one <details class="disclosure"> per variant
+ *   .help-steps, .help-techniques, .help-keys, .help-storage, .help-actions, .help-links   the content blocks
+ *   .tour, .tour-target          the tour: a small card fixed to the page and the outline of what it names
+ * Motion is switched off by the global reduced-motion rules of base.css.
+ */
+
+/* ---- Dialog: tabs ---- */
+.help-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  gap: var(--sg-space-1);
+  margin: calc(-1 * var(--sg-space-4)) calc(-1 * var(--sg-space-4)) var(--sg-space-4);
+  padding: var(--sg-space-2) var(--sg-space-4) 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  border-bottom: 1px solid var(--sg-color-divider);
+  background: var(--sg-color-surface);
+  scrollbar-width: thin;
+}
+
+.help-tab {
+  flex: none;
+  min-height: var(--sg-control-height);
+  margin-bottom: -1px;
+  padding: 0 var(--sg-space-3);
+  border: 1px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-radius: var(--sg-radius-2) var(--sg-radius-2) 0 0;
+  background: transparent;
+  color: var(--sg-color-text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    background-color var(--sg-motion-fast) ease,
+    color var(--sg-motion-fast) ease;
+}
+
+.help-tab:hover {
+  background: var(--sg-color-hover);
+  color: var(--sg-color-text);
+}
+
+.help-tab[aria-selected="true"] {
+  border-bottom-color: var(--sg-color-accent);
+  color: var(--sg-color-text);
+}
+
+.help-tab:focus-visible {
+  outline-offset: calc(-1 * var(--sg-focus-width));
+}
+
+.help-panels {
+  min-width: 0;
+}
+
+.help-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  min-width: 0;
+  line-height: 1.55;
+}
+
+.help-panel[hidden] {
+  display: none;
+}
+
+.help-panel:focus-visible {
+  outline-offset: var(--sg-space-1);
+}
+
+.help-panel p {
+  max-width: 68ch;
+  margin: 0;
+}
+
+.help__lead {
+  font-size: 1.0625rem;
+}
+
+.help__title {
+  margin-top: var(--sg-space-3);
+  padding-bottom: var(--sg-space-1);
+  border-bottom: 1px solid var(--sg-color-divider);
+  font-size: var(--sg-font-size-lg);
+}
+
+.help__small-title {
+  margin: var(--sg-space-2) 0 0;
+  font-size: 1rem;
+}
+
+/* ---- Steps and levels ---- */
+.help-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  max-width: 68ch;
+  margin: 0;
+  padding-inline-start: var(--sg-space-5);
+  list-style: decimal;
+}
+
+/* ---- Variants ---- */
+.help-variant {
+  scroll-margin-top: calc(var(--sg-control-height) + var(--sg-space-5));
+}
+
+.help-variant__name {
+  font-weight: 600;
+}
+
+.help-variant__desc {
+  color: var(--sg-color-text-muted);
+}
+
+/* ---- Techniques ---- */
+.help-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+}
+
+.help-techniques {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.help-technique {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sg-space-1) var(--sg-space-2);
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface-2);
+}
+
+.help-technique__name {
+  font-weight: 700;
+}
+
+.help-technique__desc {
+  flex: 1 1 18rem;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.help-technique__scope {
+  align-self: center;
+}
+
+/* ---- Keys ---- */
+.help-keys {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sg-space-1) var(--sg-space-4);
+  margin: 0;
+}
+
+.help-keys__combos {
+  margin-top: var(--sg-space-2);
+}
+
+.help-keys__text {
+  margin: 0;
+  color: var(--sg-color-text-muted);
+}
+
+.help-keys kbd {
+  display: inline-block;
+  min-width: 1.75rem;
+  padding: 0.125rem var(--sg-space-2);
+  border: 1px solid var(--sg-color-border);
+  border-bottom-width: 3px;
+  border-radius: var(--sg-radius-1);
+  background: var(--sg-color-surface);
+  color: var(--sg-color-text);
+  font: inherit;
+  font-size: var(--sg-font-size-sm);
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .help-keys {
+    grid-template-columns: minmax(11rem, 17rem) minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .help-keys__combos {
+    margin-top: 0;
+  }
+}
+
+/* ---- About ---- */
+.help-storage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sg-space-1) var(--sg-space-3);
+  margin: 0;
+}
+
+.help-storage dt code {
+  overflow-wrap: anywhere;
+  font-size: var(--sg-font-size-sm);
+}
+
+.help-storage dd {
+  margin: 0 0 var(--sg-space-2);
+  color: var(--sg-color-text-muted);
+}
+
+.help-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sg-space-2);
+}
+
+.help-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-1);
+  margin: 0;
+  padding-inline-start: var(--sg-space-5);
+  list-style: disc;
+}
+
+@media (min-width: 640px) {
+  .help-storage {
+    grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr);
+  }
+
+  .help-storage dd {
+    margin: 0;
+  }
+}
+
+/* ---- Tour: a card that never takes the focus or covers the page ---- */
+.tour {
+  position: fixed;
+  z-index: calc(var(--sg-z-modal) - 10);
+  inset-block-end: var(--sg-space-4);
+  inset-inline-end: var(--sg-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  width: min(22rem, calc(100vw - 2 * var(--sg-space-3)));
+  padding: var(--sg-space-4);
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  color: var(--sg-color-text);
+  box-shadow: var(--sg-shadow-2);
+}
+
+.tour__title {
+  margin: 0;
+  font-size: var(--sg-font-size-lg);
+}
+
+.tour__text {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.tour__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-2);
+}
+
+.tour__progress {
+  margin: 0;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 600;
+}
+
+.tour__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sg-space-2);
+}
+
+.tour__buttons .btn {
+  min-height: 2.75rem;
+}
+
+.tour-target {
+  outline: 3px solid var(--sg-color-accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 599.98px) {
+  .tour {
+    inset-inline: var(--sg-space-3);
+    inset-block-end: var(--sg-space-3);
+    width: auto;
+  }
+}
+
+@media (forced-colors: active) {
+  .help-tab[aria-selected="true"] {
+    border-bottom-color: Highlight;
+    text-decoration: underline;
+  }
+
+  .tour,
+  .help-technique {
+    border-color: CanvasText;
+  }
+
+  .tour-target {
+    outline-color: Highlight;
+  }
+}

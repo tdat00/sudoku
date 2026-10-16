@@ -51,7 +51,7 @@ index.html ── <script> tags in the order of tests/node-runner.js SOURCE_FILE
 js/core/   pure logic, no DOM (copied from the generator, trimmed — §2.2)
 js/ui/     modules that talk to the page; every file also loads in Node (pure helpers + DOM functions)
 css/       tokens (3 themes) · base · layout · components · board · play · help
-tests/     harness.js · node-runner.js · tests.html · suites/ · fixtures/ (puzzle documents)
+tests/     harness.js · node-runner.js · tests.html · suites/ · fixtures/ (puzzle documents) · browser/ (CDP scripts)
 docs/      fixtures.md (how the documents were made) · qa.md (the manual browser run)
 ```
 
@@ -79,16 +79,19 @@ A lower layer never knows a higher one.
 | `ui/symbols.js`, `board-view.js` | `symbols`, `boardView` | value → glyph; the SVG board of every geometry | copied, adapted |
 | `ui/play.js` | `play` | game engine (pure) + the play UI | the generator's play mode, reworked into the main screen |
 | `ui/help.js` | `help` | Help dialog (rules of 15 variants, technique ladder, keys, about) and the tour | rewritten |
-| `ui/app.js` | `app` | start-up, open flows, dialogs, info card, recent list, settings, wiring; the `SG.app` extension surface | **new** |
+| `ui/app.js` | `app` | start-up, open flows, dialogs, toasts, info card, recent list, auto-save, wiring; the `SG.app` extension surface | **new** |
 
 ### 2.3 The `SG.app` surface
 `play.js`, `a11y.js`, `theme.js` and `help.js` were written against the generator's `SG.app`; the player keeps
 the part of that contract they use, so they needed small edits only: `getStore() getBoard() getResult()
 toast(kind, key, args) openModal({titleKey, body, footer, wide, onClose}) announce(text) on(name, fn) emit(name,
-payload) showResult(puzzle, options)`, plus `getPuzzle() open(input, options) openPuzzle(puzzle, options)`.
+payload) showResult(puzzle, options)`, plus `getPuzzle() open(input, options) openPuzzle(puzzle, options)
+openOpenDialog() clearSavedData() saveNow()`.
 `getResult()` returns `{ result: puzzle, trace: [] }`: the "result" is the opened puzzle (`model`, `givens`,
 `solution`, …). Events: `result` (a puzzle is on the board), `settings` (a preference changed), `locale`,
-`theme`, `action` (`settings`, `help`, `open`), `play:game` (a game was created), `play:change` (a game changed).
+`theme`, `action` (`settings`, `help`, `open`), `play:game` (a game was attached), `play:change` (a game changed;
+the app saves 400 ms later), `data:cleared`. `play.js` is driven by `attach(puzzle, {state, symbolMode, focus})` /
+`detach()`; it reads `check` and `autoNotes` from the store and follows the `settings` event.
 
 ### 2.4 Script order
 `tests/node-runner.js` `SOURCE_FILES` is the single source of truth; `index.html` and `tests.html` repeat it and
@@ -165,9 +168,10 @@ elimination is applied to the notes and remembered. When the solver is stuck the
 reveal one cell. A hint never suggests a wrong value (tested on all fixtures).
 
 ### 6.2 The play UI
-Mounted by `app.js` once a puzzle is on the board: status bar (timer, pause, progress), tools (notes, erase,
-undo, redo, hint, check), the **symbol pad** (touch-sized buttons, up to 9 / 6 per row), a message line, the
-hint card and an Options disclosure (check mode, auto-notes, fill notes, reveal a cell / the solution, reset
+Mounted by `play.js` itself into `#play-status` (status bar: timer, pause, progress) and `#play-root` (tools:
+notes, erase, undo, redo, hint, check; the **symbol pad**, touch-sized buttons, up to 6 per row on a wide screen
+and 5 on a narrow one; a **Symbols** selector with the legend under the board for colours and shapes; a
+message line; the hint card) and an Options disclosure (check mode, auto-notes, fill notes, reveal a cell / the solution, reset
 with a confirming second press). Keyboard: arrows and the a11y grid keys move; typing a symbol enters it
 (two-character symbols of Mega 12×12 wait for the second character); `N` notes, `H` hint, `Backspace` / `Delete`
 erase, `Ctrl+Z` / `Ctrl+Y` undo / redo, `Esc` closes the hint. The timer pauses on blur / hidden tab and resumes.
@@ -215,7 +219,11 @@ asks "Continue" or "Start over"; the recent list and a reload continue without a
 The Open dialog and the page-wide drop share one path: read text (files up to 8 MB, `FileReader`) →
 `SG.importer.open(text, {source})` → on success `app.openPuzzle`. Errors are shown in the dialog (or as a toast
 when there is none) with the translated issue texts; a failed open never replaces the puzzle on the board. A
-dropped file shows a full-page "Drop the puzzle here" overlay. A pasted link or token is decoded in place.
+dropped file shows a full-page "Drop the puzzle here" overlay. A paste outside a text field opens the pasted
+text (the Open dialog has its own box, `Ctrl+Enter` opens it); dropped *text* opens only when it looks like a
+puzzle, so dragging a sentence around the page does nothing. A link from the address bar or the generator opens
+without moving the focus (the first `Tab` still reaches the skip link); a puzzle the person opens (dialog,
+drop, paste, recent list) puts the focus on the board.
 
 ### 8.3 First-visit tour
 `SG.help` also owns the tour: 4 skippable steps (welcome / open a puzzle, the board and notes, hints, the
@@ -229,7 +237,9 @@ Skip link to `#main`; the board `<svg>` is `role="grid"` with `role="row"` / `gr
 translated label per cell ("Row 4, column 7, value 5, given", cage sums and signs included); arrow keys, Home,
 End, Ctrl+Home / End, Page Up / Down move between real cells. `#a11y-live` announces entries, errors, hints and
 completion (no timer ticks). Dialogs trap focus and restore it; toasts and the live region stay audible inside a
-modal. Contrast ≥ 4.5 : 1 text, ≥ 3 : 1 lines / focus ring, 7 : 1 text in the high-contrast theme (computed from
+modal: while a dialog is open the toasts are placed under its panel, never over its buttons, and a message that
+is already on screen is not stacked twice. The entries of the player live in their own SVG layer, so the cell
+carries a `data-user` attribute that the grid labels read ("value 5" instead of "empty"). Contrast ≥ 4.5 : 1 text, ≥ 3 : 1 lines / focus ring, 7 : 1 text in the high-contrast theme (computed from
 the tokens by `theme.test.js`). `prefers-reduced-motion` and the Settings switch turn every animation off.
 No real screen-reader run has been done (§11).
 
@@ -263,10 +273,12 @@ that read `tests/fixtures/puzzles/*.json` need `http://`, they skip themselves o
 | `i18n` | key parity, placeholders, no empty values, coverage computed from the code |
 | `store`, `progress` | prefs, safe storage, LRU, version purge, quota, blocked storage, same-puzzle id, recent list |
 | `play` | the engine on all 15 fixtures: values, notes, exact undo / redo, conflicts, completion, hint soundness, timer, serialisation; the key reader, pad and note layouts |
-| `a11y`, `theme` | cell labels, keyboard moves, announcer; token parity and contrast |
+| `symbols`, `board-view` | glyphs per mode, the legend, the 16 shapes; geometry and markup of all 15 fixtures (cells, layers, cages, signs, no colour literal) |
+| `a11y`, `theme` | cell labels, keyboard moves, the Settings data; token parity and contrast |
+| `app` | the surface and events of `SG.app`, the elements it needs from `index.html`, no HTML built from data, storage only through `store` / `progress` |
 | `help` | an entry for every variant and technique, README claims |
 | `ui-contract` | module surface, no colour literals outside the token files, script order of `index.html` = runner = `tests.html`, no hard-coded text in `index.html`, forbidden globals absent, no DOM in `js/core` |
-| browser run | headless Edge over CDP, recorded in `docs/qa.md` |
+| browser run | `tests/browser/*.js`: headless Edge over CDP (fragment, paste, file, drop, play with real key events, hints, reload, keyboard-only walk, Settings, Help, tour, themes, 1440 / 900 / 375 px with touch, blocked storage); recorded in `docs/qa.md` |
 
 The fixtures were made by the generator (`docs/fixtures.md`); the test kit (`tests/fixtures/testkit.js`) holds a
 seeded RNG, a random solved grid (the DFS solver with a random value order) and a minimal clue remover so the

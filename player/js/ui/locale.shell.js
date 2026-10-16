@@ -34,15 +34,16 @@
       'shell.help.title': 'Open help',
 
       'shell.welcome.title': 'Open a Sudoku puzzle to play it',
-      'shell.welcome.lead': 'This is a player for puzzles made by Sudoku Generator: all 15 variants, notes, ' +
-        'hints that name the technique, and progress that is saved for you.',
+      'shell.welcome.lead': 'This is a player for puzzles made by Sudoku Generator: all 15 variants, ' +
+        'notes, hints that name the technique, and progress that is saved for you.',
       'shell.welcome.step1': 'Make a puzzle in Sudoku Generator and press “Play online”.',
       'shell.welcome.step2': 'Or open a puzzle file, paste a link, or paste a line of 81 digits (a classic ' +
         'board).',
       'shell.welcome.step3': 'Come back any time: your progress is kept on this device.',
       'shell.welcome.open': 'Open a puzzle',
       'shell.welcome.generator': 'Get a puzzle from Sudoku Generator',
-      'shell.welcome.privacy': 'Everything stays in your browser. Nothing is uploaded and no account is needed.',
+      'shell.welcome.privacy': 'Everything stays in your browser. Nothing is uploaded and no account is ' +
+        'needed.',
 
       'shell.board.title': 'Sudoku board',
       'shell.board.desc': 'Open a puzzle to see the board.',
@@ -85,8 +86,8 @@
       'shell.welcome.step3': 'Bạn có thể quay lại bất cứ lúc nào: tiến độ được giữ trên thiết bị này.',
       'shell.welcome.open': 'Mở một đề',
       'shell.welcome.generator': 'Lấy đề từ Trình sinh đề Sudoku',
-      'shell.welcome.privacy': 'Mọi thứ nằm trong trình duyệt của bạn. Không có gì được tải lên và không cần ' +
-        'tài khoản.',
+      'shell.welcome.privacy': 'Mọi thứ nằm trong trình duyệt của bạn. Không có gì được tải lên và không ' +
+        'cần tài khoản.',
 
       'shell.board.title': 'Bàn cờ Sudoku',
       'shell.board.desc': 'Hãy mở một đề để thấy bàn cờ.',

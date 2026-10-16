@@ -32,7 +32,8 @@
    * @param {number} [options.nodes]    Maximum number of ticks (check() calls plus tick() units).
    * @param {function(): void} [options.onCancel]  Called once, when cancel() is invoked first time.
    * @param {function(): *} [options.shouldCancel] Polled with the clock sample; a truthy result cancels
-   *                                               the budget (for flags set from outside, e.g. in shared memory).
+   *                                               the budget (for flags set from outside, e.g. in shared
+   *                                               memory).
    * @param {function(): number} [options.now]     Clock in milliseconds; defaults to Date.now.
    * @returns {Budget}
    */
