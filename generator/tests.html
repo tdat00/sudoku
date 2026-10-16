@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sudoku Generator - tests</title>
+  <style>
+    :root { color-scheme: light dark; --ok: #1a7f37; --bad: #cf222e; --skip: #9a6700; --muted: #6e7781; --line: #8c959f55; }
+    body { font: 14px/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif; margin: 0 auto; padding: 0 16px 48px; max-width: 1000px; }
+    h1 { font-size: 20px; margin: 16px 0 8px; }
+    h2 { font-size: 15px; margin: 20px 0 6px; }
+    form { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 8px 0; }
+    input[type=search] { width: 16em; }
+    .summary { margin: 8px 0; padding: 8px 12px; border-left: 4px solid var(--muted); background: var(--line); font-weight: 600; }
+    .summary.pass { border-color: var(--ok); }
+    .summary.fail { border-color: var(--bad); }
+    .notice { margin: 8px 0; padding: 8px 12px; border-left: 4px solid var(--skip); background: var(--line); }
+    details { margin: 4px 0; }
+    summary { cursor: pointer; padding: 2px 0; }
+    ul { list-style: none; margin: 0; padding: 0 0 0 18px; }
+    li { padding: 1px 0; word-break: break-word; }
+    .pass, .fail, .skip { font-weight: 600; }
+    li.pass::before { content: '\2713\00a0'; color: var(--ok); }
+    li.fail::before { content: '\2717\00a0'; color: var(--bad); }
+    li.skip::before { content: '\25cb\00a0'; color: var(--skip); }
+    li .ms, li .reason { color: var(--muted); font-weight: normal; }
+    summary.fail { color: var(--bad); }
+    ol.failure-list { padding-left: 22px; }
+    ol.failure-list li { margin-bottom: 10px; }
+    pre { margin: 4px 0 0; padding: 8px; overflow: auto; background: var(--line); font-size: 12px; white-space: pre-wrap; }
+    table { border-collapse: collapse; }
+    td, th { padding: 2px 10px; text-align: right; border-bottom: 1px solid var(--line); }
+    td:first-child, th:first-child { text-align: left; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sudoku Generator &mdash; tests</h1>
+    <form id="controls">
+      <label>Suite
+        <select id="suite"><option value="">all suites</option></select>
+      </label>
+      <label>Filter
+        <input id="filter" type="search" placeholder="text in test name">
+      </label>
+      <label><input id="bail" type="checkbox"> stop at first failure</label>
+      <button id="run" type="submit" disabled>Run</button>
+    </form>
+    <p id="summary" class="summary" role="status" aria-live="polite">Loading files&hellip;</p>
+  </header>
+
+  <section id="notice" class="notice" hidden></section>
+
+  <section id="failures" hidden>
+    <h2>Failures</h2>
+    <ol id="failure-list" class="failure-list"></ol>
+  </section>
+
+  <section>
+    <h2>Results</h2>
+    <div id="results"></div>
+  </section>
+
+  <section id="benches" hidden>
+    <h2>Benchmarks</h2>
+    <table id="bench-table"></table>
+  </section>
+
+  <details id="missing-box" hidden>
+    <summary id="missing-summary"></summary>
+    <ul id="missing-list"></ul>
+  </details>
+
+  <script src="tests/harness.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      /*
+       * Browser test page. It works from file:// because it only injects classic <script> tags.
+       *
+       * SOURCE_FILES / FIXTURE_FILES / SUITE_FILES list everything that is planned, in load order.
+       * A file that does not exist yet is skipped (it is listed at the bottom of the page), so
+       * later phases need no edit here. Keep SOURCE_FILES in sync with tests/node-runner.js, and
+       * add a name to SUITE_FILES only for a suite that is not planned in design.md section 15.2.
+       */
+      var SOURCE_FILES = [
+        'js/core/ns.js', 'js/core/errors.js', 'js/core/bits.js', 'js/core/budget.js', 'js/core/rng.js',
+        'js/core/model.js', 'js/core/constraints.js', 'js/core/combo-table.js',
+        'js/core/dfs-solver.js', 'js/core/techniques.js', 'js/core/logical-solver.js',
+        'js/core/tech-basic.js', 'js/core/tech-subset.js', 'js/core/tech-fish.js',
+        'js/core/tech-wing.js', 'js/core/tech-chain.js', 'js/core/tech-cage.js', 'js/core/tech-ineq.js',
+        'js/core/difficulty.js', 'js/core/full-grid.js', 'js/core/symmetry.js', 'js/core/digger.js',
+        'js/core/events.js', 'js/core/explain-data.js', 'js/core/pipeline.js',
+        'js/variants/registry.js', 'js/variants/classic.js', 'js/variants/mega.js',
+        'js/variants/extra-regions.js', 'js/variants/jigsaw.js', 'js/variants/killer.js',
+        'js/variants/greater-than.js', 'js/variants/multigrid.js', 'js/variants/wordoku.js',
+        'assets/wordlists/isograms.en.js', 'assets/wordlists/isograms.vi.js',
+        'js/worker/worker-client.js',
+        'js/ui/exchange.js',
+        'js/ui/i18n.js', 'js/ui/locale.en.js', 'js/ui/locale.vi.js', 'js/ui/locale.shell.js',
+        'js/ui/symbols.js', 'js/ui/board-view.js', 'js/ui/store.js', 'js/ui/controls.js',
+        'js/ui/step-view.js', 'js/ui/explain.js', 'js/ui/player.js', 'js/ui/result-view.js',
+        'js/ui/cache.js', 'js/ui/export.js', 'js/ui/import.js', 'js/ui/a11y.js', 'js/ui/theme.js',
+        'js/ui/help.js', 'js/ui/app.js'
+      ];
+      var FIXTURE_FILES = ['classic', 'techniques-helper', 'techniques', 'rated', 'perf-helper', 'regression']
+        .map(function (n) { return 'tests/fixtures/' + n + '.js'; });
+      var SUITE_FILES = [
+        'a11y', 'bits', 'cache', 'constraints', 'controls', 'difficulty', 'digger', 'events', 'exchange', 'export',
+        'format', 'full-grid', 'greater-than', 'help', 'i18n', 'jigsaw', 'killer', 'logical-solver', 'mega', 'model',
+        'multigrid', 'extra-regions', 'perf', 'pipeline', 'player', 'purity', 'result-view', 'rng',
+        'solver', 'steps', 'store', 'tech-basic', 'tech-cage', 'tech-chain', 'tech-fish', 'tech-ineq',
+        'tech-subset', 'tech-wing', 'techniques', 'theme', 'ui-contract', 'variants', 'wordoku', 'worker'
+      ];
+
+      var SG = window.SG;
+      var $ = function (id) { return document.getElementById(id); };
+      var params = new URLSearchParams(window.location.search);
+      var currentError = null;
+      var running = false;
+
+      window.addEventListener('error', function (event) {
+        if (currentError === null) currentError = event.error || new Error(event.message);
+      });
+
+      function make(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+      }
+
+      function formatMs(ms) {
+        return ms >= 1000 ? (ms / 1000).toFixed(2) + ' s' : Math.round(ms) + ' ms';
+      }
+
+      /** Resolves { found, error }. A missing file reports found = false instead of failing. */
+      function loadScript(src) {
+        return new Promise(function (resolve) {
+          currentError = null;
+          var script = document.createElement('script');
+          script.async = false;
+          script.src = src;
+          script.onload = function () { resolve({ found: true, error: currentError }); };
+          script.onerror = function () { resolve({ found: false, error: null }); };
+          document.head.appendChild(script);
+        });
+      }
+
+      async function loadEverything() {
+        var missing = [];
+        var broken = [];
+        var queue = SOURCE_FILES.map(function (f) { return { file: f, suite: null }; })
+          .concat(FIXTURE_FILES.map(function (f) { return { file: f, suite: null }; }))
+          .concat(SUITE_FILES.map(function (name) {
+            return { file: 'tests/suites/' + name + '.test.js', suite: name };
+          }));
+
+        for (var i = 0; i < queue.length; i++) {
+          var item = queue[i];
+          if (item.suite !== null) SG.test.setSuite(item.suite);
+          var outcome = await loadScript(item.file);
+          if (!outcome.found) missing.push(item.file);
+          else if (outcome.error) {
+            broken.push(item.file + ': ' + outcome.error.message);
+            SG.test.addLoadError(item.suite || 'load: ' + item.file, outcome.error);
+          }
+        }
+        return { missing: missing, broken: broken };
+      }
+
+      function showLoadReport(report) {
+        if (report.broken.length > 0) {
+          var notice = $('notice');
+          notice.hidden = false;
+          notice.textContent = 'Failed to load: ' + report.broken.join(' | ');
+        }
+        if (report.missing.length > 0) {
+          $('missing-box').hidden = false;
+          $('missing-summary').textContent = report.missing.length + ' planned files not found (skipped)';
+          report.missing.forEach(function (file) { $('missing-list').appendChild(make('li', '', file)); });
+        }
+      }
+
+      function renderFailure(record) {
+        var item = make('li');
+        item.appendChild(make('strong', 'fail', record.fullName));
+        item.appendChild(make('div', '', record.error.name + ': ' + record.error.message));
+        if (record.error.stack) item.appendChild(make('pre', '', record.error.stack));
+        $('failure-list').appendChild(item);
+        $('failures').hidden = false;
+      }
+
+      async function runTests() {
+        if (running) return;
+        running = true;
+        $('run').disabled = true;
+        $('results').textContent = '';
+        $('failure-list').textContent = '';
+        $('failures').hidden = true;
+        $('benches').hidden = true;
+        $('summary').className = 'summary';
+        $('summary').textContent = 'Running\u2026';
+
+        var list = null;
+        var group = null;
+        var results = await SG.test.run({
+          suite: $('suite').value,
+          filter: $('filter').value,
+          bail: $('bail').checked,
+          yieldMs: 40,
+          onSuiteStart: function (name) {
+            group = make('details');
+            group.open = true;
+            group.appendChild(make('summary', '', name));
+            list = make('ul');
+            group.appendChild(list);
+            $('results').appendChild(group);
+          },
+          onTestEnd: function (record) {
+            var item = make('li', record.status, record.name + ' ');
+            if (record.status === 'skip' && record.reason) item.appendChild(make('span', 'reason', '- ' + record.reason + ' '));
+            item.appendChild(make('span', 'ms', '(' + formatMs(record.ms) + ')'));
+            if (record.status === 'fail') {
+              item.appendChild(make('div', '', record.error.name + ': ' + record.error.message));
+              renderFailure(record);
+            }
+            list.appendChild(item);
+          },
+          onSuiteEnd: function (summary) {
+            var head = group.firstChild;
+            head.textContent = summary.name + ' \u2014 ' + summary.passed + ' passed' +
+              (summary.failed ? ', ' + summary.failed + ' failed' : '') +
+              (summary.skipped ? ', ' + summary.skipped + ' skipped' : '') + ' (' + formatMs(summary.ms) + ')';
+            head.className = summary.failed ? 'fail' : '';
+            group.open = summary.failed > 0;
+          }
+        });
+
+        var ok = results.failed === 0 && results.total > 0;
+        $('summary').className = 'summary ' + (ok ? 'pass' : 'fail');
+        $('summary').textContent = results.total + ' tests: ' + results.passed + ' passed, ' + results.failed +
+          ' failed, ' + results.skipped + ' skipped \u2014 ' + formatMs(results.ms) +
+          (results.bailed ? ' (stopped at first failure)' : '') + (results.total === 0 ? ' (no tests matched)' : '');
+        document.title = (ok ? '\u2713 ' : '\u2717 ') + 'Sudoku Generator - tests';
+        showBenches(results.benches);
+        running = false;
+        $('run').disabled = false;
+      }
+
+      function showBenches(benches) {
+        if (benches.length === 0) return;
+        var table = $('bench-table');
+        table.textContent = '';
+        var head = make('tr');
+        ['benchmark', 'iterations', 'ms/op', 'ops/s'].forEach(function (h) { head.appendChild(make('th', '', h)); });
+        table.appendChild(head);
+        benches.forEach(function (b) {
+          var row = make('tr');
+          [b.name, String(b.iterations), b.msPerOp.toFixed(4), String(Math.round(b.opsPerSec))]
+            .forEach(function (cell) { row.appendChild(make('td', '', cell)); });
+          table.appendChild(row);
+        });
+        $('benches').hidden = false;
+      }
+
+      $('controls').addEventListener('submit', function (event) {
+        event.preventDefault();
+        runTests();
+      });
+      $('suite').addEventListener('change', runTests);
+
+      $('filter').value = params.get('filter') || '';
+      $('bail').checked = params.get('bail') === '1';
+
+      loadEverything().then(function (report) {
+        showLoadReport(report);
+        SG.test.suiteNames().forEach(function (name) {
+          var option = make('option', '', name);
+          option.value = name;
+          $('suite').appendChild(option);
+        });
+        $('suite').value = params.get('suite') || '';
+        $('run').disabled = false;
+        if (params.get('autorun') !== '0') return runTests();
+        $('summary').textContent = 'Loaded. Press Run.';
+        return undefined;
+      });
+    })();
+  </script>
+</body>
+</html>
