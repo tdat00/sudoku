@@ -1,0 +1,522 @@
+/*
+ * Steps panel and explanation card (task T-4.5). Colours only through the --sg-color-* tokens.
+ * Every state is told by a word and a shape as well as by colour: the status word, the icon of the status
+ * (circle / broken ring / check / cross / dashed circle), the left bar, the marker of the running code line.
+ * The container layout of the list (column, strip, stepper) lives in layout.css.
+ */
+
+/* ---- Summary: attempt and sample counters, last notice ---- */
+.steps-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sg-space-2);
+  margin-bottom: var(--sg-space-3);
+}
+
+.steps-summary__attempt {
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.steps-summary__note {
+  flex: 1 1 100%;
+  margin: 0;
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 1px solid var(--sg-color-border);
+  border-inline-start-width: 4px;
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface-2);
+  font-size: var(--sg-font-size-sm);
+  overflow-wrap: anywhere;
+}
+
+.steps-summary__note[data-kind="retry"],
+.steps-summary__note[data-kind="warning"] {
+  border-color: var(--sg-color-warning);
+  background: var(--sg-color-warning-bg);
+}
+
+.steps-summary__note[data-kind="done"] {
+  border-color: var(--sg-color-success);
+  background: var(--sg-color-success-bg);
+}
+
+.steps-summary__note[data-kind="error"] {
+  border-color: var(--sg-color-danger);
+  background: var(--sg-color-danger-bg);
+}
+
+/* ---- One step ---- */
+.step {
+  --step-accent: var(--sg-color-divider);
+  --step-indent: calc(var(--sg-space-3) + 1.5rem + var(--sg-space-2));
+  --step-toggle: 2rem;
+  min-width: 0;
+  border: 1px solid var(--sg-color-divider);
+  border-inline-start: 4px solid var(--step-accent);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface);
+  color: var(--sg-color-text);
+}
+
+.step[data-status="pending"] {
+  color: var(--sg-color-text-muted);
+}
+
+.step[data-status="running"] {
+  --step-accent: var(--sg-color-accent);
+  border-color: var(--sg-color-accent);
+  background: var(--sg-color-accent-soft);
+}
+
+.step[data-status="done"] {
+  --step-accent: var(--sg-color-success);
+}
+
+.step[data-status="error"] {
+  --step-accent: var(--sg-color-danger);
+  border-color: var(--sg-color-danger);
+  background: var(--sg-color-danger-bg);
+}
+
+.step[data-status="skipped"] {
+  --step-accent: var(--sg-color-text-muted);
+  border-style: dashed;
+  border-inline-start-style: solid;
+  color: var(--sg-color-text-muted);
+}
+
+.step.is-active {
+  border-color: var(--sg-color-accent);
+  box-shadow: 0 0 0 1px var(--sg-color-accent);
+}
+
+.step__row {
+  position: relative;
+}
+
+.step__main {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "num name icon"
+    ". meta meta";
+  align-items: center;
+  column-gap: var(--sg-space-2);
+  row-gap: 0.125rem;
+  min-width: 0;
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 0;
+  border-radius: var(--sg-radius-2);
+  background: transparent;
+  color: inherit;
+  text-align: start;
+}
+
+.step__main:enabled:hover {
+  background: var(--sg-color-hover);
+}
+
+.step__main:disabled {
+  color: var(--sg-color-text-muted);
+  cursor: default;
+}
+
+/* Inset: the list of the narrow layouts scrolls and would clip an outline drawn outside. */
+.step__main:focus-visible,
+.step__toggle:focus-visible {
+  outline-offset: calc(-1 * var(--sg-focus-width));
+}
+
+.step__num {
+  display: inline-flex;
+  grid-area: num;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.step__name {
+  grid-area: name;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.step__icon {
+  display: inline-flex;
+  grid-area: icon;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--sg-color-text-muted);
+}
+
+.step__ic {
+  display: none;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
+}
+
+.step[data-status="pending"] .step__ic--pending,
+.step[data-status="running"] .step__ic--running,
+.step[data-status="done"] .step__ic--done,
+.step[data-status="error"] .step__ic--error,
+.step[data-status="skipped"] .step__ic--skipped {
+  display: block;
+}
+
+.step[data-status="running"] .step__icon {
+  color: var(--sg-color-accent);
+}
+
+.step[data-status="running"] .step__ic--running {
+  animation: sg-spin 0.9s linear infinite;
+}
+
+.step[data-status="done"] .step__icon {
+  color: var(--sg-color-success);
+}
+
+.step[data-status="error"] .step__icon {
+  color: var(--sg-color-danger);
+}
+
+.step__meta {
+  display: flex;
+  grid-area: meta;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--sg-space-2);
+  margin-inline-end: calc(var(--step-toggle) + var(--sg-space-1));
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.step__status {
+  font-weight: 700;
+}
+
+.step[data-status="running"] .step__status {
+  color: var(--sg-color-accent);
+}
+
+.step[data-status="done"] .step__status {
+  color: var(--sg-color-success);
+}
+
+.step[data-status="error"] .step__status {
+  color: var(--sg-color-danger);
+}
+
+.step__time {
+  font-variant-numeric: tabular-nums;
+}
+
+.step__sample {
+  padding: 0 var(--sg-space-2);
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-pill);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The detail toggle sits in the lower right corner of the step, beside the status line. */
+.step__toggle {
+  position: absolute;
+  inset-block-end: var(--sg-space-1);
+  inset-inline-end: var(--sg-space-1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--step-toggle);
+  height: var(--step-toggle);
+  padding: 0;
+  border: 0;
+  border-radius: var(--sg-radius-2);
+  background: transparent;
+  color: var(--sg-color-text-muted);
+}
+
+.step__toggle:hover {
+  background: var(--sg-color-hover);
+  color: var(--sg-color-text);
+}
+
+.step__toggle:disabled {
+  background: transparent;
+  color: var(--sg-color-disabled-text);
+  cursor: default;
+}
+
+.step__chevron {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
+  transition: transform var(--sg-motion-fast) ease;
+}
+
+.step__toggle[aria-expanded="true"] .step__chevron {
+  transform: rotate(180deg);
+}
+
+@media (pointer: coarse) {
+  .step {
+    --step-toggle: var(--sg-control-height);
+  }
+
+  .step__main {
+    min-height: calc(var(--sg-control-height) + 1.75rem);
+  }
+}
+
+.step__live {
+  margin: 0;
+  padding: 0 var(--sg-space-3) var(--sg-space-2) var(--step-indent);
+  color: var(--sg-color-text);
+  font-size: var(--sg-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.step__detail {
+  padding: 0 var(--sg-space-3) var(--sg-space-3) var(--step-indent);
+  color: var(--sg-color-text);
+  font-size: var(--sg-font-size-sm);
+}
+
+.step__facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  margin: 0;
+}
+
+.step__fact-name {
+  color: var(--sg-color-text-muted);
+  font-weight: 650;
+}
+
+.step__fact-value {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.step__notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-1);
+  margin: 0;
+}
+
+.step__note {
+  padding-inline-start: var(--sg-space-2);
+  border-inline-start: 2px solid var(--sg-color-divider);
+}
+
+.step__empty {
+  margin: 0;
+  color: var(--sg-color-text-muted);
+}
+
+/* ---- Narrow screens: the collapsed stepper shows name, status and time only ---- */
+@media (max-width: 767.98px) {
+  #steps-root:not(.is-expanded) .step__toggle,
+  #steps-root:not(.is-expanded) .step__live,
+  #steps-root:not(.is-expanded) .step__detail {
+    display: none;
+  }
+
+  #steps-root:not(.is-expanded) .step__meta {
+    margin-inline-end: 0;
+  }
+}
+
+/* ---- Technique chart ---- */
+.steps-chart__title {
+  margin-bottom: var(--sg-space-2);
+}
+
+.steps-chart__svg {
+  width: 100%;
+  max-width: 21rem;
+  height: auto;
+  overflow: visible;
+}
+
+.steps-chart__track {
+  fill: var(--sg-color-track);
+}
+
+.steps-chart__bar {
+  fill: var(--sg-color-accent);
+}
+
+.steps-chart__label,
+.steps-chart__value {
+  fill: var(--sg-color-text);
+  font-family: var(--sg-font-family);
+  font-size: 13px;
+}
+
+.steps-chart__value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.steps-chart__empty {
+  margin: 0;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+/* ---- Explanation card ---- */
+.explain-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  min-width: 0;
+}
+
+.explain-card__empty {
+  margin: 0;
+  color: var(--sg-color-text-muted);
+}
+
+.explain-card__kicker {
+  margin: 0;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 650;
+}
+
+.explain-card__title {
+  margin: 0;
+  font-size: var(--sg-font-size-lg);
+}
+
+.explain-card__live {
+  margin: 0;
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 1px solid var(--sg-color-border);
+  border-inline-start: 4px solid var(--sg-color-accent);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.explain-card__live-label {
+  margin-inline-end: var(--sg-space-2);
+  color: var(--sg-color-accent);
+  font-weight: 700;
+}
+
+.explain-card__parts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  margin: 0;
+}
+
+.explain-card__label {
+  color: var(--sg-color-accent);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 700;
+}
+
+.explain-card__text {
+  margin: 0;
+}
+
+.explain-card__subtitle {
+  margin: 0 0 var(--sg-space-2);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 700;
+}
+
+/* The pseudocode: line numbers from a counter, indentation from --indent, the running line marked by a bar,
+   a bold face and an arrow in place of its number. */
+.explain-code {
+  margin: 0;
+  padding: var(--sg-space-2) 0;
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface);
+  counter-reset: sg-line;
+  font-family: var(--sg-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.explain-code__line {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  align-items: baseline;
+  padding: 0.125rem var(--sg-space-2) 0.125rem 0;
+  border-inline-start: 4px solid transparent;
+  counter-increment: sg-line;
+}
+
+.explain-code__line::before {
+  padding-inline-end: var(--sg-space-2);
+  color: var(--sg-color-text-muted);
+  content: counter(sg-line);
+  text-align: end;
+}
+
+.explain-code__text {
+  padding-inline-start: calc(var(--indent, 0) * 1.25em);
+  font: inherit;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.explain-code__line.is-active {
+  border-inline-start-color: var(--sg-color-accent);
+  background: var(--sg-color-accent-soft);
+  font-weight: 700;
+}
+
+.explain-code__line.is-active::before {
+  color: var(--sg-color-accent);
+  content: "\25B6";
+  font-size: 0.7em;
+}
+
+@media (forced-colors: active) {
+  .steps-chart__bar {
+    fill: currentColor;
+  }
+
+  .steps-chart__track {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+
+  .explain-code__line.is-active {
+    border-inline-start-color: currentColor;
+  }
+
+  .step.is-active {
+    border-width: 3px;
+  }
+}
