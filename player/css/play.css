@@ -1,0 +1,495 @@
+/*
+ * Play (js/ui/play.js): the status bar, the tools, the number pad, the hint card and the options in the side
+ * panel, and the overlay layer drawn into the board SVG. Only var(--...) tokens are used (css/tokens.css, css/tokens-board.css); a translucent tint is the
+ * token colour with fill-opacity (SVG) or opacity (a pseudo-element), so the three themes need no extra
+ * tokens and no colour function is written here.
+ *
+ * Board overlay (inside the board's <svg class="sgb">): one <g class="pl-cell"> per cell holding two rects
+ * (.pl-bg: selection, neighbours, same symbol, conflict, mistake; .pl-hint: hint region, cells and targets)
+ * and, when the cell has something to show, .pl-content (the value, or the candidate notes). The state of a
+ * cell is a class of its group: is-sel is-peer is-same is-conflict is-wrong is-hint-region is-hint-cell
+ * is-hint-target.
+ */
+
+/* ---- Panel ---- */
+.play {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+}
+
+.play__panel[hidden],
+.play__status[hidden] {
+  display: none;
+}
+
+.play__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  padding: var(--sg-space-3);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
+}
+
+.play__status {
+  display: flex;
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-2) var(--sg-space-3);
+}
+
+.play__time {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--sg-space-2);
+}
+
+.play__clock {
+  font-size: var(--sg-font-size-lg);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.play__progress {
+  margin-inline-start: auto;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.play__pause {
+  min-height: 2.75rem;
+}
+
+.play__pause[aria-pressed="true"] {
+  border-color: var(--sg-color-accent);
+  background: var(--sg-color-accent);
+  color: var(--sg-color-accent-text);
+}
+
+/* ---- Tools and number pad: touch targets of at least 44 px ---- */
+.play__tools {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--sg-space-2);
+}
+
+.play__tool,
+.play__key {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: var(--sg-space-1);
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface-2);
+  color: var(--sg-color-text);
+  font-weight: 600;
+  line-height: 1.15;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition:
+    background-color var(--sg-motion-fast) ease,
+    border-color var(--sg-motion-fast) ease,
+    color var(--sg-motion-fast) ease;
+}
+
+.play__tool {
+  font-size: 0.75rem;
+}
+
+.play__tool .icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.play__tool-label {
+  overflow-wrap: anywhere;
+}
+
+.play__tool:hover:not(:disabled),
+.play__key:hover:not(:disabled) {
+  background: var(--sg-color-hover);
+}
+
+.play__tool:active:not(:disabled),
+.play__key:active:not(:disabled) {
+  background: var(--sg-color-accent-soft);
+}
+
+.play__tool[aria-pressed="true"],
+.play__key[aria-pressed="true"] {
+  border-color: var(--sg-color-accent);
+  background: var(--sg-color-accent);
+  color: var(--sg-color-accent-text);
+}
+
+.play__tool:disabled,
+.play__key:disabled {
+  border-color: var(--sg-color-divider);
+  color: var(--sg-color-text-muted);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.play__pad {
+  display: grid;
+  grid-template-columns: repeat(var(--play-pad-cols, 9), minmax(0, 1fr));
+  gap: var(--sg-space-2);
+}
+
+.play__key {
+  font-size: 1.375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Notes mode: the pad is dashed, so the mode shows without relying on colour alone. */
+.play__pad.is-notes .play__key {
+  border-style: dashed;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.play__key .sgb-sw {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+@media (max-width: 599.98px) {
+  .play__pad {
+    grid-template-columns: repeat(var(--play-pad-cols-narrow, 5), minmax(0, 1fr));
+  }
+
+  .play__tools {
+    gap: var(--sg-space-1);
+  }
+}
+
+/* ---- Messages and hints ---- */
+.play__message {
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 1px solid var(--sg-color-border);
+  border-inline-start-width: 4px;
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface-2);
+  font-size: var(--sg-font-size-sm);
+}
+
+.play__message[data-kind="success"] {
+  border-color: var(--sg-color-success);
+  background: var(--sg-color-success-bg);
+}
+
+.play__message[data-kind="warning"] {
+  border-color: var(--sg-color-warning);
+  background: var(--sg-color-warning-bg);
+}
+
+.play__message[data-kind="danger"] {
+  border-color: var(--sg-color-danger);
+  background: var(--sg-color-danger-bg);
+}
+
+.play__hint {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  padding: var(--sg-space-3);
+  border: 1px solid var(--sg-board-technique);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface);
+}
+
+/* The tint of the hint card is a translucent layer of the technique colour behind the content. */
+.play__hint::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--sg-board-technique);
+  opacity: 0.09;
+  pointer-events: none;
+}
+
+.play__hint-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-2);
+}
+
+.play__hint-title {
+  margin: 0;
+  font-size: var(--sg-font-size-lg);
+}
+
+.play__hint-desc {
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.play__hint-line {
+  font-size: var(--sg-font-size-sm);
+}
+
+.play__hint-action {
+  font-weight: 700;
+}
+
+.play__hint-note {
+  color: var(--sg-color-warning);
+  font-size: var(--sg-font-size-sm);
+}
+
+.play__hint-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sg-space-2);
+}
+
+.play__hint-buttons .btn {
+  min-height: 2.75rem;
+}
+
+.play__symbols {
+  display: flex;
+  align-items: center;
+  gap: var(--sg-space-2);
+}
+
+.play__symbols[hidden] {
+  display: none;
+}
+
+.play__symbols select {
+  flex: 1 1 auto;
+  min-height: 2.75rem;
+}
+
+/* ---- Options ---- */
+.play__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+}
+
+.play__option select {
+  width: 100%;
+  min-height: 2.75rem;
+}
+
+.play__option-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sg-space-2);
+}
+
+.play__option-buttons .btn {
+  min-height: 2.75rem;
+}
+
+.play__keys {
+  margin: 0;
+}
+
+/* ---- Overlay layer inside the board SVG ---- */
+.sgb.play-on {
+  cursor: pointer;
+}
+
+.sgb .layer-play,
+.sgb .layer-play * {
+  pointer-events: none;
+}
+
+.sgb .layer-play .pl-bg,
+.sgb .layer-play .pl-hint {
+  fill: transparent;
+  fill-opacity: 1;
+  stroke: none;
+}
+
+.sgb .layer-play .is-peer .pl-bg {
+  fill: var(--sg-board-selected);
+  fill-opacity: 0.07;
+}
+
+.sgb .layer-play .is-same .pl-bg {
+  fill: var(--sg-board-selected);
+  fill-opacity: 0.2;
+}
+
+.sgb .layer-play .is-sel .pl-bg {
+  fill: var(--sg-board-selected-fill);
+  fill-opacity: 1;
+}
+
+.sgb .layer-play .is-conflict .pl-bg {
+  fill: var(--sg-color-danger);
+  fill-opacity: 0.22;
+  stroke: var(--sg-color-danger);
+  stroke-width: 2;
+  stroke-dasharray: 5 3;
+}
+
+.sgb .layer-play .is-wrong .pl-bg {
+  fill: var(--sg-color-danger);
+  fill-opacity: 0.34;
+  stroke: var(--sg-color-danger);
+  stroke-width: 2.5;
+  stroke-dasharray: none;
+}
+
+.sgb .layer-play .is-sel .pl-bg {
+  stroke: var(--sg-board-selected);
+  stroke-width: 3;
+  stroke-dasharray: none;
+}
+
+.sgb .layer-play .is-hint-region .pl-hint {
+  fill: var(--sg-board-technique);
+  fill-opacity: 0.09;
+}
+
+.sgb .layer-play .is-hint-cell .pl-hint {
+  fill: var(--sg-board-technique-fill);
+  fill-opacity: 1;
+  stroke: var(--sg-board-technique);
+  stroke-width: 2;
+}
+
+.sgb .layer-play .is-hint-target .pl-hint {
+  fill: var(--sg-board-technique);
+  fill-opacity: 0.32;
+  stroke: var(--sg-board-technique);
+  stroke-width: 3.5;
+}
+
+.sgb .layer-play .pl-val {
+  fill: var(--sg-board-ink-placed);
+  font-family: var(--sg-font-family);
+  font-weight: var(--sg-board-weight-placed);
+  text-anchor: middle;
+}
+
+.sgb .layer-play .pl-val--l2 { font-size: 0.78em; }
+.sgb .layer-play .pl-val--l3 { font-size: 0.6em; }
+
+.sgb .layer-play .is-conflict .pl-val,
+.sgb .layer-play .is-wrong .pl-val {
+  fill: var(--sg-color-danger);
+  font-weight: 700;
+}
+
+.sgb .layer-play .is-conflict .sym--placed,
+.sgb .layer-play .is-wrong .sym--placed {
+  fill: var(--sg-color-danger);
+}
+
+.sgb .layer-play .pl-note {
+  fill: var(--sg-board-ink-coord);
+  font-family: var(--sg-font-family);
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.sgb .layer-play .pl-note-sym {
+  fill: var(--sg-board-ink-coord);
+}
+
+.sgb .layer-play .pl-note.is-elim {
+  fill: var(--sg-color-danger);
+  text-decoration: line-through;
+}
+
+.sgb .layer-play .pl-note-fill {
+  stroke: var(--sg-board-sym-edge);
+  stroke-width: 0.6;
+}
+
+.sgb .layer-play .pl-note-fill.is-elim {
+  stroke: var(--sg-color-danger);
+  stroke-width: 1.4;
+}
+
+.sgb .layer-play.is-paused .pl-content {
+  visibility: hidden;
+}
+
+/* ---- Motion and print ---- */
+@media (prefers-reduced-motion: reduce) {
+  .play__tool,
+  .play__key {
+    transition: none;
+  }
+}
+
+:root[data-motion="off"] .play__tool,
+:root[data-motion="off"] .play__key {
+  transition: none;
+}
+
+/* ---- Forced colours: system colours for the states the tints would lose ---- */
+@media (forced-colors: active) {
+  .play__tool,
+  .play__key,
+  .play__message,
+  .play__hint {
+    border-color: ButtonText;
+  }
+
+  .play__tool[aria-pressed="true"],
+  .play__key[aria-pressed="true"],
+  .play__pause[aria-pressed="true"] {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+
+  .play__tool:disabled,
+  .play__key:disabled {
+    border-color: GrayText;
+    color: GrayText;
+    opacity: 1;
+  }
+
+  .sgb .layer-play .is-sel .pl-bg {
+    fill: Highlight;
+    fill-opacity: 0.35;
+    stroke: Highlight;
+  }
+
+  .sgb .layer-play .is-conflict .pl-bg,
+  .sgb .layer-play .is-wrong .pl-bg {
+    stroke: LinkText;
+  }
+
+  .sgb .layer-play .is-hint-cell .pl-hint,
+  .sgb .layer-play .is-hint-target .pl-hint {
+    stroke: Mark;
+  }
+
+  .sgb .layer-play .pl-val,
+  .sgb .layer-play .pl-note {
+    fill: CanvasText;
+  }
+}

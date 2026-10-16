@@ -58,6 +58,8 @@ const SOURCE_FILES = [
   'js/ui/symbols.js',
   'js/ui/board-view.js',
   'js/ui/a11y.js',
+  'js/ui/progress.js',
+  'js/ui/play.js',
 ];
 
 const fs = require('fs');

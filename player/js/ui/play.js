@@ -1,0 +1,2725 @@
+/**
+ * Play (design.md section 6): the user solves the opened puzzle on the board, with notes, undo / redo,
+ * error checking, hints that name the technique they use, a timer and completion detection. The entries live
+ * in the module's own overlay layer of the board SVG (`<g class="layer-play">`), so the board view only
+ * ever draws the clues.
+ *
+ * Two layers, so everything can be tested in Node:
+ *  - `SG.play.createGame(model, givens, solution, options)`  the PURE game engine: entries, notes, exact
+ *    undo / redo, rule conflicts, wrong entries, hints, a timer on an injected clock, completion detection
+ *    and a serialisable state. No DOM, no timers.
+ *  - `SG.play.init(app)`  the DOM layer, started by app.js at start-up: the status bar (`#play-status`), the
+ *    tools, number pad, symbol selector, hint card and options (`#play-root`), the overlay layer, keyboard
+ *    and pointer input. `attach(puzzle)` puts a puzzle in play, `detach()` takes it out again.
+ *
+ * ---------------------------------------------------------------------------------------------------------
+ * PUBLIC API (`SG.play`)
+ * ---------------------------------------------------------------------------------------------------------
+ *   createGame(model, givens, solution, options?)  -> Game (below). `options`: `now()` clock in ms,
+ *                      `autoNotes` (default true: a placed value leaves the notes of its peers).
+ *   restoreGame(model, givens, solution, data, options?) -> Game from `game.serialize()` (throws TypeError
+ *                      for data that does not belong to this puzzle).
+ *   describeHint(model, hint, opts?) -> translated texts of a hint (technique name + description, region,
+ *                      cells, action, explanation); `localizeArgs`, `groupEliminations`, `valueText`.
+ *   noteLayout(digits) -> { cols, rows } of the note mini grid; padLayout(digits, maxCols) -> { cols, rows }.
+ *   cellAtPoint(geo, x, y) -> cell index under a board point, -1 for none; moveSelection(geo, cell, dRow,
+ *                      dCol) -> next cell in a direction (jumps over holes), same cell at the edge.
+ *   createKeyReader(labels) -> reads typed characters into values (also two-character symbols such as 10-12).
+ *   typedLabels(model, mode) -> the text of each value as the board draws it.
+ *   init(app) / attach(puzzle, {state?, symbolMode?, focus?}) / detach() / isActive() / getGame() /
+ *   getSymbolMode() / setSymbolMode(mode) / select(cell) / destroy()  the DOM layer. `puzzle` is what
+ *                      `SG.importer` returns (`model`, `givens`, `solution`); `state` a `game.serialize()`.
+ *                      The app emits `play:game` ({ game, puzzle }) when a game is attached and
+ *                      `play:change` (the event of the game, or { type: 'symbols' }) on every change.
+ *   CHECK_MODES, SAVE_VERSION, HINT_LEVELS.
+ *
+ * Game (`createGame`):
+ *   values        getValue(i) userValue(i) isGiven(i) getNotes(i) snapshot()
+ *   editing       setValue(cell, v, {amend}) clearValue(cell) erase(cell) toggleNote(cell, v) fillNotes()
+ *                 undo() redo() canUndo() canRedo() reset()
+ *   checking      conflicts() wrongCells() check() progress() isSolved() status()
+ *                 'idle' | 'playing' | 'solved' | 'gaveUp'
+ *   hints         hint() nextHintStep() applyHint() clearHint() currentHint() revealCell(cell?)
+ *                 revealSolution()
+ *   timer         pauseTimer(by) resumeTimer(by) elapsedMs() timerState()
+ *   other         subscribe(fn) -> off, setOptions({autoNotes}), getOptions(), serialize(), counters()
+ * Every change calls the subscribers with `{ type, cells, values, solved }`; `type` is one of 'set', 'erase',
+ * 'note', 'fillNotes', 'undo', 'redo', 'hint', 'reveal', 'revealAll', 'reset', 'check', 'timer', 'solved'.
+ *
+ * Hints. The next logical step is the first step of `SG.logicalSolver.solve` on the grid of givens plus the
+ * user's CORRECT entries (wrong entries are ignored and counted in `hint.ignored`). Every step is checked
+ * against the solution before it is shown, so a hint never suggests a wrong value; when the solver is stuck
+ * the hint says so (`ok: false, reason: 'stuck'`). The steps of one solve form a plan: the user walks it with
+ * `hint()` (level 1 technique and region, 2 the cells, 3 the placement or elimination),
+ * `nextHintStep()` and `applyHint()`. An applied elimination is remembered, so the next plan skips it.
+ */
+(function (root) {
+  'use strict';
+
+  const SG = root.SG = root.SG || {};
+
+  // Keep the first instance on repeated loads: a running game must survive.
+  if (SG.play && typeof SG.play.createGame === 'function') return;
+
+  const SAVE_VERSION = 1;
+  const MAX_HISTORY = 2000;
+  const HINT_BUDGET_MS = 4000;
+  const HINT_LEVELS = 3;
+  const KEY_TIMEOUT_MS = 1200;
+  const CHECK_MODES = Object.freeze(['off', 'conflicts', 'live']);
+
+  // ---------------------------------------------------------------------------------------------
+  // Pure helpers
+  // ---------------------------------------------------------------------------------------------
+
+  function fail(message) {
+    return new TypeError('SG.play: ' + message);
+  }
+
+  function tr(key, args) {
+    return SG.i18n && typeof SG.i18n.t === 'function' ? SG.i18n.t(key, args) : key;
+  }
+
+  function hasText(key) {
+    return !!(SG.i18n && typeof SG.i18n.has === 'function' && SG.i18n.has(key));
+  }
+
+  function bitOf(value) {
+    return 1 << (value - 1);
+  }
+
+  function popcount(mask) {
+    let m = mask;
+    let count = 0;
+    while (m !== 0) {
+      m &= m - 1;
+      count++;
+    }
+    return count;
+  }
+
+  function defaultNow() {
+    return typeof performance !== 'undefined' && typeof performance.now === 'function'
+      ? performance.now() : Date.now();
+  }
+
+  /**
+   * The mini grid of the candidate notes of a cell: 3x3 for 9 digits, 2x3 for 6, 2x2 for 4, 3x4 for 12 and
+   * 4x4 for 16 (columns by rows: 3 columns x 2 rows for 6, 4 columns x 3 rows for 12).
+   * @param {number} digits
+   * @returns {{cols: number, rows: number}}
+   */
+  function noteLayout(digits) {
+    const d = Math.max(1, digits | 0);
+    const cols = Math.ceil(Math.sqrt(d));
+    return { cols: cols, rows: Math.ceil(d / cols) };
+  }
+
+  /**
+   * Rows and columns of the number pad: at most `maxCols` buttons in a row, rows of about equal length.
+   * @param {number} digits
+   * @param {number} maxCols
+   * @returns {{cols: number, rows: number}}
+   */
+  function padLayout(digits, maxCols) {
+    const d = Math.max(1, digits | 0);
+    const rows = Math.ceil(d / Math.max(1, maxCols | 0));
+    return { cols: Math.ceil(d / rows), rows: rows };
+  }
+
+  /**
+   * The cell under a point of the board, in board (viewBox) units.
+   * @param {Object} geo  `SG.boardView.geometry(model)`.
+   * @param {number} x
+   * @param {number} y
+   * @returns {number} Cell index, -1 outside the cells and on holes of the canvas.
+   */
+  function cellAtPoint(geo, x, y) {
+    const col = Math.floor((x - geo.originX) / geo.cell);
+    const row = Math.floor((y - geo.originY) / geo.cell);
+    if (!(row >= 0 && row < geo.rows && col >= 0 && col < geo.cols)) return -1;
+    return geo.at[row * geo.cols + col];
+  }
+
+  /**
+   * The next cell in a direction. Holes of a multi-grid canvas are jumped over; at the edge the selection
+   * stays where it is.
+   * @param {Object} geo
+   * @param {number} cell
+   * @param {number} dRow  -1, 0 or 1.
+   * @param {number} dCol  -1, 0 or 1.
+   * @returns {number}
+   */
+  function moveSelection(geo, cell, dRow, dCol) {
+    if (!(cell >= 0)) return cell;
+    let row = geo.cellRow[cell] + dRow;
+    let col = geo.cellCol[cell] + dCol;
+    while (row >= 0 && row < geo.rows && col >= 0 && col < geo.cols) {
+      const found = geo.at[row * geo.cols + col];
+      if (found >= 0) return found;
+      row += dRow;
+      col += dCol;
+    }
+    return cell;
+  }
+
+  /**
+   * The text of every value as the board draws it in a symbol mode ('5', 'C', 'A' of a letter set, the
+   * letter of a Wordoku). Colour and shape modes have no text: they fall back to the label of the model.
+   * @param {PuzzleModel} model
+   * @param {string} [mode='digits']
+   * @returns {string[]} Entry v - 1 is the text of value v.
+   */
+  function typedLabels(model, mode) {
+    const out = [];
+    const labels = model.symbols && model.symbols.labels;
+    for (let v = 1; v <= model.digits; v++) {
+      let text = null;
+      if (SG.symbols && typeof SG.symbols.glyph === 'function') {
+        const g = SG.symbols.glyph(mode || 'digits', v, model, { label: false });
+        if (g && typeof g.text === 'string' && g.text !== '') text = g.text;
+      }
+      if (text === null) {
+        const labelled = labels && labels[v - 1] !== undefined && model.symbols.mode !== 'word';
+        if (labelled) text = String(labels[v - 1]);
+        else text = v <= 9 ? String(v) : String.fromCharCode(55 + v);
+      }
+      out.push(text);
+    }
+    return out;
+  }
+
+  /**
+   * What a hint or a message calls a value: the text of the symbol, or the translated name of a colour or
+   * a shape (where the board draws no text).
+   * @param {PuzzleModel} model
+   * @param {number} value
+   * @param {string} [mode='digits']
+   * @returns {string}
+   */
+  function valueText(model, value, mode) {
+    if (SG.symbols && typeof SG.symbols.glyph === 'function') {
+      const g = SG.symbols.glyph(mode || 'digits', value, model, {});
+      if (g && typeof g.text === 'string' && g.text !== '') return g.text;
+      if (g && typeof g.label === 'string' && g.label !== '') return g.label;
+    }
+    return typedLabels(model, mode)[value - 1] || String(value);
+  }
+
+  /**
+   * Reads typed characters into values. Symbols of one character give their value at once; a set with
+   * two-character symbols (mega12 numbers 1-12) gives the shorter value first (`pending: true`) and the
+   * longer one when the next character arrives within the timeout (`continued: true`: it replaces the
+   * pending one). Digits 1-9 stand for the first nine values when no symbol starts with them (typing 5 in
+   * a letter or word set).
+   * @param {string[]} labels  The symbol of each value (`typedLabels`).
+   * @param {{timeoutMs?: number}} [options]
+   * @returns {{feed: function(string, number): ?{value: ?number, pending: boolean, continued: boolean},
+   *            reset: function(): void, labels: string[]}}
+   */
+  function createKeyReader(labels, options) {
+    const timeout = options && options.timeoutMs > 0 ? options.timeoutMs : KEY_TIMEOUT_MS;
+    const exact = new Map();
+    const names = [];
+    labels.forEach(function (label, index) {
+      const key = String(label).toLowerCase();
+      if (!exact.has(key)) {
+        exact.set(key, index + 1);
+        names.push(key);
+      }
+    });
+    for (let v = 1; v <= Math.min(9, labels.length); v++) {
+      const key = String(v);
+      if (!names.some(function (name) { return name.indexOf(key) === 0; })) {
+        exact.set(key, v);
+        names.push(key);
+      }
+    }
+    let buffer = '';
+    let stamp = 0;
+
+    function known(prefix) {
+      return names.some(function (name) { return name.indexOf(prefix) === 0; });
+    }
+
+    function longer(prefix) {
+      return names.some(function (name) {
+        return name.length > prefix.length && name.indexOf(prefix) === 0;
+      });
+    }
+
+    return {
+      labels: labels.slice(),
+      reset: function reset() {
+        buffer = '';
+      },
+      feed: function feed(char, now) {
+        const c = String(char).toLowerCase();
+        if (c.length === 0) return null;
+        if (buffer !== '' && !(now - stamp <= timeout)) buffer = '';
+        let continued = buffer !== '';
+        let candidate = buffer + c;
+        if (!known(candidate)) {
+          continued = false;
+          candidate = c;
+          if (!known(candidate)) {
+            buffer = '';
+            return null;
+          }
+        }
+        stamp = now;
+        const value = exact.has(candidate) ? exact.get(candidate) : null;
+        if (value !== null && !longer(candidate)) {
+          buffer = '';
+          return { value: value, pending: false, continued: continued };
+        }
+        buffer = candidate;
+        return { value: value, pending: true, continued: continued };
+      }
+    };
+  }
+
+  /**
+   * Groups eliminations by digit.
+   * @param {Array<[number, number]>} eliminations  `[cell, value]` pairs.
+   * @returns {Array<{value: number, cells: number[]}>} Ascending by value; cells ascending.
+   */
+  function groupEliminations(eliminations) {
+    const byValue = new Map();
+    (eliminations || []).forEach(function (pair) {
+      if (!byValue.has(pair[1])) byValue.set(pair[1], []);
+      byValue.get(pair[1]).push(pair[0]);
+    });
+    return Array.from(byValue.keys()).sort(function (a, b) { return a - b; }).map(function (value) {
+      return { value: value, cells: byValue.get(value).sort(function (a, b) { return a - b; }) };
+    });
+  }
+
+  const DIGIT_ARGS = ['digit', 'digitX', 'digitY'];
+  const DIGIT_LIST_ARGS = ['digits', 'forced', 'partDigits'];
+
+  /**
+   * The arguments of a step text with every digit written the way the board draws it (a hexadecimal 0 is
+   * value 1, a Wordoku value is a letter) and every chain cell as a label.
+   * @param {PuzzleModel} model
+   * @param {Object} args  `step.i18nArgs`.
+   * @param {string} [mode]  Symbol mode of the board.
+   * @returns {Object} A copy.
+   */
+  function localizeArgs(model, args, mode) {
+    const out = Object.assign({}, args || {});
+    DIGIT_ARGS.forEach(function (key) {
+      if (typeof out[key] === 'number') out[key] = valueText(model, out[key], mode);
+    });
+    DIGIT_LIST_ARGS.forEach(function (key) {
+      if (Array.isArray(out[key])) {
+        out[key] = out[key].map(function (v) {
+          return typeof v === 'number' ? valueText(model, v, mode) : v;
+        });
+      }
+    });
+    if (Array.isArray(out.chains)) {
+      out.chains = out.chains.map(function (chain) {
+        return chain.map(function (lit) {
+          return [SG.model.cellLabel(model, lit[0]), valueText(model, lit[1], mode), lit[2]];
+        });
+      });
+    }
+    return out;
+  }
+
+  function cellLabels(model, cells) {
+    return cells.map(function (c) { return SG.model.cellLabel(model, c); });
+  }
+
+  /**
+   * The translated texts of a hint.
+   * @param {PuzzleModel} model
+   * @param {Object} hint  What `game.hint()` returned.
+   * @param {{mode?: string}} [opts]  `mode` is the symbol mode of the board.
+   * @returns {Object} `{ ok: false, reason, text }` for a hint without a step; else `title` (technique name),
+   *          `description`, `region`, `cells`, `action`, `explanation`, `ignored` (a text, '' for none).
+   */
+  function describeHint(model, hint, opts) {
+    const mode = opts && opts.mode ? opts.mode : 'digits';
+    if (!hint || hint.ok !== true) {
+      const reason = hint && hint.reason ? hint.reason : 'unavailable';
+      return { ok: false, reason: reason, text: tr('play.hint.' + reason) };
+    }
+    let region = tr('play.hint.noRegion');
+    if (hint.region !== null && hint.region.kind === 'cage') {
+      region = tr('play.hint.region.cage', { sum: hint.region.sum });
+    } else if (hint.region !== null) {
+      region = tr('play.hint.region', { kind: tr('unitKind.' + hint.region.kind), label: hint.region.label });
+    }
+    const symbols = function (v) { return valueText(model, v, mode); };
+    let action;
+    if (hint.placements.length > 0) {
+      action = hint.placements.map(function (p) {
+        return tr('play.hint.place', { cell: SG.model.cellLabel(model, p[0]), symbol: symbols(p[1]) });
+      }).join(' ');
+    } else {
+      action = groupEliminations(hint.eliminations).map(function (g) {
+        return tr('play.hint.eliminate',
+          { symbol: symbols(g.value), cells: cellLabels(model, g.cells).join(', ') });
+      }).join(' ');
+    }
+    return {
+      ok: true,
+      title: tr(hint.nameKey),
+      description: hasText(hint.descKey) ? tr(hint.descKey) : '',
+      region: region,
+      cells: tr('play.hint.cells', { cells: cellLabels(model, hint.cells).join(', ') }),
+      action: action,
+      explanation: tr(hint.stepKey, localizeArgs(model, hint.stepArgs, mode)),
+      ignored: hint.ignored > 0 ? tr('play.hint.ignored', { count: hint.ignored }) : ''
+    };
+  }
+
+  // ---------------------------------------------------------------------------------------------
+  // Game engine (pure)
+  // ---------------------------------------------------------------------------------------------
+
+  /**
+   * Creates a game.
+   * @param {PuzzleModel} model
+   * @param {ArrayLike<number>} givens    One entry per cell, 0 = empty (the clues of the puzzle).
+   * @param {ArrayLike<number>} solution  The full solution.
+   * @param {{now?: function(): number, autoNotes?: boolean, state?: Object}} [options]
+   * @returns {Object} The game, see the file header.
+   */
+  function createGame(model, givens, solution, options) {
+    if (!model || !(model.cellCount > 0)) throw fail('a puzzle model is required');
+    const n = model.cellCount;
+    const D = model.digits;
+    if (!givens || givens.length !== n) throw fail('givens must have one entry per cell (' + n + ')');
+    if (!solution || solution.length !== n) throw fail('solution must have one entry per cell (' + n + ')');
+    const opts = options || {};
+    const given = Int32Array.from(givens);
+    const sol = Int32Array.from(solution);
+    const values = new Int32Array(n);
+    const notes = new Int32Array(n);
+    const settings = { autoNotes: opts.autoNotes !== false };
+    const counts = { hints: 0, reveals: 0, checks: 0 };
+    const clock = typeof opts.now === 'function' ? opts.now : defaultNow;
+    const tm = { started: false, elapsed: 0, since: null, pausedBy: null };
+    const listeners = [];
+    const hs = { key: null, plan: [], status: 'none', cursor: 0, level: 0, ignored: 0, current: null,
+      known: new Set() };
+    let undoStack = [];
+    let redoStack = [];
+    let solved = false;
+
+    // ---- small readers ----------------------------------------------------------------------------
+
+    function validCell(cell) {
+      return Number.isInteger(cell) && cell >= 0 && cell < n;
+    }
+
+    function cellValue(cell) {
+      return given[cell] || values[cell];
+    }
+
+    function userGrid() {
+      const grid = new Int32Array(n);
+      for (let i = 0; i < n; i++) grid[i] = given[i] || (values[i] === sol[i] ? values[i] : 0);
+      return grid;
+    }
+
+    function fullGrid() {
+      const grid = new Int32Array(n);
+      for (let i = 0; i < n; i++) grid[i] = cellValue(i);
+      return grid;
+    }
+
+    function candidateMask(grid, cell) {
+      let mask = SG.bits ? SG.bits.full(D) : (1 << D) - 1;
+      const peers = model.peers[cell];
+      for (let k = 0; k < peers.length; k++) {
+        const v = grid[peers[k]];
+        if (v > 0) mask &= ~bitOf(v);
+      }
+      return mask;
+    }
+
+    // ---- events ----------------------------------------------------------------------------------
+
+    function emit(info) {
+      listeners.slice().forEach(function (fn) {
+        try {
+          fn(info);
+        } catch (err) {
+          if (typeof console !== 'undefined' && typeof console.error === 'function') console.error(err);
+        }
+      });
+    }
+
+    // ---- timer -----------------------------------------------------------------------------------
+
+    function stopTimer() {
+      if (tm.since !== null) {
+        tm.elapsed += clock() - tm.since;
+        tm.since = null;
+      }
+      tm.pausedBy = null;
+    }
+
+    function touchTimer() {
+      if (solved) return;
+      if (!tm.started) {
+        tm.started = true;
+        tm.since = clock();
+      } else if (tm.since === null && tm.pausedBy === null) {
+        tm.since = clock();
+      }
+    }
+
+    function elapsedMs() {
+      return tm.elapsed + (tm.since !== null ? Math.max(0, clock() - tm.since) : 0);
+    }
+
+    // ---- solved / status -------------------------------------------------------------------------
+
+    function hasGaveUp() {
+      return undoStack.some(function (entry) { return entry.gaveUp === true; });
+    }
+
+    function computeSolved() {
+      let equal = true;
+      for (let i = 0; i < n; i++) {
+        const v = cellValue(i);
+        if (v === 0) return false;
+        if (v !== sol[i]) equal = false;
+      }
+      return equal || (!!SG.model && SG.model.isSolution(model, fullGrid()));
+    }
+
+    function status() {
+      if (solved) return hasGaveUp() ? 'gaveUp' : 'solved';
+      return tm.started ? 'playing' : 'idle';
+    }
+
+    // ---- history ---------------------------------------------------------------------------------
+
+    function recordCell(rec, cell, v, mask) {
+      if (values[cell] === v && notes[cell] === mask) return;
+      rec.push([cell, values[cell], v, notes[cell], mask]);
+      values[cell] = v;
+      notes[cell] = mask;
+    }
+
+    /** Puts a value into a cell: its notes go, and (with `autoNotes`) the digit leaves its peers' notes. */
+    function placeInto(rec, cell, v) {
+      recordCell(rec, cell, v, 0);
+      if (!settings.autoNotes) return;
+      const bit = bitOf(v);
+      const peers = model.peers[cell];
+      for (let k = 0; k < peers.length; k++) {
+        const p = peers[k];
+        const open = values[p] === 0 && given[p] === 0;
+        if (open && (notes[p] & bit) !== 0) recordCell(rec, p, 0, notes[p] & ~bit);
+      }
+    }
+
+    function revert(entry) {
+      const touched = [];
+      for (let k = entry.changes.length - 1; k >= 0; k--) {
+        const c = entry.changes[k];
+        values[c[0]] = c[1];
+        notes[c[0]] = c[3];
+        touched.push(c[0]);
+      }
+      return touched;
+    }
+
+    function replay(entry) {
+      const touched = [];
+      for (let k = 0; k < entry.changes.length; k++) {
+        const c = entry.changes[k];
+        values[c[0]] = c[2];
+        notes[c[0]] = c[4];
+        touched.push(c[0]);
+      }
+      return touched;
+    }
+
+    function touchedCells(rec) {
+      const seen = new Set();
+      rec.forEach(function (c) { seen.add(c[0]); });
+      return Array.from(seen).sort(function (a, b) { return a - b; });
+    }
+
+    function valuesChanged(rec) {
+      return rec.some(function (c) { return c[1] !== c[2]; });
+    }
+
+    /** Announces a change: the hint of the old grid goes, the solved state is re-evaluated. */
+    function settle(type, cells, changedValues) {
+      if (changedValues) hs.current = null;
+      const was = solved;
+      solved = computeSolved();
+      if (solved && !was) stopTimer();
+      else if (!solved) touchTimer();
+      emit({ type: type, cells: cells, values: changedValues, solved: solved });
+      if (solved && !was) emit({ type: 'solved', cells: [], values: false, solved: true });
+    }
+
+    function commit(type, rec, extra) {
+      if (rec.length === 0) return false;
+      const entry = { kind: type, changes: rec };
+      if (extra && extra.gaveUp === true) entry.gaveUp = true;
+      undoStack.push(entry);
+      if (undoStack.length > MAX_HISTORY) undoStack.shift();
+      redoStack = [];
+      settle(type, touchedCells(rec), valuesChanged(rec));
+      return true;
+    }
+
+    // ---- editing ---------------------------------------------------------------------------------
+
+    function setValue(cell, v, o) {
+      if (!validCell(cell) || !(Number.isInteger(v) && v >= 1 && v <= D)) return false;
+      if (given[cell] > 0 || values[cell] === v) return false;
+      let amended = null;
+      if (o && o.amend === true && redoStack.length === 0 && undoStack.length > 0) {
+        const top = undoStack[undoStack.length - 1];
+        if (top.kind === 'set' && top.changes[0][0] === cell) {
+          amended = top;
+          undoStack.pop();
+          revert(top);
+        }
+      }
+      const rec = [];
+      placeInto(rec, cell, v);
+      if (rec.length === 0) {
+        if (amended !== null) settle('undo', touchedCells(amended.changes), true);
+        return amended !== null;
+      }
+      return commit('set', rec);
+    }
+
+    function clearValue(cell) {
+      if (!validCell(cell) || given[cell] > 0 || values[cell] === 0) return false;
+      const rec = [];
+      recordCell(rec, cell, 0, notes[cell]);
+      return commit('erase', rec);
+    }
+
+    function erase(cell) {
+      if (!validCell(cell) || given[cell] > 0) return false;
+      if (values[cell] > 0) return clearValue(cell);
+      if (notes[cell] === 0) return false;
+      const rec = [];
+      recordCell(rec, cell, 0, 0);
+      return commit('erase', rec);
+    }
+
+    function toggleNote(cell, v) {
+      if (!validCell(cell) || !(Number.isInteger(v) && v >= 1 && v <= D)) return false;
+      if (given[cell] > 0 || values[cell] > 0) return false;
+      const rec = [];
+      recordCell(rec, cell, 0, notes[cell] ^ bitOf(v));
+      return commit('note', rec);
+    }
+
+    function fillNotes() {
+      const grid = fullGrid();
+      const rec = [];
+      for (let i = 0; i < n; i++) {
+        if (given[i] === 0 && values[i] === 0) recordCell(rec, i, 0, candidateMask(grid, i));
+      }
+      return commit('fillNotes', rec);
+    }
+
+    function undo() {
+      if (undoStack.length === 0) return false;
+      const entry = undoStack.pop();
+      revert(entry);
+      redoStack.push(entry);
+      settle('undo', touchedCells(entry.changes), valuesChanged(entry.changes));
+      return true;
+    }
+
+    function redo() {
+      if (redoStack.length === 0) return false;
+      const entry = redoStack.pop();
+      replay(entry);
+      undoStack.push(entry);
+      settle('redo', touchedCells(entry.changes), valuesChanged(entry.changes));
+      return true;
+    }
+
+    function reset() {
+      const cells = [];
+      for (let i = 0; i < n; i++) if (values[i] !== 0 || notes[i] !== 0) cells.push(i);
+      values.fill(0);
+      notes.fill(0);
+      undoStack = [];
+      redoStack = [];
+      counts.hints = 0;
+      counts.reveals = 0;
+      counts.checks = 0;
+      tm.started = false;
+      tm.elapsed = 0;
+      tm.since = null;
+      tm.pausedBy = null;
+      hs.key = null;
+      hs.plan = [];
+      hs.current = null;
+      hs.known.clear();
+      solved = false;
+      emit({ type: 'reset', cells: cells, values: true, solved: false });
+    }
+
+    // ---- checking --------------------------------------------------------------------------------
+
+    /** The sums a cage can still reach with `open` more cells: [min, max], or null when it cannot be done. */
+    function cageRange(cage, used, open) {
+      if (open === 0) return [0, 0];
+      if (!cage.distinct) return [open, open * D];
+      const free = [];
+      for (let v = 1; v <= D; v++) if ((used & bitOf(v)) === 0) free.push(v);
+      if (free.length < open) return null;
+      let min = 0;
+      let max = 0;
+      for (let k = 0; k < open; k++) {
+        min += free[k];
+        max += free[free.length - 1 - k];
+      }
+      return [min, max];
+    }
+
+    /**
+     * The rule conflicts among the visible values (clues and entries): the same digit twice in a unit, a
+     * cage that repeats a digit or can no longer reach its sum, a sign that is not satisfied.
+     * @returns {{cells: number[], units: number[], cages: number[], signs: number[]}}
+     */
+    function conflicts() {
+      const flag = new Uint8Array(n);
+      const badUnits = [];
+      const badCages = [];
+      const badSigns = [];
+      const first = new Int32Array(D + 1);
+      let u;
+      let i;
+      for (u = 0; u < model.units.length; u++) {
+        const cells = model.units[u];
+        let dup = false;
+        first.fill(-1);
+        for (i = 0; i < cells.length; i++) {
+          const c = cells[i];
+          const v = cellValue(c);
+          if (v <= 0) continue;
+          if (first[v] === -1) {
+            first[v] = c;
+          } else {
+            flag[c] = 1;
+            flag[first[v]] = 1;
+            dup = true;
+          }
+        }
+        if (dup) badUnits.push(u);
+      }
+      for (let k = 0; k < model.cages.length; k++) {
+        const cage = model.cages[k];
+        let sum = 0;
+        let used = 0;
+        let filled = 0;
+        let bad = false;
+        for (i = 0; i < cage.cells.length; i++) {
+          const v = cellValue(cage.cells[i]);
+          if (v <= 0) continue;
+          sum += v;
+          filled++;
+          if (cage.distinct) {
+            if ((used & bitOf(v)) !== 0) bad = true;
+            used |= bitOf(v);
+          }
+        }
+        if (!bad && filled > 0) {
+          const range = cageRange(cage, used, cage.cells.length - filled);
+          bad = range === null || sum + range[0] > cage.sum || sum + range[1] < cage.sum;
+        }
+        if (bad) {
+          badCages.push(k);
+          for (i = 0; i < cage.cells.length; i++) if (cellValue(cage.cells[i]) > 0) flag[cage.cells[i]] |= 2;
+        }
+      }
+      for (let q = 0; q < model.inequalities.length; q++) {
+        const a = model.inequalities[q].a;
+        const b = model.inequalities[q].b;
+        const va = cellValue(a);
+        const vb = cellValue(b);
+        let bad = false;
+        if (va > 0 && vb > 0) bad = !(va < vb);
+        else if (va === D) bad = true;
+        else if (vb === 1) bad = true;
+        if (bad) {
+          badSigns.push(q);
+          if (va > 0) flag[a] |= 4;
+          if (vb > 0) flag[b] |= 4;
+        }
+      }
+      const cells = [];
+      for (i = 0; i < n; i++) if (flag[i] !== 0) cells.push(i);
+      return { cells: cells, units: badUnits, cages: badCages, signs: badSigns };
+    }
+
+    /** Entries that differ from the solution. */
+    function wrongCells() {
+      const out = [];
+      for (let i = 0; i < n; i++) if (values[i] > 0 && values[i] !== sol[i]) out.push(i);
+      return out;
+    }
+
+    function progress() {
+      let givenCount = 0;
+      let filled = 0;
+      let correct = 0;
+      for (let i = 0; i < n; i++) {
+        if (given[i] > 0) {
+          givenCount++;
+        } else if (values[i] > 0) {
+          filled++;
+          if (values[i] === sol[i]) correct++;
+        }
+      }
+      const total = n - givenCount;
+      return {
+        total: total, givens: givenCount, filled: filled, correct: correct, wrong: filled - correct,
+        remaining: total - correct, percent: total === 0 ? 100 : Math.round(100 * correct / total)
+      };
+    }
+
+    function check() {
+      counts.checks++;
+      const found = conflicts();
+      const wrong = wrongCells();
+      const p = progress();
+      emit({ type: 'check', cells: [], values: false, solved: solved });
+      return {
+        wrong: wrong, conflicts: found.cells, filled: p.filled, empty: p.total - p.filled,
+        ok: wrong.length === 0 && found.cells.length === 0, complete: solved
+      };
+    }
+
+    // ---- hints -----------------------------------------------------------------------------------
+
+    function ensureExtensions() {
+      if (model.cages.length > 0 && SG.comboTable) SG.comboTable.enablePropagation(model.variantId);
+      if (model.inequalities.length > 0 && SG.ineq) SG.ineq.ensureExtension();
+    }
+
+    function runSolver(grid, assumeUniqueness) {
+      return SG.logicalSolver.solve(model, grid, {
+        collectSteps: true,
+        stopOnStuck: true,
+        assumeUniqueness: assumeUniqueness,
+        budget: SG.budget ? SG.budget.create({ ms: HINT_BUDGET_MS }) : null
+      });
+    }
+
+    function stepSound(step) {
+      for (let k = 0; k < step.placements.length; k++) {
+        if (sol[step.placements[k][0]] !== step.placements[k][1]) return false;
+      }
+      for (let k = 0; k < step.eliminations.length; k++) {
+        if (sol[step.eliminations[k][0]] === step.eliminations[k][1]) return false;
+      }
+      return true;
+    }
+
+    function soundPrefix(steps) {
+      let k = 0;
+      while (k < steps.length && stepSound(steps[k])) k++;
+      return steps.slice(0, k);
+    }
+
+    function knownKey(cell, v) {
+      return cell * 32 + v;
+    }
+
+    function alreadyKnown(step) {
+      return step.placements.length === 0 && step.eliminations.every(function (e) {
+        return hs.known.has(knownKey(e[0], e[1]));
+      });
+    }
+
+    function countIgnored() {
+      return wrongCells().length;
+    }
+
+    function planHints() {
+      const grid = userGrid();
+      hs.key = grid.join(',');
+      hs.cursor = 0;
+      hs.level = 0;
+      hs.current = null;
+      hs.plan = [];
+      hs.ignored = countIgnored();
+      if (grid.every(function (v) { return v > 0; })) {
+        hs.status = 'solved';
+        return;
+      }
+      ensureExtensions();
+      try {
+        let report = runSolver(grid, true);
+        let steps = soundPrefix(report.steps);
+        if (steps.length === 0 && report.steps.length > 0) {
+          // The first step disagrees with the solution (a puzzle with more than one solution, say): retry
+          // without the techniques that rely on a unique solution.
+          report = runSolver(grid, false);
+          steps = soundPrefix(report.steps);
+        }
+        hs.plan = steps.filter(function (s) { return !alreadyKnown(s); });
+        hs.status = hs.plan.length > 0 ? 'ok' : report.status === 'contradiction' ? 'unavailable' : 'stuck';
+      } catch (err) {
+        hs.status = 'unavailable';
+      }
+    }
+
+    function ensurePlan() {
+      const key = userGrid().join(',');
+      if (hs.key !== key || hs.status === 'none') planHints();
+    }
+
+    function unitContaining(step) {
+      const a = step.i18nArgs || {};
+      let index = -1;
+      if (Number.isInteger(a.unitIndex)) index = a.unitIndex;
+      else if (step.technique === 'pointing' && Number.isInteger(a.boxIndex)) index = a.boxIndex;
+      else if (step.technique === 'boxLine' && Number.isInteger(a.lineIndex)) index = a.lineIndex;
+      else if (typeof a.unit === 'string') {
+        for (let u = 0; u < model.unitMeta.length; u++) {
+          if (model.unitMeta[u].label === a.unit) {
+            index = u;
+            break;
+          }
+        }
+      }
+      if (index < 0 && step.cells.length >= 2 && step.technique !== 'cageCombo') {
+        let best = -1;
+        for (let u = 0; u < model.units.length; u++) {
+          const members = model.units[u];
+          if (step.cells.every(function (c) { return members.indexOf(c) !== -1; }) &&
+              (best < 0 || members.length < model.units[best].length)) {
+            best = u;
+          }
+        }
+        index = best;
+      }
+      return index;
+    }
+
+    function regionOf(step) {
+      if (step.technique === 'nakedSingle') return null;
+      if (step.technique === 'cageCombo' && step.i18nArgs && step.i18nArgs.sum !== undefined) {
+        return { kind: 'cage', label: String(step.i18nArgs.sum), sum: step.i18nArgs.sum,
+          cells: step.cells.slice() };
+      }
+      const u = unitContaining(step);
+      if (u < 0) return null;
+      return { kind: model.unitMeta[u].kind, label: model.unitMeta[u].label, unit: u,
+        cells: Array.from(model.units[u]) };
+    }
+
+    function buildHint(k, level) {
+      const step = hs.plan[k];
+      const known = SG.techniques && SG.techniques.has(step.technique);
+      const tech = known ? SG.techniques.get(step.technique) : null;
+      const nameKey = tech ? tech.i18nKey : 'technique.' + step.technique;
+      const targets = [];
+      step.placements.concat(step.eliminations).forEach(function (pair) {
+        if (targets.indexOf(pair[0]) === -1) targets.push(pair[0]);
+      });
+      return {
+        ok: true,
+        step: k,
+        steps: hs.plan.length,
+        level: level,
+        technique: step.technique,
+        nameKey: nameKey,
+        descKey: nameKey + '.desc',
+        stepKey: step.i18nKey,
+        stepArgs: Object.assign({}, step.i18nArgs),
+        kind: step.placements.length > 0 ? 'placement' : 'elimination',
+        cells: step.cells.slice(),
+        targets: targets,
+        placements: step.placements.map(function (p) { return p.slice(); }),
+        eliminations: step.eliminations.map(function (e) { return e.slice(); }),
+        region: regionOf(step),
+        ignored: hs.ignored
+      };
+    }
+
+    function refused(reason) {
+      hs.current = { ok: false, reason: reason, ignored: hs.ignored };
+      return hs.current;
+    }
+
+    function hint() {
+      ensurePlan();
+      if (hs.status !== 'ok') return refused(hs.status);
+      if (hs.cursor >= hs.plan.length) return refused('stuck');
+      hs.ignored = countIgnored();
+      if (hs.level === 0) counts.hints++;
+      hs.level = Math.min(hs.level + 1, HINT_LEVELS);
+      hs.current = buildHint(hs.cursor, hs.level);
+      emit({ type: 'hint', cells: hs.current.cells, values: false, solved: solved });
+      return hs.current;
+    }
+
+    function nextHintStep() {
+      ensurePlan();
+      if (hs.status !== 'ok') return refused(hs.status);
+      if (hs.cursor + 1 >= hs.plan.length) return refused('stuck');
+      hs.cursor++;
+      hs.level = 0;
+      return hint();
+    }
+
+    function clearHint() {
+      hs.current = null;
+      hs.level = 0;
+    }
+
+    function currentHint() {
+      return hs.current;
+    }
+
+    function applyHint() {
+      const h = hs.current;
+      if (!h || h.ok !== true) return false;
+      const rec = [];
+      h.placements.forEach(function (p) {
+        if (given[p[0]] === 0 && values[p[0]] !== p[1]) placeInto(rec, p[0], p[1]);
+      });
+      h.eliminations.forEach(function (e) {
+        hs.known.add(knownKey(e[0], e[1]));
+        if (given[e[0]] === 0 && values[e[0]] === 0 && (notes[e[0]] & bitOf(e[1])) !== 0) {
+          recordCell(rec, e[0], 0, notes[e[0]] & ~bitOf(e[1]));
+        }
+      });
+      if (h.placements.length === 0) {
+        hs.cursor++;
+        hs.level = 0;
+        hs.current = null;
+      }
+      if (rec.length === 0) {
+        emit({ type: 'hint', cells: h.targets, values: false, solved: solved });
+        return true;
+      }
+      return commit('hint', rec);
+    }
+
+    /** The open cell with the fewest candidates: the least arbitrary cell to reveal. */
+    function easiestCell() {
+      const grid = userGrid();
+      let best = -1;
+      let bestCount = Infinity;
+      for (let i = 0; i < n; i++) {
+        if (given[i] > 0 || values[i] === sol[i]) continue;
+        const count = popcount(candidateMask(grid, i));
+        if (count < bestCount) {
+          best = i;
+          bestCount = count;
+        }
+      }
+      return best;
+    }
+
+    function revealCell(cell) {
+      let target = cell;
+      if (!validCell(target) || given[target] > 0 || values[target] === sol[target]) target = easiestCell();
+      if (target < 0) return null;
+      const rec = [];
+      placeInto(rec, target, sol[target]);
+      counts.reveals++;
+      commit('reveal', rec);
+      return { cell: target, value: sol[target] };
+    }
+
+    function revealSolution() {
+      const rec = [];
+      for (let i = 0; i < n; i++) if (given[i] === 0) recordCell(rec, i, sol[i], 0);
+      if (rec.length === 0) return false;
+      counts.reveals += rec.length;
+      return commit('revealAll', rec, { gaveUp: true });
+    }
+
+    // ---- timer API -------------------------------------------------------------------------------
+
+    function pauseTimer(by) {
+      if (!tm.started || tm.since === null) return false;
+      tm.elapsed += clock() - tm.since;
+      tm.since = null;
+      tm.pausedBy = by === 'auto' ? 'auto' : 'user';
+      emit({ type: 'timer', cells: [], values: false, solved: solved });
+      return true;
+    }
+
+    function resumeTimer(by) {
+      if (!tm.started || tm.since !== null || solved) return false;
+      if (by === 'auto' && tm.pausedBy !== 'auto') return false;
+      tm.pausedBy = null;
+      tm.since = clock();
+      emit({ type: 'timer', cells: [], values: false, solved: solved });
+      return true;
+    }
+
+    function timerState() {
+      return { started: tm.started, running: tm.since !== null, paused: tm.pausedBy !== null,
+        pausedBy: tm.pausedBy, elapsedMs: elapsedMs() };
+    }
+
+    // ---- state -----------------------------------------------------------------------------------
+
+    function serializeEntries(list) {
+      return list.map(function (e) {
+        const out = { k: e.kind, c: e.changes.map(function (c) { return c.slice(); }) };
+        if (e.gaveUp === true) out.g = 1;
+        return out;
+      });
+    }
+
+    function serialize() {
+      return {
+        v: SAVE_VERSION,
+        variantId: model.variantId,
+        cells: n,
+        digits: D,
+        values: Array.from(values),
+        notes: Array.from(notes),
+        undo: serializeEntries(undoStack),
+        redo: serializeEntries(redoStack),
+        counters: { hints: counts.hints, reveals: counts.reveals, checks: counts.checks },
+        known: Array.from(hs.known),
+        options: { autoNotes: settings.autoNotes },
+        timer: { started: tm.started, elapsed: Math.round(elapsedMs()),
+          pausedBy: tm.since !== null ? 'auto' : tm.pausedBy }
+      };
+    }
+
+    function parseEntries(list) {
+      if (!Array.isArray(list)) throw fail('invalid saved game: history');
+      return list.map(function (e) {
+        if (!e || !Array.isArray(e.c)) throw fail('invalid saved game: history entry');
+        e.c.forEach(function (c) {
+          const ok = Array.isArray(c) && c.length === 5 && validCell(c[0]) &&
+            c.every(function (x) { return Number.isInteger(x) && x >= 0; }) && c[1] <= D && c[2] <= D;
+          if (!ok) throw fail('invalid saved game: history change');
+        });
+        const entry = { kind: String(e.k), changes: e.c.map(function (c) { return c.slice(); }) };
+        if (e.g === 1) entry.gaveUp = true;
+        return entry;
+      });
+    }
+
+    function load(data) {
+      const full = SG.bits ? SG.bits.full(D) : (1 << D) - 1;
+      const ok = data && data.v === SAVE_VERSION && data.cells === n && data.digits === D &&
+        Array.isArray(data.values) && data.values.length === n && Array.isArray(data.notes) &&
+        data.notes.length === n;
+      if (!ok) throw fail('invalid saved game');
+      for (let i = 0; i < n; i++) {
+        const v = data.values[i];
+        const m = data.notes[i];
+        const badCell = !(Number.isInteger(v) && v >= 0 && v <= D);
+        const badNote = !(Number.isInteger(m) && m >= 0 && (m & ~full) === 0);
+        if (badCell || badNote) throw fail('invalid saved game: cell ' + i);
+        if (given[i] > 0 && (v !== 0 || m !== 0)) throw fail('invalid saved game: a clue was changed');
+        values[i] = v;
+        notes[i] = m;
+      }
+      undoStack = parseEntries(data.undo);
+      redoStack = parseEntries(data.redo);
+      const c = data.counters || {};
+      counts.hints = c.hints | 0;
+      counts.reveals = c.reveals | 0;
+      counts.checks = c.checks | 0;
+      (data.known || []).forEach(function (k) { if (Number.isInteger(k)) hs.known.add(k); });
+      if (data.options && typeof data.options.autoNotes === 'boolean') {
+        settings.autoNotes = data.options.autoNotes;
+      }
+      const t = data.timer || {};
+      tm.started = t.started === true;
+      tm.elapsed = Number(t.elapsed) > 0 ? Number(t.elapsed) : 0;
+      tm.since = null;
+      tm.pausedBy = tm.started ? (t.pausedBy === 'user' ? 'user' : 'auto') : null;
+      solved = computeSolved();
+      if (solved) {
+        tm.pausedBy = null;
+      }
+    }
+
+    if (opts.state) load(opts.state);
+
+    return {
+      model: model,
+      cellCount: n,
+      digits: D,
+
+      /** @returns {number} The value shown in a cell: the clue, else the entry (0 = empty). */
+      getValue: cellValue,
+      /** @returns {number} The entry of the user (0 for none, also on a clue). */
+      userValue: function userValue(cell) { return validCell(cell) ? values[cell] : 0; },
+      isGiven: function isGiven(cell) { return validCell(cell) && given[cell] > 0; },
+      /** @returns {number} Bit mask of the notes of a cell (bit v - 1 = value v). */
+      getNotes: function getNotes(cell) { return validCell(cell) ? notes[cell] : 0; },
+      snapshot: function snapshot() { return { values: values.slice(), notes: notes.slice() }; },
+
+      setValue: setValue,
+      clearValue: clearValue,
+      erase: erase,
+      toggleNote: toggleNote,
+      fillNotes: fillNotes,
+      undo: undo,
+      redo: redo,
+      canUndo: function canUndo() { return undoStack.length > 0; },
+      canRedo: function canRedo() { return redoStack.length > 0; },
+      reset: reset,
+
+      conflicts: conflicts,
+      wrongCells: wrongCells,
+      check: check,
+      progress: progress,
+      isSolved: function isSolved() { return solved; },
+      status: status,
+
+      hint: hint,
+      nextHintStep: nextHintStep,
+      applyHint: applyHint,
+      clearHint: clearHint,
+      currentHint: currentHint,
+      revealCell: revealCell,
+      revealSolution: revealSolution,
+
+      pauseTimer: pauseTimer,
+      resumeTimer: resumeTimer,
+      elapsedMs: elapsedMs,
+      timerState: timerState,
+
+      subscribe: function subscribe(fn) {
+        if (typeof fn !== 'function') throw fail('subscribe needs a function');
+        listeners.push(fn);
+        return function off() {
+          const at = listeners.indexOf(fn);
+          if (at !== -1) listeners.splice(at, 1);
+        };
+      },
+      setOptions: function setOptions(next) {
+        if (next && typeof next.autoNotes === 'boolean') settings.autoNotes = next.autoNotes;
+      },
+      getOptions: function getOptions() { return { autoNotes: settings.autoNotes }; },
+      counters: function counters() {
+        return { hints: counts.hints, reveals: counts.reveals, checks: counts.checks };
+      },
+      serialize: serialize
+    };
+  }
+
+  /**
+   * Rebuilds a game from `game.serialize()`. A running timer comes back paused (resume it to carry on).
+   * @param {PuzzleModel} model
+   * @param {ArrayLike<number>} givens
+   * @param {ArrayLike<number>} solution
+   * @param {Object} data
+   * @param {Object} [options]  See `createGame`.
+   * @returns {Object}
+   * @throws {TypeError} For data that does not belong to this puzzle.
+   */
+  function restoreGame(model, givens, solution, data, options) {
+    if (data === null || typeof data !== 'object') throw fail('invalid saved game');
+    return createGame(model, givens, solution, Object.assign({}, options || {}, { state: data }));
+  }
+
+  // ---------------------------------------------------------------------------------------------
+  // DOM layer
+  // ---------------------------------------------------------------------------------------------
+
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const CLOCK_MS = 500;
+  const RESET_ARM_MS = 4000;
+  const WIDE_PAD_COLS = 9;
+  const NARROW_PAD_COLS = 6;
+  const CELL_UNITS = 40;
+  const NOTE_MARGIN = 3;
+  const NOTE_TOP_CAGE = 11;
+  const ARROWS = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] };
+
+  /** Icons the sprite of index.html does not have (24 x 24 box, drawn with the stroke of `.icon`). */
+  const ICON_PATHS = {
+    undo: 'M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11',
+    redo: 'm15 14 5-5-5-5M20 9H9.5a5.5 5.5 0 0 0 0 11H13',
+    erase: 'm7 21-4.3-4.3a1.5 1.5 0 0 1 0-2.1l10-10a1.5 1.5 0 0 1 2.1 0l5.6 5.6a1.5 1.5 0 0 1 0 2.1L11 21z' +
+      'M7 21h13',
+    notes: 'M4 20l1-4.5L16.5 4a2.1 2.1 0 0 1 3 3L8 18.5zM14.5 6l3 3',
+    hint: 'M9 18h6M10 21.5h4M12 2.5a6.5 6.5 0 0 0-3.7 11.8c.6.5 1 1.2 1 1.9v.8h5.4v-.8c0-.7.4-1.4 1-1.9' +
+      'A6.5 6.5 0 0 0 12 2.5z'
+  };
+
+  let controller = null;
+
+  function h(tag, attrs, children) {
+    const node = root.document.createElement(tag);
+    Object.keys(attrs || {}).forEach(function (name) {
+      const value = attrs[name];
+      if (value === null || value === undefined || value === false) return;
+      if (name === 'class') node.className = value;
+      else if (name === 'text') node.textContent = value;
+      else node.setAttribute(name, value === true ? '' : String(value));
+    });
+    (children || []).forEach(function (child) { if (child) node.appendChild(child); });
+    return node;
+  }
+
+  function s(tag, attrs) {
+    const node = root.document.createElementNS(SVG_NS, tag);
+    Object.keys(attrs || {}).forEach(function (name) { node.setAttribute(name, String(attrs[name])); });
+    return node;
+  }
+
+  function icon(name) {
+    const svg = s('svg', { class: 'icon', viewBox: '0 0 24 24', 'aria-hidden': 'true', focusable: 'false' });
+    if (ICON_PATHS[name] !== undefined) svg.appendChild(s('path', { d: ICON_PATHS[name] }));
+    else svg.appendChild(s('use', { href: '#ic-' + name }));
+    return svg;
+  }
+
+  function clockText(ms) {
+    const whole = Math.floor(Math.max(0, ms) / 1000) * 1000;
+    return whole < 1000 ? tr('duration.s', { value: '0' }) : SG.i18n.formatDuration(whole);
+  }
+
+  /**
+   * Builds the controller of the DOM layer for the running app.
+   * @param {Object} app  `SG.app`.
+   * @returns {Object} `{ start, attach, detach, isActive, getGame, select, symbolMode, destroy }`.
+   */
+  function createController(app) {
+    const doc = root.document;
+    const els = {};
+    const bound = [];
+    const subscriptions = [];
+    const appOffs = [];
+    let board = null;
+    let svg = null;
+    let geo = null;
+    let puzzle = null;
+    let game = null;
+    let unsubscribeGame = null;
+    let active = false;
+    let sel = -1;
+    let notesMode = false;
+    let marks = null;
+    let hint = null;
+    let layer = null;
+    let reader = null;
+    let message = null;
+    let clockTimer = null;
+    let addedTabindex = false;
+    let resetTimer = null;
+    let padSig = '';
+    let wordHidden = false;
+
+    // ---- translation of the static texts ---------------------------------------------------------
+
+    function bindText(el, key, attr) {
+      const entry = { el: el, key: key, attr: attr || null };
+      bound.push(entry);
+      applyText(entry);
+      return el;
+    }
+
+    function applyText(entry) {
+      const text = tr(entry.key);
+      if (entry.attr === null) entry.el.textContent = text;
+      else entry.el.setAttribute(entry.attr, text);
+    }
+
+    function retranslate() {
+      bound.forEach(applyText);
+    }
+
+    function store() {
+      return typeof app.getStore === 'function' ? app.getStore() : null;
+    }
+
+    /** A preference of the store (`check`, `autoNotes`); the defaults when there is no store. */
+    function pref(name) {
+      const st = store();
+      const state = st === null ? null : st.get();
+      if (state !== null && state[name] !== undefined) return state[name];
+      return name === 'check' ? 'conflicts' : true;
+    }
+
+    function currentMode() {
+      return svg !== null && svg.getAttribute('data-symbols') ? svg.getAttribute('data-symbols') : 'digits';
+    }
+
+    function auxOn() {
+      const st = store();
+      return st === null || st.get().colorAuxSymbol !== false;
+    }
+
+    function labelOf(cell) {
+      return SG.model.cellLabel(game.model, cell);
+    }
+
+    // ---- user interface -------------------------------------------------------------------------
+
+    function toolButton(id, iconName, key, onClick) {
+      const button = h('button', { type: 'button', class: 'play__tool', 'data-tool': id }, [
+        icon(iconName), h('span', { class: 'play__tool-label' })
+      ]);
+      bindText(button.lastChild, key);
+      bindText(button, key + '.title', 'title');
+      button.addEventListener('click', onClick);
+      els[id] = button;
+      return button;
+    }
+
+    function buildHintCard() {
+      const card = {
+        title: h('h3', { class: 'play__hint-title' }),
+        step: h('span', { class: 'badge badge--accent play__hint-step' }),
+        desc: h('p', { class: 'play__hint-desc' }),
+        region: h('p', { class: 'play__hint-line' }),
+        cells: h('p', { class: 'play__hint-line' }),
+        action: h('p', { class: 'play__hint-action' }),
+        explain: h('p', { class: 'play__hint-line' }),
+        note: h('p', { class: 'play__hint-note' }),
+        more: h('button', { type: 'button', class: 'btn btn--secondary btn--sm' }),
+        apply: h('button', { type: 'button', class: 'btn btn--primary btn--sm' }),
+        next: h('button', { type: 'button', class: 'btn btn--secondary btn--sm' }),
+        reveal: h('button', { type: 'button', class: 'btn btn--secondary btn--sm' }),
+        close: h('button', { type: 'button', class: 'btn btn--ghost btn--sm' })
+      };
+      bindText(card.more, 'play.hint.more');
+      bindText(card.next, 'play.hint.next');
+      bindText(card.reveal, 'play.hint.reveal');
+      bindText(card.close, 'play.hint.close');
+      card.more.addEventListener('click', showHint);
+      card.apply.addEventListener('click', applyHint);
+      card.next.addEventListener('click', nextHint);
+      card.reveal.addEventListener('click', revealCell);
+      card.close.addEventListener('click', closeHint);
+      card.root = h('div', { class: 'play__hint', hidden: true, 'aria-live': 'polite' }, [
+        h('div', { class: 'play__hint-head' }, [card.title, card.step]),
+        card.desc, card.region, card.cells, card.action, card.explain, card.note,
+        h('div', { class: 'play__hint-buttons' }, [card.more, card.apply, card.next, card.reveal, card.close])
+      ]);
+      return card;
+    }
+
+    function optionRow(label, control) {
+      return h('label', { class: 'field field--inline play__option' }, [label, control]);
+    }
+
+    function secondaryButton(key, onClick) {
+      const button = h('button', { type: 'button', class: 'btn btn--secondary btn--sm' });
+      bindText(button, key);
+      button.addEventListener('click', onClick);
+      return button;
+    }
+
+    function buildUi() {
+      const statusHost = doc.getElementById('play-status');
+      const panelHost = doc.getElementById('play-root');
+      if (statusHost === null || panelHost === null) return false;
+
+      els.pause = h('button', { type: 'button', class: 'btn btn--secondary btn--sm play__pause' }, [
+        icon('pause'), h('span', { class: 'btn__label' })
+      ]);
+      els.pauseLabel = els.pause.lastChild;
+      els.pause.addEventListener('click', togglePause);
+      els.clock = h('span', { class: 'play__clock' });
+      els.progress = h('span', { class: 'play__progress' });
+      const timeLabel = h('span', { class: 'visually-hidden' });
+      bindText(timeLabel, 'play.timer.label');
+      els.status = h('div', { class: 'play__status', hidden: true }, [
+        h('span', { class: 'play__time' }, [timeLabel, els.clock]), els.pause, els.progress
+      ]);
+      statusHost.appendChild(els.status);
+
+      els.tools = h('div', { class: 'play__tools', role: 'toolbar' }, [
+        toolButton('notes', 'notes', 'play.tool.notes', toggleNotes),
+        toolButton('erase', 'erase', 'play.tool.erase', eraseCell),
+        toolButton('undo', 'undo', 'play.tool.undo', undo),
+        toolButton('redo', 'redo', 'play.tool.redo', redo),
+        toolButton('hint', 'hint', 'play.tool.hint', showHint),
+        toolButton('check', 'check', 'play.tool.check', checkEntries)
+      ]);
+      els.notes.setAttribute('aria-pressed', 'false');
+      bindText(els.tools, 'play.tool.label', 'aria-label');
+
+      els.pad = h('div', { class: 'play__pad', role: 'group' });
+      bindText(els.pad, 'play.pad.label', 'aria-label');
+      els.message = h('p', { class: 'play__message', hidden: true });
+      els.hintCard = buildHintCard();
+
+      els.symbols = h('select', { class: 'select', id: 'play-symbols' });
+      els.symbols.addEventListener('change', function () { setSymbolMode(els.symbols.value); });
+      const symbolsLabel = h('label', { class: 'field__label', for: 'play-symbols' });
+      bindText(symbolsLabel, 'play.symbols.label');
+      els.symbolsRow = h('div', { class: 'field field--inline play__symbols' }, [symbolsLabel, els.symbols]);
+
+      els.checkSelect = h('select', { class: 'select' }, CHECK_MODES.map(function (mode) {
+        const option = h('option', { value: mode });
+        bindText(option, 'play.options.check.' + mode);
+        return option;
+      }));
+      els.checkSelect.value = pref('check');
+      els.checkSelect.addEventListener('change', function () {
+        const st = store();
+        if (st !== null) st.set({ check: els.checkSelect.value }, { source: 'play' });
+      });
+      const checkLabel = h('span', { class: 'field__label' });
+      bindText(checkLabel, 'play.options.check');
+      els.autoNotes = h('input', { type: 'checkbox' });
+      els.autoNotes.checked = pref('autoNotes') !== false;
+      els.autoNotes.addEventListener('change', function () {
+        const st = store();
+        if (st !== null) st.set({ autoNotes: els.autoNotes.checked }, { source: 'play' });
+      });
+      const autoLabel = h('span', { class: 'field__label' });
+      bindText(autoLabel, 'play.options.autoNotes');
+      els.reset = secondaryButton('play.options.reset', resetGame);
+      els.keys = h('p', { class: 'play__keys field__hint' });
+      bindText(els.keys, 'play.keys');
+      const more = h('details', { class: 'disclosure play__more' }, [
+        h('summary', {}, [h('span', { class: 'play__more-title' })]),
+        h('div', { class: 'disclosure__body play__options' }, [
+          optionRow(checkLabel, els.checkSelect),
+          h('label', { class: 'checkbox play__option' }, [els.autoNotes, autoLabel]),
+          h('div', { class: 'play__option-buttons' }, [
+            secondaryButton('play.options.fillNotes', fillNotes),
+            secondaryButton('play.options.revealCell', revealCell),
+            secondaryButton('play.options.revealAll', revealAll),
+            els.reset
+          ]),
+          els.keys
+        ])
+      ]);
+      bindText(more.querySelector('.play__more-title'), 'play.options.summary');
+
+      els.panel = h('section', { class: 'play__panel', hidden: true }, [
+        els.tools, els.pad, els.symbolsRow, els.message, els.hintCard.root, more
+      ]);
+      bindText(els.panel, 'play.panel.label', 'aria-label');
+      els.root = h('div', { class: 'play', 'data-active': 'false' }, [els.panel]);
+      panelHost.appendChild(els.root);
+      els.legend = doc.getElementById('board-legend');
+      return true;
+    }
+
+    // ---- symbols ----------------------------------------------------------------------------------
+
+    function refreshSymbolControl() {
+      const modes = SG.symbols.modesFor(game.model);
+      els.symbolsRow.hidden = modes.length < 2;
+      els.symbols.textContent = '';
+      modes.forEach(function (mode) {
+        const option = h('option', { value: mode });
+        option.textContent = tr('symbolMode.' + mode);
+        els.symbols.appendChild(option);
+      });
+      els.symbols.value = currentMode();
+    }
+
+    /** The legend under the board names the colours and shapes; digits and letters need none. */
+    function renderLegend() {
+      if (els.legend === null) return;
+      const mode = currentMode();
+      const wanted = active && (mode === 'colors' || mode === 'shapes');
+      els.legend.hidden = !wanted;
+      els.legend.textContent = '';
+      if (wanted) SG.symbols.renderLegend(els.legend, mode, game.model, { colorAuxSymbol: auxOn() });
+    }
+
+    function setSymbolMode(mode) {
+      if (!active || SG.symbols.modesFor(game.model).indexOf(mode) === -1) return false;
+      if (mode !== currentMode()) {
+        board.setSymbolMode(mode);
+        reader = createKeyReader(typedLabels(game.model, mode));
+        app.emit('play:change', { type: 'symbols', mode: mode });
+      }
+      els.symbols.value = mode;
+      renderLegend();
+      refreshAll();
+      return true;
+    }
+
+    // ---- overlay layer ---------------------------------------------------------------------------
+
+    function glyphOf(v) {
+      return SG.symbols.glyph(currentMode(), v, game.model, { colorAuxSymbol: auxOn(), label: false });
+    }
+
+    function lenClass(text) {
+      return text.length >= 3 ? ' pl-val--l3' : text.length === 2 ? ' pl-val--l2' : '';
+    }
+
+    function buildLayer() {
+      const n = game.cellCount;
+      const g = s('g', { class: 'layer-play', 'data-layer': 'play', 'aria-hidden': 'true' });
+      g.setAttribute('style', 'font-size:' + geo.value.font + 'px');
+      const cells = new Array(n);
+      for (let i = 0; i < n; i++) {
+        const cellGroup = s('g', { class: 'pl-cell', 'data-pc': i });
+        const size = CELL_UNITS - 3;
+        const rect = { x: geo.cellX[i] + 1.5, y: geo.cellY[i] + 1.5, width: size, height: size };
+        cellGroup.appendChild(s('rect', Object.assign({ class: 'pl-bg' }, rect)));
+        cellGroup.appendChild(s('rect', Object.assign({ class: 'pl-hint' }, rect)));
+        g.appendChild(cellGroup);
+        cells[i] = { g: cellGroup, content: null };
+      }
+      svg.appendChild(g);
+      const labels = typedLabels(game.model, currentMode());
+      const longest = labels.reduce(function (m, text) { return Math.max(m, text.length); }, 1);
+      layer = { g: g, cells: cells, shown: new Array(n).fill(''), cls: new Array(n).fill(''),
+        sig: currentMode() + '|' + auxOn(), longest: longest };
+    }
+
+    function ensureLayer() {
+      if (layer !== null && layer.g.parentNode === svg) {
+        const sig = currentMode() + '|' + auxOn();
+        if (layer.sig === sig) return;
+        layer.sig = sig;
+        layer.shown.fill('');
+        return;
+      }
+      buildLayer();
+    }
+
+    function removeLayer() {
+      if (layer !== null && layer.g.parentNode !== null) layer.g.parentNode.removeChild(layer.g);
+      layer = null;
+    }
+
+    function drawValue(parent, i, v) {
+      const g = glyphOf(v);
+      const x = geo.cellX[i];
+      const y = geo.cellY[i];
+      const cx = x + CELL_UNITS / 2;
+      const cy = y + CELL_UNITS / 2 + geo.value.shiftY;
+      if (g.colorIndex !== null) {
+        parent.appendChild(s('rect', { class: 'pl-fill cell--c' + (g.colorIndex + 1), x: x + 1.2, y: y + 1.2,
+          width: CELL_UNITS - 2.4, height: CELL_UNITS - 2.4 }));
+      }
+      if (g.shape !== null) {
+        parent.appendChild(s('path', { class: g.colorIndex !== null ? 'sym sym--aux' : 'sym sym--placed',
+          'fill-rule': 'evenodd', d: SG.symbols.shapePath(g.shape, cx, cy) }));
+      }
+      if (g.text !== null) {
+        const label = s('text', { class: 'pl-val' + lenClass(g.text), x: cx, y: cy, dy: '0.35em',
+          'text-anchor': 'middle' });
+        label.textContent = g.text;
+        parent.appendChild(label);
+      }
+    }
+
+    function drawNotes(parent, i, mask, elim) {
+      const lay = noteLayout(game.digits);
+      const top = game.model.cages.length > 0 ? NOTE_TOP_CAGE : NOTE_MARGIN;
+      const slotW = (CELL_UNITS - 2 * NOTE_MARGIN) / lay.cols;
+      const slotH = (CELL_UNITS - top - NOTE_MARGIN) / lay.rows;
+      const font = Math.min(slotH * 0.86, slotW / (layer.longest * 0.62), 11);
+      for (let d = 1; d <= game.digits; d++) {
+        if ((mask & bitOf(d)) === 0) continue;
+        const cx = geo.cellX[i] + NOTE_MARGIN + (((d - 1) % lay.cols) + 0.5) * slotW;
+        const cy = geo.cellY[i] + top + (Math.floor((d - 1) / lay.cols) + 0.5) * slotH;
+        const g = glyphOf(d);
+        const cls = 'pl-note' + ((elim & bitOf(d)) !== 0 ? ' is-elim' : '');
+        if (g.text !== null) {
+          const label = s('text', { class: cls, x: cx, y: cy, dy: '0.35em', 'text-anchor': 'middle',
+            'font-size': Math.round(font * 10) / 10 });
+          label.textContent = g.text;
+          parent.appendChild(label);
+        } else if (g.colorIndex !== null) {
+          const side = Math.min(slotW, slotH) * 0.72;
+          const marked = (elim & bitOf(d)) !== 0 ? ' is-elim' : '';
+          parent.appendChild(s('rect', { class: 'pl-note-fill cell--c' + (g.colorIndex + 1) + marked,
+            x: cx - side / 2, y: cy - side / 2, width: side, height: side }));
+        } else if (g.shape !== null) {
+          parent.appendChild(s('path', { class: cls + ' pl-note-sym', 'fill-rule': 'evenodd',
+            d: SG.symbols.shapePath(g.shape, cx, cy, Math.min(slotW, slotH) * 0.4) }));
+        }
+      }
+    }
+
+    function elimMasks() {
+      const out = new Map();
+      if (hint !== null && hint.ok === true && hint.level >= 3) {
+        hint.eliminations.forEach(function (e) { out.set(e[0], (out.get(e[0]) || 0) | bitOf(e[1])); });
+      }
+      return out;
+    }
+
+    function describeEntry(i, v, mask) {
+      const el = board !== null ? board.getCellElement(i) : null;
+      if (el === null) return;
+      let text = '';
+      if (v > 0) {
+        text = tr('play.cell.entry', { symbol: valueText(game.model, v, currentMode()) });
+      } else if (mask !== 0) {
+        const names = [];
+        for (let d = 1; d <= game.digits; d++) {
+          if ((mask & bitOf(d)) !== 0) names.push(valueText(game.model, d, currentMode()));
+        }
+        text = tr('play.cell.notes', { symbols: names.join(', ') });
+      }
+      if (text === '') el.removeAttribute('aria-description');
+      else el.setAttribute('aria-description', text);
+    }
+
+    function clearDescriptions() {
+      if (board === null || game === null) return;
+      for (let i = 0; i < game.cellCount; i++) {
+        const el = board.getCellElement(i);
+        if (el !== null) el.removeAttribute('aria-description');
+      }
+    }
+
+    function renderCells() {
+      const fresh = board.getGeometry();
+      if (fresh !== geo) {
+        geo = fresh;
+        removeLayer();
+      }
+      ensureLayer();
+      const elim = elimMasks();
+      for (let i = 0; i < game.cellCount; i++) {
+        const v = game.userValue(i);
+        const mask = v === 0 ? game.getNotes(i) : 0;
+        const bad = v === 0 && elim.has(i) ? elim.get(i) & mask : 0;
+        const key = v + ':' + mask + ':' + bad;
+        if (layer.shown[i] === key) continue;
+        layer.shown[i] = key;
+        describeEntry(i, v, mask);
+        const c = layer.cells[i];
+        if (c.content !== null) c.content.textContent = '';
+        if (v === 0 && mask === 0) continue;
+        if (c.content === null) {
+          c.content = s('g', { class: 'pl-content' });
+          c.g.appendChild(c.content);
+        }
+        if (v > 0) drawValue(c.content, i, v);
+        else drawNotes(c.content, i, mask, bad);
+      }
+    }
+
+    function currentMarks() {
+      const n = game.cellCount;
+      const out = { conflict: new Uint8Array(n), wrong: new Uint8Array(n) };
+      if (pref('check') !== 'off') game.conflicts().cells.forEach(function (c) { out.conflict[c] = 1; });
+      if (pref('check') === 'live') game.wrongCells().forEach(function (c) { out.wrong[c] = 1; });
+      if (marks !== null) {
+        marks.conflicts.forEach(function (c) { out.conflict[c] = 1; });
+        marks.wrong.forEach(function (c) { out.wrong[c] = 1; });
+      }
+      return out;
+    }
+
+    function refreshMarks() {
+      if (!active || layer === null) return;
+      ensureLayer();
+      const n = game.cellCount;
+      const shown = currentMarks();
+      const near = new Uint8Array(n);
+      if (sel >= 0) {
+        const peers = game.model.peers[sel];
+        for (let k = 0; k < peers.length; k++) near[peers[k]] = 1;
+      }
+      const selValue = sel >= 0 ? game.getValue(sel) : 0;
+      const inRegion = new Set(hint !== null && hint.ok === true && hint.region ? hint.region.cells : []);
+      const inCells = new Set(hint !== null && hint.ok === true && hint.level >= 2 ? hint.cells : []);
+      const inTargets = new Set(hint !== null && hint.ok === true && hint.level >= 3 ? hint.targets : []);
+      for (let i = 0; i < n; i++) {
+        let cls = 'pl-cell';
+        if (i === sel) cls += ' is-sel';
+        else if (near[i] === 1) cls += ' is-peer';
+        if (selValue > 0 && i !== sel && game.getValue(i) === selValue) cls += ' is-same';
+        if (shown.conflict[i] === 1) cls += ' is-conflict';
+        if (shown.wrong[i] === 1) cls += ' is-wrong';
+        if (inRegion.has(i)) cls += ' is-hint-region';
+        if (inCells.has(i)) cls += ' is-hint-cell';
+        if (inTargets.has(i)) cls += ' is-hint-target';
+        if (layer.cls[i] !== cls) {
+          layer.cls[i] = cls;
+          layer.cells[i].g.setAttribute('class', cls);
+        }
+      }
+    }
+
+    function setPausedLook() {
+      if (layer !== null) layer.g.classList.toggle('is-paused', game.timerState().pausedBy === 'user');
+    }
+
+    // ---- state of the panel -----------------------------------------------------------------------
+
+    function canEdit() {
+      if (!active || game === null) return false;
+      const status = game.status();
+      return status !== 'solved' && status !== 'gaveUp' && game.timerState().pausedBy !== 'user';
+    }
+
+    function updateClock() {
+      if (game === null) return;
+      els.clock.textContent = clockText(game.elapsedMs());
+    }
+
+    function startClock() {
+      if (clockTimer === null) clockTimer = root.setInterval(updateClock, CLOCK_MS);
+      updateClock();
+    }
+
+    function stopClock() {
+      if (clockTimer !== null) root.clearInterval(clockTimer);
+      clockTimer = null;
+    }
+
+    function refreshPad() {
+      const model = game.model;
+      const sig = [model.variantId, game.digits, currentMode(), auxOn(), SG.i18n.current].join('|');
+      if (sig !== padSig) {
+        padSig = sig;
+        els.pad.textContent = '';
+        const wide = padLayout(game.digits, WIDE_PAD_COLS);
+        const narrow = padLayout(game.digits, NARROW_PAD_COLS);
+        els.pad.style.setProperty('--play-pad-cols', String(wide.cols));
+        els.pad.style.setProperty('--play-pad-cols-narrow', String(narrow.cols));
+        for (let v = 1; v <= game.digits; v++) {
+          const g = SG.symbols.glyph(currentMode(), v, model, { colorAuxSymbol: auxOn() });
+          const key = h('button', { type: 'button', class: 'play__key', 'data-v': v, 'data-name': g.label });
+          if (g.text !== null) key.textContent = g.text;
+          else key.innerHTML = SG.symbols.swatchMarkup(g);
+          key.addEventListener('click', function () { enterValue(v, false); });
+          els.pad.appendChild(key);
+        }
+      }
+      const editable = canEdit();
+      const filled = sel >= 0 ? game.userValue(sel) : 0;
+      const noteMask = sel >= 0 ? game.getNotes(sel) : 0;
+      Array.prototype.forEach.call(els.pad.children, function (key) {
+        const v = Number(key.getAttribute('data-v'));
+        key.disabled = !editable;
+        key.setAttribute('aria-label', tr(notesMode ? 'play.pad.note' : 'play.pad.value',
+          { symbol: key.getAttribute('data-name') }));
+        const pressed = notesMode ? (noteMask & bitOf(v)) !== 0 : filled === v;
+        key.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      });
+      els.pad.classList.toggle('is-notes', notesMode);
+    }
+
+    function refreshTools() {
+      const editable = canEdit();
+      els.notes.disabled = !editable;
+      els.notes.setAttribute('aria-pressed', notesMode ? 'true' : 'false');
+      els.erase.disabled = !editable;
+      els.undo.disabled = !active || !game.canUndo() || game.timerState().pausedBy === 'user';
+      els.redo.disabled = !active || !game.canRedo() || game.timerState().pausedBy === 'user';
+      els.hint.disabled = !editable;
+      els.check.disabled = !editable;
+    }
+
+    function refreshStatus() {
+      const p = game.progress();
+      els.progress.textContent = tr('play.progress', { filled: p.filled + p.givens, total: game.cellCount });
+      const paused = game.timerState().pausedBy === 'user';
+      const finished = game.isSolved();
+      els.pause.hidden = finished;
+      els.pause.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      els.pauseLabel.textContent = tr(paused ? 'play.timer.resume' : 'play.timer.pause');
+      els.pause.firstChild.firstChild.setAttribute('href', paused ? '#ic-play' : '#ic-pause');
+      els.reset.textContent = tr(resetTimer === null ? 'play.options.reset' : 'play.options.reset.confirm');
+      updateClock();
+    }
+
+    function renderMessage() {
+      if (message === null) {
+        els.message.hidden = true;
+        els.message.textContent = '';
+        return;
+      }
+      els.message.hidden = false;
+      els.message.setAttribute('data-kind', message.kind);
+      els.message.textContent = message.build();
+    }
+
+    /** Shows (and announces) a message; `build` is called again on a language change. */
+    function say(kind, build, quiet) {
+      message = build === null ? null : { kind: kind, build: build };
+      renderMessage();
+      if (message === null || quiet === true || typeof app.announce !== 'function') return;
+      app.announce(message.build());
+    }
+
+    function refreshAll() {
+      if (!active) return;
+      renderCells();
+      refreshMarks();
+      refreshPad();
+      refreshTools();
+      refreshStatus();
+      setPausedLook();
+      syncWordLine();
+    }
+
+    // ---- selection and focus ----------------------------------------------------------------------
+
+    function focusBoard() {
+      if (svg === null) return;
+      const roving = sel >= 0 && board !== null ? board.getCellElement(sel) : null;
+      const target = roving !== null && roving.hasAttribute('tabindex') ? roving : svg;
+      if (typeof target.focus === 'function' && target.hasAttribute('tabindex')) {
+        target.focus({ preventScroll: true });
+      }
+    }
+
+    function select(cell, focus) {
+      const next = game !== null && Number.isInteger(cell) && cell >= 0 && cell < game.cellCount ? cell : -1;
+      if (next !== sel) {
+        sel = next;
+        if (reader !== null) reader.reset();
+        refreshMarks();
+        refreshPad();
+      }
+      if (focus === true) focusBoard();
+    }
+
+    function firstEditable() {
+      for (let i = 0; i < game.cellCount; i++) if (!game.isGiven(i) && game.userValue(i) === 0) return i;
+      return -1;
+    }
+
+    function pointToCell(clientX, clientY) {
+      const ctm = typeof svg.getScreenCTM === 'function' ? svg.getScreenCTM() : null;
+      if (ctm === null || typeof svg.createSVGPoint !== 'function') return -1;
+      const point = svg.createSVGPoint();
+      point.x = clientX;
+      point.y = clientY;
+      const at = point.matrixTransform(ctm.inverse());
+      return cellAtPoint(geo, at.x, at.y);
+    }
+
+    function onBoardClick(ev) {
+      if (!active || (typeof ev.button === 'number' && ev.button !== 0)) return;
+      if (ev.detail === 0 && ev.clientX === 0 && ev.clientY === 0) return;
+      const cell = pointToCell(ev.clientX, ev.clientY);
+      if (cell >= 0) select(cell, true);
+    }
+
+    function onFocusIn(ev) {
+      const target = ev.target;
+      if (!active || !target || typeof target.getAttribute !== 'function' || target === svg) return;
+      if (svg === null || !svg.contains(target)) return;
+      const value = target.getAttribute('data-cell');
+      if (value !== null && value !== '') select(Number(value), false);
+    }
+
+    // ---- editing ----------------------------------------------------------------------------------
+
+    function requireCell() {
+      if (sel >= 0) return true;
+      say('info', function () { return tr('play.msg.select'); });
+      return false;
+    }
+
+    function enterValue(v, continued) {
+      if (!canEdit() || !requireCell()) return;
+      const cell = sel;
+      if (game.isGiven(cell)) {
+        say('warning', function () { return tr('play.msg.given', { cell: labelOf(cell) }); });
+        return;
+      }
+      if (notesMode) {
+        if (game.userValue(cell) > 0) {
+          say('warning', function () { return tr('play.msg.notesFilled', { cell: labelOf(cell) }); });
+          return;
+        }
+        game.toggleNote(cell, v);
+        return;
+      }
+      if (game.userValue(cell) === v && !continued) {
+        game.clearValue(cell);
+        return;
+      }
+      game.setValue(cell, v, { amend: continued });
+    }
+
+    function eraseCell() {
+      if (!canEdit() || !requireCell()) return;
+      if (game.isGiven(sel)) {
+        const cell = sel;
+        say('warning', function () { return tr('play.msg.given', { cell: labelOf(cell) }); });
+        return;
+      }
+      game.erase(sel);
+    }
+
+    function undo() {
+      if (active && game.timerState().pausedBy !== 'user') game.undo();
+    }
+
+    function redo() {
+      if (active && game.timerState().pausedBy !== 'user') game.redo();
+    }
+
+    function toggleNotes() {
+      if (!canEdit()) return;
+      notesMode = !notesMode;
+      refreshPad();
+      refreshTools();
+    }
+
+    function fillNotes() {
+      if (!canEdit()) return;
+      if (game.fillNotes()) say('info', function () { return tr('play.msg.notesFilledAll'); });
+    }
+
+    function checkEntries() {
+      if (!canEdit()) return;
+      const res = game.check();
+      marks = { wrong: new Set(res.wrong), conflicts: new Set(res.conflicts) };
+      if (res.filled === 0) {
+        say('info', function () { return tr('play.check.empty'); });
+      } else if (res.ok) {
+        say('success', function () { return tr('play.check.ok'); });
+      } else {
+        say('danger', function () {
+          const parts = [];
+          if (res.wrong.length > 0) parts.push(tr('play.check.wrong', { count: res.wrong.length }));
+          if (res.conflicts.length > 0) {
+            parts.push(tr('play.check.conflicts', { count: res.conflicts.length }));
+          }
+          return parts.join(' ');
+        });
+      }
+      refreshMarks();
+    }
+
+    function revealCell() {
+      if (!canEdit()) return;
+      const shown = game.revealCell(sel >= 0 ? sel : undefined);
+      if (shown === null) return;
+      select(shown.cell, false);
+      say('info', function () {
+        return tr('play.msg.revealed', {
+          cell: labelOf(shown.cell), symbol: valueText(game.model, shown.value, currentMode())
+        });
+      });
+    }
+
+    function revealAll() {
+      if (!canEdit()) return;
+      game.revealSolution();
+    }
+
+    function resetGame() {
+      if (!active) return;
+      if (resetTimer === null) {
+        resetTimer = root.setTimeout(function () {
+          resetTimer = null;
+          if (active) refreshStatus();
+        }, RESET_ARM_MS);
+        refreshStatus();
+        return;
+      }
+      root.clearTimeout(resetTimer);
+      resetTimer = null;
+      game.reset();
+      marks = null;
+      hint = null;
+      notesMode = false;
+      say('info', function () { return tr('play.msg.reset'); });
+    }
+
+    function togglePause() {
+      if (!active) return;
+      if (game.timerState().pausedBy === 'user') {
+        game.resumeTimer('user');
+        say('info', null);
+      } else if (game.pauseTimer('user')) {
+        say('info', function () { return tr('play.timer.paused'); });
+      }
+    }
+
+    // ---- hints ------------------------------------------------------------------------------------
+
+    function show(el, visible) {
+      el.hidden = !visible;
+    }
+
+    function renderHint() {
+      const card = els.hintCard;
+      if (hint === null) {
+        card.root.hidden = true;
+        return;
+      }
+      card.root.hidden = false;
+      const d = describeHint(game.model, hint, { mode: currentMode() });
+      const ok = d.ok === true;
+      const level = ok ? hint.level : 3;
+      card.title.textContent = ok ? d.title : tr('play.tool.hint');
+      show(card.step, ok);
+      if (ok) card.step.textContent = tr('play.hint.step', { step: hint.step + 1, steps: hint.steps });
+      card.desc.textContent = ok ? d.description : d.text;
+      show(card.desc, card.desc.textContent !== '');
+      card.region.textContent = ok ? d.region : '';
+      show(card.region, ok);
+      card.cells.textContent = ok ? d.cells : '';
+      show(card.cells, ok && level >= 2);
+      card.action.textContent = ok ? d.action : '';
+      show(card.action, ok && level >= 3);
+      card.explain.textContent = ok ? d.explanation : '';
+      show(card.explain, ok && level >= 3);
+      if (ok) {
+        card.note.textContent = d.ignored;
+      } else {
+        card.note.textContent = hint.ignored > 0 ? tr('play.hint.ignored', { count: hint.ignored }) : '';
+      }
+      show(card.note, card.note.textContent !== '');
+      show(card.more, ok && hint.level < 3);
+      show(card.apply, ok && hint.level >= 3);
+      if (ok) {
+        card.apply.textContent = tr(hint.kind === 'placement' ? 'play.hint.apply.place'
+          : 'play.hint.apply.eliminate');
+      }
+      show(card.next, ok && hint.level >= 3 && hint.step + 1 < hint.steps);
+      show(card.reveal, !ok && hint.reason === 'stuck');
+    }
+
+    function afterHintChange() {
+      renderHint();
+      renderCells();
+      refreshMarks();
+    }
+
+    function showHint() {
+      if (!canEdit()) return;
+      hint = game.hint();
+      afterHintChange();
+    }
+
+    function nextHint() {
+      if (!canEdit()) return;
+      hint = game.nextHintStep();
+      afterHintChange();
+    }
+
+    function applyHint() {
+      if (!canEdit() || hint === null || hint.ok !== true) return;
+      const placed = hint.kind === 'placement' ? hint.targets[0] : -1;
+      game.applyHint();
+      hint = null;
+      if (placed >= 0) select(placed, false);
+      afterHintChange();
+    }
+
+    function closeHint() {
+      game.clearHint();
+      hint = null;
+      afterHintChange();
+    }
+
+    // ---- game events ------------------------------------------------------------------------------
+
+    function syncWordLine() {
+      if (board === null || !SG.modelAids) return;
+      if (!active || SG.modelAids.describeWord(game.model) === null) return;
+      const reveal = game.isSolved();
+      if (reveal === !wordHidden) return;
+      wordHidden = !reveal;
+      board.setLayerVisible('word', reveal);
+    }
+
+    function onSolved() {
+      stopClock();
+      updateClock();
+      const status = game.status();
+      if (status === 'gaveUp') {
+        say('info', function () { return tr('play.msg.revealedAll'); });
+        return;
+      }
+      const time = clockText(game.elapsedMs());
+      const counters = game.counters();
+      const info = SG.modelAids.describeWord(game.model);
+      say('success', function () {
+        let text = tr('play.success', { time: clockText(game.elapsedMs()) });
+        if (counters.hints > 0) text += ' ' + tr('play.success.hints', { count: counters.hints });
+        if (counters.reveals > 0) text += ' ' + tr('play.success.revealed', { count: counters.reveals });
+        if (info) text += ' ' + tr('play.success.word', { word: info.word });
+        return text;
+      });
+      if (board !== null && typeof board.pulseDone === 'function') board.pulseDone();
+      if (typeof app.toast === 'function') app.toast('success', 'play.success.toast', { time: time });
+    }
+
+    /** A game that is already finished when it is attached (a reload): the message without the fanfare. */
+    function showFinished() {
+      const status = game.status();
+      if (status === 'gaveUp') {
+        say('info', function () { return tr('play.msg.revealedAll'); }, true);
+        return;
+      }
+      const info = SG.modelAids.describeWord(game.model);
+      say('success', function () {
+        let text = tr('play.success', { time: clockText(game.elapsedMs()) });
+        if (info) text += ' ' + tr('play.success.word', { word: info.word });
+        return text;
+      }, true);
+    }
+
+    function onGameChange(info) {
+      if (!active) return;
+      if (info.type === 'timer') {
+        if (game.timerState().running) startClock();
+        else stopClock();
+        refreshAll();
+        app.emit('play:change', info);
+        return;
+      }
+      if (info.values && marks !== null) marks = null;
+      if (info.type === 'undo' || info.type === 'redo' || info.type === 'reset' || info.type === 'set' ||
+          info.type === 'erase') {
+        say('info', null);
+      }
+      if (info.values && hint !== null) {
+        hint = null;
+        game.clearHint();
+        renderHint();
+      }
+      if ((info.type === 'set' || info.type === 'erase') && info.cells.length > 0 &&
+          typeof app.announce === 'function') {
+        const cell = info.cells[0];
+        const value = game.userValue(cell);
+        app.announce(value > 0
+          ? tr('play.msg.set', { cell: labelOf(cell), symbol: valueText(game.model, value, currentMode()) })
+          : tr('play.msg.cleared', { cell: labelOf(cell) }));
+      }
+      refreshAll();
+      if (info.type === 'solved') onSolved();
+      else if (!game.isSolved() && game.timerState().running) startClock();
+      app.emit('play:change', info);
+    }
+
+    // ---- keyboard ---------------------------------------------------------------------------------
+
+    function isButton(el) {
+      return el && (el.tagName === 'BUTTON' || el.tagName === 'A');
+    }
+
+    function keyTargetOk(target) {
+      if (doc.querySelector('dialog[open], #modal-root .modal') !== null) return false;
+      if (!target || target === doc.body || target === doc.documentElement) return true;
+      if (svg !== null && svg.contains(target)) return true;
+      if (els.root.contains(target)) {
+        return ['INPUT', 'SELECT', 'TEXTAREA', 'SUMMARY', 'OPTION'].indexOf(target.tagName) === -1;
+      }
+      return false;
+    }
+
+    function moveBy(delta) {
+      if (sel < 0) {
+        select(firstEditable() >= 0 ? firstEditable() : 0, true);
+        return;
+      }
+      select(moveSelection(geo, sel, delta[0], delta[1]), true);
+    }
+
+    function hotkeyFree(letter) {
+      if (reader === null) return true;
+      return reader.labels.every(function (label) { return String(label).toLowerCase() !== letter; });
+    }
+
+    function onKeyDown(ev) {
+      if (!active || ev.defaultPrevented || ev.isComposing || !keyTargetOk(ev.target)) return;
+      const key = ev.key;
+      if (typeof key !== 'string') return;
+      if ((ev.ctrlKey || ev.metaKey) && !ev.altKey) {
+        const lower = key.toLowerCase();
+        if (lower === 'z') {
+          ev.preventDefault();
+          if (ev.shiftKey) redo();
+          else undo();
+        } else if (lower === 'y') {
+          ev.preventDefault();
+          redo();
+        }
+        return;
+      }
+      if (ev.altKey || key === 'Tab') return;
+      const bare = ev.target === doc.body || ev.target === doc.documentElement || !ev.target;
+      if (isButton(ev.target) && (key === 'Enter' || key === ' ')) return;
+      if (Object.prototype.hasOwnProperty.call(ARROWS, key)) {
+        if (bare) return;
+        ev.preventDefault();
+        moveBy(ARROWS[key]);
+        return;
+      }
+      if (key === 'Escape') {
+        if (hint !== null) {
+          ev.preventDefault();
+          closeHint();
+        }
+        return;
+      }
+      if (!canEdit()) return;
+      if (key === 'Backspace' || key === 'Delete' || (key === ' ' && !bare)) {
+        ev.preventDefault();
+        eraseCell();
+        return;
+      }
+      if (key.length !== 1) return;
+      const read = reader.feed(key, Date.now());
+      if (read !== null) {
+        ev.preventDefault();
+        if (read.value !== null) enterValue(read.value, read.continued);
+        return;
+      }
+      const lower = key.toLowerCase();
+      if ((lower === 'n' && hotkeyFree('n')) || key === '`') {
+        ev.preventDefault();
+        toggleNotes();
+      } else if (lower === 'h' && hotkeyFree('h')) {
+        ev.preventDefault();
+        showHint();
+      }
+    }
+
+    function onVisibility() {
+      if (!active || game === null) return;
+      if (doc.visibilityState === 'hidden') pauseAuto();
+      else resumeAuto();
+    }
+
+    function pauseAuto() {
+      if (active && game !== null && game.pauseTimer('auto')) stopClock();
+    }
+
+    function resumeAuto() {
+      if (active && game !== null && game.resumeTimer('auto')) startClock();
+    }
+
+    // ---- attaching and detaching ------------------------------------------------------------------
+
+    function listen(target, type, fn) {
+      target.addEventListener(type, fn);
+      subscriptions.push(function () { target.removeEventListener(type, fn); });
+    }
+
+    function makeGame(state) {
+      const options = { autoNotes: pref('autoNotes') !== false };
+      if (state !== undefined && state !== null) {
+        try {
+          return restoreGame(puzzle.model, puzzle.givens, puzzle.solution, state, options);
+        } catch (err) {
+          // A saved game that does not fit (damaged, other version): start a fresh one.
+        }
+      }
+      return createGame(puzzle.model, puzzle.givens, puzzle.solution, options);
+    }
+
+    function attach(next, options) {
+      const opt = options || {};
+      const view = typeof app.getBoard === 'function' ? app.getBoard() : null;
+      if (!next || !next.model || view === null || els.root === undefined) return null;
+      if (active) detach();
+      board = view;
+      svg = board.svg || doc.getElementById('board-svg');
+      puzzle = next;
+      geo = board.getGeometry();
+      game = makeGame(opt.state);
+      const modes = SG.symbols.modesFor(game.model);
+      const wanted = opt.symbolMode || puzzle.symbolMode;
+      board.setSymbolMode(modes.indexOf(wanted) !== -1 ? wanted : modes[0]);
+      board.setValues(puzzle.givens);
+      board.setGivens(puzzle.givens);
+      board.clearHighlights();
+      reader = createKeyReader(typedLabels(game.model, currentMode()));
+      active = true;
+      unsubscribeGame = game.subscribe(onGameChange);
+      if (svg.getAttribute('tabindex') === null && svg.querySelector('[tabindex]') === null) {
+        svg.setAttribute('tabindex', '0');
+        addedTabindex = true;
+      }
+      svg.classList.add('play-on');
+      listen(svg, 'click', onBoardClick);
+      // On the document, not on the svg: Blink makes an SVG element with a focus listener focusable, which
+      // would add the whole board to the tab order in front of its roving cell.
+      listen(doc, 'focusin', onFocusIn);
+      listen(doc, 'keydown', onKeyDown);
+      listen(doc, 'visibilitychange', onVisibility);
+      listen(root, 'blur', pauseAuto);
+      listen(root, 'focus', resumeAuto);
+      wordHidden = false;
+      notesMode = false;
+      marks = null;
+      hint = null;
+      message = null;
+      els.root.setAttribute('data-active', 'true');
+      els.panel.hidden = false;
+      els.status.hidden = false;
+      sel = firstEditable();
+      layer = null;
+      padSig = '';
+      refreshSymbolControl();
+      renderLegend();
+      renderHint();
+      renderMessage();
+      game.resumeTimer('auto');
+      refreshAll();
+      if (game.timerState().running) startClock();
+      updateClock();
+      if (game.isSolved()) showFinished();
+      if (opt.focus === true) focusBoard();
+      app.emit('play:game', { game: game, puzzle: puzzle });
+      return game;
+    }
+
+    function detach() {
+      if (!active) return false;
+      active = false;
+      stopClock();
+      game.pauseTimer('auto');
+      if (unsubscribeGame !== null) unsubscribeGame();
+      unsubscribeGame = null;
+      subscriptions.splice(0).forEach(function (off) { off(); });
+      if (resetTimer !== null) root.clearTimeout(resetTimer);
+      resetTimer = null;
+      hint = null;
+      game.clearHint();
+      renderHint();
+      notesMode = false;
+      clearDescriptions();
+      removeLayer();
+      if (svg !== null) {
+        svg.classList.remove('play-on');
+        if (addedTabindex) svg.removeAttribute('tabindex');
+      }
+      addedTabindex = false;
+      if (board !== null && wordHidden) board.setLayerVisible('word', true);
+      wordHidden = false;
+      renderLegend();
+      els.root.setAttribute('data-active', 'false');
+      els.panel.hidden = true;
+      els.status.hidden = true;
+      return true;
+    }
+
+    // ---- app events -------------------------------------------------------------------------------
+
+    function onSettings(payload) {
+      const keys = payload && payload.keys ? payload.keys : [];
+      if (keys.indexOf('check') !== -1) els.checkSelect.value = pref('check');
+      if (keys.indexOf('autoNotes') !== -1) {
+        els.autoNotes.checked = pref('autoNotes') !== false;
+        if (game !== null) game.setOptions({ autoNotes: pref('autoNotes') !== false });
+      }
+      if (!active) return;
+      if (keys.indexOf('colorAuxSymbol') !== -1) {
+        board.setColorAuxSymbol(auxOn());
+        renderLegend();
+      }
+      refreshAll();
+    }
+
+    function onLocale() {
+      retranslate();
+      if (game !== null) refreshSymbolControl();
+      if (active) {
+        if (layer !== null) layer.shown.fill('');
+        renderHint();
+        renderMessage();
+        renderLegend();
+        refreshAll();
+      }
+    }
+
+    function start() {
+      if (!buildUi()) return false;
+      appOffs.push(app.on('settings', onSettings), app.on('locale', onLocale));
+      return true;
+    }
+
+    function destroy() {
+      detach();
+      appOffs.splice(0).forEach(function (off) { if (typeof off === 'function') off(); });
+      bound.length = 0;
+      if (els.root && els.root.parentNode) els.root.parentNode.removeChild(els.root);
+      if (els.status && els.status.parentNode) els.status.parentNode.removeChild(els.status);
+    }
+
+    return {
+      start: start,
+      attach: attach,
+      detach: detach,
+      select: select,
+      setSymbolMode: setSymbolMode,
+      destroy: destroy,
+      symbolMode: currentMode,
+      isActive: function isActive() { return active; },
+      getGame: function getGame() { return game; }
+    };
+  }
+
+  /**
+   * Starts the DOM layer (app.js calls it at start-up). Idempotent; does nothing without the mount points.
+   * @param {Object} app  `SG.app`.
+   * @returns {boolean} Whether play is available.
+   */
+  function init(app) {
+    if (typeof document === 'undefined' || !app || typeof app.on !== 'function') return false;
+    if (controller !== null) return true;
+    const created = createController(app);
+    if (!created.start()) return false;
+    controller = created;
+    return true;
+  }
+
+  /**
+   * Puts a puzzle in play on the board of the app.
+   * @param {Object} puzzle  `model`, `givens`, `solution` (what `SG.importer` returns).
+   * @param {{state?: Object, symbolMode?: string, focus?: boolean}} [options]  `state`: a saved
+   *        `game.serialize()` (a state that does not fit is ignored); `focus`: move the focus to the board.
+   * @returns {?Object} The game; null when play is not available.
+   */
+  function attach(puzzle, options) {
+    return controller !== null ? controller.attach(puzzle, options) : null;
+  }
+
+  /** Takes the puzzle out of play (the board and the panel stay as they are). @returns {boolean} Was on. */
+  function detach() {
+    return controller !== null && controller.detach();
+  }
+
+  /** @returns {boolean} Whether a puzzle is in play. */
+  function isActive() {
+    return controller !== null && controller.isActive();
+  }
+
+  /** @returns {?Object} The game of the puzzle in play (null before the first `attach`). */
+  function getGame() {
+    return controller !== null ? controller.getGame() : null;
+  }
+
+  /** @returns {string} The symbol mode of the board ('digits' without a board). */
+  function getSymbolMode() {
+    return controller !== null && controller.isActive() ? controller.symbolMode() : 'digits';
+  }
+
+  /** Switches the symbol mode of the puzzle in play. @returns {boolean} Whether it was accepted. */
+  function setSymbolMode(mode) {
+    return controller !== null && controller.setSymbolMode(mode);
+  }
+
+  /** Selects a cell (a puzzle must be in play). */
+  function select(cell) {
+    if (controller !== null && controller.isActive()) controller.select(cell, true);
+  }
+
+  /** Removes everything play added to the page (for tests and hot reloads). */
+  function destroy() {
+    if (controller !== null) controller.destroy();
+    controller = null;
+  }
+
+  SG.play = {
+    init: init,
+    attach: attach,
+    detach: detach,
+    isActive: isActive,
+    getGame: getGame,
+    getSymbolMode: getSymbolMode,
+    setSymbolMode: setSymbolMode,
+    select: select,
+    destroy: destroy,
+    SAVE_VERSION: SAVE_VERSION,
+    CHECK_MODES: CHECK_MODES,
+    HINT_LEVELS: HINT_LEVELS,
+    createGame: createGame,
+    restoreGame: restoreGame,
+    describeHint: describeHint,
+    localizeArgs: localizeArgs,
+    groupEliminations: groupEliminations,
+    valueText: valueText,
+    typedLabels: typedLabels,
+    createKeyReader: createKeyReader,
+    noteLayout: noteLayout,
+    padLayout: padLayout,
+    cellAtPoint: cellAtPoint,
+    moveSelection: moveSelection
+  };
+
+  // ---------------------------------------------------------------------------------------------
+  // Strings of play
+  // ---------------------------------------------------------------------------------------------
+
+  SG.localeFragments = SG.localeFragments || [];
+  SG.localeFragments.push({
+    en: {
+      'play.panel.label': 'Play',
+      'play.symbols.label': 'Symbols',
+      'play.timer.label': 'Time',
+      'play.timer.pause': 'Pause',
+      'play.timer.resume': 'Resume',
+      'play.timer.paused': 'Paused. Press Resume to carry on.',
+      'play.progress': '{filled} of {total} cells filled',
+      'play.tool.label': 'Play tools',
+      'play.tool.notes': 'Notes',
+      'play.tool.notes.title': 'Pencil notes (N): mark the symbols a cell may still hold',
+      'play.tool.erase': 'Erase',
+      'play.tool.erase.title': 'Erase the selected cell (Backspace)',
+      'play.tool.undo': 'Undo',
+      'play.tool.undo.title': 'Undo (Ctrl+Z)',
+      'play.tool.redo': 'Redo',
+      'play.tool.redo.title': 'Redo (Ctrl+Y)',
+      'play.tool.hint': 'Hint',
+      'play.tool.hint.title': 'Find the next logical step (H)',
+      'play.tool.check': 'Check',
+      'play.tool.check.title': 'Check your entries',
+      'play.pad.label': 'Symbol pad',
+      'play.pad.value': 'Enter {symbol}',
+      'play.pad.note': 'Toggle note {symbol}',
+      'play.options.summary': 'Options',
+      'play.options.check': 'Check as I type',
+      'play.options.check.off': 'Off (only when I press Check)',
+      'play.options.check.conflicts': 'Rule conflicts (repeats, cage sums, signs)',
+      'play.options.check.live': 'All mistakes (compared with the solution)',
+      'play.options.autoNotes': 'Remove a placed symbol from the notes of its neighbours',
+      'play.options.fillNotes': 'Fill in all notes',
+      'play.options.revealCell': 'Reveal a cell',
+      'play.options.revealAll': 'Reveal the solution',
+      'play.options.reset': 'Reset puzzle',
+      'play.options.reset.confirm': 'Press again to reset',
+      'play.keys': 'Keys: arrows move, type a symbol to enter it, Backspace erases, N switches notes, ' +
+        'H asks for a hint, Ctrl+Z undoes, Ctrl+Y redoes.',
+      'play.msg.select': 'Select a cell first.',
+      'play.cell.entry': 'Your entry: {symbol}',
+      'play.cell.notes': 'Your notes: {symbols}',
+      'play.msg.given': '{cell} is a clue and cannot be changed.',
+      'play.msg.notesFilled': '{cell} already has a value. Erase it to add notes.',
+      'play.msg.set': '{cell}: {symbol}',
+      'play.msg.cleared': '{cell}: cleared',
+      'play.msg.notesFilledAll': 'All notes are filled in.',
+      'play.msg.revealed': 'Revealed {cell}: {symbol}.',
+      'play.msg.revealedAll': 'The solution is shown. This puzzle does not count as solved.',
+      'play.msg.reset': 'The puzzle was reset.',
+      'play.check.empty': 'Nothing to check yet. Enter a few values first.',
+      'play.check.ok': 'No mistakes so far. Keep going!',
+      'play.check.wrong_one': '{count} entry does not match the solution.',
+      'play.check.wrong_other': '{count} entries do not match the solution.',
+      'play.check.conflicts_one': '{count} cell breaks a rule.',
+      'play.check.conflicts_other': '{count} cells break a rule.',
+      'play.success': 'Solved! Time: {time}.',
+      'play.success.hints_one': 'You used {count} hint.',
+      'play.success.hints_other': 'You used {count} hints.',
+      'play.success.revealed_one': '{count} cell was revealed for you.',
+      'play.success.revealed_other': '{count} cells were revealed for you.',
+      'play.success.word': 'The hidden word is {word}.',
+      'play.success.toast': 'Puzzle solved in {time}!',
+      'play.hint.step': 'Step {step} of {steps}',
+      'play.hint.region': 'Look in {kind} {label}.',
+      'play.hint.region.cage': 'Look at the cage with sum {sum}.',
+      'play.hint.noRegion': 'Look for this pattern in the whole grid.',
+      'play.hint.cells': 'Cells involved: {cells}.',
+      'play.hint.place': 'Place {symbol} in {cell}.',
+      'play.hint.eliminate': 'Remove the candidate {symbol} from {cells}.',
+      'play.hint.more': 'Show more',
+      'play.hint.apply.place': 'Fill it in',
+      'play.hint.apply.eliminate': 'Remove from my notes',
+      'play.hint.next': 'Next step',
+      'play.hint.close': 'Close hint',
+      'play.hint.reveal': 'Reveal one cell',
+      'play.hint.ignored_one': '{count} of your entries is wrong and was ignored for this hint.',
+      'play.hint.ignored_other': '{count} of your entries are wrong and were ignored for this hint.',
+      'play.hint.stuck': 'No logical step found from here. Either the puzzle needs a harder technique than ' +
+        'the solver knows, or a wrong entry is in the way. Use Check to look for mistakes, or reveal one ' +
+        'cell.',
+      'play.hint.solved': 'Nothing to hint: every cell is already correct.',
+      'play.hint.unavailable': 'A hint is not available right now.'
+    },
+    vi: {
+      'play.panel.label': 'Chơi',
+      'play.symbols.label': 'Ký hiệu',
+      'play.timer.label': 'Thời gian',
+      'play.timer.pause': 'Tạm dừng',
+      'play.timer.resume': 'Tiếp tục',
+      'play.timer.paused': 'Đang tạm dừng. Nhấn Tiếp tục để chơi tiếp.',
+      'play.progress': 'Đã điền {filled}/{total} ô',
+      'play.tool.label': 'Công cụ chơi',
+      'play.tool.notes': 'Ghi chú',
+      'play.tool.notes.title': 'Ghi chú nháp (N): đánh dấu các ký hiệu ô này còn có thể nhận',
+      'play.tool.erase': 'Xóa',
+      'play.tool.erase.title': 'Xóa ô đang chọn (Backspace)',
+      'play.tool.undo': 'Hoàn tác',
+      'play.tool.undo.title': 'Hoàn tác (Ctrl+Z)',
+      'play.tool.redo': 'Làm lại',
+      'play.tool.redo.title': 'Làm lại (Ctrl+Y)',
+      'play.tool.hint': 'Gợi ý',
+      'play.tool.hint.title': 'Tìm bước suy luận tiếp theo (H)',
+      'play.tool.check': 'Kiểm tra',
+      'play.tool.check.title': 'Kiểm tra các ô bạn đã điền',
+      'play.pad.label': 'Bàn phím ký hiệu',
+      'play.pad.value': 'Điền {symbol}',
+      'play.pad.note': 'Bật/tắt ghi chú {symbol}',
+      'play.options.summary': 'Tùy chọn',
+      'play.options.check': 'Kiểm tra khi gõ',
+      'play.options.check.off': 'Tắt (chỉ khi tôi nhấn Kiểm tra)',
+      'play.options.check.conflicts': 'Vi phạm luật (trùng số, tổng lồng, dấu so sánh)',
+      'play.options.check.live': 'Mọi lỗi (so với đáp án)',
+      'play.options.autoNotes': 'Tự xóa ký hiệu vừa điền khỏi ghi chú của các ô cùng nhóm',
+      'play.options.fillNotes': 'Điền sẵn mọi ghi chú',
+      'play.options.revealCell': 'Hiện một ô',
+      'play.options.revealAll': 'Hiện đáp án',
+      'play.options.reset': 'Đặt lại đề',
+      'play.options.reset.confirm': 'Nhấn lần nữa để đặt lại',
+      'play.keys': 'Phím tắt: mũi tên để di chuyển, gõ ký hiệu để điền, Backspace để xóa, N để bật ghi ' +
+        'chú, H để xin gợi ý, Ctrl+Z để hoàn tác, Ctrl+Y để làm lại.',
+      'play.msg.select': 'Hãy chọn một ô trước.',
+      'play.cell.entry': 'Bạn đã điền: {symbol}',
+      'play.cell.notes': 'Ghi chú của bạn: {symbols}',
+      'play.msg.given': '{cell} là ô cho sẵn, không thể thay đổi.',
+      'play.msg.notesFilled': '{cell} đã có giá trị. Hãy xóa giá trị trước khi ghi chú.',
+      'play.msg.set': '{cell}: {symbol}',
+      'play.msg.cleared': '{cell}: đã xóa',
+      'play.msg.notesFilledAll': 'Đã điền sẵn tất cả ghi chú.',
+      'play.msg.revealed': 'Đã hiện {cell}: {symbol}.',
+      'play.msg.revealedAll': 'Đã hiện đáp án. Đề này không được tính là đã giải.',
+      'play.msg.reset': 'Đã đặt lại đề.',
+      'play.check.empty': 'Chưa có gì để kiểm tra. Hãy điền vài ô trước.',
+      'play.check.ok': 'Chưa thấy lỗi nào. Cứ tiếp tục nhé!',
+      'play.check.wrong_one': '{count} ô không khớp với đáp án.',
+      'play.check.wrong_other': '{count} ô không khớp với đáp án.',
+      'play.check.conflicts_one': '{count} ô vi phạm luật.',
+      'play.check.conflicts_other': '{count} ô vi phạm luật.',
+      'play.success': 'Giải xong rồi! Thời gian: {time}.',
+      'play.success.hints_one': 'Bạn đã dùng {count} gợi ý.',
+      'play.success.hints_other': 'Bạn đã dùng {count} gợi ý.',
+      'play.success.revealed_one': 'Có {count} ô đã được hiện sẵn cho bạn.',
+      'play.success.revealed_other': 'Có {count} ô đã được hiện sẵn cho bạn.',
+      'play.success.word': 'Từ ẩn là {word}.',
+      'play.success.toast': 'Đã giải xong đề trong {time}!',
+      'play.hint.step': 'Bước {step}/{steps}',
+      'play.hint.region': 'Hãy nhìn vào {kind} {label}.',
+      'play.hint.region.cage': 'Hãy nhìn vào lồng có tổng {sum}.',
+      'play.hint.noRegion': 'Hãy tìm mẫu này trên toàn bộ lưới.',
+      'play.hint.cells': 'Các ô liên quan: {cells}.',
+      'play.hint.place': 'Điền {symbol} vào {cell}.',
+      'play.hint.eliminate': 'Loại ứng viên {symbol} khỏi {cells}.',
+      'play.hint.more': 'Xem thêm',
+      'play.hint.apply.place': 'Điền giúp tôi',
+      'play.hint.apply.eliminate': 'Xóa khỏi ghi chú của tôi',
+      'play.hint.next': 'Bước tiếp theo',
+      'play.hint.close': 'Đóng gợi ý',
+      'play.hint.reveal': 'Hiện một ô',
+      'play.hint.ignored_one': '{count} ô bạn điền bị sai nên đã được bỏ qua khi tìm gợi ý.',
+      'play.hint.ignored_other': '{count} ô bạn điền bị sai nên đã được bỏ qua khi tìm gợi ý.',
+      'play.hint.stuck': 'Không tìm được bước suy luận nào từ vị trí này. Hoặc đề cần kỹ thuật khó hơn mức ' +
+        'bộ giải biết, hoặc có ô điền sai đang cản đường. Hãy dùng Kiểm tra để tìm lỗi, hoặc hiện một ô.',
+      'play.hint.solved': 'Không còn gì để gợi ý: mọi ô đều đã đúng.',
+      'play.hint.unavailable': 'Hiện chưa thể đưa ra gợi ý.'
+    }
+  });
+})(typeof self !== 'undefined' ? self : globalThis);
