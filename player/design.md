@@ -1,0 +1,287 @@
+# Sudoku Player — Design Document
+
+> The player is the second half of a split project. **sudoku-generator** makes Sudoku puzzles (15 variants, a
+> logical difficulty rating, a replayable generation trace). **sudoku-player** — this repository — opens such a
+> puzzle in a browser and lets people **play** it. The only coupling between the two is a file format and a link
+> token (§5). This document says what the player is, how it is built and why; `task.md` is the work breakdown
+> and its status, `memory.md` the resume guide for a maintainer, `README.md` the user's entry point.
+
+## 1. Goals and non-goals
+
+### 1.1 What it is
+A **static web app** (HTML, CSS, JavaScript; no build step, no npm, no framework) that receives a puzzle made by
+sudoku-generator and plays it:
+
+- Opens a puzzle from the **link** the generator's "Play online" button builds (`…/#puzzle=<token>`), from a
+  **file** (picker or drag & drop anywhere on the page), from **pasted text** (the JSON document, a token, a
+  whole link, or a line of 16 / 36 / 81 characters for a classic board) and from a list of **recent puzzles**.
+- Plays **all 15 variants** — classic 4×4 / 6×6 / 9×9, Mega 12×12 / 16×16, Diagonal X, Hyper, Jigsaw, Killer,
+  Greater-Than, Samurai, Sohei, Butterfly, Flower, Wordoku — **without any variant or generation code**: the
+  document carries the board as plain data (`model`) and the player rebuilds it with `SG.model.create`.
+- Play features: select by mouse, touch or keyboard; enter values (digits, letters or hex per the board's
+  symbols; two-character numbers for Mega 12×12); an on-screen symbol pad; candidate notes; erase; exact
+  undo / redo; error checking (off / conflicts / live); progressive hints (3 levels) that name the logical
+  technique; a timer that pauses when the page loses focus; completion detection; reset; reveal; five symbol
+  sets (digits, letters, colours, shapes, the Wordoku word).
+- **Progress is saved automatically per puzzle** (local storage, last ~20 puzzles) and the opened puzzles are
+  kept (last ~10), so a reload — or coming back tomorrow — continues where the player stopped.
+- Bilingual **EN / VI**, three themes + `prefers-color-scheme`, font-size setting, reduced motion, WCAG AA
+  contrast, keyboard operable, `role="grid"` board, `aria-live` announcements, responsive (desktop two columns,
+  mobile one column with the pad under the board).
+- Everything runs **locally**: no server, no account, no network request after the page is loaded.
+
+### 1.2 Non-goals (and a test that proves it)
+Generation (`full-grid`, digger, pipeline, symmetry, seeded RNG), the variant registry and builders, difficulty
+calibration and classification, the worker, the puzzle cache and pre-generation, the steps panel, the replay
+player, explanations, the result panel, **export and print** — none of it is in this repository.
+`tests/suites/ui-contract.test.js` loads every player source and asserts that `SG.pipeline`, `SG.digger`,
+`SG.fullGrid`, `SG.variants`, `SG.workerClient`, `SG.symmetry`, `SG.difficulty`, `SG.rng` and `SG.exportUi` do
+not exist and that no file under `js/` mentions them.
+
+### 1.3 Constraints
+IIFE + `SG` namespace, `'use strict'`, 2-space indent, single quotes, English comments, no `import` / `export`,
+DOM only in `js/ui/*`, every UI file loads in Node without a DOM, every displayed string through `SG.i18n`, no
+colour literal outside the two token files. Works from `file://` (no `fetch` of local files) and over `http://`.
+Target browser: a current Chromium (tested in Edge); Firefox and Safari are expected to work and untested.
+
+## 2. Architecture
+
+```
+index.html ── <script> tags in the order of tests/node-runner.js SOURCE_FILES
+js/core/   pure logic, no DOM (copied from the generator, trimmed — §2.2)
+js/ui/     modules that talk to the page; every file also loads in Node (pure helpers + DOM functions)
+css/       tokens (3 themes) · base · layout · components · board · play · help
+tests/     harness.js · node-runner.js · tests.html · suites/ · fixtures/ (puzzle documents)
+docs/      fixtures.md (how the documents were made) · qa.md (the manual browser run)
+```
+
+### 2.1 Layers
+`ns / errors / bits / budget` → `model` → `constraints`, `combo-table`, `dfs-solver` → `techniques`,
+`logical-solver`, `tech-*` → `classic-model`, `model-aids` (all `js/core/`) → `exchange`, `importer`, `i18n`,
+locale packs, `store`, `theme`, `symbols`, `board-view`, `a11y`, `progress`, `play`, `help`, `app` (`js/ui/`).
+A lower layer never knows a higher one.
+
+### 2.2 Modules
+| File | `SG.` name | Role | Origin |
+|------|------------|------|--------|
+| `core/ns.js`, `errors.js`, `bits.js`, `budget.js` | `SG`, `errors`, `bits`, `budget` | namespace, `GenerationError`, bit masks, work budget | copied; the stepper part of `budget` removed |
+| `core/model.js` | `model` | `PuzzleModel` (units, peers, cages, signs, layout, symbols), `validate` V1–V8 | copied |
+| `core/constraints.js`, `combo-table.js`, `dfs-solver.js` | `constraints`, `comboTable`, `dfs` | propagation, cage sums, solution counting | copied |
+| `core/techniques.js`, `logical-solver.js`, `tech-basic / subset / fish / wing / chain / cage / ineq.js` | `techniques`, `logicalSolver`, `ineq` | the 26 named techniques; the solver that powers hints | copied (scoring left as the plain design score; no classification) |
+| `core/classic-model.js` | `classicModel` | 4 / 6 / 9 classic board builder (units rows, columns, boxes) | **new** (replaces `variants/classic.js`) |
+| `core/model-aids.js` | `modelAids` | Greater-Than sign edges, Wordoku word line, symbol sets of a model | **new** (replaces pieces of `greater-than.js`, `wordoku.js`) |
+| `ui/exchange.js` | `exchange` | link token encode / decode, error codes | shared byte for byte with the generator |
+| `ui/importer.js` | `importer` | recognise, decode, validate and open a puzzle; puzzle id | **new** (player side of the generator's import) |
+| `ui/i18n.js`, `locale.en.js`, `locale.vi.js`, `locale.shell.js` | `i18n`, `locales` | translation, plurals, fragments | copied; generator groups removed; `player.*`, `error.exchange.*` added |
+| `ui/store.js` | `store` | preferences, safe storage backend, URL parsing | **new**, light |
+| `ui/progress.js` | `progress` | per-puzzle progress (LRU 20), opened puzzles (LRU 10), recent list, tour flag | **new** |
+| `ui/theme.js`, `a11y.js` | `theme`, `a11y` | themes + system schemes; ARIA grid, keyboard, live region, Settings dialog | copied, adapted |
+| `ui/symbols.js`, `board-view.js` | `symbols`, `boardView` | value → glyph; the SVG board of every geometry | copied, adapted |
+| `ui/play.js` | `play` | game engine (pure) + the play UI | the generator's play mode, reworked into the main screen |
+| `ui/help.js` | `help` | Help dialog (rules of 15 variants, technique ladder, keys, about) and the tour | rewritten |
+| `ui/app.js` | `app` | start-up, open flows, dialogs, info card, recent list, settings, wiring; the `SG.app` extension surface | **new** |
+
+### 2.3 The `SG.app` surface
+`play.js`, `a11y.js`, `theme.js` and `help.js` were written against the generator's `SG.app`; the player keeps
+the part of that contract they use, so they needed small edits only: `getStore() getBoard() getResult()
+toast(kind, key, args) openModal({titleKey, body, footer, wide, onClose}) announce(text) on(name, fn) emit(name,
+payload) showResult(puzzle, options)`, plus `getPuzzle() open(input, options) openPuzzle(puzzle, options)`.
+`getResult()` returns `{ result: puzzle, trace: [] }`: the "result" is the opened puzzle (`model`, `givens`,
+`solution`, …). Events: `result` (a puzzle is on the board), `settings` (a preference changed), `locale`,
+`theme`, `action` (`settings`, `help`, `open`), `play:game` (a game was created), `play:change` (a game changed).
+
+### 2.4 Script order
+`tests/node-runner.js` `SOURCE_FILES` is the single source of truth; `index.html` and `tests.html` repeat it and
+`ui-contract.test.js` fails when they drift. `exchange.js` comes before `i18n.js`.
+
+## 3. The puzzle model
+Unchanged from the generator (every variant is one constraint problem): cells `0…N-1`, domains `1…D`,
+all-different **units**, optional **cages** (sum) and **inequalities** (`value[a] < value[b]`), a **layout**
+(canvas rows / columns, cell coordinates, regions, overlays, sub-grids), **symbols** (`mode`, `labels[v-1]`) and
+`fixedCells` (the Wordoku word line). `SG.model.create(spec)` builds the immutable model (`peers`, `cellUnits`),
+`SG.model.validate` checks V1–V8. The model never depends on how the puzzle was made, which is what lets the
+player play a puzzle from a document alone.
+
+Killer and Greater-Than use **lazy propagation extensions**: after building a model that has cages the player
+calls `SG.comboTable.enablePropagation(variantId)`, one with signs `SG.ineq.ensureExtension()` — otherwise the
+solver would ignore the rules. The importer does it for every model it builds.
+
+## 4. Opening a puzzle (`SG.importer`)
+`SG.importer.open(input)` returns a promise of an **outcome** `{ ok, kind, errors, warnings, puzzle }`; it never
+rejects and nothing in it throws.
+
+1. **Recognise** (`detect`): JSON (starts with `{` / `[`), a token (`z.` / `j.` + base64url), a link or bare
+   fragment (`…#puzzle=<token>`, via `SG.exchange.tokenFromHash`), a line of classic clues, or nothing known.
+2. **Decode** a token with `SG.exchange.decode` (deflate-raw, bounded to 8 MB); its error codes become the
+   issues `error.exchange.*`.
+3. **Validate** the document (`validate`): `format` (`sudoku-generator/v1`; another version gets its own
+   message), `variantId` in the static list of 15 (digit and cell counts known per variant), `givens` /
+   `solution` shape and ranges, and the **`model` block**: every list bounded, every index in range, labels
+   short and distinct, cages feasible and covering (Killer), signs between neighbours and acyclic. A variant
+   other than the classic ones needs the block (`import.error.noModel` otherwise).
+4. **Build**: `SG.model.create(model)`, `SG.model.validate(model, {solve: false})`, cross-check of the stored
+   `layout`, `symbols`, `cages`, `inequalities` against the model, enable the extensions.
+5. **Check**: the stored solution against units / cages / signs / word line and the givens; the number of
+   solutions with `SG.dfs.countSolutions(model, givens, 2)` under a 6 s budget. No solution → refused
+   (`import.error.noSolution`); several → playable with a warning; budget exceeded → playable, "unverified". A
+   missing solution is computed with the DFS solver (a text line always is).
+6. **Result**: a `puzzle` `{ id, variantId, model, givens, solution, uniqueness, solutionSource, symbolMode,
+   info, document }`. `id` hashes the variant, structure and givens, so the same puzzle has the same id however
+   it arrived (a text line of a classic board equals its document). `document` is the small plain document that
+   is stored for the recent list; `info` feeds the info card (no Wordoku key word in it).
+
+A **text line** (`parseText`) is 16, 36 or 81 characters; `.`, `0`, `-`, `_` are empty; spaces and line breaks
+are ignored; it builds `SG.classicModel.build(4 | 6 | 9)`.
+
+## 5. The exchange with sudoku-generator
+`js/ui/exchange.js` (and its test `exchange.test.js`) are **byte-identical** in both repositories. The token is
+`z.` + base64url(deflate-raw(JSON)) or `j.` + base64url(JSON) in the URL **fragment** — it never reaches a
+server. The document is the generator's puzzle JSON (`format: 'sudoku-generator/v1'`, design.md §14.1 of the
+generator) plus the additive block `model = SG.exchange.plain(SG.pipeline.toWire(result).model)`: `variantId`,
+`digits`, `units`, `unitMeta`, `cages`, `inequalities`, `layout`, `symbols`, `fixedCells`. What the player reads:
+`variantId`, `givens`, `solution`, `model`, `seed`, `symbolMode`, `difficulty {requested, achieved, score,
+hardestTechnique}`, `generatedAt`, `locale`, `stats.clues`, `wordoku {placement, line}`. Everything else is
+ignored, so the generator may add fields.
+
+At start-up and on `hashchange` the page looks for `#puzzle=<token>`; after the puzzle is on the board the
+fragment is removed with `history.replaceState`. The generator's link base is
+`<meta name="sg-player-url">` there; the player's link back is `<meta name="sg-generator-url"
+content="https://tdat00.github.io/sudoku-generator/">` here.
+
+## 6. Play
+### 6.1 The game engine (`SG.play.createGame`, pure)
+`createGame(model, givens, solution, options)` keeps values and notes as typed arrays and a history of change
+records `[cell, oldValue, newValue, oldNotes, newNotes]`, so **undo / redo are exact** (a value and the notes it
+cleared come back together). It offers editing (`setValue`, `clearValue`, `erase`, `toggleNote`, `fillNotes`),
+checking (`conflicts` — repeated values, cages that cannot reach their sum, unsatisfied signs; `wrongCells`
+against the solution; `check`; `progress`), completion (`isSolved`: equals the solution **or** any valid grid),
+hints, a timer on an injected clock (`pauseTimer('auto' | 'user')`), and `serialize()` / `restoreGame()`.
+
+**Hints** run `SG.logicalSolver.solve` on the givens plus the player's *correct* entries (wrong entries are
+ignored and counted), keep the steps up to the first one that disagrees with the solution, and walk the plan in
+three levels: (1) the technique name, its description and the region to look at; (2) the cells involved; (3)
+the placement or the eliminations, with the step's explanation. "Fill it in" applies a placement; an
+elimination is applied to the notes and remembered. When the solver is stuck the hint says so and offers to
+reveal one cell. A hint never suggests a wrong value (tested on all fixtures).
+
+### 6.2 The play UI
+Mounted by `app.js` once a puzzle is on the board: status bar (timer, pause, progress), tools (notes, erase,
+undo, redo, hint, check), the **symbol pad** (touch-sized buttons, up to 9 / 6 per row), a message line, the
+hint card and an Options disclosure (check mode, auto-notes, fill notes, reveal a cell / the solution, reset
+with a confirming second press). Keyboard: arrows and the a11y grid keys move; typing a symbol enters it
+(two-character symbols of Mega 12×12 wait for the second character); `N` notes, `H` hint, `Backspace` / `Delete`
+erase, `Ctrl+Z` / `Ctrl+Y` undo / redo, `Esc` closes the hint. The timer pauses on blur / hidden tab and resumes.
+Revealing the whole solution marks the game "given up": it is not counted as solved. A solved Wordoku shows its
+key word (the word line stays hidden until then); a solved game shows a success message with time, hints used
+and cells revealed, plus a toast.
+
+### 6.3 Symbol modes
+`digits` (labels of the model: hex for Mega 16, numbers up to 12 for Mega 12), `letters`, `colors` (palette fill
+plus a geometric symbol unless switched off — colour is never the only carrier), `shapes`, `word`
+(Wordoku). `SG.modelAids.symbolModes(model)` lists the modes of a board; the importer keeps the document's mode
+when the board offers it.
+
+## 7. Saved progress (`SG.progress`)
+All storage goes through one safe backend (`SG.store.storage()`): every call in `try/catch`, blocked or missing
+storage ⇒ an in-memory map for the session, `QuotaExceededError` ⇒ evict the least recently used entries and
+retry, a corrupt value or another schema version ⇒ purged. Nothing throws into the app.
+
+| Key | Contents |
+|-----|----------|
+| `sg.player.prefs.v1` | `{ v, lang, theme, fontSize, reducedMotion, colorAuxSymbol, check, autoNotes, showCoords }` |
+| `sg.player.progress.v1` | `{ version: 1, entries: [{ id, at, symbolMode, percent, solved, state }] }`, LRU 20; `state` = `game.serialize()` with the history cut to the last 300 undo / 100 redo steps |
+| `sg.player.puzzles.v1` | `{ version: 1, entries: [{ id, at, doc }] }`, LRU 10, each document ≤ 160 kB, total ≤ 900 kB |
+| `sg.player.last.v1` | id of the puzzle on the board (restored on a reload without a fragment) |
+| `sg.player.tour.v1` | the first-visit tour was seen |
+
+The keys are prefixed `sg.player.` because GitHub Pages serves the generator and the player from one origin
+(`tdat00.github.io`), which shares `localStorage`. Progress is saved 400 ms after a change, when the tab hides
+and before unload. **Same-puzzle flow**: opening a puzzle whose id has saved progress with at least one entry
+asks "Continue" or "Start over"; the recent list and a reload continue without asking.
+
+## 8. UI / UX
+### 8.1 Layout (`css/layout.css`)
+- **Welcome state** (no puzzle): what the player is, how to get a puzzle (generator link), an "Open puzzle"
+  button, the recent list.
+- **Desktop (≥ 960 px)**: two columns — the board (with the status bar above it) and a side panel (info card,
+  tools, pad, message / hint, options, recent puzzles).
+- **Mobile**: one column — board, tools and pad right under it, then the hint card; the info card, options and
+  recent list are collapsible `<details>`.
+- Header: title, **Open puzzle**, language EN | VI, theme (light · dark · high contrast), Settings, Help.
+- Dialogs (`<dialog>` through `openModal`): Open puzzle (file picker, drop zone, paste box, recent list),
+  Continue / Start over, Settings, Help. Esc closes, focus returns to the opener.
+
+### 8.2 Opening
+The Open dialog and the page-wide drop share one path: read text (files up to 8 MB, `FileReader`) →
+`SG.importer.open(text, {source})` → on success `app.openPuzzle`. Errors are shown in the dialog (or as a toast
+when there is none) with the translated issue texts; a failed open never replaces the puzzle on the board. A
+dropped file shows a full-page "Drop the puzzle here" overlay. A pasted link or token is decoded in place.
+
+### 8.3 First-visit tour
+`SG.help` also owns the tour: 4 skippable steps (welcome / open a puzzle, the board and notes, hints, the
+settings) as a non-modal card; key `sg.player.tour.v1`. **Decision:** it is shown only when the page starts on
+the welcome screen (no `#puzzle=` fragment and no restored puzzle) and never while a dialog is open; opening a
+puzzle ends it. A visitor who arrives from the generator's link wants to play, so nothing may stand in front of
+the puzzle; the tour stays available from the Help dialog. Blocked storage means once per page load.
+
+### 8.4 Accessibility
+Skip link to `#main`; the board `<svg>` is `role="grid"` with `role="row"` / `gridcell`, roving tabindex and a
+translated label per cell ("Row 4, column 7, value 5, given", cage sums and signs included); arrow keys, Home,
+End, Ctrl+Home / End, Page Up / Down move between real cells. `#a11y-live` announces entries, errors, hints and
+completion (no timer ticks). Dialogs trap focus and restore it; toasts and the live region stay audible inside a
+modal. Contrast ≥ 4.5 : 1 text, ≥ 3 : 1 lines / focus ring, 7 : 1 text in the high-contrast theme (computed from
+the tokens by `theme.test.js`). `prefers-reduced-motion` and the Settings switch turn every animation off.
+No real screen-reader run has been done (§11).
+
+### 8.5 Theming
+`css/tokens.css` + `css/tokens-board.css` define three themes on `<html data-theme>` (`light`, `dark`,
+`high-contrast`); `auto` removes the attribute so `prefers-color-scheme` rules. A small inline script in
+`index.html` applies the stored theme, motion and text size before the stylesheets paint.
+
+## 9. Internationalisation
+`SG.i18n.t(key, args)`, `{placeholders}`, plural keys `_one` / `_other`, `data-i18n` / `data-i18n-attr` in the
+HTML, `<html lang>` follows the language. Language: `?lang=` → stored preference → `navigator.languages` → `en`.
+Locale packs are plain JS (`SG.locales.en / vi`) plus **fragments** (`SG.localeFragments.push({en, vi})`) that
+every module appends to its own file. Both languages have identical key sets and placeholders and no empty
+value; `i18n.test.js` computes the keys the code uses from the source text (every `t('…')`, `data-i18n`, error
+code, technique id and variant id) and checks they exist. Groups kept from the generator: variant names,
+difficulty names, technique names / descriptions / step texts, unit kinds, symbol modes, a11y / theme / help
+strings; added: `player.*` (shell, open flow, info card, recent list, welcome, tour), `import.*`,
+`error.exchange.*`, `play.*`.
+
+## 10. Testing
+`node tests/node-runner.js` (about 30 s; no install). `tests.html` runs the same suites in a browser (the suites
+that read `tests/fixtures/puzzles/*.json` need `http://`, they skip themselves on `file://`).
+
+| Suite | What it checks |
+|-------|----------------|
+| `bits`, `model`, `constraints`, `solver` | foundation, the model (V1–V8, classic builder), propagation, DFS (ported) |
+| `techniques`, `tech-*`, `logical-solver` | the 26 techniques: positive / negative fixtures, soundness against known solutions, the solver loop (ported; a small test kit stands in for generation) |
+| `exchange` | token round trips and errors (shared, byte-identical) |
+| `importer` | all 18 fixtures rebuild valid models with exactly one solution; tokens, links, JSON; text lines (4 / 6 / 9); wrong version, damaged and hostile input, fuzzed damage |
+| `model-aids` | sign edges, word line, symbol modes |
+| `i18n` | key parity, placeholders, no empty values, coverage computed from the code |
+| `store`, `progress` | prefs, safe storage, LRU, version purge, quota, blocked storage, same-puzzle id, recent list |
+| `play` | the engine on all 15 fixtures: values, notes, exact undo / redo, conflicts, completion, hint soundness, timer, serialisation; the key reader, pad and note layouts |
+| `a11y`, `theme` | cell labels, keyboard moves, announcer; token parity and contrast |
+| `help` | an entry for every variant and technique, README claims |
+| `ui-contract` | module surface, no colour literals outside the token files, script order of `index.html` = runner = `tests.html`, no hard-coded text in `index.html`, forbidden globals absent, no DOM in `js/core` |
+| browser run | headless Edge over CDP, recorded in `docs/qa.md` |
+
+The fixtures were made by the generator (`docs/fixtures.md`); the test kit (`tests/fixtures/testkit.js`) holds a
+seeded RNG, a random solved grid (the DFS solver with a random value order) and a minimal clue remover so the
+ported solver suites can still build puzzles with a known unique solution. It is test-only and never loaded by
+the app.
+
+## 11. Risks and limits
+- **Document drift**: the generator may change its document; the player ignores unknown fields and refuses
+  another `format` version with a clear message. The fixtures come from a generator revision (`docs/fixtures.md`).
+- **Hostile input**: everything that arrives is data; sizes are bounded before any loop, errors are issues, and
+  `tests/suites/importer.test.js` fuzzes damaged documents. There is no `eval`, no HTML injection (text is set
+  with `textContent`), the token never leaves the browser.
+- **Storage**: blocked, full or corrupt storage degrades to memory-only play; saved history is trimmed.
+- **Large boards on phones**: Samurai / Mega 16 cells are small on a 375 px screen (the board scales, the pad is
+  full width); a zoomable board is an idea, not built.
+- **Hints** can only explain the 26 known techniques; a position that needs more says "stuck" and offers to
+  reveal a cell.
+- **Not done**: a real screen-reader run, Firefox / Safari, a real phone, a long-session performance profile.
