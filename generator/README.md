@@ -135,8 +135,11 @@ python -m http.server 8000      # then open http://localhost:8000/
 ```
 
 **GitHub Pages** — the app uses only relative paths, so it works from any sub-path with no configuration.
-Publishing the repository with *Settings → Pages → Deploy from a branch* serves it at
-`https://<user>.github.io/<repository>/`.
+Choose *Settings → Pages → Build and deployment → Source → GitHub Actions*. The
+[deployment workflow](.github/workflows/pages.yml) runs the Node 24 tests and publishes the app after every
+push to `main`; you can also run it manually from the **Actions** tab. Only the app files and licence are
+published, not the tests or working notes. The live app is at
+**[tdat00.github.io/sudoku-generator](https://tdat00.github.io/sudoku-generator/)**.
 
 Open the **Help** button for the rules of every variant, the technique ladder and the keyboard shortcuts. The
 first time you visit, a short tour shows where everything is (it is skipped when the address contains
@@ -361,7 +364,6 @@ sudoku-generator/
 ├── index.html              the page: every <script> tag, in dependency order; the sg-player-url meta tag
 ├── tests.html              the same test suites, run in the browser
 ├── design.md · task.md     the design specification (as built) and the task list with its completion summary
-├── memory.md               resume guide for a maintainer (architecture summary, decisions, gotchas)
 ├── README.md · LICENSE     this file · the MIT licence
 ├── docs/                   screenshots used by this README · final-report.md (the final QA report)
 ├── assets/
@@ -817,8 +819,11 @@ python -m http.server 8000      # rồi mở http://localhost:8000/
 ```
 
 **GitHub Pages** — ứng dụng chỉ dùng đường dẫn tương đối nên chạy được ở mọi đường dẫn con mà không cần cấu
-hình. Bật *Settings → Pages → Deploy from a branch* cho kho mã nguồn là ứng dụng được phục vụ tại
-`https://<tài-khoản>.github.io/<kho>/`.
+hình. Chọn *Settings → Pages → Build and deployment → Source → GitHub Actions*.
+[Workflow triển khai](.github/workflows/pages.yml) chạy các kiểm thử trên Node 24 và xuất bản ứng dụng sau mỗi
+lần đẩy lên `main`; bạn cũng có thể chạy thủ công từ thẻ **Actions**. Chỉ các tệp ứng dụng và giấy phép được
+xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng trực tuyến tại
+**[tdat00.github.io/sudoku-generator](https://tdat00.github.io/sudoku-generator/)**.
 
 Bấm nút **Trợ giúp** để xem luật của từng biến thể, bậc thang kỹ thuật và các phím tắt. Lần đầu bạn truy cập,
 một hướng dẫn nhanh sẽ chỉ ra mọi thứ nằm ở đâu (hướng dẫn này bị bỏ qua khi địa chỉ có `auto=1`).
