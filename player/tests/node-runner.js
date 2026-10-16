@@ -32,6 +32,13 @@ const SOURCE_FILES = [
   'js/core/errors.js',
   'js/core/bits.js',
   'js/core/budget.js',
+  'js/core/model.js',
+  'js/core/constraints.js',
+  'js/core/combo-table.js',
+  'js/core/dfs-solver.js',
+  'js/core/model-aids.js',
+  'js/core/classic-model.js',
+  'js/ui/exchange.js',
 ];
 
 const fs = require('fs');
