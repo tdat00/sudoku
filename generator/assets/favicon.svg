@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <title>Sudoku Generator</title>
+  <style>
+    .bg { fill: #ffffff; stroke: #2253c0; }
+    .line { stroke: #2253c0; }
+    .core { fill: #2253c0; }
+    .mark { fill: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #181e27; stroke: #7ba3ff; }
+      .line { stroke: #7ba3ff; }
+      .core { fill: #7ba3ff; }
+      .mark { fill: #181e27; }
+    }
+  </style>
+  <rect class="bg" x="2" y="2" width="28" height="28" rx="5" stroke-width="2"/>
+  <path class="line" d="M11.3 2.5v27M20.7 2.5v27M2.5 11.3h27M2.5 20.7h27" stroke-width="1.6" fill="none"/>
+  <rect class="core" x="11.3" y="11.3" width="9.4" height="9.4"/>
+  <path class="mark" d="M16 13.6l1 2.3 2.5.2-1.9 1.6.6 2.4-2.2-1.3-2.2 1.3.6-2.4-1.9-1.6 2.5-.2z"/>
+</svg>

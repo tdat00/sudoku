@@ -1,0 +1,264 @@
+/* Reset, typography, focus ring, accessibility helpers (design.md 10.7). No colour literals here. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--sg-font-size-base);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  accent-color: var(--sg-color-accent);
+  scroll-padding-top: var(--sg-space-4);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--sg-color-bg);
+  color: var(--sg-color-text);
+  font-family: var(--sg-font-family);
+  font-size: 1rem;
+  line-height: var(--sg-line-height);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body.is-modal-open {
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ol,
+ul,
+dl,
+dd,
+figure,
+fieldset {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+  font-weight: 650;
+}
+
+h1 {
+  font-size: var(--sg-font-size-xl);
+}
+
+h2 {
+  font-size: var(--sg-font-size-lg);
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+fieldset {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+
+a {
+  color: var(--sg-color-accent);
+  text-underline-offset: 0.15em;
+}
+
+a:hover {
+  color: var(--sg-color-accent-hover);
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--sg-font-mono);
+  font-size: 0.9em;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+hr {
+  height: 1px;
+  margin: var(--sg-space-4) 0;
+  border: 0;
+  background: var(--sg-color-divider);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---- Form controls: inherit the typography, appearance is added in components.css ---- */
+button,
+input,
+select,
+textarea {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+}
+
+textarea {
+  resize: vertical;
+}
+
+summary {
+  cursor: pointer;
+}
+
+/* ---- Focus ring: 3px outline, >= 3:1 against every surface, never removed ---- */
+:focus-visible {
+  outline: var(--sg-focus-width) solid var(--sg-color-focus);
+  outline-offset: var(--sg-focus-offset);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Programmatic focus targets (skip link, dialogs) do not need a ring around the whole region. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+::selection {
+  background: var(--sg-color-accent);
+  color: var(--sg-color-accent-text);
+}
+
+/* ---- Accessibility helpers ---- */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--sg-space-2);
+  left: var(--sg-space-2);
+  z-index: calc(var(--sg-z-toast) + 10);
+  padding: var(--sg-space-2) var(--sg-space-4);
+  border: 2px solid var(--sg-color-focus);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface);
+  color: var(--sg-color-text);
+  font-weight: 650;
+  text-decoration: none;
+  box-shadow: var(--sg-shadow-2);
+  transform: translateY(-300%);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ---- Small typographic utilities ---- */
+.text-muted {
+  color: var(--sg-color-text-muted);
+}
+
+.mono {
+  font-family: var(--sg-font-mono);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ---- Reduced motion: system preference or Settings switch (data-motion="off") ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:root[data-motion="off"] *,
+:root[data-motion="off"] *::before,
+:root[data-motion="off"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-delay: 0ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* ---- Smooth theme switching: colours only, and never under reduced motion ----
+   js/ui/theme.js adds .is-theming to <html> for a moment around a change of theme. */
+@media (prefers-reduced-motion: no-preference) {
+  :root.is-theming:not([data-motion="off"]),
+  :root.is-theming:not([data-motion="off"]) *,
+  :root.is-theming:not([data-motion="off"]) *::before,
+  :root.is-theming:not([data-motion="off"]) *::after {
+    transition:
+      background-color var(--sg-motion-base) ease,
+      color var(--sg-motion-base) ease,
+      border-color var(--sg-motion-base) ease,
+      fill var(--sg-motion-base) ease,
+      stroke var(--sg-motion-base) ease,
+      outline-color var(--sg-motion-base) ease !important;
+  }
+}
+
+/* ---- Forced colours (Windows high contrast): the system palette wins, shapes keep the meaning ---- */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: var(--sg-focus-width) solid Highlight;
+  }
+
+  .skip-link {
+    border-color: CanvasText;
+  }
+}

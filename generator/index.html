@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Address of the sudoku-player web app; the "Play online" action of the Export dialog opens it with the
+       puzzle in the URL fragment (js/ui/exchange.js, js/ui/export.js). -->
+  <meta name="sg-player-url" content="https://tdat00.github.io/sudoku-player/">
+  <title data-i18n="app.title">Sudoku Generator</title>
+  <!-- First paint without a flash (SG.theme, T-7.4): applies the stored theme, motion and text size before the
+       stylesheets paint. It mirrors applyPrefs of js/ui/app.js; any failure leaves the defaults. -->
+  <script>
+    (function () {
+      var html = document.documentElement;
+      var prefs = null;
+      try { prefs = JSON.parse(localStorage.getItem('sg.prefs.v1')); } catch (e) { prefs = null; }
+      if (!prefs || typeof prefs !== 'object') prefs = {};
+      if (prefs.theme === 'light' || prefs.theme === 'dark' || prefs.theme === 'high-contrast') {
+        html.setAttribute('data-theme', prefs.theme);
+      } else {
+        html.removeAttribute('data-theme');
+      }
+      if (prefs.reducedMotion === true) html.setAttribute('data-motion', 'off');
+      if (prefs.fontSize === 'small') html.style.setProperty('--sg-font-size-base', '87.5%');
+      else if (prefs.fontSize === 'large') html.style.setProperty('--sg-font-size-base', '125%');
+    })();
+  </script>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/tokens-board.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/board.css">
+  <link rel="stylesheet" href="css/steps.css">
+  <link rel="stylesheet" href="css/help.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+<body>
+  <!-- Icon sprite: <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-NAME"></use></svg> -->
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="ic-logo" viewBox="0 0 24 24">
+      <rect x="2.5" y="2.5" width="19" height="19" rx="3"></rect>
+      <path d="M8.8 2.5v19M15.2 2.5v19M2.5 8.8h19M2.5 15.2h19" stroke-width="1.5"></path>
+      <rect x="8.8" y="8.8" width="6.4" height="6.4" fill="currentColor" stroke="none"></rect>
+    </symbol>
+    <symbol id="ic-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8"></path>
+    </symbol>
+    <symbol id="ic-moon" viewBox="0 0 24 24">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
+    </symbol>
+    <symbol id="ic-contrast" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"></path>
+    </symbol>
+    <symbol id="ic-settings" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9.6" stroke-width="3" stroke-dasharray="2.5 2.48"></circle>
+      <circle cx="12" cy="12" r="6.8"></circle>
+      <circle cx="12" cy="12" r="2.4"></circle>
+    </symbol>
+    <symbol id="ic-help" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M9.4 9.3a2.7 2.7 0 0 1 5.2.9c0 1.8-2.6 2.3-2.6 4"></path>
+      <circle cx="12" cy="17.3" r="0.7" fill="currentColor"></circle>
+    </symbol>
+    <symbol id="ic-first" viewBox="0 0 24 24">
+      <path d="M6 5v14"></path>
+      <path d="M19 6v12L9 12z" fill="currentColor"></path>
+    </symbol>
+    <symbol id="ic-prev" viewBox="0 0 24 24">
+      <path d="M15 5l-7 7 7 7"></path>
+    </symbol>
+    <symbol id="ic-play" viewBox="0 0 24 24">
+      <path d="M7 4.5v15l13-7.5z" fill="currentColor"></path>
+    </symbol>
+    <symbol id="ic-pause" viewBox="0 0 24 24">
+      <rect x="6" y="4.5" width="4.2" height="15" rx="1" fill="currentColor" stroke="none"></rect>
+      <rect x="13.8" y="4.5" width="4.2" height="15" rx="1" fill="currentColor" stroke="none"></rect>
+    </symbol>
+    <symbol id="ic-next" viewBox="0 0 24 24">
+      <path d="M9 5l7 7-7 7"></path>
+    </symbol>
+    <symbol id="ic-last" viewBox="0 0 24 24">
+      <path d="M18 5v14"></path>
+      <path d="M5 6v12l10-6z" fill="currentColor"></path>
+    </symbol>
+    <symbol id="ic-chevron-up" viewBox="0 0 24 24">
+      <path d="M6 15l6-6 6 6"></path>
+    </symbol>
+    <symbol id="ic-chevron-down" viewBox="0 0 24 24">
+      <path d="M6 9l6 6 6-6"></path>
+    </symbol>
+    <symbol id="ic-sliders" viewBox="0 0 24 24">
+      <path d="M4 7h8M18 7h2M4 17h2M12 17h8"></path>
+      <circle cx="15" cy="7" r="2.4"></circle>
+      <circle cx="9" cy="17" r="2.4"></circle>
+    </symbol>
+    <symbol id="ic-sparkle" viewBox="0 0 24 24">
+      <path d="M12 2.5l2.2 6.3 6.3 2.2-6.3 2.2L12 19.5l-2.2-6.3L3.5 11l6.3-2.2z" fill="currentColor"></path>
+    </symbol>
+    <symbol id="ic-refresh" viewBox="0 0 24 24">
+      <path d="M20 12a8 8 0 1 1-2.6-5.9"></path>
+      <path d="M20 4v5h-5"></path>
+    </symbol>
+    <symbol id="ic-download" viewBox="0 0 24 24">
+      <path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14"></path>
+    </symbol>
+    <symbol id="ic-x" viewBox="0 0 24 24">
+      <path d="M6 6l12 12M18 6L6 18"></path>
+    </symbol>
+    <symbol id="ic-check" viewBox="0 0 24 24">
+      <path d="M5 12.5l4.5 4.5L19 7.5"></path>
+    </symbol>
+    <symbol id="ic-copy" viewBox="0 0 24 24">
+      <rect x="9" y="9" width="11" height="11" rx="2"></rect>
+      <path d="M5 15V6a2 2 0 0 1 2-2h8"></path>
+    </symbol>
+    <symbol id="ic-dice" viewBox="0 0 24 24">
+      <rect x="3.5" y="3.5" width="17" height="17" rx="3.5"></rect>
+      <circle cx="8.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"></circle>
+      <circle cx="15.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"></circle>
+      <circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"></circle>
+      <circle cx="8.5" cy="15.5" r="1.1" fill="currentColor" stroke="none"></circle>
+      <circle cx="15.5" cy="15.5" r="1.1" fill="currentColor" stroke="none"></circle>
+    </symbol>
+    <symbol id="ic-alert" viewBox="0 0 24 24">
+      <path d="M12 3.5l9.5 16.5h-19z"></path>
+      <path d="M12 10v4.5"></path>
+      <circle cx="12" cy="17.4" r="0.7" fill="currentColor"></circle>
+    </symbol>
+  </svg>
+
+  <a id="skip-link" class="skip-link" href="#main" data-i18n="shell.skip"></a>
+
+  <header class="app-header">
+    <div class="app-header__inner">
+      <div class="app-brand">
+        <svg class="icon icon--brand" aria-hidden="true" focusable="false"><use href="#ic-logo"></use></svg>
+        <h1 id="app-title" class="app-title" data-i18n="app.title"></h1>
+      </div>
+
+      <div class="app-tools">
+        <div id="lang-switch" class="segmented" role="group" data-i18n-attr="aria-label:shell.lang.label">
+          <button type="button" class="segmented__btn" data-lang="en" lang="en" aria-pressed="true"
+            data-i18n-attr="aria-label:shell.lang.en.name,title:shell.lang.en.name"
+            data-i18n="shell.lang.en.short"></button>
+          <button type="button" class="segmented__btn" data-lang="vi" lang="vi" aria-pressed="false"
+            data-i18n-attr="aria-label:shell.lang.vi.name,title:shell.lang.vi.name"
+            data-i18n="shell.lang.vi.short"></button>
+        </div>
+
+        <div id="theme-switch" class="segmented" role="group" data-i18n-attr="aria-label:shell.theme.label">
+          <button type="button" class="segmented__btn segmented__btn--icon" data-theme-value="light"
+            aria-pressed="true" data-i18n-attr="aria-label:shell.theme.light,title:shell.theme.light">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-sun"></use></svg>
+          </button>
+          <button type="button" class="segmented__btn segmented__btn--icon" data-theme-value="dark"
+            aria-pressed="false" data-i18n-attr="aria-label:shell.theme.dark,title:shell.theme.dark">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-moon"></use></svg>
+          </button>
+          <button type="button" class="segmented__btn segmented__btn--icon" data-theme-value="high-contrast"
+            aria-pressed="false"
+            data-i18n-attr="aria-label:shell.theme.highContrast,title:shell.theme.highContrast">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-contrast"></use></svg>
+          </button>
+        </div>
+
+        <button id="btn-settings" type="button" class="btn btn--ghost" aria-haspopup="dialog"
+          data-i18n-attr="title:shell.settings.title">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-settings"></use></svg>
+          <span class="btn__label" data-i18n="shell.settings"></span>
+        </button>
+        <button id="btn-help" type="button" class="btn btn--ghost" aria-haspopup="dialog"
+          data-i18n-attr="title:shell.help.title">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-help"></use></svg>
+          <span class="btn__label" data-i18n="shell.help"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-layout" id="app-layout">
+    <button id="btn-drawer" type="button" class="drawer-toggle" aria-expanded="false"
+      aria-controls="controls-root" data-i18n-attr="title:shell.drawer.title">
+      <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-sliders"></use></svg>
+      <span data-i18n="shell.drawer.toggle"></span>
+      <svg class="icon drawer-toggle__chevron" aria-hidden="true" focusable="false"><use href="#ic-chevron-up"></use></svg>
+    </button>
+
+    <aside id="controls-root" class="panel panel--controls" aria-labelledby="controls-heading">
+      <h2 id="controls-heading" class="panel__title" data-i18n="shell.controls.heading"></h2>
+      <form id="controls-form" class="controls-form" novalidate autocomplete="off"
+        aria-labelledby="controls-heading"></form>
+      <div class="controls-actions" role="group" data-i18n-attr="aria-label:shell.actions.label">
+        <button id="btn-generate" type="button" class="btn btn--primary btn--block"
+          data-i18n-attr="title:shell.btn.generate.title">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-sparkle"></use></svg>
+          <span class="btn__label" data-i18n="shell.btn.generate"></span>
+        </button>
+        <button id="btn-regenerate" type="button" class="btn btn--secondary btn--block" disabled
+          data-i18n-attr="title:shell.btn.regenerate.title">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-refresh"></use></svg>
+          <span class="btn__label" data-i18n="shell.btn.regenerate"></span>
+        </button>
+        <button id="btn-cancel" type="button" class="btn btn--ghost btn--block" hidden
+          data-i18n-attr="title:shell.btn.cancel.title">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-x"></use></svg>
+          <span class="btn__label" data-i18n="shell.btn.cancel"></span>
+        </button>
+        <button id="btn-export" type="button" class="btn btn--secondary btn--block" disabled
+          aria-haspopup="dialog" data-i18n-attr="title:shell.btn.export.title">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-download"></use></svg>
+          <span class="btn__label" data-i18n="shell.btn.export"></span>
+        </button>
+      </div>
+    </aside>
+    <div class="drawer-backdrop" aria-hidden="true"></div>
+
+    <main id="main" class="app-main" tabindex="-1">
+      <section id="board-root" class="board-area" aria-labelledby="board-heading">
+        <h2 id="board-heading" class="visually-hidden" data-i18n="shell.board.heading"></h2>
+        <div class="board-frame">
+          <svg id="board-svg" class="board-svg" viewBox="0 0 9 9" preserveAspectRatio="xMidYMid meet"
+            role="img" aria-labelledby="board-title board-desc" focusable="false">
+            <title id="board-title" data-i18n="shell.board.title"></title>
+            <desc id="board-desc" data-i18n="shell.board.desc"></desc>
+          </svg>
+        </div>
+      </section>
+
+      <section id="player-root" class="player" aria-labelledby="player-heading">
+        <h2 id="player-heading" class="visually-hidden" data-i18n="shell.player.heading"></h2>
+        <div class="player__transport" role="group" data-i18n-attr="aria-label:player.label">
+          <button id="btn-first" type="button" class="btn btn--icon btn--secondary" disabled
+            data-i18n-attr="aria-label:player.first,title:player.first">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-first"></use></svg>
+          </button>
+          <button id="btn-prev" type="button" class="btn btn--icon btn--secondary" disabled
+            data-i18n-attr="aria-label:player.prev,title:player.prev">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-prev"></use></svg>
+          </button>
+          <button id="btn-play" type="button" class="btn btn--icon btn--primary" disabled data-state="paused"
+            data-i18n-attr="aria-label:player.play,title:player.play">
+            <svg class="icon icon--play" aria-hidden="true" focusable="false"><use href="#ic-play"></use></svg>
+            <svg class="icon icon--pause" aria-hidden="true" focusable="false"><use href="#ic-pause"></use></svg>
+          </button>
+          <button id="btn-next" type="button" class="btn btn--icon btn--secondary" disabled
+            data-i18n-attr="aria-label:player.next,title:player.next">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-next"></use></svg>
+          </button>
+          <button id="btn-last" type="button" class="btn btn--icon btn--secondary" disabled
+            data-i18n-attr="aria-label:player.last,title:player.last">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-last"></use></svg>
+          </button>
+        </div>
+
+        <div class="player__timeline">
+          <input id="scrubber" class="slider" type="range" min="0" max="0" step="1" value="0" disabled
+            data-i18n-attr="aria-label:player.scrubber">
+          <span id="player-time" class="player__time"></span>
+        </div>
+
+        <div class="segmented player__speeds" role="group" data-i18n-attr="aria-label:player.speed.label">
+          <button type="button" class="segmented__btn" data-speed="instant" aria-pressed="false"
+            data-i18n-attr="title:player.speed.instant.title" data-i18n="player.speed.instant"></button>
+          <button type="button" class="segmented__btn" data-speed="fast" aria-pressed="false"
+            data-i18n-attr="title:player.speed.fast.title" data-i18n="player.speed.fast"></button>
+          <button type="button" class="segmented__btn" data-speed="step" aria-pressed="false"
+            data-i18n-attr="title:player.speed.step.title" data-i18n="player.speed.step"></button>
+          <button type="button" class="segmented__btn" data-speed="manual" aria-pressed="false"
+            data-i18n-attr="title:player.speed.manual.title" data-i18n="player.speed.manual"></button>
+        </div>
+      </section>
+
+      <div class="status-row">
+        <span class="status-row__label" data-i18n="shell.status.label"></span>
+        <p id="status-line" class="status-row__text" role="status" aria-live="polite" aria-atomic="true"></p>
+        <span id="mode-badge" class="badge" hidden></span>
+      </div>
+    </main>
+
+    <aside id="steps-root" class="panel panel--steps" aria-labelledby="steps-heading">
+      <div class="panel__header">
+        <h2 id="steps-heading" class="panel__title" data-i18n="shell.steps.heading"></h2>
+        <button id="btn-steps-toggle" type="button" class="btn btn--ghost btn--sm steps-toggle"
+          aria-expanded="false" aria-controls="steps-list" data-i18n-attr="title:shell.steps.toggle.title">
+          <span class="btn__label" data-i18n="shell.steps.toggle"></span>
+          <svg class="icon steps-toggle__chevron" aria-hidden="true" focusable="false"><use href="#ic-chevron-down"></use></svg>
+        </button>
+      </div>
+      <ol id="steps-list" class="steps-list" aria-labelledby="steps-heading"></ol>
+      <div id="steps-chart" class="steps-chart"></div>
+      <section class="explain" aria-labelledby="explain-heading">
+        <h3 id="explain-heading" class="panel__subtitle" data-i18n="shell.explain.heading"></h3>
+        <div id="explain-root" class="explain__body"></div>
+      </section>
+    </aside>
+
+    <section id="result-root" class="result-area" data-i18n-attr="aria-label:shell.result.label"></section>
+  </div>
+
+  <div id="modal-root" class="modal-root"></div>
+  <div id="toast-root" class="toast-root" role="status" aria-live="polite" aria-relevant="additions"
+    data-i18n-attr="aria-label:shell.toast.label"></div>
+  <div id="a11y-live" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Order = SOURCE_FILES in tests/node-runner.js (also tests.html and js/worker/gen.worker.js). -->
+  <script src="js/core/ns.js"></script>
+  <script src="js/core/errors.js"></script>
+  <script src="js/core/bits.js"></script>
+  <script src="js/core/budget.js"></script>
+  <script src="js/core/rng.js"></script>
+  <script src="js/core/model.js"></script>
+  <script src="js/core/constraints.js"></script>
+  <script src="js/core/combo-table.js"></script>
+  <script src="js/core/dfs-solver.js"></script>
+  <script src="js/core/techniques.js"></script>
+  <script src="js/core/logical-solver.js"></script>
+  <script src="js/core/tech-basic.js"></script>
+  <script src="js/core/tech-subset.js"></script>
+  <script src="js/core/tech-fish.js"></script>
+  <script src="js/core/tech-wing.js"></script>
+  <script src="js/core/tech-chain.js"></script>
+  <script src="js/core/tech-cage.js"></script>
+  <script src="js/core/tech-ineq.js"></script>
+  <script src="js/core/difficulty.js"></script>
+  <script src="js/core/full-grid.js"></script>
+  <script src="js/core/symmetry.js"></script>
+  <script src="js/core/digger.js"></script>
+  <script src="js/core/events.js"></script>
+  <script src="js/core/explain-data.js"></script>
+  <script src="js/core/pipeline.js"></script>
+  <script src="js/variants/registry.js"></script>
+  <script src="js/variants/classic.js"></script>
+  <script src="js/variants/mega.js"></script>
+  <script src="js/variants/extra-regions.js"></script>
+  <script src="js/variants/jigsaw.js"></script>
+  <script src="js/variants/killer.js"></script>
+  <script src="js/variants/greater-than.js"></script>
+  <script src="js/variants/multigrid.js"></script>
+  <script src="js/variants/wordoku.js"></script>
+  <script src="assets/wordlists/isograms.en.js"></script>
+  <script src="assets/wordlists/isograms.vi.js"></script>
+  <script src="js/worker/worker-client.js"></script>
+  <script src="js/ui/exchange.js"></script>
+  <script src="js/ui/i18n.js"></script>
+  <script src="js/ui/locale.en.js"></script>
+  <script src="js/ui/locale.vi.js"></script>
+  <script src="js/ui/locale.shell.js"></script>
+  <script src="js/ui/symbols.js"></script>
+  <script src="js/ui/board-view.js"></script>
+  <script src="js/ui/store.js"></script>
+  <script src="js/ui/controls.js"></script>
+  <script src="js/ui/step-view.js"></script>
+  <script src="js/ui/explain.js"></script>
+  <script src="js/ui/player.js"></script>
+  <script src="js/ui/result-view.js"></script>
+  <script src="js/ui/cache.js"></script>
+  <script src="js/ui/export.js"></script>
+  <script src="js/ui/import.js"></script>
+  <script src="js/ui/a11y.js"></script>
+  <script src="js/ui/theme.js"></script>
+  <script src="js/ui/help.js"></script>
+  <script src="js/ui/app.js"></script>
+</body>
+</html>

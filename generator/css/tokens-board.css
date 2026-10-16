@@ -1,0 +1,333 @@
+/*
+ * Board tokens (owned by the board view): every colour, line width and animation duration the SVG board
+ * uses. Colour literals live only here and in tokens.css; board.css and js/ui/board-view.js reference the
+ * custom properties below (and the generic --sg-color-focus, --sg-font-family, --sg-font-mono).
+ *
+ * Line widths are unitless on purpose: they are SVG user units of the board viewBox (one cell = 40 units),
+ * so the board scales as one picture.
+ *
+ * Themes: light is the default and the fallback; dark and high-contrast override what differs. With no
+ * explicit data-theme, prefers-color-scheme picks dark. The [data-sg-theme="..."] selectors let a probe
+ * element read one theme's values without touching <html> (the SVG/PNG export always reads "light").
+ *
+ * Symbol palette --sg-board-sym-1..16 (colour mode): odd and even entries alternate between a dark and a
+ * light band, so neighbouring entries keep a luminance contrast of at least 3:1, and every entry is drawn
+ * together with a geometric symbol (two-tone: --sg-board-sym-ink with a --sg-board-sym-edge outline).
+ *
+ * --sg-board-focus is the keyboard focus ring of a cell (js/ui/a11y.js); the high-contrast board has a white
+ * paper on a black page, so it cannot reuse the yellow --sg-color-focus.
+ */
+
+:root,
+:root[data-theme="light"],
+[data-sg-theme="light"] {
+  --sg-board-paper: #ffffff;
+
+  --sg-board-line-thin: #6d7582;
+  --sg-board-line-thick: #1b2130;
+  --sg-board-line-subgrid: #0b0f19;
+  --sg-board-width-thin: 1;
+  --sg-board-width-thick: 3;
+  --sg-board-width-subgrid: 4.5;
+  --sg-board-focus: #6a1fd0;
+
+  --sg-board-ink-given: #11151d;
+  --sg-board-ink-placed: #1f5fbf;
+  --sg-board-ink-solution: #066247;
+  --sg-board-ink-coord: #5b6472;
+  --sg-board-ink-sum: #38404d;
+  --sg-board-weight-given: 700;
+  --sg-board-weight-placed: 500;
+
+  --sg-board-region-1: #fde2e4;
+  --sg-board-region-2: #e2ece9;
+  --sg-board-region-3: #dfe7fd;
+  --sg-board-region-4: #fff1d6;
+  --sg-board-region-5: #e6e0f3;
+  --sg-board-region-6: #d8f0e3;
+  --sg-board-region-7: #fbe3f1;
+  --sg-board-region-8: #e5ecc8;
+  --sg-board-region-9: #d6ebf5;
+
+  --sg-board-overlay-diag: rgba(238, 160, 40, 0.26);
+  --sg-board-overlay-window: rgba(70, 130, 230, 0.20);
+  --sg-board-overlay-overlap: rgba(120, 128, 140, 0.20);
+  --sg-board-overlay-word: rgba(40, 170, 110, 0.28);
+
+  --sg-board-cage-0: #fde8c8;
+  --sg-board-cage-1: #d9efd2;
+  --sg-board-cage-2: #d3e6f9;
+  --sg-board-cage-3: #f6d9ee;
+  --sg-board-cage-4: #ece5c0;
+  --sg-board-cage-line: #4f5866;
+  --sg-board-cage-width: 1.3;
+  --sg-board-cage-dash: 3 2.4;
+
+  --sg-board-sign: #7a1f6e;
+  --sg-board-sign-width: 2.6;
+
+  --sg-board-probe: #b87d00;
+  --sg-board-backtrack: #d92d20;
+  --sg-board-restore: #d92d20;
+  --sg-board-technique: #7c3aed;
+  --sg-board-technique-fill: rgba(124, 58, 237, 0.16);
+  --sg-board-selected: #1f5fbf;
+  --sg-board-selected-fill: rgba(31, 95, 191, 0.14);
+  --sg-board-hover: rgba(31, 95, 191, 0.08);
+
+  --sg-board-sym-1: #07765b;
+  --sg-board-sym-2: #fec7ed;
+  --sg-board-sym-3: #635bbf;
+  --sg-board-sym-4: #6fe5c4;
+  --sg-board-sym-5: #5a5101;
+  --sg-board-sym-6: #93a6fe;
+  --sg-board-sym-7: #242424;
+  --sg-board-sym-8: #beac43;
+  --sg-board-sym-9: #8a2674;
+  --sg-board-sym-10: #efd84a;
+  --sg-board-sym-11: #134ca4;
+  --sg-board-sym-12: #34b8b2;
+  --sg-board-sym-13: #015c37;
+  --sg-board-sym-14: #ffac9c;
+  --sg-board-sym-15: #474747;
+  --sg-board-sym-16: #9b9b9b;
+  --sg-board-sym-ink: #ffffff;
+  --sg-board-sym-edge: #0b0f19;
+
+  --sg-board-dur-placing: 120ms;
+  --sg-board-dur-backtrack: 180ms;
+  --sg-board-dur-probing: 200ms;
+  --sg-board-dur-removed: 200ms;
+  --sg-board-dur-restored: 300ms;
+  --sg-board-dur-technique: 400ms;
+  --sg-board-dur-done: 500ms;
+}
+
+:root[data-theme="dark"],
+[data-sg-theme="dark"] {
+  --sg-board-paper: #161a22;
+
+  --sg-board-line-thin: #8b94a4;
+  --sg-board-line-thick: #e8ebf1;
+  --sg-board-line-subgrid: #ffffff;
+  --sg-board-width-thin: 1;
+  --sg-board-width-thick: 3;
+  --sg-board-width-subgrid: 4.5;
+  --sg-board-focus: #ffd84d;
+
+  --sg-board-ink-given: #f4f6fa;
+  --sg-board-ink-placed: #7fb2ff;
+  --sg-board-ink-solution: #5fd3a9;
+  --sg-board-ink-coord: #98a1b0;
+  --sg-board-ink-sum: #c3cad6;
+  --sg-board-weight-given: 700;
+  --sg-board-weight-placed: 500;
+
+  --sg-board-region-1: #3a2630;
+  --sg-board-region-2: #243a35;
+  --sg-board-region-3: #25304a;
+  --sg-board-region-4: #403622;
+  --sg-board-region-5: #33294a;
+  --sg-board-region-6: #234034;
+  --sg-board-region-7: #43283a;
+  --sg-board-region-8: #363d1f;
+  --sg-board-region-9: #213c46;
+
+  --sg-board-overlay-diag: rgba(238, 168, 60, 0.26);
+  --sg-board-overlay-window: rgba(100, 156, 245, 0.24);
+  --sg-board-overlay-overlap: rgba(160, 168, 180, 0.20);
+  --sg-board-overlay-word: rgba(60, 200, 130, 0.28);
+
+  --sg-board-cage-0: #4a3b22;
+  --sg-board-cage-1: #2a4429;
+  --sg-board-cage-2: #25384f;
+  --sg-board-cage-3: #4a2b46;
+  --sg-board-cage-4: #44411f;
+  --sg-board-cage-line: #aab2c0;
+  --sg-board-cage-width: 1.3;
+  --sg-board-cage-dash: 3 2.4;
+
+  --sg-board-sign: #f0a8e4;
+  --sg-board-sign-width: 2.6;
+
+  --sg-board-probe: #f5c542;
+  --sg-board-backtrack: #ff6b5e;
+  --sg-board-restore: #ff6b5e;
+  --sg-board-technique: #b794ff;
+  --sg-board-technique-fill: rgba(183, 148, 255, 0.22);
+  --sg-board-selected: #7fb2ff;
+  --sg-board-selected-fill: rgba(127, 178, 255, 0.20);
+  --sg-board-hover: rgba(127, 178, 255, 0.12);
+
+  --sg-board-sym-1: #07765b;
+  --sg-board-sym-2: #fec7ed;
+  --sg-board-sym-3: #635bbf;
+  --sg-board-sym-4: #6fe5c4;
+  --sg-board-sym-5: #5a5101;
+  --sg-board-sym-6: #93a6fe;
+  --sg-board-sym-7: #242424;
+  --sg-board-sym-8: #beac43;
+  --sg-board-sym-9: #8a2674;
+  --sg-board-sym-10: #efd84a;
+  --sg-board-sym-11: #134ca4;
+  --sg-board-sym-12: #34b8b2;
+  --sg-board-sym-13: #015c37;
+  --sg-board-sym-14: #ffac9c;
+  --sg-board-sym-15: #474747;
+  --sg-board-sym-16: #9b9b9b;
+  --sg-board-sym-ink: #ffffff;
+  --sg-board-sym-edge: #05070b;
+}
+
+:root[data-theme="high-contrast"],
+[data-sg-theme="high-contrast"] {
+  --sg-board-paper: #ffffff;
+
+  --sg-board-line-thin: #000000;
+  --sg-board-line-thick: #000000;
+  --sg-board-line-subgrid: #000000;
+  --sg-board-width-thin: 1.4;
+  --sg-board-width-thick: 4;
+  --sg-board-width-subgrid: 5.5;
+  --sg-board-focus: #b3005e;
+
+  --sg-board-ink-given: #000000;
+  --sg-board-ink-placed: #0033cc;
+  --sg-board-ink-solution: #006644;
+  --sg-board-ink-coord: #000000;
+  --sg-board-ink-sum: #000000;
+  --sg-board-weight-given: 800;
+  --sg-board-weight-placed: 600;
+
+  --sg-board-region-1: transparent;
+  --sg-board-region-2: transparent;
+  --sg-board-region-3: transparent;
+  --sg-board-region-4: transparent;
+  --sg-board-region-5: transparent;
+  --sg-board-region-6: transparent;
+  --sg-board-region-7: transparent;
+  --sg-board-region-8: transparent;
+  --sg-board-region-9: transparent;
+
+  --sg-board-overlay-diag: rgba(0, 0, 0, 0.16);
+  --sg-board-overlay-window: rgba(0, 0, 0, 0.12);
+  --sg-board-overlay-overlap: rgba(0, 0, 0, 0.14);
+  --sg-board-overlay-word: rgba(0, 0, 0, 0.18);
+
+  --sg-board-cage-0: transparent;
+  --sg-board-cage-1: transparent;
+  --sg-board-cage-2: transparent;
+  --sg-board-cage-3: transparent;
+  --sg-board-cage-4: transparent;
+  --sg-board-cage-line: #000000;
+  --sg-board-cage-width: 1.8;
+  --sg-board-cage-dash: 4 3;
+
+  --sg-board-sign: #000000;
+  --sg-board-sign-width: 3.4;
+
+  --sg-board-probe: #8a5a00;
+  --sg-board-backtrack: #b00020;
+  --sg-board-restore: #b00020;
+  --sg-board-technique: #5b1fc2;
+  --sg-board-technique-fill: rgba(91, 31, 194, 0.22);
+  --sg-board-selected: #0033cc;
+  --sg-board-selected-fill: rgba(0, 51, 204, 0.20);
+  --sg-board-hover: rgba(0, 0, 0, 0.10);
+
+  --sg-board-sym-1: #05644c;
+  --sg-board-sym-2: #fed4f1;
+  --sg-board-sym-3: #534ca3;
+  --sg-board-sym-4: #9bebd2;
+  --sg-board-sym-5: #4c4401;
+  --sg-board-sym-6: #b0bcfe;
+  --sg-board-sym-7: #1d1d1d;
+  --sg-board-sym-8: #cdc088;
+  --sg-board-sym-9: #751f62;
+  --sg-board-sym-10: #f2e18a;
+  --sg-board-sym-11: #0e408b;
+  --sg-board-sym-12: #83c9c5;
+  --sg-board-sym-13: #014d2d;
+  --sg-board-sym-14: #ffc0b6;
+  --sg-board-sym-15: #3b3b3b;
+  --sg-board-sym-16: #b5b5b5;
+  --sg-board-sym-ink: #ffffff;
+  --sg-board-sym-edge: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --sg-board-paper: #161a22;
+
+    --sg-board-line-thin: #8b94a4;
+    --sg-board-line-thick: #e8ebf1;
+    --sg-board-line-subgrid: #ffffff;
+    --sg-board-width-thin: 1;
+    --sg-board-width-thick: 3;
+    --sg-board-width-subgrid: 4.5;
+    --sg-board-focus: #ffd84d;
+
+    --sg-board-ink-given: #f4f6fa;
+    --sg-board-ink-placed: #7fb2ff;
+    --sg-board-ink-solution: #5fd3a9;
+    --sg-board-ink-coord: #98a1b0;
+    --sg-board-ink-sum: #c3cad6;
+    --sg-board-weight-given: 700;
+    --sg-board-weight-placed: 500;
+
+    --sg-board-region-1: #3a2630;
+    --sg-board-region-2: #243a35;
+    --sg-board-region-3: #25304a;
+    --sg-board-region-4: #403622;
+    --sg-board-region-5: #33294a;
+    --sg-board-region-6: #234034;
+    --sg-board-region-7: #43283a;
+    --sg-board-region-8: #363d1f;
+    --sg-board-region-9: #213c46;
+
+    --sg-board-overlay-diag: rgba(238, 168, 60, 0.26);
+    --sg-board-overlay-window: rgba(100, 156, 245, 0.24);
+    --sg-board-overlay-overlap: rgba(160, 168, 180, 0.20);
+    --sg-board-overlay-word: rgba(60, 200, 130, 0.28);
+
+    --sg-board-cage-0: #4a3b22;
+    --sg-board-cage-1: #2a4429;
+    --sg-board-cage-2: #25384f;
+    --sg-board-cage-3: #4a2b46;
+    --sg-board-cage-4: #44411f;
+    --sg-board-cage-line: #aab2c0;
+    --sg-board-cage-width: 1.3;
+    --sg-board-cage-dash: 3 2.4;
+
+    --sg-board-sign: #f0a8e4;
+    --sg-board-sign-width: 2.6;
+
+    --sg-board-probe: #f5c542;
+    --sg-board-backtrack: #ff6b5e;
+    --sg-board-restore: #ff6b5e;
+    --sg-board-technique: #b794ff;
+    --sg-board-technique-fill: rgba(183, 148, 255, 0.22);
+    --sg-board-selected: #7fb2ff;
+    --sg-board-selected-fill: rgba(127, 178, 255, 0.20);
+    --sg-board-hover: rgba(127, 178, 255, 0.12);
+
+    --sg-board-sym-1: #07765b;
+    --sg-board-sym-2: #fec7ed;
+    --sg-board-sym-3: #635bbf;
+    --sg-board-sym-4: #6fe5c4;
+    --sg-board-sym-5: #5a5101;
+    --sg-board-sym-6: #93a6fe;
+    --sg-board-sym-7: #242424;
+    --sg-board-sym-8: #beac43;
+    --sg-board-sym-9: #8a2674;
+    --sg-board-sym-10: #efd84a;
+    --sg-board-sym-11: #134ca4;
+    --sg-board-sym-12: #34b8b2;
+    --sg-board-sym-13: #015c37;
+    --sg-board-sym-14: #ffac9c;
+    --sg-board-sym-15: #474747;
+    --sg-board-sym-16: #9b9b9b;
+    --sg-board-sym-ink: #ffffff;
+    --sg-board-sym-edge: #05070b;
+  }
+}

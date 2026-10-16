@@ -1,0 +1,596 @@
+/*
+ * Page frame (design.md 10.1): header + three layouts.
+ *   >= 1200px     3 columns: controls | board | steps (+ explanation)
+ *   768-1199px    2 columns: controls | board, steps panel below as a horizontally scrollable strip
+ *   < 768px       1 column: controls become a bottom drawer (#btn-drawer toggles #controls-root.is-open),
+ *                 steps panel is a collapsed horizontal stepper (#btn-steps-toggle toggles #steps-root.is-expanded)
+ */
+
+:root {
+  --sg-layout-max-width: 120rem;
+  --sg-drawer-bar-height: 3.25rem;
+}
+
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.icon {
+  display: inline-block;
+  flex: none;
+  width: 1.25em;
+  height: 1.25em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon--brand {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--sg-color-accent);
+}
+
+/* ---- Header ---- */
+.app-header {
+  background: var(--sg-color-surface);
+  border-bottom: 1px solid var(--sg-color-divider);
+}
+
+.app-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-2) var(--sg-space-4);
+  max-width: var(--sg-layout-max-width);
+  margin-inline: auto;
+  padding: var(--sg-space-3) var(--sg-space-4);
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sg-space-3);
+  min-width: 0;
+}
+
+.app-title {
+  margin: 0;
+  font-size: var(--sg-font-size-xl);
+  letter-spacing: -0.01em;
+}
+
+.app-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sg-space-2) var(--sg-space-3);
+}
+
+/* ---- Grid of the three areas ---- */
+.app-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "main"
+    "steps"
+    "result";
+  align-items: start;
+  gap: var(--sg-space-4);
+  max-width: var(--sg-layout-max-width);
+  margin-inline: auto;
+  padding: var(--sg-space-4);
+}
+
+#controls-root {
+  grid-area: controls;
+}
+
+.app-main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  min-width: 0;
+}
+
+#steps-root {
+  grid-area: steps;
+  min-width: 0;
+}
+
+.result-area {
+  grid-area: result;
+  min-width: 0;
+}
+
+.result-area:empty {
+  display: none;
+}
+
+/* ---- Panels ---- */
+.panel {
+  padding: var(--sg-space-4);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
+}
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-2);
+  margin-bottom: var(--sg-space-3);
+}
+
+.panel__title {
+  margin: 0 0 var(--sg-space-3);
+  font-size: var(--sg-font-size-lg);
+}
+
+.panel__header > .panel__title {
+  margin: 0;
+}
+
+.panel__subtitle {
+  margin: 0 0 var(--sg-space-2);
+  font-size: 1rem;
+}
+
+.controls-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-4);
+}
+
+.controls-actions {
+  position: sticky;
+  bottom: calc(-1 * var(--sg-space-4));
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  margin: var(--sg-space-4) calc(-1 * var(--sg-space-4)) calc(-1 * var(--sg-space-4));
+  padding: var(--sg-space-3) var(--sg-space-4) var(--sg-space-4);
+  border-top: 1px solid var(--sg-color-divider);
+  border-radius: 0 0 var(--sg-radius-3) var(--sg-radius-3);
+  background: var(--sg-color-surface);
+}
+
+/* ---- Board area ---- */
+.board-frame {
+  display: flex;
+  justify-content: center;
+  padding: var(--sg-space-3);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
+}
+
+.board-svg {
+  width: 100%;
+  height: auto;
+  max-height: 72vh;
+}
+
+/* ---- Player ---- */
+.player {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sg-space-3) var(--sg-space-4);
+  padding: var(--sg-space-3) var(--sg-space-4);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+}
+
+.player__transport {
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--sg-space-2);
+}
+
+.player__timeline {
+  display: flex;
+  flex: 1 1 14rem;
+  align-items: center;
+  gap: var(--sg-space-3);
+  min-width: 0;
+}
+
+.player__timeline .slider {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+}
+
+.player__time {
+  flex: none;
+  min-width: 6ch;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+  white-space: nowrap;
+}
+
+.player__speeds {
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+/* The labels may wrap and the padding is smaller, so four buttons fit a 320px screen with large text. */
+.player__speeds .segmented__btn {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-inline: var(--sg-space-2);
+  white-space: normal;
+  text-align: center;
+}
+
+/* The play button shows the pause glyph while playing (data-state="playing" or aria-pressed="true"). */
+#btn-play .icon--pause,
+#btn-play[data-state="playing"] .icon--play,
+#btn-play[aria-pressed="true"] .icon--play {
+  display: none;
+}
+
+#btn-play[data-state="playing"] .icon--pause,
+#btn-play[aria-pressed="true"] .icon--pause {
+  display: inline-block;
+}
+
+/* ---- Status line ---- */
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sg-space-1) var(--sg-space-2);
+  min-height: 2.5rem;
+  padding: var(--sg-space-2) var(--sg-space-4);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface-2);
+}
+
+.status-row__label {
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 600;
+}
+
+.status-row__text {
+  flex: 1 1 12rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Added by js/ui/app.js: a one-line notice under the status, the error state and the symbol legend. */
+.status-row__notice {
+  flex: 1 0 100%;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.status-row[data-state="error"] .status-row__text {
+  color: var(--sg-color-danger);
+  font-weight: 600;
+}
+
+.board-legend:not(:empty) {
+  margin-top: var(--sg-space-3);
+  padding: var(--sg-space-2) var(--sg-space-4);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+}
+
+/* ---- Run states (js/ui/theme.js sets #app-layout[data-run]): idle, busy, ready, error, cancelled ---- */
+.status-row[data-state="error"] {
+  border-color: var(--sg-color-danger);
+  background: var(--sg-color-danger-bg);
+}
+
+.status-row[data-state="error"] .status-row__label::before {
+  content: "\26A0\FE0E";
+  margin-inline-end: var(--sg-space-1);
+}
+
+[data-run="error"] .board-frame {
+  border-color: var(--sg-color-danger);
+}
+
+/* Hints of the panels that have nothing to show yet; the texts are translated spans, one per state. */
+.empty-hint {
+  margin: 0;
+  padding: var(--sg-space-3) var(--sg-space-4);
+  border: 1px dashed var(--sg-color-border);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.empty-hint [data-state] {
+  display: none;
+}
+
+#result-hint {
+  display: none;
+  grid-area: result;
+  min-width: 0;
+}
+
+#result-root:empty + #result-hint {
+  display: block;
+}
+
+[data-run="ready"] #result-hint {
+  display: none;
+}
+
+[data-run="error"] #result-hint {
+  border-style: solid;
+  border-color: var(--sg-color-danger);
+  background: var(--sg-color-danger-bg);
+  color: var(--sg-color-text);
+}
+
+[data-run="idle"] #result-hint [data-state="idle"],
+[data-run="busy"] #result-hint [data-state="busy"],
+[data-run="error"] #result-hint [data-state="error"],
+[data-run="cancelled"] #result-hint [data-state="cancelled"],
+[data-run="idle"] #steps-hint [data-state="idle"] {
+  display: inline;
+}
+
+#steps-hint {
+  display: none;
+  margin-bottom: var(--sg-space-3);
+}
+
+[data-run="idle"] #steps-hint {
+  display: block;
+}
+
+/* ---- Steps panel: container layout only, the step items are styled by steps.css ---- */
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  margin: 0;
+}
+
+.steps-chart:not(:empty) {
+  margin-top: var(--sg-space-4);
+}
+
+.explain {
+  margin-top: var(--sg-space-4);
+  padding-top: var(--sg-space-4);
+  border-top: 1px solid var(--sg-color-divider);
+}
+
+#btn-steps-toggle {
+  display: none;
+}
+
+.steps-toggle[aria-expanded="true"] .steps-toggle__chevron {
+  transform: rotate(180deg);
+}
+
+/* ---- Drawer parts are inert above the mobile breakpoint ---- */
+.drawer-toggle,
+.drawer-backdrop {
+  display: none;
+}
+
+/* ---- Narrow header: icon-only buttons ---- */
+@media (max-width: 599.98px) {
+  .app-title {
+    font-size: var(--sg-font-size-lg);
+  }
+
+  .app-tools .btn__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .app-tools .btn {
+    padding-inline: var(--sg-space-2);
+  }
+}
+
+/* ---- Below 1200px: steps panel becomes a strip below the board ---- */
+@media (max-width: 1199.98px) {
+  .steps-list {
+    flex-direction: row;
+    padding-bottom: var(--sg-space-2);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    gap: var(--sg-space-3);
+  }
+
+  .steps-list > li {
+    flex: 0 0 auto;
+    min-width: 11rem;
+    max-width: 17rem;
+    scroll-snap-align: start;
+  }
+}
+
+/* ---- 768-1199px: two columns ---- */
+@media (min-width: 768px) {
+  .app-layout {
+    grid-template-columns: clamp(15rem, 30vw, 17.5rem) minmax(0, 1fr);
+    grid-template-areas:
+      "controls main"
+      "controls steps"
+      "controls result";
+  }
+
+  #controls-root {
+    position: sticky;
+    top: var(--sg-space-4);
+    max-height: calc(100vh - 2 * var(--sg-space-4));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* ---- >= 1200px: three columns ---- */
+@media (min-width: 1200px) {
+  .app-layout {
+    grid-template-columns: clamp(15rem, 22vw, 17.5rem) minmax(0, 1fr) clamp(17rem, 28vw, 21.25rem);
+    grid-template-areas:
+      "controls main steps"
+      "controls result steps";
+  }
+
+  #steps-root {
+    position: sticky;
+    top: var(--sg-space-4);
+    max-height: calc(100vh - 2 * var(--sg-space-4));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* ---- < 768px: one column, bottom drawer for the controls, collapsible stepper ---- */
+@media (max-width: 767.98px) {
+  body {
+    padding-bottom: calc(var(--sg-drawer-bar-height) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .app-layout {
+    padding: var(--sg-space-3);
+    gap: var(--sg-space-3);
+  }
+
+  .drawer-toggle {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--sg-z-drawer-bar);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sg-space-2);
+    height: calc(var(--sg-drawer-bar-height) + env(safe-area-inset-bottom, 0px));
+    padding: 0 var(--sg-space-4) env(safe-area-inset-bottom, 0px);
+    border: 0;
+    border-top: 1px solid var(--sg-color-border);
+    background: var(--sg-color-surface);
+    color: var(--sg-color-text);
+    font-weight: 650;
+    box-shadow: var(--sg-shadow-2);
+  }
+
+  .drawer-toggle:hover {
+    background: var(--sg-color-hover);
+  }
+
+  .drawer-toggle:focus-visible {
+    outline-offset: calc(-1 * var(--sg-focus-width) - 1px);
+  }
+
+  .drawer-toggle__chevron {
+    transition: transform var(--sg-motion-base) ease;
+  }
+
+  .drawer-toggle[aria-expanded="true"] .drawer-toggle__chevron {
+    transform: rotate(180deg);
+  }
+
+  #controls-root {
+    position: fixed;
+    right: 0;
+    bottom: calc(var(--sg-drawer-bar-height) + env(safe-area-inset-bottom, 0px));
+    left: 0;
+    z-index: var(--sg-z-drawer);
+    max-height: 75vh;
+    max-height: min(75vh, 100dvh - 8rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: var(--sg-radius-3) var(--sg-radius-3) 0 0;
+    box-shadow: var(--sg-shadow-2);
+    visibility: hidden;
+    transform: translateY(calc(100% + 1.5rem));
+    transition:
+      transform var(--sg-motion-base) ease,
+      visibility 0s linear var(--sg-motion-base);
+  }
+
+  #controls-root.is-open {
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--sg-z-drawer-backdrop);
+    display: block;
+    background: var(--sg-color-backdrop);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--sg-motion-base) ease,
+      visibility 0s linear var(--sg-motion-base);
+  }
+
+  #controls-root.is-open + .drawer-backdrop {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  #btn-steps-toggle {
+    display: inline-flex;
+  }
+
+  #steps-root {
+    padding: var(--sg-space-3);
+  }
+
+  #steps-root:not(.is-expanded) .steps-chart,
+  #steps-root:not(.is-expanded) .explain {
+    display: none;
+  }
+
+  #steps-root.is-expanded .steps-list {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+
+  #steps-root.is-expanded .steps-list > li {
+    max-width: none;
+  }
+
+  .board-frame {
+    padding: var(--sg-space-2);
+  }
+
+  .player {
+    padding: var(--sg-space-3);
+  }
+}

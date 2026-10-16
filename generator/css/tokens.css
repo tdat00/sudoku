@@ -1,0 +1,217 @@
+/*
+ * General design tokens (design.md 10.8, contract section 4).
+ * Colours live ONLY here and in tokens-board.css. Three themes are selected with
+ * <html data-theme="light|dark|high-contrast">; prefers-color-scheme is honoured only while no
+ * data-theme attribute is present. Keep the dark palette of the media block identical to the
+ * explicit [data-theme="dark"] block.
+ *
+ * Contrast (WCAG 2.2 AA): text >= 4.5:1, UI component borders / focus ring >= 3:1; the
+ * high-contrast theme targets >= 7:1 for text. tests/suites/theme.test.js computes every pair from this
+ * file (and tokens-board.css), so a colour change that breaks a ratio fails the tests.
+ * --sg-color-disabled-text is the colour of disabled text (>= 4.5:1 on the disabled background: disabled
+ * controls never fade with opacity). prefers-contrast: more is answered at the end of this file.
+ */
+
+/* ---- Theme independent tokens ---- */
+:root {
+  --sg-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial,
+    sans-serif;
+  --sg-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* The font-size setting changes this one value (any <length-percentage>, e.g. 87.5% / 100% / 125%). */
+  --sg-font-size-base: 100%;
+  --sg-font-size-sm: 0.875rem;
+  --sg-font-size-lg: 1.125rem;
+  --sg-font-size-xl: 1.375rem;
+  --sg-line-height: 1.5;
+
+  --sg-space-1: 0.25rem;
+  --sg-space-2: 0.5rem;
+  --sg-space-3: 0.75rem;
+  --sg-space-4: 1rem;
+  --sg-space-5: 1.5rem;
+  --sg-space-6: 2rem;
+
+  --sg-radius-1: 0.25rem;
+  --sg-radius-2: 0.5rem;
+  --sg-radius-3: 0.75rem;
+  --sg-radius-pill: 999px;
+
+  --sg-motion-fast: 120ms;
+  --sg-motion-base: 220ms;
+
+  --sg-control-height: 2.5rem;
+  --sg-focus-width: 3px;
+  --sg-focus-offset: 2px;
+
+  --sg-z-drawer-backdrop: 40;
+  --sg-z-drawer: 50;
+  --sg-z-drawer-bar: 60;
+  --sg-z-modal: 100;
+  --sg-z-toast: 110;
+}
+
+@media (pointer: coarse) {
+  :root {
+    --sg-control-height: 2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --sg-motion-fast: 0ms;
+    --sg-motion-base: 0ms;
+  }
+}
+
+:root[data-motion="off"] {
+  --sg-motion-fast: 0ms;
+  --sg-motion-base: 0ms;
+}
+
+/* ---- Light (default) ---- */
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --sg-color-bg: #f3f5f9;
+  --sg-color-surface: #ffffff;
+  --sg-color-surface-2: #e9edf4;
+  --sg-color-text: #172033;
+  --sg-color-text-muted: #4b5668;
+  --sg-color-disabled-text: #586377;
+  --sg-color-border: #6f7b8f;
+  --sg-color-divider: #d3d9e4;
+  --sg-color-hover: #dde4f0;
+  --sg-color-track: #dfe5ef;
+
+  --sg-color-accent: #2253c0;
+  --sg-color-accent-hover: #17409d;
+  --sg-color-accent-soft: #dfe8ff;
+  --sg-color-accent-text: #ffffff;
+
+  --sg-color-success: #17692f;
+  --sg-color-success-bg: #dff4e6;
+  --sg-color-warning: #7a4a00;
+  --sg-color-warning-bg: #fff1cc;
+  --sg-color-danger: #b3261e;
+  --sg-color-danger-bg: #fde4e1;
+  --sg-color-focus: #6a1fd0;
+
+  --sg-color-backdrop: rgba(16, 24, 40, 0.55);
+  --sg-shadow-1: 0 1px 2px rgba(16, 24, 40, 0.1), 0 1px 1px rgba(16, 24, 40, 0.06);
+  --sg-shadow-2: 0 10px 28px rgba(16, 24, 40, 0.22);
+}
+
+/* ---- Dark ---- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --sg-color-bg: #0f131a;
+  --sg-color-surface: #181e27;
+  --sg-color-surface-2: #222a36;
+  --sg-color-text: #e6ebf3;
+  --sg-color-text-muted: #a6b2c4;
+  --sg-color-disabled-text: #94a1b5;
+  --sg-color-border: #7f8ca2;
+  --sg-color-divider: #2f3948;
+  --sg-color-hover: #2d3849;
+  --sg-color-track: #2a3342;
+
+  --sg-color-accent: #7ba3ff;
+  --sg-color-accent-hover: #a0bcff;
+  --sg-color-accent-soft: #1f3566;
+  --sg-color-accent-text: #0a1226;
+
+  --sg-color-success: #62d68d;
+  --sg-color-success-bg: #14301f;
+  --sg-color-warning: #f2c14e;
+  --sg-color-warning-bg: #382c0c;
+  --sg-color-danger: #ff918a;
+  --sg-color-danger-bg: #3d1a18;
+  --sg-color-focus: #ffd84d;
+
+  --sg-color-backdrop: rgba(0, 0, 0, 0.65);
+  --sg-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --sg-shadow-2: 0 10px 28px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- Dark, from the operating system preference (only while no explicit theme is chosen) ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --sg-color-bg: #0f131a;
+    --sg-color-surface: #181e27;
+    --sg-color-surface-2: #222a36;
+    --sg-color-text: #e6ebf3;
+    --sg-color-text-muted: #a6b2c4;
+    --sg-color-disabled-text: #94a1b5;
+    --sg-color-border: #7f8ca2;
+    --sg-color-divider: #2f3948;
+    --sg-color-hover: #2d3849;
+    --sg-color-track: #2a3342;
+
+    --sg-color-accent: #7ba3ff;
+    --sg-color-accent-hover: #a0bcff;
+    --sg-color-accent-soft: #1f3566;
+    --sg-color-accent-text: #0a1226;
+
+    --sg-color-success: #62d68d;
+    --sg-color-success-bg: #14301f;
+    --sg-color-warning: #f2c14e;
+    --sg-color-warning-bg: #382c0c;
+    --sg-color-danger: #ff918a;
+    --sg-color-danger-bg: #3d1a18;
+    --sg-color-focus: #ffd84d;
+
+    --sg-color-backdrop: rgba(0, 0, 0, 0.65);
+    --sg-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --sg-shadow-2: 0 10px 28px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* ---- High contrast (text >= 7:1, borders and focus ring >= 7:1) ---- */
+:root[data-theme="high-contrast"] {
+  color-scheme: dark;
+
+  --sg-color-bg: #000000;
+  --sg-color-surface: #000000;
+  --sg-color-surface-2: #141414;
+  --sg-color-text: #ffffff;
+  --sg-color-text-muted: #e3e3e3;
+  --sg-color-disabled-text: #bdbdbd;
+  --sg-color-border: #ffffff;
+  --sg-color-divider: #a8a8a8;
+  --sg-color-hover: #2b2b2b;
+  --sg-color-track: #2b2b2b;
+
+  --sg-color-accent: #4dd8ff;
+  --sg-color-accent-hover: #9be9ff;
+  --sg-color-accent-soft: #00323f;
+  --sg-color-accent-text: #000000;
+
+  --sg-color-success: #66ff9e;
+  --sg-color-success-bg: #003315;
+  --sg-color-warning: #ffe14d;
+  --sg-color-warning-bg: #332b00;
+  --sg-color-danger: #ff9a9a;
+  --sg-color-danger-bg: #400000;
+  --sg-color-focus: #ffff00;
+
+  --sg-color-backdrop: rgba(0, 0, 0, 0.88);
+  --sg-shadow-1: none;
+  --sg-shadow-2: none;
+}
+
+/* ---- prefers-contrast: more (light and dark only; the high-contrast theme already is the maximum) ----
+   Muted text, borders and dividers take the text colour and the focus ring gets thicker. */
+@media (prefers-contrast: more) {
+  :root:not([data-theme="high-contrast"]) {
+    --sg-color-text-muted: var(--sg-color-text);
+    --sg-color-disabled-text: var(--sg-color-text);
+    --sg-color-border: var(--sg-color-text);
+    --sg-color-divider: var(--sg-color-text);
+    --sg-focus-width: 4px;
+  }
+}
