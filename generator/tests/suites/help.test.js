@@ -468,8 +468,8 @@
       expect(text).toContain('<a id="english"></a>');
       expect(text).toContain('<a id="tieng-viet"></a>');
       expect(text.indexOf('# English')).toBeLessThan(text.indexOf('# Ti\u1ebfng Vi\u1ec7t'));
-      expect(text).toContain('[English](#english)');
-      expect(text).toContain('[Ti\u1ebfng Vi\u1ec7t](#tieng-viet)');
+      expect(text).toContain('[Table of Contents](#english)');
+      expect(text).toContain('[M\u1ee5c l\u1ee5c](#tieng-viet)');
     });
 
     it('mentions every registered variant id, with its digits, cell count and levels right', function () {

@@ -5,9 +5,11 @@
 > combined tree. The play mode has since **moved to the sudoku-player repository**
 > ([github.com/tdat00/sudoku-player](https://github.com/tdat00/sudoku-player)); the rows and defects that concern it are
 > marked "➡️ moved to sudoku-player" below and describe code that is **no longer in this repository** (the generator's own
-> test count after the split is in `memory.md`, `task.md` Appendix E and `README.md`: 3,498 tests in 42 suites, all
-> green). The generator's behaviour (generation, replay, export, import, accessibility, themes, help, cache) is unchanged;
-> the split only adds the "Play online" hand-off (`T-7.8`, `design.md` §10.9), which was checked separately in headless Edge.
+> test count after the split is in `task.md` Appendix E and `README.md`; since then the UI was reworked (tabs, a list of
+> generated puzzles, a new print / text export, see `design.md` §10 and §18), so the screenshots, the UI defect list and
+> the export / share-link checks below describe the page as it was then). The generator's behaviour (generation, replay,
+> export, import, accessibility, themes, help, cache) was unchanged by the split, which only adds the "Play online"
+> hand-off (`T-7.8`, `design.md` §10.9), checked separately in headless Edge.
 
 Date: 2026-10-16 · Machine: AMD EPYC 7763 (8 vCPU), Windows, Node v24.21.0, Microsoft Edge 155 (Chromium) headless,
 driven over CDP. Everything below was measured on the tree that ships (no build step).

@@ -2,7 +2,40 @@
 
 <a id="top"></a>
 
-**[English](#english) · [Tiếng Việt](#tieng-viet)**
+**Live apps · Ứng dụng trực tuyến:**
+[Sudoku Generator](https://tdat00.github.io/sudoku-generator/) ([GitHub](https://github.com/tdat00/sudoku-generator)) ·
+[Sudoku Player](https://tdat00.github.io/sudoku-player/) ([GitHub](https://github.com/tdat00/sudoku-player))
+
+- [Table of Contents](#english)
+  - [What it is](#what-it-is)
+  - [Features](#features)
+  - [Screenshots](#screenshots)
+  - [Running it](#running-it)
+  - [URL parameters](#url-parameters)
+  - [Play online](#play-online-with-sudoku-player)
+  - [How it works](#how-it-works)
+  - [Adding a variant](#adding-a-variant)
+  - [Adding a technique](#adding-a-technique)
+  - [Running the tests](#running-the-tests)
+  - [Conventions](#conventions)
+  - [Known limitations](#known-limitations)
+  - [Licence and credits](#licence-and-credits)
+- [Mục lục](#tieng-viet)
+  - [Giới thiệu](#giới-thiệu)
+  - [Tính năng](#tính-năng)
+  - [Ảnh chụp màn hình](#ảnh-chụp-màn-hình)
+  - [Cách chạy](#cách-chạy)
+  - [Tham số URL](#tham-số-url)
+  - [Chơi trực tuyến](#chơi-trực-tuyến-với-sudoku-player)
+  - [Cách hoạt động](#cách-hoạt-động)
+  - [Thêm một biến thể](#thêm-một-biến-thể)
+  - [Thêm một kỹ thuật](#thêm-một-kỹ-thuật)
+  - [Chạy kiểm thử](#chạy-kiểm-thử)
+  - [Quy ước](#quy-ước)
+  - [Hạn chế đã biết](#hạn-chế-đã-biết)
+  - [Giấy phép và ghi công](#giấy-phép-và-ghi-công)
+
+---
 
 A static web app, written in plain HTML, CSS and JavaScript, that generates Sudoku puzzles in **15 variants**,
 **guarantees the difficulty you ask for**, and **shows you how every puzzle is made** — step by step, in
@@ -24,21 +57,6 @@ dụng anh em **[sudoku-player](https://github.com/tdat00/sudoku-player)**: nút
 
 # English
 
-**Contents:**
-[What it is](#what-it-is) ·
-[Features](#features) ·
-[Screenshots](#screenshots) ·
-[Running it](#running-it) ·
-[URL parameters](#url-parameters) ·
-[Play online](#play-online-with-sudoku-player) ·
-[How it works](#how-it-works) ·
-[Adding a variant](#adding-a-variant) ·
-[Adding a technique](#adding-a-technique) ·
-[Running the tests](#running-the-tests) ·
-[Conventions](#conventions) ·
-[Known limitations](#known-limitations) ·
-[Licence and credits](#licence-and-credits)
-
 ## What it is
 
 Most Sudoku generators hand you a puzzle and nothing else. This one is also a way to *learn how puzzles are made*:
@@ -47,10 +65,13 @@ Most Sudoku generators hand you a puzzle and nothing else. This one is also a wa
 2. The generator runs at full speed and **keeps a short log** of how it dug the puzzle out of a full
    solution: every clue it removed and every one it had to put back.
 3. The board shows the finished puzzle at once. Then you **step through how it was made**, by hand, with the
-   First / Previous / Next / Last step buttons or the slider under the board: each step is one change you can
-   see (the full solution, the cages or signs, a batch of removals, the finished puzzle). The steps are listed
-   in a panel next to the board; its **Explain** button opens the Help at the step that is on show (what, why,
-   how, and the pseudocode that runs).
+   First / Previous / Next / Last step buttons or the slider in the **Generation Steps** tab under the board: each
+   step is one change you can see (the full solution, the cages or signs, a batch of removals, the finished
+   puzzle). The tab describes the step that is on show, with the techniques the puzzle needs at that point and
+   their score; its **Explain** icon opens the Help at that step (what, why, how, and the pseudocode that runs).
+   The **Summary** tab next to it shows the difficulty of the finished puzzle and how its score adds up.
+4. Every puzzle you generate is kept in a list on the left, so you can open it again, or print and export
+   several of them together.
 
 The difficulty is not a guess. Each level is defined by the solving techniques a person needs, and the digger
 only removes a clue while the puzzle can still be solved with the techniques of the requested level (the
@@ -63,15 +84,21 @@ same puzzle.
   Jigsaw; Killer; Greater-Than; Samurai, Sohei, Butterfly and Flower (overlapping grids); Wordoku.
 - **Six difficulty levels** — very easy, easy, medium, hard, expert, evil — from 21 human solving techniques
   (singles, locked candidates, subsets, fish, wings, chains) plus 3 cage and 2 inequality techniques.
-- **Step-by-step replay** of the generation, moved by hand (first, previous, next and last step, a slider, or
-  a click in the list of steps): each step is one visible change of the board, the easy early removals are
+- **Step-by-step replay** of the generation, moved by hand (first, previous, next and last step, or a slider
+  with a notch for every step): each step is one visible change of the board, the easy early removals are
   summed up in batches, and the Help ("How it works") explains the step with pseudocode.
+- **Difficulty score you can read** — the Summary tab lists every technique the puzzle needs with its uses,
+  points and total, then the empty cells and the bonus points for difficult techniques, and a Total equal to the
+  score; the Generation Steps tab shows the same table for the puzzle at each step.
+- **Generated puzzles list** — every puzzle you make is saved in the browser (up to 100, newest first) and shown
+  on the left as "variant" and "level: score, seed"; click one to open it again (the same seed gives the same
+  puzzle), remove one, or clear the list.
 - **Bilingual interface** (English / Vietnamese), switched without a reload; every string, including the
   solving techniques and the variant rules, exists in both languages.
 - **Guaranteed result** — exactly one solution (checked by a separate solver), the requested level or, when it
   cannot be reached, the closest puzzle with a clear notice.
 - **Print / PDF** — the Print dialog prints the puzzles you tick in the saved list (the one on screen is ticked at
-  first), 1, 2 or 4 to a page, optionally with their solutions on pages of their own; choose "Save as PDF" in the print dialog to get a PDF file (vector graphics, so the lines stay sharp).
+  first), 1, 2 or 4 to a page (4 at first), optionally with their solutions on pages of their own; choose "Save as PDF" in the print dialog to get a PDF file (vector graphics, so the lines stay sharp).
 - **Text export** — the **Export** button next to **Print** shows the puzzles you tick in the saved list as readable text (`#1,Classic Sudoku 9x9,Hard,<seed>` then one grid row per line, `.` for empty cells) with a Copy
   button, to copy into a file or another tool.
 - **Play online** — the **Play** button next to **Print** hands the puzzle on screen to the separate [sudoku-player](https://github.com/tdat00/sudoku-player)
@@ -125,12 +152,11 @@ You need only a web browser (Chrome or Edge 100+, Firefox 100+, Safari 15.4+).
 
 **The quickest way** — open `index.html` in the browser (double-click it, or drag it onto a window). It works
 from `file://`, but browsers do not allow Web Workers there, so the generator runs on the main thread in small
-slices: the badge under the board says *Main thread*, the page stays responsive between slices but may pause
+slices: the page stays responsive between slices but may pause
 for a moment on a large board (one unsplittable piece of work can take up to a few hundred milliseconds),
 **Cancel** takes effect at the next slice, and the background pre-generation of the next puzzle is off.
 
-**Recommended** — serve the folder with any static server. Then the generator runs in a Web Worker (the badge
-says *Background thread*), the page stays smooth, **Cancel** works at once and the next puzzle is quietly
+**Recommended** — serve the folder with any static server. Then the generator runs in a Web Worker, the page stays smooth, **Cancel** works at once and the next puzzle is quietly
 pre-generated while you look at this one:
 
 ```bash
@@ -151,8 +177,7 @@ Open the **Help** button for the rules of every variant, the technique ladder an
 ## URL parameters
 
 The address bar always holds the state of the page, so a link reproduces a puzzle exactly. Only values that
-differ from the defaults are written; a share link (from the result panel) writes
-`v d sym mode` as well. Any other parameter is ignored, the `trace` and `speed` of older links included.
+differ from the defaults are written. The page has no share-link button; a link that carries a seed reproduces the puzzle (`SG.store.shareUrl` builds one that also carries `v d sym mode`). Any other parameter is ignored, the `trace` and `speed` of older links included.
 
 | Parameter | Example | Meaning |
 |-----------|---------|---------|
@@ -171,7 +196,7 @@ differ from the defaults are written; a share link (from the result panel) write
 `?v=classic9&d=expert&seed=42&lang=vi&auto=1` always gives the same puzzle. Settings are also kept in the
 browser's `localStorage`: `sg.prefs.v1` (language, theme, text size, reduced motion, the colour-blind
 symbol), `sg.lastConfig.v1` (the last options), `sg.cache.v1` (up to 20 recently generated puzzles, see
-[Cache and pre-generation](#cache-and-pre-generation)). A link that names
+[Cache and pre-generation](#cache-and-pre-generation)), `sg.history.v1` (the list of generated puzzles on the left, up to 100). A link that names
 a puzzle parameter wins over the stored options. If storage is blocked, the
 page keeps everything in memory for the session.
 
@@ -179,7 +204,7 @@ page keeps everything in memory for the session.
 
 This repository only **generates** puzzles. Solving them is the job of its sibling,
 **[sudoku-player](https://github.com/tdat00/sudoku-player)** (published at
-`https://tdat00.github.io/sudoku-player/`): a separate static app with a grid you can fill in, candidate notes,
+[tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)): a separate static app with a grid you can fill in, candidate notes,
 undo/redo, error checking, hints that name the logical technique, a timer, progress saved per puzzle, all 15
 variants, English / Vietnamese, themes and accessibility.
 
@@ -288,7 +313,7 @@ starts `js/worker/gen.worker.js`, which loads the core, the variants and the wor
 and runs `SG.pipeline.runSteps` in slices of about 12 ms, so a `cancel` message is read between slices: the
 promise is rejected at once, the work stops at the next boundary, and a worker that does not answer within
 150 ms is terminated (and created again when it is needed). Where a Worker cannot start (`file://`, a restrictive policy) the client
-falls back to the main thread, runs the same slices there and the page shows the badge. The puzzle for a given
+falls back to the main thread and runs the same slices there. The puzzle for a given
 seed is identical in both modes.
 
 ### Cache and pre-generation
@@ -428,7 +453,7 @@ sudoku-generator/
     ├── harness.js · node-runner.js · soak.js · perf.js
     ├── fixtures/           puzzles and fixtures with known answers, the performance helper and the
     │                       regression hashes (regression.js, generated)
-    └── suites/             one *.test.js per area, 42 in all (found automatically)
+    └── suites/             one *.test.js per area, 43 in all (found automatically)
 ```
 
 ## Adding a variant
@@ -663,7 +688,7 @@ header of `js/core/techniques.js`. A complete example — *Full House*, a unit w
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # every suite (42, about 3,350 tests), about three minutes
+node tests/node-runner.js                          # every suite (43, about 3,370 tests), about three minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
@@ -674,7 +699,7 @@ The runner loads `SOURCE_FILES` with `vm.runInThisContext`, discovers `tests/fix
 engine, every variant, the solving techniques, the pipeline and its events, the worker and its client, and the
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks this README
 against the code: its variants table, URL parameters, script names, links, commands and flags, the `SG.…`
-names and the two worked examples. At the tip of this repository the runner counts 3,354 tests in 42 suites,
+names and the two worked examples. At the tip of this repository the runner counts 3,367 tests in 43 suites,
 all green; the counts of the combined project at its final review (before the split) are in
 `docs/final-report.md`.
 
@@ -758,21 +783,6 @@ project that plays the puzzles is [sudoku-player](https://github.com/tdat00/sudo
 
 # Tiếng Việt
 
-**Mục lục:**
-[Giới thiệu](#giới-thiệu) ·
-[Tính năng](#tính-năng) ·
-[Ảnh chụp màn hình](#ảnh-chụp-màn-hình) ·
-[Cách chạy](#cách-chạy) ·
-[Tham số URL](#tham-số-url) ·
-[Chơi trực tuyến](#chơi-trực-tuyến-với-sudoku-player) ·
-[Cách hoạt động](#cách-hoạt-động) ·
-[Thêm một biến thể](#thêm-một-biến-thể) ·
-[Thêm một kỹ thuật](#thêm-một-kỹ-thuật) ·
-[Chạy kiểm thử](#chạy-kiểm-thử) ·
-[Quy ước](#quy-ước) ·
-[Hạn chế đã biết](#hạn-chế-đã-biết) ·
-[Giấy phép và ghi công](#giấy-phép-và-ghi-công)
-
 ## Giới thiệu
 
 Phần lớn trình tạo Sudoku chỉ đưa cho bạn một đề rồi thôi. Trình này còn là cách để *hiểu một đề Sudoku được
@@ -782,10 +792,12 @@ tạo ra như thế nào*:
 2. Bộ sinh chạy hết tốc độ và **ghi lại một nhật ký ngắn** về cách nó đào ra đề từ một lời giải đầy đủ: mọi số
    đã xóa và mọi số phải trả lại.
 3. Bảng hiện ngay đề hoàn chỉnh. Sau đó bạn **tự xem lại đề được tạo ra như thế nào**, bằng các nút Bước đầu
-   tiên / Bước trước / Bước tiếp theo / Bước cuối cùng hoặc thanh trượt dưới bảng: mỗi bước là một thay đổi
-   bạn nhìn thấy trên bảng (lời giải đầy đủ, các lồng hay dấu so sánh, một đợt xóa ô, đề hoàn chỉnh). Các bước
-   được liệt kê trong một khung cạnh bảng; nút **Giải thích** của khung này mở Trợ giúp ở đúng bước đang xem
-   (làm gì, vì sao, làm thế nào, và đoạn mã giả đang chạy).
+   tiên / Bước trước / Bước tiếp theo / Bước cuối cùng hoặc thanh trượt ở thẻ **Các bước tạo đề** dưới bảng: mỗi
+   bước là một thay đổi bạn nhìn thấy trên bảng (lời giải đầy đủ, các lồng hay dấu so sánh, một đợt xóa ô, đề
+   hoàn chỉnh). Thẻ này mô tả bước đang xem, kèm các kỹ thuật mà đề cần ở thời điểm đó và điểm của chúng; biểu
+   tượng **Giải thích** mở Trợ giúp ở đúng bước đó (làm gì, vì sao, làm thế nào, và đoạn mã giả đang chạy). Thẻ
+   **Tóm tắt** bên cạnh cho biết độ khó của đề hoàn chỉnh và điểm của nó được cộng lên như thế nào.
+4. Mọi đề bạn tạo đều được giữ trong một danh sách ở bên trái, để mở lại, hoặc in và xuất nhiều đề cùng lúc.
 
 Độ khó không phải là phỏng đoán. Mỗi mức được định nghĩa bằng các kỹ thuật giải mà người chơi cần dùng, và bộ
 đào chỉ bỏ một số cho sẵn khi đề vẫn giải được bằng các kỹ thuật của mức đã chọn (*oracle bị giới hạn theo kỹ
@@ -800,14 +812,21 @@ thuật*, [design.md](design.md) §6.8). Cùng seed và cùng tùy chọn luôn 
   người (số đơn, ứng viên bị khóa, tập con, cá, cánh, chuỗi) cùng 3 kỹ thuật về lồng và 2 kỹ thuật về dấu so
   sánh.
 - **Phát lại từng bước** quá trình tạo đề, do bạn tự điều khiển (bước đầu tiên, bước trước, bước tiếp theo,
-  bước cuối cùng, thanh trượt, hoặc bấm vào danh sách các bước): mỗi bước là một thay đổi nhìn thấy được trên
+  bước cuối cùng, hoặc thanh trượt có một vạch cho mỗi bước): mỗi bước là một thay đổi nhìn thấy được trên
   bảng, những lần xóa dễ ở đầu được gộp thành từng đợt, và phần Trợ giúp ("Cách hoạt động") giải thích bước
   đó kèm mã giả.
+- **Điểm độ khó đọc được** — thẻ Tóm tắt liệt kê từng kỹ thuật mà đề cần cùng số lần dùng, điểm và tổng, rồi
+  các ô trống và điểm thưởng cho kỹ thuật khó, và dòng Tổng bằng đúng điểm của đề; thẻ Các bước tạo đề cho
+  bảng tương tự ở từng bước.
+- **Danh sách các đề đã tạo** — mỗi đề bạn tạo được lưu trong trình duyệt (tối đa 100, mới nhất ở trên) và hiện
+  ở bên trái dưới dạng "biến thể" và "mức: điểm, seed"; bấm vào một đề để mở lại (cùng seed cho cùng đề), xóa
+  từng đề, hoặc xóa cả danh sách.
 - **Giao diện song ngữ** (Anh / Việt), đổi ngay không cần tải lại trang; mọi chuỗi chữ, kể cả tên kỹ thuật giải
   và luật của từng biến thể, đều có cả hai ngôn ngữ.
 - **Kết quả được đảm bảo** — đúng một lời giải (do một bộ giải riêng kiểm tra), đúng mức độ yêu cầu hoặc, khi
   không đạt được, đề gần nhất kèm thông báo rõ ràng.
-- **In / PDF** — hộp thoại In đề in đề đang hiển thị, có thể kèm lời giải ở một trang riêng; chọn "Lưu dưới
+- **In / PDF** — hộp thoại In đề in các đề bạn tick trong danh sách đã lưu (lúc đầu là đề đang hiển thị), 1, 2
+  hoặc 4 đề mỗi trang (mặc định 4), có thể kèm lời giải ở các trang riêng; chọn "Lưu dưới
   dạng PDF" trong hộp thoại in để có tệp PDF (đồ họa vector nên nét kẻ luôn sắc).
 - **Xuất văn bản** — nút **Xuất văn bản** cạnh nút **In đề** hiện các đề bạn tick trong danh sách đã tạo dưới dạng văn bản dễ đọc (`#1,Classic Sudoku 9x9,Hard,<seed>` rồi mỗi hàng lưới một dòng, `.` là ô trống), kèm nút Sao chép.
   Dán vào tệp hoặc công cụ khác.
@@ -844,12 +863,11 @@ Bạn chỉ cần một trình duyệt web (Chrome hoặc Edge 100+, Firefox 100
 
 **Cách nhanh nhất** — mở `index.html` bằng trình duyệt (bấm đúp, hoặc kéo thả vào cửa sổ). Cách này chạy được
 từ `file://`, nhưng trình duyệt không cho dùng Web Worker ở đó nên bộ sinh chạy trên luồng chính theo từng lát
-nhỏ: huy hiệu dưới bảng ghi *Luồng chính*, trang vẫn phản hồi giữa các lát nhưng với bảng lớn có thể khựng một
+nhỏ: trang vẫn phản hồi giữa các lát nhưng với bảng lớn có thể khựng một
 lúc (có những đoạn việc không chia nhỏ được, lâu nhất vài trăm mili giây), nút **Hủy** có tác dụng ở lát kế
 tiếp, và việc tạo sẵn đề kế tiếp ở nền bị tắt.
 
-**Khuyến nghị** — phục vụ thư mục bằng một máy chủ tĩnh bất kỳ. Khi đó bộ sinh chạy trong Web Worker (huy hiệu
-ghi *Luồng nền*), trang luôn mượt, nút **Hủy** có tác dụng ngay và đề kế tiếp được âm thầm tạo sẵn trong lúc
+**Khuyến nghị** — phục vụ thư mục bằng một máy chủ tĩnh bất kỳ. Khi đó bộ sinh chạy trong Web Worker, trang luôn mượt, nút **Hủy** có tác dụng ngay và đề kế tiếp được âm thầm tạo sẵn trong lúc
 bạn xem đề này:
 
 ```bash
@@ -870,7 +888,7 @@ Bấm nút **Trợ giúp** để xem luật của từng biến thể, bậc tha
 ## Tham số URL
 
 Thanh địa chỉ luôn giữ trạng thái của trang, nên một liên kết tạo lại đúng một đề. Chỉ những giá trị khác mặc
-định mới được ghi; liên kết chia sẻ (ở khung kết quả) còn ghi thêm `v d sym mode`. Mọi tham số khác đều bị bỏ
+định mới được ghi. Trang không có nút chia sẻ liên kết; một liên kết có seed tạo lại đúng đề (`SG.store.shareUrl` dựng liên kết ghi thêm `v d sym mode`). Mọi tham số khác đều bị bỏ
 qua, kể cả `trace` và `speed` của các liên kết cũ.
 
 | Tham số | Ví dụ | Ý nghĩa |
@@ -890,14 +908,14 @@ qua, kể cả `trace` và `speed` của các liên kết cũ.
 `?v=classic9&d=expert&seed=42&lang=vi&auto=1` luôn cho ra cùng một đề. Các thiết lập còn được lưu trong
 `localStorage` của trình duyệt: `sg.prefs.v1` (ngôn ngữ, giao diện, cỡ chữ, giảm chuyển động, ký hiệu hỗ trợ
 người mù màu), `sg.lastConfig.v1` (các tùy chọn gần nhất), `sg.cache.v1` (tối đa 20 đề vừa tạo, xem
-[Bộ nhớ đệm và tạo sẵn đề](#bộ-nhớ-đệm-và-tạo-sẵn-đề)). Liên kết có nêu tham
+[Bộ nhớ đệm và tạo sẵn đề](#bộ-nhớ-đệm-và-tạo-sẵn-đề)), `sg.history.v1` (danh sách các đề đã tạo ở bên trái, tối đa 100). Liên kết có nêu tham
 số của đề thì được ưu tiên hơn các tùy chọn đã lưu. Nếu bị chặn lưu trữ, trang giữ mọi thứ trong bộ nhớ trong
 suốt phiên.
 
 ## Chơi trực tuyến với sudoku-player
 
 Kho mã này chỉ **tạo** đề. Việc giải đề do dự án anh em đảm nhận:
-**[sudoku-player](https://github.com/tdat00/sudoku-player)** (đăng tại `https://tdat00.github.io/sudoku-player/`) —
+**[sudoku-player](https://github.com/tdat00/sudoku-player)** (đăng tại [tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)) —
 một ứng dụng tĩnh riêng với lưới để bạn điền số, ghi chú ứng viên, hoàn tác / làm lại, kiểm tra lỗi, gợi ý nêu
 tên kỹ thuật logic, đồng hồ, tiến độ được lưu theo từng đề, đủ 15 biến thể, tiếng Anh / Việt, giao diện và trợ
 năng.
@@ -976,12 +994,12 @@ mức; cuối cùng là đề hoàn chỉnh. Phần việc kỹ thuật (cấu h
 đào trượt mức) không được hiện. Ví dụ, một đề Cổ điển 9×9 mức *dễ* với seed 3 phát lại trong 7 bước: lời giải
 đầy đủ, năm đợt xóa ngẫu nhiên (9, 10, 10 và 10 ô, rồi "xóa 8 ô · trả lại 2 ô") và đề hoàn chỉnh với 34 số
 cho sẵn. `SG.player.create()` là bộ phát lại điều khiển bằng tay (về đầu, lùi, tiến, đến cuối, nhảy đến một
-vị trí; vị trí 0 là lưới trống), `SG.stepView.create()` là danh sách các bước kèm chú giải các khung trên
-bảng; dòng trạng thái dưới bảng (trình đọc màn hình sẽ đọc dòng này) đi theo bước đang xem. Lời giải thích của
+vị trí; vị trí 0 là lưới trống), `SG.stepView.create()` là phần mô tả bước đang xem (kèm chú giải các khung trên
+bảng và bảng điểm của các kỹ thuật mà đề cần ở bước đó). Lời giải thích của
 bảy bước nằm trong hộp thoại Trợ giúp (thẻ "Cách hoạt động"): mỗi bước một mục thu gọn / mở rộng được, với
 làm gì / vì sao / làm thế nào và mã giả, `SG.explainCard.create(el, { compact: true })`; mục của bước phát lại
 đang xem được đánh dấu, mở sẵn, kèm dòng đang chạy và bộ đếm của giai đoạn đào (`SG.app.getExplainContext()`).
-Nút **Giải thích** của khung các bước mở Trợ giúp ở thẻ đó.
+Biểu tượng **Giải thích** của phần mô tả bước mở Trợ giúp ở thẻ đó.
 Các lớp phủ (lồng, dấu, cửa sổ) được vẽ từ mô hình của kết quả, không từ nhật ký. Mọi lựa chọn ngẫu nhiên
 dùng các luồng được tách ra từ một bộ sinh số có seed (`SG.rng`), vì thế seed tạo lại được đề.
 
@@ -994,7 +1012,7 @@ tạo một client độc lập (có `dispose()`) cho bộ nhớ đệm. Qua `ht
 `SG.pipeline.runSteps` theo từng lát khoảng 12 ms, nên thông điệp `cancel` được đọc giữa các lát: promise bị từ
 chối ngay, việc đang làm dừng ở ranh giới kế tiếp, và worker nào không phản hồi trong 150 ms thì bị tắt (và được
 tạo lại khi cần). Ở nơi Worker không khởi động được (`file://`, chính sách hạn chế) client chuyển sang chạy trên luồng chính,
-chạy cùng các lát đó ở đó và trang hiện huy hiệu. Với cùng một seed, đề ở hai chế độ là như nhau.
+chạy cùng các lát đó ở đó. Với cùng một seed, đề ở hai chế độ là như nhau.
 
 ### Bộ nhớ đệm và tạo sẵn đề
 
@@ -1147,7 +1165,7 @@ của `js/core/techniques.js`; ví dụ hoàn chỉnh *Full House* (một nhóm 
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # mọi suite (42, khoảng 3.350 bài), khoảng ba phút
+node tests/node-runner.js                          # mọi suite (43, khoảng 3.370 bài), khoảng ba phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
@@ -1158,7 +1176,7 @@ Bộ chạy nạp `SOURCE_FILES` bằng `vm.runInThisContext`, tự tìm `tests/
 giải, pipeline cùng các sự kiện của nó, worker và client của nó, và phần logic thuần của mọi module giao diện
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu README này với mã nguồn: bảng biến thể, tham số
 URL, tên các script, liên kết, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 3.354 bài trong 42 suite, tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 3.367 bài trong 43 suite, tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong `docs/final-report.md`.
 
 - **Trong trình duyệt:** mở `tests.html` (chạy được từ `file://`). Tham số truy vấn:
