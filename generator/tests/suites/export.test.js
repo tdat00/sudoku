@@ -136,12 +136,15 @@
 
     it('what the player and the print path need is still there', function () {
       ready();
-      ['init', 'open', 'openCode', 'close', 'toJson', 'buildPlayLink', 'buildExportCode', 'playerBase',
+      ['init', 'open', 'openText', 'close', 'closeText', 'toJson', 'buildPlayLink', 'buildExportText',
+        'gridLines', 'playerBase',
         'pagePlayerBase', 'openPlayLink',
         'playOnline', 'buildPrintLayout', 'boardSvg', 'printTokens', 'printItems', 'buildPrintRoot',
         'clearPrint'].forEach(function (name) {
         expect(typeof E[name]).toBe('function');
       });
+      expect(E.openCode).toBeUndefined();
+      expect(E.buildExportCode).toBeUndefined();
     });
   });
 
@@ -253,6 +256,98 @@
   });
 
   // ---------------------------------------------------------------------------------------------
+  // Export as readable text
+  // ---------------------------------------------------------------------------------------------
+
+  describe('export: readable text', function () {
+    function lines(text) {
+      return text.split('\n');
+    }
+
+    it('writes the header line #number,variant,level,seed and the grid, one row per line', function () {
+      ready();
+      var r = realResult('classic9', 'easy', 3);
+      var text = inLocale('en', function () { return E.buildExportText([{ result: r }]); });
+      var rows = lines(text);
+      expect(rows[0]).toBe('#1,Classic Sudoku 9x9,' + SG.i18n.t('difficulty.' + r.rating.level) + ',3');
+      expect(rows.slice(1, 10).every(function (row) { return /^[1-9.]{9}$/.test(row); })).toBe(true);
+      expect(rows[10]).toBe('');
+      expect(rows.length).toBe(11);
+      // The grid is the givens, row by row: a digit for a clue and a dot for an empty cell.
+      var expected = [];
+      for (var row = 0; row < 9; row++) {
+        var line = '';
+        for (var col = 0; col < 9; col++) {
+          var v = r.givens[row * 9 + col];
+          line += v > 0 ? String(v) : '.';
+        }
+        expected.push(line);
+      }
+      expect(rows.slice(1, 10)).toEqual(expected);
+      expect(E.gridLines(r)).toEqual(expected);
+    });
+
+    it('numbers several puzzles from 1 and separates them by a blank line', function () {
+      ready();
+      var a = realResult('classic9', 'easy', 3);
+      var b = realResult('classic4', 'easy', 2);
+      var c = realResult('killer', 'easy', 5);
+      var text = inLocale('en', function () { return E.buildExportText([{ result: a }, { result: b }, { result: c }]); });
+      var headers = lines(text).filter(function (line) { return line.charAt(0) === '#'; });
+      expect(headers.length).toBe(3);
+      expect(headers.map(function (h) { return h.split(',')[0]; })).toEqual(['#1', '#2', '#3']);
+      expect(headers[1].split(',')[1]).toBe('Classic Sudoku 4x4');
+      expect(headers[2].split(',')[3]).toBe('5');
+      expect(text.split('\n\n').length).toBe(3);
+      expect(text.slice(-1)).toBe('\n');
+      expect(text.slice(-2)).not.toBe('\n\n');
+    });
+
+    it('writes nothing for no puzzle, and keeps the seed field empty for a puzzle without a seed', function () {
+      ready();
+      expect(E.buildExportText([])).toBe('');
+      var r = Object.assign({}, realResult('classic9', 'easy', 5), { seed: null });
+      expect(lines(E.buildExportText([{ result: r }]))[0].split(',')[3]).toBe('');
+    });
+
+    it('uses the language of the page for the names, with no comma and no times sign in a header', function () {
+      ready();
+      var r = realResult('classic9', 'hard', 4);
+      var en = inLocale('en', function () { return E.buildExportText([{ result: r }]); }).split('\n')[0];
+      var vi = inLocale('vi', function () { return E.buildExportText([{ result: r }]); }).split('\n')[0];
+      expect(en).not.toBe(vi);
+      [en, vi].forEach(function (header) {
+        expect(header.split(',').length).toBe(4);
+        expect(header.indexOf('\u00d7')).toBe(-1);
+      });
+    });
+
+    it('draws a board with holes on its canvas: _ where no cell is, and every cell once', function () {
+      ready();
+      var r = realResult('samurai', 'easy', 2);
+      var rows = E.gridLines(r);
+      expect(rows.length).toBe(r.model.layout.rows);
+      rows.forEach(function (row) { expect(row.length).toBe(r.model.layout.cols); });
+      var cells = rows.join('').replace(/_/g, '').length;
+      expect(cells).toBe(r.model.cellCount);
+      expect(rows.join('').indexOf('_')).not.toBe(-1);
+    });
+
+    it('writes the values above 9 as letters: 10 is A, 11 is B, and so on', function () {
+      ready();
+      var r = realResult('mega16', 'easy', 2);
+      var rows = E.gridLines(r);
+      expect(rows.length).toBe(16);
+      var letters = rows.join('').replace(/[1-9.]/g, '');
+      expect(/^[A-G]*$/.test(letters)).toBe(true);
+      var max = 0;
+      for (var i = 0; i < r.givens.length; i++) max = Math.max(max, r.givens[i]);
+      expect(max).toBeGreaterThan(9);
+      expect(letters.length).toBeGreaterThan(0);
+    });
+  });
+
+  // ---------------------------------------------------------------------------------------------
   // Play online (hand-off to sudoku-player)
   // ---------------------------------------------------------------------------------------------
 
@@ -300,20 +395,6 @@
         generatedAt: FIXED.generatedAt });
       expect(other.url.indexOf('http://localhost:8080/player/#puzzle=j.')).toBe(0);
       expect((await SG.exchange.decode(other.token)).seed).toBe(11);
-    });
-
-    it('builds the text code: the token of the link, which decodes to the document of toJson', async function () {
-      ready();
-      var r = realResult('killer', 'easy', 11);
-      var opts = { generatedAt: FIXED.generatedAt, locale: 'en' };
-      var made = await E.buildExportCode(r, opts);
-      expect(made.code).toBe((await E.buildPlayLink(r, opts)).token);
-      expect(/^[zj]\./.test(made.code)).toBe(true);
-      expect(made.length).toBe(made.code.length);
-      expect(made.long).toBe(false);
-      expect(await SG.exchange.decode(made.code)).toEqual(E.toJson(r, opts));
-      var plain = await E.buildExportCode(r, { generatedAt: FIXED.generatedAt, compress: false });
-      expect(plain.code.indexOf('j.')).toBe(0);
     });
 
     it('works for a puzzle without a seed (only the document matters)', async function () {
@@ -561,14 +642,15 @@
     it('the pack holds exactly the strings of the dialogs, the print pages and the Play button', function () {
       ready();
       var f = fragments('export.')[0];
-      expect(Object.keys(f.en).sort()).toEqual(['export.code.copied', 'export.code.copy',
-        'export.code.copyFailed', 'export.code.error', 'export.code.hint', 'export.code.intro',
-        'export.code.long', 'export.code.title', 'export.code.working', 'export.playOnline.error',
-        'export.playOnline.long', 'export.playOnline.opened', 'export.print.alt', 'export.print.altSolution',
-        'export.print.button', 'export.print.heading', 'export.print.hint', 'export.print.meta',
-        'export.print.puzzleNumber', 'export.print.solutionNumber', 'export.print.solutionOnly',
-        'export.print.solutionPage', 'export.print.solutionsPage', 'export.summary',
-        'export.summary.none', 'export.summary.seed', 'export.title', 'export.toast.failed']);
+      expect(Object.keys(f.en).sort()).toEqual(['export.pick.count', 'export.pick.empty',
+        'export.pick.preparing', 'export.pick.selectAll', 'export.pick.selectNone', 'export.pick.title',
+        'export.playOnline.error', 'export.playOnline.long', 'export.playOnline.opened', 'export.print.alt',
+        'export.print.altSolution', 'export.print.button', 'export.print.heading', 'export.print.hint',
+        'export.print.meta', 'export.print.perPage', 'export.print.puzzleNumber',
+        'export.print.solutionNumber', 'export.print.solutionOnly', 'export.print.solutionPage',
+        'export.print.solutionsPage', 'export.summary', 'export.summary.seed', 'export.text.copied',
+        'export.text.copy', 'export.text.copyFailed', 'export.text.intro', 'export.text.label',
+        'export.text.placeholder', 'export.text.title', 'export.title', 'export.toast.failed']);
     });
 
     it('every key that the code asks for exists (a typo would show the bare key)', function () {

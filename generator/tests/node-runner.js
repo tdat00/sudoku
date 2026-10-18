@@ -80,6 +80,7 @@ const SOURCE_FILES = [
   'js/ui/player.js',
   'js/ui/result-view.js',
   'js/ui/cache.js',
+  'js/ui/history.js',
   'js/ui/export.js',
   'js/ui/a11y.js',
   'js/ui/theme.js',

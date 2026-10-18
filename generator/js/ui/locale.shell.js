@@ -47,7 +47,7 @@
       'shell.btn.export': 'Print',
       'shell.btn.export.title': 'Print the puzzle or save it as a PDF',
       'shell.btn.exportCode': 'Export',
-      'shell.btn.exportCode.title': 'Get a text code of the puzzle to paste into sudoku-player',
+      'shell.btn.exportCode.title': 'Export the puzzles you choose as readable text',
 
       'shell.board.heading': 'Puzzle board',
       'shell.board.title': 'Sudoku board',
@@ -111,8 +111,8 @@
       'shell.btn.playOnline.title': 'Mở đề này trong sudoku-player để giải',
       'shell.btn.export': 'In đề',
       'shell.btn.export.title': 'In đề hoặc lưu thành PDF',
-      'shell.btn.exportCode': 'Xuất mã',
-      'shell.btn.exportCode.title': 'Lấy mã văn bản của đề để dán vào sudoku-player',
+      'shell.btn.exportCode': 'Xuất văn bản',
+      'shell.btn.exportCode.title': 'Xuất các đề bạn chọn dưới dạng văn bản đọc được',
 
       'shell.board.heading': 'Bảng đề bài',
       'shell.board.title': 'Bảng Sudoku',

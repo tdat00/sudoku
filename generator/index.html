@@ -197,6 +197,18 @@
       <svg class="icon drawer-toggle__chevron" aria-hidden="true" focusable="false"><use href="#ic-chevron-up"></use></svg>
     </button>
 
+    <aside id="history-root" class="panel panel--history" aria-labelledby="history-heading">
+      <div class="panel__header">
+        <h2 id="history-heading" class="panel__title" data-i18n="history.title"></h2>
+        <button id="history-clear" type="button" class="btn btn--ghost btn--sm" disabled
+          data-i18n-attr="title:history.clear.title">
+          <span class="btn__label" data-i18n="history.clear"></span>
+        </button>
+      </div>
+      <p id="history-empty" class="empty-hint" data-i18n="history.empty"></p>
+      <ul id="history-list" class="history-list" hidden></ul>
+    </aside>
+
     <main id="main" class="app-main" tabindex="-1">
       <div class="main-head">
         <div class="main-head__titles">
@@ -383,6 +395,7 @@
   <script src="js/ui/player.js"></script>
   <script src="js/ui/result-view.js"></script>
   <script src="js/ui/cache.js"></script>
+  <script src="js/ui/history.js"></script>
   <script src="js/ui/export.js"></script>
   <script src="js/ui/a11y.js"></script>
   <script src="js/ui/theme.js"></script>

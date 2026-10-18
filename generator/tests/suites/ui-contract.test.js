@@ -110,7 +110,7 @@
       });
       ['generate:start', 'generate:progress', 'generate:end', 'generate:error', 'result', 'locale', 'position',
         'theme', 'settings', 'action'].forEach(function (name) { expect(header).toContain("'" + name + "'"); });
-      ['exportUi', 'a11y', 'theme', 'help', 'cache'].forEach(function (name) {
+      ['exportUi', 'a11y', 'theme', 'help', 'cache', 'history'].forEach(function (name) {
         expect(header).toContain('SG.' + name);
       });
     });

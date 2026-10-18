@@ -70,10 +70,10 @@ same puzzle.
   solving techniques and the variant rules, exists in both languages.
 - **Guaranteed result** — exactly one solution (checked by a separate solver), the requested level or, when it
   cannot be reached, the closest puzzle with a clear notice.
-- **Print / PDF** — the Print dialog prints the puzzle on screen, optionally with its solution on a page of its
-  own; choose "Save as PDF" in the print dialog to get a PDF file (vector graphics, so the lines stay sharp).
-- **Text code** — the **Export** button next to **Print** shows a text code of the puzzle on screen with a Copy
-  button. Paste it into **Open puzzle** of sudoku-player to play it there, with no link and no file.
+- **Print / PDF** — the Print dialog prints the puzzles you tick in the saved list (the one on screen is ticked at
+  first), 1, 2 or 4 to a page, optionally with their solutions on pages of their own; choose "Save as PDF" in the print dialog to get a PDF file (vector graphics, so the lines stay sharp).
+- **Text export** — the **Export** button next to **Print** shows the puzzles you tick in the saved list as readable text (`#1,Classic Sudoku 9x9,Hard,<seed>` then one grid row per line, `.` for empty cells) with a Copy
+  button, to copy into a file or another tool.
 - **Play online** — the **Play** button next to **Print** hands the puzzle on screen to the separate [sudoku-player](https://github.com/tdat00/sudoku-player)
   web app, where you solve it with notes, undo/redo, checking, hints that name the technique and a timer. The
   puzzle travels inside the link (after the `#`), so nothing is uploaded; see
@@ -269,12 +269,12 @@ too hard; and the finished puzzle. The technical work (settings, board model, ra
 missed the level) is not shown. A Classic 9×9 *easy* puzzle with seed 3, for example, replays in 7 steps: the
 full solution, five batches of random removals (9, 10, 10 and 10 cells, then "8 cells removed · 2 cells put
 back") and the finished puzzle with 34 clues. `SG.player.create()` is the manual player (first, previous,
-next, last, seek; position 0 is the empty grid), `SG.stepView.create()` the list of the steps with a legend of
-the board frames; the status line under the board, which screen readers hear, follows the step. The explanation
+next, last, seek; position 0 is the empty grid), `SG.stepView.create()` the description of the step on show
+(with a legend of the board frames and the techniques the puzzle needs at that step). The explanation
 of the seven steps lives in the Help dialog (tab "How it works"): one collapsible entry per step with its
 what / why / how and pseudocode, `SG.explainCard.create(el, { compact: true })`; the entry of the replay step on
 show is marked, open, and its running line and dig counters are shown (`SG.app.getExplainContext()`). The
-**Explain** button of the steps panel opens the Help on that tab. Overlays (cages, signs, windows) are drawn from
+**Explain** (help) icon of the step description opens the Help on that tab. Overlays (cages, signs, windows) are drawn from
 the model of the result, not from the log.
 Random choices use forked streams of one seeded generator (`SG.rng`), which is why a seed reproduces a
 puzzle.
@@ -303,6 +303,17 @@ been idle for a second, the cache also pre-generates one or two puzzles with the
 which "Generate" (with an empty seed) and "Generate random" then hand out instantly. It never runs while a
 generation is in progress, pauses in a hidden tab, skips configurations that are slow, and does not exist in
 main-thread mode. A switch in Settings turns the pre-generation off (the choice is not remembered).
+
+### Puzzle history
+
+`SG.history` (`js/ui/history.js`) adds every puzzle the page generates to a list kept in `localStorage`
+(`sg.history.v1`, newest first, 100 entries at most; with no storage the list lives in memory). An entry is small:
+variant, level asked for and reached, seed, clues, score, time and the configuration that rebuilds the puzzle
+(`SG.history.entryOf(result)`); an imported puzzle is not listed because no seed rebuilds it. The list is the
+left panel of the page (`#history-root`; under the result on narrower screens). A puzzle that is generated again
+moves to the top; picking an entry writes its configuration to the form and generates it (the same seed gives
+the same puzzle, and the cache serves it at once when it still has it) without moving it. Each entry can be
+removed, and **Clear** empties the list.
 
 ### Internationalisation
 
@@ -363,11 +374,12 @@ must be idempotent — on each of these optional modules that exists, in this or
 
 | Module | What it does |
 |--------|--------------|
-| `SG.exportUi` | The Print dialog (print / PDF of the puzzle on screen, optionally with the solution on its own page), the **Export** button (`action { id: 'exportCode' }`: the text code of the puzzle, `buildExportCode(result)`, to paste into sudoku-player) and the **Play** button (`action { id: 'play' }`: opens the puzzle in sudoku-player, see above) |
+| `SG.exportUi` | The Print dialog (print / PDF of the puzzles chosen from the saved list, 1, 2 or 4 per page, optionally with the solutions on their own pages), the **Export** button (`action { id: 'exportCode' }`: the chosen puzzles as readable text, `buildExportText(items)`) and the **Play** button (`action { id: 'play' }`: opens the puzzle in sudoku-player, see above) |
 | `SG.a11y` | The board as an ARIA grid with keyboard navigation, live announcements (a generation starts, the language changes), the Settings dialog |
 | `SG.theme` | Light, dark and high-contrast themes (and "auto"), the hints of the empty / busy / error states |
 | `SG.help` | The Help dialog (rules, technique ladder, shortcuts) |
 | `SG.cache` | The cache and pre-generation described above; it replaces the generation client with a wrapper |
+| `SG.history` | The list of generated puzzles (`localStorage` key `sg.history.v1`, newest first, 100 at most) shown in the left panel; picking one writes its configuration to the form and generates it again |
 
 Such a module listens with `SG.app.on('action', …)` (the Print and Play buttons of the main panel and the
 Settings and Help buttons of the header emit `action { id: 'export' | 'exportCode' | 'play' | 'settings' | 'help' }`), draws
@@ -410,7 +422,7 @@ sudoku-generator/
 │   └── ui/                 exchange.js (link to sudoku-player) · i18n.js · locale.en.js · locale.vi.js
 │                           · locale.shell.js · symbols.js · board-view.js · store.js · controls.js
 │                           · step-view.js · explain.js · player.js (replay of the generation)
-│                           · result-view.js · cache.js · export.js · a11y.js · theme.js
+│                           · result-view.js · cache.js · history.js · export.js · a11y.js · theme.js
 │                           · help.js · app.js
 └── tests/
     ├── harness.js · node-runner.js · soak.js · perf.js
@@ -797,8 +809,8 @@ thuật*, [design.md](design.md) §6.8). Cùng seed và cùng tùy chọn luôn 
   không đạt được, đề gần nhất kèm thông báo rõ ràng.
 - **In / PDF** — hộp thoại In đề in đề đang hiển thị, có thể kèm lời giải ở một trang riêng; chọn "Lưu dưới
   dạng PDF" trong hộp thoại in để có tệp PDF (đồ họa vector nên nét kẻ luôn sắc).
-- **Mã văn bản** — nút **Xuất mã** cạnh nút **In đề** hiện mã văn bản của đề đang hiển thị, kèm nút Sao chép.
-  Dán mã vào **Mở đề** của sudoku-player để chơi, không cần liên kết hay tệp.
+- **Xuất văn bản** — nút **Xuất văn bản** cạnh nút **In đề** hiện các đề bạn tick trong danh sách đã tạo dưới dạng văn bản dễ đọc (`#1,Classic Sudoku 9x9,Hard,<seed>` rồi mỗi hàng lưới một dòng, `.` là ô trống), kèm nút Sao chép.
+  Dán vào tệp hoặc công cụ khác.
 - **Chơi trực tuyến** — nút **Chơi** cạnh nút **In đề** chuyển đề đang hiển thị sang ứng dụng riêng
   [sudoku-player](https://github.com/tdat00/sudoku-player), nơi bạn giải đề với ghi chú, hoàn tác / làm lại, kiểm
   tra, gợi ý nêu tên kỹ thuật và đồng hồ. Đề nằm ngay trong liên kết (sau dấu `#`) nên không có gì bị tải lên;
@@ -996,6 +1008,16 @@ một hai đề với cùng tùy chọn trong một worker, để nút "Tạo đ
 ngay. Nó không bao giờ chạy khi đang có một lần tạo, tạm dừng khi tab bị ẩn, bỏ qua các cấu hình chậm, và
 không tồn tại ở chế độ luồng chính. Một công tắc trong Cài đặt tắt việc tạo sẵn (lựa chọn này không được nhớ).
 
+### Lịch sử các đề
+
+`SG.history` (`js/ui/history.js`) thêm mọi đề trang tạo ra vào một danh sách lưu trong `localStorage`
+(`sg.history.v1`, mới nhất ở trên, tối đa 100 mục; không có storage thì danh sách chỉ nằm trong bộ nhớ). Mỗi mục
+nhỏ gọn: biến thể, mức đã chọn và mức đạt được, seed, số ô cho sẵn, điểm, thời gian và cấu hình để dựng lại đề
+(`SG.history.entryOf(result)`); đề nhập vào không được liệt kê vì không có seed nào dựng lại được. Danh sách là
+panel bên trái của trang (`#history-root`; nằm dưới phần kết quả trên màn hình hẹp). Đề được tạo lại sẽ lên đầu
+danh sách; bấm một mục sẽ ghi cấu hình của nó vào biểu mẫu rồi tạo đề (cùng seed cho cùng đề, và bộ nhớ đệm trả
+về ngay nếu còn) mà không đổi vị trí của mục. Mỗi mục có thể xóa, và nút **Xóa hết** làm trống danh sách.
+
 ### Quốc tế hóa
 
 `SG.i18n.t(key, args)` dịch các `{placeholder}`; các thuộc tính `data-i18n` và `data-i18n-attr` dịch phần HTML.
@@ -1040,11 +1062,12 @@ một `try/catch` riêng:
 
 | Module | Làm gì |
 |--------|--------|
-| `SG.exportUi` | Hộp thoại In đề (in / PDF đề đang hiển thị, có thể kèm lời giải ở một trang riêng), nút **Xuất mã** (`action { id: 'exportCode' }`: mã văn bản của đề, `buildExportCode(result)`, để dán vào sudoku-player) và nút **Chơi** (`action { id: 'play' }`: mở đề trong sudoku-player, xem ở trên) |
+| `SG.exportUi` | Hộp thoại In đề (in / PDF đề đang hiển thị, có thể kèm lời giải ở một trang riêng), nút **Xuất văn bản** (`action { id: 'exportCode' }`: các đề đã chọn dưới dạng văn bản dễ đọc, `buildExportText(items)`) và nút **Chơi** (`action { id: 'play' }`: mở đề trong sudoku-player, xem ở trên) |
 | `SG.a11y` | Bảng dưới dạng lưới ARIA với điều hướng bằng bàn phím, thông báo trực tiếp (khi bắt đầu tạo đề, khi đổi ngôn ngữ), hộp thoại Cài đặt |
 | `SG.theme` | Giao diện sáng, tối, tương phản cao (và "tự động"), gợi ý cho các trạng thái trống / bận / lỗi |
 | `SG.help` | Hộp thoại Trợ giúp (luật, bậc thang kỹ thuật, phím tắt) |
 | `SG.cache` | Bộ nhớ đệm và việc tạo sẵn đề mô tả ở trên; nó thay client sinh đề bằng một lớp bọc |
+| `SG.history` | Danh sách các đề đã tạo (`localStorage`, khóa `sg.history.v1`, mới nhất ở trên, tối đa 100) hiện ở panel bên trái; bấm một mục sẽ ghi cấu hình của nó vào biểu mẫu và tạo lại đề |
 
 Module như vậy lắng nghe bằng `SG.app.on('action', …)` (các nút In đề và Chơi ở khung chính, Cài đặt và Trợ
 giúp ở đầu trang phát `action { id: 'export' | 'exportCode' | 'play' | 'settings' | 'help' }`), vẽ hộp thoại bằng

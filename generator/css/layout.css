@@ -490,6 +490,22 @@
   }
 }
 
+/* ---- >= 1360px: the list of puzzles gets a column of its own on the left (wide enough for "<variant> - <level>" on one line) ---- */
+@media (min-width: 1360px) {
+  .app-layout {
+    grid-template-columns: clamp(19rem, 21vw, 23rem) minmax(0, 1fr) clamp(16rem, 24vw, 21.25rem);
+    grid-template-areas: "history main side";
+  }
+
+  #history-root {
+    position: sticky;
+    top: var(--sg-space-4);
+    max-height: calc(100vh - 2 * var(--sg-space-4));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
 @media (max-width: 767.98px) {
   body {
     padding-bottom: calc(var(--sg-drawer-bar-height) + env(safe-area-inset-bottom, 0px));

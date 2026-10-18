@@ -1,14 +1,15 @@
 /**
- * Print / PDF export (task T-7.1; design.md sections 10.6 and 14.1) and the hand-off of a puzzle to the
- * sudoku-player web app (task T-7.8; design.md section 10.9): `SG.exportUi`. The Print button of the page
- * opens one small dialog with a single card, Print / PDF, for the puzzle on screen (optionally with the
- * solution on a page of its own). The "Export" button opens a dialog with the text code of the puzzle, to
- * paste into the player. The "Play" button of the page calls `playOnline()`, which opens the puzzle
- * on screen in the player in a new tab.
+ * Print / PDF and text export (task T-7.1; design.md sections 10.6 and 14.1) and the hand-off of a puzzle to
+ * the sudoku-player web app (task T-7.8; design.md section 10.9): `SG.exportUi`. The Print button of the page
+ * opens one dialog: the saved puzzles (`SG.history`) to choose from, 1, 2 or 4 puzzles per page and an
+ * optional solution page for each (the puzzle on screen is ticked at first; a puzzle that is not on screen
+ * is generated again from its saved settings). The "Export" button opens a dialog with the same list and
+ * the readable text of the ticked puzzles, to copy. The "Play" button of the page calls `playOnline()`,
+ * which opens the puzzle on screen in the player in a new tab.
  *
  * Two layers, so that what matters runs in Node:
  *  - PURE (no DOM): `toJson`, `buildPrintLayout`, `boardSvg`, `printTokens`, `buildPlayLink`,
- *    `buildExportCode`.
+ *    `buildExportText`.
  *  - DOM: the dialogs, the print path and the page's `<meta name="sg-player-url">` (`pagePlayerBase`).
  *
  * ---------------------------------------------------------------------------------------------------------
@@ -16,15 +17,19 @@
  * ---------------------------------------------------------------------------------------------------------
  *   init(app)            Idempotent. Listens to the 'action' event of `SG.app`: `{ id: 'export' }` (the Print
  *                        button) opens the dialog, `{ id: 'exportCode' }` (the Export button) calls
- *                        `openCode()`, `{ id: 'play' }` (the Play button) calls `playOnline()`.
+ *                        `openText()`, `{ id: 'play' }` (the Play button) calls `playOnline()`.
  *   open()               Opens the dialog (or focuses the open one). Returns the modal handle, null without a
  *                        DOM or an app.
- *   openCode()           Opens the dialog of the text code: the code in a read-only box and a Copy button.
- *                        Null without a DOM, an app or a puzzle.
- *   buildExportCode(result, opts?)  -> Promise<{ code, length, long }>. The token of the player link without
- *                        the address (`z.…` / `j.…`); the player's "Open puzzle" box takes it as it is.
- *                        `opts`: `{ generatedAt?, locale?, compress? }`.
- *   close()              Closes it.
+ *   openText()           Opens the Export dialog: the list of saved puzzles and, in a read-only box, the text
+ *                        of the ticked ones with a Copy button. Null without a DOM or an app.
+ *   buildExportText(items)  -> string. The readable text of puzzles, `items` = `[{ result }]`. Each puzzle is
+ *                        a header line `#number,variant,level,seed` (names in the language of the page, `x`
+ *                        for the times sign) and its grid, one board row per line: a digit is a clue (10 is
+ *                        `A`, 11 `B`, ...), `.` an empty cell and `_` a place of the canvas without a cell
+ *                        (Samurai and the like). Puzzles are separated by a blank line. Only the clues are
+ *                        written; the seed rebuilds the rest.
+ *   gridLines(result)    -> string[]. The grid lines of one puzzle, as above.
+ *   close() / closeText()  Close the dialogs.
  *   toJson(result, ctx?) The JSON document of design.md 14.1 as plain data: `format`, `generatedAt`,
  *                        `variantId`, `variantOptions`, `difficulty`, `seed`, `symmetry`, `symbolMode`,
  *                        `digits`, `cellCount`, `layout`, `givens`, `solution`, `cages`, `inequalities`,
@@ -293,22 +298,58 @@
     });
   }
 
-  /**
-   * The text code of a puzzle: the token of the player link without the address (`z.…` compressed or `j.…`
-   * plain). The player's "Open puzzle" box accepts it as it is, so it can be copied and pasted across.
-   * @param {Object} result  A `PuzzleResult`.
-   * @param {{generatedAt?: string, locale?: string, compress?: boolean}} [options]
-   * @returns {Promise<{code: string, length: number, long: boolean}>}  `long`: more than `LONG_LINK_CHARS`.
-   */
-  function buildExportCode(result, options) {
-    const o = options || {};
-    return Promise.resolve().then(function () {
-      const doc = toJson(result, { generatedAt: o.generatedAt, locale: o.locale });
-      return SG.exchange.encode(doc, { compress: o.compress }).then(function (token) {
-        return { code: token, length: token.length, long: token.length > LONG_LINK_CHARS };
-      });
-    });
+  // ---------------------------------------------------------------------------------------------
+  // Export as readable text
+  // ---------------------------------------------------------------------------------------------
+
+  const EMPTY_CELL = '.';
+  const OFF_BOARD = '_';
+
+  /** One character for a value: a digit up to 9, then A, B, C... (10 is A). An empty cell is a dot. */
+  function cellChar(value) {
+    if (!(value > 0)) return EMPTY_CELL;
+    return value <= 9 ? String(value) : String.fromCharCode(55 + value);
   }
+
+  /** A name for the header line of a puzzle: plain letters (`x` for the times sign) and no commas. */
+  function plainName(text) {
+    return String(text).replace(/\u00d7/g, 'x').replace(/[,\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  /**
+   * The grid of a puzzle as text lines, one board row per line: a digit is a clue, `.` an empty cell and `_`
+   * a place of the canvas that belongs to no cell (the corners between the grids of Samurai and the like).
+   * @param {Object} result  A `PuzzleResult`.
+   * @returns {string[]}
+   */
+  function gridLines(result) {
+    const model = result.model;
+    const layout = model.layout;
+    const canvas = [];
+    for (let r = 0; r < layout.rows; r++) canvas.push(new Array(layout.cols).fill(OFF_BOARD));
+    for (let i = 0; i < model.cellCount; i++) canvas[layout.cellRow[i]][layout.cellCol[i]] = cellChar(result.givens[i]);
+    return canvas.map(function (row) { return row.join(''); });
+  }
+
+  /**
+   * The readable text of puzzles. Every puzzle starts with a header line `#number,variant,level,seed` (the
+   * names in the language of the page, the level reached) and is followed by its grid, one row per line;
+   * puzzles are separated by a blank line. Only the clues are written: the seed rebuilds the rest.
+   * @param {Array<{result: Object}>} items  The puzzles, in the order they are written.
+   * @returns {string} '' for no puzzle, else the text with a final line break.
+   */
+  function buildExportText(items) {
+    const blocks = items.map(function (item, i) {
+      const s = summarize(item.result);
+      const header = ['#' + (i + 1), plainName(s.variantName), plainName(s.levelName), s.seed].join(',');
+      return [header].concat(gridLines(item.result)).join('\n');
+    });
+    return blocks.length === 0 ? '' : blocks.join('\n\n') + '\n';
+  }
+
+  // ---------------------------------------------------------------------------------------------
+  // Play online: opening the link
+  // ---------------------------------------------------------------------------------------------
 
   /**
    * Opens a player link in a new tab; the new page gets no handle on this one.
@@ -644,13 +685,28 @@
   // The dialog
   // ---------------------------------------------------------------------------------------------
 
-  /** Settings that stay while the page is open. */
-  const prefs = { solutionPage: true };
+  /**
+   * Settings that stay while the page is open: the solution pages and the puzzles per page of the Print
+   * dialog, and which puzzles each dialog had ticked (`null`: never chosen yet, so the puzzle on screen is
+   * ticked).
+   */
+  const prefs = { solutionPage: true, perPage: 4, selected: null };
+  const textPrefs = { selected: null };
+
+  /** Puzzles per page that the dialog offers (`buildPrintLayout` also knows 6). */
+  const DIALOG_PER_PAGE = Object.freeze([1, 2, 4]);
+
+  /** Thrown into the chain of a job that the user cancelled. */
+  const ABORTED = { aborted: true };
+
+  /** Puzzles that were generated again for a dialog, by id: the next dialog does not need to wait. */
+  const resultCache = new Map();
+  const RESULT_CACHE_MAX = 40;
 
   let appRef = null;
   let initialised = false;
   let openDialog = null;
-  let openCodeDialog = null;
+  let openTextDialog = null;
 
   function currentResult() {
     const current = appRef ? appRef.getResult() : null;
@@ -667,65 +723,335 @@
     return state && state.variantId === result.model.variantId ? state.symbolMode : null;
   }
 
-  function summaryText(result) {
-    const s = summarize(result);
-    const clues = t('unit.clue', { count: s.clues });
-    const args = { variant: s.variantName, level: s.levelName, clues: clues, seed: s.seed };
-    return t(s.seed === '' ? 'export.summary' : 'export.summary.seed', args);
+  /** The text of one puzzle in the list: variant, level, clues and, when it has one, the seed. */
+  function choiceText(choice) {
+    const e = choice.entry;
+    const args = { variant: nameOf('variant.', e.variantId), level: nameOf('difficulty.', e.level),
+      clues: t('unit.clue', { count: e.clues }), seed: e.seed };
+    return t(e.seed === '' ? 'export.summary' : 'export.summary.seed', args);
   }
 
   /**
-   * Builds the dialog: a paper preview of the puzzle, what will be printed, the solution switch (body), and
-   * Cancel / Print (footer).
+   * The puzzles the dialog offers, in the order of the saved list (newest first): `{ id, entry, result }`,
+   * where `result` is set for the puzzle on screen (no need to generate it again). A puzzle on screen that is
+   * not in the list (an imported one) comes first.
+   * @returns {{choices: Object[], currentId: ?string}}
+   */
+  function pickChoices() {
+    const history = SG.history;
+    const list = history && typeof history.list === 'function' ? history.list() : [];
+    const result = currentResult();
+    let currentId = null;
+    let own = null;
+    if (result !== null) {
+      own = history && typeof history.entryOf === 'function' ? history.entryOf(result) : null;
+      if (own === null) {
+        own = { id: 'screen', variantId: result.model.variantId,
+          level: result.rating ? result.rating.level : '', clues: countClues(result.givens), seed: '' };
+      }
+      currentId = own.id;
+    }
+    const choices = list.map(function (entry) {
+      return { id: entry.id, entry: entry, result: entry.id === currentId ? result : null };
+    });
+    if (own !== null && !choices.some(function (c) { return c.id === currentId; })) {
+      choices.unshift({ id: currentId, entry: own, result: result });
+    }
+    return { choices: choices, currentId: currentId };
+  }
+
+  /**
+   * The list of saved puzzles to choose from, shared by the Print and the Export dialogs: a count, Select
+   * all / Select none and one tick box per puzzle. What was ticked is remembered in `memory.selected`.
+   * @param {{selected: ?string[]}} memory
+   * @param {function(): void} onChange  Called after the user changed what is ticked.
+   * @returns {{element: Element, choices: Object[], picked: function(): Object[],
+   *   setBusy: function(boolean): void, refresh: function(): void}}
+   */
+  function createPicker(memory, onChange) {
+    const offered = pickChoices();
+    const selected = new Set();
+    const refs = {};
+    let busy = false;
+
+    const ids = new Set(offered.choices.map(function (c) { return c.id; }));
+    if (memory.selected !== null) {
+      // What was ticked last time, for the puzzles that are still there; if none is left, the puzzle on screen.
+      memory.selected.forEach(function (id) { if (ids.has(id)) selected.add(id); });
+    }
+    if (memory.selected === null || (selected.size === 0 && memory.selected.length > 0)) {
+      offered.choices.forEach(function (c) { if (c.id === offered.currentId) selected.add(c.id); });
+    }
+
+    function remember() {
+      memory.selected = Array.from(selected);
+    }
+
+    function picked() {
+      return offered.choices.filter(function (c) { return selected.has(c.id); });
+    }
+
+    function update() {
+      const total = offered.choices.length;
+      const count = picked().length;
+      setKey(refs.count, 'export.pick.count', { selected: count, total: total });
+      refs.empty.hidden = total > 0;
+      refs.list.hidden = total === 0;
+      refs.selectAll.disabled = busy || total === 0;
+      refs.selectNone.disabled = busy || count === 0;
+      refs.list.querySelectorAll('input').forEach(function (input) { input.disabled = busy; });
+    }
+
+    function render() {
+      refs.list.textContent = '';
+      offered.choices.forEach(function (choice) {
+        const input = el('input', { type: 'checkbox', 'data-role': 'pick', 'data-id': choice.id });
+        input.checked = selected.has(choice.id);
+        input.disabled = busy;
+        input.addEventListener('change', function () {
+          if (input.checked) selected.add(choice.id);
+          else selected.delete(choice.id);
+          remember();
+          update();
+          onChange();
+        });
+        refs.list.appendChild(el('li', { class: 'print-list__item' }, [
+          el('label', { class: 'print-pick' }, [input, el('span', { text: choiceText(choice) })])
+        ]));
+      });
+    }
+
+    function setAll(on) {
+      selected.clear();
+      if (on) offered.choices.forEach(function (c) { selected.add(c.id); });
+      remember();
+      render();
+      update();
+      onChange();
+    }
+
+    refs.count = el('p', { class: 'print-dialog__count', 'data-role': 'count' });
+    refs.selectAll = button('export.pick.selectAll', { class: 'btn btn--ghost btn--sm',
+      'data-role': 'select-all' });
+    refs.selectNone = button('export.pick.selectNone', { class: 'btn btn--ghost btn--sm',
+      'data-role': 'select-none' });
+    refs.selectAll.addEventListener('click', function () { setAll(true); });
+    refs.selectNone.addEventListener('click', function () { setAll(false); });
+    refs.list = el('ul', { class: 'print-list', 'data-role': 'list' });
+    refs.empty = tx('p', { class: 'empty-hint', 'data-role': 'empty' }, 'export.pick.empty');
+    const element = el('fieldset', { class: 'field-group' }, [
+      tx('legend', { class: 'field-group__legend' }, 'export.pick.title'),
+      el('div', { class: 'print-dialog__bar' }, [refs.count,
+        el('div', { class: 'cluster' }, [refs.selectAll, refs.selectNone])]),
+      refs.empty,
+      refs.list
+    ]);
+    render();
+    update();
+
+    return {
+      element: element,
+      choices: offered.choices,
+      picked: picked,
+      setBusy: function setBusy(flag) {
+        busy = flag;
+        update();
+      },
+      refresh: function refresh() {
+        render();
+        update();
+      }
+    };
+  }
+
+  /**
+   * Gets the puzzles of some choices, in order: the puzzle on screen as it is, the others generated again
+   * from their saved settings (the same seed gives the same puzzle) and remembered in `resultCache`.
+   * @param {Object[]} picks  Choices of `pickChoices`.
+   * @param {{progress?: function(number, number): void}} [hooks]  `progress(k, n)`: puzzle k of n is being
+   *        generated.
+   * @returns {{promise: Promise<Object[]>, cancel: function(): void}} The promise rejects with `ABORTED`
+   *          after `cancel()`.
+   */
+  function startFetch(picks, hooks) {
+    const h = hooks || {};
+    const results = [];
+    let client = null;
+    let cancelled = false;
+
+    function release() {
+      if (client !== null && typeof client.dispose === 'function') client.dispose();
+      client = null;
+    }
+
+    function generate(choice) {
+      const config = Object.assign(
+        SG.store.toConfig(Object.assign(SG.store.defaults(), SG.history.overridesOf(choice.entry))),
+        { trace: 'off' });
+      if (client === null && SG.workerClient && typeof SG.workerClient.create === 'function') {
+        try {
+          client = SG.workerClient.create();
+        } catch (err) {
+          client = null;
+        }
+      }
+      if (client !== null) return client.generate(config, null);
+      return new Promise(function (resolve) { root.setTimeout(resolve, 0); }).then(function () {
+        return SG.pipeline.run(config, null);
+      });
+    }
+
+    function one(choice, k) {
+      if (choice.result !== null) return Promise.resolve(choice.result);
+      if (resultCache.has(choice.id)) return Promise.resolve(resultCache.get(choice.id));
+      if (typeof h.progress === 'function') h.progress(k, picks.length);
+      return generate(choice).then(function (result) {
+        resultCache.set(choice.id, result);
+        if (resultCache.size > RESULT_CACHE_MAX) resultCache.delete(resultCache.keys().next().value);
+        return result;
+      });
+    }
+
+    function next(i) {
+      if (cancelled) return Promise.reject(ABORTED);
+      if (i === picks.length) return Promise.resolve(results);
+      return one(picks[i], i + 1).then(function (result) {
+        results.push(result);
+        return next(i + 1);
+      });
+    }
+
+    const promise = next(0).then(function (list) {
+      release();
+      return list;
+    }, function (err) {
+      release();
+      throw cancelled ? ABORTED : err;
+    });
+    return { promise: promise, cancel: function cancel() {
+      cancelled = true;
+      release();
+    } };
+  }
+
+  function switchRow(key, role, checked, onChange) {
+    const id = nextId('export-sw');
+    const input = el('input', { class: 'switch__input', type: 'checkbox', role: 'switch', id: id,
+      'data-role': role });
+    input.checked = checked;
+    input.addEventListener('change', function () { onChange(input.checked); });
+    return { input: input, row: el('label', { class: 'switch', for: id }, [
+      input,
+      el('span', { class: 'switch__track', 'aria-hidden': 'true' }),
+      tx('span', { class: 'switch__text' }, key)
+    ]) };
+  }
+
+  /** A status line (`role="status"`) that is set with a translated text and emptied again. */
+  function statusLine() {
+    const node = el('p', { class: 'print-dialog__status', 'data-role': 'status', role: 'status',
+      'aria-live': 'polite' });
+    return {
+      node: node,
+      preparing: function preparing(done, total) {
+        setKey(node, 'export.pick.preparing', { done: done, total: total });
+      },
+      clear: function clear() {
+        node.textContent = '';
+        node.removeAttribute('data-i18n');
+        node.removeAttribute('data-i18n-args');
+      }
+    };
+  }
+
+  function failureToast(err) {
+    logError(err);
+    appRef.toast('danger', 'export.toast.failed', { message: err && err.message ? err.message : String(err) });
+  }
+
+  /**
+   * Builds the Print dialog: how many puzzles go on a page, the solutions switch and the list of saved
+   * puzzles to choose from (body), and Cancel / Print (footer). The puzzles that are not on screen are
+   * generated again before the print dialog of the browser opens.
    * @param {Element} container  `modal.body`.
    * @returns {{mountFooter: function(Element): void, refresh: function(): void, destroy: function(): void}}
    */
   function createDialog(container) {
     const app = appRef;
     const refs = {};
+    let busy = false;
+    let closed = false;
+    let job = null;
 
-    function toast(kind, key, args) {
-      app.toast(kind, key, args);
+    const picker = createPicker(prefs, updateState);
+    const status = statusLine();
+
+    function updateState() {
+      picker.setBusy(busy);
+      refs.perPage.forEach(function (input) { input.disabled = busy; });
+      refs.printSolution.disabled = busy;
+      if (refs.printButton) refs.printButton.disabled = busy || picker.picked().length === 0;
     }
 
-    function switchRow(key, role, checked, onChange) {
-      const id = nextId('export-sw');
-      const input = el('input', { class: 'switch__input', type: 'checkbox', role: 'switch', id: id,
-        'data-role': role });
-      input.checked = checked;
-      input.addEventListener('change', function () { onChange(input.checked); });
-      return { input: input, row: el('label', { class: 'switch', for: id }, [
-        input,
-        el('span', { class: 'switch__track', 'aria-hidden': 'true' }),
-        tx('span', { class: 'switch__text' }, key)
+    /** "Puzzles per page": a label and one button for each choice (1, 2 or 4), no frame. */
+    function perPageField() {
+      const labelId = nextId('export-per-page');
+      const group = el('div', { class: 'choice-group', role: 'radiogroup', 'aria-labelledby': labelId });
+      const inputs = [];
+      DIALOG_PER_PAGE.forEach(function (n) {
+        const input = el('input', { type: 'radio', name: 'sg-print-per-page', value: n,
+          'data-role': 'per-page' });
+        input.checked = prefs.perPage === n;
+        input.addEventListener('change', function () { if (input.checked) prefs.perPage = n; });
+        inputs.push(input);
+        group.appendChild(el('label', { class: 'choice' }, [input,
+          el('span', { class: 'choice__text', text: String(n) })]));
+      });
+      return { inputs: inputs, row: el('div', { class: 'print-dialog__row' }, [
+        tx('span', { class: 'field__label', id: labelId }, 'export.print.perPage'),
+        group
       ]) };
     }
 
-    function printOne() {
-      const result = currentResult();
-      if (result === null) return;
-      const item = { result: result, number: null, symbolMode: screenSymbolMode(result) };
-      printItems([item], { perPage: 1, solutions: prefs.solutionPage && hasSolution(result.solution) })
-        .then(close, function (err) {
-          logError(err);
-          toast('danger', 'export.toast.failed', { message: err && err.message ? err.message : String(err) });
+    function printSelected() {
+      const picks = picker.picked();
+      if (busy || picks.length === 0) return;
+      busy = true;
+      updateState();
+      job = startFetch(picks, { progress: status.preparing });
+      job.promise.then(function (results) {
+        status.clear();
+        const items = results.map(function (result, i) {
+          return { result: result, number: results.length > 1 ? i + 1 : null,
+            symbolMode: picks[i].result !== null ? screenSymbolMode(result) : null };
         });
+        return printItems(items, { perPage: prefs.perPage, solutions: prefs.solutionPage &&
+          items.some(function (item) { return hasSolution(item.result.solution); }) });
+      }).then(function () {
+        busy = false;
+        close();
+      }, function (err) {
+        busy = false;
+        if (err === ABORTED || closed) return;
+        status.clear();
+        failureToast(err);
+        updateState();
+      });
     }
 
     const sol = switchRow('export.print.solutionPage', 'print-solution', prefs.solutionPage, function (on) {
       prefs.solutionPage = on;
     });
     refs.printSolution = sol.input;
-    refs.preview = el('img', { class: 'print-dialog__preview', 'data-role': 'preview', hidden: true,
-      alt: '' });
-    refs.summary = el('p', { class: 'print-dialog__summary', 'data-role': 'summary' });
+    const perPage = perPageField();
+    refs.perPage = perPage.inputs;
+    // The settings come first and the list of puzzles, which grows with every generation, comes last.
     container.appendChild(el('div', { class: 'print-dialog', 'data-role': 'export-body' }, [
-      refs.preview,
-      el('div', { class: 'print-dialog__side' }, [
-        refs.summary,
-        tx('p', { class: 'field__hint' }, 'export.print.hint'),
-        sol.row
-      ])
+      perPage.row,
+      sol.row,
+      tx('p', { class: 'field__hint' }, 'export.print.hint'),
+      picker.element,
+      status.node
     ]));
 
     function mountFooter(footer) {
@@ -733,43 +1059,126 @@
       cancel.addEventListener('click', close);
       refs.printButton = button('export.print.button', { class: 'btn btn--primary', 'data-role': 'print' },
         'print');
-      refs.printButton.addEventListener('click', printOne);
+      refs.printButton.addEventListener('click', printSelected);
       footer.appendChild(cancel);
       footer.appendChild(refs.printButton);
-      refresh();
+      updateState();
     }
 
     function refresh() {
-      const result = currentResult();
-      const has = result !== null;
-      if (has) {
-        refs.summary.removeAttribute('data-i18n');
-        refs.summary.textContent = summaryText(result);
-        try {
-          refs.preview.src = svgDataUrl(boardSvg(result, { print: true, symbolMode: screenSymbolMode(result) }));
-          refs.preview.alt = t('export.print.alt', {
-            variant: summarize(result).variantName, level: summarize(result).levelName });
-          refs.preview.hidden = false;
-        } catch (err) {
-          logError(err);
-          refs.preview.hidden = true;
-        }
-      } else {
-        setKey(refs.summary, 'export.summary.none');
-        refs.preview.hidden = true;
-      }
-      refs.printSolution.disabled = !has;
-      if (refs.printButton) refs.printButton.disabled = !has;
+      picker.refresh();
+      updateState();
     }
 
-    const stop = [app.on('result', refresh), app.on('locale', refresh)];
-    refresh();
+    const stop = [app.on('locale', refresh)];
+    updateState();
 
     return {
       mountFooter: mountFooter,
       refresh: refresh,
       destroy: function destroy() {
+        closed = true;
         stop.forEach(function (off) { off(); });
+        if (job !== null) job.cancel();
+      }
+    };
+  }
+
+  /**
+   * Builds the Export dialog: a read-only box with the text of the puzzles that are ticked in the list below
+   * it (it follows the list), and Close / Copy text (footer).
+   * @param {Element} container  `modal.body`.
+   * @returns {{mountFooter: function(Element): void, refresh: function(): void, destroy: function(): void}}
+   */
+  function createTextDialog(container) {
+    const app = appRef;
+    const refs = {};
+    let closed = false;
+    let job = null;
+    let text = '';
+
+    const picker = createPicker(textPrefs, rebuild);
+    const status = statusLine();
+
+    function updateCopy() {
+      if (refs.copyButton) refs.copyButton.disabled = text === '';
+    }
+
+    /** Writes the text of what is ticked; puzzles that have to be generated again are waited for. */
+    function rebuild() {
+      if (job !== null) job.cancel();
+      job = null;
+      text = '';
+      refs.box.value = '';
+      status.clear();
+      updateCopy();
+      const picks = picker.picked();
+      if (picks.length === 0) return;
+      const mine = startFetch(picks, { progress: status.preparing });
+      job = mine;
+      mine.promise.then(function (results) {
+        if (job !== mine || closed) return;
+        status.clear();
+        text = buildExportText(results.map(function (result) { return { result: result }; }));
+        refs.box.value = text;
+        updateCopy();
+      }, function (err) {
+        if (err === ABORTED || job !== mine || closed) return;
+        status.clear();
+        failureToast(err);
+      });
+    }
+
+    function copy() {
+      const write = SG.controls && typeof SG.controls.copyText === 'function' ? SG.controls.copyText : null;
+      Promise.resolve(write ? write(text) : false).then(function (ok) {
+        app.toast(ok ? 'success' : 'danger', ok ? 'export.text.copied' : 'export.text.copyFailed');
+      });
+    }
+
+    refs.box = el('textarea', { class: 'textarea mono', readonly: true, rows: 10, wrap: 'off',
+      spellcheck: 'false', autocomplete: 'off', autocapitalize: 'off', 'data-role': 'text' });
+    refs.box.addEventListener('focus', function () { refs.box.select(); });
+    function labelBox() {
+      refs.box.setAttribute('aria-label', t('export.text.label'));
+      refs.box.setAttribute('placeholder', t('export.text.placeholder'));
+    }
+    labelBox();
+    container.appendChild(el('div', { class: 'print-dialog', 'data-role': 'export-body' }, [
+      tx('p', { class: 'field__hint' }, 'export.text.intro'),
+      refs.box,
+      picker.element,
+      status.node
+    ]));
+
+    function mountFooter(footer) {
+      const cancel = button('common.close', { 'data-role': 'cancel' });
+      cancel.addEventListener('click', closeText);
+      refs.copyButton = button('export.text.copy', { class: 'btn btn--primary', 'data-role': 'copy',
+        disabled: true }, 'copy');
+      refs.copyButton.addEventListener('click', copy);
+      footer.appendChild(cancel);
+      footer.appendChild(refs.copyButton);
+      updateCopy();
+    }
+
+    // The names in the text follow the language of the page.
+    function refresh() {
+      picker.refresh();
+      labelBox();
+      rebuild();
+    }
+
+    const stop = [app.on('locale', refresh)];
+    rebuild();
+
+    return {
+      mountFooter: mountFooter,
+      refresh: refresh,
+      destroy: function destroy() {
+        closed = true;
+        stop.forEach(function (off) { off(); });
+        if (job !== null) job.cancel();
       }
     };
   }
@@ -830,56 +1239,36 @@
     });
   }
 
+  /** Closes the Export dialog if it is open. */
+  function closeText() {
+    if (openTextDialog !== null) openTextDialog.modal.close();
+  }
+
   /**
-   * Opens the dialog of the text code (the Export button of the page): the code of the puzzle on screen in
-   * a read-only box with a Copy button. Returns the open one when there is one.
-   * @returns {?Object} The modal handle of `SG.app.openModal`; null without a DOM, an app or a puzzle.
+   * Opens the Export dialog (the Export button of the page): the text of the puzzles that are ticked in the
+   * list of saved puzzles, in a read-only box with a Copy button. Returns the open one when there is one.
+   * @returns {?Object} The modal handle of `SG.app.openModal`; null without a DOM or an app.
    */
-  function openCode() {
+  function openText() {
     if (appRef === null || typeof document === 'undefined') return null;
-    if (openCodeDialog !== null) return openCodeDialog;
-    const result = currentResult();
-    if (result === null) return null;
-    let box = null;
-    let copyBtn = null;
-    let code = '';
+    if (openTextDialog !== null) return openTextDialog.modal;
+    let dialog = null;
     const modal = appRef.openModal({
-      titleKey: 'export.code.title',
+      titleKey: 'export.text.title',
+      wide: true,
       body: function (container) {
-        box = el('textarea', { class: 'textarea', readonly: true, rows: 6, spellcheck: 'false',
-          autocomplete: 'off', autocapitalize: 'off', 'data-role': 'code', id: nextId('export-code'),
-          'aria-describedby': 'export-code-hint' });
-        const status = tx('p', { class: 'field__hint', id: 'export-code-hint' }, 'export.code.hint');
-        copyBtn = button('export.code.copy', { class: 'btn btn--primary', 'data-role': 'copy', disabled: true },
-          'copy');
-        box.addEventListener('focus', function () { box.select(); });
-        copyBtn.addEventListener('click', function () {
-          const copy = SG.controls && typeof SG.controls.copyText === 'function' ? SG.controls.copyText : null;
-          Promise.resolve(copy ? copy(code) : false).then(function (ok) {
-            appRef.toast(ok ? 'success' : 'danger', ok ? 'export.code.copied' : 'export.code.copyFailed');
-          });
-        });
-        container.appendChild(el('div', { class: 'stack', 'data-role': 'code-body' }, [
-          tx('p', { class: 'export-summary' }, 'export.code.intro'), box, status, copyBtn
-        ]));
-        box.value = t('export.code.working');
-        buildExportCode(result).then(function (info) {
-          code = info.code;
-          box.value = code;
-          copyBtn.disabled = false;
-          if (info.long) appRef.toast('warning', 'export.code.long', longLinkArgs({ length: info.length }));
-        }, function (err) {
-          logError(err);
-          box.value = '';
-          const message = SG.i18n && typeof SG.i18n.tError === 'function' ? SG.i18n.tError(err) : String(err);
-          appRef.toast('danger', 'export.code.error', { message: message });
-        });
+        dialog = createTextDialog(container);
+      },
+      footer: function (container) {
+        if (dialog !== null) dialog.mountFooter(container);
       },
       onClose: function () {
-        openCodeDialog = null;
+        if (dialog !== null) dialog.destroy();
+        openTextDialog = null;
       }
     });
-    openCodeDialog = modal;
+    if (modal === null) return null;
+    openTextDialog = { modal: modal, dialog: dialog };
     return modal;
   }
 
@@ -896,7 +1285,7 @@
     app.on('action', function (payload) {
       if (!payload) return;
       if (payload.id === 'export') open();
-      else if (payload.id === 'exportCode') openCode();
+      else if (payload.id === 'exportCode') openText();
       else if (payload.id === 'play') playOnline();
     });
   }
@@ -908,13 +1297,15 @@
     LONG_LINK_CHARS: LONG_LINK_CHARS,
     init: init,
     open: open,
-    openCode: openCode,
+    openText: openText,
+    closeText: closeText,
     close: close,
     toJson: toJson,
     playerBase: playerBase,
     pagePlayerBase: pagePlayerBase,
     buildPlayLink: buildPlayLink,
-    buildExportCode: buildExportCode,
+    buildExportText: buildExportText,
+    gridLines: gridLines,
     openPlayLink: openPlayLink,
     playOnline: playOnline,
     buildPrintLayout: buildPrintLayout,
@@ -936,10 +1327,16 @@
       'export.title': 'Print',
       'export.summary': '{variant} \u00b7 {level} \u00b7 {clues}',
       'export.summary.seed': '{variant} \u00b7 {level} \u00b7 {clues} \u00b7 seed {seed}',
-      'export.summary.none': 'No puzzle is on screen yet. Generate one first.',
+      'export.pick.title': 'Puzzles to choose from',
+      'export.pick.selectAll': 'Select all',
+      'export.pick.selectNone': 'Select none',
+      'export.pick.count': '{selected} of {total} selected',
+      'export.pick.empty': 'No puzzles yet. Generate one first.',
+      'export.pick.preparing': 'Preparing puzzle {done} of {total}\u2026',
+      'export.print.perPage': 'Puzzles per page',
       'export.print.hint': 'Opens the print dialog of your browser. To make a PDF file, choose \u201cSave as ' +
         'PDF\u201d there. Lines stay sharp because the puzzle is printed as vector graphics.',
-      'export.print.solutionPage': 'Add the solution on a separate page',
+      'export.print.solutionPage': 'Add the solutions on separate pages',
       'export.print.button': 'Print\u2026',
       'export.print.heading': '{variant} \u00b7 {level}',
       'export.print.meta': 'Seed {seed} \u00b7 {clues}',
@@ -954,28 +1351,31 @@
       'export.playOnline.long': 'This link is very long (about {size} kB), and some apps and servers cut ' +
         'long links. If the player does not open this puzzle, try a smaller puzzle.',
       'export.playOnline.error': 'The link could not be made: {message}',
-      'export.code.title': 'Export a text code',
-      'export.code.intro': 'A text code of the puzzle on screen. Copy it, then in sudoku-player press ' +
-        '\u201cOpen puzzle\u201d and paste it to play.',
-      'export.code.hint': 'The code holds the whole puzzle, so you can keep it in a note or send it in a ' +
-        'message.',
-      'export.code.working': 'Making the code\u2026',
-      'export.code.copy': 'Copy code',
-      'export.code.copied': 'Code copied to the clipboard.',
-      'export.code.copyFailed': 'Could not copy the code. Select it and copy it by hand.',
-      'export.code.long': 'This code is very long (about {size} kB), and some apps cut long texts. If the ' +
-        'player does not open this puzzle, try a smaller puzzle.',
-      'export.code.error': 'The code could not be made: {message}',
+      'export.text.title': 'Export puzzles as text',
+      'export.text.intro': 'Choose the puzzles to export. Each one starts with a line \u201c#number,variant,' +
+        'level,seed\u201d, and its grid follows, one row per line: a digit is a clue and \u201c.\u201d an ' +
+        'empty cell.',
+      'export.text.label': 'Text of the chosen puzzles',
+      'export.text.placeholder': 'Choose at least one puzzle below to see its text.',
+      'export.text.copy': 'Copy text',
+      'export.text.copied': 'Text copied to the clipboard.',
+      'export.text.copyFailed': 'Could not copy the text. Select it and copy it by hand.',
       'export.toast.failed': 'Could not export: {message}'
     },
     vi: {
       'export.title': 'In đề',
       'export.summary': '{variant} \u00b7 mức {level} \u00b7 {clues}',
       'export.summary.seed': '{variant} \u00b7 mức {level} \u00b7 {clues} \u00b7 seed {seed}',
-      'export.summary.none': 'Chưa có đề nào trên màn hình. Hãy tạo một đề trước.',
+      'export.pick.title': 'Các đề để chọn',
+      'export.pick.selectAll': 'Chọn tất cả',
+      'export.pick.selectNone': 'Bỏ chọn',
+      'export.pick.count': 'Đã chọn {selected}/{total} đề',
+      'export.pick.empty': 'Chưa có đề nào. Hãy tạo một đề trước.',
+      'export.pick.preparing': 'Đang chuẩn bị đề {done}/{total}\u2026',
+      'export.print.perPage': 'Số đề mỗi trang',
       'export.print.hint': 'Mở hộp thoại in của trình duyệt. Để tạo tệp PDF, hãy chọn \u201cLưu dưới dạng ' +
         'PDF\u201d ở đó. Nét kẻ luôn sắc vì đề được in dưới dạng đồ họa vector.',
-      'export.print.solutionPage': 'Thêm lời giải ở một trang riêng',
+      'export.print.solutionPage': 'Thêm lời giải ở các trang riêng',
       'export.print.button': 'In…',
       'export.print.heading': '{variant} \u00b7 mức {level}',
       'export.print.meta': 'Seed: {seed} \u00b7 {clues}',
@@ -990,17 +1390,15 @@
       'export.playOnline.long': 'Liên kết này rất dài (khoảng {size} kB), và một số ứng dụng, máy chủ sẽ ' +
         'cắt bớt liên kết dài. Nếu trình chơi không mở được đề này, hãy thử một đề nhỏ hơn.',
       'export.playOnline.error': 'Không tạo được liên kết: {message}',
-      'export.code.title': 'Xuất mã văn bản',
-      'export.code.intro': 'Mã văn bản của đề đang hiển thị. Hãy sao chép nó, rồi trong sudoku-player bấm ' +
-        '\u201cMở đề\u201d và dán vào để chơi.',
-      'export.code.hint': 'Mã chứa toàn bộ đề, nên bạn có thể lưu vào ghi chú hoặc gửi trong tin nhắn.',
-      'export.code.working': 'Đang tạo mã…',
-      'export.code.copy': 'Sao chép mã',
-      'export.code.copied': 'Đã sao chép mã vào bộ nhớ tạm.',
-      'export.code.copyFailed': 'Không sao chép được mã. Hãy chọn và sao chép thủ công.',
-      'export.code.long': 'Mã này rất dài (khoảng {size} kB), và một số ứng dụng sẽ cắt bớt văn bản dài. ' +
-        'Nếu trình chơi không mở được đề này, hãy thử một đề nhỏ hơn.',
-      'export.code.error': 'Không tạo được mã: {message}',
+      'export.text.title': 'Xuất các đề dạng văn bản',
+      'export.text.intro': 'Chọn các đề cần xuất. Mỗi đề bắt đầu bằng một dòng \u201c#số thứ tự,biến thể,' +
+        'mức độ,seed\u201d, rồi đến lưới của đề, mỗi hàng một dòng: chữ số là ô cho sẵn, dấu \u201c.\u201d ' +
+        'là ô trống.',
+      'export.text.label': 'Văn bản của các đề đã chọn',
+      'export.text.placeholder': 'Hãy chọn ít nhất một đề bên dưới để xem văn bản của nó.',
+      'export.text.copy': 'Sao chép văn bản',
+      'export.text.copied': 'Đã sao chép văn bản vào bộ nhớ tạm.',
+      'export.text.copyFailed': 'Không sao chép được văn bản. Hãy chọn và sao chép thủ công.',
       'export.toast.failed': 'Không xuất được: {message}'
     }
   });
