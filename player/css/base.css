@@ -200,19 +200,6 @@ summary {
   transform: none;
 }
 
-/* ---- Small typographic utilities ---- */
-.text-muted {
-  color: var(--sg-color-text-muted);
-}
-
-.mono {
-  font-family: var(--sg-font-mono);
-}
-
-.nowrap {
-  white-space: nowrap;
-}
-
 /* ---- Reduced motion: system preference or Settings switch (data-motion="off") ---- */
 @media (prefers-reduced-motion: reduce) {
   *,

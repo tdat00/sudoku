@@ -56,7 +56,7 @@
   ]);
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
-  const WIDE_QUERY = '(min-width: 64rem)';
+  const WIDE_QUERY = '(min-width: 60rem)';
 
   /** Where each technique's tab and panel are, by technique id (rebuilt by every render). */
   const tabs = new Map();

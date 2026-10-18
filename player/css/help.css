@@ -164,7 +164,7 @@
   text-transform: uppercase;
 }
 
-@media (min-width: 64rem) {
+@media (min-width: 60rem) {
   .help-page__layout {
     grid-template-columns: 17rem minmax(0, 1fr);
     gap: var(--sg-space-5);
@@ -511,7 +511,7 @@
   white-space: nowrap;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 600px) {
   .help-keys {
     grid-template-columns: minmax(11rem, 17rem) minmax(0, 1fr);
     align-items: center;

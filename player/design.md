@@ -221,7 +221,7 @@ reveal one cell. A hint never suggests a wrong value (tested on all fixtures).
 ### 6.2 The play UI
 Mounted by `play.js` itself into `#play-status` (the status box at the top of the side panel), `#play-root`
 (tools: notes, erase, undo, redo, hint, check; the **symbol pad**, touch-sized buttons, up to 6 per row on a
-wide screen and 5 on a narrow one; a toggle right under the pad that expands the frame to show the **puzzle
+wide screen and one row on a phone; a toggle right under the pad that expands the frame to show the **puzzle
 actions** — fill in all notes and reveal a cell (a second press confirms), hidden at first so that none is
 pressed by mistake; on a small screen the toggle is part of the bar fixed to the bottom —; the hint card; there is no message line, what the game says is announced to screen readers) and
 `#options-root`: the **Options** frame, a `<details>` closed at first, with one radio per line for the symbols

@@ -1255,7 +1255,6 @@
   // The same breakpoint as css/layout.css (and Sudoku Generator): below it the keys are fixed to the bottom.
   const SMALL_SCREEN = '(max-width: 767.98px)';
   const WIDE_PAD_COLS = 6;
-  const NARROW_PAD_COLS = 5;
   const POPUP_COLS = 3;
   const POPUP_COLS_BIG = 4;
   const CELL_UNITS = 40;
@@ -1989,9 +1988,7 @@
       if (sig !== padSig) {
         padSig = sig;
         const wide = padLayout(game.digits, WIDE_PAD_COLS);
-        const narrow = padLayout(game.digits, NARROW_PAD_COLS);
         els.pad.style.setProperty('--play-pad-cols', String(wide.cols));
-        els.pad.style.setProperty('--play-pad-cols-narrow', String(narrow.cols));
         // The bar fixed to the bottom of a small screen keeps the pad on one row (two for more than 9 symbols).
         els.pad.style.setProperty('--play-pad-cols-mobile',
           String(game.digits <= 9 ? game.digits : Math.ceil(game.digits / 2)));

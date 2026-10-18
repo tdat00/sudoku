@@ -222,16 +222,6 @@
   height: 1.75rem;
 }
 
-@media (max-width: 599.98px) {
-  .play__pad {
-    grid-template-columns: repeat(var(--play-pad-cols-narrow, 5), minmax(0, 1fr));
-  }
-
-  .play__tools {
-    gap: var(--sg-space-1);
-  }
-}
-
 /* ---- Hints ---- */
 .play__hint {
   position: relative;
@@ -662,6 +652,18 @@
 
   .play__popup {
     display: none;
+  }
+
+  /* The game buttons sit on the left of the row of Share and Import (play.js moves them there, see
+     placeStatus); the status box is the next line. */
+  .main-actions .play__controls {
+    margin-inline-end: auto;
+  }
+
+  .main-head > .play__status {
+    order: -1;
+    flex: 1 1 100%;
+    margin-block-end: var(--sg-space-2);
   }
 
   /* The status box above the puzzle: time, progress and the status line, small and without a frame. */
