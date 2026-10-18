@@ -14,8 +14,10 @@
  * The form never starts a generation (app.js owns the Generate / Cancel / Export buttons). Strings are keys
  * of `SG.i18n` (`controls.*` fragment at the bottom of this file, plus the base packs).
  *
- * Field ids of the model: 'variant', 'difficulty', 'symbolMode', 'symmetry', 'seed', 'digOrder',
- * 'maxAttempts', 'trace', 'showSolution' and 'opt.<optionId>' for the options of the variant.
+ * Field ids of the model: 'variant', 'difficulty', 'symbolMode', 'seed', 'symmetry' (advanced), 'digOrder',
+ * 'maxAttempts', 'showSolution' and 'opt.<optionId>' for the options of the variant.
+ *
+ * The description of a field (`hintKey`) is shown in a help tooltip next to the label, not under the control.
  */
 (function (root) {
   'use strict';
@@ -189,6 +191,7 @@
   function symbolModeField(s, def) {
     const field = baseField('symbolMode', 'symbolMode', 'basic', 'select', 'controls.symbolMode.label');
     field.value = s.symbolMode;
+    field.hintKey = 'controls.symbolMode.hint';
     def.symbolModes.forEach(function (mode) { field.choices.push(choice(mode, 'symbolMode.' + mode)); });
     // A single choice is no choice: the large grids pick their symbols with their own variant option.
     field.disabled = field.choices.length <= 1;
@@ -197,8 +200,9 @@
   }
 
   function symmetryField(s) {
-    const field = baseField('symmetry', 'symmetry', 'basic', 'select', 'controls.symmetry.label');
+    const field = baseField('symmetry', 'symmetry', 'advanced', 'select', 'controls.symmetry.label');
     field.value = s.symmetry;
+    field.hintKey = 'controls.symmetry.hint';
     SG.symmetry.KINDS.forEach(function (kind) { field.choices.push(choice(kind, 'symmetry.' + kind)); });
     field.preview = symmetryPreview(s.symmetry);
     const warning = strictSymmetryWarning(s.symmetry, s.difficulty);
@@ -235,16 +239,6 @@
     field.max = SG.store.MAX_ATTEMPTS.max;
     field.step = 1;
     field.defaultValue = SG.store.MAX_ATTEMPTS.default;
-    return field;
-  }
-
-  function traceField(s) {
-    const field = baseField('trace', 'trace', 'advanced', 'select', 'controls.trace.label');
-    field.value = s.trace;
-    field.hintKey = 'controls.trace.hint';
-    SG.store.TRACE_LEVELS.forEach(function (level) {
-      field.choices.push(choice(level, 'traceLevel.' + level));
-    });
     return field;
   }
 
@@ -340,12 +334,11 @@
     const s = SG.store.sanitize(state);
     const def = SG.variants.get(s.variantId);
     const items = SG.variants.optionsOf(def);
-    const fields = [variantField(s), difficultyField(s, def), symbolModeField(s, def), symmetryField(s),
-      seedField(s)];
+    const fields = [variantField(s), difficultyField(s, def), symbolModeField(s, def), seedField(s)];
     items.forEach(function (item) {
       if (!item.advanced) fields.push(optionField(item, s, 'options'));
     });
-    fields.push(digOrderField(s), maxAttemptsField(s), traceField(s), showSolutionField(s));
+    fields.push(symmetryField(s), digOrderField(s), maxAttemptsField(s), showSolutionField(s));
     items.forEach(function (item) {
       if (item.advanced) fields.push(optionField(item, s, 'advanced'));
     });
@@ -467,29 +460,104 @@
     }
   }
 
+  // ---------------------------------------------------------------------------------------------
+  // The help tooltip next to a field label. The description of a field lives here, not under the control.
+  // It opens on hover, on keyboard focus and on click / tap (so it works on a phone), Esc closes it, and it
+  // is styled text (not a native `title`): see `richText`.
+  // ---------------------------------------------------------------------------------------------
+
+  /**
+   * Tooltip text with light formatting, built with DOM nodes (never innerHTML): a blank line starts a new
+   * paragraph and `**text**` is bold. Plain text is a single paragraph.
+   */
+  function richText(doc, text) {
+    return String(text).split(/\n{2,}/).map(function (paragraph) {
+      const p = make(doc, 'p', {});
+      paragraph.split(/\*\*(.+?)\*\*/).forEach(function (part, i) {
+        if (part === '') return;
+        p.appendChild(make(doc, i % 2 === 1 ? 'strong' : 'span', { text: part }));
+      });
+      return p;
+    });
+  }
+
+  const tipDocs = typeof WeakSet === 'function' ? new WeakSet() : null;
+
+  /** One click listener per document that closes the tooltips opened by a click elsewhere. */
+  function closeTipsOnOutsideClick(doc) {
+    if (tipDocs === null || tipDocs.has(doc) || typeof doc.addEventListener !== 'function') return;
+    tipDocs.add(doc);
+    doc.addEventListener('click', function (event) {
+      if (typeof doc.querySelectorAll !== 'function') return;
+      doc.querySelectorAll('.help-tip[data-open]').forEach(function (tip) {
+        if (!tip.contains(event.target)) tip.removeAttribute('data-open');
+      });
+    });
+  }
+
+  function helpTip(doc, id) {
+    const pop = make(doc, 'div', { class: 'help-tip__pop', id: id + '-hint', role: 'tooltip' });
+    const button = make(doc, 'button', {
+      type: 'button', class: 'help-tip__btn', 'aria-describedby': id + '-hint'
+    }, [icon(doc, 'help')]);
+    const wrap = make(doc, 'span', { class: 'help-tip' }, [button, pop]);
+    wrap.hidden = true;
+    button.addEventListener('click', function () {
+      wrap.removeAttribute('data-dismissed');
+      if (wrap.getAttribute('data-open') === null) wrap.setAttribute('data-open', '');
+      else wrap.removeAttribute('data-open');
+    });
+    wrap.addEventListener('keydown', function (event) {
+      if (event.key !== 'Escape' || wrap.getAttribute('data-dismissed') !== null) return;
+      wrap.removeAttribute('data-open');
+      wrap.setAttribute('data-dismissed', '');
+      event.stopPropagation();
+    });
+    wrap.addEventListener('mouseenter', function () { wrap.removeAttribute('data-dismissed'); });
+    wrap.addEventListener('focusout', function () {
+      wrap.removeAttribute('data-dismissed');
+      wrap.removeAttribute('data-open');
+    });
+    closeTipsOnOutsideClick(doc);
+    return {
+      wrap: wrap,
+      pop: pop,
+      update: function (text, name) {
+        wrap.hidden = text === '';
+        if (pop.getAttribute('data-text') !== text) {
+          pop.setAttribute('data-text', text);
+          clear(pop);
+          if (text !== '') richText(doc, text).forEach(function (p) { pop.appendChild(p); });
+        }
+        button.setAttribute('aria-label', t('controls.help.label', { name: name }));
+      }
+    };
+  }
+
   function fieldShell(doc, f) {
     const id = domId(f.id);
+    const label = make(doc, 'label', { class: 'field__label', for: id, text: t(f.labelKey) });
+    const tip = helpTip(doc, id);
     return {
       id: id,
       wrap: make(doc, 'div', { class: 'field', 'data-field': f.id }),
-      label: make(doc, 'label', { class: 'field__label', for: id, text: t(f.labelKey) }),
-      hint: make(doc, 'p', { class: 'field__hint', id: id + '-hint' }),
+      label: label,
+      tip: tip,
+      head: make(doc, 'div', { class: 'field__head' }, [label, tip.wrap]),
       warn: make(doc, 'div', { class: 'stack', id: id + '-warn', hidden: true })
     };
   }
 
   function updateShell(doc, shell, f, control, extras) {
     shell.wrap.hidden = !f.visible;
-    setText(shell.hint, hasText(f.hintKey) ? t(f.hintKey) : '');
-    shell.hint.hidden = shell.hint.textContent === '';
+    shell.tip.update(hasText(f.hintKey) ? t(f.hintKey) : '', t(f.labelKey));
     renderAlerts(doc, shell.warn, f.warnings, 'warning', true, shell.id + '-alert');
-    describeBy(control, [shell.hint, shell.warn].concat(extras || []));
+    describeBy(control, [shell.tip.pop, shell.warn].concat(extras || []));
   }
 
   function appendShell(shell, middle) {
-    shell.wrap.appendChild(shell.label);
+    shell.wrap.appendChild(shell.head);
     middle.forEach(function (node) { shell.wrap.appendChild(node); });
-    shell.wrap.appendChild(shell.hint);
     shell.wrap.appendChild(shell.warn);
   }
 
@@ -579,10 +647,11 @@
     }
     input.addEventListener('input', post);
     input.addEventListener('change', post);
-    shell.wrap.appendChild(make(doc, 'div', { class: 'field field--inline' }, [shell.label, output]));
+    shell.wrap.appendChild(make(doc, 'div', { class: 'field field--inline field__head' }, [
+      make(doc, 'span', { class: 'field__title' }, [shell.label, shell.tip.wrap]), output
+    ]));
     shell.wrap.appendChild(input);
     shell.wrap.appendChild(make(doc, 'div', { class: 'field field--inline' }, [lower, upper]));
-    shell.wrap.appendChild(shell.hint);
     shell.wrap.appendChild(shell.warn);
     return {
       node: shell.wrap,
@@ -634,8 +703,9 @@
     const text = make(doc, 'span', { class: 'switch__text', text: t(f.labelKey) });
     const track = make(doc, 'span', { class: 'switch__track', 'aria-hidden': 'true' });
     input.addEventListener('change', function () { commit(f, input.checked); });
-    shell.wrap.appendChild(make(doc, 'label', { class: 'switch', for: shell.id }, [input, track, text]));
-    shell.wrap.appendChild(shell.hint);
+    shell.wrap.appendChild(make(doc, 'div', { class: 'field__head' }, [
+      make(doc, 'label', { class: 'switch', for: shell.id }, [input, track, text]), shell.tip.wrap
+    ]));
     shell.wrap.appendChild(shell.warn);
     return {
       node: shell.wrap,
@@ -675,9 +745,6 @@
       autocapitalize: 'off', spellcheck: 'false'
     });
     const info = make(doc, 'p', { class: 'field__hint', id: shell.id + '-info', hidden: true });
-    const dice = make(doc, 'button', {
-      type: 'button', class: 'btn btn--secondary btn--icon', 'data-action': 'new-seed'
-    }, [icon(doc, 'dice')]);
     const copy = make(doc, 'button', {
       type: 'button', class: 'btn btn--secondary btn--icon', 'data-action': 'copy-seed'
     }, [icon(doc, 'copy')]);
@@ -689,11 +756,9 @@
         actions.submit();
       }
     });
-    dice.addEventListener('click', actions.rollSeed);
     copy.addEventListener('click', actions.copySeed);
-    shell.wrap.appendChild(shell.label);
-    shell.wrap.appendChild(make(doc, 'div', { class: 'input-group' }, [input, dice, copy]));
-    shell.wrap.appendChild(shell.hint);
+    shell.wrap.appendChild(shell.head);
+    shell.wrap.appendChild(make(doc, 'div', { class: 'input-group' }, [input, copy]));
     shell.wrap.appendChild(info);
     shell.wrap.appendChild(shell.warn);
     return {
@@ -702,9 +767,6 @@
       update: function (field) {
         if (input.value !== field.value) input.value = field.value;
         input.setAttribute('placeholder', t(field.placeholderKey));
-        const rollLabel = t('controls.seed.random');
-        dice.setAttribute('aria-label', rollLabel);
-        dice.setAttribute('title', rollLabel);
         const copyLabel = t('controls.seed.copy');
         copy.setAttribute('aria-label', copyLabel);
         copy.setAttribute('title', copyLabel);
@@ -812,9 +874,6 @@
 
     const actions = {
       submit: typeof opts.onSubmit === 'function' ? function () { opts.onSubmit(); } : null,
-      rollSeed: function () {
-        notify('controls.seed.rolled', { seed: String(store.newSeed()) }, 'success');
-      },
       copySeed: function () {
         const seed = String(store.get().seed).trim();
         if (seed === '') {
@@ -984,19 +1043,22 @@
       'controls.variant.label': 'Variant',
       'controls.difficulty.label': 'Difficulty',
       'controls.symbolMode.label': 'Symbol set',
+      'controls.symbolMode.hint': 'Only changes how the values are drawn (digits, letters, colours with ' +
+        'shapes, or shapes). The puzzle does not change.',
       'controls.symmetry.label': 'Symmetry',
+      'controls.symmetry.hint': 'Clues are removed in matching groups, so the pattern of the given cells ' +
+        'is symmetric.\n\nA **stricter symmetry** makes the highest levels harder to reach.',
+      'controls.help.label': 'About “{name}”',
       'controls.symmetry.preview': 'Pattern preview, {symmetry}: the highlighted cells are removed together',
       'controls.seed.label': 'Seed',
       'controls.seed.hint': 'Leave empty for a random puzzle. The same seed with the same options always ' +
         'gives the same puzzle.',
       'controls.seed.hashed': 'This text is turned into the number {seed}; the same text always gives the ' +
         'same puzzle.',
-      'controls.seed.random': 'New random seed',
       'controls.seed.copy': 'Copy seed',
-      'controls.seed.rolled': 'New random seed: {seed}',
       'controls.seed.copied': 'Seed copied to the clipboard.',
       'controls.seed.copyFailed': 'Could not copy the seed. Select it and copy it by hand.',
-      'controls.seed.nothingToCopy': 'There is no seed to copy yet. Roll a new seed first.',
+      'controls.seed.nothingToCopy': 'There is no seed to copy yet. Type a seed or generate a puzzle first.',
       'controls.options.legend': 'Variant options',
       'controls.advanced.summary': 'Advanced options',
       'controls.digOrder.label': 'Dig order',
@@ -1004,9 +1066,6 @@
         'grid.',
       'controls.maxAttempts.label': 'Maximum attempts',
       'controls.maxAttempts.hint': 'Full grids to try before settling for the closest puzzle (1–20).',
-      'controls.trace.label': 'Replay detail',
-      'controls.trace.hint': 'How much of the generation is recorded for the step-by-step replay. “Off” ' +
-        'keeps only the result.',
       'controls.showSolution.label': 'Show the solution',
       'controls.showSolution.hint': 'Display the solved grid together with the puzzle.',
       'controls.warn.strictSymmetry': 'The symmetry “{symmetry}” together with “{difficulty}” is ' +
@@ -1021,27 +1080,27 @@
       'controls.variant.label': 'Biến thể',
       'controls.difficulty.label': 'Độ khó',
       'controls.symbolMode.label': 'Bộ ký hiệu',
+      'controls.symbolMode.hint': 'Chỉ đổi cách vẽ các giá trị (chữ số, chữ cái, màu kèm hình, hoặc hình ' +
+        'khối). Câu đố không thay đổi.',
       'controls.symmetry.label': 'Đối xứng',
+      'controls.symmetry.hint': 'Các số cho sẵn được bỏ theo từng nhóm tương ứng, nên hình dạng các ô cho ' +
+        'sẵn đối xứng.\n\n**Đối xứng càng chặt** thì các mức cao nhất càng khó đạt.',
+      'controls.help.label': 'Giải thích về “{name}”',
       'controls.symmetry.preview': 'Xem trước mẫu {symmetry}: các ô được tô sáng sẽ được bỏ cùng nhau',
       'controls.seed.label': 'Seed',
       'controls.seed.hint': 'Để trống để tạo đề ngẫu nhiên. Cùng seed và cùng tùy chọn sẽ luôn cho ra ' +
         'cùng một đề.',
       'controls.seed.hashed': 'Chữ này được chuyển thành số {seed}; cùng một chữ luôn cho ra cùng một đề.',
-      'controls.seed.random': 'Seed ngẫu nhiên mới',
       'controls.seed.copy': 'Sao chép seed',
-      'controls.seed.rolled': 'Seed ngẫu nhiên mới: {seed}',
       'controls.seed.copied': 'Đã sao chép seed vào bộ nhớ tạm.',
       'controls.seed.copyFailed': 'Không sao chép được seed. Hãy chọn và sao chép thủ công.',
-      'controls.seed.nothingToCopy': 'Chưa có seed để sao chép. Hãy tạo seed ngẫu nhiên trước.',
+      'controls.seed.nothingToCopy': 'Chưa có seed để sao chép. Hãy nhập seed hoặc tạo đề trước.',
       'controls.options.legend': 'Tùy chọn của biến thể',
       'controls.advanced.summary': 'Tùy chọn nâng cao',
       'controls.digOrder.label': 'Thứ tự đào lỗ',
       'controls.digOrder.hint': 'Thứ tự bộ sinh thử bỏ các số cho sẵn khỏi lưới đã điền đầy.',
       'controls.maxAttempts.label': 'Số lần thử tối đa',
       'controls.maxAttempts.hint': 'Số lưới đầy đủ được thử trước khi chọn đề gần nhất (1–20).',
-      'controls.trace.label': 'Mức chi tiết khi phát lại',
-      'controls.trace.hint': 'Mức độ ghi lại quá trình tạo đề để phát lại từng bước. “Tắt” chỉ giữ lại ' +
-        'kết quả.',
       'controls.showSolution.label': 'Hiện lời giải',
       'controls.showSolution.hint': 'Hiển thị cả lưới đã giải cùng với đề bài.',
       'controls.warn.strictSymmetry': 'Đối xứng “{symmetry}” kết hợp với mức “{difficulty}” khá khắt khe: ' +

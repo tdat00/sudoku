@@ -62,18 +62,18 @@
     controls: ['describe', 'mount', 'copyText'],
     symbols: ['modesFor', 'glyph', 'legend', 'legendMarkup', 'renderLegend'],
     boardView: ['create', 'geometry', 'renderMarkup', 'exportSvg', 'cellView', 'resolveTokens'],
-    stepView: ['create', 'reduce', 'statusesAt', 'statuses', 'initialState', 'chartModel'],
+    stepView: ['create', 'chartModel'],
     explainCard: ['create', 'viewModel'],
-    player: ['create', 'createEngine', 'isMeaningful'],
+    player: ['create', 'buildSteps', 'viewAt', 'describeStep', 'stepTitle', 'stepMeta', 'positionText'],
     resultView: ['create', 'viewModel', 'shareState', 'shareLink'],
-    app: ['getStore', 'getBoard', 'getPlayer', 'getStepView', 'getResult', 'generate', 'cancel', 'toast',
+    app: ['getStore', 'getBoard', 'getPlayer', 'getStepView', 'getExplainContext', 'getResult', 'generate',
+      'cancel', 'toast',
       'openModal', 'announce', 'on', 'emit']
   };
 
   /** The instance interfaces that can be created without a DOM. */
-  var PLAYER_INSTANCE = ['load', 'push', 'finish', 'play', 'pause', 'toggle', 'next', 'prev', 'first', 'last',
-    'seek', 'seekToStep', 'seekToSeq', 'setSpeed', 'getSpeed', 'state', 'describe', 'bindControls', 'reset',
-    'destroy'];
+  var PLAYER_INSTANCE = ['load', 'reset', 'next', 'prev', 'first', 'last', 'seek', 'state', 'describe',
+    'getSteps', 'getStep', 'bindControls', 'destroy'];
 
   var CLIENT_SURFACE = ['generate', 'cancel'];
 
@@ -110,7 +110,7 @@
       });
       ['generate:start', 'generate:progress', 'generate:end', 'generate:error', 'result', 'locale', 'position',
         'theme', 'settings', 'action'].forEach(function (name) { expect(header).toContain("'" + name + "'"); });
-      ['exportUi', 'importUi', 'a11y', 'theme', 'help', 'cache'].forEach(function (name) {
+      ['exportUi', 'a11y', 'theme', 'help', 'cache'].forEach(function (name) {
         expect(header).toContain('SG.' + name);
       });
     });
@@ -149,6 +149,7 @@
       expect(SG.app.getBoard()).toBeNull();
       expect(SG.app.getPlayer()).toBeNull();
       expect(SG.app.getStepView()).toBeNull();
+      expect(SG.app.getExplainContext()).toBeNull();
       expect(SG.app.getResult()).toBeNull();
       expect(SG.app.openModal({ titleKey: 'result.title' })).toBeNull();
       expect(typeof SG.app.toast('info', 'result.title').close).toBe('function');
@@ -410,24 +411,28 @@
 
   var MOUNT_IDS = ['skip-link', 'app-title', 'lang-switch', 'theme-switch', 'btn-settings', 'btn-help',
     'btn-drawer', 'controls-root', 'controls-form', 'btn-generate', 'btn-regenerate', 'btn-cancel', 'btn-export',
-    'board-root', 'board-svg', 'board-title', 'board-desc', 'player-root', 'btn-first', 'btn-prev', 'btn-play',
+    'btn-export-code', 'btn-play-online',
+    'board-root', 'board-svg', 'board-title', 'board-desc', 'player-root', 'btn-first', 'btn-prev',
     'btn-next', 'btn-last', 'scrubber', 'player-time', 'status-line', 'mode-badge', 'steps-root', 'steps-list',
-    'steps-chart', 'btn-steps-toggle', 'explain-root', 'result-root', 'modal-root', 'toast-root', 'a11y-live'];
+    'btn-steps-toggle', 'btn-explain', 'result-root', 'modal-root', 'toast-root', 'a11y-live'];
 
   describe('ui contract: index.html', function () {
-    it('has every mount point of the contract and the language, theme and speed buttons', function () {
-      var page = readHtml(readText('index.html'));
-      var ids = {};
-      page.elements.forEach(function (el) { if (el.attrs.id) ids[el.attrs.id] = true; });
-      expect(MOUNT_IDS.filter(function (id) { return ids[id] !== true; })).toEqual([]);
-      function count(attribute) {
-        return page.elements.filter(function (el) { return el.attrs[attribute] !== undefined; })
-          .map(function (el) { return el.attrs[attribute]; }).sort();
-      }
-      expect(count('data-lang')).toEqual(['en', 'vi']);
-      expect(count('data-theme-value')).toEqual(['dark', 'high-contrast', 'light']);
-      expect(count('data-speed')).toEqual(['fast', 'instant', 'manual', 'step']);
-    });
+    it('has every mount point of the contract and the language and theme buttons, and no speed buttons',
+      function () {
+        var page = readHtml(readText('index.html'));
+        var ids = {};
+        page.elements.forEach(function (el) { if (el.attrs.id) ids[el.attrs.id] = true; });
+        expect(MOUNT_IDS.filter(function (id) { return ids[id] !== true; })).toEqual([]);
+        function count(attribute) {
+          return page.elements.filter(function (el) { return el.attrs[attribute] !== undefined; })
+            .map(function (el) { return el.attrs[attribute]; }).sort();
+        }
+        expect(count('data-lang')).toEqual(['en', 'vi']);
+        expect(count('data-theme-value')).toEqual(['dark', 'high-contrast', 'light']);
+        // The replay is manual: no play button, no speed buttons.
+        expect(count('data-speed')).toEqual([]);
+        expect(ids['btn-play']).toBeUndefined();
+      });
 
     it('has no hard-coded visible text: every text node, title and label is translated', function () {
       var page = readHtml(readText('index.html'));

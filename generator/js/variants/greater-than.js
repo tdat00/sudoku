@@ -278,6 +278,11 @@
    * two cells that the sign joins in `cells` (the sign sits between them) and highlight them; the board of
    * the replay shows the clues, which are cleared first and revealed with `dig.restore`.
    *
+   * Dig log (`options.log`, see `SG.digger`): `{ op: 'signs', signs: [[a, b], ...] }` (every sign, value[a] <
+   * value[b]), `{ op: 'clear' }` (the board is emptied), `{ op: 'reveal', cells }` (clues shown since the
+   * last reveal), `{ op: 'pass', pass, clues }`, and `accept` / `reject` entries whose `cells` are the two
+   * cells of the sign and `sign` its index in the `signs` list.
+   *
    * @param {PuzzleModel} model  With every sign (see `postGenerate`).
    * @param {ArrayLike<number>} solution
    * @param {string} level
@@ -330,6 +335,9 @@
       for (let i = 0; i < g.length; i++) groupOf[g[i]] = index;
     });
     const stats = { groups: total, tried: 0, accepted: 0, rejected: 0, skipped: 0, oracleCalls: 0 };
+    // The dig log (see SG.digger): the signs, the clues revealed since the board was last shown, verdicts.
+    const log = Array.isArray(options.log) ? options.log : null;
+    const pending = [];
     let clues = 0;
 
     function metrics() {
@@ -349,16 +357,20 @@
         if (givens[c] !== 0) continue;
         givens[c] = solution[c];
         clues++;
+        pending.push(c);
         const us = model.cellUnits[c];
         for (let k = 0; k < us.length; k++) unitClues[us[k]]++;
       }
     }
 
     function showClues() {
+      if (log !== null && pending.length > 0) log.push({ op: 'reveal', cells: pending.slice() });
+      pending.length = 0;
       if (em.wantsMicro) em.syncBoard('dig', 'dig.restore', {}, givens);
     }
 
     function tracePass(phase, name) {
+      if (log !== null && phase === 'start') log.push({ op: 'pass', pass: name, clues: clues });
       if (em.wantsMicro) em.micro('dig', 'dig.pass.' + phase, { pass: name, clues: clues });
     }
 
@@ -390,12 +402,14 @@
         const reason = oracle(withSigns(model, aliveSigns()));
         if (reason === null) {
           stats.accepted++;
+          if (log !== null) log.push({ op: 'accept', cells: pair.slice(), sign: idx });
           if (em.wantsMicro) {
             em.micro('dig', 'dig.accept', { cells: pair.slice() }, { unhighlight: pair.slice() }, metrics());
           }
         } else {
           alive[idx] = 1;
           stats.rejected++;
+          if (log !== null) log.push({ op: 'reject', cells: pair.slice(), sign: idx, reason: reason });
           if (em.wantsMicro) {
             em.micro('dig', 'dig.reject', { cells: pair.slice(), reason: reason },
               { unhighlight: pair.slice() }, metrics());
@@ -409,6 +423,10 @@
 
     // --- 1. no clues, then as few as the level and the techniques need ------------------------------
 
+    if (log !== null) {
+      log.push({ op: 'signs', signs: signs.map(function (s) { return [s.a, s.b]; }) });
+      log.push({ op: 'clear' });
+    }
     if (em.wantsMicro) em.syncBoard('dig', 'dig.restore', {}, givens);
 
     const groupOrder = rng.shuffle(groups.map(function (g, index) { return index; }));

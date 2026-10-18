@@ -86,9 +86,9 @@
       var m = model('');
       expect(m.variantId).toBe('classic9');
       expect(m.fields.map(function (f) { return f.id; })).toEqual(['variant', 'difficulty', 'symbolMode',
-        'symmetry', 'seed', 'digOrder', 'maxAttempts', 'trace', 'showSolution']);
+        'seed', 'symmetry', 'digOrder', 'maxAttempts', 'showSolution']);
       expect(m.fields.map(function (f) { return f.section; })).toEqual(['basic', 'basic', 'basic', 'basic',
-        'basic', 'advanced', 'advanced', 'advanced', 'advanced']);
+        'advanced', 'advanced', 'advanced', 'advanced']);
       expect(m.notes).toEqual([]);
       expect(m.warnings).toEqual([]);
     });
@@ -208,18 +208,16 @@
       expect(field(model('?v=killer'), 'variant').value).toBe('killer');
     });
 
-    it('has the advanced fields with their limits', function () {
+    it('has the advanced fields with their limits, and no replay detail any more', function () {
       ready();
-      var m = model('?attempts=5&trace=summary&sol=1&order=spiral');
+      var m = model('?attempts=5&sol=1&order=spiral');
       var attempts = field(m, 'maxAttempts');
       expect([attempts.type, attempts.min, attempts.max, attempts.value]).toEqual(['number', 1, 20, 5]);
-      expect(values(field(m, 'trace'))).toEqual(['off', 'summary', 'full']);
-      expect(field(m, 'trace').value).toBe('summary');
-      expect(field(model(''), 'trace').value).toBe('full');
       expect(values(field(m, 'digOrder'))).toEqual(SG.digger.ORDERS);
       expect(field(m, 'digOrder').value).toBe('spiral');
       expect(field(m, 'showSolution').type).toBe('boolean');
       expect(field(m, 'showSolution').value).toBe(true);
+      expect(field(model('?trace=summary'), 'trace')).toBeUndefined();
     });
 
     it('describes the seed field and explains a text seed', function () {
@@ -593,11 +591,12 @@
       withEnglish(function () {
         var fx = mountFixture();
         ['ctl-variant', 'ctl-difficulty', 'ctl-symbolMode', 'ctl-symmetry', 'ctl-seed', 'ctl-digOrder',
-          'ctl-maxAttempts', 'ctl-trace', 'ctl-showSolution'].forEach(function (id) {
+          'ctl-maxAttempts', 'ctl-showSolution'].forEach(function (id) {
           expect(fx.byId(id)).not.toBeNull();
         });
+        expect(fx.byId('ctl-trace')).toBeNull();
         var labels = fx.doc.findAll(fx.form, function (el) { return el.tagName === 'LABEL'; });
-        expect(labels.length).toBeGreaterThan(8);
+        expect(labels.length).toBeGreaterThan(7);
         labels.forEach(function (label) {
           expect(fx.byId(label.getAttribute('for'))).not.toBeNull();
           expect(label.textContent).not.toBe('');
@@ -610,6 +609,62 @@
         expect(fx.byId('ctl-advanced').tagName).toBe('DETAILS');
         expect(fx.byId('ctl-variant-hint').textContent).toMatch(/9×9/);
       });
+    });
+
+    it('shows the description of a field in a help tooltip next to its label, not under the control', function () {
+      ready();
+      withEnglish(function () {
+        var fx = mountFixture();
+        var hints = fx.doc.findAll(fx.form, function (el) {
+          return /(^| )field__hint( |$)/.test(el.className) && el.id !== 'ctl-seed-info';
+        });
+        expect(hints).toEqual([]);
+        ['variant', 'difficulty', 'symbolMode', 'seed', 'symmetry', 'digOrder', 'maxAttempts',
+          'showSolution'].forEach(function (name) {
+          var pop = fx.byId('ctl-' + name + '-hint');
+          expect(pop.getAttribute('role')).toBe('tooltip');
+          expect(pop.textContent).not.toBe('');
+          var tip = pop.parentNode;
+          expect(tip.className).toBe('help-tip');
+          expect(tip.hidden).toBe(false);
+          expect(tip.parentNode.className).toMatch(/field__head/);
+          expect(tip.children[0].getAttribute('aria-label')).toMatch(/^About /);
+          expect(fx.byId('ctl-' + name).getAttribute('aria-describedby')).toMatch(new RegExp('ctl-' + name + '-hint'));
+        });
+        var symmetry = fx.byId('ctl-symmetry-hint');
+        expect(symmetry.children.length).toBe(2);
+        expect(symmetry.children[1].children[1].tagName).toBe('STRONG');
+        expect(symmetry.children[1].children[1].textContent).toBe('stricter symmetry');
+      });
+    });
+
+    it('opens the tooltip on click, closes it on Escape and on a second click', function () {
+      ready();
+      var fx = mountFixture();
+      var tip = fx.byId('ctl-seed-hint').parentNode;
+      var button = tip.children[0];
+      expect(tip.getAttribute('data-open')).toBeNull();
+      button.fire('click');
+      expect(tip.getAttribute('data-open')).not.toBeNull();
+      var esc = tip.fire('keydown', { key: 'Escape', stopPropagation: function () { this.stopped = true; } });
+      expect(tip.getAttribute('data-open')).toBeNull();
+      expect(tip.getAttribute('data-dismissed')).not.toBeNull();
+      expect(esc.stopped).toBe(true);
+      tip.fire('mouseenter');
+      expect(tip.getAttribute('data-dismissed')).toBeNull();
+      button.fire('click');
+      button.fire('click');
+      expect(tip.getAttribute('data-open')).toBeNull();
+    });
+
+    it('keeps symmetry inside the advanced options', function () {
+      ready();
+      var fx = mountFixture();
+      var advanced = fx.byId('ctl-advanced');
+      var inside = fx.doc.find(advanced, function (el) { return el === fx.byId('ctl-symmetry'); });
+      expect(inside).not.toBeNull();
+      var wrapper = fx.byId('ctl-symmetry').parentNode;
+      expect(wrapper.getAttribute('data-field') || wrapper.parentNode.getAttribute('data-field')).toBe('symmetry');
     });
 
     it('describes every control with existing elements', function () {
@@ -631,8 +686,6 @@
       expect(fx.store.get().difficulty).toBe('hard');
       pick(fx.byId('ctl-symmetry'), 'mirrorV');
       expect(fx.store.get().symmetry).toBe('mirrorV');
-      pick(fx.byId('ctl-trace'), 'summary');
-      expect(fx.store.get().trace).toBe('summary');
       pick(fx.byId('ctl-digOrder'), 'snake');
       expect(fx.store.get().digOrder).toBe('snake');
       var sol = fx.byId('ctl-showSolution');
@@ -753,17 +806,6 @@
       expect(svg.children.length).toBeGreaterThan(before - 1);
     });
 
-    it('rolls a new seed with the dice button and reports it', function () {
-      ready();
-      var fx = mountFixture({ random: function () { return 31415; } });
-      var dice = action(fx, 'new-seed');
-      expect(dice.getAttribute('aria-label')).toBe('New random seed');
-      dice.fire('click');
-      expect(fx.store.get().seed).toBe('31415');
-      expect(fx.byId('ctl-seed').value).toBe('31415');
-      expect(fx.notes).toEqual([['controls.seed.rolled', { seed: '31415' }, 'success']]);
-    });
-
     it('copies the seed with the fallback and says when there is nothing to copy', function () {
       ready();
       var fx = mountFixture();
@@ -813,11 +855,12 @@
 
     it('shows a toast in #toast-root when no notify callback is given', function () {
       ready();
-      var fx = mountFixture({ random: function () { return 5; } }, { notify: null });
-      action(fx, 'new-seed').fire('click');
+      var fx = mountFixture(undefined, { notify: null });
+      expect(action(fx, 'new-seed')).toBeNull();
+      action(fx, 'copy-seed').fire('click');
       var toast = fx.byId('toast-root').children[0];
-      expect(toast.className).toBe('toast toast--success');
-      expect(toast.textContent).toBe('New random seed: 5');
+      expect(toast.className).toBe('toast toast--warning');
+      expect(toast.textContent).toBe('There is no seed to copy yet. Type a seed or generate a puzzle first.');
       fx.view.destroy();
       expect(fx.byId('toast-root').children.length).toBe(0);
     });

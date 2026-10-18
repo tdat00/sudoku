@@ -1,17 +1,20 @@
 /**
- * Explanation card (task T-4.5; design.md section 7.4): for the step that is running, the three fixed parts
- * What / Why / How, the pseudocode of the step with the line that is executing highlighted, and a status
- * line that follows the live metrics. The data comes from `SG.explain` (js/core/explain-data.js, keys only);
- * the texts are in the locale packs. This file exports `SG.explainCard` (NOT `SG.explain`).
+ * Explanation card (task T-4.5; design.md section 7.4): for the phase of the replay step on show (full
+ * solution, extra structure, dig), the three fixed parts What / Why / How, the pseudocode of the phase with
+ * the line that the step corresponds to highlighted, and a status line with the running dig counters. The
+ * data comes from `SG.explain` (js/core/explain-data.js, keys only); the texts are in the locale packs. This
+ * file exports `SG.explainCard` (NOT `SG.explain`).
  *
  * Pure part (runs in Node): `viewModel(stepId, ctx)` resolves everything the card shows, in the current
- * language. DOM part: `create(rootEl)` renders a view model into `#explain-root` and re-renders it when the
- * language changes, keeping the step, the line and the metrics.
+ * language. DOM part: `create(rootEl, options)` renders a view model into an element and re-renders it when
+ * the language changes, keeping the step, the line and the metrics. The Help dialog (js/ui/help.js, tab "How
+ * it works") makes one compact card per step; the one of the replay step on show gets the highlighted line
+ * and the dig counters (`SG.app.getExplainContext()`).
  *
- * How the player drives it: for every replayed event of a step call
- * `card.show(event.stepId, { eventKey: event.i18nKey, metrics: event.metrics })` (the line comes from
- * `SG.explain.lineFor`; an event that executes no particular line, such as 'dig.end', highlights none),
- * and for a `metric` event, which has no key, only `card.setMetrics(event.metrics)`.
+ * How the host drives it: for the replay step on show call
+ * `card.show(step.phase, { lineLabel: step.line, metrics: step.metrics })`; without metrics (the full
+ * solution, the extra structure) the status line is hidden. `eventKey` still picks a line from an event key
+ * (`SG.explain.lineFor`) for callers that have events.
  */
 (function (root) {
   'use strict';
@@ -46,12 +49,13 @@
    * @param {string} stepId  One of the seven step ids.
    * @param {Object} [ctx]
    * @param {Object} [ctx.metrics]  Numbers for the status line (`event.metrics`); missing ones read as 0.
+   *        Without metrics there is no status line (`live` is null).
    * @param {string} [ctx.eventKey]  `i18nKey` of the event being replayed; picks the highlighted line.
    * @param {?string} [ctx.lineLabel]  The line to highlight, overriding `eventKey` (null = none).
    * @returns {?{stepId: string, index: number, total: number, titleKey: string, title: string,
    *   keys: {what: string, why: string, how: string}, what: string, why: string, how: string,
    *   lines: Array<{label: string, indent: number, key: string, text: string, active: boolean}>,
-   *   activeLabel: ?string, live: {key: string, args: Object, text: string}}}
+   *   activeLabel: ?string, live: ?{key: string, args: Object, text: string}}}
    *   `null` for an unknown step id. `activeLabel` is the label of the highlighted line (null when none).
    */
   function viewModel(stepId, ctx) {
@@ -68,7 +72,7 @@
       return { label: line.label, indent: line.indent, key: line.key, text: translate(line.key),
         active: active };
     });
-    const live = data.live(c.metrics);
+    const live = c.metrics ? data.live(c.metrics) : null;
     return {
       stepId: stepId,
       index: data.index,
@@ -81,7 +85,8 @@
       how: translate(data.how),
       lines: lines,
       activeLabel: activeLabel,
-      live: { key: live.key, args: live.args, text: translate(live.key, formatArgs(live.args)) }
+      live: live === null ? null
+        : { key: live.key, args: live.args, text: translate(live.key, formatArgs(live.args)) }
     };
   }
 
@@ -110,8 +115,9 @@
   }
 
   /**
-   * Renders the card into `#explain-root`. It owns the content of that element.
-   * @param {Element} rootEl  `#explain-root`.
+   * Renders the card into `rootEl`. It owns the content of that element.
+   * @param {Element} rootEl  The element that holds the card (a step of the Help dialog).
+   * @param {{compact?: boolean}} [options]  `compact`: no kicker and no title (the host has its own heading).
    * @returns {{
    *   show: function(string, Object=): void,
    *   setLine: function(?string): void,
@@ -129,10 +135,11 @@
    *   `refresh()` re-translates and redraws (done by itself on `SG.i18n.onChange`);
    *   `destroy()` removes the listener and the card.
    */
-  function create(rootEl) {
+  function create(rootEl, options) {
     if (!rootEl || typeof rootEl.appendChild !== 'function') {
-      throw new TypeError('SG.explainCard.create needs the #explain-root element');
+      throw new TypeError('SG.explainCard.create needs the element to render into');
     }
+    const compact = !!(options && options.compact);
     const doc = rootEl.ownerDocument;
     let stepId = null;
     let metrics = null;
@@ -172,17 +179,20 @@
         lineEls.map(function (l) { return l.li; }));
       const code = html(doc, 'section', { class: 'explain-card__code' }, [codeTitle, list]);
 
-      const el = html(doc, 'article', { class: 'card card--flat explain-card', 'data-step': vm.stepId },
-        [kicker, title, live, dl, code]);
-      return { el: el, kicker: kicker, title: title, liveLabel: liveLabel, liveText: liveText, parts: parts,
-        codeTitle: codeTitle, list: list, lines: lineEls };
+      const el = html(doc, 'article', {
+        class: 'card card--flat explain-card' + (compact ? ' explain-card--compact' : ''),
+        'data-step': vm.stepId
+      }, compact ? [live, dl, code] : [kicker, title, live, dl, code]);
+      return { el: el, kicker: kicker, title: title, live: live, liveLabel: liveLabel, liveText: liveText,
+        parts: parts, codeTitle: codeTitle, list: list, lines: lineEls };
     }
 
     function fill(vm) {
-      setText(card.kicker, translate('explainCard.kicker', { n: vm.index, total: vm.total }));
+      setText(card.kicker, translate('explainCard.kicker'));
       setText(card.title, vm.title);
+      card.live.hidden = vm.live === null;
       setText(card.liveLabel, translate('explainCard.live'));
-      setText(card.liveText, vm.live.text);
+      setText(card.liveText, vm.live === null ? '' : vm.live.text);
       card.parts.forEach(function (p) {
         setText(p.dt, translate('explainCard.' + p.name));
         setText(p.dd, vm[p.name]);
@@ -272,7 +282,7 @@
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({
     en: {
-      'explainCard.kicker': 'Step {n} of {total}',
+      'explainCard.kicker': 'How it works',
       'explainCard.what': 'What',
       'explainCard.why': 'Why',
       'explainCard.how': 'How',
@@ -283,7 +293,7 @@
       'explainCard.empty': 'Start a generation to see how each step works.'
     },
     vi: {
-      'explainCard.kicker': 'Bước {n}/{total}',
+      'explainCard.kicker': 'Cách hoạt động',
       'explainCard.what': 'Làm gì',
       'explainCard.why': 'Tại sao',
       'explainCard.how': 'Bằng cách nào',

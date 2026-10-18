@@ -77,7 +77,7 @@
   });
 
   // ---------------------------------------------------------------------------------------------
-  // Variants, groups, difficulty, symmetry, symbol sets, dig orders, technique groups, trace, speed
+  // Variants, groups, difficulty, symmetry, symbol sets, dig orders, technique groups, trace levels
   // ---------------------------------------------------------------------------------------------
 
   add({
@@ -159,12 +159,7 @@
 
     'traceLevel.off': 'Tắt (chỉ kết quả)',
     'traceLevel.summary': 'Tóm tắt',
-    'traceLevel.full': 'Chi tiết đầy đủ',
-
-    'speed.instant': 'Tức thì',
-    'speed.fast': 'Nhanh',
-    'speed.step': 'Từng bước',
-    'speed.manual': 'Thủ công'
+    'traceLevel.full': 'Chi tiết đầy đủ'
   });
 
   // ---------------------------------------------------------------------------------------------
@@ -236,7 +231,7 @@
       'còn giải được bằng các kỹ thuật cho phép hay không (điều này cũng chứng minh lời giải là duy nhất); ' +
       'nếu không thì nhóm ô đó được trả lại. Một lượt thứ hai, có định hướng, giữ lại những lần bỏ làm bài ' +
       'khó nhất. Cuối cùng là kiểm tra lần nữa rằng chỉ còn đúng một lời giải.',
-    'explain.dig.live': 'Đã thử {attempts} lần · chấp nhận {accepted} · từ chối {rejected} · còn {clues} ' +
+    'explain.dig.live': 'Đã thử {attempts} · chấp nhận {accepted} · từ chối {rejected} · còn {clues} ' +
       'số cho sẵn',
     'explain.dig.code.order': 'order ← shuffle(các nhóm ô đối xứng)',
     'explain.dig.code.loop': 'với mỗi group trong order:',
@@ -560,9 +555,9 @@
     'error.events.invalidLimit': 'Giới hạn kích thước “{maxEvents}” của nhật ký các bước không hợp lệ.',
     'error.exchange.invalidToken': 'Mã của liên kết đề không hợp lệ hoặc bị cắt cụt. Hãy sao chép lại ' +
       'toàn bộ liên kết.',
-    'error.exchange.tooLarge': 'Đề này quá lớn để chuyển bằng liên kết. Hãy dùng tệp JSON.',
-    'error.exchange.unsupportedEncoding': 'Trình duyệt này không giải nén được liên kết đề. Hãy dùng tệp ' +
-      'JSON hoặc một trình duyệt mới hơn.',
+    'error.exchange.tooLarge': 'Đề này quá lớn để chuyển bằng liên kết.',
+    'error.exchange.unsupportedEncoding': 'Trình duyệt này không giải nén được liên kết đề. Hãy dùng một ' +
+      'trình duyệt mới hơn.',
     'error.exchange.invalidJson': 'Nội dung của liên kết đề không phải là JSON hợp lệ.',
     'error.exchange.invalidUrl': 'Địa chỉ của trình chơi không hợp lệ. Cần một địa chỉ http hoặc https.',
     'error.fullGrid.invalidFixedCells': 'Các ô cố định của bàn cờ mâu thuẫn với nhau.',

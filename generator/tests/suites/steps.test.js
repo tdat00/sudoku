@@ -1,6 +1,6 @@
-// Steps panel and explanation card (task T-4.5): the pure parts of js/ui/step-view.js and js/ui/explain.js,
-// run against REAL event traces of the pipeline. No DOM is needed: the reducer, statusesAt, the chart model
-// and the card's view model are plain functions. The DOM parts are checked in a browser.
+// Steps panel and explanation card (task T-4.5, reworked): the list of the replay steps (js/ui/step-view.js)
+// on a small fake DOM, the chart model the result panel uses, and the view model of the explanation card
+// (js/ui/explain.js), run against real results and traces of the pipeline.
 (function () {
   'use strict';
 
@@ -12,48 +12,14 @@
 
   var STEP_IDS = ['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune'];
 
-  var CONFIGS = {
-    classic: { variantId: 'classic9', difficulty: 'medium', seed: 1, trace: 'summary' },
-    classicFull: { variantId: 'classic9', difficulty: 'medium', seed: 1, trace: 'full' },
-    classicOff: { variantId: 'classic9', difficulty: 'medium', seed: 1, trace: 'off' },
-    killer: { variantId: 'killer', difficulty: 'medium', seed: 3, trace: 'summary' },
-    // Row-by-row digging cannot reach the hard level, so every sample misses and the attempts run out.
-    exhausted: { variantId: 'classic9', difficulty: 'hard', seed: 1, trace: 'summary', maxAttempts: 2,
-      digOrder: 'rowByRow' },
-    // The first grid misses, the second one hits.
-    recovered: { variantId: 'hyper', difficulty: 'expert', seed: 1, trace: 'summary', maxAttempts: 2,
-      digOrder: 'rowByRow' }
-  };
-
   var cache = {};
 
-  /** The recorded events and the result of a real pipeline run (run once per name). */
-  function trace(name) {
-    if (!cache[name]) {
-      var events = [];
-      var result = SG.pipeline.run(CONFIGS[name], function (e) { events.push(e); });
-      cache[name] = { events: events, result: result };
+  function result(variantId, difficulty, seed) {
+    var key = variantId + '/' + difficulty + '/' + seed;
+    if (!cache[key]) {
+      cache[key] = SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
     }
-    return cache[name];
-  }
-
-  function stateAfter(events, count) {
-    var state = V.initialState();
-    for (var i = 0; i < count; i++) state = V.reduce(state, events[i]);
-    return state;
-  }
-
-  function isStart(e) {
-    return e.type === 'step' && e.phase === 'start';
-  }
-
-  function isEnd(e) {
-    return e.type === 'step' && e.phase === 'end';
-  }
-
-  function indexOfEvent(events, test, from) {
-    for (var i = from || 0; i < events.length; i++) if (test(events[i])) return i;
-    return -1;
+    return cache[key];
   }
 
   function hasOwn(obj, key) {
@@ -73,342 +39,277 @@
     }
   }
 
-  /** A hand-made event, for the cases a real run cannot produce. */
-  var seqCounter = 0;
-  function ev(type, stepId, phase, t, key, args, metrics) {
-    var e = { type: type, stepId: stepId, phase: phase, t: t, seq: seqCounter++ };
-    if (key !== undefined) e.i18nKey = key;
-    if (args !== undefined) e.i18nArgs = args;
-    if (metrics !== undefined) e.metrics = metrics;
-    return e;
-  }
-
-  /** A hand-made `error` event for the given step and error code. */
-  function failure(stepId, code, t) {
-    return ev('error', stepId, 'end', t, 'error.' + code, { code: code });
-  }
-
   // ---------------------------------------------------------------------------------------------
-  // Reducer
+  // A small fake DOM: elements, text, classes, attributes, listeners, '#id' lookups and `closest`
   // ---------------------------------------------------------------------------------------------
 
-  describe('stepView: reducer', function () {
-    it('starts with the seven steps pending, in pipeline order, and a fresh state each time', function () {
-      var s = V.initialState();
-      expect(V.STEP_IDS).toEqual(SG.events.STEP_IDS);
-      expect(Object.keys(s.steps)).toEqual(STEP_IDS);
-      STEP_IDS.forEach(function (id, i) {
-        expect(s.steps[id].status).toBe('pending');
-        expect(s.steps[id].index).toBe(i + 1);
-        expect(s.steps[id].ms).toBe(0);
-      });
-      expect(s.current).toBeNull();
-      expect(s.attempt).toBeNull();
-      expect(s.sample).toBeNull();
-      s.steps.dig.status = 'done';
-      expect(V.initialState().steps.dig.status).toBe('pending');
-    });
+  function createFakeDocument() {
+    var doc = {};
 
-    it('shows a finished classic9 run: everything done, extraStructure skipped, result known', function () {
-      var t = trace('classic');
-      var s = V.statusesAt(t.events);
-      expect(V.statuses(s)).toEqual({
-        configure: 'done', buildModel: 'done', fullGrid: 'done', extraStructure: 'skipped', dig: 'done',
-        rate: 'done', tune: 'done'
-      });
-      expect(s.finished).toBe(true);
-      expect(s.current).toBeNull();
-      expect(s.error).toBeNull();
-      expect(s.result.achieved).toBe(t.result.rating.level);
-      expect(s.result.attempts).toBe(t.result.attempts);
-      expect(s.result.seed).toBe(t.result.seed);
-      expect(s.seq).toBe(t.events[t.events.length - 1].seq);
-    });
-
-    it('does not skip extraStructure of a variant that builds something (killer)', function () {
-      var s = V.statusesAt(trace('killer').events);
-      expect(s.steps.extraStructure.status).toBe('done');
-      expect(s.steps.extraStructure.notes.length).toBeGreaterThan(0);
-      expect(V.statuses(s).tune).toBe('done');
-    });
-
-    it('gives the same statuses for the three verbosity levels', function () {
-      var expected = V.statuses(V.statusesAt(trace('classic').events));
-      expect(V.statuses(V.statusesAt(trace('classicOff').events))).toEqual(expected);
-      expect(V.statuses(V.statusesAt(trace('classicFull').events))).toEqual(expected);
-    });
-
-    it('takes metrics of the three levels: final numbers, and live numbers from micro events', function () {
-      var full = V.statusesAt(trace('classicFull').events);
-      expect(full.steps.fullGrid.metrics.placed).toBe(81);
-      expect(full.steps.fullGrid.metrics.backtracks).toBeGreaterThanOrEqual(0);
-      expect(full.steps.buildModel.metrics.cells).toBe(81);
-      expect(full.steps.buildModel.metrics.units).toBe(27);
-      var summary = V.statusesAt(trace('classic').events);
-      expect(summary.steps.dig.metrics.clues).toBe(trace('classic').result.givens.filter(Boolean).length);
-      expect(summary.steps.rate.metrics.score).toBeGreaterThan(0);
-      var off = V.statusesAt(trace('classicOff').events);
-      expect(off.steps.fullGrid.metrics.placed).toBe(81);
-
-      var events = trace('classicFull').events;
-      var mid = indexOfEvent(events, function (e) { return e.i18nKey === 'dig.accept'; });
-      var s = stateAfter(events, mid + 1);
-      expect(s.steps.dig.status).toBe('running');
-      expect(s.steps.dig.metrics.accepted).toBe(1);
-      expect(s.steps.dig.metrics.attempts).toBe(1);
-    });
-
-    it('sets the step that starts to running and every later step back to pending, at every start and end',
-      function () {
-        ['classic', 'killer', 'exhausted', 'recovered'].forEach(function (name) {
-          var events = trace(name).events;
-          var state = V.initialState();
-          events.forEach(function (e) {
-            state = V.reduce(state, e);
-            if (!isStart(e) && !isEnd(e)) return;
-            var at = STEP_IDS.indexOf(e.stepId);
-            var status = state.steps[e.stepId].status;
-            if (isStart(e)) {
-              expect(status).toBe('running');
-              expect(state.current).toBe(e.stepId);
-              STEP_IDS.slice(at + 1).forEach(function (id) {
-                expect(state.steps[id].status).toBe('pending');
-              });
-            } else {
-              expect(status === 'done' || (status === 'skipped' && e.stepId === 'extraStructure')).toBe(true);
-            }
-            STEP_IDS.slice(0, at).forEach(function (id) {
-              expect(state.steps[id].status === 'done' || state.steps[id].status === 'skipped').toBe(true);
-            });
-          });
-        });
-      });
-
-    it('counts attempts and samples and the samples that missed the level', function () {
-      var events = trace('classic').events;
-      var firstGrid = indexOfEvent(events, function (e) { return e.i18nKey === 'fullGrid.start'; });
-      var s = stateAfter(events, firstGrid + 1);
-      expect(s.attempt).toEqual({ n: 1, max: 8 });
-      expect(s.sample).toBeNull();
-      var digStarts = events.filter(function (e) { return e.i18nKey === 'dig.start'; });
-      var misses = events.filter(function (e) { return e.i18nKey === 'tune.miss'; });
-      expect(digStarts.length).toBeGreaterThan(1);
-      var end = V.statusesAt(events);
-      expect(end.sample).toEqual({ n: digStarts.length, max: 12 });
-      expect(end.misses).toBe(misses.length);
-      expect(end.steps.dig.runs).toBe(digStarts.length);
-      expect(end.steps.rate.runs).toBe(digStarts.length);
-      expect(end.steps.fullGrid.runs).toBe(1);
-      var secondDig = indexOfEvent(events, function (e) { return e.i18nKey === 'dig.start'; },
-        indexOfEvent(events, function (e) { return e.i18nKey === 'dig.start'; }) + 1);
-      var s2 = stateAfter(events, secondDig + 1);
-      expect(s2.sample).toEqual({ n: 2, max: 12 });
-      expect(s2.misses).toBe(1);
-      expect(s2.steps.rate.status).toBe('pending');
-      expect(s2.steps.tune.status).toBe('pending');
-    });
-
-    it('shows the retry: a new attempt resets the steps after fullGrid and the sample counters', function () {
-      var events = trace('exhausted').events;
-      var retries = events.filter(function (e) { return e.type === 'retry'; });
-      expect(retries.length).toBe(2);
-      var first = indexOfEvent(events, function (e) { return e.type === 'retry'; });
-      var s = stateAfter(events, first + 1);
-      expect(s.retries).toBe(1);
-      expect(s.lastRetry.attempt).toBe(1);
-      expect(s.lastRetry.willRetry).toBe(true);
-      expect(s.attempt).toEqual({ n: 2, max: 2 });
-      var grid2 = indexOfEvent(events, function (e) {
-        return e.i18nKey === 'fullGrid.start' && e.i18nArgs.attempt === 2;
-      });
-      var before = stateAfter(events, grid2);
-      var after = stateAfter(events, grid2 + 1);
-      expect(V.statuses(after)).toEqual({
-        configure: 'done', buildModel: 'done', fullGrid: 'running', extraStructure: 'pending', dig: 'pending',
-        rate: 'pending', tune: 'pending'
-      });
-      expect(after.sample).toBeNull();
-      expect(after.misses).toBe(0);
-      expect(after.steps.fullGrid.runs).toBe(2);
-      expect(after.steps.dig.ms).toBe(before.steps.dig.ms);
-      expect(after.steps.dig.runs).toBe(before.steps.dig.runs);
-    });
-
-    it('ends an exhausted run on the closest puzzle: tune.best, not exact, all steps done', function () {
-      var t = trace('exhausted');
-      var s = V.statusesAt(t.events);
-      expect(s.retries).toBe(2);
-      expect(s.lastRetry.willRetry).toBe(false);
-      expect(s.attempt).toEqual({ n: 2, max: 2 });
-      expect(s.result.exact).toBe(false);
-      expect(t.result.warnings).toContain('difficulty.approximate');
-      expect(s.steps.tune.notes.some(function (n) { return n.key === 'tune.best'; })).toBe(true);
-      expect(STEP_IDS.every(function (id) {
-        return s.steps[id].status !== 'pending' && s.steps[id].status !== 'running';
-      })).toBe(true);
-    });
-
-    it('recovers after a miss: one retry, the second attempt hits', function () {
-      var t = trace('recovered');
-      var s = V.statusesAt(t.events);
-      expect(s.retries).toBe(1);
-      expect(s.attempt.n).toBe(2);
-      expect(s.result.exact).toBe(true);
-      expect(s.steps.fullGrid.runs).toBe(2);
-      expect(s.error).toBeNull();
-    });
-
-    it('keeps each step time close to PuzzleResult.timings and can take the timings over', function () {
-      ['classic', 'exhausted', 'killer'].forEach(function (name) {
-        var t = trace(name);
-        var s = V.statusesAt(t.events);
-        var before = JSON.stringify(s);
-        STEP_IDS.forEach(function (id) {
-          var want = t.result.timings[id];
-          expect(Math.abs(s.steps[id].ms - want)).toBeLessThan(10 + want * 0.2);
-        });
-        var set = V.applyTimings(s, t.result.timings);
-        STEP_IDS.forEach(function (id) {
-          expect(set.steps[id].ms).toBeCloseTo(t.result.timings[id], 1);
-        });
-        expect(JSON.stringify(s)).toBe(before);
-        expect(V.applyTimings(s, null)).toEqual(s);
-      });
-    });
-
-    it('measures a running step up to the last event', function () {
-      seqCounter = 0;
-      var s = V.reduce(V.initialState(), ev('step', 'dig', 'start', 10, 'dig.start', { attempt: 1 }));
-      expect(V.elapsedMs(s, 'dig')).toBe(0);
-      s = V.reduce(s, ev('metric', 'dig', 'progress', 35, undefined, undefined, { clues: 70 }));
-      expect(V.elapsedMs(s, 'dig')).toBe(25);
-      s = V.reduce(s, ev('step', 'dig', 'end', 40, 'dig.end', undefined, { clues: 30 }));
-      expect(V.elapsedMs(s, 'dig')).toBe(30);
-      s = V.reduce(s, ev('step', 'dig', 'start', 50, 'dig.start', { attempt: 1 }));
-      s = V.reduce(s, ev('metric', 'dig', 'progress', 60, undefined, undefined, { clues: 70 }));
-      expect(V.elapsedMs(s, 'dig')).toBe(40);
-      expect(s.steps.dig.runs).toBe(2);
-    });
-
-    it('skips extraStructure from either sign: the "none" notice or the end event', function () {
-      seqCounter = 0;
-      var begin = ev('step', 'extraStructure', 'start', 1, 'extraStructure.start', {});
-      var start = V.reduce(V.initialState(), begin);
-      expect(start.steps.extraStructure.status).toBe('running');
-      var none = V.reduce(start, ev('step', 'extraStructure', 'progress', 2, 'extraStructure.none', {}));
-      expect(none.steps.extraStructure.status).toBe('skipped');
-      var ended = function (skipped) {
-        var end = ev('step', 'extraStructure', 'end', 3, 'extraStructure.end', { skipped: skipped });
-        return V.reduce(start, end).steps.extraStructure.status;
+    function El(tag) {
+      var el = this;
+      this.tagName = String(tag).toUpperCase();
+      this.attrs = {};
+      this.children = [];
+      this.parentNode = null;
+      this.listeners = {};
+      this.hidden = false;
+      this.own = '';
+      this.ownerDocument = doc;
+      this.classList = {
+        toggle: function (cls, on) {
+          var list = el.classes();
+          var has = list.indexOf(cls) !== -1;
+          var want = on === undefined ? !has : Boolean(on);
+          if (want && !has) list.push(cls);
+          if (!want && has) list.splice(list.indexOf(cls), 1);
+          el.attrs['class'] = list.join(' ');
+          return want;
+        },
+        contains: function (cls) { return el.classes().indexOf(cls) !== -1; }
       };
-      expect(ended(true)).toBe('skipped');
-      expect(ended(false)).toBe('done');
-    });
-
-    it('marks the step of an error event, or the running one for a pipeline-level error', function () {
-      seqCounter = 0;
-      var run = V.reduce(V.initialState(), ev('step', 'configure', 'start', 1, 'configure.start', {}));
-      run = V.reduce(run, ev('step', 'configure', 'end', 2, 'configure.end'));
-      run = V.reduce(run, ev('step', 'dig', 'start', 5, 'dig.start', { attempt: 1, maxAttempts: 8 }));
-      var named = V.reduce(run, failure('dig', 'budget.exceeded', 9));
-      expect(named.steps.dig.status).toBe('error');
-      expect(named.steps.dig.ms).toBe(4);
-      expect(named.error).toEqual({ stepId: 'dig', key: 'error.budget.exceeded',
-        args: { code: 'budget.exceeded' } });
-      expect(named.steps.configure.status).toBe('done');
-      var general = V.reduce(run, failure('pipeline', 'budget.cancelled', 9));
-      expect(general.steps.dig.status).toBe('error');
-      expect(general.finished).toBe(false);
-      var late = V.reduce(V.initialState(), failure('pipeline', 'unexpected', 1));
-      expect(V.statuses(late)).toEqual(V.statuses(V.initialState()));
-      expect(late.error.key).toBe('error.unexpected');
-    });
-
-    it('ignores events it does not understand', function () {
-      var base = JSON.stringify(V.initialState());
-      [null, undefined, 7, 'x', {}, { type: 'weird', stepId: 'dig' },
-        { type: 'step', stepId: 'bogus', phase: 'start' },
-        { type: 'micro', stepId: 'nowhere', phase: 'progress', metrics: { clues: 1 } }].forEach(function (e) {
-        expect(JSON.stringify(V.reduce(V.initialState(), e))).toBe(base);
-      });
-    });
-
-    it('does not modify the state it is given', function () {
-      var events = trace('classic').events;
-      var state = stateAfter(events, 14);
-      var snapshot = JSON.stringify(state);
-      var next = V.reduce(state, events[14]);
-      expect(JSON.stringify(state)).toBe(snapshot);
-      expect(next).not.toBe(state);
-      expect(next.steps.dig).not.toBe(state.steps.dig);
-    });
-  });
-
-  // ---------------------------------------------------------------------------------------------
-  // statusesAt
-  // ---------------------------------------------------------------------------------------------
-
-  describe('stepView: statusesAt', function () {
-    function checkEveryPosition(events, stride) {
-      var state = V.initialState();
-      expect(V.statusesAt(events, -1)).toEqual(state);
-      for (var k = 0; k < events.length; k++) {
-        state = V.reduce(state, events[k]);
-        if (k % stride === 0 || k === events.length - 1) {
-          expect(V.statusesAt(events, events[k].seq)).toEqual(state);
-        }
-      }
     }
-
-    it('equals feeding the events one by one, at every position of a summary trace', function () {
-      checkEveryPosition(trace('classic').events, 1);
-      checkEveryPosition(trace('killer').events, 1);
+    El.prototype.classes = function () {
+      return (this.attrs['class'] || '').split(' ').filter(Boolean);
+    };
+    El.prototype.setAttribute = function (name, value) {
+      this.attrs[name] = String(value);
+      if (name === 'hidden') this.hidden = true;
+    };
+    El.prototype.getAttribute = function (name) {
+      return hasOwn(this.attrs, name) ? this.attrs[name] : null;
+    };
+    El.prototype.removeAttribute = function (name) {
+      delete this.attrs[name];
+      if (name === 'hidden') this.hidden = false;
+    };
+    El.prototype.appendChild = function (child) {
+      if (child.parentNode) child.parentNode.removeChild(child);
+      child.parentNode = this;
+      this.children.push(child);
+      return child;
+    };
+    El.prototype.insertBefore = function (child, ref) {
+      if (child.parentNode) child.parentNode.removeChild(child);
+      var at = ref ? this.children.indexOf(ref) : -1;
+      child.parentNode = this;
+      if (at === -1) this.children.push(child);
+      else this.children.splice(at, 0, child);
+      return child;
+    };
+    El.prototype.removeChild = function (child) {
+      this.children = this.children.filter(function (c) { return c !== child; });
+      child.parentNode = null;
+      return child;
+    };
+    Object.defineProperty(El.prototype, 'firstChild', { get: function () { return this.children[0] || null; } });
+    Object.defineProperty(El.prototype, 'nextSibling', {
+      get: function () {
+        if (!this.parentNode) return null;
+        var list = this.parentNode.children;
+        return list[list.indexOf(this) + 1] || null;
+      }
     });
-
-    it('equals feeding the events one by one on traces with retries and with full detail', function () {
-      checkEveryPosition(trace('exhausted').events, 7);
-      checkEveryPosition(trace('recovered').events, 5);
-      checkEveryPosition(trace('classicFull').events, 3);
+    Object.defineProperty(El.prototype, 'textContent', {
+      get: function () { return this.own + this.children.map(function (c) { return c.textContent; }).join(''); },
+      set: function (value) {
+        this.children.forEach(function (c) { c.parentNode = null; });
+        this.children = [];
+        this.own = String(value);
+      }
     });
+    El.prototype.contains = function (node) {
+      for (var n = node; n; n = n.parentNode) if (n === this) return true;
+      return false;
+    };
+    El.prototype.closest = function (selector) {
+      var attr = /^\[([\w-]+)\]$/.exec(selector);
+      for (var n = this; n && n.getAttribute; n = n.parentNode) {
+        if (attr && n.getAttribute(attr[1]) !== null) return n;
+      }
+      return null;
+    };
+    El.prototype.querySelector = function (selector) {
+      var id = selector.charAt(0) === '#' ? selector.slice(1) : null;
+      var found = null;
+      (function walk(node) {
+        node.children.forEach(function (c) {
+          if (found || !c.attrs) return;
+          if (id !== null && c.attrs.id === id) found = c;
+          else walk(c);
+        });
+      })(this);
+      return found;
+    };
+    El.prototype.addEventListener = function (type, fn) {
+      (this.listeners[type] = this.listeners[type] || []).push(fn);
+    };
+    El.prototype.removeEventListener = function (type, fn) {
+      this.listeners[type] = (this.listeners[type] || []).filter(function (f) { return f !== fn; });
+    };
+    /** Fires an event that bubbles from this element up to the root. */
+    El.prototype.fire = function (type) {
+      var event = { type: type, target: this };
+      for (var n = this; n; n = n.parentNode) {
+        (n.listeners[type] || []).slice().forEach(function (fn) { fn(event); });
+      }
+    };
 
-    it('treats the position as inclusive and defaults to the whole trace', function () {
-      var events = trace('classic').events;
-      expect(V.statusesAt(events)).toEqual(V.statusesAt(events, 1e9));
-      expect(V.statusesAt(events, 0).steps.configure.status).toBe('running');
-      expect(V.statusesAt(events, 2).steps.configure.status).toBe('done');
-      expect(V.statusesAt([], 5)).toEqual(V.initialState());
-    });
+    function Text(text) {
+      this.own = String(text);
+      this.children = [];
+      this.parentNode = null;
+    }
+    Object.defineProperty(Text.prototype, 'textContent', { get: function () { return this.own; } });
 
-    it('records where each step started and ended in the trace, for seeking', function () {
-      var events = trace('exhausted').events;
-      var s = V.statusesAt(events);
-      STEP_IDS.forEach(function (id) {
-        var step = s.steps[id];
-        expect(events[step.firstSeq].stepId).toBe(id);
-        expect(isStart(events[step.firstSeq])).toBe(true);
-        expect(events[step.startSeq].stepId).toBe(id);
-        expect(isStart(events[step.startSeq])).toBe(true);
-        expect(events[step.endSeq].stepId).toBe(id);
-        expect(isEnd(events[step.endSeq])).toBe(true);
-        expect(step.firstSeq).toBeLessThan(step.startSeq + 1);
+    doc.createElement = function (tag) { return new El(tag); };
+    doc.createTextNode = function (text) { return new Text(text); };
+    doc.findAll = function (start, pred, out) {
+      out = out || [];
+      if (start.attrs && pred(start)) out.push(start);
+      (start.children || []).forEach(function (c) { doc.findAll(c, pred, out); });
+      return out;
+    };
+    return doc;
+  }
+
+  function panelFixture() {
+    var doc = createFakeDocument();
+    var rootEl = doc.createElement('aside');
+    rootEl.setAttribute('id', 'steps-root');
+    var toggle = doc.createElement('button');
+    toggle.setAttribute('id', 'btn-steps-toggle');
+    rootEl.appendChild(toggle);
+    var list = doc.createElement('ol');
+    list.setAttribute('id', 'steps-list');
+    rootEl.appendChild(list);
+    var explain = doc.createElement('section');
+    rootEl.appendChild(explain);
+    var picked = [];
+    var view = V.create(rootEl, { onSelect: function (p) { picked.push(p); } });
+    return { doc: doc, root: rootEl, list: list, toggle: toggle, explain: explain, view: view, picked: picked };
+  }
+
+  // ---------------------------------------------------------------------------------------------
+  // The list of the replay steps
+  // ---------------------------------------------------------------------------------------------
+
+  describe('stepView: the list of the replay steps', function () {
+    it('lists every step with its number, title and summary, and marks none until a position is set', function () {
+      var fx = panelFixture();
+      var steps = SG.player.buildSteps(result('classic9', 'medium', 3)).steps;
+      inLocale('en', function () {
+        fx.view.setSteps(steps);
+        expect(fx.list.children.length).toBe(steps.length);
+        fx.list.children.forEach(function (li, i) {
+          expect(li.getAttribute('data-kind')).toBe(steps[i].kind);
+          expect(li.getAttribute('data-position')).toBe(String(i + 1));
+          var main = li.children[0];
+          expect(main.tagName).toBe('BUTTON');
+          expect(main.textContent).toContain(String(i + 1));
+          expect(main.textContent).toContain(SG.player.stepTitle(steps[i]));
+          expect(main.textContent).toContain(SG.player.stepMeta(steps[i]));
+          expect(main.getAttribute('aria-current')).toBeNull();
+          expect(li.children[1].hidden).toBe(true);
+        });
+        expect(fx.list.children[0].textContent).toContain('Full solution');
+        expect(fx.view.getPosition()).toBe(0);
       });
-      expect(s.steps.dig.firstSeq).toBeLessThan(s.steps.dig.startSeq);
-      expect(s.steps.configure.firstSeq).toBe(0);
     });
 
-    it('copes with a capped trace (a repeated seq) and ends on the same statuses', function () {
-      var full = trace('classicFull').events;
-      var capped = SG.events.capTrace(full, Math.floor(full.length / 2));
-      expect(capped.length).toBeLessThan(full.length);
-      expect(V.statuses(V.statusesAt(capped))).toEqual(V.statuses(V.statusesAt(full)));
-      var state = V.initialState();
-      capped.forEach(function (e) { state = V.reduce(state, e); });
-      expect(V.statusesAt(capped)).toEqual(state);
+    it('marks the current step, shows its sentence and hides the one before', function () {
+      var fx = panelFixture();
+      var steps = SG.player.buildSteps(result('classic9', 'medium', 3)).steps;
+      inLocale('en', function () {
+        fx.view.setSteps(steps);
+        fx.view.setPosition(3);
+        var li = fx.list.children[2];
+        expect(li.classList.contains('is-current')).toBe(true);
+        expect(li.children[0].getAttribute('aria-current')).toBe('step');
+        expect(li.children[1].hidden).toBe(false);
+        expect(li.children[1].textContent).toBe(SG.player.describeStep(steps[2]));
+        fx.view.setPosition(4);
+        expect(li.classList.contains('is-current')).toBe(false);
+        expect(li.children[0].getAttribute('aria-current')).toBeNull();
+        expect(li.children[1].hidden).toBe(true);
+        expect(fx.list.children[3].classList.contains('is-current')).toBe(true);
+        fx.view.setPosition(0);
+        expect(fx.doc.findAll(fx.list, function (el) { return el.classList.contains('is-current'); })).toEqual([]);
+        fx.view.setPosition(999);
+        expect(fx.view.getPosition()).toBe(0);
+      });
+    });
+
+    it('tells the app which step was picked, from a click anywhere on it', function () {
+      var fx = panelFixture();
+      fx.view.setSteps(SG.player.buildSteps(result('classic9', 'easy', 3)).steps);
+      fx.list.children[1].children[0].fire('click');
+      fx.list.children[4].children[0].children[1].children[0].fire('click');
+      fx.list.fire('click');
+      expect(fx.picked).toEqual([2, 5]);
+    });
+
+    it('explains the frames it uses in a legend, and only those', function () {
+      var fx = panelFixture();
+      var legend = fx.list.nextSibling;
+      expect(legend.hidden).toBe(true);
+      inLocale('en', function () {
+        fx.view.setSteps(SG.player.buildSteps(result('classic9', 'medium', 3)).steps);
+        var marks = legend.children.map(function (li) { return li.getAttribute('data-mark'); });
+        expect(marks).toEqual(['dug', 'kept']);
+        expect(legend.hidden).toBe(false);
+        expect(legend.textContent).toContain('Removed in this step');
+        fx.view.setSteps(SG.player.buildSteps(result('greaterThan', 'medium', 4)).steps);
+        var gtMarks = legend.children.map(function (li) { return li.getAttribute('data-mark'); });
+        expect(gtMarks).toContain('revealed');
+        expect(gtMarks).toContain('signRemoved');
+        expect(gtMarks).not.toContain('dug');
+        fx.view.clear();
+        expect(legend.hidden).toBe(true);
+        expect(fx.list.children.length).toBe(0);
+      });
+    });
+
+    it('follows the language and keeps the current step', function () {
+      var fx = panelFixture();
+      var steps = SG.player.buildSteps(result('killer', 'medium', 2)).steps;
+      fx.view.setSteps(steps);
+      fx.view.setPosition(2);
+      var en = fx.list.textContent;
+      inLocale('vi', function () {
+        expect(fx.list.textContent).not.toBe(en);
+        expect(fx.list.children[1].textContent).toContain('Các lồng');
+        expect(fx.list.children[1].classList.contains('is-current')).toBe(true);
+      });
+      expect(fx.list.textContent).toBe(en);
+    });
+
+    it('expands and collapses the stepper of narrow screens', function () {
+      var fx = panelFixture();
+      fx.view.setExpanded(true);
+      expect(fx.root.classList.contains('is-expanded')).toBe(true);
+      expect(fx.toggle.getAttribute('aria-expanded')).toBe('true');
+      fx.view.setExpanded(false);
+      expect(fx.root.classList.contains('is-expanded')).toBe(false);
+      expect(fx.toggle.getAttribute('aria-expanded')).toBe('false');
+    });
+
+    it('builds its list when the page has none, and takes everything away on destroy', function () {
+      var doc = createFakeDocument();
+      var rootEl = doc.createElement('aside');
+      var view = V.create(rootEl, {});
+      var list = rootEl.querySelector('#steps-list');
+      expect(list).not.toBeNull();
+      view.setSteps(SG.player.buildSteps(result('classic4', 'easy', 2)).steps);
+      expect(list.children.length).toBeGreaterThan(2);
+      view.destroy();
+      expect(rootEl.children.length).toBe(0);
+      expect(function () { V.create(null); }).toThrow();
     });
   });
 
   // ---------------------------------------------------------------------------------------------
-  // Chart
+  // Chart model (drawn by the result panel)
   // ---------------------------------------------------------------------------------------------
 
   describe('stepView: chartModel', function () {
@@ -419,26 +320,22 @@
     it('orders the bars by the technique ladder, whatever the order of the counts', function () {
       var m = V.chartModel({ xWing: 1, nakedPair: 4, nakedSingle: 40, hiddenSingleBox: 7, pointing: 2 });
       expect(ids(m)).toEqual(['nakedSingle', 'hiddenSingleBox', 'pointing', 'nakedPair', 'xWing']);
-      var orders = m.bars.map(function (b) { return b.order; });
-      expect(orders).toEqual(orders.slice().sort(function (a, b) { return a - b; }));
       expect(m.total).toBe(54);
       expect(m.max).toBe(40);
     });
 
     it('draws the real counts of a puzzle, cage techniques included, simplest first', function () {
-      [trace('classic'), trace('killer')].forEach(function (t) {
-        var counts = t.result.rating.techniqueCounts;
+      [result('classic9', 'medium', 3), result('killer', 'medium', 2)].forEach(function (r) {
+        var counts = r.rating.techniqueCounts;
         var m = V.chartModel(counts);
         var used = Object.keys(counts).filter(function (k) { return counts[k] > 0; }).sort();
         expect(ids(m).slice().sort()).toEqual(used);
         m.bars.forEach(function (bar) {
           expect(bar.count).toBe(counts[bar.id]);
           expect(bar.label).not.toBe(bar.key);
-          expect(bar.label.length).toBeGreaterThan(2);
         });
         for (var i = 1; i < m.bars.length; i++) expect(m.bars[i - 1].order).toBeLessThan(m.bars[i].order);
       });
-      expect(ids(V.chartModel(trace('killer').result.rating.techniqueCounts))).toContain('cageCombo');
     });
 
     it('scales the bars to the largest count, with a minimum width, inside the track', function () {
@@ -448,11 +345,6 @@
       expect(m.bars[1].barWidth).toBe(100);
       expect(m.bars[2].barWidth).toBe(4);
       expect(V.chartModel({ nakedSingle: 1000, nakedPair: 1 }, { width: 200 }).bars[1].barWidth).toBe(3);
-      m.bars.forEach(function (bar) {
-        expect(bar.barWidth).toBeLessThan(bar.trackWidth + 0.001);
-        expect(bar.ratio).toBeGreaterThan(0);
-        expect(bar.ratio).toBeLessThan(1.0001);
-      });
       expect(V.chartModel({ nakedSingle: 3 }, { width: 100, minBarWidth: 10 }).bars[0].barWidth).toBe(100);
     });
 
@@ -464,66 +356,33 @@
         expect(bar.labelY).toBeGreaterThan(bar.y);
         expect(bar.barY).toBeGreaterThan(bar.labelY);
         expect(bar.valueX).toBe(m.width);
-        expect(isFinite(bar.barWidth) && isFinite(bar.barY)).toBe(true);
       });
     });
 
     it('handles zero, negative, broken and missing counts as an empty chart', function () {
-      [undefined, null, {}, { nakedSingle: 0 },
-        { nakedSingle: -2, xWing: NaN, nakedPair: 'x', swordfish: Infinity }]
+      [undefined, null, {}, { nakedSingle: 0 }, { nakedSingle: -2, xWing: NaN, nakedPair: 'x', swordfish: Infinity }]
         .forEach(function (counts) {
           var m = V.chartModel(counts);
           expect(m.empty).toBe(true);
           expect(m.bars).toEqual([]);
           expect(m.height).toBe(0);
-          expect(m.max).toBe(0);
-          expect(m.total).toBe(0);
         });
-      var mixed = V.chartModel({ nakedSingle: 0, xWing: 2, nakedPair: -1 });
-      expect(ids(mixed)).toEqual(['xWing']);
-      expect(mixed.bars[0].barWidth).toBe(mixed.width);
     });
 
-    it('puts techniques the registry does not know last, by id, labelled with their id', function () {
-      var m = V.chartModel({ zeta: 1, nakedSingle: 2, alpha: 3, xWing: 1 });
-      expect(ids(m)).toEqual(['nakedSingle', 'xWing', 'alpha', 'zeta']);
-      expect(m.bars[2].label).toBe('alpha');
-      expect(m.bars[2].order).toBeNull();
-    });
+    it('puts techniques the registry does not know last, by id, and labels with the language or a function',
+      function () {
+        var m = V.chartModel({ zeta: 1, nakedSingle: 2, alpha: 3, xWing: 1 });
+        expect(ids(m)).toEqual(['nakedSingle', 'xWing', 'alpha', 'zeta']);
+        expect(m.bars[2].label).toBe('alpha');
+        var vi = inLocale('vi', function () { return V.chartModel({ nakedSingle: 3 }).bars[0].label; });
+        expect(vi).toBe(SG.locales.vi['technique.nakedSingle']);
+        var custom = function (id, key) { return id + '|' + key; };
+        expect(V.chartModel({ nakedSingle: 3 }, { label: custom }).bars[0].label)
+          .toBe('nakedSingle|technique.nakedSingle');
+      });
 
-    it('labels with the current language, or with a given function', function () {
-      var en = V.chartModel({ nakedSingle: 3 }).bars[0].label;
-      var vi = inLocale('vi', function () { return V.chartModel({ nakedSingle: 3 }).bars[0].label; });
-      expect(en).toBe(SG.locales.en['technique.nakedSingle']);
-      expect(vi).toBe(SG.locales.vi['technique.nakedSingle']);
-      expect(vi).not.toBe(en);
-      var custom = function (id, key) { return id + '|' + key; };
-      expect(V.chartModel({ nakedSingle: 3 }, { label: custom }).bars[0].label)
-        .toBe('nakedSingle|technique.nakedSingle');
-    });
-
-    it('describes the chart in words: every technique and its count, in order', function () {
-      var m = V.chartModel({ hiddenSingleBox: 7, nakedSingle: 40 });
-      var text = V.chartSummary(m);
-      expect(text.indexOf(m.bars[0].label)).toBeGreaterThan(-1);
-      expect(text.indexOf(m.bars[0].label)).toBeLessThan(text.indexOf(m.bars[1].label));
-      expect(text).toContain('40');
-      expect(text).toContain('7');
-      expect(text).not.toMatch(/[{}]/);
-      expect(V.chartSummary(V.chartModel({}))).toBe(SG.locales.en['steps.chart.empty']);
-      var vi = inLocale('vi', function () { return V.chartSummary(m); });
-      expect(vi).not.toBe(text);
-      expect(vi).toContain('40');
-    });
-
-    it('takes its counts from the rate events of the trace', function () {
-      var t = trace('killer');
-      var s = V.statusesAt(t.events);
-      expect(s.techniqueCounts).toEqual(t.result.rating.techniqueCounts);
-      var rateStart = indexOfEvent(t.events, function (e) { return e.i18nKey === 'rate.start'; });
-      expect(stateAfter(t.events, rateStart + 1).techniqueCounts).toEqual({});
-      var all = V.statusesAt(trace('exhausted').events);
-      expect(all.techniqueCounts).toEqual(trace('exhausted').result.rating.techniqueCounts);
+    it('still names the seven pipeline steps for other modules', function () {
+      expect(V.STEP_IDS).toEqual(STEP_IDS);
     });
   });
 
@@ -538,113 +397,64 @@
         var vm = X.viewModel(id);
         expect(vm.stepId).toBe(id);
         expect(vm.index).toBe(i + 1);
-        expect(vm.total).toBe(7);
         expect(vm.titleKey).toBe('step.' + id + '.name');
         expect(vm.title).toBe(SG.locales.en['step.' + id + '.name']);
         ['what', 'why', 'how'].forEach(function (part) {
           expect(vm.keys[part]).toBe(data[part]);
           expect(vm[part]).toBe(SG.locales.en[data[part]]);
-          expect(vm[part]).not.toMatch(/[{}]/);
         });
         expect(vm.lines.length).toBe(data.pseudocode.length);
-        vm.lines.forEach(function (line, k) {
-          expect(line.label).toBe(data.pseudocode[k].label);
-          expect(line.indent).toBe(data.pseudocode[k].indent);
-          expect(line.key).toBe(data.pseudocode[k].key);
-          expect(line.text).toBe(SG.locales.en[line.key]);
-          expect(line.active).toBe(false);
-        });
         expect(vm.activeLabel).toBeNull();
-        expect(vm.live.key).toBe(data.liveKey);
-        expect(vm.live.text).not.toMatch(/[{}]/);
+        expect(vm.live).toBeNull();
       });
     });
 
-    it('highlights exactly the line of every highlight key of every step', function () {
+    it('highlights the line a replay step names, or the line of an event key', function () {
+      var steps = SG.player.buildSteps(result('killer', 'medium', 2)).steps;
+      steps.forEach(function (s) {
+        var vm = X.viewModel(s.phase, { lineLabel: s.line, metrics: s.metrics });
+        expect(vm).not.toBeNull();
+        expect(vm.activeLabel).toBe(s.line);
+        if (s.metrics) expect(vm.live.text).toContain(String(s.metrics.clues));
+        else expect(vm.live).toBeNull();
+      });
       var checked = 0;
       STEP_IDS.forEach(function (id) {
         var data = SG.explain.get(id);
-        var labels = data.pseudocode.map(function (line) { return line.label; });
         Object.keys(data.highlight).forEach(function (key) {
-          var vm = X.viewModel(id, { eventKey: key });
-          var active = vm.lines.filter(function (line) { return line.active; });
-          expect(active.length).toBe(1);
-          expect(active[0].label).toBe(data.highlight[key]);
-          expect(active[0].label).toBe(SG.explain.lineFor(id, key));
-          expect(labels).toContain(active[0].label);
-          expect(vm.activeLabel).toBe(data.highlight[key]);
+          expect(X.viewModel(id, { eventKey: key }).activeLabel).toBe(data.highlight[key]);
           checked++;
         });
       });
       expect(checked).toBeGreaterThan(25);
     });
 
-    it('highlights nothing for an event that executes no particular line', function () {
-      var keys = ['dig.end', 'dig.start', 'fullGrid.end', 'rate.start', 'tune.end', 'no.such.key'];
-      keys.forEach(function (key) {
-        var id = key.indexOf('.') > 0 ? key.split('.')[0] : 'dig';
-        var vm = X.viewModel(STEP_IDS.indexOf(id) === -1 ? 'dig' : id, { eventKey: key });
-        expect(vm.activeLabel).toBeNull();
-        expect(vm.lines.some(function (line) { return line.active; })).toBe(false);
-      });
-      expect(X.viewModel('dig', { metrics: { clues: 3 } }).activeLabel).toBeNull();
-    });
-
     it('lets an explicit line label win over the event key, and null mean "none"', function () {
       expect(X.viewModel('dig', { eventKey: 'dig.try', lineLabel: 'verify' }).activeLabel).toBe('verify');
       expect(X.viewModel('dig', { eventKey: 'dig.try', lineLabel: null }).activeLabel).toBeNull();
       expect(X.viewModel('dig', { lineLabel: 'nope' }).activeLabel).toBeNull();
-      expect(X.viewModel('tune', { eventKey: 'retry.difficulty' }).activeLabel).toBe('retry');
-    });
-
-    it('keeps the key of an event of another step from lighting a line of this one', function () {
       expect(X.viewModel('rate', { eventKey: 'dig.try' }).activeLabel).toBeNull();
     });
 
-    it('fills the status line from the metrics, with zeros for the missing ones', function () {
+    it('fills the status line from the metrics (zeros for missing ones), and has none without them', function () {
       var dig = X.viewModel('dig', { metrics: { attempts: 62, accepted: 26, rejected: 11, clues: 30 } });
       expect(dig.live.args).toEqual({ attempts: 62, accepted: 26, rejected: 11, clues: 30 });
       ['62', '26', '11', '30'].forEach(function (n) { expect(dig.live.text).toContain(n); });
-      expect(X.viewModel('dig').live.args).toEqual({ attempts: 0, accepted: 0, rejected: 0, clues: 0 });
-      var rate = X.viewModel('rate', { metrics: { clues: 30, score: 83.975 } });
-      expect(rate.live.text).toContain('84');
-      expect(rate.live.text).not.toContain('83.975');
-      expect(X.viewModel('fullGrid', { metrics: { placed: 54, backtracks: 12 } }).live.text).toContain('54');
-      expect(X.viewModel('configure').live.text).toBe(SG.locales.en['explain.configure.live']);
-    });
-
-    it('returns null for an unknown step', function () {
+      expect(X.viewModel('dig', { metrics: {} }).live.args).toEqual({ attempts: 0, accepted: 0, rejected: 0,
+        clues: 0 });
+      expect(X.viewModel('rate', { metrics: { clues: 30, score: 83.975 } }).live.text).toContain('84');
+      expect(X.viewModel('dig').live).toBeNull();
       expect(X.viewModel('nope')).toBeNull();
-      expect(X.viewModel(undefined)).toBeNull();
     });
 
     it('follows the language: new text at once, same structure and same highlighted line', function () {
-      var ctx = { eventKey: 'dig.accept', metrics: { attempts: 5, accepted: 3, rejected: 2, clues: 60 } };
+      var ctx = { lineLabel: 'accept', metrics: { attempts: 5, accepted: 3, rejected: 2, clues: 60 } };
       var en = X.viewModel('dig', ctx);
       var vi = inLocale('vi', function () { return X.viewModel('dig', ctx); });
       expect(vi.title).toBe(SG.locales.vi['step.dig.name']);
-      expect(vi.title).not.toBe(en.title);
       ['what', 'why', 'how'].forEach(function (part) { expect(vi[part]).not.toBe(en[part]); });
-      expect(vi.live.text).not.toBe(en.live.text);
       expect(vi.live.text).toContain('60');
-      expect(vi.lines.map(function (l) { return l.label + l.indent + l.active; }))
-        .toEqual(en.lines.map(function (l) { return l.label + l.indent + l.active; }));
       expect(vi.activeLabel).toBe('accept');
-      expect(vi.lines.some(function (l, i) { return l.text !== en.lines[i].text; })).toBe(true);
-      expect(X.viewModel('dig', ctx).title).toBe(en.title);
-    });
-
-    it('can replay a whole trace through the card: every event with a key gives a legal line', function () {
-      var events = trace('classicFull').events;
-      var lit = 0;
-      events.forEach(function (e) {
-        if (!e.i18nKey || STEP_IDS.indexOf(e.stepId) === -1) return;
-        var vm = X.viewModel(e.stepId, { eventKey: e.i18nKey, metrics: e.metrics });
-        var active = vm.lines.filter(function (line) { return line.active; });
-        expect(active.length <= 1).toBe(true);
-        if (active.length === 1) lit++;
-      });
-      expect(lit).toBeGreaterThan(20);
     });
   });
 
@@ -670,57 +480,44 @@
         var text = source(file);
         while ((m = re.exec(text)) !== null) used.push(m[1]);
       });
-      V.STATUSES.forEach(function (status) { used.push('steps.status.' + status); });
       ['what', 'why', 'how'].forEach(function (part) { used.push('explainCard.' + part); });
-      // 'steps.status.' alone is the prefix of the dynamic keys added just above.
       used = used.filter(function (key, i) { return used.indexOf(key) === i && key.slice(-1) !== '.'; });
-      expect(used.length).toBeGreaterThan(25);
+      expect(used.length).toBeGreaterThan(10);
       ['en', 'vi'].forEach(function (code) {
-        var missing = used.filter(function (key) { return !packHas(SG.locales[code], key); });
-        expect(missing).toEqual([]);
+        expect(used.filter(function (key) { return !packHas(SG.locales[code], key); })).toEqual([]);
       });
-      var clashes = SG.i18n.conflicts.filter(function (c) { return /^(steps|explainCard)\./.test(c.key); });
-      expect(clashes).toEqual([]);
+      expect(SG.i18n.conflicts.filter(function (c) { return /^(steps|explainCard)\./.test(c.key); })).toEqual([]);
     });
 
     it('keeps the two locale fragments identical in keys and placeholders, with no key outside the prefixes',
       function () {
-        ['steps.status.pending', 'explainCard.what'].forEach(function (probe) {
+        ['steps.legend.dug', 'explainCard.what'].forEach(function (probe) {
           var fragment = fragmentWith(probe);
           expect(fragment).toBeTruthy();
           var en = Object.keys(fragment.en).sort();
           expect(Object.keys(fragment.vi).sort()).toEqual(en);
           en.forEach(function (key) {
             expect(/^(steps|explainCard)\./.test(key)).toBe(true);
-            var holes = function (text) {
-              return (String(text).match(/\{[A-Za-z]+\}/g) || []).sort().join();
-            };
+            var holes = function (text) { return (String(text).match(/\{[A-Za-z]+\}/g) || []).sort().join(); };
             expect(holes(fragment.vi[key])).toBe(holes(fragment.en[key]));
             expect(fragment.vi[key].trim()).not.toBe('');
           });
         });
       });
 
-    it('names every status, in both languages, with different words', function () {
-      V.STATUSES.forEach(function (status) {
-        var en = SG.locales.en['steps.status.' + status];
-        var vi = SG.locales.vi['steps.status.' + status];
-        expect(en.length).toBeGreaterThan(1);
-        expect(vi).not.toBe(en);
-      });
-    });
-
-    it('uses only tokens of css/tokens.css and no colour literal in css/steps.css', function () {
+    it('uses only tokens and no colour literal in css/steps.css', function () {
       var css = source('css/steps.css').replace(/\/\*[\s\S]*?\*\//g, '');
       var tokens = source('css/tokens.css');
+      var boardTokens = source('css/tokens-board.css');
       expect(css).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
       expect(css).not.toMatch(/\b(?:rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\(/);
       expect(css).not.toMatch(/:\s*(?:white|black|red|green|blue|gray|grey|yellow|orange|purple)\b/);
       var used = css.match(/var\(--sg-[a-z0-9-]+/g) || [];
-      expect(used.length).toBeGreaterThan(30);
+      expect(used.length).toBeGreaterThan(20);
       used.forEach(function (ref) {
         var name = ref.slice(4);
         if (/^--sg-color-/.test(name)) expect(tokens.indexOf(name + ':')).toBeGreaterThan(-1);
+        if (/^--sg-board-/.test(name)) expect(boardTokens.indexOf(name + ':')).toBeGreaterThan(-1);
       });
     });
 

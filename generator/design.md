@@ -37,7 +37,7 @@ A static web app written in **plain HTML + CSS + JavaScript** — no framework, 
 
 - Generate Sudoku puzzles in **many different variants**.
 - Choose a **target difficulty** and be guaranteed that the generated puzzle lands exactly at that difficulty.
-- **Watch every step** of the generation process — this is the key differentiator. The site does not just "spit out" a Sudoku puzzle; it **teaches users how a Sudoku puzzle is made**.
+- **Step through** the generation process — this is the key differentiator. The site does not just "spit out" a Sudoku puzzle; it **teaches users how a Sudoku puzzle is made**, one visible change of the board at a time.
 - Switch instantly between **English and Vietnamese** across the entire UI and all explanatory content.
 
 ### 1.2 Goals
@@ -48,7 +48,7 @@ A static web app written in **plain HTML + CSS + JavaScript** — no framework, 
 | G2 | Guaranteed unique solution | 100% of generated puzzles have **exactly one solution** (unique solution) |
 | G3 | Guaranteed difficulty | ≥ 95% of generated puzzles fall within the difficulty band the user selected |
 | G4 | Support all 15 variants | See [§5](#5-variant-catalogue--mapping) |
-| G5 | Visualise the process | Every step has: a name, a bilingual description, metrics, and an animation on the grid |
+| G5 | Visualise the process | Every replay step has: a title, a bilingual description, a visible change on the grid, and during the dig the running counters (§7.3) |
 | G6 | Fully bilingual | 0 hard-coded strings; 100% of translation keys have both `en` and `vi` |
 | G7 | Never block the UI | Every task > 50 ms runs in a Web Worker or is sliced across frames |
 | G8 | Reproducible | Same `seed` + same configuration ⇒ the same Sudoku puzzle, 100% of the time |
@@ -114,7 +114,7 @@ Chrome/Edge ≥ 100, Firefox ≥ 100, Safari ≥ 15.4. Allowed features: `BigInt
 │  UI LAYER  (js/ui/)                                          │
 │  app · controls · board-view(SVG) · step-view · explain      │
 │  player · result-view · symbols · i18n · store(URL+storage)  │
-│  cache · export · import · exchange · a11y · theme · help    │
+│  cache · export · exchange · a11y · theme · help             │
 └───────────────▲──────────────────────────────┬───────────────┘
                 │ GenerationEvent[]            │ GenerateRequest
                 │ (progress/step/done/error)   │ (variant, difficulty, seed…)
@@ -159,13 +159,13 @@ sequenceDiagram
     loop Every step / progress milestone
         P-->>W: emit(GenerationEvent)
         W-->>WC: postMessage({type:'events', session, events})  — batches, ≈30 ms
-        WC-->>UI: onEvent(event)  → push into the replay queue
-        UI-->>U: Update the steps panel + grid animation
+        WC-->>UI: onEvent(event)  → trace buffer + status line
+        UI-->>U: The status line follows the step events (the board shows the empty grid)
     end
     P-->>W: PuzzleResult
     W-->>WC: postMessage({type:'done', session, result})  — SG.pipeline.toWire
     WC-->>UI: resolve(puzzle)  — SG.pipeline.fromWire rebuilds the model
-    UI-->>U: Show the finished puzzle + statistics panel
+    UI-->>U: Show the finished puzzle + the replay steps (from result.digLog) + statistics panel
 ```
 
 In main-thread mode the same `runSteps` generator is driven by the client itself, without `postMessage` ([§9.3](#93-web-worker--fallback-mechanism)).
@@ -175,11 +175,12 @@ In main-thread mode the same `runSteps` generator is driven by the client itself
 This is the part of the "show every step" requirement that is easiest to get wrong.
 
 > **ADR-002 — Never slow the algorithm down for the sake of animation.**
-> The worker runs **at full speed** and records its events into a *trace log*. The UI reads that log and **replays** it at a speed chosen by the user.
+> The worker runs **at full speed**. Besides its events (the *trace*), the digger keeps a compact **dig log** of the dig that became the puzzle (`PuzzleResult.digLog`, §13.9). The UI shows the finished puzzle at once and builds the **replay** from that log afterwards; nothing plays by itself, the user steps through it by hand ([§7.3](#73-replay-engine-in-the-ui-layer)). It replaced a player that played the trace back at a chosen speed (§18).
 >
-> - Benefit: the actual generation time is unaffected; users can rewind, pause, and step through.
-> - Mode `trace: 'off' | 'summary' | 'full'`. Only a `full` trace carries the board patches that fill and dig the grid during the replay, so the **UI default is `full`**; the pipeline's own default (direct callers, the tests) is `summary`. `SG.pipeline` downgrades `full` to `summary` for boards with more than 300 cells (`SG.pipeline.FULL_TRACE_MAX_CELLS`; warning `trace.downgraded`, event `buildModel.traceDowngraded`), which among the 15 variants is the case for Samurai (369 cells) only (Sohei, 288, keeps `full`). Full recording costs less than 35% of the generation time (asserted by `pipeline.test.js`).
-> - Memory limit: the log is down-sampled when it exceeds `maxTraceEvents` (default 20 000, `SG.events.capTrace` / `createTraceBuffer`); every non-`micro` event is kept, the `micro` events are thinned evenly, and what the dropped ones changed is carried by synthesised `trace.coalesced` events, so the replay still ends on the same board.
+> - Benefit: the actual generation time is unaffected; users can go to any step, forwards or backwards, at their own pace.
+> - The replay does not depend on the trace: the dig log is recorded whatever the verbosity, it is the same in a worker and on the main thread and on every board size, and it holds decisions only (a few hundred small entries even on Samurai, about 15 kB as JSON).
+> - Mode `trace: 'off' | 'summary' | 'full'` still selects the events. The page sends no `trace` (the "Replay detail" option is gone), so the pipeline's default `summary` applies; its step events feed the status line while a run goes on. `full` (every `micro` event) is for direct callers and the tests. `SG.pipeline` downgrades `full` to `summary` for boards with more than 300 cells (`SG.pipeline.FULL_TRACE_MAX_CELLS`; warning `trace.downgraded`, event `buildModel.traceDowngraded`), which among the 15 variants is the case for Samurai (369 cells) only (Sohei, 288, keeps `full`). Full recording costs less than 35% of the generation time (asserted by `pipeline.test.js`).
+> - Memory limit: the trace is down-sampled when it exceeds `maxTraceEvents` (default 20 000, `SG.events.capTrace` / `createTraceBuffer`); every non-`micro` event is kept, the `micro` events are thinned evenly, and what the dropped ones changed is carried by synthesised `trace.coalesced` events, so applying a capped trace still ends on the same board. The replay of the page does not read the trace, so the limit no longer shapes what it shows.
 
 ---
 
@@ -419,7 +420,7 @@ Runs to a fixpoint, using a worklist to avoid rescanning everything:
 | P5 — Inequality propagation | Greater-Than | `a<b` ⇒ `max(cand[a]) < max(cand[b])`, `min(cand[b]) > min(cand[a])`; two-way pruning |
 | P6 — Contradiction detection | All variants | A cell with 0 candidates, or a unit with no room left for some value ⇒ FAIL immediately |
 
-> **P4 — cage sum combination table:** precomputed when `combo-table.js` loads; `SG.comboTable.table[size][sum]` = array of bitmasks of the feasible value sets (512 masks in all, a few KB, built for digits 1–9 only). It makes Killer affordable: a cage is reduced to a handful of digit sets and O(1) lookups. P4 and P5 are not built into `constraints.js`: they are **propagation extensions** registered through `SG.constraints.registerExtension({ id, prepare, propagate })` — P4 by `SG.comboTable.enablePropagation(variantId)`, P5 by `SG.ineq.ensureExtension()` — and they register **lazily** (on the first Killer / Greater-Than build), so a plain page load does not touch the engine. A model that is built or imported by any other route (`SG.pipeline.fromWire`, `SG.cache` deserialisation, `SG.importUi`) must call the same functions before `SG.dfs` is used on it, otherwise the DFS silently ignores cage sums and signs.
+> **P4 — cage sum combination table:** precomputed when `combo-table.js` loads; `SG.comboTable.table[size][sum]` = array of bitmasks of the feasible value sets (512 masks in all, a few KB, built for digits 1–9 only). It makes Killer affordable: a cage is reduced to a handful of digit sets and O(1) lookups. P4 and P5 are not built into `constraints.js`: they are **propagation extensions** registered through `SG.constraints.registerExtension({ id, prepare, propagate })` — P4 by `SG.comboTable.enablePropagation(variantId)`, P5 by `SG.ineq.ensureExtension()` — and they register **lazily** (on the first Killer / Greater-Than build), so a plain page load does not touch the engine. A model that is built by any other route (`SG.pipeline.fromWire`, `SG.cache` deserialisation) must call the same functions before `SG.dfs` is used on it, otherwise the DFS silently ignores cage sums and signs.
 
 ### 6.4 DFS solver that counts solutions (`dfs-solver`)
 
@@ -660,8 +661,8 @@ The outer loop of the algorithm above (up to `maxAttempts` grids, default 8, UI 
 #### ⑦ Additional optimisations (task `T-6.3`)
 
 Built (`js/ui/cache.js`, §14.3):
-- **Persistent cache:** every generated puzzle is stored in `localStorage` (`sg.cache.v1`, LRU, 20 puzzles, schema-version checked). The same configuration with the same seed is served from it at once. The cache stores the puzzle only, never the trace; a puzzle served from the cache is shown immediately and its trace is **regenerated from the seed in the background** (an independent client), then loaded into the player paused at the end. The regenerated puzzle must equal the cached one, otherwise the entry is dropped.
-- **Background pre-generation:** once a puzzle is shown and the page has been idle for 1 s, the cache quietly pre-generates one or two puzzles with the same configuration and random seeds in a Web Worker (at most 2 per configuration, 4 in all; never while a generation runs; paused while the tab is hidden; skipped for configurations whose expected time is above 3 s; **absent in main-thread mode**). "Generate" with an empty seed field and "Regenerate" hand them out instantly.
+- **Persistent cache:** every generated puzzle is stored in `localStorage` (`sg.cache.v1`, LRU, 20 puzzles, schema-version checked). The same configuration with the same seed is served from it at once. The cache stores the puzzle only, never the trace nor the dig log; a puzzle served from the cache is shown immediately (the replay waits, with a "preparing the replay" note) and is **regenerated from the seed in the background** (an independent client); its dig log then gives the puzzle its replay through `SG.app.attachTrace(trace, digLog)`, which opens on the finished puzzle. The regenerated puzzle must equal the cached one, otherwise the entry is dropped.
+- **Background pre-generation:** once a puzzle is shown and the page has been idle for 1 s, the cache quietly pre-generates one or two puzzles with the same configuration and random seeds in a Web Worker (at most 2 per configuration, 4 in all; never while a generation runs; paused while the tab is hidden; skipped for configurations whose expected time is above 3 s; **absent in main-thread mode**). "Generate" with an empty seed field and "Generate random" hand them out instantly.
 
 Not built: *progressive difficulty (warm start)* — generating a `medium` puzzle first and then digging on to `hard`/`expert`. The guided dig of stage B covers the same need differently.
 
@@ -675,17 +676,17 @@ Not built: *progressive difficulty (warm start)* — generating a `medium` puzzl
 
 `SG.pipeline.run(config, emit, budget)` always goes through the 7 steps. A variant may **add** events inside a step (Killer's cage repairs, Wordoku's word fallback…) but must not skip a step: a variant without a `postGenerate` hook still passes through step 4 and emits `extraStructure.none`.
 
-| # | Step ID | Name (VI) | Name (EN) | What it does | Shown on the grid |
-|---|---------|-----------|-----------|--------------|-------------------|
-| 1 | `configure` | Chuẩn bị cấu hình | Configure | Normalise the options, fix the `seed`, look up the variant | Configuration summary panel |
-| 2 | `buildModel` | Dựng mô hình lưới | Build board model | `variant.build`: cells/units/peers; Jigsaw regions; multi-grid sub-grids; then the `difficultySpec` of the board | Draw the empty grid + colour the regions |
-| 3 | `fullGrid` | Sinh lưới đầy đủ | Generate full solution | Randomised DFS + propagation (`attempt` n of m) | Digits appear progressively in fill order; backtracked cells flash red |
-| 4 | `extraStructure` | Dựng cấu trúc phụ | Build extra structure | `variant.postGenerate`: cages (Killer) / inequality signs (Greater-Than) / key word (Wordoku), or "nothing to do" | Draw dashed cages, `<` `>` signs |
-| 5 | `dig` | Đào lỗ có kiểm chứng | Dig holes with validation | §6.8: stage A (random dig), stage B (guided dig), and the uniqueness safety net | Cell under consideration gets a yellow border → accepted: fades out; rejected: flashes red, then reappears |
-| 6 | `rate` | Chấm độ khó | Rate difficulty | One full rating with the logical solver | Bar chart of the techniques used |
-| 7 | `tune` | Hiệu chỉnh & hoàn tất | Tune & finalize | The band check: `tune.hit`, or `tune.miss` and a new sample; `tune.best` when every attempt is used | The finished puzzle + statistics cards |
+| # | Step ID | Name (VI) | Name (EN) | What it does | Shown in the replay (§7.3) |
+|---|---------|-----------|-----------|--------------|----------------------------|
+| 1 | `configure` | Chuẩn bị cấu hình | Configure | Normalise the options, fix the `seed`, look up the variant | Not shown (technical work) |
+| 2 | `buildModel` | Dựng mô hình lưới | Build board model | `variant.build`: cells/units/peers; Jigsaw regions; multi-grid sub-grids; then the `difficultySpec` of the board | Position 0: the empty grid with its regions (also on screen while a run goes on) |
+| 3 | `fullGrid` | Sinh lưới đầy đủ | Generate full solution | Randomised DFS + propagation (`attempt` n of m) | Step "Full solution": the whole solution at once (no backtracking is shown) |
+| 4 | `extraStructure` | Dựng cấu trúc phụ | Build extra structure | `variant.postGenerate`: cages (Killer) / inequality signs (Greater-Than) / key word (Wordoku), or "nothing to do" | Step "Cages" (dashed cages and their sums) or "Signs" (every `<` `>` sign); no step for the other variants |
+| 5 | `dig` | Đào lỗ có kiểm chứng | Dig holes with validation | §6.8: stage A (random dig), stage B (guided dig), and the uniqueness safety net | Batches of random removals (removed cells framed, cells put back framed dashed red), guided rounds, the signs of Greater-Than, rarely a restart; then the finished puzzle |
+| 6 | `rate` | Chấm độ khó | Rate difficulty | One full rating with the logical solver | Not shown; the result panel has the bar chart of the techniques used |
+| 7 | `tune` | Hiệu chỉnh & hoàn tất | Tune & finalize | The band check: `tune.hit`, or `tune.miss` and a new sample; `tune.best` when every attempt is used | Not shown (a sample that missed the level is never replayed); the result panel has the statistics cards |
 
-**Steps 5–7 repeat per dig sample.** Rating and tuning are three steps of their own, not one: the digger's guided stage shares its rating objective with the rater, so "dig" is every removal plus the uniqueness check, "rate" the rating of the finished puzzle, "tune" the band check. When a sample misses the level (`tune.miss`), dig → rate → tune repeat **on the same grid** (`dig.start` carries `sample` / `maxSamples`; up to 12 samples per grid, 30 for coarse symmetries) — a grid is expensive and its next dig is cheap. When the samples of a grid are used up, `retry.difficulty` is emitted and steps 3–7 restart with a new grid ("Attempt #2/8"; the counter comes from `fullGrid.start` and `retry.difficulty`, the sample counter from `dig.start`, and the steps panel puts the later steps back to pending while they re-run, adding up their time and run counts). The UI therefore never stays silent while the generator retries.
+**Steps 5–7 repeat per dig sample.** Rating and tuning are three steps of their own, not one: the digger's guided stage shares its rating objective with the rater, so "dig" is every removal plus the uniqueness check, "rate" the rating of the finished puzzle, "tune" the band check. When a sample misses the level (`tune.miss`), dig → rate → tune repeat **on the same grid** (`dig.start` carries `sample` / `maxSamples`; up to 12 samples per grid, 30 for coarse symmetries) — a grid is expensive and its next dig is cheap. When the samples of a grid are used up, `retry.difficulty` is emitted and steps 3–7 restart with a new grid ("Attempt 2 of 8"; the counter comes from `fullGrid.start` and `retry.difficulty`, the sample counter from `dig.start`; while a run goes on, the status line under the board shows the latest step event, such as "Attempt 2 of 8: filling the whole grid."). The UI therefore never stays silent while the generator retries.
 
 ### 7.2 Event schema
 
@@ -717,22 +718,43 @@ Cell states: `empty`, `placed`, `given`, `backtracked`. A patch is applied in th
 | Level | Events emitted | Used when |
 |-------|----------------|-----------|
 | `off` | only `step` start/end + `done` + `error` | tests, batch generation, a pre-generation that needs no replay |
-| `summary` | adds `step` progress events (the narration: config, model, techniques found, verdicts), `retry`, and a `metric` at most every 50 ms | the pipeline's default, and what a `full` request becomes above 300 cells |
-| `full` | adds every `micro` event (each fill, backtrack, dig, rejection) | the UI default: only a `full` trace fills the board during the replay |
+| `summary` | adds `step` progress events (the narration: config, model, techniques found, verdicts), `retry`, and a `metric` at most every 50 ms | the pipeline's default, so what the page gets (it sends no `trace`), and what a `full` request becomes above 300 cells |
+| `full` | adds every `micro` event (each fill, backtrack, dig, rejection) | direct callers and the tests (applying its patches in order rebuilds the board exactly); the page's replay does not need it |
 
 ### 7.3 Replay engine in the UI layer
 
 ```
-events from worker  →  traceBuffer (array)  →  Player  →  DOM
-                                                 ↑
-                           controls: ▶ ⏸ ⏭ ⏮ + speed buttons + scrubber
+result (solution, model, digLog) ──► SG.player.buildSteps (pure) ──► steps ──► player ──► board
+                                                                                 │ onPosition
+                                                         steps list · status line
+controls: ⏮ first · ‹ previous · › next · ⏭ last · slider (#scrubber) · "Step k of N" (#player-time) · a click in the list
+(the explanation of the step on show is in the Help dialog, §7.4)
 ```
 
-- `Player` is a pure engine (`SG.player.createEngine`: trace, working view, checkpoints, inverse patches; no DOM, no timers) plus a thin layer (`SG.player.create`) with a time-based `requestAnimationFrame` loop. The speed is an accumulator fed by elapsed milliseconds, so it does not depend on the frame rate; a frame never applies more than 120 events and never counts a gap longer than 1 s (a background tab does not run away when it wakes up).
-- Speeds: `instant` (jump to the final position, no animation) · `fast` (~200 meaningful events/second, board animations off) · `step` (~8/second, animations on) · `manual` (each ⏭ advances exactly one meaningful event). A *meaningful* event is every event with a non-empty patch and every `step`, `retry`, `done` and `error` event — not `metric` events or bookkeeping `micro` events.
-- Supports **reverse playback**: each `patch` is stored together with its inverse patch (produced by `SG.events.invertPatch`), so it can step backwards without recomputation.
-- The scrubber lets the user jump to any position; on a jump, patches are applied sequentially from the nearest checkpoint (one checkpoint every 500 events).
-- The steps panel, the explanation card and the status line are all derived from the player's **position** (`SG.stepView.statusesAt(events, uptoSeq)` is a pure reducer over the event stream), so seeking can never leave them out of step with the board. Overlays (cages, signs, windows) are drawn from the final model, not from patches.
+- **Finished first, moved by hand.** After a generation the board shows the finished puzzle at once: `player.load(result)` builds the steps and shows the **last** position. Nothing animates or plays by itself. ⏮ goes to position 0 (the empty grid), ‹ / › move one step, ⏭ returns to the finished puzzle, and the slider (with a translated `aria-valuetext`) and a click in the steps list jump anywhere. There is no Play/Pause button, no speed and no speed preference.
+- **Built from the dig log, not from the trace.** `SG.player.buildSteps(result)` (pure, → `{ steps, signs, cellCount }`) reads `result.solution`, `result.model` and `result.digLog` (§13.9): the decisions of the **final sample only** — the dig that became the puzzle — recorded by `SG.digger` (header "Dig log" of `js/core/digger.js`) and, for Greater-Than, by `digSignsSteps` (`js/variants/greater-than.js`). Entries: `{ op: 'pass', pass, clues }`, `{ op: 'accept', cells }`, `{ op: 'reject', cells, reason }`, `{ op: 'keep', cells, score }` (a guided candidate that could go but was not the hardest one), `{ op: 'restart' }` (the safety net digs again from the full grid); Greater-Than adds `{ op: 'signs', signs: [[a, b], …] }` (`value[a] < value[b]`), `{ op: 'clear' }`, `{ op: 'reveal', cells }` and sign verdicts `{ op: 'accept' | 'reject', sign: index, cells: [a, b] }`. The log is the same whatever the trace verbosity, the thread or the board size. Given a result without a log, `buildSteps` gives just the solution, the structure and the finished puzzle; the app does not load such a result into the player but shows it finished and waits for its log (see **Cache** below).
+- **One step = one visible change of the board.** Technical work (the settings, the board model, the rating, the tuning, samples that missed the level) is not shown. Position 0 is the empty grid, position *k* shows step *k*:
+
+| Kind | Title | What the board shows | Card (`phase` / line) |
+|------|-------|----------------------|-----------------------|
+| `solution` | Full solution | Every value of `result.solution` | `fullGrid` / `place` |
+| `cages` | Cages | Killer: the cages and their sums appear | `extraStructure` / `build` |
+| `signs` | Signs | Greater-Than: every sign appears | `extraStructure` / `build` |
+| `clues` | Starting clues | Greater-Than: the grid is emptied and a few clues are kept (dotted frame) | `dig` / — |
+| `random` | Random removals | A batch of random removals: about a ninth of the board is tried per step (`batchCells(n) = max(2, round(n / 9))`); removed cells are framed (`cell--dug`), cells that had to go back framed dashed red (`cell--kept`). Every batch removes something; refusals after the last removal join the last step, so the easy early removals are summarized ("Remove 9 cells at random: the puzzle can still be solved without them", "Try to remove 10 cells at random: 8 cells removed, 2 cells put back because …") | `dig` / `check` |
+| `guided` | Hardest removal | One round of the guided dig per step (`roundsPerStep(n) = max(1, round(n / 81))` rounds on large boards): the candidates are rated, the removal that makes the puzzle hardest is taken, refused candidates are framed `cell--kept` | `dig` / `deeper` |
+| `signDig` | Removing signs | Greater-Than: a batch of signs tried (`batchSigns(s) = max(4, round(s / 8))`); removed signs are drawn dashed and faded, signs that had to stay red | `dig` / `check` |
+| `reveal` | More clues | Greater-Than: the puzzle came out too hard, so more clues are shown (dotted frame, `cell--revealed`) | `dig` / — |
+| `restart` | Starting again | The safety net threw a dug puzzle away and digs again from the full grid (rare) | `dig` / `verify` |
+| `final` | Finished puzzle | The clues of the result (and its signs), no frame | `dig` / `verify` |
+
+Example: Classic 9×9, *easy*, seed 3 replays in 7 steps — Full solution; Random removals ×5 (9, 10, 10 and 10 cells, then "8 cells removed · 2 cells put back"); Finished puzzle, 34 clues. Larger boards and higher levels take about 10 to 25 steps.
+
+- **Steps are plain data:** `{ index, kind, phase, line, key, args, values, structure, marks, signs, metrics }`. `values` is the board after the step (a full snapshot, cheap at this granularity, so seeking needs no checkpoints or inverse patches), `structure` tells whether cages and signs are drawn, `marks` holds the frames `{ dug, kept, revealed }`, `signs` the sign marks `{ hidden, removed, kept }` by index into `buildSteps().signs`, `metrics` the running dig counters `{ attempts, accepted, rejected, clues }` (null outside the dig). The counters are cumulative and counted in what the board shows — cells, or signs for Greater-Than — so they add up with the steps list. `viewAt(built, position)` is the board at a position; `describeStep`, `stepTitle`, `stepMeta` and `positionText` are the texts (`replay.*` keys).
+- **One place drives the rest.** The player's `onPosition({ position, length, step, direction })` (`direction` is `'forward'`, `'backward'` or `'seek'`; `step` is null at position 0) is the only thing that moves the steps list and the status line, and the app re-emits it as its `position` event, so nothing can be out of step with the board. The Help dialog reads the same position when it opens (`SG.app.getExplainContext()`, §7.4). The status line (`role="status"`, polite) reads the sentence of each step to screen readers and, at the last position, says that the puzzle is ready.
+- **Board.** The structure layers (`cages`, `ineq`; `SG.player.STRUCTURE_LAYERS`) are hidden until the step that builds them; the frames are highlight classes of `layer-overlay` ([§10.3](#103-animation-language)). Greater-Than draws every sign during the replay (`SG.greaterThan.withSigns(result.model, signs)`), marks them by index (`board.setSignMarks({ hidden, removed, kept })`) and switches to the model of the result at the last position. The other overlays (regions, windows, the Wordoku line) come from the model, not from the log. "Show solution" draws the solution only at the last position.
+- **Steps panel** (`SG.stepView.create(rootEl, { onSelect })`, `js/ui/step-view.js`): an ordered list of the steps — number, title and a one-line summary ("9 cells removed · 72 clues left"); the current step (`aria-current="step"`) also shows its full sentence; a click (or Enter / Space) on a step calls `onSelect(position)`, which seeks the player there. A legend under the list explains only the marks the steps use (removed in this step / tried, but put back / clue shown in this step / sign taken away in this step / sign tried, but kept). The instance offers `setSteps`, `setPosition`, `clear`, `getPosition`, `setExpanded`, `refresh`, `destroy`; the constant `STEP_IDS` lists the seven pipeline steps. The bar chart the panel used to show (`#steps-chart`, technique frequencies) is gone; its geometry, `SG.stepView.chartModel`, now only serves the result panel (§10.5).
+- **Cache.** A puzzle served from the cache has no dig log (it is never stored): the replay waits until the background regeneration hands the log over through `SG.app.attachTrace(trace, digLog)` ([§6.8 ⑦](#68--optimal-hole-digging-strategy)).
 
 ### 7.4 Explanation content
 
@@ -751,7 +773,7 @@ SG.explain['dig'] = {                // js/core/explain-data.js — pure data, k
 };
 ```
 
-The data module is `SG.explain` (core); the UI card that renders it is **`SG.explainCard`** (`js/ui/explain.js`) — the two names must not be confused. The card shows the three parts, the **pseudocode** of the step with the currently executing line highlighted (turning the site into an algorithm-learning tool), and a status line that follows the live metrics; it re-renders on a language change keeping the step, the line and the metrics.
+The data module is `SG.explain` (core); the UI card that renders it is **`SG.explainCard`** (`js/ui/explain.js`) — the two names must not be confused. The cards live in the **Help dialog**, tab "How it works" (`js/ui/help.js`), not on the page: one collapsible entry (`<details class="disclosure help-step">`) per pipeline step, each with a compact card (`SG.explainCard.create(el, { compact: true })`, no kicker and no title, the entry's summary names the step): the three parts, the **pseudocode** (turning the site into an algorithm-learning tool) and, in the entry of the step on show, a "Now" line. The entry that the replay step on show belongs to (`fullGrid`, `extraStructure` or `dig`; `SG.app.getExplainContext()`, at position 0 the first of them) is marked "Now: replay step k of N", is open the first time the tab is drawn, and shows the pseudocode line of the replay step highlighted and, during the dig only, the counters ("Tried · accepted · rejected · clues left", cumulative and counted in cells, signs for Greater-Than, so they add up with the steps list). The user opens and closes the entries freely (the open ones stay open when the language changes). The **Explain** button of the steps panel (`#btn-explain`, `action { id: 'help', tab: 'generation' }`) opens the Help on that tab. The card re-renders on a language change keeping the step, the line and the metrics.
 
 ---
 
@@ -866,7 +888,7 @@ Repeat to a fixpoint. With a long inequality chain `a<b<c<d`, bounds propagation
 
 `model.layout.cellRegion` of a multi-grid board is the canvas box slot, so an overlapped box has ONE id although two grids own it; `layout.overlays` holds one `{ kind: 'overlap', cells }` per box owned by two or more grids, and `layout.subGrids` the 9×9 outlines. The labels are `G{n}-R{r}C{c}`.
 
-> **Performance.** The first plan expected `samurai` (369 cells) and `sohei` (288 cells) to be 15–40× slower than `classic9`, with budgets of 8 s (`medium`) and 20 s (`hard`). Measured in Node by `tests/soak.js --full` (`trace: summary`, 25 puzzles per combination), the p95 is 0.29 s / 0.47 s for Samurai medium / hard, 0.16 / 0.37 s for Sohei, 0.12 / 0.20 s for Flower and 0.07 / 0.13 s for Butterfly — one to two orders of magnitude inside the budgets, because the technique-bounded oracle and the calibrated clue floors keep the digs short. The UI still runs generation in a worker, shows the running step with live metrics and a Cancel button, and Samurai downgrades a `full` trace to `summary`.
+> **Performance.** The first plan expected `samurai` (369 cells) and `sohei` (288 cells) to be 15–40× slower than `classic9`, with budgets of 8 s (`medium`) and 20 s (`hard`). Measured in Node by `tests/soak.js --full` (`trace: summary`, 25 puzzles per combination), the p95 is 0.29 s / 0.47 s for Samurai medium / hard, 0.16 / 0.37 s for Sohei, 0.12 / 0.20 s for Flower and 0.07 / 0.13 s for Butterfly — one to two orders of magnitude inside the budgets, because the technique-bounded oracle and the calibrated clue floors keep the digs short. The UI still runs generation in a worker, shows the running step in the status line and a Cancel button, and Samurai downgrades a `full` trace to `summary` (the page gets `summary` anyway).
 >
 > **Cell-count derivation (verified):** `sohei` = 4×81 − 4 shared 3×3 boxes = 324 − 36 = **288**. `flower` = 15×15 canvas − 4 empty 3×3 corners = 225 − 36 = **189**. Earlier drafts listed 324 and 225; those were the pre-merge and full-canvas figures respectively and are wrong. The builder checks the canvas, the origins (multiples of 3) and the unique cell count and throws `multigrid.invalidGeometry` on any mismatch.
 
@@ -966,7 +988,7 @@ SG.workerClient = {
   cancel() → boolean,
   get mode() { return 'worker' | 'main'; },            // final once ready() has settled
   ready() → Promise<'worker'|'main'>,                  // detects Worker support (ping/pong handshake, 5 s timeout)
-  create(options) → client,                            // an independent client (+ dispose()): used by the cache and batch print
+  create(options) → client,                            // an independent client (+ dispose()): used by the cache
 };
 // options of create(): forceMode 'auto'|'worker'|'main', workerUrl, workerFactory, chunkMs (12), batchMs (30),
 // maxBatch (400), budgetMs (120 000, ACTIVE ms), readyTimeoutMs (5000), killAfterMs (150), now, yieldFn, paintFn
@@ -982,10 +1004,10 @@ SG.workerClient = {
 
 ### 9.4 Leak prevention & memory pressure
 
-- The trace log is bounded by `maxTraceEvents` (20 000; `SG.events.createTraceBuffer`); beyond that threshold, the `micro` events are down-sampled.
+- The trace log is bounded by `maxTraceEvents` (20 000; `SG.events.createTraceBuffer`); beyond that threshold, the `micro` events are down-sampled. The replay does not read the trace (it is built from the dig log, a few hundred entries at most, §7.3), so the limit no longer affects what it shows.
 - Clear the previous generation's trace before starting a new one.
-- When generating `samurai` with `full` trace: the pipeline automatically downgrades to `summary` (warning `trace.downgraded`, shown in the result panel), because `full` can produce hundreds of thousands of events.
-- The cache never stores the trace (it can be megabytes); a cached puzzle's trace is regenerated from its seed ([§6.8 ⑦](#68--optimal-hole-digging-strategy)).
+- When a caller asks for a `full` trace of `samurai`, the pipeline automatically downgrades it to `summary` (warning `trace.downgraded`, shown in the result panel), because `full` can produce hundreds of thousands of events. The page itself never asks for `full`: it sends no `trace` and gets `summary`.
+- The cache never stores the trace (it can be megabytes) nor the dig log; a cached puzzle's trace and dig log are regenerated from its seed ([§6.8 ⑦](#68--optimal-hole-digging-strategy)).
 
 ---
 
@@ -996,32 +1018,31 @@ SG.workerClient = {
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
 │ HEADER   [Sudoku Generator]        [EN|VI]  [☀/☾]  [⚙ Settings]  [? Help]  │
-├──────────────────┬─────────────────────────────────┬───────────────────────┤
-│  CONTROL PANEL   │           GRID AREA             │   STEPS PANEL         │
-│  (left,≤280px)   │           (middle, fluid)       │   (right,≤340px)      │
-│                  │                                 │                       │
-│  Variant     [▾] │      ┌───────────────────┐      │ ① Configure         ✓ │
-│  Difficulty  [▾] │      │                   │      │ ② Build board model ✓ │
-│  Symbols     [▾] │      │    GRID (SVG)     │      │ ③ Generate solution ⟳ │
-│  Symmetry    [▾] │      │                   │      │    ├ 54/81 cells      │
-│  Seed    [____]🎲│      └───────────────────┘      │    └ 12 backtracks    │
-│  ▸ Advanced      │                                 │ ④ Extra structure   ○ │
-│                  │   ⏮ ⏸ ▶ ⏭   [━━━●━━━━] 1.0×    │ ⑤ Dig holes         ○ │
-│  [ ✦ GENERATE ]  │  Instant · Fast · Step · Manual │ ⑥ Rate difficulty   ○ │
-│  [ ⟲ Regenerate ]│                                 │ ⑦ Finalize          ○ │
-│  [ ⤓ Export ▾ ]  │   Status: generating grid…      │ ───────────────────── │
-│                  │                                 │ 📖 EXPLANATION        │
-│                  │                                 │ What / Why / How      │
-│                  │                                 │ [pseudocode+highlight]│
-└──────────────────┴─────────────────────────────────┴───────────────────────┘
+├─────────────────────┬───────────────────────────────┬──────────────────────┤
+│  CONTROL PANEL      │          MAIN PANEL           │  STEPS PANEL         │
+│  (left,≤280px)      │        (middle, fluid)        │  (right,≤340px)      │
+│                     │ Heading   [Play][Print][Export]│                     │
+│  Variant        [▾] │ Subheading                    │ 1 Full solution      │
+│  Difficulty     [▾] │     ┌───────────────────┐     │ 2 Random removals    │
+│  Symbols        [▾] │     │                   │     │▐3 Random removals    │
+│  Seed  [_______][⧉] │     │    GRID (SVG)     │     │   Remove 10 cells at │
+│  (+ variant options)│     │                   │     │   random: the puzzle │
+│  ▸ Advanced options │     └───────────────────┘     │   can still be …     │
+│    (Symmetry, …)    │ ⏮ ‹ › ⏭  [━━━●━━] Step 3 of 7 │ ⋮                    │
+│                     │ Status: <the step's sentence> │ 7 Finished puzzle    │
+│ [✦ GENERATE]        │                               │ ▭ removed ┅ put back │
+│ [⟲ Generate random] │   (result panel below)        │ [?] Explain → Help   │
+└─────────────────────┴───────────────────────────────┴──────────────────────┘
 ```
+
+**Main panel.** At its top left, a heading `<variant> - <difficulty> (Seed: <seed>)` (`#puzzle-heading`; the level reached and the seed used once a puzzle is on screen, the choices of the form before) and the description of the variant (`#puzzle-subheading`); at its top right **Play** (`#btn-play-online`, opens the puzzle in sudoku-player in a new tab, [§10.9](#109-hand-off-to-the-player-exchange)) **Print** (`#btn-export`, [§10.6](#106-export)) and **Export** (`#btn-export-code`, the text code to paste into the player, [§10.6](#106-export)), enabled once a puzzle is shown. While no puzzle is on screen the board shows the empty layout of the chosen variant, and choosing another variant shows its layout at once (a puzzle of the old variant is discarded). Under the board, the replay controls (`#btn-first #btn-prev #btn-next #btn-last`, the slider `#scrubber`, "Step k of N" in `#player-time`, [§7.3](#73-replay-engine-in-the-ui-layer)) and the status line. Under the form, **Generate** and **Generate random** (`#btn-generate`, `#btn-regenerate`: a new random seed, then a generation, `SG.app.regenerate()`; enabled after the first run); **Cancel** appears while a run goes on.
 
 **Responsive** (`css/layout.css`):
 - `≥ 1200px`: 3 columns as above (controls 240–280 px, steps 272–340 px); the result panel sits under the grid.
 - `768–1199px`: 2 columns — the steps panel moves below the grid, as a horizontally scrollable strip, and the result panel below it.
 - `< 768px`: 1 stacked column; the control panel becomes a drawer sliding up from the bottom (a bar with a chevron toggles it); the steps panel becomes a collapsed horizontal stepper — tap to expand the details.
 
-The page mount points are fixed ids that every module renders into (`#controls-root`, `#board-root` with `#board-svg`, `#player-root`, `#status-line`, `#mode-badge`, `#steps-root`, `#explain-root`, `#result-root`, `#modal-root`, `#toast-root`, `#a11y-live`); later modules only add elements inside their own mount point.
+The page mount points are fixed ids that every module renders into (`#controls-root`, `#board-root` with `#board-svg`, `#player-root`, `#status-line`, `#mode-badge`, `#steps-root` with `#steps-list` and `#btn-explain`, `#result-root`, `#modal-root`, `#toast-root`, `#a11y-live`); later modules only add elements inside their own mount point.
 
 ### 10.2 Board renderer — why SVG
 
@@ -1044,16 +1065,29 @@ The page mount points are fixed ids that every module renders into (`#controls-r
   <g class="layer-regions">   <!-- paper, Jigsaw tints, diagonal/window/overlap/word-line overlays, Killer cage colours -->
   <g class="layer-cells">     <!-- one <rect class="cell" data-cell="i"> per cell: state and colour-mode background -->
   <g class="layer-cages">     <!-- Killer: dashed inset outline + sum <text> -->
-  <g class="layer-ineq">      <!-- Greater-Than: signs on the edges -->
+  <g class="layer-ineq">      <!-- Greater-Than: signs on the edges (data-sign = index; the replay hides or marks them) -->
   <g class="layer-values">    <!-- per cell one <text> (digit, letter, word) and one <use> (geometric symbol) -->
   <g class="layer-grid">      <!-- thin lines within a region, thick between regions, sub-grid outlines, optional coordinates -->
-  <g class="layer-overlay">   <!-- effects: probed, technique and selected cells -->
+  <g class="layer-overlay">   <!-- effects: probed, technique and selected cells; the replay frames (removed, put back, revealed) -->
 </svg>
 ```
 
 One cell is 40 board units; the `viewBox` scales the whole board, so there is no resize code. The geometry is a **pure** function (`SG.boardView.geometry(model, opts)`, `renderMarkup`, `exportSvg`) that runs in Node — export, print and the help illustrations draw boards from it without a DOM — and `SG.boardView.create(svgEl, model, opts)` builds the tree once from that markup and then only patches nodes (`setLayerVisible(name, flag)` shows or hides a layer by its `data-layer` name: `regions overlays word cages ineq cells values grid coords overlay`).
 
 ### 10.3 Animation language
+
+The replay of the page ([§7.3](#73-replay-engine-in-the-ui-layer)) moves between **static** pictures: no animation, one set of marks per step (`css/board.css`; the dash or the dots tell the marks apart without colour). The legend under the steps list explains the ones the steps use.
+
+| Mark | Look | CSS class |
+|------|------|-----------|
+| Removed in this step | Solid amber frame, pale amber fill | `.hl.cell--dug` |
+| Tried, but put back | Dashed red frame | `.hl.cell--kept` |
+| Clue shown in this step (Greater-Than) | Dotted violet frame | `.hl.cell--revealed` |
+| Sign taken away in this step | The sign is drawn dashed and faded | `.sign--removed` |
+| Sign tried, but kept | The sign is drawn red | `.sign--kept` |
+| Sign taken away in an earlier step | Not drawn | `.sign--hidden` |
+
+The animations below remain in `SG.boardView` for a caller that plays events back (`applyPatch(patch, { animate })`, `pulseDone()`); the page's replay no longer uses them.
 
 | Event | Effect | CSS class | Duration |
 |-------|--------|-----------|----------|
@@ -1074,12 +1108,11 @@ One cell is 40 board units; the `viewBox` scales the whole board, so there is no
 | Basic | Variant | select (grouped) | `classic9` |
 | Basic | Difficulty | select (filtered by `difficultySupport`) | `medium` |
 | Basic | Symbol set | select (filtered by variant) | `digits` |
-| Basic | Symmetry | select + miniature preview | `rotational180` |
-| Basic | Seed | text + 🎲 button + 📋 copy button; any text is accepted (a whole number 0–4294967295 as it is, anything else FNV-1a hashed, §14.2) | random (empty) |
+| Basic | Seed | text + 📋 copy button; any text is accepted (a whole number 0–4294967295 as it is, anything else FNV-1a hashed, §14.2) | random (empty) |
+| Advanced | Symmetry | select + miniature preview | `rotational180` |
 | Advanced | Dig sequence style | select | `random` |
 | Advanced | Max attempts | number 1–20 | 8 |
-| Advanced | Trace verbosity | select | `full` (§3.3) |
-| Advanced | Show solution | toggle | off |
+| Advanced | Show solution | toggle (the solution is drawn on the finished puzzle, at the last position of the replay) | off |
 | Variant | Cage size (Killer, `cageSize`) | slider −2…+2 | 0 = "by difficulty" |
 | Variant | Region compactness (Jigsaw, `compactness`) | slider 0–1 | 0.6 |
 | Variant | Symbol set (Mega, `symbolSet`) | select | `letters` (12×12) / `hex` (16×16) |
@@ -1089,32 +1122,31 @@ One cell is 40 board units; the `viewBox` scales the whole board, so there is no
 
 **Principle:** variant-specific options are **generated automatically** from the `variant.options` schema in the registry — no hand-written HTML for each variant.
 
+**No replay options:** the replay has no setting in the form. The former "Replay detail" field (the trace verbosity) and the replay speed are gone, together with their `trace` / `speed` URL parameters and stored values (§14.2, §14.3); the replay is stepped by hand ([§7.3](#73-replay-engine-in-the-ui-layer)).
+
+**Descriptions:** the description of an option (`hintKey`) is not printed under the control. Each label has a small help icon (`.help-tip`) whose tooltip shows it — on hover, keyboard focus and click/tap; Esc closes it. The tooltip is styled rich text (`richText` in `controls.js`: a blank line starts a paragraph, `**text**` is bold; built from DOM nodes, never `innerHTML`) and is the `aria-describedby` of the control.
+
 ### 10.5 Results panel (after generation finishes)
 
-Shows (`SG.resultView`, in `#result-root`): a preview image of the puzzle · clue count · difficulty score + the level achieved next to the requested one · hardest technique · bar chart of technique frequency · total time + time per step · number of attempts · seed (click to copy) · share link (restores exactly this puzzle, whatever the form says now) · the solution switch.
+Shows (`SG.resultView`, in `#result-root`): a preview image of the puzzle · clue count · difficulty score + the level achieved next to the requested one · hardest technique · bar chart of technique frequency (geometry: `SG.stepView.chartModel`) · total time + time per step · number of attempts · seed (click to copy) · share link (restores exactly this puzzle, whatever the form says now) · a "Play online" button (the same hand-off as **Play**, [§10.9](#109-hand-off-to-the-player-exchange)) · the solution switch.
 
 If the difficulty **does not exactly match** the requested level (`difficulty.approximate`) ⇒ a clear yellow warning with a "Retry with a different seed" button. The other warnings (`trace.downgraded`, `digger.unsoundTechnique`) are listed, translated; no warning, no warning UI.
 
 ### 10.6 Export
 
-The Export button opens one dialog (`SG.exportUi`, a `<dialog>` of `SG.app.openModal`) with four sections: the export formats of the puzzle on screen, **Play online** ([§10.9](#109-hand-off-to-the-player-exchange)), **batch printing**, and the import of a puzzle (`SG.importUi.mount`).
+The Print button (`#btn-export`, a printer icon) opens one small dialog titled **Print** (`SG.exportUi`, a `<dialog>` of `SG.app.openModal`): a paper preview of the puzzle (`boardSvg` with the print look, always light), what will be printed (variant · level · clues · seed), the hint about "Save as PDF", the **Add the solution on a separate page** switch, and a footer with **Cancel** and **Print…**; the dialog closes once the print dialog of the browser was opened. The **Export** button (`#btn-export-code`, `action { id: 'exportCode' }`) opens a second small dialog, `SG.exportUi.openCode()`: a read-only box with the text code of the puzzle on screen (`buildExportCode(result)`: the token `z.…` / `j.…` of the player link without the address, made by `SG.exchange.encode(toJson(result))`) and a **Copy code** button (`SG.controls.copyText`). The code is accepted as it is by the **Open puzzle** box of sudoku-player. The **Play** button is not part of either dialog: it hands the puzzle to the player ([§10.9](#109-hand-off-to-the-player-exchange)).
 
 | Format | Contents | Notes |
 |--------|----------|-------|
-| Print / PDF | The puzzle (+ optionally the solution on a separate page) | `print.css`, sharp vector output, hides every control element; the browser's print dialog does the PDF |
-| PNG | Image of the grid | Draw the SVG onto a `<canvas>` at 1×–4× (default 2×), then `toBlob` |
-| SVG | Vector file | A standalone SVG built from the result itself (`SG.exportUi.boardSvg`), whatever the replay shows right now |
-| JSON | Following the schema in §14.1 (including the `model` block for the player) | For re-import / automation / the player |
-| Text | One line, row by row (`.` = empty; 1–9 then A, B, C… for 10 and above) | Only where the line can carry the puzzle: classic 4/6/9, Mega, Diagonal, Hyper, Wordoku (with a note on what the line leaves out). Jigsaw, Killer, Greater-Than and the multi-grid boards are refused with the reason |
-| Link | A URL containing the configuration and the `seed` | Reproduces the puzzle exactly (§14.2) |
+| Print / PDF | The puzzle (+ optionally the solution on a separate page) | `print.css`, sharp vector output (`SG.exportUi.boardSvg` as an image in `#print-root`), hides every control element; the browser's print dialog does the PDF |
 
-**Batch print:** N puzzles (up to 60) with the settings of the puzzle on screen and seeds derived from its seed, 1 / 2 / 4 / 6 per page, optional pages with the solutions — very useful for teachers. The batch is made by an independent generation client, so the puzzle on screen is never replaced.
+The image (PNG, SVG), file (JSON, text), link and batch-printing exports, and the import of a puzzle, were removed; the puzzle JSON of §14.1 survives only as the document of the player link ([§10.9](#109-hand-off-to-the-player-exchange)).
 
 ### 10.7 Accessibility
 
 - Everything is operable by keyboard; a sensible tab order; a "Skip to main content" link (it moves focus to `#main`).
 - Grid (`js/ui/a11y.js`): the board `<svg>` gets `role="grid"`, its cells are grouped into `role="row"` and get `role="gridcell"` + a translated `aria-label` ("Hàng 4, cột 7, giá trị 5" / "Row 4, column 7, value 5"; cage sums and signs are part of the label); one cell is in the tab order (roving `tabindex`); arrow keys, Home, End, Ctrl+Home, Ctrl+End, Page Up and Page Down move between real cells (holes of a multi-grid canvas are skipped); a focus ring is drawn on top of the board.
-- An `aria-live="polite"` region (`#a11y-live`) announces **step transitions only**, de-duplicated and rate-limited; no `micro` event is ever announced (that would be noise). The status line is silent for screen readers while the replay plays and the completion is announced once.
+- An `aria-live="polite"` region (`#a11y-live`, written by `SG.app.announce`) says the start of a generation and a language change (`SG.a11y`, de-duplicated and rate-limited), the finished puzzle with its level and clue count, a cancel, and the cache's "the step-by-step replay is ready"; no event of a run and no replay step is announced there (that would be noise). The status line (`#status-line`, `role="status"`, polite) is silent while a run is busy; afterwards it reads the sentence of each replay step the user moves to ([§7.3](#73-replay-engine-in-the-ui-layer)).
 - Contrast ≥ 4.5:1 for text, ≥ 3:1 for lines, borders and focus rings, in all three themes, and 7:1 for text in the high-contrast theme (computed from the token files by `theme.test.js`). A colour palette that is safe for colour-blind users; `colors` mode is **always** accompanied by geometric symbols unless the user switches that off in Settings.
 - A high-contrast theme and text-size adjustment (small / normal / large = 87.5 % / 100 % / 125 % of the base font size).
 - Respect `prefers-reduced-motion` and `prefers-color-scheme`. A **Settings dialog** (`SG.a11y.openSettings`) holds the theme, the text size, reduced motion, the colour-blind symbol, the switch of background pre-generation (shown only when it exists, i.e. in worker mode; the choice is not persisted) and the board coordinates.
@@ -1130,17 +1162,17 @@ A tiny inline script in `index.html` reads the stored preferences before the sty
 
 The generator does not play puzzles; the separate **sudoku-player** web app does (repository [tdat00/sudoku-player](https://github.com/tdat00/sudoku-player), published at `https://tdat00.github.io/sudoku-player/`). Task `T-7.8` hands a puzzle over without a server: the whole puzzle travels in the **fragment** of a link, which a browser never sends anywhere. The only code shared by the two repositories is `js/ui/exchange.js` (`SG.exchange`, copied byte for byte into both, with its suite `tests/suites/exchange.test.js`; no DOM).
 
-**The document** is the puzzle JSON of [§14.1](#141-json-schema-of-a-puzzle) (`format: 'sudoku-generator/v1'`) exactly as `SG.exportUi.toJson(result, ctx)` writes it, plus one additive block, **`model`** = `SG.exchange.plain(SG.pipeline.toWire(result).model)`: the plain-data *ModelSpec* that `SG.model.create(spec)` accepts (`variantId, digits, cellCount, units, unitMeta, cages, inequalities, layout {rows, cols, cellRow, cellCol, cellRegion, overlays, subGrids}, symbols {mode, labels}, fixedCells`; typed arrays become plain arrays). With it the player rebuilds the board with **no variant code**, then switches on the lazy propagation extensions when the model needs them (`SG.comboTable.enablePropagation(variantId)` for cages, `SG.ineq.ensureExtension()` for inequalities). Everything else the player shows is in the document already: `variantId`, `givens`, `solution`, `seed`, `symbolMode`, `digits`, `cellCount`, `difficulty {requested, achieved, score, hardestTechnique, techniqueCounts}`, `symmetry`, `generatedAt`, `stats`, `labels`, `locale`, `wordoku`. The generator's own import (`SG.importUi`) **ignores `model`** and rebuilds the board from `variantId` and the options, exactly as before; the JSON stays backward compatible and `format` stays `sudoku-generator/v1`. `format.test.js` checks, for every variant, that `SG.model.create(doc.model)` rebuilds an equal model (also after the token round trip) and that the import gives the same puzzle with, without or with a damaged `model`.
+**The document** is the puzzle JSON of [§14.1](#141-json-schema-of-a-puzzle) (`format: 'sudoku-generator/v1'`) exactly as `SG.exportUi.toJson(result, ctx)` writes it, plus one additive block, **`model`** = `SG.exchange.plain(SG.pipeline.toWire(result).model)`: the plain-data *ModelSpec* that `SG.model.create(spec)` accepts (`variantId, digits, cellCount, units, unitMeta, cages, inequalities, layout {rows, cols, cellRow, cellCol, cellRegion, overlays, subGrids}, symbols {mode, labels}, fixedCells`; typed arrays become plain arrays). With it the player rebuilds the board with **no variant code**, then switches on the lazy propagation extensions when the model needs them (`SG.comboTable.enablePropagation(variantId)` for cages, `SG.ineq.ensureExtension()` for inequalities). Everything else the player shows is in the document already: `variantId`, `givens`, `solution`, `seed`, `symbolMode`, `digits`, `cellCount`, `difficulty {requested, achieved, score, hardestTechnique, techniqueCounts}`, `symmetry`, `generatedAt`, `stats`, `labels`, `locale`, `wordoku`. The generator itself no longer imports puzzles; the JSON stays backward compatible (`format` stays `sudoku-generator/v1`). `format.test.js` checks, for every variant, that `SG.model.create(doc.model)` rebuilds an equal model (also after the token round trip).
 
 **The token** is `z.` + base64url(deflate-raw(UTF-8 JSON)), or `j.` + base64url(JSON) where compression is unavailable or does not pay. `SG.exchange.encode(doc, { compress? })` and `decode(token)` are asynchronous (`CompressionStream`), limited to 8 MiB of JSON / 4 Mi characters of token (a decompression bomb is refused while streaming). Failures are `SG.errors.GenerationError`s with the codes `exchange.invalidToken`, `exchange.tooLarge`, `exchange.unsupportedEncoding`, `exchange.invalidJson`, `exchange.invalidUrl`, translated through `SG.i18n.tError` (`error.exchange.*` in both packs). `SG.exchange.playerUrl(base, token)` makes `<base>#puzzle=<token>` (it replaces an existing fragment and refuses any base that is not `http(s)` or a relative path); `tokenFromHash(hash)` is what the player calls on load and on `hashchange`.
 
-**Play online** (a section of the Export dialog, `SG.exportUi.buildPlayLink / openPlayLink / playerBase`): the dialog encodes the document of the puzzle on screen as soon as it opens (and again when the puzzle or the language changes), shows the link in a read-only field with a Copy button, and its primary **Play online** button opens it with `window.open(url, '_blank', 'noopener')` — the link is ready before the click, so the browser sees a user-initiated popup. The player's address is read from `<meta name="sg-player-url" content="…">` in `index.html` (hard-coded fallback `https://tdat00.github.io/sudoku-player/`); an invalid address is a translated error. Above 100 000 characters the dialog warns that apps and servers may cut the link and offers the JSON file instead (the player opens a file, a paste or a drop as well). An imported puzzle can be sent too — only the document matters. No storage key was added.
+**Play online** (the **Play** button next to **Print**: the app emits `action { id: 'play' }`, `SG.exportUi.init` answers with `playOnline()`; building blocks `SG.exportUi.buildPlayLink / openPlayLink / playerBase`): there is no dialog. `playOnline()` encodes the document of the puzzle on screen, opens the link with `window.open(url, '_blank', 'noopener')` and says so in a toast. The player's address is read from `<meta name="sg-player-url" content="…">` in `index.html` (hard-coded fallback `https://tdat00.github.io/sudoku-player/`); an invalid address, like any other failure, is a translated error toast. Above 100 000 characters a second toast warns that apps and servers may cut the link. No storage key was added.
 
 **Not in this repository:** the player's importer, its game engine, hints and UI. The player also accepts a bare 81-character line (16 and 36 for the smaller boards) and builds a classic model for it itself.
 
-### 10.10 Help and first-visit tour
+### 10.10 Help
 
-`SG.help` (task `T-7.6`): the Help button opens a dialog with five tabs — the rules of every variant (with a small picture drawn from the real geometry), the difficulty levels and the technique ladder, how generation works, controls and keyboard shortcuts, about. What the registries already know (variant names, options, levels, technique names and descriptions, step names) is **read from them, never copied**, so the help cannot drift from the code; `help.test.js` fails when a variant has no help entry. A skippable four-step **tour** walks over the real page the first time only (`sg.tour.v1`; blocked storage means once per page load; never with `auto=1` in the URL).
+`SG.help` (task `T-7.6`): the Help button opens a dialog with five tabs — the rules of every variant (with a small picture drawn from the real geometry), the difficulty levels and the technique ladder, how generation works, controls and keyboard shortcuts, about. What the registries already know (variant names, options, levels, technique names and descriptions, step names) is **read from them, never copied**, so the help cannot drift from the code; `help.test.js` fails when a variant has no help entry. The generation tab explains the replay (`help.generation.replay`), the controls glossary ends with the replay under the board (`help.controls.replay`), and the keys tab has a Replay group for the slider. There is no first-visit tour or other popup.
 
 ---
 
@@ -1155,7 +1187,7 @@ SG.i18n.current;                         // 'vi' | 'en'
 ```
 
 - The language packs are **plain JS files** that assign to `SG.locales.en` / `SG.locales.vi` — **do not `fetch` JSON**, to avoid CORS blocking on `file://`. The shared strings live in `js/ui/locale.en.js` / `locale.vi.js` (steps, explanations, techniques, difficulty, symmetry, variants, events, errors, generic words).
-- **`SG.localeFragments`** is how every other file adds keys without editing the hot locale files: it is an array of `{ en: {...}, vi: {...} }` objects pushed at the bottom of the file that owns the strings (variants, `tech-cage.js`, `tech-ineq.js` and every UI module do this; 24 fragments at the time of writing). `SG.i18n.mergeFragments()` merges the ones that appeared since its last call into the packs (on first use and again whenever the array grew). The base packs win: a fragment that redefines an existing key is reported in `SG.i18n.conflicts` and does not override it, and `i18n.test.js` fails on a conflict. Keys must be globally unique and prefixed by their module (`controls.*`, `board.*`, `symbols.*`, `steps.*`, `explainCard.*`, `player.*`, `result.*`, `app.*`, `shell.*`, `cache.*`, `export.*`, `import.*`, `a11y.*`, `theme.*`, `play.*`, `help.*`, `worker.*`, `variant.*`, `technique.*`).
+- **`SG.localeFragments`** is how every other file adds keys without editing the hot locale files: it is an array of `{ en: {...}, vi: {...} }` objects pushed at the bottom of the file that owns the strings (variants, `tech-cage.js`, `tech-ineq.js` and every UI module do this; 22 fragments at the time of writing). `SG.i18n.mergeFragments()` merges the ones that appeared since its last call into the packs (on first use and again whenever the array grew). The base packs win: a fragment that redefines an existing key is reported in `SG.i18n.conflicts` and does not override it, and `i18n.test.js` fails on a conflict. Keys must be globally unique and prefixed by their module (`controls.*`, `board.*`, `symbols.*`, `steps.*`, `explainCard.*`, `player.*`, `replay.*`, `result.*`, `app.*`, `shell.*`, `cache.*`, `export.*`, `a11y.*`, `theme.*`, `help.*`, `worker.*`, `variant.*`, `technique.*`).
 - Translation keys use hierarchical dot notation: `controls.variant.label`, `explain.dig.what`, `technique.xWing` (the name), `technique.xWing.desc`, `technique.xWing.step` (the sentence of one step; variants such as `.step.endpoints` exist), `error.<code>` for every `GenerationError` code.
 - Parameters are inserted using the `{name}` syntax. Plural forms are keys with the suffix `_one` / `_other`; the category comes from `Intl.PluralRules` and `args.count`, and a language without that form falls back to `_other`, then to the plain key (Vietnamese has no plural forms). A text may also depend on `args.rule`: the key `<key>.<rule>` wins when it exists.
 - Applying to the DOM: the attributes `data-i18n="key"`, `data-i18n-attr="title:key2,aria-label:key3"` and `data-i18n-args='{"n":3}'`. When the language changes, `applyTo(root)` rescans and updates — no page reload.
@@ -1218,7 +1250,7 @@ sudoku-generator/
 │   ├── components.css         Buttons, selects, cards, badges, modals
 │   ├── board.css              SVG grid styling + animations
 │   ├── steps.css              Steps panel & explanation cards
-│   ├── help.css               Help dialog & first-visit tour
+│   ├── help.css               Help dialog
 │   └── print.css              Print styles (linked with media="print")
 ├── js/
 │   ├── core/
@@ -1269,16 +1301,15 @@ sudoku-generator/
 │       ├── board-view.js      Builds & patches the SVG (geometry is pure)
 │       ├── store.js           State + URL sync + localStorage
 │       ├── controls.js        Builds the form from the schema + cross-option constraints
-│       ├── step-view.js       Steps panel + metrics + technique chart
+│       ├── step-view.js       Steps panel: list of the replay steps + legend; technique chart model (result panel)
 │       ├── explain.js         Explanation cards + pseudocode (exports SG.explainCard)
-│       ├── player.js          Trace replay engine (▶ ⏸ ⏭ scrubbing)
+│       ├── player.js          Replay of the generation from the dig log (first / previous / next / last, slider)
 │       ├── result-view.js     Result panel, warnings, share link
-│       ├── cache.js           Puzzle cache + background pre-generation + trace regeneration
-│       ├── export.js          Print/PNG/SVG/JSON/Text/Link + batch print + Play online (link to sudoku-player)
-│       ├── import.js          JSON / text import, validation, "Analyse difficulty"
+│       ├── cache.js           Puzzle cache + background pre-generation + regeneration of a served puzzle's replay
+│       ├── export.js          Print / PDF dialog + the Play button's hand-off to sudoku-player (`playOnline`)
 │       ├── a11y.js            ARIA grid, keyboard navigation, aria-live, Settings dialog
 │       ├── theme.js           Themes, run-state hints, prefers-color-scheme tracking
-│       ├── help.js            Help dialog + first-visit tour
+│       ├── help.js            Help dialog
 │       └── app.js             Bootstrap & wiring of the modules (SG.app)
 └── tests/
     ├── harness.js             Minimal describe/it/expect/bench
@@ -1413,7 +1444,7 @@ NormalizedOption = { id, type: 'slider'|'select'|'boolean'|'text', labelKey, hin
                      visibleWhen, maxLength, placeholderKey }
 ```
 
-The option schemas that the variants declare differ in small ways (`i18nKey` or `labelKey`, `hintKey` or `hintI18nKey`, `choices[].i18nKey` or `.labelKey`); the registry **normalises** them into the one shape above, and the UI (`controls.js`, `store.js`, the cache key, the import) only ever reads `optionsOf` / `defaultOptions` / `sanitizeOptions`, never `def.options`.
+The option schemas that the variants declare differ in small ways (`i18nKey` or `labelKey`, `hintKey` or `hintI18nKey`, `choices[].i18nKey` or `.labelKey`); the registry **normalises** them into the one shape above, and the UI (`controls.js`, `store.js`, the cache key) only ever reads `optionsOf` / `defaultOptions` / `sanitizeOptions`, never `def.options`.
 
 ### 13.9 `SG.pipeline`
 
@@ -1425,11 +1456,11 @@ SG.pipeline.toWire(result): Object                         // PuzzleResult as pl
 SG.pipeline.fromWire(wire): PuzzleResult                   // rebuilds the model, switches the lazy extensions on
 SG.pipeline.STEPS, DEFAULT_MAX_ATTEMPTS (8), FULL_TRACE_MAX_CELLS (300)
 GenerateConfig = { variantId, difficulty = 'medium', seed?, symbolMode, symmetry = 'rotational180', digOrder = 'random',
-                   maxAttempts = 8, trace: 'off'|'summary'|'full' (default 'summary'), variantOptions: Object }
-PuzzleResult  = { model, givens, solution, rating, seed, config, timings, attempts, warnings }
+                   maxAttempts = 8, trace: 'off'|'summary'|'full' (default 'summary'; the page sends none), variantOptions: Object }
+PuzzleResult  = { model, givens, solution, rating, seed, config, timings, attempts, warnings, digLog }
 ```
 
-`run` is `runSteps` driven to its end without ever yielding (`SG.budget.drive`): same events, same puzzle. The `config` of the result is the normalised one (its `trace` is the one that was applied). Errors are `SG.errors.GenerationError`s with codes such as `variant.unknown`, `difficulty.unsupportedLevel`, `rng.invalidSeed`, `symmetry.unknownKind`, `digger.invalidOption`, `pipeline.invalidOption`, `budget.exceeded`, `budget.cancelled`; each has an `error.<code>` text. A level that cannot be reached is **not** an error: the closest puzzle is returned with the warning `difficulty.approximate`.
+`run` is `runSteps` driven to its end without ever yielding (`SG.budget.drive`): same events, same puzzle. The `config` of the result is the normalised one (its `trace` is the one that was applied). `digLog` is how the puzzle was dug: the dig log of `SG.digger.generate` for the sample that became the puzzle — plain data whose entries are listed in [§7.3](#73-replay-engine-in-the-ui-layer) and in the header of `js/core/digger.js` (Greater-Than: `digSignsSteps` in `js/variants/greater-than.js`). It does not depend on `config.trace`; `toWire` / `fromWire` carry it (`fromWire` gives `undefined` when the wire has none), `SG.cache` strips it when it stores a puzzle, and the UI builds its replay from it. Errors are `SG.errors.GenerationError`s with codes such as `variant.unknown`, `difficulty.unsupportedLevel`, `rng.invalidSeed`, `symmetry.unknownKind`, `digger.invalidOption`, `pipeline.invalidOption`, `budget.exceeded`, `budget.cancelled`; each has an `error.<code>` text. A level that cannot be reached is **not** an error: the closest puzzle is returned with the warning `difficulty.approximate`.
 
 ### 13.10 `SG.workerClient`
 
@@ -1462,7 +1493,8 @@ SG.i18n.mergeFragments(), conflicts, available
 ```js
 SG.boardView.create(svgEl, model, opts): BoardView
 BoardView = { applyPatch(patch, { animate?, highlightClass? }), setValues(values, labels?), setGivens(givens), showSolution(solution),
-              highlight(cells, cls?), unhighlight(cells), clearHighlights(), setSymbolMode(mode),
+              highlight(cells, cls?), unhighlight(cells), clearHighlights(),
+              setSignMarks({ hidden, removed, kept } | null) /* Greater-Than signs by index; survives a rebuild */, setSymbolMode(mode),
               setLayerVisible(name, flag), isLayerVisible(name), setColorAuxSymbol(flag), setAnimate(flag),
               setInteractive(flag), setOnCellClick(fn), setShowCoords(flag), setModel(model) /* rebuilds, keeps values */,
               refreshText(), pulseDone(), getCellElement(i), getGeometry(), getState(), toSvgString(), toPngBlob(scale?), destroy() }
@@ -1487,7 +1519,7 @@ SG.events.createEmitter(verbosity, sink, options) / toEmitter(x)      // + the p
 
 ### 13.14 `SG.app` — the extension API of the UI
 
-`js/ui/app.js` owns the page and is the only file that new UI modules talk to; the full list is the header of the file. In short: `getStore() getBoard() getPlayer() getStepView() getResult()` (→ `{ result, trace }` or null), `generate(overrides?) regenerate() cancel() showResult(result, { trace, status })`, `toast(kind, key, args)`, `announce(text)`, `openModal({ titleKey, body, footer, wide, onClose })`, and an event bus `on(name, fn) → off` / `emit(name, payload)` with the events `generate:start generate:progress generate:end generate:error generate:cancel result trace position locale theme settings action` (header buttons emit `action { id: 'export' | 'settings' | 'help' }`). At the end of start-up `app.js` calls `init(SG.app)` — idempotent, in its own `try/catch` — on each of `SG.exportUi`, `SG.importUi`, `SG.a11y`, `SG.theme`, `SG.help`, `SG.cache` that exists, in this order; so a new module plugs in **without editing `app.js`**. `SG.cache.init` replaces the generation client through `SG.app.setClient` with a wrapper of the same interface.
+`js/ui/app.js` owns the page and is the only file that new UI modules talk to; the full list is the header of the file. In short: `getStore() getBoard() getPlayer() getStepView() getResult()` (→ `{ result, trace }` or null), `generate(overrides?) regenerate() cancel() showResult(result, { trace, status })`, `setClient(client)` and `attachTrace(trace, digLog?)` (what the cache uses), `toast(kind, key, args)`, `announce(text)`, `openModal({ titleKey, body, footer, wide, onClose })`, and an event bus `on(name, fn) → off` / `emit(name, payload)` with the events `generate:start generate:progress generate:end generate:error generate:cancel result trace position locale theme settings action`. `position` carries `{ position, length, step, direction }` after every move of the replay (`step` is a step of `SG.player.buildSteps`, null at position 0; `direction` is `'forward'`, `'backward'` or `'seek'`); `trace` carries `{ result, trace }` once `attachTrace` gave a puzzle served from the cache its replay. The buttons emit `action { id: 'export' | 'exportCode' | 'play' | 'settings' | 'help' }` (Print, Export and Play at the top right of the main panel, Settings and Help in the header). At the end of start-up `app.js` calls `init(SG.app)` — idempotent, in its own `try/catch` — on each of `SG.exportUi`, `SG.a11y`, `SG.theme`, `SG.help`, `SG.cache` that exists, in this order; so a new module plugs in **without editing `app.js`**. `SG.cache.init` replaces the generation client through `SG.app.setClient` with a wrapper of the same interface.
 
 ### 13.15 `SG.exchange` and the Play-online API of `SG.exportUi`
 
@@ -1505,6 +1537,7 @@ SG.exportUi.buildPlayLink(result, { base?, generatedAt?, locale?, compress? })
                                                                    // -> Promise<{ url, token, base, length, long }>
 SG.exportUi.playerBase(content?) / pagePlayerBase()                // <meta name="sg-player-url"> or the default
 SG.exportUi.openPlayLink(url)                                      // window.open(url, '_blank', 'noopener')
+SG.exportUi.playOnline() -> Promise                                // link of the puzzle on screen, opened in a new tab, toasts (the Play button)
 SG.exportUi.PLAYER_URL_DEFAULT / LONG_LINK_CHARS                   // 'https://tdat00.github.io/sudoku-player/', 100000
 ```
 
@@ -1554,11 +1587,11 @@ SG.exportUi.PLAYER_URL_DEFAULT / LONG_LINK_CHARS                   // 'https://t
 }
 ```
 
-Everything from `symbols` down is **additive**: the first plan's fields are unchanged, and a document that lacks the new ones still imports. The export (`SG.exportUi.toJson`) writes the following beyond the plan: `rawScore`, `hardestGroup`, `confidence`, `solved` and `empties` inside `difficulty`; `stats.timings` (milliseconds per step); `symbols` (the symbol mode and the label of every value, so Mega 16×16 and Wordoku re-import exactly); `digOrder`, `maxAttempts` and `warnings` (the configuration and the warnings of the run); `locale` and `labels` (rule L6: the names of the variant, the level and the hardest technique **in the language of the export**); `model` (the plain-data model spec for sudoku-player, see [§10.9](#109-hand-off-to-the-player-exchange): the import ignores it); and, only where applicable, `layout.cellRow` / `layout.cellCol` (the canvas position of every cell, written for boards that are not a full row-major rectangle — the multi-grid boards, whose canvas has holes) and `wordoku` (`{ word, placement, line }`, Wordoku only). `cages` carry `{ cells, sum, distinct }`; `inequalities` carry `{ a, b }` (`value[a] < value[b]`).
+Everything from `symbols` down is **additive**: the first plan's fields are unchanged. The export (`SG.exportUi.toJson`, the document of the player link) writes the following beyond the plan: `rawScore`, `hardestGroup`, `confidence`, `solved` and `empties` inside `difficulty`; `stats.timings` (milliseconds per step); `symbols` (the symbol mode and the label of every value, so Mega 16×16 and Wordoku are described exactly); `digOrder`, `maxAttempts` and `warnings` (the configuration and the warnings of the run); `locale` and `labels` (rule L6: the names of the variant, the level and the hardest technique **in the language of the export**); `model` (the plain-data model spec for sudoku-player, see [§10.9](#109-hand-off-to-the-player-exchange)); and, only where applicable, `layout.cellRow` / `layout.cellCol` (the canvas position of every cell, written for boards that are not a full row-major rectangle — the multi-grid boards, whose canvas has holes) and `wordoku` (`{ word, placement, line }`, Wordoku only). `cages` carry `{ cells, sum, distinct }`; `inequalities` carry `{ a, b }` (`value[a] < value[b]`).
 
-**Import** (`SG.importUi`): a JSON file, a drop or pasted text, or a plain line of digits (`.`, `0`, `-`, `_` = empty; 16 / 36 / 81 / 144 / 256 characters identify `classic4` / `classic6` / `classic9` / `mega12` / `mega16`, and 81 characters can mean `classic9`, `diagonalX` or `hyper`). It checks the form, rebuilds a **real** `PuzzleModel` of the variant from the stored structure (nothing is randomised), checks givens, solution and uniqueness (a puzzle with none or several solutions still imports, with a warning) and shows it through `SG.app.showResult`; "Analyse difficulty" rates an imported puzzle with the generator's own scorer.
+**No import:** the generator no longer reads puzzle files, pasted text or dropped files (the former `SG.importUi` was removed together with the JSON, text, PNG and SVG exports). The document only travels to the player through the link of [§10.9](#109-hand-off-to-the-player-exchange).
 
-**Compatibility rule:** always check `format` (`sudoku-generator/vN`). A different version ⇒ reject the import with a translatable message (`import.error.wrongVersion`); a corrupt or foreign file gives a translated `import.error.*` text, never an exception. New fields may only be added in a backward-compatible way.
+**Compatibility rule:** the player checks `format` (`sudoku-generator/vN`) and rejects another version. New fields may only be added in a backward-compatible way.
 
 ### 14.2 URL parameters
 
@@ -1566,33 +1599,29 @@ Everything from `symbols` down is **additive**: the first plan's fields are unch
 |-----------|---------|---------|
 | `v` | `v=jigsaw9` | Variant ID |
 | `d` | `d=hard` | Difficulty |
-| `seed` | `seed=1734567890` | Seed (missing ⇒ random) |
+| `seed` | `seed=1734567890` | Seed (missing ⇒ random). A link (or a reload) with a seed generates that puzzle as soon as the page loads |
 | `sym` | `sym=rotational180` | Symmetry type |
 | `mode` | `mode=letters` | Symbol set |
 | `order` | `order=snake` | Dig sequence: `random` (default), `rowByRow`, `snake`, `spiral`, `jumpOne` |
 | `attempts` | `attempts=12` | Maximum full grids to try, 1–20 (default 8) |
-| `trace` | `trace=summary` | Trace verbosity: `off`, `summary`, `full` (default) |
 | `sol` | `sol=1` | Show the solution next to the puzzle |
 | `o.<id>` | `o.cageSize=2` | A variant option, e.g. `o.compactness=0.8`, `o.futoshiki=1`, `o.placement=row` (sanitised against the variant by `SG.variants.sanitizeOptions`) |
 | `lang` | `lang=vi` | Language |
-| `auto` | `auto=1` | Generate automatically as soon as the page loads (and skip the first-visit tour) |
-| `speed` | `speed=instant` | Replay speed: `instant`, `fast` (default), `step`, `manual` |
+| `auto` | `auto=1` | Generate automatically as soon as the page loads (a link with a `seed` does so anyway) |
 
 `?v=classic9&d=expert&seed=42&lang=vi&auto=1` must always reproduce the **exact** same puzzle.
 
-- Only values that differ from the defaults are written to the address bar; a **share link** (result panel, Export dialog: `SG.store.shareUrl`, `toSearchString(state, { full: true })`) always carries `v d sym mode` as well. The page itself never starts a generation because the URL changed.
+- Only values that differ from the defaults are written to the address bar; a **share link** (result panel: `SG.store.shareUrl`, `toSearchString(state, { full: true })`) always carries `v d sym mode` as well. Any other parameter is ignored and left out of the canonical URL — the `trace` and `speed` of older links included (the "Replay detail" option and the replay speed are gone, §10.4). The page never starts a generation because the URL changed; it generates **on load** when the URL has a `seed` (a shared link, or a reload after "Generate random", which writes its new seed to the URL) or `auto=1`.
 - **Seed hashing.** The state keeps the seed as the text the user typed. A decimal integer in 0…4294967295 is used as it is; anything else (letters, a negative number, a number beyond uint32) is hashed to a uint32 with FNV-1a 32 bit over the UTF-16 code units of the NFC-normalised, trimmed text — the same hash `SG.rng` uses to derive child streams. A blank seed means "random" and the `seed` of the configuration is left out.
-- **Priority at start-up:** URL > stored values > defaults; when the URL carries any puzzle parameter (`v d seed sym mode order attempts trace sol o.*`), the URL is the whole puzzle configuration and the stored configuration is ignored — a shared link must not be bent by the receiver's last settings.
+- **Priority at start-up:** URL > stored values > defaults; when the URL carries any puzzle parameter (`v d seed sym mode order attempts sol o.*`), the URL is the whole puzzle configuration and the stored configuration is ignored — a shared link must not be bent by the receiver's last settings.
 
 ### 14.3 `localStorage` keys
 
 | Key | Contents |
 |-----|----------|
-| `sg.prefs.v1` | Language, theme, font size, speed, reduced motion, colour-blind aux symbol |
-| `sg.lastConfig.v1` | The most recent generation configuration |
-| `sg.cache.v1` | `{ version: 1, entries: [{ key, cfg, at, pool, data }] }`: up to 20 generated puzzles (LRU, `pool: true` marks a pre-generated one; at most 2 per configuration, 4 in all), with version checking. `data` is `SG.cache.serialize(result)`: the `toWire` form with typed arrays encoded as `{ $t, d }` plus a checksum of `givens` + `solution`. **No trace is stored.** |
-| `sg.tour.v1` | The first-visit tour has been seen |
-
+| `sg.prefs.v1` | Language, theme, font size, reduced motion, colour-blind aux symbol (a `speed` stored by an older version is ignored) |
+| `sg.lastConfig.v1` | The most recent generation configuration (a `trace` stored by an older version is ignored) |
+| `sg.cache.v1` | `{ version: 1, entries: [{ key, cfg, at, pool, data }] }`: up to 20 generated puzzles (LRU, `pool: true` marks a pre-generated one; at most 2 per configuration, 4 in all), with version checking. `data` is `SG.cache.serialize(result)`: the `toWire` form with typed arrays encoded as `{ $t, d }` plus a checksum of `givens` + `solution`. **No trace and no dig log are stored.** |
 Every read/write is wrapped in `try/catch` (Safari's private mode can throw): blocked or missing storage means the values live in memory for the session (an in-memory LRU for the cache), a `QuotaExceededError` evicts the least recently used entries and retries, and a corrupt item or another schema version is purged. Nothing throws into the application.
 
 ---
@@ -1627,7 +1656,7 @@ All 42 files of `tests/suites/` (the current test count is in `memory.md` and `R
 | `techniques.test.js` | Properties that must hold for **every** registered technique, by looping over `SG.techniques.list()` — a technique added later is tested without editing it |
 | `difficulty.test.js` | Scoring, bands, clue floors, classification against labelled puzzles (within 1 level), monotonicity, the difficulty-bounded digger, invariants I1–I6 |
 | `events.test.js` | The event emitter, verbosity filtering, patches (`invertPatch` round trip), the per-step explanation data, `capTrace` |
-| `pipeline.test.js` | The seven steps in order with `start`/`end` pairs; events against `VOCABULARY`; patches reconstruct the final grid; cost of instrumentation (`off` < 2 %, `full` < 35 %); determinism; hooks; retries; cancellation |
+| `pipeline.test.js` | The seven steps in order with `start`/`end` pairs; events against `VOCABULARY`; patches reconstruct the final grid; cost of instrumentation (`off` < 2 %, `full` < 35 %); the `PuzzleResult` fields and its dig log (applied to the solution, it ends exactly on the puzzle; it is the same for every verbosity and crosses the wire); determinism; hooks; retries; cancellation |
 | `mega.test.js`, `extra-regions.test.js`, `jigsaw.test.js`, `killer.test.js`, `greater-than.test.js`, `multigrid.test.js`, `wordoku.test.js` | One suite per variant file: geometry (unit and cell counts), the variant's own algorithm (layouts, cages, signs, word lists, shared cells), common criteria CV1–CV9, events, i18n |
 | `variants.test.js` | **One sweep over `SG.variants.list()`**: CV0 definition and spec, CV1 models validate, CV2 full grids, CV3 puzzles at every declared level (other levels refused), CV4 invariants I1–I7 (I6 with the variant's own floor), CV5 determinism, CV6 no hang, CV7 names / options / levels in both languages. A variant added later is covered without editing it |
 | `worker.test.js` | `SG.pipeline.runSteps` ≡ `run` (same events, same puzzle); the worker protocol; the client in both modes; cancellation; sessions; `toWire` / `fromWire`; the script lists agree |
@@ -1635,9 +1664,9 @@ All 42 files of `tests/suites/` (the current test count is in `memory.md` and `R
 | `i18n.test.js` | Both language packs and every fragment have the same keys, the same `{placeholders}`, no empty value and no conflict; every `data-i18n` in the HTML exists; every `VOCABULARY` key, technique and error code is translated; the API (plural rules, `eventText`, `detect`) |
 | `ui-contract.test.js` | The function surface of each UI module; every UI file loads without a DOM; no colour literal outside the two token files; the four script lists agree; the mount points of `index.html` |
 | `store.test.js`, `controls.test.js` | State, URL parse / serialise, storage failure modes; the form model built from the variant options |
-| `steps.test.js`, `player.test.js`, `result-view.test.js` | The pure parts of the steps panel / explanation card, the replay engine (checkpoints, inverse patches, manual stepping) and the result panel, run against real traces |
+| `steps.test.js`, `player.test.js`, `result-view.test.js` | The steps list (with a small fake DOM: numbers, titles, the current step, clicks, the legend, the language) and the chart model; the explanation card; the replay steps built from real results (they start from the solution and end on the puzzle, frames, counters that add up, batch sizes, Killer cages, Greater-Than signs, results without a dig log), the board at a position, the step texts in both languages, the manual navigation and its controls; and the result panel |
 | `cache.test.js` | Configuration keys, serialisation, the LRU store and its failure modes, the controller (served from cache, trace regeneration, pre-generation scheduling) |
-| `export.test.js`, `format.test.js`, `exchange.test.js` | File names, print layout, batch seeds, text line, JSON (with its `model` block); the Play-online link (player address, token, length warning, `noopener`); **export → import round trip loses no data** for every variant; `SG.model.create(doc.model)` rebuilds the model of every variant; damaged / foreign / wrong-version input; `exchange.test.js` is the suite shared with sudoku-player (token round trip, limits, player URL, `plain`) |
+| `export.test.js`, `format.test.js`, `exchange.test.js` | Print layout, JSON (with its `model` block), the Play link (player address, token, length warning, `noopener`, the `play` action), the print SVG and its paper look, the `export.*` strings; `SG.model.create(doc.model)` rebuilds the model of every variant (also through a link token); `exchange.test.js` is the suite shared with sudoku-player (token round trip, limits, player URL, `plain`) |
 | `a11y.test.js`, `theme.test.js`, `help.test.js` | Cell labels and keyboard navigation; every theme defines the same tokens and contrast; the help registry (every variant has an entry, shortcuts) and the **README is checked mechanically** (variants table, URL parameters, script paths, links, `node tests/…` commands and flags, `SG.x.y` names, its two worked examples) |
 
 Two further Node scripts are not part of the normal run:
@@ -1674,15 +1703,15 @@ The first plan's checklist: 3 browsers × (desktop + mobile) × (light + dark) �
 
 | # | Risk | Severity | Mitigation |
 |---|------|----------|------------|
-| R1 | Generating `samurai`/`mega16` is too slow and the browser hangs | High | Worker + budget + Cancel button + the live steps panel + automatic `trace` downgrade (no percentage bar: the length of a run is unknown). Outcome: p95 is well inside the budgets (§8.4, §9.1) |
+| R1 | Generating `samurai`/`mega16` is too slow and the browser hangs | High | Worker + budget + Cancel button + the live status line + automatic `trace` downgrade (no percentage bar: the length of a run is unknown). Outcome: p95 is well inside the budgets (§8.4, §9.1) |
 | R2 | Hitting the exact difficulty is harder than expected | High | Technique-bounded oracle (§6.8 ④) + a calibration soak test + always keep an "approximate" fallback with a warning |
 | R3 | A logical technique is implemented incorrectly ⇒ wrongly eliminates a candidate ⇒ the puzzle has **no solution** | Very high | Invariant I7 checks soundness on every fixture; `digger` always re-verifies with `dfs` before returning the final result |
 | R4 | Opening via `file://` does not work | Medium | No ES modules / `fetch`; cooperative main-thread fallback (§9.3); the README explains how to run a server |
 | R5 | A generated Jigsaw layout has no solution | Medium | Validation in the build step + reseeding |
 | R6 | Killer cages admit multiple solutions | Medium | The 3-step repair strategy (§8.2 step 5), bounded by search nodes |
 | R7 | The two language packs drift apart in their keys | Medium | `i18n.test.js` blocks it immediately |
-| R8 | The trace log overflows memory | Medium | `maxTraceEvents` + down-sampling + clearing the old trace |
-| R9 | Animations make the app feel slow | Low | ADR-002: separate real speed from viewing speed; default `fast` |
+| R8 | The trace log overflows memory | Medium | `maxTraceEvents` + down-sampling + clearing the old trace; the replay reads the small dig log, not the trace |
+| R9 | Animations make the app feel slow | Low | ADR-002: the generator runs at full speed, the finished puzzle is shown at once and the replay is stepped by hand (no playback, no speeds) |
 | R10 | Scope creep into building a player | Low | Resolved by the split: the player is its own repository (sudoku-player); this one only hands a puzzle over (task `T-7.8`, §10.9) |
 | R11 | The score formula does not match players' perception | Medium | `T-2.10` / `T-7.7` calibrate it with labelled sample puzzles and soak runs; the costs are plain data in `SG.difficulty.COSTS` |
 | R12 | Several agents editing the same file ⇒ conflicts | Medium | Every task in `task.md` states the **files it owns**; the API contract in §13 is invariant |
@@ -1718,34 +1747,35 @@ Everything above has been brought in line with the implementation. This table co
 
 | Topic | What was built | Why |
 |-------|----------------|-----|
-| Pipeline steps 5–7 (§7.1) | `dig`, `rate` and `tune` are three steps. A missed dig sample repeats dig → rate → tune **on the same grid**, up to 12 samples per grid (30 for symmetries with groups of more than 2 cells); then `retry.difficulty` and a new grid. Events: `dig.start` (args `sample`, `maxSamples`), `tune.hit` / `tune.miss`, `retry.difficulty` | The guided dig shares its rating objective with the rater, and a full grid is much more expensive than another dig of it. The steps panel and the "Attempt n/m" counter are driven from these events |
+| Pipeline steps 5–7 (§7.1) | `dig`, `rate` and `tune` are three steps. A missed dig sample repeats dig → rate → tune **on the same grid**, up to 12 samples per grid (30 for symmetries with groups of more than 2 cells); then `retry.difficulty` and a new grid. Events: `dig.start` (args `sample`, `maxSamples`), `tune.hit` / `tune.miss`, `retry.difficulty` | The guided dig shares its rating objective with the rater, and a full grid is much more expensive than another dig of it. The status line of a run ("Attempt n of m") is driven from these events |
 | Stage B of the dig (§6.8) | A **guided** dig: it rates up to 32 candidate removals per step and applies the one that makes the puzzle hardest, never past the band; levels from `medium` up, starting at ≈ 47 % of the cells as clues. `tune.restore` / "dig deeper with a relaxed oracle" were not built | A finished stage-A puzzle is minimal, so a relaxed oracle finds nothing to remove; random minimal puzzles need only singles 3 times in 4, so the hard levels would be hit too rarely |
 | Costs and bands (§6.6, §6.7) | `SG.difficulty.COSTS` (calibrated: subset ×7, fish ×6, wing ×10, chain ×8, singles 1 / 1.25 / 1.5) and `TABLE` (bands 0 / **72** / 180 / 400 / 800 / 1500); a **technique floor** raises the score to the band minimum of the hardest technique's group; `rating.rawScore` keeps the unfloored value; `report.score` of the solver stays the uncalibrated design score | The design costs overlapped the groups (the ~40 singles of any puzzle drown a few technique steps); the floor makes invariant I5 true by construction; calibration log in `js/core/difficulty.js` (task `T-2.10`) |
 | Clue floors (§6.7; **D1**) | `spec(level, model).minClues` is the one floor; a variant declares `clueFloorScale` and / or `clueFloor`; Killer: `{ veryEasy: 40 }` only; invariant I6, the digger, the pipeline, `soak.js` and the variants sweep all use it | The classic9 floor scaled by `cellCount / 81` made hard/expert unreachable for Killer and left medium/hard hit by 1–20 % of the digs on the hybrid and multi-grid boards (task `T-7.7`) |
 | Levels offered (**D2**, **D3**) | `flower` offers `medium` (it had none); `classic6` does not (it had it) | With the per-variant floor `flower medium` is hit by 49 % of the digs (was 9 %); `classic6 medium` stayed at 0–3 % |
 | `restartThreshold` (**D4**) | `SG.fullGrid.generate` reads the variant's `restartThreshold` unless the caller passes one (Mega: 300 / 400) | It was declared but never wired |
-| Option schema (**D5**) | Variants keep their own shapes; the registry **normalises** them (`optionsOf`, `defaultOptions`, `sanitizeOptions`); the UI, the store, the cache key and the import read only those | Parallel agents wrote slightly different schemas; normalising in one place was cheaper than renaming |
+| Option schema (**D5**) | Variants keep their own shapes; the registry **normalises** them (`optionsOf`, `defaultOptions`, `sanitizeOptions`); the UI, the store and the cache key read only those | Parallel agents wrote slightly different schemas; normalising in one place was cheaper than renaming |
 | Calibration breadth (**D6**) | Costs are tuned on classic9; the other variants calibrate through `clueFloorScale`. `jellyfish` is untestable on real data (never on the solving path of 3 000 natural classic9 puzzles), so its cost only follows the fish factor. `extraPasses` is unused | Classic9 has the highest hit rate; the other boards were already at 95–100 % exact hits and needed speed, not new costs |
 | Technique list (§6.6) | 26 registered: 21 classic + 3 `cage` + 2 `ineq`; Hidden Single split by unit kind, Quad split Naked / Hidden; `order` values in §6.6; **singles are techniques** — the logical solver never calls `propagate` | So that singles are attributed and scored, and `allowedTechniques` means what it says |
 | Event contract (§7.2) | `SG.events.VOCABULARY` (`type`, `stepId`, `phase`, `key`, `level`, `args`, `patch`) is the contract; variants append their own entries; `lookup`, `vocabularyKeys`, `eventProblems` check events | One list that the core, the UI, the locale packs and the tests share |
 | Stepper API (§9.3, §13.9, §13.13) | `SG.pipeline.runSteps` and the `SG.digger.*Steps` generators yield at natural boundaries; `run` is `runSteps` driven by `SG.budget.drive`; `SG.budget.createClock` is an *active* clock | One algorithm for both modes, so events, puzzle and budget accounting cannot differ, and `cancel` works in a worker (which otherwise cannot read its queue) |
 | Worker client (§9.3, §13.10) | `generate / cancel / mode / ready / create / dispose`; session ids; ≈ 30 ms event batches; cooperative cancel, `terminate()` after 150 ms; `MessageChannel` yields; a main-thread mode that runs the same slices; **no `SharedArrayBuffer`** | A shared flag needs cross-origin-isolation headers that a plain static server does not send; `requestIdleCallback`/`setTimeout` are clamped or throttled in background tabs |
-| Lazy extensions (§6.3) | Cage and inequality propagation register on first use (`SG.comboTable.enablePropagation`, `SG.ineq.ensureExtension`); `fromWire`, `SG.cache` and `SG.importUi` switch them on for models they rebuild | The engine's own tests assume an empty extension registry, and a plain page load should not touch the engine |
-| Default trace (§3.3, §14.2) | UI default `full`, pipeline default `summary`; `full` is downgraded to `summary` above 300 cells (Samurai, 369 cells, only) | Only a `full` trace carries the patches that fill the board during the replay |
+| Lazy extensions (§6.3) | Cage and inequality propagation register on first use (`SG.comboTable.enablePropagation`, `SG.ineq.ensureExtension`); `fromWire` and `SG.cache` switch them on for models they rebuild | The engine's own tests assume an empty extension registry, and a plain page load should not touch the engine |
+| Default trace (§3.3, §14.2) | Pipeline default `summary`, which is also what the page gets: it sends no `trace` since the "Replay detail" option was removed; `full` (direct callers, tests) is downgraded to `summary` above 300 cells (Samurai, 369 cells, only) | The replay no longer needs a `full` trace (it reads the dig log); `summary` still feeds the status line of a run |
+| Replay (§3.3, §7.3, §10.3) | Built by `SG.player.buildSteps` from `PuzzleResult.digLog` (the final sample only): one step per visible change of the board, the easy early removals summed up in batches, technical work hidden. The finished puzzle is shown at once and the replay is moved by hand (first / previous / next / last, slider, a click in the steps list), with static frames instead of animations. The first version — a player of the trace with Play/Pause, four speeds (`instant` / `fast` / `step` / `manual`), the `speed` preference and URL parameter, the "Replay detail" option (`trace` URL parameter) and a steps panel of the seven pipeline steps with a technique-frequency bar chart (`#steps-chart`) — was removed | Replaying every event was long and mostly technical (settings, rating, tuning, samples that missed the level), and a trace is capped at 20 000 events and thinned on large boards, so it could not always show the final dig faithfully; the dig log is small, exact and the same for every verbosity, thread and board size |
 | Cell counts (§5.1) | `sohei` 288, `flower` 189 (the first plan said 324 and 225) | Arithmetic of the geometry of §5.2, checked by the builder |
 | Names | UI card = `SG.explainCard` (`js/ui/explain.js`); core data = `SG.explain` (`js/core/explain-data.js`) | They were two modules with the same natural name |
 | Locale strings (§11) | `SG.localeFragments`: every file pushes `{ en, vi }` fragments; `SG.i18n.mergeFragments()` merges them; the base packs win; the strings of the static page frame are one more fragment, `js/ui/locale.shell.js` | Parallel agents never edit the hot locale files |
 | i18n API (§13.11) | `setLocale` returns the code; extras `detect`, `tError`, `eventText`, `setCellLabeler`, `has`, `keys`, `formatNumber`, `formatDuration`; plural rules via `Intl.PluralRules` | Needed by the controls, the steps panel, the exports and the tests |
 | Board view (§13.12) | Ten layers (`regions overlays word cages ineq cells values grid coords overlay`); `setLayerVisible`, `getGeometry`, pure `geometry` / `renderMarkup` / `exportSvg`; one cell = 40 board units | Export, print and the help pictures reuse the pure part without a DOM |
-| JSON export (§14.1) | Additive fields: `layout.cellRow/cellCol` (non-row-major boards), `symbols`, `wordoku`, `digOrder`, `maxAttempts`, `warnings`, `stats.timings`, `locale`, `labels`, extra `difficulty` fields, and (task `T-7.8`) `model`, the plain-data model spec for the player | A re-import must lose nothing; rule L6 (names in the export language); the player rebuilds the board without any variant code |
-| URL and storage (§14.2, §14.3) | Extra params `order attempts trace sol o.<id>`; seed hashing (FNV-1a); share links carry `v d sym mode`; extra key `sg.tour.v1`; `sg.cache.v1` format | State that is not a puzzle parameter must not bend a shared link |
-| Cache (§6.8 ⑦) | Result cache + background pool; the trace is **regenerated from the seed**; *progressive difficulty (warm start)* not built | A trace can be megabytes; the guided dig already covers the warm-start need |
+| JSON document (§14.1) | Additive fields: `layout.cellRow/cellCol` (non-row-major boards), `symbols`, `wordoku`, `digOrder`, `maxAttempts`, `warnings`, `stats.timings`, `locale`, `labels`, extra `difficulty` fields, and (task `T-7.8`) `model`, the plain-data model spec for the player | The document must describe the puzzle completely; rule L6 (names in the export language); the player rebuilds the board without any variant code |
+| URL and storage (§14.2, §14.3) | Extra params `order attempts sol o.<id>` (the `trace` and `speed` of older versions are ignored); a URL with a `seed` generates on load; seed hashing (FNV-1a); share links carry `v d sym mode`; `sg.cache.v1` format | State that is not a puzzle parameter must not bend a shared link |
+| Cache (§6.8 ⑦) | Result cache + background pool; the trace and the dig log (the replay) are **regenerated from the seed**; *progressive difficulty (warm start)* not built | A trace can be megabytes; the guided dig already covers the warm-start need |
 | Multi-grid (§8.4) | Generic MRV + `fastSeedOverlaps`; no sub-grid-wise digging sequence; p95 ≈ 0.07–0.5 s in Node instead of the planned 8–20 s budgets | The oracle and the clue floors keep the digs short |
 | Mega (§8.6) | Symbol set is the option `symbolSet`; **no** mobile minimap / horizontal scroll (the SVG scales to the width) | Scaling the viewBox was enough for the board sizes tested; the minimap is an idea (below) |
 | Killer, Greater-Than, Wordoku (§8.2, §8.3, §8.5) | Killer's layout uniqueness check / repair runs for hard and above only (veryEasy–medium rely on the clues); GT: `build` returns the empty board, signs come from `postGenerate`, the dig removes signs (revealing clue groups where the level needs them); Wordoku letters are in alphabetical order and the VI list is short, so the EN list takes over with an event | Models are immutable; uniqueness at the easy levels is guaranteed by the oracle |
 | Unique-solution check (§6.5) | `stillUnique` is ≈ 3.7–4× faster than counting on remove-stays-unique calls, ≈ 1.8× over a whole dig | The first estimate (5–12×) was optimistic; the "≥ 3×" criterion was accepted in its narrower reading |
 | Order of work (§17) | P5 `T-5.1…5.8` before P4; `T-5.9`, `T-5.10` after P4 had started; the pre-generation task `T-6.3` is *not* the calibration (that is `T-2.10`) | Avoided merge conflicts on the hot files |
-| Split into two repositories (`T-7.5`, `T-7.8`) | The trial-play mode (`js/ui/play.js`, `css/play.css`, `tests/suites/play.test.js`, the `sg.play.v1` key and the play shortcuts of the help) moved to the **sudoku-player** repository. This one keeps the generator and gains `js/ui/exchange.js` (shared byte for byte), the `model` block of the JSON and the "Play online" action of the Export dialog (§10.9) | A player and a generator have different users and release rhythm; the only coupling left is a documented document format, carried in a URL fragment so that no server is involved |
+| Split into two repositories (`T-7.5`, `T-7.8`) | The trial-play mode (`js/ui/play.js`, `css/play.css`, `tests/suites/play.test.js`, the `sg.play.v1` key and the play shortcuts of the help) moved to the **sudoku-player** repository. This one keeps the generator and gains `js/ui/exchange.js` (shared byte for byte), the `model` block of the JSON and the "Play" button (§10.9) that opens the puzzle in the player | A player and a generator have different users and release rhythm; the only coupling left is a documented document format, carried in a URL fragment so that no server is involved |
 | Tests (§15) | 42 suites (`play.test.js` left, `exchange.test.js` came); the harness has more matchers; the README is checked mechanically by `help.test.js`; `tests/perf.js` + regression hashes; `tests/soak.js --full` | See §15 |
 | Document history | This specification was translated from Vietnamese to English at the user's request; the original Vietnamese `design.md` / `task.md` no longer exist on disk | — |
 

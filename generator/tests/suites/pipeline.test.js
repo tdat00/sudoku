@@ -861,8 +861,8 @@
   describe('pipeline: the PuzzleResult (design.md 13.9)', function () {
     it('has exactly the fields of the contract', function () {
       var out = run({ difficulty: 'easy', seed: 4 });
-      expect(Object.keys(out.result).sort()).toEqual(['attempts', 'config', 'givens', 'model', 'rating',
-        'seed', 'solution', 'timings', 'warnings']);
+      expect(Object.keys(out.result).sort()).toEqual(['attempts', 'config', 'digLog', 'givens', 'model',
+        'rating', 'seed', 'solution', 'timings', 'warnings']);
     });
 
     it('holds a valid puzzle: invariants I1, I2, I3 and I6, and the model and rating', function () {
@@ -933,6 +933,94 @@
       STEPS.forEach(function (id) { expect(result.timings[id]).toBeGreaterThan(0); });
       expect(result.timings.dig).toBeGreaterThan(result.timings.fullGrid);
       expect(result.timings.dig).toBeGreaterThan(result.timings.rate);
+    });
+  });
+
+  // ---------------------------------------------------------------------------------------------
+  // The dig log of the result (what the replay of the UI is built from)
+  // ---------------------------------------------------------------------------------------------
+
+  var DIG_OPS = ['pass', 'accept', 'reject', 'keep', 'restart', 'signs', 'clear', 'reveal'];
+
+  /** Applies a dig log to the solution: the board and, for Greater-Than, the signs it ends with. */
+  function replayDigLog(result) {
+    var values = Int32Array.from(result.solution);
+    var signs = null;
+    var alive = null;
+    result.digLog.forEach(function (e) {
+      if (e.op === 'signs') {
+        signs = e.signs;
+        alive = signs.map(function () { return 1; });
+      } else if (e.op === 'clear') {
+        values.fill(0);
+      } else if (e.op === 'reveal') {
+        e.cells.forEach(function (c) { values[c] = result.solution[c]; });
+      } else if (e.op === 'restart') {
+        values = Int32Array.from(result.solution);
+      } else if (e.op === 'accept') {
+        if (typeof e.sign === 'number') alive[e.sign] = 0;
+        else e.cells.forEach(function (c) { values[c] = 0; });
+      }
+    });
+    return {
+      values: values,
+      signs: signs === null ? null : signs.filter(function (s, i) { return alive[i] === 1; })
+    };
+  }
+
+  function checkDigLog(result) {
+    expect(Array.isArray(result.digLog)).toBe(true);
+    expect(result.digLog.length).toBeGreaterThan(0);
+    result.digLog.forEach(function (e) {
+      expect(DIG_OPS.indexOf(e.op)).not.toBe(-1);
+      if (e.op === 'accept' || e.op === 'reject' || e.op === 'keep' || e.op === 'reveal') {
+        expect(e.cells.length).toBeGreaterThan(0);
+        e.cells.forEach(function (c) { expect(c >= 0 && c < result.model.cellCount).toBe(true); });
+      }
+      if (e.op === 'reject') expect(typeof e.reason).toBe('string');
+      if (e.op === 'pass') expect(typeof e.pass).toBe('string');
+    });
+    var end = replayDigLog(result);
+    expect(Array.from(end.values)).toEqual(Array.from(result.givens));
+    if (end.signs !== null) {
+      expect(end.signs).toEqual(result.model.inequalities.map(function (q) { return [q.a, q.b]; }));
+    }
+  }
+
+  describe('pipeline: the dig log (the data of the replay)', function () {
+    [['classic4', 'easy'], ['classic9', 'veryEasy'], ['classic9', 'medium'], ['classic9', 'evil'],
+      ['killer', 'easy'], ['greaterThan', 'easy'], ['greaterThan', 'medium'], ['wordoku', 'easy'],
+      ['jigsaw9', 'easy']].forEach(function (pair) {
+      it(pair[0] + ' ' + pair[1] + ': applied to the solution, it ends exactly on the puzzle', function () {
+        var out = run({ variantId: pair[0], difficulty: pair[1], seed: 21 }, 'off');
+        checkDigLog(out.result);
+        var ops = out.result.digLog.map(function (e) { return e.op; });
+        expect(ops).toContain('pass');
+        expect(ops).toContain('accept');
+        if (pair[0] === 'greaterThan') {
+          expect(ops[0]).toBe('signs');
+          expect(ops).toContain('clear');
+        }
+      }, 60000);
+    });
+
+    it('records the guided pass from medium on: candidates kept or refused, then the hardest removed',
+      function () {
+        var log = run({ difficulty: 'hard', seed: 8 }, 'off').result.digLog;
+        var passes = log.filter(function (e) { return e.op === 'pass'; }).map(function (e) { return e.pass; });
+        expect(passes).toEqual(['random', 'guided']);
+        var guided = log.slice(log.map(function (e) { return e.pass; }).indexOf('guided'));
+        expect(guided.some(function (e) { return e.op === 'keep'; })).toBe(true);
+        expect(guided.some(function (e) { return e.op === 'accept'; })).toBe(true);
+      });
+
+    it('does not depend on the trace verbosity, and is plain data that crosses the wire', function () {
+      var off = run({ difficulty: 'medium', seed: 12 }, 'off').result;
+      var full = run({ difficulty: 'medium', seed: 12 }, 'full').result;
+      expect(full.digLog).toEqual(off.digLog);
+      expect(JSON.parse(JSON.stringify(off.digLog))).toEqual(off.digLog);
+      expect(P.fromWire(P.toWire(off)).digLog).toEqual(off.digLog);
+      expect(P.fromWire(Object.assign({}, P.toWire(off), { digLog: undefined })).digLog).toBeUndefined();
     });
   });
 
@@ -1398,6 +1486,13 @@
           checkNesting(out.events);
           expect(SG.dfs.countSolutions(out.result.model, out.result.givens, 2)).toBe(1);
           expect(Array.from(replay(out.events, 81).value)).toEqual(Array.from(out.result.givens));
+          checkDigLog(out.result);
+          var restart = out.result.digLog.map(function (e) { return e.op; }).indexOf('restart');
+          if (restart !== -1) {
+            // The puzzle comes from a replaced sample: its log digs again from the full grid.
+            expect(out.result.digLog[restart + 1].op).toBe('pass');
+            expect(out.result.digLog[restart + 1].pass).toBe('fallback');
+          }
           if (count(out.events, 'dig.unsound') > 0) {
             sawUnsound = true;
             expect(out.result.warnings).toContain('digger.unsoundTechnique');

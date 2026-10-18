@@ -1030,9 +1030,9 @@
       checkBoth('names', required);
     });
 
-    it('has the names of the replay speeds and the generic words', function () {
+    it('has the generic words', function () {
       packsReady();
-      var required = ['instant', 'fast', 'step', 'manual'].map(function (speed) { return 'speed.' + speed; });
+      var required = [];
       ['yes', 'no', 'ok', 'cancel', 'close', 'loading'].forEach(function (word) {
         required.push('common.' + word);
       });

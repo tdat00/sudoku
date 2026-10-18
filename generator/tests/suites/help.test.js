@@ -1,8 +1,8 @@
-// Help and tour (task T-7.6): everything in js/ui/help.js that runs without a DOM, plus the documentation. The
-// dialog and the tour themselves are DOM code and are covered by the browser run of the task; what is checked
-// here is what keeps them honest: every registered variant has a help entry (a variant added later makes this
+// Help dialog (task T-7.6): everything in js/ui/help.js that runs without a DOM, plus the documentation. The
+// dialog itself is DOM code and is covered by the browser run of the task; what is checked
+// here is what keeps it honest: every registered variant has a help entry (a variant added later makes this
 // suite fail until it has one), the texts exist in both languages, the ladder follows the technique registry,
-// the tour decides correctly with any storage, and README.md is accurate (every variant, URL parameter, script,
+// and README.md is accurate (every variant, URL parameter, script,
 // link, command and API name it mentions exists, and its two worked examples run).
 (function () {
   'use strict';
@@ -259,13 +259,18 @@
       });
     });
 
-    it('reuses the labels and hints of the controls', function () {
+    it('reuses the labels and hints of the controls, and has the replay instead of the speeds', function () {
       ready();
       H.controlsGlossary().forEach(function (c) {
         expect(missingIn('en', [c.labelKey, c.textKey])).toEqual([]);
         expect(missingIn('vi', [c.labelKey, c.textKey])).toEqual([]);
       });
       expect(H.controlsGlossary().length).toBeGreaterThan(10);
+      var ids = H.controlsGlossary().map(function (c) { return c.id; });
+      expect(ids).toContain('replay');
+      ['trace', 'instant', 'fast', 'step', 'manual'].forEach(function (id) {
+        expect(ids).not.toContain(id);
+      });
     });
 
     it('needs only keys that exist in both packs (own and foreign)', function () {
@@ -273,7 +278,8 @@
       var keys = H.requiredKeys();
       expect(keys).toContain('technique.xWing');
       expect(keys).toContain('help.title');
-      expect(keys.length).toBeGreaterThan(300);
+      expect(keys).toContain('help.controls.replay');
+      expect(keys.length).toBeGreaterThan(250);
       expect(missingIn('en', keys)).toEqual([]);
       expect(missingIn('vi', keys)).toEqual([]);
     });
@@ -294,7 +300,7 @@
       'help.difficulty.variant.for': ['variants'],
       'help.difficulty.closest.text': ['badge', 'retry'],
       'help.generation.worker': ['main', 'worker'],
-      'help.tour.progress': ['n', 'total']
+      'help.generation.current': ['length', 'position']
     };
 
     it('has the same keys in English and Vietnamese, none empty, the same placeholders', function () {
@@ -338,7 +344,7 @@
       var sample = {
         count: 15, digits: 9, levels: 'Easy', modes: 'Digits', word: 'SUNFLOWER', multiplier: '1.5', bonus: '0.6',
         min: '1,500', group: 'Singles', variants: 'Killer', badge: 'Closest', retry: 'Retry', main: 'Main',
-        worker: 'Worker', n: 1, total: 4
+        worker: 'Worker', position: 6, length: 12
       };
       var before = SG.i18n.current;
       try {
@@ -353,128 +359,6 @@
       } finally {
         SG.i18n.setLocale(before);
       }
-    });
-  });
-
-  // ---------------------------------------------------------------------------------------------
-  // 4. The tour
-  // ---------------------------------------------------------------------------------------------
-
-  describe('help: the first-time tour', function () {
-    function storageWith(value) {
-      return { getItem: function (key) { return key === H.TOUR_KEY ? value : null; } };
-    }
-
-    it('has three or four steps over elements that exist in index.html', function () {
-      needNode();
-      var steps = H.tourSteps();
-      expect(steps.length).toBeGreaterThan(2);
-      expect(steps.length).toBeLessThan(5);
-      var html = readText('index.html');
-      var wanted = {};
-      steps.forEach(function (step) {
-        expect(step.targets.length).toBeGreaterThan(0);
-        step.targets.forEach(function (alternative) {
-          alternative.forEach(function (selector) {
-            expect(/^#[A-Za-z][\w-]*$/.test(selector)).toBe(true);
-            wanted[selector.slice(1)] = true;
-            expect(html).toContain('id="' + selector.slice(1) + '"');
-          });
-        });
-        expect(missingIn('en', [step.titleKey, step.textKey])).toEqual([]);
-        expect(missingIn('vi', [step.titleKey, step.textKey])).toEqual([]);
-      });
-      ['controls-root', 'btn-generate', 'board-root', 'player-root', 'steps-root'].forEach(function (id) {
-        expect(wanted[id]).toBe(true);
-      });
-    });
-
-    it('is shown to a first-time visitor and never twice when the storage works', function () {
-      ready();
-      expect(H.TOUR_KEY).toBe('sg.tour.v1');
-      expect(H.shouldShowTour(storageWith(null), '')).toBe(true);
-      expect(H.shouldShowTour(storageWith(undefined), '?v=killer')).toBe(true);
-      expect(H.shouldShowTour(storageWith(''), '')).toBe(true);
-      expect(H.shouldShowTour(storageWith('1'), '')).toBe(false);
-      expect(H.shouldShowTour(storageWith('seen'), '?lang=vi')).toBe(false);
-    });
-
-    it('is shown once per page load when the storage is blocked, missing or throws', function () {
-      ready();
-      var throwing = { getItem: function () { throw new Error('SecurityError'); } };
-      expect(H.shouldShowTour(throwing, '')).toBe(true);
-      expect(H.shouldShowTour(null, '')).toBe(true);
-      expect(H.shouldShowTour(undefined, '')).toBe(true);
-      expect(H.shouldShowTour({}, '')).toBe(true);
-      expect(H.shouldShowTour(throwing, '?auto=1')).toBe(false);
-    });
-
-    it('is never shown for an automated or shared link (auto=1), whatever the storage says', function () {
-      ready();
-      var fresh = storageWith(null);
-      ['?auto=1', '?v=classic9&d=hard&auto=1', '?auto=true', '?auto=ON', '?seed=1&auto=yes&lang=vi',
-        'file:///x/index.html?auto=1#top', 'https://example.org/app/?v=killer&auto=1'].forEach(function (url) {
-        expect(H.shouldShowTour(fresh, url)).toBe(false);
-      });
-      ['?auto=0', '?auto=false', '?auto=', '?automatic=1', '?x=auto=1', '', '?v=killer#auto=1',
-        'https://example.org/auto=1'].forEach(function (url) {
-        expect(H.shouldShowTour(fresh, url)).toBe(true);
-      });
-      expect(H.shouldShowTour(fresh, { search: '?auto=1' })).toBe(false);
-      expect(H.shouldShowTour(fresh, { search: '' })).toBe(true);
-      expect(H.shouldShowTour(fresh)).toBe(true);
-      expect(H.shouldShowTour(fresh, 42)).toBe(true);
-    });
-
-    it('puts the card beside the target, inside the viewport, preferring the right side', function () {
-      ready();
-      var card = { width: 352, height: 220 };
-      var desktop = { width: 1440, height: 900 };
-      var left = H.placeCard({ left: 10, top: 45, right: 302, bottom: 900 }, card, desktop);
-      expect(left.side).toBe('right');
-      expect(left.left).toBeGreaterThan(301);
-      var beside = H.placeCard({ left: 600, top: 20, right: 900, bottom: 80 }, card, { width: 1000, height: 900 });
-      expect(beside.side).toBe('left');
-      var below = H.placeCard({ left: 20, top: 20, right: 980, bottom: 80 }, card, { width: 1000, height: 900 });
-      expect(below.side).toBe('bottom');
-      expect(below.top).toBeGreaterThan(80);
-      var onTheEdge = H.placeCard({ left: 1100, top: 100, right: 1430, bottom: 300 }, card, desktop);
-      expect(onTheEdge.side).toBe('left');
-      expect(onTheEdge.left + card.width).toBeLessThan(1101);
-      [{ left: 0, top: 0, right: 1440, bottom: 900 }, { left: 5, top: 5, right: 40, bottom: 40 },
-        { left: 1400, top: 860, right: 1440, bottom: 900 }, null].forEach(function (rect) {
-        var at = H.placeCard(rect, card, desktop);
-        expect(at.left).toBeGreaterThan(11);
-        expect(at.top).toBeGreaterThan(11);
-        expect(at.left + card.width).toBeLessThan(desktop.width - 11);
-        expect(at.top + card.height).toBeLessThan(desktop.height - 11);
-      });
-    });
-
-    it('goes above a bar at the bottom of a phone, and covers the least of a target that fills the screen', function () {
-      ready();
-      var phone = { width: 375, height: 667 };
-      var card = { width: 351, height: 230 };
-      var bar = H.placeCard({ left: 0, top: 614, right: 375, bottom: 667 }, card, phone);
-      expect(bar.side).toBe('top');
-      expect(bar.top + card.height).toBeLessThan(614);
-      var big = H.placeCard({ left: 0, top: 0, right: 375, bottom: 400 }, card, phone);
-      expect(big.side).toBe('bottom');
-      var centre = H.placeCard(null, card, phone);
-      expect(centre.side).toBe('center');
-    });
-
-    it('joins rectangles', function () {
-      ready();
-      var u = H.unionRect([{ left: 10, top: 20, right: 30, bottom: 40 }, { left: 5, top: 25, right: 50, bottom: 35 }]);
-      expect(u.left).toBe(5);
-      expect(u.top).toBe(20);
-      expect(u.right).toBe(50);
-      expect(u.bottom).toBe(40);
-      expect(u.width).toBe(45);
-      expect(u.height).toBe(20);
-      expect(H.unionRect([])).toBeNull();
-      expect(H.unionRect([{ left: 0, top: 0, right: 0, bottom: 10 }, null])).toBeNull();
     });
   });
 
@@ -499,7 +383,6 @@
         app.subscribed[0].fn({ id: 'help' });
         app.subscribed[0].fn({ id: 'export' });
         app.subscribed[0].fn(null);
-        expect(H.isTourActive()).toBe(false);
       } finally {
         H.destroy();
       }
@@ -511,8 +394,6 @@
       expect(H.init(null)).toBe(false);
       expect(H.init({})).toBe(false);
       expect(H.open()).toBeNull();
-      expect(H.startTour()).toBe(false);
-      expect(H.stopTour('skip')).toBe(false);
       H.close();
     });
   });
@@ -616,13 +497,12 @@
       var d = SG.store.defaults();
       var all = Object.assign({}, d, {
         variantId: 'wordoku', difficulty: 'hard', seed: '42', symmetry: 'mirrorH', symbolMode: 'digits',
-        digOrder: 'snake', maxAttempts: 3, trace: 'off', showSolution: true, lang: 'vi', speed: 'manual',
+        digOrder: 'snake', maxAttempts: 3, showSolution: true, lang: 'vi',
         auto: true, variantOptions: { placement: 'row', line: 3 }
       });
       var params = Object.keys(SG.store.toUrlParams(all, { full: true }));
       expect(params).toContain('order');
       expect(params).toContain('attempts');
-      expect(params).toContain('trace');
       expect(params).toContain('sol');
       expect(params).toContain('o.placement');
       var text = readme();

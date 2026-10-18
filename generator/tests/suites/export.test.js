@@ -1,8 +1,8 @@
-// Export and print (tasks T-7.1 and T-7.8): the pure parts of SG.exportUi that run on Node: file names, the page plan of a
-// print job, the seeds of a batch, the text line, the JSON document of design.md 14.1 (with its `model` block),
-// the "Play online" link to sudoku-player, the standalone SVG of a
-// puzzle (and its paper look), the batch generation with an independent client, and the strings of the dialog.
-// The dialog, the downloads and the print path need a DOM and are verified in the browser.
+// Print / PDF export and the hand-off to the player (tasks T-7.1 and T-7.8): the pure parts of SG.exportUi that
+// run on Node: the page plan of a print job, the JSON document of design.md 14.1 (with its `model` block), the
+// "Play online" link to sudoku-player (and the 'play' action of the app), the standalone SVG of a puzzle (and
+// its paper look), and the strings of the dialog. The dialog and the print path need a DOM and are verified in
+// the browser.
 (function () {
   'use strict';
 
@@ -49,46 +49,6 @@
     SG.boardView.TOKEN_NAMES.forEach(function (name) { out[name] = 'T<' + name.replace('--sg-board-', '') + '>'; });
     return out;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // File names
-  // ---------------------------------------------------------------------------------------------
-
-  describe('export: file names', function () {
-    it('sudoku-<variant>-<level>-<seed>.<ext> in English', function () {
-      ready();
-      var r = realResult('classic9', 'easy', 5);
-      expect(E.fileName(r, 'json')).toBe('sudoku-classic-9x9-' + r.rating.level.toLowerCase() + '-5.json');
-      expect(E.fileName(r, 'PNG')).toMatch(/\.png$/);
-      expect(E.fileName(r, 'txt')).toMatch(/^sudoku-[a-z0-9-]+\.txt$/);
-      expect(E.fileName(realResult('killer', 'easy', 5), 'svg')).toMatch(/^sudoku-killer-[a-z-]+-5\.svg$/);
-      expect(E.fileName(realResult('jigsaw9', 'easy', 5), 'svg')).toMatch(/^sudoku-jigsaw-/);
-    });
-
-    it('in Vietnamese the words are translated and have no accents, spaces or odd characters', function () {
-      ready();
-      inLocale('vi', function () {
-        var r = realResult('classic9', 'easy', 5);
-        var name = E.fileName(r, 'json');
-        expect(name).toMatch(/^sudoku-co-dien-9x9-[a-z-]+-5\.json$/);
-        expect(name).not.toBe(inLocale('en', function () { return E.fileName(r, 'json'); }));
-        ['killer', 'greaterThan', 'jigsaw9', 'wordoku', 'mega16', 'diagonalX', 'hyper', 'samurai', 'flower']
-          .forEach(function (id) {
-            var other = SG.variants.get(id).difficultySupport[0];
-            expect(E.fileName(realResult(id, other, 5), 'png')).toMatch(/^sudoku-[a-z0-9]+(-[a-z0-9]+)*-5\.png$/);
-          });
-      });
-    });
-
-    it('adds a suffix before the extension, and leaves the seed out when the puzzle has none', function () {
-      ready();
-      var r = realResult('classic4', 'veryEasy', 9);
-      expect(E.fileName(r, 'png', { suffix: 'solution' })).toMatch(/-9-solution\.png$/);
-      var imported = Object.assign({}, r, { seed: null });
-      expect(E.fileName(imported, 'txt')).toMatch(/^sudoku-classic-4x4-[a-z-]+\.txt$/);
-      expect(E.fileName(imported, 'txt')).not.toMatch(/-null/);
-    });
-  });
 
   // ---------------------------------------------------------------------------------------------
   // The page plan
@@ -161,101 +121,27 @@
   });
 
   // ---------------------------------------------------------------------------------------------
-  // Batch seeds
+  // What was removed
   // ---------------------------------------------------------------------------------------------
 
-  describe('export: batch seeds', function () {
-    it('n distinct uint32 seeds; the first is the base seed; the same base gives the same batch', function () {
+  describe('export: only print / PDF and Play are left', function () {
+    it('the file, text, image and batch API is gone, and so is the importer', function () {
       ready();
-      [0, 1, 42, 123456789, 4294967295].forEach(function (base) {
-        var seeds = E.batchSeeds(base, E.MAX_BATCH);
-        expect(seeds.length).toBe(E.MAX_BATCH);
-        expect(seeds[0]).toBe(base);
-        expect(new Set(seeds).size).toBe(E.MAX_BATCH);
-        seeds.forEach(function (s) {
-          expect(Number.isInteger(s) && s >= 0 && s <= 4294967295).toBe(true);
-        });
-        expect(E.batchSeeds(base, E.MAX_BATCH)).toEqual(seeds);
-        expect(E.batchSeeds(base, 6)).toEqual(seeds.slice(0, 6));
+      ['formatJson', 'toText', 'textSupport', 'fileName', 'makeFile', 'download', 'batchSeeds', 'createBatch',
+        'svgSize', 'MAX_BATCH', 'PNG_SCALES'].forEach(function (name) {
+        expect(E[name]).toBeUndefined();
       });
+      expect(SG.importUi).toBeUndefined();
     });
 
-    it('different bases give different batches; zero or a nonsense count gives nothing', function () {
+    it('what the player and the print path need is still there', function () {
       ready();
-      expect(E.batchSeeds(1, 6).slice(1)).not.toEqual(E.batchSeeds(2, 6).slice(1));
-      expect(E.batchSeeds(7, 0)).toEqual([]);
-      expect(E.batchSeeds(7, -3)).toEqual([]);
-      expect(E.batchSeeds(7, NaN)).toEqual([]);
-      expect(E.batchSeeds(-1, 2)[0]).toBe(4294967295);
-    });
-  });
-
-  // ---------------------------------------------------------------------------------------------
-  // Text
-  // ---------------------------------------------------------------------------------------------
-
-  describe('export: text', function () {
-    it('a classic 9x9 is 81 characters, "." for empty, the digits otherwise', function () {
-      ready();
-      var r = realResult('classic9', 'easy', 5);
-      var line = E.toText(r);
-      expect(line.length).toBe(81);
-      expect(/^[1-9.]{81}$/.test(line)).toBe(true);
-      expect(81 - count(line, '.')).toBe(arr(r.givens).filter(function (v) { return v > 0; }).length);
-      for (var i = 0; i < 81; i++) expect(line[i] === '.' ? 0 : Number(line[i])).toBe(r.givens[i]);
-      var solution = E.toText(r, { solution: true });
-      expect(/^[1-9]{81}$/.test(solution)).toBe(true);
-      expect(E.textSupport(r)).toEqual({ ok: true, notes: [], reason: null });
-    });
-
-    it('4x4 and 6x6 give 16 and 36 characters; 12x12 and 16x16 write 10 and above as A, B, C', function () {
-      ready();
-      expect(E.toText(realResult('classic4', 'easy', 1)).length).toBe(16);
-      expect(E.toText(realResult('classic6', 'easy', 1)).length).toBe(36);
-      var m12 = realResult('mega12', 'veryEasy', 1);
-      var m16 = realResult('mega16', 'veryEasy', 1);
-      expect(E.toText(m12, { solution: true })).toMatch(/^[1-9ABC]{144}$/);
-      expect(E.toText(m16, { solution: true })).toMatch(/^[1-9A-G]{256}$/);
-      expect(E.toText(m16, { solution: true })).toContain('G');
-    });
-
-    it('says what a line leaves out: the extra rule, the symbol set', function () {
-      ready();
-      expect(E.textSupport(realResult('diagonalX', 'easy', 1)).notes).toEqual(['export.text.note.rules']);
-      expect(E.textSupport(realResult('hyper', 'easy', 1)).notes).toEqual(['export.text.note.rules']);
-      expect(E.textSupport(realResult('wordoku', 'easy', 1)).notes).toEqual(['export.text.note.symbols']);
-      expect(E.textSupport(realResult('mega12', 'veryEasy', 1)).notes).toEqual(['export.text.note.symbols']);
-      expect(E.toText(realResult('diagonalX', 'easy', 1)).length).toBe(81);
-    });
-
-    it('is not offered, with a reason, where a line would lose data: Jigsaw, Killer, Greater-Than, multi-grid', function () {
-      ready();
-      var expected = { jigsaw9: 'export.text.reason.regions', killer: 'export.text.reason.cages',
-        greaterThan: 'export.text.reason.signs', samurai: 'export.text.reason.grids',
-        sohei: 'export.text.reason.grids', butterfly: 'export.text.reason.grids',
-        flower: 'export.text.reason.grids' };
-      Object.keys(expected).forEach(function (id) {
-        var level = SG.variants.get(id).difficultySupport[0];
-        var r = realResult(id, level, 1);
-        var support = E.textSupport(r);
-        expect(support.ok).toBe(false);
-        expect(support.reason).toBe(expected[id]);
-        expect(E.toText(r)).toBeNull();
-        expect(E.toText(r, { solution: true })).toBeNull();
-        ['en', 'vi'].forEach(function (code) {
-          inLocale(code, function () {
-            expect(SG.i18n.has(support.reason)).toBe(true);
-            expect(SG.i18n.t(support.reason)).not.toBe(support.reason);
-          });
-        });
+      ['init', 'open', 'openCode', 'close', 'toJson', 'buildPlayLink', 'buildExportCode', 'playerBase',
+        'pagePlayerBase', 'openPlayLink',
+        'playOnline', 'buildPrintLayout', 'boardSvg', 'printTokens', 'printItems', 'buildPrintRoot',
+        'clearPrint'].forEach(function (name) {
+        expect(typeof E[name]).toBe('function');
       });
-    });
-
-    it('no solution known: no solution text', function () {
-      ready();
-      var r = Object.assign({}, realResult('classic9', 'easy', 5), { solution: new Int32Array(81) });
-      expect(E.toText(r, { solution: true })).toBeNull();
-      expect(E.toText(r)).not.toBeNull();
     });
   });
 
@@ -359,26 +245,6 @@
       expect(E.toJson(r, { generatedAt: FIXED.generatedAt, locale: 'vi' }).locale).toBe('vi');
     });
 
-    it('formatJson: two-space indent, one board row per line for the grids, a final newline', function () {
-      ready();
-      var d = E.toJson(realResult('classic9', 'easy', 5), FIXED);
-      var text = E.formatJson(d);
-      expect(text.charAt(0)).toBe('{');
-      expect(text.slice(-2)).toBe('}\n');
-      var lines = text.split('\n');
-      var start = lines.indexOf('  "givens": [');
-      expect(start).toBeGreaterThan(0);
-      for (var r = 0; r < 9; r++) {
-        expect(lines[start + 1 + r]).toMatch(/^ {4}[0-9](, [0-9]){8},?$/);
-      }
-      expect(lines[start + 10]).toBe('  ],');
-      expect(JSON.parse(text)).toEqual(d);
-      var killer = E.toJson(realResult('killer', 'easy', 11), FIXED);
-      var kText = E.formatJson(killer);
-      expect(kText).toMatch(/\n {4}\{"cells":\[\d+(,\d+)*\],"sum":\d+,"distinct":true\}/);
-      expect(JSON.parse(kText)).toEqual(killer);
-    });
-
     it('a puzzle without a known solution writes "solution": null', function () {
       ready();
       var r = Object.assign({}, realResult('classic9', 'easy', 5), { solution: new Int32Array(81) });
@@ -436,14 +302,28 @@
       expect((await SG.exchange.decode(other.token)).seed).toBe(11);
     });
 
-    it('works for an imported puzzle (only the document matters), with no seed', async function () {
+    it('builds the text code: the token of the link, which decodes to the document of toJson', async function () {
       ready();
-      var imported = SG.importUi.toResult(SG.importUi.importText(
-        E.formatJson(E.toJson(realResult('classic9', 'easy', 5), FIXED))));
-      var link = await E.buildPlayLink(imported, { generatedAt: FIXED.generatedAt });
+      var r = realResult('killer', 'easy', 11);
+      var opts = { generatedAt: FIXED.generatedAt, locale: 'en' };
+      var made = await E.buildExportCode(r, opts);
+      expect(made.code).toBe((await E.buildPlayLink(r, opts)).token);
+      expect(/^[zj]\./.test(made.code)).toBe(true);
+      expect(made.length).toBe(made.code.length);
+      expect(made.long).toBe(false);
+      expect(await SG.exchange.decode(made.code)).toEqual(E.toJson(r, opts));
+      var plain = await E.buildExportCode(r, { generatedAt: FIXED.generatedAt, compress: false });
+      expect(plain.code.indexOf('j.')).toBe(0);
+    });
+
+    it('works for a puzzle without a seed (only the document matters)', async function () {
+      ready();
+      var r = Object.assign({}, realResult('classic9', 'easy', 5), { seed: null });
+      var link = await E.buildPlayLink(r, { generatedAt: FIXED.generatedAt });
       var doc = await SG.exchange.decode(link.token);
       expect(doc.variantId).toBe('classic9');
-      expect(doc.givens).toEqual(arr(imported.givens));
+      expect(doc.seed).toBeNull();
+      expect(doc.givens).toEqual(arr(r.givens));
       expect(SG.model.create(doc.model).cellCount).toBe(81);
     });
 
@@ -499,7 +379,7 @@
       }
     });
 
-    it('playOnline (the result panel button) opens the link of the puzzle on screen and says so', async function () {
+    it('playOnline (the Play button) opens the link of the puzzle on screen and says so', async function () {
       ready();
       var shown = null;
       var toasts = [];
@@ -531,10 +411,45 @@
         E.init({ on: function () {}, getResult: function () { return null; }, toast: function () {} });
       }
     });
+
+    it('init: the action { id: "play" } calls playOnline, other actions do not open the player', async function () {
+      ready();
+      if (!NODE) SG.test.skip('needs the file system (Node only)');
+      // A private copy of the module, so that its one-time listener is registered on a fake app.
+      var fresh = { SG: Object.assign({}, SG) };
+      delete fresh.SG.exportUi;
+      fresh.SG.localeFragments = [];
+      var source = NODE.fs.readFileSync(NODE.path.join(NODE.root, 'js/ui/export.js'), 'utf8');
+      var opened = [];
+      fresh.open = function () { opened.push(Array.prototype.slice.call(arguments)); return null; };
+      new Function('self', source)(fresh);
+      var module = fresh.SG.exportUi;
+      expect(typeof module.init).toBe('function');
+      var handlers = {};
+      var toasts = [];
+      var shown = { result: realResult('classic4', 'easy', 1), trace: [] };
+      module.init({
+        on: function (name, fn) { handlers[name] = fn; return function () {}; },
+        getResult: function () { return shown; },
+        toast: function (kind, key) { toasts.push(kind + ':' + key); },
+        openModal: function () { throw new Error('the dialog must not open for a play action'); }
+      });
+      expect(typeof handlers.action).toBe('function');
+      handlers.action({ id: 'settings' });
+      handlers.action(null);
+      handlers.action({ id: 'play' });
+      for (var wait = 0; wait < 100 && opened.length === 0; wait++) {
+        await new Promise(function (resolve) { setTimeout(resolve, 20); });
+      }
+      expect(opened.length).toBe(1);
+      expect(opened[0][0].indexOf(BASE + '#puzzle=')).toBe(0);
+      expect(opened[0].slice(1)).toEqual(['_blank', 'noopener']);
+      expect(toasts).toEqual(['info:export.playOnline.opened']);
+    });
   });
 
   // ---------------------------------------------------------------------------------------------
-  // The picture
+  // The picture (used by the print path)
   // ---------------------------------------------------------------------------------------------
 
   describe('export: SVG of a puzzle', function () {
@@ -546,7 +461,6 @@
       expect(svg).toContain('xmlns="http://www.w3.org/2000/svg"');
       expect(svg).toMatch(/viewBox="0 0 372 372" width="372" height="372"/);
       expect(svg).toContain('<title id="sgb-title">Sudoku board: Classic Sudoku 9\u00d79</title>');
-      expect(E.svgSize(svg)).toEqual({ width: 372, height: 372 });
       // the clues and nothing else: one <text> per clue
       var clues = arr(r.givens).filter(function (v) { return v > 0; }).length;
       expect(count(svg, 'class="val val--given"')).toBe(clues);
@@ -600,226 +514,6 @@
       expect(E.printTokens({})['--sg-board-region-1']).toBe('transparent');
       expect(E.printTokens({})['--sg-board-sign']).toBeUndefined();
     });
-
-    it('a caption names the variant, the level, the seed and the clues, in the current language', function () {
-      ready();
-      var r = realResult('classic9', 'easy', 5);
-      var plain = E.boardSvg(r, { tokens: {} });
-      var en = inLocale('en', function () { return E.boardSvg(r, { tokens: {}, caption: true }); });
-      var vi = inLocale('vi', function () { return E.boardSvg(r, { tokens: {}, caption: true }); });
-      expect(count(en, 'class="cap')).toBe(2);
-      expect(en).toContain('Classic Sudoku 9\u00d79');
-      expect(en).toContain('Seed: 5'.replace('Seed: ', 'Seed '));
-      expect(vi).toContain('Sudoku cổ điển 9\u00d79');
-      expect(vi).toContain('Seed: 5');
-      expect(vi).not.toContain('Classic Sudoku');
-      var size = E.svgSize(en);
-      expect(size.width).toBe(372);
-      expect(size.height).toBeGreaterThan(372);
-      expect(en).toContain('<svg x="0" y="');
-      expect(count(en, '<svg ')).toBe(2);
-      expect(en.indexOf('<?xml')).toBe(0);
-      expect(en).toContain(plain.slice(plain.indexOf('<style>'), plain.indexOf('</style>')));
-      var solution = E.boardSvg(r, { tokens: {}, caption: true, solution: true });
-      expect(solution).toContain('Solution');
-      expect(E.boardSvg(r, { tokens: {}, caption: true })).not.toContain('Solution \u00b7');
-    });
-
-    it('a caption survives a very long name on a small board', function () {
-      ready();
-      var r = realResult('classic4', 'easy', 123456);
-      var svg = E.boardSvg(r, { tokens: {}, caption: true });
-      var size = E.svgSize(svg);
-      expect(size.width).toBe(172);
-      var m = /font-size="(\d+)"/.exec(svg);
-      expect(Number(m[1])).toBeGreaterThanOrEqual(7);
-      expect(Number(m[1])).toBeLessThanOrEqual(14);
-    });
-  });
-
-  // ---------------------------------------------------------------------------------------------
-  // Files
-  // ---------------------------------------------------------------------------------------------
-
-  describe('export: files', function () {
-    function readBlob(blob) {
-      return blob.text();
-    }
-
-    it('makeFile builds the JSON, the text and the SVG file with their names and types', function () {
-      ready();
-      var r = realResult('classic9', 'easy', 5);
-      return E.makeFile(r, 'json', { generatedAt: '2026-01-01T00:00:00.000Z' }).then(function (file) {
-        expect(file.name).toBe(E.fileName(r, 'json'));
-        expect(file.blob.type).toBe('application/json');
-        return readBlob(file.blob);
-      }).then(function (text) {
-        expect(JSON.parse(text).variantId).toBe('classic9');
-        return E.makeFile(r, 'text', { solution: true });
-      }).then(function (file) {
-        expect(file.name).toBe(E.fileName(r, 'txt', { suffix: 'solution' }));
-        return readBlob(file.blob);
-      }).then(function (text) {
-        expect(text).toBe(E.toText(r, { solution: true }) + '\n');
-        return E.makeFile(r, 'svg', { caption: true });
-      }).then(function (file) {
-        expect(file.name).toBe(E.fileName(r, 'svg'));
-        expect(file.blob.type).toBe('image/svg+xml');
-        return readBlob(file.blob);
-      }).then(function (text) {
-        expect(text.indexOf('<?xml')).toBe(0);
-        expect(count(text, '<svg ')).toBe(2);
-      });
-    });
-
-    it('makeFile refuses what it cannot make, with a rejection and not an exception', function () {
-      ready();
-      var killer = realResult('killer', 'easy', 5);
-      return E.makeFile(killer, 'text').then(function () {
-        throw new Error('the text of a Killer puzzle must be refused');
-      }, function (err) {
-        expect(err instanceof Error).toBe(true);
-        return E.makeFile(killer, 'pdf');
-      }).then(function () {
-        throw new Error('an unknown format must be refused');
-      }, function (err) {
-        expect(err instanceof Error).toBe(true);
-        if (typeof document !== 'undefined') return null;
-        return E.makeFile(killer, 'png').then(function () {
-          throw new Error('without a canvas there is no PNG');
-        }, function (pngErr) {
-          expect(pngErr instanceof Error).toBe(true);
-        });
-      });
-    });
-  });
-
-  // ---------------------------------------------------------------------------------------------
-  // Batch generation
-  // ---------------------------------------------------------------------------------------------
-
-  describe('export: batch generation', function () {
-    function fakeClient(log, options) {
-      var o = options || {};
-      return {
-        generate: function (config) {
-          log.requests.push(config);
-          if (o.failAt !== undefined && log.requests.length === o.failAt) {
-            return Promise.reject(new SG.errors.GenerationError('budget.exceeded', {}));
-          }
-          return Promise.resolve({ config: config, seed: config.seed, marker: log.requests.length });
-        },
-        cancel: function () { log.cancelled++; }
-      };
-    }
-
-    it('asks for one puzzle per derived seed, trace off, the same configuration, and reuses the first result', function () {
-      ready();
-      var first = realResult('classic9', 'easy', 5);
-      var log = { requests: [], cancelled: 0, progress: [] };
-      var batch = E.createBatch({ config: first.config, count: 4, first: first, client: fakeClient(log),
-        onProgress: function (done, total) { log.progress.push([done, total]); } });
-      return batch.promise.then(function (results) {
-        expect(results.length).toBe(4);
-        expect(results[0]).toBe(first);
-        var seeds = E.batchSeeds(5, 4);
-        expect(log.requests.map(function (c) { return c.seed; })).toEqual(seeds.slice(1));
-        log.requests.forEach(function (c) {
-          expect(c.trace).toBe('off');
-          expect(c.variantId).toBe('classic9');
-          expect(c.difficulty).toBe(first.config.difficulty);
-          expect(c.symmetry).toBe(first.config.symmetry);
-          expect(c.variantOptions).toEqual(first.config.variantOptions);
-        });
-        expect(results.map(function (r) { return r.seed; }).slice(1)).toEqual(seeds.slice(1));
-        expect(log.progress).toEqual([[1, 4], [2, 4], [3, 4], [4, 4]]);
-        expect(first.config.trace).not.toBe(undefined);
-        expect(first.config.seed).toBe(5);
-      });
-    });
-
-    it('without a first result it generates all of them, starting with the base seed', function () {
-      ready();
-      var config = realResult('classic4', 'easy', 8).config;
-      var log = { requests: [], cancelled: 0 };
-      return E.createBatch({ config: config, count: 3, client: fakeClient(log) }).promise.then(function (results) {
-        expect(results.length).toBe(3);
-        expect(log.requests.map(function (c) { return c.seed; })).toEqual(E.batchSeeds(8, 3));
-      });
-    });
-
-    it('cancel stops the run, cancels the client and rejects with budget.cancelled (translated)', function () {
-      ready();
-      var config = realResult('classic4', 'easy', 8).config;
-      var log = { requests: [], cancelled: 0 };
-      var batch = E.createBatch({ config: config, count: 5, client: fakeClient(log) });
-      batch.cancel();
-      batch.cancel();
-      return batch.promise.then(function () {
-        throw new Error('a cancelled batch must not resolve');
-      }, function (err) {
-        expect(err.code).toBe('budget.cancelled');
-        expect(log.cancelled).toBe(1);
-        ['en', 'vi'].forEach(function (code) {
-          inLocale(code, function () { expect(SG.i18n.tError(err)).not.toBe('error.budget.cancelled'); });
-        });
-        return new Promise(function (resolve) { setTimeout(resolve, 20); });
-      }).then(function () {
-        expect(log.requests.length).toBeLessThanOrEqual(1);
-      });
-    });
-
-    it('a failing puzzle ends the batch with that error (translatable), later puzzles are not requested', function () {
-      ready();
-      var config = realResult('classic4', 'easy', 8).config;
-      var log = { requests: [], cancelled: 0 };
-      var batch = E.createBatch({ config: config, count: 6, client: fakeClient(log, { failAt: 2 }) });
-      return batch.promise.then(function () {
-        throw new Error('must reject');
-      }, function (err) {
-        expect(err.code).toBe('budget.exceeded');
-        expect(log.requests.length).toBe(2);
-        ['en', 'vi'].forEach(function (code) {
-          inLocale(code, function () { expect(SG.i18n.tError(err)).not.toBe('error.budget.exceeded'); });
-        });
-        batch.cancel();
-      });
-    });
-
-    it('the local fallback runs SG.pipeline.run on the main thread and gives real, different puzzles', function () {
-      ready();
-      var first = realResult('classic4', 'easy', 8);
-      var progress = [];
-      return E.createBatch({ config: first.config, count: 3, first: first, forceLocal: true,
-        onProgress: function (done) { progress.push(done); } }).promise.then(function (results) {
-        expect(results.length).toBe(3);
-        expect(progress).toEqual([1, 2, 3]);
-        var seeds = E.batchSeeds(8, 3);
-        results.forEach(function (r, i) {
-          expect(r.seed).toBe(seeds[i]);
-          expect(arr(SG.dfs.solve(r.model, r.givens))).toEqual(arr(r.solution));
-        });
-        var texts = results.map(function (r) { return E.toText(r); });
-        expect(new Set(texts).size).toBe(3);
-        // the same seeds give the same puzzles as a direct run
-        var direct = SG.pipeline.run(Object.assign({}, first.config, { seed: seeds[2], trace: 'off' }), null);
-        expect(arr(results[2].givens)).toEqual(arr(direct.givens));
-      });
-    });
-
-    it('an independent SG.workerClient (main-thread mode) does the same and is disposed afterwards', function () {
-      ready();
-      if (!SG.workerClient || typeof SG.workerClient.create !== 'function') SG.test.skip('no SG.workerClient.create');
-      var first = realResult('classic4', 'easy', 8);
-      return E.createBatch({ config: first.config, count: 3, first: first, clientOptions: {
-        forceMode: 'main', yieldFn: function () { return Promise.resolve(); },
-        paintFn: function () { return Promise.resolve(); } } }).promise.then(function (results) {
-        expect(results.length).toBe(3);
-        var seeds = E.batchSeeds(8, 3);
-        expect(results.map(function (r) { return r.seed; })).toEqual(seeds);
-        expect(arr(results[0].givens)).toEqual(arr(first.givens));
-      });
-    });
   });
 
   // ---------------------------------------------------------------------------------------------
@@ -837,34 +531,44 @@
       return (text.match(/\{(\w+)\}/g) || []).sort().join(',');
     }
 
-    ['export.', 'import.'].forEach(function (prefix) {
-      it('the ' + prefix + '* fragment has the same keys in English and Vietnamese, none empty, same placeholders',
-        function () {
-          ready();
-          var list = fragments(prefix);
-          expect(list.length).toBe(1);
-          var f = list[0];
-          expect(Object.keys(f.en).sort()).toEqual(Object.keys(f.vi).sort());
-          Object.keys(f.en).forEach(function (key) {
-            expect(key.indexOf(prefix)).toBe(0);
-            expect(typeof f.en[key] === 'string' && f.en[key].trim() !== '').toBe(true);
-            expect(typeof f.vi[key] === 'string' && f.vi[key].trim() !== '').toBe(true);
-            expect(placeholders(f.vi[key])).toBe(placeholders(f.en[key]));
-          });
-        });
-
-      it('every ' + prefix + '* key is live in both packs and Vietnamese is not a copy of English', function () {
+    it('the export.* fragment has the same keys in English and Vietnamese, none empty, same placeholders',
+      function () {
         ready();
-        var f = fragments(prefix)[0];
+        var list = fragments('export.');
+        expect(list.length).toBe(1);
+        var f = list[0];
+        expect(Object.keys(f.en).sort()).toEqual(Object.keys(f.vi).sort());
         Object.keys(f.en).forEach(function (key) {
-          var plural = /_(one|other)$/.test(key) ? key.replace(/_(one|other)$/, '') : key;
-          ['en', 'vi'].forEach(function (code) {
-            inLocale(code, function () { expect(SG.i18n.has(plural)).toBe(true); });
-          });
-          var words = f.en[key].replace(/\{\w+\}/g, '').trim().split(/\s+/);
-          if (words.length > 1) expect(f.vi[key]).not.toBe(f.en[key]);
+          expect(key.indexOf('export.')).toBe(0);
+          expect(typeof f.en[key] === 'string' && f.en[key].trim() !== '').toBe(true);
+          expect(typeof f.vi[key] === 'string' && f.vi[key].trim() !== '').toBe(true);
+          expect(placeholders(f.vi[key])).toBe(placeholders(f.en[key]));
         });
       });
+
+    it('every export.* key is live in both packs and Vietnamese is not a copy of English', function () {
+      ready();
+      var f = fragments('export.')[0];
+      Object.keys(f.en).forEach(function (key) {
+        ['en', 'vi'].forEach(function (code) {
+          inLocale(code, function () { expect(SG.i18n.has(key)).toBe(true); });
+        });
+        var words = f.en[key].replace(/\{\w+\}/g, '').trim().split(/\s+/);
+        if (words.length > 1) expect(f.vi[key]).not.toBe(f.en[key]);
+      });
+    });
+
+    it('the pack holds exactly the strings of the dialogs, the print pages and the Play button', function () {
+      ready();
+      var f = fragments('export.')[0];
+      expect(Object.keys(f.en).sort()).toEqual(['export.code.copied', 'export.code.copy',
+        'export.code.copyFailed', 'export.code.error', 'export.code.hint', 'export.code.intro',
+        'export.code.long', 'export.code.title', 'export.code.working', 'export.playOnline.error',
+        'export.playOnline.long', 'export.playOnline.opened', 'export.print.alt', 'export.print.altSolution',
+        'export.print.button', 'export.print.heading', 'export.print.hint', 'export.print.meta',
+        'export.print.puzzleNumber', 'export.print.solutionNumber', 'export.print.solutionOnly',
+        'export.print.solutionPage', 'export.print.solutionsPage', 'export.summary',
+        'export.summary.none', 'export.summary.seed', 'export.title', 'export.toast.failed']);
     });
 
     it('every key that the code asks for exists (a typo would show the bare key)', function () {
@@ -876,9 +580,11 @@
       (source.match(/'export\.[A-Za-z0-9.]+'/g) || []).forEach(function (q) { used[q.slice(1, -1)] = true; });
       var f = fragments('export.')[0];
       var defined = {};
-      Object.keys(f.en).forEach(function (key) { defined[key.replace(/_(one|other)$/, '')] = true; });
+      Object.keys(f.en).forEach(function (key) { defined[key] = true; });
       var missing = Object.keys(used).filter(function (key) { return !defined[key]; });
       expect(missing).toEqual([]);
+      var unused = Object.keys(defined).filter(function (key) { return !used[key]; });
+      expect(unused).toEqual([]);
     });
   });
 

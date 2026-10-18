@@ -10,21 +10,21 @@
  *
  * The state is plain data (frozen when read):
  *   puzzle configuration   variantId, difficulty, seed (text, '' = random), symmetry, symbolMode, digOrder,
- *                          maxAttempts (1..20), trace ('off'|'summary'|'full', default 'full': only a full
- *                          trace carries the board patches that fill the grid during the replay; the pipeline
- *                          itself downgrades it to 'summary' above 300 cells), showSolution,
+ *                          maxAttempts (1..20), showSolution,
  *                          variantOptions ({ optionId: value }, always complete for the variant)
  *   session                auto (URL only: generate on load)
  *   preferences            lang, theme ('auto'|'light'|'dark'|'high-contrast'), fontSize
- *                          ('small'|'normal'|'large'), speed ('instant'|'fast'|'step'|'manual'),
- *                          reducedMotion, colorAuxSymbol
+ *                          ('small'|'normal'|'large'), reducedMotion, colorAuxSymbol
+ * There is no trace verbosity and no replay speed: the replay is built from the dig log of the result and
+ * moved by hand, so `toConfig` leaves `trace` out and the pipeline applies its default ('summary').
  * The store never touches the DOM: `data-theme` and friends are applied by theme.js / app.js.
  * Changing the state never triggers a generation.
  *
- * URL (design.md 14.2): `v d seed sym mode lang auto speed`, plus `order attempts trace sol` and the options
- * of the variant as `o.<optionId>`. Only values that differ from the defaults are written, except for share
- * links (`toSearchString(state, { full: true })`) which always carry `v d sym mode`. Same link => same
- * puzzle.
+ * URL (design.md 14.2): `v d seed sym mode lang auto`, plus `order attempts sol` and the options of the
+ * variant as `o.<optionId>`. Only values that differ from the defaults are written, except for share links
+ * (`toSearchString(state, { full: true })`) which always carry `v d sym mode`. Same link => same puzzle.
+ * Any other parameter is ignored and left out of the canonical URL, `trace` and `speed` of older links
+ * included; the `trace` / `speed` fields that an older version stored are ignored the same way.
  *
  * Seeds: the state keeps the seed as the text the user typed. A decimal integer in 0..4294967295 is used as
  * it is; anything else (letters, a negative number, a number beyond uint32) is HASHED to a uint32 with
@@ -56,14 +56,12 @@
   const UINT32_MAX = 4294967295;
 
   const LANGS = Object.freeze(['en', 'vi']);
-  const TRACE_LEVELS = Object.freeze(['off', 'summary', 'full']);
   const THEMES = Object.freeze(['auto', 'light', 'dark', 'high-contrast']);
   const FONT_SIZES = Object.freeze(['small', 'normal', 'large']);
-  const SPEEDS = Object.freeze(['instant', 'fast', 'step', 'manual']);
 
   const CONFIG_KEYS = Object.freeze(['variantId', 'difficulty', 'seed', 'symmetry', 'symbolMode', 'digOrder',
-    'maxAttempts', 'trace', 'showSolution', 'variantOptions']);
-  const PREF_KEYS = Object.freeze(['lang', 'theme', 'fontSize', 'speed', 'reducedMotion', 'colorAuxSymbol']);
+    'maxAttempts', 'showSolution', 'variantOptions']);
+  const PREF_KEYS = Object.freeze(['lang', 'theme', 'fontSize', 'reducedMotion', 'colorAuxSymbol']);
   const STATE_KEYS = Object.freeze(CONFIG_KEYS.concat(['auto'], PREF_KEYS));
 
   const hasOwn = Object.prototype.hasOwnProperty;
@@ -191,7 +189,7 @@
   // ---------------------------------------------------------------------------------------------
 
   /**
-   * The state of a fresh start (`trace` is 'full', see the file header).
+   * The state of a fresh start.
    * @returns {Object} A new, complete state.
    */
   function defaults() {
@@ -205,14 +203,12 @@
       symbolMode: def.defaultSymbolMode,
       digOrder: 'random',
       maxAttempts: MAX_ATTEMPTS.default,
-      trace: 'full',
       showSolution: false,
       variantOptions: SG.variants.defaultOptions(def),
       auto: false,
       lang: 'en',
       theme: 'auto',
       fontSize: 'normal',
-      speed: 'fast',
       reducedMotion: false,
       colorAuxSymbol: true
     };
@@ -279,7 +275,6 @@
     out.digOrder = oneOf(raw.digOrder, SG.digger.ORDERS, fb.digOrder);
     out.maxAttempts = toIntInRange(raw.maxAttempts, MAX_ATTEMPTS.min, MAX_ATTEMPTS.max,
       toIntInRange(fb.maxAttempts, MAX_ATTEMPTS.min, MAX_ATTEMPTS.max, MAX_ATTEMPTS.default));
-    out.trace = oneOf(raw.trace, TRACE_LEVELS, fb.trace);
     out.showSolution = toBool(raw.showSolution, fb.showSolution === true);
     out.variantOptions = normalizeOptions(def, raw.variantOptions);
 
@@ -288,7 +283,6 @@
     out.lang = lang !== null ? lang : (normalizeLang(fb.lang) || 'en');
     out.theme = oneOf(raw.theme, THEMES, fb.theme);
     out.fontSize = oneOf(raw.fontSize, FONT_SIZES, fb.fontSize);
-    out.speed = oneOf(raw.speed, SPEEDS, fb.speed);
     out.reducedMotion = toBool(raw.reducedMotion, fb.reducedMotion === true);
     out.colorAuxSymbol = toBool(raw.colorAuxSymbol, fb.colorAuxSymbol !== false);
     return out;
@@ -323,10 +317,11 @@
   /**
    * The `GenerateConfig` of `SG.pipeline` for a state (sanitised first, so the result is always valid).
    * Pure: the same state gives the same config. A blank seed leaves `seed` out (the pipeline then picks a
-   * random one); see the file header for how a seed text becomes a uint32.
+   * random one); see the file header for how a seed text becomes a uint32. `trace` is always left out: the
+   * pipeline applies its default verbosity ('summary'), the replay does not depend on it.
    * @param {Object} state
    * @returns {{variantId: string, difficulty: string, seed: (number|undefined), symbolMode: string,
-   *   symmetry: string, digOrder: string, maxAttempts: number, trace: string, variantOptions: Object}}
+   *   symmetry: string, digOrder: string, maxAttempts: number, variantOptions: Object}}
    */
   function toConfig(state) {
     const s = sanitize(state);
@@ -337,7 +332,6 @@
       symmetry: s.symmetry,
       digOrder: s.digOrder,
       maxAttempts: s.maxAttempts,
-      trace: s.trace,
       variantOptions: Object.assign({}, s.variantOptions)
     };
     const seed = seedInfo(s.seed);
@@ -376,8 +370,8 @@
     return params;
   }
 
-  /** URL parameters that make a link a puzzle configuration (not just a language or a speed). */
-  const CONFIG_PARAMS = ['v', 'd', 'seed', 'sym', 'mode', 'order', 'attempts', 'trace', 'sol'];
+  /** URL parameters that make a link a puzzle configuration (not just a language or `auto`). */
+  const CONFIG_PARAMS = ['v', 'd', 'seed', 'sym', 'mode', 'order', 'attempts', 'sol'];
 
   /**
    * Reads a search string into a PARTIAL state: only the parameters that were present and valid by
@@ -397,7 +391,6 @@
     if (typeof q.order === 'string' && SG.digger.ORDERS.indexOf(q.order) !== -1) patch.digOrder = q.order;
     const attempts = toIntInRange(q.attempts, MAX_ATTEMPTS.min, MAX_ATTEMPTS.max, null);
     if (attempts !== null) patch.maxAttempts = attempts;
-    if (typeof q.trace === 'string' && TRACE_LEVELS.indexOf(q.trace) !== -1) patch.trace = q.trace;
     const sol = toBool(q.sol, null);
     if (sol !== null) patch.showSolution = sol;
     const options = {};
@@ -407,7 +400,6 @@
     if (Object.keys(options).length > 0) patch.variantOptions = options;
     const lang = normalizeLang(q.lang);
     if (lang !== null) patch.lang = lang;
-    if (typeof q.speed === 'string' && SPEEDS.indexOf(q.speed) !== -1) patch.speed = q.speed;
     const auto = toBool(q.auto, null);
     if (auto !== null) patch.auto = auto;
     return {
@@ -463,14 +455,12 @@
     if (full || s.symbolMode !== def.defaultSymbolMode) p.mode = s.symbolMode;
     if (s.digOrder !== d.digOrder) p.order = s.digOrder;
     if (s.maxAttempts !== d.maxAttempts) p.attempts = String(s.maxAttempts);
-    if (s.trace !== d.trace) p.trace = s.trace;
     if (s.showSolution) p.sol = '1';
     SG.variants.optionsOf(def).forEach(function (item) {
       const value = s.variantOptions[item.id];
       if (value !== item.default) p['o.' + item.id] = optionToParam(item, value);
     });
     if (s.lang !== d.lang) p.lang = s.lang;
-    if (s.speed !== d.speed) p.speed = s.speed;
     if ((opts.auto !== undefined ? opts.auto === true : s.auto)) p.auto = '1';
     return p;
   }
@@ -577,7 +567,6 @@
     if (lang !== null) out.lang = lang;
     if (oneOf(stored.theme, THEMES, null) !== null) out.theme = stored.theme;
     if (oneOf(stored.fontSize, FONT_SIZES, null) !== null) out.fontSize = stored.fontSize;
-    if (oneOf(stored.speed, SPEEDS, null) !== null) out.speed = stored.speed;
     if (typeof stored.reducedMotion === 'boolean') out.reducedMotion = stored.reducedMotion;
     if (typeof stored.colorAuxSymbol === 'boolean') out.colorAuxSymbol = stored.colorAuxSymbol;
     return out;
@@ -838,10 +827,8 @@
     PREFS_KEY: PREFS_KEY,
     LAST_CONFIG_KEY: LAST_CONFIG_KEY,
     MAX_ATTEMPTS: MAX_ATTEMPTS,
-    TRACE_LEVELS: TRACE_LEVELS,
     THEMES: THEMES,
     FONT_SIZES: FONT_SIZES,
-    SPEEDS: SPEEDS,
     SEED_MAX_LENGTH: SEED_MAX_LENGTH,
     defaults: defaults,
     sanitize: sanitize,

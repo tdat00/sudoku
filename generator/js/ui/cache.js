@@ -6,13 +6,14 @@
  *    puzzles, least recently used first out, schema version checked). Asking for the same configuration with
  *    the same seed again is served from it at once (a few milliseconds, no worker), because a generation is
  *    deterministic: the cached puzzle is the one a new run would produce.
- *  - REPLAY. The cache stores the puzzle only, never the trace (it can be megabytes). A puzzle served from
- *    the cache is therefore shown first, with the steps panel and the replay controls idle and a small note
- *    "preparing the replay", while the trace is regenerated from the seed in the background (an independent
- *    client; the same worker the pre-generator uses). The regenerated puzzle must equal the cached one
- *    (givens, solution, rating); if it does not, the cache entry is dropped and the puzzle is generated
- *    again. When the trace is ready the player loads it, paused at the END, so the steps panel, the
- *    explanation card and the replay controls work as after a normal run (`SG.app.attachTrace`).
+ *  - REPLAY. The cache stores the puzzle only, never the trace nor the dig log (the replay data). A puzzle
+ *    served from the cache is therefore shown first, with the steps panel and the replay controls idle and a
+ *    small note "preparing the replay", while it is regenerated from the seed in the background (an
+ *    independent client; the same worker the pre-generator uses). The regenerated puzzle must equal the
+ *    cached one (givens, solution, rating); if it does not, the cache entry is dropped and the puzzle is
+ *    generated again. When the regeneration is done its trace and dig log go to the app
+ *    (`SG.app.attachTrace(trace, digLog)`), so the steps panel, the explanation card and the replay controls
+ *    work as after a normal run, showing the finished puzzle.
  *    Generating anything else meanwhile cancels the regeneration; nothing of it can reach the new run (it is
  *    guarded by an identity check).
  *  - POOL. After a puzzle is shown and the page has been quiet for a moment (1 s: no generation, no change of
@@ -246,12 +247,15 @@
 
   /**
    * A PuzzleResult as JSON-safe data (the wire format of `SG.pipeline.toWire`, with typed arrays wrapped),
-   * plus a checksum. Fields that are not part of a PuzzleResult (for example `fromCache`) are not stored.
+   * plus a checksum. Fields that are not part of a PuzzleResult (for example `fromCache`) are not stored, nor
+   * is the dig log: like the trace it only serves the replay, which a served puzzle gets back from the
+   * background regeneration (see "REPLAY" above).
    * @param {PuzzleResult} result
    * @returns {Object}
    */
   function serialize(result) {
     const wire = encode(SG.pipeline.toWire(result));
+    delete wire.digLog;
     wire.sum = checksum(result.givens, result.solution);
     return wire;
   }
@@ -1108,7 +1112,7 @@
         if (again && typeof again.catch === 'function') again.catch(noop);
         return;
       }
-      const attached = attempt(function () { return app.attachTrace(trace); }) === true;
+      const attached = attempt(function () { return app.attachTrace(trace, fresh.digLog); }) === true;
       if (attached) {
         note.hide();
         attempt(function () { app.announce(SG.i18n.t('cache.ready')); });

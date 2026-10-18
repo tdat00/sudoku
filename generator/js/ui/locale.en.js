@@ -79,7 +79,7 @@
   });
 
   // ---------------------------------------------------------------------------------------------
-  // Variants, groups, difficulty, symmetry, symbol sets, dig orders, technique groups, trace, speed
+  // Variants, groups, difficulty, symmetry, symbol sets, dig orders, technique groups, trace levels
   // ---------------------------------------------------------------------------------------------
 
   add({
@@ -161,12 +161,7 @@
 
     'traceLevel.off': 'Off (result only)',
     'traceLevel.summary': 'Summary',
-    'traceLevel.full': 'Full detail',
-
-    'speed.instant': 'Instant',
-    'speed.fast': 'Fast',
-    'speed.step': 'Step by step',
-    'speed.manual': 'Manual'
+    'traceLevel.full': 'Full detail'
   });
 
   // ---------------------------------------------------------------------------------------------
@@ -579,9 +574,8 @@
     'error.events.invalidLimit': 'The size limit "{maxEvents}" of the step log is not valid.',
     'error.exchange.invalidToken': 'The puzzle link code is not valid or was cut short. Copy the whole ' +
       'link again.',
-    'error.exchange.tooLarge': 'This puzzle is too large to travel in a link. Use the JSON file instead.',
-    'error.exchange.unsupportedEncoding': 'This browser cannot unpack puzzle links. Use the JSON file or a ' +
-      'newer browser.',
+    'error.exchange.tooLarge': 'This puzzle is too large to travel in a link.',
+    'error.exchange.unsupportedEncoding': 'This browser cannot unpack puzzle links. Try a newer browser.',
     'error.exchange.invalidJson': 'The content of the puzzle link is not valid JSON.',
     'error.exchange.invalidUrl': 'The address of the player is not valid. It must be an http or https ' +
       'address.',

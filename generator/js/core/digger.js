@@ -51,6 +51,16 @@
  * dig functions pick their instrumentation once, at entry: with a quiet emitter (no sink, 'off') they use
  * `NO_TRACE`, whose methods do nothing, so the loops carry no event code; 'summary' adds a throttled
  * `metric` per group, 'full' adds the `dig.*` micro events.
+ *
+ * Dig log. Independently of the events, every dig records its decisions in a compact log (`options.log`, an
+ * array the caller owns): `{ op: 'pass', pass, clues }` when a pass starts, `{ op: 'accept', cells }` for a
+ * group that was removed, `{ op: 'reject', cells, reason }` for a group that had to go back, `{ op: 'keep',
+ * cells, score }` for a candidate of the guided pass that could go but was not the hardest one, and
+ * `{ op: 'restart' }` when the safety net throws a dug puzzle away and digs again from the full grid. A dig
+ * strategy that digs something else adds its own entries (Greater-Than: `signs`, `clear`, `reveal`, and
+ * `sign` on its accept / reject entries). `digLevel` returns the log of its sample and `generate` the log of
+ * the puzzle it returns, so the UI can replay how the puzzle was dug whatever the trace verbosity was. The
+ * log never feeds back into the algorithm.
  */
 (function (root) {
   'use strict';
@@ -337,12 +347,45 @@
   };
 
   /**
-   * Picks the instrumentation for one run of a dig loop from what the emitter wants.
+   * Picks the instrumentation for one run of a dig loop from what the emitter wants, and adds the dig log.
    * @param {Emitter} em
    * @param {function(): Object} metrics  Current { clues, accepted, rejected, attempts }.
-   * @returns {Object} `NO_TRACE`, a metric-only tracer ('summary') or the full tracer ('full').
+   * @param {?Object[]} [log]  The dig log to append the decisions to (see the file header); null: none.
+   * @returns {Object} `NO_TRACE`, a metric-only tracer ('summary') or the full tracer ('full'), wrapped by
+   *          the log recorder when there is a log.
    */
-  function createTracer(em, metrics) {
+  function createTracer(em, metrics, log) {
+    const base = emitTracer(em, metrics);
+    return Array.isArray(log) ? logTracer(base, log) : base;
+  }
+
+  /** The tracer that writes the decisions into `log` and then hands them on to `base`. */
+  function logTracer(base, log) {
+    return {
+      skip: base.skip,
+      tryGroup: base.tryGroup,
+      accept: function accept(cells) {
+        log.push({ op: 'accept', cells: Array.from(cells) });
+        base.accept(cells);
+      },
+      reject: function reject(cells, reason) {
+        log.push({ op: 'reject', cells: Array.from(cells), reason: reason });
+        base.reject(cells, reason);
+      },
+      keep: function keep(cells, score) {
+        const shown = score >= STUCK_SCORE ? null : Math.round(score);
+        log.push({ op: 'keep', cells: Array.from(cells), score: shown });
+        base.keep(cells, score);
+      },
+      pass: function pass(kind, phase, clues) {
+        if (phase === 'start') log.push({ op: 'pass', pass: kind, clues: clues });
+        base.pass(kind, phase, clues);
+      },
+      tick: base.tick
+    };
+  }
+
+  function emitTracer(em, metrics) {
     if (!em.wantsMetrics) return NO_TRACE;
     function tick() {
       em.metric('dig', metrics);
@@ -426,6 +469,7 @@
    *        because the pipeline's stage runner does it.
    * @param {string} [options.pass='random']  Name of this pass in the `dig.pass.*` events.
    * @param {boolean} [options.verify=true]  Re-check the finished puzzle with `SG.dfs.countSolutions`.
+   * @param {?Object[]} [options.log]  The dig log to append the decisions to (see the file header).
    * @returns {DigResult}
    * @throws {SG.errors.GenerationError} 'digger.invalidSolution', 'digger.invalidOption',
    *         'digger.notUnique' (a bug guard that should never fire), or a budget error.
@@ -505,7 +549,7 @@
       return { clues: clues, accepted: stats.accepted, rejected: stats.rejected, attempts: stats.tried };
     }
 
-    const trace = createTracer(em, metrics);
+    const trace = createTracer(em, metrics, options.log);
     const steps = options.stepEvents !== false;
 
     function skip(group, reason) {
@@ -709,7 +753,7 @@
       return { clues: clues, accepted: stats.accepted, rejected: stats.rejected, attempts: stats.tried };
     }
 
-    const trace = createTracer(ctx.emit, metrics);
+    const trace = createTracer(ctx.emit, metrics, ctx.log);
     trace.pass('guided', 'start', clues);
 
     for (;;) {
@@ -794,6 +838,7 @@
    * @param {DifficultySpec} [options.spec]
    * @param {Object} [options.budget]
    * @param {?(Emitter|function(Object): void)} [options.emit]
+   * @param {?Object[]} [options.log]  The dig log to append the decisions to (see the file header).
    * @param {boolean} [options.cooperative=false]  The caller can run the strategy in slices (see
    *        `digStageSteps`). Then the function returns the generator instead of the result, and a strategy
    *        that wraps `digStage` (Killer) and forwards its options gets the same treatment without knowing
@@ -832,6 +877,7 @@
     const guided = options.guided !== undefined ? options.guided === true
       : SG.difficulty.levelIndex(level) >= GUIDED_FROM_LEVEL;
     const techniques = spec.oracle === 'techniques' ? spec.allowedTechniques : null;
+    const log = Array.isArray(options.log) ? options.log : null;
 
     // Stage A. The guided stage needs room to choose, so the random dig hands over at GUIDED_START.
     const handOver = guided ? Math.max(minClues, Math.round(GUIDED_START * n)) : minClues;
@@ -846,7 +892,8 @@
       stepEvents: false,
       pass: 'random',
       verify: false,
-      cooperative: coop
+      cooperative: coop,
+      log: log
     });
     const stats = first.stats;
     let givens = first.givens;
@@ -861,7 +908,8 @@
           budget: budget,
           emit: em,
           stats: stats,
-          cooperative: coop
+          cooperative: coop,
+          log: log
         });
       givens = second.givens;
       clues = second.clues;
@@ -875,9 +923,10 @@
   /**
    * Registers a dig strategy, for example 'signs' for Greater-Than (design.md section 8.3). The function has
    * the signature of `digStage`; the options it receives are the resolved ones (`spec`, `symmetry`, `order`,
-   * `minClues`, `minCluesPerUnit`, `guided`, `budget`, `emit`, `cooperative`). It should emit its events
-   * through `emit` (a `SG.events` emitter) with `stepId` 'dig', keep the board of the replay in step (patches
-   * of at most 8 cells) and return `{ givens, clues, stats }`, plus `model` when it removed structure from
+   * `minClues`, `minCluesPerUnit`, `guided`, `budget`, `emit`, `cooperative`, `log`). It should emit its
+   * events through `emit` (a `SG.events` emitter) with `stepId` 'dig', keep the board of the replay in step
+   * (patches of at most 8 cells), append its decisions to the dig log `log` (see the file header) and return
+   * `{ givens, clues, stats }`, plus `model` when it removed structure from
    * the model. It may ignore `cooperative` and return the result at once (then the whole dig of a sample is
    * one piece of work for a scheduler); or, when `options.cooperative === true`, return an iterator that
    * yields at boundaries it chooses and returns that value (`digStageSteps` is the example).
@@ -927,6 +976,7 @@
     ctx.emit.step('dig', 'progress', 'dig.verify', { unique: unique });
     if (unique) return { givens: dug.givens, clues: dug.clues, unsound: false };
     ctx.emit.step('dig', 'progress', 'dig.unsound', {});
+    if (Array.isArray(ctx.log)) ctx.log.push({ op: 'restart' });
     const safe = dig(model, solution, rng.fork('fallback'), {
       symmetry: ctx.symmetry,
       order: ctx.order,
@@ -935,7 +985,8 @@
       budget: ctx.budget,
       emit: ctx.emit,
       stepEvents: false,
-      pass: 'fallback'
+      pass: 'fallback',
+      log: ctx.log
     });
     return { givens: safe.givens, clues: safe.clues, unsound: true };
   }
@@ -973,6 +1024,7 @@
    * @property {boolean} unsound    The technique-bounded dig produced a puzzle that was not unique, so a
    *           technique has a bug. The returned puzzle comes from the DFS fallback and is unique.
    * @property {Object} stats       { groups, tried, accepted, rejected, skipped, oracleCalls }
+   * @property {Object[]} log       The dig log of this sample (see the file header).
    */
 
   /**
@@ -1030,6 +1082,7 @@
     const minPerUnit = options.minCluesPerUnit !== undefined ? options.minCluesPerUnit : spec.minCluesPerUnit;
     const guided = options.guided !== undefined ? options.guided === true
       : SG.difficulty.levelIndex(level) >= GUIDED_FROM_LEVEL;
+    const log = [];
     const resolved = {
       spec: spec,
       symmetry: symmetry,
@@ -1039,7 +1092,8 @@
       guided: guided,
       budget: budget,
       emit: em,
-      cooperative: coop
+      cooperative: coop,
+      log: log
     };
 
     const dug = yield* stage('dig', Object.assign({}, where, {
@@ -1103,7 +1157,8 @@
       rating: rating,
       exact: exact,
       unsound: dug.unsound,
-      stats: dug.stats
+      stats: dug.stats,
+      log: log
     };
   }
 
@@ -1132,6 +1187,7 @@
    * @property {string[]} warnings   'difficulty.approximate' when the level was not reached exactly;
    *           'digger.unsoundTechnique' when a technique produced an ambiguous puzzle (a bug).
    * @property {Object} stats        The statistics of the returned puzzle's dig.
+   * @property {Object[]} log        The dig log of the returned puzzle (see the file header).
    */
 
   /**
@@ -1323,7 +1379,8 @@
       attempts: attempts,
       samples: samples,
       warnings: warnings,
-      stats: best.stats
+      stats: best.stats,
+      log: best.log
     };
   }
 

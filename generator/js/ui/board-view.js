@@ -11,7 +11,8 @@
  *   layer-values    per cell one <text> (digits, letters, word) and one <use> (geometric symbol)
  *   layer-grid      thin lines inside a region, thick between regions and on the outer border, sub-grid
  *                   outlines of multi-grid boards, optional row / column coordinates
- *   layer-overlay   effects: highlighted (probed, technique, selected) cells
+ *   layer-overlay   effects: highlighted (probed, technique, selected) cells and the replay frames (removed,
+ *                   put back, revealed in the step on show)
  * `setLayerVisible(name, flag)` shows or hides a layer by its `data-layer` name: regions, overlays, word,
  * cages, ineq, cells, values, grid, coords, overlay.
  *
@@ -839,6 +840,7 @@
    * @property {function(ArrayLike<number>, string=): void} highlight
    * @property {function(ArrayLike<number>): void} unhighlight
    * @property {function(): void} clearHighlights
+   * @property {function(?Object): void} setSignMarks  Greater-Than: hide or mark signs by index.
    * @property {function(string): void} setSymbolMode
    * @property {function(string, boolean): void} setLayerVisible
    * @property {function(string): boolean} isLayerVisible
@@ -898,6 +900,8 @@
     let trans;
     let lastActual;
     let unsubscribe = null;
+    /** Marks of the Greater-Than signs, by sign index: `{ hidden, removed, kept }` sets, or null. */
+    let signMarks = null;
     let destroyed = false;
     const motionQuery = typeof root.matchMedia === 'function' ?
       root.matchMedia('(prefers-reduced-motion: reduce)') : null;
@@ -1100,6 +1104,18 @@
       trans.fill(0);
     }
 
+    function applySignMarks() {
+      const list = svgEl.querySelectorAll('[data-sign]');
+      for (let k = 0; k < list.length; k++) {
+        const el = list[k];
+        const i = Number(el.getAttribute('data-sign'));
+        const m = signMarks;
+        el.classList.toggle('sign--hidden', m !== null && m.hidden.has(i));
+        el.classList.toggle('sign--removed', m !== null && m.removed.has(i));
+        el.classList.toggle('sign--kept', m !== null && m.kept.has(i));
+      }
+    }
+
     function onClick(ev) {
       if (!options.interactive || typeof options.onCellClick !== 'function') return;
       const el = ev.target && typeof ev.target.closest === 'function' ?
@@ -1179,6 +1195,7 @@
       svgEl.classList.toggle('board--animate-off', !animate);
       svgEl.setAttribute('data-animate', animate ? 'on' : 'off');
       collect();
+      applySignMarks();
       snapshotShown();
       refreshText();
     }
@@ -1285,6 +1302,22 @@
 
       clearHighlights: function clearHighlights() {
         Array.from(hl.keys()).forEach(removeHighlight);
+      },
+
+      /**
+       * Marks Greater-Than signs by their index in `model.inequalities` (the `data-sign` attribute of the
+       * sign): `hidden` are not drawn, `removed` are drawn faded (signs that the step on show takes away),
+       * `kept` in the colour of a restored cell (signs that had to stay). The marks survive a rebuild of the
+       * tree; `null` clears them.
+       * @param {?{hidden?: ArrayLike<number>, removed?: ArrayLike<number>, kept?: ArrayLike<number>}} marks
+       */
+      setSignMarks: function setSignMarks(marks) {
+        signMarks = marks ? {
+          hidden: new Set(marks.hidden || []),
+          removed: new Set(marks.removed || []),
+          kept: new Set(marks.kept || [])
+        } : null;
+        applySignMarks();
       },
 
       /** Changes how values are drawn; the tree is not rebuilt. */

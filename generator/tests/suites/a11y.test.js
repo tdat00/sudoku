@@ -1,8 +1,9 @@
 // Accessibility (task T-7.3): the pure parts of SG.a11y, checked on Node with real models and results: the
 // accessible name of a cell in both languages (values, grids, cage sums, signs), the keyboard navigation over
 // the geometry of every board shape (holes of multi-grid canvases are skipped), the de-duplicating and rate
-// limited announcer, the step transitions and the Settings choices. The DOM part (roles, observers, dialog)
-// is verified in the browser run of the task (accessibility tree over CDP).
+// limited announcer and the Settings choices. Steps are not announced by this module (the status line reads
+// them during the replay). The DOM part (roles, observers, dialog) is verified in the browser run of the task
+// (accessibility tree over CDP).
 (function () {
   'use strict';
 
@@ -428,36 +429,17 @@
     });
   });
 
-  describe('a11y: step transitions', function () {
-    it('finds the step a replay position has entered, and nothing for micro events or the same step', function () {
+  describe('a11y: steps are left to the status line', function () {
+    it('announces no pipeline step and no replay position, and never reads the player state', function () {
       ready();
-      var ids = A.STEP_IDS;
-      expect(ids).toEqual(['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune']);
-      expect(A.stepTransition(null, 'configure', ids)).toBe(0);
-      expect(A.stepTransition('configure', 'buildModel', ids)).toBe(1);
-      expect(A.stepTransition('dig', 'dig', ids)).toBe(-1);
-      expect(A.stepTransition('dig', 'pipeline', ids)).toBe(-1);
-      expect(A.stepTransition('dig', null, ids)).toBe(-1);
-    });
-
-    it('the step ids are the ones the steps panel uses', function () {
-      ready();
-      if (!SG.stepView) SG.test.skip('SG.stepView is not loaded here');
-      expect(A.STEP_IDS).toEqual(Array.from(SG.stepView.STEP_IDS));
-    });
-
-    it('every step has a translated name for the announcement', function () {
-      ready();
-      A.STEP_IDS.forEach(function (id) {
-        ['en', 'vi'].forEach(function (code) {
-          expect(SG.i18n.has('step.' + id + '.name')).toBe(true);
-          inLocale(code, function () {
-            var text = SG.i18n.t('a11y.announce.step', { n: 3, total: 7, name: SG.i18n.t('step.' + id + '.name') });
-            expect(text).toContain(SG.i18n.t('step.' + id + '.name'));
-            expect(text).toContain('3');
-          });
-        });
-      });
+      if (!NODE || !NODE.fs) SG.test.skip('needs the Node file system');
+      var code = NODE.fs.readFileSync(NODE.path.join(NODE.root, 'js/ui/a11y.js'), 'utf8')
+        .replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, '');
+      var found = ["'generate:progress'", "'position'", 'getPlayer', '.playing', "'a11y.announce.step'"]
+        .filter(function (token) { return code.indexOf(token) !== -1; });
+      expect(found).toEqual([]);
+      expect(A.STEP_IDS).toBeUndefined();
+      expect(A.stepTransition).toBeUndefined();
     });
   });
 

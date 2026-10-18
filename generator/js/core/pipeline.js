@@ -143,6 +143,9 @@
    * @property {number} attempts          Full grids generated.
    * @property {string[]} warnings        i18n keys: 'difficulty.approximate' (the closest puzzle was
    *           returned), 'digger.unsoundTechnique', 'trace.downgraded'.
+   * @property {Object[]} digLog          How the puzzle was dug: the dig log of `SG.digger.generate` for the
+   *           sample that became the puzzle (plain data; see the header of js/core/digger.js). The UI builds
+   *           its replay from it, whatever `config.trace` was.
    */
 
   /**
@@ -307,7 +310,8 @@
       config: cfg,
       timings: Object.assign({}, stage.timings),
       attempts: puzzle.attempts,
-      warnings: warnings.concat(puzzle.warnings)
+      warnings: warnings.concat(puzzle.warnings),
+      digLog: puzzle.log
     };
     em.done({
       requested: cfg.difficulty,
@@ -363,7 +367,8 @@
    * plain data and typed arrays. Typed arrays are shared, not copied; the clone that `postMessage` makes is
    * the copy. See `fromWire`.
    * @param {PuzzleResult} result
-   * @returns {Object} `{ v, model, givens, solution, rating, seed, config, timings, attempts, warnings }`.
+   * @returns {Object} `{ v, model, givens, solution, rating, seed, config, timings, attempts, warnings,
+   *          digLog }`.
    */
   function toWire(result) {
     return {
@@ -376,7 +381,8 @@
       config: result.config,
       timings: result.timings,
       attempts: result.attempts,
-      warnings: result.warnings
+      warnings: result.warnings,
+      digLog: result.digLog
     };
   }
 
@@ -412,7 +418,8 @@
       config: wire.config,
       timings: wire.timings,
       attempts: wire.attempts,
-      warnings: wire.warnings
+      warnings: wire.warnings,
+      digLog: Array.isArray(wire.digLog) ? wire.digLog : undefined
     };
   }
 

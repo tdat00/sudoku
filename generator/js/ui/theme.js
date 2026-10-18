@@ -411,7 +411,8 @@
       'theme.error.result': 'The last run failed, so there is no puzzle to summarise. Change the options ' +
         'and try again.',
       'theme.cancelled.result': 'Generation was cancelled. Press Generate to start again.',
-      'theme.empty.steps': 'The seven steps of the generator light up here as the puzzle is made.'
+      'theme.empty.steps': 'Once a puzzle is made, the steps that built it are listed here: the full ' +
+        'solution, then the cells dug out of it. Pick one to see it on the board.'
     },
     vi: {
       'theme.empty.result': 'Bản tóm tắt đề sẽ hiện ở đây sau khi bạn tạo đề: độ khó, số ô cho sẵn, các kỹ ' +
@@ -419,7 +420,8 @@
       'theme.busy.result': 'Đang tạo đề\u2026',
       'theme.error.result': 'Lần tạo vừa rồi bị lỗi nên chưa có đề để tóm tắt. Hãy đổi tùy chọn rồi thử lại.',
       'theme.cancelled.result': 'Đã hủy việc tạo đề. Bấm Tạo đề để bắt đầu lại.',
-      'theme.empty.steps': 'Bảy bước của trình tạo đề sẽ sáng dần ở đây khi đề được tạo.'
+      'theme.empty.steps': 'Khi đề được tạo xong, các bước dựng nên nó sẽ hiện ở đây: lời giải đầy đủ, rồi ' +
+        'các ô lần lượt bị xóa. Chọn một bước để xem trên bảng.'
     }
   });
 })(typeof self !== 'undefined' ? self : globalThis);

@@ -13,9 +13,9 @@
  *     (`.a11y-ring`).
  *   - labels follow the DOM of the board: a MutationObserver on the value and cell layers re-labels only the
  *     cells that changed, a locale change re-labels all of them.
- *   - `aria-live` announcements for step transitions ONLY (no micro event ever): from 'generate:start',
- *     'generate:progress' (step starts) and 'position' (replay), de-duplicated and rate limited, sent with
- *     `SG.app.announce`.
+ *   - `aria-live` announcements, de-duplicated and rate limited, sent with `SG.app.announce`: the start of a
+ *     generation ('generate:start') and a language change. Steps are never announced here: the generator
+ *     runs at full speed, and during the replay the status line (`#status-line`, polite) reads every step.
  *   - the Settings dialog (`action {id: 'settings'}` -> `SG.app.openModal`): theme, text size, reduced
  *     motion and the colour-blind symbol go through the store (`SG.store`, no new storage key); the board
  *     coordinates and the background pre-generation (`SG.cache.setEnabled`, when `SG.cache` is loaded) are
@@ -24,7 +24,7 @@
  *     a modal dialog is open.
  *
  * Pure part (runs in Node, see tests/suites/a11y.test.js): `cellPosition`, `cellExtras`, `valueInfo`,
- * `cellLabel`, `moveTarget`, `pageStep`, `createAnnouncer`, `stepTransition`.
+ * `cellLabel`, `moveTarget`, `pageStep`, `createAnnouncer`.
  *
  * PUBLIC API (`SG.a11y`)
  *   init(app)            idempotent; called by app.js at start-up. Returns true when it is running.
@@ -35,8 +35,8 @@
  *                        refresh(), apply(), destroy() }`. 'cellfocus' ({ cell }) is emitted through
  *                        `SG.app.emit` whenever a cell takes the focus (other modules can follow it).
  *   attachGrid(board, hooks?)  the grid controller itself, for another board view.
- *   Pure helpers listed above, plus `NAV_KEYS`, `STEP_IDS`, `THEME_CHOICES`, `FONT_CHOICES` and
- *   `APPEARANCE_DEFAULTS` (the data of the Settings dialog).
+ *   Pure helpers listed above, plus `NAV_KEYS`, `THEME_CHOICES`, `FONT_CHOICES` and `APPEARANCE_DEFAULTS`
+ *   (the data of the Settings dialog).
  */
 (function (root) {
   'use strict';
@@ -50,8 +50,6 @@
 
   const NAV_KEYS = Object.freeze(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp',
     'PageDown']);
-  const FALLBACK_STEP_IDS = Object.freeze(['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig',
-    'rate', 'tune']);
   const HIDDEN_LAYERS = Object.freeze(['regions', 'overlays', 'word', 'cages', 'ineq', 'values', 'grid',
     'coords', 'overlay']);
 
@@ -64,10 +62,6 @@
 
   function logError(err) {
     if (typeof console !== 'undefined' && typeof console.error === 'function') console.error(err);
-  }
-
-  function stepIds() {
-    return SG.stepView && Array.isArray(SG.stepView.STEP_IDS) ? SG.stepView.STEP_IDS : FALLBACK_STEP_IDS;
   }
 
   // ---------------------------------------------------------------------------------------------
@@ -336,20 +330,6 @@
       pending: function () { return pending; },
       last: function () { return lastText; }
     };
-  }
-
-  /**
-   * The index of the step a replay position has entered, or -1 when there is no step transition (a micro
-   * event, the same step again, the 'done' event).
-   * @param {?string} previous  The step announced last.
-   * @param {?string} stepId  The step of the event.
-   * @param {string[]} [ids]  The step ids in order.
-   * @returns {number}
-   */
-  function stepTransition(previous, stepId, ids) {
-    const list = ids || FALLBACK_STEP_IDS;
-    const at = list.indexOf(stepId);
-    return at === -1 || stepId === previous ? -1 : at;
   }
 
   // ---------------------------------------------------------------------------------------------
@@ -754,11 +734,6 @@
     announcer: null,
     modal: null,
     showCoords: false,
-    seen: new Set(),
-    lastReplayStep: null,
-    playingBefore: false,
-    endAnnounced: false,
-    runActive: false,
     skipLink: null,
     onSkip: null,
     unwatchModals: null
@@ -816,7 +791,6 @@
     container.appendChild(switchRow('reducedMotion', 'a11y.settings.motion.label',
       'a11y.settings.motion.hint', function (on) { put({ reducedMotion: on }); }));
     if (systemReducesMotion()) container.appendChild(note('a11y.settings.motion.system'));
-    container.appendChild(note('a11y.settings.speed.note'));
     container.appendChild(switchRow('colorAuxSymbol', 'a11y.settings.aux.label', 'a11y.settings.aux.hint',
       function (on) { put({ colorAuxSymbol: on }); }));
     if (pregenAvailable()) {
@@ -880,70 +854,23 @@
     return SG.i18n.has('difficulty.' + level) ? t('difficulty.' + level) : String(level);
   }
 
-  function announceStep(index) {
-    const ids = stepIds();
-    ctx.announcer.push(t('a11y.announce.step', {
-      n: index + 1, total: ids.length, name: t('step.' + ids[index] + '.name')
-    }));
-  }
-
   function onGenerateStart(payload) {
     const config = payload && payload.config ? payload.config : {};
-    ctx.runActive = true;
-    ctx.seen.clear();
-    ctx.lastReplayStep = null;
-    ctx.endAnnounced = false;
     ctx.announcer.reset();
     ctx.announcer.push(t('a11y.announce.start', {
       variant: variantName(config.variantId), level: levelName(config.difficulty)
     }));
   }
 
-  /** Live events of a run (worker mode): only the first start of each step is told, never a micro event. */
-  function onGenerateProgress(event) {
-    if (!ctx.runActive || event.type !== 'step' || event.phase !== 'start') return;
-    const index = stepTransition(null, event.stepId, stepIds());
-    if (index === -1 || ctx.seen.has(event.stepId)) return;
-    ctx.seen.add(event.stepId);
-    announceStep(index);
-  }
-
+  /** The run is over and the app reports the outcome itself: drop whatever is still waiting to be said. */
   function onRunEnd() {
-    ctx.runActive = false;
     ctx.announcer.cancel();
   }
 
   function onResult() {
     onRunEnd();
-    ctx.seen.clear();
-    ctx.lastReplayStep = null;
-    ctx.endAnnounced = false;
-    // The app has just said that the puzzle is ready: let it finish before the replay talks.
+    // The app has just said that the puzzle is ready: let it finish before this module talks again.
     ctx.announcer.hold(1500);
-  }
-
-  /** Replay: a step transition while playing, or after a jump; single steps are read from the status line. */
-  function onPosition(info) {
-    if (!info) return;
-    const player = ctx.app.getPlayer();
-    const playerState = player ? player.state() : { playing: false, finished: false };
-    const forward = info.direction === 'forward';
-    if (!forward) {
-      ctx.seen.clear();
-      ctx.endAnnounced = false;
-    }
-    const index = stepTransition(ctx.lastReplayStep, info.stepId, stepIds());
-    if (index !== -1) {
-      ctx.lastReplayStep = info.stepId;
-      if (!forward || (playerState.playing && !ctx.seen.has(info.stepId))) announceStep(index);
-      ctx.seen.add(info.stepId);
-    }
-    if (!playerState.finished) ctx.endAnnounced = false;
-    else if (forward && (playerState.playing || ctx.playingBefore) && !ctx.endAnnounced) {
-      ctx.endAnnounced = true;
-      ctx.announcer.push(t('a11y.announce.replayEnd'));
-    }
-    ctx.playingBefore = playerState.playing === true;
   }
 
   function onLocale(payload) {
@@ -1041,12 +968,10 @@
       ctx.grid = attachGrid(board, { emit: function (name, payload) { app.emit(name, payload); } });
     }
     ctx.off.push(app.on('generate:start', onGenerateStart));
-    ctx.off.push(app.on('generate:progress', onGenerateProgress));
     ctx.off.push(app.on('generate:end', onRunEnd));
     ctx.off.push(app.on('generate:error', onRunEnd));
     ctx.off.push(app.on('generate:cancel', onRunEnd));
     ctx.off.push(app.on('result', onResult));
-    ctx.off.push(app.on('position', onPosition));
     ctx.off.push(app.on('locale', onLocale));
     ctx.off.push(app.on('settings', syncSettings));
     ctx.off.push(app.on('action', onAction));
@@ -1057,7 +982,6 @@
 
   SG.a11y = {
     NAV_KEYS: NAV_KEYS,
-    STEP_IDS: FALLBACK_STEP_IDS,
     THEME_CHOICES: THEME_CHOICES,
     FONT_CHOICES: FONT_CHOICES,
     APPEARANCE_DEFAULTS: APPEARANCE_DEFAULTS,
@@ -1068,7 +992,6 @@
     moveTarget: moveTarget,
     pageStep: pageStep,
     createAnnouncer: createAnnouncer,
-    stepTransition: stepTransition,
     attachGrid: attachGrid,
     init: init,
     destroy: destroy,
@@ -1100,8 +1023,6 @@
       'a11y.dir.left': 'to the left',
       'a11y.dir.right': 'to the right',
       'a11y.announce.start': 'Generating {variant}, {level}.',
-      'a11y.announce.step': 'Step {n} of {total}: {name}.',
-      'a11y.announce.replayEnd': 'Replay finished.',
       'a11y.announce.language': 'Language: {language}.',
       'a11y.settings.title': 'Settings',
       'a11y.settings.theme.legend': 'Theme',
@@ -1118,8 +1039,6 @@
       'a11y.settings.motion.label': 'Reduce animations',
       'a11y.settings.motion.hint': 'Turns off the cell animations and the smooth colour changes.',
       'a11y.settings.motion.system': 'Your device already asks for reduced motion, so animations stay off.',
-      'a11y.settings.speed.note': 'The replay speed is chosen with the Instant, Fast, Step and Manual ' +
-        'buttons under the board. Instant or Manual avoid the moving replay.',
       'a11y.settings.aux.label': 'Show a symbol on colours',
       'a11y.settings.aux.hint': 'The colour symbol set also draws a shape in every cell, so the values ' +
         'can be told apart without telling the colours apart.',
@@ -1150,8 +1069,6 @@
       'a11y.dir.left': 'bên trái',
       'a11y.dir.right': 'bên phải',
       'a11y.announce.start': 'Đang tạo đề {variant}, mức {level}.',
-      'a11y.announce.step': 'Bước {n}/{total}: {name}.',
-      'a11y.announce.replayEnd': 'Đã phát lại xong.',
       'a11y.announce.language': 'Ngôn ngữ: {language}.',
       'a11y.settings.title': 'Cài đặt',
       'a11y.settings.theme.legend': 'Giao diện',
@@ -1168,8 +1085,6 @@
       'a11y.settings.motion.label': 'Giảm hiệu ứng chuyển động',
       'a11y.settings.motion.hint': 'Tắt hiệu ứng của các ô và các chuyển màu mượt.',
       'a11y.settings.motion.system': 'Thiết bị của bạn đã yêu cầu giảm chuyển động nên hiệu ứng luôn tắt.',
-      'a11y.settings.speed.note': 'Tốc độ phát lại được chọn bằng các nút Tức thì, Nhanh, Từng bước và ' +
-        'Thủ công dưới bảng. Chọn Tức thì hoặc Thủ công để tránh phần phát lại chuyển động.',
       'a11y.settings.aux.label': 'Hiện ký hiệu trên ô màu',
       'a11y.settings.aux.hint': 'Bộ ký hiệu màu sẽ vẽ thêm một hình trong mỗi ô, nhờ vậy vẫn phân biệt ' +
         'được các giá trị mà không cần phân biệt màu.',

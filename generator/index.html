@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Address of the sudoku-player web app; the "Play online" action of the Export dialog opens it with the
-       puzzle in the URL fragment (js/ui/exchange.js, js/ui/export.js). -->
+  <!-- Address of the sudoku-player web app; the Play button of the main panel opens it with the puzzle in
+       the URL fragment (js/ui/exchange.js, js/ui/export.js). -->
   <meta name="sg-player-url" content="https://tdat00.github.io/sudoku-player/">
   <title data-i18n="app.title">Sudoku Generator</title>
   <!-- First paint without a flash (SG.theme, T-7.4): applies the stored theme, motion and text size before the
@@ -104,8 +104,10 @@
       <path d="M20 12a8 8 0 1 1-2.6-5.9"></path>
       <path d="M20 4v5h-5"></path>
     </symbol>
-    <symbol id="ic-download" viewBox="0 0 24 24">
-      <path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14"></path>
+    <symbol id="ic-print" viewBox="0 0 24 24">
+      <path d="M7 9V4h10v5"></path>
+      <rect x="3.5" y="9" width="17" height="8" rx="2"></rect>
+      <path d="M7 14h10v6H7z"></path>
     </symbol>
     <symbol id="ic-x" viewBox="0 0 24 24">
       <path d="M6 6l12 12M18 6L6 18"></path>
@@ -116,6 +118,12 @@
     <symbol id="ic-copy" viewBox="0 0 24 24">
       <rect x="9" y="9" width="11" height="11" rx="2"></rect>
       <path d="M5 15V6a2 2 0 0 1 2-2h8"></path>
+    </symbol>
+    <symbol id="ic-share" viewBox="0 0 24 24">
+      <circle cx="17.5" cy="5.5" r="2.5"></circle>
+      <circle cx="6.5" cy="12" r="2.5"></circle>
+      <circle cx="17.5" cy="18.5" r="2.5"></circle>
+      <path d="M8.7 10.8l6.6-3.9M8.7 13.2l6.6 3.9"></path>
     </symbol>
     <symbol id="ic-dice" viewBox="0 0 24 24">
       <rect x="3.5" y="3.5" width="17" height="17" rx="3.5"></rect>
@@ -209,16 +217,35 @@
           <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-x"></use></svg>
           <span class="btn__label" data-i18n="shell.btn.cancel"></span>
         </button>
-        <button id="btn-export" type="button" class="btn btn--secondary btn--block" disabled
-          aria-haspopup="dialog" data-i18n-attr="title:shell.btn.export.title">
-          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-download"></use></svg>
-          <span class="btn__label" data-i18n="shell.btn.export"></span>
-        </button>
       </div>
     </aside>
     <div class="drawer-backdrop" aria-hidden="true"></div>
 
     <main id="main" class="app-main" tabindex="-1">
+      <div class="main-head">
+        <div class="main-head__titles">
+          <h2 id="puzzle-heading" class="main-head__title"></h2>
+          <p id="puzzle-subheading" class="main-head__subtitle"></p>
+        </div>
+        <div class="main-actions" role="group" data-i18n-attr="aria-label:shell.mainActions.label">
+          <button id="btn-play-online" type="button" class="btn btn--secondary" disabled
+            data-i18n-attr="title:shell.btn.playOnline.title">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-play"></use></svg>
+            <span class="btn__label" data-i18n="shell.btn.playOnline"></span>
+          </button>
+          <button id="btn-export" type="button" class="btn btn--secondary" disabled
+            aria-haspopup="dialog" data-i18n-attr="title:shell.btn.export.title">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-print"></use></svg>
+            <span class="btn__label" data-i18n="shell.btn.export"></span>
+          </button>
+          <button id="btn-export-code" type="button" class="btn btn--secondary" disabled
+            aria-haspopup="dialog" data-i18n-attr="title:shell.btn.exportCode.title">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-share"></use></svg>
+            <span class="btn__label" data-i18n="shell.btn.exportCode"></span>
+          </button>
+        </div>
+      </div>
+
       <section id="board-root" class="board-area" aria-labelledby="board-heading">
         <h2 id="board-heading" class="visually-hidden" data-i18n="shell.board.heading"></h2>
         <div class="board-frame">
@@ -241,11 +268,6 @@
             data-i18n-attr="aria-label:player.prev,title:player.prev">
             <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-prev"></use></svg>
           </button>
-          <button id="btn-play" type="button" class="btn btn--icon btn--primary" disabled data-state="paused"
-            data-i18n-attr="aria-label:player.play,title:player.play">
-            <svg class="icon icon--play" aria-hidden="true" focusable="false"><use href="#ic-play"></use></svg>
-            <svg class="icon icon--pause" aria-hidden="true" focusable="false"><use href="#ic-pause"></use></svg>
-          </button>
           <button id="btn-next" type="button" class="btn btn--icon btn--secondary" disabled
             data-i18n-attr="aria-label:player.next,title:player.next">
             <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-next"></use></svg>
@@ -261,17 +283,6 @@
             data-i18n-attr="aria-label:player.scrubber">
           <span id="player-time" class="player__time"></span>
         </div>
-
-        <div class="segmented player__speeds" role="group" data-i18n-attr="aria-label:player.speed.label">
-          <button type="button" class="segmented__btn" data-speed="instant" aria-pressed="false"
-            data-i18n-attr="title:player.speed.instant.title" data-i18n="player.speed.instant"></button>
-          <button type="button" class="segmented__btn" data-speed="fast" aria-pressed="false"
-            data-i18n-attr="title:player.speed.fast.title" data-i18n="player.speed.fast"></button>
-          <button type="button" class="segmented__btn" data-speed="step" aria-pressed="false"
-            data-i18n-attr="title:player.speed.step.title" data-i18n="player.speed.step"></button>
-          <button type="button" class="segmented__btn" data-speed="manual" aria-pressed="false"
-            data-i18n-attr="title:player.speed.manual.title" data-i18n="player.speed.manual"></button>
-        </div>
       </section>
 
       <div class="status-row">
@@ -284,18 +295,20 @@
     <aside id="steps-root" class="panel panel--steps" aria-labelledby="steps-heading">
       <div class="panel__header">
         <h2 id="steps-heading" class="panel__title" data-i18n="shell.steps.heading"></h2>
-        <button id="btn-steps-toggle" type="button" class="btn btn--ghost btn--sm steps-toggle"
-          aria-expanded="false" aria-controls="steps-list" data-i18n-attr="title:shell.steps.toggle.title">
-          <span class="btn__label" data-i18n="shell.steps.toggle"></span>
-          <svg class="icon steps-toggle__chevron" aria-hidden="true" focusable="false"><use href="#ic-chevron-down"></use></svg>
-        </button>
+        <div class="panel__actions">
+          <button id="btn-explain" type="button" class="btn btn--ghost btn--sm" aria-haspopup="dialog"
+            data-i18n-attr="title:shell.btn.explain.title">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-help"></use></svg>
+            <span class="btn__label" data-i18n="shell.btn.explain"></span>
+          </button>
+          <button id="btn-steps-toggle" type="button" class="btn btn--ghost btn--sm steps-toggle"
+            aria-expanded="false" aria-controls="steps-list" data-i18n-attr="title:shell.steps.toggle.title">
+            <span class="btn__label" data-i18n="shell.steps.toggle"></span>
+            <svg class="icon steps-toggle__chevron" aria-hidden="true" focusable="false"><use href="#ic-chevron-down"></use></svg>
+          </button>
+        </div>
       </div>
       <ol id="steps-list" class="steps-list" aria-labelledby="steps-heading"></ol>
-      <div id="steps-chart" class="steps-chart"></div>
-      <section class="explain" aria-labelledby="explain-heading">
-        <h3 id="explain-heading" class="panel__subtitle" data-i18n="shell.explain.heading"></h3>
-        <div id="explain-root" class="explain__body"></div>
-      </section>
     </aside>
 
     <section id="result-root" class="result-area" data-i18n-attr="aria-label:shell.result.label"></section>
@@ -359,7 +372,6 @@
   <script src="js/ui/result-view.js"></script>
   <script src="js/ui/cache.js"></script>
   <script src="js/ui/export.js"></script>
-  <script src="js/ui/import.js"></script>
   <script src="js/ui/a11y.js"></script>
   <script src="js/ui/theme.js"></script>
   <script src="js/ui/help.js"></script>

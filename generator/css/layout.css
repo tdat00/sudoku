@@ -100,6 +100,41 @@
   min-width: 0;
 }
 
+/* Heading of the main panel (top left) and the puzzle actions (Play, Export; top right). */
+.main-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sg-space-2) var(--sg-space-3);
+}
+
+.main-head__titles {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+
+.main-head__title {
+  margin: 0;
+  font-size: var(--sg-font-size-lg);
+  overflow-wrap: anywhere;
+}
+
+.main-head__subtitle {
+  margin: var(--sg-space-1) 0 0;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.main-actions {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--sg-space-2);
+  margin-inline-start: auto;
+}
+
 #steps-root {
   grid-area: steps;
   min-width: 0;
@@ -138,6 +173,12 @@
 
 .panel__header > .panel__title {
   margin: 0;
+}
+
+.panel__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sg-space-1);
 }
 
 .panel__subtitle {
@@ -223,32 +264,6 @@
   font-variant-numeric: tabular-nums;
   text-align: end;
   white-space: nowrap;
-}
-
-.player__speeds {
-  flex: 0 1 auto;
-  max-width: 100%;
-}
-
-/* The labels may wrap and the padding is smaller, so four buttons fit a 320px screen with large text. */
-.player__speeds .segmented__btn {
-  flex: 1 1 auto;
-  min-width: 0;
-  padding-inline: var(--sg-space-2);
-  white-space: normal;
-  text-align: center;
-}
-
-/* The play button shows the pause glyph while playing (data-state="playing" or aria-pressed="true"). */
-#btn-play .icon--pause,
-#btn-play[data-state="playing"] .icon--play,
-#btn-play[aria-pressed="true"] .icon--play {
-  display: none;
-}
-
-#btn-play[data-state="playing"] .icon--pause,
-#btn-play[aria-pressed="true"] .icon--pause {
-  display: inline-block;
 }
 
 /* ---- Status line ---- */
@@ -370,16 +385,8 @@
   flex-direction: column;
   gap: var(--sg-space-2);
   margin: 0;
-}
-
-.steps-chart:not(:empty) {
-  margin-top: var(--sg-space-4);
-}
-
-.explain {
-  margin-top: var(--sg-space-4);
-  padding-top: var(--sg-space-4);
-  border-top: 1px solid var(--sg-color-divider);
+  padding: 0;
+  list-style: none;
 }
 
 #btn-steps-toggle {
@@ -470,6 +477,14 @@
     max-height: calc(100vh - 2 * var(--sg-space-4));
     overflow-y: auto;
     overscroll-behavior: contain;
+  }
+
+  /* The list scrolls by itself, so the explanation below it stays in reach. */
+  .steps-list {
+    max-height: 45vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 2px;
   }
 }
 
@@ -570,11 +585,6 @@
 
   #steps-root {
     padding: var(--sg-space-3);
-  }
-
-  #steps-root:not(.is-expanded) .steps-chart,
-  #steps-root:not(.is-expanded) .explain {
-    display: none;
   }
 
   #steps-root.is-expanded .steps-list {

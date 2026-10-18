@@ -248,6 +248,86 @@
   gap: var(--sg-space-3);
 }
 
+/* Label row of a field: the label and its small help icon. The tooltip is laid over the control below. */
+.field__head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--sg-space-1);
+  min-height: 1.5rem;
+}
+
+.field__title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sg-space-1);
+  min-width: 0;
+}
+
+.help-tip {
+  display: inline-flex;
+  flex: none;
+}
+
+.help-tip[hidden] {
+  display: none;
+}
+
+.help-tip__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--sg-radius-pill);
+  background: transparent;
+  color: var(--sg-color-text-muted);
+  cursor: help;
+}
+
+.help-tip__btn .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.help-tip__btn:hover,
+.help-tip[data-open] .help-tip__btn {
+  color: var(--sg-color-accent);
+}
+
+.help-tip__pop {
+  position: absolute;
+  top: 100%;
+  inset-inline: 0;
+  z-index: 20;
+  display: none;
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface);
+  color: var(--sg-color-text);
+  box-shadow: var(--sg-shadow-2);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.help-tip__pop p + p {
+  margin-top: var(--sg-space-2);
+}
+
+.help-tip:hover .help-tip__pop,
+.help-tip:focus-within .help-tip__pop,
+.help-tip[data-open] .help-tip__pop {
+  display: block;
+}
+
+.help-tip[data-dismissed] .help-tip__pop {
+  display: none;
+}
+
 .field--invalid :is(.input, .select, .textarea, input, select, textarea),
 :is(.input, .select, .textarea, input, select, textarea)[aria-invalid="true"] {
   border-color: var(--sg-color-danger);
@@ -847,6 +927,50 @@ dialog.modal:not([open]) {
   padding: var(--sg-space-3) var(--sg-space-4);
   border-top: 1px solid var(--sg-color-divider);
   background: var(--sg-color-surface-2);
+}
+
+/* ---- Print dialog: a paper preview next to what will be printed ---- */
+.print-dialog {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sg-space-4);
+}
+
+.print-dialog__preview {
+  flex: 0 0 auto;
+  width: 9rem;
+  height: 9rem;
+  object-fit: contain;
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-2);
+}
+
+.print-dialog__preview[hidden] {
+  display: none;
+}
+
+.print-dialog__side {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  min-width: 0;
+}
+
+.print-dialog__summary {
+  margin: 0;
+  font-weight: 600;
+}
+
+@media (max-width: 30rem) {
+  .print-dialog {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .print-dialog__preview {
+    align-self: center;
+  }
 }
 
 /* ---- Layout helpers ---- */

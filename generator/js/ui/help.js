@@ -1,33 +1,26 @@
 /**
- * Help and first-time tour (task T-7.6): `SG.help`.
+ * Help dialog: `SG.help`.
  *
- * Two features, both plugged in through the optional-module hook of js/ui/app.js (`init(SG.app)`):
- *  - the HELP DIALOG, opened by the Help button (`action { id: 'help' }`): five tabs (variant rules,
+ * Plugged in through the optional-module hook of js/ui/app.js (`init(SG.app)`): the HELP DIALOG, opened by
+ * the Help button (`action { id: 'help' }`), has five tabs (variant rules,
  *    difficulty and the technique ladder, how generation works, controls and keys, about). The texts are
  *    locale keys `help.*`; what the registries already know (variant names, options, levels, technique names
  *    and descriptions, step names) is READ from them and never copied, so the help cannot drift away from
  *    the code.
- *  - the TOUR, a skippable four-step walk over the real page, shown only the first time (`sg.tour.v1` in
- *    localStorage; blocked storage means once per page load; never with `auto=1` in the URL).
  *
  * Pure helpers (no DOM, used by the tests): `entries`, `ladder`, `steps`, `shortcuts`, `controlsGlossary`,
- * `illustration`, `requiredKeys`, `tourSteps`, `shouldShowTour`, `placeCard`, `unionRect`.
+ * `illustration`, `requiredKeys`.
  *
  * ---------------------------------------------------------------------------------------------------------
  * PUBLIC API (`SG.help`)
  * ---------------------------------------------------------------------------------------------------------
- *   init(app)             -> boolean. Idempotent. Listens to `action { id: 'help' }` and schedules the tour
- *                            when `shouldShowTour` allows it. `app` is `SG.app`.
+ *   init(app)             -> boolean. Idempotent. Listens to `action { id: 'help' }`. `app` is `SG.app`.
  *   open(options?)        -> the modal handle of `SG.app.openModal`, or null (no DOM / not initialised).
  *                            `options.tab`: 'variants' | 'difficulty' | 'generation' | 'shortcuts' | 'about';
  *                            `options.variantId`: opens that variant on the variants tab.
  *   close()               -> closes the dialog.
- *   startTour(options?)   -> boolean. Starts the tour now (also when it was seen). `options.persist ===
- *                            false` does not remember the end of this run.
- *   stopTour(reason?)     -> ends a running tour ('skip' | 'done' | 'help' | any string); remembers it.
- *   isTourActive()        -> boolean.
  *   destroy()             -> removes everything the module added.
- *   TOUR_KEY, TAB_IDS     constants ('sg.tour.v1').
+ *   TAB_IDS               constant.
  *   entries(variantList?) -> the variant help registry (see `entries`).
  *   ladder()              -> the difficulty ladder rows and the variant-specific techniques.
  *   steps()               -> the seven generation steps as translation keys.
@@ -35,10 +28,6 @@
  *   controlsGlossary()    -> the controls and what they do, as translation keys.
  *   illustration(id)      -> `{ variantId, width, height, viewBox, markup, cells }` or null.
  *   requiredKeys()        -> every translation key the help reads from other files or from its own fragment.
- *   tourSteps()           -> the tour steps `{ id, titleKey, textKey, targets }`.
- *   shouldShowTour(storage, url) -> boolean.
- *   placeCard(rect, card, viewport, options?) -> `{ left, top, side }` position of the tour card.
- *   unionRect(rects)      -> the smallest rectangle that holds all of them, or null.
  *
  * Keycaps ("Esc", "Ctrl", arrows) are printed on the keyboard and are the same in both languages, so they
  * live in `shortcuts()` as plain text; everything else goes through `SG.i18n.t`.
@@ -48,14 +37,10 @@
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first instance on repeated loads: a running dialog or tour must survive.
+  // Keep the first instance on repeated loads: a running dialog must survive.
   if (SG.help && typeof SG.help.init === 'function') return;
 
-  /** localStorage key that remembers that the tour was seen. */
-  const TOUR_KEY = 'sg.tour.v1';
   const TAB_IDS = Object.freeze(['variants', 'difficulty', 'generation', 'shortcuts', 'about']);
-  const AUTO_TRUE = /^(?:1|true|on|yes)$/i;
-  const TOUR_DELAY_MS = 700;
   const SVG_SAMPLE_SEED = 11;
   const SAMPLE_WORD = 'SUNFLOWER';
 
@@ -385,7 +370,7 @@
 
   /**
    * The controls of the page and what they do: `{ labelKey, textKey }` pairs of existing translation keys
-   * (the hints of the form controls are reused, not copied).
+   * (the hints of the form controls are reused, not copied). The last one is the replay under the board.
    * @returns {Array<{id: string, labelKey: string, textKey: string}>}
    */
   function controlsGlossary() {
@@ -400,14 +385,11 @@
       pair('symbolMode', 'controls.symbolMode.label', 'help.controls.symbolMode'),
       pair('digOrder', 'controls.digOrder.label', 'controls.digOrder.hint'),
       pair('maxAttempts', 'controls.maxAttempts.label', 'controls.maxAttempts.hint'),
-      pair('trace', 'controls.trace.label', 'controls.trace.hint'),
       pair('generate', 'shell.btn.generate', 'shell.btn.generate.title'),
       pair('regenerate', 'shell.btn.regenerate', 'shell.btn.regenerate.title'),
       pair('export', 'shell.btn.export', 'shell.btn.export.title'),
-      pair('instant', 'player.speed.instant', 'player.speed.instant.title'),
-      pair('fast', 'player.speed.fast', 'player.speed.fast.title'),
-      pair('step', 'player.speed.step', 'player.speed.step.title'),
-      pair('manual', 'player.speed.manual', 'player.speed.manual.title')
+      pair('exportCode', 'shell.btn.exportCode', 'shell.btn.exportCode.title'),
+      pair('replay', 'shell.player.heading', 'help.controls.replay')
     ];
   }
 
@@ -426,20 +408,17 @@
     'help.difficulty.guarantee.title', 'help.difficulty.guarantee.oracle',
     'help.difficulty.guarantee.hardest', 'help.difficulty.guarantee.evil', 'help.difficulty.guarantee.verify',
     'help.difficulty.closest.title', 'help.difficulty.closest.text',
-    'help.generation.intro', 'help.generation.steps.title', 'help.generation.replay',
+    'help.generation.intro', 'help.generation.steps.title', 'help.generation.steps.hint',
+    'help.generation.steps.hint.none', 'help.generation.current', 'help.generation.replay',
     'help.generation.worker', 'help.generation.seed',
     'help.shortcuts.intro', 'help.keys.group.general', 'help.keys.group.replay', 'help.keys.group.board',
     'help.keys.tab', 'help.keys.activate', 'help.keys.escape',
     'help.keys.tabs', 'help.keys.scrubber', 'help.keys.scrubberEnds', 'help.keys.cells', 'help.keys.rowEnds',
     'help.keys.boardEnds', 'help.keys.pages', 'help.controls.title', 'help.controls.intro',
     'help.controls.variant', 'help.controls.difficulty', 'help.controls.symmetry', 'help.controls.symbolMode',
+    'help.controls.replay',
     'help.about.privacy.title', 'help.about.privacy.text', 'help.about.repro.title', 'help.about.repro.text',
     'help.about.tech.title', 'help.about.tech.text', 'help.about.credits.title', 'help.about.credits.text',
-    'help.about.tour.title', 'help.about.tour.text',
-    'help.tour.label', 'help.tour.progress', 'help.tour.skip', 'help.tour.done', 'help.tour.again',
-    'help.tour.step.controls.title', 'help.tour.step.controls.text', 'help.tour.step.generate.title',
-    'help.tour.step.generate.text', 'help.tour.step.board.title', 'help.tour.step.board.text',
-    'help.tour.step.steps.title', 'help.tour.step.steps.text'
   ]);
 
   /**
@@ -478,170 +457,6 @@
   }
 
   // ---------------------------------------------------------------------------------------------
-  // Tour logic (pure)
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * The tour steps. `targets` is a list of alternatives; each alternative is a list of selectors whose
-   * elements are highlighted together. The first alternative that is visible is used (on a phone the
-   * options panel is a closed drawer, so the Options bar is highlighted instead).
-   * @returns {Array<{id: string, titleKey: string, textKey: string, targets: string[][]}>}
-   */
-  function tourSteps() {
-    const step = function (id, targets) {
-      return {
-        id: id,
-        titleKey: 'help.tour.step.' + id + '.title',
-        textKey: 'help.tour.step.' + id + '.text',
-        targets: targets
-      };
-    };
-    return [
-      step('controls', [['#controls-root'], ['#btn-drawer']]),
-      step('generate', [['#btn-generate'], ['#btn-drawer']]),
-      step('board', [['#board-root', '#player-root'], ['#board-root']]),
-      step('steps', [['#steps-root']])
-    ];
-  }
-
-  /** Whether a URL (a string, a Location, a URL) carries `auto=1`: an automated or shared link. */
-  function isAutoUrl(url) {
-    let text = '';
-    if (typeof url === 'string') text = url;
-    else if (url && typeof url.search === 'string') text = url.search;
-    else if (url && typeof url.href === 'string') text = url.href;
-    const q = text.indexOf('?');
-    if (q === -1) return false;
-    const hash = text.indexOf('#', q);
-    const query = text.slice(q + 1, hash === -1 ? undefined : hash);
-    return query.split('&').some(function (pair) {
-      const eq = pair.indexOf('=');
-      if (eq === -1 || pair.slice(0, eq) !== 'auto') return false;
-      let value = pair.slice(eq + 1);
-      try {
-        value = decodeURIComponent(value);
-      } catch (err) {
-        /* keep the raw text */
-      }
-      return AUTO_TRUE.test(value);
-    });
-  }
-
-  /**
-   * Should the first-time tour be offered? Not when the URL says `auto=1`, not when the tour was seen
-   * (any non-empty value under `sg.tour.v1`). Storage that is missing or throws counts as "not seen": the
-   * caller then shows it once per page load.
-   * @param {?{getItem: function(string): ?string}} storage  `localStorage` or null.
-   * @param {(string|{search: string})} [url]  The page address or its query string.
-   * @returns {boolean}
-   */
-  function shouldShowTour(storage, url) {
-    if (isAutoUrl(url)) return false;
-    if (!storage || typeof storage.getItem !== 'function') return true;
-    try {
-      const value = storage.getItem(TOUR_KEY);
-      return value === null || value === undefined || value === '';
-    } catch (err) {
-      return true;
-    }
-  }
-
-  function markSeen(storage) {
-    try {
-      storage.setItem(TOUR_KEY, '1');
-      return true;
-    } catch (err) {
-      return false;
-    }
-  }
-
-  /**
-   * The smallest rectangle that holds all the given ones.
-   * @param {Array<{left: number, top: number, right: number, bottom: number}>} rects
-   * @returns {?{left: number, top: number, right: number, bottom: number, width: number, height: number}}
-   */
-  function unionRect(rects) {
-    const list = (rects || []).filter(function (r) { return r && r.right > r.left && r.bottom > r.top; });
-    if (list.length === 0) return null;
-    const out = {
-      left: Math.min.apply(null, list.map(function (r) { return r.left; })),
-      top: Math.min.apply(null, list.map(function (r) { return r.top; })),
-      right: Math.max.apply(null, list.map(function (r) { return r.right; })),
-      bottom: Math.max.apply(null, list.map(function (r) { return r.bottom; }))
-    };
-    out.width = out.right - out.left;
-    out.height = out.bottom - out.top;
-    return out;
-  }
-
-  function clamp(value, min, max) {
-    return Math.max(min, Math.min(value, Math.max(min, max)));
-  }
-
-  function overlapArea(a, b) {
-    const w = Math.min(a.right, b.right) - Math.max(a.left, b.left);
-    const h = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
-    return w > 0 && h > 0 ? w * h : 0;
-  }
-
-  /**
-   * Where the tour card goes: next to the highlighted rectangle (right, left, below, above, in that order
-   * of preference), always inside the viewport. When no side has room the card goes where it covers the
-   * least of the target; without a target it is centred.
-   * @param {?{left: number, top: number, right: number, bottom: number}} rect  The highlighted area.
-   * @param {{width: number, height: number}} card  Size of the card.
-   * @param {{width: number, height: number}} viewport
-   * @param {{margin?: number, gap?: number}} [options]  Distance to the viewport edge and to the target.
-   * @returns {{left: number, top: number, side: string, covered: number}}  `side` is 'right' | 'left' |
-   *          'bottom' | 'top' | 'center'; `covered` is the area of the target (in px squared) that the card
-   *          hides: 0 when the card has room beside it.
-   */
-  function placeCard(rect, card, viewport, options) {
-    const o = options || {};
-    const margin = o.margin === undefined ? 12 : o.margin;
-    const gap = o.gap === undefined ? 12 : o.gap;
-    const maxLeft = viewport.width - card.width - margin;
-    const maxTop = viewport.height - card.height - margin;
-    if (!rect) {
-      return { left: clamp((viewport.width - card.width) / 2, margin, maxLeft),
-        top: clamp((viewport.height - card.height) / 2, margin, maxTop), side: 'center', covered: 0 };
-    }
-    const midX = rect.left + (rect.right - rect.left) / 2 - card.width / 2;
-    const midY = rect.top + (rect.bottom - rect.top) / 2 - card.height / 2;
-    // A side "fits" when the card has room on that side of the target; along the other axis it slides to
-    // stay inside the viewport.
-    const options4 = [
-      { side: 'right', left: rect.right + gap, top: midY, vertical: false },
-      { side: 'left', left: rect.left - gap - card.width, top: midY, vertical: false },
-      { side: 'bottom', left: midX, top: rect.bottom + gap, vertical: true },
-      { side: 'top', left: midX, top: rect.top - gap - card.height, vertical: true }
-    ].map(function (c) {
-      const fits = c.vertical
-        ? c.top >= margin && c.top <= maxTop + 0.5
-        : c.left >= margin && c.left <= maxLeft + 0.5;
-      const left = clamp(c.left, margin, maxLeft);
-      const top = clamp(c.top, margin, maxTop);
-      return {
-        side: c.side,
-        left: left,
-        top: top,
-        fits: fits,
-        covered: overlapArea(rect, {
-          left: left, top: top, right: left + card.width, bottom: top + card.height
-        })
-      };
-    });
-    let best = options4[0];
-    for (let i = 0; i < options4.length; i++) {
-      const c = options4[i];
-      if (c.fits && !best.fits) best = c;
-      else if (c.fits === best.fits && c.covered < best.covered) best = c;
-    }
-    return { left: Math.round(best.left), top: Math.round(best.top), side: best.side,
-      covered: Math.round(best.covered) };
-  }
-
-  // ---------------------------------------------------------------------------------------------
   // DOM helpers
   // ---------------------------------------------------------------------------------------------
 
@@ -671,14 +486,6 @@
     }
   }
 
-  function localStorageOrNull() {
-    try {
-      return root.localStorage || null;
-    } catch (err) {
-      return null;
-    }
-  }
-
   function reducedMotion() {
     try {
       if (document.documentElement.getAttribute('data-motion') === 'off') return true;
@@ -695,8 +502,6 @@
   let app = null;
   let initialised = false;
   let offAction = null;
-  let tourTimer = null;
-  let tourOffered = false;
 
   /** State of the dialog that is open (null when closed). */
   let dialog = null;
@@ -896,15 +701,72 @@
     }) }));
   }
 
+  /** The pipeline step the replay shows now, for the "current" mark (null without a replay). */
+  function explainContext() {
+    if (app === null || typeof app.getExplainContext !== 'function') return null;
+    return safely(function () { return app.getExplainContext(); }) || null;
+  }
+
+  function destroyCards() {
+    if (dialog === null) return;
+    dialog.cards.forEach(function (card) { safely(function () { card.destroy(); }); });
+    dialog.cards = [];
+  }
+
+  /** Fills the body of a step once: the explanation card with the highlighted line of the current step. */
+  function ensureStepCard(details, ctx) {
+    const body = details.querySelector('.help-step__body');
+    if (!body || body.firstChild || !SG.explainCard || typeof SG.explainCard.create !== 'function') return;
+    const id = details.getAttribute('data-step');
+    const card = SG.explainCard.create(body, { compact: true });
+    const current = ctx !== null && ctx.stepId === id;
+    card.show(id, current ? { lineLabel: ctx.lineLabel, metrics: ctx.metrics } : { lineLabel: null });
+    dialog.cards.push(card);
+  }
+
+  function stepDetails(s, index, ctx) {
+    const isCurrent = ctx !== null && ctx.stepId === s.id;
+    const isOpen = dialog.openSteps.has(s.id);
+    const details = h('details', {
+      class: 'disclosure help-step', id: 'help-step-' + s.id, 'data-step': s.id,
+      'data-current': isCurrent ? 'true' : null, open: isOpen
+    }, [
+      h('summary', {}, [
+        h('span', { class: 'help-step__num', 'aria-hidden': 'true', text: String(index + 1) }),
+        h('span', { class: 'help-step__name', text: t(s.nameKey) }),
+        h('span', { class: 'help-step__what', text: t(s.whatKey) }),
+        isCurrent ? h('span', { class: 'help-step__current', text: t('help.generation.current', {
+          position: ctx.position, length: ctx.length
+        }) }) : null
+      ]),
+      h('div', { class: 'disclosure__body help-step__body' })
+    ]);
+    details.addEventListener('toggle', function () {
+      if (details.open) {
+        dialog.openSteps.add(s.id);
+        ensureStepCard(details, ctx);
+      } else {
+        dialog.openSteps.delete(s.id);
+      }
+    });
+    if (isOpen) ensureStepCard(details, ctx);
+    return details;
+  }
+
   function renderGeneration(panel) {
+    destroyCards();
+    const ctx = explainContext();
+    // The first time the tab is drawn, the step the replay shows is the one that is open.
+    if (!dialog.stepsSeeded) {
+      dialog.stepsSeeded = true;
+      if (ctx !== null) dialog.openSteps.add(ctx.stepId);
+    }
     panel.appendChild(h('p', { class: 'help__lead', text: t('help.generation.intro') }));
     panel.appendChild(h('h3', { class: 'help__h3', text: t('help.generation.steps.title') }));
-    panel.appendChild(h('ol', { class: 'help-steps' }, steps().map(function (s) {
-      return h('li', { class: 'help-steps__item' }, [
-        h('strong', { class: 'help-steps__name', text: t(s.nameKey) }),
-        h('span', { class: 'help-steps__what', text: t(s.whatKey) }),
-        h('span', { class: 'help-steps__why text-muted', text: t(s.whyKey) })
-      ]);
+    panel.appendChild(h('p', { class: 'text-muted', text: t(ctx === null
+      ? 'help.generation.steps.hint.none' : 'help.generation.steps.hint') }));
+    panel.appendChild(h('div', { class: 'help-steplist' }, steps().map(function (s, i) {
+      return stepDetails(s, i, ctx);
     })));
     panel.appendChild(h('p', { text: t('help.generation.replay') }));
     panel.appendChild(h('p', { text: t('help.generation.seed') }));
@@ -964,10 +826,6 @@
       h('p', {}, [h('code', { class: 'help-code', text: '?v=killer&d=hard&seed=2024&lang=vi&auto=1' })])
     ]));
     panel.appendChild(section('tech'));
-    const again = h('button', { type: 'button', class: 'btn btn--secondary', 'data-role': 'tour-again',
-      text: t('help.tour.again') });
-    again.addEventListener('click', function () { showTourAgain(); });
-    panel.appendChild(section('tour', [h('p', {}, [again])]));
     panel.appendChild(section('credits'));
   }
 
@@ -1048,15 +906,10 @@
   }
 
   function buildFooter(container) {
-    const again = h('button', { type: 'button', class: 'btn btn--secondary help__again',
-      'data-role': 'tour-again', text: t('help.tour.again') });
     const done = h('button', { type: 'button', class: 'btn btn--primary', 'data-role': 'help-close',
       text: t('common.close') });
-    again.addEventListener('click', function () { showTourAgain(); });
     done.addEventListener('click', function () { close(); });
-    dialog.footerAgain = again;
     dialog.footerClose = done;
-    container.appendChild(again);
     container.appendChild(done);
   }
 
@@ -1065,9 +918,7 @@
     dialog.rendered.clear();
     TAB_IDS.forEach(function (id) { dialog.tabs[id].textContent = t('help.tab.' + id); });
     dialog.tabs[TAB_IDS[0]].parentNode.setAttribute('aria-label', t('help.tabs.label'));
-    if (dialog.footerAgain) dialog.footerAgain.textContent = t('help.tour.again');
     if (dialog.footerClose) dialog.footerClose.textContent = t('common.close');
-    if (tour !== null) renderTourContent();
     const top = dialog.scroller.scrollTop;
     renderPanel(dialog.tab);
     dialog.scroller.scrollTop = top;
@@ -1081,7 +932,6 @@
   function open(options) {
     if (typeof document === 'undefined' || app === null || typeof app.openModal !== 'function') return null;
     const o = options || {};
-    stopTour('help');
     const wantTab = TAB_IDS.indexOf(o.tab) !== -1 ? o.tab : null;
     let variantId = typeof o.variantId === 'string' && SG.variants.has(o.variantId) ? o.variantId : null;
     if (variantId === null && dialog === null && wantTab === null) {
@@ -1097,7 +947,8 @@
     }
     dialog = {
       handle: null, scroller: null, tabs: {}, panels: {}, rendered: new Set(), openIds: new Set(),
-      tab: wantTab || 'variants', footerAgain: null, footerClose: null, offLocale: null
+      openSteps: new Set(), stepsSeeded: false, cards: [],
+      tab: wantTab || 'variants', footerClose: null, offLocale: null
     };
     if (variantId !== null) dialog.openIds.add(variantId);
     const state = dialog;
@@ -1108,6 +959,8 @@
       footer: buildFooter,
       onClose: function () {
         if (state.offLocale) state.offLocale();
+        state.cards.forEach(function (card) { safely(function () { card.destroy(); }); });
+        state.cards = [];
         if (dialog === state) dialog = null;
       }
     });
@@ -1137,240 +990,12 @@
     if (dialog !== null && dialog.handle) dialog.handle.close();
   }
 
-  function showTourAgain() {
-    close();
-    root.setTimeout(function () { startTour({ persist: true }); }, 0);
-  }
-
-  // ---------------------------------------------------------------------------------------------
-  // The tour (DOM)
-  // ---------------------------------------------------------------------------------------------
-
-  /** The running tour or null: `{ steps, index, card, spot, parts, previous, listeners, persist }`. */
-  let tour = null;
-
-  function isVisible(el) {
-    if (!el || typeof el.getBoundingClientRect !== 'function') return false;
-    const rect = el.getBoundingClientRect();
-    if (rect.width <= 0 || rect.height <= 0) return false;
-    const style = root.getComputedStyle(el);
-    return style.visibility !== 'hidden' && style.display !== 'none';
-  }
-
-  /** The elements of every alternative of a step whose elements are all visible, in order of preference. */
-  function visibleTargets(step) {
-    const out = [];
-    step.targets.forEach(function (alternative) {
-      const els = alternative.map(function (selector) { return document.querySelector(selector); });
-      if (els.length > 0 && els.every(isVisible)) out.push(els);
-    });
-    return out;
-  }
-
-  function rectOf(els) {
-    return unionRect(els.map(function (el) { return el.getBoundingClientRect(); }));
-  }
-
-  function stepsOfThisPage() {
-    return tourSteps().filter(function (step) { return visibleTargets(step).length > 0; });
-  }
-
-  function viewportSize() {
-    const el = document.documentElement;
-    return { width: el.clientWidth || root.innerWidth, height: el.clientHeight || root.innerHeight };
-  }
-
-  function renderTourContent() {
-    const step = tour.steps[tour.index];
-    const last = tour.index === tour.steps.length - 1;
-    tour.parts.title.textContent = t(step.titleKey);
-    tour.parts.text.textContent = t(step.textKey);
-    tour.parts.progress.textContent = t('help.tour.progress', {
-      n: tour.index + 1, total: tour.steps.length
-    });
-    tour.parts.skip.textContent = t('help.tour.skip');
-    tour.parts.back.textContent = t('common.back');
-    tour.parts.back.hidden = tour.index === 0;
-    tour.parts.next.textContent = last ? t('help.tour.done') : t('common.next');
-    tour.card.setAttribute('aria-label', t('help.tour.label'));
-  }
-
-  /** Highlights the alternative of the step next to which the card hides the least, and places the card. */
-  function positionTour() {
-    if (tour === null) return;
-    const gap = 16;
-    const size = { width: tour.card.offsetWidth, height: tour.card.offsetHeight };
-    const view = viewportSize();
-    let best = null;
-    visibleTargets(tour.steps[tour.index]).forEach(function (els) {
-      const rect = rectOf(els);
-      const where = placeCard(rect, size, view, { margin: 12, gap: gap });
-      if (best === null || where.covered < best.where.covered) best = { rect: rect, where: where };
-    });
-    if (best === null) {
-      tour.spot.hidden = true;
-      best = { rect: null, where: placeCard(null, size, view, { margin: 12 }) };
-    } else {
-      const pad = 6;
-      tour.spot.hidden = false;
-      tour.spot.style.left = Math.round(best.rect.left - pad) + 'px';
-      tour.spot.style.top = Math.round(best.rect.top - pad) + 'px';
-      tour.spot.style.width = Math.round(best.rect.width + 2 * pad) + 'px';
-      tour.spot.style.height = Math.round(best.rect.height + 2 * pad) + 'px';
-    }
-    tour.card.style.left = best.where.left + 'px';
-    tour.card.style.top = best.where.top + 'px';
-    tour.card.setAttribute('data-side', best.where.side);
-  }
-
-  /** True when less than 60% of the (viewport-sized part of the) target is on screen. */
-  function needsScroll(rect) {
-    const height = viewportSize().height;
-    const visible = Math.min(rect.bottom, height) - Math.max(rect.top, 0);
-    return visible < Math.min(rect.height, height) * 0.6;
-  }
-
-  function showStep(index) {
-    tour.index = index;
-    renderTourContent();
-    const first = visibleTargets(tour.steps[index])[0];
-    const rect = first ? rectOf(first) : null;
-    if (rect !== null && needsScroll(rect) && typeof first[0].scrollIntoView === 'function') {
-      first[0].scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
-    }
-    positionTour();
-  }
-
-  function schedulePosition() {
-    if (tour === null || tour.frame) return;
-    const raf = root.requestAnimationFrame || function (fn) { return root.setTimeout(fn, 16); };
-    tour.frame = raf(function () {
-      if (tour === null) return;
-      tour.frame = 0;
-      positionTour();
-    });
-  }
-
-  function onTourKey(event) {
-    if (tour === null || event.key !== 'Escape') return;
-    if (document.querySelector('dialog[open]')) return;
-    event.preventDefault();
-    event.stopPropagation();
-    stopTour('skip');
-  }
-
-  function focusAfterTour(previous) {
-    const target = previous && previous.isConnected && previous !== document.body ? previous
-      : document.getElementById('btn-generate');
-    if (target && typeof target.focus === 'function') target.focus();
-  }
-
-  /**
-   * Starts the tour: a spotlight over the real page and a card with Back / Next / Skip. It does not block the
-   * page (the highlight lets clicks through) and does nothing when the page has none of the target elements.
-   * @param {{persist?: boolean}} [options]  `persist: false` leaves the "seen" flag alone.
-   * @returns {boolean} Whether the tour is running.
-   */
-  function startTour(options) {
-    if (typeof document === 'undefined' || !document.body) return false;
-    if (tour !== null) return true;
-    const found = stepsOfThisPage();
-    if (found.length === 0) return false;
-    const o = options || {};
-    const spot = h('div', { class: 'tour-spot', 'aria-hidden': 'true' });
-    const parts = {
-      title: h('h2', { class: 'tour-card__title', id: 'tour-title' }),
-      text: h('p', { class: 'tour-card__text', id: 'tour-text' }),
-      progress: h('span', { class: 'tour-card__progress' }),
-      skip: h('button', { type: 'button', class: 'btn btn--ghost btn--sm', 'data-role': 'tour-skip' }),
-      back: h('button', { type: 'button', class: 'btn btn--secondary btn--sm', 'data-role': 'tour-back' }),
-      next: h('button', { type: 'button', class: 'btn btn--primary btn--sm', 'data-role': 'tour-next' })
-    };
-    const content = h('div', { class: 'tour-card__content', 'aria-live': 'polite', 'aria-atomic': 'true' },
-      [parts.progress, parts.title, parts.text]);
-    const card = h('section', {
-      class: 'tour-card', role: 'dialog', 'aria-modal': 'false', 'aria-labelledby': 'tour-title',
-      'aria-describedby': 'tour-text'
-    }, [content, h('div', { class: 'tour-card__actions' }, [parts.skip, parts.back, parts.next])]);
-    tour = {
-      steps: found, index: 0, card: card, spot: spot, parts: parts, frame: 0,
-      previous: document.activeElement, persist: o.persist !== false, offLocale: null
-    };
-    document.body.appendChild(spot);
-    document.body.appendChild(card);
-    parts.skip.addEventListener('click', function () { stopTour('skip'); });
-    parts.back.addEventListener('click', function () {
-      if (tour && tour.index > 0) showStep(tour.index - 1);
-    });
-    parts.next.addEventListener('click', function () {
-      if (tour === null) return;
-      if (tour.index >= tour.steps.length - 1) stopTour('done');
-      else showStep(tour.index + 1);
-    });
-    document.addEventListener('keydown', onTourKey, true);
-    root.addEventListener('resize', schedulePosition);
-    root.addEventListener('scroll', schedulePosition, true);
-    tour.offLocale = SG.i18n.onChange(function () {
-      if (tour === null) return;
-      renderTourContent();
-      positionTour();
-    });
-    showStep(0);
-    parts.next.focus();
-    return true;
-  }
-
-  /**
-   * Ends the running tour, remembers that it was seen (when the run persists) and returns the focus.
-   * @param {string} [reason]  'skip' | 'done' | 'help' | any other label (informational).
-   * @returns {boolean} Whether a tour was running.
-   */
-  function stopTour(reason) {
-    if (tour === null) return false;
-    const finished = tour;
-    tour = null;
-    if (finished.frame && typeof root.cancelAnimationFrame === 'function') {
-      root.cancelAnimationFrame(finished.frame);
-    }
-    document.removeEventListener('keydown', onTourKey, true);
-    root.removeEventListener('resize', schedulePosition);
-    root.removeEventListener('scroll', schedulePosition, true);
-    if (finished.offLocale) finished.offLocale();
-    [finished.card, finished.spot].forEach(function (node) {
-      if (node.parentNode) node.parentNode.removeChild(node);
-    });
-    if (finished.persist) {
-      const storage = localStorageOrNull();
-      if (storage) markSeen(storage);
-    }
-    if (reason !== 'help') focusAfterTour(finished.previous);
-    return true;
-  }
-
-  function offerTour() {
-    if (tourOffered) return;
-    tourOffered = true;
-    let auto = false;
-    try {
-      auto = app.getStore().get().auto === true;
-    } catch (err) {
-      auto = false;
-    }
-    const search = root.location ? root.location.search : '';
-    if (auto || !shouldShowTour(localStorageOrNull(), search)) return;
-    tourTimer = root.setTimeout(function () {
-      tourTimer = null;
-      if (typeof document === 'undefined' || document.querySelector('dialog[open]')) return;
-      startTour({ persist: true });
-    }, TOUR_DELAY_MS);
-  }
-
   // ---------------------------------------------------------------------------------------------
   // Module hook
   // ---------------------------------------------------------------------------------------------
 
   /**
-   * Plugs the help into the application: the Help button opens the dialog, the first visit gets the tour.
+   * Plugs the help into the application: the Help button opens the dialog.
    * @param {Object} appApi  `SG.app`.
    * @returns {boolean} True when the module is running (also on a repeated call).
    */
@@ -1380,34 +1005,25 @@
     initialised = true;
     app = appApi;
     offAction = app.on('action', function (event) {
-      if (event && event.id === 'help') open();
+      if (event && event.id === 'help') open(event.tab ? { tab: event.tab } : undefined);
     });
-    offerTour();
     return true;
   }
 
-  /** Removes the dialog, the tour and the listeners. */
+  /** Removes the dialog and the listeners. */
   function destroy() {
-    if (tourTimer !== null) root.clearTimeout(tourTimer);
-    tourTimer = null;
-    stopTour('destroy');
     close();
     if (typeof offAction === 'function') offAction();
     offAction = null;
     app = null;
     initialised = false;
-    tourOffered = false;
   }
 
   SG.help = {
-    TOUR_KEY: TOUR_KEY,
     TAB_IDS: TAB_IDS,
     init: init,
     open: open,
     close: close,
-    startTour: startTour,
-    stopTour: stopTour,
-    isTourActive: function isTourActive() { return tour !== null; },
     destroy: destroy,
     entries: entries,
     ladder: ladder,
@@ -1415,11 +1031,7 @@
     shortcuts: shortcuts,
     controlsGlossary: controlsGlossary,
     illustration: illustration,
-    requiredKeys: requiredKeys,
-    tourSteps: tourSteps,
-    shouldShowTour: shouldShowTour,
-    placeCard: placeCard,
-    unionRect: unionRect
+    requiredKeys: requiredKeys
   };
 
   // ---------------------------------------------------------------------------------------------
@@ -1607,14 +1219,25 @@
         'raise the number of attempts.',
 
       'help.generation.intro': 'Every puzzle is made in seven steps, always in the same order. The ' +
-        'generator runs at full speed and records everything it does; the board and the steps panel then ' +
-        'replay that record at the speed you choose, so watching never slows the algorithm down.',
+        'generator runs them at full speed and keeps a short log of what it did. The replay under the ' +
+        'board is built from that log: it shows the steps you can see on the board, not every internal ' +
+        'step, so watching never slows the algorithm down.',
       'help.generation.steps.title': 'The seven steps',
-      'help.generation.replay': 'Use the player under the board to play or pause the replay, move one step ' +
-        'forward or back, or drag the slider to any moment. Pick a speed from Instant, which jumps to the ' +
-        'finished puzzle, to Manual, which moves only when you press Next step. Click a step in the list ' +
-        'to jump to its start; the explanation card shows what the step does, why, and the pseudocode that ' +
-        'runs.',
+      'help.generation.steps.hint': 'Open a step to read what it does, why and how, with its pseudocode. ' +
+        'The step that the replay shows now is marked and open: its running line is highlighted.',
+      'help.generation.steps.hint.none': 'Open a step to read what it does, why and how, with its ' +
+        'pseudocode. Generate a puzzle and step through its replay to see which step is current.',
+      'help.generation.current': 'Now: replay step {position} of {length}',
+      'help.generation.replay': 'As soon as a puzzle is ready, the board shows it; nothing plays by ' +
+        'itself. To see how it was made, use First step, Previous step, Next step and Last step under the ' +
+        'board, or drag the slider to any step; the label beside them tells which step is shown. The ' +
+        'replay starts with the full solution, then shows the cages or the signs (Killer and ' +
+        'Greater-Than only), the batches of random removals and, from Medium up, the rounds in which the ' +
+        'generator rates several candidate removals and keeps the one that makes the puzzle hardest; it ' +
+        'ends on the finished puzzle. Click a step in the Generation steps list to jump to it: the current ' +
+        'step is highlighted with its full sentence, and the Explain button above the list opens this ' +
+        'page at the step it belongs to. On the board, an amber frame marks the cells removed in the ' +
+        'current step, and a red frame the cells put back.',
       'help.generation.seed': 'The seed is the number that starts every random choice. The same seed with ' +
         'the same options always gives the same puzzle, so any puzzle can be shared and reproduced. Leave ' +
         'it empty to get a new random puzzle each time.',
@@ -1630,9 +1253,9 @@
       'help.keys.group.board': 'Board',
       'help.keys.tab': 'Move to the next or to the previous control.',
       'help.keys.activate': 'Press the focused button, or open and close a section.',
-      'help.keys.escape': 'Close the open dialog, or skip the quick tour.',
+      'help.keys.escape': 'Close the open dialog.',
       'help.keys.tabs': 'On the tabs of this dialog: switch tab, or jump to the first or the last one.',
-      'help.keys.scrubber': 'On the replay slider: move one event back or forward.',
+      'help.keys.scrubber': 'On the replay slider: move one step back or forward.',
       'help.keys.scrubberEnds': 'On the replay slider: jump to the start or to the end.',
       'help.keys.cells': 'On the board: move to the neighbouring cell.',
       'help.keys.rowEnds': 'On the board: jump to the first or the last cell of the row.',
@@ -1640,7 +1263,8 @@
       'help.keys.pages': 'On the board: move several rows up or down at once.',
       'help.controls.title': 'The controls',
       'help.controls.intro': 'The options panel on the left (the Options bar on a phone) chooses what is ' +
-        'generated; the buttons under it start the generation. These are the controls and the replay speeds.',
+        'generated; the buttons under it start the generation. These are the controls, including the ' +
+        'replay under the board.',
       'help.controls.variant': 'Pick one of the variants. Its own options appear under it.',
       'help.controls.difficulty': 'How demanding the techniques needed to solve the puzzle are. A variant ' +
         'that lacks a level moves to the nearest one it offers.',
@@ -1648,49 +1272,30 @@
         'is symmetric. A stricter symmetry makes the highest levels harder to reach.',
       'help.controls.symbolMode': 'Only changes how the values are drawn (digits, letters, colours with ' +
         'shapes, or shapes). The puzzle does not change.',
+      'help.controls.replay': 'Under the board, First step and Last step jump to the beginning or the end ' +
+        'of the replay, Previous step and Next step move one step at a time, and the slider goes straight ' +
+        'to any step. The label beside them tells which step is shown.',
 
       'help.about.privacy.title': 'Privacy',
       'help.about.privacy.text': 'Everything runs inside your browser. Puzzles are generated on your own ' +
         'device and nothing is sent to a server; there are no accounts, no trackers and no cookies. The ' +
         'only things kept are small items in the local storage of your browser: your language, theme and ' +
-        'last options, whether you have seen the quick tour, and a few recently generated puzzles, so that ' +
+        'last options, and a few recently generated puzzles, so that ' +
         'the same one can be shown again at once. \u201cPlay online\u201d opens the separate sudoku-player ' +
         'page in a new tab; the puzzle travels only inside the address, after the \u201c#\u201d, which a ' +
         'browser never sends to a server.',
       'help.about.repro.title': 'Sharing and reproducing a puzzle',
       'help.about.repro.text': 'The seed together with the variant, the level and the options fully ' +
-        'determines the puzzle, and the address bar keeps them. Copy the link, or use the Export button, ' +
+        'determines the puzzle, and the address bar keeps them. Copy the link, ' +
         'and anyone who opens it gets exactly the same puzzle. Add auto=1 to a link to generate as soon as ' +
         'the page loads. For example:',
       'help.about.tech.title': 'Built with',
       'help.about.tech.text': 'Plain HTML, CSS and JavaScript: no framework, no build step and no external ' +
         'library. Once the files are on your computer it also works offline: open index.html directly, or ' +
         'serve the folder with any static web server.',
-      'help.about.tour.title': 'Quick tour',
-      'help.about.tour.text': 'A short walk over the page that shows where to choose a puzzle, how to ' +
-        'generate it and how to watch it being built. It appears only the first time you visit.',
       'help.about.credits.title': 'Credits and licence',
       'help.about.credits.text': 'See the project repository for the source code, the documentation and ' +
-        'the licence.',
-
-      'help.tour.label': 'Quick tour',
-      'help.tour.progress': 'Step {n} of {total}',
-      'help.tour.skip': 'Skip tour',
-      'help.tour.done': 'Got it',
-      'help.tour.again': 'Show the tour again',
-      'help.tour.step.controls.title': 'Choose what to generate',
-      'help.tour.step.controls.text': 'Pick a variant and a difficulty here, and a seed if you want to ' +
-        'reproduce a puzzle exactly. On a phone, open the Options bar at the bottom of the screen.',
-      'help.tour.step.generate.title': 'Generate a puzzle',
-      'help.tour.step.generate.text': 'Press Generate. The puzzle is made in a moment, and everything the ' +
-        'generator did is recorded so that you can watch it.',
-      'help.tour.step.board.title': 'Watch it being built',
-      'help.tour.step.board.text': 'The board shows the puzzle. Use the player under it to play, pause, ' +
-        'step forward or back, or drag the slider; the speed buttons go from Instant to Manual.',
-      'help.tour.step.steps.title': 'Follow the steps',
-      'help.tour.step.steps.text': 'The seven steps of the generation are listed here, each with an ' +
-        'explanation. Click one to jump to it. Open Help at any time for the rules of every variant, or to ' +
-        'see this tour again.'
+        'the licence.'
     },
     vi: {
       'help.title': 'Trợ giúp',
@@ -1862,14 +1467,26 @@
         'được, đánh dấu “{badge}”, kèm mức mà nó thực sự đạt. Đề vẫn hợp lệ và vẫn có đúng một lời giải; ' +
         'chỉ độ khó là khác. Hãy dùng “{retry}” hoặc tăng số lần thử.',
 
-      'help.generation.intro': 'Mỗi đề được tạo qua bảy bước, luôn theo cùng một thứ tự. Bộ sinh chạy hết ' +
-        'tốc độ và ghi lại mọi việc nó làm; bảng và khung các bước sau đó phát lại bản ghi ấy với tốc độ ' +
-        'bạn chọn, nên việc xem không bao giờ làm thuật toán chậm đi.',
+      'help.generation.intro': 'Mỗi đề được tạo qua bảy bước, luôn theo cùng một thứ tự. Bộ sinh chạy các ' +
+        'bước này hết tốc độ và chỉ ghi lại một nhật ký ngắn về những gì nó đã làm. Phần phát lại bên dưới ' +
+        'bảng được dựng từ nhật ký đó: nó cho thấy những bước nhìn thấy được trên bảng chứ không phải từng ' +
+        'bước xử lý bên trong, nên việc xem lại không bao giờ làm thuật toán chậm đi.',
       'help.generation.steps.title': 'Bảy bước',
-      'help.generation.replay': 'Dùng bộ phát bên dưới bảng để phát hoặc tạm dừng, lùi hay tiến một bước, ' +
-        'hoặc kéo thanh trượt đến bất kỳ thời điểm nào. Chọn tốc độ từ Tức thì, nhảy thẳng đến đề hoàn ' +
-        'chỉnh, đến Thủ công, chỉ chuyển bước khi bạn bấm Bước tiếp theo. Bấm vào một bước trong danh sách ' +
-        'để nhảy đến đầu bước đó; thẻ giải thích cho biết bước đó làm gì, vì sao, và đoạn mã giả đang chạy.',
+      'help.generation.steps.hint': 'Mở một bước để đọc nó làm gì, tại sao và bằng cách nào, kèm mã giả. ' +
+        'Bước mà phần phát lại đang hiển thị được đánh dấu và mở sẵn: dòng đang chạy được tô sáng.',
+      'help.generation.steps.hint.none': 'Mở một bước để đọc nó làm gì, tại sao và bằng cách nào, kèm mã ' +
+        'giả. Hãy tạo một đề và xem lại từng bước để biết bước nào đang là hiện tại.',
+      'help.generation.current': 'Hiện tại: bước phát lại {position}/{length}',
+      'help.generation.replay': 'Khi đề đã sẵn sàng, bảng hiện ngay đề hoàn chỉnh; không có gì tự chạy. ' +
+        'Muốn xem đề được làm ra thế nào, hãy dùng các nút Bước đầu tiên, Bước trước, Bước tiếp theo và ' +
+        'Bước cuối cùng bên dưới bảng, hoặc kéo thanh trượt đến bước bất kỳ; nhãn bên cạnh cho biết bước ' +
+        'nào đang được hiển thị. Phần phát lại bắt đầu từ lời giải đầy đủ, rồi đến các lồng hoặc các dấu ' +
+        'so sánh (chỉ có ở Sudoku Sát thủ và Sudoku So sánh), các đợt xóa ô ngẫu nhiên và, từ mức Trung ' +
+        'bình trở lên, các vòng mà bộ sinh đánh giá nhiều cách xóa ô rồi chọn cách làm đề khó nhất; ' +
+        'cuối cùng là đề hoàn chỉnh. Bấm vào một bước trong danh sách Các bước tạo đề để nhảy đến bước đó: ' +
+        'bước hiện tại được tô sáng kèm câu mô tả đầy đủ, còn nút Giải thích phía trên danh sách mở trang ' +
+        'này ở đúng bước tương ứng. Trên bảng, khung màu hổ phách đánh dấu các ô bị xóa ở bước hiện tại, ' +
+        'còn khung màu đỏ đánh dấu các ô được trả lại.',
       'help.generation.seed': 'Seed là con số khởi động mọi lựa chọn ngẫu nhiên. Cùng seed và cùng tùy ' +
         'chọn sẽ luôn cho ra cùng một đề, nên đề nào cũng có thể chia sẻ và tạo lại. Để trống nếu bạn muốn ' +
         'mỗi lần một đề ngẫu nhiên mới.',
@@ -1885,9 +1502,9 @@
       'help.keys.group.board': 'Bảng',
       'help.keys.tab': 'Chuyển đến điều khiển kế tiếp hoặc phía trước.',
       'help.keys.activate': 'Bấm nút đang được chọn, hoặc mở và đóng một mục.',
-      'help.keys.escape': 'Đóng hộp thoại đang mở, hoặc bỏ qua phần hướng dẫn nhanh.',
+      'help.keys.escape': 'Đóng hộp thoại đang mở.',
       'help.keys.tabs': 'Trên các thẻ của hộp thoại này: chuyển thẻ, hoặc nhảy đến thẻ đầu hay thẻ cuối.',
-      'help.keys.scrubber': 'Trên thanh trượt phát lại: lùi hoặc tiến một sự kiện.',
+      'help.keys.scrubber': 'Trên thanh trượt phát lại: lùi hoặc tiến một bước.',
       'help.keys.scrubberEnds': 'Trên thanh trượt phát lại: nhảy đến đầu hoặc cuối.',
       'help.keys.cells': 'Trên bảng: chuyển sang ô bên cạnh.',
       'help.keys.rowEnds': 'Trên bảng: nhảy đến ô đầu hoặc ô cuối của hàng.',
@@ -1895,7 +1512,8 @@
       'help.keys.pages': 'Trên bảng: lên hoặc xuống nhiều hàng cùng lúc.',
       'help.controls.title': 'Các điều khiển',
       'help.controls.intro': 'Bảng tùy chọn bên trái (thanh Tùy chọn trên điện thoại) quyết định đề được ' +
-        'tạo ra thế nào; các nút bên dưới bắt đầu việc tạo đề. Đây là các điều khiển và các tốc độ phát lại.',
+        'tạo ra thế nào; các nút bên dưới bắt đầu việc tạo đề. Đây là các điều khiển, kể cả phần phát lại ' +
+        'bên dưới bảng.',
       'help.controls.variant': 'Chọn một biến thể. Các tùy chọn riêng của nó hiện ngay bên dưới.',
       'help.controls.difficulty': 'Các kỹ thuật cần dùng để giải đề đòi hỏi nhiều đến đâu. Biến thể nào ' +
         'không có mức đó sẽ chuyển sang mức gần nhất mà nó có.',
@@ -1903,46 +1521,27 @@
         'sẵn đối xứng. Đối xứng càng chặt thì các mức cao nhất càng khó đạt.',
       'help.controls.symbolMode': 'Chỉ đổi cách vẽ các giá trị (chữ số, chữ cái, màu kèm hình, hoặc hình ' +
         'khối). Câu đố không thay đổi.',
+      'help.controls.replay': 'Bên dưới bảng, Bước đầu tiên và Bước cuối cùng nhảy về đầu hoặc đến cuối ' +
+        'phần phát lại, Bước trước và Bước tiếp theo chuyển từng bước một, còn thanh trượt đưa thẳng đến ' +
+        'bước bất kỳ. Nhãn bên cạnh cho biết bước nào đang được hiển thị.',
 
       'help.about.privacy.title': 'Quyền riêng tư',
       'help.about.privacy.text': 'Mọi thứ chạy ngay trong trình duyệt của bạn. Đề được tạo trên chính ' +
         'thiết bị của bạn và không có gì được gửi đến máy chủ; không có tài khoản, không theo dõi và không ' +
         'dùng cookie. Chỉ có một vài mục nhỏ được lưu trong bộ nhớ cục bộ của trình duyệt: ngôn ngữ, giao ' +
-        'diện và các tùy chọn gần nhất của bạn, việc bạn đã xem hướng dẫn nhanh hay chưa, và vài đề vừa tạo ' +
+        'diện và các tùy chọn gần nhất của bạn, và vài đề vừa tạo ' +
         'để có thể hiện lại ngay. “Chơi trực tuyến” mở trang sudoku-player riêng trong một thẻ mới; đề chỉ ' +
         'nằm trong địa chỉ, sau dấu “#”, phần mà trình duyệt không bao giờ gửi đến máy chủ.',
       'help.about.repro.title': 'Chia sẻ và tạo lại một đề',
       'help.about.repro.text': 'Seed cùng với biến thể, mức độ khó và các tùy chọn xác định hoàn toàn đề, ' +
-        'và thanh địa chỉ luôn giữ chúng. Hãy sao chép liên kết, hoặc dùng nút Xuất đề, và bất kỳ ai mở nó ' +
+        'và thanh địa chỉ luôn giữ chúng. Hãy sao chép liên kết, và bất kỳ ai mở nó ' +
         'cũng nhận được đúng đề đó. Thêm auto=1 vào liên kết để tạo đề ngay khi trang tải xong. Ví dụ:',
       'help.about.tech.title': 'Được xây dựng bằng',
       'help.about.tech.text': 'HTML, CSS và JavaScript thuần: không framework, không bước biên dịch và ' +
         'không thư viện ngoài. Khi các tệp đã có trên máy, trang cũng chạy được khi không có mạng: mở trực ' +
         'tiếp index.html, hoặc phục vụ thư mục bằng bất kỳ máy chủ web tĩnh nào.',
-      'help.about.tour.title': 'Hướng dẫn nhanh',
-      'help.about.tour.text': 'Một vòng ngắn trên trang cho thấy nơi chọn đề, cách tạo đề và cách xem đề ' +
-        'được dựng ra sao. Nó chỉ xuất hiện ở lần đầu bạn truy cập.',
       'help.about.credits.title': 'Ghi công và giấy phép',
-      'help.about.credits.text': 'Hãy xem kho mã nguồn của dự án để biết mã nguồn, tài liệu và giấy phép.',
-
-      'help.tour.label': 'Hướng dẫn nhanh',
-      'help.tour.progress': 'Bước {n} trên {total}',
-      'help.tour.skip': 'Bỏ qua',
-      'help.tour.done': 'Đã hiểu',
-      'help.tour.again': 'Xem lại hướng dẫn nhanh',
-      'help.tour.step.controls.title': 'Chọn đề cần tạo',
-      'help.tour.step.controls.text': 'Chọn biến thể và độ khó ở đây, thêm seed nếu bạn muốn tạo lại chính ' +
-        'xác một đề. Trên điện thoại, hãy mở thanh Tùy chọn ở cuối màn hình.',
-      'help.tour.step.generate.title': 'Tạo một đề',
-      'help.tour.step.generate.text': 'Bấm Tạo đề. Đề được tạo trong chốc lát, và mọi việc bộ sinh đã làm ' +
-        'đều được ghi lại để bạn có thể xem.',
-      'help.tour.step.board.title': 'Xem đề được dựng ra sao',
-      'help.tour.step.board.text': 'Bảng hiện đề. Dùng bộ phát bên dưới để phát, tạm dừng, tiến hoặc lùi ' +
-        'một bước, hay kéo thanh trượt; các nút tốc độ đi từ Tức thì đến Thủ công.',
-      'help.tour.step.steps.title': 'Theo dõi từng bước',
-      'help.tour.step.steps.text': 'Bảy bước của quá trình tạo đề được liệt kê ở đây, mỗi bước kèm một lời ' +
-        'giải thích. Bấm vào một bước để nhảy đến đó. Mở Trợ giúp bất cứ lúc nào để xem luật của mọi biến ' +
-        'thể, hoặc để xem lại hướng dẫn này.'
+      'help.about.credits.text': 'Hãy xem kho mã nguồn của dự án để biết mã nguồn, tài liệu và giấy phép.'
     }
   });
 })(typeof self !== 'undefined' ? self : globalThis);

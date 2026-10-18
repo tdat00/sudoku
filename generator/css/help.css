@@ -1,10 +1,9 @@
 /*
- * Help dialog and first-time tour (js/ui/help.js). Only var(--sg-*) tokens: no colour literals.
+ * Help dialog (js/ui/help.js). Only var(--sg-*) tokens: no colour literals.
  *
  *   .help                     content of the dialog: .help__tabs (tablist) + .help__panel (tabpanels)
  *   .help-variant             one <details class="disclosure"> per variant, with a .help-figure picture
- *   .help-table, .help-keys, .help-terms, .help-steps, .help-rung   the content blocks of the other tabs
- *   .tour-spot, .tour-card    the tour: a spotlight over a real element and the card next to it
+ *   .help-table, .help-keys, .help-terms, .help-steplist, .help-rung   the content blocks of the other tabs
  * Motion is switched off by the global reduced-motion rules of base.css.
  */
 
@@ -103,10 +102,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--sg-space-3);
-}
-
-.modal__footer .help__again {
-  margin-inline-end: auto;
 }
 
 .help-code {
@@ -342,34 +337,33 @@
   }
 }
 
-/* ---- How it works ---- */
-.help-steps {
+/* ---- How it works: one disclosure per step, the explanation card inside ---- */
+.help-steplist {
   display: flex;
   flex-direction: column;
-  gap: var(--sg-space-3);
-  counter-reset: help-step;
+  gap: var(--sg-space-2);
 }
 
-.help-steps__item {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-  min-width: 0;
-  padding-inline-start: 2.5rem;
-  counter-increment: help-step;
+.help-step {
+  scroll-margin-top: calc(var(--sg-control-height) + var(--sg-space-5));
 }
 
-.help-steps__item::before {
-  content: counter(help-step);
-  position: absolute;
-  top: 0;
-  inset-inline-start: 0;
+.help-step[data-current="true"] {
+  border-color: var(--sg-color-accent);
+}
+
+.help-step > summary {
+  flex-wrap: wrap;
+  row-gap: 0;
+}
+
+.help-step__num {
   display: inline-flex;
+  flex: none;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: var(--sg-radius-pill);
   background: var(--sg-color-accent);
   color: var(--sg-color-accent-text);
@@ -377,12 +371,27 @@
   font-weight: 700;
 }
 
-.help-steps__name {
-  font-size: 1.0625rem;
+.help-step__name {
+  flex: 0 1 auto;
+  font-weight: 650;
 }
 
-.help-steps__why {
+.help-step__what {
+  flex: 1 1 16rem;
+  min-width: 0;
+  color: var(--sg-color-text-muted);
   font-size: var(--sg-font-size-sm);
+  font-weight: 400;
+}
+
+.help-step__current {
+  flex: none;
+  padding: 0 var(--sg-space-2);
+  border: 1px solid var(--sg-color-accent);
+  border-radius: var(--sg-radius-pill);
+  color: var(--sg-color-accent);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 700;
 }
 
 /* ---- Keys ---- */
@@ -443,79 +452,5 @@
 
   .help-keys > dt {
     margin-top: 0;
-  }
-}
-
-/* ---- Tour ---- */
-.tour-spot {
-  position: fixed;
-  z-index: calc(var(--sg-z-modal) - 10);
-  border: 2px solid var(--sg-color-accent);
-  border-radius: var(--sg-radius-3);
-  box-shadow: 0 0 0 100vmax var(--sg-color-backdrop);
-  outline: 2px solid var(--sg-color-surface);
-  pointer-events: none;
-  transition:
-    left var(--sg-motion-base) ease,
-    top var(--sg-motion-base) ease,
-    width var(--sg-motion-base) ease,
-    height var(--sg-motion-base) ease;
-}
-
-.tour-card {
-  position: fixed;
-  z-index: calc(var(--sg-z-modal) - 5);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sg-space-3);
-  width: min(22rem, calc(100vw - 2 * var(--sg-space-3)));
-  max-height: calc(100vh - 2 * var(--sg-space-3));
-  padding: var(--sg-space-4);
-  overflow: auto;
-  border: 1px solid var(--sg-color-border);
-  border-radius: var(--sg-radius-3);
-  background: var(--sg-color-surface);
-  color: var(--sg-color-text);
-  box-shadow: var(--sg-shadow-2);
-  transition:
-    left var(--sg-motion-base) ease,
-    top var(--sg-motion-base) ease;
-}
-
-.tour-card__content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sg-space-2);
-}
-
-.tour-card__progress {
-  color: var(--sg-color-text-muted);
-  font-size: var(--sg-font-size-sm);
-  font-weight: 600;
-}
-
-.tour-card__title {
-  font-size: var(--sg-font-size-lg);
-}
-
-.tour-card__text {
-  line-height: 1.5;
-}
-
-.tour-card__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--sg-space-2);
-}
-
-.tour-card__actions [data-role="tour-skip"] {
-  margin-inline-end: auto;
-}
-
-@media print {
-  .tour-spot,
-  .tour-card {
-    display: none;
   }
 }

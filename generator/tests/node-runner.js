@@ -81,7 +81,6 @@ const SOURCE_FILES = [
   'js/ui/result-view.js',
   'js/ui/cache.js',
   'js/ui/export.js',
-  'js/ui/import.js',
   'js/ui/a11y.js',
   'js/ui/theme.js',
   'js/ui/help.js',

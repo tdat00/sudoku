@@ -68,16 +68,25 @@
       expect(d.symbolMode).toBe('digits');
       expect(d.digOrder).toBe('random');
       expect(d.maxAttempts).toBe(8);
-      expect(d.trace).toBe('full');
       expect(d.showSolution).toBe(false);
       expect(d.variantOptions).toEqual({});
       expect(d.auto).toBe(false);
       expect(d.lang).toBe('en');
       expect(d.theme).toBe('auto');
       expect(d.fontSize).toBe('normal');
-      expect(d.speed).toBe('fast');
       expect(d.reducedMotion).toBe(false);
       expect(d.colorAuxSymbol).toBe(true);
+    });
+
+    it('has no replay detail (trace) and no replay speed any more', function () {
+      ready();
+      var d = S.defaults();
+      expect('trace' in d).toBe(false);
+      expect('speed' in d).toBe(false);
+      expect('trace' in S.sanitize({ trace: 'full', speed: 'manual' })).toBe(false);
+      expect('speed' in S.sanitize({ trace: 'full', speed: 'manual' })).toBe(false);
+      expect(S.TRACE_LEVELS).toBeUndefined();
+      expect(S.SPEEDS).toBeUndefined();
     });
 
     it('returns a new object every time and sanitising the defaults changes nothing', function () {
@@ -233,14 +242,17 @@
       expect(S.toUrlParams(S.defaults())).toEqual({});
     });
 
-    it('writes trace=summary (no longer the default) and leaves trace=full out', function () {
+    it('ignores trace and speed of older links and drops them from the canonical URL', function () {
       ready();
-      expect(S.toSearchString(S.parseUrl('?trace=summary'))).toBe('?trace=summary');
-      expect(S.parseUrl('?trace=summary').trace).toBe('summary');
-      expect(S.toSearchString(S.parseUrl('?trace=full'))).toBe('');
-      expect(S.toSearchString(S.parseUrl('?trace=off'))).toBe('?trace=off');
-      expect(S.toConfig(S.defaults()).trace).toBe('full');
-      expect(S.toConfig(S.parseUrl('?trace=summary')).trace).toBe('summary');
+      ['?trace=summary', '?trace=full', '?trace=off', '?speed=manual', '?speed=instant&trace=off']
+        .forEach(function (search) {
+          expect(S.parseUrl(search)).toEqual(S.defaults());
+          expect(S.toSearchString(S.parseUrl(search))).toBe('');
+        });
+      expect(S.readUrl('?trace=off&speed=fast')).toEqual({ patch: {}, hasConfig: false });
+      var link = S.parseUrl('?v=killer&trace=full&d=hard&speed=step&seed=5');
+      expect(S.toSearchString(link)).toBe('?v=killer&d=hard&seed=5');
+      expect('trace' in S.toConfig(link)).toBe(false);
     });
 
     it('accepts a bare query, a full URL, a fragment and encoded text', function () {
@@ -257,19 +269,17 @@
 
     it('ignores invalid values and keeps the valid ones', function () {
       ready();
-      var s = S.parseUrl('?v=nope&d=nope&sym=nope&mode=nope&order=nope&trace=loud&attempts=abc&sol=maybe' +
-        '&lang=xx&speed=warp&d=hard');
+      var s = S.parseUrl('?v=nope&d=nope&sym=nope&mode=nope&order=nope&attempts=abc&sol=maybe' +
+        '&lang=xx&d=hard');
       var d = S.defaults();
       expect(s.variantId).toBe(d.variantId);
       expect(s.difficulty).toBe('hard');
       expect(s.symmetry).toBe(d.symmetry);
       expect(s.symbolMode).toBe(d.symbolMode);
       expect(s.digOrder).toBe(d.digOrder);
-      expect(s.trace).toBe(d.trace);
       expect(s.maxAttempts).toBe(d.maxAttempts);
       expect(s.showSolution).toBe(false);
       expect(s.lang).toBe('en');
-      expect(s.speed).toBe('fast');
     });
 
     it('clamps attempts and applies the cross-option constraints', function () {
@@ -323,7 +333,7 @@
         var state = S.sanitize({
           variantId: id, difficulty: levels[levels.length - 1], seed: '1234', symmetry: 'mirrorH',
           symbolMode: def.symbolModes[def.symbolModes.length - 1], digOrder: 'spiral', maxAttempts: 3,
-          trace: 'off', showSolution: true, lang: 'vi', speed: 'step', auto: true,
+          showSolution: true, lang: 'vi', auto: true,
           variantOptions: SG.variants.optionsOf(def).reduce(function (acc, item) {
             if (item.type === 'slider') acc[item.id] = item.max;
             else if (item.type === 'select') acc[item.id] = item.choices[item.choices.length - 1].value;
@@ -358,10 +368,10 @@
     it('lists the parameters in a fixed order', function () {
       ready();
       var state = S.sanitize({ variantId: 'wordoku', difficulty: 'easy', seed: '5', symmetry: 'none',
-        symbolMode: 'digits', digOrder: 'snake', maxAttempts: 2, trace: 'summary', showSolution: true,
-        variantOptions: { placement: 'row' }, lang: 'vi', speed: 'instant', auto: true });
+        symbolMode: 'digits', digOrder: 'snake', maxAttempts: 2, showSolution: true,
+        variantOptions: { placement: 'row' }, lang: 'vi', auto: true });
       expect(Object.keys(S.toUrlParams(state))).toEqual(['v', 'd', 'seed', 'sym', 'mode', 'order', 'attempts',
-        'trace', 'sol', 'o.placement', 'lang', 'speed', 'auto']);
+        'sol', 'o.placement', 'lang', 'auto']);
     });
   });
 
@@ -391,7 +401,7 @@
       var c = S.toConfig(S.sanitize({ seed: '1', lang: 'vi', theme: 'dark', auto: true,
         showSolution: true }));
       expect(Object.keys(c).sort()).toEqual(['difficulty', 'digOrder', 'maxAttempts', 'seed', 'symbolMode',
-        'symmetry', 'trace', 'variantId', 'variantOptions']);
+        'symmetry', 'variantId', 'variantOptions']);
     });
 
     it('is a valid pipeline configuration for every variant and every level it supports', function () {
@@ -421,12 +431,13 @@
       expect(text.seed).toBe(S.seedInfo('my puzzle').value);
     });
 
-    it('is accepted by SG.pipeline.run with variant options', function () {
+    it('is accepted by SG.pipeline.run with variant options, which applies its default trace', function () {
       ready();
       var config = S.toConfig(S.parseUrl('?v=jigsaw9&d=veryEasy&seed=3&o.compactness=0.9&trace=off'));
+      expect('trace' in config).toBe(false);
       var result = SG.pipeline.run(config, function () {}, null);
       expect(result.config.variantOptions.compactness).toBe(0.9);
-      expect(result.config.trace).toBe('off');
+      expect(result.config.trace).toBe('summary');
     });
   });
 
@@ -518,15 +529,26 @@
       });
       store.set({ seed: '1' }, { source: 'test' });
       store.set({ seed: '1' }, { source: 'test' });
-      store.set({ difficulty: 'easy', trace: 'off' });
+      store.set({ difficulty: 'easy', digOrder: 'snake' });
       expect(calls.length).toBe(2);
       expect(calls[0]).toEqual(['1', ['seed'], 'test']);
-      expect(calls[1][1]).toEqual(['difficulty', 'trace']);
+      expect(calls[1][1]).toEqual(['difficulty', 'digOrder']);
       off();
       off();
       store.set({ seed: '2' });
       expect(calls.length).toBe(2);
       expect(function () { store.subscribe('nope'); }).toThrow();
+    });
+
+    it('ignores trace and speed in a patch: they are not part of the state', function () {
+      ready();
+      var store = makeStore();
+      var calls = 0;
+      store.subscribe(function () { calls++; });
+      expect(store.set({ trace: 'off', speed: 'manual' })).toBe(store.get());
+      expect(calls).toBe(0);
+      expect('trace' in store.get()).toBe(false);
+      expect('speed' in store.get()).toBe(false);
     });
 
     it('notifies in order when a subscriber sets state, and survives a throwing subscriber', function () {
@@ -580,7 +602,7 @@
       ready();
       withEnglish(function () {
         var store = makeStore();
-        store.set({ variantId: 'killer', difficulty: 'hard', seed: '9', theme: 'dark', speed: 'manual',
+        store.set({ variantId: 'killer', difficulty: 'hard', seed: '9', theme: 'dark', fontSize: 'large',
           auto: true });
         store.reset();
         expect(store.get().variantId).toBe('classic9');
@@ -588,7 +610,7 @@
         expect(store.get().seed).toBe('');
         expect(store.get().auto).toBe(false);
         expect(store.get().theme).toBe('dark');
-        expect(store.get().speed).toBe('manual');
+        expect(store.get().fontSize).toBe('large');
       });
     });
 
@@ -653,7 +675,7 @@
       withEnglish(function () {
         var storage = memoryStorage({
           'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'killer', difficulty: 'expert', seed: '11' }),
-          'sg.prefs.v1': JSON.stringify({ v: 1, lang: 'vi', theme: 'dark', speed: 'manual' })
+          'sg.prefs.v1': JSON.stringify({ v: 1, lang: 'vi', theme: 'dark', fontSize: 'large' })
         });
         var fromStorage = makeStore({ storage: storage });
         fromStorage.load();
@@ -663,31 +685,52 @@
         expect(fromStorage.get().theme).toBe('dark');
         SG.i18n.setLocale('en');
 
-        var fromUrl = makeStore({ storage: storage, env: env('?v=hyper&lang=en&speed=instant') });
+        var fromUrl = makeStore({ storage: storage, env: env('?v=hyper&lang=en') });
         fromUrl.load();
         expect(fromUrl.get().variantId).toBe('hyper');
         expect(fromUrl.get().difficulty).toBe('medium');
         expect(fromUrl.get().seed).toBe('');
         expect(fromUrl.get().lang).toBe('en');
-        expect(fromUrl.get().speed).toBe('instant');
+        expect(fromUrl.get().fontSize).toBe('large');
         expect(fromUrl.get().theme).toBe('dark');
       });
     });
 
-    it('keeps the stored configuration when the URL only carries language, speed or auto', function () {
+    it('keeps the stored configuration when the URL only carries language, auto or old replay settings',
+      function () {
+        ready();
+        withEnglish(function () {
+          var storage = memoryStorage({
+            'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'jigsaw9', seed: '8',
+              variantOptions: { compactness: 0.2 } })
+          });
+          var store = makeStore({ storage: storage, env: env('?lang=vi&auto=1&speed=step&trace=full') });
+          store.load();
+          expect(store.get().variantId).toBe('jigsaw9');
+          expect(store.get().variantOptions.compactness).toBe(0.2);
+          expect(store.get().lang).toBe('vi');
+          expect(store.get().auto).toBe(true);
+          expect('speed' in store.get()).toBe(false);
+          expect('trace' in store.get()).toBe(false);
+        });
+      });
+
+    it('ignores the trace and speed an older version stored, and stops writing them', function () {
       ready();
       withEnglish(function () {
         var storage = memoryStorage({
-          'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'jigsaw9', seed: '8',
-            variantOptions: { compactness: 0.2 } })
+          'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'killer', trace: 'off' }),
+          'sg.prefs.v1': JSON.stringify({ v: 1, lang: 'en', theme: 'dark', speed: 'manual' })
         });
-        var store = makeStore({ storage: storage, env: env('?lang=vi&auto=1&speed=step') });
+        var store = makeStore({ storage: storage });
         store.load();
-        expect(store.get().variantId).toBe('jigsaw9');
-        expect(store.get().variantOptions.compactness).toBe(0.2);
-        expect(store.get().lang).toBe('vi');
-        expect(store.get().auto).toBe(true);
-        expect(store.get().speed).toBe('step');
+        expect(store.get().variantId).toBe('killer');
+        expect(store.get().theme).toBe('dark');
+        expect('trace' in store.get()).toBe(false);
+        expect('speed' in store.get()).toBe(false);
+        store.set({ difficulty: 'hard' });
+        expect('trace' in JSON.parse(storage.data['sg.lastConfig.v1'])).toBe(false);
+        expect('speed' in JSON.parse(storage.data['sg.prefs.v1'])).toBe(false);
       });
     });
 
@@ -695,8 +738,7 @@
       ready();
       var storage = memoryStorage({
         'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'killer', difficulty: 'expert',
-          symmetry: 'none',
-          trace: 'summary', maxAttempts: 3, seed: '1' })
+          symmetry: 'none', maxAttempts: 3, seed: '1' })
       });
       var store = makeStore({ storage: storage, env: env('?v=classic9&seed=42') });
       store.load();
@@ -704,7 +746,6 @@
       expect(store.get().seed).toBe('42');
       expect(store.get().difficulty).toBe(d.difficulty);
       expect(store.get().symmetry).toBe(d.symmetry);
-      expect(store.get().trace).toBe(d.trace);
       expect(store.get().maxAttempts).toBe(d.maxAttempts);
     });
 
@@ -737,9 +778,9 @@
       expect(heard).toEqual([['hyper', true, 'load']]);
     });
 
-    it('rewrites the URL to its canonical form after loading', function () {
+    it('rewrites the URL to its canonical form after loading (old replay settings disappear)', function () {
       ready();
-      var e = env('?v=classic4&d=evil&junk=1&seed=7');
+      var e = env('?v=classic4&d=evil&junk=1&seed=7&trace=full&speed=manual');
       var store = makeStore({ env: e, storage: null });
       store.load();
       expect(e.urls).toEqual(['/index.html?v=classic4&d=easy&seed=7#top']);
@@ -751,17 +792,18 @@
       var store = makeStore({ storage: storage });
       store.set({ variantId: 'killer', difficulty: 'hard', seed: '31', theme: 'high-contrast',
         fontSize: 'large',
-        reducedMotion: true, colorAuxSymbol: false, speed: 'step', auto: true });
+        reducedMotion: true, colorAuxSymbol: false, auto: true });
       expect(S.PREFS_KEY).toBe('sg.prefs.v1');
       expect(S.LAST_CONFIG_KEY).toBe('sg.lastConfig.v1');
       var prefs = JSON.parse(storage.data['sg.prefs.v1']);
-      expect(prefs).toEqual({ v: 1, lang: 'en', theme: 'high-contrast', fontSize: 'large', speed: 'step',
+      expect(prefs).toEqual({ v: 1, lang: 'en', theme: 'high-contrast', fontSize: 'large',
         reducedMotion: true, colorAuxSymbol: false });
       var last = JSON.parse(storage.data['sg.lastConfig.v1']);
       expect(last.variantId).toBe('killer');
       expect(last.difficulty).toBe('hard');
       expect(last.seed).toBe('31');
       expect('auto' in last).toBe(false);
+      expect('trace' in last).toBe(false);
       expect(store.save()).toBe(true);
     });
 
@@ -785,7 +827,7 @@
       ready();
       [{ 'sg.prefs.v1': '{not json', 'sg.lastConfig.v1': 'null' },
         { 'sg.prefs.v1': '[1,2]', 'sg.lastConfig.v1': '"text"' },
-        { 'sg.prefs.v1': JSON.stringify({ lang: 'xx', theme: 'neon', fontSize: 9, speed: 'warp',
+        { 'sg.prefs.v1': JSON.stringify({ lang: 'xx', theme: 'neon', fontSize: 9,
           reducedMotion: 'yes', colorAuxSymbol: 3 }),
           'sg.lastConfig.v1': JSON.stringify({ variantId: 'nope', difficulty: 'x', maxAttempts: 'many',
             variantOptions: 7 }) }].forEach(function (data) {
@@ -803,8 +845,8 @@
       expect(store.get().difficulty).toBe('hard');
       expect(store.save()).toBe(false);
       expect(store.persistent()).toBe(false);
-      expect(function () { store.set({ speed: 'manual' }); }).not.toThrow();
-      expect(store.get().speed).toBe('manual');
+      expect(function () { store.set({ fontSize: 'large' }); }).not.toThrow();
+      expect(store.get().fontSize).toBe('large');
     });
 
     it('keeps working when reading the storage object itself throws', function () {

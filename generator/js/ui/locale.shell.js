@@ -2,8 +2,8 @@
  * Strings of the static page frame (index.html): header, landmarks, control-panel actions, the replay
  * player shell, the steps panel and the live regions. Pure data - the file never touches the DOM.
  *
- * Keys are prefixed `shell.` (page frame) or `player.` (replay transport and speed buttons, shared with
- * js/ui/player.js). `app.title` is owned by the base locale packs and only used from the HTML.
+ * Keys are prefixed `shell.` (page frame) or `player.` (the replay buttons, shared with js/ui/player.js).
+ * `app.title` is owned by the base locale packs and only used from the HTML.
  */
 (function (root) {
   'use strict';
@@ -37,12 +37,17 @@
       'shell.actions.label': 'Actions',
       'shell.btn.generate': 'Generate',
       'shell.btn.generate.title': 'Generate a new puzzle with the chosen options',
-      'shell.btn.regenerate': 'Regenerate',
-      'shell.btn.regenerate.title': 'Generate another puzzle with the current options',
+      'shell.btn.regenerate': 'Generate random',
+      'shell.btn.regenerate.title': 'Generate another puzzle with the current options and a new random seed',
       'shell.btn.cancel': 'Cancel',
       'shell.btn.cancel.title': 'Stop the running generation',
-      'shell.btn.export': 'Export',
-      'shell.btn.export.title': 'Export or share the puzzle',
+      'shell.mainActions.label': 'Puzzle actions',
+      'shell.btn.playOnline': 'Play',
+      'shell.btn.playOnline.title': 'Open this puzzle in sudoku-player to solve it',
+      'shell.btn.export': 'Print',
+      'shell.btn.export.title': 'Print the puzzle or save it as a PDF',
+      'shell.btn.exportCode': 'Export',
+      'shell.btn.exportCode.title': 'Get a text code of the puzzle to paste into sudoku-player',
 
       'shell.board.heading': 'Puzzle board',
       'shell.board.title': 'Sudoku board',
@@ -50,29 +55,19 @@
 
       'shell.player.heading': 'Replay',
       'player.label': 'Replay controls',
-      'player.first': 'Go to the first step',
+      'player.first': 'Go to the start (the empty grid)',
       'player.prev': 'Previous step',
-      'player.play': 'Play',
-      'player.pause': 'Pause',
       'player.next': 'Next step',
-      'player.last': 'Go to the last step',
-      'player.scrubber': 'Replay position',
-      'player.speed.label': 'Replay speed',
-      'player.speed.instant': 'Instant',
-      'player.speed.instant.title': 'Skip the animation and show the finished puzzle',
-      'player.speed.fast': 'Fast',
-      'player.speed.fast.title': 'Replay the steps quickly',
-      'player.speed.step': 'Step',
-      'player.speed.step.title': 'Pause after every step',
-      'player.speed.manual': 'Manual',
-      'player.speed.manual.title': 'Move forward only when you press Next step',
+      'player.last': 'Go to the finished puzzle',
+      'player.scrubber': 'Replay step',
 
       'shell.status.label': 'Status:',
 
       'shell.steps.heading': 'Generation steps',
       'shell.steps.toggle': 'Details',
-      'shell.steps.toggle.title': 'Expand or collapse the step details',
-      'shell.explain.heading': 'Explanation',
+      'shell.steps.toggle.title': 'Expand or collapse the list of steps',
+      'shell.btn.explain': 'Explain',
+      'shell.btn.explain.title': 'Open the Help to read how the current step works',
 
       'shell.result.label': 'Result',
       'shell.toast.label': 'Notifications'
@@ -103,12 +98,18 @@
       'shell.actions.label': 'Thao tác',
       'shell.btn.generate': 'Tạo đề',
       'shell.btn.generate.title': 'Tạo đề Sudoku mới theo các tùy chọn đã chọn',
-      'shell.btn.regenerate': 'Tạo lại',
-      'shell.btn.regenerate.title': 'Tạo thêm một đề khác với các tùy chọn hiện tại',
+      'shell.btn.regenerate': 'Tạo ngẫu nhiên',
+      'shell.btn.regenerate.title': 'Tạo thêm một đề khác với các tùy chọn hiện tại và một seed ' +
+        'ngẫu nhiên mới',
       'shell.btn.cancel': 'Hủy',
       'shell.btn.cancel.title': 'Dừng quá trình tạo đề đang chạy',
-      'shell.btn.export': 'Xuất đề',
-      'shell.btn.export.title': 'Xuất hoặc chia sẻ đề bài',
+      'shell.mainActions.label': 'Thao tác với đề',
+      'shell.btn.playOnline': 'Chơi',
+      'shell.btn.playOnline.title': 'Mở đề này trong sudoku-player để giải',
+      'shell.btn.export': 'In đề',
+      'shell.btn.export.title': 'In đề hoặc lưu thành PDF',
+      'shell.btn.exportCode': 'Xuất mã',
+      'shell.btn.exportCode.title': 'Lấy mã văn bản của đề để dán vào sudoku-player',
 
       'shell.board.heading': 'Bảng đề bài',
       'shell.board.title': 'Bảng Sudoku',
@@ -116,29 +117,19 @@
 
       'shell.player.heading': 'Phát lại',
       'player.label': 'Điều khiển phát lại',
-      'player.first': 'Về bước đầu tiên',
+      'player.first': 'Về lúc bắt đầu (lưới trống)',
       'player.prev': 'Bước trước',
-      'player.play': 'Phát',
-      'player.pause': 'Tạm dừng',
       'player.next': 'Bước tiếp theo',
-      'player.last': 'Đến bước cuối cùng',
-      'player.scrubber': 'Vị trí phát lại',
-      'player.speed.label': 'Tốc độ phát lại',
-      'player.speed.instant': 'Tức thì',
-      'player.speed.instant.title': 'Bỏ qua hoạt ảnh và hiện ngay đề đã hoàn chỉnh',
-      'player.speed.fast': 'Nhanh',
-      'player.speed.fast.title': 'Phát lại nhanh các bước',
-      'player.speed.step': 'Từng bước',
-      'player.speed.step.title': 'Dừng lại sau mỗi bước',
-      'player.speed.manual': 'Thủ công',
-      'player.speed.manual.title': 'Chỉ chuyển bước khi bạn bấm Bước tiếp theo',
+      'player.last': 'Đến đề hoàn chỉnh',
+      'player.scrubber': 'Bước phát lại',
 
       'shell.status.label': 'Trạng thái:',
 
       'shell.steps.heading': 'Các bước tạo đề',
       'shell.steps.toggle': 'Chi tiết',
-      'shell.steps.toggle.title': 'Mở rộng hoặc thu gọn chi tiết các bước',
-      'shell.explain.heading': 'Giải thích',
+      'shell.steps.toggle.title': 'Mở rộng hoặc thu gọn danh sách các bước',
+      'shell.btn.explain': 'Giải thích',
+      'shell.btn.explain.title': 'Mở phần Trợ giúp để đọc cách bước hiện tại hoạt động',
 
       'shell.result.label': 'Kết quả',
       'shell.toast.label': 'Thông báo'

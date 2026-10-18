@@ -7,13 +7,13 @@
 A static web app, written in plain HTML, CSS and JavaScript, that generates Sudoku puzzles in **15 variants**,
 **guarantees the difficulty you ask for**, and **shows you how every puzzle is made** — step by step, in
 English or Vietnamese. No framework, no build step, no server, no external library. To *solve* a puzzle it has
-made, use its sibling app **[sudoku-player](https://github.com/tdat00/sudoku-player)**: the "Play online" button
+made, use its sibling app **[sudoku-player](https://github.com/tdat00/sudoku-player)**: the "Play" button
 opens the puzzle there ([details](#play-online-with-sudoku-player)).
 
 Một ứng dụng web tĩnh viết bằng HTML, CSS và JavaScript thuần, tạo đề Sudoku cho **15 biến thể**, **đảm bảo
 đúng độ khó bạn chọn** và **cho bạn xem từng bước đề được tạo ra** — bằng tiếng Anh hoặc tiếng Việt. Không
 framework, không bước biên dịch, không máy chủ, không thư viện ngoài. Muốn *giải* một đề vừa tạo, hãy dùng ứng
-dụng anh em **[sudoku-player](https://github.com/tdat00/sudoku-player)**: nút "Chơi trực tuyến" mở đề đó ở bên
+dụng anh em **[sudoku-player](https://github.com/tdat00/sudoku-player)**: nút "Chơi" mở đề đó ở bên
 ấy ([chi tiết](#chơi-trực-tuyến-với-sudoku-player)). (Phần tiếng Việt nằm ở [phía dưới](#tieng-viet).)
 
 ![The generator in the light theme: a classic 9×9 puzzle halfway through the replay of its generation](docs/screenshot-classic9-light.png)
@@ -44,10 +44,13 @@ dụng anh em **[sudoku-player](https://github.com/tdat00/sudoku-player)**: nút
 Most Sudoku generators hand you a puzzle and nothing else. This one is also a way to *learn how puzzles are made*:
 
 1. You pick a variant, a difficulty, optionally a seed, and press **Generate**.
-2. The generator runs at full speed and **records every move** it makes (building the board, filling the
-   solution, digging holes, rating the result).
-3. The page **replays that record** at the speed you choose, next to a panel that explains the seven steps
-   (what, why, how, and the pseudocode that runs).
+2. The generator runs at full speed and **keeps a short log** of how it dug the puzzle out of a full
+   solution: every clue it removed and every one it had to put back.
+3. The board shows the finished puzzle at once. Then you **step through how it was made**, by hand, with the
+   First / Previous / Next / Last step buttons or the slider under the board: each step is one change you can
+   see (the full solution, the cages or signs, a batch of removals, the finished puzzle). The steps are listed
+   in a panel next to the board; its **Explain** button opens the Help at the step that is on show (what, why,
+   how, and the pseudocode that runs).
 
 The difficulty is not a guess. Each level is defined by the solving techniques a person needs, and the digger
 only removes a clue while the puzzle can still be solved with the techniques of the requested level (the
@@ -60,22 +63,24 @@ same puzzle.
   Jigsaw; Killer; Greater-Than; Samurai, Sohei, Butterfly and Flower (overlapping grids); Wordoku.
 - **Six difficulty levels** — very easy, easy, medium, hard, expert, evil — from 21 human solving techniques
   (singles, locked candidates, subsets, fish, wings, chains) plus 3 cage and 2 inequality techniques.
-- **Step-by-step replay** of the generation: play, pause, step, scrub, four speeds; an explanation card with
-  pseudocode for each of the seven steps.
+- **Step-by-step replay** of the generation, moved by hand (first, previous, next and last step, a slider, or
+  a click in the list of steps): each step is one visible change of the board, the easy early removals are
+  summed up in batches, and the Help ("How it works") explains the step with pseudocode.
 - **Bilingual interface** (English / Vietnamese), switched without a reload; every string, including the
   solving techniques and the variant rules, exists in both languages.
 - **Guaranteed result** — exactly one solution (checked by a separate solver), the requested level or, when it
   cannot be reached, the closest puzzle with a clear notice.
-- **Export, import and print** — PNG, SVG, JSON, text, a share link, print / PDF, batch printing for teachers
-  (several puzzles per page, optional solution pages), and import of a saved puzzle.
-- **Play online** — one click hands the puzzle on screen to the separate [sudoku-player](https://github.com/tdat00/sudoku-player)
+- **Print / PDF** — the Print dialog prints the puzzle on screen, optionally with its solution on a page of its
+  own; choose "Save as PDF" in the print dialog to get a PDF file (vector graphics, so the lines stay sharp).
+- **Text code** — the **Export** button next to **Print** shows a text code of the puzzle on screen with a Copy
+  button. Paste it into **Open puzzle** of sudoku-player to play it there, with no link and no file.
+- **Play online** — the **Play** button next to **Print** hands the puzzle on screen to the separate [sudoku-player](https://github.com/tdat00/sudoku-player)
   web app, where you solve it with notes, undo/redo, checking, hints that name the technique and a timer. The
   puzzle travels inside the link (after the `#`), so nothing is uploaded; see
   [Play online with sudoku-player](#play-online-with-sudoku-player).
 - **Accessible** — keyboard navigation, ARIA grid, live announcements, light, dark and high-contrast themes,
   adjustable text size, reduced motion.
-- **In-app help** — the rules of all 15 variants, the technique ladder, keyboard shortcuts, and a first-visit
-  tour.
+- **In-app help** — the rules of all 15 variants, the technique ladder and keyboard shortcuts.
 - **Static and offline** — open `index.html`, or serve the folder with any static server; the generator itself
   never sends anything anywhere. Recently generated puzzles are cached in the browser, and the next one is
   quietly pre-generated in the background, so *Generate* is often instant.
@@ -141,36 +146,32 @@ push to `main`; you can also run it manually from the **Actions** tab. Only the 
 published, not the tests or working notes. The live app is at
 **[tdat00.github.io/sudoku-generator](https://tdat00.github.io/sudoku-generator/)**.
 
-Open the **Help** button for the rules of every variant, the technique ladder and the keyboard shortcuts. The
-first time you visit, a short tour shows where everything is (it is skipped when the address contains
-`auto=1`).
+Open the **Help** button for the rules of every variant, the technique ladder and the keyboard shortcuts.
 
 ## URL parameters
 
 The address bar always holds the state of the page, so a link reproduces a puzzle exactly. Only values that
-differ from the defaults are written; a share link (from the result panel or the **Export** dialog) writes
-`v d sym mode` as well.
+differ from the defaults are written; a share link (from the result panel) writes
+`v d sym mode` as well. Any other parameter is ignored, the `trace` and `speed` of older links included.
 
 | Parameter | Example | Meaning |
 |-----------|---------|---------|
 | `v` | `v=jigsaw9` | Variant id (the table above). Default `classic9`. |
 | `d` | `d=hard` | Difficulty: `veryEasy`, `easy`, `medium`, `hard`, `expert`, `evil`. Default `medium`. |
-| `seed` | `seed=1734567890` | Seed. A whole number 0–4294967295 is used as it is; any other text is hashed to one. Missing = random. |
+| `seed` | `seed=1734567890` | Seed. A whole number 0–4294967295 is used as it is; any other text is hashed to one. Missing = random. A link (or a reload) with a seed generates that puzzle as soon as the page loads. |
 | `sym` | `sym=mirrorH` | Symmetry of the given cells: `none`, `rotational180` (default), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. |
 | `mode` | `mode=letters` | Symbol set: `digits`, `letters`, `colors`, `shapes`, `word` (Wordoku only). Default: the variant's own. |
 | `order` | `order=snake` | Order in which clues are tried: `random` (default), `rowByRow`, `snake`, `spiral`, `jumpOne`. |
 | `attempts` | `attempts=12` | Full grids to try before settling for the closest puzzle, 1–20. Default 8. |
-| `trace` | `trace=summary` | How much of the generation is recorded for the replay: `off`, `summary`, `full` (default). |
 | `sol` | `sol=1` | Show the solution next to the puzzle. |
 | `o.<id>` | `o.cageSize=2` | An option of the chosen variant, for example `o.compactness=0.8` (jigsaw9), `o.futoshiki=1` (greaterThan), `o.placement=row` (wordoku). |
 | `lang` | `lang=vi` | Language: `en` or `vi`. Default: the stored choice, then the browser language. |
-| `speed` | `speed=instant` | Replay speed: `instant`, `fast` (default), `step`, `manual`. |
-| `auto` | `auto=1` | Generate as soon as the page loads (and do not show the first-visit tour). |
+| `auto` | `auto=1` | Generate as soon as the page loads (a link with a `seed` does so anyway). |
 
 `?v=classic9&d=expert&seed=42&lang=vi&auto=1` always gives the same puzzle. Settings are also kept in the
-browser's `localStorage`: `sg.prefs.v1` (language, theme, text size, speed, reduced motion, the colour-blind
+browser's `localStorage`: `sg.prefs.v1` (language, theme, text size, reduced motion, the colour-blind
 symbol), `sg.lastConfig.v1` (the last options), `sg.cache.v1` (up to 20 recently generated puzzles, see
-[Cache and pre-generation](#cache-and-pre-generation)), and `sg.tour.v1` (the tour was seen). A link that names
+[Cache and pre-generation](#cache-and-pre-generation)). A link that names
 a puzzle parameter wins over the stored options. If storage is blocked, the
 page keeps everything in memory for the session.
 
@@ -182,24 +183,22 @@ This repository only **generates** puzzles. Solving them is the job of its sibli
 undo/redo, error checking, hints that name the logical technique, a timer, progress saved per puzzle, all 15
 variants, English / Vietnamese, themes and accessibility.
 
-**How a puzzle gets there.** Press **Export** and use the **Play online** section (or the **Play online** button
-of the result panel). The page turns the puzzle on screen into a *puzzle document*, packs it into a token and
+**How a puzzle gets there.** Press the **Play** button next to **Print** in the main panel. The page turns the
+puzzle on screen into a *puzzle document*, packs it into a token and
 opens `https://tdat00.github.io/sudoku-player/#puzzle=<token>` in a new tab (`window.open(url, '_blank',
 'noopener')`). The token is in the URL **fragment**, which a browser never sends to a server, so nothing is
-uploaded. The dialog also shows the link in a read-only field with a **Copy link** button, and when the link is
-longer than about 100 kB it warns that some apps and servers cut long links and offers the JSON file instead (the
-player opens a file, a drop or pasted text as well). The player's address comes from
+uploaded. When the link is longer than about 100 kB a toast warns that some apps and servers cut long links.
+The player's address comes from
 `<meta name="sg-player-url" content="https://tdat00.github.io/sudoku-player/">` in `index.html`: change it to
 point at your own copy.
 
 **The exchange format** — the only coupling between the two repositories, implemented by `js/ui/exchange.js`
 (`SG.exchange`, the same file byte for byte in both, with the suite `tests/suites/exchange.test.js`):
 
-- The **document** is the puzzle JSON of [design.md](design.md) §14.1 (`format: 'sudoku-generator/v1'`), exactly
-  what **Download JSON** writes, plus one additive block, **`model`**: the plain-data model specification
+- The **document** is the puzzle JSON of [design.md](design.md) §14.1 (`format: 'sudoku-generator/v1'`), as
+  `SG.exportUi.toJson` writes it, plus one additive block, **`model`**: the plain-data model specification
   (`variantId`, `digits`, `units`, `unitMeta`, `cages`, `inequalities`, `layout`, `symbols`, `fixedCells`) that
-  `SG.model.create(spec)` accepts. With it the player rebuilds the board **without any variant code**. The
-  generator's own import ignores `model` and works as before.
+  `SG.model.create(spec)` accepts. With it the player rebuilds the board **without any variant code**.
 - The **token** is `z.` + base64url(deflate-raw(JSON)) — or `j.` + base64url(JSON) when compression is not
   available or does not pay. `SG.exchange.encode(doc)` and `SG.exchange.decode(token)` are asynchronous;
   `SG.exchange.playerUrl(base, token)` builds the link and refuses a base that is not `http(s)` or a relative
@@ -216,7 +215,7 @@ point at your own copy.
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
 │ UI            js/ui/        app · controls · board-view (SVG) · step-view · explain · player  │
-│                             · result-view · i18n · store · export · import · play · a11y …     │
+│                             · result-view · i18n · store · export · exchange · a11y …         │
 ├──────────────────────────────────────────────────────────────────────────────────────────────┤
 │ ORCHESTRATION js/worker/    worker-client (Web Worker, or the main-thread fallback)           │
 │                             gen.worker.js (runs the pipeline off the main thread)             │
@@ -242,10 +241,11 @@ differences go through the registry (`SG.variants`).
 
 `SG.pipeline.run(config, emit, budget)` is synchronous and always goes through seven steps:
 `configure → buildModel → fullGrid → extraStructure → dig → rate → tune`. It returns a `PuzzleResult`
-(`model, givens, solution, rating, seed, config, timings, attempts, warnings`) and reports everything through
-`emit` as `GenerationEvent`s: `{ type, stepId, phase, t, seq, i18nKey?, i18nArgs?, patch?, metrics? }`. A
-`patch` is a *delta* of at most eight cells (`{ cells: [{ i, value, state }], highlight, unhighlight }`), never
-a snapshot. `SG.events.VOCABULARY` is the contract for every event key.
+(`model, givens, solution, rating, seed, config, timings, attempts, warnings, digLog`) and reports
+everything through `emit` as `GenerationEvent`s:
+`{ type, stepId, phase, t, seq, i18nKey?, i18nArgs?, patch?, metrics? }`. A `patch` is a *delta* of at most
+eight cells (`{ cells: [{ i, value, state }], highlight, unhighlight }`), never a snapshot.
+`SG.events.VOCABULARY` is the contract for every event key.
 
 `dig`, `rate` and `tune` are three steps that repeat per *dig sample*: when the puzzle that was just dug misses
 the requested level (`tune.miss`), the next sample is dug from the same grid (up to 12 per grid), and only
@@ -255,17 +255,35 @@ generator that yields at natural boundaries (what the worker and the main-thread
 `SG.pipeline.toWire` / `fromWire` carry a result across `postMessage`. The difficulty of a puzzle is
 `SG.difficulty.rate(...)`, from calibrated technique costs; use `rating.score`, never the solver's raw score.
 
-The UI never slows the algorithm down to animate it. It stores the events as a *trace* and `SG.player`
-replays the trace (`SG.events.createView / applyPatch / invertPatch / mergePatches`), so it can pause, step
-backwards and scrub. Overlays (cages, signs, windows) are drawn from the final `result.model`, not from
-patches. Random choices use forked streams of one seeded generator (`SG.rng`), which is why a seed
-reproduces a puzzle.
+The UI never slows the algorithm down to animate it, and its replay does not read the events. Next to them
+the digger keeps a compact **dig log** of the sample that became the puzzle (`result.digLog`: entries `pass`,
+`accept`, `reject`, `keep` and `restart`, plus `signs`, `clear`, `reveal` and sign verdicts for Greater-Than;
+the header of `js/core/digger.js` describes them). It is the same whatever the trace verbosity, the thread or
+the board size, and `toWire` / `fromWire` carry it. After a run the board shows the finished puzzle at once;
+nothing plays by itself. `SG.player.buildSteps(result)` (pure) turns the log into the steps of the replay,
+each one a change the board shows: the full solution; the cages (Killer) or the signs (Greater-Than); batches
+of random removals, about a ninth of the board tried per step, with the removed cells framed and the cells
+that had to go back framed dashed red; rounds of the guided dig, each taking the removal that makes the
+puzzle hardest; for Greater-Than the batches of signs taken away and the clues shown when the puzzle came out
+too hard; and the finished puzzle. The technical work (settings, board model, rating, tuning, samples that
+missed the level) is not shown. A Classic 9×9 *easy* puzzle with seed 3, for example, replays in 7 steps: the
+full solution, five batches of random removals (9, 10, 10 and 10 cells, then "8 cells removed · 2 cells put
+back") and the finished puzzle with 34 clues. `SG.player.create()` is the manual player (first, previous,
+next, last, seek; position 0 is the empty grid), `SG.stepView.create()` the list of the steps with a legend of
+the board frames; the status line under the board, which screen readers hear, follows the step. The explanation
+of the seven steps lives in the Help dialog (tab "How it works"): one collapsible entry per step with its
+what / why / how and pseudocode, `SG.explainCard.create(el, { compact: true })`; the entry of the replay step on
+show is marked, open, and its running line and dig counters are shown (`SG.app.getExplainContext()`). The
+**Explain** button of the steps panel opens the Help on that tab. Overlays (cages, signs, windows) are drawn from
+the model of the result, not from the log.
+Random choices use forked streams of one seeded generator (`SG.rng`), which is why a seed reproduces a
+puzzle.
 
 ### Worker and fallback
 
 `SG.workerClient.generate(config, onEvent)` returns a promise of the `PuzzleResult`; `.cancel()` stops a run,
 `.mode` tells `'worker'` or `'main'`, `.ready()` settles once the mode is known, and `SG.workerClient.create()`
-makes an independent client (with `dispose()`) for the cache and for batch printing. Over `http(s)` the client
+makes an independent client (with `dispose()`) for the cache. Over `http(s)` the client
 starts `js/worker/gen.worker.js`, which loads the core, the variants and the word lists with `importScripts`
 and runs `SG.pipeline.runSteps` in slices of about 12 ms, so a `cancel` message is read between slices: the
 promise is rejected at once, the work stops at the next boundary, and a worker that does not answer within
@@ -277,13 +295,14 @@ seed is identical in both modes.
 
 `SG.cache` (`js/ui/cache.js`) stores every generated puzzle in `localStorage` (`sg.cache.v1`, 20 puzzles,
 least recently used out first, schema version checked), so the same configuration with the same seed is served
-at once. It stores the puzzle only, never the trace: a cached puzzle is shown immediately and its trace is
-**regenerated from the seed in the background**, then loaded into the replay (paused at the end) — the
-regenerated puzzle must equal the cached one, otherwise the entry is dropped. When the page has been idle for a
-second, the cache also pre-generates one or two puzzles with the same options in a worker, which "Generate"
-(with an empty seed) and "Regenerate" then hand out instantly. It never runs while a generation is in
-progress, pauses in a hidden tab, skips configurations that are slow, and does not exist in main-thread mode.
-A switch in Settings turns the pre-generation off (the choice is not remembered).
+at once. It stores the puzzle only, never the trace nor the dig log: a cached puzzle is shown immediately (the
+replay waits, with a "preparing the replay" note) and is **generated again from its seed in the background**;
+its dig log then gives it its replay (`SG.app.attachTrace(trace, digLog)`), which opens on the finished
+puzzle — the regenerated puzzle must equal the cached one, otherwise the entry is dropped. When the page has
+been idle for a second, the cache also pre-generates one or two puzzles with the same options in a worker,
+which "Generate" (with an empty seed) and "Generate random" then hand out instantly. It never runs while a
+generation is in progress, pauses in a hidden tab, skips configurations that are slow, and does not exist in
+main-thread mode. A switch in Settings turns the pre-generation off (the choice is not remembered).
 
 ### Internationalisation
 
@@ -331,10 +350,12 @@ the runner and `tests.html`.
 
 `js/ui/app.js` owns the page and exposes `SG.app`: `getStore()`, `getBoard()`, `getPlayer()`, `getStepView()`,
 `getResult()` (the last `{ result, trace }`), `generate()`, `regenerate()`, `cancel()`, `showResult()` (show a
-puzzle that was not generated on this page, as the import does), `toast()`, `announce()`, `openModal()`,
+puzzle that was not generated on this page), `toast()`, `announce()`, `openModal()`,
 `setClient()` and `attachTrace()` (what the cache uses), and an event bus `on()` / `emit()` with the events
-`generate:start`, `generate:progress`, `generate:end`, `generate:error`, `generate:cancel`, `result`, `trace`,
-`position`, `locale`, `theme`, `settings` and `action`. The header of `app.js` is the full contract.
+`generate:start`, `generate:progress`, `generate:end`, `generate:error`, `generate:cancel`, `result`, `trace`
+(`{ result, trace }`, once `attachTrace()` gave a cached puzzle its replay), `position` (`{ position, length,
+step, direction }` after every move of the replay; `step` is a step of `SG.player.buildSteps`, null at
+position 0), `locale`, `theme`, `settings` and `action`. The header of `app.js` is the full contract.
 
 **Adding a UI module without editing `app.js`.** At the end of start-up `app.js` calls `init(SG.app)` — which
 must be idempotent — on each of these optional modules that exists, in this order, every call in its own
@@ -342,15 +363,15 @@ must be idempotent — on each of these optional modules that exists, in this or
 
 | Module | What it does |
 |--------|--------------|
-| `SG.exportUi` | The Export dialog: print / PDF, PNG, SVG, JSON, text, share link, **Play online** (the link to sudoku-player) and batch printing (1 / 2 / 4 / 6 per page, optional solution pages); it hosts the import section |
-| `SG.importUi` | Import of a saved JSON or a line of digits, validation (a bad file gives a translated message), "Analyse difficulty"; a file can be dropped anywhere on the page |
-| `SG.a11y` | The board as an ARIA grid with keyboard navigation, live announcements of step changes, the Settings dialog |
+| `SG.exportUi` | The Print dialog (print / PDF of the puzzle on screen, optionally with the solution on its own page), the **Export** button (`action { id: 'exportCode' }`: the text code of the puzzle, `buildExportCode(result)`, to paste into sudoku-player) and the **Play** button (`action { id: 'play' }`: opens the puzzle in sudoku-player, see above) |
+| `SG.a11y` | The board as an ARIA grid with keyboard navigation, live announcements (a generation starts, the language changes), the Settings dialog |
 | `SG.theme` | Light, dark and high-contrast themes (and "auto"), the hints of the empty / busy / error states |
-| `SG.help` | The Help dialog (rules, technique ladder, shortcuts) and the first-visit tour |
+| `SG.help` | The Help dialog (rules, technique ladder, shortcuts) |
 | `SG.cache` | The cache and pre-generation described above; it replaces the generation client with a wrapper |
 
-Such a module listens with `SG.app.on('action', …)` (the header buttons emit `action { id: 'export' | 'settings' |
-'help' }`), draws dialogs with `SG.app.openModal()` and reads the puzzle with `SG.app.getResult()`; a name that
+Such a module listens with `SG.app.on('action', …)` (the Print and Play buttons of the main panel and the
+Settings and Help buttons of the header emit `action { id: 'export' | 'exportCode' | 'play' | 'settings' | 'help' }`), draws
+dialogs with `SG.app.openModal()` and reads the puzzle with `SG.app.getResult()`; a name that
 is not in the list needs one more entry in the `OPTIONAL_MODULES` list of `app.js`. Every UI file must **load
 in Node without a DOM** (top-level code only defines functions and pushes locale fragments; the DOM is touched
 inside functions called at run time), and keeps its logic in pure, testable functions next to the DOM code.
@@ -389,7 +410,7 @@ sudoku-generator/
 │   └── ui/                 exchange.js (link to sudoku-player) · i18n.js · locale.en.js · locale.vi.js
 │                           · locale.shell.js · symbols.js · board-view.js · store.js · controls.js
 │                           · step-view.js · explain.js · player.js (replay of the generation)
-│                           · result-view.js · cache.js · export.js · import.js · a11y.js · theme.js
+│                           · result-view.js · cache.js · export.js · a11y.js · theme.js
 │                           · help.js · app.js
 └── tests/
     ├── harness.js · node-runner.js · soak.js · perf.js
@@ -630,7 +651,7 @@ header of `js/core/techniques.js`. A complete example — *Full House*, a unit w
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # every suite (42, about 3,500 tests), about three minutes
+node tests/node-runner.js                          # every suite (42, about 3,350 tests), about three minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
@@ -641,7 +662,7 @@ The runner loads `SOURCE_FILES` with `vm.runInThisContext`, discovers `tests/fix
 engine, every variant, the solving techniques, the pipeline and its events, the worker and its client, and the
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks this README
 against the code: its variants table, URL parameters, script names, links, commands and flags, the `SG.…`
-names and the two worked examples. At the tip of this repository the runner counts 3,498 tests in 42 suites,
+names and the two worked examples. At the tip of this repository the runner counts 3,354 tests in 42 suites,
 all green; the counts of the combined project at its final review (before the split) are in
 `docs/final-report.md`.
 
@@ -708,8 +729,8 @@ The full list is in [design.md](design.md) §12.2:
 - **Browsers**: developed and checked in Chromium-based Edge only; Firefox 100+ and Safari 15.4+ are the
   supported targets but have not been tried, and neither has a real phone.
 - **Play online** needs the player to be published at the address of the `sg-player-url` meta tag, and a
-  browser that does not block pop-ups for the page (the link is also shown, so you can copy it). A puzzle link
-  longer than about 100 kB may be cut by chat apps and servers; use the JSON file for such boards.
+  browser that does not block pop-ups for the page. A puzzle link longer than about 100 kB may be cut by chat
+  apps and servers and then does not open in the player.
 
 ## Licence and credits
 
@@ -746,9 +767,13 @@ Phần lớn trình tạo Sudoku chỉ đưa cho bạn một đề rồi thôi. 
 tạo ra như thế nào*:
 
 1. Bạn chọn biến thể, độ khó, có thể thêm seed, rồi bấm **Tạo đề**.
-2. Bộ sinh chạy hết tốc độ và **ghi lại mọi nước đi** của nó (dựng bảng, điền lời giải, đào lỗ, chấm điểm).
-3. Trang **phát lại bản ghi đó** với tốc độ bạn chọn, bên cạnh một khung giải thích bảy bước (làm gì, vì sao,
-   làm thế nào, và đoạn mã giả đang chạy).
+2. Bộ sinh chạy hết tốc độ và **ghi lại một nhật ký ngắn** về cách nó đào ra đề từ một lời giải đầy đủ: mọi số
+   đã xóa và mọi số phải trả lại.
+3. Bảng hiện ngay đề hoàn chỉnh. Sau đó bạn **tự xem lại đề được tạo ra như thế nào**, bằng các nút Bước đầu
+   tiên / Bước trước / Bước tiếp theo / Bước cuối cùng hoặc thanh trượt dưới bảng: mỗi bước là một thay đổi
+   bạn nhìn thấy trên bảng (lời giải đầy đủ, các lồng hay dấu so sánh, một đợt xóa ô, đề hoàn chỉnh). Các bước
+   được liệt kê trong một khung cạnh bảng; nút **Giải thích** của khung này mở Trợ giúp ở đúng bước đang xem
+   (làm gì, vì sao, làm thế nào, và đoạn mã giả đang chạy).
 
 Độ khó không phải là phỏng đoán. Mỗi mức được định nghĩa bằng các kỹ thuật giải mà người chơi cần dùng, và bộ
 đào chỉ bỏ một số cho sẵn khi đề vẫn giải được bằng các kỹ thuật của mức đã chọn (*oracle bị giới hạn theo kỹ
@@ -762,22 +787,25 @@ thuật*, [design.md](design.md) §6.8). Cùng seed và cùng tùy chọn luôn 
 - **Sáu mức độ khó** — rất dễ, dễ, trung bình, khó, chuyên gia, địa ngục — dựa trên 21 kỹ thuật giải của con
   người (số đơn, ứng viên bị khóa, tập con, cá, cánh, chuỗi) cùng 3 kỹ thuật về lồng và 2 kỹ thuật về dấu so
   sánh.
-- **Phát lại từng bước** quá trình tạo đề: phát, tạm dừng, từng bước, kéo thanh trượt, bốn tốc độ; thẻ giải
-  thích kèm mã giả cho từng bước trong bảy bước.
+- **Phát lại từng bước** quá trình tạo đề, do bạn tự điều khiển (bước đầu tiên, bước trước, bước tiếp theo,
+  bước cuối cùng, thanh trượt, hoặc bấm vào danh sách các bước): mỗi bước là một thay đổi nhìn thấy được trên
+  bảng, những lần xóa dễ ở đầu được gộp thành từng đợt, và phần Trợ giúp ("Cách hoạt động") giải thích bước
+  đó kèm mã giả.
 - **Giao diện song ngữ** (Anh / Việt), đổi ngay không cần tải lại trang; mọi chuỗi chữ, kể cả tên kỹ thuật giải
   và luật của từng biến thể, đều có cả hai ngôn ngữ.
 - **Kết quả được đảm bảo** — đúng một lời giải (do một bộ giải riêng kiểm tra), đúng mức độ yêu cầu hoặc, khi
   không đạt được, đề gần nhất kèm thông báo rõ ràng.
-- **Xuất, nhập và in** — PNG, SVG, JSON, văn bản, liên kết chia sẻ, in / PDF, in hàng loạt cho giáo viên (nhiều
-  đề trên mỗi trang, có thể kèm trang lời giải) và nhập lại một đề đã lưu.
-- **Chơi trực tuyến** — một cú bấm chuyển đề đang hiển thị sang ứng dụng riêng
+- **In / PDF** — hộp thoại In đề in đề đang hiển thị, có thể kèm lời giải ở một trang riêng; chọn "Lưu dưới
+  dạng PDF" trong hộp thoại in để có tệp PDF (đồ họa vector nên nét kẻ luôn sắc).
+- **Mã văn bản** — nút **Xuất mã** cạnh nút **In đề** hiện mã văn bản của đề đang hiển thị, kèm nút Sao chép.
+  Dán mã vào **Mở đề** của sudoku-player để chơi, không cần liên kết hay tệp.
+- **Chơi trực tuyến** — nút **Chơi** cạnh nút **In đề** chuyển đề đang hiển thị sang ứng dụng riêng
   [sudoku-player](https://github.com/tdat00/sudoku-player), nơi bạn giải đề với ghi chú, hoàn tác / làm lại, kiểm
   tra, gợi ý nêu tên kỹ thuật và đồng hồ. Đề nằm ngay trong liên kết (sau dấu `#`) nên không có gì bị tải lên;
   xem [Chơi trực tuyến với sudoku-player](#chơi-trực-tuyến-với-sudoku-player).
 - **Dễ tiếp cận** — điều hướng bằng bàn phím, lưới ARIA, thông báo trực tiếp, giao diện sáng, tối và tương
   phản cao, chỉnh cỡ chữ, giảm chuyển động.
-- **Trợ giúp ngay trong ứng dụng** — luật của cả 15 biến thể, bậc thang kỹ thuật, phím tắt, và hướng dẫn nhanh
-  cho lần truy cập đầu tiên.
+- **Trợ giúp ngay trong ứng dụng** — luật của cả 15 biến thể, bậc thang kỹ thuật và phím tắt.
 - **Tĩnh và chạy ngoại tuyến** — mở `index.html`, hoặc phục vụ thư mục bằng một máy chủ tĩnh bất kỳ; bản thân
   trình tạo không gửi gì đi đâu cả. Các đề vừa tạo được lưu đệm trong trình duyệt và đề kế tiếp được âm thầm tạo
   sẵn ở nền, nên nút *Tạo đề* thường cho kết quả ngay.
@@ -825,34 +853,32 @@ lần đẩy lên `main`; bạn cũng có thể chạy thủ công từ thẻ **
 xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng trực tuyến tại
 **[tdat00.github.io/sudoku-generator](https://tdat00.github.io/sudoku-generator/)**.
 
-Bấm nút **Trợ giúp** để xem luật của từng biến thể, bậc thang kỹ thuật và các phím tắt. Lần đầu bạn truy cập,
-một hướng dẫn nhanh sẽ chỉ ra mọi thứ nằm ở đâu (hướng dẫn này bị bỏ qua khi địa chỉ có `auto=1`).
+Bấm nút **Trợ giúp** để xem luật của từng biến thể, bậc thang kỹ thuật và các phím tắt.
 
 ## Tham số URL
 
 Thanh địa chỉ luôn giữ trạng thái của trang, nên một liên kết tạo lại đúng một đề. Chỉ những giá trị khác mặc
-định mới được ghi; liên kết chia sẻ (ở khung kết quả hoặc hộp thoại **Xuất đề**) còn ghi thêm `v d sym mode`.
+định mới được ghi; liên kết chia sẻ (ở khung kết quả) còn ghi thêm `v d sym mode`. Mọi tham số khác đều bị bỏ
+qua, kể cả `trace` và `speed` của các liên kết cũ.
 
 | Tham số | Ví dụ | Ý nghĩa |
 |---------|-------|---------|
 | `v` | `v=jigsaw9` | Mã biến thể (bảng ở trên). Mặc định `classic9`. |
 | `d` | `d=hard` | Độ khó: `veryEasy`, `easy`, `medium`, `hard`, `expert`, `evil`. Mặc định `medium`. |
-| `seed` | `seed=1734567890` | Seed. Số nguyên 0–4294967295 được dùng nguyên văn; văn bản khác được băm thành một số. Không có = ngẫu nhiên. |
+| `seed` | `seed=1734567890` | Seed. Số nguyên 0–4294967295 được dùng nguyên văn; văn bản khác được băm thành một số. Không có = ngẫu nhiên. Liên kết (hay lần tải lại trang) có seed sẽ tạo ngay đề đó khi trang tải xong. |
 | `sym` | `sym=mirrorH` | Kiểu đối xứng của các ô cho sẵn: `none`, `rotational180` (mặc định), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. |
 | `mode` | `mode=letters` | Bộ ký hiệu: `digits`, `letters`, `colors`, `shapes`, `word` (chỉ Wordoku). Mặc định: của biến thể. |
 | `order` | `order=snake` | Thứ tự thử bỏ số: `random` (mặc định), `rowByRow`, `snake`, `spiral`, `jumpOne`. |
 | `attempts` | `attempts=12` | Số lưới đầy đủ được thử trước khi chấp nhận đề gần nhất, 1–20. Mặc định 8. |
-| `trace` | `trace=summary` | Mức ghi lại để phát lại: `off`, `summary`, `full` (mặc định). |
 | `sol` | `sol=1` | Hiện lời giải cạnh đề. |
 | `o.<id>` | `o.cageSize=2` | Một tùy chọn của biến thể đang chọn, ví dụ `o.compactness=0.8` (jigsaw9), `o.futoshiki=1` (greaterThan), `o.placement=row` (wordoku). |
 | `lang` | `lang=vi` | Ngôn ngữ: `en` hoặc `vi`. Mặc định: lựa chọn đã lưu, rồi ngôn ngữ của trình duyệt. |
-| `speed` | `speed=instant` | Tốc độ phát lại: `instant`, `fast` (mặc định), `step`, `manual`. |
-| `auto` | `auto=1` | Tạo đề ngay khi trang tải xong (và không hiện hướng dẫn lần đầu). |
+| `auto` | `auto=1` | Tạo đề ngay khi trang tải xong (liên kết có `seed` thì tự tạo đề cả khi không có tham số này). |
 
 `?v=classic9&d=expert&seed=42&lang=vi&auto=1` luôn cho ra cùng một đề. Các thiết lập còn được lưu trong
-`localStorage` của trình duyệt: `sg.prefs.v1` (ngôn ngữ, giao diện, cỡ chữ, tốc độ, giảm chuyển động, ký hiệu
-hỗ trợ người mù màu), `sg.lastConfig.v1` (các tùy chọn gần nhất), `sg.cache.v1` (tối đa 20 đề vừa tạo, xem
-[Bộ nhớ đệm và tạo sẵn đề](#bộ-nhớ-đệm-và-tạo-sẵn-đề)) và `sg.tour.v1` (đã xem hướng dẫn). Liên kết có nêu tham
+`localStorage` của trình duyệt: `sg.prefs.v1` (ngôn ngữ, giao diện, cỡ chữ, giảm chuyển động, ký hiệu hỗ trợ
+người mù màu), `sg.lastConfig.v1` (các tùy chọn gần nhất), `sg.cache.v1` (tối đa 20 đề vừa tạo, xem
+[Bộ nhớ đệm và tạo sẵn đề](#bộ-nhớ-đệm-và-tạo-sẵn-đề)). Liên kết có nêu tham
 số của đề thì được ưu tiên hơn các tùy chọn đã lưu. Nếu bị chặn lưu trữ, trang giữ mọi thứ trong bộ nhớ trong
 suốt phiên.
 
@@ -864,24 +890,22 @@ một ứng dụng tĩnh riêng với lưới để bạn điền số, ghi chú
 tên kỹ thuật logic, đồng hồ, tiến độ được lưu theo từng đề, đủ 15 biến thể, tiếng Anh / Việt, giao diện và trợ
 năng.
 
-**Đề sang đó bằng cách nào.** Bấm **Xuất đề** rồi dùng phần **Chơi trực tuyến** (hoặc nút **Chơi trực tuyến**
-ở khung kết quả). Trang biến đề đang hiển thị thành một *tài liệu đề*, nén thành một mã (token) rồi mở
+**Đề sang đó bằng cách nào.** Bấm nút **Chơi** cạnh nút **In đề** ở khung chính. Trang biến đề đang hiển thị
+thành một *tài liệu đề*, nén thành một mã (token) rồi mở
 `https://tdat00.github.io/sudoku-player/#puzzle=<token>` trong thẻ mới (`window.open(url, '_blank',
 'noopener')`). Mã nằm ở **phần fragment** của URL — trình duyệt không bao giờ gửi phần này lên máy chủ — nên
-không có gì bị tải lên. Hộp thoại còn hiện liên kết trong một ô chỉ đọc kèm nút **Sao chép liên kết**; khi liên
-kết dài hơn khoảng 100 kB, nó cảnh báo rằng một số ứng dụng và máy chủ cắt bớt liên kết dài và gợi ý dùng tệp
-JSON (trình chơi cũng mở được tệp, thao tác thả hoặc văn bản dán vào). Địa chỉ của trình chơi lấy từ
+không có gì bị tải lên. Khi liên kết dài hơn khoảng 100 kB, một thông báo cảnh báo rằng một số ứng dụng và máy
+chủ cắt bớt liên kết dài. Địa chỉ của trình chơi lấy từ
 `<meta name="sg-player-url" content="https://tdat00.github.io/sudoku-player/">` trong `index.html`: hãy đổi nó
 nếu bạn có bản riêng.
 
 **Định dạng trao đổi** — mối liên kết duy nhất giữa hai kho mã, do `js/ui/exchange.js` (`SG.exchange`, cùng
 một tệp, giống từng byte ở cả hai bên, kèm bộ kiểm thử `tests/suites/exchange.test.js`) cài đặt:
 
-- **Tài liệu** là JSON của đề theo [design.md](design.md) §14.1 (`format: 'sudoku-generator/v1'`), đúng như
-  **Tải tệp JSON** ghi ra, cộng thêm một khối bổ sung **`model`**: đặc tả mô hình dạng dữ liệu thuần
+- **Tài liệu** là JSON của đề theo [design.md](design.md) §14.1 (`format: 'sudoku-generator/v1'`), do
+  `SG.exportUi.toJson` ghi ra, cộng thêm một khối bổ sung **`model`**: đặc tả mô hình dạng dữ liệu thuần
   (`variantId`, `digits`, `units`, `unitMeta`, `cages`, `inequalities`, `layout`, `symbols`, `fixedCells`) mà
   `SG.model.create(spec)` nhận được. Nhờ nó, trình chơi dựng lại bảng **mà không cần mã của biến thể nào**.
-  Chức năng nhập của chính trình tạo này bỏ qua `model` và hoạt động như trước.
 - **Mã (token)** là `z.` + base64url(deflate-raw(JSON)) — hoặc `j.` + base64url(JSON) khi không nén được hoặc nén
   không có lợi. `SG.exchange.encode(doc)` và `SG.exchange.decode(token)` là hàm bất đồng bộ;
   `SG.exchange.playerUrl(base, token)` dựng liên kết và từ chối địa chỉ gốc không phải `http(s)` hay đường dẫn
@@ -912,10 +936,10 @@ một bộ giải và một bộ sinh phục vụ cả 15 biến thể, và tron
 
 `SG.pipeline.run(config, emit, budget)` chạy đồng bộ và luôn đi qua bảy bước:
 `configure → buildModel → fullGrid → extraStructure → dig → rate → tune`. Nó trả về một `PuzzleResult`
-(`model, givens, solution, rating, seed, config, timings, attempts, warnings`) và báo mọi việc qua `emit` dưới
-dạng `GenerationEvent`: `{ type, stepId, phase, t, seq, i18nKey?, i18nArgs?, patch?, metrics? }`. Một `patch`
-là *phần thay đổi* của tối đa tám ô, không bao giờ là ảnh chụp cả bảng. `SG.events.VOCABULARY` là hợp đồng cho
-mọi khóa sự kiện.
+(`model, givens, solution, rating, seed, config, timings, attempts, warnings, digLog`) và báo mọi việc qua
+`emit` dưới dạng `GenerationEvent`: `{ type, stepId, phase, t, seq, i18nKey?, i18nArgs?, patch?, metrics? }`.
+Một `patch` là *phần thay đổi* của tối đa tám ô, không bao giờ là ảnh chụp cả bảng. `SG.events.VOCABULARY` là
+hợp đồng cho mọi khóa sự kiện.
 
 Ba bước `dig`, `rate` và `tune` lặp lại theo từng *lần đào thử* (dig sample): khi đề vừa đào chưa đúng mức yêu
 cầu (`tune.miss`), lần đào kế tiếp được thực hiện trên cùng lưới (tối đa 12 lần mỗi lưới), và chỉ khi đó
@@ -926,17 +950,34 @@ generator, nhường quyền ở những ranh giới tự nhiên (là cái worke
 `SG.difficulty.rate(...)`, tính từ chi phí kỹ thuật đã hiệu chỉnh; hãy dùng `rating.score`, không dùng điểm thô
 của bộ giải.
 
-Giao diện không bao giờ làm thuật toán chậm đi để tạo hoạt ảnh. Nó lưu các sự kiện thành một *trace* và
-`SG.player` phát lại trace đó (`SG.events.createView / applyPatch / invertPatch / mergePatches`), nên có thể
-tạm dừng, lùi từng bước và kéo thanh trượt. Các lớp phủ (lồng, dấu, cửa sổ) được vẽ từ `result.model` cuối
-cùng, không từ các patch. Mọi lựa chọn ngẫu nhiên dùng các luồng được tách ra từ một bộ sinh số có seed
-(`SG.rng`), vì thế seed tạo lại được đề.
+Giao diện không bao giờ làm thuật toán chậm đi để tạo hoạt ảnh, và phần phát lại cũng không đọc các sự kiện.
+Song song với các sự kiện, bộ đào ghi một **nhật ký đào** (dig log) gọn nhẹ cho lần đào thử đã trở thành đề
+(`result.digLog`: các mục `pass`, `accept`, `reject`, `keep` và `restart`, cộng thêm `signs`, `clear`,
+`reveal` và kết quả thử từng dấu ở biến thể So sánh; phần đầu của `js/core/digger.js` mô tả chúng). Nhật ký
+này như nhau bất kể mức ghi trace, luồng chạy hay kích thước bảng, và được `toWire` / `fromWire` mang theo.
+Tạo xong, bảng hiện ngay đề hoàn chỉnh; không có gì tự chạy. `SG.player.buildSteps(result)` (hàm thuần) biến
+nhật ký thành các bước phát lại, mỗi bước là một thay đổi hiện trên bảng: lời giải đầy đủ; các lồng (Killer)
+hoặc các dấu (So sánh); từng đợt xóa ô ngẫu nhiên, mỗi bước thử khoảng một phần chín số ô của bảng, ô bị xóa
+được đóng khung, ô phải trả lại được đóng khung nét đứt màu đỏ; các vòng đào có định hướng, mỗi vòng chọn cách
+xóa làm đề khó nhất; ở biến thể So sánh còn có các đợt bỏ dấu và các số cho sẵn được hiện thêm khi đề khó quá
+mức; cuối cùng là đề hoàn chỉnh. Phần việc kỹ thuật (cấu hình, mô hình bảng, chấm điểm, hiệu chỉnh, các lần
+đào trượt mức) không được hiện. Ví dụ, một đề Cổ điển 9×9 mức *dễ* với seed 3 phát lại trong 7 bước: lời giải
+đầy đủ, năm đợt xóa ngẫu nhiên (9, 10, 10 và 10 ô, rồi "xóa 8 ô · trả lại 2 ô") và đề hoàn chỉnh với 34 số
+cho sẵn. `SG.player.create()` là bộ phát lại điều khiển bằng tay (về đầu, lùi, tiến, đến cuối, nhảy đến một
+vị trí; vị trí 0 là lưới trống), `SG.stepView.create()` là danh sách các bước kèm chú giải các khung trên
+bảng; dòng trạng thái dưới bảng (trình đọc màn hình sẽ đọc dòng này) đi theo bước đang xem. Lời giải thích của
+bảy bước nằm trong hộp thoại Trợ giúp (thẻ "Cách hoạt động"): mỗi bước một mục thu gọn / mở rộng được, với
+làm gì / vì sao / làm thế nào và mã giả, `SG.explainCard.create(el, { compact: true })`; mục của bước phát lại
+đang xem được đánh dấu, mở sẵn, kèm dòng đang chạy và bộ đếm của giai đoạn đào (`SG.app.getExplainContext()`).
+Nút **Giải thích** của khung các bước mở Trợ giúp ở thẻ đó.
+Các lớp phủ (lồng, dấu, cửa sổ) được vẽ từ mô hình của kết quả, không từ nhật ký. Mọi lựa chọn ngẫu nhiên
+dùng các luồng được tách ra từ một bộ sinh số có seed (`SG.rng`), vì thế seed tạo lại được đề.
 
 ### Worker và phương án dự phòng
 
 `SG.workerClient.generate(config, onEvent)` trả về một promise của `PuzzleResult`; `.cancel()` dừng một lần
 chạy, `.mode` cho biết `'worker'` hay `'main'`, `.ready()` xong khi đã biết chế độ, và `SG.workerClient.create()`
-tạo một client độc lập (có `dispose()`) cho bộ nhớ đệm và việc in hàng loạt. Qua `http(s)`, client khởi động
+tạo một client độc lập (có `dispose()`) cho bộ nhớ đệm. Qua `http(s)`, client khởi động
 `js/worker/gen.worker.js`, nạp phần lõi, các biến thể và danh sách từ bằng `importScripts` rồi chạy
 `SG.pipeline.runSteps` theo từng lát khoảng 12 ms, nên thông điệp `cancel` được đọc giữa các lát: promise bị từ
 chối ngay, việc đang làm dừng ở ranh giới kế tiếp, và worker nào không phản hồi trong 150 ms thì bị tắt (và được
@@ -947,12 +988,13 @@ chạy cùng các lát đó ở đó và trang hiện huy hiệu. Với cùng m�
 
 `SG.cache` (`js/ui/cache.js`) lưu mọi đề đã tạo vào `localStorage` (`sg.cache.v1`, 20 đề, đề lâu chưa dùng nhất
 bị bỏ trước, có kiểm tra phiên bản lược đồ), nên cùng cấu hình và cùng seed được trả về ngay lập tức. Nó chỉ lưu
-đề, không bao giờ lưu trace: đề lấy từ bộ nhớ đệm hiện ra ngay và trace của nó được **tạo lại từ seed ở nền**,
-rồi nạp vào phần phát lại (dừng ở cuối) — đề tạo lại phải trùng với đề đã lưu, nếu không mục đó bị bỏ. Khi trang
-đã rảnh một giây, bộ nhớ đệm còn tạo sẵn một hai đề với cùng tùy chọn trong một worker, để nút "Tạo đề" (khi ô
-seed trống) và "Tạo lại" đưa ra ngay. Nó không bao giờ chạy khi đang có một lần tạo, tạm dừng khi tab bị ẩn, bỏ
-qua các cấu hình chậm, và không tồn tại ở chế độ luồng chính. Một công tắc trong Cài đặt tắt việc tạo sẵn (lựa
-chọn này không được nhớ).
+đề, không bao giờ lưu trace hay nhật ký đào: đề lấy từ bộ nhớ đệm hiện ra ngay (phần phát lại tạm thời chưa
+dùng được, kèm dòng ghi chú "đang chuẩn bị phần phát lại") và được **tạo lại từ seed ở nền**; nhật ký đào của
+lần tạo lại đó mang phần phát lại đến cho đề (`SG.app.attachTrace(trace, digLog)`), mở ra ở đề hoàn chỉnh — đề
+tạo lại phải trùng với đề đã lưu, nếu không mục đó bị bỏ. Khi trang đã rảnh một giây, bộ nhớ đệm còn tạo sẵn
+một hai đề với cùng tùy chọn trong một worker, để nút "Tạo đề" (khi ô seed trống) và "Tạo ngẫu nhiên" đưa ra
+ngay. Nó không bao giờ chạy khi đang có một lần tạo, tạm dừng khi tab bị ẩn, bỏ qua các cấu hình chậm, và
+không tồn tại ở chế độ luồng chính. Một công tắc trong Cài đặt tắt việc tạo sẵn (lựa chọn này không được nhớ).
 
 ### Quốc tế hóa
 
@@ -984,10 +1026,13 @@ bỏ qua.
 
 `js/ui/app.js` sở hữu trang và cung cấp `SG.app`: `getStore()`, `getBoard()`, `getPlayer()`, `getStepView()`,
 `getResult()` (kết quả gần nhất `{ result, trace }`), `generate()`, `regenerate()`, `cancel()`, `showResult()`
-(hiện một đề không do trang này tạo, như khi nhập), `toast()`, `announce()`, `openModal()`, `setClient()` và
+(hiện một đề không do trang này tạo), `toast()`, `announce()`, `openModal()`, `setClient()` và
 `attachTrace()` (bộ nhớ đệm dùng hai hàm này), cùng một kênh sự kiện `on()` / `emit()` với các sự kiện
-`generate:start`, `generate:progress`, `generate:end`, `generate:error`, `generate:cancel`, `result`, `trace`,
-`position`, `locale`, `theme`, `settings` và `action`. Phần đầu của `app.js` là hợp đồng đầy đủ.
+`generate:start`, `generate:progress`, `generate:end`, `generate:error`, `generate:cancel`, `result`, `trace`
+(`{ result, trace }`, khi `attachTrace()` vừa mang phần phát lại đến cho một đề lấy từ bộ nhớ đệm), `position`
+(`{ position, length, step, direction }` sau mỗi lần di chuyển trong phần phát lại; `step` là một bước của
+`SG.player.buildSteps`, bằng null ở vị trí 0), `locale`, `theme`, `settings` và `action`. Phần đầu của
+`app.js` là hợp đồng đầy đủ.
 
 **Thêm một module giao diện mà không sửa `app.js`.** Cuối quá trình khởi động, `app.js` gọi `init(SG.app)` — hàm
 này phải idempotent — trên từng module tùy chọn dưới đây nếu nó tồn tại, theo đúng thứ tự này, mỗi lần gọi trong
@@ -995,15 +1040,15 @@ một `try/catch` riêng:
 
 | Module | Làm gì |
 |--------|--------|
-| `SG.exportUi` | Hộp thoại Xuất đề: in / PDF, PNG, SVG, JSON, văn bản, liên kết chia sẻ, **Chơi trực tuyến** (liên kết sang sudoku-player) và in hàng loạt (1 / 2 / 4 / 6 đề mỗi trang, có thể kèm trang lời giải); nó chứa phần nhập đề |
-| `SG.importUi` | Nhập một JSON đã lưu hoặc một dòng chữ số, kiểm tra hợp lệ (tệp hỏng cho thông báo đã dịch), "Phân tích độ khó"; có thể thả tệp vào bất kỳ đâu trên trang |
-| `SG.a11y` | Bảng dưới dạng lưới ARIA với điều hướng bằng bàn phím, thông báo trực tiếp khi đổi bước, hộp thoại Cài đặt |
+| `SG.exportUi` | Hộp thoại In đề (in / PDF đề đang hiển thị, có thể kèm lời giải ở một trang riêng), nút **Xuất mã** (`action { id: 'exportCode' }`: mã văn bản của đề, `buildExportCode(result)`, để dán vào sudoku-player) và nút **Chơi** (`action { id: 'play' }`: mở đề trong sudoku-player, xem ở trên) |
+| `SG.a11y` | Bảng dưới dạng lưới ARIA với điều hướng bằng bàn phím, thông báo trực tiếp (khi bắt đầu tạo đề, khi đổi ngôn ngữ), hộp thoại Cài đặt |
 | `SG.theme` | Giao diện sáng, tối, tương phản cao (và "tự động"), gợi ý cho các trạng thái trống / bận / lỗi |
-| `SG.help` | Hộp thoại Trợ giúp (luật, bậc thang kỹ thuật, phím tắt) và hướng dẫn nhanh lần đầu |
+| `SG.help` | Hộp thoại Trợ giúp (luật, bậc thang kỹ thuật, phím tắt) |
 | `SG.cache` | Bộ nhớ đệm và việc tạo sẵn đề mô tả ở trên; nó thay client sinh đề bằng một lớp bọc |
 
-Module như vậy lắng nghe bằng `SG.app.on('action', …)` (các nút ở đầu trang phát `action { id: 'export' |
-'settings' | 'help' }`), vẽ hộp thoại bằng `SG.app.openModal()` và đọc đề bằng `SG.app.getResult()`; tên không có
+Module như vậy lắng nghe bằng `SG.app.on('action', …)` (các nút In đề và Chơi ở khung chính, Cài đặt và Trợ
+giúp ở đầu trang phát `action { id: 'export' | 'exportCode' | 'play' | 'settings' | 'help' }`), vẽ hộp thoại bằng
+`SG.app.openModal()` và đọc đề bằng `SG.app.getResult()`; tên không có
 trong danh sách cần thêm một mục vào danh sách `OPTIONAL_MODULES` của `app.js`. Mọi tệp giao diện phải **nạp được
 trong Node không cần DOM** (mã ở mức trên cùng chỉ định nghĩa hàm và đẩy các mảnh ngôn ngữ; DOM chỉ được chạm trong
 các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, kiểm thử được, nằm cạnh mã DOM. `js/ui/exchange.js`
@@ -1079,7 +1124,7 @@ của `js/core/techniques.js`; ví dụ hoàn chỉnh *Full House* (một nhóm 
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # mọi suite (42, khoảng 3.500 bài), khoảng ba phút
+node tests/node-runner.js                          # mọi suite (42, khoảng 3.350 bài), khoảng ba phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
@@ -1090,7 +1135,7 @@ Bộ chạy nạp `SOURCE_FILES` bằng `vm.runInThisContext`, tự tìm `tests/
 giải, pipeline cùng các sự kiện của nó, worker và client của nó, và phần logic thuần của mọi module giao diện
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu README này với mã nguồn: bảng biến thể, tham số
 URL, tên các script, liên kết, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 3.498 bài trong 42 suite, tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 3.354 bài trong 42 suite, tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong `docs/final-report.md`.
 
 - **Trong trình duyệt:** mở `tests.html` (chạy được từ `file://`). Tham số truy vấn:
@@ -1154,8 +1199,8 @@ Danh sách đầy đủ ở [design.md](design.md) §12.2:
 - **Trình duyệt**: được phát triển và kiểm tra chỉ trên Edge nền Chromium; Firefox 100+ và Safari 15.4+ là mục
   tiêu hỗ trợ nhưng chưa được thử, điện thoại thật cũng vậy.
 - **Chơi trực tuyến** cần trình chơi đã được đăng tại địa chỉ của thẻ meta `sg-player-url`, và một trình duyệt
-  không chặn cửa sổ bật lên của trang (liên kết cũng được hiện ra để bạn sao chép). Liên kết đề dài hơn khoảng
-  100 kB có thể bị ứng dụng chat hay máy chủ cắt bớt; với các bảng như vậy hãy dùng tệp JSON.
+  không chặn cửa sổ bật lên của trang. Liên kết đề dài hơn khoảng 100 kB có thể bị ứng dụng chat hay máy chủ
+  cắt bớt và khi đó không mở được trong trình chơi.
 
 ## Giấy phép và ghi công
 
