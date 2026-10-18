@@ -230,7 +230,7 @@
   color: var(--sg-color-text);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 600px) {
   .help-variant__body {
     grid-template-columns: auto minmax(0, 1fr);
   }
@@ -334,7 +334,7 @@
   align-items: flex-start;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 600px) {
   .help-terms {
     grid-template-columns: minmax(9rem, 14rem) minmax(0, 1fr);
   }
@@ -456,7 +456,7 @@
   white-space: nowrap;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 600px) {
   .help-keys {
     grid-template-columns: minmax(12rem, 17rem) minmax(0, 1fr);
     align-items: center;

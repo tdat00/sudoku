@@ -3,10 +3,10 @@
  *   .btn (+ --primary --secondary --ghost --danger --icon --sm --block, state: disabled / .is-busy)
  *   .segmented > .segmented__btn[aria-pressed="true"]
  *   .field > .field__label + .input|.select|.slider|.textarea + .field__hint + .field__error
- *   .field-group (fieldset) > .field-group__legend, .field-row, .input-group, .checkbox, .switch, .disclosure
+ *   .field-group (fieldset) > .field-group__legend, .input-group, .checkbox, .switch, .disclosure
  *   .card, .stat-grid > .stat, .badge (+ --accent --success --warning --danger), .alert (+ --warning ...)
  *   .toast (+ --success --warning --danger) inside #toast-root, .modal inside #modal-root
- *   .progress, .spinner, .is-busy, .stack, .cluster
+ *   .progress, .is-busy, .stack, .cluster
  */
 
 /* ---- Buttons ---- */
@@ -115,8 +115,7 @@
   pointer-events: none;
 }
 
-.btn.is-busy::after,
-.spinner {
+.btn.is-busy::after {
   content: "";
   display: inline-block;
   flex: none;
@@ -346,12 +345,6 @@
   padding: 0 var(--sg-space-1);
   font-size: var(--sg-font-size-sm);
   font-weight: 650;
-}
-
-.field-row {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--sg-space-3);
 }
 
 .input-group {
@@ -845,7 +838,7 @@ progress.progress::-moz-progress-bar {
 @media (max-width: 767.98px) {
   .toast-root {
     right: var(--sg-space-3);
-    bottom: calc(var(--sg-drawer-bar-height) + var(--sg-space-3) + env(safe-area-inset-bottom, 0px));
+    bottom: calc(var(--sg-actions-bar-height) + var(--sg-space-3) + env(safe-area-inset-bottom, 0px));
     left: var(--sg-space-3);
     width: auto;
   }
@@ -1184,6 +1177,13 @@ dialog.modal:not([open]) {
 .stat-grid--sm {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 12rem));
   gap: var(--sg-space-2);
+}
+
+/* On a phone the boxes (Difficulty, Clues) share one row, each at most as wide as on a desktop. */
+@media (max-width: 767.98px) {
+  .stat-grid--sm {
+    grid-template-columns: repeat(2, minmax(0, 12rem));
+  }
 }
 
 .stat--sm {

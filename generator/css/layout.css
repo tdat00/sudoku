@@ -8,7 +8,8 @@
 
 :root {
   --sg-layout-max-width: 120rem;
-  --sg-drawer-bar-height: 3.25rem;
+  /* The bar of the Generate buttons fixed to the bottom on a phone (also keeps the toasts above it). */
+  --sg-actions-bar-height: calc(var(--sg-control-height) + 2 * var(--sg-space-2));
 }
 
 .sprite {
@@ -450,74 +451,10 @@
   display: none;
 }
 
-/* ---- Narrow header: icon-only buttons ---- */
-@media (max-width: 599.98px) {
-  .app-title {
-    font-size: var(--sg-font-size-lg);
-  }
-}
-
-/* ---- Mobile header: title, Settings and Help share one row; language and theme live in the Settings dialog ---- */
-@media (max-width: 767.98px) {
-  .app-header__inner {
-    flex-wrap: nowrap;
-    gap: var(--sg-space-2);
-    padding: var(--sg-space-2) var(--sg-space-3);
-  }
-
-  .app-brand {
-    flex: 1 1 auto;
-  }
-
-  .app-tools {
-    flex: none;
-    flex-wrap: nowrap;
-    gap: var(--sg-space-1);
-  }
-
-  #lang-switch,
-  #theme-switch {
-    display: none;
-  }
-
-  .app-tools .btn__label,
-  .main-actions #btn-export .btn__label,
-  .main-actions #btn-export-code .btn__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
-  .app-tools .btn,
-  .main-actions #btn-export,
-  .main-actions #btn-export-code {
-    padding-inline: var(--sg-space-2);
-  }
-
-  /* Play, Print and Export sit above the puzzle heading. */
-  .main-actions {
-    order: -1;
-    flex: 1 1 100%;
-    justify-content: flex-end;
-    gap: var(--sg-space-1);
-    margin-inline-start: 0;
-  }
-
-  .main-actions .btn {
-    min-height: 2rem;
-    gap: var(--sg-space-1);
-    font-size: var(--sg-font-size-sm);
-  }
-
-  .main-actions .btn .icon {
-    width: 1.1em;
-    height: 1.1em;
-  }
-}
+/* ---- Responsive layout ----
+   Breakpoints (the same in Sudoku Player): >= 768px two columns, >= 1360px three columns, < 768px the mobile layout
+   (one column, icon-only buttons, the options as a drawer), < 600px a smaller title. The desktop rules come first;
+   the mobile block is last so that it wins over the base rules of components.css. */
 
 /* ---- >= 768px: board, replay and result | puzzle options; the list of puzzles under the result ---- */
 @media (min-width: 768px) {
@@ -554,11 +491,78 @@
   }
 }
 
+/* ---- < 600px: a smaller title ---- */
+@media (max-width: 599.98px) {
+  .app-title {
+    font-size: var(--sg-font-size-lg);
+  }
+}
+
+/* ---- < 768px: the mobile layout ---- */
 @media (max-width: 767.98px) {
-  :root {
-    --sg-actions-bar-height: calc(var(--sg-control-height) + 2 * var(--sg-space-2));
+  /* Header: title, Settings and Help share one row; language and theme live in the Settings dialog. */
+  .app-header__inner {
+    flex-wrap: nowrap;
+    gap: var(--sg-space-2);
+    padding: var(--sg-space-2) var(--sg-space-3);
   }
 
+  .app-brand {
+    flex: 1 1 auto;
+  }
+
+  .app-tools {
+    flex: none;
+    flex-wrap: nowrap;
+    gap: var(--sg-space-1);
+  }
+
+  #lang-switch,
+  #theme-switch {
+    display: none;
+  }
+
+  /* Icon-only buttons: the labels stay for screen readers (the same as .visually-hidden). */
+  .app-tools .btn__label,
+  .main-actions #btn-export .btn__label,
+  .main-actions #btn-export-code .btn__label,
+  .drawer-toggle > span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .app-tools .btn,
+  .main-actions #btn-export,
+  .main-actions #btn-export-code {
+    padding-inline: var(--sg-space-2);
+  }
+
+  /* Play, Print and Export sit above the puzzle heading. */
+  .main-actions {
+    order: -1;
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    gap: var(--sg-space-1);
+    margin-inline-start: 0;
+  }
+
+  .main-actions .btn {
+    min-height: 2rem;
+    gap: var(--sg-space-1);
+    font-size: var(--sg-font-size-sm);
+  }
+
+  .main-actions .btn .icon {
+    width: 1.1em;
+    height: 1.1em;
+  }
+
+  /* Page: room for the bar of the Generate buttons fixed to the bottom. */
   body {
     padding-bottom: calc(var(--sg-actions-bar-height) + env(safe-area-inset-bottom, 0px));
   }
@@ -584,16 +588,6 @@
     border-radius: var(--sg-radius-2);
     background: var(--sg-color-surface-2);
     color: var(--sg-color-text);
-  }
-
-  .drawer-toggle > span {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
   }
 
   .drawer-toggle__chevron {
