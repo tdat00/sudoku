@@ -7,7 +7,7 @@
  *   .card, .stat-grid > .stat, .badge (+ --accent --success --warning --danger), .alert (+ --warning ...)
  *   .toast (+ --success --warning --danger) inside #toast-root, .modal inside #modal-root
  *   .progress, .stack, .cluster
- *   Player parts at the end: .drop-zone, .recent-list, .info-list, .welcome
+ *   Player parts at the end: .drop-zone, .history-list, .welcome
  */
 
 /* ---- Buttons ---- */
@@ -730,7 +730,7 @@ progress.progress::-moz-progress-bar {
 @media (max-width: 767.98px) {
   .toast-root {
     right: var(--sg-space-3);
-    bottom: calc(var(--sg-space-3) + env(safe-area-inset-bottom, 0px));
+    bottom: calc(var(--play-keys-height, 0px) + var(--sg-space-3) + env(safe-area-inset-bottom, 0px));
     left: var(--sg-space-3);
     width: auto;
   }
@@ -953,128 +953,121 @@ dialog.modal:not([open]) {
   }
 }
 
-/* ---- Player: info card, recent list, open dialog, errors ---- */
+/* ---- Player: recent list, open dialog, errors ---- */
 .modal__lead {
   max-width: 62ch;
   margin: 0 0 var(--sg-space-3);
 }
 
-.info-list {
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  gap: var(--sg-space-1) var(--sg-space-3);
-  margin: 0;
-}
-
-.info-list__term {
-  color: var(--sg-color-text-muted);
-  font-size: var(--sg-font-size-sm);
-}
-
-.info-list__value {
-  margin: 0;
-  overflow-wrap: anywhere;
-  font-variant-numeric: tabular-nums;
-}
-
-.info-progress {
+/* List of puzzles (left panel and welcome screen): the same rules as the list of generated puzzles of Sudoku
+   Generator (css/components.css there), with the check mark of a solved puzzle added. */
+.history-list {
   display: flex;
   flex-direction: column;
   gap: var(--sg-space-1);
-  margin-top: var(--sg-space-3);
-}
-
-.info-progress__label {
-  font-size: var(--sg-font-size-sm);
-  font-weight: 600;
-}
-
-.info-note {
-  margin: var(--sg-space-2) 0 0;
-  color: var(--sg-color-text-muted);
-  font-size: var(--sg-font-size-sm);
-}
-
-.recent-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sg-space-2);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.recent-item {
-  display: flex;
-  align-items: stretch;
-  gap: var(--sg-space-1);
+.history-list[hidden] {
+  display: none;
 }
 
-.recent-item__open {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
+.history-item {
+  position: relative;
   min-width: 0;
-  min-height: 2.75rem;
-  padding: var(--sg-space-2) var(--sg-space-3);
-  border: 1px solid var(--sg-color-border);
-  border-radius: var(--sg-radius-2);
-  background: var(--sg-color-surface);
-  color: var(--sg-color-text);
-  text-align: start;
+  border-radius: 0;
 }
 
-.recent-item__open:hover {
+.history-item:hover {
   background: var(--sg-color-hover);
 }
 
-.recent-item.is-current .recent-item__open {
-  border-color: var(--sg-color-accent);
+.history-item__open {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+  padding: 0.5rem 5rem 0.5rem var(--sg-space-3);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  line-height: 1.35;
+  text-align: start;
+}
+
+.history-item__open[aria-current="true"] {
   box-shadow: inset 3px 0 0 var(--sg-color-accent);
+  background: var(--sg-color-accent-soft);
 }
 
-.recent-item__name {
-  font-weight: 600;
+.history-item__title {
+  overflow: hidden;
+  font-size: var(--sg-font-size-base);
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.recent-item__meta {
+/* A large, faded icon between the name and the remove button: Solved or In progress (a new puzzle has none). */
+.history-item__status {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 2.75rem;
+  display: inline-flex;
+  transform: translateY(-50%);
+  opacity: 0.25;
+  pointer-events: none;
+  color: var(--sg-color-text-muted);
+}
+
+.history-item__status[data-status="solved"] {
+  color: var(--sg-color-success);
+}
+
+.history-item__status[data-status="progress"] {
+  color: var(--sg-color-accent);
+}
+
+.history-item__status .icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  stroke-width: 2;
+}
+
+.history-item__meta {
   color: var(--sg-color-text-muted);
   font-size: var(--sg-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
 }
 
-.recent-item__remove {
-  flex: none;
-  min-width: 2.75rem;
-  min-height: 2.75rem;
+.history-item__level {
+  font-weight: 650;
 }
 
-.recent-empty {
-  margin: 0;
-  color: var(--sg-color-text-muted);
+.history-item .history-item__remove.btn--sm.btn--icon {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 0.5rem;
+  transform: translateY(-50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  min-height: 0;
+  padding: 0;
+}
+
+.history-item__remove .icon {
+  width: 0.875rem;
+  height: 0.875rem;
 }
 
 .welcome__recent-title {
   margin: 0 0 var(--sg-space-2);
   font-size: var(--sg-font-size-lg);
-}
-
-.open-file {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--sg-space-2);
-  margin-bottom: var(--sg-space-3);
-}
-
-.open-drop {
-  margin: 0 0 var(--sg-space-4);
-  padding: var(--sg-space-3);
-  border: 2px dashed var(--sg-color-border);
-  border-radius: var(--sg-radius-3);
-  color: var(--sg-color-text-muted);
-  text-align: center;
 }
 
 .open-text {
@@ -1102,12 +1095,7 @@ dialog.modal:not([open]) {
 }
 
 @media (forced-colors: active) {
-  .recent-item__open {
-    border-color: ButtonText;
-  }
-
-  .recent-item.is-current .recent-item__open {
-    border-color: Highlight;
-    border-width: 3px;
+  .history-item__open[aria-current="true"] {
+    outline: 2px solid currentColor;
   }
 }

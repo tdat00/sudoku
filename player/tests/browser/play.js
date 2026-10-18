@@ -18,6 +18,8 @@ async function token(page, name) {
 }
 
 async function clickCell(page, i) {
+  // The popup of the previous click may sit on top of this cell: close it first.
+  await page.eval('(function(){var p=document.querySelector(".play__popup");if(p&&!p.hidden)p.querySelector(".play__ptool:last-child").click();})()');
   const c = await page.eval('(function(){var r=SG.app.getBoard().getCellElement(' + i + ').getBoundingClientRect();' +
     'return {x:r.left+r.width/2,y:r.top+r.height/2};})()');
   await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: c.x, y: c.y });
@@ -49,6 +51,31 @@ async function clickCell(page, i) {
     // select with the mouse, type a right value
     await clickCell(page, e0);
     check('mouse click selects the cell', await page.eval('document.querySelector("#board-svg .layer-play .is-sel") && document.querySelector("#board-svg .layer-play .is-sel").getAttribute("data-pc") === "' + e0 + '"'));
+
+    // the popup of keys next to the clicked cell
+    const popupInfo = await page.eval('(function(){var p=document.querySelector(".play__popup");var c=SG.app.getBoard().getCellElement(' + e0 + ').getBoundingClientRect();var r=p.getBoundingClientRect();var f=p.parentNode.getBoundingClientRect();return {hidden:p.hidden,keys:p.querySelectorAll(".play__pkey").length,tools:p.querySelectorAll(".play__ptool").length,near:Math.abs((r.left+r.width/2)-(c.left+c.width/2))<r.width&&(r.top>=c.bottom-1||r.bottom<=c.top+1),inside:r.left>=f.left-1&&r.right<=f.right+1&&r.top>=f.top-1&&r.bottom<=f.bottom+1,small:r.width<f.width};})()');
+    check('clicking a cell pops up the keys 1-9, Notes, Erase and Close next to it, inside the board frame', !popupInfo.hidden && popupInfo.keys === 9 && popupInfo.tools === 3 && popupInfo.near && popupInfo.inside, JSON.stringify(popupInfo));
+    await page.shot('play-popup');
+    check('the pad of the side panel is still there', await page.eval('document.querySelectorAll("#play-root .play__key").length') === 9);
+    await page.eval('document.querySelector(".play__popup .play__pkey[data-v=\\"' + info.solution[e0] + '\\"]").click()');
+    check('a key of the popup enters the value', await page.eval('SG.play.getGame().userValue(' + e0 + ')') === info.solution[e0]);
+    await page.eval('document.querySelector(".play__popup .play__ptool:nth-child(2)").click()');
+    check('Erase of the popup erases it', await page.eval('SG.play.getGame().userValue(' + e0 + ')') === 0);
+    await page.eval('document.querySelector(".play__popup .play__ptool:nth-child(1)").click()');
+    await page.eval('document.querySelector(".play__popup .play__pkey[data-v=\\"4\\"]").click()');
+    check('Notes of the popup switch notes mode, and a key then toggles a note', await page.eval('SG.play.getGame().getNotes(' + e0 + ') !== 0 && document.querySelector("[data-tool=notes]").getAttribute("aria-pressed") === "true"'));
+    await page.eval('document.querySelector(".play__popup .play__ptool:nth-child(1)").click()');
+    await page.eval('document.querySelector(".play__popup .play__ptool:nth-child(2)").click()');
+    await page.key('Escape');
+    check('Escape closes the popup', await page.eval('document.querySelector(".play__popup").hidden'));
+    const given = info.givens.findIndex(function (v) { return v > 0; });
+    await clickCell(page, given);
+    check('there is no popup on a given cell', await page.eval('document.querySelector(".play__popup").hidden'));
+    await clickCell(page, e0);
+    check('and it comes back on an empty cell', await page.eval('!document.querySelector(".play__popup").hidden'));
+    await page.eval('document.querySelector(".play__popup .play__ptool:nth-child(3)").click()');
+    check('the Close button closes it', await page.eval('document.querySelector(".play__popup").hidden'));
+    await clickCell(page, e0);
     await page.key(String(info.solution[e0]));
     check('typed digit enters the value', await page.eval('SG.play.getGame().userValue(' + e0 + ')') === info.solution[e0]);
     check('status shows progress', (await page.eval('document.querySelector(".play__progress").textContent')).indexOf('35 of 81') === 0);
@@ -119,17 +146,17 @@ async function clickCell(page, i) {
     await sleep(300);
     const fin = await page.eval(`(function () {
       var g = SG.play.getGame();
-      return { solved: g.isSolved(), status: g.status(), msg: document.querySelector('.play__message').textContent,
-        toast: !!document.querySelector('.toast--success'), info: document.querySelector('[data-role=info-progress]').innerText };
+      return { solved: g.isSolved(), status: g.status(), live: document.getElementById('a11y-live').textContent,
+        toast: !!document.querySelector('.toast--success'), noBox: !document.querySelector('.play__message') };
     })()`);
-    check('the typed solution completes the puzzle', fin.solved && fin.status === 'solved' && /Solved/.test(fin.msg), JSON.stringify(fin));
+    check('the typed solution completes the puzzle', fin.solved && fin.status === 'solved' && /Solved/.test(fin.live) && fin.noBox, JSON.stringify(fin));
     await page.shot('play-solved');
     await sleep(700);
 
     // reload without the fragment: restored, solved
     await page.goto(base, 1500);
-    const re = await page.eval('({p: !!SG.app.getPuzzle(), solved: SG.play.getGame() && SG.play.getGame().isSolved(), msg: document.querySelector(".play__message").textContent})');
-    check('reload restores the solved puzzle', re.p && re.solved && /Solved/.test(re.msg), JSON.stringify(re));
+    const re = await page.eval('({p: !!SG.app.getPuzzle(), solved: SG.play.getGame() && SG.play.getGame().isSolved(), noBox: !document.querySelector(".play__message")})');
+    check('reload restores the solved puzzle', re.p && re.solved && re.noBox, JSON.stringify(re));
 
     // the same link again: "already open"? current puzzle id is the same, so a toast says so
     await page.eval('void SG.app.open("' + tok + '", {source: "link"})');
@@ -152,13 +179,55 @@ async function clickCell(page, i) {
     check('and forgets the saved progress', await page.eval('JSON.parse(localStorage.getItem("sg.player.progress.v1")).entries.filter(function(e){return e.id===SG.app.getPuzzle().id;}).length') === 0);
 
     // recent list
-    const recent = await page.eval('Array.from(document.querySelectorAll("#recent-root .recent-item__open")).map(function(b){return b.textContent;})');
+    const recent = await page.eval('Array.from(document.querySelectorAll("#recent-root .history-item__open")).map(function(b){return b.textContent;})');
     check('the recent list has both puzzles', recent.length === 2, JSON.stringify(recent));
-    await page.eval('document.querySelectorAll(".toast__close").forEach(function (b) { b.click(); }); document.getElementById("recent-details").open = true');
+    const statuses = await page.eval('Array.from(document.querySelectorAll("#recent-root .history-item__status")).length');
+    check('a puzzle that is not started has no status icon', statuses === 0, String(statuses));
+    await page.eval('document.querySelectorAll(".toast__close").forEach(function (b) { b.click(); })');
     await page.shot('play-recent');
-    await page.click('#recent-root .recent-item:nth-child(2) .recent-item__open');
+    await page.click('#recent-root .history-item__open:not([aria-current])');
     await sleep(600);
     check('a recent puzzle opens without questions', await page.eval('SG.app.getPuzzle().variantId') === 'classic6' && await page.eval('!document.querySelector("dialog.modal[open]")'));
+
+    // Play / Pause / Resume / Reset follow each game
+    const ctl = 'JSON.stringify((function(){var p=document.querySelector(".play__pause"),r=document.querySelector(".play__reset");return {pause:p.hidden?"":p.textContent.trim(),reset:!r.hidden,label:r.getAttribute("aria-label"),text:r.textContent.trim()};})())';
+    const state = async function () { return JSON.parse(await page.eval(ctl)); };
+    const look = 'JSON.stringify((function(){var c=getComputedStyle(document.querySelector(".play__pause"));return [c.fontWeight,c.backgroundColor];})())';
+    const looks = [];
+    const measure = async function () {
+      await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 1, y: 1 });
+      await sleep(250);
+      looks.push(await page.eval(look));
+    };
+    await measure();
+    let s = await state();
+    check('a game nobody played shows Play and no Reset', s.pause === 'Play' && !s.reset, JSON.stringify(s));
+    await page.click('.play__pause');
+    await measure();
+    s = await state();
+    check('Play starts the game: it shows Pause and Reset (icon + label)', s.pause === 'Pause' && s.reset && s.text === 'Reset' && s.label === 'Reset puzzle', JSON.stringify(s));
+    await page.click('#recent-root .history-item__open:not([aria-current])');
+    await sleep(600);
+    s = await state();
+    check('another puzzle that is not played has its own Play and no Reset', await page.eval('SG.app.getPuzzle().variantId') === 'classic9' && s.pause === 'Play' && !s.reset, JSON.stringify(s));
+    await page.click('#recent-root .history-item__open:not([aria-current])');
+    await sleep(600);
+    s = await state();
+    check('leaving a running game paused it: it comes back with Resume and Reset', await page.eval('SG.app.getPuzzle().variantId') === 'classic6' && s.pause === 'Resume' && s.reset, JSON.stringify(s));
+    await measure();
+    check('Play, Pause and Resume are all bold and filled alike', looks.every(function (v) { return v === looks[0]; }) && +JSON.parse(looks[0])[0] >= 700 && JSON.parse(looks[0])[1] !== 'rgba(0, 0, 0, 0)',     looks.join(' '));
+    await page.click('.play__pause');
+    check('Resume goes back to Pause', (await state()).pause === 'Pause');
+    await page.click('.play__reset');
+    s = await state();
+    check('the first press of Reset only asks to confirm', s.reset && s.label === 'Press again to reset' && s.text === 'Confirm' && s.pause === 'Pause', JSON.stringify(s));
+    await page.click('.play__reset');
+    s = await state();
+    check('the second press resets: Play again and no Reset', s.pause === 'Play' && !s.reset && await page.eval('SG.play.getGame().status()') === 'idle', JSON.stringify(s));
+    await page.shot('play-controls');
+    await page.click('#recent-clear');
+    await sleep(200);
+    check('Clear empties the list and shows the hint', await page.eval('document.querySelectorAll("#recent-root .history-item").length === 0 && document.getElementById("recent-root").hidden && !document.getElementById("recent-empty").hidden && document.getElementById("recent-clear").disabled'));
     console.log('console errors:', JSON.stringify(page.errors));
     check('no console errors', page.errors.length === 0);
     page.close();

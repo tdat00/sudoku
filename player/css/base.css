@@ -12,6 +12,9 @@ html {
   text-size-adjust: 100%;
   accent-color: var(--sg-color-accent);
   scroll-padding-top: var(--sg-space-4);
+  /* Always leave room for the vertical scrollbar, so the layout is as wide as Sudoku Generator's (which is
+     taller and always scrolls) whether or not this page scrolls. */
+  scrollbar-gutter: stable;
 }
 
 body {

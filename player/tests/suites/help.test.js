@@ -151,12 +151,12 @@
 
     it('the numbers in the About texts match the limits of the progress store', function () {
       ready();
-      expect(SG.progress.LIMITS.progressEntries).toBe(20);
-      expect(SG.progress.LIMITS.puzzleEntries).toBe(10);
-      expect(SG.locales.en['help.about.key.progress']).toContain('20');
-      expect(SG.locales.en['help.about.key.puzzles']).toContain('10');
-      expect(SG.locales.vi['help.about.key.progress']).toContain('20');
-      expect(SG.locales.vi['help.about.key.puzzles']).toContain('10');
+      expect(SG.progress.LIMITS.progressEntries).toBe(100);
+      expect(SG.progress.LIMITS.puzzleEntries).toBe(100);
+      expect(SG.locales.en['help.about.key.progress']).toContain('100');
+      expect(SG.locales.en['help.about.key.puzzles']).toContain('100');
+      expect(SG.locales.vi['help.about.key.progress']).toContain('100');
+      expect(SG.locales.vi['help.about.key.puzzles']).toContain('100');
     });
 
     it('does not claim a screen reader test that was not done', function () {
@@ -194,16 +194,16 @@
       expect(Object.keys(SG.importer.VARIANTS).length).toBe(15);
     });
 
-    it('its numbers are the numbers of the code: 26 techniques, 20 + 10 puzzles, 8 MB files', function () {
+    it('its numbers are the numbers of the code: 26 techniques, 100 + 100 puzzles, 8 MB files', function () {
       ready();
       var text = read('README.md');
       expect(text).toContain('one of 26 techniques');
       expect(text).toContain('một trong 26 kỹ thuật');
       expect(SG.techniques.list().length).toBe(26);
-      expect(text).toContain('the last 20 puzzles');
-      expect(text).toContain('the last 10 opened puzzles');
-      expect(text).toContain('20 đề gần nhất');
-      expect(text).toContain('10 đề đã mở gần nhất');
+      expect(text).toContain('the last 100 puzzles');
+      expect(text).toContain('the last 100 imported puzzles');
+      expect(text).toContain('100 đề gần nhất');
+      expect(text).toContain('100 đề đã nhập gần nhất');
       expect(read('js/ui/app.js')).toContain('MAX_FILE_BYTES = 8 * 1024 * 1024');
     });
 
@@ -234,7 +234,8 @@
 
     it('promises no feature the player does not have: no export, no print, no generation', function () {
       ready();
-      var text = read('README.md').toLowerCase();
+      // The Import takes the text of the generator's Export box; the player has no export of its own.
+      var text = read('README.md').toLowerCase().replace(/\*\*export\*\* box/g, '').replace(/\*\*xuất\*\*/g, '');
       expect(/\bexport\b|\bprint\b|generate a puzzle here|in-browser generation/.test(text)).toBe(false);
     });
   });

@@ -53,7 +53,7 @@
         var outcome = open(doc);
         expect(outcome.ok).toBe(true);
         expect(outcome.errors).toEqual([]);
-        expect(outcome.kind).toBe('json');
+        expect(outcome.kind).toBe('document');
         var puzzle = outcome.puzzle;
         expect(puzzle.variantId).toBe(doc.variantId);
         expect(puzzle.model.variantId).toBe(doc.variantId);
@@ -134,9 +134,22 @@
       expect(outcome.puzzle.id).toBe(open(K.document('classic9')).puzzle.id);
     });
 
-    it('asks for a current generator when a variant document has no model block', function () {
+    it('opens a document without the model block when the board follows from the variant', function () {
       need();
-      NAMES.filter(function (n) { return !/^classic\d(\.|$)/.test(n); }).forEach(function (name) {
+      ['classic4', 'classic6', 'classic9', 'diagonalX', 'hyper', 'mega12', 'mega16', 'samurai', 'sohei', 'butterfly',
+        'flower'].forEach(function (name) {
+        var doc = K.document(name);
+        delete doc.model;
+        var outcome = I.openDocument(doc);
+        expect(keys(outcome.errors)).toEqual([]);
+        expect(outcome.ok).toBe(true);
+        expect(outcome.puzzle.id).toBe(open(K.document(name)).puzzle.id);
+      });
+    });
+
+    it('asks for a current generator when a variant document has no model block and no variant rebuilds it', function () {
+      need();
+      ['jigsaw9', 'killer', 'greaterThan', 'wordoku'].forEach(function (name) {
         var doc = K.document(name);
         delete doc.model;
         expectError(I.openDocument(doc), 'import.error.noModel');
@@ -203,14 +216,12 @@
       });
     });
 
-    it('opens the JSON text of a document, with a BOM and spaces around it', function () {
+    it('no longer opens the JSON text of a document (the import takes the generator\'s exported text)', function () {
       need();
       var text = '\uFEFF  ' + JSON.stringify(K.document('samurai'), null, 2) + '\n';
       return I.open(text).then(function (outcome) {
-        expect(outcome.ok).toBe(true);
-        expect(outcome.kind).toBe('json');
-        expect(outcome.puzzle.variantId).toBe('samurai');
-        expect(outcome.puzzle.model.cellCount).toBe(369);
+        expect(outcome.ok).toBe(false);
+        expect(keys(outcome.errors)).toEqual(['import.error.unrecognised']);
       });
     });
 
@@ -248,8 +259,8 @@
 
     it('classifies the input', function () {
       expect(I.detect('').kind).toBe('empty');
-      expect(I.detect('{"a":1}').kind).toBe('json');
-      expect(I.detect('[1]').kind).toBe('json');
+      expect(I.detect('{"a":1}').kind).toBe('unknown');
+      expect(I.detect('[1]').kind).toBe('unknown');
       expect(I.detect('z.abc-_').kind).toBe('token');
       expect(I.detect('j.abc').value).toBe('j.abc');
       expect(I.detect('https://x.y/#puzzle=z.abc').kind).toBe('link');
@@ -337,6 +348,382 @@
         'import.error.textChars');
       expectError(I.openText(''), 'import.error.empty');
       expectError(I.openText(12), 'import.error.empty');
+    });
+  });
+
+  // ---------------------------------------------------------------------------------------------
+  describe('importer: the text of the generator\'s Export box (one or many puzzles)', function () {
+    function text(name) {
+      var t = K.exportText(name);
+      if (t === null) SG.test.skip('the export fixtures cannot be read here (a browser on file://)');
+      return t;
+    }
+
+    function gridOf(block) {
+      return block.rows.join('').split('').map(function (c) { return c === '.' ? 0 : Number(c); });
+    }
+
+    ['en', 'vi'].forEach(function (code) {
+      it('imports every classic puzzle of a real export in ' + code + ': clues, level and seed', function () {
+        var input = text('classic-mixed.' + code);
+        var blocks = I.exportBlocks(input);
+        expect(blocks.length).toBe(4);
+        return I.openMany(input, { source: 'file' }).then(function (result) {
+          expect(result.items.length).toBe(4);
+          var variants = ['classic9', 'classic4', 'classic6', 'classic9'];
+          var levels = ['easy', 'easy', 'easy', 'hard'];
+          var seeds = [3, 2, 7, 4];
+          result.items.forEach(function (item, k) {
+            expect(item.index).toBe(k + 1);
+            expect(item.outcome.ok).toBe(true);
+            var puzzle = item.outcome.puzzle;
+            expect(puzzle.variantId).toBe(variants[k]);
+            expect(Array.from(puzzle.givens)).toEqual(gridOf(blocks[k]));
+            expect(puzzle.info.difficulty.achieved).toBe(levels[k]);
+            expect(puzzle.info.seed).toBe(seeds[k]);
+            expect(puzzle.info.source).toBe('file');
+            expect(puzzle.uniqueness).toBe('unique');
+            expect(SG.model.isSolution(puzzle.model, puzzle.solution)).toBe(true);
+          });
+        });
+      });
+    });
+
+    it('gives the same puzzle as the player link of that puzzle (same id for the same clues)', function () {
+      var input = text('single.en');
+      return I.openMany(input).then(function (result) {
+        expect(result.items.length).toBe(1);
+        var puzzle = result.items[0].outcome.puzzle;
+        expect(puzzle.id).toBe(I.puzzleId(puzzle.model, puzzle.givens));
+        expect(I.openDocument(puzzle.document).puzzle.id).toBe(puzzle.id);
+      });
+    });
+
+    var SETS = {
+      'classic-mixed': ['classic9', 'classic4', 'classic6', 'classic9'],
+      structured: ['jigsaw9', 'killer', 'greaterThan', 'wordoku'],
+      derived: ['diagonalX', 'hyper', 'mega12', 'mega16'],
+      multigrid: ['samurai', 'sohei', 'butterfly', 'flower']
+    };
+
+    ['en', 'vi'].forEach(function (code) {
+      Object.keys(SETS).forEach(function (name) {
+        it('imports every variant of the export "' + name + '" in ' + code + ' as the board it is', function () {
+          var input = text(name + '.' + code);
+          var blocks = I.exportBlocks(input);
+          expect(blocks.length).toBe(4);
+          return I.openMany(input).then(function (result) {
+            expect(result.items.length).toBe(4);
+            result.items.forEach(function (item, k) {
+              expect(keys(item.outcome.errors)).toEqual([]);
+              expect(item.outcome.ok).toBe(true);
+              var puzzle = item.outcome.puzzle;
+              expect(puzzle.variantId).toBe(SETS[name][k]);
+              expect(puzzle.model.variantId).toBe(SETS[name][k]);
+              expect(SG.model.validate(puzzle.model, { solve: false }).ok).toBe(true);
+              expect(SG.model.isSolution(puzzle.model, puzzle.solution)).toBe(true);
+              for (var c = 0; c < puzzle.givens.length; c++) {
+                if (puzzle.givens[c] > 0) expect(puzzle.solution[c]).toBe(puzzle.givens[c]);
+              }
+              expect(puzzle.info.clues).toBe(Array.from(puzzle.givens).filter(function (v) { return v > 0; }).length);
+              expect(puzzle.info.difficulty.achieved).not.toBeNull();
+              // What was stored for the list of puzzles opens again, as the same puzzle.
+              var again = I.openDocument(puzzle.document);
+              expect(again.ok).toBe(true);
+              expect(again.puzzle.id).toBe(puzzle.id);
+            });
+          });
+        });
+      });
+    });
+
+    it('rebuilds the structured boards of a real export: regions, cages, signs, and a wordoku with its word', function () {
+      var input = text('structured.en');
+      var blocks = I.exportBlocks(input);
+      expect(Object.keys(blocks[0].extras)).toEqual(['regions']);
+      expect(Object.keys(blocks[1].extras)).toEqual(['cages']);
+      expect(Object.keys(blocks[2].extras)).toEqual(['signs']);
+      expect(Object.keys(blocks[3].extras)).toEqual(['letters', 'word-line']);
+      return I.openMany(input).then(function (result) {
+        var jigsaw = result.items[0].outcome.puzzle;
+        var killer = result.items[1].outcome.puzzle;
+        var signs = result.items[2].outcome.puzzle;
+        var word = result.items[3].outcome.puzzle;
+        expect(jigsaw.model.units.length).toBe(27);
+        expect(killer.model.cages.length).toBeGreaterThan(10);
+        expect(killer.model.cages.reduce(function (n, c) { return n + c.cells.length; }, 0)).toBe(81);
+        expect(signs.model.inequalities.length).toBeGreaterThan(0);
+        expect(word.model.symbols.mode).toBe('word');
+        expect(word.info.wordoku).not.toBeNull();
+        expect(word.info.wordoku.placement).toBe('diagonal');
+        // The word is what the solution spells on the line: nine distinct letters of the `letters` line.
+        var spelled = SG.modelAids.describeWord(word.model);
+        expect(spelled.word.length).toBe(9);
+        expect(new Set(spelled.word.split('')).size).toBe(9);
+        expect(input.indexOf(spelled.word)).toBe(-1);
+      });
+    });
+
+    it('makes a share link of every imported puzzle that opens as the very same puzzle', function () {
+      var base = 'https://tdat00.github.io/sudoku-player/';
+      var names = ['classic-mixed.en', 'structured.en', 'derived.vi', 'multigrid.en'];
+      return Promise.all(names.map(function (name) { return I.openMany(text(name)); })).then(function (all) {
+        var puzzles = [];
+        all.forEach(function (result) {
+          result.items.forEach(function (item) {
+            expect(item.outcome.ok).toBe(true);
+            puzzles.push(item.outcome.puzzle);
+          });
+        });
+        expect(puzzles.length).toBe(16);
+        return Promise.all(puzzles.map(function (puzzle) {
+          return SG.exchange.encode(puzzle.document).then(function (token) {
+            var url = SG.exchange.playerUrl(base, token);
+            expect(url.indexOf(base + '#puzzle=')).toBe(0);
+            return I.open(url, { source: 'link' }).then(function (outcome) {
+              expect(keys(outcome.errors)).toEqual([]);
+              expect(outcome.ok).toBe(true);
+              expect(outcome.puzzle.id).toBe(puzzle.id);
+              expect(outcome.puzzle.variantId).toBe(puzzle.variantId);
+              expect(Array.from(outcome.puzzle.solution)).toEqual(Array.from(puzzle.solution));
+            });
+          });
+        }));
+      });
+    });
+
+    it('says what is missing when a puzzle that needs structure lines has none (an older export)', function () {
+      var killer = text('structured.en').trim().split('\n\n')[1].split('\n').filter(function (l) {
+        return l.indexOf('cages:') !== 0;
+      }).join('\n');
+      var jigsaw = text('structured.en').trim().split('\n\n')[0].split('\n').filter(function (l) {
+        return l.indexOf('regions:') !== 0;
+      }).join('\n');
+      return I.openMany(killer + '\n\n' + jigsaw.replace('#1', '#2')).then(function (result) {
+        result.items.forEach(function (item) {
+          assertKnown(item.outcome);
+          expect(keys(item.outcome.errors)).toEqual(['import.error.exportStructure']);
+        });
+        expect(result.items[0].outcome.errors[0].args.field).toBe('cages');
+        expect(result.items[1].outcome.errors[0].args.field).toBe('regions');
+      });
+    });
+
+    it('refuses damaged structure lines: bad regions, cages, signs, letters and word line', function () {
+      var blocks = text('structured.en').trim().split('\n\n');
+      function damaged(block, key, value) {
+        return block.split('\n').map(function (l) { return l.indexOf(key + ':') === 0 ? key + ': ' + value : l; })
+          .join('\n');
+      }
+      var inputs = [
+        damaged(blocks[0], 'regions', '111111111 222222222'),
+        damaged(blocks[1], 'cages', '5=r1c1; x=r9c9'),
+        damaged(blocks[1], 'cages', '5=r1c1,r1c1'),
+        damaged(blocks[2], 'signs', 'r1c1>r1c2'),
+        damaged(blocks[3], 'letters', 'A B C'),
+        damaged(blocks[3], 'word-line', 'row 12')
+      ];
+      return Promise.all(inputs.map(function (text) { return I.openMany(text); })).then(function (all) {
+        all.forEach(function (result) { assertKnown(result.items[0].outcome); });
+        expect(keys(all[0].items[0].outcome.errors)).toEqual(['import.error.exportStructure']);
+        expect(keys(all[1].items[0].outcome.errors)).toEqual(['import.error.exportStructure']);
+        expect(keys(all[3].items[0].outcome.errors)).toEqual(['import.error.exportStructure']);
+        expect(keys(all[4].items[0].outcome.errors)).toEqual(['import.error.exportStructure']);
+        expect(keys(all[5].items[0].outcome.errors)).toEqual(['import.error.exportStructure']);
+      });
+    });
+
+    it('rejects a wrong cage sum or a repeated cage cell through the board checks, not an exception', function () {
+      var killer = text('structured.en').trim().split('\n\n')[1].split('\n').map(function (l) {
+        return l.indexOf('cages:') === 0 ? l.replace(/^cages: \d+=/, 'cages: 99=') : l;
+      }).join('\n');
+      return I.openMany(killer).then(function (result) {
+        assertKnown(result.items[0].outcome);
+      });
+    });
+
+    it('names a variant the player does not have, or a grid that is no board of its own', function () {
+      var rows = text('single.en').trim().split('\n').slice(1);
+      return I.openMany('#1,Hexagon Sudoku,Easy,1\n' + rows.slice(0, 7).map(function (r) { return r.slice(0, 7); })
+        .join('\n')).then(function (result) {
+        expect(keys(result.items[0].outcome.errors)).toEqual(['import.error.exportVariant']);
+      });
+    });
+
+    it('reads a board without the name of the variant from the grid alone', function () {
+      var derived = text('derived.en').trim().split('\n\n');
+      var bare = derived.map(function (block) { return block.replace(/^(#\d+),[^,]*,/, '$1,Unknown,'); });
+      return I.openMany(bare.join('\n\n')).then(function (result) {
+        // 9x9 grids without a structure line are classic (the diagonals and windows are not in the clues);
+        // 12 and 16 rows are the Mega boards.
+        expect(result.items.map(function (i) { return i.outcome.ok && i.outcome.puzzle.variantId; }))
+          .toEqual(['classic9', 'classic9', 'mega12', 'mega16']);
+      });
+    });
+
+    it('reads a puzzle whose header is in the other language, and a text saved with Windows line breaks', function () {
+      var input = text('classic-mixed.vi').replace(/\n/g, '\r\n');
+      return I.openMany(input).then(function (result) {
+        expect(result.items.length).toBe(4);
+        expect(result.items.every(function (item) { return item.outcome.ok; })).toBe(true);
+        expect(result.items[3].outcome.puzzle.info.difficulty.achieved).toBe('hard');
+      });
+    });
+
+    it('reports a header without a grid, a grid that is not square and a character that is not a clue', function () {
+      var good = text('single.en').trim().split('\n');
+      var rows = good.slice(1);
+      var input = ['#1,Classic Sudoku 9x9,Easy,1'].join('\n') + '\n\n' +
+        ['#2,Classic Sudoku 9x9,Easy,2'].concat(rows.map(function (r, i) { return i === 3 ? r.slice(0, 8) : r; }))
+          .join('\n') + '\n\n' +
+        ['#3,Classic Sudoku 9x9,Easy,3'].concat(rows.map(function (r, i) { return i === 0 ? 'x' + r.slice(1) : r; }))
+          .join('\n') + '\n\n' + good.join('\n').replace('#1', '#4') + '\n';
+      return I.openMany(input).then(function (result) {
+        expect(result.items.length).toBe(4);
+        expect(keys(result.items[0].outcome.errors)).toEqual(['import.error.exportNoGrid']);
+        expect(keys(result.items[1].outcome.errors)).toEqual(['import.error.exportGrid']);
+        expect(keys(result.items[2].outcome.errors)).toEqual(['import.error.textChars']);
+        expect(result.items[3].outcome.ok).toBe(true);
+      });
+    });
+
+    it('does not take a puzzle whose name says another size than its grid', function () {
+      var rows = text('single.en').trim().split('\n').slice(1);
+      return I.openMany('#1,Classic Sudoku 4x4,Easy,1\n' + rows.join('\n')).then(function (result) {
+        expect(keys(result.items[0].outcome.errors)).toEqual(['import.error.exportShape']);
+      });
+    });
+
+    it('keeps a seed that is not a number out of the puzzle, and a level it does not know', function () {
+      var rows = text('single.en').trim().split('\n').slice(1);
+      return I.openMany('#1,Classic Sudoku 9x9,Whatever,abc-1\n' + rows.join('\n')).then(function (result) {
+        var puzzle = result.items[0].outcome.puzzle;
+        expect(puzzle.info.seed).toBeNull();
+        expect(puzzle.info.difficulty).toBeNull();
+      });
+    });
+
+    it('hands any other input to the single-puzzle reader, and never throws on junk', function () {
+      var P81 = '53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79';
+      return Promise.all([I.openMany(P81), I.openMany(''), I.openMany(null), I.openMany('#1,'),
+        I.openMany('#1,Classic Sudoku 9x9,Easy,1\n\n#2,a,b,c\n123')]).then(function (all) {
+        expect(all[0].items.length).toBe(1);
+        expect(all[0].items[0].outcome.ok).toBe(true);
+        expect(all[0].items[0].outcome.kind).toBe('text');
+        expect(keys(all[1].items[0].outcome.errors)).toEqual(['import.error.empty']);
+        expect(all[2].items[0].outcome.ok).toBe(false);
+        all[3].items.concat(all[4].items).forEach(function (item) { assertKnown(item.outcome); });
+        expect(all[4].items.length).toBe(2);
+      });
+    });
+
+    it('refuses an export of more puzzles than a person can have made', function () {
+      var rows = text('single.en').trim().split('\n').slice(1).join('\n');
+      var big = [];
+      for (var k = 1; k <= 201; k++) big.push('#' + k + ',Classic Sudoku 9x9,Easy,' + k + '\n' + rows);
+      return I.openMany(big.join('\n\n')).then(function (result) {
+        expect(result.items.length).toBe(1);
+        expect(keys(result.items[0].outcome.errors)).toEqual(['import.error.tooLarge']);
+      });
+    });
+  });
+
+  // ---------------------------------------------------------------------------------------------
+  describe('importer: the Play button of the generator (every puzzle of the list in one token)', function () {
+    var BASE = 'https://tdat00.github.io/sudoku-player/';
+
+    function text(name) {
+      var t = K.exportText(name);
+      if (t === null) SG.test.skip('the export fixtures cannot be read here (a browser on file://)');
+      return t;
+    }
+
+    function idsOf(result) {
+      return result.items.map(function (item) { return item.outcome.ok ? item.outcome.puzzle.id : null; });
+    }
+
+    it('tells a text token and its link from the token of one document', function () {
+      return Promise.all([SG.exchange.encodeText(text('structured.en')), SG.exchange.encode({ format: SG.exchange.FORMAT })])
+        .then(function (tokens) {
+          var bundle = I.detect(tokens[0]);
+          expect(bundle.kind).toBe('bundle');
+          expect(bundle.value).toBe(tokens[0]);
+          expect(I.detect('  ' + tokens[0] + '\n').kind).toBe('bundle');
+          var link = I.detect(SG.exchange.playerUrl(BASE, tokens[0], { active: 3 }));
+          expect(link.kind).toBe('bundle');
+          expect(link.value).toBe(tokens[0]);
+          expect(link.active).toBe(3);
+          expect(I.detect(SG.exchange.playerUrl(BASE, tokens[0])).active).toBeUndefined();
+          expect(I.detect(tokens[1]).kind).toBe('token');
+          expect(I.detect(SG.exchange.playerUrl(BASE, tokens[1])).kind).toBe('link');
+        });
+    });
+
+    ['t', 's'].forEach(function (kind) {
+      it('opens every puzzle of a ' + (kind === 't' ? 'compressed' : 'plain') + ' text token, as pasted text would', function () {
+        var input = text('structured.en');
+        return SG.exchange.encodeText(input, { compress: kind === 't' }).then(function (token) {
+          expect(token.slice(0, 2)).toBe(kind + '.');
+          return Promise.all([I.openMany(token), I.openMany(input)]);
+        }).then(function (both) {
+          expect(both[0].items.length).toBe(4);
+          expect(both[0].active).toBeUndefined();
+          expect(idsOf(both[0])).toEqual(idsOf(both[1]));
+          expect(idsOf(both[0]).every(function (id) { return typeof id === 'string'; })).toBe(true);
+          expect(both[0].items.map(function (item) { return item.index; })).toEqual([1, 2, 3, 4]);
+        });
+      });
+    });
+
+    it('a link carries the number of the puzzle to show first', function () {
+      var input = text('multigrid.en');
+      return SG.exchange.encodeText(input).then(function (token) {
+        return I.openMany(SG.exchange.playerUrl(BASE, token, { active: 3 }));
+      }).then(function (result) {
+        expect(result.items.length).toBe(4);
+        expect(result.active).toBe(3);
+        expect(result.items[2].outcome.puzzle.variantId).toBe('butterfly');
+      });
+    });
+
+    it('open (one puzzle) answers with the first puzzle of a bundle', function () {
+      return SG.exchange.encodeText(text('derived.en')).then(function (token) {
+        return Promise.all([I.open(token), I.openMany(text('derived.en'))]);
+      }).then(function (both) {
+        expect(both[0].ok).toBe(true);
+        expect(both[0].puzzle.id).toBe(both[1].items[0].outcome.puzzle.id);
+      });
+    });
+
+    it('refuses a damaged bundle with the message of the token, and never a token inside a token', function () {
+      return SG.exchange.encodeText(text('single.en')).then(function (inner) {
+        return SG.exchange.encodeText(inner).then(function (outer) {
+          return Promise.all([I.openMany('s.%%%'), I.openMany('t.AAAAAAAA'), I.openMany(outer),
+            I.openMany('s.' + btoa(String.fromCharCode(0xff, 0xfe, 0x41)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''))]);
+        });
+      }).then(function (all) {
+        all.forEach(function (result) {
+          expect(result.items.length).toBe(1);
+          expect(result.items[0].outcome.ok).toBe(false);
+          assertKnown(result.items[0].outcome);
+        });
+        expect(keys(all[0].items[0].outcome.errors)).toEqual(['import.error.unrecognised']);
+        expect(keys(all[1].items[0].outcome.errors)).toEqual(['error.exchange.invalidToken']);
+        expect(keys(all[2].items[0].outcome.errors)).toEqual(['import.error.unrecognised']);
+        expect(keys(all[3].items[0].outcome.errors)).toEqual(['error.exchange.invalidJson']);
+      });
+    });
+
+    it('keeps the old link of one puzzle working (a document token)', function () {
+      var doc = K.document('classic9');
+      return SG.exchange.encode(doc).then(function (token) {
+        return I.openMany(SG.exchange.playerUrl(BASE, token));
+      }).then(function (result) {
+        expect(result.items.length).toBe(1);
+        expect(result.items[0].outcome.ok).toBe(true);
+        expect(result.items[0].outcome.kind).toBe('link');
+        expect(result.active).toBeUndefined();
+      });
     });
   });
 

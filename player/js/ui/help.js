@@ -501,8 +501,8 @@
         'cookies. It only keeps the small items listed below in the local storage of this browser, so ' +
         'that you can carry on where you stopped.',
       'help.about.key.prefs': 'Your language, theme, text size and the other settings.',
-      'help.about.key.progress': 'Your progress on the last 20 puzzles you played.',
-      'help.about.key.puzzles': 'The last 10 puzzles you opened (for the Recent puzzles list).',
+      'help.about.key.progress': 'Your progress on the last 100 puzzles you played.',
+      'help.about.key.puzzles': 'The last 100 puzzles you imported (for the list of puzzles).',
       'help.about.key.last': 'Which puzzle was on the board when you left.',
       'help.about.delete': 'Delete saved puzzles and progress',
       'help.about.delete.confirm': 'Press again to delete',
@@ -677,8 +677,8 @@
         'không theo dõi, không cookie. Trang chỉ lưu vài mục nhỏ liệt kê dưới đây trong bộ nhớ cục bộ ' +
         'của trình duyệt này, để bạn chơi tiếp được từ chỗ đã dừng.',
       'help.about.key.prefs': 'Ngôn ngữ, giao diện, cỡ chữ và các cài đặt khác của bạn.',
-      'help.about.key.progress': 'Tiến độ của 20 đề bạn chơi gần nhất.',
-      'help.about.key.puzzles': '10 đề bạn mở gần nhất (cho danh sách Đề gần đây).',
+      'help.about.key.progress': 'Tiến độ của 100 đề bạn chơi gần nhất.',
+      'help.about.key.puzzles': '100 đề bạn nhập gần nhất (cho danh sách các đề).',
       'help.about.key.last': 'Đề nào đang trên bàn cờ khi bạn rời đi.',
       'help.about.delete': 'Xóa các đề và tiến độ đã lưu',
       'help.about.delete.confirm': 'Nhấn lần nữa để xóa',

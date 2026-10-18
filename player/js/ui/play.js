@@ -9,7 +9,8 @@
  *    undo / redo, rule conflicts, wrong entries, hints, a timer on an injected clock, completion detection
  *    and a serialisable state. No DOM, no timers.
  *  - `SG.play.init(app)`  the DOM layer, started by app.js at start-up: the status bar (`#play-status`), the
- *    tools, number pad, symbol selector, hint card and options (`#play-root`), the overlay layer, keyboard
+ *    tools, number pad and hint card (`#play-root`), the Options frame (`#options-root`: symbols, check mode,
+ *    notes switch, puzzle actions), the popup over the board, the overlay layer, keyboard
  *    and pointer input. `attach(puzzle)` puts a puzzle in play, `detach()` takes it out again.
  *
  * ---------------------------------------------------------------------------------------------------------
@@ -41,7 +42,7 @@
  *                 'idle' | 'playing' | 'solved' | 'gaveUp'
  *   hints         hint() nextHintStep() applyHint() clearHint() currentHint() revealCell(cell?)
  *                 revealSolution()
- *   timer         pauseTimer(by) resumeTimer(by) elapsedMs() timerState()
+ *   timer         startTimer() pauseTimer(by) resumeTimer(by) elapsedMs() timerState()
  *   other         subscribe(fn) -> off, setOptions({autoNotes}), getOptions(), serialize(), counters()
  * Every change calls the subscribers with `{ type, cells, values, solved }`; `type` is one of 'set', 'erase',
  * 'note', 'fillNotes', 'undo', 'redo', 'hint', 'reveal', 'revealAll', 'reset', 'check', 'timer', 'solved'.
@@ -1067,6 +1068,16 @@
       return true;
     }
 
+    /** Starts the clock of a game nobody has played yet (the Play button; a first move does the same). */
+    function startTimer() {
+      if (tm.started || solved) return false;
+      tm.started = true;
+      tm.since = clock();
+      tm.pausedBy = null;
+      emit({ type: 'timer', cells: [], values: false, solved: solved });
+      return true;
+    }
+
     function timerState() {
       return { started: tm.started, running: tm.since !== null, paused: tm.pausedBy !== null,
         pausedBy: tm.pausedBy, elapsedMs: elapsedMs() };
@@ -1195,6 +1206,7 @@
       revealSolution: revealSolution,
 
       pauseTimer: pauseTimer,
+      startTimer: startTimer,
       resumeTimer: resumeTimer,
       elapsedMs: elapsedMs,
       timerState: timerState,
@@ -1240,8 +1252,12 @@
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const CLOCK_MS = 500;
   const RESET_ARM_MS = 4000;
+  // The same breakpoint as css/layout.css (and Sudoku Generator): below it the keys are fixed to the bottom.
+  const SMALL_SCREEN = '(max-width: 767.98px)';
   const WIDE_PAD_COLS = 6;
   const NARROW_PAD_COLS = 5;
+  const POPUP_COLS = 3;
+  const POPUP_COLS_BIG = 4;
   const CELL_UNITS = 40;
   const NOTE_MARGIN = 3;
   const NOTE_TOP_CAGE = 11;
@@ -1254,6 +1270,7 @@
     erase: 'm7 21-4.3-4.3a1.5 1.5 0 0 1 0-2.1l10-10a1.5 1.5 0 0 1 2.1 0l5.6 5.6a1.5 1.5 0 0 1 0 2.1L11 21z' +
       'M7 21h13',
     notes: 'M4 20l1-4.5L16.5 4a2.1 2.1 0 0 1 3 3L8 18.5zM14.5 6l3 3',
+    reset: 'M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5',
     hint: 'M9 18h6M10 21.5h4M12 2.5a6.5 6.5 0 0 0-3.7 11.8c.6.5 1 1.2 1 1.9v.8h5.4v-.8c0-.7.4-1.4 1-1.9' +
       'A6.5 6.5 0 0 0 12 2.5z'
   };
@@ -1315,11 +1332,11 @@
     let hint = null;
     let layer = null;
     let reader = null;
-    let message = null;
     let clockTimer = null;
     let resetTimer = null;
     let padSig = '';
     let wordHidden = false;
+    let popupOpen = false;
 
     // ---- translation of the static texts ---------------------------------------------------------
 
@@ -1411,35 +1428,37 @@
       return card;
     }
 
-    function optionRow(label, control) {
-      return h('label', { class: 'field field--inline play__option' }, [label, control]);
-    }
-
-    function secondaryButton(key, onClick) {
-      const button = h('button', { type: 'button', class: 'btn btn--secondary btn--sm' });
-      bindText(button, key);
-      button.addEventListener('click', onClick);
-      return button;
-    }
-
     function buildUi() {
       const statusHost = doc.getElementById('play-status');
       const panelHost = doc.getElementById('play-root');
-      if (statusHost === null || panelHost === null) return false;
+      const optionsHost = doc.getElementById('options-root');
+      if (statusHost === null || panelHost === null || optionsHost === null) return false;
 
-      els.pause = h('button', { type: 'button', class: 'btn btn--secondary btn--sm play__pause' }, [
+      els.pause = h('button', { type: 'button', class: 'btn btn--primary btn--sm play__pause' }, [
         icon('pause'), h('span', { class: 'btn__label' })
       ]);
       els.pauseLabel = els.pause.lastChild;
       els.pause.addEventListener('click', togglePause);
+      els.reset = h('button', { type: 'button', class: 'btn btn--secondary btn--sm play__reset' }, [
+        icon('reset'), h('span', { class: 'btn__label' })
+      ]);
+      els.resetLabel = els.reset.lastChild;
+      els.reset.addEventListener('click', resetGame);
       els.clock = h('span', { class: 'play__clock' });
       els.progress = h('span', { class: 'play__progress' });
       const timeLabel = h('span', { class: 'visually-hidden' });
       bindText(timeLabel, 'play.timer.label');
-      els.status = h('div', { class: 'play__status', hidden: true }, [
-        h('span', { class: 'play__time' }, [timeLabel, els.clock]), els.pause, els.progress
+      els.controls = h('div', { class: 'play__controls' }, [els.pause, els.reset]);
+      els.statusRow = h('div', { class: 'play__status-row' }, [
+        els.controls,
+        h('span', { class: 'play__time' }, [timeLabel, els.clock])
       ]);
+      els.status = h('div', { class: 'play__status', hidden: true }, [els.statusRow, els.progress]);
       statusHost.appendChild(els.status);
+      // The page's status line (saved / not saved) goes inside the box, below the timer row.
+      const statusLine = statusHost.querySelector('.status-row');
+      if (statusLine !== null) els.status.appendChild(statusLine);
+      els.statusHost = statusHost;
 
       els.tools = h('div', { class: 'play__tools', role: 'toolbar' }, [
         toolButton('notes', 'notes', 'play.tool.notes', toggleNotes),
@@ -1454,62 +1473,138 @@
 
       els.pad = h('div', { class: 'play__pad', role: 'group' });
       bindText(els.pad, 'play.pad.label', 'aria-label');
-      els.message = h('p', { class: 'play__message', hidden: true });
       els.hintCard = buildHintCard();
 
-      els.symbols = h('select', { class: 'select', id: 'play-symbols' });
-      els.symbols.addEventListener('change', function () { setSymbolMode(els.symbols.value); });
-      const symbolsLabel = h('label', { class: 'field__label', for: 'play-symbols' });
-      bindText(symbolsLabel, 'play.symbols.label');
-      els.symbolsRow = h('div', { class: 'field field--inline play__symbols' }, [symbolsLabel, els.symbols]);
+      // One radio per symbol mode, one per line; the rows are rebuilt for every puzzle (refreshSymbolControl).
+      const symbolsLegend = h('legend', { class: 'field-group__legend' });
+      bindText(symbolsLegend, 'play.symbols.label');
+      els.symbolsList = h('div', { class: 'play__choices' });
+      els.symbolsRow = h('fieldset', { class: 'field-group play__symbols' }, [symbolsLegend, els.symbolsList]);
 
-      els.checkSelect = h('select', { class: 'select' }, CHECK_MODES.map(function (mode) {
-        const option = h('option', { value: mode });
-        bindText(option, 'play.options.check.' + mode);
-        return option;
-      }));
-      els.checkSelect.value = pref('check');
-      els.checkSelect.addEventListener('change', function () {
-        const st = store();
-        if (st !== null) st.set({ check: els.checkSelect.value }, { source: 'play' });
+      els.keys = h('div', { class: 'play__keys' }, [els.tools, els.pad]);
+      els.panel = h('section', { class: 'play__panel', hidden: true }, [
+        els.keys, els.hintCard.root
+      ]);
+      bindText(els.panel, 'play.panel.label', 'aria-label');
+      els.root = h('div', { class: 'play', 'data-active': 'false' }, [els.panel]);
+      panelHost.appendChild(els.root);
+
+      // The Options frame below the play frame: how to show the symbols, the two checking preferences (the
+      // ones of the Settings dialog) and the actions on this puzzle.
+      // The check mode: one radio per mode, one per line (the Settings dialog has the same choice).
+      els.checkRadios = CHECK_MODES.map(function (mode) {
+        const input = h('input', { type: 'radio', name: 'play-check', value: mode });
+        input.checked = pref('check') === mode;
+        input.addEventListener('change', function () {
+          const st = store();
+          if (input.checked && st !== null) st.set({ check: mode }, { source: 'play' });
+        });
+        const text = h('span');
+        bindText(text, 'play.options.check.' + mode);
+        return h('label', { class: 'checkbox' }, [input, text]);
       });
-      const checkLabel = h('span', { class: 'field__label' });
-      bindText(checkLabel, 'play.options.check');
-      els.autoNotes = h('input', { type: 'checkbox' });
+      const checkLegend = h('legend', { class: 'field-group__legend' });
+      bindText(checkLegend, 'play.options.check');
+      const checkGroup = h('fieldset', { class: 'field-group' }, [
+        checkLegend, h('div', { class: 'play__choices' }, els.checkRadios)
+      ]);
+      els.autoNotes = h('input', { type: 'checkbox', id: 'play-auto-notes' });
       els.autoNotes.checked = pref('autoNotes') !== false;
       els.autoNotes.addEventListener('change', function () {
         const st = store();
         if (st !== null) st.set({ autoNotes: els.autoNotes.checked }, { source: 'play' });
       });
-      const autoLabel = h('span', { class: 'field__label' });
+      const autoLabel = h('label', { class: 'field__label', for: 'play-auto-notes' });
       bindText(autoLabel, 'play.options.autoNotes');
-      els.reset = secondaryButton('play.options.reset', resetGame);
-      els.keys = h('p', { class: 'play__keys field__hint' });
-      bindText(els.keys, 'play.keys');
-      const more = h('details', { class: 'disclosure play__more' }, [
-        h('summary', {}, [h('span', { class: 'play__more-title' })]),
-        h('div', { class: 'disclosure__body play__options' }, [
-          optionRow(checkLabel, els.checkSelect),
-          h('label', { class: 'checkbox play__option' }, [els.autoNotes, autoLabel]),
-          h('div', { class: 'play__option-buttons' }, [
-            secondaryButton('play.options.fillNotes', fillNotes),
-            secondaryButton('play.options.revealCell', revealCell),
-            secondaryButton('play.options.revealAll', revealAll),
-            els.reset
-          ]),
-          els.keys
+      const title = h('span', { class: 'play__options-title' });
+      bindText(title, 'play.options.summary');
+      // Collapsible, closed at first (the play frame above is what a player needs all the time).
+      els.optionsBox = h('details', { class: 'disclosure play__options', hidden: true }, [
+        h('summary', {}, [title]),
+        h('div', { class: 'disclosure__body play__options-body' }, [
+          els.symbolsRow,
+          checkGroup,
+          h('div', { class: 'checkbox play__option' }, [els.autoNotes, autoLabel]),
+          makeActions()
         ])
       ]);
-      bindText(more.querySelector('.play__more-title'), 'play.options.summary');
-
-      els.panel = h('section', { class: 'play__panel', hidden: true }, [
-        els.tools, els.pad, els.symbolsRow, els.message, els.hintCard.root, more
-      ]);
-      bindText(els.panel, 'play.panel.label', 'aria-label');
-      els.root = h('div', { class: 'play', 'data-active': 'false' }, [els.panel]);
-      panelHost.appendChild(els.root);
+      optionsHost.appendChild(els.optionsBox);
       els.legend = doc.getElementById('board-legend');
+
+      // The popup over the board (see renderPopup): the keys of the pad, Notes, Erase and Close.
+      const popupTool = function (iconName, key, onClick) {
+        const button = h('button', { type: 'button', class: 'play__ptool' }, [icon(iconName)]);
+        bindText(button, key, 'aria-label');
+        bindText(button, key, 'title');
+        button.addEventListener('click', onClick);
+        return button;
+      };
+      els.popupPad = h('div', { class: 'play__popup-pad', role: 'group' });
+      bindText(els.popupPad, 'play.pad.label', 'aria-label');
+      els.popupNotes = popupTool('notes', 'play.tool.notes', toggleNotes);
+      els.popupNotes.setAttribute('aria-pressed', 'false');
+      els.popupErase = popupTool('erase', 'play.tool.erase', eraseCell);
+      els.popupClose = popupTool('x', 'play.popup.close', closePopup);
+      els.popup = h('div', { class: 'play__popup', role: 'toolbar', hidden: true }, [
+        els.popupPad, h('div', { class: 'play__popup-tools' }, [els.popupNotes, els.popupErase, els.popupClose])
+      ]);
+      bindText(els.popup, 'play.popup.label', 'aria-label');
+      const frame = doc.querySelector('.board-frame');
+      if (frame !== null) frame.appendChild(els.popup);
+      placeStatus();
       return true;
+    }
+
+    /**
+     * Where the status box lives. On a wide screen it is the box at the top of the side panel. On a small
+     * screen the Play / Pause / Reset buttons join Share / Import above the puzzle (on the left), and the box
+     * with the time, the progress and the status line follows on the next line.
+     */
+    function placeStatus() {
+      if (els.status === undefined) return;
+      const actions = doc.querySelector('.main-actions');
+      const head = actions !== null ? actions.parentNode : null;
+      if (isSmallScreen() && actions !== null && head !== null) {
+        if (els.controls.parentNode !== actions) actions.insertBefore(els.controls, actions.firstChild);
+        if (els.status.parentNode !== head) head.insertBefore(els.status, actions.nextSibling);
+      } else {
+        if (els.controls.parentNode !== els.statusRow) els.statusRow.insertBefore(els.controls, els.statusRow.firstChild);
+        if (els.status.parentNode !== els.statusHost) els.statusHost.appendChild(els.status);
+      }
+    }
+
+    /**
+     * The actions on the puzzle in the Options frame: fill in all notes, reveal a cell, reveal the solution,
+     * reset (a second press confirms). They only concern the puzzle on the board, so they are not in Settings.
+     */
+    function makeActions() {
+      const button = function (key, onClick) {
+        const node = h('button', { type: 'button', class: 'btn btn--secondary btn--sm', 'data-i18n': key });
+        node.textContent = tr(key);
+        node.addEventListener('click', onClick);
+        return node;
+      };
+      els.actions = {
+        fill: button('play.options.fillNotes', fillNotes),
+        cell: button('play.options.revealCell', revealCell),
+        all: button('play.options.revealAll', revealAll),
+        reset: h('button', { type: 'button', class: 'btn btn--secondary btn--sm' })
+      };
+      els.actions.reset.addEventListener('click', resetGame);
+      refreshActions();
+      return h('div', { class: 'play__actions play__option-buttons', 'data-setting': 'puzzle' },
+        [els.actions.fill, els.actions.cell, els.actions.all, els.actions.reset]);
+    }
+
+    /** Keeps the actions in step with the game. */
+    function refreshActions() {
+      const set = els.actions;
+      if (set === undefined) return;
+      const editable = canEdit();
+      const key = resetTimer === null ? 'play.options.reset' : 'play.options.reset.confirm';
+      [set.fill, set.cell, set.all].forEach(function (node) { node.disabled = !editable; });
+      set.reset.setAttribute('data-i18n', key);
+      set.reset.textContent = tr(key);
     }
 
     // ---- symbols ----------------------------------------------------------------------------------
@@ -1517,13 +1612,21 @@
     function refreshSymbolControl() {
       const modes = SG.symbols.modesFor(game.model);
       els.symbolsRow.hidden = modes.length < 2;
-      els.symbols.textContent = '';
+      els.symbolsList.textContent = '';
       modes.forEach(function (mode) {
-        const option = h('option', { value: mode });
-        option.textContent = tr('symbolMode.' + mode);
-        els.symbols.appendChild(option);
+        const input = h('input', { type: 'radio', name: 'play-symbols', value: mode });
+        input.addEventListener('change', function () { if (input.checked) setSymbolMode(mode); });
+        const text = h('span');
+        text.textContent = tr('symbolMode.' + mode);
+        els.symbolsList.appendChild(h('label', { class: 'checkbox' }, [input, text]));
       });
-      els.symbols.value = currentMode();
+      syncSymbolControl();
+    }
+
+    function syncSymbolControl() {
+      Array.prototype.forEach.call(els.symbolsList.querySelectorAll('input'), function (input) {
+        input.checked = input.value === currentMode();
+      });
     }
 
     /** The legend under the board names the colours and shapes; digits and letters need none. */
@@ -1543,7 +1646,7 @@
         reader = createKeyReader(typedLabels(game.model, mode));
         app.emit('play:change', { type: 'symbols', mode: mode });
       }
-      els.symbols.value = mode;
+      syncSymbolControl();
       renderLegend();
       refreshAll();
       return true;
@@ -1786,75 +1889,137 @@
       const sig = [model.variantId, game.digits, currentMode(), auxOn(), SG.i18n.current].join('|');
       if (sig !== padSig) {
         padSig = sig;
-        els.pad.textContent = '';
         const wide = padLayout(game.digits, WIDE_PAD_COLS);
         const narrow = padLayout(game.digits, NARROW_PAD_COLS);
         els.pad.style.setProperty('--play-pad-cols', String(wide.cols));
         els.pad.style.setProperty('--play-pad-cols-narrow', String(narrow.cols));
-        for (let v = 1; v <= game.digits; v++) {
-          const g = SG.symbols.glyph(currentMode(), v, model, { colorAuxSymbol: auxOn() });
-          const key = h('button', { type: 'button', class: 'play__key', 'data-v': v, 'data-name': g.label });
-          if (g.text !== null) key.textContent = g.text;
-          else key.innerHTML = SG.symbols.swatchMarkup(g);
-          key.addEventListener('click', function () { enterValue(v, false); });
-          els.pad.appendChild(key);
-        }
+        // The bar fixed to the bottom of a small screen keeps the pad on one row (two for more than 9 symbols).
+        els.pad.style.setProperty('--play-pad-cols-mobile',
+          String(game.digits <= 9 ? game.digits : Math.ceil(game.digits / 2)));
+        els.popupPad.style.setProperty('--play-pad-cols', String(padLayout(game.digits,
+          game.digits > 9 ? POPUP_COLS_BIG : POPUP_COLS).cols));
+        // The pad of the side panel and the pad of the popup over the board have the same keys.
+        [[els.pad, 'play__key'], [els.popupPad, 'play__pkey']].forEach(function (pair) {
+          pair[0].textContent = '';
+          for (let v = 1; v <= game.digits; v++) {
+            const g = SG.symbols.glyph(currentMode(), v, model, { colorAuxSymbol: auxOn() });
+            const key = h('button', { type: 'button', class: pair[1], 'data-v': v, 'data-name': g.label });
+            if (g.text !== null) key.textContent = g.text;
+            else key.innerHTML = SG.symbols.swatchMarkup(g);
+            key.addEventListener('click', function () { enterValue(v, false); });
+            pair[0].appendChild(key);
+          }
+        });
       }
       const editable = canEdit();
       const filled = sel >= 0 ? game.userValue(sel) : 0;
       const noteMask = sel >= 0 ? game.getNotes(sel) : 0;
-      Array.prototype.forEach.call(els.pad.children, function (key) {
-        const v = Number(key.getAttribute('data-v'));
-        key.disabled = !editable;
-        key.setAttribute('aria-label', tr(notesMode ? 'play.pad.note' : 'play.pad.value',
-          { symbol: key.getAttribute('data-name') }));
-        const pressed = notesMode ? (noteMask & bitOf(v)) !== 0 : filled === v;
-        key.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      [els.pad, els.popupPad].forEach(function (pad) {
+        Array.prototype.forEach.call(pad.children, function (key) {
+          const v = Number(key.getAttribute('data-v'));
+          key.disabled = !editable;
+          key.setAttribute('aria-label', tr(notesMode ? 'play.pad.note' : 'play.pad.value',
+            { symbol: key.getAttribute('data-name') }));
+          const pressed = notesMode ? (noteMask & bitOf(v)) !== 0 : filled === v;
+          key.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+        });
+        pad.classList.toggle('is-notes', notesMode);
       });
-      els.pad.classList.toggle('is-notes', notesMode);
+    }
+
+    // ---- the popup over the board ----------------------------------------------------------------
+
+    /** Whether the screen is small: the keys are fixed to the bottom and there is no popup. */
+    function isSmallScreen() {
+      return typeof root.matchMedia === 'function' && root.matchMedia(SMALL_SCREEN).matches;
+    }
+
+    /** Tells the page how tall the fixed bar of keys is, so nothing hides behind it (0 when it is not fixed). */
+    function syncKeysHeight() {
+      if (els.keys === undefined || root.document === undefined) return;
+      const fixed = active && root.getComputedStyle(els.keys).position === 'fixed';
+      root.document.documentElement.style.setProperty('--play-keys-height',
+        fixed ? els.keys.offsetHeight + 'px' : '0px');
+    }
+
+    /**
+     * The popup with the keys of the pad, Notes, Erase and Close, next to the cell that was clicked, so a
+     * value can be entered without leaving the board. It follows the selected cell until it is closed
+     * (Escape, its Close button), and is not shown for a given, a paused or a solved game.
+     */
+    function renderPopup() {
+      if (els.popup === undefined || els.popup.parentNode === null) return;
+      const wanted = popupOpen && active && sel >= 0 && canEdit() && !game.isGiven(sel) && !isSmallScreen();
+      const cellEl = wanted && board !== null ? board.getCellElement(sel) : null;
+      if (cellEl === null) {
+        els.popup.hidden = true;
+        return;
+      }
+      els.popup.hidden = false;
+      const frame = els.popup.parentNode.getBoundingClientRect();
+      const cell = cellEl.getBoundingClientRect();
+      const width = els.popup.offsetWidth;
+      const height = els.popup.offsetHeight;
+      const gap = 6;
+      let left = cell.left - frame.left + cell.width / 2 - width / 2;
+      left = Math.max(gap, Math.min(left, frame.width - width - gap));
+      // Below the cell when it fits, else above it, else pinned to the nearest edge.
+      let top = cell.bottom - frame.top + gap;
+      if (top + height > frame.height - gap) top = cell.top - frame.top - height - gap;
+      top = Math.max(gap, Math.min(top, frame.height - height - gap));
+      els.popup.style.left = Math.round(left) + 'px';
+      els.popup.style.top = Math.round(top) + 'px';
+    }
+
+    function closePopup() {
+      popupOpen = false;
+      renderPopup();
     }
 
     function refreshTools() {
       const editable = canEdit();
       els.notes.disabled = !editable;
       els.notes.setAttribute('aria-pressed', notesMode ? 'true' : 'false');
+      els.popupNotes.disabled = !editable;
+      els.popupNotes.setAttribute('aria-pressed', notesMode ? 'true' : 'false');
+      els.popupErase.disabled = !editable;
       els.erase.disabled = !editable;
       els.undo.disabled = !active || !game.canUndo() || game.timerState().pausedBy === 'user';
       els.redo.disabled = !active || !game.canRedo() || game.timerState().pausedBy === 'user';
       els.hint.disabled = !editable;
       els.check.disabled = !editable;
+      refreshActions();
     }
 
     function refreshStatus() {
       const p = game.progress();
       els.progress.textContent = tr('play.progress', { filled: p.filled + p.givens, total: game.cellCount });
-      const paused = game.timerState().pausedBy === 'user';
+      const state = game.timerState();
+      const idle = game.status() === 'idle';
+      const paused = state.pausedBy === 'user';
       const finished = game.isSolved();
+      // Play before the first move, Pause while the clock runs, Resume after a pause; Reset only once played.
       els.pause.hidden = finished;
       els.pause.setAttribute('aria-pressed', paused ? 'true' : 'false');
-      els.pauseLabel.textContent = tr(paused ? 'play.timer.resume' : 'play.timer.pause');
-      els.pause.firstChild.firstChild.setAttribute('href', paused ? '#ic-play' : '#ic-pause');
-      els.reset.textContent = tr(resetTimer === null ? 'play.options.reset' : 'play.options.reset.confirm');
+      els.pause.setAttribute('data-state', idle ? 'play' : paused ? 'resume' : 'pause');
+      els.pauseLabel.textContent = tr(idle ? 'play.timer.play' : paused ? 'play.timer.resume' : 'play.timer.pause');
+      els.pause.setAttribute('title', els.pauseLabel.textContent);
+      els.pause.firstChild.firstChild.setAttribute('href', idle || paused ? '#ic-play' : '#ic-pause');
+      const armed = resetTimer !== null;
+      const resetLabel = tr(armed ? 'play.options.reset.confirm' : 'play.options.reset');
+      els.reset.hidden = idle;
+      els.reset.classList.toggle('is-armed', armed);
+      els.reset.setAttribute('aria-label', resetLabel);
+      els.reset.setAttribute('title', resetLabel);
+      els.resetLabel.textContent = tr(armed ? 'play.timer.reset.confirm' : 'play.timer.reset');
+      refreshActions();
       updateClock();
     }
 
-    function renderMessage() {
-      if (message === null) {
-        els.message.hidden = true;
-        els.message.textContent = '';
-        return;
-      }
-      els.message.hidden = false;
-      els.message.setAttribute('data-kind', message.kind);
-      els.message.textContent = message.build();
-    }
-
-    /** Shows (and announces) a message; `build` is called again on a language change. */
+    /** Announces a message to screen readers (there is no message box on the page); `quiet` skips it. */
     function say(kind, build, quiet) {
-      message = build === null ? null : { kind: kind, build: build };
-      renderMessage();
-      if (message === null || quiet === true || typeof app.announce !== 'function') return;
-      app.announce(message.build());
+      if (build === null || quiet === true || typeof app.announce !== 'function') return;
+      app.announce(build());
     }
 
     function refreshAll() {
@@ -1866,6 +2031,8 @@
       refreshStatus();
       setPausedLook();
       syncWordLine();
+      renderPopup();
+      syncKeysHeight();
     }
 
     // ---- selection and focus ----------------------------------------------------------------------
@@ -1886,6 +2053,7 @@
         if (reader !== null) reader.reset();
         refreshMarks();
         refreshPad();
+        renderPopup();
       }
       if (focus === true) focusBoard();
     }
@@ -1909,7 +2077,13 @@
       if (!active || (typeof ev.button === 'number' && ev.button !== 0)) return;
       if (ev.detail === 0 && ev.clientX === 0 && ev.clientY === 0) return;
       const cell = pointToCell(ev.clientX, ev.clientY);
-      if (cell >= 0) select(cell, true);
+      if (cell >= 0) {
+        select(cell, true);
+        // A click or tap on a cell opens the popup for it (a keyboard move only moves an open one). A small
+        // screen has the keys fixed to the bottom instead, so it gets no popup.
+        popupOpen = !isSmallScreen();
+        renderPopup();
+      }
     }
 
     function onFocusIn(ev) {
@@ -2039,12 +2213,22 @@
 
     function togglePause() {
       if (!active) return;
-      if (game.timerState().pausedBy === 'user') {
+      if (game.status() === 'idle') {
+        game.startTimer();
+        say('info', null);
+      } else if (game.timerState().pausedBy === 'user') {
         game.resumeTimer('user');
         say('info', null);
       } else if (game.pauseTimer('user')) {
         say('info', function () { return tr('play.timer.paused'); });
       }
+    }
+
+    /** Pauses a running game for good (the user has to resume it): leaving it for another puzzle. */
+    function pauseGame() {
+      if (!active || game === null || game.isSolved()) return false;
+      game.resumeTimer('auto');
+      return game.pauseTimer('user');
     }
 
     // ---- hints ------------------------------------------------------------------------------------
@@ -2264,6 +2448,9 @@
         if (hint !== null) {
           ev.preventDefault();
           closeHint();
+        } else if (popupOpen) {
+          ev.preventDefault();
+          closePopup();
         }
         return;
       }
@@ -2351,13 +2538,15 @@
       listen(doc, 'visibilitychange', onVisibility);
       listen(root, 'blur', pauseAuto);
       listen(root, 'focus', resumeAuto);
+      listen(root, 'resize', function () { renderPopup(); syncKeysHeight(); });
+      popupOpen = false;
       wordHidden = false;
       notesMode = false;
       marks = null;
       hint = null;
-      message = null;
       els.root.setAttribute('data-active', 'true');
       els.panel.hidden = false;
+      els.optionsBox.hidden = false;
       els.status.hidden = false;
       sel = firstEditable();
       layer = null;
@@ -2365,7 +2554,6 @@
       refreshSymbolControl();
       renderLegend();
       renderHint();
-      renderMessage();
       game.resumeTimer('auto');
       refreshAll();
       if (game.timerState().running) startClock();
@@ -2398,7 +2586,12 @@
       renderLegend();
       els.root.setAttribute('data-active', 'false');
       els.panel.hidden = true;
+      popupOpen = false;
+      renderPopup();
+      els.optionsBox.hidden = true;
       els.status.hidden = true;
+      refreshActions();
+      syncKeysHeight();
       return true;
     }
 
@@ -2406,7 +2599,11 @@
 
     function onSettings(payload) {
       const keys = payload && payload.keys ? payload.keys : [];
-      if (keys.indexOf('check') !== -1) els.checkSelect.value = pref('check');
+      if (keys.indexOf('check') !== -1) {
+        els.checkRadios.forEach(function (label) {
+          label.firstChild.checked = label.firstChild.value === pref('check');
+        });
+      }
       if (keys.indexOf('autoNotes') !== -1) {
         els.autoNotes.checked = pref('autoNotes') !== false;
         if (game !== null) game.setOptions({ autoNotes: pref('autoNotes') !== false });
@@ -2425,7 +2622,6 @@
       if (active) {
         if (layer !== null) layer.shown.fill('');
         renderHint();
-        renderMessage();
         renderLegend();
         refreshAll();
       }
@@ -2434,6 +2630,15 @@
     function start() {
       if (!buildUi()) return false;
       appOffs.push(app.on('settings', onSettings), app.on('locale', onLocale));
+      // The same breakpoint moves the controls (placeStatus) and drops the popup.
+      if (typeof root.matchMedia === 'function') {
+        const query = root.matchMedia(SMALL_SCREEN);
+        const onQuery = function () { placeStatus(); renderPopup(); syncKeysHeight(); };
+        if (typeof query.addEventListener === 'function') {
+          query.addEventListener('change', onQuery);
+          appOffs.push(function () { query.removeEventListener('change', onQuery); });
+        }
+      }
       return true;
     }
 
@@ -2442,6 +2647,9 @@
       appOffs.splice(0).forEach(function (off) { if (typeof off === 'function') off(); });
       bound.length = 0;
       if (els.root && els.root.parentNode) els.root.parentNode.removeChild(els.root);
+      if (els.optionsBox && els.optionsBox.parentNode) els.optionsBox.parentNode.removeChild(els.optionsBox);
+      if (els.popup && els.popup.parentNode) els.popup.parentNode.removeChild(els.popup);
+      if (els.controls && els.controls.parentNode) els.controls.parentNode.removeChild(els.controls);
       if (els.status && els.status.parentNode) els.status.parentNode.removeChild(els.status);
     }
 
@@ -2449,6 +2657,7 @@
       start: start,
       attach: attach,
       detach: detach,
+      pauseGame: pauseGame,
       select: select,
       setSymbolMode: setSymbolMode,
       destroy: destroy,
@@ -2488,6 +2697,11 @@
     return controller !== null && controller.detach();
   }
 
+  /** Pauses the game in play when it is running. @returns {boolean} Whether it was paused. */
+  function pauseGame() {
+    return controller !== null && controller.pauseGame();
+  }
+
   /** @returns {boolean} Whether a puzzle is in play. */
   function isActive() {
     return controller !== null && controller.isActive();
@@ -2523,6 +2737,7 @@
     init: init,
     attach: attach,
     detach: detach,
+    pauseGame: pauseGame,
     isActive: isActive,
     getGame: getGame,
     getSymbolMode: getSymbolMode,
@@ -2557,6 +2772,9 @@
       'play.symbols.label': 'Symbols',
       'play.timer.label': 'Time',
       'play.timer.pause': 'Pause',
+      'play.timer.play': 'Play',
+      'play.timer.reset': 'Reset',
+      'play.timer.reset.confirm': 'Confirm',
       'play.timer.resume': 'Resume',
       'play.timer.paused': 'Paused. Press Resume to carry on.',
       'play.progress': '{filled} of {total} cells filled',
@@ -2576,6 +2794,8 @@
       'play.pad.label': 'Symbol pad',
       'play.pad.value': 'Enter {symbol}',
       'play.pad.note': 'Toggle note {symbol}',
+      'play.popup.label': 'Enter a value in the selected cell',
+      'play.popup.close': 'Close the keys',
       'play.options.summary': 'Options',
       'play.options.check': 'Check as I type',
       'play.options.check.off': 'Off (only when I press Check)',
@@ -2587,8 +2807,6 @@
       'play.options.revealAll': 'Reveal the solution',
       'play.options.reset': 'Reset puzzle',
       'play.options.reset.confirm': 'Press again to reset',
-      'play.keys': 'Keys: arrows move, type a symbol to enter it, Backspace erases, N switches notes, ' +
-        'H asks for a hint, Ctrl+Z undoes, Ctrl+Y redoes.',
       'play.msg.select': 'Select a cell first.',
       'play.cell.entry': 'Your entry: {symbol}',
       'play.cell.notes': 'Your notes: {symbols}',
@@ -2639,6 +2857,9 @@
       'play.symbols.label': 'Ký hiệu',
       'play.timer.label': 'Thời gian',
       'play.timer.pause': 'Tạm dừng',
+      'play.timer.play': 'Chơi',
+      'play.timer.reset': 'Đặt lại',
+      'play.timer.reset.confirm': 'Xác nhận',
       'play.timer.resume': 'Tiếp tục',
       'play.timer.paused': 'Đang tạm dừng. Nhấn Tiếp tục để chơi tiếp.',
       'play.progress': 'Đã điền {filled}/{total} ô',
@@ -2658,6 +2879,8 @@
       'play.pad.label': 'Bàn phím ký hiệu',
       'play.pad.value': 'Điền {symbol}',
       'play.pad.note': 'Bật/tắt ghi chú {symbol}',
+      'play.popup.label': 'Nhập giá trị vào ô đã chọn',
+      'play.popup.close': 'Đóng bàn phím',
       'play.options.summary': 'Tùy chọn',
       'play.options.check': 'Kiểm tra khi gõ',
       'play.options.check.off': 'Tắt (chỉ khi tôi nhấn Kiểm tra)',
@@ -2669,8 +2892,6 @@
       'play.options.revealAll': 'Hiện đáp án',
       'play.options.reset': 'Đặt lại đề',
       'play.options.reset.confirm': 'Nhấn lần nữa để đặt lại',
-      'play.keys': 'Phím tắt: mũi tên để di chuyển, gõ ký hiệu để điền, Backspace để xóa, N để bật ghi ' +
-        'chú, H để xin gợi ý, Ctrl+Z để hoàn tác, Ctrl+Y để làm lại.',
       'play.msg.select': 'Hãy chọn một ô trước.',
       'play.cell.entry': 'Bạn đã điền: {symbol}',
       'play.cell.notes': 'Ghi chú của bạn: {symbols}',

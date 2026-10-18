@@ -429,7 +429,7 @@
 
   var MOUNT_IDS = ['skip-link', 'app-title', 'lang-switch', 'theme-switch', 'btn-open', 'btn-settings', 'btn-help',
     'main', 'welcome', 'btn-welcome-open', 'link-generator', 'welcome-recent', 'player-layout', 'board-root',
-    'board-svg', 'board-title', 'board-desc', 'board-legend', 'play-status', 'side-root', 'play-root', 'info-root',
+    'board-svg', 'board-title', 'board-desc', 'board-legend', 'play-status', 'side-root', 'play-root', 'options-root',
     'recent-root', 'status-line', 'drop-overlay', 'modal-root', 'toast-root', 'a11y-live'];
 
   describe('ui contract: index.html', function () {

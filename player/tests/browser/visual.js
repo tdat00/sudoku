@@ -42,12 +42,19 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     await page.viewport(375, 700, true, 2);
     await openFresh(page, 'classic9');
     check('375 px: no horizontal overflow', (await page.eval(overflow)) <= 1, String(await page.eval(overflow)));
-    check('375 px: the info card starts collapsed', await page.eval('!document.getElementById("info-details").open'));
-    const sizes = await page.eval('Array.from(document.querySelectorAll(".play__key, .play__tool, #btn-open, .segmented__btn")).map(function(b){var r=b.getBoundingClientRect();return [Math.round(r.width),Math.round(r.height)];})');
-    const small = sizes.filter(function (s) { return s[0] < 36 || s[1] < 36; });
-    check('375 px: touch targets are at least 36 px (pad and tools 44 px)', small.length === 0, JSON.stringify(small));
+    const sizes = await page.eval('Array.from(document.querySelectorAll(".play__key, .play__tool, #btn-open, .app-tools .btn")).map(function(b){var r=b.getBoundingClientRect();return [Math.round(r.width),Math.round(r.height)];})');
+    const small = sizes.filter(function (s) { return s[0] < 32 || s[1] < 32; });
+    check('375 px: touch targets are at least 32 px (smaller buttons, as in Sudoku Generator)', small.length === 0, JSON.stringify(small));
     const padSizes = await page.eval('Array.from(document.querySelectorAll(".play__key")).map(function(b){var r=b.getBoundingClientRect();return Math.round(Math.min(r.width,r.height));})');
-    check('375 px: pad keys are at least 44 px', padSizes.every(function (s) { return s >= 44; }), JSON.stringify(padSizes));
+    check('375 px: pad keys are 32-40 px, smaller than on a desktop', padSizes.every(function (s) { return s >= 32 && s <= 40; }), JSON.stringify(padSizes));
+    const bar = await page.eval('(function(){var k=document.querySelector(".play__keys"),r=k.getBoundingClientRect(),m=document.querySelector(".play__pad").getBoundingClientRect();return {fixed:getComputedStyle(k).position==="fixed",bottom:Math.round(r.bottom),vh:window.innerHeight,pad:Math.round(parseFloat(getComputedStyle(document.body).paddingBottom)),h:Math.round(r.height),oneRow:Array.from(document.querySelectorAll(".play__key")).every(function(b){return Math.abs(b.getBoundingClientRect().top-m.top)<2;})};})()');
+    check('375 px: the tools and the pad are fixed to the bottom, the pad on one row, with room under the page', bar.fixed && bar.bottom === bar.vh && bar.oneRow && bar.pad === bar.h, JSON.stringify(bar));
+    await page.eval('window.scrollTo(0, document.documentElement.scrollHeight)');
+    await sleep(100);
+    check('375 px: they stay on screen after scrolling', await page.eval('Math.round(document.querySelector(".play__keys").getBoundingClientRect().bottom) === window.innerHeight'));
+    await page.eval('window.scrollTo(0, 0)');
+    const emptyFrame = await page.eval('(function(){var p=document.querySelector(".play__panel");var s=document.getElementById("play-root");var cs=getComputedStyle(p);return JSON.stringify([cs.display,cs.borderTopWidth,Math.round(s.getBoundingClientRect().height)]);})()');
+    check('375 px: no empty frame of the play panel above the status/options', JSON.parse(emptyFrame)[0] === 'contents' && JSON.parse(emptyFrame)[2] === 0, emptyFrame);
     await page.shot('visual-w375-classic9');
     // tap a cell, then tap a pad key
     const cell = await page.eval('(function(){var g=SG.play.getGame();for(var i=0;i<g.cellCount;i++) if(!g.isGiven(i)) return i;})()');
@@ -56,6 +63,11 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     await page.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     await sleep(150);
     check('tap selects a cell', await page.eval('document.querySelector(".is-sel").getAttribute("data-pc")') === String(cell));
+    check('375 px: no popup over the board', await page.eval('document.querySelector(".play__popup").hidden || getComputedStyle(document.querySelector(".play__popup")).display === "none"'));
+    const top = await page.eval('(function(){var a=document.querySelector(".main-actions"),c=document.querySelector(".play__controls"),p=document.querySelector(".play__pause").getBoundingClientRect(),s=document.getElementById("btn-share").getBoundingClientRect(),o=document.getElementById("btn-open").getBoundingClientRect(),st=document.querySelector(".play__status").getBoundingClientRect(),ar=a.getBoundingClientRect();return {inActions:c.parentNode===a,left:p.right<=s.left,row:Math.abs(p.top-s.top)<3&&Math.abs(s.top-o.top)<3,iconOnly:p.width<=40&&s.width<=40&&o.width<=40,below:st.top>=ar.bottom-1,statusInHead:document.querySelector(".play__status").parentNode===a.parentNode};})()');
+    check('375 px: Play/Pause sit on the left of Share/Import, all icon only, the status box on the line below', top.inActions && top.left && top.row && top.iconOnly && top.below && top.statusInHead, JSON.stringify(top));
+    const frame = await page.eval('(function(){var c=getComputedStyle(document.querySelector(".play__status"));return {border:c.borderTopWidth,bg:c.backgroundColor,pad:c.paddingTop,clock:parseFloat(getComputedStyle(document.querySelector(".play__clock")).fontSize)};})()');
+    check('375 px: the status box is small and has no frame', frame.border === '0px' && frame.bg === 'rgba(0, 0, 0, 0)' && frame.pad === '0px' && frame.clock <= 18, JSON.stringify(frame));
     const sol = await page.eval('SG.app.getPuzzle().solution[' + cell + ']');
     await page.tap('.play__key[data-v="' + sol + '"]');
     check('tapping a pad key enters the value', await page.eval('SG.play.getGame().userValue(' + cell + ')') === sol);
@@ -67,8 +79,7 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     await page.tap('[data-tool=hint]');
     await sleep(200);
     await page.shot('visual-w375-hint');
-    await page.eval('document.getElementById("info-details").open = true; document.getElementById("recent-details").open = true');
-    await page.shot('visual-w375-info-open');
+    await page.shot('visual-w375-options');
     // dialogs on mobile
     await page.tap('#btn-help');
     await page.waitFor('!!document.querySelector("dialog.modal[open]")', 2000);
@@ -99,6 +110,7 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     // ---- desktop again: themes, symbol modes, hints in Vietnamese
     await page.viewport(1440, 900, false);
     await openFresh(page, 'killer');
+    check('desktop again: the game buttons are back in the status box of the side panel', await page.eval('document.querySelector(".play__controls").parentNode.classList.contains("play__status-row") && document.querySelector(".play__status").parentNode.id === "play-status"'));
     await page.click('[data-tool=hint]');
     await page.eval('Array.from(document.querySelectorAll(".play__hint-buttons button")).filter(function(b){return !b.hidden;})[0].click()');
     await sleep(100);
@@ -117,7 +129,7 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     await page.click('#theme-switch [data-theme-value="light"]');
     await page.click('#lang-switch [data-lang="en"]');
     for (const mode of ['letters', 'colors', 'shapes']) {
-      await page.eval('(function(){var s=document.getElementById("play-symbols");s.value="' + mode + '";s.dispatchEvent(new Event("change",{bubbles:true}));})()');
+      await page.eval('(function(){document.querySelector("#options-root details").open=true;var r=document.querySelector("#options-root input[name=play-symbols][value=' + mode + ']");r.click();})()');
       await sleep(200);
       check('symbol mode ' + mode + ': the pad keeps its nine keys', await page.eval('document.querySelectorAll(".play__key").length') === 9);
       check('symbol mode ' + mode + ': the legend of the board', await page.eval('document.querySelectorAll("#board-legend .sgb-legend__item").length') === (mode === 'letters' ? 0 : 9));
@@ -141,8 +153,8 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     await page.eval('SG.play.select(' + last + ')');
     await page.type(await page.eval('SG.play.typedLabels(SG.app.getPuzzle().model, "word")[' + (wdata.sol[last] - 1) + ']'));
     await sleep(400);
-    const wmsg = await page.eval('document.querySelector(".play__message").textContent');
-    check('wordoku: solved shows the key word', wmsg.indexOf(wdata.word) !== -1, wmsg);
+    const wmsg = await page.eval('document.getElementById("a11y-live").textContent');
+    check('wordoku: solving announces the key word', wmsg.indexOf(wdata.word) !== -1, wmsg);
     check('wordoku: the word line shows', await page.eval('!document.querySelector("#board-svg [data-layer=word]").classList.contains("is-hidden")'));
     await page.shot('visual-wordoku-solved');
 

@@ -31,7 +31,9 @@
  *                                   through the importer: Promise of true when a puzzle is on the board.
  *   openPuzzle(puzzle, options)     a puzzle from `SG.importer`; `options.resume`: 'ask' (default),
  *                                   'continue' or 'fresh'; Promise of whether the puzzle is on the board.
- *   openOpenDialog()                the Open puzzle dialog.
+ *   openOpenDialog()                the Import dialog.
+ *   openShareDialog()               the Share dialog: the link that opens the puzzle on the board in the player
+ *                                   (the same kind of link as the generator's Play button); null without a puzzle.
  *   clearSavedData()                forgets the saved puzzles and progress (not the preferences).
  *   saveNow()                       writes the progress of the game on the board at once.
  *
@@ -40,7 +42,7 @@
  *   'settings'   a preference changed: `{ state, keys, source }`
  *   'locale'     the language changed: `{ locale }`
  *   'theme'      the theme preference changed: `{ theme }`
- *   'action'     a header button was used: `{ id: 'open' | 'settings' | 'help' }`
+ *   'action'     a button was used: `{ id: 'open' | 'share' | 'settings' | 'help' }`
  *   'play:game'  a game was attached to the board: `{ game, puzzle }` (emitted by play.js)
  *   'play:change' the game changed (emitted by play.js); the progress is saved shortly after
  *   'data:cleared' the saved data were deleted
@@ -59,12 +61,13 @@
   const MAX_TOASTS = 4;
   const MAX_FILE_BYTES = 8 * 1024 * 1024;
   const SAVE_DELAY_MS = 400;
-  const RECENT_SHOWN = 10;
-  const MOBILE_QUERY = '(max-width: 767.98px)';
+  const RECENT_SHOWN = 100;
+  const REPORT_SHOWN = 8;
+  const LONG_LINK_CHARS = 100000;
+  const DEFAULT_PLAYER_URL = 'https://tdat00.github.io/sudoku-player/';
   const DEFAULT_GENERATOR_URL = 'https://tdat00.github.io/sudoku-generator/';
   const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), ' +
     'textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-  const SOURCES = Object.freeze(['link', 'file', 'drop', 'paste', 'recent', 'restore', 'text']);
 
   // ---------------------------------------------------------------------------------------------
   // Small helpers
@@ -175,6 +178,7 @@
   let storageWarned = false;
   let hasSavedProgress = false;
   let openDialog = null;
+  let shareDialog = null;
 
   // ---------------------------------------------------------------------------------------------
   // Events
@@ -471,104 +475,12 @@
   }
 
   // ---------------------------------------------------------------------------------------------
-  // The page: heading, info card, recent list
+  // The page: heading, recent list
   // ---------------------------------------------------------------------------------------------
 
   function showLayout(hasPuzzle) {
     els.welcome.hidden = hasPuzzle;
     els.layout.hidden = !hasPuzzle;
-  }
-
-  function infoRow(labelKey, value) {
-    return [
-      make('dt', { class: 'info-list__term', text: t(labelKey) }),
-      make('dd', { class: 'info-list__value', text: value })
-    ];
-  }
-
-  function progressBar(percent) {
-    const bar = make('span', { class: 'progress__bar' });
-    bar.style.width = percent + '%';
-    return make('span', {
-      class: 'progress', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100',
-      'aria-valuenow': String(percent), 'aria-label': t('player.info.progress')
-    }, [bar]);
-  }
-
-  function sourceName(source) {
-    return SOURCES.indexOf(source) !== -1 ? t('player.source.' + source) : t('player.source.file');
-  }
-
-  function difficultyText(d) {
-    const achieved = levelName(d.achieved) || String(d.achieved);
-    const asked = levelName(d.requested);
-    let text = achieved;
-    if (asked !== '' && asked !== achieved) {
-      text = t('player.info.difficulty.asked', { achieved: achieved, requested: asked });
-    }
-    if (typeof d.score === 'number') {
-      text += ' · ' + t('player.info.score', { score: SG.i18n.formatNumber(Math.round(d.score)) });
-    }
-    return text;
-  }
-
-  function renderInfo() {
-    if (els === null || els.info === null) return;
-    els.info.textContent = '';
-    if (current === null) return;
-    const info = current.info || {};
-    const d = info.difficulty || null;
-    const list = make('dl', { class: 'info-list' });
-    const add = function (pair) { pair.forEach(function (node) { list.appendChild(node); }); };
-    add(infoRow('player.info.variant', variantName(current.variantId)));
-    if (d !== null) {
-      add(infoRow('player.info.difficulty', difficultyText(d)));
-      if (d.hardestTechnique && SG.i18n.has('technique.' + d.hardestTechnique)) {
-        add(infoRow('player.info.hardest', t('technique.' + d.hardestTechnique)));
-      }
-    }
-    const clues = t('player.info.clues.value', { clues: info.clues, cells: info.cellCount });
-    add(infoRow('player.info.clues', clues));
-    if (info.seed !== undefined && info.seed !== null) add(infoRow('player.info.seed', String(info.seed)));
-    if (info.generatedAt) {
-      const when = formatDate(info.generatedAt);
-      if (when !== '') add(infoRow('player.info.generated', when));
-    }
-    add(infoRow('player.info.source', sourceName(info.source)));
-    els.info.appendChild(list);
-
-    const percent = game !== null ? percentOf(game) : 0;
-    const done = game !== null && game.status() === 'solved';
-    const bar = make('div', { class: 'info-progress', 'data-role': 'info-progress' }, [
-      make('span', {
-        class: 'info-progress__label',
-        text: done ? t('player.info.solved') : t('player.info.progress.value', { percent: percent })
-      }),
-      progressBar(done ? 100 : percent)
-    ]);
-    els.info.appendChild(bar);
-
-    const notes = [];
-    if (current.uniqueness === 'multiple') notes.push('player.info.notes.multiple');
-    if (current.uniqueness === 'unknown') notes.push('player.info.notes.unverified');
-    if (current.solutionSource === 'computed') notes.push('player.info.notes.computed');
-    if (info.wordoku) notes.push('player.info.wordoku');
-    if (d === null) notes.push('player.info.notes.noDifficulty');
-    notes.forEach(function (key) { els.info.appendChild(make('p', { class: 'info-note', text: t(key) })); });
-  }
-
-  /** The progress bar of the info card follows the game without rebuilding the card. */
-  function updateInfoProgress() {
-    if (els === null || els.info === null || current === null || game === null) return;
-    const holder = els.info.querySelector('[data-role="info-progress"]');
-    if (holder === null) return;
-    const done = game.status() === 'solved';
-    const percent = done ? 100 : percentOf(game);
-    holder.querySelector('.info-progress__label').textContent = done ? t('player.info.solved') :
-      t('player.info.progress.value', { percent: percent });
-    const bar = holder.querySelector('.progress');
-    bar.setAttribute('aria-valuenow', String(percent));
-    bar.firstChild.style.width = percent + '%';
   }
 
   function heading() {
@@ -579,9 +491,30 @@
       t('player.heading.level', { variant: variantName(current.variantId), level: level });
   }
 
+  /** "<variant> - <level> (Seed: <seed>)"; the level and the seed are left out when the puzzle has none. */
+  function summaryTitle() {
+    if (current === null) return '';
+    const d = current.info && current.info.difficulty;
+    const level = d ? levelName(d.achieved) : '';
+    const seed = current.info ? current.info.seed : null;
+    let text = variantName(current.variantId);
+    if (level !== '') text += ' - ' + level;
+    if (seed !== undefined && seed !== null && String(seed) !== '') {
+      text += ' (' + t('player.heading.seed', { seed: String(seed) }) + ')';
+    }
+    return text;
+  }
+
+  function summaryDescription() {
+    if (current === null) return '';
+    const key = 'variant.' + current.variantId + '.desc';
+    return SG.i18n.has(key) ? t(key) : '';
+  }
+
   function renderHeading() {
     if (els === null) return;
-    els.heading.textContent = heading();
+    els.heading.textContent = summaryTitle();
+    if (els.subheading !== null) els.subheading.textContent = summaryDescription();
     document.title = current === null ? t('app.title') : t('player.title.puzzle', { name: heading() });
   }
 
@@ -596,57 +529,87 @@
     return parts.join(' · ');
   }
 
+  /** "<Level>: 30 clues, 45% filled" with the level in bold, as in the generator's list. */
+  function recentMetaNodes(item) {
+    const meta = item.meta || {};
+    const rest = [];
+    if (typeof meta.clues === 'number') rest.push(t('player.recent.clues', { count: meta.clues }));
+    rest.push(item.solved ? t('player.recent.solved') :
+      item.hasProgress ? t('player.recent.progress', { percent: item.percent }) : t('player.recent.new'));
+    const level = levelName(meta.achieved);
+    const nodes = [];
+    if (level !== '') nodes.push(make('strong', { class: 'history-item__level', text: level }));
+    nodes.push(document.createTextNode((level !== '' ? ': ' : '') + rest.join(', ')));
+    return nodes;
+  }
+
+  // Same markup as the generator's list of puzzles (js/ui/history.js there), so both pages share one style.
   function recentItem(item) {
     const meta = item.meta || {};
     const name = variantName(meta.variantId || item.id.split('-')[0]);
     const details = recentDetails(item);
     const isCurrent = current !== null && current.id === item.id;
+    const title = make('span', { class: 'history-item__title', text: name });
+    const statusKey = item.solved ? 'solved' : item.hasProgress ? 'progress' : 'new';
+    // Only a solved puzzle and one in progress get an icon; a new one has none.
+    const status = statusKey === 'new' ? null : make('span', {
+      class: 'history-item__status', 'data-status': statusKey, 'aria-hidden': 'true'
+    }, [icon('status-' + statusKey)]);
     const open = make('button', {
-      type: 'button', class: 'recent-item__open', 'data-id': item.id,
+      type: 'button', class: 'history-item__open', 'data-role': 'open', 'data-id': item.id,
       'aria-label': t('player.recent.open', { name: name, details: details })
     }, [
-      make('span', { class: 'recent-item__name', text: name }),
-      make('span', { class: 'recent-item__meta', text: details })
+      title,
+      make('span', { class: 'history-item__meta' }, recentMetaNodes(item))
     ]);
     if (isCurrent) open.setAttribute('aria-current', 'true');
     open.addEventListener('click', function () { safely(function () { openStored(item.id); }); });
     const removeLabel = t('player.recent.remove', { name: name });
     const remove = make('button', {
-      type: 'button', class: 'btn btn--ghost btn--icon btn--sm recent-item__remove',
+      type: 'button', class: 'btn btn--ghost btn--icon btn--sm history-item__remove', 'data-role': 'remove',
       'aria-label': removeLabel, title: removeLabel
-    }, [icon('trash')]);
+    }, [icon('x')]);
     remove.addEventListener('click', function () {
       saved.forget(item.id);
       if (isCurrent) hasSavedProgress = false;
       renderRecent();
       announce(t('player.recent.removed'));
     });
-    return make('li', { class: 'recent-item' + (isCurrent ? ' is-current' : '') }, [open, remove]);
+    return make('li', { class: 'history-item', 'data-id': item.id, 'data-status': statusKey }, [open, status, remove]);
   }
 
-  function recentList() {
-    const items = saved.recent(RECENT_SHOWN);
-    if (items.length === 0) return make('p', { class: 'recent-empty', text: t('player.recent.empty') });
-    const ul = make('ul', { class: 'recent-list', role: 'list' });
-    items.forEach(function (item) { ul.appendChild(recentItem(item)); });
-    return ul;
+  /** The items of the list, one `li` each (the left panel and the welcome screen both use them). */
+  function fillRecent(list, items) {
+    items.forEach(function (item) { list.appendChild(recentItem(item)); });
+    return list;
   }
 
   function renderRecent() {
     if (els === null) return;
+    const items = saved.recent(RECENT_SHOWN);
     if (els.recent !== null) {
       els.recent.textContent = '';
-      els.recent.appendChild(recentList());
+      fillRecent(els.recent, items);
+      els.recent.hidden = items.length === 0;
+      if (els.recentEmpty !== null) els.recentEmpty.hidden = items.length > 0;
+      if (els.recentClear !== null) els.recentClear.disabled = items.length === 0;
     }
     if (els.welcomeRecent !== null) {
       els.welcomeRecent.textContent = '';
-      if (saved.recent(1).length > 0) {
+      if (items.length > 0) {
         els.welcomeRecent.appendChild(make('h3', {
           class: 'welcome__recent-title', text: t('shell.recent.title')
         }));
-        els.welcomeRecent.appendChild(recentList());
+        els.welcomeRecent.appendChild(fillRecent(make('ul', { class: 'history-list', role: 'list' }), items));
       }
     }
+  }
+
+  function clearRecent() {
+    saved.clear();
+    hasSavedProgress = false;
+    renderRecent();
+    toast('info', 'player.recent.cleared');
   }
 
   // ---------------------------------------------------------------------------------------------
@@ -655,6 +618,8 @@
 
   function placePuzzle(puzzle, options) {
     const o = options || {};
+    // Leaving a running game pauses it, so it comes back paused (Resume) and its clock does not run on.
+    if (SG.play && SG.play.pauseGame) SG.play.pauseGame();
     saveNow();
     closeAllModals();
     if (SG.play) SG.play.detach();
@@ -665,10 +630,6 @@
     // Put the grid semantics back now (the observer would do it a moment later): play focuses a cell below.
     if (SG.a11y && SG.a11y.getGrid()) SG.a11y.getGrid().apply();
     showLayout(true);
-    if (o.collapseInfo !== false && typeof root.matchMedia === 'function' &&
-        root.matchMedia(MOBILE_QUERY).matches) {
-      els.infoDetails.open = false;
-    }
     if (SG.play) {
       SG.play.attach(puzzle, { state: o.state, symbolMode: o.symbolMode, focus: o.focus === true });
     }
@@ -676,7 +637,6 @@
     saved.setLast(puzzle.id);
     if (o.state) hasSavedProgress = true;
     renderHeading();
-    renderInfo();
     renderRecent();
     setStatus(o.state ? 'player.status.restored' : null);
     announce(t(o.state ? 'player.opened.restored' : 'player.opened',
@@ -840,6 +800,75 @@
     });
   }
 
+  /** The first error of a skipped puzzle, with its place in the text ("#3 Killer Sudoku: ..."). */
+  function skippedText(item) {
+    const first = issueTexts(item.outcome.errors)[0] || t('player.error.nothing');
+    return item.label === '' ? first : item.label + ': ' + first;
+  }
+
+  function showSkipped(imported, skipped) {
+    const shown = skipped.slice(0, REPORT_SHOWN);
+    const modal = openModal({
+      titleKey: 'player.import.report.title',
+      body: function (body) {
+        body.appendChild(make('p', {
+          class: 'modal__lead',
+          text: t('player.import.report.lead', { imported: imported, skipped: skipped.length })
+        }));
+        const ul = make('ul', { class: 'error-list', role: 'list' });
+        shown.forEach(function (item) { ul.appendChild(make('li', { text: skippedText(item) })); });
+        if (skipped.length > shown.length) {
+          ul.appendChild(make('li', {
+            text: t('player.import.report.more', { count: skipped.length - shown.length })
+          }));
+        }
+        body.appendChild(ul);
+      },
+      footer: function (footer) {
+        const close = make('button', { type: 'button', class: 'btn btn--primary', i18n: 'common.close' });
+        close.addEventListener('click', function () { modal.close(); });
+        footer.appendChild(close);
+      }
+    });
+    return modal;
+  }
+
+  /**
+   * Several puzzles came in (the text of the generator's Export box, or a bundle of the Play button): every
+   * good one goes into the list of puzzles, the one on screen in the generator (`o.active`, the number of the
+   * puzzle in the text) or else the first one is put on the board, and the ones that cannot be played are
+   * listed.
+   * @returns {Promise<boolean>} Whether a puzzle is on the board.
+   */
+  function importBatch(items, source, o) {
+    const good = items.filter(function (item) { return item.outcome.ok; });
+    const skipped = items.filter(function (item) { return !item.outcome.ok; });
+    if (good.length === 0) {
+      const lines = skipped.slice(0, REPORT_SHOWN).map(function (item) {
+        return { key: 'player.import.line', args: { text: skippedText(item) } };
+      });
+      showErrors(lines);
+      return Promise.resolve(false);
+    }
+    // Saved last to first, so that the first puzzle of the text is the newest one of the list.
+    good.slice().reverse().forEach(function (item) {
+      const puzzle = item.outcome.puzzle;
+      saved.savePuzzle(puzzle.id, puzzle.document, metaOf(puzzle));
+    });
+    const warned = good.filter(function (item) { return item.outcome.warnings.length > 0; }).length;
+    // The puzzle that was on screen in the generator (its number in the text), else the first one.
+    const wanted = good.filter(function (item) { return item.index === o.active; });
+    const first = wanted.length > 0 ? wanted[0] : good[0];
+    return openPuzzle(first.outcome.puzzle, { resume: 'continue', source: source, focus: o.focus !== false })
+      .then(function (shown) {
+        renderRecent();
+        toast('success', 'player.import.done', { count: good.length });
+        if (warned > 0) toast('warning', 'player.import.warned', { count: warned });
+        if (skipped.length > 0) showSkipped(good.length, skipped);
+        return shown;
+      });
+  }
+
   function open(input, options) {
     const o = options || {};
     const seq = ++openSeq;
@@ -847,9 +876,12 @@
     const source = o.source || (isFile ? 'file' : 'paste');
     const textPromise = isFile ? readFile(input) : Promise.resolve(input);
     return textPromise.then(function (text) {
-      return SG.importer.open(text, { source: source });
-    }).then(function (outcome) {
+      return SG.importer.openMany(text, { source: source });
+    }).then(function (result) {
       if (seq !== openSeq) return false;
+      const active = typeof o.active === 'number' ? o.active : result.active;
+      if (result.items.length !== 1) return importBatch(result.items, source, Object.assign({}, o, { active: active }));
+      const outcome = result.items[0].outcome;
       if (!outcome.ok) {
         showErrors(outcome.errors);
         return false;
@@ -873,8 +905,149 @@
   }
 
   // ---------------------------------------------------------------------------------------------
+  // The Share dialog: the link that opens this puzzle in the player (the generator's "Play" link)
+  // ---------------------------------------------------------------------------------------------
+
+  /** The player's address from `<meta name="sg-player-url">` (http(s) only), else the default. */
+  function playerBase() {
+    const meta = typeof document !== 'undefined' ?
+      document.querySelector('meta[name="sg-player-url"]') : null;
+    const value = meta ? meta.getAttribute('content') : null;
+    return typeof value === 'string' && value.trim() !== '' && SG.exchange.isAllowedBase(value) ?
+      value.trim() : DEFAULT_PLAYER_URL;
+  }
+
+  /** The link of the puzzle on the board: the puzzle document in the fragment, as `buildPlayLink` of the generator. */
+  function buildShareLink() {
+    return Promise.resolve().then(function () {
+      if (current === null) throw failure({ key: 'player.error.nothing', args: {} });
+      return SG.exchange.encode(current.document);
+    }).then(function (token) {
+      const url = SG.exchange.playerUrl(playerBase(), token);
+      return { url: url, long: url.length > LONG_LINK_CHARS };
+    });
+  }
+
+  /** Copies text to the clipboard; the promise tells whether it worked. `field` is selected as a fallback. */
+  function copyText(text, field) {
+    if (root.navigator && root.navigator.clipboard && typeof root.navigator.clipboard.writeText === 'function') {
+      return root.navigator.clipboard.writeText(text).then(function () { return true; }, function () {
+        return copyFromField(field);
+      });
+    }
+    return Promise.resolve(copyFromField(field));
+  }
+
+  function copyFromField(field) {
+    if (!field || typeof document.execCommand !== 'function') return false;
+    try {
+      field.focus();
+      field.select();
+      return document.execCommand('copy') === true;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function openShareDialog() {
+    if (current === null) return null;
+    if (shareDialog !== null) return shareDialog;
+    const refs = { box: null, copy: null, hint: null };
+    const modal = openModal({
+      titleKey: 'player.share.title',
+      wide: true,
+      body: function (body) {
+        body.appendChild(make('p', { class: 'modal__lead', i18n: 'player.share.lead' }));
+        refs.box = make('textarea', {
+          class: 'textarea share-link', id: 'share-link', rows: '5', readonly: true, spellcheck: 'false',
+          autocomplete: 'off', autocapitalize: 'off', 'aria-label': t('player.share.label')
+        });
+        refs.box.addEventListener('focus', function () { refs.box.select(); });
+        refs.hint = make('p', { class: 'field__hint', id: 'share-hint', hidden: true });
+        body.appendChild(make('div', { class: 'field' }, [refs.box, refs.hint]));
+      },
+      footer: function (footer) {
+        refs.copy = make('button', {
+          type: 'button', class: 'btn btn--primary', id: 'share-copy', disabled: true
+        }, [icon('copy'), make('span', { class: 'btn__label', i18n: 'player.share.copy' })]);
+        refs.copy.addEventListener('click', function () {
+          copyText(refs.box.value, refs.box).then(function (ok) {
+            toast(ok ? 'success' : 'danger', ok ? 'player.share.copied' : 'player.share.copyFailed');
+          });
+        });
+        const close = make('button', { type: 'button', class: 'btn btn--secondary', i18n: 'common.close' });
+        close.addEventListener('click', function () { modal.close(); });
+        footer.appendChild(close);
+        footer.appendChild(refs.copy);
+      },
+      onClose: function () { shareDialog = null; }
+    });
+    if (modal === null) return null;
+    shareDialog = modal;
+    buildShareLink().then(function (info) {
+      if (shareDialog !== modal) return;
+      refs.box.value = info.url;
+      refs.copy.disabled = false;
+      if (info.long) {
+        refs.hint.textContent = t('player.share.long', { size: SG.i18n.formatNumber(Math.round(info.url.length / 1000)) });
+        refs.hint.hidden = false;
+      }
+      refs.box.focus();
+    }, function (err) {
+      const code = err && typeof err.code === 'string' ? 'error.' + err.code : '';
+      refs.box.value = '';
+      refs.hint.textContent = t('player.share.error', {
+        message: code !== '' && SG.i18n.has(code) ? t(code) : (err && err.message ? err.message : '')
+      });
+      refs.hint.hidden = false;
+    });
+    return modal;
+  }
+
+  // ---------------------------------------------------------------------------------------------
   // The Open dialog
   // ---------------------------------------------------------------------------------------------
+
+  /**
+   * An element whose text has `{generator}` in it (player.open.intro ...): the placeholder becomes a link to
+   * Sudoku Generator (`generatorUrl()`, a new tab). It is drawn again on a language change.
+   */
+  const generatorTexts = [];
+
+  function renderGeneratorText(entry) {
+    const text = t(entry.key);
+    const at = text.indexOf('{generator}');
+    entry.node.textContent = '';
+    if (at === -1) {
+      entry.node.textContent = text;
+      return;
+    }
+    entry.node.appendChild(document.createTextNode(text.slice(0, at)));
+    entry.node.appendChild(make('a', {
+      href: generatorUrl(), target: '_blank', rel: 'noopener', class: 'generator-link',
+      text: t('player.generator.name')
+    }));
+    entry.node.appendChild(document.createTextNode(text.slice(at + '{generator}'.length)));
+  }
+
+  function generatorText(tag, attrs, key) {
+    const entry = { node: make(tag, attrs), key: key };
+    generatorTexts.push(entry);
+    renderGeneratorText(entry);
+    return entry.node;
+  }
+
+  function refreshGeneratorTexts() {
+    for (let i = generatorTexts.length - 1; i >= 0; i--) {
+      const entry = generatorTexts[i];
+      if (entry.node.isConnected) {
+        entry.seen = true;
+        renderGeneratorText(entry);
+      } else if (entry.seen === true) {
+        generatorTexts.splice(i, 1);
+      }
+    }
+  }
 
   function openOpenDialog() {
     if (openDialog !== null) return openDialog.modal;
@@ -900,24 +1073,7 @@
       titleKey: 'player.open.title',
       wide: true,
       body: function (body) {
-        body.appendChild(make('p', { class: 'modal__lead', i18n: 'player.open.intro' }));
-        const picker = make('input', {
-          type: 'file', class: 'visually-hidden', id: 'open-file', tabindex: '-1',
-          accept: '.json,.txt,.puzzle,application/json,text/plain'
-        });
-        picker.addEventListener('change', function () {
-          const file = picker.files && picker.files[0];
-          if (file) submit(file, 'file');
-          picker.value = '';
-        });
-        const choose = make('button', { type: 'button', class: 'btn btn--primary', id: 'open-choose' }, [
-          icon('upload'), make('span', { class: 'btn__label', i18n: 'player.open.file' })
-        ]);
-        choose.addEventListener('click', function () { picker.click(); });
-        body.appendChild(make('div', { class: 'open-file' }, [
-          choose, picker, make('p', { class: 'field__hint', i18n: 'player.open.file.hint' })
-        ]));
-        body.appendChild(make('p', { class: 'open-drop', i18n: 'player.open.drop' }));
+        body.appendChild(generatorText('p', { class: 'modal__lead' }, 'player.open.intro'));
         refs.text = make('textarea', {
           class: 'textarea open-text', id: 'open-text', rows: '5', spellcheck: 'false', autocomplete: 'off',
           autocapitalize: 'off', 'aria-describedby': 'open-text-hint open-errors'
@@ -931,9 +1087,7 @@
         const label = make('label', {
           class: 'field__label', for: 'open-text', i18n: 'player.open.paste.label'
         });
-        const hint = make('p', {
-          class: 'field__hint', id: 'open-text-hint', i18n: 'player.open.paste.hint'
-        });
+        const hint = generatorText('p', { class: 'field__hint', id: 'open-text-hint' }, 'player.open.paste.hint');
         refs.errors = make('div', { class: 'open-errors', id: 'open-errors', role: 'alert', hidden: true });
         body.appendChild(make('div', { class: 'field' }, [label, refs.text, hint, refs.errors]));
       },
@@ -951,12 +1105,19 @@
     });
     if (modal === null) return null;
     openDialog = { modal: modal, showErrors: showDialogErrors };
+    // The first focusable thing is now the link to the generator in the lead: the text box is what is wanted.
+    if (refs.text !== null) refs.text.focus();
     return modal;
   }
 
   // ---------------------------------------------------------------------------------------------
   // Page-wide drop and paste
   // ---------------------------------------------------------------------------------------------
+
+  /** Whether text dropped on the page is worth importing: the generator's export text, or a puzzle line / link. */
+  function looksImportable(text) {
+    return SG.importer.exportBlocks(text) !== null || SG.importer.detect(text).kind !== 'unknown';
+  }
 
   function hasFiles(event) {
     const types = event.dataTransfer && event.dataTransfer.types;
@@ -1001,7 +1162,7 @@
       }
       // Dropped text opens only when it looks like a puzzle (selected page text dragged around does not).
       const text = typeof data.getData === 'function' ? data.getData('text/plain') : '';
-      if (text && !isTextField(event.target) && SG.importer.detect(text).kind !== 'unknown') {
+      if (text && !isTextField(event.target) && looksImportable(text)) {
         event.preventDefault();
         open(text, { source: 'drop' });
       }
@@ -1036,11 +1197,17 @@
     return hash && SG.exchange ? SG.exchange.tokenFromHash(hash) : null;
   }
 
+  function fragmentActive() {
+    const hash = root.location ? root.location.hash : '';
+    return hash && SG.exchange ? SG.exchange.activeFromHash(hash) : null;
+  }
+
   function openFragment() {
     const token = fragmentToken();
     if (token === null) return Promise.resolve(false);
+    const active = fragmentActive();
     removeFragment();
-    return open(token, { source: 'link', focus: false });
+    return open(token, { source: 'link', focus: false, active: active === null ? undefined : active });
   }
 
   // ---------------------------------------------------------------------------------------------
@@ -1066,8 +1233,8 @@
   function onLocaleChange(code) {
     syncLangButtons(code);
     renderHeading();
-    renderInfo();
     renderRecent();
+    refreshGeneratorTexts();
     if (board !== null) board.refreshText();
     emit('locale', { locale: code });
   }
@@ -1082,10 +1249,11 @@
       welcomeRecent: byId('welcome-recent'),
       layout: byId('player-layout'),
       heading: byId('board-heading'),
+      subheading: byId('board-subheading'),
       svg: byId('board-svg'),
-      info: byId('info-root'),
-      infoDetails: byId('info-details'),
       recent: byId('recent-root'),
+      recentEmpty: byId('recent-empty'),
+      recentClear: byId('recent-clear'),
       status: byId('status-line'),
       drop: byId('drop-overlay'),
       generatorLink: byId('link-generator')
@@ -1093,7 +1261,11 @@
   }
 
   function wireButtons() {
-    [['btn-open', 'open'], ['btn-welcome-open', 'open'], ['btn-settings', 'settings'], ['btn-help', 'help']]
+    if (els.recentClear !== null) {
+      listen(els.recentClear, 'click', function () { safely(clearRecent); });
+    }
+    [['btn-open', 'open'], ['btn-welcome-open', 'open'], ['btn-share', 'share'], ['btn-settings', 'settings'],
+      ['btn-help', 'help']]
       .forEach(function (pair) {
         const node = byId(pair[0]);
         if (node === null) return;
@@ -1106,6 +1278,7 @@
     });
     cleanup.push(on('action', function (payload) {
       if (payload && payload.id === 'open') openOpenDialog();
+      if (payload && payload.id === 'share') openShareDialog();
     }));
   }
 
@@ -1132,8 +1305,7 @@
     placePuzzle(outcome.puzzle, {
       state: progress === null ? null : progress.state,
       symbolMode: progress === null ? undefined : progress.symbolMode,
-      focus: false,
-      collapseInfo: false
+      focus: false
     });
     return true;
   }
@@ -1161,14 +1333,8 @@
       animate: !state.reducedMotion
     });
 
-    cleanup.push(on('play:change', function () {
-      scheduleSave();
-      updateInfoProgress();
-    }));
-    cleanup.push(on('play:game', function (payload) {
-      game = payload.game;
-      updateInfoProgress();
-    }));
+    cleanup.push(on('play:change', function () { scheduleSave(); }));
+    cleanup.push(on('play:game', function (payload) { game = payload.game; }));
     ['theme', 'a11y', 'play', 'help'].forEach(function (name) {
       if (SG[name] && typeof SG[name].init === 'function') safely(function () { SG[name].init(api); });
     });
@@ -1208,6 +1374,7 @@
     open: open,
     openPuzzle: openPuzzle,
     openOpenDialog: openOpenDialog,
+    openShareDialog: openShareDialog,
     clearSavedData: clearSavedData,
     saveNow: saveNow
   };
@@ -1222,6 +1389,7 @@
   SG.localeFragments.push({
     en: {
       'player.heading.level': '{variant} · {level}',
+      'player.heading.seed': 'Seed: {seed}',
       'player.title.puzzle': '{name} – Sudoku Player',
       'player.opened': 'Puzzle opened: {variant}.',
       'player.opened.restored': 'Welcome back. Your progress on {variant} was restored.',
@@ -1234,22 +1402,28 @@
         'close this tab.',
       'player.storage.quota': 'The browser storage is full, so some progress could not be saved. Delete ' +
         'saved puzzles in Help to make room.',
-      'player.open.title': 'Open a puzzle',
-      'player.open.intro': 'Choose a puzzle file, or paste a puzzle below.',
-      'player.open.file': 'Choose a file…',
-      'player.open.file.hint': 'A puzzle file from Sudoku Generator (.json), or a text file with one ' +
-        'puzzle line.',
-      'player.open.drop': 'You can also drop a file anywhere on this page.',
-      'player.open.paste.label': 'Paste a puzzle',
-      'player.open.paste.hint': 'The text of a puzzle file, a “Play online” link, a puzzle code, or one ' +
-        'line of 81 (9×9), 36 (6×6) or 16 (4×4) characters where . 0 - _ mean an empty cell. Ctrl+Enter ' +
-        'opens it.',
-      'player.open.submit': 'Open',
-      'player.error.title': 'This puzzle could not be opened',
+      'player.open.title': 'Import puzzles',
+      'player.open.intro': 'Paste the puzzles you exported from {generator}.',
+      'player.generator.name': 'Sudoku Generator',
+      'player.open.paste.label': 'Paste puzzles',
+      'player.open.paste.hint': 'The text of the “Export” box of {generator}, with one or many puzzles ' +
+        'of any variant. A “Play online” link or a line of 81 (9×9), 36 (6×6) or 16 (4×4) characters where ' +
+        '. 0 - _ mean an empty cell also works. Ctrl+Enter imports it.',
+      'player.open.submit': 'Import',
+      'player.error.title': 'Nothing could be imported',
       'player.error.lead': 'Nothing was changed on the board. What went wrong:',
-      'player.error.again': 'Open another puzzle',
-      'player.error.nothing': 'There is nothing to open.',
+      'player.error.again': 'Import again',
+      'player.error.nothing': 'There is nothing to import.',
       'player.error.fileTooLarge': 'This file is too large to be a puzzle (over 8 MB).',
+      'player.import.done_one': '1 puzzle imported.',
+      'player.import.done_other': '{count} puzzles imported.',
+      'player.import.warned_one': '1 puzzle has more than one solution or could not be fully checked.',
+      'player.import.warned_other': '{count} puzzles have more than one solution or could not be fully ' +
+        'checked.',
+      'player.import.report.title': 'Some puzzles were not imported',
+      'player.import.report.lead': '{imported} imported, {skipped} skipped. What went wrong:',
+      'player.import.report.more': 'And {count} more.',
+      'player.import.line': '{text}',
       'player.continue.title': 'Continue this puzzle?',
       'player.continue.title.solved': 'You already solved this puzzle',
       'player.continue.body': 'You played this puzzle before: {percent}% filled, {time} played, last on ' +
@@ -1259,36 +1433,22 @@
       'player.continue.yes': 'Continue',
       'player.continue.show': 'Show it',
       'player.continue.no': 'Start over',
-      'player.info.variant': 'Variant',
-      'player.info.difficulty': 'Difficulty',
-      'player.info.difficulty.asked': '{achieved} (asked for {requested})',
-      'player.info.score': 'score {score}',
-      'player.info.hardest': 'Hardest technique',
-      'player.info.clues': 'Clues',
-      'player.info.clues.value': '{clues} of {cells} cells',
-      'player.info.seed': 'Seed',
-      'player.info.generated': 'Generated',
-      'player.info.source': 'Opened from',
-      'player.info.progress': 'Progress',
-      'player.info.progress.value': '{percent}% filled',
-      'player.info.solved': 'Solved',
-      'player.info.notes.multiple': 'This puzzle has more than one solution. Any grid that follows the ' +
-        'rules counts as solved.',
-      'player.info.notes.unverified': 'The solution could not be checked in time.',
-      'player.info.notes.computed': 'The file had no solution; this page worked it out.',
-      'player.info.notes.noDifficulty': 'No difficulty information came with this puzzle.',
-      'player.info.wordoku': 'The key word appears when you solve the puzzle.',
-      'player.source.link': 'a link',
-      'player.source.file': 'a file',
-      'player.source.drop': 'a dropped file',
-      'player.source.paste': 'pasted text',
-      'player.source.text': 'a puzzle line',
-      'player.source.recent': 'the recent list',
-      'player.source.restore': 'your last visit',
       'player.recent.empty': 'No recent puzzles yet. Puzzles you open are listed here.',
+      'player.share.title': 'Share this puzzle',
+      'player.share.lead': 'Send this link to anyone: it opens this puzzle in Sudoku Player, without your ' +
+        'progress. The puzzle travels inside the link; nothing is uploaded.',
+      'player.share.label': 'Link to this puzzle',
+      'player.share.copy': 'Copy link',
+      'player.share.copied': 'Link copied to the clipboard.',
+      'player.share.copyFailed': 'Could not copy the link. Select it and copy it by hand.',
+      'player.share.long': 'This link is long (about {size} kB), and some apps and servers cut long links.',
+      'player.share.error': 'The link could not be made: {message}',
       'player.recent.open': 'Open {name}: {details}',
       'player.recent.remove': 'Remove {name} from the list',
       'player.recent.removed': 'Removed from the list.',
+      'player.recent.clear': 'Remove all',
+      'player.recent.clear.title': 'Remove every puzzle and its saved progress from the list',
+      'player.recent.cleared': 'The list of puzzles was cleared.',
       'player.recent.clues_one': '{count} clue',
       'player.recent.clues_other': '{count} clues',
       'player.recent.progress': '{percent}% filled',
@@ -1298,6 +1458,7 @@
     },
     vi: {
       'player.heading.level': '{variant} · {level}',
+      'player.heading.seed': 'Seed: {seed}',
       'player.title.puzzle': '{name} – Trình chơi Sudoku',
       'player.opened': 'Đã mở đề: {variant}.',
       'player.opened.restored': 'Chào mừng bạn quay lại. Tiến độ của {variant} đã được khôi phục.',
@@ -1310,20 +1471,27 @@
       'player.storage.blocked': 'Trình duyệt này chặn lưu trữ cục bộ, nên tiến độ sẽ mất khi bạn đóng tab.',
       'player.storage.quota': 'Bộ nhớ của trình duyệt đã đầy nên một số tiến độ không được lưu. Hãy xóa ' +
         'các đề đã lưu trong phần Trợ giúp để lấy chỗ.',
-      'player.open.title': 'Mở một đề',
-      'player.open.intro': 'Chọn một tệp đề, hoặc dán đề vào ô bên dưới.',
-      'player.open.file': 'Chọn tệp…',
-      'player.open.file.hint': 'Tệp đề của Trình sinh đề Sudoku (.json), hoặc tệp văn bản có một dòng đề.',
-      'player.open.drop': 'Bạn cũng có thể thả tệp vào bất kỳ đâu trên trang này.',
+      'player.open.title': 'Nhập đề',
+      'player.open.intro': 'Dán các đề bạn đã xuất từ {generator}.',
+      'player.generator.name': 'Trình sinh đề Sudoku',
       'player.open.paste.label': 'Dán đề',
-      'player.open.paste.hint': 'Nội dung tệp đề, liên kết “Chơi trực tuyến”, mã đề, hoặc một dòng gồm 81 ' +
-        '(9×9), 36 (6×6) hay 16 (4×4) ký tự, trong đó . 0 - _ là ô trống. Nhấn Ctrl+Enter để mở.',
-      'player.open.submit': 'Mở',
-      'player.error.title': 'Không mở được đề này',
+      'player.open.paste.hint': 'Nội dung ô “Xuất” của {generator}, một hay nhiều đề thuộc mọi ' +
+        'biến thể. Liên kết “Chơi trực tuyến” hoặc một dòng 81 (9×9), 36 ' +
+        '(6×6), 16 (4×4) ký tự, trong đó . 0 - _ là ô trống, cũng dùng được. Nhấn Ctrl+Enter để nhập.',
+      'player.open.submit': 'Nhập',
+      'player.error.title': 'Không nhập được đề nào',
       'player.error.lead': 'Bàn cờ không bị thay đổi. Đã xảy ra lỗi:',
-      'player.error.again': 'Mở đề khác',
-      'player.error.nothing': 'Không có gì để mở.',
+      'player.error.again': 'Nhập lại',
+      'player.error.nothing': 'Không có gì để nhập.',
       'player.error.fileTooLarge': 'Tệp này quá lớn để là một đề (hơn 8 MB).',
+      'player.import.done_one': 'Đã nhập 1 đề.',
+      'player.import.done_other': 'Đã nhập {count} đề.',
+      'player.import.warned_one': '1 đề có nhiều hơn một lời giải hoặc chưa kiểm tra xong.',
+      'player.import.warned_other': '{count} đề có nhiều hơn một lời giải hoặc chưa kiểm tra xong.',
+      'player.import.report.title': 'Một số đề chưa được nhập',
+      'player.import.report.lead': 'Đã nhập {imported}, bỏ qua {skipped}. Đã xảy ra lỗi:',
+      'player.import.report.more': 'Và {count} đề nữa.',
+      'player.import.line': '{text}',
       'player.continue.title': 'Tiếp tục đề này?',
       'player.continue.title.solved': 'Bạn đã giải đề này rồi',
       'player.continue.body': 'Bạn đã chơi đề này: đã điền {percent}%, chơi {time}, lần cuối vào {date}.',
@@ -1332,36 +1500,23 @@
       'player.continue.yes': 'Tiếp tục',
       'player.continue.show': 'Xem lại',
       'player.continue.no': 'Chơi lại từ đầu',
-      'player.info.variant': 'Biến thể',
-      'player.info.difficulty': 'Độ khó',
-      'player.info.difficulty.asked': '{achieved} (yêu cầu {requested})',
-      'player.info.score': 'điểm {score}',
-      'player.info.hardest': 'Kỹ thuật khó nhất',
-      'player.info.clues': 'Số cho sẵn',
-      'player.info.clues.value': '{clues} trên {cells} ô',
-      'player.info.seed': 'Seed',
-      'player.info.generated': 'Ngày tạo',
-      'player.info.source': 'Mở từ',
-      'player.info.progress': 'Tiến độ',
-      'player.info.progress.value': 'đã điền {percent}%',
-      'player.info.solved': 'Đã giải',
-      'player.info.notes.multiple': 'Đề này có nhiều hơn một lời giải. Mọi lưới đúng luật đều được tính là ' +
-        'đã giải.',
-      'player.info.notes.unverified': 'Chưa kiểm tra xong lời giải trong thời gian cho phép.',
-      'player.info.notes.computed': 'Tệp không có lời giải; trang này đã tự tìm ra.',
-      'player.info.notes.noDifficulty': 'Đề này không kèm thông tin về độ khó.',
-      'player.info.wordoku': 'Từ khóa sẽ hiện ra khi bạn giải xong đề.',
-      'player.source.link': 'một liên kết',
-      'player.source.file': 'một tệp',
-      'player.source.drop': 'một tệp được thả vào',
-      'player.source.paste': 'văn bản đã dán',
-      'player.source.text': 'một dòng đề',
-      'player.source.recent': 'danh sách gần đây',
-      'player.source.restore': 'lần truy cập trước',
       'player.recent.empty': 'Chưa có đề nào gần đây. Các đề bạn mở sẽ được liệt kê ở đây.',
+      'player.share.title': 'Chia sẻ đề này',
+      'player.share.lead': 'Gửi liên kết này cho bất kỳ ai: nó mở đề này trong Trình chơi Sudoku, không kèm ' +
+        'tiến độ của bạn. Đề nằm ngay trong liên kết; không có gì được tải lên.',
+      'player.share.label': 'Liên kết tới đề này',
+      'player.share.copy': 'Sao chép liên kết',
+      'player.share.copied': 'Đã sao chép liên kết vào bộ nhớ tạm.',
+      'player.share.copyFailed': 'Không sao chép được liên kết. Hãy chọn và sao chép thủ công.',
+      'player.share.long': 'Liên kết này dài (khoảng {size} kB), và một số ứng dụng, máy chủ sẽ cắt bớt liên ' +
+        'kết dài.',
+      'player.share.error': 'Không tạo được liên kết: {message}',
       'player.recent.open': 'Mở {name}: {details}',
       'player.recent.remove': 'Xóa {name} khỏi danh sách',
       'player.recent.removed': 'Đã xóa khỏi danh sách.',
+      'player.recent.clear': 'Xóa hết',
+      'player.recent.clear.title': 'Xóa mọi đề cùng tiến độ đã lưu khỏi danh sách',
+      'player.recent.cleared': 'Đã xóa danh sách các đề.',
       'player.recent.clues_one': '{count} số cho sẵn',
       'player.recent.clues_other': '{count} số cho sẵn',
       'player.recent.progress': 'đã điền {percent}%',

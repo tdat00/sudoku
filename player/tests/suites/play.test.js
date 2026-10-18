@@ -783,6 +783,22 @@
       expect(g.elapsedMs()).toBe(done + 1000);
     });
 
+    it('startTimer starts the clock of a game nobody played, once, and a reset makes it idle again', function () {
+      ready();
+      var r = realResult('classic4', 'easy', 2);
+      var t = 10;
+      var g = newGame(r, { now: function () { return t; } });
+      expect(g.startTimer()).toBe(true);
+      expect(g.status()).toBe('playing');
+      expect(g.startTimer()).toBe(false);
+      t = 2010;
+      expect(g.elapsedMs()).toBe(2000);
+      g.reset();
+      expect(g.status()).toBe('idle');
+      expect(g.timerState().started).toBe(false);
+      expect(g.startTimer()).toBe(true);
+    });
+
     it('notes and clues do not matter for the clock: any first entry starts it, a check does not', function () {
       ready();
       var r = realResult('classic4', 'easy', 2);
@@ -1345,7 +1361,7 @@
       ['getValue', 'userValue', 'isGiven', 'getNotes', 'snapshot', 'setValue', 'clearValue', 'erase', 'toggleNote',
         'fillNotes', 'undo', 'redo', 'canUndo', 'canRedo', 'reset', 'conflicts', 'wrongCells', 'check', 'progress',
         'isSolved', 'status', 'hint', 'nextHintStep', 'applyHint', 'clearHint', 'currentHint', 'revealCell',
-        'revealSolution', 'pauseTimer', 'resumeTimer', 'elapsedMs', 'timerState', 'subscribe', 'setOptions',
+        'revealSolution', 'startTimer', 'pauseTimer', 'resumeTimer', 'elapsedMs', 'timerState', 'subscribe', 'setOptions',
         'getOptions', 'counters', 'serialize'].forEach(function (name) {
         expect(typeof g[name]).toBe('function');
       });

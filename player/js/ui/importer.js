@@ -1,25 +1,39 @@
 /**
- * Opening a puzzle (the player's import): `SG.importer`. A puzzle arrives as the JSON document of the
- * generator (`format: 'sudoku-generator/v1'`, plus the `model` block), as a link token, as a whole player
- * link, or as a plain text line of a classic board. This module recognises which, decodes the token, checks
- * the document, rebuilds a REAL `PuzzleModel` from its `model` block (no variant code is involved), checks
- * givens, solution and uniqueness, and hands back a playable puzzle. Whatever is wrong with the input comes
- * back as translatable issues (`import.error.*`, `error.exchange.*`); nothing here throws.
+ * Opening a puzzle (the player's import): `SG.importer`. The import is the text of Sudoku Generator's "Export"
+ * box: one or more puzzles, each a header line and its grid (`openMany`). A puzzle also arrives from the
+ * generator's "Play online" button as a link or a token: the text of ALL the puzzles of the generator's list in
+ * one compressed token (`openMany` decodes it, `active` names the puzzle to show first), or the document of
+ * one puzzle (`open`, used by the address of the page); a plain
+ * text line of a classic board is read too. A document (the stored form of a puzzle, or what a link token
+ * decodes to) is checked, a REAL `PuzzleModel` is rebuilt from its `model` block (no variant code is
+ * involved), givens, solution and uniqueness are checked, and a playable puzzle comes back. Whatever is
+ * wrong with the input comes back as translatable issues (`import.error.*`, `error.exchange.*`); nothing
+ * here throws.
  *
- * Pure: no DOM, no storage. The one asynchronous step is the decoding of a token (`SG.exchange.decode`).
+ * Pure: no DOM, no storage. The one asynchronous step is the decoding of a token (`SG.exchange.decode`,
+ * `decodeText`).
  *
  * ---------------------------------------------------------------------------------------------------------
  * PUBLIC API (`SG.importer`)
  * ---------------------------------------------------------------------------------------------------------
- *   open(input, options?)   -> Promise<Outcome>. `input` is a string: the JSON document, a bare token
- *                           (`z.` / `j.`), a player link or a bare fragment (`...#puzzle=<token>`), or a
- *                           line of 16 / 36 / 81 characters ('.', '0', '-', '_' = empty). The recognised
- *                           kind is in `Outcome.kind`: 'json' | 'token' | 'link' | 'text'.
+ *   open(input, options?)   -> Promise<Outcome>. `input` is a string: a bare token (`z.` / `j.`: one
+ *                           document; `t.` / `s.`: a bundle, the first puzzle is the answer), a player
+ *                           link or a bare fragment (`...#puzzle=<token>`), or a line of 16 / 36 / 81
+ *                           characters ('.', '0', '-', '_' = empty). The recognised kind is in
+ *                           `Outcome.kind`: 'token' | 'link' | 'text'.
+ *   openMany(input, options?) -> Promise<{ items }>. The import of the dialog: the text of Sudoku Generator's
+ *                           "Export" box (`#1,variant,level,seed`, the grid and, for Jigsaw / Killer /
+ *                           Greater-Than / Wordoku, structure lines; one or many puzzles of any variant, see
+ *                           `parseExportBlock`), or a text token of such text (a bundle). Other input goes
+ *                           to `open`. `items` is `[{ index, label, outcome }]`: one Outcome per puzzle (a
+ *                           single puzzle gives one item, identical to `open`); a bundle link adds `active`.
+ *   exportBlocks(text)      -> [{ header, rows, extras }] | null. The puzzles of an exported text; null if it is not one.
+ *   parseExportBlock(block, index) -> { ok, label, data, errors }. One of them as the data of a document.
  *   openDocument(data, options?) -> Outcome. A document that is already parsed (a stored one).
  *   openText(text, options?)     -> Outcome. A line of classic digits.
- *   detect(input)           -> { kind, value }. What a string is, without decoding it: kind 'empty' |
- *                           'json' | 'link' | 'token' | 'text' | 'unknown'; `value` is the token for 'link'
- *                           and 'token', the trimmed text otherwise.
+ *   detect(input)           -> { kind, value, active? }. What a string is, without decoding it: kind 'empty' |
+ *                           'link' | 'token' | 'bundle' | 'text' | 'unknown'; `value` is the token for
+ *                           'link', 'token' and 'bundle' (a text token), the trimmed text otherwise.
  *   validate(data)          -> { ok, errors, warnings, variantId }. The form of a document, no model built.
  *   parseText(text)         -> { ok, data, errors }. `data` has the shape of a document (no `model`).
  *   puzzleId(model, givens) -> string. The identity of a puzzle (variant + structure + givens); the same
@@ -88,7 +102,7 @@
   const MAX_LABEL_CHARS = 16;
 
   const ERROR_KEYS = Object.freeze([
-    'import.error.empty', 'import.error.tooLarge', 'import.error.badJson', 'import.error.notObject',
+    'import.error.empty', 'import.error.tooLarge', 'import.error.notObject',
     'import.error.noFormat', 'import.error.wrongFormat', 'import.error.wrongVersion',
     'import.error.missingField', 'import.error.badType', 'import.error.unknownVariant',
     'import.error.noModel', 'import.error.badModel', 'import.error.buildFailed', 'import.error.badStructure',
@@ -100,6 +114,8 @@
     'import.error.ineqSelf', 'import.error.ineqDuplicate', 'import.error.ineqNotAdjacent',
     'import.error.ineqCycle', 'import.error.textChars', 'import.error.textLength',
     'import.error.unrecognised', 'import.error.noSolution', 'import.error.readFailed',
+    'import.error.exportNoGrid', 'import.error.exportGrid', 'import.error.exportVariant',
+    'import.error.exportShape', 'import.error.exportStructure',
     'error.exchange.invalidToken', 'error.exchange.tooLarge', 'error.exchange.unsupportedEncoding',
     'error.exchange.invalidJson', 'error.exchange.invalidUrl'
   ]);
@@ -190,24 +206,36 @@
   /**
    * What a string is, without decoding it.
    * @param {*} input
-   * @returns {{kind: string, value: string}} kind: 'empty' | 'json' | 'link' | 'token' | 'text' | 'unknown'.
+   * @returns {{kind: string, value: string, active?: number}} kind: 'empty' | 'link' | 'token' | 'bundle' |
+   *   'text' | 'unknown'. A 'bundle' is a text token (the puzzles of the generator's "Play" button); for a
+   *   link, `active` is the number of the puzzle to show first, when the link says one.
    */
   function detect(input) {
     const body = typeof input === 'string' ? input.replace(/^\uFEFF/, '').trim() : '';
     if (body === '') return { kind: 'empty', value: '' };
-    const first = body.charAt(0);
-    if (first === '{' || first === '[') return { kind: 'json', value: body };
     const squeezed = body.replace(/\s+/g, '');
-    if (/^[jz]\.[A-Za-z0-9_-]+$/.test(squeezed)) return { kind: 'token', value: squeezed };
+    if (/^[jzts]\.[A-Za-z0-9_-]+$/.test(squeezed)) {
+      return { kind: tokenKind(squeezed, 'token'), value: squeezed };
+    }
     if (/puzzle=/.test(body) && SG.exchange) {
       const at = body.indexOf('#');
       const fragment = at === -1 ? body : body.slice(at + 1);
       const token = SG.exchange.tokenFromHash(fragment);
-      if (token !== null) return { kind: 'link', value: token };
+      if (token !== null) {
+        const found = { kind: tokenKind(token, 'link'), value: token };
+        const active = SG.exchange.activeFromHash(fragment);
+        if (active !== null) found.active = active;
+        return found;
+      }
     }
     const compact = squeezed;
     if (compact.length <= MAX_TEXT_CHARS && looksLikeText(compact)) return { kind: 'text', value: compact };
     return { kind: 'unknown', value: body.slice(0, 80) };
+  }
+
+  /** 'bundle' for a token of text (several puzzles), else `plainKind`. */
+  function tokenKind(token, plainKind) {
+    return SG.exchange && SG.exchange.isTextToken(token) ? 'bundle' : plainKind;
   }
 
   // ---------------------------------------------------------------------------------------------
@@ -545,7 +573,7 @@
     }
     if (data.model !== undefined && data.model !== null) {
       if (errors.length === 0) checkModelSpec(data.model, variantId, n, digits, errors);
-    } else if (variantId !== SG.classicModel.variantIdOf(digits)) {
+    } else if (!SG.textBoards.buildable(variantId)) {
       errors.push(issue('import.error.noModel', { variantId: variantId }));
     }
     return done(variantId);
@@ -563,7 +591,7 @@
 
   function modelFromDocument(data, variantId, digits) {
     if (data.model !== undefined && data.model !== null) return SG.model.create(data.model);
-    return SG.classicModel.build(digits);
+    return SG.textBoards.buildVariant(variantId);
   }
 
   /** The stored fields that must say what the model says: a document whose parts disagree is damaged. */
@@ -721,11 +749,11 @@
    * @param {*} data  A document, or the data of `parseText`.
    * @param {{source?: string, budgetMs?: number}} [options]  `source` is the way it arrived ('link', 'file',
    *   'paste', 'text', 'recent', ...) and ends up in `puzzle.info.source`.
-   * @returns {Object} The outcome, see the file header (`kind` is 'json').
+   * @returns {Object} The outcome, see the file header (`kind` is 'document').
    */
   function openDocument(data, options) {
     const o = options || {};
-    const kind = o.kind || 'json';
+    const kind = o.kind || 'document';
     try {
       return buildPuzzle(data, kind, o);
     } catch (err) {
@@ -888,14 +916,9 @@
     }
     if (seen.kind === 'empty') return Promise.resolve(failure('unknown', [issue('import.error.empty')]));
     if (seen.kind === 'text') return Promise.resolve(openText(seen.value, o));
-    if (seen.kind === 'json') {
-      let data;
-      try {
-        data = JSON.parse(seen.value);
-      } catch (err) {
-        return Promise.resolve(failure('json', [issue('import.error.badJson')]));
-      }
-      return Promise.resolve(openDocument(data, Object.assign({}, o, { kind: 'json' })));
+    if (seen.kind === 'bundle') {
+      // Several puzzles in one token: the first one is the answer here (`openMany` gives them all).
+      return openMany(input, o).then(function (result) { return result.items[0].outcome; });
     }
     if (seen.kind === 'token' || seen.kind === 'link') {
       if (!SG.exchange) return Promise.resolve(failure(seen.kind, [issue('import.error.unrecognised')]));
@@ -908,6 +931,331 @@
     return Promise.resolve(failure('unknown', [issue('import.error.unrecognised')]));
   }
 
+  // ---------------------------------------------------------------------------------------------
+  // Several puzzles at once
+  // ---------------------------------------------------------------------------------------------
+
+  const EXPORT_HEADER = /^#\s*\d+\s*,/;
+  const MAX_ITEMS = 200;
+
+  /** A name as the generator writes it in the header of an exported puzzle: lower case, `x` for the times sign. */
+  function plainName(text) {
+    return String(text).replace(/\u00d7/g, 'x').replace(/[,\r\n]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
+  /** The id whose name (`prefix.<id>`, in English or Vietnamese) is `name`; null when none is. */
+  function idByName(prefix, ids, name) {
+    const wanted = plainName(name);
+    if (wanted === '' || !SG.locales) return null;
+    for (let i = 0; i < ids.length; i++) {
+      for (const code of ['en', 'vi']) {
+        const pack = SG.locales[code];
+        const text = pack && pack[prefix + '.' + ids[i]];
+        if (typeof text === 'string' && plainName(text) === wanted) return ids[i];
+      }
+    }
+    return null;
+  }
+
+  /**
+   * The puzzles of the "Export as text" box of Sudoku Generator: a header line `#number,variant,level,seed`,
+   * the grid, one board row per line, then (for Jigsaw, Killer, Greater-Than and Wordoku) `key: value`
+   * structure lines; a blank line between puzzles.
+   * @param {string} text
+   * @returns {?Array<{header: string, rows: string[], extras: Object<string, string>}>} null when the text is
+   *   not in that form. `extras` maps the lower-case key of a structure line to its value.
+   */
+  function exportBlocks(text) {
+    const lines = String(text).replace(/^\uFEFF/, '').split(/\r?\n/).map(function (s) { return s.trim(); });
+    const first = lines.filter(function (s) { return s !== ''; })[0];
+    if (first === undefined || !EXPORT_HEADER.test(first)) return null;
+    const blocks = [];
+    let current = null;
+    lines.forEach(function (line) {
+      const keyed = /^([A-Za-z][A-Za-z-]*)\s*:\s*(.*)$/.exec(line);
+      if (EXPORT_HEADER.test(line)) {
+        current = { header: line, rows: [], extras: {} };
+        blocks.push(current);
+      } else if (line === '') {
+        current = null;
+      } else if (current !== null && keyed !== null) {
+        const key = keyed[1].toLowerCase();
+        if (!has(current.extras, key)) current.extras[key] = keyed[2].trim();
+      } else if (current !== null) {
+        current.rows.push(line);
+      }
+    });
+    return blocks;
+  }
+
+  /** `r3c7` -> the index of that cell on a 9x9 board (row-major), or -1. */
+  function cellOfToken(token) {
+    const m = /^r([1-9])c([1-9])$/.exec(String(token).trim());
+    return m === null ? -1 : (Number(m[1]) - 1) * 9 + Number(m[2]) - 1;
+  }
+
+  /** The `regions:` line of a Jigsaw puzzle: nine groups of nine region numbers 1-9 -> region (0-8) of each cell. */
+  function parseRegions(value) {
+    const groups = String(value).split(/\s+/);
+    if (groups.length !== 9 || !groups.every(function (g) { return /^[1-9]{9}$/.test(g); })) return null;
+    const regions = groups.join('').split('').map(function (d) { return Number(d) - 1; });
+    const size = new Array(9).fill(0);
+    regions.forEach(function (g) { size[g]++; });
+    return size.every(function (s) { return s === 9; }) ? regions : null;
+  }
+
+  /** The `cages:` line of a Killer puzzle: `sum=r1c1,r1c2; sum=...` -> [{ cells, sum }]. */
+  function parseCages(value) {
+    const cages = [];
+    const parts = String(value).split(';').map(function (s) { return s.trim(); }).filter(Boolean);
+    if (parts.length === 0 || parts.length > MAX_CAGES) return null;
+    for (let i = 0; i < parts.length; i++) {
+      const m = /^(\d{1,3})\s*=\s*(.+)$/.exec(parts[i]);
+      if (m === null) return null;
+      const cells = m[2].split(',').map(cellOfToken);
+      if (cells.some(function (c) { return c < 0; })) return null;
+      cages.push({ cells: cells, sum: Number(m[1]) });
+    }
+    return cages;
+  }
+
+  /** The `signs:` line of a Greater-Than puzzle: `r1c1<r1c2; ...` -> [{ a, b }] with value[a] < value[b]. */
+  function parseSigns(value) {
+    const parts = String(value).split(';').map(function (s) { return s.trim(); }).filter(Boolean);
+    if (parts.length === 0 || parts.length > MAX_SIGNS) return null;
+    const signs = [];
+    for (let i = 0; i < parts.length; i++) {
+      const m = /^(r\dc\d)\s*<\s*(r\dc\d)$/.exec(parts[i]);
+      if (m === null) return null;
+      const a = cellOfToken(m[1]);
+      const b = cellOfToken(m[2]);
+      if (a < 0 || b < 0) return null;
+      signs.push({ a: a, b: b });
+    }
+    return signs;
+  }
+
+  /** The `word-line:` of a Wordoku puzzle: 'diagonal' | 'row 3' | 'column 5' -> the nine cells; null if bad. */
+  function parseWordLine(value) {
+    const m = /^(diagonal|row\s+([1-9])|column\s+([1-9]))$/i.exec(String(value).trim());
+    if (m === null) return null;
+    const word = m[1].toLowerCase();
+    if (word === 'diagonal') return { placement: 'diagonal', line: null, cells: SG.textBoards.wordLineCells('diagonal', 0) };
+    const placement = word.slice(0, 3) === 'row' ? 'row' : 'column';
+    const line = Number(m[2] || m[3]);
+    return { placement: placement, line: line, cells: SG.textBoards.wordLineCells(placement, line - 1) };
+  }
+
+  /** The value (1-based) a grid character stands for: 1-9, then A = 10, B = 11 ...; 0 for `.`, -1 for anything else. */
+  function valueOfChar(ch, digits) {
+    if (ch === '.') return 0;
+    let v = -1;
+    if (ch >= '1' && ch <= '9') v = ch.charCodeAt(0) - 48;
+    else if (ch >= 'A' && ch <= 'Z') v = ch.charCodeAt(0) - 55;
+    return v >= 1 && v <= digits ? v : -1;
+  }
+
+  /**
+   * Reads one block of the exported text into the data of a document. The clues give the cells; the board comes
+   * from the variant (classic, Mega, Diagonal, Hyper, and the overlapping boards by the `_` of the canvas) or
+   * from the structure lines under the grid (Jigsaw regions, Killer cages, Greater-Than signs, Wordoku letters
+   * and word line). A structured board is returned as a `model` block, so the stored puzzle needs no line.
+   * @returns {{ok: boolean, label: string, data: ?Object, errors: Array}}
+   */
+  function parseExportBlock(block, index) {
+    const parts = block.header.split(',');
+    const variantName = (parts[1] || '').trim();
+    const levelName = (parts[2] || '').trim();
+    const seedText = parts.slice(3).join(',').trim();
+    const label = '#' + index + (variantName === '' ? '' : ' ' + variantName);
+    const shown = variantName === '' ? '#' + index : variantName;
+    const fail = function (key, args) {
+      return { ok: false, label: label, data: null, errors: [issue(key, args)] };
+    };
+    const CM = SG.classicModel;
+    const TB = SG.textBoards;
+    const rows = block.rows;
+    const extras = block.extras || {};
+    const height = rows.length;
+    if (height === 0) return fail('import.error.exportNoGrid');
+    const width = rows[0].length;
+    if (rows.some(function (row) { return row.length !== width; })) {
+      return fail('import.error.exportGrid', { size: height });
+    }
+    const named = idByName('variant', Object.keys(VARIANTS), variantName);
+    const offBoard = rows.some(function (row) { return row.indexOf('_') !== -1; });
+
+    // Which variant: its name, else what the grid and the structure lines say.
+    let variantId = named;
+    if (variantId === null && offBoard) {
+      variantId = Object.keys(CM.MULTIGRID).filter(function (id) {
+        return CM.MULTIGRID[id].rows === height && CM.MULTIGRID[id].cols === width;
+      }).filter(function (id) { return maskMatches(id, rows); })[0] || null;
+    } else if (variantId === null && height === width) {
+      if (extras.regions !== undefined) variantId = 'jigsaw9';
+      else if (extras.cages !== undefined) variantId = 'killer';
+      else if (extras.signs !== undefined) variantId = 'greaterThan';
+      else if (extras.letters !== undefined) variantId = 'wordoku';
+      else variantId = CM.variantIdOf(height) || (height === 12 ? 'mega12' : height === 16 ? 'mega16' : null);
+    }
+    if (variantId === null || !has(VARIANTS, variantId)) {
+      return fail('import.error.exportVariant', { variant: shown });
+    }
+
+    // The cells of the board, in the order of its model, and the canvas position of each.
+    const digits = VARIANTS[variantId].digits;
+    let positions = [];
+    if (CM.isMultigrid(variantId)) {
+      const geo = CM.geometryOf(variantId);
+      if (geo.rows !== height || geo.cols !== width || !maskMatches(variantId, rows)) {
+        return fail('import.error.exportShape', { variant: shown, rows: height, cols: width });
+      }
+      const layout = CM.buildMultigrid(variantId).layout;
+      positions = Array.from(layout.cellRow).map(function (r, i) { return [r, layout.cellCol[i]]; });
+    } else {
+      if (offBoard || height !== digits || width !== digits) {
+        return fail('import.error.exportShape', { variant: shown, rows: height, cols: width });
+      }
+      for (let r = 0; r < height; r++) {
+        for (let c = 0; c < width; c++) positions.push([r, c]);
+      }
+    }
+    const givens = new Array(positions.length);
+    for (let i = 0; i < positions.length; i++) {
+      const ch = rows[positions[i][0]].charAt(positions[i][1]);
+      const v = valueOfChar(ch, digits);
+      if (v < 0) {
+        return fail('import.error.textChars', { char: ch, position: positions[i][0] * width + positions[i][1] + 1 });
+      }
+      givens[i] = v;
+    }
+    const data = { format: FORMAT, variantId: variantId, digits: digits, cellCount: givens.length,
+      givens: givens, solution: null };
+    const missing = function (field) { return fail('import.error.exportStructure', { variant: shown, field: field }); };
+
+    if (variantId === 'jigsaw9') {
+      if (extras.regions === undefined) return missing('regions');
+      const regions = parseRegions(extras.regions);
+      if (regions === null) return fail('import.error.exportStructure', { variant: shown, field: 'regions' });
+      data.model = TB.jigsawSpec(regions);
+    } else if (variantId === 'killer') {
+      if (extras.cages === undefined) return missing('cages');
+      const cages = parseCages(extras.cages);
+      if (cages === null) return fail('import.error.exportStructure', { variant: shown, field: 'cages' });
+      data.model = TB.killerSpec(cages);
+    } else if (variantId === 'greaterThan') {
+      if (extras.signs === undefined) return missing('signs');
+      const signs = parseSigns(extras.signs);
+      if (signs === null) return fail('import.error.exportStructure', { variant: shown, field: 'signs' });
+      data.model = TB.greaterThanSpec(signs);
+    } else if (variantId === 'wordoku') {
+      if (extras.letters === undefined) return missing('letters');
+      if (extras['word-line'] === undefined) return missing('word-line');
+      const labels = extras.letters.split(/\s+/).filter(Boolean);
+      const line = parseWordLine(extras['word-line']);
+      if (labels.length !== 9 || new Set(labels).size !== 9 || labels.some(function (s) { return s.length > 3; })) {
+        return fail('import.error.exportStructure', { variant: shown, field: 'letters' });
+      }
+      if (line === null) return fail('import.error.exportStructure', { variant: shown, field: 'word-line' });
+      // The key word is not in the text: it is what the (unique) solution spells along the line.
+      let solution = null;
+      try {
+        const bare = SG.model.create(TB.wordokuSpec(labels, line.cells, null));
+        solution = SG.dfs.solve(bare, Int32Array.from(givens), null, SG.budget.create({ ms: SOLVE_BUDGET_MS }));
+      } catch (err) {
+        solution = null;
+      }
+      if (solution === null) return fail('import.error.noSolution');
+      data.model = TB.wordokuSpec(labels, line.cells, line.cells.map(function (cell) { return solution[cell]; }));
+      data.solution = Array.from(solution);
+      data.wordoku = { placement: line.placement, line: line.line };
+      data.symbolMode = 'word';
+    }
+
+    if (/^\d{1,10}$/.test(seedText) && Number(seedText) <= 4294967295) data.seed = Number(seedText);
+    const level = idByName('difficulty', LEVELS, levelName);
+    if (level !== null) data.difficulty = { achieved: level };
+    return { ok: true, label: label, data: data, errors: [] };
+  }
+
+  /** Whether the `_` of the grid are exactly the canvas positions that no sub-grid of the overlapping board covers. */
+  function maskMatches(variantId, rows) {
+    const geo = SG.classicModel.geometryOf(variantId);
+    if (geo === null || rows.length !== geo.rows || rows.some(function (row) { return row.length !== geo.cols; })) {
+      return false;
+    }
+    const covered = new Uint8Array(geo.rows * geo.cols);
+    geo.origins.forEach(function (origin) {
+      for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) covered[(origin[0] + r) * geo.cols + origin[1] + c] = 1;
+      }
+    });
+    for (let r = 0; r < geo.rows; r++) {
+      for (let c = 0; c < geo.cols; c++) {
+        if ((rows[r].charAt(c) !== '_') !== (covered[r * geo.cols + c] === 1)) return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * The puzzles of a text token (the "Play" hand-off of the generator): the token is decoded to the text of
+   * its Export box, which is opened like pasted text. `active` is the number of the puzzle to show first.
+   * A token inside a token is refused.
+   */
+  function openBundle(seen, o) {
+    const unreadable = function (issues) {
+      return { items: [{ index: 1, label: '', outcome: failure('bundle', issues) }] };
+    };
+    if (!SG.exchange || o.nested === true) return Promise.resolve(unreadable([issue('import.error.unrecognised')]));
+    return SG.exchange.decodeText(seen.value).then(function (text) {
+      return openMany(text, Object.assign({}, o, { nested: true })).then(function (result) {
+        return seen.active > 0 ? Object.assign({}, result, { active: seen.active }) : result;
+      });
+    }, function (err) {
+      return unreadable([tokenIssue(err)]);
+    });
+  }
+
+  /**
+   * Opens the puzzles of the text that Sudoku Generator's "Export" box gives (`#1,variant,level,seed` and a
+   * grid per puzzle, one or more puzzles), or of a text token (the "Play" hand-off of the generator, see
+   * `openBundle`). Any other input is handed to `open` (one puzzle: a link token or a classic line).
+   * @param {string} input
+   * @param {{source?: string, budgetMs?: number}} [options]
+   * @returns {Promise<{items: Array<{index: number, label: string, outcome: Object}>, active?: number}>} One
+   *   item per puzzle (a single puzzle is one item, as `open` would have given it); `active`: the number
+   *   (`index`) of the puzzle a bundle link wants shown first. Never rejects.
+   */
+  function openMany(input, options) {
+    const o = options || {};
+    const body = typeof input === 'string' ? input.replace(/^\uFEFF/, '').trim() : '';
+    let seen = { kind: 'unknown' };
+    try {
+      seen = detect(body);
+    } catch (err) {
+      seen = { kind: 'unknown' };
+    }
+    if (seen.kind === 'bundle') return openBundle(seen, o);
+    const blocks = body === '' ? null : exportBlocks(body);
+    if (blocks === null) {
+      return open(input, o).then(function (outcome) {
+        return { items: [{ index: 1, label: '', outcome: outcome }] };
+      });
+    }
+    if (blocks.length > MAX_ITEMS) {
+      return Promise.resolve({ items: [{ index: 1, label: '', outcome: failure('export',
+        [issue('import.error.tooLarge')]) }] });
+    }
+    return Promise.resolve({ items: blocks.map(function (block, k) {
+      const parsed = parseExportBlock(block, k + 1);
+      const outcome = parsed.ok ?
+        openDocument(parsed.data, Object.assign({}, o, { kind: 'export' })) :
+        failure('export', parsed.errors);
+      return { index: k + 1, label: parsed.label, outcome: outcome };
+    }) });
+  }
+
   SG.importer = {
     FORMAT: FORMAT,
     LEVELS: LEVELS,
@@ -917,10 +1265,13 @@
     WARNING_KEYS: WARNING_KEYS,
     detect: detect,
     parseText: parseText,
+    exportBlocks: exportBlocks,
+    parseExportBlock: parseExportBlock,
     validate: validate,
     puzzleId: puzzleId,
     issueText: issueText,
     open: open,
+    openMany: openMany,
     openDocument: openDocument,
     openText: openText
   };
@@ -938,7 +1289,6 @@
       'import.type.string': 'text',
       'import.error.empty': 'There is nothing to open: the text is empty.',
       'import.error.tooLarge': 'This is too large to be a puzzle.',
-      'import.error.badJson': 'This is not valid JSON, so it cannot be a puzzle file.',
       'import.error.notObject': 'A puzzle file must hold one JSON object.',
       'import.error.noFormat': 'This file has no "format" field, so it is not a Sudoku puzzle file.',
       'import.error.wrongFormat': 'Unknown file format "{format}". The player opens sudoku-generator/v1 ' +
@@ -983,6 +1333,14 @@
         'Generator, or a line of 16, 36 or 81 characters.',
       'import.error.noSolution': 'This puzzle has no solution, so it cannot be played.',
       'import.error.readFailed': 'The file could not be read.',
+      'import.error.exportNoGrid': 'This puzzle has a header line but no grid under it.',
+      'import.error.exportGrid': 'The grid is not square: a board of {size} rows needs {size} characters ' +
+        'in every row.',
+      'import.error.exportVariant': 'This player has no variant called "{variant}".',
+      'import.error.exportShape': 'The grid of {variant} ({rows} rows of {cols} characters) does not have the ' +
+        'shape of that board.',
+      'import.error.exportStructure': 'The text of {variant} has no usable "{field}" line, so the board cannot ' +
+        'be rebuilt. Export the puzzle again with the current Sudoku Generator.',
       'import.warn.severalSolutions': 'This puzzle has more than one solution. Any complete valid grid ' +
         'counts as solved; hints follow one of them.',
       'import.warn.unverified': 'Checking whether this puzzle has a single solution took too long, so it ' +
@@ -995,7 +1353,6 @@
       'import.type.string': 'một đoạn chữ',
       'import.error.empty': 'Chưa có gì để mở: nội dung đang trống.',
       'import.error.tooLarge': 'Nội dung quá lớn, không thể là một đề Sudoku.',
-      'import.error.badJson': 'Đây không phải JSON hợp lệ nên không thể là tệp đề.',
       'import.error.notObject': 'Tệp đề phải chứa đúng một đối tượng JSON.',
       'import.error.noFormat': 'Tệp này không có trường "format" nên không phải tệp đề Sudoku.',
       'import.error.wrongFormat': 'Định dạng tệp "{format}" không rõ. Trình chơi mở được tệp ' +
@@ -1039,6 +1396,13 @@
         'Sudoku hoặc một dòng 16, 36 hay 81 ký tự.',
       'import.error.noSolution': 'Đề này không có lời giải nên không thể chơi.',
       'import.error.readFailed': 'Không đọc được tệp.',
+      'import.error.exportNoGrid': 'Đề này có dòng tiêu đề nhưng không có lưới bên dưới.',
+      'import.error.exportGrid': 'Lưới không vuông: bàn cờ {size} hàng cần {size} ký tự trên mỗi hàng.',
+      'import.error.exportVariant': 'Trình chơi này không có biến thể "{variant}".',
+      'import.error.exportShape': 'Lưới của {variant} ({rows} hàng, mỗi hàng {cols} ký tự) không đúng hình ' +
+        'dạng của bàn cờ đó.',
+      'import.error.exportStructure': 'Văn bản của {variant} không có dòng "{field}" dùng được nên không ' +
+        'dựng lại được bàn cờ. Hãy xuất lại đề bằng Trình sinh đề Sudoku bản mới.',
       'import.warn.severalSolutions': 'Đề này có nhiều hơn một lời giải. Mọi lưới đầy đủ hợp lệ đều được ' +
         'tính là đã giải; gợi ý đi theo một trong các lời giải đó.',
       'import.warn.unverified': 'Việc kiểm tra đề có duy nhất một lời giải mất quá nhiều thời gian nên đã ' +

@@ -14,8 +14,11 @@
     en: {
       'shell.skip': 'Skip to the puzzle',
 
-      'shell.open': 'Open puzzle',
-      'shell.open.title': 'Open a puzzle from a file, a link or pasted text',
+      'shell.open': 'Import',
+      'shell.open.title': 'Import puzzles from a file, a link or pasted text',
+      'shell.share': 'Share',
+      'shell.share.title': 'Get a link that opens this puzzle in Sudoku Player',
+      'shell.mainActions.label': 'Puzzle actions',
 
       'shell.lang.label': 'Language',
       'shell.lang.en.short': 'EN',
@@ -33,34 +36,39 @@
       'shell.help': 'Help',
       'shell.help.title': 'Open help',
 
-      'shell.welcome.title': 'Open a Sudoku puzzle to play it',
+      'shell.welcome.title': 'Import a Sudoku puzzle to play it',
       'shell.welcome.lead': 'This is a player for puzzles made by Sudoku Generator: all 15 variants, ' +
         'notes, hints that name the technique, and progress that is saved for you.',
       'shell.welcome.step1': 'Make a puzzle in Sudoku Generator and press “Play online”.',
-      'shell.welcome.step2': 'Or open a puzzle file, paste a link, or paste a line of 81 digits (a classic ' +
-        'board).',
+      'shell.welcome.step2': 'Or import puzzles: a puzzle file, a link, the text of Sudoku Generator’s ' +
+        '“Export” box (one or many puzzles), or a line of 81 digits (a classic board).',
       'shell.welcome.step3': 'Come back any time: your progress is kept on this device.',
-      'shell.welcome.open': 'Open a puzzle',
+      'shell.welcome.open': 'Import puzzles',
       'shell.welcome.generator': 'Get a puzzle from Sudoku Generator',
       'shell.welcome.privacy': 'Everything stays in your browser. Nothing is uploaded and no account is ' +
         'needed.',
 
       'shell.board.title': 'Sudoku board',
-      'shell.board.desc': 'Open a puzzle to see the board.',
-      'shell.side.heading': 'Puzzle information and play tools',
-      'shell.info.title': 'This puzzle',
-      'shell.recent.title': 'Recent puzzles',
+      'shell.board.desc': 'Import a puzzle to see the board.',
+      'shell.side.heading': 'Play tools and options',
+      'shell.recent.title': 'Imported puzzles',
       'shell.status.label': 'Status',
 
-      'shell.drop.title': 'Drop the puzzle file here',
-      'shell.drop.hint': 'A file made by Sudoku Generator, or a text file with a puzzle line.',
-      'shell.toast.label': 'Notifications'
+      'shell.drop.title': 'Drop the puzzle files here',
+      'shell.drop.hint': 'Files made by Sudoku Generator, or text files with puzzles.',
+      'shell.toast.label': 'Notifications',
+      'shell.footer.copyright': '\u00a9 2026 Dat Le. Released under the MIT licence.',
+      'shell.footer.repo': 'Source code on GitHub',
+      'shell.footer.repo.title': 'Open the repository of sudoku-player on GitHub (new tab)'
     },
     vi: {
       'shell.skip': 'Chuyển tới bàn cờ',
 
-      'shell.open': 'Mở đề',
-      'shell.open.title': 'Mở đề từ tệp, liên kết hoặc đoạn văn bản đã dán',
+      'shell.open': 'Nhập đề',
+      'shell.open.title': 'Nhập đề từ tệp, liên kết hoặc đoạn văn bản đã dán',
+      'shell.share': 'Chia sẻ',
+      'shell.share.title': 'Lấy liên kết mở đề này trong Trình chơi Sudoku',
+      'shell.mainActions.label': 'Thao tác với đề',
 
       'shell.lang.label': 'Ngôn ngữ',
       'shell.lang.en.short': 'EN',
@@ -78,27 +86,30 @@
       'shell.help': 'Trợ giúp',
       'shell.help.title': 'Mở trợ giúp',
 
-      'shell.welcome.title': 'Mở một đề Sudoku để chơi',
+      'shell.welcome.title': 'Nhập một đề Sudoku để chơi',
       'shell.welcome.lead': 'Đây là trình chơi cho các đề do Trình sinh đề Sudoku tạo ra: đủ 15 biến thể, ' +
         'có ghi chú, gợi ý nêu tên kỹ thuật và tự động lưu tiến độ cho bạn.',
       'shell.welcome.step1': 'Tạo một đề trong Trình sinh đề Sudoku rồi bấm “Chơi trực tuyến”.',
-      'shell.welcome.step2': 'Hoặc mở tệp đề, dán liên kết, hay dán một dòng 81 chữ số (bàn cờ cổ điển).',
+      'shell.welcome.step2': 'Hoặc nhập đề: tệp đề, liên kết, văn bản trong ô “Xuất” của Trình sinh đề ' +
+        'Sudoku (một hay nhiều đề), hay một dòng 81 chữ số (bàn cờ cổ điển).',
       'shell.welcome.step3': 'Bạn có thể quay lại bất cứ lúc nào: tiến độ được giữ trên thiết bị này.',
-      'shell.welcome.open': 'Mở một đề',
+      'shell.welcome.open': 'Nhập đề',
       'shell.welcome.generator': 'Lấy đề từ Trình sinh đề Sudoku',
       'shell.welcome.privacy': 'Mọi thứ nằm trong trình duyệt của bạn. Không có gì được tải lên và không ' +
         'cần tài khoản.',
 
       'shell.board.title': 'Bàn cờ Sudoku',
-      'shell.board.desc': 'Hãy mở một đề để thấy bàn cờ.',
-      'shell.side.heading': 'Thông tin đề và công cụ chơi',
-      'shell.info.title': 'Đề này',
-      'shell.recent.title': 'Đề gần đây',
+      'shell.board.desc': 'Hãy nhập một đề để thấy bàn cờ.',
+      'shell.side.heading': 'Công cụ chơi và tùy chọn',
+      'shell.recent.title': 'Các đề đã nhập',
       'shell.status.label': 'Trạng thái',
 
-      'shell.drop.title': 'Thả tệp đề vào đây',
-      'shell.drop.hint': 'Tệp do Trình sinh đề Sudoku tạo, hoặc tệp văn bản có một dòng đề.',
-      'shell.toast.label': 'Thông báo'
+      'shell.drop.title': 'Thả các tệp đề vào đây',
+      'shell.drop.hint': 'Các tệp do Trình sinh đề Sudoku tạo, hoặc tệp văn bản có các đề.',
+      'shell.toast.label': 'Thông báo',
+      'shell.footer.copyright': '\u00a9 2026 Dat Le. Phát hành theo giấy phép MIT.',
+      'shell.footer.repo': 'Mã nguồn trên GitHub',
+      'shell.footer.repo.title': 'Mở kho mã sudoku-player trên GitHub (tab mới)'
     }
   };
 

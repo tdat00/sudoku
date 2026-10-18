@@ -58,11 +58,26 @@ const describeActive = '(function(){var a=document.activeElement;if(!a)return "n
     check('typing a digit on the focused cell enters it', await page.eval('SG.play.getGame().userValue(' + cell + ')') === sol);
     check('the label of the cell follows the entry', /value/.test(await page.eval('SG.a11y.getGrid().labelOf(' + cell + ')')));
 
+    // ---- Options frame of the side panel
+    check('the Options frame is collapsible and closed at first', await page.eval('(function(){var d=document.querySelector("#options-root details.play__options");return !!d && d.open===false && !d.hidden;})()'));
+    await page.eval('document.querySelector("#options-root details.play__options").open = true');
+    check('the Options frame holds the symbols, the check mode, the notes switch and the puzzle actions, as radios and buttons', await page.eval('(function(){var o=document.querySelector("#options-root .play__options");return !!o && o.querySelectorAll("input[name=play-symbols]").length>=2 && o.querySelectorAll("input[name=play-check]").length===3 && !!o.querySelector("#play-auto-notes") && o.querySelectorAll(".play__option-buttons .btn").length===4 && !o.querySelector("select") && !o.querySelector("fieldset.play__actions") && !o.querySelector(".play__keys") && !document.querySelector("#play-root input[name=play-symbols]");})()'));
+    check('each radio and each button is on a line of its own', await page.eval('(function(){var o=document.querySelector("#options-root .play__options");var tops=function(sel){return Array.from(o.querySelectorAll(sel)).map(function(e){return Math.round(e.getBoundingClientRect().top);});};var distinct=function(a){return new Set(a).size===a.length;};return distinct(tops("input[name=play-check]")) && distinct(tops("input[name=play-symbols]")) && distinct(tops(".play__option-buttons .btn"));})()'));
+    await page.eval('document.querySelector("#options-root input[name=play-check][value=off]").click()');
+    check('the check mode of the Options frame is stored', await page.eval('JSON.parse(localStorage.getItem("sg.player.prefs.v1")).check') === 'off');
+    await page.eval('document.getElementById("play-auto-notes").click()');
+    check('and so is the notes switch', await page.eval('JSON.parse(localStorage.getItem("sg.player.prefs.v1")).autoNotes') === false);
+    await page.eval('document.getElementById("play-auto-notes").click()');
+    const revealedBefore = await page.eval('SG.play.getGame().progress().filled');
+    await page.eval('Array.from(document.querySelectorAll("#options-root .play__option-buttons .btn"))[1].click()');
+    check('Reveal a cell in the Options frame fills a cell', (await page.eval('SG.play.getGame().progress().filled')) === revealedBefore + 1);
+
     // ---- Settings dialog
     await page.click('#btn-settings');
     await page.waitFor('!!document.querySelector("dialog.modal[open]")', 2000);
     const sets = await page.eval('Array.from(document.querySelectorAll("dialog.modal[open] fieldset legend, dialog.modal[open] .switch__text")).map(function(e){return e.textContent;})');
     check('Settings lists language, theme, text size, motion, symbol, check mode, notes, coordinates', sets.length >= 8, JSON.stringify(sets));
+    check('Settings has no puzzle actions (fill notes, reveal, reset): they are in the Options frame', await page.eval('(function(){var d=document.querySelector("dialog.modal[open]");return !d.querySelector("[data-setting=puzzle]") && !/Fill in all notes|Reveal a cell|Reveal the solution|Reset puzzle/.test(d.textContent);})()'));
     await page.shot('ui-settings');
     await page.click('dialog.modal[open] input[name="sg-theme"][value="dark"]');
     check('dark theme applies', await page.eval('document.documentElement.getAttribute("data-theme")') === 'dark');
@@ -70,16 +85,16 @@ const describeActive = '(function(){var a=document.activeElement;if(!a)return "n
     check('large text applies', await page.eval('document.documentElement.style.getPropertyValue("--sg-font-size-base")') === '125%');
     await page.click('dialog.modal[open] input[name="sg-check"][value="live"]');
     check('check mode is stored', await page.eval('JSON.parse(localStorage.getItem("sg.player.prefs.v1")).check') === 'live');
-    check('and the play options follow', await page.eval('document.querySelector(".play__options select").value') === 'live');
+    check('and the Options frame follows', await page.eval('document.querySelector("#options-root input[name=play-check]:checked").value') === 'live');
     await page.click('dialog.modal[open] input[data-setting="showCoords"]');
     check('coordinates switch on', await page.eval('SG.app.getBoard().getGeometry().coords !== null && !!document.querySelector("#board-svg .coord")'));
     check('the play overlay follows the new geometry', await page.eval('document.querySelectorAll("#board-svg .layer-play .pl-cell").length') === 81);
     await page.click('dialog.modal[open] input[data-setting="autoNotes"]');
     check('notes behaviour is stored', await page.eval('JSON.parse(localStorage.getItem("sg.player.prefs.v1")).autoNotes') === false);
     await page.click('dialog.modal[open] input[name="sg-lang"][value="vi"]');
-    check('language switches to Vietnamese at once', await page.eval('document.documentElement.lang') === 'vi' && (await page.eval('document.querySelector("#btn-open .btn__label").textContent')) === 'Mở đề');
+    check('language switches to Vietnamese at once', await page.eval('document.documentElement.lang') === 'vi' && (await page.eval('document.querySelector("#btn-open .btn__label").textContent')) === 'Nhập đề');
     await page.shot('ui-settings-vi');
-    await page.click('dialog.modal[open] .btn--secondary');
+    await page.click('dialog.modal[open] .modal__footer .btn--secondary');
     check('Reset to defaults keeps the language', await page.eval('(function(){var s=JSON.parse(localStorage.getItem("sg.player.prefs.v1"));return s.theme==="auto"&&s.check==="conflicts"&&s.autoNotes===true&&s.lang==="vi";})()'));
     await page.key('Escape');
     await sleep(200);

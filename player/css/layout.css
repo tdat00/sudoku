@@ -1,13 +1,14 @@
 /*
- * Page frame (design.md 8.1): header, the welcome screen and the two layouts of a puzzle on screen.
- *   >= 60rem    two columns: the board (status bar above it) | the side panel (play tools, pad, info, recent)
- *   <  60rem    one column: board, then the side panel; the info card and the recent list are collapsible
+ * Page frame (design.md 8.1): header, the welcome screen and the layouts of a puzzle on screen.
+ *   >= 1360px   three columns: list of puzzles | summary and board | side panel (status, play tools, pad, options)
+ *   >= 768px    two columns: summary and board, then the list of puzzles | the side panel
+ *   <  768px    one column: board, side panel, then the list of puzzles
+ * The column sizes and breakpoints are those of Sudoku Generator, so the two pages share one layout.
  * The play UI itself (tools, pad, hint card, status bar) is styled by play.css.
  */
 
 :root {
-  --sg-layout-max-width: 84rem;
-  --sg-side-width: 25rem;
+  --sg-layout-max-width: 120rem;
 }
 
 .sprite {
@@ -83,6 +84,36 @@
   border: 1px solid var(--sg-color-danger);
   border-radius: var(--sg-radius-2);
   background: var(--sg-color-danger-bg);
+}
+
+/* ---- Footer: copyright and the link to the repository (as in Sudoku Generator) ---- */
+.app-footer {
+  max-width: var(--sg-layout-max-width);
+  margin-inline: auto;
+  padding: var(--sg-space-2) var(--sg-space-4) var(--sg-space-4);
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+  text-align: center;
+}
+
+.app-footer__inner {
+  margin: 0;
+}
+
+.app-footer__copy::after {
+  content: "\00b7";
+  display: inline-block;
+  margin-inline: var(--sg-space-2);
+}
+
+.app-footer__link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.app-footer__link:hover {
+  color: var(--sg-color-accent);
 }
 
 /* ---- Main ---- */
@@ -169,6 +200,10 @@
 .player-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "board"
+    "side"
+    "recent";
   gap: var(--sg-space-4);
   align-items: start;
 }
@@ -177,20 +212,101 @@
   display: none;
 }
 
+.panel {
+  padding: var(--sg-space-4);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
+}
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-2);
+  margin-bottom: var(--sg-space-3);
+}
+
+.panel__title {
+  margin: 0 0 var(--sg-space-3);
+  font-size: var(--sg-font-size-lg);
+}
+
+.panel__header > .panel__title {
+  margin: 0;
+}
+
+/* Hint of a panel that has nothing to show yet. */
+.empty-hint {
+  margin: 0;
+  padding: var(--sg-space-3) var(--sg-space-4);
+  border: 1px dashed var(--sg-color-border);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.empty-hint[hidden] {
+  display: none;
+}
+
+.panel--recent {
+  grid-area: recent;
+  min-width: 0;
+}
+
 .board-area {
+  grid-area: board;
   display: flex;
   flex-direction: column;
   gap: var(--sg-space-3);
   min-width: 0;
 }
 
-.board-heading {
+/* Summary above the board (top left): "<variant> - <level> (Seed: <seed>)" and the description of the
+   variant; the puzzle actions (Open puzzle) at the top right, as in Sudoku Generator. */
+.main-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sg-space-2) var(--sg-space-3);
+}
+
+.main-head__titles {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+
+.main-actions {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--sg-space-2);
+  margin-inline-start: auto;
+}
+
+.main-head__title {
   margin: 0;
   font-size: var(--sg-font-size-lg);
   overflow-wrap: anywhere;
 }
 
+.main-head__subtitle {
+  margin: var(--sg-space-1) 0 0;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.main-head__subtitle:empty {
+  display: none;
+}
+
 .board-frame {
+  position: relative;
   display: flex;
   justify-content: center;
   padding: var(--sg-space-3);
@@ -214,31 +330,50 @@
 }
 
 .side {
+  grid-area: side;
   display: flex;
   flex-direction: column;
   gap: var(--sg-space-3);
   min-width: 0;
 }
 
-.side__info,
-.side__recent {
-  border: 1px solid var(--sg-color-divider);
-  border-radius: var(--sg-radius-3);
-  background: var(--sg-color-surface);
-}
-
-@media (min-width: 60rem) {
+/* Same column sizes and breakpoints as Sudoku Generator (css/layout.css there). */
+/* >= 768px: board | side panel, the list of puzzles under the board. */
+@media (min-width: 768px) {
   .player-layout {
-    grid-template-columns: minmax(0, 1fr) var(--sg-side-width);
+    grid-template-columns: minmax(0, 1fr) clamp(16rem, 30vw, 21.25rem);
+    grid-template-areas:
+      "board side"
+      "recent side";
   }
 
   .side {
     position: sticky;
     top: var(--sg-space-4);
+    max-height: calc(100vh - 2 * var(--sg-space-4));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 2px;
   }
 
   .board-svg {
     max-height: calc(100vh - 15.5rem);
+  }
+}
+
+/* >= 1360px: the list of puzzles gets a column of its own on the left. */
+@media (min-width: 1360px) {
+  .player-layout {
+    grid-template-columns: clamp(19rem, 21vw, 23rem) minmax(0, 1fr) clamp(16rem, 24vw, 21.25rem);
+    grid-template-areas: "recent board side";
+  }
+
+  .panel--recent {
+    position: sticky;
+    top: var(--sg-space-4);
+    max-height: calc(100vh - 2 * var(--sg-space-4));
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 }
 
@@ -324,22 +459,104 @@
   color: var(--sg-color-text-muted);
 }
 
-/* ---- Narrow header: icon-only buttons ---- */
-@media (max-width: 47.99rem) {
-  .app-tools .btn__label {
+/* ---- Narrow header (same rules as Sudoku Generator) ---- */
+@media (max-width: 599.98px) {
+  .app-title {
+    font-size: var(--sg-font-size-lg);
+  }
+}
+
+/* Title and the buttons share one row; language and theme live in the Settings dialog. */
+@media (max-width: 767.98px) {
+  .app-header__inner {
+    flex-wrap: nowrap;
+    gap: var(--sg-space-2);
+    padding: var(--sg-space-2) var(--sg-space-3);
+  }
+
+  .app-brand {
+    flex: 1 1 auto;
+  }
+
+  .app-tools {
+    flex: none;
+    flex-wrap: nowrap;
+    gap: var(--sg-space-1);
+  }
+
+  #lang-switch,
+  #theme-switch {
     display: none;
   }
 
-  #btn-open .btn__label {
-    display: inline;
+  .app-tools .btn__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
-  .app-header__inner {
-    padding-block: var(--sg-space-2);
+  .app-tools .btn {
+    padding-inline: var(--sg-space-2);
+  }
+
+  /* The puzzle actions sit above the puzzle heading, right-aligned (as in Sudoku Generator). */
+  .main-actions {
+    order: -1;
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    gap: var(--sg-space-1);
+    margin-inline-start: 0;
+  }
+
+  .main-actions .btn {
+    min-height: 2.25rem;
+    gap: var(--sg-space-1);
+    font-size: var(--sg-font-size-sm);
+  }
+
+  .main-actions .btn .icon {
+    width: 1.1em;
+    height: 1.1em;
+  }
+
+  /* Icon-only buttons (Share, Import, and the Play / Pause / Reset of the game); the labels stay for
+     screen readers. The game buttons sit on the left of the row, the status box is the next line. */
+  .main-actions .btn {
+    width: 2.25rem;
+    padding: 0;
+  }
+
+  .main-actions .btn__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .main-actions .play__controls {
+    margin-inline-end: auto;
+  }
+
+  .main-head > .play__status {
+    order: -1;
+    flex: 1 1 100%;
+    margin-block-end: var(--sg-space-2);
   }
 
   .app-main {
     padding: var(--sg-space-3);
+  }
+
+  /* Room for the bar of keys fixed to the bottom while a puzzle is in play (set by play.js). */
+  body {
+    padding-bottom: var(--play-keys-height, 0px);
   }
 
   .welcome__card {

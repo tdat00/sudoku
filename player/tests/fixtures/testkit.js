@@ -9,6 +9,8 @@
  *   SG.testkit.dig(model, solution, rng, { minClues })   -> { givens, clues }: clues removed in random order
  *                                            while the puzzle keeps exactly one solution
  *   SG.testkit.documentNames()               the file names (without .json) of the puzzle fixtures
+ *   SG.testkit.exportText(name)              the text of tests/fixtures/exports/<name>.txt (real output of the
+ *                                            generator's Export box, made by tests/tools/make-exports.js)
  *   SG.testkit.document(name)                the parsed document, or null when it cannot be read here (a
  *                                            browser on file://; the suites then skip themselves)
  *   SG.testkit.model(id)                     the model of a variant id (classic ids from the classic
@@ -129,6 +131,24 @@
     return doc === null ? null : JSON.parse(JSON.stringify(doc));
   }
 
+  /** The text of tests/fixtures/exports/<name>.txt: real output of Sudoku Generator's "Export" box; null if unreadable. */
+  function exportText(name) {
+    var env = SG.test && SG.test.node;
+    var rel = 'tests/fixtures/exports/' + name + '.txt';
+    try {
+      if (env) return env.fs.readFileSync(env.path.join(env.root, rel), 'utf8');
+      if (typeof XMLHttpRequest !== 'undefined') {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', rel, false);
+        xhr.send(null);
+        if (xhr.status === 200 || (xhr.status === 0 && xhr.responseText)) return xhr.responseText;
+      }
+    } catch (err) {
+      return null;
+    }
+    return null;
+  }
+
   function modelOf(id) {
     if (models.has(id)) return models.get(id);
     var model = null;
@@ -156,6 +176,7 @@
     VARIANT_IDS: VARIANT_IDS,
     documentNames: function documentNames() { return DOCUMENT_NAMES.slice(); },
     document: documentOf,
+    exportText: exportText,
     model: modelOf
   };
 })();

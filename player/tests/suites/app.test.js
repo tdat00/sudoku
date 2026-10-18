@@ -105,7 +105,7 @@
       var html = read('index.html');
       var ids = {};
       (code.match(/byId\('([\w-]+)'\)/g) || []).forEach(function (m) { ids[m.slice(6, -2)] = true; });
-      var fields = /(?:welcome|welcomeRecent|layout|heading|svg|info|infoDetails|recent|status|drop|generatorLink)/;
+      var fields = /(?:welcome|welcomeRecent|layout|heading|svg|recent|status|drop|generatorLink)/;
       (code.match(new RegExp(fields.source + ": byId\\('([\\w-]+)'\\)", 'g')) || [])
         .forEach(function (m) { ids[/'([\w-]+)'/.exec(m)[1]] = true; });
       (code.match(/\['(btn-[\w-]+)', '\w+'\]/g) || [])
@@ -116,7 +116,7 @@
         expect(html.indexOf('id="' + id + '"')).not.toBe(-1);
       });
       // play.js mounts into these:
-      ['play-status', 'play-root', 'board-legend'].forEach(function (id) {
+      ['play-status', 'play-root', 'options-root', 'board-legend'].forEach(function (id) {
         expect(html.indexOf('id="' + id + '"')).not.toBe(-1);
       });
     });

@@ -92,18 +92,19 @@
       expect(list[0].percent).toBe(30);
     });
 
-    it('keeps the last 20 puzzles (least recently used goes first)', function () {
+    it('keeps the last 100 puzzles (least recently used goes first)', function () {
       ready();
       var p = make().progress;
-      for (var n = 1; n <= 25; n++) p.saveProgress(id(n), record(n));
+      var max = PG.LIMITS.progressEntries;
+      for (var n = 1; n <= max + 5; n++) p.saveProgress(id(n), record(n % 100));
       var list = p.progressList();
-      expect(list.length).toBe(PG.LIMITS.progressEntries);
+      expect(list.length).toBe(max);
       expect(p.loadProgress(id(1))).toBeNull();
       expect(p.loadProgress(id(5))).toBeNull();
       expect(p.loadProgress(id(6)).percent).toBe(6);
-      expect(p.loadProgress(id(25)).percent).toBe(25);
+      expect(p.loadProgress(id(max + 5)).percent).toBe((max + 5) % 100);
       p.saveProgress(id(6), record(66));
-      p.saveProgress(id(26), record(26));
+      p.saveProgress(id(max + 6), record(26));
       expect(p.loadProgress(id(6)).percent).toBe(66);
       expect(p.loadProgress(id(7))).toBeNull();
     });
@@ -167,11 +168,12 @@
       expect(p.loadPuzzle(id(2))).toBeNull();
     });
 
-    it('keeps the last 10 documents', function () {
+    it('keeps the last 100 documents', function () {
       ready();
       var p = make().progress;
-      for (var n = 1; n <= 14; n++) p.savePuzzle(id(n), { n: n }, null);
-      expect(p.recent(50).length).toBe(PG.LIMITS.puzzleEntries);
+      var max = PG.LIMITS.puzzleEntries;
+      for (var n = 1; n <= max + 4; n++) p.savePuzzle(id(n), { n: n }, null);
+      expect(p.recent(max + 50).length).toBe(max);
       expect(p.loadPuzzle(id(4))).toBeNull();
       expect(p.loadPuzzle(id(5)).doc.n).toBe(5);
     });
@@ -190,7 +192,7 @@
       expect(p.loadPuzzle(id(8))).not.toBeNull();
     });
 
-    it('lists the stored puzzles newest first with their progress', function () {
+    it('lists the stored puzzles newest added first with their progress, and keeps the order when played', function () {
       ready();
       var p = make().progress;
       p.savePuzzle(id(1), { n: 1 }, { variantId: 'classic9' });
@@ -198,8 +200,9 @@
       p.savePuzzle(id(3), { n: 3 }, null);
       p.saveProgress(id(1), record(55, { solved: false }));
       p.saveProgress(id(2), record(100, { solved: true }));
+      p.savePuzzle(id(1), { n: 1 }, { variantId: 'classic9' });
       var list = p.recent();
-      expect(list.map(function (e) { return e.id; })).toEqual([id(2), id(1), id(3)]);
+      expect(list.map(function (e) { return e.id; })).toEqual([id(3), id(2), id(1)]);
       var byId = {};
       list.forEach(function (e) { byId[e.id] = e; });
       expect(byId[id(1)].percent).toBe(55);
@@ -208,6 +211,22 @@
       expect(byId[id(3)].hasProgress).toBe(false);
       expect(byId[id(3)].meta).toBeNull();
       expect(p.recent(2).length).toBe(2);
+    });
+
+    it('a puzzle that is saved again keeps its place, even when the whole list was saved at the same time', function () {
+      ready();
+      var backend = fakeBackend();
+      var p = PG.createProgress(SG.store.createStorage(backend), function () { return 5000; });
+      // A batch import saves the puzzles last to first within one millisecond.
+      [4, 3, 2, 1].forEach(function (n) { p.savePuzzle(id(n), { n: n }, null); });
+      var order = function () { return p.recent().map(function (e) { return e.id; }); };
+      expect(order()).toEqual([id(1), id(2), id(3), id(4)]);
+      p.savePuzzle(id(4), { n: 4 }, { variantId: 'classic9' });
+      p.savePuzzle(id(2), { n: 2 }, null);
+      expect(order()).toEqual([id(1), id(2), id(3), id(4)]);
+      expect(p.recent().filter(function (e) { return e.id === id(4); })[0].meta).toEqual({ variantId: 'classic9' });
+      p.savePuzzle(id(5), { n: 5 }, null);
+      expect(order()).toEqual([id(5), id(1), id(2), id(3), id(4)]);
     });
 
     it('drops a meta that is too big instead of the puzzle', function () {

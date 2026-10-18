@@ -1,6 +1,6 @@
 /*
- * Play (js/ui/play.js): the status bar, the tools, the number pad, the hint card and the options in the side
- * panel, and the overlay layer drawn into the board SVG. Only var(--...) tokens are used
+ * Play (js/ui/play.js): the status bar, the tools, the number pad and the hint card in the side panel, and
+ * the overlay layer drawn into the board SVG. Only var(--...) tokens are used
  * (css/tokens.css, css/tokens-board.css); a translucent tint is the
  * token colour with fill-opacity (SVG) or opacity (a pseudo-element), so the three themes need no extra
  * tokens and no colour function is written here.
@@ -20,7 +20,8 @@
 }
 
 .play__panel[hidden],
-.play__status[hidden] {
+.play__status[hidden],
+.play__pause[hidden] {
   display: none;
 }
 
@@ -37,14 +38,38 @@
 
 .play__status {
   display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
   padding: var(--sg-space-2) var(--sg-space-3);
   border: 1px solid var(--sg-color-divider);
   border-radius: var(--sg-radius-2);
   background: var(--sg-color-surface);
-  flex-wrap: wrap;
+}
+
+.play__status-row {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--sg-space-2) var(--sg-space-3);
+}
+
+/* Control buttons stay on the left, the clock on the right. */
+.play__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--sg-space-2);
+}
+
+/* The status line inside the box: no frame of its own, a rule above it. */
+.play__status .status-row {
+  min-height: 0;
+  padding: var(--sg-space-2) 0 0;
+  border: 0;
+  border-top: 1px solid var(--sg-color-divider);
+  border-radius: 0;
+  background: transparent;
 }
 
 .play__time {
@@ -60,20 +85,29 @@
 }
 
 .play__progress {
-  margin-inline-start: auto;
   color: var(--sg-color-text-muted);
   font-size: var(--sg-font-size-sm);
   font-variant-numeric: tabular-nums;
 }
 
+/* Play, Pause and Resume are always the filled, bold action of the box. */
 .play__pause {
+  min-height: 2.75rem;
+  font-weight: 700;
+}
+
+.play__reset {
   min-height: 2.75rem;
 }
 
-.play__pause[aria-pressed="true"] {
-  border-color: var(--sg-color-accent);
-  background: var(--sg-color-accent);
-  color: var(--sg-color-accent-text);
+.play__reset[hidden] {
+  display: none;
+}
+
+.play__reset.is-armed {
+  border-color: var(--sg-color-danger);
+  background: var(--sg-color-danger-bg);
+  color: var(--sg-color-danger);
 }
 
 /* ---- Tools and number pad: touch targets of at least 44 px ---- */
@@ -180,31 +214,7 @@
   }
 }
 
-/* ---- Messages and hints ---- */
-.play__message {
-  padding: var(--sg-space-2) var(--sg-space-3);
-  border: 1px solid var(--sg-color-border);
-  border-inline-start-width: 4px;
-  border-radius: var(--sg-radius-2);
-  background: var(--sg-color-surface-2);
-  font-size: var(--sg-font-size-sm);
-}
-
-.play__message[data-kind="success"] {
-  border-color: var(--sg-color-success);
-  background: var(--sg-color-success-bg);
-}
-
-.play__message[data-kind="warning"] {
-  border-color: var(--sg-color-warning);
-  background: var(--sg-color-warning-bg);
-}
-
-.play__message[data-kind="danger"] {
-  border-color: var(--sg-color-danger);
-  background: var(--sg-color-danger-bg);
-}
-
+/* ---- Hints ---- */
 .play__hint {
   position: relative;
   isolation: isolate;
@@ -270,36 +280,60 @@
   min-height: 2.75rem;
 }
 
-.play__symbols {
-  display: flex;
-  align-items: center;
-  gap: var(--sg-space-2);
-}
-
 .play__symbols[hidden] {
   display: none;
 }
 
-.play__symbols select {
-  flex: 1 1 auto;
-  min-height: 2.75rem;
+/* ---- Options frame (side panel): a disclosure, closed at first ---- */
+.play__options {
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
 }
 
-/* ---- Options ---- */
-.play__options {
+.play__options[hidden] {
+  display: none;
+}
+
+.play__options-body {
+  gap: var(--sg-space-4);
+}
+
+/* Choice groups of the frame (symbols, check mode): no frame of their own, one radio per line. */
+.play__options .field-group {
+  gap: var(--sg-space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.play__options .field-group__legend {
+  float: left;
+  width: 100%;
+  margin-bottom: var(--sg-space-2);
+  padding: 0;
+}
+
+.play__choices {
   display: flex;
   flex-direction: column;
-  gap: var(--sg-space-3);
+  gap: var(--sg-space-2);
 }
 
-.play__option select {
-  width: 100%;
-  min-height: 2.75rem;
+.play__choices .checkbox {
+  min-height: 2rem;
+  align-items: center;
 }
 
+.play__option .field__label {
+  margin: 0;
+}
+
+/* The actions on the puzzle, one button per line. */
 .play__option-buttons {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
   gap: var(--sg-space-2);
 }
 
@@ -307,8 +341,94 @@
   min-height: 2.75rem;
 }
 
-.play__keys {
-  margin: 0;
+/* ---- The popup over the board: keys, Notes, Erase, Close, next to the selected cell ---- */
+.play__popup {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  padding: var(--sg-space-2);
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-2);
+}
+
+.play__popup[hidden] {
+  display: none;
+}
+
+.play__popup-pad {
+  display: grid;
+  grid-template-columns: repeat(var(--play-pad-cols, 3), minmax(2.75rem, 1fr));
+  gap: var(--sg-space-1);
+}
+
+.play__popup-tools {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sg-space-1);
+}
+
+.play__pkey,
+.play__ptool {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: var(--sg-space-1);
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface-2);
+  color: var(--sg-color-text);
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.play__ptool {
+  font-size: 1rem;
+}
+
+.play__ptool .icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.play__pkey .sgb-sw {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.play__pkey:hover:not(:disabled),
+.play__ptool:hover:not(:disabled) {
+  background: var(--sg-color-hover);
+}
+
+.play__pkey[aria-pressed="true"],
+.play__ptool[aria-pressed="true"] {
+  border-color: var(--sg-color-accent);
+  background: var(--sg-color-accent);
+  color: var(--sg-color-accent-text);
+}
+
+.play__popup-pad.is-notes .play__pkey {
+  border-style: dashed;
+  font-weight: 500;
+}
+
+.play__pkey:disabled,
+.play__ptool:disabled {
+  border-color: var(--sg-color-divider);
+  color: var(--sg-color-text-muted);
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* ---- Overlay layer inside the board SVG ---- */
@@ -435,6 +555,114 @@
   visibility: hidden;
 }
 
+/*
+ * Small screens (the breakpoint of Sudoku Generator): smaller buttons, and the tools and the pad are always
+ * on screen, fixed to the bottom. There is no popup over the board. Last, so it wins over the rules above.
+ */
+@media (max-width: 767.98px) {
+  /* The frame would be empty (the keys are fixed to the bottom): only the hint card, when there is one, stays. */
+  .play__panel:not([hidden]) {
+    display: contents;
+  }
+
+  .side__play:not(:has(.play__hint:not([hidden]))) {
+    margin-block-end: calc(-1 * var(--sg-space-3));
+  }
+
+  .play__keys {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sg-space-1);
+    padding: var(--sg-space-2) var(--sg-space-3) calc(var(--sg-space-2) + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--sg-color-border);
+    background: var(--sg-color-surface);
+    box-shadow: var(--sg-shadow-2);
+  }
+
+  .play__tools {
+    gap: var(--sg-space-1);
+  }
+
+  .play__pad {
+    grid-template-columns: repeat(var(--play-pad-cols-mobile, 9), minmax(0, 1fr));
+    gap: var(--sg-space-1);
+  }
+
+  .play__tool,
+  .play__key {
+    min-width: 0;
+    min-height: 2.25rem;
+    padding: 2px;
+  }
+
+  .play__tool {
+    gap: 0;
+    font-size: 0.625rem;
+  }
+
+  .play__tool .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .play__key {
+    font-size: 1.125rem;
+  }
+
+  .play__pad.is-notes .play__key {
+    font-size: 1rem;
+  }
+
+  .play__key .sgb-sw {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .play__pause,
+  .play__reset,
+  .play__hint-buttons .btn,
+  .play__option-buttons .btn {
+    min-height: 2.25rem;
+  }
+
+  .play__popup {
+    display: none;
+  }
+
+  /* The status box above the puzzle: time, progress and the status line, small and without a frame. */
+  .play__status {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--sg-space-3);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .play__clock {
+    font-size: var(--sg-font-size-base);
+  }
+
+  .play__progress,
+  .play__status .status-row,
+  .play__status .status-row__label {
+    font-size: var(--sg-font-size-sm);
+  }
+
+  .play__status .status-row {
+    flex: 1 1 100%;
+    padding: 0;
+    border-top: 0;
+  }
+}
+
 /* ---- Motion and print ---- */
 @media (prefers-reduced-motion: reduce) {
   .play__tool,
@@ -452,7 +680,6 @@
 @media (forced-colors: active) {
   .play__tool,
   .play__key,
-  .play__message,
   .play__hint {
     border-color: ButtonText;
   }

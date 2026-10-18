@@ -47,6 +47,7 @@ const SOURCE_FILES = [
   'js/core/tech-ineq.js',
   'js/core/model-aids.js',
   'js/core/classic-model.js',
+  'js/core/text-boards.js',
   'js/ui/exchange.js',
   'js/ui/importer.js',
   'js/ui/i18n.js',

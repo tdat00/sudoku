@@ -3,10 +3,10 @@
  * or a return visit carries on where the person was, all through the safe storage of `SG.store` (every access in
  * try / catch, blocked storage = memory for the session):
  *
- *   sg.player.progress.v1  { version, entries: [{ id, at, symbolMode, percent, solved, state }] }, LRU of 20;
+ *   sg.player.progress.v1  { version, entries: [{ id, at, symbolMode, percent, solved, state }] }, LRU of 100;
  *                          `state` is a `game.serialize()` whose history is cut to the last 300 undo and 100
  *                          redo steps
- *   sg.player.puzzles.v1   { version, entries: [{ id, at, doc, meta }] }, LRU of 10; the opened documents
+ *   sg.player.puzzles.v1   { version, entries: [{ id, at, doc, meta }] }, LRU of 100; the imported documents
  *                          (a document over 160 kB is not stored, the total stays under 900 kB)
  *   sg.player.last.v1      the id of the puzzle on the board  (a reload without a fragment restores it)
  *
@@ -27,7 +27,7 @@
  *   loadProgress(id) -> entry | null          removeProgress(id)          progressList() -> entries
  *   savePuzzle(id, doc, meta?) -> 'ok' | 'quota' | 'blocked' | 'tooLarge' | 'invalid'
  *   loadPuzzle(id) -> { id, at, doc, meta } | null      removePuzzle(id)
- *   recent(limit?) -> [{ id, at, meta, percent, solved, hasProgress }], the stored puzzles, newest first
+ *   recent(limit?) -> [{ id, at, meta, percent, solved, hasProgress }], the stored puzzles, newest added first (playing one does not move it)
  *   forget(id)                       the progress and the stored document of one puzzle
  *   setLast(id) / getLast() / clearLast()
  *   clear()                           every key of the player except the preferences
@@ -48,8 +48,8 @@
     last: 'sg.player.last.v1'
   });
   const LIMITS = Object.freeze({
-    progressEntries: 20,
-    puzzleEntries: 10,
+    progressEntries: 100,
+    puzzleEntries: 100,
     docBytes: 160 * 1024,
     puzzlesBytes: 900 * 1024,
     undoSteps: 300,
@@ -202,8 +202,13 @@
         const text = JSON.stringify(meta);
         small = text.length <= LIMITS.metaBytes ? JSON.parse(text) : null;
       }
-      const list = readEntries(KEYS.puzzles, validPuzzleEntry).filter(function (e) { return e.id !== id; });
-      list.unshift({ id: id, at: clock(), doc: JSON.parse(docText), meta: small });
+      // A puzzle keeps its place and the time it was first added: opening or saving it never moves it.
+      const all = readEntries(KEYS.puzzles, validPuzzleEntry);
+      const at = all.findIndex(function (e) { return e.id === id; });
+      const entry = { id: id, at: at === -1 ? clock() : all[at].at, doc: JSON.parse(docText), meta: small };
+      const list = all.slice();
+      if (at === -1) list.unshift(entry);
+      else list[at] = entry;
       return writeEntries(KEYS.puzzles, list.slice(0, LIMITS.puzzleEntries), id,
         function (entries, text) {
           return entries.length <= 1 || text.length <= LIMITS.puzzlesBytes;
@@ -230,7 +235,7 @@
         const saved = progress.get(p.id);
         return {
           id: p.id,
-          at: saved === undefined ? p.at : Math.max(p.at, saved.at),
+          at: p.at,
           meta: p.meta || null,
           percent: saved === undefined ? 0 : saved.percent,
           solved: saved !== undefined && saved.solved,

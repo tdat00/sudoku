@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="sg-generator-url" content="https://tdat00.github.io/sudoku-generator/">
+  <!-- Address of this player, as the Share button puts it in front of the puzzle (like the generator's Play link). -->
+  <meta name="sg-player-url" content="https://tdat00.github.io/sudoku-player/">
   <title data-i18n="app.title">Sudoku Player</title>
   <!-- First paint without a flash (SG.theme): applies the stored theme, motion and text size before the
        stylesheets paint. It reads the key of js/ui/store.js; any failure leaves the defaults. -->
@@ -102,6 +104,20 @@
     <symbol id="ic-external" viewBox="0 0 24 24">
       <path d="M14 4.5h5.5V10M19.5 4.5L11 13M17.5 14v4a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18V8A1.5 1.5 0 0 1 6 6.5h4"></path>
     </symbol>
+    <symbol id="ic-status-solved" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9.5"></circle>
+      <path d="M7.8 12.4l3 3 5.4-6"></path>
+    </symbol>
+    <symbol id="ic-status-progress" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9.5"></circle>
+      <path d="M12 12V5.5M12 12l4.6 3.3"></path>
+    </symbol>
+    <symbol id="ic-share" viewBox="0 0 24 24">
+      <circle cx="17.5" cy="5.5" r="2.5"></circle>
+      <circle cx="6.5" cy="12" r="2.5"></circle>
+      <circle cx="17.5" cy="18.5" r="2.5"></circle>
+      <path d="M8.7 10.8l6.6-3.9M8.7 13.2l6.6 3.9"></path>
+    </symbol>
   </svg>
 
   <a id="skip-link" class="skip-link" href="#main" data-i18n="shell.skip"></a>
@@ -114,12 +130,6 @@
       </div>
 
       <div class="app-tools">
-        <button id="btn-open" type="button" class="btn btn--primary" aria-haspopup="dialog"
-          data-i18n-attr="title:shell.open.title">
-          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-folder"></use></svg>
-          <span class="btn__label" data-i18n="shell.open"></span>
-        </button>
-
         <div id="lang-switch" class="segmented" role="group" data-i18n-attr="aria-label:shell.lang.label">
           <button type="button" class="segmented__btn" data-lang="en" lang="en" aria-pressed="true"
             data-i18n-attr="aria-label:shell.lang.en.name,title:shell.lang.en.name"
@@ -190,9 +200,37 @@
     </section>
 
     <div id="player-layout" class="player-layout" hidden>
+      <aside id="recent-panel" class="panel panel--recent" aria-labelledby="recent-heading">
+        <div class="panel__header">
+          <h2 id="recent-heading" class="panel__title" data-i18n="shell.recent.title"></h2>
+          <button id="recent-clear" type="button" class="btn btn--ghost btn--sm" disabled
+            data-i18n-attr="title:player.recent.clear.title">
+            <span class="btn__label" data-i18n="player.recent.clear"></span>
+          </button>
+        </div>
+        <p id="recent-empty" class="empty-hint" data-i18n="player.recent.empty"></p>
+        <ul id="recent-root" class="history-list" hidden></ul>
+      </aside>
+
       <section id="board-root" class="board-area" aria-labelledby="board-heading">
-        <h2 id="board-heading" class="board-heading"></h2>
-        <div id="play-status" class="play-status-host"></div>
+        <div class="main-head">
+          <div class="main-head__titles">
+            <h2 id="board-heading" class="main-head__title"></h2>
+            <p id="board-subheading" class="main-head__subtitle"></p>
+          </div>
+          <div class="main-actions" role="group" data-i18n-attr="aria-label:shell.mainActions.label">
+            <button id="btn-share" type="button" class="btn btn--secondary" aria-haspopup="dialog"
+              data-i18n-attr="title:shell.share.title">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-share"></use></svg>
+              <span class="btn__label" data-i18n="shell.share"></span>
+            </button>
+            <button id="btn-open" type="button" class="btn btn--secondary" aria-haspopup="dialog"
+              data-i18n-attr="title:shell.open.title">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-folder"></use></svg>
+              <span class="btn__label" data-i18n="shell.open"></span>
+            </button>
+          </div>
+        </div>
         <div class="board-frame">
           <svg id="board-svg" class="board-svg" viewBox="0 0 9 9" preserveAspectRatio="xMidYMid meet"
             role="img" aria-labelledby="board-title board-desc" focusable="false">
@@ -205,23 +243,27 @@
 
       <aside id="side-root" class="side" aria-labelledby="side-heading">
         <h2 id="side-heading" class="visually-hidden" data-i18n="shell.side.heading"></h2>
+        <div id="play-status" class="side__status">
+          <!-- play.js moves this row into its status box, below the timer and the pause button. -->
+          <div class="status-row">
+            <span class="status-row__label" data-i18n="shell.status.label"></span>
+            <p id="status-line" class="status-row__text" role="status" aria-live="off"></p>
+          </div>
+        </div>
         <div id="play-root" class="side__play"></div>
-        <details id="info-details" class="disclosure side__info" open>
-          <summary><span data-i18n="shell.info.title"></span></summary>
-          <div id="info-root" class="disclosure__body"></div>
-        </details>
-        <details id="recent-details" class="disclosure side__recent">
-          <summary><span data-i18n="shell.recent.title"></span></summary>
-          <div id="recent-root" class="disclosure__body"></div>
-        </details>
+        <div id="options-root" class="side__options"></div>
       </aside>
     </div>
-
-    <div class="status-row">
-      <span class="status-row__label" data-i18n="shell.status.label"></span>
-      <p id="status-line" class="status-row__text" role="status" aria-live="off"></p>
-    </div>
   </main>
+
+  <footer class="app-footer">
+    <p class="app-footer__inner">
+      <span class="app-footer__copy" data-i18n="shell.footer.copyright"></span>
+      <a class="app-footer__link" href="https://github.com/tdat00/sudoku-player" target="_blank"
+        rel="noopener noreferrer" data-i18n="shell.footer.repo"
+        data-i18n-attr="title:shell.footer.repo.title"></a>
+    </p>
+  </footer>
 
   <div id="drop-overlay" class="drop-overlay" hidden>
     <div class="drop-overlay__card">
@@ -256,6 +298,7 @@
   <script src="js/core/tech-ineq.js"></script>
   <script src="js/core/model-aids.js"></script>
   <script src="js/core/classic-model.js"></script>
+  <script src="js/core/text-boards.js"></script>
   <script src="js/ui/exchange.js"></script>
   <script src="js/ui/importer.js"></script>
   <script src="js/ui/i18n.js"></script>
