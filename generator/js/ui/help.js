@@ -529,6 +529,23 @@
     ]);
   }
 
+  /**
+   * The text of a hint as paragraphs, like the tooltips of the form: a blank line starts a new paragraph and
+   * `**text**` is bold (the values of an option). Built with DOM nodes, never innerHTML.
+   * @param {string} text
+   * @returns {Element[]}
+   */
+  function richText(text) {
+    return String(text).split(/\n{2,}/).map(function (paragraph) {
+      const parts = [];
+      paragraph.split(/\*\*(.+?)\*\*/).forEach(function (part, i) {
+        if (part === '') return;
+        parts.push(i % 2 === 1 ? h('strong', { text: part }) : part);
+      });
+      return h('p', {}, parts);
+    });
+  }
+
   function variantBody(entry) {
     const body = h('div', { class: 'disclosure__body help-variant__body' });
     const text = h('div', { class: 'help-variant__text' });
@@ -547,7 +564,7 @@
       text.appendChild(h('ul', { class: 'help-list' }, entry.options.map(function (o) {
         return h('li', {}, [
           h('strong', { text: t(o.labelKey) }),
-          o.hintKey !== null ? h('span', { class: 'help-list__hint', text: t(o.hintKey) }) : null
+          o.hintKey !== null ? h('div', { class: 'help-list__hint' }, richText(t(o.hintKey))) : null
         ]);
       })));
     }
@@ -1333,7 +1350,7 @@
       'help.variant.classic6.special': 'Khối rộng hơn chiều cao, nên khối và hàng giao nhau theo cách khác ' +
         'với bảng 9×9. Một bảng dễ chịu để làm quen với các kỹ thuật cơ bản.',
       'help.variant.classic6.figure': 'Bảng 6×6 trống với sáu khối, mỗi khối 2 hàng × 3 cột.',
-      'help.variant.classic9.rules': 'Câu đố kinh điển. Điền vào lưới 9×9 sao cho mỗi hàng, mỗi cột và mỗi ' +
+      'help.variant.classic9.rules': 'Đề cổ điển. Điền vào lưới 9×9 sao cho mỗi hàng, mỗi cột và mỗi ' +
         'khối 3×3 đều chứa các chữ số từ 1 đến 9, mỗi số đúng một lần. Các số cho sẵn vừa đủ để lời giải ' +
         'là duy nhất.',
       'help.variant.classic9.special': 'Biến thể chuẩn của bộ sinh: thang độ khó và các bậc kỹ thuật được ' +
@@ -1343,7 +1360,7 @@
         '12 ký hiệu, mỗi ký hiệu đúng một lần. Mỗi khối cao 3 hàng và rộng 4 cột. Các ký hiệu là chữ số từ ' +
         '1 đến 9 rồi đến A, B, C, hoặc các số từ 1 đến 12.',
       'help.variant.mega12.special': 'Bảng lớn: việc tạo đề lâu hơn, và trên màn hình nhỏ lưới khá rộng ' +
-        'nên hãy cuộn hoặc thu phóng. Tùy chọn bộ ký hiệu chỉ đổi cách vẽ các giá trị; bản thân câu đố ' +
+        'nên hãy cuộn hoặc thu phóng. Tùy chọn bộ ký hiệu chỉ đổi cách vẽ các giá trị; bản thân đề ' +
         'không thay đổi.',
       'help.variant.mega12.figure': 'Bảng 12×12 trống với mười hai khối, mỗi khối 3 hàng × 4 cột.',
       'help.variant.mega16.rules': 'Điền vào lưới 16×16 sao cho mỗi hàng, mỗi cột và mỗi khối 4×4 đều chứa ' +
@@ -1413,14 +1430,14 @@
       'help.variant.flower.special': 'Mức chồng lấn dày đặc nhất trong các biến thể: nhiều ô thuộc hai ' +
         'hoặc ba lưới, nên mỗi lần đặt số đều kéo theo nhiều hệ quả.',
       'help.variant.flower.figure': 'Bảng Bông hoa: một lưới giữa và bốn cánh hoa chồng lên nhau.',
-      'help.variant.wordoku.rules': 'Một câu Sudoku 9×9 chơi bằng chín chữ cái thay cho chữ số: mỗi hàng, ' +
+      'help.variant.wordoku.rules': 'Một đề Sudoku 9×9 chơi bằng chín chữ cái thay cho chữ số: mỗi hàng, ' +
         'cột và khối 3×3 đều chứa đủ chín chữ cái, mỗi chữ đúng một lần. Chín chữ cái là các chữ của một ' +
         'từ khóa ẩn, được viết dọc theo một đường của lời giải: mặc định là đường chéo chính, hoặc một ' +
         'hàng hay một cột.',
       'help.variant.wordoku.special': 'Từ khóa không hiện khi đề chưa giải xong; giải xong bạn sẽ đọc được ' +
         'nó. Bạn có thể chọn danh sách từ tiếng Anh hoặc tiếng Việt (từ tiếng Việt viết không dấu, và nếu ' +
         'danh sách tiếng Việt quá ngắn thì dùng tiếng Anh), hoặc tự nhập một từ gồm chín chữ cái khác ' +
-        'nhau. Bộ ký hiệu Chữ số chơi cùng câu đố đó bằng số.',
+        'nhau. Bộ ký hiệu Chữ số chơi cùng đề đó bằng số.',
       'help.variant.wordoku.figure': 'Một bảng Wordoku với từ khóa {word} viết dọc theo đường chéo chính.',
 
       'help.difficulty.intro': 'Độ khó của một đề không phải là phỏng đoán: nó được xác định bởi các kỹ ' +
@@ -1520,7 +1537,7 @@
       'help.controls.symmetry': 'Các số cho sẵn được bỏ theo từng nhóm tương ứng, nên hình dạng các ô cho ' +
         'sẵn đối xứng. Đối xứng càng chặt thì các mức cao nhất càng khó đạt.',
       'help.controls.symbolMode': 'Chỉ đổi cách vẽ các giá trị (chữ số, chữ cái, màu kèm hình, hoặc hình ' +
-        'khối). Câu đố không thay đổi.',
+        'khối). Đề không thay đổi.',
       'help.controls.replay': 'Bên dưới bảng, Bước đầu tiên và Bước cuối cùng nhảy về đầu hoặc đến cuối ' +
         'phần phát lại, Bước trước và Bước tiếp theo chuyển từng bước một, còn thanh trượt đưa thẳng đến ' +
         'bước bất kỳ. Nhãn bên cạnh cho biết bước nào đang được hiển thị.',

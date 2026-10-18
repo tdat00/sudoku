@@ -176,7 +176,7 @@
     'step.tune.name': 'Hiệu chỉnh và hoàn tất',
 
     'explain.configure.what': 'Kiểm tra các thiết lập bạn chọn, điền giá trị mặc định và cố định seed.',
-    'explain.configure.why': 'Cùng một seed với cùng các thiết lập luôn cho đúng cùng một bài, nên mọi bài ' +
+    'explain.configure.why': 'Cùng một seed với cùng các thiết lập luôn cho đúng cùng một đề, nên mọi đề ' +
       'đều có thể chia sẻ và dựng lại.',
     'explain.configure.how': 'Các tùy chọn được chuẩn hóa; biến thể, mức độ, kiểu đối xứng và thứ tự đào ' +
       'được kiểm tra; nếu bạn không nhập seed thì một seed ngẫu nhiên sẽ được chọn.',
@@ -188,8 +188,8 @@
     'explain.buildModel.what': 'Tạo bàn cờ trống: các ô, các hàng, cột, vùng và những ô nhìn thấy nhau.',
     'explain.buildModel.why': 'Luật của mỗi biến thể chỉ là các nhóm ô mà mọi giá trị phải khác nhau. Khi ' +
       'bàn cờ được mô tả bằng dữ liệu, một bộ giải duy nhất dùng được cho mọi biến thể.',
-    'explain.buildModel.how': 'Biến thể dựng các ô và bố cục (Jigsaw trước tiên phải mọc các vùng, lưới ' +
-      'nhiều bảng thì đặt từng lưới con). Sau đó liệt kê các nhóm (hàng, cột, vùng) và các ô cùng nhóm với ' +
+    'explain.buildModel.how': 'Biến thể dựng các ô và bố cục (Jigsaw trước tiên tạo các vùng, bàn cờ ' +
+      'nhiều lưới thì đặt từng lưới con). Sau đó liệt kê các nhóm (hàng, cột, vùng) và các ô cùng nhóm với ' +
       'mỗi ô, rồi co giãn các ngưỡng độ khó theo kích thước bàn cờ.',
     'explain.buildModel.live': 'Lưới có {cells} ô và {units} nhóm',
     'explain.buildModel.code.build': 'model ← variant.build(options, rng)',
@@ -198,7 +198,7 @@
     'explain.buildModel.code.spec': 'spec ← difficultySpec(level), co giãn theo số ô',
 
     'explain.fullGrid.what': 'Điền kín cả bàn cờ bằng một lời giải hợp lệ.',
-    'explain.fullGrid.why': 'Mọi bài Sudoku hay đều bắt đầu từ một lời giải hoàn chỉnh — nhờ vậy ta luôn ' +
+    'explain.fullGrid.why': 'Mọi đề Sudoku hay đều bắt đầu từ một lời giải hoàn chỉnh — nhờ vậy ta luôn ' +
       'biết chắc đáp án tồn tại.',
     'explain.fullGrid.how': 'Thuật toán quay lui (backtracking) điền số theo thứ tự ngẫu nhiên, luôn chọn ' +
       'ô có ít ứng viên nhất. Sau mỗi lần đặt số, hệ quả được lan truyền; khi có ô hết ứng viên thì lùi ' +
@@ -225,47 +225,47 @@
     'explain.extraStructure.code.none': 'nếu không thì không cần làm gì',
 
     'explain.dig.what': 'Lần lượt bỏ bớt các số khỏi lưới đầy đủ, mỗi lần một nhóm ô.',
-    'explain.dig.why': 'Mỗi ô bị bỏ đi làm bài khó hơn, nhưng bài phải giữ đúng một lời giải và vẫn giải ' +
+    'explain.dig.why': 'Mỗi ô bị bỏ đi làm đề khó hơn, nhưng đề phải giữ đúng một lời giải và vẫn giải ' +
       'được bằng các kỹ thuật cho phép ở mức đó.',
-    'explain.dig.how': 'Các ô được bỏ theo từng nhóm đối xứng. Sau mỗi lần bỏ, bộ giải logic kiểm tra bài ' +
+    'explain.dig.how': 'Các ô được bỏ theo từng nhóm đối xứng. Sau mỗi lần bỏ, bộ giải logic kiểm tra đề ' +
       'còn giải được bằng các kỹ thuật cho phép hay không (điều này cũng chứng minh lời giải là duy nhất); ' +
-      'nếu không thì nhóm ô đó được trả lại. Một lượt thứ hai, có định hướng, giữ lại những lần bỏ làm bài ' +
+      'nếu không thì nhóm ô đó được trả lại. Một lượt thứ hai, có định hướng, giữ lại những lần bỏ làm đề ' +
       'khó nhất. Cuối cùng là kiểm tra lần nữa rằng chỉ còn đúng một lời giải.',
     'explain.dig.live': 'Đã thử {attempts} · chấp nhận {accepted} · từ chối {rejected} · còn {clues} ' +
       'số cho sẵn',
     'explain.dig.code.order': 'order ← shuffle(các nhóm ô đối xứng)',
     'explain.dig.code.loop': 'với mỗi group trong order:',
     'explain.dig.code.filter': 'bỏ qua group nếu số cho sẵn, một hàng, một cột hoặc một vùng sẽ quá ít',
-    'explain.dig.code.try': 'bỏ group khỏi bài',
-    'explain.dig.code.check': 'nếu bài vẫn giải được bằng các kỹ thuật cho phép:',
+    'explain.dig.code.try': 'bỏ group khỏi đề',
+    'explain.dig.code.check': 'nếu đề vẫn giải được bằng các kỹ thuật cho phép:',
     'explain.dig.code.accept': 'giữ group ở trạng thái đã bỏ',
     'explain.dig.code.reject': 'nếu không thì trả group về chỗ cũ',
-    'explain.dig.code.deeper': 'rồi đào sâu hơn: giữ lần bỏ làm bài khó nhất',
+    'explain.dig.code.deeper': 'rồi đào sâu hơn: giữ lần bỏ làm đề khó nhất',
     'explain.dig.code.verify': 'xác minh rằng chỉ còn đúng một lời giải',
 
-    'explain.rate.what': 'Đo xem bài khó đến đâu.',
-    'explain.rate.why': 'Độ khó được đo bằng những gì một người cần để giải bài, chứ không đoán theo số ' +
-      'manh mối. Nhờ vậy ta đảm bảo được đúng mức độ bạn yêu cầu.',
-    'explain.rate.how': 'Bộ giải logic giải bài từng bước bằng các kỹ thuật của con người, từ rẻ đến đắt, ' +
+    'explain.rate.what': 'Đo xem đề khó đến đâu.',
+    'explain.rate.why': 'Độ khó được đo bằng những gì một người cần để giải đề, chứ không đoán theo số ' +
+      'cho sẵn. Nhờ vậy ta đảm bảo được đúng mức độ bạn yêu cầu.',
+    'explain.rate.how': 'Bộ giải logic giải đề từng bước bằng các kỹ thuật của con người, từ rẻ đến đắt, ' +
       'và đếm mỗi kỹ thuật được dùng bao nhiêu lần. Mỗi lần dùng có một chi phí; tổng điểm quyết định ' +
       'mức độ.',
     'explain.rate.live': '{clues} số cho sẵn · điểm {score}',
-    'explain.rate.code.solve': 'report ← giải bài bằng logic, với mọi kỹ thuật',
+    'explain.rate.code.solve': 'report ← giải đề bằng logic, với mọi kỹ thuật',
     'explain.rate.code.count': 'đếm số lần cần dùng mỗi kỹ thuật',
     'explain.rate.code.score': 'score ← tổng chi phí của các kỹ thuật',
     'explain.rate.code.classify': 'level ← dải độ khó chứa score',
 
     'explain.tune.what': 'So kết quả với mức độ bạn yêu cầu, rồi hoàn tất.',
-    'explain.tune.why': 'Việc đào là ngẫu nhiên nên bài đầu tiên có thể hơi dễ hoặc hơi khó. Kiểm tra rồi ' +
+    'explain.tune.why': 'Việc đào là ngẫu nhiên nên đề đầu tiên có thể hơi dễ hoặc hơi khó. Kiểm tra rồi ' +
       'thử lại là cách đảm bảo đúng mức độ.',
-    'explain.tune.how': 'Nếu đúng mức độ thì nhận bài. Nếu không, thử đào lại trên cùng lưới hoặc rút một ' +
-      'lưới mới. Khi hết lượt thử, dùng bài gần nhất và đánh dấu là gần đúng. Cuối cùng kết quả được đóng ' +
+    'explain.tune.how': 'Nếu đúng mức độ thì nhận đề. Nếu không, thử đào lại trên cùng lưới hoặc tạo một ' +
+      'lưới mới. Khi hết lượt thử, dùng đề gần nhất và đánh dấu là gần đúng. Cuối cùng kết quả được đóng ' +
       'gói cùng số liệu thống kê.',
     'explain.tune.live': '{clues} số cho sẵn · điểm {score}',
-    'explain.tune.code.compare': 'nếu mức độ của bài đúng bằng mức độ yêu cầu:',
-    'explain.tune.code.accept': 'nhận bài',
-    'explain.tune.code.retry': 'nếu không thì đào bài khác, hoặc rút lưới mới',
-    'explain.tune.code.best': 'khi hết lượt thử, dùng bài gần nhất',
+    'explain.tune.code.compare': 'nếu mức độ của đề đúng bằng mức độ yêu cầu:',
+    'explain.tune.code.accept': 'nhận đề',
+    'explain.tune.code.retry': 'nếu không thì đào đề khác, hoặc tạo lưới mới',
+    'explain.tune.code.best': 'khi hết lượt thử, dùng đề gần nhất',
     'explain.tune.code.package': 'đóng gói kết quả'
   });
 
@@ -331,7 +331,7 @@
     'technique.wWing.desc': 'Hai ô có cùng hai ứng viên, nối với nhau bằng một liên kết mạnh trên một chữ ' +
       'số: chữ số còn lại bị loại khỏi mọi ô nhìn thấy cả hai ô.',
     'technique.uniqueRectangle': 'Hình chữ nhật duy nhất (Unique Rectangle)',
-    'technique.uniqueRectangle.desc': 'Một bài chỉ có đúng một lời giải, nên bốn ô trong hai hàng, hai cột ' +
+    'technique.uniqueRectangle.desc': 'Một đề chỉ có đúng một lời giải, nên bốn ô trong hai hàng, hai cột ' +
       'và hai khối không thể chỉ còn cùng hai ứng viên. Điều này buộc phải loại thêm một ứng viên.',
     'technique.forcingChain': 'Chuỗi suy luận (Forcing Chain)',
     'technique.forcingChain.desc': 'Chuỗi các suy luận kiểu “nếu thế này thì thế kia”, chứng minh một ứng ' +
@@ -403,7 +403,7 @@
       'thấy nhau. Một liên kết mạnh trên {digitX} trong {unit} ({link1} và {link2}) nối hai ô này, nên một ' +
       'trong hai ô phải là {digit}. {digit} bị loại khỏi mọi ô nhìn thấy cả hai.',
     'technique.uniqueRectangle.type1.step': 'Hình chữ nhật duy nhất: ba góc chỉ chứa {digitX} và {digitY}. ' +
-      'Nếu {cell} cũng chỉ chứa hai chữ số đó thì bài sẽ có hai lời giải. Vậy {digitX} và {digitY} bị ' +
+      'Nếu {cell} cũng chỉ chứa hai chữ số đó thì đề sẽ có hai lời giải. Vậy {digitX} và {digitY} bị ' +
       'loại khỏi {cell}.',
     'technique.uniqueRectangle.type2.step': 'Hình chữ nhật duy nhất: hai góc chỉ chứa {digitX} và ' +
       '{digitY}; hai góc còn lại, {roof1} và {roof2}, còn chứa thêm {digit}. Để tránh hai lời giải, một ' +
@@ -467,51 +467,51 @@
     'dig.pass.start': 'Bắt đầu lượt đào {pass}: trên lưới có {clues} số cho sẵn.',
     'dig.skip': 'Bỏ qua {cells}: {reason}.',
     'dig.try': 'Thử bỏ {cells}.',
-    'dig.accept': 'Đã bỏ {cells}: bài vẫn giải được bằng các kỹ thuật cho phép.',
+    'dig.accept': 'Đã bỏ {cells}: đề vẫn giải được bằng các kỹ thuật cho phép.',
     'dig.reject': 'Trả {cells} về chỗ cũ: {reason}.',
-    'dig.keep': 'Giữ lần bỏ {cells} vì làm bài khó nhất (điểm {score}).',
+    'dig.keep': 'Giữ lần bỏ {cells} vì làm đề khó nhất (điểm {score}).',
     'dig.pass.end': 'Kết thúc lượt đào {pass}: còn {clues} số cho sẵn.',
-    'dig.verify': 'Đang kiểm tra bài có đúng một lời giải.',
-    'dig.verify.yes': 'Đã kiểm tra: bài có đúng một lời giải.',
-    'dig.verify.no': 'Đã kiểm tra: bài có nhiều hơn một lời giải!',
-    'dig.unsound': 'Một kỹ thuật cho ra bài không có lời giải duy nhất, nên được thay bằng cách đào đơn ' +
+    'dig.verify': 'Đang kiểm tra đề có đúng một lời giải.',
+    'dig.verify.yes': 'Đã kiểm tra: đề có đúng một lời giải.',
+    'dig.verify.no': 'Đã kiểm tra: đề có nhiều hơn một lời giải!',
+    'dig.unsound': 'Một kỹ thuật cho ra đề không có lời giải duy nhất, nên được thay bằng cách đào đơn ' +
       'giản và an toàn.',
     'dig.end': 'Đã đào xong.',
     'dig.reason.rejected': 'một ô trong đó đã bị từ chối trước đó',
-    'dig.reason.minClues': 'bài sẽ xuống dưới số cho sẵn tối thiểu',
+    'dig.reason.minClues': 'đề sẽ xuống dưới số cho sẵn tối thiểu',
     'dig.reason.unitMinimum': 'một hàng, cột hoặc vùng sẽ còn quá ít số cho sẵn',
-    'dig.reason.ambiguous': 'bài sẽ không còn đúng một lời giải',
-    'dig.reason.techniques': 'các kỹ thuật cho phép không còn giải hết được bài',
-    'dig.reason.tooHard': 'bài sẽ khó hơn mức độ yêu cầu',
+    'dig.reason.ambiguous': 'đề sẽ không còn đúng một lời giải',
+    'dig.reason.techniques': 'các kỹ thuật cho phép không còn giải hết được đề',
+    'dig.reason.tooHard': 'đề sẽ khó hơn mức độ yêu cầu',
     'digPass.random': 'ngẫu nhiên',
     'digPass.guided': 'có định hướng',
     'digPass.fallback': 'dự phòng an toàn',
 
-    'rate.start': 'Đang chấm điểm bài bằng bộ giải logic.',
+    'rate.start': 'Đang chấm điểm đề bằng bộ giải logic.',
     'rate.technique_one': '{technique} ({group}) được dùng {count} lần.',
     'rate.technique_other': '{technique} ({group}) được dùng {count} lần.',
     'rate.result': 'Kết quả chấm: {level}, điểm {score}, kỹ thuật khó nhất: {hardestTechnique}.',
     'rate.end': 'Đã chấm xong.',
 
-    'tune.start': 'Đang so bài với mức độ yêu cầu (lần thử {attempt}/{maxAttempts}).',
+    'tune.start': 'Đang so đề với mức độ yêu cầu (lần thử {attempt}/{maxAttempts}).',
     'tune.hit': 'Đạt mức độ: “{achieved}” (điểm {score}, dải từ {scoreMin} đến {scoreMax}).',
     'tune.miss': 'Chưa đúng mức độ: cần “{requested}”, ra “{achieved}” (điểm {score}). Thử lại (mẫu ' +
       '{sample}/{maxSamples}).',
-    'tune.best': 'Hết lượt thử. Bài gần nhất là “{achieved}” (cần “{requested}”, điểm {score}).',
-    'tune.final_one': 'Bài hoàn chỉnh được hiển thị trên lưới (đổi {count} ô).',
-    'tune.final_other': 'Bài hoàn chỉnh được hiển thị trên lưới (đổi {count} ô).',
+    'tune.best': 'Hết lượt thử. Đề gần nhất là “{achieved}” (cần “{requested}”, điểm {score}).',
+    'tune.final_one': 'Đề hoàn chỉnh được hiển thị trên lưới (đổi {count} ô).',
+    'tune.final_other': 'Đề hoàn chỉnh được hiển thị trên lưới (đổi {count} ô).',
     'tune.end': 'Đã hiệu chỉnh xong.',
 
     'retry.difficulty': 'Lần thử {attempt}/{maxAttempts} ra “{achieved}” thay vì “{requested}”.',
     'retry.difficulty.yes': 'Lần thử {attempt}/{maxAttempts} ra “{achieved}” thay vì “{requested}”. Một ' +
-      'lưới mới sẽ được rút.',
+      'lưới mới sẽ được tạo.',
     'retry.difficulty.no': 'Lần thử {attempt}/{maxAttempts} ra “{achieved}” thay vì “{requested}”. Đã hết ' +
       'lượt thử.',
     'retry.reason.difficulty': 'độ khó chưa khớp',
 
     'done': 'Đã sinh xong.',
-    'done.yes': 'Xong: bài mức “{achieved}” với {clues} số cho sẵn (seed {seed}).',
-    'done.no': 'Xong: bài gần nhất là “{achieved}” (yêu cầu “{requested}”) với {clues} số cho sẵn ' +
+    'done.yes': 'Xong: đề mức “{achieved}” với {clues} số cho sẵn (seed {seed}).',
+    'done.no': 'Xong: đề gần nhất là “{achieved}” (yêu cầu “{requested}”) với {clues} số cho sẵn ' +
       '(seed {seed}).',
 
     'trace.coalesced_one': 'Nhật ký bỏ qua {dropped} bước chi tiết ở đây.',
@@ -523,18 +523,18 @@
   // ---------------------------------------------------------------------------------------------
 
   add({
-    'difficulty.approximate': 'Bộ sinh không đạt chính xác mức độ yêu cầu, nên đây là bài gần nhất mà nó ' +
+    'difficulty.approximate': 'Bộ sinh không đạt chính xác mức độ yêu cầu, nên đây là đề gần nhất mà nó ' +
       'tìm được.',
-    'digger.unsoundTechnique': 'Một kỹ thuật giải đã cho ra bài không có lời giải duy nhất. Cách đào đơn ' +
-      'giản và an toàn đã được dùng thay thế, nên độ khó có thể khác với điểm chấm.',
+    'digger.unsoundTechnique': 'Một kỹ thuật giải đã cho ra đề không có lời giải duy nhất. Cách đào đơn ' +
+      'giản và an toàn đã được dùng thay thế, nên độ khó có thể khác với điểm đánh giá.',
     'trace.downgraded': 'Bàn cờ quá lớn để phát lại từng bước đầy đủ, nên mức chi tiết đã được giảm xuống ' +
       'thành tóm tắt.',
 
     'error.unknown': 'Đã xảy ra lỗi ({code}).',
     'error.unexpected': 'Một lỗi không mong muốn đã làm bộ sinh dừng lại: {message}',
-    'error.budget.exceeded': 'Việc sinh bài mất nhiều thời gian hơn mức cho phép nên đã bị dừng. Hãy thử ' +
+    'error.budget.exceeded': 'Việc sinh đề mất nhiều thời gian hơn mức cho phép nên đã bị dừng. Hãy thử ' +
       'lại, đổi seed hoặc chọn mức dễ hơn.',
-    'error.budget.cancelled': 'Đã hủy việc sinh bài.',
+    'error.budget.cancelled': 'Đã hủy việc sinh đề.',
     'error.constraints.invalidExtension': 'Một phần mở rộng ràng buộc không hợp lệ (id: {id}).',
     'error.constraints.duplicateExtension': 'Phần mở rộng ràng buộc “{id}” bị đăng ký hai lần.',
     'error.dfs.invalidGivens': 'Các chữ số cho sẵn không phù hợp với bàn cờ này.',
@@ -543,7 +543,7 @@
     'error.difficulty.unsupportedLevel': '{variantId} không sinh được ở mức “{level}”. Hãy chọn mức khác.',
     'error.digger.invalidOption': 'Giá trị “{value}” không hợp lệ cho tùy chọn “{option}”.',
     'error.digger.invalidSolution': 'Lời giải đưa cho bộ đào không hợp lệ.',
-    'error.digger.notUnique': 'Bài đã đào của {variantId} không có đúng một lời giải.',
+    'error.digger.notUnique': 'Đề đã đào của {variantId} không có đúng một lời giải.',
     'error.digger.invalidStrategy': 'Chiến lược đào “{id}” không hợp lệ.',
     'error.digger.unknownStrategy': 'Không có chiến lược đào “{id}”.',
     'error.digger.invalidPostGenerate': 'Hàm dựng cấu trúc phụ của {variantId} trả về một bàn cờ không ' +

@@ -589,8 +589,8 @@
       'technique.ineqChain.step.max': 'Dọc theo chuỗi {chain}, mỗi ô đều nhỏ hơn ô đứng sau nó, nên ' +
         '{cell} không thể lớn hơn {bound}.',
       'technique.minMaxForcing': 'Ép biên min/max',
-      'technique.minMaxForcing.desc': 'Các ô trong cùng một vùng đều chứa chữ số khác nhau. Một ô lớn ' +
-        'hơn k ô của vùng đó thì phải lớn hơn chữ số nhỏ nhất thứ k mà các ô ấy có thể nhận (tương tự ' +
+      'technique.minMaxForcing.desc': 'Các ô trong cùng một nhóm đều chứa chữ số khác nhau. Một ô lớn ' +
+        'hơn k ô của nhóm đó thì phải lớn hơn chữ số nhỏ nhất thứ k mà các ô ấy có thể nhận (tương tự ' +
         'với nhỏ hơn và chữ số lớn nhất thứ k).',
       'technique.minMaxForcing.step.min': '{cell} lớn hơn {count} ô của {unit} ({others}). Các ô này ' +
         'chứa chữ số khác nhau, nên {cell} không thể nhỏ hơn {bound}.',

@@ -301,6 +301,17 @@
     return SG.techniques.get(id).baseCost;
   }
 
+  /**
+   * What a technique adds to the score of a puzzle that applies it `count` times: the first use weighs
+   * `SCORING.firstUseMultiplier` costs, every further use one cost (the same sum `classify` takes).
+   * @param {string} id  A registered technique id.
+   * @param {number} count  Applications of the technique.
+   * @returns {number}
+   */
+  function techniqueScore(id, count) {
+    return count > 0 ? costOf(id) * (count - 1 + SCORING.firstUseMultiplier) : 0;
+  }
+
   /** Groups that level index `i` may use on this model's variant. */
   function groupsFor(i) {
     return BASE_GROUPS.slice(0, i + 1).concat(VARIANT_GROUPS);
@@ -501,6 +512,7 @@
     classify: classify,
     rate: rate,
     costOf: costOf,
+    techniqueScore: techniqueScore,
     levelIndex: levelIndex
   };
 })(typeof self !== 'undefined' ? self : globalThis);

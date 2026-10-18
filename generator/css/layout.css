@@ -1,9 +1,9 @@
 /*
  * Page frame (design.md 10.1): header + three layouts.
- *   >= 1200px     3 columns: controls | board | steps (+ explanation)
- *   768-1199px    2 columns: controls | board, steps panel below as a horizontally scrollable strip
- *   < 768px       1 column: controls become a bottom drawer (#btn-drawer toggles #controls-root.is-open),
- *                 steps panel is a collapsed horizontal stepper (#btn-steps-toggle toggles #steps-root.is-expanded)
+ *   >= 1360px     3 columns: list of generated puzzles | board and the replay box (replay controls, tabs
+ *                 Result | Step) | puzzle options
+ *   768-1359px    2 columns: board, replay box and the list of puzzles | puzzle options
+ *   < 768px       1 column: the options become a bottom drawer (#btn-drawer toggles #controls-root.is-open)
  */
 
 :root {
@@ -73,14 +73,13 @@
   gap: var(--sg-space-2) var(--sg-space-3);
 }
 
-/* ---- Grid of the three areas ---- */
+/* ---- Grid of the areas ---- */
 .app-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
     "main"
-    "steps"
-    "result";
+    "history";
   align-items: start;
   gap: var(--sg-space-4);
   max-width: var(--sg-layout-max-width);
@@ -88,8 +87,45 @@
   padding: var(--sg-space-4);
 }
 
-#controls-root {
-  grid-area: controls;
+/* ---- Footer: copyright and the link to the repository ---- */
+.app-footer {
+  max-width: var(--sg-layout-max-width);
+  margin-inline: auto;
+  padding: var(--sg-space-2) var(--sg-space-4) var(--sg-space-4);
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+  text-align: center;
+}
+
+.app-footer__inner {
+  margin: 0;
+}
+
+.app-footer__copy::after {
+  content: "\00b7";
+  display: inline-block;
+  margin-inline: var(--sg-space-2);
+}
+
+.app-footer__link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.app-footer__link:hover {
+  color: var(--sg-color-accent);
+}
+
+/* The puzzle options: a column on the right; below 768px they are the bottom drawer, fixed to the screen. */
+.app-side {
+  grid-area: side;
+  min-width: 0;
+}
+
+#history-root {
+  grid-area: history;
+  min-width: 0;
 }
 
 .app-main {
@@ -135,13 +171,49 @@
   margin-inline-start: auto;
 }
 
-#steps-root {
-  grid-area: steps;
+/* The result and the description of the current step share the box of the replay controls, as tabs. */
+.player__tabs {
+  display: flex;
+  gap: var(--sg-space-1);
+  border-bottom: 1px solid var(--sg-color-divider);
+}
+
+.tab {
+  margin-bottom: -1px;
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--sg-color-text-muted);
+  font-weight: 650;
+}
+
+.tab:hover {
+  color: var(--sg-color-text);
+}
+
+.tab[aria-selected="true"] {
+  border-bottom-color: var(--sg-color-accent);
+  color: var(--sg-color-text);
+}
+
+.player__panel {
   min-width: 0;
 }
 
+.player__panel[hidden] {
+  display: none;
+}
+
+/* The result card loses its own frame inside the panel. */
+.player__panel .card {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
 .result-area {
-  grid-area: result;
   min-width: 0;
 }
 
@@ -175,6 +247,10 @@
   margin: 0;
 }
 
+.panel__header--start {
+  justify-content: flex-start;
+}
+
 .panel__actions {
   display: flex;
   align-items: center;
@@ -193,17 +269,12 @@
 }
 
 .controls-actions {
-  position: sticky;
-  bottom: calc(-1 * var(--sg-space-4));
-  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: var(--sg-space-2);
-  margin: var(--sg-space-4) calc(-1 * var(--sg-space-4)) calc(-1 * var(--sg-space-4));
-  padding: var(--sg-space-3) var(--sg-space-4) var(--sg-space-4);
-  border-top: 1px solid var(--sg-color-divider);
-  border-radius: 0 0 var(--sg-radius-3) var(--sg-radius-3);
-  background: var(--sg-color-surface);
+  margin-bottom: var(--sg-space-4);
+  padding-bottom: var(--sg-space-4);
+  border-bottom: 1px solid var(--sg-color-divider);
 }
 
 /* ---- Board area ---- */
@@ -226,14 +297,22 @@
 /* ---- Player ---- */
 .player {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sg-space-3) var(--sg-space-4);
+  flex-direction: column;
+  gap: var(--sg-space-3);
   padding: var(--sg-space-3) var(--sg-space-4);
   border: 1px solid var(--sg-color-divider);
   border-radius: var(--sg-radius-3);
   background: var(--sg-color-surface);
+}
+
+/* Replay controls: first / previous / next / last and the slider, at the top of the Step tab. */
+.player__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sg-space-3) var(--sg-space-4);
+  margin-bottom: var(--sg-space-3);
 }
 
 .player__transport {
@@ -250,15 +329,42 @@
   min-width: 0;
 }
 
-.player__timeline .slider {
+.player__track {
+  position: relative;
   flex: 1 1 0;
-  width: auto;
   min-width: 0;
+  padding-bottom: 0.5rem;
+}
+
+.player__timeline .slider {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Anchor points: one notch under the slider for every step, at the centre of the thumb for that value. */
+.player__ticks {
+  position: absolute;
+  top: calc(0.875rem + 0.7rem);
+  inset-inline: 0.625rem;
+  height: 0.4rem;
+  pointer-events: none;
+}
+
+.player__tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--i, 0) / var(--n, 1) * 100%);
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: var(--sg-color-border);
 }
 
 .player__time {
   flex: none;
-  min-width: 6ch;
+  width: 15ch;
   color: var(--sg-color-text-muted);
   font-size: var(--sg-font-size-sm);
   font-variant-numeric: tabular-nums;
@@ -266,41 +372,11 @@
   white-space: nowrap;
 }
 
-/* ---- Status line ---- */
-.status-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--sg-space-1) var(--sg-space-2);
-  min-height: 2.5rem;
-  padding: var(--sg-space-2) var(--sg-space-4);
-  border: 1px solid var(--sg-color-divider);
-  border-radius: var(--sg-radius-3);
-  background: var(--sg-color-surface-2);
-}
-
-.status-row__label {
+/* ---- Note under the replay controls (js/ui/cache.js) and the symbol legend ---- */
+.cache-note {
+  margin: 0;
   color: var(--sg-color-text-muted);
   font-size: var(--sg-font-size-sm);
-  font-weight: 600;
-}
-
-.status-row__text {
-  flex: 1 1 12rem;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-/* Added by js/ui/app.js: a one-line notice under the status, the error state and the symbol legend. */
-.status-row__notice {
-  flex: 1 0 100%;
-  color: var(--sg-color-text-muted);
-  font-size: var(--sg-font-size-sm);
-}
-
-.status-row[data-state="error"] .status-row__text {
-  color: var(--sg-color-danger);
-  font-weight: 600;
 }
 
 .board-legend:not(:empty) {
@@ -312,16 +388,6 @@
 }
 
 /* ---- Run states (js/ui/theme.js sets #app-layout[data-run]): idle, busy, ready, error, cancelled ---- */
-.status-row[data-state="error"] {
-  border-color: var(--sg-color-danger);
-  background: var(--sg-color-danger-bg);
-}
-
-.status-row[data-state="error"] .status-row__label::before {
-  content: "\26A0\FE0E";
-  margin-inline-end: var(--sg-space-1);
-}
-
 [data-run="error"] .board-frame {
   border-color: var(--sg-color-danger);
 }
@@ -343,7 +409,6 @@
 
 #result-hint {
   display: none;
-  grid-area: result;
   min-width: 0;
 }
 
@@ -379,24 +444,6 @@
   display: block;
 }
 
-/* ---- Steps panel: container layout only, the step items are styled by steps.css ---- */
-.steps-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sg-space-2);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-#btn-steps-toggle {
-  display: none;
-}
-
-.steps-toggle[aria-expanded="true"] .steps-toggle__chevron {
-  transform: rotate(180deg);
-}
-
 /* ---- Drawer parts are inert above the mobile breakpoint ---- */
 .drawer-toggle,
 .drawer-backdrop {
@@ -424,71 +471,25 @@
   }
 }
 
-/* ---- Below 1200px: steps panel becomes a strip below the board ---- */
-@media (max-width: 1199.98px) {
-  .steps-list {
-    flex-direction: row;
-    padding-bottom: var(--sg-space-2);
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x proximity;
-    gap: var(--sg-space-3);
-  }
-
-  .steps-list > li {
-    flex: 0 0 auto;
-    min-width: 11rem;
-    max-width: 17rem;
-    scroll-snap-align: start;
-  }
-}
-
-/* ---- 768-1199px: two columns ---- */
+/* ---- >= 768px: board, replay and result | puzzle options; the list of puzzles under the result ---- */
 @media (min-width: 768px) {
   .app-layout {
-    grid-template-columns: clamp(15rem, 30vw, 17.5rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) clamp(16rem, 30vw, 21.25rem);
     grid-template-areas:
-      "controls main"
-      "controls steps"
-      "controls result";
+      "main side"
+      "history side";
   }
 
-  #controls-root {
+  .app-side {
     position: sticky;
     top: var(--sg-space-4);
     max-height: calc(100vh - 2 * var(--sg-space-4));
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-}
-
-/* ---- >= 1200px: three columns ---- */
-@media (min-width: 1200px) {
-  .app-layout {
-    grid-template-columns: clamp(15rem, 22vw, 17.5rem) minmax(0, 1fr) clamp(17rem, 28vw, 21.25rem);
-    grid-template-areas:
-      "controls main steps"
-      "controls result steps";
-  }
-
-  #steps-root {
-    position: sticky;
-    top: var(--sg-space-4);
-    max-height: calc(100vh - 2 * var(--sg-space-4));
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-
-  /* The list scrolls by itself, so the explanation below it stays in reach. */
-  .steps-list {
-    max-height: 45vh;
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 2px;
   }
 }
 
-/* ---- < 768px: one column, bottom drawer for the controls, collapsible stepper ---- */
 @media (max-width: 767.98px) {
   body {
     padding-bottom: calc(var(--sg-drawer-bar-height) + env(safe-area-inset-bottom, 0px));
@@ -579,21 +580,8 @@
     transition-delay: 0s;
   }
 
-  #btn-steps-toggle {
-    display: inline-flex;
-  }
-
-  #steps-root {
-    padding: var(--sg-space-3);
-  }
-
-  #steps-root.is-expanded .steps-list {
-    flex-direction: column;
-    overflow-x: visible;
-  }
-
-  #steps-root.is-expanded .steps-list > li {
-    max-width: none;
+  .app-side {
+    display: contents;
   }
 
   .board-frame {

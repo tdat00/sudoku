@@ -811,8 +811,9 @@
       en: {
         'variant.jigsaw9': 'Jigsaw Sudoku',
         'option.compactness': 'Region compactness',
-        'option.compactness.hint': 'High values give rounded, compact regions; low values give winding, ' +
-          'snake-like regions that are harder to read.',
+        'option.compactness.hint': 'How regular the regions look.\n\n**Compact** (high values): rounded, ' +
+          'compact regions.\n\n**Winding** (low values): winding, snake-like regions that are harder to ' +
+          'read.',
         'option.compactness.min': 'Winding',
         'option.compactness.max': 'Compact',
         'error.jigsaw.layoutFailed': 'Could not build a valid Jigsaw layout after {attempts} attempts. ' +
@@ -821,8 +822,9 @@
       vi: {
         'variant.jigsaw9': 'Sudoku Ghép hình',
         'option.compactness': 'Độ gọn của vùng',
-        'option.compactness.hint': 'Giá trị cao cho các vùng tròn trịa, gọn gàng; giá trị thấp cho các vùng ' +
-          'uốn lượn như con rắn, khó nhìn hơn.',
+        'option.compactness.hint': 'Mức độ đều đặn của các vùng.\n\n**Gọn gàng** (giá trị cao): các vùng ' +
+          'tròn trịa, gọn gàng.\n\n**Uốn lượn** (giá trị thấp): các vùng uốn lượn như con rắn, khó nhìn ' +
+          'hơn.',
         'option.compactness.min': 'Uốn lượn',
         'option.compactness.max': 'Gọn gàng',
         'error.jigsaw.layoutFailed': 'Không tạo được bố cục Ghép hình hợp lệ sau {attempts} lần thử. ' +

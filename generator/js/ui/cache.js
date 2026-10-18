@@ -695,7 +695,7 @@
   // The note "preparing the replay"
   // ---------------------------------------------------------------------------------------------
 
-  /** A one-line note in the status row of the page (`#cache-note`); a no-op without a DOM. */
+  /** A one-line note under the replay controls (`#cache-note`); a no-op without a DOM. */
   function createNote() {
     let el = null;
     let key = null;
@@ -703,13 +703,13 @@
     function ensure() {
       if (typeof document === 'undefined') return null;
       if (el !== null && el.isConnected) return el;
-      const line = document.getElementById('status-line');
-      if (line === null || !line.parentNode) return null;
+      const host = document.getElementById('player-root');
+      if (host === null) return null;
       el = document.createElement('p');
       el.id = NOTE_ID;
-      el.className = 'status-row__notice';
+      el.className = 'cache-note';
       el.hidden = true;
-      line.parentNode.appendChild(el);
+      host.appendChild(el);
       return el;
     }
 

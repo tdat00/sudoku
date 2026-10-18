@@ -65,7 +65,7 @@
     stepView: ['create', 'chartModel'],
     explainCard: ['create', 'viewModel'],
     player: ['create', 'buildSteps', 'viewAt', 'describeStep', 'stepTitle', 'stepMeta', 'positionText'],
-    resultView: ['create', 'viewModel', 'shareState', 'shareLink'],
+    resultView: ['create', 'viewModel'],
     app: ['getStore', 'getBoard', 'getPlayer', 'getStepView', 'getExplainContext', 'getResult', 'generate',
       'cancel', 'toast',
       'openModal', 'announce', 'on', 'emit']
@@ -413,8 +413,8 @@
     'btn-drawer', 'controls-root', 'controls-form', 'btn-generate', 'btn-regenerate', 'btn-cancel', 'btn-export',
     'btn-export-code', 'btn-play-online',
     'board-root', 'board-svg', 'board-title', 'board-desc', 'player-root', 'btn-first', 'btn-prev',
-    'btn-next', 'btn-last', 'scrubber', 'player-time', 'status-line', 'mode-badge', 'steps-root', 'steps-list',
-    'btn-steps-toggle', 'btn-explain', 'result-root', 'modal-root', 'toast-root', 'a11y-live'];
+    'btn-next', 'btn-last', 'scrubber',     'player-time', 'steps-root', 'step-detail',
+        'btn-explain', 'result-root', 'modal-root', 'toast-root', 'a11y-live'];
 
   describe('ui contract: index.html', function () {
     it('has every mount point of the contract and the language and theme buttons, and no speed buttons',

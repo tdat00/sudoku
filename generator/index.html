@@ -197,30 +197,6 @@
       <svg class="icon drawer-toggle__chevron" aria-hidden="true" focusable="false"><use href="#ic-chevron-up"></use></svg>
     </button>
 
-    <aside id="controls-root" class="panel panel--controls" aria-labelledby="controls-heading">
-      <h2 id="controls-heading" class="panel__title" data-i18n="shell.controls.heading"></h2>
-      <form id="controls-form" class="controls-form" novalidate autocomplete="off"
-        aria-labelledby="controls-heading"></form>
-      <div class="controls-actions" role="group" data-i18n-attr="aria-label:shell.actions.label">
-        <button id="btn-generate" type="button" class="btn btn--primary btn--block"
-          data-i18n-attr="title:shell.btn.generate.title">
-          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-sparkle"></use></svg>
-          <span class="btn__label" data-i18n="shell.btn.generate"></span>
-        </button>
-        <button id="btn-regenerate" type="button" class="btn btn--secondary btn--block" disabled
-          data-i18n-attr="title:shell.btn.regenerate.title">
-          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-refresh"></use></svg>
-          <span class="btn__label" data-i18n="shell.btn.regenerate"></span>
-        </button>
-        <button id="btn-cancel" type="button" class="btn btn--ghost btn--block" hidden
-          data-i18n-attr="title:shell.btn.cancel.title">
-          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-x"></use></svg>
-          <span class="btn__label" data-i18n="shell.btn.cancel"></span>
-        </button>
-      </div>
-    </aside>
-    <div class="drawer-backdrop" aria-hidden="true"></div>
-
     <main id="main" class="app-main" tabindex="-1">
       <div class="main-head">
         <div class="main-head__titles">
@@ -259,60 +235,96 @@
 
       <section id="player-root" class="player" aria-labelledby="player-heading">
         <h2 id="player-heading" class="visually-hidden" data-i18n="shell.player.heading"></h2>
-        <div class="player__transport" role="group" data-i18n-attr="aria-label:player.label">
-          <button id="btn-first" type="button" class="btn btn--icon btn--secondary" disabled
-            data-i18n-attr="aria-label:player.first,title:player.first">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-first"></use></svg>
-          </button>
-          <button id="btn-prev" type="button" class="btn btn--icon btn--secondary" disabled
-            data-i18n-attr="aria-label:player.prev,title:player.prev">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-prev"></use></svg>
-          </button>
-          <button id="btn-next" type="button" class="btn btn--icon btn--secondary" disabled
-            data-i18n-attr="aria-label:player.next,title:player.next">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-next"></use></svg>
-          </button>
-          <button id="btn-last" type="button" class="btn btn--icon btn--secondary" disabled
-            data-i18n-attr="aria-label:player.last,title:player.last">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-last"></use></svg>
-          </button>
+
+        <div class="player__tabs" role="tablist" data-i18n-attr="aria-label:shell.tabs.label">
+          <button id="tab-result" type="button" class="tab" role="tab" aria-selected="true"
+            aria-controls="result-panel" data-tab="result" data-i18n="shell.tab.result"></button>
+          <button id="tab-steps" type="button" class="tab" role="tab" aria-selected="false" tabindex="-1"
+            aria-controls="steps-root" data-tab="steps" data-i18n="shell.tab.steps"></button>
         </div>
 
-        <div class="player__timeline">
-          <input id="scrubber" class="slider" type="range" min="0" max="0" step="1" value="0" disabled
-            data-i18n-attr="aria-label:player.scrubber">
-          <span id="player-time" class="player__time"></span>
+        <div id="result-panel" class="player__panel" role="tabpanel" aria-labelledby="tab-result">
+          <section id="result-root" class="result-area" data-i18n-attr="aria-label:shell.result.label"></section>
+        </div>
+
+        <div id="steps-root" class="player__panel" role="tabpanel" aria-labelledby="tab-steps" hidden>
+          <div class="player__controls">
+            <div class="player__transport" role="group" data-i18n-attr="aria-label:player.label">
+              <button id="btn-first" type="button" class="btn btn--icon btn--secondary" disabled
+                data-i18n-attr="aria-label:player.first,title:player.first">
+                <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-first"></use></svg>
+              </button>
+              <button id="btn-prev" type="button" class="btn btn--icon btn--secondary" disabled
+                data-i18n-attr="aria-label:player.prev,title:player.prev">
+                <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-prev"></use></svg>
+              </button>
+              <button id="btn-next" type="button" class="btn btn--icon btn--secondary" disabled
+                data-i18n-attr="aria-label:player.next,title:player.next">
+                <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-next"></use></svg>
+              </button>
+              <button id="btn-last" type="button" class="btn btn--icon btn--secondary" disabled
+                data-i18n-attr="aria-label:player.last,title:player.last">
+                <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-last"></use></svg>
+              </button>
+            </div>
+
+            <div class="player__timeline">
+              <div class="player__track">
+                <input id="scrubber" class="slider" type="range" min="0" max="0" step="1" value="0" disabled
+                  data-i18n-attr="aria-label:player.scrubber">
+                <div class="player__ticks" aria-hidden="true"></div>
+              </div>
+              <span id="player-time" class="player__time"></span>
+            </div>
+          </div>
+
+          <div class="panel__header panel__header--start">
+            <h2 id="steps-heading" class="panel__title"></h2>
+            <button id="btn-explain" type="button" class="btn btn--ghost btn--icon btn--sm" aria-haspopup="dialog"
+              data-i18n-attr="aria-label:shell.btn.explain,title:shell.btn.explain.title">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-help"></use></svg>
+            </button>
+          </div>
+          <div id="step-detail" class="step-detail" aria-live="polite"></div>
         </div>
       </section>
-
-      <div class="status-row">
-        <span class="status-row__label" data-i18n="shell.status.label"></span>
-        <p id="status-line" class="status-row__text" role="status" aria-live="polite" aria-atomic="true"></p>
-        <span id="mode-badge" class="badge" hidden></span>
-      </div>
     </main>
 
-    <aside id="steps-root" class="panel panel--steps" aria-labelledby="steps-heading">
-      <div class="panel__header">
-        <h2 id="steps-heading" class="panel__title" data-i18n="shell.steps.heading"></h2>
-        <div class="panel__actions">
-          <button id="btn-explain" type="button" class="btn btn--ghost btn--sm" aria-haspopup="dialog"
-            data-i18n-attr="title:shell.btn.explain.title">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-help"></use></svg>
-            <span class="btn__label" data-i18n="shell.btn.explain"></span>
+    <div class="app-side">
+      <aside id="controls-root" class="panel panel--controls" aria-labelledby="controls-heading">
+        <h2 id="controls-heading" class="panel__title" data-i18n="shell.controls.heading"></h2>
+        <div class="controls-actions" role="group" data-i18n-attr="aria-label:shell.actions.label">
+          <button id="btn-generate" type="button" class="btn btn--primary btn--block"
+            data-i18n-attr="title:shell.btn.generate.title">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-sparkle"></use></svg>
+            <span class="btn__label" data-i18n="shell.btn.generate"></span>
           </button>
-          <button id="btn-steps-toggle" type="button" class="btn btn--ghost btn--sm steps-toggle"
-            aria-expanded="false" aria-controls="steps-list" data-i18n-attr="title:shell.steps.toggle.title">
-            <span class="btn__label" data-i18n="shell.steps.toggle"></span>
-            <svg class="icon steps-toggle__chevron" aria-hidden="true" focusable="false"><use href="#ic-chevron-down"></use></svg>
+          <button id="btn-regenerate" type="button" class="btn btn--secondary btn--block" disabled
+            data-i18n-attr="title:shell.btn.regenerate.title">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-refresh"></use></svg>
+            <span class="btn__label" data-i18n="shell.btn.regenerate"></span>
+          </button>
+          <button id="btn-cancel" type="button" class="btn btn--ghost btn--block" hidden
+            data-i18n-attr="title:shell.btn.cancel.title">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-x"></use></svg>
+            <span class="btn__label" data-i18n="shell.btn.cancel"></span>
           </button>
         </div>
-      </div>
-      <ol id="steps-list" class="steps-list" aria-labelledby="steps-heading"></ol>
-    </aside>
-
-    <section id="result-root" class="result-area" data-i18n-attr="aria-label:shell.result.label"></section>
+        <form id="controls-form" class="controls-form" novalidate autocomplete="off"
+          aria-labelledby="controls-heading"></form>
+      </aside>
+      <div class="drawer-backdrop" aria-hidden="true"></div>
+    </div>
   </div>
+
+  <footer class="app-footer">
+    <p class="app-footer__inner">
+      <span class="app-footer__copy" data-i18n="shell.footer.copyright"></span>
+      <a class="app-footer__link" href="https://github.com/tdat00/sudoku-generator" target="_blank"
+        rel="noopener noreferrer" data-i18n="shell.footer.repo"
+        data-i18n-attr="title:shell.footer.repo.title"></a>
+    </p>
+  </footer>
 
   <div id="modal-root" class="modal-root"></div>
   <div id="toast-root" class="toast-root" role="status" aria-live="polite" aria-relevant="additions"

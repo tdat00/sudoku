@@ -929,48 +929,77 @@ dialog.modal:not([open]) {
   background: var(--sg-color-surface-2);
 }
 
-/* ---- Print dialog: a paper preview next to what will be printed ---- */
+/* ---- Print dialog: the saved puzzles to choose from, puzzles per page, solutions ---- */
 .print-dialog {
   display: flex;
-  align-items: flex-start;
-  gap: var(--sg-space-4);
+  flex-direction: column;
+  gap: var(--sg-space-3);
 }
 
-.print-dialog__preview {
-  flex: 0 0 auto;
-  width: 9rem;
-  height: 9rem;
-  object-fit: contain;
-  border: 1px solid var(--sg-color-border);
+.print-dialog__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sg-space-2) var(--sg-space-3);
+}
+
+.print-dialog__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-2);
+}
+
+.print-dialog__count {
+  margin: 0;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.print-list {
+  max-height: 12rem;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  border: 1px solid var(--sg-color-divider);
   border-radius: var(--sg-radius-2);
+  list-style: none;
 }
 
-.print-dialog__preview[hidden] {
+.print-list[hidden] {
   display: none;
 }
 
-.print-dialog__side {
+.print-list__item + .print-list__item {
+  border-top: 1px solid var(--sg-color-divider);
+}
+
+.print-pick {
   display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: var(--sg-space-3);
-  min-width: 0;
+  align-items: center;
+  gap: var(--sg-space-2);
+  padding: var(--sg-space-2) var(--sg-space-3);
+  cursor: pointer;
 }
 
-.print-dialog__summary {
+.print-pick:hover {
+  background: var(--sg-color-hover);
+}
+
+.print-pick > input {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
   margin: 0;
-  font-weight: 600;
 }
 
-@media (max-width: 30rem) {
-  .print-dialog {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .print-dialog__preview {
-    align-self: center;
-  }
+.print-dialog__status {
+  min-height: 1.25rem;
+  margin: 0;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
 }
 
 /* ---- Layout helpers ---- */
@@ -1034,6 +1063,90 @@ dialog.modal:not([open]) {
   }
 }
 
+/* ---- List of generated puzzles (js/ui/history.js, inside #history-root) ---- */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history-list[hidden] {
+  display: none;
+}
+
+.history-item {
+  position: relative;
+  min-width: 0;
+  border-radius: 0;
+}
+
+.history-item:hover {
+  background: var(--sg-color-hover);
+}
+
+.history-item__open {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+  padding: 0.5rem 2rem 0.5rem var(--sg-space-3);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  line-height: 1.35;
+  text-align: start;
+}
+
+.history-item__open[aria-current="true"] {
+  box-shadow: inset 3px 0 0 var(--sg-color-accent);
+  background: var(--sg-color-accent-soft);
+}
+
+.history-item__title {
+  overflow: hidden;
+  font-size: var(--sg-font-size-base);
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-item__meta {
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.history-item__level {
+  font-weight: 650;
+}
+
+.history-item .history-item__remove.btn--sm.btn--icon {
+  position: absolute;
+  top: 0.25rem;
+  inset-inline-end: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  min-height: 0;
+  padding: 0;
+}
+
+.history-item__remove .icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+@media (forced-colors: active) {
+  .history-item__open[aria-current="true"] {
+    outline: 2px solid currentColor;
+  }
+}
+
 /* ---- Result panel (js/ui/result-view.js, inside #result-root) and its warning state ---- */
 .result {
   display: flex;
@@ -1068,135 +1181,92 @@ dialog.modal:not([open]) {
   font-size: var(--sg-font-size-sm);
 }
 
-.result__body {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sg-space-4);
-  align-items: flex-start;
+.stat-grid--sm {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 12rem));
+  gap: var(--sg-space-2);
 }
 
-.result__preview {
-  flex: 0 1 15rem;
-  min-width: 0;
-  margin: 0;
-  padding: var(--sg-space-2);
-  border: 1px solid var(--sg-color-divider);
-  border-radius: var(--sg-radius-2);
-  background: var(--sg-color-surface-2);
+.stat--sm {
+  padding: var(--sg-space-2) var(--sg-space-3);
 }
 
-.result__preview-img {
-  width: 100%;
-  height: auto;
-  border-radius: var(--sg-radius-1);
-}
-
-.result__main {
-  flex: 1 1 min(100%, 18rem);
-  min-width: 0;
-}
-
-.result__field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sg-space-1);
-  min-width: 0;
-}
-
-.result__field-label {
-  font-size: var(--sg-font-size-sm);
-  font-weight: 650;
-}
-
-.result__field .btn {
-  white-space: nowrap;
-}
-
+.stat--sm .stat__label,
 .stat__sub {
   color: var(--sg-color-text-muted);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
 }
 
-.result__sections {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-  gap: var(--sg-space-4) var(--sg-space-5);
+.stat--sm .stat__value {
+  font-size: var(--sg-font-size-base);
 }
 
 .result__section {
   min-width: 0;
 }
 
-.result-bars {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sg-space-2);
-}
-
-.result-bars__row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: var(--sg-space-3);
-  row-gap: 0.125rem;
-  align-items: baseline;
-}
-
-.result-bars__label,
-.result-bars__value {
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: var(--sg-font-size-sm);
 }
 
-.result-bars__label {
-  min-width: 0;
+.result-table th,
+.result-table td {
+  padding: var(--sg-space-1) var(--sg-space-2);
+  border-bottom: 1px solid var(--sg-color-divider);
+  text-align: start;
   overflow-wrap: anywhere;
 }
 
-.result-bars__value {
+.result-table thead th {
+  color: var(--sg-color-text-muted);
+  font-weight: 600;
+}
+
+.result-table tbody th {
+  font-weight: 400;
+}
+
+.result-table .result-table__num {
+  text-align: end;
   font-variant-numeric: tabular-nums;
-  font-weight: 700;
+  white-space: nowrap;
 }
 
-.result-bars__track {
-  grid-column: 1 / -1;
-  height: 0.5rem;
-  overflow: hidden;
-  border-radius: var(--sg-radius-pill);
-  background: var(--sg-color-track);
+.result-table tbody th[scope="colgroup"] {
+  padding-top: var(--sg-space-2);
+  color: var(--sg-color-text-muted);
+  font-weight: 600;
 }
 
-.result-bars__bar {
-  display: block;
-  width: calc(var(--ratio, 0) * 100%);
-  height: 100%;
-  border-radius: inherit;
-  background: var(--sg-color-accent);
+.result-table tfoot th,
+.result-table tfoot td {
+  border-bottom: 0;
+  font-weight: 650;
 }
 
-@media (max-width: 599.98px) {
-  .result__body {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .result__preview {
-    flex: none;
-    width: min(100%, 16rem);
-    margin-inline: auto;
-  }
-
-  .result__main {
-    flex: none;
-  }
+.result-table__name {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sg-space-1);
 }
 
-@media (forced-colors: active) {
-  .result-bars__track {
-    border: 1px solid currentColor;
-  }
+.help-tip--inline {
+  position: relative;
+}
 
-  .result-bars__bar {
-    background: currentColor;
-  }
+.help-tip--inline .help-tip__pop {
+  top: calc(100% + 0.25rem);
+  inset-inline: 0 auto;
+  width: min(20rem, 70vw);
+  font-weight: 400;
+  text-align: start;
+}
+
+.result__note {
+  margin-top: var(--sg-space-2);
+  font-size: var(--sg-font-size-sm);
+  text-align: end;
 }
 
 /* ---- Settings dialog (js/ui/a11y.js): radio choices as buttons, switch rows ---- */

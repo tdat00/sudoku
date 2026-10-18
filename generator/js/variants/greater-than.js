@@ -556,14 +556,15 @@
     en: {
       'variant.greaterThan': 'Greater-Than Sudoku',
       'option.futoshiki': 'Signs across the whole grid (Futoshiki)',
-      'option.futoshiki.hint': 'Off: signs only between neighbouring cells of the same box. On: between ' +
-        'every pair of neighbouring cells, which also links the boxes.'
+      'option.futoshiki.hint': 'Where the comparison signs go.\n\n**Off**: signs only between neighbouring ' +
+        'cells of the same box.\n\n**On**: signs between every pair of neighbouring cells, which also ' +
+        'links the boxes.'
     },
     vi: {
       'variant.greaterThan': 'Sudoku So sánh',
       'option.futoshiki': 'Dấu so sánh trên toàn lưới (Futoshiki)',
-      'option.futoshiki.hint': 'Tắt: chỉ có dấu giữa các ô kề nhau trong cùng một khối. Bật: dấu giữa mọi ' +
-        'cặp ô kề nhau, kể cả giữa các khối.'
+      'option.futoshiki.hint': 'Nơi đặt các dấu so sánh.\n\n**Tắt**: chỉ có dấu giữa các ô kề nhau trong ' +
+        'cùng một khối.\n\n**Bật**: dấu giữa mọi cặp ô kề nhau, kể cả giữa các khối.'
     }
   });
 })(typeof self !== 'undefined' ? self : globalThis);

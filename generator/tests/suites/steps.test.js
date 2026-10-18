@@ -163,6 +163,7 @@
     Object.defineProperty(Text.prototype, 'textContent', { get: function () { return this.own; } });
 
     doc.createElement = function (tag) { return new El(tag); };
+    doc.createElementNS = function (ns, tag) { return new El(tag); };
     doc.createTextNode = function (text) { return new Text(text); };
     doc.findAll = function (start, pred, out) {
       out = out || [];
@@ -177,81 +178,64 @@
     var doc = createFakeDocument();
     var rootEl = doc.createElement('aside');
     rootEl.setAttribute('id', 'steps-root');
-    var toggle = doc.createElement('button');
-    toggle.setAttribute('id', 'btn-steps-toggle');
-    rootEl.appendChild(toggle);
-    var list = doc.createElement('ol');
-    list.setAttribute('id', 'steps-list');
-    rootEl.appendChild(list);
-    var explain = doc.createElement('section');
-    rootEl.appendChild(explain);
-    var picked = [];
-    var view = V.create(rootEl, { onSelect: function (p) { picked.push(p); } });
-    return { doc: doc, root: rootEl, list: list, toggle: toggle, explain: explain, view: view, picked: picked };
+    var detail = doc.createElement('div');
+    detail.setAttribute('id', 'step-detail');
+    var heading = doc.createElement('h2');
+    heading.setAttribute('id', 'steps-heading');
+    rootEl.appendChild(heading);
+    rootEl.appendChild(detail);
+    var view = V.create(rootEl);
+    return { doc: doc, root: rootEl, detail: detail, view: view };
+  }
+
+  function part(fx, cls) {
+    return fx.doc.findAll(fx.detail, function (el) { return el.classes().indexOf(cls) !== -1; })[0] || null;
   }
 
   // ---------------------------------------------------------------------------------------------
-  // The list of the replay steps
+  // The description of the step on show
   // ---------------------------------------------------------------------------------------------
 
-  describe('stepView: the list of the replay steps', function () {
-    it('lists every step with its number, title and summary, and marks none until a position is set', function () {
+  describe('stepView: the description of the step on show', function () {
+    it('shows nothing without steps, and a hint to use the replay controls at position 0', function () {
       var fx = panelFixture();
-      var steps = SG.player.buildSteps(result('classic9', 'medium', 3)).steps;
       inLocale('en', function () {
-        fx.view.setSteps(steps);
-        expect(fx.list.children.length).toBe(steps.length);
-        fx.list.children.forEach(function (li, i) {
-          expect(li.getAttribute('data-kind')).toBe(steps[i].kind);
-          expect(li.getAttribute('data-position')).toBe(String(i + 1));
-          var main = li.children[0];
-          expect(main.tagName).toBe('BUTTON');
-          expect(main.textContent).toContain(String(i + 1));
-          expect(main.textContent).toContain(SG.player.stepTitle(steps[i]));
-          expect(main.textContent).toContain(SG.player.stepMeta(steps[i]));
-          expect(main.getAttribute('aria-current')).toBeNull();
-          expect(li.children[1].hidden).toBe(true);
-        });
-        expect(fx.list.children[0].textContent).toContain('Full solution');
+        expect(fx.detail.textContent).toBe('');
+        fx.view.setSteps(SG.player.buildSteps(result('classic9', 'medium', 3)).steps);
+        expect(part(fx, 'step-detail__empty')).not.toBeNull();
+        expect(fx.detail.textContent).toContain('replay controls');
         expect(fx.view.getPosition()).toBe(0);
       });
     });
 
-    it('marks the current step, shows its sentence and hides the one before', function () {
+    it('shows the number, title, summary and sentence of the current step only', function () {
       var fx = panelFixture();
       var steps = SG.player.buildSteps(result('classic9', 'medium', 3)).steps;
       inLocale('en', function () {
         fx.view.setSteps(steps);
         fx.view.setPosition(3);
-        var li = fx.list.children[2];
-        expect(li.classList.contains('is-current')).toBe(true);
-        expect(li.children[0].getAttribute('aria-current')).toBe('step');
-        expect(li.children[1].hidden).toBe(false);
-        expect(li.children[1].textContent).toBe(SG.player.describeStep(steps[2]));
+        expect(fx.detail.getAttribute('data-kind')).toBe(steps[2].kind);
+        expect(fx.root.querySelector('#steps-heading').textContent)
+          .toBe('Step 3 - ' + SG.player.stepTitle(steps[2]));
+        expect(part(fx, 'step-detail__meta').textContent).toBe(SG.player.stepMeta(steps[2]));
+        expect(part(fx, 'step-detail__text').textContent).toBe(SG.player.describeStep(steps[2]));
+        expect(part(fx, 'step-detail__empty')).toBeNull();
         fx.view.setPosition(4);
-        expect(li.classList.contains('is-current')).toBe(false);
-        expect(li.children[0].getAttribute('aria-current')).toBeNull();
-        expect(li.children[1].hidden).toBe(true);
-        expect(fx.list.children[3].classList.contains('is-current')).toBe(true);
+        expect(fx.root.querySelector('#steps-heading').textContent)
+          .toBe('Step 4 - ' + SG.player.stepTitle(steps[3]));
+        expect(part(fx, 'step-detail__text').textContent).toBe(SG.player.describeStep(steps[3]));
         fx.view.setPosition(0);
-        expect(fx.doc.findAll(fx.list, function (el) { return el.classList.contains('is-current'); })).toEqual([]);
+        expect(fx.root.querySelector('#steps-heading').textContent).toBe('Step description');
+        expect(part(fx, 'step-detail__text')).toBeNull();
+        expect(part(fx, 'step-detail__empty')).not.toBeNull();
         fx.view.setPosition(999);
         expect(fx.view.getPosition()).toBe(0);
       });
     });
 
-    it('tells the app which step was picked, from a click anywhere on it', function () {
-      var fx = panelFixture();
-      fx.view.setSteps(SG.player.buildSteps(result('classic9', 'easy', 3)).steps);
-      fx.list.children[1].children[0].fire('click');
-      fx.list.children[4].children[0].children[1].children[0].fire('click');
-      fx.list.fire('click');
-      expect(fx.picked).toEqual([2, 5]);
-    });
-
     it('explains the frames it uses in a legend, and only those', function () {
       var fx = panelFixture();
-      var legend = fx.list.nextSibling;
+      var legend = fx.detail.nextSibling;
       expect(legend.hidden).toBe(true);
       inLocale('en', function () {
         fx.view.setSteps(SG.player.buildSteps(result('classic9', 'medium', 3)).steps);
@@ -266,7 +250,7 @@
         expect(gtMarks).not.toContain('dug');
         fx.view.clear();
         expect(legend.hidden).toBe(true);
-        expect(fx.list.children.length).toBe(0);
+        expect(fx.detail.textContent).toBe('');
       });
     });
 
@@ -275,33 +259,118 @@
       var steps = SG.player.buildSteps(result('killer', 'medium', 2)).steps;
       fx.view.setSteps(steps);
       fx.view.setPosition(2);
-      var en = fx.list.textContent;
+      var en = fx.detail.textContent;
       inLocale('vi', function () {
-        expect(fx.list.textContent).not.toBe(en);
-        expect(fx.list.children[1].textContent).toContain('Các lồng');
-        expect(fx.list.children[1].classList.contains('is-current')).toBe(true);
+        expect(fx.detail.textContent).not.toBe(en);
+        expect(fx.root.querySelector('#steps-heading').textContent).toContain('Các lồng');
+        expect(fx.root.querySelector('#steps-heading').textContent).toContain('Bước 2 - ');
       });
-      expect(fx.list.textContent).toBe(en);
+      expect(fx.detail.textContent).toBe(en);
     });
 
-    it('expands and collapses the stepper of narrow screens', function () {
+    it('rates the puzzle of each step: nothing before the dig, the rating of the result at the end', function () {
+      var res = result('classic9', 'medium', 3);
+      var player = SG.player.create({});
+      player.load(res);
+      var steps = player.getSteps();
+      expect(player.rateStep(0)).toBeNull();
+      expect(player.rateStep(steps.length + 1)).toBeNull();
+      expect(player.rateStep(1).counts).toEqual({});
+      expect(player.rateStep(steps.length).counts).toEqual(res.rating.techniqueCounts);
+      var rated = 0;
+      steps.forEach(function (step, i) {
+        var info = player.rateStep(i + 1);
+        if (info === null) return;
+        rated++;
+        var previous = i === 0 ? { counts: {} } : player.rateStep(i);
+        if (previous !== null) expect(info.before).toEqual(previous.counts);
+      });
+      expect(rated).toBe(steps.length);
+      player.destroy();
+    });
+
+    it('shows the techniques a step needs, with the uses and score each step added', function () {
       var fx = panelFixture();
-      fx.view.setExpanded(true);
-      expect(fx.root.classList.contains('is-expanded')).toBe(true);
-      expect(fx.toggle.getAttribute('aria-expanded')).toBe('true');
-      fx.view.setExpanded(false);
-      expect(fx.root.classList.contains('is-expanded')).toBe(false);
-      expect(fx.toggle.getAttribute('aria-expanded')).toBe('false');
+      var res = result('classic9', 'medium', 3);
+      var player = SG.player.create({});
+      player.load(res);
+      var rootEl = fx.root;
+      var view = V.create(rootEl, { stats: function (p) { return player.rateStep(p); } });
+      var steps = player.getSteps();
+      inLocale('en', function () {
+        view.setSteps(steps);
+        view.setPosition(steps.length);
+        var rows = fx.doc.findAll(fx.detail, function (el) { return el.getAttribute('data-technique') !== null; });
+        expect(rows.map(function (r) { return r.getAttribute('data-technique'); }))
+          .toEqual(Object.keys(res.rating.techniqueCounts).sort(function (a, b) {
+            return SG.techniques.get(a).order - SG.techniques.get(b).order;
+          }));
+        expect(fx.detail.textContent).toContain('Techniques needed at this step');
+        // Every technique with a description has a help button that carries it, as in the summary tab.
+        rows.forEach(function (row) {
+          var id = row.getAttribute('data-technique');
+          var pops = fx.doc.findAll(row, function (el) { return el.getAttribute('role') === 'tooltip'; });
+          expect(pops.length).toBe(1);
+          expect(pops[0].textContent).toBe(SG.i18n.t('technique.' + id + '.desc'));
+          var buttons = fx.doc.findAll(row, function (el) { return el.tagName === 'BUTTON'; });
+          expect(buttons[0].getAttribute('aria-label')).toBe('About \u201c' + SG.i18n.t('technique.' + id) + '\u201d');
+        });
+        view.setPosition(1);
+        expect(fx.detail.textContent).toContain('No solving technique is needed yet.');
+      });
+      view.destroy();
+      player.destroy();
     });
 
-    it('builds its list when the page has none, and takes everything away on destroy', function () {
+    it('shows the same total at the last step as the score of the summary, whatever its parts', function () {
+      var fx = panelFixture();
+      var res = result('classic9', 'medium', 3);
+      var player = SG.player.create({});
+      player.load(res);
+      var view = V.create(fx.root, { stats: function (p) { return player.rateStep(p); } });
+      var steps = player.getSteps();
+      var info = player.rateStep(steps.length);
+      expect(info.score).toBe(res.rating.score);
+      expect(info.empties).toBe(res.rating.empties);
+      inLocale('en', function () {
+        view.setSteps(steps);
+        view.setPosition(steps.length);
+        var total = fx.doc.findAll(fx.detail, function (el) { return /step-table__total/.test(el.getAttribute('class') || ''); });
+        expect(total.length).toBe(1);
+        expect(total[0].textContent).toContain(String(Math.round(res.rating.score)));
+        var empties = fx.doc.findAll(fx.detail, function (el) { return el.getAttribute('data-part') === 'empties'; });
+        expect(empties.length).toBe(1);
+        var tip = fx.doc.findAll(empties[0], function (el) { return el.getAttribute('role') === 'tooltip'; });
+        expect(tip.length).toBe(1);
+        expect(tip[0].textContent).toContain('0.6');
+        // The rows add up to the total, as they are written.
+        var parts = fx.doc.findAll(fx.detail, function (el) {
+          return el.tagName === 'TR' && (el.getAttribute('data-technique') !== null || el.getAttribute('data-part') !== null);
+        });
+        var sum = 0;
+        parts.forEach(function (row) {
+          var cells = row.children;
+          sum += Number(cells[cells.length - 1].textContent.replace(/[^0-9.]/g, ''));
+        });
+        expect(sum).toBe(Math.round(res.rating.score));
+        // There is no "Added" column any more: name, uses and score only.
+        expect(fx.detail.textContent).not.toContain('Added');
+        var head = fx.doc.findAll(fx.detail, function (el) { return el.tagName === 'TH' && el.getAttribute('scope') === null; });
+        expect(head.length).toBeGreaterThan(0);
+      });
+      view.destroy();
+      player.destroy();
+    });
+
+    it('builds its container when the page has none, and takes everything away on destroy', function () {
       var doc = createFakeDocument();
       var rootEl = doc.createElement('aside');
-      var view = V.create(rootEl, {});
-      var list = rootEl.querySelector('#steps-list');
-      expect(list).not.toBeNull();
+      var view = V.create(rootEl);
+      var detail = rootEl.querySelector('#step-detail');
+      expect(detail).not.toBeNull();
       view.setSteps(SG.player.buildSteps(result('classic4', 'easy', 2)).steps);
-      expect(list.children.length).toBeGreaterThan(2);
+      view.setPosition(2);
+      expect(detail.children.length).toBeGreaterThan(1);
       view.destroy();
       expect(rootEl.children.length).toBe(0);
       expect(function () { V.create(null); }).toThrow();

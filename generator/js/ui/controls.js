@@ -1043,8 +1043,9 @@
       'controls.variant.label': 'Variant',
       'controls.difficulty.label': 'Difficulty',
       'controls.symbolMode.label': 'Symbol set',
-      'controls.symbolMode.hint': 'Only changes how the values are drawn (digits, letters, colours with ' +
-        'shapes, or shapes). The puzzle does not change.',
+      'controls.symbolMode.hint': 'Only changes how the values are drawn. The puzzle does not change.\n\n' +
+        '**Digits**: numbers.\n\n**Letters**: letters.\n\n**Colours**: colours, each with its own shape.\n\n' +
+        '**Shapes**: shapes only.',
       'controls.symmetry.label': 'Symmetry',
       'controls.symmetry.hint': 'Clues are removed in matching groups, so the pattern of the given cells ' +
         'is symmetric.\n\nA **stricter symmetry** makes the highest levels harder to reach.',
@@ -1080,8 +1081,9 @@
       'controls.variant.label': 'Biến thể',
       'controls.difficulty.label': 'Độ khó',
       'controls.symbolMode.label': 'Bộ ký hiệu',
-      'controls.symbolMode.hint': 'Chỉ đổi cách vẽ các giá trị (chữ số, chữ cái, màu kèm hình, hoặc hình ' +
-        'khối). Câu đố không thay đổi.',
+      'controls.symbolMode.hint': 'Chỉ đổi cách vẽ các giá trị. Đề không thay đổi.\n\n' +
+        '**Chữ số**: các con số.\n\n**Chữ cái**: các chữ cái.\n\n**Màu sắc**: các màu, mỗi màu kèm một ' +
+        'hình riêng.\n\n**Hình khối**: chỉ dùng hình khối.',
       'controls.symmetry.label': 'Đối xứng',
       'controls.symmetry.hint': 'Các số cho sẵn được bỏ theo từng nhóm tương ứng, nên hình dạng các ô cho ' +
         'sẵn đối xứng.\n\n**Đối xứng càng chặt** thì các mức cao nhất càng khó đạt.',

@@ -46,13 +46,11 @@
     return n;
   }
 
-  var BASE = 'file:///Q:/app/index.html?old=1#frag';
-
   describe('result view: values of a result', function () {
     it('shows the numbers of a real classic9 result', function () {
       ready();
       var r = realResult('classic9', 'easy', 3);
-      var vm = R.viewModel(r, { state: SG.store.defaults(), baseUrl: BASE });
+      var vm = R.viewModel(r);
       expect(vm.variantId).toBe('classic9');
       expect(vm.variantName).toBe(SG.i18n.t('variant.classic9'));
       expect(vm.clues).toBe(clueCount(r.givens));
@@ -65,63 +63,82 @@
       expect(vm.achievedName).toBe(SG.i18n.t('difficulty.' + r.rating.level));
       expect(vm.requestedName).toBe('Easy');
       expect(vm.exact).toBe(r.rating.level === 'easy');
-      expect(vm.hardest).toBe(r.rating.hardestTechnique);
-      expect(vm.hardestName).toBe(SG.i18n.t('technique.' + r.rating.hardestTechnique));
-      expect(vm.attempts).toBe(r.attempts);
-      expect(vm.attemptsText).toBe(SG.i18n.t('unit.attempt', { count: r.attempts }));
-      expect(vm.seed).toBe('3');
     });
 
-    it('lists the time of the seven steps and their total, and the technique chart', function () {
+    it('lists the techniques used with their uses and score, simplest first', function () {
       ready();
       var r = realResult('classic9', 'easy', 3);
-      var vm = R.viewModel(r, {});
-      expect(vm.steps.map(function (s) { return s.id; })).toEqual(SG.stepView.STEP_IDS);
-      vm.steps.forEach(function (s) {
-        expect(s.name).toBe(SG.i18n.t('step.' + s.id + '.name'));
-        expect(s.ms).toBe(r.timings[s.id]);
-        expect(s.text).toBe(SG.i18n.formatDuration(r.timings[s.id]));
-        expect(s.ratio).toBeGreaterThanOrEqual(0);
-        expect(s.ratio).toBeLessThanOrEqual(1);
-      });
-      expect(Math.max.apply(null, vm.steps.map(function (s) { return s.ratio; }))).toBe(1);
-      var sum = 0;
-      Object.keys(r.timings).forEach(function (id) { sum += r.timings[id]; });
-      expect(vm.totalMs).toBeCloseTo(sum, 6);
-      expect(vm.totalText).toBe(SG.i18n.formatDuration(vm.totalMs));
+      var vm = R.viewModel(r);
       var chart = SG.stepView.chartModel(r.rating.techniqueCounts);
-      expect(vm.chart.bars.map(function (b) { return b.id; })).toEqual(chart.bars.map(function (b) { return b.id; }));
-      expect(vm.chart.empty).toBe(false);
+      expect(vm.techniques.map(function (row) { return row.id; }))
+        .toEqual(chart.bars.map(function (b) { return b.id; }));
+      expect(vm.techniques.length).toBeGreaterThan(0);
+      var sum = 0;
+      vm.techniques.forEach(function (row) {
+        var count = r.rating.techniqueCounts[row.id];
+        expect(row.name).toBe(SG.i18n.t('technique.' + row.id));
+        expect(row.summary).toBe(SG.i18n.has('technique.' + row.id + '.desc')
+          ? SG.i18n.t('technique.' + row.id + '.desc') : '');
+        expect(row.count).toBe(count);
+        expect(row.countText).toBe(SG.i18n.formatNumber(count));
+        expect(row.unitScore).toBe(SG.difficulty.costOf(row.id));
+        expect(row.score).toBeCloseTo(row.unitScore *
+          (count - 1 + SG.difficulty.SCORING.firstUseMultiplier), 6);
+        // The rows are whole numbers that add up to the total (see the "parts" test below).
+        expect(Math.abs(Number(row.scoreText.replace(/[^0-9]/g, '')) - Math.round(row.score))).toBeLessThan(2);
+        sum += row.score;
+      });
+      // The technique scores are the technique part of the rating (the empty-cell bonus and the technique
+      // floor come on top).
+      expect(sum).toBeLessThan(r.rating.score + 1e-6);
       expect(vm.techniqueCounts).toEqual(r.rating.techniqueCounts);
+    });
+
+    it('adds the techniques, the empty cells and the raise up to the score, as written in the table', function () {
+      ready();
+      var withTip = realResult('classic9', 'easy', 3);
+      var vmTip = R.viewModel(withTip);
+      expect(vmTip.parts.empties).toBeGreaterThan(0);
+      ['empties', 'floor'].forEach(function (part) {
+        expect(SG.i18n.has('result.techniques.' + part + '.desc')).toBe(true);
+      });
+      ['easy', 'medium', 'hard'].forEach(function (level) {
+        var r = realResult('classic9', level, 3);
+        var vm = R.viewModel(r);
+        var num = function (text) { return Number(String(text).replace(/[^0-9]/g, '')); };
+        var sum = vm.techniques.reduce(function (n, row) { return n + num(row.scoreText); }, 0);
+        sum += num(vm.parts.emptyText) + num(vm.parts.raisedText);
+        expect(sum).toBe(Math.round(r.rating.score));
+        expect(vm.parts.totalText).toBe(vm.scoreText);
+        expect(vm.parts.empties).toBe(r.rating.empties);
+      });
+    });
+
+    it('has no technique row for a puzzle that needs none', function () {
+      ready();
+      var r = withWarnings(realResult('classic9', 'easy', 3), [], { techniqueCounts: {} });
+      expect(R.viewModel(r).techniques).toEqual([]);
     });
 
     it('shows a killer result with its own name and board size', function () {
       ready();
       var r = realResult('killer', 'easy', 3);
-      var vm = R.viewModel(r, {});
+      var vm = R.viewModel(r);
       expect(vm.variantId).toBe('killer');
       expect(vm.variantName).toBe(SG.i18n.t('variant.killer'));
       expect(vm.cells).toBe(r.model.cellCount);
       expect(vm.clues).toBe(clueCount(r.givens));
       expect(vm.requested).toBe('easy');
-      expect(vm.previewAlt).toContain(vm.variantName);
     });
 
     it('does not change the result it describes, and says nothing about a missing result', function () {
       ready();
       var r = realResult('classic9', 'easy', 3);
       var before = JSON.stringify([Array.from(r.givens), r.rating, r.timings, r.warnings, r.config]);
-      R.viewModel(r, { state: SG.store.defaults(), baseUrl: BASE, showSolution: true });
+      R.viewModel(r);
       expect(JSON.stringify([Array.from(r.givens), r.rating, r.timings, r.warnings, r.config])).toBe(before);
-      expect(R.viewModel(null, {})).toBeNull();
+      expect(R.viewModel(null)).toBeNull();
       expect(R.viewModel(undefined)).toBeNull();
-    });
-
-    it('reports the solution switch from the context', function () {
-      ready();
-      var r = realResult('classic9', 'easy', 3);
-      expect(R.viewModel(r, { showSolution: true }).solutionShown).toBe(true);
-      expect(R.viewModel(r, {}).solutionShown).toBe(false);
     });
 
     it('creating the panel needs an element', function () {
@@ -185,118 +202,20 @@
     });
   });
 
-  describe('result view: share link', function () {
-    function parse(link) {
-      return SG.store.parseUrl(link.slice(link.indexOf('?')));
-    }
-
-    it('reproduces the configuration of the result, generates on load and drops the old query', function () {
-      ready();
-      var r = realResult('classic9', 'easy', 3);
-      var vm = R.viewModel(r, { state: SG.store.defaults(), baseUrl: BASE });
-      expect(vm.shareUrl.indexOf('file:///Q:/app/index.html?')).toBe(0);
-      expect(vm.shareUrl).not.toContain('old=1');
-      expect(vm.shareUrl).not.toContain('#frag');
-      expect(vm.shareUrl).toContain('auto=1');
-      expect(vm.shareUrl).toContain('seed=3');
-      expect(vm.shareUrl).not.toContain('trace=');
-      var parsed = parse(vm.shareUrl);
-      expect(parsed.auto).toBe(true);
-      var config = SG.store.toConfig(parsed);
-      ['variantId', 'difficulty', 'seed', 'symbolMode', 'symmetry', 'digOrder', 'maxAttempts', 'variantOptions']
-        .forEach(function (key) { expect(config[key]).toEqual(r.config[key]); });
-      expect(R.shareLink(r, { state: SG.store.defaults(), baseUrl: BASE })).toBe(vm.shareUrl);
-    });
-
-    it('carries the seed that was used even when the seed field was blank', function () {
-      ready();
-      var random = SG.pipeline.run({ variantId: 'classic4', difficulty: 'easy', trace: 'off' }, null);
-      var state = Object.assign({}, SG.store.defaults(), { variantId: 'classic4', difficulty: 'easy', seed: '' });
-      var vm = R.viewModel(random, { state: state, baseUrl: BASE });
-      expect(vm.seed).toBe(String(random.seed));
-      expect(SG.store.toConfig(parse(vm.shareUrl)).seed).toBe(random.seed);
-    });
-
-    it('opens THIS puzzle, whatever the form says now', function () {
-      ready();
-      var r = realResult('classic9', 'easy', 3);
-      var other = Object.assign({}, SG.store.defaults(), { variantId: 'killer', difficulty: 'hard', seed: '99' });
-      var vm = R.viewModel(r, { state: other, baseUrl: BASE });
-      var config = SG.store.toConfig(parse(vm.shareUrl));
-      expect(config.variantId).toBe('classic9');
-      expect(config.difficulty).toBe('easy');
-      expect(config.seed).toBe(3);
-    });
-
-    it('keeps the variant options of the puzzle', function () {
-      ready();
-      var def = SG.variants.get('killer');
-      var item = SG.variants.optionsOf(def).filter(function (o) { return o.type !== 'text'; })[0];
-      var values = SG.variants.defaultOptions(def);
-      var other = item.type === 'boolean' ? !item.default
-        : (item.choices.length > 0 ? item.choices.map(function (c) { return c.value; })
-          .filter(function (v) { return v !== item.default; })[0] : item.max);
-      var options = {};
-      options[item.id] = other;
-      var r = Object.assign({}, realResult('killer', 'easy', 3), {
-        config: Object.assign({}, realResult('killer', 'easy', 3).config, { variantOptions: Object.assign(values, options) })
-      });
-      var vm = R.viewModel(r, { state: SG.store.defaults(), baseUrl: BASE });
-      expect(vm.shareUrl).toContain('o.' + item.id + '=');
-      expect(SG.store.toConfig(parse(vm.shareUrl)).variantOptions[item.id]).toEqual(other);
-    });
-
-    it('has no link for an imported puzzle, with or without a seed (the form seed would open another one)',
-      function () {
-        ready();
-        var r = realResult('classic9', 'easy', 3);
-        var state = Object.assign({}, SG.store.defaults(), { seed: '777' });
-        var noSeed = Object.assign({}, r, { seed: null, source: 'import' });
-        noSeed.config = Object.assign({}, r.config, { seed: null });
-        var vm = R.viewModel(noSeed, { state: state, baseUrl: BASE });
-        expect(vm.imported).toBe(true);
-        expect(vm.shareUrl).toBe('');
-        expect(vm.seed).toBe('');
-        expect(R.shareLink(noSeed, { state: state, baseUrl: BASE })).toBe('');
-        expect(R.shareLink(Object.assign({}, r, { source: 'import' }), { state: state, baseUrl: BASE })).toBe('');
-        // The app says so through the context as well.
-        var flagged = R.viewModel(r, { state: state, baseUrl: BASE, imported: true });
-        expect(flagged.imported).toBe(true);
-        expect(flagged.shareUrl).toBe('');
-        // A generated puzzle keeps its link.
-        var generated = R.viewModel(r, { state: state, baseUrl: BASE });
-        expect(generated.imported).toBe(false);
-        expect(generated.shareUrl).toContain('seed=3');
-      });
-
-    it('leaves the link empty when there is no store, and handles a missing context', function () {
-      ready();
-      var r = realResult('classic9', 'easy', 3);
-      expect(R.shareState(r, null).seed).toBe('3');
-      expect(R.shareState(r, { theme: 'dark' }).theme).toBe('dark');
-      expect(typeof R.viewModel(r).shareUrl).toBe('string');
-    });
-  });
-
   describe('result view: language', function () {
     it('translates every label and unit, and formats numbers for the language', function () {
       ready();
       var r = withWarnings(realResult('classic9', 'easy', 3), ['difficulty.approximate'],
-        { level: 'medium', score: 1234.4 }, 'hard');
-      r.timings = { configure: 100, buildModel: 0, fullGrid: 0, extraStructure: 0, dig: 1400, rate: 0, tune: 0 };
-      var en = inLocale('en', function () { return R.viewModel(r, {}); });
-      var vi = inLocale('vi', function () { return R.viewModel(r, {}); });
-      ['achievedName', 'requestedName', 'hardestName', 'attemptsText', 'cluesText', 'previewAlt', 'variantName']
+        { level: 'medium', score: 1234.4, techniqueCounts: { nakedSingle: 3, xWing: 1 } }, 'hard');
+      var en = inLocale('en', function () { return R.viewModel(r); });
+      var vi = inLocale('vi', function () { return R.viewModel(r); });
+      ['achievedName', 'requestedName', 'cluesText', 'variantName']
         .forEach(function (key) { expect(vi[key]).not.toBe(en[key]); });
       expect(vi.warnings[0].text).not.toBe(en.warnings[0].text);
-      expect(vi.steps[0].name).not.toBe(en.steps[0].name);
-      expect(en.totalText).toBe('1.5 s');
-      expect(vi.totalText).toBe('1,5 giây');
+      expect(vi.techniques[0].name).not.toBe(en.techniques[0].name);
       expect(en.scoreText).toBe('1,234');
       expect(vi.scoreText).toBe('1.234');
       expect(en.warnings[0].kind).toBe(vi.warnings[0].kind);
-      expect(en.shareUrl).toBe(vi.shareUrl);
-      expect(en.seed).toBe(vi.seed);
     });
 
     function fragmentOf(key) {
@@ -311,7 +230,7 @@
       it('the ' + prefix + '.* fragment has the same keys, placeholders and no empty text in en and vi',
         function () {
           ready();
-          var fragment = fragmentOf(prefix === 'result' ? 'result.title' : 'app.status.ready');
+          var fragment = fragmentOf(prefix === 'result' ? 'result.title' : 'app.status.failed');
           expect(fragment).toBeTruthy();
           var keys = Object.keys(fragment.en).sort();
           expect(Object.keys(fragment.vi).sort()).toEqual(keys);

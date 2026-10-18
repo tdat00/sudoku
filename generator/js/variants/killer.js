@@ -1014,7 +1014,7 @@
       'variant.killer': 'Killer Sudoku',
       'variant.killer.cageSize': 'Cage size',
       'variant.killer.cageSize.hint': 'Small cages are easier to read, large cages call for more ' +
-        'reasoning. "By difficulty" keeps the cage size of the chosen level.',
+        'reasoning.\n\n**By difficulty**: keeps the cage size of the chosen level.',
       'variant.killer.cageSize.small': 'Smaller',
       'variant.killer.cageSize.large': 'Larger',
       'variant.killer.cageSize.auto': 'By difficulty',
@@ -1050,18 +1050,18 @@
     vi: {
       'variant.killer': 'Sudoku Sát thủ',
       'variant.killer.cageSize': 'Cỡ lồng',
-      'variant.killer.cageSize.hint': 'Lồng nhỏ dễ đọc hơn, lồng lớn đòi hỏi suy luận nhiều hơn. ' +
-        '"Theo độ khó" giữ nguyên cỡ lồng của mức độ đã chọn.',
+      'variant.killer.cageSize.hint': 'Lồng nhỏ dễ đọc hơn, lồng lớn đòi hỏi suy luận nhiều hơn.\n\n' +
+        '**Theo độ khó**: giữ nguyên cỡ lồng của mức độ đã chọn.',
       'variant.killer.cageSize.small': 'Nhỏ hơn',
       'variant.killer.cageSize.large': 'Lớn hơn',
       'variant.killer.cageSize.auto': 'Theo độ khó',
       'technique.cageCombo': 'Tổ hợp tổng lồng',
       'technique.cageCombo.step': 'Lồng có tổng {sum} gồm {size} ô ({cells}) chỉ có thể viết bằng ' +
         'các chữ số {digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra, và chữ số bắt buộc ' +
-        'phải có trong lồng ({forced}) bị loại khỏi các ô còn lại của hàng, cột hoặc vùng chứa toàn ' +
+        'phải có trong lồng ({forced}) bị loại khỏi các ô còn lại của hàng, cột hoặc khối chứa toàn ' +
         'bộ vị trí khả dĩ của nó.',
       'technique.ruleOf45': 'Quy tắc 45',
-      'technique.ruleOf45.step': 'Quy tắc 45 trên {units}: mỗi hàng, cột hoặc vùng chứa đủ các chữ ' +
+      'technique.ruleOf45.step': 'Quy tắc 45 trên {units}: mỗi nhóm chứa đủ các chữ ' +
         'số từ 1 đến 9 (tổng 45), nên sau khi trừ các lồng nằm trọn bên trong, các ô {cells} phải có ' +
         'tổng bằng {sum}. Những ứng viên không thể đạt được tổng đó bị loại.',
       'technique.ruleOf45.place': 'Quy tắc 45 trên {units}: sau khi trừ các lồng nằm trọn bên trong, ' +

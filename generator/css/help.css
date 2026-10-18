@@ -218,6 +218,18 @@
   font-size: var(--sg-font-size-sm);
 }
 
+.help-list__hint p {
+  margin: 0;
+}
+
+.help-list__hint p + p {
+  margin-top: var(--sg-space-2);
+}
+
+.help-list__hint strong {
+  color: var(--sg-color-text);
+}
+
 @media (min-width: 640px) {
   .help-variant__body {
     grid-template-columns: auto minmax(0, 1fr);

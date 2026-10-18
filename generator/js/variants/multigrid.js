@@ -376,13 +376,13 @@
     vi: {
       'variant.samurai': 'Sudoku Samurai',
       'variant.samurai.desc':
-        'Năm lưới 9×9 chồng lên nhau: lưới giữa dùng chung một hộp 3×3 với mỗi lưới ở góc (369 ô).',
+        'Năm lưới 9×9 chồng lên nhau: lưới giữa dùng chung một khối 3×3 với mỗi lưới ở góc (369 ô).',
       'variant.sohei': 'Sudoku Sohei',
       'variant.sohei.desc':
-        'Bốn lưới 9×9 xếp thành vòng: mỗi lưới dùng chung một hộp 3×3 với hai lưới kề bên (288 ô).',
+        'Bốn lưới 9×9 xếp thành vòng: mỗi lưới dùng chung một khối 3×3 với hai lưới kề bên (288 ô).',
       'variant.butterfly': 'Sudoku Cánh bướm',
       'variant.butterfly.desc':
-        'Bốn lưới 9×9 lệch nhau một hộp, chồng lên vùng trung tâm 6×6 (144 ô).',
+        'Bốn lưới 9×9 lệch nhau một khối, chồng lên vùng trung tâm 6×6 (144 ô).',
       'variant.flower': 'Sudoku Bông hoa',
       'variant.flower.desc':
         'Năm lưới 9×9: bốn cánh hoa quanh một lưới trung tâm, chồng lên nhau rất dày (189 ô).',

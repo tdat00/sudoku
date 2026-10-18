@@ -284,7 +284,7 @@
         'một lần.',
       'option.symbolSet': 'Bộ ký hiệu',
       'option.symbolSet.hint':
-        'Chỉ thay đổi cách hiển thị các giá trị. Câu đố và đáp án vẫn giữ nguyên.',
+        'Chỉ thay đổi cách hiển thị các giá trị. Đề và lời giải vẫn giữ nguyên.',
       'option.symbolSet.mega12.letters': 'Chữ số và chữ cái (1–9, A, B, C)',
       'option.symbolSet.mega12.numbers': 'Số (1–12)',
       'option.symbolSet.mega16.hex': 'Thập lục phân (0–9, A–F)',

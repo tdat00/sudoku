@@ -61,15 +61,18 @@
       'player.last': 'Go to the finished puzzle',
       'player.scrubber': 'Replay step',
 
-      'shell.status.label': 'Status:',
 
-      'shell.steps.heading': 'Generation steps',
-      'shell.steps.toggle': 'Details',
-      'shell.steps.toggle.title': 'Expand or collapse the list of steps',
+      'shell.steps.heading': 'Step description',
+      'shell.tabs.label': 'Summary and generation steps',
+      'shell.tab.result': 'Summary',
+      'shell.tab.steps': 'Generation Steps',
       'shell.btn.explain': 'Explain',
       'shell.btn.explain.title': 'Open the Help to read how the current step works',
 
       'shell.result.label': 'Result',
+      'shell.footer.copyright': '\u00a9 2026 Dat Le. Released under the MIT licence.',
+      'shell.footer.repo': 'Source code on GitHub',
+      'shell.footer.repo.title': 'Open the repository of sudoku-generator on GitHub (new tab)',
       'shell.toast.label': 'Notifications'
     },
     vi: {
@@ -123,15 +126,18 @@
       'player.last': 'Đến đề hoàn chỉnh',
       'player.scrubber': 'Bước phát lại',
 
-      'shell.status.label': 'Trạng thái:',
 
-      'shell.steps.heading': 'Các bước tạo đề',
-      'shell.steps.toggle': 'Chi tiết',
-      'shell.steps.toggle.title': 'Mở rộng hoặc thu gọn danh sách các bước',
+      'shell.steps.heading': 'Mô tả bước',
+      'shell.tabs.label': 'Tóm tắt và các bước tạo đề',
+      'shell.tab.result': 'Tóm tắt',
+      'shell.tab.steps': 'Các bước tạo đề',
       'shell.btn.explain': 'Giải thích',
       'shell.btn.explain.title': 'Mở phần Trợ giúp để đọc cách bước hiện tại hoạt động',
 
       'shell.result.label': 'Kết quả',
+      'shell.footer.copyright': '\u00a9 2026 Dat Le. Phát hành theo giấy phép MIT.',
+      'shell.footer.repo': 'Mã nguồn trên GitHub',
+      'shell.footer.repo.title': 'Mở kho mã sudoku-generator trên GitHub (tab mới)',
       'shell.toast.label': 'Thông báo'
     }
   };

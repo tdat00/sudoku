@@ -1,107 +1,61 @@
 /*
- * Steps panel (the list of the replay steps) and explanation card. Colours only through the --sg-color-*
- * tokens (and the --sg-board-* frame colours for the legend swatches). The current step is told by a word
- * and a shape as well as by colour: `aria-current`, the bar on its left, its full sentence.
- * The container layout of the list (column, strip, stepper) lives in layout.css.
+ * Steps panel (the description of the current replay step) and explanation card. Colours only through the
+ * --sg-color-* tokens (and the --sg-board-* frame colours for the legend swatches).
  */
 
-/* ---- One step of the replay ---- */
-.rstep {
-  min-width: 0;
-  border: 1px solid var(--sg-color-divider);
-  border-inline-start: 4px solid var(--sg-color-divider);
-  border-radius: var(--sg-radius-2);
-  background: var(--sg-color-surface);
-  color: var(--sg-color-text);
-}
-
-.rstep[data-kind="final"] {
-  border-inline-start-color: var(--sg-color-success);
-}
-
-.rstep.is-current {
-  border-color: var(--sg-color-accent);
-  border-inline-start-color: var(--sg-color-accent);
-  background: var(--sg-color-accent-soft);
-  box-shadow: 0 0 0 1px var(--sg-color-accent);
-}
-
-.rstep__main {
-  display: grid;
-  width: 100%;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: start;
-  column-gap: var(--sg-space-2);
-  min-width: 0;
-  padding: var(--sg-space-2) var(--sg-space-3);
-  border: 0;
-  border-radius: var(--sg-radius-2);
-  background: transparent;
-  color: inherit;
-  text-align: start;
-}
-
-.rstep__main:hover {
-  background: var(--sg-color-hover);
-}
-
-/* Inset: the list scrolls and would clip an outline drawn outside. */
-.rstep__main:focus-visible {
-  outline-offset: calc(-1 * var(--sg-focus-width));
-}
-
-.rstep__num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.5rem;
-  height: 1.5rem;
-  padding: 0 0.25rem;
-  border: 2px solid currentColor;
-  border-radius: var(--sg-radius-pill);
-  font-size: 0.75rem;
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.rstep.is-current .rstep__num {
-  border-color: var(--sg-color-accent);
-  background: var(--sg-color-accent);
-  color: var(--sg-color-accent-text);
-}
-
-.rstep__body {
+/* ---- The step on show ---- */
+.step-detail {
   display: flex;
   flex-direction: column;
-  gap: 0.125rem;
+  gap: var(--sg-space-3);
   min-width: 0;
 }
 
-.rstep__title {
-  font-size: 0.9375rem;
-  font-weight: 650;
-  overflow-wrap: anywhere;
+.step-detail:empty {
+  display: none;
 }
 
-.rstep__meta {
+.step-detail__empty {
+  margin: 0;
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.step-detail__meta {
+  margin: 0;
   color: var(--sg-color-text-muted);
   font-size: var(--sg-font-size-sm);
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
 
-.rstep__text {
+.step-detail__text {
   margin: 0;
-  padding: 0 var(--sg-space-3) var(--sg-space-3) calc(var(--sg-space-3) + 1.5rem + var(--sg-space-2));
   font-size: var(--sg-font-size-sm);
   overflow-wrap: anywhere;
+}
+
+.step-detail__techniques {
+  min-width: 0;
+}
+
+.step-detail__subtitle {
+  margin: 0 0 var(--sg-space-2);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 650;
+}
+
+.step-detail__techniques .result-table tfoot th,
+.step-detail__techniques .result-table tfoot td {
+  border-bottom: 0;
+  font-weight: 650;
 }
 
 /* ---- Legend of the board frames ---- */
 .steps-legend {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   gap: var(--sg-space-1) var(--sg-space-4);
   margin: var(--sg-space-3) 0 0;
   padding: 0;
@@ -284,10 +238,6 @@
 @media (forced-colors: active) {
   .explain-code__line.is-active {
     border-inline-start-color: currentColor;
-  }
-
-  .rstep.is-current {
-    border-width: 3px;
   }
 
   .steps-legend__swatch {

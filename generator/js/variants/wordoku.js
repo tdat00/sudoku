@@ -502,13 +502,14 @@
         'variant.wordoku.placement.column': 'A column',
         'variant.wordoku.line': 'Row or column number',
         'variant.wordoku.line.hint':
-          'Which row or column carries the word, counted from 1. Only used when the word goes on a row ' +
-          'or a column.',
+          'Which row or column carries the word, counted from 1. Only used when the word goes on ' +
+          '**A row** or **A column**.',
         'variant.wordoku.line.random': 'Random',
         'variant.wordoku.language': 'Word list',
         'variant.wordoku.language.hint':
-          'The language of the key words to draw from. Vietnamese words are written without diacritics. ' +
-          'If the Vietnamese list is too short, English words are used instead.',
+          'The language of the key words to draw from.\n\n**English**: English words.\n\n**Vietnamese**: ' +
+          'Vietnamese words, written without diacritics. If this list is too short, English words are ' +
+          'used instead.',
         'variant.wordoku.language.en': 'English',
         'variant.wordoku.language.vi': 'Vietnamese',
         'variant.wordoku.word': 'Your own word',
@@ -541,12 +542,13 @@
         'variant.wordoku.placement.column': 'Một cột',
         'variant.wordoku.line': 'Số thứ tự hàng hoặc cột',
         'variant.wordoku.line.hint':
-          'Hàng hoặc cột nào mang từ khóa, đếm từ 1. Chỉ dùng khi từ được đặt trên một hàng hoặc một cột.',
+          'Hàng hoặc cột nào mang từ khóa, đếm từ 1. Chỉ dùng khi từ được đặt trên **Một hàng** hoặc ' +
+          '**Một cột**.',
         'variant.wordoku.line.random': 'Ngẫu nhiên',
         'variant.wordoku.language': 'Kho từ',
         'variant.wordoku.language.hint':
-          'Ngôn ngữ của các từ khóa được rút ra. Từ tiếng Việt được viết không dấu. Nếu kho từ tiếng Việt ' +
-          'còn quá ít từ, trò chơi sẽ dùng từ tiếng Anh.',
+          'Ngôn ngữ của các từ khóa được rút ra.\n\n**Tiếng Anh**: các từ tiếng Anh.\n\n**Tiếng Việt**: ' +
+          'các từ tiếng Việt, viết không dấu. Nếu kho từ này còn quá ít từ, trò chơi sẽ dùng từ tiếng Anh.',
         'variant.wordoku.language.en': 'Tiếng Anh',
         'variant.wordoku.language.vi': 'Tiếng Việt',
         'variant.wordoku.word': 'Từ của riêng bạn',

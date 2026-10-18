@@ -1,13 +1,15 @@
 /**
- * Steps panel (task T-4.5, reworked; design.md sections 7.3 and 10.5): the list of the replay steps of the
- * puzzle on show. Each step is a change the board shows (the full solution, the cages or signs, a batch of
+ * Steps panel (task T-4.5, reworked; design.md sections 7.3 and 10.5): the description of the replay step on
+ * show. Each step is a change the board shows (the full solution, the cages or signs, a batch of
  * removals, a "hardest removal" round, the finished puzzle; see `SG.player.buildSteps`); technical work is
- * not listed. A click (or Enter / Space) on a step moves the replay there; the current step is marked
- * (`aria-current="step"`) and shows its full sentence; a small legend explains the frames of the board.
+ * not listed. The user moves through the steps with the replay controls under the board; the panel shows the
+ * number, title, summary and full sentence of the current step, and a small legend explains the frames of
+ * the board.
  *
  * Pure part (runs in Node): `chartModel(counts, options)`, the geometry of the technique-frequency bar chart
- * that the result panel draws, and `STEP_IDS`, the seven pipeline steps (for other modules' texts).
- * DOM part: `create(rootEl, options)` renders the list into `#steps-list` of `#steps-root`.
+ * (kept for callers; the result panel uses its ordering), and `STEP_IDS`, the seven pipeline steps (for other
+ * modules' texts).
+ * DOM part: `create(rootEl)` renders the description into `#step-detail` of `#steps-root`.
  */
 (function (root) {
   'use strict';
@@ -166,54 +168,32 @@
     return el;
   }
 
-  function setText(node, text) {
-    if (node.textContent !== text) node.textContent = text;
-  }
-
-  /** Scrolls `container` (never the page) so that `item` is inside it. */
-  function keepVisible(container, item) {
-    if (!container || typeof item.getBoundingClientRect !== 'function' ||
-        typeof container.getBoundingClientRect !== 'function') {
-      return;
-    }
-    const c = container.getBoundingClientRect();
-    const r = item.getBoundingClientRect();
-    if (container.scrollHeight > container.clientHeight + 1) {
-      if (r.top < c.top) container.scrollTop -= c.top - r.top;
-      else if (r.bottom > c.bottom) container.scrollTop += Math.min(r.bottom - c.bottom, r.top - c.top);
-    }
-    if (container.scrollWidth > container.clientWidth + 1) {
-      if (r.left < c.left) container.scrollLeft -= c.left - r.left;
-      else if (r.right > c.right) container.scrollLeft += Math.min(r.right - c.right, r.left - c.left);
-    }
-  }
-
   // ---------------------------------------------------------------------------------------------
   // The panel
   // ---------------------------------------------------------------------------------------------
 
   /**
-   * Builds the list of the replay steps inside `#steps-root` (`#steps-list`, created when missing) and a
-   * legend of the board frames after it.
+   * Shows the description of the replay step on show inside `#steps-root` (`#step-detail`, created when
+   * missing): its number, title, summary and full sentence, with a legend of the board frames after it. The
+   * steps themselves are moved with the replay controls under the board.
    *
    * @param {Element} rootEl  `#steps-root`.
    * @param {Object} [options]
-   * @param {function(number): void} [options.onSelect]  Called with the position of a step that was picked.
+   * @param {function(number): ?{counts: Object<string, number>, before: Object<string, number>,
+   *   empties: (number|undefined), score: (number|undefined)}} [options.stats]
+   *   Gives the techniques the puzzle of a step needs (`SG.player` `rateStep`); without it, or when it returns
+   *   null, the step shows no technique table.
    * @returns {{
    *   setSteps: function(Object[]): void,
    *   setPosition: function(number): void,
    *   clear: function(): void,
    *   getPosition: function(): number,
-   *   setExpanded: function(boolean): void,
    *   refresh: function(): void,
    *   destroy: function(): void
    * }}
-   *   `setSteps(steps)` shows the steps of `SG.player` (nothing is current until `setPosition`);
-   *   `setPosition(p)` marks step p (0: none) and keeps it in view inside the panel (the page never
-   *     scrolls);
-   *   `clear()` empties the list (nothing on show);
-   *   `setExpanded(on)` expands or collapses the stepper of narrow screens (`#steps-root.is-expanded` and
-   *     the `aria-expanded` of `#btn-steps-toggle`);
+   *   `setSteps(steps)` takes the steps of `SG.player` (no step is on show until `setPosition`);
+   *   `setPosition(p)` shows step p (0: none, a hint to use the replay controls);
+   *   `clear()` empties the panel (nothing on show);
    *   `refresh()` re-translates everything (done by itself on `SG.i18n.onChange`);
    *   `destroy()` removes the listeners and what it built.
    */
@@ -225,58 +205,23 @@
     const doc = rootEl.ownerDocument;
     const created = [];
 
-    let listEl = rootEl.querySelector('#steps-list');
-    if (listEl === null) {
-      listEl = html(doc, 'ol', { id: 'steps-list', class: 'steps-list' });
-      rootEl.appendChild(listEl);
-      created.push(listEl);
+    let detailEl = rootEl.querySelector('#step-detail');
+    if (detailEl === null) {
+      detailEl = html(doc, 'div', { id: 'step-detail', class: 'step-detail' });
+      rootEl.appendChild(detailEl);
+      created.push(detailEl);
     }
     const legendEl = html(doc, 'ul', { class: 'steps-legend', hidden: true });
-    listEl.parentNode.insertBefore(legendEl, listEl.nextSibling);
+    detailEl.parentNode.insertBefore(legendEl, detailEl.nextSibling);
     created.push(legendEl);
-    listEl.textContent = '';
+    detailEl.textContent = '';
+    const headingEl = rootEl.querySelector('#steps-heading');
 
     let steps = [];
-    let items = [];
     let position = 0;
 
     function player() {
       return SG.player || null;
-    }
-
-    function titleOf(step) {
-      const p = player();
-      return p ? p.stepTitle(step) : step.kind;
-    }
-
-    function metaOf(step) {
-      const p = player();
-      return p ? p.stepMeta(step) : '';
-    }
-
-    function textOf(step) {
-      const p = player();
-      return p ? p.describeStep(step) : '';
-    }
-
-    function buildItem(step) {
-      const num = html(doc, 'span', { class: 'rstep__num' });
-      const title = html(doc, 'span', { class: 'rstep__title' });
-      const meta = html(doc, 'span', { class: 'rstep__meta' });
-      const main = html(doc, 'button', { type: 'button', class: 'rstep__main', 'data-position': step.index },
-        [num, html(doc, 'span', { class: 'rstep__body' }, [title, meta])]);
-      const text = html(doc, 'p', { class: 'rstep__text', hidden: true });
-      const li = html(doc, 'li', { class: 'rstep', 'data-kind': step.kind, 'data-position': step.index },
-        [main, text]);
-      return { step: step, li: li, main: main, num: num, title: title, meta: meta, text: text };
-    }
-
-    function fillItem(item) {
-      setText(item.num, String(item.step.index));
-      setText(item.title, titleOf(item.step));
-      setText(item.meta, metaOf(item.step));
-      item.main.setAttribute('title', translate('steps.select.title'));
-      if (!item.text.hidden) setText(item.text, textOf(item.step));
     }
 
     function renderLegend() {
@@ -293,57 +238,204 @@
       legendEl.setAttribute('aria-label', translate('steps.legend.label'));
     }
 
-    function markCurrent(scroll) {
-      items.forEach(function (item) {
-        const current = item.step.index === position;
-        item.li.classList.toggle('is-current', current);
-        if (current) item.main.setAttribute('aria-current', 'step');
-        else item.main.removeAttribute('aria-current');
-        if (current) {
-          setText(item.text, textOf(item.step));
-          item.text.hidden = false;
-        } else if (!item.text.hidden) {
-          item.text.hidden = true;
-        }
+    function renderHeading() {
+      if (headingEl === null) return;
+      const step = steps[position - 1];
+      const p = player();
+      const text = step
+        ? translate('steps.title', { number: String(position), title: p ? p.stepTitle(step) : step.kind })
+        : translate('shell.steps.heading');
+      if (headingEl.textContent !== text) headingEl.textContent = text;
+    }
+
+    function formatNumber(n, options) {
+      return SG.i18n && typeof SG.i18n.formatNumber === 'function' ? SG.i18n.formatNumber(n, options) : String(n);
+    }
+
+    function cell(tag, text, cls) {
+      return html(doc, tag, cls ? { class: cls } : {}, [doc.createTextNode(text)]);
+    }
+
+    /** The small "?" next to a name: its text opens on hover, focus and click; Esc closes it. */
+    function helpTip(popId, text, label) {
+      if (typeof doc.createElementNS !== 'function') return null;
+      const svgNs = 'http://www.w3.org/2000/svg';
+      const use = doc.createElementNS(svgNs, 'use');
+      use.setAttribute('href', '#ic-help');
+      const svg = doc.createElementNS(svgNs, 'svg');
+      svg.setAttribute('class', 'icon');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.setAttribute('focusable', 'false');
+      svg.appendChild(use);
+      const pop = html(doc, 'div', { class: 'help-tip__pop', id: popId, role: 'tooltip' },
+        [doc.createTextNode(text)]);
+      const button = html(doc, 'button', {
+        type: 'button', class: 'help-tip__btn', 'aria-describedby': popId, 'aria-label': label
+      }, [svg]);
+      const wrap = html(doc, 'span', { class: 'help-tip help-tip--inline' }, [button, pop]);
+      button.addEventListener('click', function () {
+        if (wrap.getAttribute('data-open') === null) wrap.setAttribute('data-open', '');
+        else wrap.removeAttribute('data-open');
       });
-      const item = items[position - 1];
-      if (scroll && item) {
-        keepVisible(listEl, item.li);
-        keepVisible(rootEl, item.li);
-      } else if (scroll && position === 0) {
-        listEl.scrollTop = 0;
-        listEl.scrollLeft = 0;
+      wrap.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') wrap.removeAttribute('data-open');
+      });
+      wrap.addEventListener('focusout', function () { wrap.removeAttribute('data-open'); });
+      return wrap;
+    }
+
+    /** The "?" of a technique: its summary. */
+    function techniqueHelp(id, name) {
+      const key = 'technique.' + id + '.desc';
+      if (!hasText(key)) return null;
+      return helpTip('step-tech-' + id + '-help', translate(key),
+        translate('steps.techniques.help', { name: name }));
+    }
+
+    /** The "?" of a row that is not a technique: the empty cells ('empties') or the raise to the level ('floor'). */
+    function partHelp(part, name, args) {
+      return helpTip('step-part-' + part + '-help', translate('steps.techniques.' + part + '.desc', args),
+        translate('steps.techniques.help', { name: name }));
+    }
+
+    /** A row header: the name, and the "?" after it when there is one. */
+    function nameCell(text, help) {
+      const label = html(doc, 'span', { class: 'result-table__name' }, [doc.createTextNode(text)]);
+      if (help !== null) label.appendChild(help);
+      return html(doc, 'th', { scope: 'row' }, [label]);
+    }
+
+    /**
+     * The techniques the puzzle of a step needs, with the uses and the score of each. The total is the difficulty
+     * score of the puzzle of that step, the one the summary shows at the end: the techniques, plus the empty
+     * cells, plus what the hardest technique raises the score to (when it is higher). Empty when the page cannot
+     * tell for this step.
+     */
+    function techniquesBlock(position) {
+      const info = typeof opts.stats === 'function' ? opts.stats(position) : null;
+      if (!info) return null;
+      const score = SG.difficulty && typeof SG.difficulty.techniqueScore === 'function'
+        ? SG.difficulty.techniqueScore : function () { return 0; };
+      const cellBonus = SG.difficulty && SG.difficulty.SCORING && typeof SG.difficulty.SCORING.emptyCellBonus === 'number'
+        ? SG.difficulty.SCORING.emptyCellBonus : 0;
+      const unit = SG.difficulty && typeof SG.difficulty.costOf === 'function'
+        ? SG.difficulty.costOf : function () { return 0; };
+      const bars = chartModel(info.counts).bars;
+      const box = html(doc, 'div', { class: 'step-detail__techniques' }, [
+        html(doc, 'h3', { class: 'step-detail__subtitle' },
+          [doc.createTextNode(translate('steps.techniques.title'))])
+      ]);
+      if (bars.length === 0) {
+        box.appendChild(html(doc, 'p', { class: 'step-detail__empty' },
+          [doc.createTextNode(translate('steps.techniques.none'))]));
+        return box;
       }
+      const empties = Number.isFinite(info.empties) && info.empties > 0 ? info.empties : 0;
+      const emptyPoints = empties * cellBonus;
+      const exact = bars.map(function (bar) { return score(bar.id, bar.count); });
+      const techniqueTotal = exact.reduce(function (sum, points) { return sum + points; }, 0);
+      const total = typeof info.score === 'number' && isFinite(info.score)
+        ? info.score : techniqueTotal + emptyPoints;
+      const raised = total - (techniqueTotal + emptyPoints);
+      const hasEmpties = empties > 0 && emptyPoints > 0;
+      const hasFloor = raised >= 0.5;
+      const values = exact.slice();
+      if (hasEmpties) values.push(emptyPoints);
+      if (hasFloor) values.push(raised);
+      const shown = roundToTotal(values, total);
+
+      const rows = bars.map(function (bar, i) {
+        const previous = (info.before && info.before[bar.id]) || 0;
+        const more = bar.count - previous;
+        const label = html(doc, 'span', { class: 'result-table__name' }, [doc.createTextNode(bar.label)]);
+        const help = techniqueHelp(bar.id, bar.label);
+        if (help !== null) label.appendChild(help);
+        const name = html(doc, 'th', { scope: 'row' }, [label]);
+        return html(doc, 'tr', { 'data-technique': bar.id }, [
+          name,
+          cell('td', formatNumber(bar.count) + (more > 0 ? ' (+' + formatNumber(more) + ')' : ''),
+            'result-table__num'),
+          cell('td', formatNumber(unit(bar.id), { maximumFractionDigits: 2 }), 'result-table__num'),
+          cell('td', formatNumber(shown[i]), 'result-table__num')
+        ]);
+      });
+      let next = bars.length;
+      if (hasEmpties) {
+        rows.push(html(doc, 'tr', { 'data-part': 'empties' }, [
+          nameCell(translate('steps.techniques.empties'),
+            partHelp('empties', translate('steps.techniques.empties'),
+              { points: formatNumber(cellBonus, { maximumFractionDigits: 2 }) })),
+          cell('td', formatNumber(empties), 'result-table__num'),
+          cell('td', formatNumber(cellBonus, { maximumFractionDigits: 2 }), 'result-table__num'),
+          cell('td', formatNumber(shown[next++]), 'result-table__num')
+        ]));
+      }
+      if (hasFloor) {
+        rows.push(html(doc, 'tr', { 'data-part': 'floor' }, [
+          nameCell(translate('steps.techniques.floor'),
+            partHelp('floor', translate('steps.techniques.floor'))),
+          cell('td', '', 'result-table__num'),
+          cell('td', '', 'result-table__num'),
+          cell('td', formatNumber(shown[next++]), 'result-table__num')
+        ]));
+      }
+      const other = rows.slice(bars.length);
+      const head = html(doc, 'tr', {}, [
+        html(doc, 'th', {}, [html(doc, 'span', { class: 'visually-hidden' },
+          [doc.createTextNode(translate('steps.techniques.col.name'))])]),
+        cell('th', translate('steps.techniques.col.count'), 'result-table__num'),
+        cell('th', translate('steps.techniques.col.unit'), 'result-table__num'),
+        cell('th', translate('steps.techniques.col.score'), 'result-table__num')
+      ]);
+      const foot = html(doc, 'tr', { class: 'step-table__total' }, [
+        cell('th', translate('steps.techniques.total')),
+        cell('td', '', 'result-table__num'),
+        cell('td', '', 'result-table__num'),
+        cell('td', formatNumber(Math.round(total)), 'result-table__num')
+      ]);
+      const section = function (key) {
+        return html(doc, 'tr', { class: 'result-table__section', 'data-section-row': key }, [
+          html(doc, 'th', { scope: 'colgroup', colspan: '4' },
+            [doc.createTextNode(translate('steps.techniques.section.' + key))])
+        ]);
+      };
+      const groups = [
+        html(doc, 'tbody', { 'data-group': 'technique' }, [section('technique')].concat(rows.slice(0, bars.length)))
+      ];
+      if (other.length > 0) {
+        groups.push(html(doc, 'tbody', { 'data-group': 'other' }, [section('other')].concat(other)));
+      }
+      box.appendChild(html(doc, 'table', { class: 'result-table' },
+        [html(doc, 'thead', {}, [head])].concat(groups, [html(doc, 'tfoot', {}, [foot])])));
+      return box;
     }
 
     function render() {
-      listEl.textContent = '';
-      items = steps.map(buildItem);
-      items.forEach(function (item) {
-        fillItem(item);
-        listEl.appendChild(item.li);
-      });
+      detailEl.textContent = '';
+      const step = steps[position - 1];
+      if (steps.length === 0) {
+        detailEl.removeAttribute('data-kind');
+      } else if (!step) {
+        detailEl.removeAttribute('data-kind');
+        detailEl.appendChild(html(doc, 'p', { class: 'step-detail__empty' },
+          [doc.createTextNode(translate('steps.detail.empty'))]));
+      } else {
+        const p = player();
+        detailEl.setAttribute('data-kind', step.kind);
+        detailEl.appendChild(html(doc, 'p', { class: 'step-detail__meta' },
+          [doc.createTextNode(p ? p.stepMeta(step) : '')]));
+        detailEl.appendChild(html(doc, 'p', { class: 'step-detail__text' },
+          [doc.createTextNode(p ? p.describeStep(step) : '')]));
+        const block = techniquesBlock(position);
+        if (block !== null) detailEl.appendChild(block);
+      }
+      renderHeading();
       renderLegend();
-      markCurrent(false);
     }
 
-    function onClick(event) {
-      const target = event.target && typeof event.target.closest === 'function'
-        ? event.target.closest('[data-position]') : null;
-      if (!target || !listEl.contains(target)) return;
-      const p = Number(target.getAttribute('data-position'));
-      if (Number.isInteger(p) && typeof opts.onSelect === 'function') opts.onSelect(p);
-    }
-
-    function refresh() {
-      items.forEach(fillItem);
-      renderLegend();
-      markCurrent(false);
-    }
-
-    listEl.addEventListener('click', onClick);
     const unsubscribeLocale = SG.i18n && typeof SG.i18n.onChange === 'function'
-      ? SG.i18n.onChange(refresh) : null;
+      ? SG.i18n.onChange(render) : null;
+    render();
 
     return {
       setSteps: function setSteps(next) {
@@ -355,7 +447,7 @@
         const next = Number.isInteger(p) && p >= 0 && p <= steps.length ? p : 0;
         if (next === position) return;
         position = next;
-        markCurrent(true);
+        render();
       },
       clear: function clear() {
         steps = [];
@@ -365,29 +457,40 @@
       getPosition: function getPosition() {
         return position;
       },
-      setExpanded: function setExpanded(on) {
-        const flag = on !== false;
-        rootEl.classList.toggle('is-expanded', flag);
-        const button = rootEl.querySelector('#btn-steps-toggle');
-        if (button) button.setAttribute('aria-expanded', flag ? 'true' : 'false');
-      },
-      refresh: refresh,
+      refresh: render,
       destroy: function destroy() {
         if (unsubscribeLocale !== null) unsubscribeLocale();
-        listEl.removeEventListener('click', onClick);
-        listEl.textContent = '';
+        detailEl.textContent = '';
         created.forEach(function (node) {
           if (node.parentNode) node.parentNode.removeChild(node);
         });
         steps = [];
-        items = [];
       }
     };
+  }
+
+  /**
+   * Whole numbers for the parts of a total that add up to the rounded total (the largest remainders get the
+   * extra points), so that a table of scores can be added up by hand. Used by the summary and the steps.
+   * @param {number[]} values  The exact parts.
+   * @param {number} total  The exact total.
+   * @returns {number[]}
+   */
+  function roundToTotal(values, total) {
+    const target = Math.round(total);
+    const out = values.map(function (v) { return Math.floor(v); });
+    let left = target - out.reduce(function (sum, v) { return sum + v; }, 0);
+    const order = values.map(function (v, i) { return i; }).sort(function (a, b) {
+      return (values[b] - Math.floor(values[b])) - (values[a] - Math.floor(values[a])) || a - b;
+    });
+    for (let k = 0; k < order.length && left > 0; k++, left--) out[order[k]] += 1;
+    return out;
   }
 
   SG.stepView = {
     STEP_IDS: STEP_IDS,
     chartModel: chartModel,
+    roundToTotal: roundToTotal,
     create: create
   };
 
@@ -398,7 +501,26 @@
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({
     en: {
-      'steps.select.title': 'Show this step on the board',
+      'steps.title': 'Step {number} - {title}',
+      'steps.techniques.title': 'Techniques needed at this step',
+      'steps.techniques.none': 'No solving technique is needed yet.',
+      'steps.techniques.col.name': 'Item',
+      'steps.techniques.col.count': 'Uses',
+      'steps.techniques.col.unit': 'Points',
+      'steps.techniques.col.score': 'Total',
+      'steps.techniques.empties': 'Empty cells',
+      'steps.techniques.section.technique': 'Technique',
+      'steps.techniques.section.other': 'Other',
+      'steps.techniques.empties.desc': 'Every cell that is empty at the start adds {points} points: the fewer clues ' +
+        'a puzzle gives, the more there is to solve.',
+      'steps.techniques.floor': 'Bonus points for difficult techniques',
+      'steps.techniques.floor.desc': 'Every level has a minimum score. When the hardest technique the puzzle needs ' +
+        'belongs to a higher level than the points above give, bonus points bring the score up to the minimum of ' +
+        'that level.',
+      'steps.techniques.total': 'Total',
+      'steps.techniques.help': 'About \u201c{name}\u201d',
+      'steps.detail.empty': 'Use the replay controls under the board to go through the steps of how the ' +
+        'puzzle was made. The description of each step shows here.',
       'steps.legend.label': 'Frames on the board',
       'steps.legend.dug': 'Removed in this step',
       'steps.legend.kept': 'Tried, but put back',
@@ -407,7 +529,25 @@
       'steps.legend.signKept': 'Sign tried, but kept'
     },
     vi: {
-      'steps.select.title': 'Hiện bước này trên bảng',
+      'steps.title': 'Bước {number} - {title}',
+      'steps.techniques.title': 'Kỹ thuật cần dùng ở bước này',
+      'steps.techniques.none': 'Chưa cần kỹ thuật giải nào.',
+      'steps.techniques.col.name': 'Mục',
+      'steps.techniques.col.count': 'Lần dùng',
+      'steps.techniques.col.unit': 'Điểm',
+      'steps.techniques.col.score': 'Tổng',
+      'steps.techniques.empties': 'Ô trống',
+      'steps.techniques.section.technique': 'Kỹ thuật',
+      'steps.techniques.section.other': 'Khác',
+      'steps.techniques.empties.desc': 'Mỗi ô trống ban đầu cộng thêm {points} điểm: đề càng ít số cho sẵn thì càng ' +
+        'còn nhiều việc phải giải.',
+      'steps.techniques.floor': 'Điểm thưởng cho kỹ thuật khó',
+      'steps.techniques.floor.desc': 'Mỗi độ khó có một điểm tối thiểu. Khi kỹ thuật khó nhất mà đề cần thuộc về ' +
+        'một độ khó cao hơn so với số điểm ở trên, điểm thưởng được cộng thêm để đạt mức tối thiểu của độ khó đó.',
+      'steps.techniques.total': 'Tổng',
+      'steps.techniques.help': 'Giải thích về \u201c{name}\u201d',
+      'steps.detail.empty': 'Dùng các nút phát lại dưới bảng để xem từng bước tạo ra đề. Mô tả của mỗi bước ' +
+        'hiện ở đây.',
       'steps.legend.label': 'Các khung trên bảng',
       'steps.legend.dug': 'Bị xóa ở bước này',
       'steps.legend.kept': 'Đã thử nhưng trả lại',

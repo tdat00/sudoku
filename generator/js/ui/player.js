@@ -67,6 +67,12 @@
   const SIGN_PASSES = Object.freeze(['signs', 'signs.minimal']);
   const GUIDED_PASS = 'guided';
 
+  /** Steps that only build the solution or its structure: the puzzle needs no technique yet. */
+  const RATE_FREE_KINDS = Object.freeze(['solution', 'cages', 'signs', 'restart']);
+
+  /** Time allowed to rate the puzzle of one step on the page (the step then shows no techniques). */
+  const RATE_BUDGET_MS = 400;
+
   /** Cells tried per random step: about a ninth of the board, at least 2. */
   function batchCells(cellCount) {
     return Math.max(2, Math.round(cellCount / 9));
@@ -556,6 +562,65 @@
     let stateKey = '';
     let ui = null;
     let destroyed = false;
+    let rated = Object.create(null);
+
+    /**
+     * What the puzzle at a position needs: `{ counts, empties, score }` (technique id -> uses, cells empty and
+     * the difficulty score of the puzzle), or null when it cannot be told (steps that change signs or clues, a
+     * rating that runs out of its time, no solver in this page). Steps that only build the solution or its
+     * cages need nothing; the finished puzzle is the rating of the result.
+     */
+    function scored(rating) {
+      return {
+        counts: Object.assign({}, rating.techniqueCounts),
+        empties: rating.empties,
+        score: rating.score
+      };
+    }
+
+    function techniquesAt(p) {
+      if (p === 0) return { counts: {} };
+      if (Object.prototype.hasOwnProperty.call(rated, p)) return rated[p];
+      const step = built.steps[p - 1];
+      let found = null;
+      if (RATE_FREE_KINDS.indexOf(step.kind) !== -1) {
+        found = { counts: {} };
+      } else if (step.kind === 'final') {
+        found = result.rating && result.rating.techniqueCounts
+          ? scored(result.rating) : null;
+      } else if ((step.kind === 'random' || step.kind === 'guided') && step.signs === null &&
+          SG.difficulty && typeof SG.difficulty.rate === 'function') {
+        try {
+          const budget = SG.budget ? SG.budget.create({ ms: RATE_BUDGET_MS }) : null;
+          found = scored(SG.difficulty.rate(result.model, step.values, { budget: budget }));
+        } catch (err) {
+          found = null;
+        }
+      }
+      rated[p] = found;
+      return found;
+    }
+
+    /**
+     * The techniques the puzzle of a step needs, with the ones it needed before that step for comparison.
+     * @param {number} p  A position, 1 .. length.
+     * @returns {?{counts: Object<string, number>, before: Object<string, number>, empties: (number|undefined),
+     *   score: (number|undefined)}} null when unknown.
+     */
+    function rateStep(p) {
+      if (built === null || !(p >= 1 && p <= built.steps.length)) return null;
+      const now = techniquesAt(p);
+      if (now === null) return null;
+      let before = { counts: {} };
+      for (let q = p - 1; q >= 1; q--) {
+        const known = techniquesAt(q);
+        if (known !== null) {
+          before = known;
+          break;
+        }
+      }
+      return { counts: now.counts, before: before.counts, empties: now.empties, score: now.score };
+    }
 
     function length() {
       return built === null ? 0 : built.steps.length;
@@ -623,9 +688,26 @@
       if (el.getAttribute(name) !== value) el.setAttribute(name, value);
     }
 
+    /** One anchor mark under the slider for every position 0 .. length (rebuilt when the length changes). */
+    function updateTicks(length) {
+      const el = ui.ticks;
+      if (!el || ui.tickCount === length || !el.ownerDocument) return;
+      ui.tickCount = length;
+      el.textContent = '';
+      if (length < 1) return;
+      el.style.setProperty('--n', String(length));
+      for (let i = 0; i <= length; i++) {
+        const tick = el.ownerDocument.createElement('span');
+        tick.className = 'player__tick';
+        tick.style.setProperty('--i', String(i));
+        el.appendChild(tick);
+      }
+    }
+
     function updateUi() {
       if (ui === null) return;
       const s = state();
+      updateTicks(s.loaded ? s.length : 0);
       [ui.first, ui.prev, ui.next, ui.last].forEach(function (el) {
         if (el) setProp(el, 'disabled', !s.loaded);
       });
@@ -686,6 +768,7 @@
       if (destroyed) return;
       result = res;
       built = buildSteps(res);
+      rated = Object.create(null);
       fullModel = null;
       shownModel = 'final';
       const wanted = opts && Number.isInteger(opts.position) ? opts.position : length();
@@ -702,6 +785,7 @@
       const hadSigns = built !== null && built.signs !== null;
       built = null;
       result = null;
+      rated = Object.create(null);
       position = 0;
       fullModel = null;
       shownModel = null;
@@ -736,6 +820,8 @@
         next: q('#btn-next'),
         last: q('#btn-last'),
         scrubber: q('#scrubber'),
+        ticks: q('.player__ticks'),
+        tickCount: -1,
         time: q('#player-time'),
         listeners: [],
         unsubscribe: null
@@ -793,6 +879,7 @@
 
       bindControls: bindControls,
 
+      rateStep: rateStep,
       /** Lets go of the controls and the puzzle; the board is left to the app. */
       destroy: function destroy() {
         if (destroyed) return;
