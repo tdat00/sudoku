@@ -4,8 +4,7 @@
 > logical difficulty rating, a step-by-step replay of how each puzzle was made). **sudoku-player** — this
 > repository — opens such a puzzle in a browser and lets people **play** it. The only coupling between the two
 > is a file format and a link token (§5). This document says what the player is, how it is built and why;
-> `task.md` is the work breakdown and its status, `memory.md` the resume guide for a maintainer, `README.md`
-> the user's entry point.
+> `task.md` is the work breakdown and its status, `README.md` the user's entry point.
 
 ## 1. Goals and non-goals
 
@@ -14,22 +13,25 @@ A **static web app** (HTML, CSS, JavaScript; no build step, no npm, no framework
 sudoku-generator and plays it:
 
 - Opens puzzles from the **link** the generator's **Play** button builds (`…/#puzzle=<token>&active=<n>`: every
-  puzzle of the generator's list, the one on screen first; the button sits next to **Print** at the top right of
-  the generator's main panel), from **pasted text** or a dropped text file (the generator's Export text, or one
+  puzzle of the generator's list, the one on screen first; the button sits next to the **Export** buttons at the
+  top right of the generator's main panel), from **pasted text** or a dropped text file (the generator's Export text, or one
   line of 16 / 36 / 81 characters for a classic board), and from the list of **imported puzzles**.
-- Plays **all 15 variants** — classic 4×4 / 6×6 / 9×9, Mega 12×12 / 16×16, Diagonal X, Hyper, Jigsaw, Killer,
+- Plays **all 15 variants** — classic 4×4 / 6×6 / 9×9, Mega 12×12, Monster 16×16, Diagonal X, Hyper, Jigsaw, Killer,
   Greater-Than, Samurai, Sohei, Butterfly, Flower, Wordoku — **without any variant or generation code**: the
   document carries the board as plain data (`model`) and the player rebuilds it with `SG.model.create`.
 - Play features: select by mouse, touch or keyboard; enter values (digits, letters or hex per the board's
   symbols; two-character numbers for Mega 12×12); an on-screen symbol pad; candidate notes; erase; exact
   undo / redo; error checking (off / conflicts / live); progressive hints (3 levels) that name the logical
-  technique; a timer that pauses when the page loses focus; completion detection; reset; reveal; five symbol
+  technique; a timer that pauses when the page loses focus; completion detection; Play / Pause / Reset per
+  puzzle; reveal a cell; five symbol
   sets (digits, letters, colours, shapes, the Wordoku word).
 - **Progress is saved automatically per puzzle** (local storage, last 100 puzzles) and the imported puzzles are
   kept (last 100), so a reload — or coming back tomorrow — continues where the player stopped.
 - Bilingual **EN / VI**, three themes + `prefers-color-scheme`, font-size setting, reduced motion, WCAG AA
-  contrast, keyboard operable, `role="grid"` board, `aria-live` announcements, responsive (desktop two columns,
-  mobile one column with the pad under the board).
+  contrast, keyboard operable, `role="grid"` board, `aria-live` announcements, responsive (three columns on a wide
+  desktop, two on a desktop, one on a phone with the keys fixed to the bottom).
+- A **guide** (`help.html`, a page of its own that the Help button opens in a new tab): the basics, how the hints
+  work, the 26 techniques each with a ready-made example, the keyboard.
 - Everything runs **locally**: no server, no account, no network request after the page is loaded.
 
 ### 1.2 Non-goals (and a test that proves it)
@@ -50,10 +52,12 @@ Target browser: a current Chromium (tested in Edge); Firefox and Safari are expe
 
 ```
 index.html ── <script> tags in the order of tests/node-runner.js SOURCE_FILES
+help.html  ── the guide: the same sources minus the ones it does not need, plus help-examples.js and help.js
 js/core/   pure logic, no DOM (copied from the generator, trimmed — §2.2)
 js/ui/     modules that talk to the page; every file also loads in Node (pure helpers + DOM functions)
 css/       tokens (3 themes) · base · layout · components · board · play · help
-tests/     harness.js · node-runner.js · tests.html · suites/ · fixtures/ (puzzle documents) · browser/ (CDP scripts)
+tests/     harness.js · node-runner.js · tests.html · suites/ · fixtures/ (puzzle documents) · browser/ (CDP scripts) ·
+           tools/ (make-technique-examples.js, which writes js/ui/help-examples.js)
 docs/      fixtures.md (how the documents were made) · qa.md (the manual browser run)
 ```
 
@@ -81,24 +85,26 @@ A lower layer never knows a higher one.
 | `ui/theme.js`, `a11y.js` | `theme`, `a11y` | themes + system schemes; ARIA grid, keyboard, live region, Settings dialog | copied, adapted |
 | `ui/symbols.js`, `board-view.js` | `symbols`, `boardView` | value → glyph; the SVG board of every geometry | copied, adapted |
 | `ui/play.js` | `play` | game engine (pure) + the play UI | the generator's play mode, reworked into the main screen |
-| `ui/help.js` | `help` | Help dialog (rules of 15 variants, technique ladder, keys, about) | rewritten |
+| `ui/help.js`, `help-examples.js` | `help`, `helpExamples` | the guide page (`help.html`): sections, a tab per technique, the contents; `help-examples.js` is the generated snapshot of one example per technique (§8.3) | rewritten; the examples are generated by `tests/tools/make-technique-examples.js` |
 | `ui/app.js` | `app` | start-up, open flows, dialogs, toasts, info card, recent list, auto-save, wiring; the `SG.app` extension surface | **new** |
 
 ### 2.3 The `SG.app` surface
-`play.js`, `a11y.js`, `theme.js` and `help.js` were written against the generator's `SG.app`; the player keeps
+`play.js`, `a11y.js` and `theme.js` were written against the generator's `SG.app`; the player keeps
 the part of that contract they use, so they needed small edits only: `getStore() getBoard() getResult()
 toast(kind, key, args) openModal({titleKey, body, footer, wide, onClose}) announce(text) on(name, fn) emit(name,
 payload) showResult(puzzle, options)`, plus `getPuzzle() open(input, options) openPuzzle(puzzle, options)
 openOpenDialog() clearSavedData() saveNow()`.
 `getResult()` returns `{ result: puzzle, trace: [] }`: the "result" is the opened puzzle (`model`, `givens`,
 `solution`, …). Events: `result` (a puzzle is on the board), `settings` (a preference changed), `locale`,
-`theme`, `action` (`settings`, `help`, `open`), `play:game` (a game was attached), `play:change` (a game changed;
+`theme`, `action` (`open`, `share`, `settings`; Help is a plain link to `help.html`), `play:game` (a game was attached), `play:change` (a game changed;
 the app saves 400 ms later), `data:cleared`. `play.js` is driven by `attach(puzzle, {state, symbolMode, focus})` /
 `detach()`; it reads `check` and `autoNotes` from the store and follows the `settings` event.
 
 ### 2.4 Script order
 `tests/node-runner.js` `SOURCE_FILES` is the single source of truth; `index.html` and `tests.html` repeat it and
-`ui-contract.test.js` fails when they drift. `exchange.js` comes before `i18n.js`.
+`ui-contract.test.js` fails when they drift. `help.html` loads the same list minus the files the guide does not
+need (`exchange`, `importer`, `progress`, `a11y`, `app`), with `help-examples.js` and `help.js` added; the test
+checks that too. `exchange.js` comes before `i18n.js`.
 
 ## 3. The puzzle model
 Unchanged from the generator (every variant is one constraint problem): cells `0…N-1`, domains `1…D`,
@@ -215,16 +221,16 @@ reveal one cell. A hint never suggests a wrong value (tested on all fixtures).
 ### 6.2 The play UI
 Mounted by `play.js` itself into `#play-status` (the status box at the top of the side panel), `#play-root`
 (tools: notes, erase, undo, redo, hint, check; the **symbol pad**, touch-sized buttons, up to 6 per row on a
-wide screen and 5 on a narrow one; the hint card; there is no message line, what the game says is announced to
-screen readers) and `#options-root`: the **Options** frame, a `<details>` closed at first, with one radio per
-line for the symbols (the legend under the board names colours and shapes) and for the check mode, the notes
-switch and the puzzle actions (fill notes, reveal a cell / the solution, reset with a confirming second press),
-one button per line; the check mode and the notes switch are the same preferences as in the Settings dialog, the
-puzzle actions are only here.
+wide screen and 5 on a narrow one; a toggle right under the pad that expands the frame to show the **puzzle
+actions** — fill in all notes and reveal a cell (a second press confirms), hidden at first so that none is
+pressed by mistake; on a small screen the toggle is part of the bar fixed to the bottom —; the hint card; there is no message line, what the game says is announced to screen readers) and
+`#options-root`: the **Options** frame, a `<details>` closed at first, with one radio per line for the symbols
+(the legend under the board names colours and shapes) and for the check mode, and the notes switch, the same
+preferences as in the Settings dialog. Starting a game over is the Reset button of the status box.
 
 **The status box** has the buttons on the left (**Play** while nobody played the game, which starts the clock — a
 first move does the same —, **Pause** while it runs, **Resume** after a pause; all three the same bold, filled
-button; and, once the game was played, the **Reset** button: a first press only asks "Press again", a second
+button; and the **Reset** button, only while the game is paused (so that it is not pressed by mistake) or solved (to play it again): a first press only asks "Press again", a second
 resets and the game is "Play" again), the time on the right, and under them the filled cells and the status line.
 Everything follows the game on the board: the timer state is part of the saved game (`pausedBy`), and a running
 game that is left for another puzzle is paused first (`SG.play.pauseGame()`, called by `app.placePuzzle` before
@@ -239,7 +245,7 @@ the pad, Notes, Erase and Close, for entering values without leaving the board (
 stays). Keyboard: arrows and the a11y grid keys move; typing a symbol enters it
 (two-character symbols of Mega 12×12 wait for the second character); `N` notes, `H` hint, `Backspace` / `Delete`
 erase, `Ctrl+Z` / `Ctrl+Y` undo / redo, `Esc` closes the hint. The timer pauses on blur / hidden tab and resumes.
-Revealing the whole solution marks the game "given up": it is not counted as solved. A solved Wordoku shows its
+Revealing the whole solution (`game.revealSolution`, an API without a button) marks the game "given up": it is not counted as solved. A solved Wordoku shows its
 key word (the word line stays hidden until then); a solved game is announced with the time, hints used and cells
 revealed, plus a toast.
 
@@ -279,9 +285,10 @@ asks "Continue" or "Start over"; the recent list and a reload continue without a
 - **Mobile (< 768 px)**: one column — the row of buttons (Play / Pause / Reset on the left, Share and Import on
   the right, icons only), the status box, the summary, the board, the Options frame and the list of puzzles; the
   tools and the pad are fixed to the bottom of the screen.
-- Header: title, language EN | VI, theme (light · dark · high contrast), Settings, Help.
+- Header: title, language EN | VI, theme (light · dark · high contrast), Settings, Help (a link that opens
+  `help.html` in a new tab).
 - Dialogs (`<dialog>` through `openModal`): Import (the paste box, a link to the generator), Share (the link of
-  the puzzle on the board), Continue / Start over, Settings, Help. Esc closes, focus returns to the opener.
+  the puzzle on the board), Continue / Start over, Settings. Esc closes, focus returns to the opener.
 
 ### 8.2 Opening
 The Import dialog and the page-wide drop share one path: read text (files up to 8 MB, `FileReader`) →
@@ -294,10 +301,30 @@ puzzle, so dragging a sentence around the page does nothing. A link from the add
 without moving the focus (the first `Tab` still reaches the skip link); a puzzle the person opens (dialog,
 drop, paste, list) puts the focus on the board.
 
-### 8.3 Help
-`SG.help` is the Help dialog (five tabs: how to play, the rules of the 15 variants, the technique ladder, the
-keyboard shortcuts, about / privacy). **Decision:** there is no first-visit tour or other popup that stands in
-front of the welcome screen or the puzzle: a visitor who arrives from the generator's link wants to play.
+### 8.3 Help: the guide page
+The Help button is a link to **`help.html`**, opened in a new tab: a page of its own (no dialog), with the header
+of the player (language and theme switches that change the same stored preferences, so the guide and the player
+agree) and a back link. It has four sections — the basics of playing, how the hints work (the hints are part of
+the guide), the techniques that solve harder puzzles, the keyboard — and a **table of contents** (a floating
+card on a wide screen, folded on a phone) that lists the sections, the eight technique groups and the name of
+each of the 26 techniques; the header floats with the scroll as well. In the techniques section every group is a
+card with a **tab for each technique** (`role=tablist`, arrow keys, Home / End); the panel of a tab says what the
+technique means and shows **one hardcoded example**: a board drawn like the hint card draws it (the area, the
+cells that make it work, the cells that change, the note to remove or the digit to place) with the words of
+`SG.play.describeHint` in the current language. `help.html#tech-<id>` opens a technique.
+
+**The examples are data, not computed when the page opens.** `js/ui/help-examples.js` (`SG.helpExamples[id]`) is
+generated by `node tests/tools/make-technique-examples.js <path-to-generator>`: it generates classic, Killer,
+Greater-Than, Hyper and other puzzles with the generator, plays each with the player's own hints (`fillNotes`,
+then hint + apply) and keeps, per technique, the example that is easiest to read (fewest cells, removals and
+candidates). The snapshot holds the board (`variant`, `givens`, `values`, the cages or signs), the notes of the
+cells shown and the hint (`technique`, cells, targets, placements, eliminations, region), plus `source` (the
+puzzle and the step it came from, for the tests only). `SG.help.buildExample` rebuilds a model from it and
+`SG.play.renderSnapshot` draws it. `help.test.js` checks that every technique has one, that each rebuilds, that
+replaying `source` with the hint code of the player gives the same hint (so a change of the solver shows up as a
+test failure to regenerate the file), and that the texts exist in both languages. **Decision:** there is no
+first-visit tour or other popup that stands in front of the welcome screen or the puzzle: a visitor who arrives
+from the generator's link wants to play.
 
 ### 8.4 Accessibility
 Skip link to `#main`; the board `<svg>` is `role="grid"` with `role="row"` / `gridcell`, roving tabindex and a
@@ -327,7 +354,7 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 `error.exchange.*`, `play.*`.
 
 ## 10. Testing
-`node tests/node-runner.js` (about 30 s; no install). `tests.html` runs the same suites in a browser (the suites
+`node tests/node-runner.js` (about 15 s; no install). `tests.html` runs the same suites in a browser (the suites
 that read `tests/fixtures/puzzles/*.json` need `http://`, they skip themselves on `file://`).
 
 | Suite | What it checks |
@@ -343,9 +370,9 @@ that read `tests/fixtures/puzzles/*.json` need `http://`, they skip themselves o
 | `symbols`, `board-view` | glyphs per mode, the legend, the 16 shapes; geometry and markup of all 15 fixtures (cells, layers, cages, signs, no colour literal) |
 | `a11y`, `theme` | cell labels, keyboard moves, the Settings data; token parity and contrast |
 | `app` | the surface and events of `SG.app`, the elements it needs from `index.html`, no HTML built from data, storage only through `store` / `progress` |
-| `help` | an entry for every variant and technique, README claims |
-| `ui-contract` | module surface, no colour literals outside the token files, script order of `index.html` = runner = `tests.html`, no hard-coded text in `index.html`, forbidden globals absent, no DOM in `js/core` |
-| browser run | `tests/browser/*.js`: headless Edge over CDP (fragment, paste, file, drop, play with real key events, hints, reload, keyboard-only walk, Settings, Help, themes, 1440 / 900 / 375 px with touch, blocked storage); recorded in `docs/qa.md` |
+| `help` | the sections, texts in both languages, an example for each of the 26 techniques (rebuilt from the snapshot, replayed with the hint code, readable in EN and VI), shortcuts against the keys `play.js` handles, README claims |
+| `ui-contract` | module surface, no colour literals outside the token files, script order of `index.html` = runner = `tests.html` (and `help.html` = runner minus its exceptions), no hard-coded text in either page, forbidden globals absent, no DOM in `js/core` |
+| browser run | `tests/browser/*.js`: headless Edge over CDP (fragment, paste, file, drop, play with real key events, hints, reload, keyboard-only walk, Settings, the guide page with its tabs and floating contents, themes, 1440 / 900 / 375 px with touch, blocked storage); recorded in `docs/qa.md` |
 
 The fixtures were made by the generator (`docs/fixtures.md`); the test kit (`tests/fixtures/testkit.js`) holds a
 seeded RNG, a random solved grid (the DFS solver with a random value order) and a minimal clue remover so the

@@ -61,23 +61,40 @@ const describeActive = '(function(){var a=document.activeElement;if(!a)return "n
     // ---- Options frame of the side panel
     check('the Options frame is collapsible and closed at first', await page.eval('(function(){var d=document.querySelector("#options-root details.play__options");return !!d && d.open===false && !d.hidden;})()'));
     await page.eval('document.querySelector("#options-root details.play__options").open = true');
-    check('the Options frame holds the symbols, the check mode, the notes switch and the puzzle actions, as radios and buttons', await page.eval('(function(){var o=document.querySelector("#options-root .play__options");return !!o && o.querySelectorAll("input[name=play-symbols]").length>=2 && o.querySelectorAll("input[name=play-check]").length===3 && !!o.querySelector("#play-auto-notes") && o.querySelectorAll(".play__option-buttons .btn").length===4 && !o.querySelector("select") && !o.querySelector("fieldset.play__actions") && !o.querySelector(".play__keys") && !document.querySelector("#play-root input[name=play-symbols]");})()'));
-    check('each radio and each button is on a line of its own', await page.eval('(function(){var o=document.querySelector("#options-root .play__options");var tops=function(sel){return Array.from(o.querySelectorAll(sel)).map(function(e){return Math.round(e.getBoundingClientRect().top);});};var distinct=function(a){return new Set(a).size===a.length;};return distinct(tops("input[name=play-check]")) && distinct(tops("input[name=play-symbols]")) && distinct(tops(".play__option-buttons .btn"));})()'));
+    check('the Options frame holds the symbols, the check mode and the notes switch, as radios and a switch, and no puzzle action', await page.eval('(function(){var o=document.querySelector("#options-root .play__options");return !!o && o.querySelectorAll("input[name=play-symbols]").length>=2 && o.querySelectorAll("input[name=play-check]").length===3 && !!o.querySelector("#play-auto-notes") && !o.querySelector(".play__option-buttons") && !o.querySelector("select") && !o.querySelector(".play__keys") && !document.querySelector("#play-root input[name=play-symbols]");})()'));
+    check('each radio is on a line of its own', await page.eval('(function(){var o=document.querySelector("#options-root .play__options");var tops=function(sel){return Array.from(o.querySelectorAll(sel)).map(function(e){return Math.round(e.getBoundingClientRect().top);});};var distinct=function(a){return new Set(a).size===a.length;};return distinct(tops("input[name=play-check]")) && distinct(tops("input[name=play-symbols]"));})()'));
     await page.eval('document.querySelector("#options-root input[name=play-check][value=off]").click()');
     check('the check mode of the Options frame is stored', await page.eval('JSON.parse(localStorage.getItem("sg.player.prefs.v1")).check') === 'off');
     await page.eval('document.getElementById("play-auto-notes").click()');
     check('and so is the notes switch', await page.eval('JSON.parse(localStorage.getItem("sg.player.prefs.v1")).autoNotes') === false);
     await page.eval('document.getElementById("play-auto-notes").click()');
+
+    // ---- the actions on the puzzle: in the play frame, hidden until it is expanded
+    const more = await page.eval('(function(){var t=document.querySelector("#play-root .play__more-toggle"),b=document.getElementById("play-more");return {toggle:!!t,expanded:t&&t.getAttribute("aria-expanded"),hidden:b&&b.hidden,visible:b&&b.getBoundingClientRect().height>0,buttons:b?b.querySelectorAll(".play__option-buttons .btn").length:0,underPad:!!t&&t.getBoundingClientRect().top>=document.querySelector("#play-root .play__pad").getBoundingClientRect().bottom-1};})()');
+    check('the play frame has a toggle (under the pad) and its actions are hidden at first', more.toggle && more.expanded === 'false' && more.hidden && !more.visible && more.buttons === 2 && more.underPad, JSON.stringify(more));
+    await page.click('#play-root .play__more-toggle');
+    const opened = await page.eval('(function(){var t=document.querySelector("#play-root .play__more-toggle"),b=document.getElementById("play-more");var tops=Array.from(b.querySelectorAll(".btn")).map(function(e){return Math.round(e.getBoundingClientRect().top);});return {expanded:t.getAttribute("aria-expanded"),visible:b.getBoundingClientRect().height>0,oneEach:new Set(tops).size===tops.length,inFrame:!!b.closest(".play__panel"),texts:Array.from(b.querySelectorAll(".btn")).map(function(e){return e.textContent.trim();})};})()');
+    check('expanding the play frame shows Fill in all notes and Reveal a cell, one per line, and no Reveal the solution or Reset', opened.expanded === 'true' && opened.visible && opened.oneEach && opened.inFrame && opened.texts.join('|') === 'Fill in all notes|Reveal a cell', JSON.stringify(opened));
+    await page.shot('ui-play-more');
     const revealedBefore = await page.eval('SG.play.getGame().progress().filled');
-    await page.eval('Array.from(document.querySelectorAll("#options-root .play__option-buttons .btn"))[1].click()');
-    check('Reveal a cell in the Options frame fills a cell', (await page.eval('SG.play.getGame().progress().filled')) === revealedBefore + 1);
+    await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].click()');
+    const asked = await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].textContent.trim()');
+    check('the first press of Reveal a cell only asks to confirm', asked === 'Press again to reveal' && (await page.eval('SG.play.getGame().progress().filled')) === revealedBefore, asked);
+    await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].click()');
+    check('the second press fills a cell', (await page.eval('SG.play.getGame().progress().filled')) === revealedBefore + 1);
+    check('and the button is back to its name', await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].textContent.trim()') === 'Reveal a cell');
+    await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].click()');
+    await page.eval('SG.play.select(' + cell + ')');
+    check('moving to another cell cancels the question', await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].textContent.trim()') === 'Reveal a cell');
+    await page.click('#play-root .play__more-toggle');
+    check('the toggle collapses them again', await page.eval('document.getElementById("play-more").hidden'));
 
     // ---- Settings dialog
     await page.click('#btn-settings');
     await page.waitFor('!!document.querySelector("dialog.modal[open]")', 2000);
     const sets = await page.eval('Array.from(document.querySelectorAll("dialog.modal[open] fieldset legend, dialog.modal[open] .switch__text")).map(function(e){return e.textContent;})');
     check('Settings lists language, theme, text size, motion, symbol, check mode, notes, coordinates', sets.length >= 8, JSON.stringify(sets));
-    check('Settings has no puzzle actions (fill notes, reveal, reset): they are in the Options frame', await page.eval('(function(){var d=document.querySelector("dialog.modal[open]");return !d.querySelector("[data-setting=puzzle]") && !/Fill in all notes|Reveal a cell|Reveal the solution|Reset puzzle/.test(d.textContent);})()'));
+    check('Settings has no puzzle actions (fill notes, reveal, reset): they are in the play frame', await page.eval('(function(){var d=document.querySelector("dialog.modal[open]");return !d.querySelector("[data-setting=puzzle]") && !/Fill in all notes|Reveal a cell|Reveal the solution|Reset puzzle/.test(d.textContent);})()'));
     await page.shot('ui-settings');
     await page.click('dialog.modal[open] input[name="sg-theme"][value="dark"]');
     check('dark theme applies', await page.eval('document.documentElement.getAttribute("data-theme")') === 'dark');
@@ -100,37 +117,14 @@ const describeActive = '(function(){var a=document.activeElement;if(!a)return "n
     await sleep(200);
     check('Escape closes the dialog and focus returns to the opener', await page.eval('document.activeElement.id === "btn-settings"'));
 
-    // ---- Help dialog (Vietnamese now)
+    // ---- the Help button is a link to the guide, in a new tab (no dialog)
+    const helpLink = await page.eval('(function(){var a=document.getElementById("btn-help");return {tag:a.tagName,href:a.getAttribute("href"),target:a.getAttribute("target"),rel:a.getAttribute("rel"),label:a.querySelector(".btn__label").textContent,title:a.getAttribute("title")};})()');
+    check('the Help button is a link to help.html that opens in a new tab', helpLink.tag === 'A' && helpLink.href === 'help.html' && helpLink.target === '_blank' && /noopener/.test(helpLink.rel), JSON.stringify(helpLink));
+    check('and it is in the language of the page (Vietnamese now)', helpLink.label === 'Trợ giúp' && /tab mới/.test(helpLink.title), JSON.stringify(helpLink));
+    await page.eval('document.getElementById("btn-help").addEventListener("click", function (e) { e.preventDefault(); window.__helpClicked = true; })');
     await page.click('#btn-help');
-    await page.waitFor('!!document.querySelector("dialog.modal[open]")', 2000);
-    check('Help opens in Vietnamese', await page.eval('document.querySelector("dialog.modal[open] .modal__title").textContent') === 'Trợ giúp');
-    const tabs = await page.eval('Array.from(document.querySelectorAll("dialog.modal[open] [role=tab]")).map(function(t){return t.textContent;})');
-    check('five tabs', tabs.length === 5, tabs.join(' | '));
-    await page.shot('ui-help-how-vi');
-    await page.click('#help-tab-variants');
-    check('the Variants tab lists all 15 variants', await page.eval('document.querySelectorAll("#help-panel-variants .help-variant").length') === 15);
-    await page.eval('document.querySelector("#help-variant-killer").open = true');
-    await page.shot('ui-help-variants-vi');
-    await page.click('#help-tab-hints');
-    check('the Hints tab lists the 26 techniques with descriptions', await page.eval('document.querySelectorAll("#help-panel-hints .help-technique").length') === 26 && await page.eval('Array.from(document.querySelectorAll("#help-panel-hints .help-technique__desc")).every(function(e){return e.textContent.length>10;})'));
-    await page.shot('ui-help-hints-vi');
-    await page.click('#help-tab-keys');
-    check('the Keyboard tab has the shortcuts', await page.eval('document.querySelectorAll("#help-panel-keys kbd").length') > 15);
-    await page.click('#help-tab-about');
-    check('About lists the storage keys', await page.eval('document.querySelectorAll("#help-panel-about .help-storage code").length') === 4);
-    await page.shot('ui-help-about-vi');
-    // arrow keys on the tab list
-    await page.eval('document.getElementById("help-tab-about").focus()');
-    await page.key('ArrowRight');
-    check('arrow keys move between tabs (wraps)', await page.eval('document.activeElement.id') === 'help-tab-how');
-    await page.click('#help-tab-about');
-    await page.click('#help-delete');
-    check('delete asks to be confirmed', /lần nữa/.test(await page.eval('document.getElementById("help-delete").textContent')));
-    await page.click('#help-delete');
     await sleep(200);
-    check('delete clears puzzles and progress but not the preferences', await page.eval('localStorage.getItem("sg.player.puzzles.v1") === null && localStorage.getItem("sg.player.progress.v1") === null && localStorage.getItem("sg.player.prefs.v1") !== null'));
-    await page.key('Escape');
-    await sleep(200);
+    check('pressing it opens no dialog', await page.eval('window.__helpClicked === true && !document.querySelector("dialog.modal[open]")'));
 
     // ---- theme buttons in the header and ?lang=
     await page.click('#theme-switch [data-theme-value="high-contrast"]');

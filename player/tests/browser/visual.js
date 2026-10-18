@@ -49,6 +49,10 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     check('375 px: pad keys are 32-40 px, smaller than on a desktop', padSizes.every(function (s) { return s >= 32 && s <= 40; }), JSON.stringify(padSizes));
     const bar = await page.eval('(function(){var k=document.querySelector(".play__keys"),r=k.getBoundingClientRect(),m=document.querySelector(".play__pad").getBoundingClientRect();return {fixed:getComputedStyle(k).position==="fixed",bottom:Math.round(r.bottom),vh:window.innerHeight,pad:Math.round(parseFloat(getComputedStyle(document.body).paddingBottom)),h:Math.round(r.height),oneRow:Array.from(document.querySelectorAll(".play__key")).every(function(b){return Math.abs(b.getBoundingClientRect().top-m.top)<2;})};})()');
     check('375 px: the tools and the pad are fixed to the bottom, the pad on one row, with room under the page', bar.fixed && bar.bottom === bar.vh && bar.oneRow && bar.pad === bar.h, JSON.stringify(bar));
+    const rowGap = await page.eval('(function(){var t=document.querySelector(".play__tools").getBoundingClientRect(),p=document.querySelector(".play__pad").getBoundingClientRect();return Math.round(p.top-t.bottom);})()');
+    check('375 px: the row of tools is not stuck to the row of the pad (at least 8 px)', rowGap >= 8, String(rowGap));
+    const moreMobile = await page.eval('(function(){var t=document.querySelector(".play__more-toggle"),k=document.querySelector(".play__keys"),p=document.querySelector(".play__pad").getBoundingClientRect(),tr=t.getBoundingClientRect(),kr=k.getBoundingClientRect();return {inBar:k.contains(t),below:tr.top>=p.bottom-1,onScreen:tr.bottom<=window.innerHeight&&tr.top>=kr.top};})()');
+    check('375 px: the "more actions" toggle is in the fixed bar, right under the pad', moreMobile.inBar && moreMobile.below && moreMobile.onScreen, JSON.stringify(moreMobile));
     await page.eval('window.scrollTo(0, document.documentElement.scrollHeight)');
     await sleep(100);
     check('375 px: they stay on screen after scrolling', await page.eval('Math.round(document.querySelector(".play__keys").getBoundingClientRect().bottom) === window.innerHeight'));
@@ -81,13 +85,7 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     await page.shot('visual-w375-hint');
     await page.shot('visual-w375-options');
     // dialogs on mobile
-    await page.tap('#btn-help');
-    await page.waitFor('!!document.querySelector("dialog.modal[open]")', 2000);
-    check('375 px: Help dialog has no horizontal overflow', (await page.eval(overflow)) <= 1);
-    await page.tap('#help-tab-variants');
-    await page.shot('visual-w375-help');
-    await page.key('Escape');
-    await sleep(200);
+    check('375 px: the Help button is a link to the guide', await page.eval('document.getElementById("btn-help").getAttribute("href") === "help.html"'));
     await page.tap('#btn-open');
     await page.waitFor('!!document.getElementById("open-text")', 2000);
     await page.shot('visual-w375-open');

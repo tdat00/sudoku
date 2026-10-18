@@ -1350,7 +1350,7 @@
     it('exports the documented API', function () {
       ready();
       ['init', 'attach', 'detach', 'isActive', 'getGame', 'getSymbolMode', 'setSymbolMode', 'select', 'destroy', 'createGame', 'restoreGame',
-        'describeHint', 'localizeArgs', 'groupEliminations', 'valueText', 'typedLabels', 'createKeyReader',
+        'describeHint', 'renderSnapshot', 'localizeArgs', 'groupEliminations', 'valueText', 'typedLabels', 'createKeyReader',
         'noteLayout', 'padLayout', 'cellAtPoint', 'moveSelection'].forEach(function (name) {
         expect(typeof P[name]).toBe('function');
       });

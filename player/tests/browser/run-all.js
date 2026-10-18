@@ -4,7 +4,8 @@
 const cp = require('child_process');
 const path = require('path');
 
-const RUNS = [['fragment.js', 'file'], ['fragment.js', 'http'], ['open.js'], ['play.js'], ['ui.js'], ['visual.js']];
+const RUNS = [['fragment.js', 'file'], ['fragment.js', 'http'], ['open.js'], ['play.js'], ['ui.js'], ['visual.js'],
+  ['help.js']];
 let failed = 0;
 RUNS.forEach(function (run) {
   const started = Date.now();

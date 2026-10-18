@@ -1,16 +1,42 @@
 # Sudoku Player
 
-[English](#english) · [Tiếng Việt](#tiếng-việt)
+<a id="top"></a>
 
-## English
+**Live apps · Ứng dụng trực tuyến:**
+[Sudoku Player](https://tdat00.github.io/sudoku-player/) ([GitHub](https://github.com/tdat00/sudoku-player)) ·
+[Sudoku Generator](https://tdat00.github.io/sudoku-generator/) ([GitHub](https://github.com/tdat00/sudoku-generator))
+
+- [Table of Contents](#english)
+  - [How to get a puzzle](#how-to-get-a-puzzle)
+  - [Features](#features)
+  - [Run it](#run-it)
+  - [Privacy](#privacy)
+  - [Tests](#tests)
+  - [Deploy on GitHub Pages](#deploy-on-github-pages)
+  - [More](#more)
+- [Mục lục](#tiếng-việt)
+  - [Lấy đề ở đâu](#lấy-đề-ở-đâu)
+  - [Tính năng](#tính-năng)
+  - [Chạy trang](#chạy-trang)
+  - [Quyền riêng tư](#quyền-riêng-tư)
+  - [Kiểm thử](#kiểm-thử)
+  - [Đưa lên GitHub Pages](#đưa-lên-github-pages)
+  - [Xem thêm](#xem-thêm)
+
+---
+
+<a id="english"></a>
+
+# English
 
 **Sudoku Player** is a small static web app that opens a Sudoku puzzle made by
 [Sudoku Generator](https://tdat00.github.io/sudoku-generator/) and lets you **play** it online: notes, exact undo
 and redo, error checking, hints that name the logical technique they use, a timer, and progress that is saved
 for you. English and Vietnamese, light / dark / high-contrast themes, keyboard and touch, no server, no
-account, no build step.
+account, no build step. **Open it: [tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/).**
+(The Vietnamese part is [below](#tiếng-việt).)
 
-### How to get a puzzle
+## How to get a puzzle
 
 1. In Sudoku Generator press **Play** (at the top right of the generator's main panel): its link opens here with
    **every puzzle of the generator's list** in the address (`#puzzle=<token>&active=<n>`: their text, compressed
@@ -26,7 +52,9 @@ account, no build step.
 3. Or pick one of the **imported puzzles** on the left (a faded icon marks a solved one and one in progress; the
    list keeps its order while you play); a reload brings back the puzzle you were playing.
 
-### Features
+[Back to top](#top)
+
+## Features
 
 - **All 15 variants** are playable: Classic 4×4, 6×6 and 9×9, Mega 12×12, Monster 16×16, Diagonal (X), Hyper
   (Windoku), Jigsaw, Killer, Greater-Than, Samurai, Sohei, Butterfly, Flower and Wordoku. The puzzle document
@@ -38,22 +66,26 @@ account, no build step.
   name one of 26 techniques, with a translated name and description.
 - Symbol modes: digits, letters, colours (always with a shape), shapes and the Wordoku word; a solved Wordoku
   shows its key word.
-- A timer that pauses when you leave the tab, completion detection, reveal-a-cell and reveal-the-solution.
+- A timer that pauses when you leave the tab, completion detection and reveal-a-cell.
 - **Saved progress** per puzzle (the last 100 puzzles) and the last 100 imported puzzles; opening the same puzzle
   again offers *Continue* or *Start over*.
 - A summary above the puzzle (variant, level, seed and the description of the variant), and a status box with
-  **Play / Pause / Resume** and **Reset** (it appears once the game was played), the time and the filled cells,
+  **Play / Pause / Resume** and **Reset** (it appears only while the game is paused or solved), the time and the filled cells,
   separate for every puzzle: leaving a running game pauses it.
-- An **Options** frame (closed at first) with the symbols, the check mode, the notes behaviour and the actions on
-  the puzzle (fill in all notes, reveal a cell, reveal the solution, reset). Clicking a cell also pops up the
+- An **Options** frame (closed at first) with the symbols, the check mode and the notes behaviour. The play frame
+  (tools and pad) expands to show the actions on the puzzle (fill in all notes, reveal a cell, which asks for a
+  second press), hidden at first, right under the pad. Clicking a cell also pops up the
   keys next to it; on a small screen the tools and the pad are fixed to the bottom and the buttons are icons.
 - Settings (language, theme, text size, reduced motion, colour symbol, check mode, notes behaviour,
-  coordinates), a Help dialog (how to play, the rules of the 15 variants, the technique ladder, keyboard
-  shortcuts, privacy).
+  coordinates), and a **guide** (`help.html`, opened by the Help button in a new tab): the basics of playing, how
+  the hints work, the techniques that solve harder puzzles with a real example for each of the 26, and the
+  keyboard shortcuts.
 - Accessible: skip link, an ARIA grid with spoken cell labels, live announcements, focus kept in dialogs,
   contrast checked from the design tokens, forced-colours and reduced-motion support.
 
-### Run it
+[Back to top](#top)
+
+## Run it
 
 There is nothing to install or build. Open `index.html` in a browser (it works from `file://`), or serve the
 folder with any static server, for example `python -m http.server` or `npx serve`, and open
@@ -63,10 +95,13 @@ The puzzle link looks like `…/index.html#puzzle=<token>` (with `&active=<n>` f
 compressed and URL-safe: the text of the puzzles of the generator's Play button (`t.…`), or the document of one
 puzzle (`z.…`); the fragment never leaves the browser. A text file or a pasted line works without any token.
 
-### Privacy
+[Back to top](#top)
+
+## Privacy
 
 Everything runs in your browser; nothing is uploaded, there are no accounts, trackers or cookies. Only these
-items are kept in the local storage of the browser (Help → About lists them and can delete them):
+items are kept in the local storage of the browser (the Remove all button of the list of puzzles deletes the
+puzzles and the progress):
 
 | Key | What |
 |-----|------|
@@ -77,7 +112,9 @@ items are kept in the local storage of the browser (Help → About lists them an
 
 If the browser blocks storage, the player says so and keeps your game in memory until you close the tab.
 
-### Tests
+[Back to top](#top)
+
+## Tests
 
 ```
 node tests/node-runner.js          # every suite; no packages (run on Node 24)
@@ -89,7 +126,9 @@ fixtures in `tests/fixtures/puzzles/` are real documents made by Sudoku Generato
 ([`docs/fixtures.md`](./docs/fixtures.md)). The browser run in headless Edge over the DevTools protocol is
 recorded in [`docs/qa.md`](./docs/qa.md).
 
-### Deploy on GitHub Pages
+[Back to top](#top)
+
+## Deploy on GitHub Pages
 
 Choose **Settings → Pages → Build and deployment → Source → GitHub Actions**. The
 [deployment workflow](.github/workflows/pages.yml) runs the Node 24 tests and publishes the app after every
@@ -99,21 +138,29 @@ published, not the tests or working notes. The live app is at
 button needs that address; the page reads the generator's address from `<meta name="sg-generator-url">` in
 `index.html` (default `https://tdat00.github.io/sudoku-generator/`).
 
-### More
+[Back to top](#top)
+
+## More
 
 [`design.md`](./design.md) (architecture, formats, accessibility, testing, risks) ·
 [`task.md`](./task.md) (the plan and its status) ·
 License: MIT.
 
-## Tiếng Việt
+[Back to top](#top)
+
+---
+
+<a id="tieng-viet"></a>
+
+# Tiếng Việt
 
 **Trình chơi Sudoku** là một ứng dụng web tĩnh nhỏ, mở đề Sudoku do
 [Trình sinh đề Sudoku](https://tdat00.github.io/sudoku-generator/) tạo ra và cho bạn **chơi** trực tuyến: ghi
 chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên kỹ thuật suy luận, đồng hồ và tiến độ được tự
 động lưu. Có tiếng Anh và tiếng Việt, giao diện sáng / tối / tương phản cao, dùng được bằng bàn phím và cảm
-ứng, không cần máy chủ, tài khoản hay bước biên dịch.
+ứng, không cần máy chủ, tài khoản hay bước biên dịch. **Mở ngay: [tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/).**
 
-### Lấy đề ở đâu
+## Lấy đề ở đâu
 
 1. Trong Trình sinh đề Sudoku, bấm **Chơi** (ở góc trên bên phải khung chính của trình sinh đề): liên kết mở ra
    trang này với **mọi đề trong danh sách của trình sinh đề** nằm trong địa chỉ (`#puzzle=<mã>&active=<n>`: văn
@@ -129,7 +176,9 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
 3. Hoặc chọn một **đề đã nhập** ở bên trái (một biểu tượng mờ đánh dấu đề đã giải và đề đang chơi dở; danh sách
    giữ nguyên thứ tự khi bạn chơi); tải lại trang sẽ đưa đề đang chơi trở lại.
 
-### Tính năng
+[Lên đầu trang](#top)
+
+## Tính năng
 
 - Chơi được **cả 15 biến thể**: Cổ điển 4×4, 6×6 và 9×9, Khổng lồ 12×12, Quái vật 16×16, Đường chéo (X),
   Siêu vùng (Windoku), Ghép hình, Sát thủ, So sánh, Samurai, Sohei, Cánh bướm, Bông hoa và Chữ (Wordoku). Tài
@@ -141,21 +190,25 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
   tên và mô tả đã dịch.
 - Kiểu ký hiệu: chữ số, chữ cái, màu (luôn kèm hình), hình và chữ của Wordoku; Wordoku giải xong sẽ hiện từ
   khóa.
-- Đồng hồ tạm dừng khi bạn rời tab, nhận biết hoàn thành, hiện một ô và hiện đáp án.
+- Đồng hồ tạm dừng khi bạn rời tab, nhận biết hoàn thành và hiện một ô.
 - **Tiến độ được lưu** cho từng đề (100 đề gần nhất) và 100 đề đã nhập gần nhất; mở lại đúng đề đó sẽ hỏi *Tiếp
   tục* hay *Chơi lại từ đầu*.
 - Phần tóm tắt phía trên bàn cờ (biến thể, mức độ, seed và mô tả của biến thể), cùng khung trạng thái có
-  **Chơi / Tạm dừng / Tiếp tục** và **Đặt lại** (chỉ hiện khi đề đã được chơi), thời gian và số ô đã điền,
+  **Chơi / Tạm dừng / Tiếp tục** và **Đặt lại** (chỉ hiện khi đang tạm dừng hoặc đã giải xong), thời gian và số ô đã điền,
   riêng cho từng đề: rời khỏi một ván đang chạy sẽ tự tạm dừng nó.
-- Khung **Tùy chọn** (mặc định thu gọn) với ký hiệu, cách kiểm tra lỗi, cách ghi chú và các thao tác với đề
-  (điền tất cả ghi chú, hiện một ô, hiện đáp án, đặt lại). Bấm vào một ô còn hiện bàn phím nhỏ ngay cạnh nó; trên
+- Khung **Tùy chọn** (mặc định thu gọn) với ký hiệu, cách kiểm tra lỗi và cách ghi chú. Khung chơi (công cụ và
+  bàn phím số) có thể mở rộng để hiện các thao tác với đề (điền tất cả ghi chú, hiện một ô và phải nhấn hai lần),
+  mặc định ẩn, nằm ngay dưới bàn phím số. Bấm vào một ô còn hiện bàn phím nhỏ ngay cạnh nó; trên
   màn hình nhỏ, bộ công cụ và bàn phím số được ghim ở đáy màn hình và các nút chỉ còn biểu tượng.
 - Cài đặt (ngôn ngữ, giao diện, cỡ chữ, giảm chuyển động, ký hiệu trên màu, cách kiểm tra lỗi, ghi chú, tọa
-  độ), hộp Trợ giúp (cách chơi, luật của 15 biến thể, các kỹ thuật, phím tắt, quyền riêng tư).
+  độ), và **trang hướng dẫn** (`help.html`, nút Trợ giúp mở ở tab mới): những điều cơ bản, cách hoạt động của
+  gợi ý, các kỹ thuật giải đề khó kèm một ví dụ thật cho từng kỹ thuật trong 26 kỹ thuật, và các phím tắt.
 - Dễ tiếp cận: liên kết bỏ qua, lưới ARIA với nhãn ô đọc được, thông báo trực tiếp, tiêu điểm được giữ trong
   hộp thoại, độ tương phản được kiểm tra từ các token thiết kế, hỗ trợ chế độ màu bắt buộc và giảm chuyển động.
 
-### Chạy trang
+[Lên đầu trang](#top)
+
+## Chạy trang
 
 Không cần cài đặt hay biên dịch. Mở `index.html` trong trình duyệt (chạy được từ `file://`), hoặc phục vụ thư
 mục bằng bất kỳ máy chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở
@@ -165,11 +218,13 @@ Liên kết đề có dạng `…/index.html#puzzle=<mã>` (kèm `&active=<n>` c
 URL: văn bản các đề của nút Chơi ở trình sinh đề (`t.…`), hoặc tài liệu của một đề (`z.…`); phần sau dấu `#`
 không bao giờ rời khỏi trình duyệt. Tệp văn bản hay dòng ký tự đã dán thì không cần mã.
 
-### Quyền riêng tư
+[Lên đầu trang](#top)
+
+## Quyền riêng tư
 
 Mọi thứ chạy trong trình duyệt của bạn; không có gì được tải lên, không có tài khoản, trình theo dõi hay
-cookie. Chỉ những mục sau được giữ trong bộ nhớ cục bộ của trình duyệt (Trợ giúp → Giới thiệu liệt kê và cho
-phép xóa chúng):
+cookie. Chỉ những mục sau được giữ trong bộ nhớ cục bộ của trình duyệt (nút Xóa hết của danh sách đề xóa các đề
+và tiến độ):
 
 | Khóa | Nội dung |
 |------|----------|
@@ -180,7 +235,9 @@ phép xóa chúng):
 
 Nếu trình duyệt chặn lưu trữ, trình chơi sẽ báo và giữ ván chơi trong bộ nhớ cho đến khi bạn đóng tab.
 
-### Kiểm thử
+[Lên đầu trang](#top)
+
+## Kiểm thử
 
 ```
 node tests/node-runner.js          # mọi bộ kiểm thử; không cần gói nào (đã chạy trên Node 24)
@@ -191,7 +248,9 @@ node tests/node-runner.js --suite=play,importer
 `tests/fixtures/puzzles/` là tài liệu thật do Trình sinh đề Sudoku tạo ra ([`docs/fixtures.md`](./docs/fixtures.md)).
 Lần chạy trình duyệt (Edge không giao diện qua giao thức DevTools) được ghi lại trong [`docs/qa.md`](./docs/qa.md).
 
-### Đưa lên GitHub Pages
+[Lên đầu trang](#top)
+
+## Đưa lên GitHub Pages
 
 Chọn **Settings → Pages → Build and deployment → Source → GitHub Actions**.
 [Workflow triển khai](.github/workflows/pages.yml) chạy các kiểm thử trên Node 24 và xuất bản ứng dụng sau mỗi
@@ -201,7 +260,9 @@ xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng t
 sinh đề cần địa chỉ này; trang đọc địa chỉ của Trình sinh đề từ `<meta name="sg-generator-url">` trong
 `index.html` (mặc định `https://tdat00.github.io/sudoku-generator/`).
 
-### Xem thêm
+[Lên đầu trang](#top)
+
+## Xem thêm
 
 [`design.md`](./design.md) (kiến trúc, định dạng, khả năng tiếp cận, kiểm thử, rủi ro) ·
 [`task.md`](./task.md) (kế hoạch và tiến độ) ·

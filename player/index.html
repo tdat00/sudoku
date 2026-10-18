@@ -33,7 +33,6 @@
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/board.css">
   <link rel="stylesheet" href="css/play.css">
-  <link rel="stylesheet" href="css/help.css">
 </head>
 <body>
   <!-- Icon sprite: <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-NAME"></use></svg> -->
@@ -160,11 +159,11 @@
           <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-settings"></use></svg>
           <span class="btn__label" data-i18n="shell.settings"></span>
         </button>
-        <button id="btn-help" type="button" class="btn btn--ghost" aria-haspopup="dialog"
+        <a id="btn-help" class="btn btn--ghost" href="help.html" target="_blank" rel="noopener"
           data-i18n-attr="title:shell.help.title">
           <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-help"></use></svg>
           <span class="btn__label" data-i18n="shell.help"></span>
-        </button>
+        </a>
       </div>
     </div>
   </header>
@@ -312,7 +311,6 @@
   <script src="js/ui/a11y.js"></script>
   <script src="js/ui/progress.js"></script>
   <script src="js/ui/play.js"></script>
-  <script src="js/ui/help.js"></script>
   <script src="js/ui/app.js"></script>
 </body>
 </html>

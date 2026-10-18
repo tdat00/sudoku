@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="help.page.title">How to play</title>
+  <!-- First paint without a flash (SG.theme): applies the stored theme, motion and text size before the
+       stylesheets paint. It reads the key of js/ui/store.js; any failure leaves the defaults. -->
+  <script>
+    (function () {
+      var html = document.documentElement;
+      var prefs = null;
+      try { prefs = JSON.parse(localStorage.getItem('sg.player.prefs.v1')); } catch (e) { prefs = null; }
+      if (!prefs || typeof prefs !== 'object') prefs = {};
+      if (prefs.theme === 'light' || prefs.theme === 'dark' || prefs.theme === 'high-contrast') {
+        html.setAttribute('data-theme', prefs.theme);
+      } else {
+        html.removeAttribute('data-theme');
+      }
+      if (prefs.reducedMotion === true) html.setAttribute('data-motion', 'off');
+      if (prefs.fontSize === 'small') html.style.setProperty('--sg-font-size-base', '87.5%');
+      else if (prefs.fontSize === 'large') html.style.setProperty('--sg-font-size-base', '125%');
+    })();
+  </script>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/tokens-board.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/board.css">
+  <link rel="stylesheet" href="css/play.css">
+  <link rel="stylesheet" href="css/help.css">
+</head>
+<body class="help-body">
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="ic-logo" viewBox="0 0 24 24">
+      <rect x="2.5" y="2.5" width="19" height="19" rx="3"></rect>
+      <path d="M8.8 2.5v19M15.2 2.5v19M2.5 8.8h19M2.5 15.2h19" stroke-width="1.5"></path>
+      <rect x="8.8" y="8.8" width="6.4" height="6.4" fill="currentColor" stroke="none"></rect>
+    </symbol>
+    <symbol id="ic-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8"></path>
+    </symbol>
+    <symbol id="ic-moon" viewBox="0 0 24 24">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
+    </symbol>
+    <symbol id="ic-contrast" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"></path>
+    </symbol>
+    <symbol id="ic-chevron-left" viewBox="0 0 24 24">
+      <path d="M15 6l-6 6 6 6"></path>
+    </symbol>
+  </svg>
+
+  <a id="skip-link" class="skip-link" href="#main" data-i18n="help.page.skip"></a>
+
+  <header class="app-header">
+    <div class="app-header__inner">
+      <a class="app-brand help-brand" href="index.html">
+        <svg class="icon icon--brand" aria-hidden="true" focusable="false"><use href="#ic-logo"></use></svg>
+        <span class="app-title" data-i18n="app.title"></span>
+      </a>
+
+      <div class="app-tools">
+        <div id="help-lang" class="segmented" role="group" data-i18n-attr="aria-label:shell.lang.label">
+          <button type="button" class="segmented__btn" data-lang="en" lang="en" aria-pressed="true"
+            data-i18n-attr="aria-label:shell.lang.en.name,title:shell.lang.en.name"
+            data-i18n="shell.lang.en.short"></button>
+          <button type="button" class="segmented__btn" data-lang="vi" lang="vi" aria-pressed="false"
+            data-i18n-attr="aria-label:shell.lang.vi.name,title:shell.lang.vi.name"
+            data-i18n="shell.lang.vi.short"></button>
+        </div>
+
+        <div id="help-theme" class="segmented" role="group" data-i18n-attr="aria-label:shell.theme.label">
+          <button type="button" class="segmented__btn segmented__btn--icon" data-theme-value="light"
+            aria-pressed="true" data-i18n-attr="aria-label:shell.theme.light,title:shell.theme.light">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-sun"></use></svg>
+          </button>
+          <button type="button" class="segmented__btn segmented__btn--icon" data-theme-value="dark"
+            aria-pressed="false" data-i18n-attr="aria-label:shell.theme.dark,title:shell.theme.dark">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-moon"></use></svg>
+          </button>
+          <button type="button" class="segmented__btn segmented__btn--icon" data-theme-value="high-contrast"
+            aria-pressed="false"
+            data-i18n-attr="aria-label:shell.theme.highContrast,title:shell.theme.highContrast">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-contrast"></use></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <noscript>
+    <p class="noscript">This guide needs JavaScript. / Hướng dẫn này cần bật JavaScript.</p>
+  </noscript>
+
+  <main id="main" class="help-page" tabindex="-1">
+    <div class="help-page__head">
+      <a class="btn btn--secondary btn--sm help-back" href="index.html">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-chevron-left"></use></svg>
+        <span class="btn__label" data-i18n="help.page.back"></span>
+      </a>
+      <h1 class="help-page__title" data-i18n="help.page.title"></h1>
+      <p class="help__lead help-page__lead" data-i18n="help.page.lead"></p>
+    </div>
+    <div class="help-page__layout">
+      <nav id="help-toc" class="help-toc"></nav>
+      <div id="help-root" class="help-content"></div>
+    </div>
+  </main>
+
+  <!-- The scripts the guide needs: the techniques and their texts, the boards and the drawing of a hint (the
+       examples are fixed data, nothing is played), in the order of SOURCE_FILES in tests/node-runner.js. -->
+  <script src="js/core/ns.js"></script>
+  <script src="js/core/errors.js"></script>
+  <script src="js/core/bits.js"></script>
+  <script src="js/core/budget.js"></script>
+  <script src="js/core/model.js"></script>
+  <script src="js/core/constraints.js"></script>
+  <script src="js/core/combo-table.js"></script>
+  <script src="js/core/dfs-solver.js"></script>
+  <script src="js/core/techniques.js"></script>
+  <script src="js/core/logical-solver.js"></script>
+  <script src="js/core/tech-basic.js"></script>
+  <script src="js/core/tech-subset.js"></script>
+  <script src="js/core/tech-fish.js"></script>
+  <script src="js/core/tech-wing.js"></script>
+  <script src="js/core/tech-chain.js"></script>
+  <script src="js/core/tech-cage.js"></script>
+  <script src="js/core/tech-ineq.js"></script>
+  <script src="js/core/model-aids.js"></script>
+  <script src="js/core/classic-model.js"></script>
+  <script src="js/core/text-boards.js"></script>
+  <script src="js/ui/i18n.js"></script>
+  <script src="js/ui/locale.en.js"></script>
+  <script src="js/ui/locale.vi.js"></script>
+  <script src="js/ui/locale.shell.js"></script>
+  <script src="js/ui/store.js"></script>
+  <script src="js/ui/theme.js"></script>
+  <script src="js/ui/symbols.js"></script>
+  <script src="js/ui/board-view.js"></script>
+  <script src="js/ui/play.js"></script>
+  <script src="js/ui/help-examples.js"></script>
+  <script src="js/ui/help.js"></script>
+</body>
+</html>

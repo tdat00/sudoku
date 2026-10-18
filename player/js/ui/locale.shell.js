@@ -34,7 +34,7 @@
       'shell.settings': 'Settings',
       'shell.settings.title': 'Open settings',
       'shell.help': 'Help',
-      'shell.help.title': 'Open help',
+      'shell.help.title': 'Open the guide in a new tab',
 
       'shell.welcome.title': 'Import a Sudoku puzzle to play it',
       'shell.welcome.lead': 'This is a player for puzzles made by Sudoku Generator: all 15 variants, ' +
@@ -84,7 +84,7 @@
       'shell.settings': 'Cài đặt',
       'shell.settings.title': 'Mở cài đặt',
       'shell.help': 'Trợ giúp',
-      'shell.help.title': 'Mở trợ giúp',
+      'shell.help.title': 'Mở hướng dẫn ở tab mới',
 
       'shell.welcome.title': 'Nhập một đề Sudoku để chơi',
       'shell.welcome.lead': 'Đây là trình chơi cho các đề do Trình sinh đề Sudoku tạo ra: đủ 15 biến thể, ' +

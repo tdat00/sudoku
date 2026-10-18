@@ -1,6 +1,6 @@
 # Sudoku Player — Task Breakdown
 
-> Source of truth for the design: [`design.md`](./design.md). Resume guide: [`memory.md`](./memory.md).
+> Source of truth for the design: [`design.md`](./design.md).
 > The tasks are numbered in **development order**; each phase ends with a green `node tests/node-runner.js` and
 > is one commit of the history (the commit subject names the phase). Status values: `planned` · `done` ·
 > `partial` (with the reason).
@@ -77,10 +77,11 @@ Owned: `js/ui/symbols.js`, `board-view.js`, `a11y.js`, `css/tokens-board.css`, `
 Owned: `js/ui/play.js`, `progress.js`, `css/play.css`, suites `play`, `progress`.
 - P-7.1 The pure game engine: values, notes, exact undo / redo, conflicts, completion, timer, serialisation. — done
 - P-7.2 Hints: technique name + description, three levels, always sound. — done
-- P-7.3 Play UI: status bar, tools, symbol pad, key reader (two-character symbols), message, hint card,
-  options, notes display. — done
-- P-7.4 `SG.progress`: per-puzzle progress (LRU 20), opened puzzles (LRU 10), recent list, safe storage
-  behaviour (quota, blocked, version purge). — done
+- P-7.3 Play UI: status box (Play / Pause / Resume, Reset while paused or solved), tools, symbol pad, key reader
+  (two-character symbols), hint card, the Options frame, the "More actions" (fill in all notes, reveal a cell with
+  a confirming second press), notes display. — done
+- P-7.4 `SG.progress`: per-puzzle progress (LRU 100), imported puzzles (LRU 100, a stable order), recent list,
+  safe storage behaviour (quota, blocked, version purge). — done
 
 ### P-8 — The player app
 Owned: `js/ui/app.js`, `css/components.css` (dialogs, cards), `css/layout.css` (final), suites `app`.
@@ -92,14 +93,19 @@ Owned: `js/ui/app.js`, `css/components.css` (dialogs, cards), `css/layout.css` (
   language, motion, colour symbol, check mode, notes). — done
 - P-8.4 The `SG.app` surface for the reused modules; toasts, modals, announcements. — done
 
-### P-9 — Help, final QA and documentation
-Owned: `js/ui/help.js`, `css/help.css`, `README.md`, `memory.md`, `docs/`, suite `help`.
-- P-9.1 Help dialog: how to play, rules of 15 variants, technique ladder, keyboard shortcuts, about / privacy. — done
+### P-9 — The guide, final QA and documentation
+Owned: `help.html`, `js/ui/help.js`, `help-examples.js`, `css/help.css`, `tests/tools/make-technique-examples.js`,
+`README.md`, `docs/`, suite `help`.
+- P-9.1 The guide: a page opened by the Help button in a new tab (first built as a dialog with tabs): the basics,
+  how the hints work, the 26 techniques in groups with a tab and a hardcoded example each, the keyboard, a
+  floating contents. — done
 - P-9.2 (First-visit tour: built, then removed at the owner's request; there is no tour.) — dropped
 - P-9.3 Browser verification in headless Edge (15 fixtures via fragment, paste, file input and drop; play,
   hints, save / restore, languages, themes, widths, keyboard-only, reduced motion), screenshots reviewed,
   findings fixed; the scripts are kept in `tests/browser/` and the results in `docs/qa.md`. — done
-- P-9.4 README (EN + VI), design / task / memory finalisation, final test run. — done
+- P-9.4 README (EN + VI, with a table of contents and the link to the live app), design / task finalisation, final test run. — done
+- P-10 Later work (after the first release): the generator's layout (list on the left, summary above the board,
+  status box and Options on the right), Share, bundles from the generator's Play button, the guide page. — done
 
 ## 2. Commit plan
 1. `docs:` P-0 · 2. `foundation:` P-1 · 3. `core:` P-2 · 4. `solver:` P-3 · 5. `import:` P-4 · 6. `shell:` P-5 ·

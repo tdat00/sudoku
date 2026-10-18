@@ -36,6 +36,24 @@
   box-shadow: var(--sg-shadow-1);
 }
 
+/* The actions on the puzzle: behind a small toggle at the bottom of the play frame. */
+.play__more-toggle {
+  align-self: center;
+  gap: var(--sg-space-1);
+  color: var(--sg-color-text-muted);
+}
+
+.play__more[hidden] {
+  display: none;
+}
+
+/* The tools and the pad, with room between the two rows of buttons. */
+.play__keys {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+}
+
 .play__status {
   display: flex;
   flex-direction: column;
@@ -541,6 +559,12 @@
   text-decoration: line-through;
 }
 
+/* The digit a hint puts in a cell (Help page examples, and the notes of that cell). */
+.sgb .layer-play .pl-note.is-keep {
+  fill: var(--sg-board-technique);
+  font-weight: 800;
+}
+
 .sgb .layer-play .pl-note-fill {
   stroke: var(--sg-board-sym-edge);
   stroke-width: 0.6;
@@ -560,13 +584,10 @@
  * on screen, fixed to the bottom. There is no popup over the board. Last, so it wins over the rules above.
  */
 @media (max-width: 767.98px) {
-  /* The frame would be empty (the keys are fixed to the bottom): only the hint card, when there is one, stays. */
+  /* The frame would be empty (the keys are fixed to the bottom): it is only the toggle, the actions and the
+     hint card in the flow. */
   .play__panel:not([hidden]) {
     display: contents;
-  }
-
-  .side__play:not(:has(.play__hint:not([hidden]))) {
-    margin-block-end: calc(-1 * var(--sg-space-3));
   }
 
   .play__keys {
@@ -577,7 +598,7 @@
     z-index: 50;
     display: flex;
     flex-direction: column;
-    gap: var(--sg-space-1);
+    gap: var(--sg-space-2);
     padding: var(--sg-space-2) var(--sg-space-3) calc(var(--sg-space-2) + env(safe-area-inset-bottom, 0px));
     border-top: 1px solid var(--sg-color-border);
     background: var(--sg-color-surface);
@@ -628,6 +649,15 @@
   .play__hint-buttons .btn,
   .play__option-buttons .btn {
     min-height: 2.25rem;
+  }
+
+  .play__more .play__option-buttons {
+    flex-direction: row;
+  }
+
+  .play__more .play__option-buttons .btn {
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .play__popup {

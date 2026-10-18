@@ -1,44 +1,45 @@
 /**
- * Help (design.md section 8.3): `SG.help`.
+ * Help (design.md section 8.3): `SG.help`, the page `help.html` that the Help button of the player opens in a
+ * new tab (there is no dialog).
  *
- * The Help dialog (`action {id: 'help'}` -> `open()`) has five tabs: how to play, the rules of the 15
- * variants (static texts: the player has no variants registry), the hints and the ladder of techniques they
- * can name (read from `SG.techniques`), the keyboard shortcuts, and about / privacy (what is stored and how
- * to delete it).
+ * The page has four sections: the basics of playing, how the hints work (the hints are part of the guide), the
+ * techniques that solve harder puzzles - each with a REAL example - and the keyboard. The techniques are in
+ * groups, and each group has a tab for every technique: the tab shows what the technique says and a board drawn
+ * the way the hint card of the player draws it. The table of contents on the side lists the sections, the groups
+ * and the names of the techniques.
+ *
+ * The examples are fixed data, not computed when the page opens: `SG.helpExamples[id]` (js/ui/help-examples.js,
+ * made by tests/tools/make-technique-examples.js) is a snapshot of a puzzle partway through, with the notes of the
+ * cells that matter and what the player's own hint said at that moment. `buildExample` turns it into a board and a
+ * hint, `drawExample` draws it with `SG.play.renderSnapshot` and the words of `SG.play.describeHint`, so the text
+ * is the hint's, in either language.
  *
  * PUBLIC API (`SG.help`)
- *   init(app)            idempotent; called by app.js at start-up. Returns true when it is running.
- *   destroy()            removes the listeners and closes the dialog.
- *   open(options?)       opens the Help dialog; `{ tab }` picks a tab (see `TAB_IDS`); returns the modal.
- *   close()              closes it.
- *   TAB_IDS, VARIANT_RULES (the id, name key, rules key and tip key of the 15 variants),
- *   SHORTCUTS (the rows of the keyboard tab).
+ *   SECTION_IDS            the sections, in order.
+ *   BASIC_STEPS            the steps of the basics.
+ *   SHORTCUTS              the rows of the keyboard section.
+ *   buildExample(id)       -> { id, variantId, model, givens, values, notes, hint } | null. Pure (no DOM).
+ *   drawExample(el, id)    draws the example of a technique, its explanation and a legend into `el`.
+ *   selectTechnique(id)    shows the tab of a technique (and draws its example); false when it is not on the page.
+ *   render(rootEl?)        builds the sections into `#help-root` (and the contents into `#help-toc`).
+ *   start()                what help.html calls at load: language and theme from the stored preferences, the
+ *                          header switches, the first render; returns false on a page without `#help-root`.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first instance on repeated loads: the running page must survive.
-  if (SG.help && typeof SG.help.init === 'function') return;
+  // Keep the first instance on repeated loads.
+  if (SG.help && typeof SG.help.start === 'function') return;
 
-  const TAB_IDS = Object.freeze(['how', 'variants', 'hints', 'keys', 'about']);
+  const SECTION_IDS = Object.freeze(['how', 'hints', 'techniques', 'keys']);
 
-  const VARIANT_IDS = Object.freeze(['classic4', 'classic6', 'classic9', 'mega12', 'mega16', 'diagonalX',
-    'hyper', 'jigsaw9', 'killer', 'greaterThan', 'samurai', 'sohei', 'butterfly', 'flower', 'wordoku']);
+  /** The steps of "the basics", in order: the texts are `help.how.<id>.title` and `.text`. */
+  const BASIC_STEPS = Object.freeze(['get', 'select', 'enter', 'notes', 'check', 'hint', 'play', 'symbols',
+    'save', 'solved']);
 
-  /** The static help entry of every variant: where its texts are. */
-  const VARIANT_RULES = Object.freeze(VARIANT_IDS.map(function (id) {
-    return Object.freeze({
-      id: id,
-      nameKey: 'variant.' + id,
-      descKey: 'variant.' + id + '.desc',
-      rulesKey: 'help.variant.' + id + '.rules',
-      tipKey: 'help.variant.' + id + '.tip'
-    });
-  }));
-
-  /** The keyboard tab: the keys of each row and the key of its description. */
+  /** The keyboard section: the keys of each row and the key of its description. */
   const SHORTCUTS = Object.freeze([
     Object.freeze({ id: 'move',
       keys: Object.freeze([['←', '→', '↑', '↓'], ['Home', 'End'], ['Page Up', 'Page Down']]) }),
@@ -54,7 +55,11 @@
     Object.freeze({ id: 'openBox', keys: Object.freeze([['Ctrl', 'Enter']]) })
   ]);
 
-  const REPOSITORY_URL = 'https://github.com/tdat00/sudoku-player';
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const WIDE_QUERY = '(min-width: 64rem)';
+
+  /** Where each technique's tab and panel are, by technique id (rebuilt by every render). */
+  const tabs = new Map();
 
   function t(key, args) {
     return SG.i18n.t(key, args);
@@ -64,15 +69,6 @@
     if (typeof console !== 'undefined' && typeof console.error === 'function') console.error(err);
   }
 
-  function safely(fn) {
-    try {
-      return fn();
-    } catch (err) {
-      logError(err);
-      return undefined;
-    }
-  }
-
   function h(tag, attrs, children) {
     const node = root.document.createElement(tag);
     Object.keys(attrs || {}).forEach(function (name) {
@@ -80,337 +76,454 @@
       if (value === null || value === undefined || value === false) return;
       if (name === 'class') node.className = value;
       else if (name === 'text') node.textContent = value;
-      else if (name === 'i18n') node.setAttribute('data-i18n', value);
       else node.setAttribute(name, value === true ? '' : String(value));
     });
     (children || []).forEach(function (child) { if (child) node.appendChild(child); });
     return node;
   }
 
-  const ctx = {
-    app: null,
-    off: [],
-    modal: null,
-    tab: 'how',
-    panels: {},
-    tabs: {},
-    deleteTimer: null
-  };
+  // ---------------------------------------------------------------------------------------------
+  // The examples
+  // ---------------------------------------------------------------------------------------------
+
+  /** The cell digits of a snapshot string (81 characters, '.' for an empty cell). */
+  function digitsOf(text) {
+    return Array.from(text).map(function (ch) { return ch === '.' ? 0 : Number(ch); });
+  }
+
+  /** The board of a snapshot: a plain 9x9, or a Killer or Greater-Than board from its cages or signs. */
+  function modelOf(ex) {
+    if (ex.variant === 'killer' && Array.isArray(ex.cages)) {
+      return SG.textBoards.create(SG.textBoards.killerSpec(ex.cages));
+    }
+    if (ex.variant === 'greaterThan' && Array.isArray(ex.signs)) {
+      return SG.textBoards.create(SG.textBoards.greaterThanSpec(ex.signs));
+    }
+    if (ex.variant === 'classic9') return SG.classicModel.build(9);
+    return SG.textBoards.DERIVED.indexOf(ex.variant) !== -1 ? SG.textBoards.buildVariant(ex.variant) : null;
+  }
+
+  /**
+   * The example of a technique, ready to draw: nothing is played, it is the snapshot of `SG.helpExamples`.
+   * @param {string} id  A technique id of `SG.techniques`.
+   * @returns {?{id: string, variantId: string, model: Object, givens: number[], values: number[],
+   *   notes: number[], hint: Object}} null for an unknown technique or a board it cannot build.
+   */
+  function buildExample(id) {
+    const ex = SG.helpExamples && Object.prototype.hasOwnProperty.call(SG.helpExamples, id)
+      ? SG.helpExamples[id] : null;
+    if (ex === null || !SG.classicModel || !SG.textBoards) return null;
+    const model = modelOf(ex);
+    if (model === null) return null;
+    const notes = new Array(model.cellCount).fill(0);
+    Object.keys(ex.notes).forEach(function (cell) { notes[Number(cell)] = ex.notes[cell]; });
+    const hint = Object.assign({ ok: true, step: 0, steps: 1, level: 3, ignored: 0 }, ex.hint);
+    return { id: id, variantId: ex.variant, model: model, givens: digitsOf(ex.givens), values: digitsOf(ex.values),
+      notes: notes, hint: hint };
+  }
+
+  const LEGEND = Object.freeze([
+    Object.freeze({ id: 'region', key: 'help.example.legend.region' }),
+    Object.freeze({ id: 'cell', key: 'help.example.legend.cells' }),
+    Object.freeze({ id: 'target', key: 'help.example.legend.target' }),
+    Object.freeze({ id: 'elim', key: 'help.example.legend.elim' }),
+    Object.freeze({ id: 'keep', key: 'help.example.legend.keep' })
+  ]);
+
+  function legend(hint) {
+    const list = h('ul', { class: 'help-legend', role: 'list' });
+    LEGEND.forEach(function (item) {
+      if (item.id === 'region' && !hint.region) return;
+      if (item.id === 'elim' && hint.eliminations.length === 0) return;
+      if (item.id === 'keep' && hint.placements.length === 0) return;
+      list.appendChild(h('li', { class: 'help-legend__item' }, [
+        h('span', { class: 'help-swatch help-swatch--' + item.id, 'aria-hidden': 'true' }),
+        h('span', { text: t(item.key) })
+      ]));
+    });
+    return list;
+  }
+
+  /**
+   * Draws the example of a technique into `container`: the board with the marks of the hint, what the hint says
+   * and a legend of the marks.
+   * @param {Element} container
+   * @param {string} id  A technique id.
+   * @returns {boolean} Whether the example could be drawn.
+   */
+  function drawExample(container, id) {
+    container.textContent = '';
+    let example = null;
+    try {
+      example = buildExample(id);
+    } catch (err) {
+      logError(err);
+    }
+    if (example === null) {
+      container.appendChild(h('p', { class: 'field__hint', text: t('help.example.unavailable') }));
+      return false;
+    }
+    const model = example.model;
+    const said = SG.play.describeHint(model, example.hint, { mode: 'digits' });
+    const svg = root.document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('class', 'board-svg help-example__svg');
+    const frame = h('div', { class: 'help-example__board' }, [svg]);
+    const board = SG.boardView.create(svg, model, { symbolMode: 'digits', showCoords: false,
+      colorAuxSymbol: false, animate: false });
+    board.setValues(example.givens);
+    board.setGivens(example.givens);
+    SG.play.renderSnapshot(board, svg, model, { values: example.values, notes: example.notes, hint: example.hint,
+      mode: 'digits' });
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', said.title + '. ' + said.explanation);
+
+    const facts = h('dl', { class: 'help-example__facts' }, [
+      h('dt', { text: t('help.example.region') }), h('dd', { text: said.region }),
+      h('dt', { text: t('help.example.cells') }), h('dd', { text: said.cells }),
+      h('dt', { text: t('help.example.move') }), h('dd', { text: said.action })
+    ]);
+    const name = SG.i18n.has('variant.' + example.variantId) ? t('variant.' + example.variantId) : example.variantId;
+    container.appendChild(h('figure', { class: 'help-example' }, [
+      frame,
+      h('figcaption', { class: 'help-example__text' }, [
+        h('p', { class: 'help-example__source', text: t('help.example.source', { variant: name }) }),
+        h('p', { class: 'help-example__explanation', text: said.explanation }),
+        facts,
+        legend(example.hint)
+      ])
+    ]));
+    return true;
+  }
 
   // ---------------------------------------------------------------------------------------------
-  // Help dialog: panels
+  // The sections
   // ---------------------------------------------------------------------------------------------
 
   function paragraph(key, cls) {
     return h('p', { class: cls || null, text: t(key) });
   }
 
-  function renderHow(panel) {
-    panel.appendChild(paragraph('help.how.intro', 'help__lead'));
+  function section(id, children) {
+    const title = h('h2', { class: 'help__title', id: 'help-' + id + '-title', text: t('help.section.' + id) });
+    return h('section', { class: 'help-section', id: 'help-' + id, 'aria-labelledby': 'help-' + id + '-title' },
+      [title].concat(children));
+  }
+
+  function renderHow() {
     const list = h('ol', { class: 'help-steps' });
-    ['select', 'enter', 'notes', 'check', 'hint', 'symbols', 'save', 'solved'].forEach(function (id) {
+    BASIC_STEPS.forEach(function (id) {
       list.appendChild(h('li', {}, [
-        h('strong', { text: t('help.how.' + id + '.title') + ' ' }),
-        document.createTextNode(t('help.how.' + id + '.text'))
+        h('strong', { class: 'help-steps__title', text: t('help.how.' + id + '.title') + ' ' }),
+        root.document.createTextNode(t('help.how.' + id + '.text'))
       ]));
     });
-    panel.appendChild(list);
-    panel.appendChild(paragraph('help.how.checkModes', 'field__hint'));
+    return section('how', [paragraph('help.how.intro', 'help__lead'), list, paragraph('help.how.checkModes', 'help__tip')]);
   }
 
-  function variantDetails(entry) {
-    const details = h('details', { class: 'disclosure help-variant', id: 'help-variant-' + entry.id });
-    details.appendChild(h('summary', {}, [
-      h('span', { class: 'help-variant__name', text: t(entry.nameKey) })
-    ]));
-    details.appendChild(h('div', { class: 'disclosure__body' }, [
-      paragraph(entry.descKey, 'help-variant__desc'),
-      h('h4', { class: 'help__small-title', text: t('help.variant.rules.title') }),
-      paragraph(entry.rulesKey),
-      h('h4', { class: 'help__small-title', text: t('help.variant.tip.title') }),
-      paragraph(entry.tipKey)
-    ]));
-    return details;
-  }
-
-  function renderVariants(panel) {
-    panel.appendChild(paragraph('help.variants.intro', 'help__lead'));
-    VARIANT_RULES.forEach(function (entry) { panel.appendChild(variantDetails(entry)); });
-  }
-
-  function techniqueItem(tech) {
-    const nameKey = 'technique.' + tech.id;
-    const description = SG.i18n.has(nameKey + '.desc') ? t(nameKey + '.desc') : '';
-    const item = h('li', { class: 'help-technique', 'data-technique': tech.id }, [
-      h('span', { class: 'help-technique__name', text: t(nameKey) }),
-      h('span', { class: 'help-technique__desc', text: description })
-    ]);
-    if (Array.isArray(tech.variantScope) && tech.variantScope.length > 0) {
-      const scope = tech.variantScope.map(function (id) {
-        return SG.i18n.has('variant.' + id) ? t('variant.' + id) : id;
-      }).join(', ');
-      item.appendChild(h('span', { class: 'badge help-technique__scope', text: scope }));
-    }
-    return item;
-  }
-
-  function renderHints(panel) {
-    panel.appendChild(paragraph('help.hints.intro', 'help__lead'));
+  function renderHints() {
     const levels = h('ol', { class: 'help-steps' });
-    [['help.hints.level1.title', 'help.hints.level1.text'],
-      ['help.hints.level2.title', 'help.hints.level2.text'],
-      ['help.hints.level3.title', 'help.hints.level3.text']].forEach(function (pair) {
+    ['level1', 'level2', 'level3'].forEach(function (id) {
       levels.appendChild(h('li', {}, [
-        h('strong', { text: t(pair[0]) + ' ' }),
-        document.createTextNode(t(pair[1]))
+        h('strong', { class: 'help-steps__title', text: t('help.hints.' + id + '.title') + ' ' }),
+        root.document.createTextNode(t('help.hints.' + id + '.text'))
       ]));
     });
-    panel.appendChild(levels);
-    panel.appendChild(paragraph('help.hints.sound', 'field__hint'));
-    panel.appendChild(h('h3', { class: 'help__title', text: t('help.ladder.title') }));
-    panel.appendChild(paragraph('help.ladder.intro', 'field__hint'));
+    return section('hints', [paragraph('help.hints.intro', 'help__lead'), levels,
+      paragraph('help.hints.sound', 'help__tip')]);
+  }
+
+  /** Shows the tab of a technique, hides the others of its group and draws its example the first time. */
+  function selectTechnique(id, focus) {
+    const entry = tabs.get(id);
+    if (entry === undefined) return false;
+    tabs.forEach(function (other) {
+      if (other.group !== entry.group) return;
+      const on = other === entry;
+      other.tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      other.tab.setAttribute('tabindex', on ? '0' : '-1');
+      other.panel.hidden = !on;
+    });
+    if (!entry.drawn) {
+      entry.drawn = true;
+      drawExample(entry.example, id);
+    }
+    if (focus === true) entry.tab.focus();
+    return true;
+  }
+
+  function onTabKey(event, ids) {
+    const at = ids.indexOf(event.currentTarget.getAttribute('data-technique'));
+    let next = -1;
+    if (event.key === 'ArrowRight') next = (at + 1) % ids.length;
+    else if (event.key === 'ArrowLeft') next = (at + ids.length - 1) % ids.length;
+    else if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = ids.length - 1;
+    if (next === -1) return;
+    event.preventDefault();
+    selectTechnique(ids[next], true);
+  }
+
+  /** One technique of a group: its tab, and its panel (what it says, and the example). */
+  function techniquePanel(tech, group, ids) {
+    const nameKey = tech.i18nKey || 'technique.' + tech.id;
+    const description = SG.i18n.has('technique.' + tech.id + '.desc') ? t('technique.' + tech.id + '.desc') : '';
+    const tab = h('button', { type: 'button', class: 'help-tab', role: 'tab', id: 'tab-' + tech.id,
+      'aria-controls': 'tech-' + tech.id, 'aria-selected': 'false', tabindex: '-1', 'data-technique': tech.id,
+      text: t(nameKey) });
+    tab.addEventListener('click', function () { selectTechnique(tech.id, false); });
+    tab.addEventListener('keydown', function (event) { onTabKey(event, ids); });
+    const head = h('div', { class: 'help-technique__head' }, [h('h4', { class: 'help-technique__name', text: t(nameKey) })]);
+    if (Array.isArray(tech.variantScope) && tech.variantScope.length > 0) {
+      const scope = tech.variantScope.map(function (variant) {
+        return SG.i18n.has('variant.' + variant) ? t('variant.' + variant) : variant;
+      }).join(', ');
+      head.appendChild(h('span', { class: 'badge badge--accent', text: scope }));
+    }
+    const example = h('div', { class: 'help-technique__example' });
+    const panel = h('div', { class: 'help-technique', role: 'tabpanel', id: 'tech-' + tech.id,
+      'aria-labelledby': 'tab-' + tech.id, tabindex: '0', hidden: true, 'data-technique': tech.id }, [
+      head,
+      h('p', { class: 'help-technique__desc', text: description }),
+      example
+    ]);
+    tabs.set(tech.id, { group: group, tab: tab, panel: panel, example: example, drawn: false });
+    return { tab: tab, panel: panel };
+  }
+
+  function renderTechniques() {
+    const children = [paragraph('help.techniques.intro', 'help__lead')];
     const techs = SG.techniques && typeof SG.techniques.list === 'function' ? SG.techniques.list() : [];
     const groups = SG.techniques && SG.techniques.GROUPS ? SG.techniques.GROUPS : [];
     groups.forEach(function (group) {
       const members = techs.filter(function (tech) { return tech.group === group; })
         .sort(function (a, b) { return a.order - b.order; });
       if (members.length === 0) return;
-      const section = h('section', { class: 'help-group', 'data-group': group });
-      section.appendChild(h('h4', { class: 'help__small-title', text: t('techniqueGroup.' + group) }));
-      const list = h('ul', { class: 'help-techniques', role: 'list' });
-      members.forEach(function (tech) { list.appendChild(techniqueItem(tech)); });
-      section.appendChild(list);
-      panel.appendChild(section);
+      const ids = members.map(function (tech) { return tech.id; });
+      const list = h('div', { class: 'help-tabs', role: 'tablist', 'aria-label': t('techniqueGroup.' + group) });
+      const panels = h('div', { class: 'help-group__panels' });
+      members.forEach(function (tech) {
+        const made = techniquePanel(tech, group, ids);
+        list.appendChild(made.tab);
+        panels.appendChild(made.panel);
+      });
+      children.push(h('div', { class: 'help-group', id: 'group-' + group, 'data-group': group }, [
+        h('h3', { class: 'help-group__title', text: t('techniqueGroup.' + group) }),
+        list,
+        panels
+      ]));
     });
+    return section('techniques', children);
   }
 
-  function renderKeys(panel) {
-    panel.appendChild(paragraph('help.keys.intro', 'help__lead'));
+  function renderKeys() {
     const list = h('dl', { class: 'help-keys' });
     SHORTCUTS.forEach(function (row) {
       const combos = h('dt', { class: 'help-keys__combos' });
       row.keys.forEach(function (combo, index) {
-        if (index > 0) combos.appendChild(document.createTextNode(' / '));
+        if (index > 0) combos.appendChild(root.document.createTextNode(' / '));
         combo.forEach(function (name, at) {
-          if (at > 0) combos.appendChild(document.createTextNode('+'));
+          if (at > 0) combos.appendChild(root.document.createTextNode('+'));
           combos.appendChild(h('kbd', { text: name }));
         });
       });
       list.appendChild(combos);
       list.appendChild(h('dd', { class: 'help-keys__text', text: t('help.keys.' + row.id) }));
     });
-    panel.appendChild(list);
+    return section('keys', [paragraph('help.keys.intro', 'help__lead'), list]);
   }
 
-  function storedKeys() {
-    const rows = [];
-    if (SG.store) rows.push([SG.store.KEY, 'help.about.key.prefs']);
-    if (SG.progress) {
-      rows.push([SG.progress.KEYS.progress, 'help.about.key.progress']);
-      rows.push([SG.progress.KEYS.puzzles, 'help.about.key.puzzles']);
-      rows.push([SG.progress.KEYS.last, 'help.about.key.last']);
-    }
-    return rows;
+  const RENDERERS = { how: renderHow, hints: renderHints, techniques: renderTechniques, keys: renderKeys };
+
+  // ---------------------------------------------------------------------------------------------
+  // The table of contents
+  // ---------------------------------------------------------------------------------------------
+
+  /** Scrolls to the group of a technique after its tab was shown. */
+  function goToTechnique(id) {
+    if (!selectTechnique(id, false)) return false;
+    const group = root.document.getElementById('group-' + tabs.get(id).group);
+    if (group !== null && typeof group.scrollIntoView === 'function') group.scrollIntoView();
+    return true;
   }
 
-  function resetDeleteButton(button) {
-    root.clearTimeout(ctx.deleteTimer);
-    ctx.deleteTimer = null;
-    button.textContent = t('help.about.delete');
-  }
-
-  function renderAbout(panel) {
-    panel.appendChild(h('h3', { class: 'help__title', text: t('help.about.privacy.title') }));
-    panel.appendChild(paragraph('help.about.privacy.text'));
-    const keys = h('dl', { class: 'help-storage' });
-    storedKeys().forEach(function (row) {
-      keys.appendChild(h('dt', {}, [h('code', { text: row[0] })]));
-      keys.appendChild(h('dd', { text: t(row[1]) }));
-    });
-    panel.appendChild(keys);
-
-    const actions = h('div', { class: 'help-actions' });
-    const remove = h('button', { type: 'button', class: 'btn btn--secondary', id: 'help-delete',
-      text: t('help.about.delete') });
-    remove.addEventListener('click', function () {
-      if (ctx.deleteTimer === null) {
-        remove.textContent = t('help.about.delete.confirm');
-        ctx.deleteTimer = root.setTimeout(function () { resetDeleteButton(remove); }, 4000);
-        return;
+  function techniqueLink(tech) {
+    const link = h('a', { href: '#tech-' + tech.id, class: 'help-toc__tech', text: t(tech.i18nKey || 'technique.' + tech.id) });
+    link.addEventListener('click', function (event) {
+      if (!goToTechnique(tech.id)) return;
+      event.preventDefault();
+      if (root.history && typeof root.history.replaceState === 'function') {
+        root.history.replaceState(null, '', '#tech-' + tech.id);
       }
-      resetDeleteButton(remove);
-      if (ctx.app && typeof ctx.app.clearSavedData === 'function') ctx.app.clearSavedData();
     });
-    actions.appendChild(remove);
-    panel.appendChild(actions);
-
-    panel.appendChild(h('h3', { class: 'help__title', text: t('help.about.a11y.title') }));
-    panel.appendChild(paragraph('help.about.a11y.text'));
-    panel.appendChild(h('h3', { class: 'help__title', text: t('help.about.links.title') }));
-    const links = h('ul', { class: 'help-links', role: 'list' });
-    const meta = root.document.querySelector('meta[name="sg-generator-url"]');
-    const generator = meta ? meta.getAttribute('content') : null;
-    if (generator && /^https?:\/\//i.test(generator)) {
-      links.appendChild(h('li', {}, [h('a', { href: generator, target: '_blank', rel: 'noopener',
-        text: t('help.about.link.generator') })]));
-    }
-    links.appendChild(h('li', {}, [h('a', { href: REPOSITORY_URL, target: '_blank', rel: 'noopener',
-      text: t('help.about.link.repo') })]));
-    panel.appendChild(links);
-    panel.appendChild(paragraph('help.about.licence', 'field__hint'));
+    return link;
   }
 
-  const RENDERERS = {
-    how: renderHow,
-    variants: renderVariants,
-    hints: renderHints,
-    keys: renderKeys,
-    about: renderAbout
-  };
-
-  // ---------------------------------------------------------------------------------------------
-  // Help dialog: tabs
-  // ---------------------------------------------------------------------------------------------
-
-  function renderPanel(id) {
-    const panel = ctx.panels[id];
-    if (!panel) return;
-    panel.textContent = '';
-    safely(function () { RENDERERS[id](panel); });
-    panel.setAttribute('data-rendered', SG.i18n.current);
-  }
-
-  function selectTab(id, focus) {
-    if (TAB_IDS.indexOf(id) === -1) return;
-    ctx.tab = id;
-    TAB_IDS.forEach(function (name) {
-      const selected = name === id;
-      ctx.tabs[name].setAttribute('aria-selected', selected ? 'true' : 'false');
-      ctx.tabs[name].setAttribute('tabindex', selected ? '0' : '-1');
-      ctx.panels[name].hidden = !selected;
+  /** The contents: the sections, and under the techniques their groups with the name of every technique. */
+  function renderToc(nav) {
+    nav.textContent = '';
+    nav.setAttribute('aria-labelledby', 'help-toc-title');
+    const body = h('div', { class: 'help-toc__body' });
+    const wide = typeof root.matchMedia === 'function' && root.matchMedia(WIDE_QUERY).matches;
+    const details = h('details', { class: 'help-toc__details', open: wide }, [
+      h('summary', { class: 'help-toc__title', id: 'help-toc-title', text: t('help.page.toc') }),
+      body
+    ]);
+    const list = h('ul', { class: 'help-toc__list', role: 'list' });
+    const techs = SG.techniques && typeof SG.techniques.list === 'function' ? SG.techniques.list() : [];
+    const groups = SG.techniques && SG.techniques.GROUPS ? SG.techniques.GROUPS : [];
+    SECTION_IDS.forEach(function (id) {
+      const item = h('li', { class: 'help-toc__item' }, [
+        h('a', { href: '#help-' + id, class: 'help-toc__section', 'data-section': id,
+          text: t('help.section.' + id) })
+      ]);
+      if (id === 'techniques') {
+        const sub = h('ul', { class: 'help-toc__groups', role: 'list' });
+        groups.forEach(function (group) {
+          const members = techs.filter(function (tech) { return tech.group === group; })
+            .sort(function (a, b) { return a.order - b.order; });
+          if (members.length === 0) return;
+          const names = h('ul', { class: 'help-toc__techs', role: 'list' });
+          members.forEach(function (tech) { names.appendChild(h('li', {}, [techniqueLink(tech)])); });
+          sub.appendChild(h('li', { class: 'help-toc__group' }, [
+            h('span', { class: 'help-toc__group-name', text: t('techniqueGroup.' + group) }),
+            names
+          ]));
+        });
+        item.appendChild(sub);
+      }
+      list.appendChild(item);
     });
-    if (ctx.panels[id].getAttribute('data-rendered') !== SG.i18n.current) renderPanel(id);
-    if (focus) ctx.tabs[id].focus();
+    body.appendChild(list);
+    nav.appendChild(details);
   }
 
-  function onTabKey(event) {
-    const at = TAB_IDS.indexOf(ctx.tab);
-    let next = -1;
-    if (event.key === 'ArrowRight') next = (at + 1) % TAB_IDS.length;
-    else if (event.key === 'ArrowLeft') next = (at + TAB_IDS.length - 1) % TAB_IDS.length;
-    else if (event.key === 'Home') next = 0;
-    else if (event.key === 'End') next = TAB_IDS.length - 1;
-    if (next === -1) return;
-    event.preventDefault();
-    selectTab(TAB_IDS[next], true);
-  }
-
-  function buildBody(container) {
-    const list = h('div', { class: 'help-tabs', role: 'tablist' });
-    list.setAttribute('aria-label', t('help.title'));
-    const body = h('div', { class: 'help-panels' });
-    TAB_IDS.forEach(function (id) {
-      const tab = h('button', { type: 'button', class: 'help-tab', role: 'tab', id: 'help-tab-' + id,
-        'aria-controls': 'help-panel-' + id, 'aria-selected': 'false', tabindex: '-1', 'data-tab': id,
-        'data-i18n': 'help.tab.' + id });
-      tab.addEventListener('click', function () { selectTab(id, false); });
-      tab.addEventListener('keydown', onTabKey);
-      const panel = h('div', { class: 'help-panel', role: 'tabpanel', id: 'help-panel-' + id,
-        'aria-labelledby': 'help-tab-' + id, tabindex: '0', hidden: true, 'data-panel': id });
-      ctx.tabs[id] = tab;
-      ctx.panels[id] = panel;
-      list.appendChild(tab);
-      body.appendChild(panel);
+  /** Marks the section on screen in the contents. */
+  function watchSections() {
+    if (typeof root.IntersectionObserver !== 'function') return;
+    const links = {};
+    Array.prototype.forEach.call(root.document.querySelectorAll('.help-toc__section'), function (link) {
+      links[link.getAttribute('data-section')] = link;
     });
-    container.appendChild(list);
-    container.appendChild(body);
-  }
-
-  function buildFooter(container) {
-    const closeButton = h('button', {
-      type: 'button', class: 'btn btn--primary', 'data-i18n': 'common.close'
+    const visible = new Set();
+    const observer = new root.IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        const id = entry.target.id.replace(/^help-/, '');
+        if (entry.isIntersecting) visible.add(id);
+        else visible.delete(id);
+      });
+      const first = SECTION_IDS.filter(function (id) { return visible.has(id); })[0];
+      Object.keys(links).forEach(function (id) {
+        if (id === first) links[id].setAttribute('aria-current', 'location');
+        else links[id].removeAttribute('aria-current');
+      });
+    }, { rootMargin: '0px 0px -60% 0px' });
+    SECTION_IDS.forEach(function (id) {
+      const el = root.document.getElementById('help-' + id);
+      if (el !== null) observer.observe(el);
     });
-    closeButton.addEventListener('click', close);
-    container.appendChild(closeButton);
+    watchSections.observer = observer;
   }
 
-  function relocalise() {
-    if (ctx.modal === null) return;
-    TAB_IDS.forEach(function (id) { ctx.panels[id].removeAttribute('data-rendered'); });
-    selectTab(ctx.tab, false);
+  /** Shows the technique that the address names (`help.html#tech-xWing`) and scrolls to it. */
+  function openFromHash() {
+    const hash = root.location ? root.location.hash : '';
+    const found = /^#tech-([A-Za-z0-9]+)$/.exec(hash);
+    if (found !== null) goToTechnique(found[1]);
   }
 
   /**
-   * Opens the Help dialog (or returns the one that is open).
-   * @param {{tab?: string}} [options]
-   * @returns {?Object} The modal of `SG.app.openModal`; null without a DOM or before `init`.
+   * Builds the sections in the current language (and the contents).
+   * @param {Element} [rootEl]  Default: `#help-root`.
    */
-  function open(options) {
-    if (ctx.app === null || typeof document === 'undefined') return null;
-    const wanted = options && TAB_IDS.indexOf(options.tab) !== -1 ? options.tab : null;
-    if (ctx.modal !== null) {
-      if (wanted !== null) selectTab(wanted, false);
-      return ctx.modal;
-    }
-    const modal = ctx.app.openModal({
-      titleKey: 'help.title',
-      wide: true,
-      body: buildBody,
-      footer: buildFooter,
-      onClose: function () {
-        root.clearTimeout(ctx.deleteTimer);
-        ctx.deleteTimer = null;
-        ctx.modal = null;
-      }
+  function render(rootEl) {
+    const host = rootEl || root.document.getElementById('help-root');
+    if (!host) return;
+    const shown = [];
+    tabs.forEach(function (entry, id) { if (entry.tab.getAttribute('aria-selected') === 'true') shown.push(id); });
+    tabs.clear();
+    if (watchSections.observer) watchSections.observer.disconnect();
+    host.textContent = '';
+    SECTION_IDS.forEach(function (id) { host.appendChild(RENDERERS[id]()); });
+    // The first technique of every group is shown at first; what the reader chose stays chosen.
+    const groups = {};
+    tabs.forEach(function (entry, id) { if (groups[entry.group] === undefined) groups[entry.group] = id; });
+    Object.keys(groups).forEach(function (group) { selectTechnique(groups[group], false); });
+    shown.forEach(function (id) { selectTechnique(id, false); });
+    const nav = root.document.getElementById('help-toc');
+    if (nav !== null) renderToc(nav);
+    watchSections();
+    root.document.title = t('help.page.title') + ' - ' + t('app.title');
+  }
+
+  // ---------------------------------------------------------------------------------------------
+  // The page
+  // ---------------------------------------------------------------------------------------------
+
+  /** Tells the CSS how tall the floating header is, so the contents and the anchors sit below it. */
+  function measureHeader() {
+    const header = root.document.querySelector('.app-header');
+    if (header === null) return;
+    root.document.body.style.setProperty('--help-header-height', header.offsetHeight + 'px');
+  }
+
+  function syncLang(lang) {
+    Array.prototype.forEach.call(root.document.querySelectorAll('[data-lang]'), function (button) {
+      button.setAttribute('aria-pressed', button.getAttribute('data-lang') === lang ? 'true' : 'false');
     });
-    if (modal === null) return null;
-    ctx.modal = modal;
-    selectTab(wanted || ctx.tab, false);
-    return modal;
-  }
-
-  function close() {
-    if (ctx.modal !== null) ctx.modal.close();
-  }
-
-  // ---------------------------------------------------------------------------------------------
-  // Start-up
-  // ---------------------------------------------------------------------------------------------
-
-  function destroy() {
-    ctx.off.splice(0).forEach(function (off) { off(); });
-    if (ctx.modal !== null) ctx.modal.close();
-    ctx.app = null;
-    ctx.modal = null;
-    ctx.panels = {};
-    ctx.tabs = {};
   }
 
   /**
-   * Starts the module (called by app.js at start-up; safe to call again).
-   * @param {Object} app  `SG.app`.
-   * @returns {boolean} Whether the module is running (false without a DOM).
+   * Starts the page: the language and the theme of the player's stored preferences, the switches of the header
+   * (they change the same preferences) and the first render.
+   * @returns {boolean} False on a page without `#help-root`.
    */
-  function init(app) {
-    if (typeof document === 'undefined' || !app) return false;
-    if (ctx.app === app) return true;
-    destroy();
-    ctx.app = app;
-    ctx.off.push(app.on('action', function (payload) {
-      if (payload && payload.id === 'help') open();
-    }));
-    ctx.off.push(app.on('locale', relocalise));
+  function start() {
+    if (typeof document === 'undefined' || document.getElementById('help-root') === null) return false;
+    const store = SG.store.instance();
+    const state = store.load({ search: root.location ? root.location.search : '', navigator: root.navigator });
+    SG.i18n.setLocale(state.lang);
+    SG.theme.apply(state);
+    syncLang(SG.i18n.current);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-lang]'), function (button) {
+      button.addEventListener('click', function () {
+        store.set({ lang: button.getAttribute('data-lang') }, { source: 'help' });
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-theme-value]'), function (button) {
+      button.addEventListener('click', function () {
+        store.set({ theme: button.getAttribute('data-theme-value') }, { source: 'help' });
+      });
+    });
+    store.subscribe(function (next, keys) {
+      if (keys.indexOf('lang') !== -1) SG.i18n.setLocale(next.lang);
+      if (keys.some(function (key) { return key === 'theme' || key === 'fontSize' || key === 'reducedMotion'; })) {
+        SG.theme.apply(next);
+      }
+    });
+    SG.i18n.onChange(function (code) {
+      syncLang(code);
+      SG.i18n.applyTo(document);
+      render();
+      measureHeader();
+    });
+    SG.i18n.applyTo(document);
+    render();
+    measureHeader();
+    root.addEventListener('resize', measureHeader);
+    openFromHash();
+    root.addEventListener('hashchange', openFromHash);
     return true;
   }
 
   SG.help = {
-    TAB_IDS: TAB_IDS,
-    VARIANT_RULES: VARIANT_RULES,
+    SECTION_IDS: SECTION_IDS,
     SHORTCUTS: SHORTCUTS,
-    init: init,
-    destroy: destroy,
-    open: open,
-    close: close
+    BASIC_STEPS: BASIC_STEPS,
+    buildExample: buildExample,
+    drawExample: drawExample,
+    selectTechnique: selectTechnique,
+    render: render,
+    start: start
   };
 
   // ---------------------------------------------------------------------------------------------
@@ -420,65 +533,86 @@
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({
     en: {
-      'help.title': 'Help',
-      'help.tab.how': 'How to play',
-      'help.tab.variants': 'Variants',
-      'help.tab.hints': 'Hints',
-      'help.tab.keys': 'Keyboard',
-      'help.tab.about': 'About',
-      'help.how.intro': 'Every Sudoku puzzle has one rule at its heart: fill the grid so that no ' +
-        'symbol repeats inside a row, a column or a region. Each variant adds rules of its own (see ' +
-        'Variants). This is how to play here.',
+      'help.page.title': 'How to play',
+      'help.page.lead': 'Everything you need to play: the basics, how the hints work, and the techniques that ' +
+        'solve harder puzzles, each one with a real example.',
+      'help.page.back': 'Back to the player',
+      'help.page.skip': 'Skip to the guide',
+      'help.page.toc': 'On this page',
+      'help.section.how': 'The basics',
+      'help.section.hints': 'Using hints',
+      'help.section.techniques': 'Techniques for harder puzzles',
+      'help.section.keys': 'Keyboard',
+      'help.how.intro': 'Every Sudoku puzzle has one rule at its heart: fill the grid so that no symbol ' +
+        'repeats inside a row, a column or a region. Some variants add rules of their own (cages with a ' +
+        'sum, signs between cells, extra regions); the board shows them. This is how to play here.',
+      'help.how.get.title': 'Get a puzzle.',
+      'help.how.get.text': 'In Sudoku Generator press Play: every puzzle of its list arrives here, and the ' +
+        'one you were looking at opens first. Or press Import and paste the text of the generator’s ' +
+        'Export box. The puzzles you have imported are listed on the left.',
       'help.how.select.title': 'Select a cell.',
       'help.how.select.text': 'Click or tap it, or move with the arrow keys. The clues are fixed and ' +
         'cannot be changed.',
       'help.how.enter.title': 'Enter a symbol.',
-      'help.how.enter.text': 'Type it, or press a key of the pad under the board. Press the same ' +
-        'symbol again to clear the cell.',
+      'help.how.enter.text': 'Type it, or press a key of the pad under the board (on a wide screen a pad ' +
+        'also pops up next to the cell). Press the same symbol again to clear the cell.',
       'help.how.notes.title': 'Use notes.',
       'help.how.notes.text': 'Switch on Notes (N) to mark the symbols a cell may still hold; they are ' +
-        'drawn small inside the cell. A symbol you enter is removed from the notes of the cells that ' +
-        'see it, unless you switch that off in Settings.',
+        'drawn small inside the cell. “More actions” under the pad can fill in all the notes for you. A ' +
+        'symbol you enter is removed from the notes of the cells that see it, unless you switch that off ' +
+        'in the Options frame.',
       'help.how.check.title': 'Check your work.',
-      'help.how.check.text': 'Mistakes can be marked as you type (see Settings) or only when you ' +
-        'press Check. Undo and Redo (Ctrl+Z, Ctrl+Y) are exact: a value and the notes it cleared come ' +
-        'back together.',
+      'help.how.check.text': 'Mistakes can be marked as you type (see Options) or only when you press ' +
+        'Check. Undo and Redo (Ctrl+Z, Ctrl+Y) are exact: a value and the notes it cleared come back ' +
+        'together.',
       'help.how.hint.title': 'Ask for a hint.',
-      'help.how.hint.text': 'Press Hint (H). It names the logical technique that applies; each press ' +
-        'shows more, down to the move itself. Hints are always correct.',
+      'help.how.hint.text': 'Press Hint (H) when you are stuck. It names the logical technique that ' +
+        'applies; each press shows more, down to the move itself. Hints are always correct. The next ' +
+        'sections explain them.',
+      'help.how.play.title': 'Play, Pause, Reset.',
+      'help.how.play.text': 'The clock starts with your first move, or when you press Play. Pause stops it ' +
+        'and hides the board; leaving the tab, or opening another puzzle, pauses it too. While a game is ' +
+        'paused, or solved, Reset starts it over.',
       'help.how.symbols.title': 'Change how symbols look.',
-      'help.how.symbols.text': 'Where the board allows it, you can switch between digits, letters, ' +
-        'colours and shapes. Colours always carry a small shape as well, so they can be told apart ' +
-        'without seeing colour.',
+      'help.how.symbols.text': 'Where the board allows it, Options lets you switch between digits, ' +
+        'letters, colours and shapes. Colours always carry a small shape as well, so they can be told ' +
+        'apart without seeing colour.',
       'help.how.save.title': 'Come back later.',
-      'help.how.save.text': 'Your progress is saved automatically on this device. Open the same ' +
-        'puzzle again and you can continue; the Recent puzzles list brings it back at once.',
+      'help.how.save.text': 'Your progress is saved automatically on this device, and nothing is sent ' +
+        'anywhere. Open the same puzzle again, from the list on the left, and you can continue.',
       'help.how.solved.title': 'Finish.',
-      'help.how.solved.text': 'When the grid is complete and correct, a message shows your time. The ' +
-        'timer pauses when you leave the tab or press Pause. “Reveal the solution” (under Options) ' +
-        'shows the answer, but then the puzzle does not count as solved.',
-      'help.how.checkModes': 'Tip: a Killer cage whose sum can no longer be reached, or a ' +
-        'Greater-Than sign that is broken, is flagged as a rule conflict.',
-      'help.variants.intro': 'All 15 variants of Sudoku Generator can be played here. Each entry ' +
-        'gives the rules and a tip for playing it.',
-      'help.variant.rules.title': 'Rules',
-      'help.variant.tip.title': 'Tip for playing',
+      'help.how.solved.text': 'When the grid is complete and correct, a message shows your time, and a ' +
+        'tick appears next to the puzzle in the list.',
+      'help.how.checkModes': 'Tip: a Killer cage whose sum can no longer be reached, or a Greater-Than ' +
+        'sign that is broken, is flagged as a rule conflict.',
       'help.hints.intro': 'A hint finds the next logical step from your current grid and names the ' +
-        'technique behind it. It never guesses and never suggests a wrong value.',
+        'technique behind it. It never guesses and never suggests a wrong value. Notes help it: with all ' +
+        'the notes filled in, you see exactly what each technique sees.',
       'help.hints.level1.title': 'First: the technique.',
       'help.hints.level1.text': 'Its name, what it means, and the region (row, column, box, cage…) to ' +
         'look at.',
       'help.hints.level2.title': 'Then: the cells.',
       'help.hints.level2.text': 'Press Show more to see the cells that take part in the step.',
       'help.hints.level3.title': 'Finally: the move.',
-      'help.hints.level3.text': 'The next press shows the placement, or the symbols to remove, with ' +
-        'an explanation. “Fill it in” enters a placement for you; “Remove from my notes” applies an ' +
+      'help.hints.level3.text': 'The next press shows the placement, or the symbols to remove, with an ' +
+        'explanation. “Fill it in” enters a placement for you; “Remove from my notes” applies an ' +
         'elimination.',
-      'help.hints.sound': 'Wrong entries are ignored when a hint is worked out (and counted). If no ' +
-        'known technique applies from here, the hint says so and offers to reveal one cell.',
-      'help.ladder.title': 'The techniques hints can name',
-      'help.ladder.intro': 'From the easiest to the hardest. The last ones are rare. Some only apply ' +
-        'to Killer or Greater-Than puzzles.',
+      'help.hints.sound': 'Wrong entries are ignored when a hint is worked out (and counted). If no known ' +
+        'technique applies from here, the hint says so and offers to reveal one cell.',
+      'help.techniques.intro': 'When no simple move is left, look for one of these, from the easiest to the ' +
+        'hardest; the last ones are rare, and some only apply to Killer or Greater-Than puzzles. Pick a ' +
+        'technique in a group to see a real example: a puzzle partway through, with its notes filled in, ' +
+        'at the moment the hint names that technique.',
+      'help.example.source': 'From a {variant} puzzle, as the hint shows it.',
+      'help.example.region': 'Where to look',
+      'help.example.cells': 'The cells',
+      'help.example.move': 'The move',
+      'help.example.unavailable': 'The example could not be built.',
+      'help.example.legend.region': 'Area to look at',
+      'help.example.legend.cells': 'Cells that make it work',
+      'help.example.legend.target': 'Cells that change',
+      'help.example.legend.elim': 'Note to remove',
+      'help.example.legend.keep': 'Digit to place',
       'help.keys.intro': 'Everything can be done from the keyboard.',
       'help.keys.move': 'Move between cells. Home and End go to the ends of the row, Page Up and Page ' +
         'Down move a box up or down. On boards with several grids the keys skip the gaps.',
@@ -489,284 +623,114 @@
       'help.keys.hint': 'Ask for a hint, and again for more detail.',
       'help.keys.undo': 'Undo.',
       'help.keys.redo': 'Redo.',
-      'help.keys.escape': 'Close the hint card, or a dialog.',
+      'help.keys.escape': 'Close the hint card, a pop-up or a dialog.',
       'help.keys.tab': 'Move between the areas of the page (header, board, tools, pad, side panel). ' +
         'The skip link at the top jumps to the puzzle.',
       'help.keys.paste': 'Paste a puzzle anywhere on the page to open it: a link, the text of a ' +
         'puzzle file, or a line of 81, 36 or 16 characters.',
-      'help.keys.openBox': 'In the text box of the Open dialog: open the pasted puzzle.',
-      'help.about.privacy.title': 'Privacy: everything stays here',
-      'help.about.privacy.text': 'Sudoku Player runs entirely in your browser. Puzzles are read on ' +
-        'your own device and nothing is sent to a server; there are no accounts, no trackers and no ' +
-        'cookies. It only keeps the small items listed below in the local storage of this browser, so ' +
-        'that you can carry on where you stopped.',
-      'help.about.key.prefs': 'Your language, theme, text size and the other settings.',
-      'help.about.key.progress': 'Your progress on the last 100 puzzles you played.',
-      'help.about.key.puzzles': 'The last 100 puzzles you imported (for the list of puzzles).',
-      'help.about.key.last': 'Which puzzle was on the board when you left.',
-      'help.about.delete': 'Delete saved puzzles and progress',
-      'help.about.delete.confirm': 'Press again to delete',
-      'help.about.a11y.title': 'Accessibility',
-      'help.about.a11y.text': 'The board is a grid you can move through with the keyboard, every cell ' +
-        'has a spoken label, there are light, dark and high-contrast themes, and animations can be ' +
-        'switched off. It has been checked with an automated browser, but not yet with a real screen ' +
-        'reader.',
-      'help.about.links.title': 'Links',
-      'help.about.link.generator': 'Sudoku Generator: make a puzzle',
-      'help.about.link.repo': 'Source code and documentation',
-      'help.about.licence': 'Sudoku Player is open source (MIT licence).',
-      'help.variant.classic4.rules': 'Fill the 4×4 grid so that every row, every column and every 2×2 ' +
-        'box contains each of the digits 1 to 4 exactly once. Some digits are given; you work out the ' +
-        'others by logic alone, and there is always exactly one solution.',
-      'help.variant.classic4.tip': 'The smallest board is a good place to learn how notes and hints ' +
-        'work.',
-      'help.variant.classic6.rules': 'Fill the 6×6 grid so that every row, every column and every box ' +
-        'contains each of the digits 1 to 6 exactly once. The boxes are 2 rows high and 3 columns ' +
-        'wide.',
-      'help.variant.classic6.tip': 'Boxes are 2 rows high and 3 columns wide, so a box and a row ' +
-        'overlap differently from 9×9.',
-      'help.variant.classic9.rules': 'The classic puzzle. Fill the 9×9 grid so that every row, every ' +
-        'column and every 3×3 box contains each of the digits 1 to 9 exactly once. The given digits ' +
-        'are enough to make the solution unique.',
-      'help.variant.classic9.tip': 'The reference board. Hints can name any of the techniques listed ' +
-        'under Hints.',
-      'help.variant.mega12.rules': 'Fill the 12×12 grid so that every row, every column and every box ' +
-        'contains each of the 12 symbols exactly once. The boxes are 3 rows high and 4 columns wide. ' +
-        'The symbols are the digits 1 to 9 followed by A, B and C, or the numbers 1 to 12.',
-      'help.variant.mega12.tip': 'The grid is wide, so it is small on a phone: turn the phone ' +
-        'sideways or zoom the page. Symbols such as 10 to 12 take two keystrokes: type both ' +
-        'characters.',
-      'help.variant.mega16.rules': 'Fill the 16×16 grid so that every row, every column and every 4×4 ' +
-        'box contains each of the 16 symbols exactly once. The symbols are the hexadecimal digits 0 ' +
-        'to 9 and A to F (or 1 to 9 and A to G, depending on how the puzzle was made).',
-      'help.variant.mega16.tip': 'Symbols are the hexadecimal digits, so press the key of the symbol: ' +
-        '0 to 9, then A to F. The cells are small; use a large screen or zoom the page.',
-      'help.variant.diagonalX.rules': 'Classic 9×9 rules, plus one more: each of the two long ' +
-        'diagonals, from corner to corner, must also contain each of the digits 1 to 9 exactly once.',
-      'help.variant.diagonalX.tip': 'Both diagonals are tinted. A cell on a diagonal sees four groups ' +
-        'at once (row, column, box and diagonal), which gives more deductions.',
-      'help.variant.hyper.rules': 'Classic 9×9 rules, plus four extra 3×3 windows, drawn shaded. Each ' +
-        'window must also contain each of the digits 1 to 9 exactly once. The windows sit one cell in ' +
-        'from the corners of the grid: rows and columns 2 to 4 and 6 to 8.',
-      'help.variant.hyper.tip': 'The shaded windows overlap the normal boxes, so a symbol often has ' +
-        'fewer places to go. This variant is also known as Windoku.',
-      'help.variant.jigsaw9.rules': 'The nine 3×3 boxes are replaced by nine irregular regions of ' +
-        'nine cells each, drawn with thick borders. Every row, every column and every region contains ' +
-        'each of the digits 1 to 9 exactly once.',
-      'help.variant.jigsaw9.tip': 'There are no 3×3 boxes: read the thick borders. Notes help to keep ' +
-        'track of the odd shapes.',
-      'help.variant.killer.rules': 'The cells are grouped into cages, drawn with dashed outlines, and ' +
-        'the small number in the corner of a cage is its sum. The digits in a cage must add up to ' +
-        'that sum and may not repeat inside the cage. The usual row, column and box rules apply as ' +
-        'well. Few or no digits are given.',
-      'help.variant.killer.tip': 'Work out which digits can make the sum of a cage (the hint names ' +
-        'the technique, such as Cage Sum Combination or the Rule of 45). Digits never repeat inside a ' +
-        'cage.',
-      'help.variant.greaterThan.rules': 'Signs between neighbouring cells tell which of the two ' +
-        'digits is larger. The point of a < or > sign is on the side of the smaller digit, and it ' +
-        'opens towards the larger one. The usual row, column and box rules apply as well.',
-      'help.variant.greaterThan.tip': 'A sign points towards the smaller symbol. Signs limit both ' +
-        'cells they touch, so a 1 or a 9 next to a sign is often a quick win.',
-      'help.variant.samurai.rules': 'Five 9×9 grids overlap in an X shape: four corner grids and one ' +
-        'in the middle. The middle grid shares one 3×3 box with each corner grid. Every grid follows ' +
-        'the classic rules, and a shared box counts for both of its grids at once. 369 cells in all.',
-      'help.variant.samurai.tip': 'A cell in an overlap belongs to two grids at once. The arrow keys ' +
-        'skip the gaps between grids.',
-      'help.variant.sohei.rules': 'Four 9×9 grids are arranged in a ring around an empty middle. Each ' +
-        'grid shares one 3×3 box with each of its two neighbours. Every grid follows the classic ' +
-        'rules, and a shared box counts for both of its grids at once. 288 cells in all.',
-      'help.variant.sohei.tip': 'The empty middle belongs to no grid. A symbol placed in a shared box ' +
-        'helps two grids at once.',
-      'help.variant.butterfly.rules': 'Four 9×9 grids, each shifted by three cells from the next, ' +
-        'overlap in a central 6×6 area (144 cells in all). Every grid follows the classic rules, and ' +
-        'a cell in an overlap must satisfy every grid it belongs to.',
-      'help.variant.butterfly.tip': 'The middle 6×6 area belongs to all four grids, so a symbol ' +
-        'placed there is checked against four grids.',
-      'help.variant.flower.rules': 'Five 9×9 grids: a centre grid and four petals above, below, left ' +
-        'and right of it, each shifted by three cells. A petal overlaps the centre in a band of 6×9 ' +
-        'cells, and the petals overlap one another near the corners of the centre. 189 cells in all; ' +
-        'every grid follows the classic rules.',
-      'help.variant.flower.tip': 'The densest overlap of all: many cells belong to two or three ' +
-        'grids, so every entry has far-reaching consequences.',
-      'help.variant.wordoku.rules': 'A 9×9 Sudoku played with nine letters instead of digits: every ' +
-        'row, column and 3×3 box contains each of the nine letters exactly once. The nine letters are ' +
-        'those of a hidden key word, written along one line of the solution: the main diagonal by ' +
-        'default, or a row or a column.',
-      'help.variant.wordoku.tip': 'Nine letters replace the digits. The key word is hidden along one ' +
-        'line of the solution and appears when you solve the puzzle. Switch the symbol set to digits ' +
-        'if you prefer numbers.'
+      'help.keys.openBox': 'In the text box of the Import dialog: import the pasted puzzles.'
     },
     vi: {
-      'help.title': 'Trợ giúp',
-      'help.tab.how': 'Cách chơi',
-      'help.tab.variants': 'Biến thể',
-      'help.tab.hints': 'Gợi ý',
-      'help.tab.keys': 'Bàn phím',
-      'help.tab.about': 'Giới thiệu',
-      'help.how.intro': 'Mọi câu đố Sudoku đều có một luật cốt lõi: điền vào lưới sao cho không ký ' +
-        'hiệu nào lặp lại trong một hàng, một cột hay một vùng. Mỗi biến thể có thêm luật riêng (xem ' +
-        'mục Biến thể). Đây là cách chơi ở đây.',
+      'help.page.title': 'Hướng dẫn chơi',
+      'help.page.lead': 'Mọi thứ bạn cần để chơi: những điều cơ bản, cách hoạt động của gợi ý, và các kỹ ' +
+        'thuật giải đề khó, mỗi kỹ thuật kèm một ví dụ thật.',
+      'help.page.back': 'Quay lại trình chơi',
+      'help.page.skip': 'Chuyển tới hướng dẫn',
+      'help.page.toc': 'Trong trang này',
+      'help.section.how': 'Những điều cơ bản',
+      'help.section.hints': 'Dùng gợi ý',
+      'help.section.techniques': 'Kỹ thuật cho đề khó',
+      'help.section.keys': 'Bàn phím',
+      'help.how.intro': 'Mọi câu đố Sudoku đều có một luật cốt lõi: điền vào lưới sao cho không ký hiệu ' +
+        'nào lặp lại trong một hàng, một cột hay một vùng. Một số biến thể có thêm luật riêng (lồng có ' +
+        'tổng, dấu so sánh giữa các ô, vùng phụ); bảng đã vẽ sẵn chúng. Đây là cách chơi ở đây.',
+      'help.how.get.title': 'Lấy một đề.',
+      'help.how.get.text': 'Trong Trình sinh đề Sudoku, bấm Chơi: mọi đề trong danh sách của nó được chuyển ' +
+        'sang đây, và đề bạn đang xem được mở trước. Hoặc bấm Nhập đề rồi dán nội dung ô Xuất của trình ' +
+        'sinh đề. Các đề đã nhập được liệt kê ở bên trái.',
       'help.how.select.title': 'Chọn một ô.',
-      'help.how.select.text': 'Nhấp hoặc chạm vào ô, hoặc di chuyển bằng các phím mũi tên. Các ô cho ' +
-        'sẵn là cố định và không đổi được.',
+      'help.how.select.text': 'Nhấp hoặc chạm vào ô, hoặc di chuyển bằng các phím mũi tên. Các ô cho sẵn ' +
+        'là cố định và không đổi được.',
       'help.how.enter.title': 'Điền một ký hiệu.',
-      'help.how.enter.text': 'Gõ ký hiệu, hoặc bấm một phím trên bàn phím số dưới bảng. Bấm lại cùng ' +
-        'ký hiệu để xóa ô.',
+      'help.how.enter.text': 'Gõ ký hiệu, hoặc bấm một phím trên bàn phím số dưới bảng (trên màn hình rộng, ' +
+        'một bàn phím nhỏ còn hiện ngay cạnh ô). Bấm lại cùng ký hiệu để xóa ô.',
       'help.how.notes.title': 'Dùng ghi chú.',
-      'help.how.notes.text': 'Bật Ghi chú (N) để đánh dấu các ký hiệu mà ô còn có thể nhận; chúng ' +
-        'được vẽ nhỏ trong ô. Ký hiệu bạn điền sẽ tự biến mất khỏi ghi chú của các ô nhìn thấy nó, ' +
-        'trừ khi bạn tắt tùy chọn này trong Cài đặt.',
+      'help.how.notes.text': 'Bật Ghi chú (N) để đánh dấu các ký hiệu mà ô còn có thể nhận; chúng được vẽ ' +
+        'nhỏ trong ô. “Thêm thao tác” dưới bàn phím số có thể điền sẵn mọi ghi chú giúp bạn. Ký hiệu bạn ' +
+        'điền sẽ tự biến mất khỏi ghi chú của các ô nhìn thấy nó, trừ khi bạn tắt tùy chọn này trong khung ' +
+        'Tùy chọn.',
       'help.how.check.title': 'Kiểm tra bài làm.',
-      'help.how.check.text': 'Lỗi có thể được đánh dấu ngay khi bạn gõ (xem Cài đặt) hoặc chỉ khi bạn ' +
-        'bấm Kiểm tra. Hoàn tác và Làm lại (Ctrl+Z, Ctrl+Y) chính xác tuyệt đối: một giá trị và các ' +
-        'ghi chú nó đã xóa cùng quay lại.',
+      'help.how.check.text': 'Lỗi có thể được đánh dấu ngay khi bạn gõ (xem Tùy chọn) hoặc chỉ khi bạn bấm ' +
+        'Kiểm tra. Hoàn tác và Làm lại (Ctrl+Z, Ctrl+Y) chính xác tuyệt đối: một giá trị và các ghi chú ' +
+        'nó đã xóa cùng quay lại.',
       'help.how.hint.title': 'Xin gợi ý.',
-      'help.how.hint.text': 'Bấm Gợi ý (H). Gợi ý nêu tên kỹ thuật suy luận có thể dùng; mỗi lần bấm ' +
-        'cho thấy thêm, cho đến chính nước đi. Gợi ý luôn đúng.',
+      'help.how.hint.text': 'Bấm Gợi ý (H) khi bạn bí. Gợi ý nêu tên kỹ thuật suy luận có thể dùng; mỗi ' +
+        'lần bấm cho thấy thêm, cho đến chính nước đi. Gợi ý luôn đúng. Các mục sau giải thích chúng.',
+      'help.how.play.title': 'Chơi, Tạm dừng, Đặt lại.',
+      'help.how.play.text': 'Đồng hồ chạy từ nước đi đầu tiên của bạn, hoặc khi bạn bấm Chơi. Tạm dừng làm ' +
+        'đồng hồ dừng và ẩn bảng; rời khỏi tab hay mở đề khác cũng tự tạm dừng. Khi ván đang tạm dừng ' +
+        'hoặc đã giải xong, Đặt lại cho chơi lại từ đầu.',
       'help.how.symbols.title': 'Đổi cách hiển thị ký hiệu.',
-      'help.how.symbols.text': 'Khi bảng cho phép, bạn có thể chuyển giữa chữ số, chữ cái, màu và ' +
+      'help.how.symbols.text': 'Khi bảng cho phép, Tùy chọn cho bạn chuyển giữa chữ số, chữ cái, màu và ' +
         'hình. Màu luôn kèm một hình nhỏ, nên vẫn phân biệt được mà không cần nhìn màu.',
       'help.how.save.title': 'Quay lại sau.',
-      'help.how.save.text': 'Tiến độ được tự động lưu trên thiết bị này. Mở lại đúng đề đó là bạn có ' +
-        'thể chơi tiếp; danh sách Đề gần đây đưa đề trở lại ngay.',
+      'help.how.save.text': 'Tiến độ được tự động lưu trên thiết bị này, và không có gì được gửi đi đâu ' +
+        'cả. Mở lại đúng đề đó từ danh sách bên trái là bạn có thể chơi tiếp.',
       'help.how.solved.title': 'Hoàn thành.',
-      'help.how.solved.text': 'Khi lưới đầy đủ và đúng, một thông báo cho biết thời gian của bạn. ' +
-        'Đồng hồ tạm dừng khi bạn rời tab hoặc bấm Tạm dừng. “Hiện đáp án” (trong Tùy chọn) cho xem ' +
-        'lời giải, nhưng khi đó đề không được tính là đã giải.',
-      'help.how.checkModes': 'Mẹo: một lồng Killer không thể đạt tổng nữa, hay một dấu so sánh bị vi ' +
+      'help.how.solved.text': 'Khi lưới đầy đủ và đúng, một thông báo cho biết thời gian của bạn, và một ' +
+        'dấu tích hiện cạnh đề trong danh sách.',
+      'help.how.checkModes': 'Mẹo: một lồng Sát thủ không thể đạt tổng nữa, hay một dấu so sánh bị vi ' +
         'phạm, sẽ được đánh dấu là vi phạm luật.',
-      'help.variants.intro': 'Cả 15 biến thể của Trình sinh đề Sudoku đều chơi được ở đây. Mỗi mục ' +
-        'nêu luật chơi và một mẹo khi chơi.',
-      'help.variant.rules.title': 'Luật chơi',
-      'help.variant.tip.title': 'Mẹo khi chơi',
-      'help.hints.intro': 'Gợi ý tìm bước suy luận tiếp theo từ lưới hiện tại của bạn và nêu tên kỹ ' +
-        'thuật đứng sau nó. Gợi ý không bao giờ đoán mò và không bao giờ đề xuất giá trị sai.',
+      'help.hints.intro': 'Gợi ý tìm bước suy luận tiếp theo từ lưới hiện tại của bạn và nêu tên kỹ thuật ' +
+        'đứng sau nó. Gợi ý không bao giờ đoán mò và không bao giờ đề xuất giá trị sai. Ghi chú giúp ích ' +
+        'cho nó: khi đã điền sẵn mọi ghi chú, bạn thấy đúng những gì từng kỹ thuật nhìn thấy.',
       'help.hints.level1.title': 'Trước hết: kỹ thuật.',
-      'help.hints.level1.text': 'Tên kỹ thuật, ý nghĩa của nó và vùng (hàng, cột, khối, lồng…) cần ' +
-        'nhìn vào.',
+      'help.hints.level1.text': 'Tên kỹ thuật, ý nghĩa của nó và vùng (hàng, cột, khối, lồng…) cần nhìn ' +
+        'vào.',
       'help.hints.level2.title': 'Tiếp theo: các ô.',
       'help.hints.level2.text': 'Bấm Xem thêm để thấy các ô tham gia vào bước này.',
       'help.hints.level3.title': 'Cuối cùng: nước đi.',
-      'help.hints.level3.text': 'Lần bấm tiếp theo cho thấy ô cần điền, hoặc các ký hiệu cần loại, ' +
-        'kèm lời giải thích. “Điền giúp tôi” sẽ điền ô đó; “Xóa khỏi ghi chú của tôi” áp dụng một ' +
-        'phép loại trừ.',
-      'help.hints.sound': 'Các ô điền sai bị bỏ qua khi tìm gợi ý (và được đếm). Nếu từ đây không kỹ ' +
-        'thuật nào đã biết áp dụng được, gợi ý sẽ nói rõ và đề nghị hiện một ô.',
-      'help.ladder.title': 'Các kỹ thuật mà gợi ý có thể nêu',
-      'help.ladder.intro': 'Từ dễ nhất đến khó nhất. Những kỹ thuật cuối rất hiếm. Một số chỉ áp dụng ' +
-        'cho đề Killer hoặc Greater-Than.',
+      'help.hints.level3.text': 'Lần bấm tiếp theo cho thấy ô cần điền, hoặc các ký hiệu cần loại, kèm lời ' +
+        'giải thích. “Điền giúp tôi” sẽ điền ô đó; “Xóa khỏi ghi chú của tôi” áp dụng một phép loại trừ.',
+      'help.hints.sound': 'Các ô điền sai bị bỏ qua khi tìm gợi ý (và được đếm). Nếu từ đây không kỹ thuật ' +
+        'nào đã biết áp dụng được, gợi ý sẽ nói rõ và đề nghị hiện một ô.',
+      'help.techniques.intro': 'Khi không còn nước đi đơn giản, hãy tìm một trong các kỹ thuật này, từ dễ ' +
+        'nhất đến khó nhất; những kỹ thuật cuối rất hiếm, và một số chỉ áp dụng cho đề Sát thủ hoặc So ' +
+        'sánh. Chọn một kỹ thuật trong nhóm để xem ví dụ thật: một đề đang chơi dở, đã điền sẵn ghi chú, ' +
+        'đúng lúc gợi ý nêu tên kỹ thuật đó.',
+      'help.example.source': 'Từ một đề {variant}, đúng như gợi ý hiển thị.',
+      'help.example.region': 'Nhìn ở đâu',
+      'help.example.cells': 'Các ô',
+      'help.example.move': 'Nước đi',
+      'help.example.unavailable': 'Không dựng được ví dụ.',
+      'help.example.legend.region': 'Vùng cần nhìn',
+      'help.example.legend.cells': 'Các ô làm nên kỹ thuật',
+      'help.example.legend.target': 'Các ô thay đổi',
+      'help.example.legend.elim': 'Ghi chú cần xóa',
+      'help.example.legend.keep': 'Số cần điền',
       'help.keys.intro': 'Mọi thao tác đều làm được bằng bàn phím.',
-      'help.keys.move': 'Di chuyển giữa các ô. Home và End đến hai đầu hàng, Page Up và Page Down ' +
-        'nhảy lên hoặc xuống một khối. Trên bảng nhiều lưới, các phím bỏ qua các khoảng trống.',
-      'help.keys.enter': 'Điền ký hiệu vào ô đang chọn: chữ số và chữ cái như bảng hiển thị. Ký hiệu ' +
-        'hai ký tự (10 đến 12 trên Mega 12×12) cần gõ hai phím.',
+      'help.keys.move': 'Di chuyển giữa các ô. Home và End đến hai đầu hàng, Page Up và Page Down nhảy lên ' +
+        'hoặc xuống một khối. Trên bảng nhiều lưới, các phím bỏ qua các khoảng trống.',
+      'help.keys.enter': 'Điền ký hiệu vào ô đang chọn: chữ số và chữ cái như bảng hiển thị. Ký hiệu hai ký ' +
+        'tự (10 đến 12 trên Mega 12×12) cần gõ hai phím.',
       'help.keys.erase': 'Xóa ô đang chọn: giá trị trước, rồi đến ghi chú.',
       'help.keys.notes': 'Chuyển giữa điền giá trị và ghi chú.',
       'help.keys.hint': 'Xin gợi ý, và bấm lại để xem chi tiết hơn.',
       'help.keys.undo': 'Hoàn tác.',
       'help.keys.redo': 'Làm lại.',
-      'help.keys.escape': 'Đóng thẻ gợi ý, hoặc một hộp thoại.',
-      'help.keys.tab': 'Chuyển giữa các vùng của trang (đầu trang, bảng, công cụ, bàn phím số, bảng ' +
-        'bên). Liên kết bỏ qua ở đầu trang nhảy thẳng tới đề.',
-      'help.keys.paste': 'Dán một đề vào bất kỳ đâu trên trang để mở nó: liên kết, nội dung tệp đề, ' +
-        'hoặc một dòng 81, 36 hay 16 ký tự.',
-      'help.keys.openBox': 'Trong ô văn bản của hộp thoại Mở đề: mở đề vừa dán.',
-      'help.about.privacy.title': 'Riêng tư: mọi thứ ở lại đây',
-      'help.about.privacy.text': 'Trình chơi Sudoku chạy hoàn toàn trong trình duyệt của bạn. Đề được ' +
-        'đọc ngay trên thiết bị của bạn và không có gì được gửi tới máy chủ; không có tài khoản, ' +
-        'không theo dõi, không cookie. Trang chỉ lưu vài mục nhỏ liệt kê dưới đây trong bộ nhớ cục bộ ' +
-        'của trình duyệt này, để bạn chơi tiếp được từ chỗ đã dừng.',
-      'help.about.key.prefs': 'Ngôn ngữ, giao diện, cỡ chữ và các cài đặt khác của bạn.',
-      'help.about.key.progress': 'Tiến độ của 100 đề bạn chơi gần nhất.',
-      'help.about.key.puzzles': '100 đề bạn nhập gần nhất (cho danh sách các đề).',
-      'help.about.key.last': 'Đề nào đang trên bàn cờ khi bạn rời đi.',
-      'help.about.delete': 'Xóa các đề và tiến độ đã lưu',
-      'help.about.delete.confirm': 'Nhấn lần nữa để xóa',
-      'help.about.a11y.title': 'Khả năng tiếp cận',
-      'help.about.a11y.text': 'Bảng là một lưới bạn có thể di chuyển bằng bàn phím, mỗi ô có nhãn đọc ' +
-        'được, có giao diện sáng, tối và tương phản cao, và có thể tắt hiệu ứng chuyển động. Trang đã ' +
-        'được kiểm tra bằng trình duyệt tự động, nhưng chưa được thử với trình đọc màn hình thật.',
-      'help.about.links.title': 'Liên kết',
-      'help.about.link.generator': 'Trình sinh đề Sudoku: tạo một đề',
-      'help.about.link.repo': 'Mã nguồn và tài liệu',
-      'help.about.licence': 'Trình chơi Sudoku là phần mềm mã nguồn mở (giấy phép MIT).',
-      'help.variant.classic4.rules': 'Điền vào lưới 4×4 sao cho mỗi hàng, mỗi cột và mỗi khối 2×2 đều ' +
-        'chứa các chữ số từ 1 đến 4, mỗi số đúng một lần. Một số ô đã được cho sẵn; bạn chỉ dùng suy ' +
-        'luận để tìm các ô còn lại, và luôn chỉ có đúng một lời giải.',
-      'help.variant.classic4.tip': 'Bảng nhỏ nhất là nơi tốt để làm quen với ghi chú và gợi ý.',
-      'help.variant.classic6.rules': 'Điền vào lưới 6×6 sao cho mỗi hàng, mỗi cột và mỗi khối đều ' +
-        'chứa các chữ số từ 1 đến 6, mỗi số đúng một lần. Mỗi khối cao 2 hàng và rộng 3 cột.',
-      'help.variant.classic6.tip': 'Mỗi khối cao 2 hàng và rộng 3 cột, nên khối và hàng chồng lên ' +
-        'nhau khác với bảng 9×9.',
-      'help.variant.classic9.rules': 'Câu đố kinh điển. Điền vào lưới 9×9 sao cho mỗi hàng, mỗi cột ' +
-        'và mỗi khối 3×3 đều chứa các chữ số từ 1 đến 9, mỗi số đúng một lần. Các số cho sẵn vừa đủ ' +
-        'để lời giải là duy nhất.',
-      'help.variant.classic9.tip': 'Bảng chuẩn. Gợi ý có thể nêu bất kỳ kỹ thuật nào trong danh sách ' +
-        'ở mục Gợi ý.',
-      'help.variant.mega12.rules': 'Điền vào lưới 12×12 sao cho mỗi hàng, mỗi cột và mỗi khối đều ' +
-        'chứa đủ 12 ký hiệu, mỗi ký hiệu đúng một lần. Mỗi khối cao 3 hàng và rộng 4 cột. Các ký hiệu ' +
-        'là chữ số từ 1 đến 9 rồi đến A, B, C, hoặc các số từ 1 đến 12.',
-      'help.variant.mega12.tip': 'Lưới rộng nên trên điện thoại sẽ nhỏ: hãy xoay ngang điện thoại ' +
-        'hoặc phóng to trang. Các ký hiệu như 10 đến 12 cần gõ hai phím: gõ cả hai ký tự.',
-      'help.variant.mega16.rules': 'Điền vào lưới 16×16 sao cho mỗi hàng, mỗi cột và mỗi khối 4×4 đều ' +
-        'chứa đủ 16 ký hiệu, mỗi ký hiệu đúng một lần. Các ký hiệu là chữ số hệ thập lục phân từ 0 ' +
-        'đến 9 và từ A đến F (hoặc từ 1 đến 9 và từ A đến G, tùy cách đề được tạo).',
-      'help.variant.mega16.tip': 'Các ký hiệu là chữ số hệ thập lục phân, nên hãy bấm phím của ký ' +
-        'hiệu: 0 đến 9, rồi A đến F. Các ô nhỏ; hãy dùng màn hình lớn hoặc phóng to trang.',
-      'help.variant.diagonalX.rules': 'Luật Sudoku 9×9 cổ điển, thêm một luật nữa: mỗi đường chéo ' +
-        'dài, từ góc này sang góc đối diện, cũng phải chứa các chữ số từ 1 đến 9, mỗi số đúng một ' +
-        'lần.',
-      'help.variant.diagonalX.tip': 'Cả hai đường chéo được tô màu. Một ô trên đường chéo thuộc bốn ' +
-        'nhóm cùng lúc (hàng, cột, khối và đường chéo), nên có thêm nhiều suy luận.',
-      'help.variant.hyper.rules': 'Luật Sudoku 9×9 cổ điển, thêm bốn cửa sổ 3×3 được tô bóng. Mỗi cửa ' +
-        'sổ cũng phải chứa các chữ số từ 1 đến 9, mỗi số đúng một lần. Các cửa sổ nằm lùi vào một ô ' +
-        'so với các góc của lưới: hàng và cột 2 đến 4 và 6 đến 8.',
-      'help.variant.hyper.tip': 'Các cửa sổ tô bóng chồng lên các khối thường, nên một ký hiệu thường ' +
-        'có ít chỗ hơn để đặt. Biến thể này còn gọi là Windoku.',
-      'help.variant.jigsaw9.rules': 'Chín khối 3×3 được thay bằng chín vùng không đều, mỗi vùng gồm ' +
-        'chín ô và có viền đậm. Mỗi hàng, mỗi cột và mỗi vùng đều chứa các chữ số từ 1 đến 9, mỗi số ' +
-        'đúng một lần.',
-      'help.variant.jigsaw9.tip': 'Không có khối 3×3: hãy đọc các viền đậm. Ghi chú giúp theo dõi ' +
-        'những hình dạng kỳ lạ.',
-      'help.variant.killer.rules': 'Các ô được gom thành những lồng viền nét đứt, và con số nhỏ ở góc ' +
-        'lồng là tổng của nó. Các chữ số trong một lồng phải cộng lại bằng tổng đó và không được lặp ' +
-        'lại trong lồng. Các luật hàng, cột và khối thông thường vẫn áp dụng. Hầu như không có chữ số ' +
-        'cho sẵn.',
-      'help.variant.killer.tip': 'Hãy tìm xem những chữ số nào có thể tạo nên tổng của một lồng (gợi ' +
-        'ý nêu tên kỹ thuật, như Tổ hợp tổng của lồng hay Quy tắc 45). Chữ số không bao giờ lặp lại ' +
-        'trong một lồng.',
-      'help.variant.greaterThan.rules': 'Các dấu giữa hai ô cạnh nhau cho biết chữ số nào lớn hơn. ' +
-        'Đầu nhọn của dấu < hoặc > hướng về phía chữ số nhỏ hơn và mở ra phía chữ số lớn hơn. Các ' +
-        'luật hàng, cột và khối thông thường vẫn áp dụng.',
-      'help.variant.greaterThan.tip': 'Dấu hướng về phía ký hiệu nhỏ hơn. Mỗi dấu ràng buộc cả hai ô ' +
-        'nó chạm tới, nên số 1 hoặc 9 cạnh một dấu thường là nước đi nhanh.',
-      'help.variant.samurai.rules': 'Năm lưới 9×9 chồng lên nhau theo hình chữ X: bốn lưới ở góc và ' +
-        'một lưới ở giữa. Lưới giữa dùng chung một khối 3×3 với từng lưới góc. Mỗi lưới theo luật cổ ' +
-        'điển, và khối dùng chung được tính cho cả hai lưới cùng lúc. Tổng cộng 369 ô.',
-      'help.variant.samurai.tip': 'Một ô trong vùng chồng thuộc hai lưới cùng lúc. Các phím mũi tên ' +
-        'bỏ qua khoảng trống giữa các lưới.',
-      'help.variant.sohei.rules': 'Bốn lưới 9×9 xếp thành một vòng quanh một khoảng trống ở giữa. Mỗi ' +
-        'lưới dùng chung một khối 3×3 với từng lưới trong hai lưới bên cạnh. Mỗi lưới theo luật cổ ' +
-        'điển, và khối dùng chung được tính cho cả hai lưới cùng lúc. Tổng cộng 288 ô.',
-      'help.variant.sohei.tip': 'Khoảng trống ở giữa không thuộc lưới nào. Một ký hiệu đặt trong khối ' +
-        'dùng chung giúp hai lưới cùng lúc.',
-      'help.variant.butterfly.rules': 'Bốn lưới 9×9, mỗi lưới lệch ba ô so với lưới kế tiếp, chồng ' +
-        'lên nhau ở một vùng 6×6 ở giữa (tổng cộng 144 ô). Mỗi lưới theo luật cổ điển, và một ô nằm ' +
-        'trong vùng chồng phải thỏa mãn mọi lưới chứa nó.',
-      'help.variant.butterfly.tip': 'Vùng 6×6 ở giữa thuộc cả bốn lưới, nên ký hiệu đặt ở đó được ' +
-        'kiểm tra với bốn lưới.',
-      'help.variant.flower.rules': 'Năm lưới 9×9: một lưới ở giữa và bốn cánh hoa ở phía trên, dưới, ' +
-        'trái, phải của nó, mỗi cánh lệch ba ô. Một cánh chồng lên lưới giữa ở một dải 6×9 ô, và các ' +
-        'cánh còn chồng lên nhau gần các góc của lưới giữa. Tổng cộng 189 ô; mỗi lưới theo luật cổ ' +
-        'điển.',
-      'help.variant.flower.tip': 'Vùng chồng dày đặc nhất: nhiều ô thuộc hai hoặc ba lưới, nên mỗi ' +
-        'lần điền đều có hệ quả rất xa.',
-      'help.variant.wordoku.rules': 'Một câu Sudoku 9×9 chơi bằng chín chữ cái thay cho chữ số: mỗi ' +
-        'hàng, cột và khối 3×3 đều chứa đủ chín chữ cái, mỗi chữ đúng một lần. Chín chữ cái là các ' +
-        'chữ của một từ khóa ẩn, được viết dọc theo một đường của lời giải: mặc định là đường chéo ' +
-        'chính, hoặc một hàng hay một cột.',
-      'help.variant.wordoku.tip': 'Chín chữ cái thay cho chữ số. Từ khóa ẩn dọc một đường của lời ' +
-        'giải và hiện ra khi bạn giải xong. Hãy chuyển bộ ký hiệu sang chữ số nếu bạn thích dùng số.'
+      'help.keys.escape': 'Đóng thẻ gợi ý, bàn phím nhỏ hoặc một hộp thoại.',
+      'help.keys.tab': 'Chuyển giữa các vùng của trang (đầu trang, bảng, công cụ, bàn phím số, bảng bên). ' +
+        'Liên kết bỏ qua ở đầu trang nhảy thẳng tới đề.',
+      'help.keys.paste': 'Dán một đề vào bất kỳ đâu trên trang để mở nó: liên kết, nội dung tệp đề, hoặc ' +
+        'một dòng 81, 36 hay 16 ký tự.',
+      'help.keys.openBox': 'Trong ô văn bản của hộp thoại Nhập đề: nhập các đề vừa dán.'
     }
   });
+
+  // help.html starts the page once every script has loaded (the strings above included).
+  if (typeof document !== 'undefined' && typeof document.getElementById === 'function') {
+    const run = function () { start(); };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+    else run();
+  }
 })(typeof self !== 'undefined' ? self : globalThis);

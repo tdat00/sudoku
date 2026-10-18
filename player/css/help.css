@@ -1,82 +1,203 @@
 /*
- * Help dialog (js/ui/help.js). Only var(--sg-*) tokens: no colour literals.
+ * The guide (help.html, js/ui/help.js). Only var(--sg-*) tokens: no colour literals.
  *
- *   .help-tabs / .help-tab       the tablist of the dialog; .help-panels / .help-panel the tab panels
- *   .help-variant                one <details class="disclosure"> per variant
- *   .help-steps, .help-techniques, .help-keys, .help-storage, .help-actions, .help-links   the content blocks
- * Motion is switched off by the global reduced-motion rules of base.css.
+ *   .help-page, .help-page__head, .help-page__layout   the frame of the page
+ *   .help-toc                                          the contents: sections, groups, the techniques
+ *   .help-section, .help-steps, .help__tip, .help-keys the content blocks (cards)
+ *   .help-group, .help-tabs, .help-tab, .help-technique   a group of techniques with a tab for each
+ *   .help-example, .help-legend, .help-swatch          the example of a technique: the board and its marks
+ * The marks of the board itself (.layer-play .is-hint-*) come from play.css. Motion is switched off by the
+ * global reduced-motion rules of base.css.
  */
 
-/* ---- Dialog: tabs ---- */
-.help-tabs {
+.help-brand {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* The header floats with the scroll; help.js sets --help-header-height to its real height. */
+.help-body {
+  --help-header-height: 3.75rem;
+  --help-sticky-top: calc(var(--help-header-height) + var(--sg-space-4));
+}
+
+.help-body .app-header {
   position: sticky;
   top: 0;
-  z-index: 2;
-  display: flex;
-  gap: var(--sg-space-1);
-  margin: calc(-1 * var(--sg-space-4)) calc(-1 * var(--sg-space-4)) var(--sg-space-4);
-  padding: var(--sg-space-2) var(--sg-space-4) 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  overscroll-behavior-x: contain;
-  border-bottom: 1px solid var(--sg-color-divider);
-  background: var(--sg-color-surface);
-  scrollbar-width: thin;
+  z-index: 20;
 }
 
-.help-tab {
-  flex: none;
-  min-height: var(--sg-control-height);
-  margin-bottom: -1px;
-  padding: 0 var(--sg-space-3);
-  border: 1px solid transparent;
-  border-bottom: 3px solid transparent;
-  border-radius: var(--sg-radius-2) var(--sg-radius-2) 0 0;
-  background: transparent;
-  color: var(--sg-color-text-muted);
-  font-weight: 600;
-  white-space: nowrap;
-  transition:
-    background-color var(--sg-motion-fast) ease,
-    color var(--sg-motion-fast) ease;
+.help-body .help-section,
+.help-body .help-group {
+  scroll-margin-top: var(--help-sticky-top);
 }
 
-.help-tab:hover {
-  background: var(--sg-color-hover);
-  color: var(--sg-color-text);
+/* ---- The frame of the page ---- */
+.help-page {
+  max-width: var(--sg-layout-max-width);
+  margin-inline: auto;
+  padding: var(--sg-space-5) var(--sg-space-4) var(--sg-space-6);
 }
 
-.help-tab[aria-selected="true"] {
-  border-bottom-color: var(--sg-color-accent);
-  color: var(--sg-color-text);
-}
-
-.help-tab:focus-visible {
-  outline-offset: calc(-1 * var(--sg-focus-width));
-}
-
-.help-panels {
-  min-width: 0;
-}
-
-.help-panel {
+.help-page__head {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--sg-space-3);
+  margin-bottom: var(--sg-space-5);
+  padding: var(--sg-space-5);
+  border: 1px solid var(--sg-color-divider);
+  border-inline-start: 6px solid var(--sg-color-accent);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
+}
+
+.help-page__title {
+  margin: 0;
+  font-size: 1.75rem;
+  letter-spacing: -0.01em;
+}
+
+.help-page__lead {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--sg-color-text-muted);
+  font-size: 1.0625rem;
+}
+
+.help-page__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sg-space-4);
+}
+
+.help-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-5);
   min-width: 0;
   line-height: 1.55;
 }
 
-.help-panel[hidden] {
-  display: none;
+/* ---- The contents ---- */
+.help-toc {
+  min-width: 0;
 }
 
-.help-panel:focus-visible {
-  outline-offset: var(--sg-space-1);
+.help-toc__details {
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
 }
 
-.help-panel p {
-  max-width: 68ch;
+.help-toc__title {
+  padding: var(--sg-space-3) var(--sg-space-4);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.help-toc__body {
+  padding: 0 var(--sg-space-4) var(--sg-space-4);
+}
+
+.help-toc__list,
+.help-toc__groups,
+.help-toc__techs {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.help-toc__list {
+  gap: var(--sg-space-2);
+}
+
+.help-toc__section,
+.help-toc__tech {
+  display: block;
+  border-radius: var(--sg-radius-1);
+  color: var(--sg-color-text);
+  text-decoration: none;
+}
+
+.help-toc__section {
+  padding: var(--sg-space-1) var(--sg-space-2);
+  font-weight: 650;
+}
+
+.help-toc__tech {
+  padding: 0.125rem var(--sg-space-2);
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.help-toc__section:hover,
+.help-toc__tech:hover {
+  background: var(--sg-color-hover);
+  color: var(--sg-color-text);
+}
+
+.help-toc__section[aria-current="location"] {
+  background: var(--sg-color-accent-soft);
+  color: var(--sg-color-accent);
+}
+
+.help-toc__groups {
+  gap: var(--sg-space-2);
+  margin: var(--sg-space-1) 0 var(--sg-space-1) var(--sg-space-2);
+  padding-inline-start: var(--sg-space-2);
+  border-inline-start: 2px solid var(--sg-color-divider);
+}
+
+.help-toc__group-name {
+  display: block;
+  padding: 0 var(--sg-space-2);
+  color: var(--sg-color-text);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 64rem) {
+  .help-page__layout {
+    grid-template-columns: 17rem minmax(0, 1fr);
+    gap: var(--sg-space-5);
+    align-items: start;
+  }
+
+  /* The nav is the grid item (as tall as its content), so the nav itself must be the sticky box. */
+  .help-toc {
+    position: sticky;
+    top: var(--help-sticky-top);
+    max-height: calc(100vh - var(--help-sticky-top) - var(--sg-space-4));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: var(--sg-radius-3);
+  }
+}
+
+/* ---- Sections: one card each ---- */
+.help-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-4);
+  min-width: 0;
+  padding: var(--sg-space-5);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
+  scroll-margin-top: var(--sg-space-4);
+}
+
+.help-section p {
+  max-width: 70ch;
   margin: 0;
 }
 
@@ -85,80 +206,276 @@
 }
 
 .help__title {
-  margin-top: var(--sg-space-3);
-  padding-bottom: var(--sg-space-1);
-  border-bottom: 1px solid var(--sg-color-divider);
-  font-size: var(--sg-font-size-lg);
+  margin: 0;
+  padding-inline-start: var(--sg-space-3);
+  border-inline-start: 4px solid var(--sg-color-accent);
+  font-size: 1.375rem;
+  line-height: 1.25;
 }
 
-.help__small-title {
-  margin: var(--sg-space-2) 0 0;
-  font-size: 1rem;
+.help__tip {
+  padding: var(--sg-space-3) var(--sg-space-4);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-accent-soft);
+  font-size: var(--sg-font-size-sm);
 }
 
-/* ---- Steps and levels ---- */
+/* Numbered steps: a round number in front of every step. */
 .help-steps {
   display: flex;
   flex-direction: column;
-  gap: var(--sg-space-2);
-  max-width: 68ch;
+  gap: var(--sg-space-3);
+  max-width: 70ch;
   margin: 0;
-  padding-inline-start: var(--sg-space-5);
-  list-style: decimal;
+  padding: 0;
+  counter-reset: help-step;
+  list-style: none;
 }
 
-/* ---- Variants ---- */
-.help-variant {
-  scroll-margin-top: calc(var(--sg-control-height) + var(--sg-space-5));
+.help-steps > li {
+  position: relative;
+  min-height: 2rem;
+  padding-inline-start: 2.75rem;
+  counter-increment: help-step;
 }
 
-.help-variant__name {
-  font-weight: 600;
+.help-steps > li::before {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--sg-radius-pill);
+  background: var(--sg-color-accent);
+  color: var(--sg-color-accent-text);
+  content: counter(help-step);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 700;
 }
 
-.help-variant__desc {
-  color: var(--sg-color-text-muted);
+.help-steps__title {
+  color: var(--sg-color-text);
 }
 
-/* ---- Techniques ---- */
+/* ---- A group of techniques: a tab for each ---- */
 .help-group {
   display: flex;
   flex-direction: column;
+  gap: var(--sg-space-3);
+  padding: var(--sg-space-4);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface-2);
+  scroll-margin-top: var(--sg-space-4);
+}
+
+.help-group__title {
+  margin: 0;
+  font-size: var(--sg-font-size-lg);
+}
+
+.help-tabs {
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--sg-space-2);
 }
 
-.help-techniques {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sg-space-2);
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.help-tab {
+  min-height: 2.25rem;
+  padding: 0 var(--sg-space-3);
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-pill);
+  background: var(--sg-color-surface);
+  color: var(--sg-color-text);
+  font-weight: 600;
+  transition:
+    background-color var(--sg-motion-fast) ease,
+    color var(--sg-motion-fast) ease;
+}
+
+.help-tab:hover {
+  background: var(--sg-color-hover);
+}
+
+.help-tab[aria-selected="true"] {
+  border-color: var(--sg-color-accent);
+  background: var(--sg-color-accent);
+  color: var(--sg-color-accent-text);
 }
 
 .help-technique {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--sg-space-1) var(--sg-space-2);
-  padding: var(--sg-space-2) var(--sg-space-3);
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  padding: var(--sg-space-4);
   border: 1px solid var(--sg-color-divider);
   border-radius: var(--sg-radius-2);
-  background: var(--sg-color-surface-2);
+  background: var(--sg-color-surface);
+}
+
+.help-technique[hidden] {
+  display: none;
+}
+
+.help-technique__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sg-space-2) var(--sg-space-3);
 }
 
 .help-technique__name {
-  font-weight: 700;
+  margin: 0;
+  font-size: 1.125rem;
 }
 
 .help-technique__desc {
+  max-width: 70ch;
+  margin: 0;
+  color: var(--sg-color-text-muted);
+}
+
+/* ---- The example of a technique ---- */
+.help-example {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--sg-space-4) var(--sg-space-5);
+  margin: 0;
+}
+
+.help-example__board {
   flex: 1 1 18rem;
+  max-width: 28rem;
+  padding: var(--sg-space-2);
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-3);
+  background: var(--sg-color-surface);
+  box-shadow: var(--sg-shadow-1);
+}
+
+.help-example__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.help-example__text {
+  display: flex;
+  flex: 1 1 16rem;
+  flex-direction: column;
+  gap: var(--sg-space-3);
+  min-width: 0;
+}
+
+.help-example__text p {
+  margin: 0;
+}
+
+.help-example__source {
   color: var(--sg-color-text-muted);
   font-size: var(--sg-font-size-sm);
 }
 
-.help-technique__scope {
-  align-self: center;
+.help-example__explanation {
+  padding: var(--sg-space-3) var(--sg-space-4);
+  border-inline-start: 4px solid var(--sg-board-technique);
+  border-radius: var(--sg-radius-1);
+  background: var(--sg-color-surface-2);
+  font-weight: 600;
+}
+
+.help-example__facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sg-space-2) var(--sg-space-3);
+  margin: 0;
+  font-size: var(--sg-font-size-sm);
+}
+
+.help-example__facts dt {
+  color: var(--sg-color-text-muted);
+  font-weight: 700;
+}
+
+.help-example__facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---- The legend of the marks ---- */
+.help-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sg-space-2) var(--sg-space-4);
+  margin: 0;
+  padding: var(--sg-space-3) 0 0;
+  border-top: 1px solid var(--sg-color-divider);
+  list-style: none;
+  font-size: var(--sg-font-size-sm);
+}
+
+.help-legend__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sg-space-2);
+}
+
+.help-swatch {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--sg-color-divider);
+  border-radius: var(--sg-radius-1);
+  background: var(--sg-color-surface);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 700;
+}
+
+.help-swatch--region::before,
+.help-swatch--target::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--sg-board-technique);
+  content: "";
+}
+
+.help-swatch--region::before {
+  opacity: 0.15;
+}
+
+.help-swatch--target::before {
+  opacity: 0.32;
+}
+
+.help-swatch--target,
+.help-swatch--cell {
+  border-color: var(--sg-board-technique);
+  border-width: 2px;
+}
+
+.help-swatch--cell {
+  background: var(--sg-board-technique-fill);
+}
+
+.help-swatch--elim::after {
+  color: var(--sg-color-danger);
+  content: "5";
+  text-decoration: line-through;
+}
+
+.help-swatch--keep::after {
+  color: var(--sg-board-technique);
+  content: "5";
+  font-weight: 800;
 }
 
 /* ---- Keys ---- */
@@ -170,7 +487,7 @@
 }
 
 .help-keys__combos {
-  margin-top: var(--sg-space-2);
+  margin-top: var(--sg-space-3);
 }
 
 .help-keys__text {
@@ -198,6 +515,7 @@
   .help-keys {
     grid-template-columns: minmax(11rem, 17rem) minmax(0, 1fr);
     align-items: center;
+    row-gap: var(--sg-space-2);
   }
 
   .help-keys__combos {
@@ -205,56 +523,37 @@
   }
 }
 
-/* ---- About ---- */
-.help-storage {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--sg-space-1) var(--sg-space-3);
-  margin: 0;
-}
-
-.help-storage dt code {
-  overflow-wrap: anywhere;
-  font-size: var(--sg-font-size-sm);
-}
-
-.help-storage dd {
-  margin: 0 0 var(--sg-space-2);
-  color: var(--sg-color-text-muted);
-}
-
-.help-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sg-space-2);
-}
-
-.help-links {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sg-space-1);
-  margin: 0;
-  padding-inline-start: var(--sg-space-5);
-  list-style: disc;
-}
-
-@media (min-width: 640px) {
-  .help-storage {
-    grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr);
+@media (max-width: 599.98px) {
+  .help-page {
+    padding: var(--sg-space-3);
   }
 
-  .help-storage dd {
-    margin: 0;
+  .help-page__head,
+  .help-section {
+    padding: var(--sg-space-4);
+  }
+
+  .help-group {
+    padding: var(--sg-space-3);
+  }
+
+  .help-technique {
+    padding: var(--sg-space-3);
   }
 }
 
 @media (forced-colors: active) {
-  .help-tab[aria-selected="true"] {
-    border-bottom-color: Highlight;
-    text-decoration: underline;
-  }
-
+  .help-swatch,
+  .help-example__board,
+  .help-section,
   .help-technique {
     border-color: CanvasText;
+  }
+
+  .help-tab[aria-selected="true"] {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
   }
 }

@@ -9,8 +9,8 @@
  *    undo / redo, rule conflicts, wrong entries, hints, a timer on an injected clock, completion detection
  *    and a serialisable state. No DOM, no timers.
  *  - `SG.play.init(app)`  the DOM layer, started by app.js at start-up: the status bar (`#play-status`), the
- *    tools, number pad and hint card (`#play-root`), the Options frame (`#options-root`: symbols, check mode,
- *    notes switch, puzzle actions), the popup over the board, the overlay layer, keyboard
+ *    tools, number pad and hint card (`#play-root`, with the puzzle actions behind a toggle), the Options frame
+ *    (`#options-root`: symbols, check mode, notes switch), the popup over the board, the overlay layer, keyboard
  *    and pointer input. `attach(puzzle)` puts a puzzle in play, `detach()` takes it out again.
  *
  * ---------------------------------------------------------------------------------------------------------
@@ -1296,6 +1296,81 @@
     return node;
   }
 
+  /**
+   * Draws a snapshot of a game on a board view, in the same layer and with the same classes as the play
+   * overlay: the values the player entered, the notes of the cells that matter and the marks of a hint (the
+   * region, the cells that justify it, the cells it changes, the candidates it removes). The Help page uses it
+   * to show a technique at work. Symbols are drawn as text (digits, letters).
+   * @param {Object} board  The view `SG.boardView.create` made for `model`.
+   * @param {Element} svgEl  Its svg element.
+   * @param {PuzzleModel} model
+   * @param {{values: ArrayLike<number>, notes: ArrayLike<number>, hint?: Object, mode?: string,
+   *   notesIn?: number[]}} snap  `values`: the entries of the player (the board draws the givens itself);
+   *   `notes`: the bit mask of every cell; `hint`: what `game.hint()` returned; `notesIn`: the cells whose notes
+   *   are drawn (default: the cells of the region, of the hint and the ones it changes).
+   * @returns {Element} The layer.
+   */
+  function renderSnapshot(board, svgEl, model, snap) {
+    const geo = board.getGeometry();
+    const mode = snap.mode || 'digits';
+    const hint = snap.hint && snap.hint.ok === true ? snap.hint : null;
+    const inRegion = new Set(hint && hint.region ? hint.region.cells : []);
+    const inCells = new Set(hint ? hint.cells : []);
+    const inTargets = new Set(hint ? hint.targets : []);
+    const elim = new Map();
+    const keep = new Map();
+    if (hint) {
+      hint.eliminations.forEach(function (e) { elim.set(e[0], (elim.get(e[0]) || 0) | bitOf(e[1])); });
+      hint.placements.forEach(function (p) { keep.set(p[0], (keep.get(p[0]) || 0) | bitOf(p[1])); });
+    }
+    const noted = new Set(snap.notesIn || Array.from(inRegion).concat(Array.from(inCells), Array.from(inTargets)));
+    const layer = s('g', { class: 'layer-play', 'data-layer': 'play', 'aria-hidden': 'true',
+      style: 'font-size:' + geo.value.font + 'px' });
+    const lay = noteLayout(model.digits);
+    const top = model.cages.length > 0 ? NOTE_TOP_CAGE : NOTE_MARGIN;
+    const slotW = (CELL_UNITS - 2 * NOTE_MARGIN) / lay.cols;
+    const slotH = (CELL_UNITS - top - NOTE_MARGIN) / lay.rows;
+    const longest = typedLabels(model, mode).reduce(function (m, text) { return Math.max(m, text.length); }, 1);
+    const font = Math.min(slotH * 0.86, slotW / (longest * 0.62), 11);
+    const text = function (v) { return SG.symbols.glyph(mode, v, model, { colorAuxSymbol: false, label: false }).text; };
+    for (let i = 0; i < model.cellCount; i++) {
+      let cls = 'pl-cell';
+      if (inRegion.has(i)) cls += ' is-hint-region';
+      if (inCells.has(i)) cls += ' is-hint-cell';
+      if (inTargets.has(i)) cls += ' is-hint-target';
+      const group = s('g', { class: cls, 'data-pc': i });
+      const rect = { x: geo.cellX[i] + 1.5, y: geo.cellY[i] + 1.5, width: CELL_UNITS - 3, height: CELL_UNITS - 3 };
+      group.appendChild(s('rect', Object.assign({ class: 'pl-bg' }, rect)));
+      group.appendChild(s('rect', Object.assign({ class: 'pl-hint' }, rect)));
+      const value = snap.values[i] || 0;
+      const mask = snap.notes[i] || 0;
+      if (value > 0) {
+        const label = s('text', { class: 'pl-val', x: geo.cellX[i] + CELL_UNITS / 2,
+          y: geo.cellY[i] + CELL_UNITS / 2 + geo.value.shiftY, dy: '0.35em', 'text-anchor': 'middle' });
+        label.textContent = text(value);
+        group.appendChild(s('g', { class: 'pl-content' }, [])).appendChild(label);
+      } else if (mask !== 0 && noted.has(i)) {
+        const content = s('g', { class: 'pl-content' });
+        for (let d = 1; d <= model.digits; d++) {
+          if ((mask & bitOf(d)) === 0) continue;
+          const note = s('text', {
+            class: 'pl-note' + (((elim.get(i) || 0) & bitOf(d)) !== 0 ? ' is-elim' : '') +
+              (((keep.get(i) || 0) & bitOf(d)) !== 0 ? ' is-keep' : ''),
+            x: geo.cellX[i] + NOTE_MARGIN + (((d - 1) % lay.cols) + 0.5) * slotW,
+            y: geo.cellY[i] + top + (Math.floor((d - 1) / lay.cols) + 0.5) * slotH,
+            dy: '0.35em', 'text-anchor': 'middle', 'font-size': Math.round(font * 10) / 10
+          });
+          note.textContent = text(d);
+          content.appendChild(note);
+        }
+        group.appendChild(content);
+      }
+      layer.appendChild(group);
+    }
+    svgEl.appendChild(layer);
+    return layer;
+  }
+
   function icon(name) {
     const svg = s('svg', { class: 'icon', viewBox: '0 0 24 24', 'aria-hidden': 'true', focusable: 'false' });
     if (ICON_PATHS[name] !== undefined) svg.appendChild(s('path', { d: ICON_PATHS[name] }));
@@ -1334,9 +1409,11 @@
     let reader = null;
     let clockTimer = null;
     let resetTimer = null;
+    let revealTimer = null;
     let padSig = '';
     let wordHidden = false;
     let popupOpen = false;
+    let moreOpen = false;
 
     // ---- translation of the static texts ---------------------------------------------------------
 
@@ -1482,15 +1559,27 @@
       els.symbolsRow = h('fieldset', { class: 'field-group play__symbols' }, [symbolsLegend, els.symbolsList]);
 
       els.keys = h('div', { class: 'play__keys' }, [els.tools, els.pad]);
+      // The actions on this puzzle (fill in all notes, reveal a cell): out of the way until the play frame is
+      // expanded, so that none of them is pressed by mistake. The toggle sits right under the pad, in the same
+      // frame (on a small screen, in the bar that is fixed to the bottom).
+      els.moreIcon = icon('chevron-down');
+      els.moreLabel = h('span', { class: 'btn__label' });
+      els.moreToggle = h('button', { type: 'button', class: 'btn btn--ghost btn--sm play__more-toggle',
+        'aria-expanded': 'false', 'aria-controls': 'play-more' }, [els.moreIcon, els.moreLabel]);
+      els.moreToggle.addEventListener('click', function () { setMore(!moreOpen); });
+      els.moreBody = h('div', { class: 'play__more', id: 'play-more', hidden: true }, [makeActions()]);
+      els.keys.appendChild(els.moreToggle);
+      els.keys.appendChild(els.moreBody);
       els.panel = h('section', { class: 'play__panel', hidden: true }, [
         els.keys, els.hintCard.root
       ]);
       bindText(els.panel, 'play.panel.label', 'aria-label');
+      setMore(false);
       els.root = h('div', { class: 'play', 'data-active': 'false' }, [els.panel]);
       panelHost.appendChild(els.root);
 
-      // The Options frame below the play frame: how to show the symbols, the two checking preferences (the
-      // ones of the Settings dialog) and the actions on this puzzle.
+      // The Options frame below the play frame: how to show the symbols and the two checking preferences (the
+      // ones of the Settings dialog).
       // The check mode: one radio per mode, one per line (the Settings dialog has the same choice).
       els.checkRadios = CHECK_MODES.map(function (mode) {
         const input = h('input', { type: 'radio', name: 'play-check', value: mode });
@@ -1524,8 +1613,7 @@
         h('div', { class: 'disclosure__body play__options-body' }, [
           els.symbolsRow,
           checkGroup,
-          h('div', { class: 'checkbox play__option' }, [els.autoNotes, autoLabel]),
-          makeActions()
+          h('div', { class: 'checkbox play__option' }, [els.autoNotes, autoLabel])
         ])
       ]);
       optionsHost.appendChild(els.optionsBox);
@@ -1574,8 +1662,9 @@
     }
 
     /**
-     * The actions on the puzzle in the Options frame: fill in all notes, reveal a cell, reveal the solution,
-     * reset (a second press confirms). They only concern the puzzle on the board, so they are not in Settings.
+     * The actions on the puzzle, in the play frame once it is expanded: fill in all notes, reveal a cell and
+     * reveal the solution. They only concern the puzzle on the board, so they are not in Settings. (Starting
+     * the game over is the Reset button of the status box.)
      */
     function makeActions() {
       const button = function (key, onClick) {
@@ -1586,14 +1675,23 @@
       };
       els.actions = {
         fill: button('play.options.fillNotes', fillNotes),
-        cell: button('play.options.revealCell', revealCell),
-        all: button('play.options.revealAll', revealAll),
-        reset: h('button', { type: 'button', class: 'btn btn--secondary btn--sm' })
+        cell: button('play.options.revealCell', askRevealCell)
       };
-      els.actions.reset.addEventListener('click', resetGame);
       refreshActions();
       return h('div', { class: 'play__actions play__option-buttons', 'data-setting': 'puzzle' },
-        [els.actions.fill, els.actions.cell, els.actions.all, els.actions.reset]);
+        [els.actions.fill, els.actions.cell]);
+    }
+
+    /** Expands or collapses the actions of the play frame (collapsed at first and for every puzzle). */
+    function setMore(open) {
+      moreOpen = open === true;
+      if (!moreOpen) disarmReveal();
+      els.moreBody.hidden = !moreOpen;
+      els.moreToggle.setAttribute('aria-expanded', moreOpen ? 'true' : 'false');
+      els.moreLabel.setAttribute('data-i18n', moreOpen ? 'play.more.hide' : 'play.more.show');
+      els.moreLabel.textContent = tr(moreOpen ? 'play.more.hide' : 'play.more.show');
+      els.moreIcon.firstChild.setAttribute('href', moreOpen ? '#ic-chevron-up' : '#ic-chevron-down');
+      syncKeysHeight();
     }
 
     /** Keeps the actions in step with the game. */
@@ -1601,10 +1699,11 @@
       const set = els.actions;
       if (set === undefined) return;
       const editable = canEdit();
-      const key = resetTimer === null ? 'play.options.reset' : 'play.options.reset.confirm';
-      [set.fill, set.cell, set.all].forEach(function (node) { node.disabled = !editable; });
-      set.reset.setAttribute('data-i18n', key);
-      set.reset.textContent = tr(key);
+      [set.fill, set.cell].forEach(function (node) { node.disabled = !editable; });
+      const key = revealTimer === null ? 'play.options.revealCell' : 'play.options.revealCell.confirm';
+      set.cell.setAttribute('data-i18n', key);
+      set.cell.textContent = tr(key);
+      set.cell.classList.toggle('is-armed', revealTimer !== null);
     }
 
     // ---- symbols ----------------------------------------------------------------------------------
@@ -1998,7 +2097,9 @@
       const idle = game.status() === 'idle';
       const paused = state.pausedBy === 'user';
       const finished = game.isSolved();
-      // Play before the first move, Pause while the clock runs, Resume after a pause; Reset only once played.
+      // Play before the first move, Pause while the clock runs, Resume after a pause. Reset only while the
+      // game is paused (so that it is not pressed by mistake in the middle of a game) or when it is solved
+      // (to play it again).
       els.pause.hidden = finished;
       els.pause.setAttribute('aria-pressed', paused ? 'true' : 'false');
       els.pause.setAttribute('data-state', idle ? 'play' : paused ? 'resume' : 'pause');
@@ -2007,7 +2108,7 @@
       els.pause.firstChild.firstChild.setAttribute('href', idle || paused ? '#ic-play' : '#ic-pause');
       const armed = resetTimer !== null;
       const resetLabel = tr(armed ? 'play.options.reset.confirm' : 'play.options.reset');
-      els.reset.hidden = idle;
+      els.reset.hidden = !paused && !finished;
       els.reset.classList.toggle('is-armed', armed);
       els.reset.setAttribute('aria-label', resetLabel);
       els.reset.setAttribute('title', resetLabel);
@@ -2050,6 +2151,7 @@
       const next = game !== null && Number.isInteger(cell) && cell >= 0 && cell < game.cellCount ? cell : -1;
       if (next !== sel) {
         sel = next;
+        disarmReveal();
         if (reader !== null) reader.reset();
         refreshMarks();
         refreshPad();
@@ -2187,9 +2289,26 @@
       });
     }
 
-    function revealAll() {
+    /** Reveals the selected cell (the easiest open one without a selection), after a confirming second press. */
+    function askRevealCell() {
       if (!canEdit()) return;
-      game.revealSolution();
+      if (revealTimer === null) {
+        revealTimer = root.setTimeout(function () {
+          revealTimer = null;
+          if (active) refreshActions();
+        }, RESET_ARM_MS);
+        refreshActions();
+        return;
+      }
+      disarmReveal();
+      revealCell();
+    }
+
+    function disarmReveal() {
+      if (revealTimer === null) return;
+      root.clearTimeout(revealTimer);
+      revealTimer = null;
+      refreshActions();
     }
 
     function resetGame() {
@@ -2217,6 +2336,10 @@
         game.startTimer();
         say('info', null);
       } else if (game.timerState().pausedBy === 'user') {
+        if (resetTimer !== null) {
+          root.clearTimeout(resetTimer);
+          resetTimer = null;
+        }
         game.resumeTimer('user');
         say('info', null);
       } else if (game.pauseTimer('user')) {
@@ -2540,6 +2663,7 @@
       listen(root, 'focus', resumeAuto);
       listen(root, 'resize', function () { renderPopup(); syncKeysHeight(); });
       popupOpen = false;
+      setMore(false);
       wordHidden = false;
       notesMode = false;
       marks = null;
@@ -2574,6 +2698,8 @@
       subscriptions.splice(0).forEach(function (off) { off(); });
       if (resetTimer !== null) root.clearTimeout(resetTimer);
       resetTimer = null;
+      if (revealTimer !== null) root.clearTimeout(revealTimer);
+      revealTimer = null;
       hint = null;
       game.clearHint();
       renderHint();
@@ -2587,6 +2713,7 @@
       els.root.setAttribute('data-active', 'false');
       els.panel.hidden = true;
       popupOpen = false;
+      setMore(false);
       renderPopup();
       els.optionsBox.hidden = true;
       els.status.hidden = true;
@@ -2750,6 +2877,7 @@
     createGame: createGame,
     restoreGame: restoreGame,
     describeHint: describeHint,
+    renderSnapshot: renderSnapshot,
     localizeArgs: localizeArgs,
     groupEliminations: groupEliminations,
     valueText: valueText,
@@ -2803,8 +2931,10 @@
       'play.options.check.live': 'All mistakes (compared with the solution)',
       'play.options.autoNotes': 'Remove a placed symbol from the notes of its neighbours',
       'play.options.fillNotes': 'Fill in all notes',
+      'play.more.show': 'More actions',
+      'play.more.hide': 'Fewer actions',
       'play.options.revealCell': 'Reveal a cell',
-      'play.options.revealAll': 'Reveal the solution',
+      'play.options.revealCell.confirm': 'Press again to reveal',
       'play.options.reset': 'Reset puzzle',
       'play.options.reset.confirm': 'Press again to reset',
       'play.msg.select': 'Select a cell first.',
@@ -2888,8 +3018,10 @@
       'play.options.check.live': 'Mọi lỗi (so với đáp án)',
       'play.options.autoNotes': 'Tự xóa ký hiệu vừa điền khỏi ghi chú của các ô cùng nhóm',
       'play.options.fillNotes': 'Điền sẵn mọi ghi chú',
+      'play.more.show': 'Thêm thao tác',
+      'play.more.hide': 'Bớt thao tác',
       'play.options.revealCell': 'Hiện một ô',
-      'play.options.revealAll': 'Hiện đáp án',
+      'play.options.revealCell.confirm': 'Nhấn lần nữa để hiện',
       'play.options.reset': 'Đặt lại đề',
       'play.options.reset.confirm': 'Nhấn lần nữa để đặt lại',
       'play.msg.select': 'Hãy chọn một ô trước.',

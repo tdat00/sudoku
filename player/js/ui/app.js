@@ -1,6 +1,6 @@
 /**
  * The player app (design.md sections 2.3, 7, 8): `SG.app`. Starts the page, opens puzzles, keeps the progress
- * and wires the other modules. Everything the reused modules (`play.js`, `a11y.js`, `theme.js`, `help.js`)
+ * and wires the other modules. Everything the reused modules (`play.js`, `a11y.js`, `theme.js`)
  * need from the app is the small surface below (the one the generator's app offered them).
  *
  * Opening a puzzle (every way ends in `openPuzzle`):
@@ -42,7 +42,7 @@
  *   'settings'   a preference changed: `{ state, keys, source }`
  *   'locale'     the language changed: `{ locale }`
  *   'theme'      the theme preference changed: `{ theme }`
- *   'action'     a button was used: `{ id: 'open' | 'share' | 'settings' | 'help' }`
+ *   'action'     a button was used: `{ id: 'open' | 'share' | 'settings' }` (Help is a link to help.html)
  *   'play:game'  a game was attached to the board: `{ game, puzzle }` (emitted by play.js)
  *   'play:change' the game changed (emitted by play.js); the progress is saved shortly after
  *   'data:cleared' the saved data were deleted
@@ -1264,8 +1264,7 @@
     if (els.recentClear !== null) {
       listen(els.recentClear, 'click', function () { safely(clearRecent); });
     }
-    [['btn-open', 'open'], ['btn-welcome-open', 'open'], ['btn-share', 'share'], ['btn-settings', 'settings'],
-      ['btn-help', 'help']]
+    [['btn-open', 'open'], ['btn-welcome-open', 'open'], ['btn-share', 'share'], ['btn-settings', 'settings']]
       .forEach(function (pair) {
         const node = byId(pair[0]);
         if (node === null) return;
@@ -1335,7 +1334,7 @@
 
     cleanup.push(on('play:change', function () { scheduleSave(); }));
     cleanup.push(on('play:game', function (payload) { game = payload.game; }));
-    ['theme', 'a11y', 'play', 'help'].forEach(function (name) {
+    ['theme', 'a11y', 'play'].forEach(function (name) {
       if (SG[name] && typeof SG[name].init === 'function') safely(function () { SG[name].init(api); });
     });
     wireButtons();
@@ -1400,8 +1399,8 @@
       'player.status.full': 'Progress could not be saved: the browser storage is full.',
       'player.storage.blocked': 'This browser blocks local storage, so your progress is lost when you ' +
         'close this tab.',
-      'player.storage.quota': 'The browser storage is full, so some progress could not be saved. Delete ' +
-        'saved puzzles in Help to make room.',
+      'player.storage.quota': 'The browser storage is full, so some progress could not be saved. Remove ' +
+        'puzzles from the list on the left to make room.',
       'player.open.title': 'Import puzzles',
       'player.open.intro': 'Paste the puzzles you exported from {generator}.',
       'player.generator.name': 'Sudoku Generator',
@@ -1470,7 +1469,7 @@
       'player.status.full': 'Không lưu được tiến độ: bộ nhớ của trình duyệt đã đầy.',
       'player.storage.blocked': 'Trình duyệt này chặn lưu trữ cục bộ, nên tiến độ sẽ mất khi bạn đóng tab.',
       'player.storage.quota': 'Bộ nhớ của trình duyệt đã đầy nên một số tiến độ không được lưu. Hãy xóa ' +
-        'các đề đã lưu trong phần Trợ giúp để lấy chỗ.',
+        'bớt đề trong danh sách bên trái để lấy chỗ.',
       'player.open.title': 'Nhập đề',
       'player.open.intro': 'Dán các đề bạn đã xuất từ {generator}.',
       'player.generator.name': 'Trình sinh đề Sudoku',

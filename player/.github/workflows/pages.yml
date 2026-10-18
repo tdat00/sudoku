@@ -35,7 +35,7 @@ jobs:
       - name: Prepare site
         run: |
           mkdir _site
-          cp -R index.html css js assets LICENSE _site/
+          cp -R index.html help.html css js assets LICENSE _site/
 
       - name: Configure Pages
         uses: actions/configure-pages@v6

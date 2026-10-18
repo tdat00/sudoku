@@ -57,6 +57,8 @@ async function clickCell(page, i) {
     check('clicking a cell pops up the keys 1-9, Notes, Erase and Close next to it, inside the board frame', !popupInfo.hidden && popupInfo.keys === 9 && popupInfo.tools === 3 && popupInfo.near && popupInfo.inside, JSON.stringify(popupInfo));
     await page.shot('play-popup');
     check('the pad of the side panel is still there', await page.eval('document.querySelectorAll("#play-root .play__key").length') === 9);
+    const deskGap = await page.eval('(function(){var t=document.querySelector(".play__tools").getBoundingClientRect(),p=document.querySelector(".play__pad").getBoundingClientRect();return Math.round(p.top-t.bottom);})()');
+    check('the row of tools is not stuck to the row of the pad (at least 10 px)', deskGap >= 10, String(deskGap));
     await page.eval('document.querySelector(".play__popup .play__pkey[data-v=\\"' + info.solution[e0] + '\\"]").click()');
     check('a key of the popup enters the value', await page.eval('SG.play.getGame().userValue(' + e0 + ')') === info.solution[e0]);
     await page.eval('document.querySelector(".play__popup .play__ptool:nth-child(2)").click()');
@@ -151,6 +153,16 @@ async function clickCell(page, i) {
     })()`);
     check('the typed solution completes the puzzle', fin.solved && fin.status === 'solved' && /Solved/.test(fin.live) && fin.noBox, JSON.stringify(fin));
     await page.shot('play-solved');
+    const solvedButtons = await page.eval('(function(){var p=document.querySelector(".play__pause"),r=document.querySelector(".play__reset");return {pause:p.hidden,reset:!r.hidden};})()');
+    check('a solved puzzle shows Reset (to play it again) and no Pause', solvedButtons.pause && solvedButtons.reset, JSON.stringify(solvedButtons));
+    await page.click('.play__reset');
+    await page.click('.play__reset');
+    const replay = await page.eval('(function(){var p=document.querySelector(".play__pause"),r=document.querySelector(".play__reset");return {status:SG.play.getGame().status(),pause:p.hidden?"":p.textContent.trim(),reset:!r.hidden};})()');
+    check('Reset of a solved puzzle starts it over: Play again, no Reset', replay.status === 'idle' && replay.pause === 'Play' && !replay.reset, JSON.stringify(replay));
+    // put the solution back, so that the next steps see a solved puzzle again
+    await page.eval('(function(){var g=SG.play.getGame(),p=SG.app.getPuzzle();for(var i=0;i<g.cellCount;i++) if(!g.isGiven(i)) g.setValue(i,p.solution[i]);})()');
+    await sleep(300);
+    check('and it can be solved again', await page.eval('SG.play.getGame().isSolved()'));
     await sleep(700);
 
     // reload without the fragment: restored, solved
@@ -205,7 +217,12 @@ async function clickCell(page, i) {
     await page.click('.play__pause');
     await measure();
     s = await state();
-    check('Play starts the game: it shows Pause and Reset (icon + label)', s.pause === 'Pause' && s.reset && s.text === 'Reset' && s.label === 'Reset puzzle', JSON.stringify(s));
+    check('Play starts the game: it shows Pause, and no Reset while it runs', s.pause === 'Pause' && !s.reset, JSON.stringify(s));
+    await page.click('.play__pause');
+    s = await state();
+    check('Pause shows Resume and the Reset button (icon + label)', s.pause === 'Resume' && s.reset && s.text === 'Reset' && s.label === 'Reset puzzle', JSON.stringify(s));
+    await page.click('.play__pause');
+    check('Resume hides Reset again, so it is not pressed by mistake', (await state()).pause === 'Pause' && !(await state()).reset);
     await page.click('#recent-root .history-item__open:not([aria-current])');
     await sleep(600);
     s = await state();
@@ -215,12 +232,10 @@ async function clickCell(page, i) {
     s = await state();
     check('leaving a running game paused it: it comes back with Resume and Reset', await page.eval('SG.app.getPuzzle().variantId') === 'classic6' && s.pause === 'Resume' && s.reset, JSON.stringify(s));
     await measure();
-    check('Play, Pause and Resume are all bold and filled alike', looks.every(function (v) { return v === looks[0]; }) && +JSON.parse(looks[0])[0] >= 700 && JSON.parse(looks[0])[1] !== 'rgba(0, 0, 0, 0)',     looks.join(' '));
-    await page.click('.play__pause');
-    check('Resume goes back to Pause', (await state()).pause === 'Pause');
+    check('Play, Pause and Resume are all bold and filled alike', looks.every(function (v) { return v === looks[0]; }) && +JSON.parse(looks[0])[0] >= 700 && JSON.parse(looks[0])[1] !== 'rgba(0, 0, 0, 0)', looks.join(' '));
     await page.click('.play__reset');
     s = await state();
-    check('the first press of Reset only asks to confirm', s.reset && s.label === 'Press again to reset' && s.text === 'Confirm' && s.pause === 'Pause', JSON.stringify(s));
+    check('the first press of Reset only asks to confirm', s.reset && s.label === 'Press again to reset' && s.text === 'Confirm' && s.pause === 'Resume', JSON.stringify(s));
     await page.click('.play__reset');
     s = await state();
     check('the second press resets: Play again and no Reset', s.pause === 'Play' && !s.reset && await page.eval('SG.play.getGame().status()') === 'idle', JSON.stringify(s));

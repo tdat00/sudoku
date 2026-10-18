@@ -68,7 +68,7 @@
     progress: ['createProgress', 'instance', 'validId', 'trimState'],
     play: ['init', 'attach', 'detach', 'createGame', 'restoreGame', 'describeHint', 'createKeyReader',
       'typedLabels'],
-    help: ['init', 'open', 'VARIANT_RULES'],
+    help: ['start', 'buildExample', 'drawExample', 'render', 'SECTION_IDS', 'SHORTCUTS'],
     app: ['getStore', 'getBoard', 'getResult', 'toast', 'openModal', 'announce', 'on', 'emit', 'showResult',
       'getPuzzle', 'open', 'openPuzzle', 'start']
   };
@@ -482,10 +482,64 @@
       expect(page.elements[3].attrs.title).toBe('Go');
     });
 
-    it('lists the scripts in the order of SOURCE_FILES (tests/node-runner.js)', function () {
+    it('lists the scripts in the order of SOURCE_FILES (tests/node-runner.js), without the files of the guide', function () {
       var page = readHtml(readText('index.html'));
       var scripts = page.scripts.filter(function (src) { return src !== null; });
-      expect(scripts).toEqual(sourceFilesOfRunner());
+      expect(scripts).toEqual(sourceFilesOfRunner().filter(function (rel) { return HELP_ONLY.indexOf(rel) === -1; }));
+    });
+  });
+
+  // help.html is the guide that the Help button opens in a new tab: it needs the core (the examples replay the
+  // hints), the strings and the board, and none of the page of the player.
+  var HELP_ONLY = ['js/ui/help-examples.js', 'js/ui/help.js'];
+  var NOT_IN_GUIDE = ['js/ui/exchange.js', 'js/ui/importer.js', 'js/ui/a11y.js', 'js/ui/progress.js', 'js/ui/app.js'];
+
+  describe('ui contract: help.html', function () {
+    var page = readHtml(readText('help.html'));
+
+    it('has its mount points and the language and theme buttons', function () {
+      var ids = {};
+      page.elements.forEach(function (el) { if (el.attrs.id) ids[el.attrs.id] = true; });
+      ['main', 'help-root', 'help-toc', 'skip-link', 'help-lang', 'help-theme'].forEach(function (id) {
+        expect(ids[id]).toBe(true);
+      });
+      function count(attribute) {
+        return page.elements.filter(function (el) { return el.attrs[attribute] !== undefined; })
+          .map(function (el) { return el.attrs[attribute]; }).sort();
+      }
+      expect(count('data-lang')).toEqual(['en', 'vi']);
+      expect(count('data-theme-value')).toEqual(['dark', 'high-contrast', 'light']);
+    });
+
+    it('has no hard-coded visible text and no dialog, About or Variants', function () {
+      var loose = page.texts.filter(function (t) {
+        if (t.parent !== null && t.parent.attrs.class === 'noscript') return false;
+        return t.parent === null || t.parent.attrs['data-i18n'] === undefined;
+      }).map(function (t) { return (t.parent ? '<' + t.parent.tag + '> ' : '') + t.text; });
+      expect(loose).toEqual([]);
+      var text = readText('help.html') + readText('js/ui/help.js');
+      expect(/openModal|help\.tab\.|help\.about|help\.variant/.test(text)).toBe(false);
+    });
+
+    it('loads the sources of the guide, in the order of SOURCE_FILES, and the files exist', function () {
+      var scripts = page.scripts.filter(function (src) { return src !== null; });
+      expect(scripts).toEqual(sourceFilesOfRunner().filter(function (rel) { return NOT_IN_GUIDE.indexOf(rel) === -1; }));
+      scripts.forEach(function (src) { expect(exists(src) ? '' : src + ' is missing').toBe(''); });
+    });
+
+    it('links the stylesheets that exist, and the Help button of the player opens it in a new tab', function () {
+      page.elements.filter(function (el) { return el.tag === 'link' && el.attrs.rel === 'stylesheet'; })
+        .forEach(function (el) { expect(exists(el.attrs.href) ? '' : el.attrs.href + ' is missing').toBe(''); });
+      var button = readHtml(readText('index.html')).elements.filter(function (el) { return el.attrs.id === 'btn-help'; })[0];
+      expect(button.tag).toBe('a');
+      expect(button.attrs.href).toBe('help.html');
+      expect(button.attrs.target).toBe('_blank');
+      expect(button.attrs.rel).toContain('noopener');
+      expect(exists('help.html')).toBe(true);
+    });
+
+    it('is published with the app', function () {
+      expect(readText('.github/workflows/pages.yml')).toContain('help.html');
     });
   });
 
