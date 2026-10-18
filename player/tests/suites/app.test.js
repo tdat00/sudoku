@@ -168,7 +168,7 @@
         (read(rel).match(/'(sg\.[\w.]+)'/g) || []).forEach(function (m) { keys[m.slice(1, -1)] = true; });
       });
       Object.keys(keys).forEach(function (key) { expect(key.indexOf('sg.player.')).toBe(0); });
-      expect(Object.keys(keys).length).toBe(5);
+      expect(Object.keys(keys).length).toBe(4);
       expect(env.fs.existsSync(env.path.join(env.root, 'index.html'))).toBe(true);
     });
 

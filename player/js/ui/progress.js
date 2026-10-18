@@ -8,8 +8,7 @@
  *                          redo steps
  *   sg.player.puzzles.v1   { version, entries: [{ id, at, doc, meta }] }, LRU of 10; the opened documents
  *                          (a document over 160 kB is not stored, the total stays under 900 kB)
- *   sg.player.last.v1      the id of the puzzle on the board (a reload without a fragment restores it)
- *   sg.player.tour.v1      the first-visit tour was seen
+ *   sg.player.last.v1      the id of the puzzle on the board  (a reload without a fragment restores it)
  *
  * An id is `SG.importer.puzzleId(model, givens)`: the same variant and the same clues are the same puzzle, so
  * opening a puzzle again finds its progress. Anything that does not fit (corrupt JSON, another `version`, an
@@ -31,8 +30,7 @@
  *   recent(limit?) -> [{ id, at, meta, percent, solved, hasProgress }], the stored puzzles, newest first
  *   forget(id)                       the progress and the stored document of one puzzle
  *   setLast(id) / getLast() / clearLast()
- *   tourSeen() / markTourSeen()
- *   clear()                          every key of the player except the preferences
+ *   clear()                           every key of the player except the preferences
  *   persistent()                     false while the storage is blocked or full (memory only)
  */
 (function (root) {
@@ -47,8 +45,7 @@
   const KEYS = Object.freeze({
     progress: 'sg.player.progress.v1',
     puzzles: 'sg.player.puzzles.v1',
-    last: 'sg.player.last.v1',
-    tour: 'sg.player.tour.v1'
+    last: 'sg.player.last.v1'
   });
   const LIMITS = Object.freeze({
     progressEntries: 20,
@@ -248,7 +245,7 @@
       if (getLast() === id) clearLast();
     }
 
-    // ---- the puzzle on the board, the tour -----------------------------------------------------------
+    // ---- the puzzle on the board ---------------------------------------------------------------------
 
     function setLast(id) {
       if (validId(id)) disk.setItem(KEYS.last, id);
@@ -263,16 +260,8 @@
       disk.removeItem(KEYS.last);
     }
 
-    function tourSeen() {
-      return disk.getItem(KEYS.tour) === '1';
-    }
-
-    function markTourSeen() {
-      disk.setItem(KEYS.tour, '1');
-    }
-
     function clear() {
-      [KEYS.progress, KEYS.puzzles, KEYS.last, KEYS.tour].forEach(function (key) { disk.removeItem(key); });
+      [KEYS.progress, KEYS.puzzles, KEYS.last].forEach(function (key) { disk.removeItem(key); });
     }
 
     return {
@@ -288,8 +277,6 @@
       setLast: setLast,
       getLast: getLast,
       clearLast: clearLast,
-      tourSeen: tourSeen,
-      markTourSeen: markTourSeen,
       clear: clear,
       persistent: function persistent() { return disk.persistent(); }
     };

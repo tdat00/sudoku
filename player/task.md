@@ -92,10 +92,10 @@ Owned: `js/ui/app.js`, `css/components.css` (dialogs, cards), `css/layout.css` (
   language, motion, colour symbol, check mode, notes). — done
 - P-8.4 The `SG.app` surface for the reused modules; toasts, modals, announcements. — done
 
-### P-9 — Help, tour, final QA and documentation
+### P-9 — Help, final QA and documentation
 Owned: `js/ui/help.js`, `css/help.css`, `README.md`, `memory.md`, `docs/`, suite `help`.
 - P-9.1 Help dialog: how to play, rules of 15 variants, technique ladder, keyboard shortcuts, about / privacy. — done
-- P-9.2 First-visit tour (4 steps, skippable, `sg.player.tour.v1`). — done
+- P-9.2 (First-visit tour: built, then removed at the owner's request; there is no tour.) — dropped
 - P-9.3 Browser verification in headless Edge (15 fixtures via fragment, paste, file input and drop; play,
   hints, save / restore, languages, themes, widths, keyboard-only, reduced motion), screenshots reviewed,
   findings fixed; the scripts are kept in `tests/browser/` and the results in `docs/qa.md`. — done

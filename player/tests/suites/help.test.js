@@ -1,5 +1,5 @@
-// Help and the tour: the static rules of the 15 variants, the technique ladder, the shortcuts, the storage
-// the About tab lists, the tour steps, and the claims of the README, all checked against the code they
+// Help: the static rules of the 15 variants, the technique ladder, the shortcuts, the storage
+// the About tab lists, and the claims of the README, all checked against the code they
 // describe.
 (function () {
   'use strict';
@@ -103,21 +103,13 @@
       SG.techniques.GROUPS.forEach(function (group) { bothLanguages('techniqueGroup.' + group); });
     });
 
-    it('lists the tabs, the shortcuts and the tour steps with texts in both languages', function () {
+    it('lists the tabs and the shortcuts with texts in both languages', function () {
       ready();
       expect(H.TAB_IDS).toEqual(['how', 'variants', 'hints', 'keys', 'about']);
       H.TAB_IDS.forEach(function (id) { bothLanguages('help.tab.' + id); });
       H.SHORTCUTS.forEach(function (row) {
         bothLanguages('help.keys.' + row.id);
         expect(row.keys.length).toBeGreaterThan(0);
-      });
-      expect(H.TOUR_STEPS.length).toBe(4);
-      H.TOUR_STEPS.forEach(function (step) {
-        bothLanguages(step.titleKey);
-        bothLanguages(step.textKey);
-      });
-      ['label', 'announce', 'progress', 'done', 'skip'].forEach(function (name) {
-        bothLanguages('help.tour.' + name);
       });
     });
 
@@ -137,25 +129,6 @@
         expect(named).toContain(id);
       });
     });
-
-    it('the tour points only at elements that index.html has, and never at a dialog', function () {
-      ready();
-      var html = read('index.html');
-      H.TOUR_STEPS.forEach(function (step) {
-        step.targets.forEach(function (selector) {
-          expect(/^#[\w-]+$/.test(selector)).toBe(true);
-          expect(html).toContain('id="' + selector.slice(1) + '"');
-        });
-      });
-    });
-
-    it('the tour is remembered under the key the privacy text lists, and is not blocking', function () {
-      ready();
-      expect(SG.progress.KEYS.tour).toBe('sg.player.tour.v1');
-      var code = read('js/ui/help.js');
-      expect(code).toContain("'aria-modal': 'false'");
-      expect(code).not.toMatch(/\.focus\(\)[^;]*tour/);
-    });
   });
 
   describe('help: the storage it describes', function () {
@@ -165,8 +138,8 @@
       [SG.store.KEY].concat(Object.keys(SG.progress.KEYS).map(function (name) {
         return SG.progress.KEYS[name];
       })).forEach(function (key) { written[key] = true; });
-      expect(Object.keys(written).length).toBe(5);
-      ['prefs', 'progress', 'puzzles', 'last', 'tour'].forEach(function (name) {
+      expect(Object.keys(written).length).toBe(4);
+      ['prefs', 'progress', 'puzzles', 'last'].forEach(function (name) {
         bothLanguages('help.about.key.' + name);
       });
       var code = read('js/ui/help.js');
@@ -174,7 +147,6 @@
       expect(code).toContain('SG.progress.KEYS.progress');
       expect(code).toContain('SG.progress.KEYS.puzzles');
       expect(code).toContain('SG.progress.KEYS.last');
-      expect(code).toContain('SG.progress.KEYS.tour');
     });
 
     it('the numbers in the About texts match the limits of the progress store', function () {
@@ -239,7 +211,7 @@
       ready();
       var text = read('README.md');
       var K = SG.progress.KEYS;
-      [SG.store.KEY, K.progress, K.puzzles, K.last, K.tour].forEach(function (key) {
+      [SG.store.KEY, K.progress, K.puzzles, K.last].forEach(function (key) {
         expect(text.split(key).length - 1).toBe(2);
       });
       expect(text).toContain('#puzzle=<token>');

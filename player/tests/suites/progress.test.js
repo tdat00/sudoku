@@ -219,7 +219,7 @@
     });
   });
 
-  describe('progress: the last puzzle and the tour', function () {
+  describe('progress: the last puzzle', function () {
     it('remembers the id of the puzzle on the board and ignores anything else', function () {
       ready();
       var m = make();
@@ -234,17 +234,13 @@
       expect(m.progress.getLast()).toBeNull();
     });
 
-    it('marks the tour as seen, and clear() forgets everything of the player', function () {
+    it('clear() forgets everything of the player', function () {
       ready();
       var p = make().progress;
-      expect(p.tourSeen()).toBe(false);
-      p.markTourSeen();
-      expect(p.tourSeen()).toBe(true);
       p.saveProgress(id(1), record(1));
       p.savePuzzle(id(1), { n: 1 }, null);
       p.setLast(id(1));
       p.clear();
-      expect(p.tourSeen()).toBe(false);
       expect(p.progressList()).toEqual([]);
       expect(p.recent()).toEqual([]);
       expect(p.getLast()).toBeNull();
@@ -326,8 +322,6 @@
       expect(m.progress.loadPuzzle(id(1)).doc.n).toBe(1);
       m.progress.setLast(id(1));
       expect(m.progress.getLast()).toBe(id(1));
-      m.progress.markTourSeen();
-      expect(m.progress.tourSeen()).toBe(true);
       expect(m.progress.persistent()).toBe(false);
       expect(function () { m.progress.clear(); }).not.toThrow();
     });

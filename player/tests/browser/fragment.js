@@ -33,14 +33,13 @@ const mode = process.argv[2] || 'file';
           welcome: document.getElementById('welcome').hidden, title: document.title,
           info: document.getElementById('info-root').innerText.replace(/\\n+/g, ' | ').slice(0, 160),
           modes: Array.from(document.querySelectorAll('#play-symbols option')).map(function (o) { return o.value; }).join(','),
-          tour: !!document.getElementById('tour-card'),
           grid: document.getElementById('board-svg').getAttribute('role'),
           gridcells: document.querySelectorAll('#board-svg [role=gridcell]').length,
           overlay: document.querySelectorAll('#board-svg .layer-play .pl-cell').length
         };
       })()`);
       const ok = facts.ok && facts.cells === facts.rects && facts.rects === facts.gridcells && facts.hash === '' &&
-        facts.layout && facts.welcome && !facts.tour && facts.grid === 'grid' && facts.overlay === facts.cells;
+        facts.layout && facts.welcome && facts.grid === 'grid' && facts.overlay === facts.cells;
       results.push({ name, ok, facts });
       console.log((ok ? 'ok   ' : 'FAIL ') + name.padEnd(14), facts.variant, facts.cells, '|', facts.heading, '|', facts.modes, '|', facts.info.slice(0, 90));
       if (['killer', 'samurai', 'wordoku', 'greaterThan', 'jigsaw9', 'mega16', 'classic9', 'flower', 'butterfly', 'sohei', 'mega12', 'hyper'].indexOf(name) !== -1) {

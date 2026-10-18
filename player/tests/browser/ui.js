@@ -1,5 +1,5 @@
 'use strict';
-// Browser run: the first-visit tour, a keyboard-only walk, Settings, Help, language and themes.
+// Browser run: a keyboard-only walk, Settings, Help, language and themes.
 // Usage: node tests/browser/ui.js
 const fs = require('fs');
 const path = require('path');
@@ -20,38 +20,6 @@ const describeActive = '(function(){var a=document.activeElement;if(!a)return "n
     const page = await newPage(browser);
     await page.goto(base, 800);
     await page.eval('localStorage.clear()');
-    await page.goto('about:blank', 50);
-
-    // ---- first visit: the tour (welcome screen, clean storage)
-    await page.goto(base, 1500);
-    check('the tour starts on the first visit to the welcome screen', await page.eval('!!document.getElementById("tour-card")'));
-    check('the tour does not take the focus', await page.eval('!document.getElementById("tour-card").contains(document.activeElement)'));
-    check('step 1 marks the Open button', await page.eval('document.getElementById("btn-open").classList.contains("tour-target")'));
-    await page.click('#tour-card .btn--primary');
-    await page.click('#tour-card .btn--primary');
-    await page.click('#tour-card .btn--primary');
-    check('step 4 marks Settings and Help', await page.eval('document.getElementById("btn-settings").classList.contains("tour-target") && document.getElementById("btn-help").classList.contains("tour-target")'));
-    check('step counter reads 4 of 4', (await page.eval('document.querySelector(".tour__progress").textContent')) === 'Step 4 of 4');
-    await page.shot('ui-tour-step4');
-    await page.click('#tour-card .btn--primary');
-    check('Done closes the tour and remembers it', await page.eval('!document.getElementById("tour-card") && localStorage.getItem("sg.player.tour.v1") === "1"'));
-    await page.goto(base, 1500);
-    check('the tour is not shown again', await page.eval('!document.getElementById("tour-card")'));
-    await page.eval('localStorage.clear()');
-    await page.goto('about:blank', 50);
-    await page.goto(base, 1500);
-    await page.eval('localStorage.clear()');
-    await page.goto('about:blank', 50);
-    await page.goto(base, 1500);
-    await page.click('#tour-card .tour__skip');
-    check('Skip tour closes it and remembers it', await page.eval('!document.getElementById("tour-card") && localStorage.getItem("sg.player.tour.v1") === "1"'));
-    await page.eval('localStorage.clear()');
-    await page.goto('about:blank', 50);
-    await page.goto(base, 1500);
-    await page.eval('document.getElementById("btn-open").click()');
-    await sleep(300);
-    check('opening a dialog ends the tour', await page.eval('!document.getElementById("tour-card")'));
-    await page.key('Escape');
 
     // ---- keyboard-only
     const tok = await page.eval('SG.exchange.encode(' + fs.readFileSync(path.join(ROOT, 'tests/fixtures/puzzles/classic9.json'), 'utf8') + ')');
@@ -134,7 +102,7 @@ const describeActive = '(function(){var a=document.activeElement;if(!a)return "n
     await page.click('#help-tab-keys');
     check('the Keyboard tab has the shortcuts', await page.eval('document.querySelectorAll("#help-panel-keys kbd").length') > 15);
     await page.click('#help-tab-about');
-    check('About lists the storage keys', await page.eval('document.querySelectorAll("#help-panel-about .help-storage code").length') === 5);
+    check('About lists the storage keys', await page.eval('document.querySelectorAll("#help-panel-about .help-storage code").length') === 4);
     await page.shot('ui-help-about-vi');
     // arrow keys on the tab list
     await page.eval('document.getElementById("help-tab-about").focus()');
@@ -145,7 +113,7 @@ const describeActive = '(function(){var a=document.activeElement;if(!a)return "n
     check('delete asks to be confirmed', /lần nữa/.test(await page.eval('document.getElementById("help-delete").textContent')));
     await page.click('#help-delete');
     await sleep(200);
-    check('delete clears puzzles, progress and the tour flag but not the preferences', await page.eval('localStorage.getItem("sg.player.puzzles.v1") === null && localStorage.getItem("sg.player.progress.v1") === null && localStorage.getItem("sg.player.prefs.v1") !== null'));
+    check('delete clears puzzles and progress but not the preferences', await page.eval('localStorage.getItem("sg.player.puzzles.v1") === null && localStorage.getItem("sg.player.progress.v1") === null && localStorage.getItem("sg.player.prefs.v1") !== null'));
     await page.key('Escape');
     await sleep(200);
 

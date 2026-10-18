@@ -12,11 +12,12 @@ account, no build step.
 
 ### How to get a puzzle
 
-1. In Sudoku Generator make a puzzle and press **Play online**: its link opens here with the puzzle in the
-   address (`#puzzle=<token>`), which is read in your browser and then removed from the address bar.
+1. In Sudoku Generator make a puzzle and press **Play** (at the top right of the generator's main panel): its
+   link opens here with the puzzle in the address (`#puzzle=<token>`), which is read in your browser and then
+   removed from the address bar.
 2. Or press **Open puzzle** and choose a puzzle file (`.json`), drop a file anywhere on the page, or paste:
-   the text of a puzzle file, a “Play online” link, a bare puzzle code, or one line of 81 (9×9), 36 (6×6) or
-   16 (4×4) characters where `.`, `0`, `-` and `_` mean an empty cell.
+   the text of a puzzle file, a puzzle link (`…#puzzle=<token>`), a bare puzzle code, or one line of 81 (9×9),
+   36 (6×6) or 16 (4×4) characters where `.`, `0`, `-` and `_` mean an empty cell.
 3. Or pick one of the **recent puzzles**; a reload brings back the puzzle you were playing.
 
 ### Features
@@ -37,7 +38,7 @@ account, no build step.
 - A puzzle card (variant, difficulty asked for and reached, score, clues, seed, date, progress).
 - Settings (language, theme, text size, reduced motion, colour symbol, check mode, notes behaviour,
   coordinates), a Help dialog (how to play, the rules of the 15 variants, the technique ladder, keyboard
-  shortcuts, privacy) and a skippable first-visit tour.
+  shortcuts, privacy).
 - Accessible: skip link, an ARIA grid with spoken cell labels, live announcements, focus kept in dialogs,
   contrast checked from the design tokens, forced-colours and reduced-motion support.
 
@@ -61,7 +62,6 @@ items are kept in the local storage of the browser (Help → About lists them an
 | `sg.player.progress.v1` | your progress on the last 20 puzzles |
 | `sg.player.puzzles.v1` | the last 10 puzzles you opened |
 | `sg.player.last.v1` | the puzzle that was on the board |
-| `sg.player.tour.v1` | whether the quick tour was shown |
 
 If the browser blocks storage, the player says so and keeps your game in memory until you close the tab.
 
@@ -83,7 +83,7 @@ Choose **Settings → Pages → Build and deployment → Source → GitHub Actio
 [deployment workflow](.github/workflows/pages.yml) runs the Node 24 tests and publishes the app after every
 push to `main`; you can also run it manually from the **Actions** tab. Only the app files and licence are
 published, not the tests or working notes. The live app is at
-**[tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)**. Sudoku Generator's “Play online”
+**[tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)**. Sudoku Generator's “Play”
 button needs that address; the page reads the generator's address from `<meta name="sg-generator-url">` in
 `index.html` (default `https://tdat00.github.io/sudoku-generator/`).
 
@@ -103,11 +103,12 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
 
 ### Lấy đề ở đâu
 
-1. Trong Trình sinh đề Sudoku, tạo một đề rồi bấm **Chơi trực tuyến**: liên kết mở ra trang này với đề nằm
-   trong địa chỉ (`#puzzle=<mã>`); mã được đọc ngay trong trình duyệt rồi xóa khỏi thanh địa chỉ.
+1. Trong Trình sinh đề Sudoku, tạo một đề rồi bấm **Chơi** (ở góc trên bên phải khung chính của trình sinh
+   đề): liên kết mở ra trang này với đề nằm trong địa chỉ (`#puzzle=<mã>`); mã được đọc ngay trong trình duyệt
+   rồi xóa khỏi thanh địa chỉ.
 2. Hoặc bấm **Mở đề** rồi chọn tệp đề (`.json`), thả tệp vào bất kỳ đâu trên trang, hoặc dán: nội dung tệp đề,
-   liên kết “Chơi trực tuyến”, mã đề trần, hay một dòng 81 (9×9), 36 (6×6) hoặc 16 (4×4) ký tự, trong đó `.`,
-   `0`, `-`, `_` là ô trống.
+   liên kết đề (`…#puzzle=<mã>`), mã đề trần, hay một dòng 81 (9×9), 36 (6×6) hoặc 16 (4×4) ký tự, trong đó
+   `.`, `0`, `-`, `_` là ô trống.
 3. Hoặc chọn một **đề gần đây**; tải lại trang sẽ đưa đề đang chơi trở lại.
 
 ### Tính năng
@@ -127,8 +128,7 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
   tục* hay *Chơi lại từ đầu*.
 - Thẻ thông tin đề (biến thể, độ khó yêu cầu và đạt được, điểm, số cho sẵn, seed, ngày tạo, tiến độ).
 - Cài đặt (ngôn ngữ, giao diện, cỡ chữ, giảm chuyển động, ký hiệu trên màu, cách kiểm tra lỗi, ghi chú, tọa
-  độ), hộp Trợ giúp (cách chơi, luật của 15 biến thể, các kỹ thuật, phím tắt, quyền riêng tư) và buổi giới
-  thiệu nhanh có thể bỏ qua.
+  độ), hộp Trợ giúp (cách chơi, luật của 15 biến thể, các kỹ thuật,   phím tắt, quyền riêng tư).
 - Dễ tiếp cận: liên kết bỏ qua, lưới ARIA với nhãn ô đọc được, thông báo trực tiếp, tiêu điểm được giữ trong
   hộp thoại, độ tương phản được kiểm tra từ các token thiết kế, hỗ trợ chế độ màu bắt buộc và giảm chuyển động.
 
@@ -153,7 +153,6 @@ phép xóa chúng):
 | `sg.player.progress.v1` | tiến độ của 20 đề gần nhất |
 | `sg.player.puzzles.v1` | 10 đề bạn đã mở gần nhất |
 | `sg.player.last.v1` | đề đang trên bàn cờ |
-| `sg.player.tour.v1` | đã hiện buổi giới thiệu nhanh hay chưa |
 
 Nếu trình duyệt chặn lưu trữ, trình chơi sẽ báo và giữ ván chơi trong bộ nhớ cho đến khi bạn đóng tab.
 
@@ -174,7 +173,7 @@ Chọn **Settings → Pages → Build and deployment → Source → GitHub Actio
 [Workflow triển khai](.github/workflows/pages.yml) chạy các kiểm thử trên Node 24 và xuất bản ứng dụng sau mỗi
 lần đẩy lên `main`; bạn cũng có thể chạy thủ công từ thẻ **Actions**. Chỉ các tệp ứng dụng và giấy phép được
 xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng trực tuyến tại
-**[tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)**. Nút “Chơi trực tuyến” của Trình
+**[tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)**. Nút “Chơi” của Trình
 sinh đề cần địa chỉ này; trang đọc địa chỉ của Trình sinh đề từ `<meta name="sg-generator-url">` trong
 `index.html` (mặc định `https://tdat00.github.io/sudoku-generator/`).
 

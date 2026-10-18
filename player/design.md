@@ -1,10 +1,11 @@
 # Sudoku Player — Design Document
 
 > The player is the second half of a split project. **sudoku-generator** makes Sudoku puzzles (15 variants, a
-> logical difficulty rating, a replayable generation trace). **sudoku-player** — this repository — opens such a
-> puzzle in a browser and lets people **play** it. The only coupling between the two is a file format and a link
-> token (§5). This document says what the player is, how it is built and why; `task.md` is the work breakdown
-> and its status, `memory.md` the resume guide for a maintainer, `README.md` the user's entry point.
+> logical difficulty rating, a step-by-step replay of how each puzzle was made). **sudoku-player** — this
+> repository — opens such a puzzle in a browser and lets people **play** it. The only coupling between the two
+> is a file format and a link token (§5). This document says what the player is, how it is built and why;
+> `task.md` is the work breakdown and its status, `memory.md` the resume guide for a maintainer, `README.md`
+> the user's entry point.
 
 ## 1. Goals and non-goals
 
@@ -12,9 +13,10 @@
 A **static web app** (HTML, CSS, JavaScript; no build step, no npm, no framework) that receives a puzzle made by
 sudoku-generator and plays it:
 
-- Opens a puzzle from the **link** the generator's "Play online" button builds (`…/#puzzle=<token>`), from a
-  **file** (picker or drag & drop anywhere on the page), from **pasted text** (the JSON document, a token, a
-  whole link, or a line of 16 / 36 / 81 characters for a classic board) and from a list of **recent puzzles**.
+- Opens a puzzle from the **link** the generator's **Play** button builds (`…/#puzzle=<token>`; the button
+  sits next to **Print** at the top right of the generator's main panel), from a **file** (picker or drag &
+  drop anywhere on the page), from **pasted text** (the JSON document, a token, a whole link, or a line of
+  16 / 36 / 81 characters for a classic board) and from a list of **recent puzzles**.
 - Plays **all 15 variants** — classic 4×4 / 6×6 / 9×9, Mega 12×12 / 16×16, Diagonal X, Hyper, Jigsaw, Killer,
   Greater-Than, Samurai, Sohei, Butterfly, Flower, Wordoku — **without any variant or generation code**: the
   document carries the board as plain data (`model`) and the player rebuilds it with `SG.model.create`.
@@ -74,11 +76,11 @@ A lower layer never knows a higher one.
 | `ui/importer.js` | `importer` | recognise, decode, validate and open a puzzle; puzzle id | **new** (player side of the generator's import) |
 | `ui/i18n.js`, `locale.en.js`, `locale.vi.js`, `locale.shell.js` | `i18n`, `locales` | translation, plurals, fragments | copied; generator groups removed; `player.*`, `error.exchange.*` added |
 | `ui/store.js` | `store` | preferences, safe storage backend, URL parsing | **new**, light |
-| `ui/progress.js` | `progress` | per-puzzle progress (LRU 20), opened puzzles (LRU 10), recent list, tour flag | **new** |
+| `ui/progress.js` | `progress` | per-puzzle progress (LRU 20), opened puzzles (LRU 10), recent list | **new** |
 | `ui/theme.js`, `a11y.js` | `theme`, `a11y` | themes + system schemes; ARIA grid, keyboard, live region, Settings dialog | copied, adapted |
 | `ui/symbols.js`, `board-view.js` | `symbols`, `boardView` | value → glyph; the SVG board of every geometry | copied, adapted |
 | `ui/play.js` | `play` | game engine (pure) + the play UI | the generator's play mode, reworked into the main screen |
-| `ui/help.js` | `help` | Help dialog (rules of 15 variants, technique ladder, keys, about) and the tour | rewritten |
+| `ui/help.js` | `help` | Help dialog (rules of 15 variants, technique ladder, keys, about) | rewritten |
 | `ui/app.js` | `app` | start-up, open flows, dialogs, toasts, info card, recent list, auto-save, wiring; the `SG.app` extension surface | **new** |
 
 ### 2.3 The `SG.app` surface
@@ -196,7 +198,6 @@ retry, a corrupt value or another schema version ⇒ purged. Nothing throws into
 | `sg.player.progress.v1` | `{ version: 1, entries: [{ id, at, symbolMode, percent, solved, state }] }`, LRU 20; `state` = `game.serialize()` with the history cut to the last 300 undo / 100 redo steps |
 | `sg.player.puzzles.v1` | `{ version: 1, entries: [{ id, at, doc }] }`, LRU 10, each document ≤ 160 kB, total ≤ 900 kB |
 | `sg.player.last.v1` | id of the puzzle on the board (restored on a reload without a fragment) |
-| `sg.player.tour.v1` | the first-visit tour was seen |
 
 The keys are prefixed `sg.player.` because GitHub Pages serves the generator and the player from one origin
 (`tdat00.github.io`), which shares `localStorage`. Progress is saved 400 ms after a change, when the tab hides
@@ -225,12 +226,10 @@ puzzle, so dragging a sentence around the page does nothing. A link from the add
 without moving the focus (the first `Tab` still reaches the skip link); a puzzle the person opens (dialog,
 drop, paste, recent list) puts the focus on the board.
 
-### 8.3 First-visit tour
-`SG.help` also owns the tour: 4 skippable steps (welcome / open a puzzle, the board and notes, hints, the
-settings) as a non-modal card; key `sg.player.tour.v1`. **Decision:** it is shown only when the page starts on
-the welcome screen (no `#puzzle=` fragment and no restored puzzle) and never while a dialog is open; opening a
-puzzle ends it. A visitor who arrives from the generator's link wants to play, so nothing may stand in front of
-the puzzle; the tour stays available from the Help dialog. Blocked storage means once per page load.
+### 8.3 Help
+`SG.help` is the Help dialog (five tabs: how to play, the rules of the 15 variants, the technique ladder, the
+keyboard shortcuts, about / privacy). **Decision:** there is no first-visit tour or other popup that stands in
+front of the welcome screen or the puzzle: a visitor who arrives from the generator's link wants to play.
 
 ### 8.4 Accessibility
 Skip link to `#main`; the board `<svg>` is `role="grid"` with `role="row"` / `gridcell`, roving tabindex and a
@@ -256,7 +255,7 @@ every module appends to its own file. Both languages have identical key sets and
 value; `i18n.test.js` computes the keys the code uses from the source text (every `t('…')`, `data-i18n`, error
 code, technique id and variant id) and checks they exist. Groups kept from the generator: variant names,
 difficulty names, technique names / descriptions / step texts, unit kinds, symbol modes, a11y / theme / help
-strings; added: `player.*` (shell, open flow, info card, recent list, welcome, tour), `import.*`,
+strings; added: `player.*` (shell, open flow, info card, recent list, welcome), `import.*`,
 `error.exchange.*`, `play.*`.
 
 ## 10. Testing
@@ -278,7 +277,7 @@ that read `tests/fixtures/puzzles/*.json` need `http://`, they skip themselves o
 | `app` | the surface and events of `SG.app`, the elements it needs from `index.html`, no HTML built from data, storage only through `store` / `progress` |
 | `help` | an entry for every variant and technique, README claims |
 | `ui-contract` | module surface, no colour literals outside the token files, script order of `index.html` = runner = `tests.html`, no hard-coded text in `index.html`, forbidden globals absent, no DOM in `js/core` |
-| browser run | `tests/browser/*.js`: headless Edge over CDP (fragment, paste, file, drop, play with real key events, hints, reload, keyboard-only walk, Settings, Help, tour, themes, 1440 / 900 / 375 px with touch, blocked storage); recorded in `docs/qa.md` |
+| browser run | `tests/browser/*.js`: headless Edge over CDP (fragment, paste, file, drop, play with real key events, hints, reload, keyboard-only walk, Settings, Help, themes, 1440 / 900 / 375 px with touch, blocked storage); recorded in `docs/qa.md` |
 
 The fixtures were made by the generator (`docs/fixtures.md`); the test kit (`tests/fixtures/testkit.js`) holds a
 seeded RNG, a random solved grid (the DFS solver with a random value order) and a minimal clue remover so the

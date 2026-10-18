@@ -1,24 +1,17 @@
 /**
- * Help and the first-visit tour (design.md section 8.3): `SG.help`.
+ * Help (design.md section 8.3): `SG.help`.
  *
  * The Help dialog (`action {id: 'help'}` -> `open()`) has five tabs: how to play, the rules of the 15
  * variants (static texts: the player has no variants registry), the hints and the ladder of techniques they
- * can name (read from `SG.techniques`), the keyboard shortcuts, and about / privacy (what is stored, how to
- * delete it, the tour again). The tour is a small non-modal card with four steps, skippable at any time; it is
- * shown on the first visit when the page starts on the welcome screen (never when the address carries a
- * puzzle, never while a dialog is open) and is remembered under `sg.player.tour.v1`. It never takes the focus
- * and never stands in the way of opening a puzzle: opening a puzzle (or any dialog) ends it.
+ * can name (read from `SG.techniques`), the keyboard shortcuts, and about / privacy (what is stored and how
+ * to delete it).
  *
  * PUBLIC API (`SG.help`)
  *   init(app)            idempotent; called by app.js at start-up. Returns true when it is running.
- *   destroy()            removes the listeners and closes the dialog and the tour.
+ *   destroy()            removes the listeners and closes the dialog.
  *   open(options?)       opens the Help dialog; `{ tab }` picks a tab (see `TAB_IDS`); returns the modal.
  *   close()              closes it.
- *   startTour(options?)  shows the tour from step 1 (`{ force: true }` also when it was seen before).
- *   maybeStartTour()     the first-visit rule: starts the tour when it was not seen, no puzzle is on the
- *                        board and no dialog is open. Returns whether it started.
- *   endTour(remember?)   closes the tour; `remember` (default true) marks it as seen.
- *   TAB_IDS, VARIANT_RULES (the id, name key, rules key and tip key of the 15 variants), TOUR_STEPS,
+ *   TAB_IDS, VARIANT_RULES (the id, name key, rules key and tip key of the 15 variants),
  *   SHORTCUTS (the rows of the keyboard tab).
  */
 (function (root) {
@@ -44,17 +37,6 @@
       tipKey: 'help.variant.' + id + '.tip'
     });
   }));
-
-  const TOUR_STEPS = Object.freeze([
-    Object.freeze({ id: 'open', titleKey: 'help.tour.open.title', textKey: 'help.tour.open.text',
-      targets: Object.freeze(['#btn-open']) }),
-    Object.freeze({ id: 'play', titleKey: 'help.tour.play.title', textKey: 'help.tour.play.text',
-      targets: Object.freeze([]) }),
-    Object.freeze({ id: 'hints', titleKey: 'help.tour.hints.title', textKey: 'help.tour.hints.text',
-      targets: Object.freeze([]) }),
-    Object.freeze({ id: 'settings', titleKey: 'help.tour.settings.title', textKey: 'help.tour.settings.text',
-      targets: Object.freeze(['#btn-settings', '#btn-help']) })
-  ]);
 
   /** The keyboard tab: the keys of each row and the key of its description. */
   const SHORTCUTS = Object.freeze([
@@ -112,7 +94,6 @@
     tab: 'how',
     panels: {},
     tabs: {},
-    tour: null,
     deleteTimer: null
   };
 
@@ -228,7 +209,6 @@
       rows.push([SG.progress.KEYS.progress, 'help.about.key.progress']);
       rows.push([SG.progress.KEYS.puzzles, 'help.about.key.puzzles']);
       rows.push([SG.progress.KEYS.last, 'help.about.key.last']);
-      rows.push([SG.progress.KEYS.tour, 'help.about.key.tour']);
     }
     return rows;
   }
@@ -261,13 +241,6 @@
       resetDeleteButton(remove);
       if (ctx.app && typeof ctx.app.clearSavedData === 'function') ctx.app.clearSavedData();
     });
-    const again = h('button', { type: 'button', class: 'btn btn--secondary', id: 'help-tour',
-      text: t('help.about.tourAgain') });
-    again.addEventListener('click', function () {
-      close();
-      startTour({ force: true });
-    });
-    actions.appendChild(again);
     actions.appendChild(remove);
     panel.appendChild(actions);
 
@@ -379,7 +352,6 @@
       if (wanted !== null) selectTab(wanted, false);
       return ctx.modal;
     }
-    endTour(true);
     const modal = ctx.app.openModal({
       titleKey: 'help.title',
       wide: true,
@@ -402,117 +374,11 @@
   }
 
   // ---------------------------------------------------------------------------------------------
-  // The tour
-  // ---------------------------------------------------------------------------------------------
-
-  function tourTargets(step) {
-    const out = [];
-    step.targets.forEach(function (selector) {
-      const node = root.document.querySelector(selector);
-      if (node !== null && node.offsetParent !== null) out.push(node);
-    });
-    return out;
-  }
-
-  function markTargets(tour) {
-    tour.marked.forEach(function (node) { node.classList.remove('tour-target'); });
-    tour.marked = tourTargets(TOUR_STEPS[tour.index]);
-    tour.marked.forEach(function (node) { node.classList.add('tour-target'); });
-  }
-
-  function renderTour() {
-    const tour = ctx.tour;
-    if (tour === null) return;
-    const step = TOUR_STEPS[tour.index];
-    tour.title.textContent = t(step.titleKey);
-    tour.text.textContent = t(step.textKey);
-    tour.progress.textContent = t('help.tour.progress', { step: tour.index + 1, steps: TOUR_STEPS.length });
-    tour.back.hidden = tour.index === 0;
-    const last = tour.index === TOUR_STEPS.length - 1;
-    tour.next.textContent = t(last ? 'help.tour.done' : 'common.next');
-    tour.back.textContent = t('common.back');
-    tour.skip.textContent = t('help.tour.skip');
-    tour.card.setAttribute('aria-label', t('help.tour.label'));
-    markTargets(tour);
-  }
-
-  function onTourKey(event) {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      endTour(true);
-    }
-  }
-
-  function onTourLocale() {
-    renderTour();
-  }
-
-  function startTour(options) {
-    if (ctx.app === null || typeof document === 'undefined') return false;
-    const force = !!(options && options.force);
-    if (ctx.tour !== null) return true;
-    if (!force && SG.progress && SG.progress.instance().tourSeen()) return false;
-    if (ctx.modal !== null && !force) return false;
-    const card = h('div', { class: 'tour', id: 'tour-card', role: 'dialog', 'aria-modal': 'false',
-      'aria-labelledby': 'tour-title', 'aria-describedby': 'tour-text' });
-    const title = h('h2', { class: 'tour__title', id: 'tour-title' });
-    const text = h('p', { class: 'tour__text', id: 'tour-text' });
-    const progress = h('p', { class: 'tour__progress' });
-    const back = h('button', { type: 'button', class: 'btn btn--secondary btn--sm' });
-    const next = h('button', { type: 'button', class: 'btn btn--primary btn--sm' });
-    const skip = h('button', { type: 'button', class: 'btn btn--ghost btn--sm tour__skip' });
-    card.appendChild(title);
-    card.appendChild(text);
-    card.appendChild(h('div', { class: 'tour__footer' }, [
-      progress, h('div', { class: 'tour__buttons' }, [skip, back, next])
-    ]));
-    ctx.tour = { card: card, title: title, text: text, progress: progress, back: back, next: next, skip: skip,
-      index: 0, marked: [], off: [] };
-    back.addEventListener('click', function () {
-      ctx.tour.index = Math.max(0, ctx.tour.index - 1);
-      renderTour();
-    });
-    next.addEventListener('click', function () {
-      if (ctx.tour.index >= TOUR_STEPS.length - 1) endTour(true);
-      else {
-        ctx.tour.index++;
-        renderTour();
-      }
-    });
-    skip.addEventListener('click', function () { endTour(true); });
-    card.addEventListener('keydown', onTourKey);
-    ctx.tour.off.push(SG.i18n.onChange(onTourLocale));
-    root.document.body.appendChild(card);
-    renderTour();
-    if (ctx.app && typeof ctx.app.announce === 'function') ctx.app.announce(t('help.tour.announce'));
-    return true;
-  }
-
-  function endTour(remember) {
-    const tour = ctx.tour;
-    if (tour === null) return false;
-    ctx.tour = null;
-    tour.off.forEach(function (off) { off(); });
-    tour.marked.forEach(function (node) { node.classList.remove('tour-target'); });
-    if (tour.card.parentNode) tour.card.parentNode.removeChild(tour.card);
-    if (remember !== false && SG.progress) SG.progress.instance().markTourSeen();
-    return true;
-  }
-
-  function maybeStartTour() {
-    if (ctx.app === null || ctx.tour !== null || ctx.modal !== null) return false;
-    if (typeof ctx.app.getPuzzle === 'function' && ctx.app.getPuzzle() !== null) return false;
-    if (root.document.querySelector('#modal-root .modal') !== null) return false;
-    return startTour();
-  }
-
-  // ---------------------------------------------------------------------------------------------
   // Start-up
   // ---------------------------------------------------------------------------------------------
 
   function destroy() {
     ctx.off.splice(0).forEach(function (off) { off(); });
-    endTour(false);
     if (ctx.modal !== null) ctx.modal.close();
     ctx.app = null;
     ctx.modal = null;
@@ -531,11 +397,8 @@
     destroy();
     ctx.app = app;
     ctx.off.push(app.on('action', function (payload) {
-      if (!payload) return;
-      if (payload.id === 'help') open();
-      else if (payload.id === 'open' || payload.id === 'settings') endTour(true);
+      if (payload && payload.id === 'help') open();
     }));
-    ctx.off.push(app.on('result', function () { endTour(true); }));
     ctx.off.push(app.on('locale', relocalise));
     return true;
   }
@@ -543,15 +406,11 @@
   SG.help = {
     TAB_IDS: TAB_IDS,
     VARIANT_RULES: VARIANT_RULES,
-    TOUR_STEPS: TOUR_STEPS,
     SHORTCUTS: SHORTCUTS,
     init: init,
     destroy: destroy,
     open: open,
-    close: close,
-    startTour: startTour,
-    maybeStartTour: maybeStartTour,
-    endTour: endTour
+    close: close
   };
 
   // ---------------------------------------------------------------------------------------------
@@ -645,10 +504,8 @@
       'help.about.key.progress': 'Your progress on the last 20 puzzles you played.',
       'help.about.key.puzzles': 'The last 10 puzzles you opened (for the Recent puzzles list).',
       'help.about.key.last': 'Which puzzle was on the board when you left.',
-      'help.about.key.tour': 'Whether the quick tour was shown.',
       'help.about.delete': 'Delete saved puzzles and progress',
       'help.about.delete.confirm': 'Press again to delete',
-      'help.about.tourAgain': 'Show the quick tour again',
       'help.about.a11y.title': 'Accessibility',
       'help.about.a11y.text': 'The board is a grid you can move through with the keyboard, every cell ' +
         'has a spoken label, there are light, dark and high-contrast themes, and animations can be ' +
@@ -658,25 +515,6 @@
       'help.about.link.generator': 'Sudoku Generator: make a puzzle',
       'help.about.link.repo': 'Source code and documentation',
       'help.about.licence': 'Sudoku Player is open source (MIT licence).',
-      'help.tour.label': 'Quick tour',
-      'help.tour.announce': 'Quick tour. Press Skip tour to close it at any time.',
-      'help.tour.progress': 'Step {step} of {steps}',
-      'help.tour.done': 'Done',
-      'help.tour.skip': 'Skip tour',
-      'help.tour.open.title': 'Open a puzzle',
-      'help.tour.open.text': 'Press “Open puzzle”, drop a puzzle file anywhere on the page, or paste ' +
-        'a link or a line of 81 digits. Puzzles from the “Play online” button of Sudoku Generator ' +
-        'open by themselves.',
-      'help.tour.play.title': 'Play on the board',
-      'help.tour.play.text': 'Select a cell and type a symbol, or tap the pad. Notes (N), Undo ' +
-        '(Ctrl+Z) and Check help you along, and mistakes can be marked as you type.',
-      'help.tour.hints.title': 'Hints that teach',
-      'help.tour.hints.text': 'A hint names the technique that applies and explains it in three ' +
-        'steps: where to look, which cells, and then the move.',
-      'help.tour.settings.title': 'Make it yours',
-      'help.tour.settings.text': 'Settings and Help are at the top: language, theme, text size, how ' +
-        'mistakes are checked, the rules of every variant. Your progress is saved on this device ' +
-        'automatically.',
       'help.variant.classic4.rules': 'Fill the 4×4 grid so that every row, every column and every 2×2 ' +
         'box contains each of the digits 1 to 4 exactly once. Some digits are given; you work out the ' +
         'others by logic alone, and there is always exactly one solution.',
@@ -842,10 +680,8 @@
       'help.about.key.progress': 'Tiến độ của 20 đề bạn chơi gần nhất.',
       'help.about.key.puzzles': '10 đề bạn mở gần nhất (cho danh sách Đề gần đây).',
       'help.about.key.last': 'Đề nào đang trên bàn cờ khi bạn rời đi.',
-      'help.about.key.tour': 'Buổi giới thiệu nhanh đã được hiện hay chưa.',
       'help.about.delete': 'Xóa các đề và tiến độ đã lưu',
       'help.about.delete.confirm': 'Nhấn lần nữa để xóa',
-      'help.about.tourAgain': 'Xem lại phần giới thiệu nhanh',
       'help.about.a11y.title': 'Khả năng tiếp cận',
       'help.about.a11y.text': 'Bảng là một lưới bạn có thể di chuyển bằng bàn phím, mỗi ô có nhãn đọc ' +
         'được, có giao diện sáng, tối và tương phản cao, và có thể tắt hiệu ứng chuyển động. Trang đã ' +
@@ -854,23 +690,6 @@
       'help.about.link.generator': 'Trình sinh đề Sudoku: tạo một đề',
       'help.about.link.repo': 'Mã nguồn và tài liệu',
       'help.about.licence': 'Trình chơi Sudoku là phần mềm mã nguồn mở (giấy phép MIT).',
-      'help.tour.label': 'Giới thiệu nhanh',
-      'help.tour.announce': 'Giới thiệu nhanh. Bấm Bỏ qua để đóng bất cứ lúc nào.',
-      'help.tour.progress': 'Bước {step}/{steps}',
-      'help.tour.done': 'Xong',
-      'help.tour.skip': 'Bỏ qua',
-      'help.tour.open.title': 'Mở một đề',
-      'help.tour.open.text': 'Bấm “Mở đề”, thả tệp đề vào bất kỳ đâu trên trang, hoặc dán liên kết ' +
-        'hay một dòng 81 chữ số. Đề từ nút “Chơi trực tuyến” của Trình sinh đề Sudoku sẽ tự mở.',
-      'help.tour.play.title': 'Chơi trên bàn cờ',
-      'help.tour.play.text': 'Chọn một ô rồi gõ ký hiệu, hoặc chạm vào bàn phím số. Ghi chú (N), Hoàn ' +
-        'tác (Ctrl+Z) và Kiểm tra sẽ giúp bạn, và lỗi có thể được đánh dấu ngay khi gõ.',
-      'help.tour.hints.title': 'Gợi ý biết dạy',
-      'help.tour.hints.text': 'Gợi ý nêu tên kỹ thuật có thể dùng và giải thích qua ba bước: nhìn vào ' +
-        'đâu, những ô nào, rồi đến nước đi.',
-      'help.tour.settings.title': 'Tùy chỉnh theo ý bạn',
-      'help.tour.settings.text': 'Cài đặt và Trợ giúp ở phía trên: ngôn ngữ, giao diện, cỡ chữ, cách ' +
-        'kiểm tra lỗi, luật của mọi biến thể. Tiến độ của bạn được tự động lưu trên thiết bị này.',
       'help.variant.classic4.rules': 'Điền vào lưới 4×4 sao cho mỗi hàng, mỗi cột và mỗi khối 2×2 đều ' +
         'chứa các chữ số từ 1 đến 4, mỗi số đúng một lần. Một số ô đã được cho sẵn; bạn chỉ dùng suy ' +
         'luận để tìm các ô còn lại, và luôn chỉ có đúng một lời giải.',

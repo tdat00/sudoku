@@ -68,7 +68,7 @@
     progress: ['createProgress', 'instance', 'validId', 'trimState'],
     play: ['init', 'attach', 'detach', 'createGame', 'restoreGame', 'describeHint', 'createKeyReader',
       'typedLabels'],
-    help: ['init', 'open', 'startTour', 'VARIANT_RULES'],
+    help: ['init', 'open', 'VARIANT_RULES'],
     app: ['getStore', 'getBoard', 'getResult', 'toast', 'openModal', 'announce', 'on', 'emit', 'showResult',
       'getPuzzle', 'open', 'openPuzzle', 'start']
   };

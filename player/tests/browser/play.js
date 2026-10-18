@@ -37,7 +37,6 @@ async function clickCell(page, i) {
     await page.goto('about:blank', 100);
     await page.goto(base + '#puzzle=' + tok, 1500);
     check('puzzle loaded, fragment removed', await page.eval('!!SG.app.getPuzzle() && location.hash === ""'));
-    check('tour did not start for a link', await page.eval('!document.getElementById("tour-card")'));
 
     const info = await page.eval(`(function () {
       var p = SG.app.getPuzzle(); var empties = [];

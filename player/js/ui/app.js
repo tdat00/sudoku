@@ -32,7 +32,7 @@
  *   openPuzzle(puzzle, options)     a puzzle from `SG.importer`; `options.resume`: 'ask' (default),
  *                                   'continue' or 'fresh'; Promise of whether the puzzle is on the board.
  *   openOpenDialog()                the Open puzzle dialog.
- *   clearSavedData()                forgets the saved puzzles, progress and tour flag (not the preferences).
+ *   clearSavedData()                forgets the saved puzzles and progress (not the preferences).
  *   saveNow()                       writes the progress of the game on the board at once.
  *
  * Events (`on(name, fn)`; `fn(payload, name)`):
@@ -169,7 +169,6 @@
   let game = null;
   let saveTimer = null;
   let announceTimer = null;
-  let tourTimer = null;
   let modalCounter = 0;
   let openSeq = 0;
   let dragDepth = 0;
@@ -1179,19 +1178,12 @@
     showLayout(false);
     renderRecent();
 
-    const hadFragment = fragmentToken() !== null;
-    let restored = false;
-    if (hadFragment) safely(openFragment);
-    else restored = safely(restoreLast) === true;
-    // The tour is for a visitor who starts on the welcome screen; a link or a restored puzzle skips it.
-    if (!hadFragment && !restored && SG.help && typeof SG.help.maybeStartTour === 'function') {
-      tourTimer = root.setTimeout(function () { safely(SG.help.maybeStartTour); }, 700);
-    }
+    if (fragmentToken() !== null) safely(openFragment);
+    else safely(restoreLast);
     return true;
   }
 
   function clearSavedData() {
-    root.clearTimeout(tourTimer);
     saved.clear();
     hasSavedProgress = false;
     storageWarned = false;
