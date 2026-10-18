@@ -5,7 +5,7 @@
  * optional solution page for each (the puzzle on screen is ticked at first; a puzzle that is not on screen
  * is generated again from its saved settings). The "Export" button opens a dialog with the same list and
  * the readable text of the ticked puzzles, to copy. The "Play" button of the page calls `playOnline()`,
- * which opens the puzzle on screen in the player in a new tab.
+ * which opens every puzzle of the list in the player in a new tab (the one on screen is shown first).
  *
  * Two layers, so that what matters runs in Node:
  *  - PURE (no DOM): `toJson`, `buildPrintLayout`, `boardSvg`, `printTokens`, `buildPlayLink`,
@@ -27,8 +27,11 @@
  *                        for the times sign) and its grid, one board row per line: a digit is a clue (10 is
  *                        `A`, 11 `B`, ...), `.` an empty cell and `_` a place of the canvas without a cell
  *                        (Samurai and the like). Puzzles are separated by a blank line. Only the clues are
- *                        written; the seed rebuilds the rest.
+ *                        written, plus, for Jigsaw, Killer, Greater-Than and Wordoku, the structure lines
+ *                        of `structureLines` that Sudoku Player needs to rebuild the board.
  *   gridLines(result)    -> string[]. The grid lines of one puzzle, as above.
+ *   structureLines(result) -> string[]. `regions:`, `cages:`, `signs:`, or `letters:` + `word-line:` of a
+ *                        puzzle whose board the clues do not fix; [] for every other variant.
  *   close() / closeText()  Close the dialogs.
  *   toJson(result, ctx?) The JSON document of design.md 14.1 as plain data: `format`, `generatedAt`,
  *                        `variantId`, `variantOptions`, `difficulty`, `seed`, `symmetry`, `symbolMode`,
@@ -44,12 +47,19 @@
  *                        `opts`: `{ base?, generatedAt?, locale?, compress? }`; `base` defaults to
  *                        `playerBase()`. Rejects with the `exchange.*` errors (`exchange.invalidUrl` for a
  *                        bad `base`). `long` is true above `LONG_LINK_CHARS` characters.
+ *   buildPlayBundle(results, opts?) -> Promise<{ url, token, base, count, active, length, long }>. The link
+ *                        that opens several puzzles in the player: the text of `buildExportText(results)` as
+ *                        one compressed base64url text token (`SG.exchange.encodeText`), then `&active=<n>`
+ *                        (the 1-based number of the puzzle to show first). `opts`: `{ base?, active?
+ *                        (0-based index), compress? }`. Rejects like `buildPlayLink`.
  *   playerBase(content?) The player's address: `content` (the `content` of the page's
  *                        `<meta name="sg-player-url">`) when it is not blank, else `PLAYER_URL_DEFAULT`.
  *                        `pagePlayerBase()` reads that tag from the page.
  *   openPlayLink(url)    `window.open(url, '_blank', 'noopener')`: the player opens in a new tab.
- *   playOnline()         -> Promise. Builds the link of the puzzle on screen, opens it and tells a failure
- *                        or a very long link in a toast. No dialog.
+ *   playOnline()         -> Promise. The Play button: builds the link of every puzzle of the saved list (and
+ *                        the one on screen) with the one on screen active, opens it and tells a failure or a
+ *                        very long link in a toast. Puzzles that are not at hand are generated again first
+ *                        in a small dialog that ends with an "Open the player" button.
  *   buildPrintLayout(count, perPage, includeSolutions)  The page plan of a print job.
  *   boardSvg(result, opts?)  A standalone SVG document of the puzzle (givens) or its solution, drawn from the
  *                        result itself, whatever the replay of the board shows right now.
@@ -298,6 +308,32 @@
     });
   }
 
+  /**
+   * The link that opens several puzzles in the player: their readable text (`buildExportText`, which the
+   * player imports) as one compressed base64url token in the fragment of the player's address, and the
+   * number of the puzzle to show first.
+   * @param {Object[]} results  `PuzzleResult`s, in the order of the list.
+   * @param {{base?: string, active?: number, compress?: boolean}} [options]  `active`: the index (0-based) of
+   *        the puzzle to show first (default 0); `base`: the player's address (default `pagePlayerBase()`);
+   *        `compress: false` forces the plain token.
+   * @returns {Promise<{url: string, token: string, base: string, count: number, active: number,
+   *   length: number, long: boolean}>} Rejects with the `exchange.*` errors.
+   */
+  function buildPlayBundle(results, options) {
+    const o = options || {};
+    return Promise.resolve().then(function () {
+      if (!Array.isArray(results) || results.length === 0) throw new TypeError('buildPlayBundle: no puzzle');
+      const base = playerBase(o.base === undefined ? pagePlayerBase() : o.base);
+      const active = Number.isInteger(o.active) && o.active >= 0 && o.active < results.length ? o.active : 0;
+      const text = buildExportText(results.map(function (result) { return { result: result }; }));
+      return SG.exchange.encodeText(text, { compress: o.compress }).then(function (token) {
+        const url = SG.exchange.playerUrl(base, token, { active: active + 1 });
+        return { url: url, token: token, base: base, count: results.length, active: active,
+          length: url.length, long: url.length > LONG_LINK_CHARS };
+      });
+    });
+  }
+
   // ---------------------------------------------------------------------------------------------
   // Export as readable text
   // ---------------------------------------------------------------------------------------------
@@ -331,10 +367,58 @@
     return canvas.map(function (row) { return row.join(''); });
   }
 
+  /** `r3c7`: the cell at row 3, column 7 of the canvas (1-based), the way the structure lines name a cell. */
+  function cellToken(layout, cell) {
+    return 'r' + (layout.cellRow[cell] + 1) + 'c' + (layout.cellCol[cell] + 1);
+  }
+
+  /**
+   * The lines under the grid of a puzzle whose board the clues do not fix, so that the player can rebuild it
+   * (a `key: value` line each; no grid row has a colon):
+   *   regions: 111222333 111222333 ...   Jigsaw: the region (1-9) of every cell, one group per board row
+   *   cages: 13=r1c1,r1c2; 7=r1c3,r2c3   Killer: `sum=cells` of every cage, in the order of the model
+   *   signs: r1c1<r1c2; r2c2<r2c1        Greater-Than: the value of the first cell is less than the second
+   *   letters: A D F G L N O R Y         Wordoku: the letter of the values 1..9
+   *   word-line: diagonal | row 3 | column 5   Wordoku: where the key word sits (not the word itself)
+   * Every other variant is fixed by its name and the grid alone, so it gets no line.
+   * @param {Object} result  A `PuzzleResult`.
+   * @returns {string[]}
+   */
+  function structureLines(result) {
+    const model = result.model;
+    const layout = model.layout;
+    const lines = [];
+    if (model.variantId === 'jigsaw9') {
+      const groups = [];
+      for (let r = 0; r < layout.rows; r++) {
+        let group = '';
+        for (let cell = r * layout.cols; cell < (r + 1) * layout.cols; cell++) group += String(layout.cellRegion[cell] + 1);
+        groups.push(group);
+      }
+      lines.push('regions: ' + groups.join(' '));
+    } else if (model.variantId === 'killer' && model.cages.length > 0) {
+      lines.push('cages: ' + model.cages.map(function (cage) {
+        return cage.sum + '=' + Array.from(cage.cells).map(function (cell) { return cellToken(layout, cell); }).join(',');
+      }).join('; '));
+    } else if (model.variantId === 'greaterThan' && model.inequalities.length > 0) {
+      lines.push('signs: ' + model.inequalities.map(function (q) {
+        return cellToken(layout, q.a) + '<' + cellToken(layout, q.b);
+      }).join('; '));
+    } else if (model.variantId === 'wordoku' && SG.wordoku && typeof SG.wordoku.describe === 'function') {
+      const word = SG.wordoku.describe(model);
+      if (word !== null) {
+        lines.push('letters: ' + model.symbols.labels.join(' '));
+        lines.push('word-line: ' + (word.placement === 'diagonal' ? 'diagonal' : word.placement + ' ' + word.line));
+      }
+    }
+    return lines;
+  }
+
   /**
    * The readable text of puzzles. Every puzzle starts with a header line `#number,variant,level,seed` (the
-   * names in the language of the page, the level reached) and is followed by its grid, one row per line;
-   * puzzles are separated by a blank line. Only the clues are written: the seed rebuilds the rest.
+   * names in the language of the page, the level reached) and is followed by its grid, one row per line, and,
+   * for the variants whose board is not fixed by the grid (Jigsaw, Killer, Greater-Than, Wordoku), the
+   * structure lines of `structureLines`; puzzles are separated by a blank line. The seed rebuilds the rest.
    * @param {Array<{result: Object}>} items  The puzzles, in the order they are written.
    * @returns {string} '' for no puzzle, else the text with a final line break.
    */
@@ -342,7 +426,7 @@
     const blocks = items.map(function (item, i) {
       const s = summarize(item.result);
       const header = ['#' + (i + 1), plainName(s.variantName), plainName(s.levelName), s.seed].join(',');
-      return [header].concat(gridLines(item.result)).join('\n');
+      return [header].concat(gridLines(item.result), structureLines(item.result)).join('\n');
     });
     return blocks.length === 0 ? '' : blocks.join('\n\n') + '\n';
   }
@@ -1218,25 +1302,117 @@
     if (openDialog !== null) openDialog.modal.close();
   }
 
+  /** Opens the link of a bundle in a new tab and tells so (and about a very long link) in toasts. */
+  function openedPlayer(info) {
+    openPlayLink(info.url);
+    appRef.toast('info', 'export.playOnline.opened');
+    if (info.long) appRef.toast('warning', 'export.playOnline.long', longLinkArgs(info));
+  }
+
+  function playFailed(err) {
+    logError(err);
+    const message = SG.i18n && typeof SG.i18n.tError === 'function' ? SG.i18n.tError(err) : String(err);
+    appRef.toast('danger', 'export.playOnline.error', { message: message });
+    return null;
+  }
+
   /**
-   * "Play online" without a dialog (the Play button of the page): makes the link of the puzzle on screen
-   * and opens it in a new tab. A very long link and a failure are told in a toast.
-   * @returns {Promise<?{url: string}>} The link that was opened; null when there is no puzzle or it failed.
+   * The Play button, when some puzzles of the list have to be generated again first: a dialog that tells the
+   * progress and ends with an "Open the player" button (a tab opened after a long wait would be taken for a
+   * pop-up, a click opens it).
+   * @returns {Promise<?Object>} The bundle that was opened, null when it was cancelled or failed.
+   */
+  function playAfterPreparing(choices, active) {
+    return new Promise(function (resolve) {
+      const refs = {};
+      let job = null;
+      let info = null;
+      let finished = false;
+      let modal = null;
+
+      function finish(value) {
+        if (finished) return;
+        finished = true;
+        resolve(value);
+      }
+
+      function launch() {
+        if (info === null) return;
+        openedPlayer(info);
+        finish(info);
+        modal.close();
+      }
+
+      modal = appRef.openModal({
+        titleKey: 'export.playOnline.title',
+        body: function (container) {
+          refs.status = el('p', { class: 'print-dialog__status', 'data-role': 'status', role: 'status',
+            'aria-live': 'polite' });
+          container.appendChild(el('div', { class: 'print-dialog' }, [
+            tx('p', { class: 'field__hint' }, 'export.playOnline.intro'),
+            refs.status
+          ]));
+        },
+        footer: function (footer) {
+          const cancel = button('common.cancel', { 'data-role': 'cancel' });
+          cancel.addEventListener('click', function () { modal.close(); });
+          refs.open = button('export.playOnline.open', { class: 'btn btn--primary', 'data-role': 'open',
+            disabled: true });
+          refs.open.addEventListener('click', launch);
+          footer.appendChild(cancel);
+          footer.appendChild(refs.open);
+        },
+        onClose: function () {
+          if (job !== null) job.cancel();
+          finish(null);
+        }
+      });
+      if (modal === null) {
+        resolve(null);
+        return;
+      }
+      job = startFetch(choices, {
+        progress: function (done, total) { setKey(refs.status, 'export.pick.preparing', { done: done, total: total }); }
+      });
+      job.promise.then(function (results) {
+        return buildPlayBundle(results, { active: active });
+      }).then(function (made) {
+        info = made;
+        setKey(refs.status, 'export.playOnline.ready', { count: made.count });
+        refs.open.disabled = false;
+        refs.open.focus();
+      }, function (err) {
+        if (err === ABORTED) return;
+        modal.close();
+        playFailed(err);
+      });
+    });
+  }
+
+  /**
+   * "Play online" (the Play button of the page): every puzzle of the list of saved puzzles, and the puzzle on
+   * screen, go to the player in a new tab, and the puzzle on screen is the one that is shown first. Puzzles
+   * that are not at hand are generated again first (a dialog tells the progress). A very long link and a
+   * failure are told in a toast.
+   * @returns {Promise<?{url: string}>} The link that was opened; null when there is no puzzle, the user
+   *          cancelled, or it failed.
    */
   function playOnline() {
-    const result = currentResult();
-    if (result === null) return Promise.resolve(null);
-    return buildPlayLink(result).then(function (info) {
-      openPlayLink(info.url);
-      appRef.toast('info', 'export.playOnline.opened');
-      if (info.long) appRef.toast('warning', 'export.playOnline.long', longLinkArgs(info));
+    const offered = pickChoices();
+    const choices = offered.choices;
+    if (choices.length === 0) return Promise.resolve(null);
+    let active = 0;
+    choices.forEach(function (choice, i) { if (choice.id === offered.currentId) active = i; });
+    const missing = choices.some(function (c) { return c.result === null && !resultCache.has(c.id); });
+    if (missing && typeof document !== 'undefined' && typeof appRef.openModal === 'function') {
+      return playAfterPreparing(choices, active);
+    }
+    return startFetch(choices).promise.then(function (results) {
+      return buildPlayBundle(results, { active: active });
+    }).then(function (info) {
+      openedPlayer(info);
       return info;
-    }, function (err) {
-      logError(err);
-      const message = SG.i18n && typeof SG.i18n.tError === 'function' ? SG.i18n.tError(err) : String(err);
-      appRef.toast('danger', 'export.playOnline.error', { message: message });
-      return null;
-    });
+    }, playFailed);
   }
 
   /** Closes the Export dialog if it is open. */
@@ -1304,8 +1480,10 @@
     playerBase: playerBase,
     pagePlayerBase: pagePlayerBase,
     buildPlayLink: buildPlayLink,
+    buildPlayBundle: buildPlayBundle,
     buildExportText: buildExportText,
     gridLines: gridLines,
+    structureLines: structureLines,
     openPlayLink: openPlayLink,
     playOnline: playOnline,
     buildPrintLayout: buildPrintLayout,
@@ -1346,15 +1524,21 @@
       'export.print.solutionsPage': 'Solutions',
       'export.print.alt': 'Sudoku puzzle: {variant}, {level}',
       'export.print.altSolution': 'Solution of the Sudoku puzzle: {variant}, {level}',
-      'export.playOnline.opened': 'Opening the player in a new tab. If nothing happens, allow pop-ups for ' +
-        'this page.',
+      'export.playOnline.opened': 'Opening the player in a new tab with all your saved puzzles; the one on ' +
+        'screen opens first. If nothing happens, allow pop-ups for this page.',
       'export.playOnline.long': 'This link is very long (about {size} kB), and some apps and servers cut ' +
-        'long links. If the player does not open this puzzle, try a smaller puzzle.',
+        'long links. If the player does not open every puzzle, remove some puzzles from the list and try again.',
       'export.playOnline.error': 'The link could not be made: {message}',
+      'export.playOnline.title': 'Play in Sudoku Player',
+      'export.playOnline.intro': 'The player gets every puzzle of the list. Puzzles that are not at hand are ' +
+        'generated again first; it can take a moment.',
+      'export.playOnline.ready': 'Everything is ready. Puzzles to send: {count}. The one on screen opens first.',
+      'export.playOnline.open': 'Open the player',
       'export.text.title': 'Export puzzles as text',
       'export.text.intro': 'Choose the puzzles to export. Each one starts with a line \u201c#number,variant,' +
         'level,seed\u201d, and its grid follows, one row per line: a digit is a clue and \u201c.\u201d an ' +
-        'empty cell.',
+        'empty cell. Jigsaw, Killer, Greater-Than and Wordoku puzzles add lines under the grid (regions, ' +
+        'cages, signs, letters) so that Sudoku Player can rebuild the board.',
       'export.text.label': 'Text of the chosen puzzles',
       'export.text.placeholder': 'Choose at least one puzzle below to see its text.',
       'export.text.copy': 'Copy text',
@@ -1385,15 +1569,21 @@
       'export.print.solutionsPage': 'Lời giải',
       'export.print.alt': 'Đề Sudoku: {variant}, {level}',
       'export.print.altSolution': 'Lời giải của đề Sudoku: {variant}, {level}',
-      'export.playOnline.opened': 'Đang mở trình chơi trong thẻ mới. Nếu không thấy gì, hãy cho phép cửa sổ ' +
-        'bật lên của trang này.',
+      'export.playOnline.opened': 'Đang mở trình chơi trong thẻ mới cùng tất cả đề đã lưu; đề đang xem sẽ ' +
+        'được mở trước. Nếu không thấy gì, hãy cho phép cửa sổ bật lên của trang này.',
       'export.playOnline.long': 'Liên kết này rất dài (khoảng {size} kB), và một số ứng dụng, máy chủ sẽ ' +
-        'cắt bớt liên kết dài. Nếu trình chơi không mở được đề này, hãy thử một đề nhỏ hơn.',
+        'cắt bớt liên kết dài. Nếu trình chơi không mở hết các đề, hãy xóa bớt đề khỏi danh sách rồi thử lại.',
       'export.playOnline.error': 'Không tạo được liên kết: {message}',
+      'export.playOnline.title': 'Chơi trong Trình chơi Sudoku',
+      'export.playOnline.intro': 'Trình chơi nhận mọi đề trong danh sách. Đề nào chưa có sẵn sẽ được tạo ' +
+        'lại trước, việc này có thể mất một lúc.',
+      'export.playOnline.ready': 'Đã sẵn sàng. Số đề sẽ gửi: {count}. Đề đang xem sẽ được mở trước.',
+      'export.playOnline.open': 'Mở trình chơi',
       'export.text.title': 'Xuất các đề dạng văn bản',
       'export.text.intro': 'Chọn các đề cần xuất. Mỗi đề bắt đầu bằng một dòng \u201c#số thứ tự,biến thể,' +
         'mức độ,seed\u201d, rồi đến lưới của đề, mỗi hàng một dòng: chữ số là ô cho sẵn, dấu \u201c.\u201d ' +
-        'là ô trống.',
+        'là ô trống. Đề Ghép hình, Sát thủ, So sánh và Wordoku có thêm các dòng dưới lưới (vùng, lồng, dấu, ' +
+        'chữ cái) để Trình chơi Sudoku dựng lại được bàn cờ.',
       'export.text.label': 'Văn bản của các đề đã chọn',
       'export.text.placeholder': 'Hãy chọn ít nhất một đề bên dưới để xem văn bản của nó.',
       'export.text.copy': 'Sao chép văn bản',

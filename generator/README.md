@@ -101,9 +101,10 @@ same puzzle.
   first), 1, 2 or 4 to a page (4 at first), optionally with their solutions on pages of their own; choose "Save as PDF" in the print dialog to get a PDF file (vector graphics, so the lines stay sharp).
 - **Text export** — the **Export** button next to **Print** shows the puzzles you tick in the saved list as readable text (`#1,Classic Sudoku 9x9,Hard,<seed>` then one grid row per line, `.` for empty cells) with a Copy
   button, to copy into a file or another tool.
-- **Play online** — the **Play** button next to **Print** hands the puzzle on screen to the separate [sudoku-player](https://github.com/tdat00/sudoku-player)
-  web app, where you solve it with notes, undo/redo, checking, hints that name the technique and a timer. The
-  puzzle travels inside the link (after the `#`), so nothing is uploaded; see
+- **Play online** — the **Play** button next to **Print** hands every puzzle of the saved list, with the one on
+  screen first, to the separate [sudoku-player](https://github.com/tdat00/sudoku-player)
+  web app, where you solve them with notes, undo/redo, checking, hints that name the technique and a timer. The
+  puzzles travel inside the link (after the `#`), compressed, so nothing is uploaded; see
   [Play online with sudoku-player](#play-online-with-sudoku-player).
 - **Accessible** — keyboard navigation, ARIA grid, live announcements, light, dark and high-contrast themes,
   adjustable text size, reduced motion.
@@ -208,29 +209,42 @@ This repository only **generates** puzzles. Solving them is the job of its sibli
 undo/redo, error checking, hints that name the logical technique, a timer, progress saved per puzzle, all 15
 variants, English / Vietnamese, themes and accessibility.
 
-**How a puzzle gets there.** Press the **Play** button next to **Print** in the main panel. The page turns the
-puzzle on screen into a *puzzle document*, packs it into a token and
-opens `https://tdat00.github.io/sudoku-player/#puzzle=<token>` in a new tab (`window.open(url, '_blank',
-'noopener')`). The token is in the URL **fragment**, which a browser never sends to a server, so nothing is
-uploaded. When the link is longer than about 100 kB a toast warns that some apps and servers cut long links.
-The player's address comes from
+**How the puzzles get there.** Press the **Play** button next to **Print** in the main panel. The page takes
+**every puzzle of the saved list** (and the puzzle on screen, if it is not in the list), writes them as the
+readable text of the **Export** box, packs that text into one token and opens
+`https://tdat00.github.io/sudoku-player/#puzzle=<token>&active=<n>` in a new tab (`window.open(url, '_blank',
+'noopener')`). `active` is the number of the puzzle that was on screen: the player puts exactly that one on its
+board and lists all the others. Puzzles that are not at hand are generated again from their seed first (a small
+dialog shows the progress and ends with an **Open the player** button). The token is in the URL **fragment**,
+which a browser never sends to a server, so nothing is uploaded. Because it is compressed text, not documents,
+a hundred puzzles fit in a link of a few tens of kB; when the link is longer than about 100 kB a toast warns
+that some apps and servers cut long links. The player's address comes from
 `<meta name="sg-player-url" content="https://tdat00.github.io/sudoku-player/">` in `index.html`: change it to
 point at your own copy.
 
 **The exchange format** — the only coupling between the two repositories, implemented by `js/ui/exchange.js`
 (`SG.exchange`, the same file byte for byte in both, with the suite `tests/suites/exchange.test.js`):
 
-- The **document** is the puzzle JSON of [design.md](design.md) §14.1 (`format: 'sudoku-generator/v1'`), as
+- A **bundle** (the Play button) is the text of `SG.exportUi.buildExportText`: per puzzle a header line
+  `#<n>,<variant>,<level>,<seed>`, the grid and, for Jigsaw, Killer, Greater-Than and Wordoku, a few structure
+  lines. The player rebuilds the boards from it, exactly as it does for text pasted into its Import box.
+- Its **text token** is `t.` + base64url(deflate-raw(UTF-8 text)) — or `s.` + base64url(text) when compression is
+  not available or does not pay. `SG.exchange.encodeText(text)` and `SG.exchange.decodeText(token)` are
+  asynchronous; `SG.exchange.playerUrl(base, token, { active })` builds the link (`&active=<n>`, 1-based) and
+  `SG.exchange.activeFromHash(hash)` reads it back.
+- The **document** of a single puzzle (still understood by the player, and what its Share button writes) is the
+  puzzle JSON of [design.md](design.md) §14.1 (`format: 'sudoku-generator/v1'`), as
   `SG.exportUi.toJson` writes it, plus one additive block, **`model`**: the plain-data model specification
   (`variantId`, `digits`, `units`, `unitMeta`, `cages`, `inequalities`, `layout`, `symbols`, `fixedCells`) that
-  `SG.model.create(spec)` accepts. With it the player rebuilds the board **without any variant code**.
-- The **token** is `z.` + base64url(deflate-raw(JSON)) — or `j.` + base64url(JSON) when compression is not
-  available or does not pay. `SG.exchange.encode(doc)` and `SG.exchange.decode(token)` are asynchronous;
-  `SG.exchange.playerUrl(base, token)` builds the link and refuses a base that is not `http(s)` or a relative
+  `SG.model.create(spec)` accepts. With it the player rebuilds the board **without any variant code**. Its token
+  is `z.` + base64url(deflate-raw(JSON)) — or `j.` + base64url(JSON); `SG.exchange.encode(doc)` and
+  `SG.exchange.decode(token)` are asynchronous.
+- `SG.exchange.playerUrl(base, token)` refuses a base that is not `http(s)` or a relative
   path. Failures carry the codes `exchange.invalidToken`, `exchange.tooLarge`, `exchange.unsupportedEncoding`,
   `exchange.invalidJson` and `exchange.invalidUrl`, translated in both languages (`error.exchange.*`).
-- In code: `SG.exportUi.toJson(result)` is the document, `SG.exportUi.buildPlayLink(result)` the link
-  (`{ url, token, base, length, long }`), `SG.exportUi.openPlayLink(url)` opens it. Details:
+- In code: `SG.exportUi.buildPlayBundle(results, { active })` is the link of several puzzles
+  (`{ url, token, base, count, active, length, long }`), `SG.exportUi.toJson(result)` the document and
+  `SG.exportUi.buildPlayLink(result)` the link of one puzzle, `SG.exportUi.openPlayLink(url)` opens it. Details:
   [design.md](design.md) §10.9 and §13.15.
 
 ## How it works
@@ -766,8 +780,8 @@ The full list is in [design.md](design.md) §12.2:
 - **Browsers**: developed and checked in Chromium-based Edge only; Firefox 100+ and Safari 15.4+ are the
   supported targets but have not been tried, and neither has a real phone.
 - **Play online** needs the player to be published at the address of the `sg-player-url` meta tag, and a
-  browser that does not block pop-ups for the page. A puzzle link longer than about 100 kB may be cut by chat
-  apps and servers and then does not open in the player.
+  browser that does not block pop-ups for the page. A link longer than about 100 kB (a very long list of
+  puzzles) may be cut by chat apps and servers and then does not open every puzzle in the player.
 
 ## Licence and credits
 
@@ -830,10 +844,11 @@ thuật*, [design.md](design.md) §6.8). Cùng seed và cùng tùy chọn luôn 
   dạng PDF" trong hộp thoại in để có tệp PDF (đồ họa vector nên nét kẻ luôn sắc).
 - **Xuất văn bản** — nút **Xuất văn bản** cạnh nút **In đề** hiện các đề bạn tick trong danh sách đã tạo dưới dạng văn bản dễ đọc (`#1,Classic Sudoku 9x9,Hard,<seed>` rồi mỗi hàng lưới một dòng, `.` là ô trống), kèm nút Sao chép.
   Dán vào tệp hoặc công cụ khác.
-- **Chơi trực tuyến** — nút **Chơi** cạnh nút **In đề** chuyển đề đang hiển thị sang ứng dụng riêng
+- **Chơi trực tuyến** — nút **Chơi** cạnh nút **In đề** chuyển mọi đề trong danh sách đã tạo, đề đang hiển thị
+  đứng đầu, sang ứng dụng riêng
   [sudoku-player](https://github.com/tdat00/sudoku-player), nơi bạn giải đề với ghi chú, hoàn tác / làm lại, kiểm
-  tra, gợi ý nêu tên kỹ thuật và đồng hồ. Đề nằm ngay trong liên kết (sau dấu `#`) nên không có gì bị tải lên;
-  xem [Chơi trực tuyến với sudoku-player](#chơi-trực-tuyến-với-sudoku-player).
+  tra, gợi ý nêu tên kỹ thuật và đồng hồ. Các đề nằm ngay trong liên kết (sau dấu `#`), đã được nén, nên không có
+  gì bị tải lên; xem [Chơi trực tuyến với sudoku-player](#chơi-trực-tuyến-với-sudoku-player).
 - **Dễ tiếp cận** — điều hướng bằng bàn phím, lưới ARIA, thông báo trực tiếp, giao diện sáng, tối và tương
   phản cao, chỉnh cỡ chữ, giảm chuyển động.
 - **Trợ giúp ngay trong ứng dụng** — luật của cả 15 biến thể, bậc thang kỹ thuật và phím tắt.
@@ -920,29 +935,42 @@ một ứng dụng tĩnh riêng với lưới để bạn điền số, ghi chú
 tên kỹ thuật logic, đồng hồ, tiến độ được lưu theo từng đề, đủ 15 biến thể, tiếng Anh / Việt, giao diện và trợ
 năng.
 
-**Đề sang đó bằng cách nào.** Bấm nút **Chơi** cạnh nút **In đề** ở khung chính. Trang biến đề đang hiển thị
-thành một *tài liệu đề*, nén thành một mã (token) rồi mở
-`https://tdat00.github.io/sudoku-player/#puzzle=<token>` trong thẻ mới (`window.open(url, '_blank',
-'noopener')`). Mã nằm ở **phần fragment** của URL — trình duyệt không bao giờ gửi phần này lên máy chủ — nên
-không có gì bị tải lên. Khi liên kết dài hơn khoảng 100 kB, một thông báo cảnh báo rằng một số ứng dụng và máy
-chủ cắt bớt liên kết dài. Địa chỉ của trình chơi lấy từ
+**Các đề sang đó bằng cách nào.** Bấm nút **Chơi** cạnh nút **In đề** ở khung chính. Trang lấy **mọi đề trong
+danh sách đã tạo** (và đề đang hiển thị nếu nó không có trong danh sách), ghi chúng thành văn bản dễ đọc của
+hộp **Xuất văn bản**, nén văn bản đó thành một mã (token) rồi mở
+`https://tdat00.github.io/sudoku-player/#puzzle=<token>&active=<n>` trong thẻ mới (`window.open(url, '_blank',
+'noopener')`). `active` là số thứ tự của đề đang hiển thị: trình chơi đặt đúng đề đó lên bảng và liệt kê tất cả
+các đề còn lại. Đề nào chưa có sẵn sẽ được tạo lại từ seed trước (một hộp thoại nhỏ báo tiến độ và kết thúc bằng
+nút **Mở trình chơi**). Mã nằm ở **phần fragment** của URL — trình duyệt không bao giờ gửi phần này lên máy chủ —
+nên không có gì bị tải lên. Vì là văn bản đã nén chứ không phải tài liệu, một trăm đề vẫn vừa trong liên kết dài
+vài chục kB; khi liên kết dài hơn khoảng 100 kB, một thông báo cảnh báo rằng một số ứng dụng và máy chủ cắt bớt
+liên kết dài. Địa chỉ của trình chơi lấy từ
 `<meta name="sg-player-url" content="https://tdat00.github.io/sudoku-player/">` trong `index.html`: hãy đổi nó
 nếu bạn có bản riêng.
 
 **Định dạng trao đổi** — mối liên kết duy nhất giữa hai kho mã, do `js/ui/exchange.js` (`SG.exchange`, cùng
 một tệp, giống từng byte ở cả hai bên, kèm bộ kiểm thử `tests/suites/exchange.test.js`) cài đặt:
 
-- **Tài liệu** là JSON của đề theo [design.md](design.md) §14.1 (`format: 'sudoku-generator/v1'`), do
-  `SG.exportUi.toJson` ghi ra, cộng thêm một khối bổ sung **`model`**: đặc tả mô hình dạng dữ liệu thuần
+- Một **gói đề** (nút Chơi) là văn bản của `SG.exportUi.buildExportText`: mỗi đề gồm một dòng tiêu đề
+  `#<số>,<biến thể>,<mức độ>,<seed>`, lưới và, với Ghép hình, Sát thủ, So sánh và Wordoku, vài dòng cấu trúc.
+  Trình chơi dựng lại bảng từ đó, đúng như khi bạn dán văn bản vào hộp Nhập của nó.
+- **Mã văn bản** của nó là `t.` + base64url(deflate-raw(văn bản UTF-8)) — hoặc `s.` + base64url(văn bản) khi
+  không nén được hoặc nén không có lợi. `SG.exchange.encodeText(text)` và `SG.exchange.decodeText(token)` là hàm
+  bất đồng bộ; `SG.exchange.playerUrl(base, token, { active })` dựng liên kết (`&active=<n>`, đếm từ 1) và
+  `SG.exchange.activeFromHash(hash)` đọc lại số đó.
+- **Tài liệu** của một đề (trình chơi vẫn hiểu, và là thứ nút Chia sẻ của nó ghi ra) là JSON của đề theo
+  [design.md](design.md) §14.1 (`format: 'sudoku-generator/v1'`), do `SG.exportUi.toJson` ghi ra, cộng thêm một
+  khối bổ sung **`model`**: đặc tả mô hình dạng dữ liệu thuần
   (`variantId`, `digits`, `units`, `unitMeta`, `cages`, `inequalities`, `layout`, `symbols`, `fixedCells`) mà
-  `SG.model.create(spec)` nhận được. Nhờ nó, trình chơi dựng lại bảng **mà không cần mã của biến thể nào**.
-- **Mã (token)** là `z.` + base64url(deflate-raw(JSON)) — hoặc `j.` + base64url(JSON) khi không nén được hoặc nén
-  không có lợi. `SG.exchange.encode(doc)` và `SG.exchange.decode(token)` là hàm bất đồng bộ;
-  `SG.exchange.playerUrl(base, token)` dựng liên kết và từ chối địa chỉ gốc không phải `http(s)` hay đường dẫn
+  `SG.model.create(spec)` nhận được. Nhờ nó, trình chơi dựng lại bảng **mà không cần mã của biến thể nào**. Mã của
+  nó là `z.` + base64url(deflate-raw(JSON)) — hoặc `j.` + base64url(JSON); `SG.exchange.encode(doc)` và
+  `SG.exchange.decode(token)` là hàm bất đồng bộ.
+- `SG.exchange.playerUrl(base, token)` từ chối địa chỉ gốc không phải `http(s)` hay đường dẫn
   tương đối. Lỗi mang các mã `exchange.invalidToken`, `exchange.tooLarge`, `exchange.unsupportedEncoding`,
   `exchange.invalidJson` và `exchange.invalidUrl`, đã dịch ở cả hai ngôn ngữ (`error.exchange.*`).
-- Trong mã: `SG.exportUi.toJson(result)` là tài liệu, `SG.exportUi.buildPlayLink(result)` là liên kết
-  (`{ url, token, base, length, long }`), `SG.exportUi.openPlayLink(url)` mở nó. Chi tiết:
+- Trong mã: `SG.exportUi.buildPlayBundle(results, { active })` là liên kết của nhiều đề
+  (`{ url, token, base, count, active, length, long }`), `SG.exportUi.toJson(result)` là tài liệu và
+  `SG.exportUi.buildPlayLink(result)` là liên kết của một đề, `SG.exportUi.openPlayLink(url)` mở nó. Chi tiết:
   [design.md](design.md) §10.9 và §13.15.
 
 ## Cách hoạt động
@@ -1240,8 +1268,8 @@ Danh sách đầy đủ ở [design.md](design.md) §12.2:
 - **Trình duyệt**: được phát triển và kiểm tra chỉ trên Edge nền Chromium; Firefox 100+ và Safari 15.4+ là mục
   tiêu hỗ trợ nhưng chưa được thử, điện thoại thật cũng vậy.
 - **Chơi trực tuyến** cần trình chơi đã được đăng tại địa chỉ của thẻ meta `sg-player-url`, và một trình duyệt
-  không chặn cửa sổ bật lên của trang. Liên kết đề dài hơn khoảng 100 kB có thể bị ứng dụng chat hay máy chủ
-  cắt bớt và khi đó không mở được trong trình chơi.
+  không chặn cửa sổ bật lên của trang. Liên kết dài hơn khoảng 100 kB (danh sách đề rất dài) có thể bị ứng dụng
+  chat hay máy chủ cắt bớt và khi đó không mở hết các đề trong trình chơi.
 
 ## Giấy phép và ghi công
 

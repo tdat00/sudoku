@@ -145,4 +145,101 @@
       expect(X.isDocument('x')).toBe(false);
     });
   });
+
+  describe('SG.exchange (bundles of puzzles: text tokens and the active puzzle)', function () {
+    var TEXT = '#1,Classic Sudoku 9x9,Easy,5\n5.3.7....\n\n#2,Classic Sudoku 6x6,Hard,7\n1.....\n' +
+      'Ti\u1ebfng Vi\u1ec7t \u2014 \u00fc \u4e2d \ud83d\ude00\n';
+
+    function manyPuzzles() {
+      var lines = [];
+      for (var i = 1; i <= 40; i++) {
+        lines.push('#' + i + ',Classic Sudoku 9x9,Easy,' + (1000 + i));
+        for (var r = 0; r < 9; r++) lines.push(r % 2 ? '53..7....' : '6..195...');
+        lines.push('');
+      }
+      return lines.join('\n');
+    }
+
+    it('round-trips text through the compressed and the plain text token', async function () {
+      var packed = await X.encodeText(manyPuzzles());
+      var plainToken = await X.encodeText(TEXT, { compress: false });
+      expect(packed.slice(0, 2)).toBe('t.');
+      expect(plainToken.slice(0, 2)).toBe('s.');
+      expect(await X.decodeText(packed)).toBe(manyPuzzles());
+      expect(await X.decodeText(plainToken)).toBe(TEXT);
+      expect(await X.decodeText('  ' + packed + '\n')).toBe(manyPuzzles());
+    });
+
+    it('a text token is base64url (URL safe), deterministic and a lot smaller than its text', async function () {
+      var text = manyPuzzles();
+      var token = await X.encodeText(text);
+      expect(/^[ts]\.[A-Za-z0-9_-]+$/.test(token)).toBe(true);
+      expect(await X.encodeText(text)).toBe(token);
+      expect(X.isTextToken(token)).toBe(true);
+      expect(token.length).toBeLessThan(text.length / 4);
+      expect(token.indexOf('=')).toBe(-1);
+    });
+
+    it('tells a text token from a document token, and each decoder refuses the other kind', async function () {
+      var doc = await X.encode(sample());
+      var text = await X.encodeText(TEXT);
+      expect(X.isTextToken(doc)).toBe(false);
+      expect(X.isTextToken(text)).toBe(true);
+      expect(X.isTextToken('j.')).toBe(false);
+      expect(X.isTextToken(null)).toBe(false);
+      expect(await codeOf(function () { return X.decode(text); })).toBe('exchange.invalidToken');
+      expect(await codeOf(function () { return X.decodeText(doc); })).toBe('exchange.invalidToken');
+    });
+
+    it('rejects malformed text tokens with a coded error', async function () {
+      expect(await codeOf(function () { return X.decodeText(null); })).toBe('exchange.invalidToken');
+      expect(await codeOf(function () { return X.decodeText(''); })).toBe('exchange.invalidToken');
+      expect(await codeOf(function () { return X.decodeText('s.%%%'); })).toBe('exchange.invalidToken');
+      expect(await codeOf(function () { return X.decodeText('t.AAAAAAAA'); })).toBe('exchange.invalidToken');
+      var bad = 's.' + btoa(String.fromCharCode(0xff, 0xfe, 0x41)).replace(/\+/g, '-').replace(/\//g, '_')
+        .replace(/=+$/, '');
+      expect(await codeOf(function () { return X.decodeText(bad); })).toBe('exchange.invalidJson');
+    });
+
+    it('refuses text over the limit, and a text token that would inflate past it', async function () {
+      expect(await codeOf(function () { return X.encodeText('x'.repeat(X.MAX_JSON_BYTES + 1)); }))
+        .toBe('exchange.tooLarge');
+      var zeros = new Uint8Array(X.MAX_JSON_BYTES + 1024);
+      var stream = new Blob([zeros]).stream().pipeThrough(new CompressionStream('deflate-raw'));
+      var packed = new Uint8Array(await new Response(stream).arrayBuffer());
+      var binary = '';
+      for (var i = 0; i < packed.length; i++) binary += String.fromCharCode(packed[i]);
+      var token = 't.' + btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      expect(await codeOf(function () { return X.decodeText(token); })).toBe('exchange.tooLarge');
+    });
+
+    it('reads the active puzzle from the fragment', function () {
+      expect(X.activeFromHash('#puzzle=t.abc&active=3')).toBe(3);
+      expect(X.activeFromHash('active=12&puzzle=t.abc')).toBe(12);
+      expect(X.activeFromHash('#puzzle=t.abc')).toBe(null);
+      expect(X.activeFromHash('#active=0')).toBe(null);
+      expect(X.activeFromHash('#active=-2')).toBe(null);
+      expect(X.activeFromHash('#active=2x')).toBe(null);
+      expect(X.activeFromHash('#active=')).toBe(null);
+      expect(X.activeFromHash(undefined)).toBe(null);
+      expect(X.tokenFromHash('#puzzle=t.abc&active=3')).toBe('t.abc');
+    });
+
+    it('builds the link of a bundle: the text token and the number of the active puzzle', async function () {
+      var token = await X.encodeText(TEXT);
+      var url = X.playerUrl('https://example.org/sudoku-player/', token, { active: 2 });
+      expect(url).toBe('https://example.org/sudoku-player/#puzzle=' + token + '&active=2');
+      var hash = url.slice(url.indexOf('#'));
+      expect(X.tokenFromHash(hash)).toBe(token);
+      expect(X.activeFromHash(hash)).toBe(2);
+      expect(await X.decodeText(X.tokenFromHash(hash))).toBe(TEXT);
+      expect(X.playerUrl('https://example.org/p/#old=1', token, { active: 1 }))
+        .toBe('https://example.org/p/#puzzle=' + token + '&active=1');
+      ['x', 0, -1, 1.5, null, undefined].forEach(function (bad) {
+        expect(X.playerUrl('https://example.org/p/', token, { active: bad })).toBe('https://example.org/p/#puzzle=' + token);
+      });
+      expect(X.playerUrl('https://example.org/p/', 's.abc')).toBe('https://example.org/p/#puzzle=s.abc');
+      expect(function () { X.playerUrl('https://x/', 'x.abc', { active: 1 }); }).toThrow();
+    });
+  });
 })();

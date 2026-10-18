@@ -136,8 +136,9 @@
 
     it('what the player and the print path need is still there', function () {
       ready();
-      ['init', 'open', 'openText', 'close', 'closeText', 'toJson', 'buildPlayLink', 'buildExportText',
-        'gridLines', 'playerBase',
+      ['init', 'open', 'openText', 'close', 'closeText', 'toJson', 'buildPlayLink', 'buildPlayBundle',
+        'buildExportText',
+        'gridLines', 'structureLines', 'playerBase',
         'pagePlayerBase', 'openPlayLink',
         'playOnline', 'buildPrintLayout', 'boardSvg', 'printTokens', 'printItems', 'buildPrintRoot',
         'clearPrint'].forEach(function (name) {
@@ -345,6 +346,80 @@
       expect(max).toBeGreaterThan(9);
       expect(letters.length).toBeGreaterThan(0);
     });
+
+    it('adds no structure line for a variant the grid alone fixes', function () {
+      ready();
+      ['classic9', 'diagonalX', 'hyper', 'mega12', 'samurai'].forEach(function (id) {
+        expect(E.structureLines(realResult(id, 'easy', 2))).toEqual([]);
+      });
+    });
+
+    it('writes the regions of a jigsaw puzzle: nine groups of nine region numbers', function () {
+      ready();
+      var r = realResult('jigsaw9', 'easy', 3);
+      var lines = E.structureLines(r);
+      expect(lines.length).toBe(1);
+      var groups = lines[0].replace(/^regions: /, '').split(' ');
+      expect(lines[0].indexOf('regions: ')).toBe(0);
+      expect(groups.length).toBe(9);
+      groups.forEach(function (g) { expect(/^[1-9]{9}$/.test(g)).toBe(true); });
+      var counts = {};
+      groups.join('').split('').forEach(function (d) { counts[d] = (counts[d] || 0) + 1; });
+      Object.keys(counts).forEach(function (d) { expect(counts[d]).toBe(9); });
+      expect(groups.join('')).toBe(arr(r.model.layout.cellRegion).map(function (v) { return v + 1; }).join(''));
+    });
+
+    it('writes the cages of a killer puzzle in the order of the model, with 1-based row and column', function () {
+      ready();
+      var r = realResult('killer', 'easy', 5);
+      var lines = E.structureLines(r);
+      expect(lines.length).toBe(1);
+      var cages = lines[0].replace(/^cages: /, '').split('; ');
+      expect(cages.length).toBe(r.model.cages.length);
+      cages.forEach(function (text, k) {
+        var parts = text.split('=');
+        expect(Number(parts[0])).toBe(r.model.cages[k].sum);
+        var cells = parts[1].split(',').map(function (token) {
+          var m = /^r(\d+)c(\d+)$/.exec(token);
+          return (Number(m[1]) - 1) * 9 + Number(m[2]) - 1;
+        });
+        expect(cells).toEqual(arr(r.model.cages[k].cells));
+      });
+    });
+
+    it('writes the signs of a greater-than puzzle: the first cell is less than the second', function () {
+      ready();
+      var r = realResult('greaterThan', 'easy', 4);
+      var lines = E.structureLines(r);
+      expect(lines.length).toBe(1);
+      var signs = lines[0].replace(/^signs: /, '').split('; ');
+      expect(signs.length).toBe(r.model.inequalities.length);
+      expect(signs.every(function (s) { return /^r\dc\d<r\dc\d$/.test(s); })).toBe(true);
+    });
+
+    it('writes the letters and the line of a wordoku puzzle, but not the word', function () {
+      ready();
+      var r = realResult('wordoku', 'easy', 6);
+      var lines = E.structureLines(r);
+      expect(lines.length).toBe(2);
+      expect(lines[0]).toBe('letters: ' + r.model.symbols.labels.join(' '));
+      expect(/^word-line: (diagonal|row [1-9]|column [1-9])$/.test(lines[1])).toBe(true);
+      var word = SG.wordoku.describe(r.model).word;
+      expect(lines.join('\n').indexOf(word)).toBe(-1);
+    });
+
+    it('keeps a puzzle in one block: structure lines follow the grid with no blank line', function () {
+      ready();
+      var a = realResult('killer', 'easy', 5);
+      var b = realResult('classic9', 'easy', 3);
+      var text = inLocale('en', function () { return E.buildExportText([{ result: a }, { result: b }]); });
+      var blocks = text.trim().split('\n\n');
+      expect(blocks.length).toBe(2);
+      var first = blocks[0].split('\n');
+      expect(first.length).toBe(1 + 9 + 1);
+      expect(first[10].indexOf('cages: ')).toBe(0);
+      expect(blocks[1].split('\n').length).toBe(10);
+    });
   });
 
   // ---------------------------------------------------------------------------------------------
@@ -481,14 +556,109 @@
         expect(calls.length).toBe(1);
         expect(calls[0][0]).toBe(info.url);
         expect(info.url.indexOf(BASE + '#puzzle=')).toBe(0);
+        expect(SG.exchange.isTextToken(info.token)).toBe(true);
+        expect(info.url.slice(-'&active=1'.length)).toBe('&active=1');
         expect(calls[0].slice(1)).toEqual(['_blank', 'noopener']);
         expect(toasts).toEqual(['info:export.playOnline.opened']);
-        var doc = await SG.exchange.decode(info.token);
-        expect(doc.variantId).toBe('classic4');
-        expect(SG.model.create(doc.model).cellCount).toBe(16);
+        expect(info.count).toBe(1);
+        var text = await SG.exchange.decodeText(info.token);
+        expect(text).toBe(E.buildExportText([{ result: shown.result }]));
+        expect(text.indexOf('#1,')).toBe(0);
       } finally {
         if (saved === undefined) delete root.open;
         else root.open = saved;
+        E.init({ on: function () {}, getResult: function () { return null; }, toast: function () {} });
+      }
+    });
+
+    it('buildPlayBundle: the text of every puzzle in one compressed token, the active one by number', async function () {
+      ready();
+      var list = [realResult('classic4', 'easy', 1), realResult('classic6', 'easy', 2),
+        realResult('killer', 'easy', 11)];
+      var link = await E.buildPlayBundle(list, { active: 2 });
+      expect(link.count).toBe(3);
+      expect(link.active).toBe(2);
+      expect(link.base).toBe(BASE);
+      expect(link.token.slice(0, 2)).toBe('t.');
+      expect(link.url).toBe(BASE + '#puzzle=' + link.token + '&active=3');
+      expect(link.length).toBe(link.url.length);
+      expect(link.long).toBe(false);
+      var hash = link.url.slice(link.url.indexOf('#'));
+      expect(SG.exchange.tokenFromHash(hash)).toBe(link.token);
+      expect(SG.exchange.activeFromHash(hash)).toBe(3);
+      var text = await SG.exchange.decodeText(link.token);
+      expect(text).toBe(E.buildExportText(list.map(function (result) { return { result: result }; })));
+      expect(count(text, '#')).toBeGreaterThan(2);
+      expect(text).toContain('cages:');
+      // the order of the list is the order of the text
+      expect(text.indexOf('#1,')).toBe(0);
+      expect(text.indexOf('#2,')).toBeGreaterThan(0);
+      expect(text.indexOf('#3,')).toBeGreaterThan(text.indexOf('#2,'));
+      var plain = await E.buildPlayBundle(list, { compress: false, base: 'http://localhost:8080/player/' });
+      expect(plain.url.indexOf('http://localhost:8080/player/#puzzle=s.')).toBe(0);
+      expect(plain.active).toBe(0);
+      expect(plain.url.slice(-'&active=1'.length)).toBe('&active=1');
+    });
+
+    it('buildPlayBundle: an active index that is not in the list falls back to the first puzzle', async function () {
+      ready();
+      var list = [realResult('classic4', 'easy', 1), realResult('classic4', 'easy', 2)];
+      for (var bad of [-1, 2, 5, 1.5, null, 'x']) {
+        var link = await E.buildPlayBundle(list, { active: bad });
+        expect(link.active).toBe(0);
+        expect(link.url.slice(-'&active=1'.length)).toBe('&active=1');
+      }
+    });
+
+    it('buildPlayBundle: 100 puzzles stay far below the limit of a link, and a bad address is an error', async function () {
+      ready();
+      var one = realResult('classic9', 'easy', 5);
+      var many = [];
+      for (var i = 0; i < 100; i++) many.push(one);
+      var link = await E.buildPlayBundle(many, { active: 99 });
+      expect(link.count).toBe(100);
+      expect(link.long).toBe(false);
+      expect(link.length).toBeLessThan(E.LONG_LINK_CHARS);
+      expect(link.url.slice(-'&active=100'.length)).toBe('&active=100');
+      expect(await codeOf(E.buildPlayBundle([one], { base: 'javascript:alert(1)' }))).toBe('exchange.invalidUrl');
+      var none = await E.buildPlayBundle([]).then(function () { return null; }, function (e) { return e; });
+      expect(none).not.toBe(null);
+    });
+
+    it('playOnline sends the whole list, generating again what is not at hand, and the puzzle on screen is active', async function () {
+      ready();
+      var screen = realResult('classic4', 'easy', 1);
+      var older = realResult('classic4', 'easy', 2);
+      var oldest = realResult('classic6', 'easy', 3);
+      // Saved list, newest first: the puzzle on screen is the second one.
+      var entries = [older, screen, oldest].map(function (r, i) { return SG.history.entryOf(r, 3000 - i); });
+      var savedList = SG.history.list;
+      SG.history.list = function () { return entries; };
+      var toasts = [];
+      var fakeApp = {
+        on: function () { return function () {}; },
+        getResult: function () { return { result: screen, trace: [] }; },
+        toast: function (kind, key) { toasts.push(kind + ':' + key); }
+      };
+      var calls = [];
+      var savedOpen = root.open;
+      root.open = function () { calls.push(Array.prototype.slice.call(arguments)); return null; };
+      try {
+        E.init(fakeApp);
+        var info = await E.playOnline();
+        expect(info.count).toBe(3);
+        expect(info.active).toBe(1);
+        expect(info.url.slice(-'&active=2'.length)).toBe('&active=2');
+        expect(calls.length).toBe(1);
+        var text = await SG.exchange.decodeText(info.token);
+        var expected = E.buildExportText([older, screen, oldest].map(function (result) { return { result: result }; }));
+        expect(text).toBe(expected);
+        expect(count(text, '\n#')).toBe(2);
+        expect(toasts).toEqual(['info:export.playOnline.opened']);
+      } finally {
+        SG.history.list = savedList;
+        if (savedOpen === undefined) delete root.open;
+        else root.open = savedOpen;
         E.init({ on: function () {}, getResult: function () { return null; }, toast: function () {} });
       }
     });
@@ -524,6 +694,7 @@
       }
       expect(opened.length).toBe(1);
       expect(opened[0][0].indexOf(BASE + '#puzzle=')).toBe(0);
+      expect(/#puzzle=[ts]\./.test(opened[0][0])).toBe(true);
       expect(opened[0].slice(1)).toEqual(['_blank', 'noopener']);
       expect(toasts).toEqual(['info:export.playOnline.opened']);
     });
@@ -644,7 +815,9 @@
       var f = fragments('export.')[0];
       expect(Object.keys(f.en).sort()).toEqual(['export.pick.count', 'export.pick.empty',
         'export.pick.preparing', 'export.pick.selectAll', 'export.pick.selectNone', 'export.pick.title',
-        'export.playOnline.error', 'export.playOnline.long', 'export.playOnline.opened', 'export.print.alt',
+        'export.playOnline.error', 'export.playOnline.intro', 'export.playOnline.long',
+        'export.playOnline.open', 'export.playOnline.opened', 'export.playOnline.ready',
+        'export.playOnline.title', 'export.print.alt',
         'export.print.altSolution', 'export.print.button', 'export.print.heading', 'export.print.hint',
         'export.print.meta', 'export.print.perPage', 'export.print.puzzleNumber',
         'export.print.solutionNumber', 'export.print.solutionOnly', 'export.print.solutionPage',
