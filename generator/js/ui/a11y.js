@@ -666,6 +666,10 @@
     Object.freeze({ value: 'dark', key: 'a11y.settings.theme.dark' }),
     Object.freeze({ value: 'high-contrast', key: 'a11y.settings.theme.highContrast' })
   ]);
+  const LANG_CHOICES = Object.freeze([
+    Object.freeze({ value: 'en', key: 'shell.lang.en.name' }),
+    Object.freeze({ value: 'vi', key: 'shell.lang.vi.name' })
+  ]);
   const FONT_CHOICES = Object.freeze([
     Object.freeze({ value: 'small', key: 'a11y.settings.font.small', sample: 'A\u2212' }),
     Object.freeze({ value: 'normal', key: 'a11y.settings.font.normal', sample: 'A' }),
@@ -761,7 +765,7 @@
     const state = ctx.app.getStore().get();
     const body = ctx.modal.body;
     Array.prototype.forEach.call(body.querySelectorAll('input[type="radio"]'), function (input) {
-      const current = input.name === 'sg-theme' ? state.theme : state.fontSize;
+      const current = state[input.name.slice(3)];
       input.checked = input.value === current;
     });
     const flags = {
@@ -783,6 +787,8 @@
     const store = ctx.app.getStore();
     const put = function (patch) { store.set(patch, { source: 'a11y' }); };
     settingsCounter++;
+    container.appendChild(choiceGroup('lang', 'shell.lang.label', LANG_CHOICES,
+      function (value) { put({ lang: value }); }));
     container.appendChild(choiceGroup('theme', 'a11y.settings.theme.legend', THEME_CHOICES,
       function (value) { put({ theme: value }); }));
     container.appendChild(note('a11y.settings.theme.hint'));

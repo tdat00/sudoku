@@ -1045,7 +1045,7 @@ SG.workerClient = {
 **Responsive** (`css/layout.css`):
 - `≥ 1360px`: 3 columns — the list of puzzles (wide enough for `<variant> - <level>` on one line; a longer title is cut with an ellipsis) | the board and the replay box (replay controls and the Summary / Generation Steps tabs) | the puzzle options (the two side columns are sticky and scroll by themselves).
 - `768–1359px`: 2 columns — the board, the replay box and the list of puzzles on the left; the puzzle options on the right.
-- `< 768px`: 1 stacked column (board, replay box, result, list of puzzles); the options become a drawer sliding up from the bottom (a bar with a chevron toggles it).
+- `< 768px`: 1 stacked column (board, replay box, result, list of puzzles); the header keeps only the title, Settings and Help (language and theme move into the Settings dialog); Play, Print and Export (icon-only for the last two) sit above the puzzle heading; a fixed bottom row always shows Generate and Generate random (50% each) plus an icon-only Options button, which slides the other options up as a drawer.
 
 The page mount points are fixed ids that every module renders into (`#history-root`, `#controls-root`, `#board-root` with `#board-svg`, `#player-root`, `#steps-root` with `#step-detail` and `#btn-explain`, `#result-root`, `#modal-root`, `#toast-root`, `#a11y-live`); later modules only add elements inside their own mount point.
 

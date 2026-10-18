@@ -455,8 +455,34 @@
   .app-title {
     font-size: var(--sg-font-size-lg);
   }
+}
 
-  .app-tools .btn__label {
+/* ---- Mobile header: title, Settings and Help share one row; language and theme live in the Settings dialog ---- */
+@media (max-width: 767.98px) {
+  .app-header__inner {
+    flex-wrap: nowrap;
+    gap: var(--sg-space-2);
+    padding: var(--sg-space-2) var(--sg-space-3);
+  }
+
+  .app-brand {
+    flex: 1 1 auto;
+  }
+
+  .app-tools {
+    flex: none;
+    flex-wrap: nowrap;
+    gap: var(--sg-space-1);
+  }
+
+  #lang-switch,
+  #theme-switch {
+    display: none;
+  }
+
+  .app-tools .btn__label,
+  .main-actions #btn-export .btn__label,
+  .main-actions #btn-export-code .btn__label {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -466,8 +492,30 @@
     white-space: nowrap;
   }
 
-  .app-tools .btn {
+  .app-tools .btn,
+  .main-actions #btn-export,
+  .main-actions #btn-export-code {
     padding-inline: var(--sg-space-2);
+  }
+
+  /* Play, Print and Export sit above the puzzle heading. */
+  .main-actions {
+    order: -1;
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    gap: var(--sg-space-1);
+    margin-inline-start: 0;
+  }
+
+  .main-actions .btn {
+    min-height: 2rem;
+    gap: var(--sg-space-1);
+    font-size: var(--sg-font-size-sm);
+  }
+
+  .main-actions .btn .icon {
+    width: 1.1em;
+    height: 1.1em;
   }
 }
 
@@ -507,8 +555,12 @@
 }
 
 @media (max-width: 767.98px) {
+  :root {
+    --sg-actions-bar-height: calc(var(--sg-control-height) + 2 * var(--sg-space-2));
+  }
+
   body {
-    padding-bottom: calc(var(--sg-drawer-bar-height) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(var(--sg-actions-bar-height) + env(safe-area-inset-bottom, 0px));
   }
 
   .app-layout {
@@ -516,65 +568,126 @@
     gap: var(--sg-space-3);
   }
 
+  /* The icon-only Options button sits at the end of the row of the Generate buttons (always visible). */
   .drawer-toggle {
     position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    right: var(--sg-space-3);
+    bottom: calc(var(--sg-space-2) + env(safe-area-inset-bottom, 0px));
     z-index: var(--sg-z-drawer-bar);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--sg-space-2);
-    height: calc(var(--sg-drawer-bar-height) + env(safe-area-inset-bottom, 0px));
-    padding: 0 var(--sg-space-4) env(safe-area-inset-bottom, 0px);
-    border: 0;
-    border-top: 1px solid var(--sg-color-border);
-    background: var(--sg-color-surface);
+    width: var(--sg-control-height);
+    height: var(--sg-control-height);
+    padding: 0;
+    border: 1px solid var(--sg-color-border);
+    border-radius: var(--sg-radius-2);
+    background: var(--sg-color-surface-2);
     color: var(--sg-color-text);
-    font-weight: 650;
-    box-shadow: var(--sg-shadow-2);
+  }
+
+  .drawer-toggle > span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .drawer-toggle__chevron {
+    display: none;
   }
 
   .drawer-toggle:hover {
     background: var(--sg-color-hover);
   }
 
-  .drawer-toggle:focus-visible {
-    outline-offset: calc(-1 * var(--sg-focus-width) - 1px);
+  .drawer-toggle[aria-expanded="true"] {
+    border-color: var(--sg-color-accent);
+    background: var(--sg-color-accent);
+    color: var(--sg-color-accent-text);
   }
 
-  .drawer-toggle__chevron {
-    transition: transform var(--sg-motion-base) ease;
-  }
-
-  .drawer-toggle[aria-expanded="true"] .drawer-toggle__chevron {
-    transform: rotate(180deg);
-  }
-
+  /* The panel is always on screen: [options form, only when open] [Generate buttons]. */
   #controls-root {
     position: fixed;
     right: 0;
-    bottom: calc(var(--sg-drawer-bar-height) + env(safe-area-inset-bottom, 0px));
+    bottom: 0;
     left: 0;
     z-index: var(--sg-z-drawer);
+    display: flex;
+    flex-direction: column;
     max-height: 75vh;
     max-height: min(75vh, 100dvh - 8rem);
-    overflow-y: auto;
-    overscroll-behavior: contain;
+    padding: 0;
+    overflow: hidden;
+    border-width: 1px 0 0;
     border-radius: var(--sg-radius-3) var(--sg-radius-3) 0 0;
     box-shadow: var(--sg-shadow-2);
-    visibility: hidden;
-    transform: translateY(calc(100% + 1.5rem));
-    transition:
-      transform var(--sg-motion-base) ease,
-      visibility 0s linear var(--sg-motion-base);
   }
 
-  #controls-root.is-open {
-    visibility: visible;
-    transform: none;
-    transition-delay: 0s;
+  #controls-root .panel__title,
+  #controls-root .controls-form {
+    display: none;
+  }
+
+  #controls-root.is-open .panel__title {
+    display: block;
+    flex: none;
+    margin: 0;
+    padding: var(--sg-space-3) var(--sg-space-4) var(--sg-space-2);
+  }
+
+  #controls-root.is-open .controls-form {
+    display: flex;
+    order: 2;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 0 var(--sg-space-4) var(--sg-space-3);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  #controls-root .controls-actions {
+    order: 3;
+    flex: none;
+    flex-direction: row;
+    gap: var(--sg-space-2);
+    box-sizing: border-box;
+    height: calc(var(--sg-actions-bar-height) + env(safe-area-inset-bottom, 0px));
+    margin: 0;
+    padding: var(--sg-space-2) calc(var(--sg-space-3) + var(--sg-control-height) + var(--sg-space-2))
+      calc(var(--sg-space-2) + env(safe-area-inset-bottom, 0px)) var(--sg-space-3);
+    border-top: 1px solid var(--sg-color-border);
+    border-bottom: 0;
+  }
+
+  .controls-actions .btn {
+    flex: 1 1 0;
+    gap: var(--sg-space-1);
+    width: auto;
+    min-width: 0;
+    padding-inline: var(--sg-space-2);
+    font-size: var(--sg-font-size-sm);
+    white-space: nowrap;
+  }
+
+  .controls-actions .btn .icon {
+    width: 1.1em;
+    height: 1.1em;
+  }
+
+  .controls-actions .btn__label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* While a run is busy, Cancel takes the place of Generate random. */
+  .controls-actions:has(#btn-cancel:not([hidden])) #btn-regenerate {
+    display: none;
   }
 
   .drawer-backdrop {
