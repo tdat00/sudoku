@@ -313,8 +313,10 @@
           var pops = fx.doc.findAll(row, function (el) { return el.getAttribute('role') === 'tooltip'; });
           expect(pops.length).toBe(2);
           expect(pops[0].textContent).toBe(SG.i18n.t('technique.' + id + '.desc'));
-          expect(pops[1].textContent).toContain(' uses × ');
-          expect(pops[1].textContent).toContain('Shown as ');
+          expect(pops[1].textContent).toContain('Work of this technique');
+          expect(pops[1].textContent).toContain('Shown as (rounded)');
+          var fractions = fx.doc.findAll(pops[1], function (el) { return el.getAttribute('class') === 'math-frac'; });
+          expect(fractions.length).toBeGreaterThan(0);
           var buttons = fx.doc.findAll(row, function (el) { return el.tagName === 'BUTTON'; });
           expect(buttons[0].getAttribute('aria-label')).toBe('About \u201c' + SG.i18n.t('technique.' + id) + '\u201d');
           expect(buttons[1].getAttribute('aria-label')).toContain('How the score of');
@@ -344,7 +346,7 @@
         expect(total[0].textContent).toContain(String(Math.round(res.rating.score)));
         var totalTip = fx.doc.findAll(total[0], function (el) { return el.getAttribute('role') === 'tooltip'; });
         expect(totalTip.length).toBe(1);
-        expect(totalTip[0].textContent).toContain('rounded to ' + Math.round(res.rating.score));
+        expect(totalTip[0].textContent).toContain('≈ ' + Math.round(res.rating.score));
         var empties = fx.doc.findAll(fx.detail, function (el) { return el.getAttribute('data-part') === 'empties'; });
         expect(empties.length).toBe(1);
         var tip = fx.doc.findAll(empties[0], function (el) { return el.getAttribute('role') === 'tooltip'; });

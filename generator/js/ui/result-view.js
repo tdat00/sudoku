@@ -67,12 +67,12 @@
   }
 
   /**
-   * The words of a score tooltip: how a whole number of the table comes from the exact ones of
-   * `SG.difficulty.scoreTable` (`SG.stepView.scoreTip`, shared with the step table); '' when it is not loaded.
+   * The model of a score tooltip (`SG.stepView.scoreTip`, shared with the step table; formulas with the real
+   * values); null when the step view is not loaded.
    */
   function scoreTip(kind, table, row) {
     return SG.stepView && typeof SG.stepView.scoreTip === 'function'
-      ? SG.stepView.scoreTip('result.techniques.tip.', kind, table, row) : '';
+      ? SG.stepView.scoreTip('result.techniques.tip.', kind, table, row) : null;
   }
 
   /**
@@ -100,7 +100,7 @@
         countText: formatNumber(count),
         score: score,
         scoreText: formatNumber(score),
-        tip: row !== null ? scoreTip('technique', table, row) : ''
+        tip: row !== null ? scoreTip('technique', table, row) : null
       };
     });
   }
@@ -125,9 +125,9 @@
     return {
       empties: empties,
       emptyText: empties > 0 ? formatNumber(table.emptyTotal) : '',
-      emptyTip: empties > 0 ? scoreTip('empties', table, null) : '',
+      emptyTip: empties > 0 ? scoreTip('empties', table, null) : null,
       totalText: formatNumber(Math.round(score)),
-      totalTip: table !== null ? scoreTip('total', table, null) : ''
+      totalTip: table !== null ? scoreTip('total', table, null) : null
     };
   }
 
@@ -267,11 +267,11 @@
       });
     }
 
-    /** The "?" next to a name: opens on hover, focus and click; Esc closes it. */
-    function helpTip(popId, text, name, labelKey) {
+    /** The "?" next to a name: opens on hover, focus and click; Esc closes it. `content` is text or an array of nodes. */
+    function helpTip(popId, content, name, labelKey) {
       const pop = make(doc, 'div', {
-        class: 'help-tip__pop', id: popId, role: 'tooltip', text: text
-      });
+        class: 'help-tip__pop', id: popId, role: 'tooltip', text: typeof content === 'string' ? content : null
+      }, typeof content === 'string' ? [] : content);
       const button = make(doc, 'button', {
         type: 'button', class: 'help-tip__btn', 'aria-describedby': popId,
         'aria-label': t(labelKey || 'result.techniques.help', { name: name })
@@ -301,8 +301,9 @@
     /** A score cell: the whole number (`data-role="score"`) and a help icon whose tooltip shows how it is calculated. */
     function scoreCell(part, name, value, tip) {
       const children = [make(doc, 'span', { 'data-role': 'score', text: value })];
-      if (tip !== '') {
-        const help = helpTip('result-score-' + part + '-help', tip, name, 'result.techniques.help.score');
+      if (tip !== null && SG.stepView && typeof SG.stepView.renderScoreTip === 'function') {
+        const help = helpTip('result-score-' + part + '-help', SG.stepView.renderScoreTip(doc, tip), name,
+          'result.techniques.help.score');
         help.className = 'help-tip help-tip--inline help-tip--end';
         help.setAttribute('data-role', 'score-help');
         children.push(help);
@@ -502,18 +503,18 @@
         'score to see how it is calculated.',
       'result.techniques.help': 'About “{name}”',
       'result.techniques.help.score': 'How the score of “{name}” is calculated',
-      'result.techniques.tip.technique': '{uses} uses × {points} points = {work} work; all the work of this ' +
-        'puzzle is {all}. The work adds 0.25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} points to the score ' +
-        '({peak} is the points of the hardest technique), shared in proportion to the work: ' +
-        '{term} × {work} ÷ {all} = {share}. Shown as {score}.',
-      'result.techniques.tip.hardest': '{uses} uses × {points} points = {work} work; all the work of this ' +
-        'puzzle is {all}. As the hardest technique it counts its {peak} points once in full. The work adds ' +
-        '0.25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} points to the score, shared in proportion to the ' +
-        'work: {term} × {work} ÷ {all} = {rest}. {peak} + {rest} = {share}. Shown as {score}.',
-      'result.techniques.tip.empties': '80 × E ÷ (E + 40) with E = {e} empty cells: 80 × {e} ÷ ({e} + 40) = ' +
-        '{value}. Shown as {score}.',
-      'result.techniques.tip.total': 'Score = empty cells {empty} + hardest technique {peak} + work {work} = ' +
-        '{sum}, rounded to {score}. The rows are rounded together, so they add up to this total.',
+      'result.techniques.tip.work': 'Work of this technique',
+      'result.techniques.tip.all': 'All the work of the puzzle',
+      'result.techniques.tip.term': 'Work term of the score',
+      'result.techniques.tip.share': 'Its share of the work term',
+      'result.techniques.tip.hardest': 'Hardest technique: its points in full + its share of the work term',
+      'result.techniques.tip.empties': 'Empty cells',
+      'result.techniques.tip.total': 'Score',
+      'result.techniques.tip.shown': 'Shown as (rounded)',
+      'result.techniques.tip.where.technique': 'n = uses, w = points per use, P = points of the hardest technique.',
+      'result.techniques.tip.where.empties': 'E = number of empty cells.',
+      'result.techniques.tip.where.total': 'V = empty cells, P = hardest technique, R = work term.',
+      'result.techniques.tip.rounding': 'The rows are rounded together, so they add up to the total.',
       'result.warning.approximate.badge': 'Closest puzzle found',
       'result.warning.approximate.levels': 'Requested: {requested}. Reached: {achieved}.',
       'result.warning.retry': 'Retry with a different seed',
@@ -548,18 +549,18 @@
         'một điểm để xem cách tính.',
       'result.techniques.help': 'Giải thích về “{name}”',
       'result.techniques.help.score': 'Cách tính điểm của “{name}”',
-      'result.techniques.tip.technique': '{uses} lần × {points} điểm = {work} khối lượng; toàn bộ khối lượng ' +
-        'của đề này là {all}. Khối lượng cộng 0,25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} điểm vào ' +
-        'điểm số ({peak} là điểm của kỹ thuật khó nhất), chia theo tỉ lệ khối lượng: ' +
-        '{term} × {work} ÷ {all} = {share}. Hiển thị là {score}.',
-      'result.techniques.tip.hardest': '{uses} lần × {points} điểm = {work} khối lượng; toàn bộ khối lượng ' +
-        'của đề này là {all}. Là kỹ thuật khó nhất nên được tính đủ {peak} điểm một lần. Khối lượng cộng ' +
-        '0,25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} điểm vào điểm số, chia theo tỉ lệ khối lượng: ' +
-        '{term} × {work} ÷ {all} = {rest}. {peak} + {rest} = {share}. Hiển thị là {score}.',
-      'result.techniques.tip.empties': '80 × E ÷ (E + 40) với E = {e} ô trống: 80 × {e} ÷ ({e} + 40) = ' +
-        '{value}. Hiển thị là {score}.',
-      'result.techniques.tip.total': 'Điểm = ô trống {empty} + kỹ thuật khó nhất {peak} + khối lượng {work} = ' +
-        '{sum}, làm tròn thành {score}. Các dòng được làm tròn cùng nhau nên cộng lại đúng bằng tổng này.',
+      'result.techniques.tip.work': 'Khối lượng của kỹ thuật này',
+      'result.techniques.tip.all': 'Toàn bộ khối lượng của đề',
+      'result.techniques.tip.term': 'Phần khối lượng của điểm số',
+      'result.techniques.tip.share': 'Phần của nó trong phần khối lượng',
+      'result.techniques.tip.hardest': 'Kỹ thuật khó nhất: đủ điểm của nó + phần của nó trong phần khối lượng',
+      'result.techniques.tip.empties': 'Ô trống',
+      'result.techniques.tip.total': 'Điểm số',
+      'result.techniques.tip.shown': 'Hiển thị (đã làm tròn)',
+      'result.techniques.tip.where.technique': 'n = số lần dùng, w = điểm mỗi lần, P = điểm của kỹ thuật khó nhất.',
+      'result.techniques.tip.where.empties': 'E = số ô trống.',
+      'result.techniques.tip.where.total': 'V = ô trống, P = kỹ thuật khó nhất, R = phần khối lượng.',
+      'result.techniques.tip.rounding': 'Các dòng được làm tròn cùng nhau nên cộng lại đúng bằng tổng.',
       'result.warning.approximate.badge': 'Đề gần nhất tìm được',
       'result.warning.approximate.levels': 'Mức đã chọn: {requested}. Mức đạt được: {achieved}.',
       'result.warning.retry': 'Thử lại với seed khác',

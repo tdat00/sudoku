@@ -87,11 +87,14 @@
         expect(row.score).toBe(table.rows[i].total);
         expect(row.scoreText).toBe(SG.i18n.formatNumber(table.rows[i].total));
         expect(Math.abs(row.score - parts.rows[i].share)).toBeLessThan(1);
-        // The tooltip shows the numbers the share is made of.
-        expect(row.tip).toContain(SG.i18n.formatNumber(count) + ' uses');
-        expect(row.tip).toContain(SG.i18n.formatNumber(table.work, { maximumFractionDigits: 2 }));
-        expect(row.tip).toContain('Shown as ' + row.scoreText);
-        expect(row.tip.indexOf('once in full') !== -1).toBe(table.rows[i].hardest);
+        // The tooltip shows the formulas with the numbers the share is made of.
+        var text = SG.stepView.scoreTipText(row.tip);
+        var f = function (n) { return SG.i18n.formatNumber(n, { maximumFractionDigits: 2 }); };
+        expect(text).toContain('W_t = n_t × w_t = ' + f(count) + ' × ' + f(table.rows[i].points) + ' = ' + f(table.rows[i].work));
+        expect(text).toContain('W = Σ W_t = ' + f(table.work));
+        expect(text).toContain('R = 0.25 × P × log_2(1 + W / P) = 0.25 × ' + f(table.peak));
+        expect(text).toContain('≈ ' + row.scoreText);
+        expect(text.indexOf('P + R') !== -1).toBe(table.rows[i].hardest);
       });
       expect(vm.techniqueCounts).toEqual(r.rating.techniqueCounts);
     });
@@ -100,9 +103,12 @@
       ready();
       var r = realResult('classic9', 'easy', 3);
       var vm = R.viewModel(r);
-      expect(vm.parts.emptyTip).toContain('80 × ' + r.rating.empties);
-      expect(vm.parts.emptyTip).toContain('Shown as ' + vm.parts.emptyText);
-      expect(vm.parts.totalTip).toContain('rounded to ' + vm.scoreText);
+      var empty = SG.stepView.scoreTipText(vm.parts.emptyTip);
+      expect(empty).toContain('V = 80 × E / E + 40 = 80 × ' + r.rating.empties + ' / ' + r.rating.empties + ' + 40');
+      expect(empty).toContain('≈ ' + vm.parts.emptyText);
+      var total = SG.stepView.scoreTipText(vm.parts.totalTip);
+      expect(total).toContain('S = V + P + R');
+      expect(total).toContain('≈ ' + vm.scoreText);
     });
 
     it('adds the techniques and the empty cells up to the score, as written in the table', function () {

@@ -65,33 +65,112 @@
     return hasText(key) ? translate(key) : id;
   }
 
+  // Tokens of a formula (`scoreTip`): a string is plain text, { v } a variable (italic), { b } a result (bold),
+  // { sub: [tokens] } a subscript, { frac: [[tokens], [tokens]] } a fraction.
+  function V(x) { return { v: x }; }
+  function B(x) { return { b: x }; }
+  function SUB() { return { sub: Array.prototype.slice.call(arguments) }; }
+  function FRAC(top, bottom) { return { frac: [top, bottom] }; }
+
   /**
-   * The words of a score tooltip: how a whole number of the Difficulty Score table comes from the exact numbers of
-   * `SG.difficulty.scoreTable`. The hardest technique also gets P in full, the empty cells V, and the work term R is
-   * shared among the techniques in proportion to their work. `prefix` is the locale prefix ('...tip.'), `kind` is
-   * 'technique' (with its `row`), 'empties' or 'total'.
+   * The model of a score tooltip: how a whole number of the Difficulty Score table comes from the exact numbers of
+   * `SG.difficulty.scoreTable`, as formulas with the real values:
+   * { lines: [{ label, math: [tokens], then: [tokens] }], notes: [text] } (`then` is the same formula with the
+   * numbers put in). The hardest technique also gets P in full, the empty cells V, and the work term R is shared
+   * among the techniques in proportion to their work. `prefix` is the locale prefix ('...tip.'), `kind` is
+   * 'technique' (with its `row`), 'empties' or 'total'. Pure data; `renderScoreTip` draws it and `scoreTipText`
+   * flattens it.
    */
   function scoreTip(prefix, kind, table, row) {
     const f = function (n) {
       return SG.i18n && typeof SG.i18n.formatNumber === 'function'
         ? SG.i18n.formatNumber(n, { maximumFractionDigits: 2 }) : String(round2(n));
     };
+    const k = function (key) { return translate(prefix + key); };
+    const shown = { label: k('shown'), math: ['≈ ', B(f(kind === 'empties' ? table.emptyTotal
+      : kind === 'total' ? table.total : row.total))] };
     if (kind === 'total') {
-      return translate(prefix + 'total', {
-        empty: f(table.emptyShare), peak: f(table.peak), work: f(table.workTerm), sum: f(table.unrounded),
-        score: f(table.total)
-      });
+      return {
+        lines: [{ label: k('total'), math: [V('S'), ' = ', V('V'), ' + ', V('P'), ' + ', V('R')],
+          then: ['= ', f(table.emptyShare), ' + ', f(table.peak), ' + ', f(table.workTerm), ' = ',
+            B(f(table.unrounded))] },
+        shown],
+        notes: [k('where.total'), k('rounding')]
+      };
     }
     if (kind === 'empties') {
-      return translate(prefix + 'empties', {
-        e: f(table.empties), value: f(table.emptyShare), score: f(table.emptyTotal)
-      });
+      const e = f(table.empties);
+      return {
+        lines: [{ label: k('empties'), math: [V('V'), ' = 80 × ', FRAC([V('E')], [V('E'), ' + 40'])],
+          then: ['= 80 × ', FRAC([e], [e, ' + 40']), ' = ', B(f(table.emptyShare))] }, shown],
+        notes: [k('where.empties'), k('rounding')]
+      };
     }
-    return translate(prefix + (row.hardest ? 'hardest' : 'technique'), {
-      uses: f(row.uses), points: f(row.points), work: f(row.work), all: f(table.work), peak: f(table.peak),
-      term: f(table.workTerm), rest: f(table.work > 0 ? table.workTerm * row.work / table.work : 0),
-      share: f(row.share), score: f(row.total)
+    const Wt = [V('W'), SUB(V('t'))];
+    const part = FRAC([f(row.work)], [f(table.work)]);
+    const log = function (top, bottom) { return ['(1 + ', FRAC(top, bottom), ')']; };
+    return {
+      lines: [
+        { label: k('work'), math: Wt.concat([' = ', V('n'), SUB(V('t')), ' × ', V('w'), SUB(V('t'))]),
+          then: ['= ', f(row.uses), ' × ', f(row.points), ' = ', B(f(row.work))] },
+        { label: k('all'), math: [V('W'), ' = Σ '].concat(Wt, [' = ', B(f(table.work))]) },
+        { label: k('term'),
+          math: [V('R'), ' = ' + f(0.25) + ' × ', V('P'), ' × log', SUB('2')].concat(log([V('W')], [V('P')])),
+          then: ['= ' + f(0.25) + ' × ', f(table.peak), ' × log', SUB('2')].concat(
+            log([f(table.work)], [f(table.peak)]), [' = ', B(f(table.workTerm))]) },
+        row.hardest
+          ? { label: k('hardest'), math: [V('P'), ' + ', V('R'), ' × ', FRAC(Wt, [V('W')])],
+            then: ['= ', f(table.peak), ' + ', f(table.workTerm), ' × ', part, ' = ', B(f(row.share))] }
+          : { label: k('share'), math: [V('R'), ' × ', FRAC(Wt, [V('W')])],
+            then: ['= ', f(table.workTerm), ' × ', part, ' = ', B(f(row.share))] },
+        shown],
+      notes: [k('where.technique'), k('rounding')]
+    };
+  }
+
+  function tipTokens(tokens) {
+    return tokens.map(function (t) {
+      if (typeof t === 'string') return t;
+      if (t.v !== undefined) return t.v;
+      if (t.b !== undefined) return t.b;
+      if (t.sub !== undefined) return '_' + tipTokens(t.sub);
+      return tipTokens(t.frac[0]) + ' / ' + tipTokens(t.frac[1]);
+    }).join('');
+  }
+
+  /** The plain text of a tip model (one line per formula, then the notes): for tests and text-only readers. */
+  function scoreTipText(model) {
+    if (model === null || typeof model !== 'object') return '';
+    return model.lines.map(function (line) {
+      return line.label + ': ' + tipTokens(line.math) + (line.then ? ' ' + tipTokens(line.then) : '');
+    }).concat(model.notes).join('\n');
+  }
+
+  function mathNodes(doc, tokens) {
+    return tokens.map(function (t) {
+      if (typeof t === 'string') return doc.createTextNode(t);
+      if (t.v !== undefined) return html(doc, 'var', {}, [doc.createTextNode(t.v)]);
+      if (t.b !== undefined) return html(doc, 'strong', {}, [doc.createTextNode(t.b)]);
+      if (t.sub !== undefined) return html(doc, 'sub', {}, mathNodes(doc, t.sub));
+      return html(doc, 'span', { class: 'math-frac' }, [
+        html(doc, 'span', { class: 'math-frac__top' }, mathNodes(doc, t.frac[0])),
+        html(doc, 'span', { class: 'visually-hidden' }, [doc.createTextNode(' / ')]),
+        html(doc, 'span', { class: 'math-frac__bottom' }, mathNodes(doc, t.frac[1]))
+      ]);
     });
+  }
+
+  /** The nodes of a tip model: each formula under its label, then the notes. */
+  function renderScoreTip(doc, model) {
+    return model.lines.map(function (line, i) {
+      const last = i === model.lines.length - 1;
+      const rows = [html(doc, 'div', { class: 'score-tip__label' }, [doc.createTextNode(line.label)]),
+        html(doc, 'div', { class: 'score-tip__math' }, mathNodes(doc, line.math))];
+      if (line.then) rows.push(html(doc, 'div', { class: 'score-tip__math' }, mathNodes(doc, line.then)));
+      return html(doc, 'div', { class: 'score-tip__line' + (last ? ' score-tip__line--result' : '') }, rows);
+    }).concat(model.notes.map(function (note) {
+      return html(doc, 'div', { class: 'score-tip__note' }, [doc.createTextNode(note)]);
+    }));
   }
 
   /**
@@ -238,8 +317,8 @@
       return html(doc, tag, cls ? { class: cls } : {}, [doc.createTextNode(text)]);
     }
 
-    /** The "?" next to a name: opens on hover, focus and click; Esc closes it. */
-    function helpTip(popId, text, label) {
+    /** The "?" next to a name: opens on hover, focus and click; Esc closes it. `content` is text or an array of nodes. */
+    function helpTip(popId, content, label) {
       if (typeof doc.createElementNS !== 'function') return null;
       const svgNs = 'http://www.w3.org/2000/svg';
       const use = doc.createElementNS(svgNs, 'use');
@@ -250,7 +329,7 @@
       svg.setAttribute('focusable', 'false');
       svg.appendChild(use);
       const pop = html(doc, 'div', { class: 'help-tip__pop', id: popId, role: 'tooltip' },
-        [doc.createTextNode(text)]);
+        typeof content === 'string' ? [doc.createTextNode(content)] : content);
       const button = html(doc, 'button', {
         type: 'button', class: 'help-tip__btn', 'aria-describedby': popId, 'aria-label': label
       }, [svg]);
@@ -284,10 +363,11 @@
       return html(doc, 'th', { scope: 'row' }, [label]);
     }
 
-    /** A score cell: the whole number (`data-role="score"`) and a help icon whose tooltip shows how it is calculated. */
+    /** A score cell: the whole number (`data-role="score"`) and a help icon whose tooltip shows how it is calculated
+     * (`tip` is a `scoreTip` model; null: no icon). */
     function scoreCell(part, name, value, tip) {
       const children = [html(doc, 'span', { 'data-role': 'score' }, [doc.createTextNode(value)])];
-      const help = tip === '' ? null : helpTip('step-score-' + part + '-help', tip,
+      const help = tip === null ? null : helpTip('step-score-' + part + '-help', renderScoreTip(doc, tip),
         translate('steps.techniques.help.score', { name: name }));
       if (help !== null) {
         help.setAttribute('class', 'help-tip help-tip--inline help-tip--end');
@@ -370,7 +450,7 @@
         cell('th', translate('steps.techniques.total')),
         cell('td', '', 'result-table__num'),
         scoreCell('total', translate('steps.techniques.total'), formatNumber(Math.round(total)),
-          table !== null ? scoreTip('steps.techniques.tip.', 'total', table, null) : '')
+          table !== null ? scoreTip('steps.techniques.tip.', 'total', table, null) : null)
       ]);
       const section = function (key) {
         return html(doc, 'tr', { class: 'result-table__section', 'data-section-row': key }, [
@@ -467,6 +547,8 @@
     STEP_IDS: STEP_IDS,
     chartModel: chartModel,
     scoreTip: scoreTip,
+    scoreTipText: scoreTipText,
+    renderScoreTip: renderScoreTip,
     roundToTotal: roundToTotal,
     create: create
   };
@@ -487,18 +569,18 @@
       'steps.techniques.total': 'Total',
       'steps.techniques.help': 'About \u201c{name}\u201d',
       'steps.techniques.help.score': 'How the score of \u201c{name}\u201d is calculated',
-      'steps.techniques.tip.technique': '{uses} uses × {points} points = {work} work; all the work of this ' +
-        'puzzle is {all}. The work adds 0.25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} points to the score ' +
-        '({peak} is the points of the hardest technique), shared in proportion to the work: ' +
-        '{term} × {work} ÷ {all} = {share}. Shown as {score}.',
-      'steps.techniques.tip.hardest': '{uses} uses × {points} points = {work} work; all the work of this ' +
-        'puzzle is {all}. As the hardest technique it counts its {peak} points once in full. The work adds ' +
-        '0.25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} points to the score, shared in proportion to the ' +
-        'work: {term} × {work} ÷ {all} = {rest}. {peak} + {rest} = {share}. Shown as {score}.',
-      'steps.techniques.tip.empties': '80 × E ÷ (E + 40) with E = {e} empty cells: 80 × {e} ÷ ({e} + 40) = ' +
-        '{value}. Shown as {score}.',
-      'steps.techniques.tip.total': 'Score = empty cells {empty} + hardest technique {peak} + work {work} = ' +
-        '{sum}, rounded to {score}. The rows are rounded together, so they add up to this total.',
+      'steps.techniques.tip.work': 'Work of this technique',
+      'steps.techniques.tip.all': 'All the work of the puzzle',
+      'steps.techniques.tip.term': 'Work term of the score',
+      'steps.techniques.tip.share': 'Its share of the work term',
+      'steps.techniques.tip.hardest': 'Hardest technique: its points in full + its share of the work term',
+      'steps.techniques.tip.empties': 'Empty cells',
+      'steps.techniques.tip.total': 'Score',
+      'steps.techniques.tip.shown': 'Shown as (rounded)',
+      'steps.techniques.tip.where.technique': 'n = uses, w = points per use, P = points of the hardest technique.',
+      'steps.techniques.tip.where.empties': 'E = number of empty cells.',
+      'steps.techniques.tip.where.total': 'V = empty cells, P = hardest technique, R = work term.',
+      'steps.techniques.tip.rounding': 'The rows are rounded together, so they add up to the total.',
       'steps.detail.empty': 'Use the replay controls under the board to go through the steps of how the ' +
         'puzzle was made. The description of each step shows here.',
       'steps.legend.label': 'Frames on the board',
@@ -522,18 +604,18 @@
       'steps.techniques.total': 'Tổng',
       'steps.techniques.help': 'Giải thích về \u201c{name}\u201d',
       'steps.techniques.help.score': 'Cách tính điểm của \u201c{name}\u201d',
-      'steps.techniques.tip.technique': '{uses} lần × {points} điểm = {work} khối lượng; toàn bộ khối lượng của ' +
-        'đề này là {all}. Khối lượng cộng 0,25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} điểm vào điểm số ' +
-        '({peak} là điểm của kỹ thuật khó nhất), chia theo tỉ lệ khối lượng: {term} × {work} ÷ {all} = {share}. ' +
-        'Hiển thị là {score}.',
-      'steps.techniques.tip.hardest': '{uses} lần × {points} điểm = {work} khối lượng; toàn bộ khối lượng của ' +
-        'đề này là {all}. Là kỹ thuật khó nhất nên được tính đủ {peak} điểm một lần. Khối lượng cộng ' +
-        '0,25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} điểm vào điểm số, chia theo tỉ lệ khối lượng: ' +
-        '{term} × {work} ÷ {all} = {rest}. {peak} + {rest} = {share}. Hiển thị là {score}.',
-      'steps.techniques.tip.empties': '80 × E ÷ (E + 40) với E = {e} ô trống: 80 × {e} ÷ ({e} + 40) = {value}. ' +
-        'Hiển thị là {score}.',
-      'steps.techniques.tip.total': 'Điểm = ô trống {empty} + kỹ thuật khó nhất {peak} + khối lượng {work} = ' +
-        '{sum}, làm tròn thành {score}. Các dòng được làm tròn cùng nhau nên cộng lại đúng bằng tổng này.',
+      'steps.techniques.tip.work': 'Khối lượng của kỹ thuật này',
+      'steps.techniques.tip.all': 'Toàn bộ khối lượng của đề',
+      'steps.techniques.tip.term': 'Phần khối lượng của điểm số',
+      'steps.techniques.tip.share': 'Phần của nó trong phần khối lượng',
+      'steps.techniques.tip.hardest': 'Kỹ thuật khó nhất: đủ điểm của nó + phần của nó trong phần khối lượng',
+      'steps.techniques.tip.empties': 'Ô trống',
+      'steps.techniques.tip.total': 'Điểm số',
+      'steps.techniques.tip.shown': 'Hiển thị (đã làm tròn)',
+      'steps.techniques.tip.where.technique': 'n = số lần dùng, w = điểm mỗi lần, P = điểm của kỹ thuật khó nhất.',
+      'steps.techniques.tip.where.empties': 'E = số ô trống.',
+      'steps.techniques.tip.where.total': 'V = ô trống, P = kỹ thuật khó nhất, R = phần khối lượng.',
+      'steps.techniques.tip.rounding': 'Các dòng được làm tròn cùng nhau nên cộng lại đúng bằng tổng.',
       'steps.detail.empty': 'Dùng các nút phát lại dưới bảng để xem từng bước tạo ra đề. Mô tả của mỗi bước ' +
         'hiện ở đây.',
       'steps.legend.label': 'Các khung trên bảng',
