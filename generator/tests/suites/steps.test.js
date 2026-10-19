@@ -368,6 +368,10 @@
         // Columns: name, uses, points per use and score (no "Added" column).
         expect(fx.detail.textContent).not.toContain('Added');
         expect(fx.detail.textContent).toContain('Points per use');
+        var heads = fx.doc.findAll(fx.detail, function (el) { return el.getAttribute('class') === 'result-table__short'; });
+        expect(heads.map(function (el) { return el.textContent; })).toEqual(['n', 'w', 'W', 'q']);
+        expect(fx.detail.textContent).toContain('n = uses');
+        expect(fx.detail.textContent).not.toContain('hardest technique counts');
         var head = fx.doc.findAll(fx.detail, function (el) { return el.tagName === 'TH' && el.getAttribute('scope') === null; });
         expect(head.length).toBeGreaterThan(0);
       });

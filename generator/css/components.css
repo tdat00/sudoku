@@ -1273,6 +1273,42 @@ dialog.modal:not([open]) {
   gap: var(--sg-space-1);
 }
 
+/* Short column names and their legend are for phones only. */
+.result-table__short,
+.result-table__legend {
+  display: none;
+}
+
+/* Phone: tighter cells and short column names leave the technique column the room it needs. */
+@media (max-width: 767.98px) {
+  .result-table th,
+  .result-table td {
+    padding-inline: var(--sg-space-1);
+  }
+
+  .result-table__short {
+    display: inline;
+  }
+
+  .result-table__legend {
+    display: block;
+  }
+
+  .result-table__legend span {
+    display: block;
+  }
+
+  .result-table__full {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
 .help-tip--inline {
   position: relative;
 }

@@ -426,6 +426,8 @@
             'result-table__num'),
           cell('td', row !== null ? formatNumber(row.points, { maximumFractionDigits: 2 }) : '',
             'result-table__num'),
+          cell('td', row !== null ? formatNumber(row.work, { maximumFractionDigits: 2 }) : '',
+            'result-table__num'),
           row !== null
             ? scoreCell(bar.id, bar.label, formatNumber(row.total),
               scoreTip('steps.techniques.tip.', 'technique', table, row))
@@ -437,29 +439,38 @@
           nameCell(translate('steps.techniques.empties'),
             partHelp('empties', translate('steps.techniques.empties'))),
           cell('td', formatNumber(table.empties), 'result-table__num'),
-          cell('td', formatNumber(table.emptyPoints, { maximumFractionDigits: 2 }), 'result-table__num'),
+          cell('td', '', 'result-table__num'),
+          cell('td', '', 'result-table__num'),
           scoreCell('empties', translate('steps.techniques.empties'), formatNumber(table.emptyTotal),
             scoreTip('steps.techniques.tip.', 'empties', table, null))
         ]));
       }
       const other = rows.slice(bars.length);
-      const head = html(doc, 'tr', {}, [
+      const numHead = function (col) {
+        const key = 'steps.techniques.col.' + col;
+        return html(doc, 'th', { class: 'result-table__num' }, [
+          html(doc, 'span', { class: 'result-table__full' }, [doc.createTextNode(translate(key))]),
+          html(doc, 'span', { class: 'result-table__short', 'aria-hidden': 'true' },
+            [doc.createTextNode(translate(key + '.short'))])
+        ]);
+      };
+      const head =  html(doc, 'tr', {}, [
         html(doc, 'th', {}, [html(doc, 'span', { class: 'visually-hidden' },
           [doc.createTextNode(translate('steps.techniques.col.name'))])]),
-        cell('th', translate('steps.techniques.col.count'), 'result-table__num'),
-        cell('th', translate('steps.techniques.col.unit'), 'result-table__num'),
-        cell('th', translate('steps.techniques.col.score'), 'result-table__num')
+        numHead('count'), numHead('unit'), numHead('work'), numHead('score')
       ]);
       const foot = html(doc, 'tr', { class: 'step-table__total' }, [
         cell('th', translate('steps.techniques.total')),
         cell('td', '', 'result-table__num'),
         cell('td', '', 'result-table__num'),
+        cell('td', table !== null ? formatNumber(table.work, { maximumFractionDigits: 2 }) : '',
+          'result-table__num'),
         scoreCell('total', translate('steps.techniques.total'), formatNumber(Math.round(total)),
           table !== null ? scoreTip('steps.techniques.tip.', 'total', table, null) : null)
       ]);
       const section = function (key) {
         return html(doc, 'tr', { class: 'result-table__section', 'data-section-row': key }, [
-          html(doc, 'th', { scope: 'colgroup', colspan: '4' },
+          html(doc, 'th', { scope: 'colgroup', colspan: '5' },
             [doc.createTextNode(translate('steps.techniques.section.' + key))])
         ]);
       };
@@ -471,6 +482,10 @@
       }
       box.appendChild(html(doc, 'table', { class: 'result-table' },
         [html(doc, 'thead', {}, [head])].concat(groups, [html(doc, 'tfoot', {}, [foot])])));
+      box.appendChild(html(doc, 'p', { class: 'text-muted result__note result-table__legend', 'data-role': 'legend' }, [
+        html(doc, 'span', {}, [doc.createTextNode(translate('steps.techniques.legend.1'))]),
+        html(doc, 'span', {}, [doc.createTextNode(translate('steps.techniques.legend.2'))])
+      ]));
       return box;
     }
 
@@ -567,7 +582,14 @@
       'steps.techniques.col.name': 'Item',
       'steps.techniques.col.count': 'Uses',
       'steps.techniques.col.unit': 'Points per use',
+      'steps.techniques.col.work': 'Work',
       'steps.techniques.col.score': 'Score',
+      'steps.techniques.col.count.short': 'n',
+      'steps.techniques.col.unit.short': 'w',
+      'steps.techniques.col.work.short': 'W',
+      'steps.techniques.col.score.short': 'q',
+      'steps.techniques.legend.1': 'n = uses, w = points per use',
+      'steps.techniques.legend.2': 'W = work (n × w), q = score',
       'steps.techniques.empties': 'Empty cells',
       'steps.techniques.section.technique': 'Technique',
       'steps.techniques.section.other': 'Other',
@@ -603,7 +625,14 @@
       'steps.techniques.col.name': 'Mục',
       'steps.techniques.col.count': 'Lần dùng',
       'steps.techniques.col.unit': 'Điểm mỗi lần',
+      'steps.techniques.col.work': 'Khối lượng',
       'steps.techniques.col.score': 'Điểm',
+      'steps.techniques.col.count.short': 'n',
+      'steps.techniques.col.unit.short': 'w',
+      'steps.techniques.col.work.short': 'W',
+      'steps.techniques.col.score.short': 'q',
+      'steps.techniques.legend.1': 'n = lần dùng, w = điểm mỗi lần',
+      'steps.techniques.legend.2': 'W = khối lượng (n × w), q = điểm',
       'steps.techniques.empties': 'Ô trống',
       'steps.techniques.section.technique': 'Kỹ thuật',
       'steps.techniques.section.other': 'Khác',

@@ -101,6 +101,8 @@
         countText: formatNumber(count),
         unitScore: unit,
         unitScoreText: formatNumber(unit, { maximumFractionDigits: 2 }),
+        work: row !== null ? row.work : 0,
+        workText: formatNumber(row !== null ? row.work : 0, { maximumFractionDigits: 2 }),
         score: score,
         scoreText: formatNumber(score),
         tip: row !== null ? scoreTip('technique', table, row) : null
@@ -127,9 +129,9 @@
     const empties = table !== null ? table.empties : 0;
     return {
       empties: empties,
-      emptyUnit: empties > 0 ? table.emptyPoints : 0,
       emptyText: empties > 0 ? formatNumber(table.emptyTotal) : '',
       emptyTip: empties > 0 ? scoreTip('empties', table, null) : null,
+      workText: table !== null ? formatNumber(table.work, { maximumFractionDigits: 2 }) : '',
       totalText: formatNumber(Math.round(score)),
       totalTip: table !== null ? scoreTip('total', table, null) : null
     };
@@ -323,8 +325,8 @@
         out.push(make(doc, 'tr', { 'data-part': 'empties' }, [
           partHeader('empties', t('result.techniques.empties'), t('result.techniques.empties.desc')),
           make(doc, 'td', { class: 'result-table__num', text: formatNumber(vm.parts.empties) }),
-          make(doc, 'td', { class: 'result-table__num',
-            text: formatNumber(vm.parts.emptyUnit, { maximumFractionDigits: 2 }) }),
+          make(doc, 'td', { class: 'result-table__num', text: '' }),
+          make(doc, 'td', { class: 'result-table__num', text: '' }),
           scoreCell('empties', t('result.techniques.empties'), vm.parts.emptyText, vm.parts.emptyTip)
         ]));
       }
@@ -333,7 +335,7 @@
 
     function sectionRow(key) {
       return make(doc, 'tr', { class: 'result-table__section', 'data-section-row': key }, [
-        make(doc, 'th', { scope: 'colgroup', colspan: '4', text: t('result.techniques.section.' + key) })
+        make(doc, 'th', { scope: 'colgroup', colspan: '5', text: t('result.techniques.section.' + key) })
       ]);
     }
 
@@ -346,7 +348,10 @@
         return box;
       }
       const num = function (key) {
-        return make(doc, 'th', { scope: 'col', class: 'result-table__num', text: t(key) });
+        return make(doc, 'th', { scope: 'col', class: 'result-table__num' }, [
+          make(doc, 'span', { class: 'result-table__full', text: t(key) }),
+          make(doc, 'span', { class: 'result-table__short', 'aria-hidden': 'true', text: t(key + '.short') })
+        ]);
       };
       const head = make(doc, 'tr', {}, [
         make(doc, 'th', { scope: 'col' }, [
@@ -354,6 +359,7 @@
         ]),
         num('result.techniques.col.count'),
         num('result.techniques.col.unit'),
+        num('result.techniques.col.work'),
         num('result.techniques.col.score')
       ]);
       const rows = vm.techniques.map(function (row) {
@@ -363,6 +369,7 @@
           make(doc, 'th', { scope: 'row' }, [make(doc, 'span', { class: 'result-table__name' }, name)]),
           make(doc, 'td', { class: 'result-table__num', text: row.countText }),
           make(doc, 'td', { class: 'result-table__num', text: row.unitScoreText }),
+          make(doc, 'td', { class: 'result-table__num', 'data-role': 'work', text: row.workText }),
           scoreCell(row.id, row.name, row.scoreText, row.tip)
         ]);
       });
@@ -380,10 +387,14 @@
           make(doc, 'th', { scope: 'row', text: t('result.techniques.total') }),
           make(doc, 'td', { class: 'result-table__num', text: '' }),
           make(doc, 'td', { class: 'result-table__num', text: '' }),
+          make(doc, 'td', { class: 'result-table__num', 'data-role': 'work', text: vm.parts.workText }),
           scoreCell('total', t('result.techniques.total'), vm.parts.totalText, vm.parts.totalTip)
         ])])
       ])));
-      box.appendChild(make(doc, 'p', { class: 'text-muted result__note', text: t('result.techniques.note') }));
+      box.appendChild(make(doc, 'p', { class: 'text-muted result__note result-table__legend', 'data-role': 'legend' }, [
+        make(doc, 'span', { text: t('result.techniques.legend.1') }),
+        make(doc, 'span', { text: t('result.techniques.legend.2') })
+      ]));
       return box;
     }
 
@@ -503,14 +514,17 @@
       'result.techniques.col.name': 'Item',
       'result.techniques.col.count': 'Uses',
       'result.techniques.col.unit': 'Points per use',
+      'result.techniques.col.work': 'Work',
       'result.techniques.col.score': 'Score',
+      'result.techniques.col.count.short': 'n',
+      'result.techniques.col.unit.short': 'w',
+      'result.techniques.col.work.short': 'W',
+      'result.techniques.col.score.short': 'q',
+      'result.techniques.legend.1': 'n = uses, w = points per use',
+      'result.techniques.legend.2': 'W = work (n × w), q = score',
       'result.techniques.empties': 'Empty cells',
       'result.techniques.empties.desc': 'Empty cells add 80 × E ÷ (E + 40) points, at most 80.',
       'result.techniques.total': 'Total',
-      'result.techniques.note': 'The hardest technique counts its points once in full; the rest grows with ' +
-        'the logarithm of the total work (points × uses) and is shared among the techniques in proportion ' +
-        'to it — a row\'s score is its allocated share of the total, not uses × points. Use the ? next to a ' +
-        'score to see how it is calculated.',
       'result.techniques.help': 'About “{name}”',
       'result.techniques.help.score': 'How the score of “{name}” is calculated',
       'result.techniques.tip.work': 'Work of this technique',
@@ -550,14 +564,17 @@
       'result.techniques.col.name': 'Mục',
       'result.techniques.col.count': 'Lần dùng',
       'result.techniques.col.unit': 'Điểm mỗi lần',
+      'result.techniques.col.work': 'Khối lượng',
       'result.techniques.col.score': 'Điểm',
+      'result.techniques.col.count.short': 'n',
+      'result.techniques.col.unit.short': 'w',
+      'result.techniques.col.work.short': 'W',
+      'result.techniques.col.score.short': 'q',
+      'result.techniques.legend.1': 'n = lần dùng, w = điểm mỗi lần',
+      'result.techniques.legend.2': 'W = khối lượng (n × w), q = điểm',
       'result.techniques.empties': 'Ô trống',
       'result.techniques.empties.desc': 'Các ô trống cộng 80 × E ÷ (E + 40) điểm, tối đa 80.',
       'result.techniques.total': 'Tổng',
-      'result.techniques.note': 'Kỹ thuật khó nhất được tính đủ điểm một lần; phần còn lại tăng theo ' +
-        'logarit của tổng khối lượng (điểm × số lần dùng) và được chia cho các kỹ thuật theo tỉ lệ đó — ' +
-        'điểm của một dòng là phần được phân bổ của tổng, không phải số lần dùng × điểm. Bấm dấu ? cạnh ' +
-        'một điểm để xem cách tính.',
       'result.techniques.help': 'Giải thích về “{name}”',
       'result.techniques.help.score': 'Cách tính điểm của “{name}”',
       'result.techniques.tip.work': 'Khối lượng của kỹ thuật này',
