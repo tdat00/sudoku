@@ -1431,6 +1431,7 @@
 
     function retranslate() {
       bound.forEach(applyText);
+      if (active && els.wordCard !== undefined && !els.wordCard.hidden) renderWordCard(true);
     }
 
     function store() {
@@ -1535,6 +1536,17 @@
       const statusLine = statusHost.querySelector('.status-row');
       if (statusLine !== null) els.status.appendChild(statusLine);
       els.statusHost = statusHost;
+
+      // What the key word of a solved Wordoku means (hidden until the word line is revealed).
+      els.wordTitle = h('div', { class: 'play__word-title' });
+      bindText(els.wordTitle, 'play.word.title');
+      els.wordText = h('div', { class: 'play__word-text' });
+      els.wordMeaning = h('p', { class: 'play__word-meaning' });
+      els.wordOther = h('p', { class: 'play__word-other' });
+      els.wordCard = h('div', { class: 'play__word', hidden: true }, [
+        els.wordTitle, els.wordText, els.wordMeaning, els.wordOther
+      ]);
+      els.status.appendChild(els.wordCard);
 
       els.tools = h('div', { class: 'play__tools', role: 'toolbar' }, [
         toolButton('notes', 'notes', 'play.tool.notes', toggleNotes),
@@ -2431,6 +2443,34 @@
 
     // ---- game events ------------------------------------------------------------------------------
 
+    /** The dictionary entries of the key word of the current game, in the language of the page. */
+    function wordEntries(info) {
+      if (!info || !SG.wordbook) return [];
+      return SG.wordbook.lookup(info.word, SG.i18n.current);
+    }
+
+    const POS_KEYS = Object.freeze({
+      n: 'play.word.pos.n', v: 'play.word.pos.v', a: 'play.word.pos.a', d: 'play.word.pos.d', o: 'play.word.pos.o'
+    });
+
+    function posText(entry) {
+      return tr(POS_KEYS[entry.pos] || POS_KEYS.o);
+    }
+
+    /** Fills the word card (word, part of speech, meaning); it stays hidden for a word without an entry. */
+    function renderWordCard(visible) {
+      if (els.wordCard === undefined) return;
+      const info = visible && active ? SG.modelAids.describeWord(game.model) : null;
+      const entry = wordEntries(info)[0];
+      els.wordCard.hidden = entry === undefined;
+      if (entry === undefined) return;
+      els.wordText.textContent = entry.text + ' (' + posText(entry) + ')';
+      els.wordText.setAttribute('lang', entry.language);
+      els.wordMeaning.textContent = entry.meaning;
+      els.wordOther.textContent = entry.other;
+      els.wordOther.hidden = entry.other === '';
+    }
+
     function syncWordLine() {
       if (board === null || !SG.modelAids) return;
       if (!active || SG.modelAids.describeWord(game.model) === null) return;
@@ -2438,6 +2478,14 @@
       if (reveal === !wordHidden) return;
       wordHidden = !reveal;
       board.setLayerVisible('word', reveal);
+      renderWordCard(reveal);
+    }
+
+    /** The success text about the key word: the word, with its meaning when the word book knows it. */
+    function wordSentence(info) {
+      const entry = wordEntries(info)[0];
+      if (entry === undefined) return tr('play.success.word', { word: info.word });
+      return tr('play.success.wordMeaning', { word: entry.text, meaning: entry.meaning });
     }
 
     function onSolved() {
@@ -2455,7 +2503,7 @@
         let text = tr('play.success', { time: clockText(game.elapsedMs()) });
         if (counters.hints > 0) text += ' ' + tr('play.success.hints', { count: counters.hints });
         if (counters.reveals > 0) text += ' ' + tr('play.success.revealed', { count: counters.reveals });
-        if (info) text += ' ' + tr('play.success.word', { word: info.word });
+        if (info) text += ' ' + wordSentence(info);
         return text;
       });
       if (board !== null && typeof board.pulseDone === 'function') board.pulseDone();
@@ -2465,6 +2513,7 @@
     /** A game that is already finished when it is attached (a reload): the message without the fanfare. */
     function showFinished() {
       const status = game.status();
+      renderWordCard(SG.modelAids.describeWord(game.model) !== null);
       if (status === 'gaveUp') {
         say('info', function () { return tr('play.msg.revealedAll'); }, true);
         return;
@@ -2472,7 +2521,7 @@
       const info = SG.modelAids.describeWord(game.model);
       say('success', function () {
         let text = tr('play.success', { time: clockText(game.elapsedMs()) });
-        if (info) text += ' ' + tr('play.success.word', { word: info.word });
+        if (info) text += ' ' + wordSentence(info);
         return text;
       }, true);
     }
@@ -2662,6 +2711,7 @@
       popupOpen = false;
       setMore(false);
       wordHidden = false;
+      renderWordCard(false);
       notesMode = false;
       marks = null;
       hint = null;
@@ -2706,6 +2756,7 @@
       if (svg !== null) svg.classList.remove('play-on');
       if (board !== null && wordHidden) board.setLayerVisible('word', true);
       wordHidden = false;
+      if (els.wordCard !== undefined) els.wordCard.hidden = true;
       renderLegend();
       els.root.setAttribute('data-active', 'false');
       els.panel.hidden = true;
@@ -2957,6 +3008,13 @@
       'play.success.revealed_one': '{count} cell was revealed for you.',
       'play.success.revealed_other': '{count} cells were revealed for you.',
       'play.success.word': 'The hidden word is {word}.',
+      'play.success.wordMeaning': 'The hidden word is {word}: {meaning}',
+      'play.word.title': 'The hidden word',
+      'play.word.pos.n': 'noun',
+      'play.word.pos.v': 'verb',
+      'play.word.pos.a': 'adjective',
+      'play.word.pos.d': 'adverb',
+      'play.word.pos.o': 'word',
       'play.success.toast': 'Puzzle solved in {time}!',
       'play.hint.step': 'Step {step} of {steps}',
       'play.hint.region': 'Look in {kind} {label}.',
@@ -3044,6 +3102,13 @@
       'play.success.revealed_one': 'Có {count} ô đã được hiện sẵn cho bạn.',
       'play.success.revealed_other': 'Có {count} ô đã được hiện sẵn cho bạn.',
       'play.success.word': 'Từ ẩn là {word}.',
+      'play.success.wordMeaning': 'Từ ẩn là {word}: {meaning}',
+      'play.word.title': 'Từ ẩn',
+      'play.word.pos.n': 'danh từ',
+      'play.word.pos.v': 'động từ',
+      'play.word.pos.a': 'tính từ',
+      'play.word.pos.d': 'trạng từ',
+      'play.word.pos.o': 'từ',
       'play.success.toast': 'Đã giải xong đề trong {time}!',
       'play.hint.step': 'Bước {step}/{steps}',
       'play.hint.region': 'Hãy nhìn vào {kind} {label}.',

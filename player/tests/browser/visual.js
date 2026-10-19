@@ -152,7 +152,8 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     await page.type(await page.eval('SG.play.typedLabels(SG.app.getPuzzle().model, "word")[' + (wdata.sol[last] - 1) + ']'));
     await sleep(400);
     const wmsg = await page.eval('document.getElementById("a11y-live").textContent');
-    check('wordoku: solving announces the key word', wmsg.indexOf(wdata.word) !== -1, wmsg);
+    check('wordoku: solving announces the key word', wmsg.toLowerCase().indexOf(wdata.word.toLowerCase()) !== -1, wmsg);
+    check('wordoku: the word card shows the word and its meaning', await page.eval('(function(){var c=document.querySelector(".play__word");return c!==null&&!c.hidden&&c.querySelector(".play__word-text").textContent.toUpperCase().indexOf(' + JSON.stringify(wdata.word) + ')===0&&c.querySelector(".play__word-meaning").textContent.length>5;})()'));
     check('wordoku: the word line shows', await page.eval('!document.querySelector("#board-svg [data-layer=word]").classList.contains("is-hidden")'));
     await page.shot('visual-wordoku-solved');
 

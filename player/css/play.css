@@ -108,6 +108,47 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* The key word of a solved Wordoku and what it means. */
+.play__word {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-1);
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 1px solid var(--sg-color-success);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-success-bg);
+}
+
+.play__word[hidden] {
+  display: none;
+}
+
+.play__word-title {
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.play__word-text {
+  color: var(--sg-color-success);
+  font-size: var(--sg-font-size-xl);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.play__word-meaning,
+.play__word-other {
+  margin: 0;
+}
+
+.play__word-other {
+  color: var(--sg-color-text-muted);
+  font-size: var(--sg-font-size-sm);
+}
+
+.play__word-other[hidden] {
+  display: none;
+}
+
 /* Play, Pause and Resume are always the filled, bold action of the box. */
 .play__pause {
   min-height: 2.75rem;

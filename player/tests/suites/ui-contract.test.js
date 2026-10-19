@@ -492,7 +492,8 @@
   // help.html is the guide that the Help button opens in a new tab: it needs the core (the examples replay the
   // hints), the strings and the board, and none of the page of the player.
   var HELP_ONLY = ['js/ui/help-examples.js', 'js/ui/help.js'];
-  var NOT_IN_GUIDE = ['js/ui/exchange.js', 'js/ui/importer.js', 'js/ui/a11y.js', 'js/ui/progress.js', 'js/ui/app.js'];
+  var NOT_IN_GUIDE = ['js/ui/exchange.js', 'js/ui/importer.js', 'js/ui/a11y.js', 'js/ui/progress.js', 'js/ui/app.js',
+    'assets/wordbook/words.vi.js', 'assets/wordbook/words.en.js', 'js/ui/wordbook.js'];
 
   describe('ui contract: help.html', function () {
     var page = readHtml(readText('help.html'));
