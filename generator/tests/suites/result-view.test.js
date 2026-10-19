@@ -147,6 +147,52 @@
     });
   });
 
+  describe('result view: the key word of a Wordoku', function () {
+    it('gives the word and its meaning in the language of the page', function () {
+      ready();
+      var r = SG.pipeline.run({ variantId: 'wordoku', difficulty: 'easy', seed: 3, trace: 'off',
+        variantOptions: { language: 'en' } }, null);
+      var word = SG.wordoku.describe(r.model).word;
+      var en = inLocale('en', function () { return R.wordInfo(r); });
+      var vi = inLocale('vi', function () { return R.wordInfo(r); });
+      expect(en.word).toBe(word);
+      expect(en.text).toBe(word.toLowerCase());
+      expect(en.language).toBe('en');
+      expect(en.meaning.length).toBeGreaterThan(5);
+      expect(vi.meaning).toBe(en.other);
+      expect(vi.other).toBe(en.meaning);
+      expect(en.posName).not.toBe('');
+    });
+
+    it('spells a Vietnamese word with its diacritics', function () {
+      ready();
+      var r = SG.pipeline.run({ variantId: 'wordoku', difficulty: 'easy', seed: 4, trace: 'off',
+        variantOptions: { language: 'vi' } }, null);
+      var info = R.wordInfo(r);
+      expect(info.language).toBe('vi');
+      expect(info.text).not.toBe(info.word);
+      expect(SG.wordoku.normalizeWord(info.text)).toBe(info.word);
+      expect(info.meaning.length).toBeGreaterThan(5);
+      expect(info.other).toBe('');
+    });
+
+    it('keeps the letters and has no meaning for a word that is not in the word book', function () {
+      ready();
+      var r = SG.pipeline.run({ variantId: 'wordoku', difficulty: 'easy', seed: 3, trace: 'off',
+        variantOptions: { word: 'ABCDEFGHI' } }, null);
+      var info = R.wordInfo(r);
+      expect(info.word).toBe('ABCDEFGHI');
+      expect(info.text).toBe('ABCDEFGHI');
+      expect(info.meaning).toBe('');
+    });
+
+    it('is null for a puzzle that is not a Wordoku and for a missing result', function () {
+      ready();
+      expect(R.wordInfo(realResult('classic9', 'easy', 3))).toBeNull();
+      expect(R.wordInfo(null)).toBeNull();
+    });
+  });
+
   describe('result view: warnings', function () {
     it('has no warning at all for a result without warnings', function () {
       ready();

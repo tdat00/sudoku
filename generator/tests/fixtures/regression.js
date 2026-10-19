@@ -189,11 +189,11 @@
         '86f7f33bac3f7d8f', '87f4bbff3a9085fb', 'f310849b45c0bdcf', '99d33533d8b4f377'
       ],
       'wordoku/medium': [
-        '22dc4bfaa61799a6', '0e4df5e6d0418212', 'a7f3cb36db1e990a', '04c16c517f363695',
-        '60cb0997a15e8bdb', 'd8d4b6f59e82e059', 'bd1cb4c0d2a6981c', '6c10f2db8afc4447',
-        '435bddb5ee6b43b1', '4e16077bc656279f', '97947bacae830170', '3245e53d4496cf71',
-        '9b79846e3eed0042', 'a827ff59d2d924d5', 'da3b9e67dc828d1b', '24624c20e315ad8c',
-        'add8998bb11bfcff', 'c18c5428bc864754', '0a6c70833bb70747', 'af7296ece71061e0'
+        '5dcf9d411744fc1d', '84c18ad36aa77cf7', '7153b073eb0c5baf', '18dab98526d745c1',
+        '06481465674f2079', '14cf7ce267aa1686', 'ee478cb41a4f7e58', 'fece246665d97f82',
+        'a4bc2f020312b52e', 'ed25f32504bcb849', 'a5d95021c3320665', '099586533a37376f',
+        'e3ceb1478406184b', '3a876ea2cdab765e', 'f41fe3554193f139', '7b5d96b0e0ddedb4',
+        '9bd86cc4381884b0', '166ca9eb6a57cd2f', '47b4af9f8d81dd93', '803cf278820ca4a4'
       ]
     }
   };

@@ -1204,6 +1204,28 @@ dialog.modal:not([open]) {
   min-width: 0;
 }
 
+/* The key word of a Wordoku and what it means (shown with "Show the solution"): a stat box that takes the
+   whole row, since a meaning is longer than a number. */
+.stat--wide {
+  min-width: 0;
+}
+
+/* Desktop: Difficulty, Clues and the key word share one row; the word takes what is left. */
+.stat-grid--word {
+  grid-template-columns: repeat(2, minmax(8rem, 12rem)) minmax(0, 1fr);
+}
+
+/* Phone: the word box goes on a row of its own below the other two. */
+@media (max-width: 767.98px) {
+  .stat-grid--word {
+    grid-template-columns: repeat(2, minmax(0, 12rem));
+  }
+
+  .stat--wide {
+    grid-column: 1 / -1;
+  }
+}
+
 .result-table {
   width: 100%;
   border-collapse: collapse;

@@ -440,7 +440,8 @@ sudoku-generator/
 ├── docs/                   screenshots used by this README · final-report.md (the final QA report)
 ├── assets/
 │   ├── favicon.svg         the inline favicon
-│   └── wordlists/          isograms.en.js · isograms.vi.js   key words of Wordoku
+│   ├── wordlists/          isograms.en.js · isograms.vi.js   key words of Wordoku
+│   └── wordbook/           words.en.js · words.vi.js   spelling, part of speech and meaning of each key word
 ├── css/
 │   ├── tokens.css          colours (3 themes), spacing, motion: the only place for colour literals
 │   ├── tokens-board.css    colours of the board (3 themes)
@@ -461,8 +462,8 @@ sudoku-generator/
 │   └── ui/                 exchange.js (link to sudoku-player) · i18n.js · locale.en.js · locale.vi.js
 │                           · locale.shell.js · symbols.js · board-view.js · store.js · controls.js
 │                           · step-view.js · explain.js · player.js (replay of the generation)
-│                           · result-view.js · cache.js · history.js · export.js · a11y.js · theme.js
-│                           · help.js · app.js
+│                           · result-view.js · wordbook.js (meaning of a key word) · cache.js · history.js
+│                           · export.js · a11y.js · theme.js · help.js · app.js
 └── tests/
     ├── harness.js · node-runner.js · soak.js · perf.js
     ├── fixtures/           puzzles and fixtures with known answers, the performance helper and the

@@ -177,20 +177,35 @@
       expect(SG.wordlists.en.length).toBeGreaterThanOrEqual(40);
     });
 
-    it('the Vietnamese list may be short or empty, but every word it has is valid', function () {
-      expect(SG.wordlists.vi.length).toBeGreaterThanOrEqual(0);
+    it('the Vietnamese list is much shorter than the English one but still has a word to draw from', function () {
+      expect(SG.wordlists.vi.length).toBeGreaterThanOrEqual(W.MIN_WORDS);
       SG.wordlists.vi.forEach(function (w) { expect(nineDistinct(w)).toBe(true); });
+      // "Bạch Tuyết" without diacritics repeats its T, which is why it cannot be an entry.
+      expect(nineDistinct('BACHTUYET')).toBe(false);
+      expect(SG.wordlists.vi).not.toContain('BACHTUYET');
     });
 
-    it('the Vietnamese list holds the examples of design.md 8.5, and none is the one that repeats a letter',
+    it('every word of both lists has an entry in the word book (assets/wordbook), and every entry a word',
       function () {
-        ['HOANGKIEM', 'BACHTUYEN', 'TRUNGBACH'].forEach(function (w) {
-          expect(nineDistinct(w)).toBe(true);
-          expect(SG.wordlists.vi).toContain(w);
+        var env = SG.test.node;
+        if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
+        ['en', 'vi'].forEach(function (lang) {
+          var text = env.fs.readFileSync(env.path.join(env.root, 'assets/wordbook/words.' + lang + '.js'), 'utf8');
+          var sandbox = {};
+          env.vm.runInNewContext(text, sandbox);
+          var book = sandbox.SG.wordbookData[lang];
+          var keys = Object.keys(book).sort();
+          expect(keys).toEqual(SG.wordlists[lang].slice().sort());
+          keys.forEach(function (key) {
+            var row = book[key];
+            expect('nvado'.indexOf(row[1]) !== -1 && row[1].length === 1).toBe(true);
+            // The spelling is the key word with its diacritics put back; a Vietnamese one has at most 3 syllables.
+            expect(W.normalizeWord(row[0])).toBe(key);
+            expect(row.slice(2).every(function (t) { return typeof t === 'string' && t.length > 5; })).toBe(true);
+            if (lang === 'vi') expect(row[0].split(' ').length).toBeLessThanOrEqual(3);
+            expect(row.length).toBe(lang === 'en' ? 4 : 3);
+          });
         });
-        // "Bạch Tuyết" without diacritics repeats its T, which is why it cannot be an entry.
-        expect(nineDistinct('BACHTUYET')).toBe(false);
-        expect(SG.wordlists.vi).not.toContain('BACHTUYET');
       });
 
     it('the check itself rejects every way an entry can go wrong', function () {

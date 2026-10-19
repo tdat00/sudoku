@@ -1195,7 +1195,10 @@
       board.setColorAuxSymbol(state.colorAuxSymbol);
       renderLegend();
     }
-    if (keys.indexOf('showSolution') !== -1) syncSolution();
+    if (keys.indexOf('showSolution') !== -1) {
+      syncSolution();
+      if (resultView !== null) resultView.refresh();
+    }
     if (keys.indexOf('variantId') !== -1 && current !== null && !busy && !(meta && meta.source === 'app')) {
       discardPuzzle();
     } else if (current === null && !busy &&
@@ -1249,7 +1252,8 @@
       stats: function (position) { return player !== null ? player.rateStep(position) : null; }
     });
     resultView = SG.resultView.create(els.resultRoot, {
-      onRetry: function () { regenerate(); }
+      onRetry: function () { regenerate(); },
+      showWord: function () { return store.get().showSolution === true; }
     });
     player = SG.player.create({ board: board, onPosition: handlePosition, onStateChange: handlePlayerState });
     player.bindControls(els.playerRoot);

@@ -2,7 +2,8 @@
  * Result panel (task T-4.8; design.md section 10.5): `SG.resultView`. What the user wants to know once a
  * puzzle is finished: two small cards (the level reached with its difficulty score, and the number of
  * clues) and a table of the techniques used with how often each was applied and what each adds to the
- * score. A result that is only the closest puzzle found (warning `difficulty.approximate`) gets a yellow
+ * score. A Wordoku result also gets a card with its key word and what the word means, while the "Show the
+ * solution" setting is on. A result that is only the closest puzzle found (warning `difficulty.approximate`) gets a yellow
  * alert and a "Retry with a different seed" button; the other warnings are listed, translated. No warning,
  * no warning UI.
  *
@@ -23,6 +24,12 @@
   if (SG.resultView && typeof SG.resultView.create === 'function') return;
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
+
+  /** Word-book part of speech -> key of its name. */
+  const POS_KEYS = Object.freeze({
+    n: 'result.word.pos.n', v: 'result.word.pos.v', a: 'result.word.pos.a', d: 'result.word.pos.d',
+    o: 'result.word.pos.o'
+  });
 
   /** Warning key -> kind; any other key is listed as 'other'. */
   const WARNING_KINDS = Object.freeze({
@@ -195,6 +202,32 @@
   // DOM
   // ---------------------------------------------------------------------------------------------
 
+  /**
+   * The key word of a Wordoku result and what it means, for the card of the panel.
+   * @param {Object} result  A `PuzzleResult`.
+   * @returns {?{word: string, text: string, language: string, posName: string, meaning: string,
+   *   other: string}} `null` when the puzzle is not a Wordoku. A word without an entry in the word book
+   *   (one the user typed) gives its letters and no meaning.
+   */
+  function wordInfo(result) {
+    if (result === null || typeof result !== 'object' || !result.model || result.model.variantId !== 'wordoku' ||
+        !SG.wordoku || typeof SG.wordoku.describe !== 'function') {
+      return null;
+    }
+    const line = SG.wordoku.describe(result.model);
+    if (line === null) return null;
+    const entry = SG.wordbook && typeof SG.wordbook.lookup === 'function'
+      ? SG.wordbook.lookup(line.word, SG.i18n && SG.i18n.current)[0] : undefined;
+    if (entry === undefined) {
+      return { word: line.word, text: line.word, language: '', posName: '', meaning: '', other: '' };
+    }
+    const posKey = POS_KEYS[entry.pos] || POS_KEYS.o;
+    return {
+      word: line.word, text: entry.text, language: entry.language, posName: t(posKey),
+      meaning: entry.meaning, other: entry.other
+    };
+  }
+
   /** Creates an element; attribute values of null / undefined / false are skipped, `true` gives ''. */
   function make(doc, tag, attrs, children) {
     const node = doc.createElement(tag);
@@ -223,6 +256,8 @@
   /**
    * @typedef {Object} ResultViewOptions
    * @property {function(): void} [onRetry]  The "Retry with a different seed" button.
+   * @property {function(): boolean} [showWord]  Whether a Wordoku result gets the card with its key word and
+   *   the meaning (the "Show the solution" setting); without it there is no such card.
    */
 
   /**
@@ -390,6 +425,20 @@
       return box;
     }
 
+    /** The key word as a stat box like Difficulty and Clues: label, word, then the meaning in small print. */
+    function wordCard(info) {
+      const children = [
+        make(doc, 'dt', { class: 'stat__label', text: t('result.word.title') }),
+        make(doc, 'dd', { class: 'stat__value', 'data-role': 'word-text', lang: info.language || null,
+          text: info.posName === '' ? info.text : info.text + ' (' + info.posName + ')' })
+      ];
+      [info.meaning, info.other].forEach(function (line) {
+        if (line !== '') children.push(make(doc, 'dd', { class: 'stat__sub', text: line }));
+      });
+      if (info.meaning === '') children.push(make(doc, 'dd', { class: 'stat__sub', text: t('result.word.unknown') }));
+      return make(doc, 'div', { class: 'stat stat--sm stat--wide', 'data-stat': 'word' }, children);
+    }
+
     function build(vm) {
       const header = make(doc, 'header', { class: 'result__header' }, [
         make(doc, 'h2', { class: 'card__title visually-hidden', id: 'result-title', text: t('result.title') })
@@ -405,6 +454,11 @@
           t('result.score.sub', { score: vm.scoreText })),
         stat('clues', t('result.stat.clues'), formatNumber(vm.clues), vm.cluesText)
       ]);
+      const info = typeof opts.showWord === 'function' && opts.showWord() ? wordInfo(result) : null;
+      if (info !== null) {
+        stats.classList.add('stat-grid--word');
+        stats.appendChild(wordCard(info));
+      }
 
       const card = make(doc, 'article', {
         class: 'card result', 'aria-labelledby': 'result-title',
@@ -462,6 +516,7 @@
   SG.resultView = {
     WARNING_KINDS: WARNING_KINDS,
     viewModel: viewModel,
+    wordInfo: wordInfo,
     create: create
   };
 
@@ -473,6 +528,13 @@
   SG.localeFragments.push({
     en: {
       'result.title': 'Result',
+      'result.word.title': 'Key word',
+      'result.word.unknown': 'This word is not in the word book, so it has no meaning to show.',
+      'result.word.pos.n': 'noun',
+      'result.word.pos.v': 'verb',
+      'result.word.pos.a': 'adjective',
+      'result.word.pos.d': 'adverb',
+      'result.word.pos.o': 'word',
       'result.stat.difficulty': 'Difficulty',
       'result.score.sub': 'Score: {score}',
       'result.stat.clues': 'Clues',
@@ -502,6 +564,13 @@
     },
     vi: {
       'result.title': 'Kết quả',
+      'result.word.title': 'Từ khóa',
+      'result.word.unknown': 'Từ này không có trong từ điển của trò chơi nên chưa có giải nghĩa.',
+      'result.word.pos.n': 'danh từ',
+      'result.word.pos.v': 'động từ',
+      'result.word.pos.a': 'tính từ',
+      'result.word.pos.d': 'trạng từ',
+      'result.word.pos.o': 'từ',
       'result.stat.difficulty': 'Độ khó',
       'result.score.sub': 'Điểm: {score}',
       'result.stat.clues': 'Số cho sẵn',
