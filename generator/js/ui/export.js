@@ -184,7 +184,7 @@
       hardestTechnique: rating.hardestTechnique === undefined ? null : rating.hardestTechnique,
       techniqueCounts: Object.assign({}, rating.techniqueCounts)
     };
-    ['rawScore', 'hardestGroup', 'confidence', 'solved', 'empties'].forEach(function (key) {
+    ['rawScore', 'hardestGroup', 'confidence', 'solved', 'empties', 'ratingVersion'].forEach(function (key) {
       if (rating[key] !== undefined) out[key] = rating[key];
     });
     return out;

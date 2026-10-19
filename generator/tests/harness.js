@@ -7,6 +7,8 @@
  *   SG.test.skip(reason)   marks the running test as skipped (use for environment limits)
  *   SG.test.node           { fs, path, vm, root } provided by the Node runner, undefined in a browser
  *   SG.test.run(options)   runs everything registered so far, resolves with SG.testResults
+ *   SG.test.timeLimit(ms)  the limit a time assertion of a unit suite uses for a budget of design.md 9.1:
+ *                          `ms * SG.test.TIME_FACTOR` (see TIME_FACTOR below)
  *
  * Tests may be async (return a promise). Results are collected into `SG.testResults`.
  */
@@ -18,6 +20,22 @@
 
   var DEFAULT_TIMEOUT_MS = 5000;
   var DEFAULT_BENCH_ITERATIONS = 1000;
+
+  /**
+   * Tolerance of the time assertions of the unit suites (the CV6 checks of the generation time against the
+   * budgets of design.md 9.1). They run 4 to 20 puzzles on whatever machine runs the suites, often while it
+   * does other work, so they guard against a gross slowdown only: 2x the budget by default, 3x when the
+   * environment variable CI is set (shared, slower CI runners), or the value of SG_TIME_FACTOR (1: the
+   * budgets themselves). The budgets as such are enforced by `node tests/qualify.js` (the 95th percentile of
+   * 40 requests per level on the reference machine decides which levels a variant offers) and measured by
+   * `node tests/perf.js`.
+   */
+  var TIME_FACTOR = (function () {
+    var env = typeof process !== 'undefined' && process && process.env ? process.env : {};
+    var forced = parseFloat(env.SG_TIME_FACTOR);
+    if (isFinite(forced) && forced > 0) return forced;
+    return env.CI ? 3 : 2;
+  })();
 
   // ---------------------------------------------------------------------------------------------
   // Errors and formatting
@@ -593,7 +611,9 @@
     suiteNames: suiteNames,
     run: run,
     deepEqual: deepEqual,
-    AssertionError: AssertionError
+    AssertionError: AssertionError,
+    TIME_FACTOR: TIME_FACTOR,
+    timeLimit: function (ms) { return ms * TIME_FACTOR; }
   };
 
   root.describe = describe;

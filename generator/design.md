@@ -2,7 +2,7 @@
 
 > **Document language:** English (translated from the original Vietnamese specification at the user's request; the Vietnamese UI strings quoted in §7.4 and §11 are product copy and stay in Vietnamese).
 > **Version:** 1.2 · **Status:** Implemented — all tasks of [`task.md`](./task.md) are done. The sections below describe the implementation as built. Where it differs from the first plan the text says so, and [§18](#18-implementation-notes--deviations) lists every deviation in one table. This repository holds **the generator only**: it was split off a combined project, and the trial-play mode now lives in the sibling repository [sudoku-player](https://github.com/tdat00/sudoku-player), which opens the puzzles this one hands over ([§10.9](#109-hand-off-to-the-player-exchange)).
-> **Related documents:** [`task.md`](./task.md) — the task list the agents worked from, with a completion summary (Appendix E) · [`README.md`](./README.md) — how to run, test and extend · `docs/final-report.md` — final QA report (written before the split and before the UI rework of §10.1, so its screenshots and UI notes are a snapshot).
+> **Related documents:** [`task.md`](./task.md) — the task list the agents worked from, with a completion summary (Appendix E) · [`README.md`](./README.md) — how to run, test and extend · `docs/report-v1.md` — final QA report (written before the split and before the UI rework of §10.1, so its screenshots and UI notes are a snapshot).
 
 ---
 
@@ -53,7 +53,7 @@ A static web app written in **plain HTML + CSS + JavaScript** — no framework, 
 | G7 | Never block the UI | Every task > 50 ms runs in a Web Worker or is sliced across frames |
 | G8 | Reproducible | Same `seed` + same configuration ⇒ the same Sudoku puzzle, 100% of the time |
 
-**Status:** G1–G8 are met as far as they can be measured in Node (`tests/soak.js`: 99–100 % exact-level hits, no invariant violation; `tests/perf.js`: p95 inside every budget of §9.1; `tests/fixtures/regression.js`: the same seed gives the same puzzle). G7 holds in worker mode; in main-thread mode it holds up to the granularity limit of one unsplittable piece of work (§9.3). Real-browser timing on the reference machine of §9.1 was not measured.
+**Status:** G1–G8 are met as far as they can be measured in Node (`tests/qualify.js`, rating v2: 4,718 exact hits of 4,720 requests on the offered levels, no invalid or unrated puzzle, docs/report-v2/qualification.md; `tests/perf.js`: p95 inside every budget of §9.1; `tests/fixtures/regression.js`: the same seed gives the same puzzle). G7 holds in worker mode; in main-thread mode it holds up to the granularity limit of one unsplittable piece of work (§9.3). Real-browser timing on the reference machine of §9.1 was not measured.
 
 ### 1.3 Non-goals
 
@@ -309,15 +309,14 @@ Every variant builder **must** pass `SG.model.validate(model)`:
 
 Which modes a variant offers is its `symbolModes`: `digits`, `letters`, `colors`, `shapes` for every variant except Mega (`digits` only — its symbol set is the variant option `symbolSet`, see [§8.6](#86-mega-1212--1616)) and Wordoku (`word`, `digits`).
 
-**Levels offered** (`difficultySupport`; the UI only lists these, and `SG.pipeline` refuses the others with `difficulty.unsupportedLevel`):
+**Levels offered** (`difficultySupport`; the UI only lists these, and `SG.pipeline` refuses the others with `difficulty.unsupportedLevel`). Rating v2: the levels each variant passed in the qualification (`node tests/qualify.js`, protocol and table in [docs/report-v2/qualification.md](docs/report-v2/qualification.md)):
 
 | Variant | Levels |
 |---------|--------|
-| `classic4`, `classic6` | veryEasy, easy (`classic6` has **no** `medium`: 0–3% of its puzzles landed there, so it is not offered) |
-| `classic9`, `diagonalX`, `hyper`, `jigsaw9` | veryEasy … evil |
-| `killer`, `greaterThan`, `wordoku` | veryEasy … expert |
-| `mega12`, `mega16`, `samurai`, `sohei`, `butterfly` | veryEasy … hard |
-| `flower` | veryEasy … hard (`medium` is offered since the clue-floor calibration of T-7.7; it was missing before) |
+| `classic4` | veryEasy (its puzzles need nothing beyond singles) |
+| `classic6` | veryEasy, hard (a list with a gap: easy and medium are never reached, veryHard … evil only by about half of the requests) |
+| `classic9`, `wordoku` | veryEasy … nightmare1 (nightmare2 is rarely reached under the default symmetry) |
+| `mega12`, `mega16`, `diagonalX`, `hyper`, `jigsaw9`, `killer`, `greaterThan`, `samurai`, `sohei`, `butterfly`, `flower` | all nine, veryEasy … nightmare2 |
 
 ### 5.2 Multi-grid geometry
 
@@ -342,7 +341,7 @@ SG.variants.register({
   i18nKey: 'variant.diagonalX',
   group: 'extraRegions',            // UI grouping; 'group.<id>' must exist in the locale packs
   digits: 9,
-  difficultySupport: ['veryEasy','easy','medium','hard','expert','evil'],
+  difficultySupport: ['veryEasy','easy','medium','hard','veryHard','expert','evil','nightmare1','nightmare2'],
   defaultSymbolMode: 'digits',
   symbolModes: ['digits','letters','colors','shapes'],
   options: [ /* schema of variant-specific options, used to auto-generate the UI */ ],
@@ -354,9 +353,11 @@ SG.variants.register({
   // Optional: tuning
   restartThreshold: undefined,                       // failed guesses per full-grid attempt (Mega: 300 / 400)
   clueFloor: undefined,                              // own clue floor per level, see §6.7
-  clueFloorScale: { medium: 0.83, hard: 0.8, expert: 0.8 }   // calibration of the derived floor, see §6.7
+  clueFloorScale: { medium: 0.83, hard: 0.8, veryHard: 0.8, expert: 0.8 }   // calibration of the derived floor, see §6.7
 });
 ```
+
+`difficultySupport` lists the levels the variant offers: exactly those that pass the qualification of `node tests/qualify.js --variant=<id>` ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)); a list may have gaps.
 
 `register` validates the definition (a typo fails when the file loads, not in the middle of a run) and rejects a duplicate `id`. The UI never reads `options` directly: `SG.variants.optionsOf(id)` returns them in one normalised shape (§13.8). The worked example of a complete new variant is in [`README.md`](./README.md#adding-a-variant).
 
@@ -481,82 +482,98 @@ SG.logicalSolver.solve(model, givens, {
 //     hardestTechnique, score, state, solution? }
 ```
 
-The loop: repeatedly **try the techniques in order from cheap → expensive** (ascending `order`), apply the first finding of the cheapest technique that has an effect, and start again from the cheapest, until the puzzle is solved or the solver is stuck (stuck is a normal result, never an error). Techniques are plain registry entries (`SG.techniques.register({ id, group, baseCost, order, i18nKey, variantScope, assumesUniqueness, find })`; the contract is the header of `js/core/techniques.js`); the solver never changes when one is added.
+The loop: repeatedly **try the techniques in a fixed technique-priority order** (ascending `order`, roughly from simple to complex; it is not the order of the rating v2 weights, e.g. XY-Wing comes before Jellyfish although it weighs more), apply the first finding of the first technique in that order that has an effect, and start again from the top, until the puzzle is solved or the solver is stuck (stuck is a normal result, never an error). Techniques are plain registry entries (`SG.techniques.register({ id, group, baseCost, order, i18nKey, variantScope, assumesUniqueness, find })`; the contract is the header of `js/core/techniques.js`); the solver never changes when one is added.
 
 > **Singles are techniques.** The solver deliberately never calls `SG.constraints.propagate`: that engine places naked and hidden singles on its own, so they would be consumed silently — neither attributed nor scored — and `allowedTechniques: ['nakedSingle']` would still solve puzzles that need hidden singles. It starts from a peer-consistent grid and applies every finding with `assign` / `eliminate` only. Cage sums and inequalities are likewise left to their techniques (`tech-cage.js`, `tech-ineq.js`) instead of the propagation extensions.
 
 #### Technique ladder
 
-26 techniques are registered: **21 classic** (the 20 rows of the first plan, with Hidden Single split by unit kind and the two Quads split into Naked / Hidden), **3 Killer** (`cage` group) and **2 Greater-Than** (`ineq` group). `order` is the position in the loop (×10 spacing, so a technique can be inserted); the *design score* is the first plan's `baseCost` (what the technique registers), the *calibrated cost* is what `SG.difficulty` actually scores with (`SG.difficulty.COSTS`, see below).
+26 techniques are registered: **21 classic** (the 20 rows of the first plan, with Hidden Single split by unit kind and the two Quads split into Naked / Hidden), **3 Killer** (`cage` group) and **2 Greater-Than** (`ineq` group). `order` is the position in the loop (×10 spacing, so a technique can be inserted); the *design score* is the first plan's `baseCost` (what the technique registers, and what the solver's own raw score adds up), the *weight* is what `SG.difficulty` scores with (`SG.difficulty.WEIGHTS`, rating v2, see below).
 
-| `order` | `id` | Technique (EN) | Group | Design score | Calibrated cost |
+| `order` | `id` | Technique (EN) | Group | Design score | Weight |
 |--------:|------|----------------|-------|-------------:|----------------:|
 | 10 | `nakedSingle` | Naked Single | `basic` | 1 | 1 |
 | 20 | `hiddenSingleBox` | Hidden Single (box/region) | `basic` | 2 | 1.25 |
 | 30 | `hiddenSingleLine` | Hidden Single (row/col) | `basic` | 3 | 1.5 |
-| 40 | `pointing` | Pointing Pair/Triple | `locked` | 7 | 7 |
-| 50 | `boxLine` | Box/Line Reduction | `locked` | 7 | 8 |
-| 55 | `cageCombo` | K1 Cage Sum Combination | `cage` | 10 | 10 |
-| 60 | `nakedPair` | Naked Pair | `subset` | 9 | 63 |
-| 65 | `ineqChain` | I1 Inequality Chain | `ineq` | 12 | 12 |
-| 70 | `hiddenPair` | Hidden Pair | `subset` | 11 | 77 |
-| 80 | `nakedTriple` | Naked Triple | `subset` | 15 | 105 |
-| 85 | `minMaxForcing` | I2 Min/Max Forcing | `ineq` | 22 | 22 |
-| 90 | `hiddenTriple` | Hidden Triple | `subset` | 18 | 126 |
-| 95 | `ruleOf45` | K2 Rule of 45 (innie/outie) | `cage` | 28 | 28 |
-| 100 | `nakedQuad` | Naked Quad | `subset` | 24 | 168 |
-| 105 | `hiddenQuad` | Hidden Quad | `subset` | 24 | 182 |
-| 110 | `xWing` | X-Wing | `fish` | 32 | 190 |
-| 120 | `simpleColouring` | Simple Colouring | `fish` | 36 | 215 |
-| 130 | `swordfish` | Swordfish | `fish` | 42 | 250 |
-| 135 | `cageSplit` | K3 Cage Splitting | `cage` | 40 | 40 |
-| 140 | `xyWing` | XY-Wing | `wing` | 48 | 480 |
-| 150 | `xyzWing` | XYZ-Wing | `wing` | 54 | 540 |
-| 160 | `jellyfish` | Jellyfish | `fish` | 56 | 335 |
-| 170 | `wWing` | W-Wing | `wing` | 60 | 600 |
-| 180 | `uniqueRectangle` | Unique Rectangle (types 1–2; `assumesUniqueness`) | `wing` | 66 | 660 |
-| 190 | `forcingChain` | Forcing Chain / X-Cycle (chains of at most `maxChainLength` = 12 links) | `chain` | 90 | 720 |
-| 200 | `nishio` | Nishio / Trial & Error (nested depth 2 by default and at most: `maxNishioDepth`) | `chain` | 140 | 1120 |
+| 40 | `pointing` | Pointing Pair/Triple | `locked` | 7 | 40 |
+| 50 | `boxLine` | Box/Line Reduction | `locked` | 7 | 50 |
+| 55 | `cageCombo` | K1 Cage Sum Combination | `cage` | 10 | 40 |
+| 60 | `nakedPair` | Naked Pair | `subset` | 9 | 120 |
+| 65 | `ineqChain` | I1 Inequality Chain | `ineq` | 12 | 40 |
+| 70 | `hiddenPair` | Hidden Pair | `subset` | 11 | 145 |
+| 80 | `nakedTriple` | Naked Triple | `subset` | 15 | 180 |
+| 85 | `minMaxForcing` | I2 Min/Max Forcing | `ineq` | 22 | 180 |
+| 90 | `hiddenTriple` | Hidden Triple | `subset` | 18 | 220 |
+| 95 | `ruleOf45` | K2 Rule of 45 (innie/outie) | `cage` | 28 | 260 |
+| 100 | `nakedQuad` | Naked Quad | `subset` | 24 | 260 |
+| 105 | `hiddenQuad` | Hidden Quad | `subset` | 24 | 300 |
+| 110 | `xWing` | X-Wing | `fish` | 32 | 320 |
+| 120 | `simpleColouring` | Simple Colouring | `fish` | 36 | 360 |
+| 130 | `swordfish` | Swordfish | `fish` | 42 | 420 |
+| 135 | `cageSplit` | K3 Cage Splitting | `cage` | 40 | 520 |
+| 140 | `xyWing` | XY-Wing | `wing` | 48 | 650 |
+| 150 | `xyzWing` | XYZ-Wing | `wing` | 54 | 750 |
+| 160 | `jellyfish` | Jellyfish | `fish` | 56 | 520 |
+| 170 | `wWing` | W-Wing | `wing` | 60 | 850 |
+| 180 | `uniqueRectangle` | Unique Rectangle (types 1–2; `assumesUniqueness`) | `wing` | 66 | 900 |
+| 190 | `forcingChain` | Forcing Chain / X-Cycle (chains of at most `maxChainLength` = 12 links) | `chain` | 90 | 1100 |
+| 200 | `nishio` | Nishio / Trial & Error (nested depth 2 by default and at most: `maxNishioDepth`) | `chain` | 140 | 1700 |
 
 `cage` techniques have `variantScope: ['killer']` and `ineq` techniques `['greaterThan']`: the solver and the digger only use a technique whose scope contains the model's variant. The Vietnamese names of the techniques live in the locale pack (`technique.<id>`), which is authoritative; the first plan's Vietnamese names were not kept.
 
-> The scores of the first plan were **starting values**; the calibration of task `T-2.10` replaced them with the costs above (design values → calibrated values and the reasons are in the calibration log of `js/core/difficulty.js`). Task `T-6.3` of the first plan referred to pre-generation, not calibration.
+> The scores of the first plan were **starting values**; the calibration of task `T-2.10` replaced them with calibrated costs (`SG.difficulty.COSTS`, rating v1), and rating v2 replaced those with the weights above ([docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md) §5.2: singles stay close together so that their order does not matter, cage combinations and inequality chains start at the locked-candidate level, the rule of 45 and cage splitting sit among strong subsets and fish). The weights are engineering priors, not measurements of human solvers. Task `T-6.3` of the first plan referred to pre-generation, not calibration.
 
 #### Difficulty scoring
 
+Rating v2 (the joint report [docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md) §5 is the specification):
+
 ```
-rawScore = Σ_over_applications ( cost(tech) × (isFirstUse(tech) ? firstUseMultiplier : 1) )
-         + emptyCellBonus
-firstUseMultiplier = 1.5        // a technique's first use is cognitively "more expensive"
-emptyCellBonus     = (initial number of empty cells) × 0.6
-score              = max(rawScore, floor of the hardest technique's group)     // "technique floor"
+precondition  a complete logical proof (rating.solved); otherwise the puzzle is unrated: no score, no level
+E     = empty cells at the start                     (rating.empties)
+n_t   = uses of technique t                          (rating.techniqueCounts)
+w_t   = SG.difficulty.WEIGHTS[t]                     a technique without a weight is an error, never a guess
+P     = max { w_t : n_t > 0 }                        the peak: the hardest technique, counted once in full
+W     = Σ w_t · n_t                                  the work
+V     = 80 · E / (E + 40)                            empty cells: bounded by 80, 40 at E = 40
+R     = 0.25 · P · log₂(1 + W / P)                   the rest of the work, on a logarithmic scale (0 when P = 0)
+score = Math.round(V + P + R)                        one rounding of the unrounded sum
+level = the level whose band [min, max) contains score
 ```
 
-`cost(tech)` is `SG.difficulty.COSTS[id]`, falling back to the registered `baseCost`. The logical solver is deliberately not told about the table: it reports `techniqueCounts`, and `SG.difficulty.classify(report, model)` re-scores from them, so `report.score` of the solver is the **uncalibrated** design score — always use `rating.score`. A puzzle that needs a technique of group G is at least as hard as the easiest puzzle of the level that introduces G, however few steps it takes: its score is raised to that level's band minimum (the **technique floor**). That keeps the two conditions below from contradicting each other, so invariant I5 holds by construction; the unfloored value stays available as `rating.rawScore` (and `tests/soak.js` prints the share of puzzles whose raw score is inside the band: 93–100% on classic9 for every level).
+The only inputs are `E` and the technique counts: not the requested or achieved level, the variant, the board size, the time or the symmetry, so the same `E` and counts give the same score in every variant. The score never decreases when a count, `E` or the weight of the hardest technique grows, and it does not depend on the order of the steps; it is **not** monotone under clue removal (the proof changes). The digger does treat a removal it refused (stuck or too hard) as refused for the rest of that dig: a measured search heuristic, not a property of the score (§6.8). One expensive step counts in full on any board (through `P`), while a long proof of cheap steps grows only logarithmically, so a singles-only proof stays below about 77 on every board up to 369 cells. There is no technique floor any more: the level is derived from the score, never the other way round. Because `R ≥ 0.25·P` whenever a technique is used, every puzzle that uses technique `t` scores at least `1.25·w_t`; that is why the oracle of a level allows exactly the techniques with `1.25·w_t` below the band maximum (§6.7).
 
-`rating.hardestTechnique` is the used technique of the highest group (ties: highest cost, then latest in the ladder). A puzzle is assigned to a difficulty level only when **both** conditions hold: `score` lies within the band **and** `hardestTechnique` belongs to an allowed group.
+The logical solver is deliberately not told about the weights: it reports `techniqueCounts`, and `SG.difficulty.classify(report, model)` scores from them, so `report.score` of the solver is the design score — always use `rating.score` (`rating.rawScore` equals it and is kept for the formats). `rating.ratingVersion` is 2.
+
+`rating.hardestTechnique` is the used technique with the largest weight — the one that provides `P` (ties: the larger registration `order`, then the id in ascending code-unit order); `rating.hardestGroup` is its group. Both are metadata only. `rating.confidence` is the margin of the score to the nearest edge of its band that borders another level. Worked example (classic9 *hard*): `P = 320` (xWing), `W = 29 + 19·1.25 + 5·1.5 + 5·40 + 120 + 320 = 700.25`, `V = 80·53/93 = 45.59`, `R = 80·log₂(1 + 700.25/320) = 133.82`, score `round(499.41) = 499`.
+
+The Difficulty Score table (§10.5) shows this sum: each technique row has its uses, its weight as the points and its share `R·w_t·n_t/W` of the work (the row of the hardest technique also carries `P`), the Empty cells row shows `V`, and one `roundToTotal` makes whole numbers that add up to the score (`SG.difficulty.scoreTable`).
 
 > **An extremely useful corollary:** if `logicalSolver` solves a puzzle **entirely with sound inference techniques**, that puzzle **certainly has a unique solution** — there is no need to call `dfs-solver` again. This is exploited in [§6.8](#68--optimal-hole-digging-strategy).
 
 ### 6.7 Difficulty definitions
 
-| Level | VI | EN | Allowed technique groups | Score band (classic9) | Clue floor `minClues` (classic9) | `minCluesPerUnit` |
-|-------|----|----|--------------------------|-----------------------|----------------------------------|------------------:|
-| `veryEasy` | Rất dễ | Very Easy | `basic` (singles only) | 0 – 72 | 40 | 2 |
-| `easy` | Dễ | Easy | `basic` + `locked` | 72 – 180 | 34 | 2 |
-| `medium` | Trung bình | Medium | + `subset` | 180 – 400 | 29 | 1 |
-| `hard` | Khó | Hard | + `fish` | 400 – 800 | 25 | 1 |
-| `expert` | Chuyên gia | Expert | + `wing` | 800 – 1500 | 22 | 0 |
-| `evil` | Ác mộng | Evil | + `chain` | ≥ 1500 | 17 | 0 |
+Nine levels (rating v2). The band is the same for every variant; the oracle of a level allows exactly the techniques whose `1.25 × weight` is below the band maximum (the column lists those that become available at that level; all of them at `nightmare2`).
 
-Bands are half-open, `[min, next min)`, so every score belongs to exactly one level; the top level has no upper bound. The only change from the first plan's numbers is the veryEasy/easy edge, **80 → 72**: singles-only puzzles of 40 clues score 64.5–69 and those of 34 clues 74–92, so 80 rated nearly every easy puzzle veryEasy. The clue ranges of the first plan (`40–50`, `34–40`, … `17–24`) survive as the floor (`minClues`, the one number the digger and invariant I6 use) and an informative `maxClues`. The `cage` and `ineq` groups are available at every level (their techniques are scoped to Killer / Greater-Than by `variantScope`); `SG.difficulty.BASE_GROUPS[0 … level]` are the classic groups a level allows.
+| Level | VI | EN | Score band | Techniques that become available | Clue floor `minClues` (classic9) | `minCluesPerUnit` |
+|-------|----|----|-----------|----------------------------------|---------------------------------:|------------------:|
+| `veryEasy` | Rất dễ | Very easy | [0, 45) | singles | 40 | 2 |
+| `easy` | Dễ | Easy | [45, 180) | pointing, box/line, naked pair; cage combination, inequality chain | 34 | 2 |
+| `medium` | Trung bình | Medium | [180, 400) | hidden pair, triples, quads; rule of 45, min/max forcing | 29 | 1 |
+| `hard` | Khó | Hard | [400, 700) | X-Wing, simple colouring, Swordfish, Jellyfish; cage splitting | 25 | 1 |
+| `veryHard` | Rất khó | Very hard | [700, 1000) | XY-Wing, XYZ-Wing | 25 | 1 |
+| `expert` | Chuyên gia | Expert | [1000, 1500) | W-Wing, Unique Rectangle, forcing chain | 22 | 0 |
+| `evil` | Địa ngục | Evil | [1500, 2400) | Nishio | 17 | 0 |
+| `nightmare1` | Ác mộng 1 | Nightmare 1 | [2400, 3600) | — | 17 | 0 |
+| `nightmare2` | Ác mộng 2 | Nightmare 2 | ≥ 3600 | — | 17 | 0 |
 
-**Variant scaling rule.** `SG.difficulty.spec(level, model)` starts from the classic9 row and multiplies the clue floor and the score band by `cellCount / 81`. A variant whose board does not follow that proportion then adjusts the floor in its definition — this is the calibration knob, and it replaced the first plan's single scaling rule:
+Bands are half-open, `[min, next min)`, so every score belongs to exactly one level; the top level has no upper bound. The canonical names and descriptions of the levels (both apps use them verbatim) are in [docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md) §5.3; the level descriptions say what a level *typically* uses, because the level comes from the score. `veryHard` takes the clue floor and unit minimum of `hard`, and the nightmare tiers those of `evil`. `maxClues` is informative only. `SG.difficulty.BASE_GROUPS` names the classic technique families in ladder order; it no longer defines the levels. No further tiers in this release: no generated puzzle reached 5,400 (report §5.3).
 
-1. `clueFloorScale: { level: factor }` multiplies the derived floor of that level (a missing level has factor 1).
+**Variant scaling rule.** `SG.difficulty.spec(level, model)` starts from the classic9 row and multiplies the clue floor by `cellCount / 81`; the score band is never scaled (rating v2). A variant whose board does not follow that proportion then adjusts the floor in its definition — this is the calibration knob, and it replaced the first plan's single scaling rule:
+
+1. `clueFloorScale: { level: factor }` multiplies the derived floor of that level (a missing level has factor 1). Rating v2 gives `veryHard` the factor of `hard` and `nightmare1` / `nightmare2` that of `evil` wherever a variant declares them.
 2. `clueFloor` — a table `{ level: clues }` (a missing level: no floor) or a function `(level, model, derivedFloor) => clues` — replaces it.
 
-The result, `spec(level, model).minClues`, is the **single number** that the digger, the pipeline, `tests/soak.js` and the variants sweep (invariant **I6**) all use. The calibration of task `T-7.7` measured, per variant, how often ONE dug puzzle lands on the requested level and set:
+The result, `spec(level, model).minClues`, is the **single number** that the digger, the pipeline, `tests/soak.js` and the variants sweep (invariant **I6**) all use. The calibration of task `T-7.7` (rating v1) measured, per variant, how often ONE dug puzzle lands on the requested level and set:
 
 | Variant | `clueFloorScale` | Effect on the share of one dug puzzle landing on the level (medium / hard / expert) |
 |---------|------------------|--------------------------------------------------------------------------------------|
@@ -588,13 +605,13 @@ Shuffle the cell list **once** and walk through it sequentially ⇒ each cell is
 
 **② Symmetry handled in groups**
 When symmetry is enabled, mirrored cells are **dug/restored together as one unit**, not cell by cell. Styles (`SG.symmetry.KINDS`): `none`, `rotational180` (default; the most attractive and common), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. Groups are computed on **canvas** coordinates, so a multi-grid board mirrors about the centre of the whole canvas, and a group simply shrinks where the mirrored position holds no cell.
-*Trade-off:* the stricter the symmetry, the higher the minimum clue count ⇒ the harder it is to reach `evil`. Symmetries whose groups have more than two cells (`rotational90`, `mirrorBoth`) dig in coarser steps and miss a level more often, so the generator allows 30 dig samples per grid instead of 12 for them, and the controls warn from `expert` upwards (`SG.controls.STRICT_SYMMETRY`).
+*Trade-off:* the stricter the symmetry, the higher the minimum clue count ⇒ the harder it is to reach the top levels. Symmetries whose groups have more than two cells (`rotational90`, `mirrorBoth`) dig in coarser steps and miss a level more often, so the generator allows 30 dig samples per grid instead of 12 for them, and the controls warn from `expert` upwards, the nightmare levels included (`SG.controls.STRICT_SYMMETRY`).
 
 **③ Cheap pruning before expensive checks (cheap pre-filters)**
 Before calling any solver, immediately reject candidates that violate:
 - The remaining clue count would drop below the level's `minClues` (the variant's own floor, §6.7).
-- That row/column/region would be left with fewer than `minCluesPerUnit` clues (2 / 2 / 1 / 1 / 0 / 0 for the six levels on a 9-digit board, scaled by `digits / 9`; Killer uses 0) — this helps the puzzle "look balanced".
-- The cell was already rejected in a previous pass (the `rejected` bitmap).
+- That row/column/region would be left with fewer than `minCluesPerUnit` clues (2 / 2 / 1 / 1 / 1 / 0 / 0 / 0 / 0 for the nine levels on a 9-digit board, scaled by `digits / 9`; Killer uses 0) — this helps the puzzle "look balanced".
+- The cell was already rejected in a previous pass (the `rejected` bitmap; Killer also puts there the clues its layout search rated inside the band, §8.2). Only a lost uniqueness is final in principle: a removal refused because the puzzle got stuck or too hard can become acceptable once another removal changes the proof. Treating every refusal as final for the rest of the dig is a measured search heuristic (rating v2 qualification: re-checking those refusals after every accepted removal made generation 4.6 times slower and hid seven top levels for time, with the same share of exact hits).
 
 **④ ⭐ The technique-bounded oracle** — use a logical solver *limited to the allowed techniques* as the oracle
 Instead of asking *"does the puzzle still have a unique solution?"* and only afterwards *"how hard is it?"*, we ask **one single question**:
@@ -604,14 +621,16 @@ Instead of asking *"does the puzzle still have a unique solution?"* and only aft
 - If **yes** ⇒ accept the dig. (And because all techniques are sound, **a unique solution is guaranteed for free** — no DFS needed. The oracle runs with `assumeUniqueness: false`, so `uniqueRectangle`, the one technique that presupposes uniqueness, is never used to certify it.)
 - If **no** ⇒ put the cell back.
 
-Result: the final puzzle is **guaranteed** to lie within the chosen technique band. This is how difficulty is **guaranteed**, rather than "generate and hope".
+Rating v2 adds the band's upper edge to the question: a removal is also put back when the score of the bounded solve would reach the band maximum (`maxScore`), so the easy levels stop in time on large boards, where many empty cells alone would otherwise push a singles-only puzzle past its band.
 
-*Applies to:* `veryEasy` → `expert`.
-*Exception `evil`:* this level allows chains/trial-and-error, so use `dfs stillUnique` (§6.5) as the oracle, then score at the end.
-*Safety net (risk R3):* whatever oracle dug it, every puzzle is re-verified with `SG.dfs.countSolutions(…, 2) === 1` before it leaves the digger. If a technique bug ever made one ambiguous, it is replaced by a plain DFS-dug puzzle and the result carries the warning `digger.unsoundTechnique`.
+Result: the dig never leaves the chosen band from above, and every puzzle it keeps has a complete proof with the techniques of the level. Whether it reaches the band from below is decided by the full rating (⑤), which is what makes a sample *exact*: a complete proof **and** a level equal to the requested one.
+
+*Applies to:* every level (rating v2).
+*Top tiers (`evil`, `nightmare1`, `nightmare2`):* every other sample is also a fast **proposal**: stage A with `dfs stillUnique` (§6.5) as the oracle, stage B towards puzzles the techniques below the chain group cannot finish; each uniqueness check of a removal is guarded at 200,000 search nodes (a removal that needs more is refused). The proposal is rated in full; when it is above the band it is **refined downward**: empty symmetry groups of the solution are added back one at a time in a seeded order (at most 64 full ratings) — an addition that is completely rated with a score ≥ the band minimum is kept (and the refinement stops when the score is also below the band maximum), any other addition is undone.
+*Safety net (risk R3):* whatever oracle dug it, every puzzle is re-verified with `SG.dfs.countSolutions(…, 2) === 1` before it leaves the digger. If a technique bug ever made one ambiguous, it is replaced by a plain DFS-dug puzzle and the result carries the warning `digger.unsoundTechnique`. A candidate that the searches, the refinement or a variant's strategy offer as the closest puzzle of the run (the keeper, §6.8) does not go through the dig step, so the keeper counts its solutions itself (within the 200,000-node guard) before it keeps it, whatever its proof claims: a candidate that is not verified unique is never kept, the closest verified one stays, and a complete proof contradicted by a second solution adds the same warning.
 
 **⑤ Deferred & banded rating**
-The full rating runs once per dug puzzle (step 6), not after every cell. Inside the guided stage (below) the oracle's own score is the objective, so the expensive rater is still called once per sample.
+The full rating runs once per dug puzzle (step 6), not after every cell. Inside the guided stage (below) the oracle's own score is the objective, so the expensive rater is still called once per sample (the proposals and the local search rate their candidates in full, counted against the caps of ⑥).
 
 #### Complete algorithm (as built)
 
@@ -621,40 +640,50 @@ Stage A is `SG.digger.dig`/`digStage` (the engine, usable on its own); stage B i
 function generate(model, level, rng, maxAttempts = 8, digTries = 12):     # digTries = 30 for coarse symmetries
     spec ← difficultySpec(level, model)                                    # §6.7, incl. the variant's floor
     for attempt in 1..maxAttempts:
+        caps     ← { ratings: 1024, proposals: 32768 }                     # per attempt, counted, never timed
         solution ← generateFullGrid(model, rng.fork('grid#'+attempt))      # step 3
-        model'   ← variant.postGenerate(...) or "nothing to do"            # step 4
+        model'   ← variant.postGenerate(...) or "nothing to do"            # step 4 (Killer: cages + layout search)
         for sample in 1..digTries:                                         # the same grid, a fresh dig each time
             # ── step 5: dig ─────────────────────────────────────────────
-            givens ← copy(solution)
-            order  ← symmetryGroups(sequence(allCells, order, rng), symmetry)
-            # Stage A: greedy dig along the pre-shuffled sequence
-            for group in order:
-                if clues − |group| < minClues or violatesUnitMinimum(group): continue
-                remove(group)
-                ok ← level == 'evil' ? stillUnique(…) : solvableWithin(allowedTechniques)
-                if not ok: restore(group)
-                (levels ≥ medium hand over to stage B at ≈ 47 % of the cells as clues)
-            # Stage B (levels ≥ medium): the guided dig, "dig deeper"
-            repeat: rate up to 32 candidate removals with the objective (the bounded solve's score,
-                    refusing a removal that is stuck, ambiguous or at/above the band's upper bound);
-                    apply the one that makes the puzzle hardest; stop when nothing can be removed
+            if level is a top tier and sample is odd:                      # the fast proposal (④)
+                givens ← proposalDig(...); rating ← rate(givens)
+                if rating.score ≥ spec.max: refineDown(...)                # ≤ 64 ratings, symmetric groups
+            else:
+                givens ← copy(solution)
+                order  ← symmetryGroups(sequence(allCells, order, rng), symmetry)
+                # Stage A: greedy dig along the pre-shuffled sequence
+                for group in order:
+                    if clues − |group| < minClues or violatesUnitMinimum(group): continue
+                    remove(group)
+                    ok ← solvableWithin(allowedTechniques) and score < spec.max
+                    if not ok: restore(group)
+                    (stage B takes over at ≈ 47 % of the cells as clues)
+                # Stage B (every level): the guided dig, "dig deeper"
+                repeat: rate up to 32 candidate removals with the objective (the bounded solve's score,
+                        refusing a removal that is stuck, ambiguous or at/above the band's upper bound);
+                        apply the one that makes the puzzle hardest; stop when nothing can be removed
             safety net: countSolutions(givens, 2) == 1, else DFS fallback + 'digger.unsoundTechnique'
             # ── step 6: rate ────────────────────────────────────────────
             rating ← SG.difficulty.rate(model', givens)                    # one full rating
             # ── step 7: tune ────────────────────────────────────────────
-            if rating.level == level: return puzzle                        # tune.hit
-            remember the closest puzzle                                    # tune.miss → next sample
+            if rating.solved and rating.level == level: return puzzle      # tune.hit
+            remember the closest completely rated puzzle                   # tune.miss → next sample
+            if caps are used up: break
+        if no sample was exact and caps remain:
+            local search from the closest sample of the attempt            # symmetric groups: remove / swap /
+                                                                           # add (Greater-Than: remove signs)
         emit retry.difficulty (attempt, willRetry)
-    return the closest puzzle, with the warning 'difficulty.approximate'
+    if no sample at all had a complete proof: throw 'digger.noRatedPuzzle'
+    return the closest completely rated puzzle, with the warning 'difficulty.approximate'
 ```
 
-Why stage B is *guided* and not "dig further with a relaxed oracle" as the first plan sketched: a puzzle that stage A has finished is minimal (every remaining clue is needed for uniqueness itself), so a relaxed oracle finds nothing more to remove — and random minimal puzzles need nothing beyond singles about three times in four, whatever technique set the oracle allows, so the hard levels would be hit far too rarely. Choosing the hardest removal at each step finds the puzzles that need more. Likewise "give clues back when the puzzle is too hard" (`tune.restore`) never became necessary: the guided stage never goes past the band, and a sample that still misses is simply replaced by a new sample.
+Why stage B is *guided* and not "dig further with a relaxed oracle" as the first plan sketched: a puzzle that stage A has finished is minimal (every remaining clue is needed for uniqueness itself), so a relaxed oracle finds nothing more to remove — and random minimal puzzles need nothing beyond singles about three times in four, whatever technique set the oracle allows, so the hard levels would be hit far too rarely. Choosing the hardest removal at each step finds the puzzles that need more. The guided stage never goes past the band; clues are given back only by the downward refinement of the top tiers' proposals and by the local search (rating v2), both logged as `reveal` entries of the dig log, so the replay shows them.
 
 > **Pipeline seams.** `digLevel` runs the three steps `dig` ("dig holes with validation": the dig strategy, default `digStage`, then the safety net), `rate` (one rating) and `tune` (the band check: `tune.hit` / `tune.miss`). A missed sample repeats dig → rate → tune **on the same grid**, up to `digTries` times, before the attempt gives up and `retry.difficulty` starts a new grid. A variant selects another dig strategy with `digStrategy` (Killer's wraps `digStage` with cage-aware settings; Greater-Than's digs signs, §8.3), registered with `SG.digger.registerStrategy(id, fn)`.
 
 #### ⑥ Outer loop: budgeted restart
 
-The outer loop of the algorithm above (up to `maxAttempts` grids, default 8, UI range 1–20; up to `digTries` dig samples per grid) is the budgeted restart. When every attempt is used, the closest puzzle is returned together with the warning `difficulty.approximate` — it never throws for that and never loops without bound ("closest" = whole levels apart first, then the distance of the score from the band).
+The outer loop of the algorithm above (up to `maxAttempts` grids, default 8, UI range 1–20; up to `digTries` dig samples per grid, then the local search) is the budgeted restart. Every attempt has deterministic caps (rating v2, report §5.7 (9)): at most 1,024 full ratings (the refinement's included) and 32,768 proposed moves (rejected and repeated ones count too), and every uniqueness check of a search candidate or a proposal removal is guarded at 200,000 search nodes; the guided objective's bounded solve is guarded at 100,000 budget checks. Counting work instead of time keeps a seed's puzzle the same on every machine. When every attempt is used, the closest **completely rated** puzzle is returned together with the warning `difficulty.approximate` ("closest" = whole levels apart first, then the distance of the score from the band); a puzzle without a complete logical proof is never returned, and when no sample at all had one the run fails with `digger.noRatedPuzzle`. The 120 s active-time guard of the client and cancellation stay errors.
 
 > **UX principle:** **never** hang indefinitely. Always return a valid puzzle (a unique solution is absolutely guaranteed), and if the difficulty is not matched exactly, tell the user clearly, with a "Retry with a different seed" button.
 
@@ -753,7 +782,7 @@ Example: Classic 9×9, *easy*, seed 3 replays in 7 steps — Full solution; Rand
 - **Steps are plain data:** `{ index, kind, phase, line, key, args, values, structure, marks, signs, metrics }`. `values` is the board after the step (a full snapshot, cheap at this granularity, so seeking needs no checkpoints or inverse patches), `structure` tells whether cages and signs are drawn, `marks` holds the frames `{ dug, kept, revealed }`, `signs` the sign marks `{ hidden, removed, kept }` by index into `buildSteps().signs`, `metrics` the running dig counters `{ attempts, accepted, rejected, clues }` (null outside the dig). The counters are cumulative and counted in what the board shows — cells, or signs for Greater-Than — so they add up with the step description. `viewAt(built, position)` is the board at a position; `describeStep`, `stepTitle`, `stepMeta` and `positionText` are the texts (`replay.*` keys).
 - **One place drives the rest.** The player's `onPosition({ position, length, step, direction })` (`direction` is `'forward'`, `'backward'` or `'seek'`; `step` is null at position 0) is the only thing that moves the step description, and the app re-emits it as its `position` event, so nothing can be out of step with the board. The Help dialog reads the same position when it opens (`SG.app.getExplainContext()`, §7.4). `SG.player.rateStep(p)` gives the techniques the puzzle of a step needs (`{ counts, before, empties, score }`, rated by `SG.difficulty.rate` and cached), which the step description turns into its score table.
 - **Board.** The structure layers (`cages`, `ineq`; `SG.player.STRUCTURE_LAYERS`) are hidden until the step that builds them; the frames are highlight classes of `layer-overlay` ([§10.3](#103-animation-language)). Greater-Than draws every sign during the replay (`SG.greaterThan.withSigns(result.model, signs)`), marks them by index (`board.setSignMarks({ hidden, removed, kept })`) and switches to the model of the result at the last position. The other overlays (regions, windows, the Wordoku line) come from the model, not from the log. "Show solution" draws the solution only at the last position.
-- **Step description** (`SG.stepView.create(rootEl, { stats })`, `js/ui/step-view.js`), in the **Generation Steps** tab under the replay controls (`#step-detail`): a heading "Step k - Title" with an **Explain** icon (opens the Help), the one-line summary ("9 cells removed · 72 clues left"), the full sentence, the **Difficulty Score table of the puzzle at that step** (Technique section with uses, points and total per technique and a help icon on each name; Other section with the empty cells and the bonus points for difficult techniques; a Total row — at the last step the same total as the Summary tab; `stats` is `player.rateStep`) and the legend of the marks the steps use (removed in this step / tried, but put back / clue shown in this step / sign taken away in this step / sign tried, but kept), at the right. At position 0 it shows a hint to use the replay controls. There is no list of steps: the user moves with the replay controls. The instance offers `setSteps`, `setPosition`, `clear`, `getPosition`, `refresh`, `destroy`; the constant `STEP_IDS` lists the seven pipeline steps, and `SG.stepView.chartModel` (technique order and labels) and `roundToTotal` (whole numbers that add up to a total) are shared with the result panel (§10.5).
+- **Step description** (`SG.stepView.create(rootEl, { stats })`, `js/ui/step-view.js`), in the **Generation Steps** tab under the replay controls (`#step-detail`): a heading "Step k - Title" with an **Explain** icon (opens the Help), the one-line summary ("9 cells removed · 72 clues left"), the full sentence, the **Difficulty Score table of the puzzle at that step** (Technique section with uses, points and share of the score per technique and a help icon on each name; Other section with the empty cells; a Total row — at the last step the same total as the Summary tab; `stats` is `player.rateStep`, and a step whose puzzle has no complete proof gets no table, the state the page already had for a step it cannot rate) and the legend of the marks the steps use (removed in this step / tried, but put back / clue shown in this step / sign taken away in this step / sign tried, but kept), at the right. At position 0 it shows a hint to use the replay controls. There is no list of steps: the user moves with the replay controls. The instance offers `setSteps`, `setPosition`, `clear`, `getPosition`, `refresh`, `destroy`; the constant `STEP_IDS` lists the seven pipeline steps, and `SG.stepView.chartModel` (technique order and labels) and `roundToTotal` (whole numbers that add up to a total) are shared with the result panel (§10.5).
 - **Cache.** A puzzle served from the cache has no dig log (it is never stored): the replay waits until the background regeneration hands the log over through `SG.app.attachTrace(trace, digLog)` ([§6.8 ⑦](#68--optimal-hole-digging-strategy)).
 
 ### 7.4 Explanation content
@@ -816,13 +845,15 @@ Input: a grid that already has a complete solution.
      - The target size is drawn at random from a difficulty-dependent distribution:
          veryEasy/easy : {2:45%, 3:40%, 4:15%}       → small cages, easy to reason about
          medium        : {2:30%, 3:35%, 4:25%, 5:10%}
-         hard/expert   : {2:15%, 3:30%, 4:30%, 5:20%, 6:5%}
+         hard … evil   : {2:15%, 3:30%, 4:30%, 5:20%, 6:5%}   (veryHard and expert included)
+         nightmare1/2  : the evil shares, tilted towards larger cages by +2 on the cage-size slider
+                         (clamp(cageSize + 2, −2, 2): +2 at the default position)
      - Constraint: the values within a cage must be PAIRWISE DIFFERENT
        (the standard Killer rule) → when growing a cage, exclude any cell whose value is already present.
 2. Compute the sum of each cage from the solution.
 3. Remove ALL clues (classic Killer gives no digits).
 4. Check for a unique solution with a cage-aware solver (`SG.dfs` with the cage propagation extension).
-   This layout check runs for hard / expert / evil only; veryEasy, easy and medium skip it, because the digger keeps the
+   This layout check runs from hard upwards; veryEasy, easy and medium skip it, because the digger keeps the
    clues those levels need and its oracle already guarantees uniqueness.
 5. If it is NOT unique, repair in this priority order (from least to most invasive):
      a. Split a large cage in the most ambiguous area into two smaller cages.
@@ -830,10 +861,16 @@ Input: a grid that already has a complete solution.
      c. Reveal 1 clue at the cell with the most candidates.
    Split / merge are tried at most 12 times, then up to 24 clues are revealed. Every check is bounded by
    search nodes (30 000 per check, 250 000 per layout), never by the clock, so the result stays reproducible.
-6. Rate the difficulty with the logical solver, with the `cage` technique group enabled.
+6. (rating v2, veryHard and above) Layout search: with the revealed digits completed to whole symmetry groups,
+   the puzzle is rated; while it is unique, completely rated and below the band, merge two neighbouring cages
+   or hand a boundary cell to the neighbouring cage, and keep a move when the puzzle stays unique with a
+   complete proof and its score does not decrease and stays below the band maximum (at most 8,192 proposed
+   moves and 256 ratings per attempt, each rating or count a piece of at most 30 000 checks). When the layout
+   ends inside the band, the dig keeps those clues, so it can end on that puzzle.
+7. Rate the difficulty with the logical solver, with the `cage` technique group enabled.
 ```
 
-The model carries `model.cages[k] = { cells, sum, distinct }` (`cells[0]` is the top-left cell: the sum label goes there) and every cage of two or more cells is also a partial all-different unit (`kind: 'cage'`, label `K<n>`). The dig that follows is the registered strategy `'killer'`: it wraps the standard `digStage` with a clue floor of 40 for `veryEasy` and **none** for the other levels (declared as the variant's `clueFloor`, §6.7), no per-unit minimum, and the guided stage at every level — the score band is what stops the dig. The variant option `cageSize` (−2 … +2, default 0 = "by difficulty") tilts the size distribution towards smaller or larger cages.
+The model carries `model.cages[k] = { cells, sum, distinct }` (`cells[0]` is the top-left cell: the sum label goes there) and every cage of two or more cells is also a partial all-different unit (`kind: 'cage'`, label `K<n>`). The dig that follows is the registered strategy `'killer'`: it wraps the standard `digStage` with a clue floor of 40 for `veryEasy` and **none** for the other levels (declared as the variant's `clueFloor`, §6.7), no per-unit minimum, and the guided stage at every level — the score band is what stops the dig. The variant option `cageSize` (−2 … +2, default 0 = "by difficulty") tilts the size distribution towards smaller or larger cages. The layout search happens in the structure phase (step 4 of the pipeline), before the replayable dig, so the Generation Steps replay digs on the final cages.
 
 **Mandatory optimisation:** the sum-combination lookup table (§6.3 — P4). Without it, Killer would be ~30× slower.
 
@@ -855,8 +892,12 @@ This is the only variant in which the thing being removed is **not a cell**.
    (Uses the same technique-bounded oracle mechanism as §6.8 ④.)
 5. Every sign that is still redundant for uniqueness is removed too, with a plain uniqueness check, so the
    sign set is minimal: removing any sign that is left would give the puzzle a second solution.
-   If the techniques of the level cannot finish the puzzle, or it is rated above the level, reveal one more
-   group of numeric clues and run steps 4–5 again on the signs that are left (at most 8 rounds).
+   If the techniques of the level cannot finish the puzzle, or it is rated above the level (levels compared by
+   their index on the nine-level ladder), reveal one more group of numeric clues and run steps 4–5 again on the
+   signs that are left (at most 8 rounds).
+6. (rating v2) When no sample of an attempt hits the level, the local search may remove further signs or clue
+   groups (never add clues, so the sign set stays minimal); the downward refinement of the top tiers does not
+   apply to the signs.
 ```
 
 The numeric clues follow the symmetry of the configuration; the signs do not. A sign is part of the model as `{ a, b }` meaning `value[a] < value[b]`, with `a` and `b` orthogonal neighbours; `SG.greaterThan.signEdges(model)` gives a renderer the edge, the midpoint and the glyph of each sign.
@@ -938,8 +979,8 @@ So they are bundled together in `js/variants/extra-regions.js`, and can **be ena
 
 ### 8.8 Mini 4×4 / 6×6
 
-- `classic4`: 2×2 boxes, supports only `veryEasy`/`easy`. Very fast — used as the "smoke test" for the whole pipeline.
-- `classic6`: boxes of **2 rows × 3 columns**. Supports `veryEasy`/`easy` only: `medium` was dropped because only 0–3 % of its puzzles landed there (decision D3; see §18).
+- `classic4`: 2×2 boxes, offers only `veryEasy` (rating v2 qualification, docs/report-v2/qualification.md): its puzzles need nothing beyond singles. Very fast — used as the "smoke test" for the whole pipeline.
+- `classic6`: boxes of **2 rows × 3 columns**. Offers `veryEasy` and `hard` (rating v2 qualification, docs/report-v2/qualification.md): `easy` and `medium` were never hit, and `veryHard`, `expert` and `evil` only by about half of the requests, below the 90 % the qualification asks for.
 - UI: the default symbol mode stays `digits`; `shapes` and `colors` are one selection away. The first plan's "kid mode" switch was not built.
 
 ---
@@ -948,25 +989,29 @@ So they are bundled together in `js/variants/extra-regions.js`, and can **be ena
 
 ### 9.1 Performance targets (budgets)
 
-Measured on a mid-range desktop (~10th-generation Intel i5), Chrome, `trace: summary` mode. p95 over 50 runs.
+Measured on a mid-range desktop (~10th-generation Intel i5), Chrome, `trace: summary` mode. p95 over 50 runs. Rating v2 (nine levels): a target the table had before is kept while the qualification meets it, `easy` takes the target of `medium`, and a new cell is three times the p95 of the qualification rounded up, never below the target of the level before and never above the qualification's own budget (2 s / 10 s / 30 s); `tests/fixtures/perf-helper.js` holds the numbers.
 
-| Variant | veryEasy | medium | hard | expert | evil |
-|---------|---------|--------|------|--------|------|
-| `classic4` / `classic6` | < 10 ms | < 20 ms | — | — | — |
-| `classic9` | < 60 ms | < 150 ms | < 400 ms | < 900 ms | < 2.5 s |
-| `diagonalX` / `hyper` | < 80 ms | < 200 ms | < 500 ms | < 1.2 s | < 3 s |
-| `jigsaw9` | < 150 ms | < 350 ms | < 900 ms | < 2 s | < 5 s |
-| `wordoku` | < 100 ms | < 250 ms | < 600 ms | < 1.5 s | — |
-| `killer` | < 300 ms | < 700 ms | < 1.8 s | < 4 s | — |
-| `greaterThan` | < 300 ms | < 700 ms | < 1.8 s | < 4 s | — |
-| `mega12` | < 400 ms | < 1 s | < 3 s | — | — |
-| `mega16` | < 1.5 s | < 4 s | < 10 s | — | — |
-| `butterfly` | < 1 s | < 3 s | < 8 s | — | — |
-| `samurai` / `flower` / `sohei` | < 3 s | < 8 s | < 20 s | — | — |
+| Variant | veryEasy | easy | medium | hard | veryHard | expert | evil | nightmare1 | nightmare2 |
+|---------|---|---|---|---|---|---|---|---|---|
+| `classic4` | < 10 ms | — | — | — | — | — | — | — | — |
+| `classic6` | < 10 ms | — | — | < 350 ms | — | — | — | — | — |
+| `classic9` | < 60 ms | < 150 ms | < 150 ms | < 400 ms | < 400 ms | < 900 ms | < 2.5 s | < 2.5 s | — |
+| `diagonalX` | < 80 ms | < 200 ms | < 200 ms | < 500 ms | < 500 ms | < 1.2 s | < 3 s | < 3 s | < 3 s |
+| `hyper` | < 80 ms | < 200 ms | < 200 ms | < 500 ms | < 500 ms | < 1.2 s | < 3 s | < 3 s | < 5 s |
+| `jigsaw9` | < 150 ms | < 350 ms | < 350 ms | < 900 ms | < 900 ms | < 2 s | < 5 s | < 5 s | < 5 s |
+| `wordoku` | < 100 ms | < 250 ms | < 250 ms | < 600 ms | < 600 ms | < 1.5 s | < 1.5 s | < 2.5 s | — |
+| `killer` | < 300 ms | < 700 ms | < 700 ms | < 1.8 s | < 10 s | < 10 s | < 10 s | < 10 s | < 10 s |
+| `greaterThan` | < 300 ms | < 700 ms | < 700 ms | < 6 s | < 10 s | < 10 s | < 10 s | < 10 s | < 10 s |
+| `mega12` | < 400 ms | < 1 s | < 1 s | < 3 s | < 3 s | < 3 s | < 3 s | < 4.5 s | < 16 s |
+| `mega16` | < 1.5 s | < 4 s | < 4 s | < 10 s | < 10 s | < 10 s | < 10 s | < 10 s | < 10 s |
+| `butterfly` | < 1 s | < 3 s | < 3 s | < 8 s | < 8 s | < 8 s | < 8 s | < 8 s | < 15 s |
+| `samurai` | < 3 s | < 8 s | < 8 s | < 20 s | < 20 s | < 20 s | < 20 s | < 20 s | < 30 s |
+| `flower` | < 3 s | < 8 s | < 8 s | < 20 s | < 20 s | < 20 s | < 20 s | < 20 s | < 20 s |
+| `sohei` | < 3 s | < 8 s | < 8 s | < 20 s | < 20 s | < 20 s | < 20 s | < 20 s | < 20 s |
 
-A `—` entry = the variant does not declare support for that level (`difficultySupport`); for `classic4` / `classic6` the second column is their `easy` target, since they offer no `medium`.
+A `—` entry = the variant does not offer that level (`difficultySupport`, [docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
 
-**Status.** `node tests/perf.js` measures every cell of this table, and `tests/soak.js` prints the same budgets next to its own timings. Measured in Node on the development machine (not in Chrome on the reference i5), every cell meets its target, most of them by an order of magnitude or more; the slowest relative to its budget is Killer expert (p95 ≈ 1.3 s of 4 s). The cheap `perf` suite of the normal test run only warns; the *regression hashes* of `tests/fixtures/regression.js` are what keeps an optimisation honest (§15.2).
+**Status.** `node tests/perf.js` measures every cell of this table, and `tests/soak.js` prints the same budgets next to its own timings. Measured in Node on the development machine (not in Chrome on the reference i5), every cell of the qualification run meets its target; the slowest relative to its budget are Greater-Than and Killer from `veryHard` up (p95 ≈ 5.4–5.9 s of 10 s). The cheap `perf` suite of the normal test run only warns; the *regression hashes* of `tests/fixtures/regression.js` are what keeps an optimisation honest (§15.2).
 
 ### 9.2 Mandatory optimisation rules
 
@@ -1040,7 +1085,7 @@ SG.workerClient = {
 
 **Main panel.** At its top left, a heading `<variant> - <difficulty> (Seed: <seed>)` (`#puzzle-heading`; the level reached and the seed used once a puzzle is on screen, the choices of the form before) and the description of the variant (`#puzzle-subheading`); at its top right **Play** (`#btn-play-online`, opens the puzzles of the list in sudoku-player in a new tab, the one on screen first, [§10.9](#109-hand-off-to-the-player-exchange)) **Print** (`#btn-export`, [§10.6](#106-export)) and **Export** (`#btn-export-code`, the chosen puzzles as readable text, [§10.6](#106-export)), enabled once a puzzle is shown. While no puzzle is on screen the board shows the empty layout of the chosen variant, and choosing another variant shows its layout at once (a puzzle of the old variant is discarded). Under the board, one box with two tabs (`.player__tabs`; arrow keys, Home and End move between them): **Summary** (`#result-panel` with `#result-root`, [§10.5](#105-result-panel); selected after every generation) and **Generation Steps** (`#steps-root`: at its top the replay controls (`#btn-first #btn-prev #btn-next #btn-last`, the slider `#scrubber` with a mark for every step, "Step k of N" in `#player-time`, [§7.3](#73-replay-engine-in-the-ui-layer)), then the step description in `#step-detail` — number, title, summary and sentence of the step on show, the Difficulty Score table of the puzzle at that step, the legend of the board frames — and the **Explain** icon). While a run goes on the board shows the empty layout and **Cancel** is the only live control; there is no status line. The puzzle options (`#controls-root`: at the top **Generate** and **Generate random** — `#btn-generate`, `#btn-regenerate`: a new random seed, then a generation, `SG.app.regenerate()`; enabled after the first run — and **Cancel** while a run goes on, so that they never move when a variant has many options; below them the form) are the right column. **Footer** (`footer.app-footer`, under the whole layout, centred, not printed): "© 2026 Dat Le. Released under the MIT licence." and a link to the repository (`https://github.com/tdat00/sudoku-generator`, opens in a new tab with `rel="noopener noreferrer"`); the texts are `shell.footer.*`, the dot between them is drawn by CSS.
 
-**Puzzle history** (`SG.history`, `js/ui/history.js`, left panel `#history-root` with `#history-list`, `#history-clear`): every generated puzzle is added to a list in `localStorage` (`sg.history.v1`, newest first, 100 at most, memory fallback). An entry holds the variant, the level asked for and reached, the seed, clues, score, time and the configuration that rebuilds the puzzle. A puzzle generated again moves to the top; picking an entry writes its configuration to the form and calls `SG.app.generate` (same seed, same puzzle; the result cache serves it at once) without moving the entry; imported puzzles are not listed. Each item shows the variant name with, below it, `<level>: score <score>, seed <seed>` (the level in bold), a seed longer than 6 characters being cut to its last 6.
+**Puzzle history** (`SG.history`, `js/ui/history.js`, left panel `#history-root` with `#history-list`, `#history-clear`): every generated puzzle is added to a list in `localStorage` (`sg.history.v1`, newest first, 100 at most, memory fallback). An entry holds the variant, the level asked for and reached, the seed, clues, score, time and the configuration that rebuilds the puzzle. A puzzle generated again moves to the top; picking an entry writes its configuration to the form and calls `SG.app.generate` (same seed, same puzzle within one generator/rating version — an entry made before rating v2 may regenerate a different puzzle, and its stored level and score are not re-rated; the result cache serves it at once) without moving the entry; imported puzzles are not listed. Each item shows the variant name with, below it, `<level>: score <score>, seed <seed>` (the level in bold), a seed longer than 6 characters being cut to its last 6.
 
 **Responsive** (`css/layout.css`):
 - `≥ 1360px`: 3 columns — the list of puzzles (wide enough for `<variant> - <level>` on one line; a longer title is cut with an ellipsis) | the board and the replay box (replay controls and the Summary / Generation Steps tabs) | the puzzle options (the two side columns are sticky and scroll by themselves).
@@ -1133,13 +1178,13 @@ The animations below remain in `SG.boardView` for a caller that plays events bac
 
 ### 10.5 Results panel (after generation finishes)
 
-Shows (`SG.resultView`, in `#result-root`): two small cards — the difficulty (the level reached, with its score underneath) and the clue count — and a "Difficulty Score" table in two sections — **Technique**: one row per technique the puzzle needed (the registry order, simplest first): name (with a small help icon that shows the summary of the technique), number of uses, score per use and the subtotal it adds (`SG.difficulty.techniqueScore`: cost × (uses − 1 + first-use multiplier)); **Other** (only when it has a row): an **Empty cells** row (the number of empty cells × the bonus of one, 0.6) and, when the hardest technique belongs to a higher level than the points give, a **Bonus points for difficult techniques** row (the technique floor of §6.6), each with a help icon. The **Total** row at the end is the difficulty score shown in the card. The subtotals are whole numbers that add up to the total as written (`SG.stepView.roundToTotal`: the largest remainders get the extra points). The table of the step description ([§7.3](#73-replay-engine-in-the-ui-layer)) has the same columns and rows for the puzzle at that step (`player.rateStep` gives `counts`, `empties`, `score`), so at the last step its total is the score of the summary. A puzzle that needs no technique says so instead of the table. The panel has no preview image, seed, share link, "Play online" button, solution switch or timings; the form still has the "Show the solution" option, and the seed is in the main heading.
+Shows (`SG.resultView`, in `#result-root`): two small cards — the difficulty (the level reached, with its score underneath) and the clue count — and a "Difficulty Score" table in two sections — **Technique**: one row per technique the puzzle needed (the registry order, simplest first): name (with a small help icon that shows the summary of the technique), number of uses, its points (the weight) and its share of the score (rating v2: the work term `R` shared in proportion to points × uses, plus the peak `P` on the row of the hardest technique; a note under the table says so); **Other** (only when it has a row): an **Empty cells** row (the number of empty cells, the average points of one, and `80 × E ÷ (E + 40)` in all), with a help icon. There is no bonus row any more (rating v1's technique floor is gone). The **Total** row at the end is the difficulty score shown in the card. The subtotals are whole numbers that add up to the total as written (`SG.difficulty.scoreTable`: one rounding of all the exact shares together, the largest remainders get the extra points). The table of the step description ([§7.3](#73-replay-engine-in-the-ui-layer)) has the same columns and rows for the puzzle at that step (`player.rateStep` gives `counts`, `empties`, `score`), so at the last step its total is the score of the summary. A puzzle that needs no technique says so instead of the table. The panel has no preview image, seed, share link, "Play online" button, solution switch or timings; the form still has the "Show the solution" option, and the seed is in the main heading.
 
 If the difficulty **does not exactly match** the requested level (`difficulty.approximate`) ⇒ a clear yellow warning with a "Retry with a different seed" button. The other warnings (`trace.downgraded`, `digger.unsoundTechnique`) are listed, translated; no warning, no warning UI.
 
 ### 10.6 Export
 
-The Print button (`#btn-export`, a printer icon) opens one dialog titled **Print** (`SG.exportUi`, a `<dialog>` of `SG.app.openModal`): the list of the saved puzzles (`SG.history`, newest first; the puzzle on screen is ticked, **Select all** / **Select none**, "n of N selected"), **Puzzles per page** (buttons for 1, 2 or 4; 4 at first), the **Add the solutions on separate pages** switch, the hint about "Save as PDF", and a footer with **Cancel** and **Print…**. There is no preview. A puzzle that is not on screen is generated again from its saved settings (same seed, same puzzle; "Preparing puzzle k of n…" is shown meanwhile, Cancel stops it); then the pages are built (`buildPrintLayout`) and the dialog closes once the print dialog of the browser was opened. The **Export** button (`#btn-export-code`, `action { id: 'exportCode' }`) opens a second dialog, `SG.exportUi.openText()`: the same list of saved puzzles (same picker, same "Preparing puzzle k of n…" generation of the ones not on screen), a read-only monospace box with the text of the ticked puzzles (`buildExportText(items)`) and a **Copy** button (`SG.controls.copyText`). The text is plain and readable: for each puzzle a header line `#<n>,<variant>,<level>,<seed>` (names in the language of the page, no comma or × in them) and then the grid, one row per line — a digit for a clue (`A`, `B`… for the values 10, 11…), `.` for an empty cell, `_` where the canvas of the board has no cell — with a blank line between puzzles. The clues are exported, and for the variants whose board the grid does not fix a few `key: value` lines follow the grid (no blank line): `regions:` (Jigsaw: the region 1-9 of every cell, nine groups of nine), `cages:` (Killer: `sum=r1c1,r1c2` per cage, cells named by row and column from 1), `signs:` (Greater-Than: `r1c1<r1c2`, the first cell is less than the second) and `letters:` + `word-line:` (Wordoku: the letter of each value and where the key word sits, never the word). Every other variant is fixed by its name and the grid (Samurai and the like by the `_` of its canvas), so sudoku-player rebuilds its board from the text. The **Play** button is not part of either dialog: it hands the puzzles of the list to the player ([§10.9](#109-hand-off-to-the-player-exchange)) as this very text, packed into one link.
+The Print button (`#btn-export`, a printer icon) opens one dialog titled **Print** (`SG.exportUi`, a `<dialog>` of `SG.app.openModal`): the list of the saved puzzles (`SG.history`, newest first; the puzzle on screen is ticked, **Select all** / **Select none**, "n of N selected"), **Puzzles per page** (buttons for 1, 2 or 4; 4 at first), the **Add the solutions on separate pages** switch, the hint about "Save as PDF", and a footer with **Cancel** and **Print…**. There is no preview. A puzzle that is not on screen is generated again from its saved settings (same seed, same puzzle within one generator/rating version; an entry made before rating v2 may give a different puzzle; "Preparing puzzle k of n…" is shown meanwhile, Cancel stops it); then the pages are built (`buildPrintLayout`) and the dialog closes once the print dialog of the browser was opened. The **Export** button (`#btn-export-code`, `action { id: 'exportCode' }`) opens a second dialog, `SG.exportUi.openText()`: the same list of saved puzzles (same picker, same "Preparing puzzle k of n…" generation of the ones not on screen), a read-only monospace box with the text of the ticked puzzles (`buildExportText(items)`) and a **Copy** button (`SG.controls.copyText`). The text is plain and readable: for each puzzle a header line `#<n>,<variant>,<level>,<seed>` (names in the language of the page, no comma or × in them) and then the grid, one row per line — a digit for a clue (`A`, `B`… for the values 10, 11…), `.` for an empty cell, `_` where the canvas of the board has no cell — with a blank line between puzzles. The clues are exported, and for the variants whose board the grid does not fix a few `key: value` lines follow the grid (no blank line): `regions:` (Jigsaw: the region 1-9 of every cell, nine groups of nine), `cages:` (Killer: `sum=r1c1,r1c2` per cage, cells named by row and column from 1), `signs:` (Greater-Than: `r1c1<r1c2`, the first cell is less than the second) and `letters:` + `word-line:` (Wordoku: the letter of each value and where the key word sits, never the word). Every other variant is fixed by its name and the grid (Samurai and the like by the `_` of its canvas), so sudoku-player rebuilds its board from the text. The **Play** button is not part of either dialog: it hands the puzzles of the list to the player ([§10.9](#109-hand-off-to-the-player-exchange)) as this very text, packed into one link.
 
 | Format | Contents | Notes |
 |--------|----------|-------|
@@ -1242,7 +1287,9 @@ sudoku-generator/
 ├── task.md                    Task list + completion summary
 ├── README.md                  Run instructions & introduction (bilingual)
 ├── LICENSE                    MIT
-├── docs/                      Screenshots used by the README · final-report.md (final QA report)
+├── docs/                      Screenshots used by the README · report-v1.md (final QA report of version 1) ·
+│                              report-v2/ (rating v2: report-brief.md, report-detailed.md, qualification.md,
+│                              the researchers' reports)
 ├── assets/
 │   ├── favicon.svg            Inline-SVG favicon
 │   └── wordlists/  isograms.en.js · isograms.vi.js
@@ -1276,7 +1323,7 @@ sudoku-generator/
 │   │   ├── tech-chain.js      forcing chain, nishio
 │   │   ├── tech-cage.js       Killer-specific techniques
 │   │   ├── tech-ineq.js       Greater-Than-specific techniques + the inequality propagation extension
-│   │   ├── difficulty.js      COSTS / TABLE (calibrated), spec, classify, rate, clue floors
+│   │   ├── difficulty.js      WEIGHTS / TABLE (rating v2), spec, classify, rate, score table, clue floors
 │   │   ├── full-grid.js       Full grid generation (+ restarts)
 │   │   ├── symmetry.js        Symmetric cell groups
 │   │   ├── digger.js          Hole-digging stages A/B, the restart loop, dig strategies, `*Steps` steppers
@@ -1321,6 +1368,7 @@ sudoku-generator/
     ├── node-runner.js         Headless runner via Node (vm.runInThisContext); owns SOURCE_FILES
     ├── soak.js                Calibration & invariant soak (Node script)
     ├── perf.js                §9.1 measurement + regression hashes (Node script)
+    ├── qualify.js             Qualification of the levels each variant offers (Node script, rating v2)
     ├── fixtures/              Sample puzzles with known answers, technique fixtures, perf helper, regression hashes
     └── suites/                *.test.js (43 suites, see §15.2)
 ```
@@ -1416,17 +1464,23 @@ Finding = { technique, cells, placements:[[cell,value]], eliminations:[[cell,val
 ### 13.7 `SG.difficulty`
 
 ```js
-SG.difficulty.LEVELS: string[]                                  // ['veryEasy',...,'evil']
-SG.difficulty.BASE_GROUPS: string[]                             // ['basic','locked','subset','fish','wing','chain']
-SG.difficulty.COSTS, TABLE, SCORING                             // the calibration, §6.6 / §6.7
+SG.difficulty.LEVELS: string[]          // ['veryEasy','easy','medium','hard','veryHard','expert','evil','nightmare1','nightmare2']
+SG.difficulty.BASE_GROUPS: string[]     // ['basic','locked','subset','fish','wing','chain'] (names only; no longer defines levels)
+SG.difficulty.WEIGHTS, TABLE, SCORING   // weights (§6.6), bands and clue floors (§6.7), formula constants
+SG.difficulty.RATING_VERSION            // 2
 SG.difficulty.spec(level, model): DifficultySpec
 DifficultySpec = { level, min, max, minClues, maxClues, minCluesPerUnit, allowedTechniques:string[],
-                   allowedGroups:string[], symmetryDefault, extraPasses /* unused */, oracle: 'techniques'|'unique', scale }
+                   allowedGroups:string[], symmetryDefault, extraPasses /* unused */, oracle: 'techniques',
+                   proposal: boolean /* evil and the nightmares */, scale }
 SG.difficulty.classify(report, model): Rating
-Rating = { level, score, rawScore, hardestTechnique, hardestGroup, confidence, solved, empties, techniqueCounts }
+Rating = { level, score, rawScore /* = score */, hardestTechnique, hardestGroup, confidence, solved, empties,
+           techniqueCounts, ratingVersion }       // no complete proof: level, score and rawScore are null
 SG.difficulty.rate(model, givens, options?): Rating            // solve with every technique, then classify
 SG.difficulty.isSupported(level, model): boolean                // pre-check before generating
-SG.difficulty.costOf(techniqueId): number
+SG.difficulty.weightOf(techniqueId): number                     // throws 'difficulty.unknownTechnique'
+SG.difficulty.breakdown(counts, empties), scoreOf(counts, empties) // the formula of §6.6, exact parts / integer
+SG.difficulty.scoreTable(counts, empties), apportion(values, total) // the Difficulty Score table (§10.5)
+SG.difficulty.bandOf(level), levelOfScore(score), levelIndex(level), provesUniqueness(rating)
 ```
 
 ### 13.8 `SG.variants`
@@ -1565,10 +1619,11 @@ SG.exportUi.PLAYER_URL_DEFAULT / LONG_LINK_CHARS                   // 'https://t
   "generatedAt": "2026-10-15T11:00:00.000Z",
   "variantId": "jigsaw9",
   "variantOptions": { "compactness": 0.6 },
-  "difficulty": { "requested": "hard", "achieved": "hard", "score": 612,
+  "difficulty": { "requested": "hard", "achieved": "hard", "score": 502,
                   "hardestTechnique": "xWing",
                   "techniqueCounts": { "nakedSingle": 21, "hiddenSingleBox": 14, "nakedPair": 3, "xWing": 1 },
-                  "rawScore": 612, "hardestGroup": "fish", "confidence": 0.7, "solved": true, "empties": 54 },
+                  "rawScore": 502, "hardestGroup": "fish", "confidence": 0.68, "solved": true, "empties": 54,
+                  "ratingVersion": 2 },
   "seed": 1734567890,
   "symmetry": "rotational180",
   "symbolMode": "digits",
@@ -1599,7 +1654,7 @@ SG.exportUi.PLAYER_URL_DEFAULT / LONG_LINK_CHARS                   // 'https://t
 }
 ```
 
-Everything from `symbols` down is **additive**: the first plan's fields are unchanged. The export (`SG.exportUi.toJson`, the document of the player link) writes the following beyond the plan: `rawScore`, `hardestGroup`, `confidence`, `solved` and `empties` inside `difficulty`; `stats.timings` (milliseconds per step); `symbols` (the symbol mode and the label of every value, so Mega 16×16 and Wordoku are described exactly); `digOrder`, `maxAttempts` and `warnings` (the configuration and the warnings of the run); `locale` and `labels` (rule L6: the names of the variant, the level and the hardest technique **in the language of the export**); `model` (the plain-data model spec for sudoku-player, see [§10.9](#109-hand-off-to-the-player-exchange)); and, only where applicable, `layout.cellRow` / `layout.cellCol` (the canvas position of every cell, written for boards that are not a full row-major rectangle — the multi-grid boards, whose canvas has holes) and `wordoku` (`{ word, placement, line }`, Wordoku only). `cages` carry `{ cells, sum, distinct }`; `inequalities` carry `{ a, b }` (`value[a] < value[b]`).
+Everything from `symbols` down is **additive**: the first plan's fields are unchanged. The export (`SG.exportUi.toJson`, the document of the player link) writes the following beyond the plan: `rawScore`, `hardestGroup`, `confidence`, `solved`, `empties` and `ratingVersion` inside `difficulty` (rating v2: `ratingVersion` is 2 and `rawScore` equals `score`; the format stays `sudoku-generator/v1`, and a reader that does not know `ratingVersion` ignores it); `stats.timings` (milliseconds per step); `symbols` (the symbol mode and the label of every value, so Mega 16×16 and Wordoku are described exactly); `digOrder`, `maxAttempts` and `warnings` (the configuration and the warnings of the run); `locale` and `labels` (rule L6: the names of the variant, the level and the hardest technique **in the language of the export**); `model` (the plain-data model spec for sudoku-player, see [§10.9](#109-hand-off-to-the-player-exchange)); and, only where applicable, `layout.cellRow` / `layout.cellCol` (the canvas position of every cell, written for boards that are not a full row-major rectangle — the multi-grid boards, whose canvas has holes) and `wordoku` (`{ word, placement, line }`, Wordoku only). `cages` carry `{ cells, sum, distinct }`; `inequalities` carry `{ a, b }` (`value[a] < value[b]`).
 
 **No import:** the generator no longer reads puzzle files, pasted text or dropped files (the former `SG.importUi` was removed together with the JSON, text, PNG and SVG exports). The document only travels to the player through the link of [§10.9](#109-hand-off-to-the-player-exchange).
 
@@ -1633,8 +1688,8 @@ Everything from `symbols` down is **additive**: the first plan's fields are unch
 |-----|----------|
 | `sg.prefs.v1` | Language, theme, font size, reduced motion, colour-blind aux symbol (a `speed` stored by an older version is ignored) |
 | `sg.lastConfig.v1` | The most recent generation configuration (a `trace` stored by an older version is ignored) |
-| `sg.cache.v1` | `{ version: 1, entries: [{ key, cfg, at, pool, data }] }`: up to 20 generated puzzles (LRU, `pool: true` marks a pre-generated one; at most 2 per configuration, 4 in all), with version checking. `data` is `SG.cache.serialize(result)`: the `toWire` form with typed arrays encoded as `{ $t, d }` plus a checksum of `givens` + `solution`. **No trace and no dig log are stored.** |
-| `sg.history.v1` | `{ version: 1, entries: [...] }`: the list of generated puzzles shown in the left panel (newest first, at most 100). An entry is `{ id, at, variantId, requested, level, seed, clues, cells, score, symbolMode?, symmetry, digOrder, maxAttempts, variantOptions }` — what the list shows and what rebuilds the puzzle (same seed, same puzzle); no grid is stored |
+| `sg.cache.v1` | `{ version: 2, entries: [{ key, cfg, at, pool, data }] }`: up to 20 generated puzzles (LRU, `pool: true` marks a pre-generated one; at most 2 per configuration, 4 in all), with version checking (version 2 = rating v2: the puzzles cached by an older version are purged once). `data` is `SG.cache.serialize(result)`: the `toWire` form with typed arrays encoded as `{ $t, d }` plus a checksum of `givens` + `solution`. **No trace and no dig log are stored.** |
+| `sg.history.v1` | `{ version: 1, entries: [...] }`: the list of generated puzzles shown in the left panel (newest first, at most 100). An entry is `{ id, at, variantId, requested, level, seed, clues, cells, score, symbolMode?, symmetry, digOrder, maxAttempts, variantOptions }` — what the list shows and what rebuilds the puzzle (same seed, same puzzle within one generator/rating version; entries made before rating v2 keep their stored level and score, are not re-rated and may regenerate a different puzzle); no grid is stored |
 Every read/write is wrapped in `try/catch` (Safari's private mode can throw): blocked or missing storage means the values live in memory for the session (an in-memory LRU for the cache), a `QuotaExceededError` evicts the least recently used entries and retries, and a corrupt item or another schema version is purged. Nothing throws into the application.
 
 ---
@@ -1648,11 +1703,11 @@ Two ways to run **the same test suites**:
 1. **`tests.html`** — open it in a browser (it works from `file://`); it shows green/red results, has a suite filter and a text filter. Query parameters: `?suite=killer&filter=text&bail=1&autorun=0`.
 2. **`node tests/node-runner.js`** — runs headless, with exit code ≠ 0 on failure. **This is how the AI agents verify their work.** Supports `--suite=a,b`, `--filter=text`, `--bail` and `--verbose`. It loads `SOURCE_FILES` (a missing file is skipped), then `tests/fixtures/*.js`, then discovers `tests/suites/*.test.js` by itself; there is no registration step for a new suite (`tests.html` keeps a hand-written `SUITE_FILES` list for browser runs).
 
-`tests/harness.js` provides: `describe` / `it` (and `.skip`), `expect(v).toBe/toEqual/toBeTruthy/toBeFalsy/toBeNull/toBeUndefined/toBeDefined/toBeGreaterThan[OrEqual]/toBeLessThan[OrEqual]/toBeCloseTo/toBeInstanceOf/toMatch/toContain/toHaveLength/toThrow`, `beforeEach` / `afterEach`, `bench(name, fn)` for performance measurement, and `SG.test.skip(reason)` for environment limits. Tests may be async. Suites that need the file system read `SG.test.node` (`{ fs, path, vm, root }`, Node only). `SG_DEEP=1` (Node) or `SG.test.deep = true` (browser) switches the mega, multigrid and variants suites to their full statistical volumes.
+`tests/harness.js` provides: `describe` / `it` (and `.skip`), `expect(v).toBe/toEqual/toBeTruthy/toBeFalsy/toBeNull/toBeUndefined/toBeDefined/toBeGreaterThan[OrEqual]/toBeLessThan[OrEqual]/toBeCloseTo/toBeInstanceOf/toMatch/toContain/toHaveLength/toThrow`, `beforeEach` / `afterEach`, `bench(name, fn)` for performance measurement, and `SG.test.skip(reason)` for environment limits. Tests may be async. Suites that need the file system read `SG.test.node` (`{ fs, path, vm, root }`, Node only). `SG_DEEP=1` (Node) or `SG.test.deep = true` (browser) switches the mega, multigrid and variants suites to their full statistical volumes. The time checks of the suites (CV6: generation time against the §9.1 budgets) use `SG.test.timeLimit(budget)`, the budget times `SG.test.TIME_FACTOR`: 2 by default, 3 when the environment variable `CI` is set, or `SG_TIME_FACTOR` (1: the budgets themselves). They guard against a gross slowdown on any machine, a busy one included; the budgets as such are enforced by `tests/qualify.js` (§6, docs/report-v2/qualification.md) and measured by `tests/perf.js` (§9.1).
 
 ### 15.2 Test suites
 
-All 43 files of `tests/suites/` (the current test count is in `README.md`; the one of the combined project is in `docs/final-report.md`). Fixtures live in `tests/fixtures/`: `classic.js` (puzzles with known answers), `techniques.js` + `techniques-helper.js` (positive / negative / soundness fixtures), `rated.js` (puzzles labelled with their level), `perf-helper.js` and `regression.js` (see below).
+All 43 files of `tests/suites/` (the current test count is in `README.md`; the one of the combined project is in `docs/report-v1.md`). Fixtures live in `tests/fixtures/`: `classic.js` (puzzles with known answers), `techniques.js` + `techniques-helper.js` (positive / negative / soundness fixtures), `rated.js` (puzzles labelled with their level), `perf-helper.js` and `regression.js` (see below).
 
 | Suite | What it checks |
 |-------|----------------|
@@ -1667,7 +1722,7 @@ All 43 files of `tests/suites/` (the current test count is in `README.md`; the o
 | `logical-solver.test.js` | The technique registry, the solve loop, `variantScope`, `collectSteps` |
 | `tech-basic.test.js`, `tech-subset.test.js`, `tech-fish.test.js`, `tech-wing.test.js`, `tech-chain.test.js` | One suite per technique group: published positive fixtures, negative fixtures, and **soundness** (never eliminates a value of the true solution) |
 | `techniques.test.js` | Properties that must hold for **every** registered technique, by looping over `SG.techniques.list()` — a technique added later is tested without editing it |
-| `difficulty.test.js` | Scoring, bands, clue floors, classification against labelled puzzles (within 1 level), monotonicity, the difficulty-bounded digger, invariants I1–I6 |
+| `difficulty.test.js` | Rating v2: the formula and its worked examples (499, 633), score purity across variants, band edges, monotonicity in the inputs, the unrated policy, the hardest-technique rule, the score table summing to the total, clue floors, classification against labelled puzzles, the support lists against docs/report-v2/qualification.md, the difficulty-bounded digger, invariants I1–I6 |
 | `events.test.js` | The event emitter, verbosity filtering, patches (`invertPatch` round trip), the per-step explanation data, `capTrace` |
 | `pipeline.test.js` | The seven steps in order with `start`/`end` pairs; events against `VOCABULARY`; patches reconstruct the final grid; cost of instrumentation (`off` < 2 %, `full` < 35 %); the `PuzzleResult` fields and its dig log (applied to the solution, it ends exactly on the puzzle; it is the same for every verbosity and crosses the wire); determinism; hooks; retries; cancellation |
 | `mega.test.js`, `extra-regions.test.js`, `jigsaw.test.js`, `killer.test.js`, `greater-than.test.js`, `multigrid.test.js`, `wordoku.test.js` | One suite per variant file: geometry (unit and cell counts), the variant's own algorithm (layouts, cages, signs, word lists, shared cells), common criteria CV1–CV9, events, i18n |
@@ -1697,19 +1752,19 @@ These are assertions that **must never be false**, checked in every generation t
 | I2 | `givens` is a subset of `solution` (it never contradicts the solution) |
 | I3 | `solution` satisfies every unit, cage, and inequality |
 | I4 | The same `(variantId, difficulty, seed, options)` ⇒ identical `givens` |
-| I5 | If `rating.level === requested` then `score` lies within `spec[min,max)` **and** `hardestTechnique ∈ allowedGroups` (holds by construction, thanks to the technique floor) |
+| I5 | Every returned puzzle has a complete logical proof (`rating.solved`), and if `rating.level === requested` then `score` lies within `spec[min,max)` (rating v2: the level is derived from the score; there is no technique floor) |
 | I6 | Clue count ≥ `SG.difficulty.spec(level, model).minClues` — **the variant's own floor** (§6.7), not the classic9 number |
 | I7 | Every logical technique eliminates only values that do **not** belong to the true solution (soundness) |
 
 ### 15.4 Fuzz / soak testing
 
-`tests/soak.js` — generates puzzles for every (variant × level) combination, checks I1–I7 on each one, and prints a confusion matrix per variant (requested level in the rows, achieved level in the columns), the time per puzzle against the §9.1 budget, the share of puzzles whose raw score is inside the band without the technique floor, and a score histogram. Presets: `--quick` (≈ 160 puzzles, the P2 checkpoint), `--count=N` (default 500), `--per-combo=N` and `--full` (25 per combination, 100 per classic9 level, ≈ 2 000 puzzles, the final QA preset); `--variant`, `--level`, `--seed`, and `--costs` / `--bands` to try a calibration change without editing the file. Exit code 0 requires no invariant violation, ≥ 90 % exact hits on every classic9 level and ≥ 80 % on every other combination (`--no-gate` always exits 0). It is not part of the normal test run (too slow); it was the tool of the calibrations of tasks `T-2.10` and `T-7.7`. The last `--full` run: 2 125 puzzles, no invariant violation, 100 % exact hits everywhere except classic9 medium (99 %).
+`tests/soak.js` — generates puzzles for every (variant × level) combination, checks I1–I7 on each one, and prints a confusion matrix per variant (requested level in the rows, achieved level in the columns), the time per puzzle against the §9.1 budget, and a score histogram on the bands of the nine levels. Presets: `--quick` (20 per classic9 level and 5 per other offered combination, ≈ 700 puzzles, the P2 checkpoint), `--count=N` (default 500), `--per-combo=N` and `--full` (25 per offered combination, 100 per classic9 level, ≈ 3 550 puzzles, the final QA preset); `--variant`, `--level`, `--seed`, and `--weights` / `--bands` to try other technique weights or bands without editing the file. Exit code 0 requires no invariant violation, ≥ 90 % exact hits on every classic9 level and ≥ 80 % on every other combination (`--no-gate` always exits 0). It is not part of the normal test run (too slow); it was the tool of the calibrations of tasks `T-2.10` and `T-7.7`. Which levels a variant offers at all is decided by the qualification, `tests/qualify.js` (protocol of report §6; results in [docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
 
 ### 15.5 Mandatory manual testing (checklist)
 
 The first plan's checklist: 3 browsers × (desktop + mobile) × (light + dark) × (VI + EN) × (opened via a server + opened via `file://`) · a trial print to PDF · a keyboard-only walkthrough · a screen reader · animations turned off.
 
-**What was actually done:** the page was loaded and screenshotted in headless **Edge** (the only browser installed on the development machine; `docs/` holds three of those screenshots), and the DOM-free parts of every UI module are covered by the Node suites above. **Not done:** Firefox, Safari, a real mobile device, a real screen reader (NVDA / VoiceOver) and a print to a physical printer. The remaining items are recorded in `docs/final-report.md` and as known limitations in `README.md` and §18.
+**What was actually done:** the page was loaded and screenshotted in headless **Edge** (the only browser installed on the development machine; `docs/` holds three of those screenshots), and the DOM-free parts of every UI module are covered by the Node suites above. **Not done:** Firefox, Safari, a real mobile device, a real screen reader (NVDA / VoiceOver) and a print to a physical printer. The remaining items are recorded in `docs/report-v1.md` and as known limitations in `README.md` and §18.
 
 ---
 
@@ -1727,7 +1782,7 @@ The first plan's checklist: 3 browsers × (desktop + mobile) × (light + dark) �
 | R8 | The trace log overflows memory | Medium | `maxTraceEvents` + down-sampling + clearing the old trace; the replay reads the small dig log, not the trace |
 | R9 | Animations make the app feel slow | Low | ADR-002: the generator runs at full speed, the finished puzzle is shown at once and the replay is stepped by hand (no playback, no speeds) |
 | R10 | Scope creep into building a player | Low | Resolved by the split: the player is its own repository (sudoku-player); this one only hands a puzzle over (task `T-7.8`, §10.9) |
-| R11 | The score formula does not match players' perception | Medium | `T-2.10` / `T-7.7` calibrate it with labelled sample puzzles and soak runs; the costs are plain data in `SG.difficulty.COSTS` |
+| R11 | The score formula does not match players' perception | Medium | `T-2.10` / `T-7.7` calibrated rating v1 with labelled sample puzzles and soak runs; rating v2 (docs/report-v2/report-detailed.md) uses one formula for every variant whose weights are plain data in `SG.difficulty.WEIGHTS`, engineering priors that a calibration with human solvers can replace (`ruleOf45` and `cageSplit` first) |
 | R12 | Several agents editing the same file ⇒ conflicts | Medium | Every task in `task.md` states the **files it owns**; the API contract in §13 is invariant |
 
 ---
@@ -1763,12 +1818,12 @@ Everything above has been brought in line with the implementation. This table co
 |-------|----------------|-----|
 | Pipeline steps 5–7 (§7.1) | `dig`, `rate` and `tune` are three steps. A missed dig sample repeats dig → rate → tune **on the same grid**, up to 12 samples per grid (30 for symmetries with groups of more than 2 cells); then `retry.difficulty` and a new grid. Events: `dig.start` (args `sample`, `maxSamples`), `tune.hit` / `tune.miss`, `retry.difficulty` | The guided dig shares its rating objective with the rater, and a full grid is much more expensive than another dig of it. The attempt counters ("Attempt n of m") are read from these events; the page no longer shows them while a run goes on (it shows the empty board), but `SG.app`'s `generate:progress` event still carries them |
 | Stage B of the dig (§6.8) | A **guided** dig: it rates up to 32 candidate removals per step and applies the one that makes the puzzle hardest, never past the band; levels from `medium` up, starting at ≈ 47 % of the cells as clues. `tune.restore` / "dig deeper with a relaxed oracle" were not built | A finished stage-A puzzle is minimal, so a relaxed oracle finds nothing to remove; random minimal puzzles need only singles 3 times in 4, so the hard levels would be hit too rarely |
-| Costs and bands (§6.6, §6.7) | `SG.difficulty.COSTS` (calibrated: subset ×7, fish ×6, wing ×10, chain ×8, singles 1 / 1.25 / 1.5) and `TABLE` (bands 0 / **72** / 180 / 400 / 800 / 1500); a **technique floor** raises the score to the band minimum of the hardest technique's group; `rating.rawScore` keeps the unfloored value; `report.score` of the solver stays the uncalibrated design score | The design costs overlapped the groups (the ~40 singles of any puzzle drown a few technique steps); the floor makes invariant I5 true by construction; calibration log in `js/core/difficulty.js` (task `T-2.10`) |
+| Scoring and levels (§6.6, §6.7; rating v2) | One formula for every variant, `round(80·E/(E+40) + P + 0.25·P·log₂(1 + W/P))` from the empty cells and the technique counts only, with the weights of `SG.difficulty.WEIGHTS`; nine levels on fixed bands 0 / 45 / 180 / 400 / 700 / 1000 / 1500 / 2400 / 3600 (`veryHard`, `nightmare1`, `nightmare2` are new); no technique floor and no band scaling; a puzzle without a complete proof is unrated and never returned; each variant offers the levels it passes in the qualification. Rating v1 (`SG.difficulty.COSTS`, first-use ×1.5, 0.6 per empty cell, bands scaled by `cellCount / 81`, the technique floor) is gone | The v1 technique floor derived the score from the level, and the scaled bands rated the same technique differently on different boards; the joint report (docs/report-v2/report-detailed.md) compares the candidate formulas on the corpora of both researchers |
 | Clue floors (§6.7; **D1**) | `spec(level, model).minClues` is the one floor; a variant declares `clueFloorScale` and / or `clueFloor`; Killer: `{ veryEasy: 40 }` only; invariant I6, the digger, the pipeline, `soak.js` and the variants sweep all use it | The classic9 floor scaled by `cellCount / 81` made hard/expert unreachable for Killer and left medium/hard hit by 1–20 % of the digs on the hybrid and multi-grid boards (task `T-7.7`) |
-| Levels offered (**D2**, **D3**) | `flower` offers `medium` (it had none); `classic6` does not (it had it) | With the per-variant floor `flower medium` is hit by 49 % of the digs (was 9 %); `classic6 medium` stayed at 0–3 % |
+| Levels offered (**D2**, **D3**; rating v2) | Rating v1: `flower` offered `medium` (it had none); `classic6` did not (it had it). Rating v2: every variant offers the levels it passes in the qualification (§5.1, docs/report-v2/qualification.md) | v1: with the per-variant floor `flower medium` was hit by 49 % of the digs (was 9 %); `classic6 medium` stayed at 0–3 %. v2: one protocol decides for every variant |
 | `restartThreshold` (**D4**) | `SG.fullGrid.generate` reads the variant's `restartThreshold` unless the caller passes one (Mega: 300 / 400) | It was declared but never wired |
 | Option schema (**D5**) | Variants keep their own shapes; the registry **normalises** them (`optionsOf`, `defaultOptions`, `sanitizeOptions`); the UI, the store and the cache key read only those | Parallel agents wrote slightly different schemas; normalising in one place was cheaper than renaming |
-| Calibration breadth (**D6**) | Costs are tuned on classic9; the other variants calibrate through `clueFloorScale`. `jellyfish` is untestable on real data (never on the solving path of 3 000 natural classic9 puzzles), so its cost only follows the fish factor. `extraPasses` is unused | Classic9 has the highest hit rate; the other boards were already at 95–100 % exact hits and needed speed, not new costs |
+| Calibration breadth (**D6**) | Rating v1: costs were tuned on classic9; the other variants calibrate through `clueFloorScale`. `jellyfish` is untestable on real data (never on the solving path of 3 000 natural classic9 puzzles), so its cost only follows the fish factor. `extraPasses` is unused | Classic9 has the highest hit rate; the other boards were already at 95–100 % exact hits and needed speed, not new costs |
 | Technique list (§6.6) | 26 registered: 21 classic + 3 `cage` + 2 `ineq`; Hidden Single split by unit kind, Quad split Naked / Hidden; `order` values in §6.6; **singles are techniques** — the logical solver never calls `propagate` | So that singles are attributed and scored, and `allowedTechniques` means what it says |
 | Event contract (§7.2) | `SG.events.VOCABULARY` (`type`, `stepId`, `phase`, `key`, `level`, `args`, `patch`) is the contract; variants append their own entries; `lookup`, `vocabularyKeys`, `eventProblems` check events | One list that the core, the UI, the locale packs and the tests share |
 | Stepper API (§9.3, §13.9, §13.13) | `SG.pipeline.runSteps` and the `SG.digger.*Steps` generators yield at natural boundaries; `run` is `runSteps` driven by `SG.budget.drive`; `SG.budget.createClock` is an *active* clock | One algorithm for both modes, so events, puzzle and budget accounting cannot differ, and `cancel` works in a worker (which otherwise cannot read its queue) |
@@ -1800,6 +1855,6 @@ Everything above has been brought in line with the implementation. This table co
 - **Main-thread mode** (`file://`, no Worker): slices of ≈ 12 ms, but one unsplittable piece of work can stall the page — a single DFS slice in Killer takes 70–86 ms, a Greater-Than sign dig 50–70 ms per sample, the cage layout of a hard Killer up to ~300 ms — and background pre-generation does not exist there.
 - **Browsers:** only Chromium-based Edge was run. Firefox 100+ and Safari 15.4+ are targets but untested; no real mobile device and **no real screen reader** were used.
 - **The pre-generation switch** in Settings (`SG.cache.setEnabled`) is not persisted.
-- **Calibration** is exact only for classic9; other variants rely on their clue floors, and a strict symmetry with a very high level returns the closest puzzle with a notice.
+- **Weights** of rating v2 are engineering priors, not measurements of human solvers (`ruleOf45` and `cageSplit` are the first calibration targets); a strict symmetry with a very high level returns the closest puzzle with a notice.
 - **Wordoku in Vietnamese** has a short word list (the English list takes over).
 - **Ideas not built:** a minimap for 16×16 on phones; progressive difficulty (warm start); persisting the pre-generation preference; a "kid mode"; sub-grid-wise digging; a percentage progress bar.

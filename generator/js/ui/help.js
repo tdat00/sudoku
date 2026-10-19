@@ -250,12 +250,14 @@
   // ---------------------------------------------------------------------------------------------
 
   function techniqueItem(tech) {
+    const weights = SG.difficulty && SG.difficulty.WEIGHTS ? SG.difficulty.WEIGHTS : {};
     return {
       id: tech.id,
       nameKey: 'technique.' + tech.id,
       descKey: 'technique.' + tech.id + '.desc',
       group: tech.group,
       order: tech.order,
+      points: Object.prototype.hasOwnProperty.call(weights, tech.id) ? weights[tech.id] : null,
       variants: Array.isArray(tech.variantScope) ? tech.variantScope.slice() : []
     };
   }
@@ -265,32 +267,44 @@
   }
 
   /**
-   * The difficulty ladder as the registries define it: level `i` adds the technique group
-   * `SG.difficulty.BASE_GROUPS[i]`; the techniques of a group are listed in the order the solver tries them.
+   * The difficulty ladder of rating v2 as the registries define it: one row per level with its score band and
+   * the 9x9 clue range, and the techniques that can first appear at that level. A technique of p points adds
+   * at least 1.25 x p to the score (`SG.difficulty.SCORING.peakBound`), so it can first appear in the band
+   * whose upper edge lies above that: the pruning rule of `SG.difficulty.spec`. The techniques of a level are
+   * listed in the order the solver tries them; the levels at the top add none.
    * @returns {{levels: Object[], variantGroups: Object[], scoring: Object}}  `levels[i]` is `{ level,
-   *          nameKey, descKey, group, groupKey, techniques, minClues, maxClues, minScore, maxScore }`
-   *          (`maxScore` is Infinity for the last level; the clue counts are the 9x9 numbers);
-   *          `variantGroups` holds the groups with a `variantScope` (`{ group, groupKey, techniques }`).
+   *          nameKey, descKey, groups, groupKeys, techniques, minClues, maxClues, minScore, maxScore }`
+   *          (`groups` are the groups of `techniques`, `maxScore` is Infinity for the last level, the clue
+   *          counts are the 9x9 numbers); `variantGroups` holds the groups with a `variantScope` (`{ group,
+   *          groupKey, techniques }`). Every technique item has its `points`.
    */
   function ladder() {
     const D = SG.difficulty;
     const all = SG.techniques.list().map(techniqueItem).sort(byOrder);
     const table = D.TABLE;
+    const bound = D.SCORING.peakBound;
     const levels = D.LEVELS.map(function (level, i) {
-      const group = D.BASE_GROUPS[i];
       const row = table[i] || {};
       const next = table[i + 1];
+      const max = next ? next.min : Infinity;
+      const techniques = all.filter(function (x) {
+        if (x.variants.length > 0 || x.points === null) return false;
+        const lowest = bound * x.points;
+        return lowest < max && (i === 0 || lowest >= row.min);
+      });
+      const groups = [];
+      techniques.forEach(function (x) { if (groups.indexOf(x.group) === -1) groups.push(x.group); });
       return {
         level: level,
         nameKey: 'difficulty.' + level,
         descKey: 'difficulty.' + level + '.desc',
-        group: group,
-        groupKey: 'techniqueGroup.' + group,
-        techniques: all.filter(function (x) { return x.group === group && x.variants.length === 0; }),
+        groups: groups,
+        groupKeys: groups.map(function (g) { return 'techniqueGroup.' + g; }),
+        techniques: techniques,
         minClues: row.minClues,
         maxClues: row.maxClues,
         minScore: row.min,
-        maxScore: next ? next.min : Infinity
+        maxScore: max
       };
     });
     const variantGroups = [];
@@ -404,6 +418,7 @@
     'help.difficulty.col.level', 'help.difficulty.col.adds', 'help.difficulty.col.clues',
     'help.difficulty.col.score', 'help.difficulty.score', 'help.difficulty.scoreOpen',
     'help.difficulty.ladder.title', 'help.difficulty.ladder.intro', 'help.difficulty.level.adds',
+    'help.difficulty.level.none',
     'help.difficulty.variant.title', 'help.difficulty.variant.intro', 'help.difficulty.variant.for',
     'help.difficulty.guarantee.title', 'help.difficulty.guarantee.oracle',
     'help.difficulty.guarantee.hardest', 'help.difficulty.guarantee.evil', 'help.difficulty.guarantee.verify',
@@ -433,7 +448,7 @@
     lad.levels.forEach(function (row) {
       add(row.nameKey);
       add(row.descKey);
-      add(row.groupKey);
+      row.groupKeys.forEach(add);
       row.techniques.forEach(function (x) { add(x.nameKey); add(x.descKey); });
     });
     lad.variantGroups.forEach(function (g) {
@@ -647,6 +662,12 @@
     }, []));
   }
 
+  /** The names of the technique groups that can first appear at a level, or a dash when there are none. */
+  function groupNames(row) {
+    return row.groupKeys.length > 0 ? row.groupKeys.map(function (key) { return t(key); }).join(', ')
+      : '\u2014';
+  }
+
   function renderLevelsTable(lad) {
     const caption = t('help.difficulty.levels.caption');
     const num = function (n) { return SG.i18n.formatNumber(n); };
@@ -659,7 +680,7 @@
         : t('help.difficulty.scoreOpen', { min: num(row.minScore) });
       return h('tr', {}, [
         h('th', { scope: 'row', text: t(row.nameKey) }),
-        h('td', { text: t(row.groupKey) }),
+        h('td', { text: groupNames(row) }),
         h('td', { class: 'help-table__num', text: num(row.minClues) + '\u2013' + num(row.maxClues) }),
         h('td', { class: 'help-table__num', text: score })
       ]);
@@ -678,11 +699,13 @@
     panel.appendChild(h('h3', { class: 'help__h3', text: t('help.difficulty.levels.title') }));
     panel.appendChild(renderLevelsTable(lad));
     panel.appendChild(h('p', { class: 'help__note', text: t('help.difficulty.score', {
-      multiplier: num(lad.scoring.firstUseMultiplier), bonus: num(lad.scoring.emptyCellBonus)
+      factor: num(lad.scoring.workFactor), max: num(lad.scoring.emptyCellMax),
+      half: num(lad.scoring.emptyCellHalf)
     }) }));
 
     panel.appendChild(h('h3', { class: 'help__h3', text: t('help.difficulty.ladder.title') }));
-    panel.appendChild(h('p', { text: t('help.difficulty.ladder.intro') }));
+    const bound = num(lad.scoring.peakBound);
+    panel.appendChild(h('p', { text: t('help.difficulty.ladder.intro', { bound: bound }) }));
     lad.levels.forEach(function (row, i) {
       panel.appendChild(h('section', { class: 'help-rung', 'aria-labelledby': 'help-rung-' + row.level }, [
         h('h4', { class: 'help__h4', id: 'help-rung-' + row.level }, [
@@ -690,10 +713,10 @@
           h('span', { text: t(row.nameKey) })
         ]),
         h('p', { text: t(row.descKey) }),
-        h('p', { class: 'help-rung__adds', text: t('help.difficulty.level.adds', {
-          group: t(row.groupKey)
-        }) }),
-        techniqueList(row.techniques, false)
+        h('p', { class: 'help-rung__adds', text: row.groups.length > 0
+          ? t('help.difficulty.level.adds', { group: groupNames(row) })
+          : t('help.difficulty.level.none') }),
+        row.techniques.length > 0 ? techniqueList(row.techniques, false) : null
       ]));
     });
 
@@ -1070,7 +1093,8 @@
         'group of cells (a row, a column, a box or a region) repeats a symbol. Open a variant to see its ' +
         'rules, its options and a picture of its board. There are {count} variants, grouped by family.',
       'help.variants.levelsNote': 'A variant only offers the levels it can generate reliably and quickly, ' +
-        'so some variants have fewer than six. The levels of each variant are listed in its section; if ' +
+        'so some variants have fewer than nine, and a list can skip a level. The levels of each variant ' +
+        'are listed in its section; if ' +
         'you switch to a variant that lacks your current level, the level is changed for you and a note ' +
         'says so.',
       'help.variant.rules.title': 'Rules',
@@ -1097,7 +1121,7 @@
         'column and every 3×3 box contains each of the digits 1 to 9 exactly once. The given digits are ' +
         'enough to make the solution unique.',
       'help.variant.classic9.special': 'The reference variant of the generator: the difficulty scale and ' +
-        'its technique ladder were tuned on this board first, and it offers all six levels.',
+        'its technique ladder were tuned on this board first.',
       'help.variant.classic9.figure': 'The empty 9×9 board with its nine 3×3 boxes.',
       'help.variant.mega12.rules': 'Fill the 12×12 grid so that every row, every column and every box ' +
         'contains each of the 12 symbols exactly once. The boxes are 3 rows high and 4 columns wide. The ' +
@@ -1189,43 +1213,49 @@
       'help.variant.wordoku.figure': 'A Wordoku board with the key word {word} written along the main ' +
         'diagonal.',
 
-      'help.difficulty.intro': 'The difficulty of a puzzle is not a guess: it is defined by the solving ' +
-        'techniques a person would need. Each level allows more advanced techniques than the one before it ' +
-        'and has fewer clues. The generator only removes a clue while the puzzle can still be solved with ' +
-        'the techniques of the requested level.',
-      'help.difficulty.levels.title': 'The six levels',
-      'help.difficulty.levels.caption': 'The levels, the technique group each one adds, the usual number ' +
-        'of clues on a 9×9 board and the score band',
+      'help.difficulty.intro': 'The difficulty of a puzzle is not a guess: it is computed from the solving ' +
+        'techniques a person would need and from the number of empty cells, with the same formula on every ' +
+        'board. Every technique has points, and the score decides the level. The generator only removes a ' +
+        'clue while the puzzle can still be solved with techniques that fit the requested level.',
+      'help.difficulty.levels.title': 'The nine levels',
+      'help.difficulty.levels.caption': 'The levels, the technique groups that can first appear at each ' +
+        'one, the usual number of clues on a 9×9 board and the score band',
       'help.difficulty.col.level': 'Level',
       'help.difficulty.col.adds': 'Adds',
       'help.difficulty.col.clues': 'Clues (9×9)',
       'help.difficulty.col.score': 'Score',
-      'help.difficulty.score': 'The score adds up the cost of every step needed to solve the puzzle: each ' +
-        'technique has its own cost, the first use of a technique counts {multiplier} times, and every ' +
-        'empty cell adds {bonus}. On larger boards the clue counts and the score bands scale with the size ' +
-        'of the board.',
+      'help.difficulty.score': 'The score counts the points of the hardest technique the puzzle needs once ' +
+        'in full, adds {factor} × those points × log₂(1 + work ÷ those points), where the work adds up ' +
+        'points × uses of every technique, and adds {max} × E ÷ (E + {half}) for the E cells that are ' +
+        'empty at the start (at most {max}). The score bands are the same on every board; only the clue ' +
+        'counts scale with the size of the board.',
       'help.difficulty.scoreOpen': '{min} and more',
       'help.difficulty.ladder.title': 'The technique ladder',
-      'help.difficulty.ladder.intro': 'The solver always tries the cheapest technique first. A level ' +
-        'allows the techniques of its own group and of every group before it, so each rung below adds a ' +
-        'few new techniques to the ones you already know.',
-      'help.difficulty.level.adds': 'New at this level: {group}',
+      'help.difficulty.ladder.intro': 'The solver always tries the techniques in a fixed priority order. ' +
+        'A technique adds at least {bound} times its points to the score, so it can first appear at the ' +
+        'level whose band reaches above that. Each rung below lists the techniques that can first appear ' +
+        'there; what a level typically uses is in its description.',
+      'help.difficulty.level.adds': 'Can first appear at this level: {group}',
+      'help.difficulty.level.none': 'No new technique: these scores come from more of the hardest steps.',
       'help.difficulty.variant.title': 'Techniques for specific variants',
       'help.difficulty.variant.intro': 'Some variants have extra rules, and extra techniques that only ' +
-        'apply to them. These are available at every level of those variants.',
+        'apply to them. They have points like every other technique and count in the score the same way.',
       'help.difficulty.variant.for': 'For: {variants}',
       'help.difficulty.guarantee.title': 'How the level is guaranteed',
       'help.difficulty.guarantee.oracle': 'While it removes clues, the generator asks one question after ' +
-        'every removal: can the puzzle still be solved using only the techniques allowed at the requested ' +
-        'level? If so, the clue stays removed; if not, it is put back. Every technique is a sound ' +
-        'deduction, so a puzzle that can be solved this way also has exactly one solution.',
-      'help.difficulty.guarantee.hardest': 'At the end the puzzle is rated. It is accepted when the ' +
-        'hardest technique it needs belongs to the requested level, not to an easier one, and its score ' +
-        'lies inside the band of the level. If it is still too easy, the generator starts again from a new ' +
-        'solution grid, up to the maximum number of attempts in the advanced options.',
-      'help.difficulty.guarantee.evil': 'The last level allows chains and trial and error, so there is no ' +
-        'fixed list of techniques to check against. For that level the generator checks after every ' +
-        'removal that exactly one solution remains, and rates the finished puzzle at the end.',
+        'every removal: can the puzzle still be solved using only techniques that fit the requested level, ' +
+        'without its score going past the top of the band? If so, the clue stays removed; if not, it is ' +
+        'put back. Every technique is a sound deduction, so a puzzle that can be solved this way also has ' +
+        'exactly one solution.',
+      'help.difficulty.guarantee.hardest': 'At the end the puzzle is rated with every technique. It is ' +
+        'accepted when the solver finishes it by logic and its score lies inside the band of the requested ' +
+        'level. If not, the generator tries another dig, searches nearby (showing, removing or swapping ' +
+        'clues, and on Killer reshaping cages), or starts again from a new solution grid, up to the ' +
+        'maximum number of attempts in the advanced options.',
+      'help.difficulty.guarantee.evil': 'For the highest levels the generator also digs quickly with only ' +
+        'a uniqueness check, and when that puzzle comes out too hard it shows clues again until the score ' +
+        'falls into the band. Whatever the path, a puzzle is only accepted when the solver can finish it ' +
+        'by logic.',
       'help.difficulty.guarantee.verify': 'Whatever the level, a separate solver counts the solutions of ' +
         'every finished puzzle as a safety net. A puzzle with more than one solution never reaches you.',
       'help.difficulty.closest.title': 'When the level cannot be reached',
@@ -1255,9 +1285,10 @@
         'step is highlighted with its full sentence, and the Explain button above the list opens this ' +
         'page at the step it belongs to. On the board, an amber frame marks the cells removed in the ' +
         'current step, and a red frame the cells put back.',
-      'help.generation.seed': 'The seed is the number that starts every random choice. The same seed with ' +
-        'the same options always gives the same puzzle, so any puzzle can be shared and reproduced. Leave ' +
-        'it empty to get a new random puzzle each time.',
+      'help.generation.seed': 'The seed is the number that starts every random choice. With the same ' +
+        'version of the generator, the same seed with the same options always gives the same puzzle, so ' +
+        'any puzzle can be shared and reproduced; a link or a history entry made by an older version may ' +
+        'give a different puzzle. Leave it empty to get a new random puzzle each time.',
       'help.generation.worker': 'When the page is served over http or https, the generator runs in a Web ' +
         'Worker, so the page stays smooth and Cancel works at once. When index.html is opened straight ' +
         'from disk, the browser does not allow workers: the generator then runs on the main thread, the ' +
@@ -1327,7 +1358,8 @@
         'không có nhóm ô nào (hàng, cột, khối hay vùng) lặp lại một ký hiệu. Hãy mở từng biến thể để xem ' +
         'luật chơi, các tùy chọn và hình minh họa bảng của nó. Có tất cả {count} biến thể, xếp theo nhóm.',
       'help.variants.levelsNote': 'Mỗi biến thể chỉ cung cấp những mức độ khó mà nó tạo được một cách ổn ' +
-        'định và nhanh chóng, nên một số biến thể có ít hơn sáu mức. Các mức của từng biến thể được liệt ' +
+        'định và nhanh chóng, nên một số biến thể có ít hơn chín mức, và danh sách có thể bỏ qua một mức. ' +
+        'Các mức của từng biến thể được liệt ' +
         'kê ngay trong phần của nó; nếu bạn chuyển sang biến thể không có mức hiện tại, mức độ khó sẽ được ' +
         'đổi giúp bạn kèm một ghi chú.',
       'help.variant.rules.title': 'Luật chơi',
@@ -1354,7 +1386,7 @@
         'khối 3×3 đều chứa các chữ số từ 1 đến 9, mỗi số đúng một lần. Các số cho sẵn vừa đủ để lời giải ' +
         'là duy nhất.',
       'help.variant.classic9.special': 'Biến thể chuẩn của bộ sinh: thang độ khó và các bậc kỹ thuật được ' +
-        'chỉnh trước hết trên bảng này, và nó có đủ cả sáu mức.',
+        'chỉnh trước hết trên bảng này.',
       'help.variant.classic9.figure': 'Bảng 9×9 trống với chín khối 3×3.',
       'help.variant.mega12.rules': 'Điền vào lưới 12×12 sao cho mỗi hàng, mỗi cột và mỗi khối đều chứa đủ ' +
         '12 ký hiệu, mỗi ký hiệu đúng một lần. Mỗi khối cao 3 hàng và rộng 4 cột. Các ký hiệu là chữ số từ ' +
@@ -1440,42 +1472,47 @@
         'nhau. Bộ ký hiệu Chữ số chơi cùng đề đó bằng số.',
       'help.variant.wordoku.figure': 'Một bảng Wordoku với từ khóa {word} viết dọc theo đường chéo chính.',
 
-      'help.difficulty.intro': 'Độ khó của một đề không phải là phỏng đoán: nó được xác định bởi các kỹ ' +
-        'thuật giải mà người chơi cần dùng. Mỗi mức cho phép những kỹ thuật nâng cao hơn mức trước và có ' +
-        'ít số cho sẵn hơn. Bộ sinh chỉ bỏ một số cho sẵn khi đề vẫn giải được bằng các kỹ thuật của mức ' +
-        'đã chọn.',
-      'help.difficulty.levels.title': 'Sáu mức độ khó',
-      'help.difficulty.levels.caption': 'Các mức độ khó, nhóm kỹ thuật mà mỗi mức bổ sung, số lượng số cho ' +
-        'sẵn thường gặp trên bảng 9×9 và dải điểm',
+      'help.difficulty.intro': 'Độ khó của một đề không phải là phỏng đoán: nó được tính từ các kỹ thuật ' +
+        'giải mà người chơi cần dùng và từ số ô trống, với cùng một công thức trên mọi bàn cờ. Mỗi kỹ ' +
+        'thuật có một số điểm, và điểm số quyết định mức độ. Bộ sinh chỉ bỏ một số cho sẵn khi đề vẫn giải ' +
+        'được bằng các kỹ thuật phù hợp với mức đã chọn.',
+      'help.difficulty.levels.title': 'Chín mức độ khó',
+      'help.difficulty.levels.caption': 'Các mức độ khó, các nhóm kỹ thuật có thể bắt đầu xuất hiện ở mỗi ' +
+        'mức, số lượng số cho sẵn thường gặp trên bảng 9×9 và dải điểm',
       'help.difficulty.col.level': 'Mức độ',
       'help.difficulty.col.adds': 'Bổ sung',
       'help.difficulty.col.clues': 'Số cho sẵn (9×9)',
       'help.difficulty.col.score': 'Điểm',
-      'help.difficulty.score': 'Điểm số cộng chi phí của mọi bước cần để giải đề: mỗi kỹ thuật có chi phí ' +
-        'riêng, lần dùng đầu tiên của một kỹ thuật được nhân {multiplier}, và mỗi ô trống cộng thêm ' +
-        '{bonus}. Với bảng lớn hơn, số lượng số cho sẵn và các dải điểm được co giãn theo kích thước bảng.',
+      'help.difficulty.score': 'Điểm số tính đủ một lần điểm của kỹ thuật khó nhất mà đề cần, cộng ' +
+        '{factor} × số điểm đó × log₂(1 + khối lượng ÷ số điểm đó), trong đó khối lượng là tổng điểm × số ' +
+        'lần dùng của mọi kỹ thuật, và cộng {max} × E ÷ (E + {half}) cho E ô trống ban đầu (tối đa {max}). ' +
+        'Các dải điểm giống nhau trên mọi bàn cờ; chỉ số lượng số cho sẵn được co giãn theo kích thước bàn ' +
+        'cờ.',
       'help.difficulty.scoreOpen': 'từ {min} trở lên',
       'help.difficulty.ladder.title': 'Bậc thang kỹ thuật',
-      'help.difficulty.ladder.intro': 'Bộ giải luôn thử kỹ thuật rẻ nhất trước. Mỗi mức cho phép các kỹ ' +
-        'thuật của nhóm riêng nó và của mọi nhóm trước đó, nên mỗi bậc bên dưới bổ sung vài kỹ thuật mới ' +
-        'vào những kỹ thuật bạn đã biết.',
-      'help.difficulty.level.adds': 'Mới ở mức này: {group}',
+      'help.difficulty.ladder.intro': 'Bộ giải luôn thử các kỹ thuật theo một thứ tự ưu tiên cố định. ' +
+        'Một kỹ thuật cộng vào điểm ít nhất {bound} lần số điểm của nó, nên nó chỉ có thể bắt đầu xuất ' +
+        'hiện ở mức có dải điểm vượt quá giá trị đó. Mỗi bậc bên dưới liệt kê các kỹ thuật có thể bắt ' +
+        'đầu xuất hiện ở đó; những gì một mức thường dùng nằm trong phần mô tả của mức.',
+      'help.difficulty.level.adds': 'Có thể bắt đầu xuất hiện ở mức này: {group}',
+      'help.difficulty.level.none': 'Không có kỹ thuật mới: điểm cao hơn đến từ nhiều bước khó hơn.',
       'help.difficulty.variant.title': 'Kỹ thuật dành riêng cho từng biến thể',
       'help.difficulty.variant.intro': 'Một số biến thể có thêm luật, và có thêm các kỹ thuật chỉ áp dụng ' +
-        'cho chúng. Những kỹ thuật này có ở mọi mức của các biến thể đó.',
+        'cho chúng. Chúng cũng có điểm như mọi kỹ thuật khác và được tính vào điểm số theo cùng một cách.',
       'help.difficulty.variant.for': 'Dành cho: {variants}',
       'help.difficulty.guarantee.title': 'Mức độ khó được đảm bảo như thế nào',
       'help.difficulty.guarantee.oracle': 'Khi bỏ bớt số cho sẵn, sau mỗi lần bỏ bộ sinh đặt một câu hỏi: ' +
-        'đề có còn giải được chỉ bằng các kỹ thuật cho phép ở mức đã chọn không? Nếu có, số đó được giữ ở ' +
-        'trạng thái đã bỏ; nếu không, nó được đặt lại. Mọi kỹ thuật đều là suy luận chắc chắn đúng, nên ' +
-        'một đề giải được theo cách này cũng có đúng một lời giải.',
-      'help.difficulty.guarantee.hardest': 'Cuối cùng đề được chấm điểm. Đề được chấp nhận khi kỹ thuật ' +
-        'khó nhất mà nó cần thuộc đúng mức đã chọn chứ không phải mức dễ hơn, và điểm số nằm trong dải của ' +
-        'mức đó. Nếu đề vẫn còn quá dễ, bộ sinh làm lại từ một lưới lời giải mới, tối đa bằng số lần thử ' +
+        'đề có còn giải được chỉ bằng các kỹ thuật phù hợp với mức đã chọn, mà điểm không vượt quá đầu ' +
+        'trên của dải không? Nếu có, số đó được giữ ở trạng thái đã bỏ; nếu không, nó được đặt lại. Mọi kỹ ' +
+        'thuật đều là suy luận chắc chắn đúng, nên một đề giải được theo cách này cũng có đúng một lời giải.',
+      'help.difficulty.guarantee.hardest': 'Cuối cùng đề được chấm điểm với mọi kỹ thuật. Đề được chấp ' +
+        'nhận khi bộ giải giải hết được đề bằng suy luận và điểm số nằm trong dải của mức đã chọn. Nếu ' +
+        'không, bộ sinh thử một lần đào khác, tìm quanh đó (hiện lại, bỏ hoặc đổi số cho sẵn, và với ' +
+        'Killer thì đổi hình các lồng), hoặc làm lại từ một lưới lời giải mới, tối đa bằng số lần thử ' +
         'trong phần tùy chọn nâng cao.',
-      'help.difficulty.guarantee.evil': 'Mức cuối cùng cho phép dùng chuỗi suy luận và thử–sai, nên không ' +
-        'có danh sách kỹ thuật cố định để đối chiếu. Với mức này, sau mỗi lần bỏ số bộ sinh kiểm tra rằng ' +
-        'vẫn còn đúng một lời giải, và chấm điểm đề hoàn chỉnh ở cuối.',
+      'help.difficulty.guarantee.evil': 'Với các mức cao nhất, bộ sinh còn đào nhanh chỉ với phép kiểm tra ' +
+        'lời giải duy nhất, và khi đề đó ra quá khó thì hiện lại số cho sẵn cho đến khi điểm rơi vào dải. ' +
+        'Dù theo cách nào, một đề chỉ được chấp nhận khi bộ giải giải hết được nó bằng suy luận.',
       'help.difficulty.guarantee.verify': 'Ở mọi mức, một bộ giải riêng còn đếm số lời giải của từng đề ' +
         'hoàn chỉnh như một lớp bảo vệ. Một đề có nhiều hơn một lời giải sẽ không bao giờ đến tay bạn.',
       'help.difficulty.closest.title': 'Khi không đạt được mức độ yêu cầu',
@@ -1504,9 +1541,10 @@
         'bước hiện tại được tô sáng kèm câu mô tả đầy đủ, còn nút Giải thích phía trên danh sách mở trang ' +
         'này ở đúng bước tương ứng. Trên bảng, khung màu hổ phách đánh dấu các ô bị xóa ở bước hiện tại, ' +
         'còn khung màu đỏ đánh dấu các ô được trả lại.',
-      'help.generation.seed': 'Seed là con số khởi động mọi lựa chọn ngẫu nhiên. Cùng seed và cùng tùy ' +
-        'chọn sẽ luôn cho ra cùng một đề, nên đề nào cũng có thể chia sẻ và tạo lại. Để trống nếu bạn muốn ' +
-        'mỗi lần một đề ngẫu nhiên mới.',
+      'help.generation.seed': 'Seed là con số khởi động mọi lựa chọn ngẫu nhiên. Với cùng một phiên bản bộ ' +
+        'tạo đề, cùng seed và cùng tùy chọn sẽ luôn cho ra cùng một đề, nên đề nào cũng có thể chia sẻ và ' +
+        'tạo lại; một liên kết hay một mục lịch sử do phiên bản cũ tạo ra có thể cho ra một đề khác. Để ' +
+        'trống nếu bạn muốn mỗi lần một đề ngẫu nhiên mới.',
       'help.generation.worker': 'Khi trang được phục vụ qua http hoặc https, bộ sinh chạy trong Web Worker ' +
         'nên trang luôn mượt và nút Hủy có tác dụng ngay. Khi mở trực tiếp index.html từ ổ đĩa, trình ' +
         'duyệt không cho dùng worker: bộ sinh khi đó chạy trên luồng chính, huy hiệu ghi “{main}” thay vì ' +

@@ -88,18 +88,22 @@
 
   /**
    * The techniques the puzzle needs, simplest first (the order of the technique ladder), each with the number
-   * of times it was applied and what it adds to the difficulty score.
+   * of times it was applied, its points and its share of the difficulty score (`SG.difficulty.scoreTable`:
+   * the hardest technique counts its points once in full, the rest of the score that comes from the
+   * techniques is shared in proportion to points x uses).
    */
-  function techniqueRows(counts) {
+  function techniqueRows(counts, table) {
     const chart = SG.stepView && typeof SG.stepView.chartModel === 'function'
       ? SG.stepView.chartModel(counts) : null;
     const ids = chart !== null ? chart.bars.map(function (bar) { return bar.id; })
       : Object.keys(counts).filter(function (id) { return counts[id] > 0; }).sort();
+    const byId = {};
+    if (table !== null) table.rows.forEach(function (row) { byId[row.id] = row; });
     return ids.map(function (id) {
       const count = counts[id];
-      const score = SG.difficulty && typeof SG.difficulty.techniqueScore === 'function'
-        ? SG.difficulty.techniqueScore(id, count) : 0;
-      const unit = SG.difficulty && typeof SG.difficulty.costOf === 'function' ? SG.difficulty.costOf(id) : 0;
+      const row = byId[id] || null;
+      const unit = row !== null ? row.points : 0;
+      const score = row !== null ? row.total : 0;
       const descKey = 'technique.' + id + '.desc';
       return {
         id: id,
@@ -110,39 +114,34 @@
         unitScore: unit,
         unitScoreText: formatNumber(unit, { maximumFractionDigits: 2 }),
         score: score,
-        scoreText: formatNumber(Math.round(score))
+        scoreText: formatNumber(score)
       };
     });
   }
 
-  /**
-   * How the score of the puzzle adds up: the techniques, the empty cells (the bonus of each) and what the
-   * hardest technique raises the score to when that is higher. Every part is a whole number and the parts add
-   * up to the rounded score (`SG.stepView.roundToTotal`); the technique rows get their `scoreText` from here.
-   * @returns {{empties: number, emptyUnit: number, emptyText: string, raised: number, raisedText: string,
-   *   totalText: string}}
-   */
-  function scoreBreakdown(rows, rating, score) {
-    const bonus = SG.difficulty && SG.difficulty.SCORING && typeof SG.difficulty.SCORING.emptyCellBonus === 'number'
-      ? SG.difficulty.SCORING.emptyCellBonus : 0;
+  /** The Difficulty Score table of a rating (`SG.difficulty.scoreTable`), or null when it cannot be made. */
+  function scoreTableOf(counts, rating) {
+    if (!SG.difficulty || typeof SG.difficulty.scoreTable !== 'function') return null;
     const empties = typeof rating.empties === 'number' && rating.empties > 0 ? rating.empties : 0;
-    const emptyPoints = empties * bonus;
-    const techniqueTotal = rows.reduce(function (sum, row) { return sum + row.score; }, 0);
-    const raised = Math.max(0, score - (techniqueTotal + emptyPoints));
-    const hasRaised = raised >= 0.5;
-    const values = rows.map(function (row) { return row.score; });
-    if (emptyPoints > 0) values.push(emptyPoints);
-    if (hasRaised) values.push(raised);
-    const whole = SG.stepView && typeof SG.stepView.roundToTotal === 'function'
-      ? SG.stepView.roundToTotal(values, score) : values.map(Math.round);
-    rows.forEach(function (row, i) { row.scoreText = formatNumber(whole[i]); });
-    let next = rows.length;
+    try {
+      return SG.difficulty.scoreTable(counts, empties);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  /**
+   * How the score of the puzzle adds up: the techniques (their rows, see `techniqueRows`) and the empty cells
+   * (their count, the average points of a cell, 80 x E / (E + 40) in all). Every part is a whole number and
+   * the parts add up to the score (one rounding, `SG.difficulty.scoreTable`).
+   * @returns {{empties: number, emptyUnit: number, emptyText: string, totalText: string}}
+   */
+  function scoreBreakdown(table, score) {
+    const empties = table !== null ? table.empties : 0;
     return {
-      empties: emptyPoints > 0 ? empties : 0,
-      emptyUnit: bonus,
-      emptyText: emptyPoints > 0 ? formatNumber(whole[next++]) : '',
-      raised: hasRaised ? raised : 0,
-      raisedText: hasRaised ? formatNumber(whole[next++]) : '',
+      empties: empties,
+      emptyUnit: empties > 0 ? table.emptyPoints : 0,
+      emptyText: empties > 0 ? formatNumber(table.emptyTotal) : '',
       totalText: formatNumber(Math.round(score))
     };
   }
@@ -171,8 +170,9 @@
     const score = typeof rating.score === 'number' && isFinite(rating.score) ? rating.score : 0;
     const counts = rating.techniqueCounts && typeof rating.techniqueCounts === 'object'
       ? rating.techniqueCounts : {};
-    const techniques = techniqueRows(counts);
-    const breakdown = scoreBreakdown(techniques, rating, score);
+    const table = scoreTableOf(counts, rating);
+    const techniques = techniqueRows(counts, table);
+    const breakdown = scoreBreakdown(table, score);
     const warnings = warningModels(result);
     const approximate = warnings.some(function (w) { return w.kind === 'approximate'; });
     return {
@@ -344,10 +344,9 @@
       ])]);
     }
 
-    /** The rows that complete the technique rows to the score: the empty cells, and the raise to the level. */
+    /** The rows that complete the technique rows to the score: the empty cells. */
     function extraRows(vm) {
       const out = [];
-      const blank = function () { return make(doc, 'td', { class: 'result-table__num', text: '' }); };
       if (vm.parts.empties > 0) {
         const unit = formatNumber(vm.parts.emptyUnit, { maximumFractionDigits: 2 });
         out.push(make(doc, 'tr', { 'data-part': 'empties' }, [
@@ -355,14 +354,6 @@
           make(doc, 'td', { class: 'result-table__num', text: formatNumber(vm.parts.empties) }),
           make(doc, 'td', { class: 'result-table__num', text: unit }),
           make(doc, 'td', { class: 'result-table__num', text: vm.parts.emptyText })
-        ]));
-      }
-      if (vm.parts.raised > 0) {
-        out.push(make(doc, 'tr', { 'data-part': 'floor' }, [
-          partHeader('floor', t('result.techniques.floor'), t('result.techniques.floor.desc')),
-          blank(),
-          blank(),
-          make(doc, 'td', { class: 'result-table__num', text: vm.parts.raisedText })
         ]));
       }
       return out;
@@ -548,14 +539,11 @@
       'result.techniques.col.unit': 'Points',
       'result.techniques.col.score': 'Total',
       'result.techniques.empties': 'Empty cells',
-      'result.techniques.empties.desc': 'Every cell that is empty at the start adds {points} points: the fewer clues ' +
-        'a puzzle gives, the more there is to solve.',
-      'result.techniques.floor': 'Bonus points for difficult techniques',
-      'result.techniques.floor.desc': 'Every level has a minimum score. When the hardest technique the puzzle needs ' +
-        'belongs to a higher level than the points above give, bonus points bring the score up to the minimum of ' +
-        'that level.',
+      'result.techniques.empties.desc': 'Empty cells add 80 × E ÷ (E + 40) points, at most 80.',
       'result.techniques.total': 'Total',
-      'result.techniques.note': 'The first use of a technique counts 1.5 times.',
+      'result.techniques.note': 'The hardest technique counts its points once in full; the rest grows with ' +
+        'the logarithm of the total work (points × uses) and is shared among the techniques in proportion ' +
+        'to it — a row\'s total is its allocated share of the score, not points × uses.',
       'result.techniques.help': 'About “{name}”',
       'result.warning.approximate.badge': 'Closest puzzle found',
       'result.warning.approximate.levels': 'Requested: {requested}. Reached: {achieved}.',
@@ -584,13 +572,11 @@
       'result.techniques.col.unit': 'Điểm',
       'result.techniques.col.score': 'Tổng',
       'result.techniques.empties': 'Ô trống',
-      'result.techniques.empties.desc': 'Mỗi ô trống ban đầu cộng thêm {points} điểm: đề càng ít số cho sẵn thì càng ' +
-        'còn nhiều việc phải giải.',
-      'result.techniques.floor': 'Điểm thưởng cho kỹ thuật khó',
-      'result.techniques.floor.desc': 'Mỗi độ khó có một điểm tối thiểu. Khi kỹ thuật khó nhất mà đề cần thuộc về ' +
-        'một độ khó cao hơn so với số điểm ở trên, điểm thưởng được cộng thêm để đạt mức tối thiểu của độ khó đó.',
+      'result.techniques.empties.desc': 'Các ô trống cộng 80 × E ÷ (E + 40) điểm, tối đa 80.',
       'result.techniques.total': 'Tổng',
-      'result.techniques.note': 'Lần dùng đầu tiên của mỗi kỹ thuật được tính 1,5 lần.',
+      'result.techniques.note': 'Kỹ thuật khó nhất được tính đủ điểm một lần; phần còn lại tăng theo ' +
+        'logarit của tổng khối lượng (điểm × số lần dùng) và được chia cho các kỹ thuật theo tỉ lệ đó — ' +
+        'tổng của một dòng là phần được phân bổ của điểm, không phải điểm × số lần dùng.',
       'result.techniques.help': 'Giải thích về “{name}”',
       'result.warning.approximate.badge': 'Đề gần nhất tìm được',
       'result.warning.approximate.levels': 'Mức đã chọn: {requested}. Mức đạt được: {achieved}.',

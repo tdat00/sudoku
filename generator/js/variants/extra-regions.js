@@ -33,7 +33,12 @@
   const KIND_DIAG = 'diag';
   const KIND_WINDOW = 'window';
 
-  const LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil'];
+  /**
+   * Levels both boards offer: every one of the nine, nightmare2 included (measured: `node tests/qualify.js`,
+   * docs/report-v2/qualification.md).
+   */
+  const LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
+    'nightmare2'];
 
   function fail(code, args) {
     return new SG.errors.GenerationError(code, args);
@@ -172,9 +177,10 @@
    * puzzle and missed the level for 11 % of the hyper ones. Where the techniques stop the dig by themselves
    * (21-24 clues, whatever the level) there is no floor to speak of, but the means of the clue counts must
    * still fall with the level, so the floors stay just above that: 24 / 20 / 17 (83 % / 80 % / 80 %) give
-   * medium 32..36 %, hard 31..73 % and expert 39..89 % of the dug puzzles.
+   * medium 32..36 %, hard 31..73 % and expert 39..89 % of the dug puzzles. veryHard takes the factor of hard
+   * (rating v2; nightmare1/2 take that of evil, which has none).
    */
-  const CLUE_FLOOR_SCALE = Object.freeze({ medium: 0.83, hard: 0.8, expert: 0.8 });
+  const CLUE_FLOOR_SCALE = Object.freeze({ medium: 0.83, hard: 0.8, veryHard: 0.8, expert: 0.8 });
 
   function definition(id, optionId, build) {
     return {

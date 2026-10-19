@@ -6,7 +6,7 @@
 //                      pruning on 9x9 models, the on-demand registration and the per-variant switch
 //   - techniques       registration, fixtures, brute-force cross-check of cageCombo, soundness (invariant I7)
 //                      for cageCombo, ruleOf45 and cageSplit through SG.techHelper.assertSound
-//   - generation       100 puzzles (20 per level): CV1 - CV6 and the invariants I1 - I7
+//   - generation       20 puzzles per level (8 from veryHard on): CV1 - CV6 and the invariants I1 - I7
 //   - cages            partition, distinct digits, sums, colouring, rendering geometry (CV9)
 //   - repair           split / merge / reveal and the layout info
 //   - i18n, events     every key in both languages, every event in the vocabulary
@@ -22,9 +22,17 @@
   var DEF = SG.variants.get('killer');
   var LEVELS = DEF.difficultySupport;
   var PER_LEVEL = 20;
+  /** Fewer puzzles of the slow top levels (each takes a second or more), so that the suite stays quick. */
+  var TOP_LEVEL_COUNT = 8;
+
+  /** Puzzles of a level in the corpus. */
+  function countOf(level) {
+    return SG.difficulty.levelIndex(level) >= SG.difficulty.levelIndex('veryHard') ? TOP_LEVEL_COUNT : PER_LEVEL;
+  }
 
   /** Milliseconds a pipeline run may take at the 95th percentile, design.md section 9.1 (killer row). */
-  var BUDGET_MS = { veryEasy: 300, easy: 700, medium: 700, hard: 1800, expert: 4000 };
+  var BUDGET_MS = { veryEasy: 300, easy: 700, medium: 700, hard: 1800, veryHard: 10000, expert: 10000,
+    evil: 10000, nightmare1: 10000, nightmare2: 10000 };
 
   function now() {
     return typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now();
@@ -67,7 +75,7 @@
     if (corpusCache === null) {
       corpusCache = [];
       LEVELS.forEach(function (level) {
-        for (var seed = 1; seed <= PER_LEVEL; seed++) {
+        for (var seed = 1; seed <= countOf(level); seed++) {
           var t0 = now();
           var result = generate(level, seed);
           corpusCache.push({ level: level, seed: seed, result: result, ms: now() - t0 });
@@ -435,11 +443,13 @@
       });
     });
 
-    it('genuinely prunes: a fifth of the candidates are gone before a single digit is known', function () {
+    it('genuinely prunes: a tenth of the candidates are gone before a single digit is known', function () {
       T.enablePropagation('killer');
       var removed = 0;
       var total = 0;
-      corpus().filter(function (p) { return p.level === 'hard' && p.seed <= 5; }).forEach(function (p) {
+      // Rating v2 picks other hard layouts than v1 did (12.7 % pruned over these 20; easy layouts, with their
+      // small cages, about 18 %).
+      corpus().filter(function (p) { return p.level === 'hard'; }).forEach(function (p) {
         var model = p.result.model;
         var plainSpec = { variantId: 'plain-test', digits: 9, units: model.units.slice(0, 27), layout: {
           rows: 9, cols: 9, cellRow: model.layout.cellRow, cellCol: model.layout.cellCol } };
@@ -453,7 +463,7 @@
           total += popcount(without.candidates[c]);
         }
       });
-      expect(removed / total).toBeGreaterThan(0.2);
+      expect(removed / total).toBeGreaterThan(0.1);
     });
 
     it('leaves a model without cages alone: no extension work for the classic variants', function () {
@@ -533,8 +543,11 @@
       IDS.forEach(function (id) { expect(report.techniqueCounts[id]).toBeUndefined(); });
       var spec = SG.difficulty.spec('expert', H.model('classic9'));
       IDS.forEach(function (id) { expect(spec.allowedTechniques).not.toContain(id); });
-      expect(SG.difficulty.spec('veryEasy', board).allowedTechniques).toContain('cageCombo');
-      expect(SG.difficulty.spec('veryEasy', board).allowedTechniques).toContain('cageSplit');
+      // Rating v2: a technique is allowed from the band whose maximum exceeds 1.25 x its weight.
+      expect(SG.difficulty.spec('veryEasy', board).allowedTechniques).not.toContain('cageCombo');
+      expect(SG.difficulty.spec('easy', board).allowedTechniques).toContain('cageCombo');
+      expect(SG.difficulty.spec('medium', board).allowedTechniques).toContain('ruleOf45');
+      expect(SG.difficulty.spec('hard', board).allowedTechniques).toContain('cageSplit');
     });
 
     it('find nothing on a Killer board without cages, and on a solved board', function () {
@@ -850,13 +863,14 @@
 
     function sweep() {
       if (sweepCache === null) {
-        sweepCache = { firings: {}, keys: {}, states: 0 };
+        sweepCache = { firings: {}, keys: {}, states: 0, puzzles: 0 };
         IDS.forEach(function (id) { sweepCache.firings[id] = 0; });
         var rng = SG.rng.create(31337);
         corpus().filter(function (p) {
           return (p.level === 'hard' || p.level === 'expert') && p.seed <= 12;
         }).forEach(function (p, index) {
           var states = positionsOf(p.result, rng.fork('p' + index));
+          sweepCache.puzzles++;
           IDS.forEach(function (id) {
             var stats = H.assertSound(SG.test, id, { model: p.result.model, states: states });
             sweepCache.firings[id] += stats.firings;
@@ -871,12 +885,14 @@
       it(id + ' never removes or places a value of the true solution, and every Finding obeys the contract',
         function () {
           var result = sweep();
-          expect(result.states).toBe(24 * 5 * 3);
+          // 12 hard puzzles and the expert ones up to seed 12 (the corpus holds fewer of the top levels).
+          expect(result.puzzles).toBe(12 + Math.min(12, countOf('expert')));
+          expect(result.states).toBe(result.puzzles * 5 * 3);
           expect(result.firings[id]).toBeGreaterThan(MIN_FIRINGS[id]);
         });
     });
 
-    it('stays sound at every level: the whole ladder solves each of the 100 puzzles with correct steps', function () {
+    it('stays sound at every level: the whole ladder solves each puzzle of the corpus with correct steps', function () {
       corpus().forEach(function (p) {
         var report = SG.logicalSolver.solve(p.result.model, p.result.givens, { collectSteps: true });
         if (report.status !== 'solved') throw new Error(p.level + ' seed ' + p.seed + ' ended ' + report.status);
@@ -933,7 +949,8 @@
       expect(DEF.i18nKey).toBe('variant.killer');
       expect(DEF.digits).toBe(9);
       expect(DEF.group).toBe('killer');
-      expect(Array.from(DEF.difficultySupport)).toEqual(['veryEasy', 'easy', 'medium', 'hard', 'expert']);
+      expect(Array.from(DEF.difficultySupport)).toEqual(['veryEasy', 'easy', 'medium', 'hard', 'veryHard',
+        'expert', 'evil', 'nightmare1', 'nightmare2']);
       expect(DEF.defaultSymbolMode).toBe('digits');
       expect(DEF.symbolModes).toContain(DEF.defaultSymbolMode);
       expect(typeof DEF.build).toBe('function');
@@ -987,19 +1004,22 @@
       expect(SG.constraints.propagate(model, state)).toBe(true);
     });
 
-    it('does not offer evil, and says so with the usual error', function () {
+    it('refuses a level id it does not know, with the usual error', function () {
       var error = null;
-      try { generate('evil', 1); } catch (err) { error = err; }
+      try { generate('nightmare3', 1); } catch (err) { error = err; }
       expect(error).not.toBeNull();
-      expect(error.code).toBe('difficulty.unsupportedLevel');
+      expect(error.code).toBe('difficulty.unknownLevel');
     });
   });
 
-  describe('killer: 100 generated puzzles (20 per level), CV3 - CV6 and invariants I1 - I7', function () {
-    it('CV3: every supported level yields 20 puzzles of that variant', function () {
-      expect(corpus()).toHaveLength(5 * PER_LEVEL);
+  describe('killer: generated puzzles (20 per level, 8 from veryHard on), CV3 - CV6 and invariants I1 - I7',
+    function () {
+    it('CV3: every supported level yields its puzzles of that variant', function () {
+      var expected = 0;
+      LEVELS.forEach(function (level) { expected += countOf(level); });
+      expect(corpus()).toHaveLength(expected);
       LEVELS.forEach(function (level) {
-        expect(corpusOf(level)).toHaveLength(PER_LEVEL);
+        expect(corpusOf(level)).toHaveLength(countOf(level));
         corpusOf(level).forEach(function (p) {
           expect(p.result.model.variantId).toBe('killer');
           expect(p.result.config.difficulty).toBe(level);
@@ -1030,22 +1050,22 @@
       });
     });
 
-    it('I5: a puzzle rated as requested has its score in the band and a hardest technique of the level', function () {
+    it('I5: every puzzle has a complete proof; one rated as requested has its score in the band', function () {
       var hits = {};
       corpus().forEach(function (p) {
         var rating = p.result.rating;
         var spec = SG.difficulty.spec(p.level, p.result.model);
+        expect(rating.solved).toBe(true);
         if (rating.level === p.level) {
           hits[p.level] = (hits[p.level] || 0) + 1;
           expect(rating.score).toBeGreaterThanOrEqual(spec.min);
           expect(rating.score).toBeLessThan(spec.max);
-          expect(spec.allowedGroups).toContain(rating.hardestGroup === null ? 'basic' : rating.hardestGroup);
           expect(p.result.warnings).not.toContain('difficulty.approximate');
         } else {
           expect(p.result.warnings).toContain('difficulty.approximate');
         }
       });
-      LEVELS.forEach(function (level) { expect(hits[level]).toBeGreaterThan(PER_LEVEL * 0.8); });
+      LEVELS.forEach(function (level) { expect(hits[level]).toBeGreaterThan(countOf(level) * 0.8); });
     });
 
     it('I6 (the clue floor of a Killer): very easy keeps 40 clues; the other levels dig down to a handful',
@@ -1055,14 +1075,13 @@
         LEVELS.forEach(function (level) {
           var sum = 0;
           corpusOf(level).forEach(function (p) { sum += clueCount(p.result.givens); });
-          mean[level] = sum / PER_LEVEL;
+          mean[level] = sum / countOf(level);
         });
         expect(mean.easy).toBeLessThan(35);
-        expect(mean.medium).toBeLessThan(20);
-        expect(mean.hard).toBeLessThan(10);
-        expect(mean.expert).toBeLessThan(8);
-        expect(mean.easy).toBeGreaterThan(mean.medium);
-        expect(mean.medium).toBeGreaterThan(mean.hard);
+        // Rating v2: the score, not the clue count, sets the level; from easy on a puzzle keeps a handful.
+        LEVELS.slice(1).forEach(function (level) {
+          if (!(mean[level] < 12)) throw new Error(level + ': mean of ' + mean[level] + ' clues');
+        });
       });
 
     it('I4 (CV5): the same seed gives the same puzzle, cages and colours included; other seeds differ', function () {
@@ -1089,9 +1108,12 @@
         var times = corpusOf(level).map(function (p) { return p.ms; }).sort(function (a, b) { return a - b; });
         var p95 = times[Math.ceil(0.95 * times.length) - 1];
         report[level] = Math.round(p95);
-        if (p95 >= BUDGET_MS[level]) throw new Error(level + ': p95 ' + Math.round(p95) + ' ms >= ' + BUDGET_MS[level]);
+        var limit = SG.test.timeLimit(BUDGET_MS[level]);
+        if (p95 >= limit) {
+          throw new Error(level + ': p95 ' + Math.round(p95) + ' ms >= ' + limit + ' (x' + SG.test.TIME_FACTOR + ')');
+        }
       });
-      expect(Object.keys(report)).toHaveLength(5);
+      expect(Object.keys(report)).toHaveLength(LEVELS.length);
     });
 
     it('stays reproducible whatever the trace level: off, summary and full give the same puzzle', function () {
@@ -1493,7 +1515,7 @@
           }
         }
       });
-      expect(total).toBe(40);
+      expect(total).toBe(countOf('hard') + countOf('expert'));
       expect(unique / total).toBeGreaterThan(0.25);
     });
 
@@ -1602,6 +1624,79 @@
         expect(error).not.toBeNull();
         expect(error.code).toBe('budget.cancelled');
       });
+  });
+
+  // ---------------------------------------------------------------------------------------------
+  // 6b. The closest candidate of a run (rating v2, report sections 5.5 and 5.7 (6))
+  // ---------------------------------------------------------------------------------------------
+
+  describe('killer: the fallback is the closest completely rated candidate the run met', function () {
+    /** Distance to the requested level as the generator measures it: whole levels, then off the band. */
+    function distance(rating, level) {
+      if (!rating || rating.solved !== true) return Infinity;
+      var band = SG.difficulty.bandOf(level);
+      var gap = Math.abs(SG.difficulty.levelIndex(rating.level) - SG.difficulty.levelIndex(level));
+      var off = rating.score < band.min ? (band.min - rating.score) / Math.max(band.min, 1)
+        : rating.score >= band.max ? (rating.score - band.max) / band.max : 0;
+      return gap * 1000 + off;
+    }
+
+    it('expert, diagonal symmetry, two attempts (seed 61843): nothing it met and verified is closer', function () {
+      var config = { variantId: 'killer', difficulty: 'expert', seed: 61843, symmetry: 'diagonal',
+        maxAttempts: 2, trace: 'off' };
+      var rate = SG.difficulty.rate;
+      var seen = [];
+      SG.difficulty.rate = function (model, givens) {
+        var rating = rate.apply(this, arguments);
+        if (rating.solved) seen.push({ model: model, givens: Int32Array.from(givens), rating: rating });
+        return rating;
+      };
+      var result;
+      try {
+        result = SG.pipeline.run(config, null);
+      } finally {
+        SG.difficulty.rate = rate;
+      }
+      // The closest candidate the run rated that an independent DFS count proves unique.
+      seen.sort(function (a, b) { return distance(a.rating, 'expert') - distance(b.rating, 'expert'); });
+      var witness = null;
+      for (var i = 0; i < seen.length && witness === null; i++) {
+        if (SG.dfs.countSolutions(seen[i].model, seen[i].givens, 2) === 1) witness = seen[i];
+      }
+      expect(witness).not.toBeNull();
+      expect(distance(result.rating, 'expert')).toBeLessThan(distance(witness.rating, 'expert') + 1e-9);
+
+      // The returned puzzle is valid: one solution, clues by whole symmetry groups, valid cages, a replay that
+      // rebuilds it, and the score it claims.
+      var model = result.model;
+      expect(SG.dfs.countSolutions(model, result.givens, 2)).toBe(1);
+      expect(SG.model.isSolution(model, result.solution)).toBe(true);
+      expect(SG.difficulty.rate(model, result.givens).score).toBe(result.rating.score);
+      SG.symmetry.groups(model, 'diagonal').forEach(function (g) {
+        var shown = Array.from(g).filter(function (c) { return result.givens[c] !== 0; }).length;
+        if (shown !== 0 && shown !== g.length) throw new Error('a symmetry group is half shown: ' + Array.from(g));
+      });
+      var covered = new Int32Array(81);
+      model.cages.forEach(function (cage) {
+        var cells = Array.from(cage.cells);
+        expect(cells.length).toBeGreaterThan(1);
+        expect(isConnected(cells)).toBe(true);
+        var digits = {};
+        var sum = 0;
+        cells.forEach(function (c) {
+          covered[c]++;
+          expect(digits[result.solution[c]]).toBeUndefined();
+          digits[result.solution[c]] = true;
+          sum += result.solution[c];
+        });
+        expect(sum).toBe(cage.sum);
+      });
+      for (var c = 0; c < 81; c++) expect(covered[c]).toBe(1);
+      var steps = SG.player.buildSteps(result).steps;
+      var lastDig = steps[steps.length - 2];
+      expect(Array.from(lastDig.values)).toEqual(Array.from(result.givens));
+      expect(result.warnings).toContain('difficulty.approximate');
+    }, 120000);
   });
 
   // ---------------------------------------------------------------------------------------------

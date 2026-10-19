@@ -2,24 +2,28 @@
 'use strict';
 
 /*
- * Soak test and calibration tool for the difficulty system (task T-2.10, design.md section 15.4).
+ * Soak test and calibration tool for the difficulty system (task T-2.10, design.md section 15.4; rating v2,
+ * docs/report-v2/report-detailed.md).
  *
  *   node tests/soak.js [--quick | --full] [--count=N] [--per-combo=N] [--seed=N] [--variant=id[,id]]
- *                      [--level=id[,id]] [--costs=JSON] [--bands=a,b,c,d,e,f] [--no-gate] [--verbose]
- *                      [--help]
+ *                      [--level=id[,id]] [--weights=JSON] [--bands=a,b,c,d,e,f,g,h,i] [--no-gate]
+ *                      [--verbose] [--help]
  *
  * It generates puzzles for every (variant x difficulty) combination of the registered variants, checks the
  * invariants I1-I7 of design.md section 15.3 on every one of them, and prints
  *   - a confusion matrix per variant (requested level in the rows, achieved level in the columns),
  *   - the time per puzzle against the budget of design.md section 9.1,
- *   - a histogram of the scores, and which technique group the puzzles of each level need.
+ *   - a histogram of the scores, and which technique group the hardest technique of the puzzles of each
+ *     level belongs to.
  * Variants with their own dig strategy or a postGenerate step (killer, greaterThan, wordoku) and those whose
  * board depends on the seed (jigsaw) are generated through SG.pipeline.run (one model per puzzle); the
  * others call SG.digger.generate on one model.
- * Invariant I6 compares the clue count with `SG.difficulty.spec(level, model).minClues`, which is the
- * variant's own floor (`clueFloorScale` / `clueFloor` of its definition, see js/core/difficulty.js). The soak
- * is not part of the normal test run (node tests/node-runner.js): it takes a while and has no pass/fail per
- * puzzle, only totals.
+ * Invariant I5 (rating v2): every puzzle has a complete logical proof, and an exact one has its score in the
+ * band of its level. Invariant I6 compares the clue count with `SG.difficulty.spec(level, model).minClues`,
+ * which is the variant's own floor (`clueFloorScale` / `clueFloor` of its definition, see
+ * js/core/difficulty.js). The soak is not part of the normal test run (node tests/node-runner.js): it takes
+ * a while and has no pass/fail per puzzle, only totals. Which levels a variant offers is decided by
+ * `node tests/qualify.js`, not by this tool.
  *
  * Exit code: 0 when no invariant was violated, every level of classic9 reached a hit rate of at least 90%
  * (the criterion of task T-2.10 and of the P2 checkpoint, `--quick`) and every other variant and level at
@@ -27,11 +31,11 @@
  * (for calibration runs). The budget column is the p95 target of design.md section 9.1 (the same table as
  * tests/perf.js, tests/fixtures/perf-helper.js); `node tests/perf.js` measures it properly.
  *
- * Measuring a level a variant does not offer yet: `--variant=flower --level=medium --include-unsupported`.
+ * Measuring a level a variant does not offer: `--variant=classic6 --level=expert --include-unsupported`.
  *
- * Calibration workflow: change SG.difficulty.COSTS / SG.difficulty.TABLE in js/core/difficulty.js, run this,
- * read the matrix. `--costs='{"xWing":150}'` and `--bands=0,72,180,400,800,1500` try a change without
- * editing the file (they patch the tables for the run and are printed in the header).
+ * Calibration workflow: change SG.difficulty.WEIGHTS / SG.difficulty.TABLE in js/core/difficulty.js, run
+ * this, read the matrix. `--weights='{"ruleOf45":145}'` and `--bands=0,45,180,400,700,1000,1500,2400,3600`
+ * try a change without editing the file (they patch the tables for the run and are printed in the header).
  *
  * The source files are the ones listed in SOURCE_FILES of tests/node-runner.js (read from it, so the two
  * cannot drift apart); files that do not exist yet are skipped.
@@ -46,9 +50,9 @@ const ROOT = path.resolve(__dirname, '..');
 const USAGE = [
   'Usage: node tests/soak.js [options]',
   '',
-  '  --quick            about 160 puzzles (20 per classic9 level, 5 per other combination): P2 checkpoint',
+  '  --quick            about 700 puzzles (20 per classic9 level, 5 per other combination): P2 checkpoint',
   '  --full             final QA preset (task T-7.7): 25 puzzles per (variant, level) combination, 100 per',
-  '                     classic9 level (about 2000 puzzles); same as --per-combo=25',
+  '                     classic9 level (about 3,550 puzzles); same as --per-combo=25',
   '  --per-combo=N      N puzzles per (variant, level) combination (4N for each classic9 level)',
   '  --count=N          total number of puzzles (default 500), shared out over the combinations',
   '  --seed=N           base seed (default 20260101); every puzzle derives its own stream from it',
@@ -56,8 +60,8 @@ const USAGE = [
   '  --level=a,b        only these levels (default: every level a variant supports)',
   '  --include-unsupported  also run the levels a variant does NOT list in difficultySupport (to measure',
   '                     whether a level could be offered; those rows are marked with * and never gated)',
-  '  --costs=JSON       override technique costs for this run, e.g. {"xWing":150}',
-  '  --bands=a,b,c,d,e,f  override the lower score bound of the six classic9 bands for this run',
+  '  --weights=JSON     override technique weights for this run, e.g. {"ruleOf45":145}',
+  '  --bands=a,...,i    override the lower score bound of the nine bands for this run',
   '  --no-gate          never fail on the hit rate or on invariants (calibration runs)',
   '  --verbose          list every invariant violation with its seed',
   '  --help             show this help'
@@ -65,7 +69,7 @@ const USAGE = [
 
 function parseArgs(argv) {
   const opts = {
-    quick: false, count: 500, perCombo: 0, seed: 20260101, variants: null, levels: null, costs: null,
+    quick: false, count: 500, perCombo: 0, seed: 20260101, variants: null, levels: null, weights: null,
     bands: null, gate: true, verbose: false, help: false, includeUnsupported: false
   };
   for (const arg of argv) {
@@ -81,7 +85,7 @@ function parseArgs(argv) {
     else if ((m = /^--seed=(\d+)$/.exec(arg))) opts.seed = parseInt(m[1], 10);
     else if ((m = /^--variant=(.+)$/.exec(arg))) opts.variants = m[1].split(',');
     else if ((m = /^--level=(.+)$/.exec(arg))) opts.levels = m[1].split(',');
-    else if ((m = /^--costs=(.+)$/.exec(arg))) opts.costs = JSON.parse(m[1]);
+    else if ((m = /^--weights=(.+)$/.exec(arg))) opts.weights = JSON.parse(m[1]);
     else if ((m = /^--bands=(.+)$/.exec(arg))) opts.bands = m[1].split(',').map(Number);
     else throw new Error('Unknown argument: ' + arg);
   }
@@ -106,15 +110,8 @@ function loadSources() {
 }
 
 // -------------------------------------------------------------------------------------------------
-// Budgets of design.md section 9.1 (milliseconds, p95). 'easy' has no column there and takes the next one
-// for classic. The other variants read the table of tests/fixtures/perf-helper.js.
+// Budgets: the p95 targets of design.md section 9.1, from the table of tests/fixtures/perf-helper.js.
 // -------------------------------------------------------------------------------------------------
-
-const BUDGET_MS = {
-  classic4: { veryEasy: 10, easy: 20 },
-  classic6: { veryEasy: 10, easy: 20, medium: 20 },
-  classic9: { veryEasy: 60, easy: 150, medium: 150, hard: 400, expert: 900, evil: 2500 }
-};
 
 /** Combinations that carry more weight when the puzzles are shared out: classic9 is the one that is gated. */
 const GATED_VARIANT = 'classic9';
@@ -152,7 +149,7 @@ function main() {
   const SG = loadSources();
   const D = SG.difficulty;
   const LEVELS = D.LEVELS;
-  if (opts.costs) Object.assign(D.COSTS, opts.costs);
+  if (opts.weights) Object.assign(D.WEIGHTS, opts.weights);
   if (opts.bands) {
     if (opts.bands.length !== LEVELS.length || opts.bands.some((v) => !isFinite(v))) {
       console.error('--bands needs ' + LEVELS.length + ' numbers\n\n' + USAGE);
@@ -244,8 +241,8 @@ function main() {
       const ms = Number(process.hrtime.bigint() - t0) / 1e6;
       const model = p.model;
       const spec = D.spec(combo.level, model);
-      rows.push({ achieved: p.achieved, exact: p.exact, ms: ms, score: p.rating.score, raw: p.rating.rawScore,
-        group: p.rating.hardestGroup, samples: p.samples, warnings: p.warnings });
+      rows.push({ achieved: p.achieved, exact: p.exact, ms: ms, score: p.rating.score,
+        solved: p.rating.solved, group: p.rating.hardestGroup, samples: p.samples, warnings: p.warnings });
 
       // I1: exactly one solution (checked with the DFS alone).
       if (SG.dfs.countSolutions(model, p.givens, 2) !== 1) note('I1', combo, i, 'not unique');
@@ -265,12 +262,12 @@ function main() {
           note('I4', combo, i, 'differs');
         }
       }
-      // I5: an exact puzzle has its score in the band and its hardest technique in the allowed groups.
+      // I5 (rating v2): every puzzle has a complete proof; an exact one has its score in the band.
+      if (p.rating.solved !== true) note('I5', combo, i, 'no complete logical proof');
       if (p.exact) {
         const r = D.rate(model, p.givens);
         const inBand = r.score >= spec.min && r.score < spec.max;
-        const groupOk = r.hardestGroup === null || spec.allowedGroups.indexOf(r.hardestGroup) !== -1;
-        if (!inBand || !groupOk || r.level !== combo.level) {
+        if (!r.solved || !inBand || r.level !== combo.level) {
           note('I5', combo, i, 'score ' + r.score + ' hardest ' + r.hardestTechnique);
         }
       }
@@ -300,23 +297,25 @@ function main() {
     ' puzzles in ' + wallS.toFixed(1) + ' s' + (opts.quick ? ', --quick' : '') +
     (opts.perCombo && !opts.quick ? ', ' + opts.perCombo + ' per combination' : '') + ')');
   out.push('');
-  out.push('Calibration in force (classic9 score bands, lower bound of each level):');
+  out.push('Calibration in force (score bands, lower bound of each level, the same on every board):');
   out.push('  ' + LEVELS.map((l, i) => l + ' ' + D.TABLE[i].min).join(' | '));
-  out.push('Technique costs: ' + Object.keys(D.COSTS).map((id) => id + ' ' + D.COSTS[id]).join(', '));
-  if (opts.costs || opts.bands) out.push('(overridden on the command line for this run)');
+  out.push('Technique weights: ' + Object.keys(D.WEIGHTS).map((id) => id + ' ' + D.WEIGHTS[id]).join(', '));
+  if (opts.weights || opts.bands) out.push('(overridden on the command line for this run)');
 
   const hitRates = {};
   const gatedRates = {};
   const variantsRun = [];
   combos.forEach((c) => { if (variantsRun.indexOf(c.id) === -1) variantsRun.push(c.id); });
 
+  /** Width of a level column ('nightmare1' is ten characters). */
+  const COL = 11;
+
   for (const id of variantsRun) {
     const mine = combos.filter((c) => c.id === id);
     out.push('');
     out.push('== ' + id + ' (' + mine[0].model.cellCount + ' cells) ==');
-    const head = pad('requested', 10, true) + LEVELS.map((l) => pad(l, 9)).join('') + pad('n', 5) +
-      pad('hit', 7) +
-      pad('raw-band', 10) + pad('samples', 9) + pad('ms p50', 8) + pad('p95', 8) + pad('max', 8) +
+    const head = pad('requested', COL, true) + LEVELS.map((l) => pad(l, COL)).join('') + pad('n', 5) +
+      pad('hit', 7) + pad('samples', 9) + pad('ms p50', 8) + pad('p95', 8) + pad('max', 8) +
       pad('budget', 8);
     out.push(head);
     let allHit = 0;
@@ -324,69 +323,63 @@ function main() {
     for (const c of mine) {
       const rows = results.get(c);
       const counts = {};
-      rows.forEach((r) => { counts[r.achieved] = (counts[r.achieved] || 0) + 1; });
+      rows.forEach((r) => {
+        const key = r.achieved === null ? 'unrated' : r.achieved;
+        counts[key] = (counts[key] || 0) + 1;
+      });
       const hits = rows.filter((r) => r.exact).length;
       allHit += hits;
       allN += rows.length;
       const times = rows.map((r) => r.ms).sort((a, b) => a - b);
       const samples = rows.reduce((a, r) => a + r.samples, 0) / rows.length;
       const targets = SG.fixtures && SG.fixtures.perfTools ? SG.fixtures.perfTools.PERF_TARGETS : {};
-      const budget = (BUDGET_MS[id] || targets[id] || {})[c.level];
+      const budget = (targets[id] || {})[c.level];
       const p95 = percentile(times, 0.95);
       const flag = budget === undefined ? '' : p95 <= budget ? ' ok' : ' SLOW';
-      const spec = D.spec(c.level, c.model);
-      const rawInBand = rows.filter((r) => r.raw >= spec.min && r.raw < spec.max).length;
       const label = c.level + (c.unsupported ? '*' : '');
-      out.push(pad(label, 10, true) + LEVELS.map((l) => pad(counts[l] || '.', 9)).join('') +
+      out.push(pad(label, COL, true) + LEVELS.map((l) => pad(counts[l] || '.', COL)).join('') +
         pad(rows.length, 5) +
-        pad((hits / rows.length * 100).toFixed(0) + '%', 7) +
-        pad((rawInBand / rows.length * 100).toFixed(0) + '%', 10) + pad(samples.toFixed(1), 9) +
+        pad((hits / rows.length * 100).toFixed(0) + '%', 7) + pad(samples.toFixed(1), 9) +
         pad(fmtMs(percentile(times, 0.5)), 8) + pad(fmtMs(p95), 8) + pad(fmtMs(times[times.length - 1]), 8) +
         pad(budget === undefined ? '-' : budget + flag, 8));
       hitRates[id + '/' + c.level] = hits / rows.length;
       if (!c.unsupported) gatedRates[id + '/' + c.level] = hits / rows.length;
     }
-    out.push('(raw-band: share of puzzles whose score lies in the band even without the technique floor)');
     out.push('exact: ' + allHit + ' of ' + allN + ' (' + (allHit / allN * 100).toFixed(1) + '%)');
 
-    // Which technique group the puzzles of each level need, and how often the technique floor was binding.
+    // The group of the hardest technique of the puzzles of each level (descriptive: the score sets levels).
     out.push('');
-    out.push('hardest technique group per requested level (share of puzzles), ' +
-      'floor-bound = score is the band minimum:');
+    out.push('group of the hardest technique per requested level (share of puzzles):');
     for (const c of mine) {
       const rows = results.get(c);
       const groups = {};
       rows.forEach((r) => { groups[r.group || 'none'] = (groups[r.group || 'none'] || 0) + 1; });
-      const floorBound = rows.filter((r) => r.score > r.raw + 1e-9).length;
-      out.push('  ' + pad(c.level, 9, true) + Object.keys(groups).sort().map((g) =>
-        g + ' ' + (groups[g] / rows.length * 100).toFixed(0) + '%').join('  ') + '   floor-bound ' +
-        (floorBound / rows.length * 100).toFixed(0) + '%');
+      out.push('  ' + pad(c.level, COL, true) + Object.keys(groups).sort().map((g) =>
+        g + ' ' + (groups[g] / rows.length * 100).toFixed(0) + '%').join('  '));
     }
   }
 
-  // Score histogram: scores divided by the scale of their board, so every variant uses the classic9 bands.
-  const edges = D.TABLE.map((row) => row.min).concat([3000, 6000, 12000])
+  // Score histogram: the bands are the same on every board, so the scores are binned as they are.
+  const edges = D.TABLE.map((row) => row.min).concat([5400])
     .filter((v, i, a) => i === 0 || v > a[i - 1]);
   const labels = edges.map((e, i) => (i + 1 < edges.length ? e + '-' + edges[i + 1] : e + '+'));
   out.push('');
-  out.push('Score histogram (score / scale, so every board uses the classic9 bands), ' +
-    'all puzzles, by requested level:');
-  out.push(pad('bin', 12, true) + combosByLevelHeader(LEVELS) + '   all');
+  out.push('Score histogram (the bands of every board), all puzzles, by requested level:');
+  out.push(pad('bin', 12, true) + combosByLevelHeader(LEVELS, COL) + '   all');
   const hist = labels.map(() => ({ all: 0 }));
   LEVELS.forEach((l) => hist.forEach((h) => { h[l] = 0; }));
   for (const c of combos) {
-    const scale = c.model.cellCount / 81;
     results.get(c).forEach((r) => {
-      const s = r.score / scale;
+      if (typeof r.score !== 'number') return;
       let b = 0;
-      for (let k = 0; k < edges.length; k++) if (s >= edges[k]) b = k;
+      for (let k = 0; k < edges.length; k++) if (r.score >= edges[k]) b = k;
       hist[b][c.level]++;
       hist[b].all++;
     });
   }
   const maxAll = Math.max.apply(null, hist.map((h) => h.all).concat([1]));
   hist.forEach((h, k) => {
-    out.push(pad(labels[k], 12, true) + LEVELS.map((l) => pad(h[l] || '.', 9)).join('') + '  ' +
+    out.push(pad(labels[k], 12, true) + LEVELS.map((l) => pad(h[l] || '.', COL)).join('') + '  ' +
       pad(h.all, 5) + ' ' +
       '#'.repeat(Math.round(30 * h.all / maxAll)));
   });
@@ -430,8 +423,8 @@ function main() {
   return ok || !opts.gate ? 0 : 1;
 }
 
-function combosByLevelHeader(levels) {
-  return levels.map((l) => pad(l, 9)).join('');
+function combosByLevelHeader(levels, width) {
+  return levels.map((l) => pad(l, width)).join('');
 }
 
 process.exitCode = main();

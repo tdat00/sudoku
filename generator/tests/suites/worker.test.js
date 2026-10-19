@@ -118,7 +118,7 @@
   }
 
   var CASES = [
-    { variantId: 'classic4', difficulty: 'easy', seed: 1, trace: 'full' },
+    { variantId: 'classic4', difficulty: 'veryEasy', seed: 1, trace: 'full' },
     { variantId: 'classic9', difficulty: 'medium', seed: 7, trace: 'summary' },
     { variantId: 'classic9', difficulty: 'hard', seed: 3, trace: 'off' },
     { variantId: 'classic9', difficulty: 'expert', seed: 11, trace: 'summary', maxAttempts: 1 },
@@ -211,7 +211,7 @@
     }, SLOW);
 
     it('cooperative: false never yields', function () {
-      var steps = P.runSteps(cfg({ variantId: 'classic4', difficulty: 'easy' }), null, null,
+      var steps = P.runSteps(cfg({ variantId: 'classic4', difficulty: 'veryEasy' }), null, null,
         { cooperative: false });
       var first = steps.next();
       expect(first.done).toBe(true);
@@ -519,8 +519,10 @@
       function () {
         [SLICED[2], SLICED[3]].forEach(function (c) {
           var work = sliceWork(c);
-          // Before: the whole dig of a sample, 100 000 to 230 000 nodes, in one slice.
-          expect(work.longest.dig).toBeLessThan(8000);
+          // Before: the whole dig of a sample, 100 000 to 230 000 nodes, in one slice. Now one sign candidate:
+          // its uniqueness check and its solve with the techniques of the level (since rating v2 the expert
+          // set has forcing chains, which makes a solve a few thousand nodes longer).
+          expect(work.longest.dig).toBeLessThan(16000);
           expect(work.slices.dig).toBeGreaterThan(100);
         });
       }, SLOW);
@@ -532,7 +534,7 @@
 
   describe('SG.pipeline.toWire / fromWire: a result across postMessage', function () {
     var WIRE_CASES = [
-      ['classic4', 'easy'], ['classic6', 'easy'], ['classic9', 'easy'], ['diagonalX', 'easy'],
+      ['classic4', 'veryEasy'], ['classic6', 'veryEasy'], ['classic9', 'easy'], ['diagonalX', 'easy'],
       ['hyper', 'easy'], ['jigsaw9', 'easy'], ['killer', 'easy'], ['greaterThan', 'easy'],
       ['mega12', 'veryEasy'], ['mega16', 'veryEasy'], ['samurai', 'veryEasy'], ['sohei', 'veryEasy'],
       ['butterfly', 'veryEasy'], ['flower', 'veryEasy'], ['wordoku', 'easy']
@@ -672,7 +674,7 @@
   var wireClassic4 = null;
   function classic4Wire() {
     if (wireClassic4 === null) {
-      wireClassic4 = P.toWire(P.run({ variantId: 'classic4', difficulty: 'easy', seed: 5, trace: 'off' },
+      wireClassic4 = P.toWire(P.run({ variantId: 'classic4', difficulty: 'veryEasy', seed: 5, trace: 'off' },
         null));
     }
     return wireClassic4;
@@ -1127,7 +1129,7 @@
     it('the slice is as long as chunkMs says: a frozen clock means one slice, a slow one one step',
       function () {
       var frozen = mainClient({ chunkMs: 12, now: function () { return 5; } });
-      var c = cfg({ variantId: 'classic4', difficulty: 'easy' });
+      var c = cfg({ variantId: 'classic4', difficulty: 'veryEasy' });
       return frozen.generate(c).then(function () {
         expect(frozen.yields.count).toBe(0);
         var coarse = 0;
@@ -1249,7 +1251,7 @@
       function () {
         var client = CLIENT.create({ forceMode: 'main', chunkMs: 1 });
         var events = 0;
-        return client.generate(cfg({ variantId: 'classic4', difficulty: 'easy' }), function () { events++; })
+        return client.generate(cfg({ variantId: 'classic4', difficulty: 'veryEasy' }), function () { events++; })
           .then(function (result) {
             expect(result.givens.length).toBe(16);
             expect(events).toBeGreaterThan(5);
@@ -1481,7 +1483,7 @@
       expect(w.ofType('error')).toHaveLength(0);
       // The worker is free: the next generate runs to its end.
       w.postMessage({ type: 'generate', session: 3,
-        config: cfg({ variantId: 'classic4', difficulty: 'easy' }) });
+        config: cfg({ variantId: 'classic4', difficulty: 'veryEasy' }) });
       w.run();
       expect(w.ofType('done').map(function (m) { return m.session; })).toEqual([3]);
     }, SLOW);
@@ -1536,7 +1538,7 @@
 
     var SAME_CASES = [
       { variantId: 'classic9', difficulty: 'medium', seed: 5, trace: 'summary' },
-      { variantId: 'classic6', difficulty: 'easy', seed: 2, trace: 'full' },
+      { variantId: 'classic6', difficulty: 'veryEasy', seed: 2, trace: 'full' },
       { variantId: 'killer', difficulty: 'easy', seed: 3, trace: 'summary' },
       { variantId: 'greaterThan', difficulty: 'easy', seed: 4, trace: 'summary' },
       { variantId: 'jigsaw9', difficulty: 'easy', seed: 2, trace: 'summary' },

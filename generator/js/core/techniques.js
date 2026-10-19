@@ -32,7 +32,7 @@
  *     SG.DEBUG on, the solver throws 'solver.stateMutated' when a technique changes the state.
  *   - Return null when the technique does not apply. Otherwise return ONE deduction (one pattern instance,
  *     the first one found in a deterministic scan order; no randomness): the solver applies it, records one
- *     step and asks the whole ladder again from the cheapest technique.
+ *     step and asks the whole ladder again from its first technique (ascending `order`).
  *   - Work on any unit shape: use model.units / model.cellUnits / model.peers, never assume rows, columns or
  *     3x3 boxes. A unit is "complete" (a digit must appear in it exactly once) only when
  *     `ctx.completeUnits[u] === 1` (size === digits and not `partial`); hidden-single style reasoning is

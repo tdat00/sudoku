@@ -1,0 +1,201 @@
+{
+  "mode": "exchange",
+  "node": "v26.8.2",
+  "cases": [
+    {
+      "name": "classic9/veryHard",
+      "format": "sudoku-generator/v1",
+      "exportedDifficulty": {
+        "requested": "veryHard",
+        "achieved": "veryHard",
+        "score": 954,
+        "hardestTechnique": "xyWing",
+        "techniqueCounts": {
+          "nakedSingle": 35,
+          "hiddenSingleBox": 15,
+          "pointing": 3,
+          "boxLine": 1,
+          "nakedPair": 1,
+          "xWing": 1,
+          "xyWing": 1
+        },
+        "rawScore": 954,
+        "hardestGroup": "wing",
+        "confidence": 0.30666666666666664,
+        "solved": true,
+        "empties": 50,
+        "ratingVersion": 2
+      },
+      "ok": true,
+      "errors": [],
+      "importedDifficulty": {
+        "requested": "veryHard",
+        "achieved": "veryHard",
+        "score": 954,
+        "hardestTechnique": "xyWing",
+        "ratingVersion": 2
+      },
+      "matchingGivens": true
+    },
+    {
+      "name": "classic9/nightmare1",
+      "format": "sudoku-generator/v1",
+      "exportedDifficulty": {
+        "requested": "nightmare1",
+        "achieved": "nightmare1",
+        "score": 3004,
+        "hardestTechnique": "nishio",
+        "techniqueCounts": {
+          "nakedSingle": 39,
+          "hiddenSingleBox": 10,
+          "hiddenSingleLine": 3,
+          "pointing": 4,
+          "hiddenTriple": 1,
+          "forcingChain": 7,
+          "nishio": 2
+        },
+        "rawScore": 3004,
+        "hardestGroup": "chain",
+        "confidence": 0.9933333333333333,
+        "solved": true,
+        "empties": 52,
+        "ratingVersion": 2
+      },
+      "ok": true,
+      "errors": [],
+      "importedDifficulty": {
+        "requested": "nightmare1",
+        "achieved": "nightmare1",
+        "score": 3004,
+        "hardestTechnique": "nishio",
+        "ratingVersion": 2
+      },
+      "matchingGivens": true
+    },
+    {
+      "name": "killer/nightmare2",
+      "format": "sudoku-generator/v1",
+      "exportedDifficulty": {
+        "requested": "nightmare2",
+        "achieved": "nightmare2",
+        "score": 3743,
+        "hardestTechnique": "nishio",
+        "techniqueCounts": {
+          "nakedSingle": 63,
+          "hiddenSingleBox": 6,
+          "hiddenSingleLine": 3,
+          "pointing": 10,
+          "boxLine": 10,
+          "cageCombo": 24,
+          "nakedPair": 1,
+          "ruleOf45": 21,
+          "cageSplit": 1,
+          "nishio": 20
+        },
+        "rawScore": 3743,
+        "hardestGroup": "chain",
+        "confidence": 0.07944444444444444,
+        "solved": true,
+        "empties": 75,
+        "ratingVersion": 2
+      },
+      "ok": true,
+      "errors": [],
+      "importedDifficulty": {
+        "requested": "nightmare2",
+        "achieved": "nightmare2",
+        "score": 3743,
+        "hardestTechnique": "nishio",
+        "ratingVersion": 2
+      },
+      "matchingGivens": true
+    },
+    {
+      "name": "greaterThan/nightmare2",
+      "format": "sudoku-generator/v1",
+      "exportedDifficulty": {
+        "requested": "nightmare2",
+        "achieved": "nightmare2",
+        "score": 3646,
+        "hardestTechnique": "nishio",
+        "techniqueCounts": {
+          "nakedSingle": 53,
+          "hiddenSingleBox": 7,
+          "hiddenSingleLine": 4,
+          "pointing": 7,
+          "boxLine": 2,
+          "nakedPair": 3,
+          "ineqChain": 25,
+          "hiddenPair": 1,
+          "hiddenTriple": 1,
+          "xWing": 1,
+          "simpleColouring": 1,
+          "xyzWing": 1,
+          "forcingChain": 3,
+          "nishio": 17
+        },
+        "rawScore": 3646,
+        "hardestGroup": "chain",
+        "confidence": 0.025555555555555557,
+        "solved": true,
+        "empties": 64,
+        "ratingVersion": 2
+      },
+      "ok": true,
+      "errors": [],
+      "importedDifficulty": {
+        "requested": "nightmare2",
+        "achieved": "nightmare2",
+        "score": 3646,
+        "hardestTechnique": "nishio",
+        "ratingVersion": 2
+      },
+      "matchingGivens": true
+    },
+    {
+      "name": "mega16/nightmare2",
+      "format": "sudoku-generator/v1",
+      "exportedDifficulty": {
+        "requested": "nightmare2",
+        "achieved": "nightmare2",
+        "score": 4344,
+        "hardestTechnique": "nishio",
+        "techniqueCounts": {
+          "nakedSingle": 103,
+          "hiddenSingleBox": 31,
+          "hiddenSingleLine": 15,
+          "pointing": 13,
+          "boxLine": 4,
+          "nakedPair": 8,
+          "hiddenPair": 2,
+          "hiddenTriple": 1,
+          "xWing": 1,
+          "simpleColouring": 3,
+          "xyWing": 1,
+          "xyzWing": 1,
+          "wWing": 1,
+          "uniqueRectangle": 1,
+          "forcingChain": 39,
+          "nishio": 37
+        },
+        "rawScore": 4344,
+        "hardestGroup": "chain",
+        "confidence": 0.41333333333333333,
+        "solved": true,
+        "empties": 150,
+        "ratingVersion": 2
+      },
+      "ok": true,
+      "errors": [],
+      "importedDifficulty": {
+        "requested": "nightmare2",
+        "achieved": "nightmare2",
+        "score": 4344,
+        "hardestTechnique": "nishio",
+        "ratingVersion": 2
+      },
+      "matchingGivens": true
+    }
+  ],
+  "engineHash": "9002e195df0dec28"
+}

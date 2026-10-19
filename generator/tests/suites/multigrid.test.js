@@ -204,16 +204,14 @@
         expect(def.group).toBe('multigrid');
         expect(def.digits).toBe(9);
         expect(def.i18nKey).toBe('variant.' + id);
-        expect(def.difficultySupport).toEqual(spec.levels);
+        expect(def.difficultySupport).toEqual(SG.difficulty.LEVELS);
         expect(def.symbolModes).toContain(def.defaultSymbolMode);
         expect(def.options).toEqual([]);
         expect(def.fastSeed).toBe(MG.fastSeedOverlaps);
       });
 
-      it('offers no level that §9.1 gives no budget for (no expert, no evil)', function () {
-        var levels = SG.variants.get(id).difficultySupport;
-        expect(levels).not.toContain('expert');
-        expect(levels).not.toContain('evil');
+      it('offers every level of the nine, nightmare2 included (measured by tests/qualify.js)', function () {
+        expect(SG.variants.get(id).difficultySupport).toEqual(SG.difficulty.LEVELS);
       });
 
       it('has exactly ' + spec.cells + ' unique cells on a ' + spec.canvas + 'x' + spec.canvas + ' canvas',
@@ -975,7 +973,7 @@
       spec.levels.forEach(function (level) {
         it(id + ' ' + level + ': ' + SAMPLES + ' puzzles are unique, valid and inside the §9.1 time budget',
           function () {
-            var limit = spec.budgets[BUDGET_OF[level]];
+            var limit = SG.test.timeLimit(spec.budgets[BUDGET_OF[level]]);
             for (var seed = 1; seed <= SAMPLES; seed++) {
               var out = generate(id, level, seed);
               checkInvariants(id, level, out.result);
@@ -1015,21 +1013,19 @@
         expectCode(function () { SG.pipeline.run(cfg, null, cancelled); }, 'budget.cancelled');
       });
 
-      it(id + ': refuses the levels it does not offer', function () {
-        ['expert', 'evil'].concat(['veryEasy', 'easy', 'medium', 'hard'].filter(function (l) {
-          return spec.levels.indexOf(l) === -1;
-        })).forEach(function (level) {
+      it(id + ': refuses a level that does not exist', function () {
+        ['nightmare', 'nightmare3', 'impossible'].forEach(function (level) {
           expectCode(function () {
             SG.pipeline.run({ variantId: id, difficulty: level, seed: 1, trace: 'off' }, null);
-          }, 'difficulty.unsupportedLevel');
+          }, 'difficulty.unknownLevel');
         });
       });
     });
 
-    it('every board offers the same four levels, flower included (its own clue floor makes medium reachable)',
+    it('every board offers all nine levels, flower included (its own clue floor makes medium reachable)',
       function () {
         IDS.forEach(function (id) {
-          expect(SG.variants.get(id).difficultySupport).toEqual(['veryEasy', 'easy', 'medium', 'hard']);
+          expect(SG.variants.get(id).difficultySupport).toEqual(SG.difficulty.LEVELS);
         });
       });
 
@@ -1117,7 +1113,7 @@
             }
             times.sort(function (a, b) { return a - b; });
             var index = { veryEasy: 0, easy: 1, medium: 1, hard: 2 }[level];
-            expect(times[18]).toBeLessThan(BOARDS[id].budgets[index]);
+            expect(times[18]).toBeLessThan(SG.test.timeLimit(BOARDS[id].budgets[index]));
             expect(exact / 20).toBeGreaterThanOrEqual(HIT_RATE[level]);
           }, 600000);
         });

@@ -1,0 +1,65 @@
+{
+  "mode": "cap-boundary",
+  "node": "v26.8.2",
+  "cases": [
+    {
+      "name": "classic9/nightmare2",
+      "config": {
+        "variantId": "classic9",
+        "difficulty": "nightmare2",
+        "seed": 124192814,
+        "maxAttempts": 1
+      },
+      "generationMs": 382.15380000000005,
+      "achieved": "evil",
+      "score": 2076,
+      "complete": true,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": []
+      },
+      "cageErrors": [],
+      "rowTotal": 2076,
+      "revealCount": 0,
+      "cap": {
+        "ratings": 21,
+        "proposals": 62,
+        "maxRatings": 20,
+        "maxProposals": 32768
+      },
+      "rateCalls": 21,
+      "uncountedCalls": 0,
+      "lastRateCalls": [
+        {
+          "ratings": 17,
+          "proposals": 45
+        },
+        {
+          "ratings": 18,
+          "proposals": 49
+        },
+        {
+          "ratings": 19,
+          "proposals": 56
+        },
+        {
+          "ratings": 20,
+          "proposals": 62
+        },
+        {
+          "ratings": 21,
+          "proposals": 62
+        }
+      ]
+    }
+  ],
+  "engineHash": "9002e195df0dec28"
+}

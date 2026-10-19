@@ -63,10 +63,12 @@
    */
 
   /**
-   * Levels: design.md section 9.1 gives mega12 and mega16 budgets up to 'hard' only. Measured with the
-   * pipeline (100 seeds per level and board), every one of them is hit exactly, far inside those budgets.
+   * Levels: measured, not assumed (rating v2: `node tests/qualify.js`, docs/report-v2/qualification.md). Both
+   * boards hit every level of the nine, nightmare2 included, within the 30 s budget of larger boards; the
+   * top tiers come from the fast proposal dig refined into the band.
    */
-  const LEVELS = Object.freeze(['veryEasy', 'easy', 'medium', 'hard']);
+  const LEVELS = Object.freeze(['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil',
+    'nightmare1', 'nightmare2']);
 
   /** @type {Object<string, MegaSpec>} */
   const SPECS = Object.freeze({

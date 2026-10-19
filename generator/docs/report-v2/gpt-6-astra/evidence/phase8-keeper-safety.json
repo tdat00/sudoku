@@ -1,0 +1,306 @@
+{
+  "mode": "keeper-safety",
+  "node": "v26.8.2",
+  "cases": [
+    {
+      "name": "keeper-technique-bug-safety",
+      "config": {
+        "variantId": "killer",
+        "difficulty": "expert",
+        "seed": 61843,
+        "symmetry": "diagonal",
+        "maxAttempts": 1,
+        "trace": "off"
+      },
+      "score": 945,
+      "level": "veryHard",
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "dfsSolutions": 2,
+      "usedGuesser": 73,
+      "solved": true,
+      "log": [
+        {
+          "op": "pass",
+          "pass": "random",
+          "clues": 81
+        },
+        {
+          "op": "accept",
+          "cells": [
+            1,
+            9
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            2,
+            18
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            3,
+            27
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            4,
+            36
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            5,
+            45
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            6,
+            54
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            8,
+            72
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            11,
+            19
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            12,
+            28
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            13,
+            37
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            15,
+            55
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            16,
+            64
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            17,
+            73
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            20
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            21,
+            29
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            22,
+            38
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            23,
+            47
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            24,
+            56
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            25,
+            65
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            26,
+            74
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            30
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            31,
+            39
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            32,
+            48
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            33,
+            57
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            34,
+            66
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            35,
+            75
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            40
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            41,
+            49
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            42,
+            58
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            43,
+            67
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            44,
+            76
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            50
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            51,
+            59
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            53,
+            77
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            60
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            61,
+            69
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            62,
+            78
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            70
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            71,
+            79
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            80
+          ]
+        }
+      ]
+    }
+  ],
+  "engineHash": "12f460a1f057f943"
+}

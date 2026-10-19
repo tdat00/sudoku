@@ -458,8 +458,14 @@
 
     // --- 2.-4. dig the signs, rate, and reveal clues while the puzzle is too hard -------------------
 
+    const caps = options.caps || null;
+    const keeper = options.keeper || null;
+    // The full rating of the state the loop ends on, when it has one: handed on instead of rated again.
+    let finalRating = null;
+    let finalModel = null;
     const order = rng.shuffle(signs.map(function (s, index) { return index; }));
     for (let round = 0; round <= MAX_TUNE_ROUNDS; round++) {
+      finalRating = null;
       if (allowed !== null) yield* digPass(order, techniqueOracle, 'signs');
       yield* digPass(order, uniqueOracle, 'signs.minimal');
 
@@ -475,9 +481,22 @@
         }
       }
       if (!tooHard) {
-        const rating = SG.difficulty.rate(current, givens, { budget: budget });
+        // Counted toward the full-rating cap of the attempt; null once it is used up (the tuning ends).
+        const rating = SG.digger.rateCounted(current, givens, budget, caps);
         yield;
-        tooHard = SG.difficulty.levelIndex(rating.level) > levelIndex;
+        if (rating === null) break;
+        finalRating = rating;
+        finalModel = current;
+        // A unique (the signs are a minimal unique set), completely rated position: the run may fall back
+        // on it if it is the closest one (docs/report-v2/report-detailed.md section 5.7 (6)).
+        if (keeper !== null && log !== null && rating.solved) {
+          keeper.offer({
+            model: current, givens: givens, solution: solution, rating: rating, stats: stats,
+            logOf: function () { return log.slice(); }
+          });
+        }
+        // Rating v2: a rating without a complete proof has no level; it counts as too hard.
+        tooHard = rating.level === null || SG.difficulty.levelIndex(rating.level) > levelIndex;
       }
       if (!tooHard || round === MAX_TUNE_ROUNDS) break;
 
@@ -486,10 +505,14 @@
         if (givens[c] === 0 && (stuck === null || stuck.state.value[c] === 0)) open.push(c);
       }
       if (open.length === 0) break;
+      finalRating = null;
       revealGroup(groupOf[open[rng.int(open.length)]]);
       showClues();
     }
 
+    if (finalRating !== null) {
+      return { givens: givens, clues: clues, stats: stats, model: finalModel, rating: finalRating };
+    }
     return { givens: givens, clues: clues, stats: stats, model: withSigns(model, aliveSigns()) };
   }
 
@@ -512,11 +535,14 @@
     i18nKey: 'variant.greaterThan',
     group: 'inequality',
     digits: SIZE,
-    difficultySupport: ['veryEasy', 'easy', 'medium', 'hard', 'expert'],
+    // Every level of the nine (measured: `node tests/qualify.js`, docs/report-v2/qualification.md).
+    difficultySupport: ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
+      'nightmare2'],
     // The signs do part of the work of the clues, so the classic9 floors (29 / 25 / 22) kept the dig from
     // reaching the level (49 %, 13 % and 11 % of the dug puzzles for medium, hard, expert); 83 % / 80 % /
     // 80 % of them (24 / 20 / 17) give 76 %, 44 % and 16 % (js/core/difficulty.js, "Calibration log").
-    clueFloorScale: Object.freeze({ medium: 0.83, hard: 0.8, expert: 0.8 }),
+    // veryHard takes the factor of hard (rating v2).
+    clueFloorScale: Object.freeze({ medium: 0.83, hard: 0.8, veryHard: 0.8, expert: 0.8 }),
     defaultSymbolMode: 'digits',
     symbolModes: ['digits', 'letters', 'colors', 'shapes'],
     options: [{

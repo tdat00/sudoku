@@ -1,0 +1,243 @@
+{
+  "mode": "caps",
+  "node": "v26.8.2",
+  "cases": [
+    {
+      "name": "classic9/nightmare2",
+      "config": {
+        "variantId": "classic9",
+        "difficulty": "nightmare2",
+        "seed": 124192814,
+        "maxAttempts": 1
+      },
+      "generationMs": 432.5498,
+      "achieved": "evil",
+      "score": 2076,
+      "complete": true,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 2076,
+      "revealCount": 0,
+      "cap": {
+        "ratings": 99,
+        "proposals": 32768,
+        "maxRatings": 1024,
+        "maxProposals": 32768
+      },
+      "rateCalls": 99,
+      "uncountedCalls": 0,
+      "lastRateCalls": [
+        {
+          "ratings": 95,
+          "proposals": 1985
+        },
+        {
+          "ratings": 96,
+          "proposals": 2035
+        },
+        {
+          "ratings": 97,
+          "proposals": 2127
+        },
+        {
+          "ratings": 98,
+          "proposals": 3198
+        },
+        {
+          "ratings": 99,
+          "proposals": 4587
+        }
+      ]
+    },
+    {
+      "name": "greaterThan/hard",
+      "config": {
+        "variantId": "greaterThan",
+        "difficulty": "hard",
+        "seed": 1704806780,
+        "maxAttempts": 1
+      },
+      "generationMs": 943.2648,
+      "achieved": "medium",
+      "score": 304,
+      "complete": true,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 304,
+      "revealCount": 2,
+      "cap": {
+        "ratings": 13,
+        "proposals": 32768,
+        "maxRatings": 1024,
+        "maxProposals": 32768
+      },
+      "rateCalls": 13,
+      "uncountedCalls": 0,
+      "lastRateCalls": [
+        {
+          "ratings": 9,
+          "proposals": 0
+        },
+        {
+          "ratings": 10,
+          "proposals": 0
+        },
+        {
+          "ratings": 11,
+          "proposals": 0
+        },
+        {
+          "ratings": 12,
+          "proposals": 0
+        },
+        {
+          "ratings": 13,
+          "proposals": 8
+        }
+      ]
+    },
+    {
+      "name": "greaterThan/veryHard",
+      "config": {
+        "variantId": "greaterThan",
+        "difficulty": "veryHard",
+        "seed": 222131648,
+        "maxAttempts": 1
+      },
+      "generationMs": 147.0589,
+      "achieved": "veryHard",
+      "score": 960,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 960,
+      "revealCount": 2,
+      "cap": {
+        "ratings": 7,
+        "proposals": 0,
+        "maxRatings": 1024,
+        "maxProposals": 32768
+      },
+      "rateCalls": 7,
+      "uncountedCalls": 0,
+      "lastRateCalls": [
+        {
+          "ratings": 3,
+          "proposals": 0
+        },
+        {
+          "ratings": 4,
+          "proposals": 0
+        },
+        {
+          "ratings": 5,
+          "proposals": 0
+        },
+        {
+          "ratings": 6,
+          "proposals": 0
+        },
+        {
+          "ratings": 7,
+          "proposals": 0
+        }
+      ]
+    },
+    {
+      "name": "killer/veryHard",
+      "config": {
+        "variantId": "killer",
+        "difficulty": "veryHard",
+        "seed": 3680590658,
+        "maxAttempts": 1
+      },
+      "generationMs": 241.61209999999983,
+      "achieved": "veryHard",
+      "score": 930,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 930,
+      "revealCount": 0,
+      "cap": {
+        "ratings": 258,
+        "proposals": 1055,
+        "maxRatings": 1024,
+        "maxProposals": 32768
+      },
+      "rateCalls": 258,
+      "uncountedCalls": 0,
+      "lastRateCalls": [
+        {
+          "ratings": 254,
+          "proposals": 1049
+        },
+        {
+          "ratings": 255,
+          "proposals": 1054
+        },
+        {
+          "ratings": 256,
+          "proposals": 1055
+        },
+        {
+          "ratings": 257,
+          "proposals": 1055
+        },
+        {
+          "ratings": 258,
+          "proposals": 1055
+        }
+      ]
+    }
+  ],
+  "engineHash": "12f460a1f057f943"
+}

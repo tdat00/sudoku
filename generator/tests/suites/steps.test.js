@@ -342,7 +342,8 @@
         expect(empties.length).toBe(1);
         var tip = fx.doc.findAll(empties[0], function (el) { return el.getAttribute('role') === 'tooltip'; });
         expect(tip.length).toBe(1);
-        expect(tip[0].textContent).toContain('0.6');
+        expect(tip[0].textContent).toContain('80 × E ÷ (E + 40)');
+        expect(SG.i18n.has('steps.techniques.floor')).toBe(false);
         // The rows add up to the total, as they are written.
         var parts = fx.doc.findAll(fx.detail, function (el) {
           return el.tagName === 'TR' && (el.getAttribute('data-technique') !== null || el.getAttribute('data-part') !== null);
@@ -368,7 +369,7 @@
       var view = V.create(rootEl);
       var detail = rootEl.querySelector('#step-detail');
       expect(detail).not.toBeNull();
-      view.setSteps(SG.player.buildSteps(result('classic4', 'easy', 2)).steps);
+      view.setSteps(SG.player.buildSteps(result('classic4', 'veryEasy', 2)).steps);
       view.setPosition(2);
       expect(detail.children.length).toBeGreaterThan(1);
       view.destroy();

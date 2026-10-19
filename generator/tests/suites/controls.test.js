@@ -95,13 +95,11 @@
 
     it('offers only the difficulty levels of the variant', function () {
       ready();
-      expect(values(field(model('?v=classic4'), 'difficulty'))).toEqual(['veryEasy', 'easy']);
-      expect(values(field(model('?v=classic6'), 'difficulty'))).toEqual(['veryEasy', 'easy']);
-      expect(values(field(model('?v=classic9'), 'difficulty'))).toEqual(SG.difficulty.LEVELS);
-      expect(values(field(model('?v=killer'), 'difficulty'))).toEqual(['veryEasy', 'easy', 'medium', 'hard',
-        'expert']);
-      expect(values(field(model('?v=samurai'), 'difficulty')))
-        .toEqual(['veryEasy', 'easy', 'medium', 'hard']);
+      expect(values(field(model('?v=classic4'), 'difficulty'))).toEqual(['veryEasy']);
+      expect(values(field(model('?v=classic6'), 'difficulty'))).toEqual(['veryEasy', 'hard']);
+      expect(values(field(model('?v=classic9'), 'difficulty'))).toEqual(SG.difficulty.LEVELS.slice(0, 8));
+      expect(values(field(model('?v=killer'), 'difficulty'))).toEqual(SG.difficulty.LEVELS);
+      expect(values(field(model('?v=samurai'), 'difficulty'))).toEqual(SG.difficulty.LEVELS);
       variantIds().forEach(function (id) {
         var f = field(model('?v=' + id), 'difficulty');
         expect(values(f).indexOf(f.value)).not.toBe(-1);
@@ -113,9 +111,11 @@
 
     it('moves a selection the variant cannot offer to a level it can', function () {
       ready();
-      var f = field(model('?v=classic4&d=evil'), 'difficulty');
-      expect(f.value).toBe('easy');
-      expect(f.hintKey).toBe('difficulty.easy.desc');
+      var f = field(model('?v=classic6&d=evil'), 'difficulty');
+      expect(f.value).toBe('hard');
+      expect(f.hintKey).toBe('difficulty.hard.desc');
+      var g = field(model('?v=classic6&d=easy'), 'difficulty');
+      expect(g.value).toBe('veryEasy');
     });
 
     it('filters the symbol sets by the variant', function () {
@@ -387,14 +387,14 @@
         var heard = null;
         store.subscribe(function (state, keys, meta) { heard = meta.adjustments; });
         store.set({ difficulty: 'evil' });
-        store.set({ variantId: 'classic4' });
+        store.set({ variantId: 'classic6' });
         var m = C.describe(store.get(), { adjustments: heard });
         expect(m.notes.length).toBe(1);
         expect(m.notes[0].id).toBe('difficultyChanged');
         var text = C.messageText(m.notes[0]);
-        expect(text).toMatch(/Classic Sudoku 4/);
+        expect(text).toMatch(/Classic Sudoku 6/);
         expect(text).toMatch(/Evil/);
-        expect(text).toMatch(/Easy/);
+        expect(text).toMatch(/Hard/);
         expect(text).not.toMatch(/[{}]/);
       });
     });
@@ -604,7 +604,7 @@
         expect(fx.byId('ctl-variant').children.length).toBeGreaterThan(3);
         expect(fx.byId('ctl-variant').children[0].tagName).toBe('OPTGROUP');
         expect(fx.byId('ctl-variant').children[0].getAttribute('label')).toBe('Classic');
-        expect(fx.byId('ctl-difficulty').children.length).toBe(6);
+        expect(fx.byId('ctl-difficulty').children.length).toBe(SG.variants.get('classic9').difficultySupport.length);
         expect(fx.byId('ctl-difficulty').children[0].textContent).toBe('Very easy');
         expect(fx.byId('ctl-advanced').tagName).toBe('DETAILS');
         expect(fx.byId('ctl-variant-hint').textContent).toMatch(/9×9/);
@@ -726,10 +726,10 @@
       withEnglish(function () {
         var fx = mountFixture();
         pick(fx.byId('ctl-difficulty'), 'evil');
-        pick(fx.byId('ctl-variant'), 'classic4');
-        expect(fx.store.get().difficulty).toBe('easy');
-        expect(fx.texts(fx.byId('ctl-difficulty'))).toEqual(['Very easy', 'Easy']);
-        expect(fx.byId('ctl-difficulty').value).toBe('easy');
+        pick(fx.byId('ctl-variant'), 'classic6');
+        expect(fx.store.get().difficulty).toBe('hard');
+        expect(fx.texts(fx.byId('ctl-difficulty'))).toEqual(['Very easy', 'Hard']);
+        expect(fx.byId('ctl-difficulty').value).toBe('hard');
         var notes = fx.byId('ctl-notes');
         expect(notes.hidden).toBe(false);
         expect(notes.textContent).toMatch(/does not offer “Evil”/);

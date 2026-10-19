@@ -12,9 +12,10 @@
   var W = SG.wordoku;
   var def = SG.variants.get('wordoku');
 
-  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'expert'];
-  /** design.md 9.1, wordoku row, p95 in ms. 'easy' has no column there and takes the next one. */
-  var BUDGET_MS = { veryEasy: 100, easy: 250, medium: 250, hard: 600, expert: 1500 };
+  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1'];
+  /** design.md 9.1, wordoku row, p95 in ms. */
+  var BUDGET_MS = { veryEasy: 100, easy: 250, medium: 250, hard: 600, veryHard: 600, expert: 1500, evil: 1500,
+    nightmare1: 2500 };
   var PUZZLES_PER_LEVEL = 20;
   var STEPS = ['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune'];
   /** The options of puzzle i of a level: half on the diagonal, the rest on a random row or column. */
@@ -485,7 +486,7 @@
       expect(def.i18nKey).toBe('variant.wordoku');
       expect(def.group).toBe('wordoku');
       expect(def.digits).toBe(9);
-      expect(def.difficultySupport).toEqual(['veryEasy', 'easy', 'medium', 'hard', 'expert']);
+      expect(def.difficultySupport).toEqual(LEVELS);
       expect(def.symbolModes).toContain(def.defaultSymbolMode);
       expect(def.defaultSymbolMode).toBe('word');
       expect(def.symbolModes).toEqual(['word', 'digits']);
@@ -494,9 +495,9 @@
       expect(def.digStrategy === undefined || def.digStrategy === null).toBe(true);
     });
 
-    it('does not support evil (design.md 9.1 has no column for it): asking for it is refused', function () {
+    it('does not support nightmare2 (it missed the qualification): asking for it is refused', function () {
       expectCode(function () {
-        SG.pipeline.run({ variantId: 'wordoku', difficulty: 'evil', seed: 1, trace: 'off' }, null);
+        SG.pipeline.run({ variantId: 'wordoku', difficulty: 'nightmare2', seed: 1, trace: 'off' }, null);
       }, 'difficulty.unsupportedLevel');
     });
 
@@ -762,7 +763,7 @@
             });
           });
 
-        it('I5: a puzzle that reached the level has its score in the band and its technique in the groups; ' +
+        it('I5: every puzzle has a complete proof, and one that reached the level has its score in the band; ' +
           'I6: at least minClues givens, every unit its minimum', function () {
           var exact = 0;
           puzzleRun()[level].forEach(function (p, i) {
@@ -778,7 +779,6 @@
               exact++;
               expect(p.rating.score).toBeGreaterThanOrEqual(spec.min);
               expect(p.rating.score).toBeLessThan(spec.max);
-              if (p.rating.hardestGroup !== null) expect(spec.allowedGroups).toContain(p.rating.hardestGroup);
               expect(p.warnings).toEqual([]);
             }
             expect(SG.difficulty.rate(p.model, p.givens).level).toBe(p.rating.level);
@@ -799,7 +799,7 @@
         it('CV6: p95 of the generation time is within the design.md 9.1 budget of ' + BUDGET_MS[level] + ' ms',
           function () {
             var times = puzzleRun()[level].map(function (p) { return p.elapsedMs; });
-            expect(percentile(times, 0.95)).toBeLessThan(BUDGET_MS[level]);
+            expect(percentile(times, 0.95)).toBeLessThan(SG.test.timeLimit(BUDGET_MS[level]));
           });
       });
     });
@@ -871,12 +871,11 @@
         var scores = LEVELS.map(function (l) {
           return mean(puzzleRun()[l].map(function (p) { return p.rating.score; }));
         });
-        // Past 'medium' the digger already reaches a minimal puzzle and the levels differ by technique, so
-        // the clue counts of 'medium', 'hard' and 'expert' are about the same (classic9 does the same).
+        // Rating v2: the score, not the clue count, sets the level. Past 'medium' the clue counts sit on a
+        // plateau (the top tiers refine their proposals by showing clues again), as on classic9.
         expect(clues[0]).toBeGreaterThan(clues[1]);
         expect(clues[1]).toBeGreaterThan(clues[2]);
-        expect(clues[3]).toBeLessThan(clues[1]);
-        expect(clues[4]).toBeLessThan(clues[1]);
+        for (var k = 3; k < LEVELS.length; k++) expect(clues[k]).toBeLessThan(clues[1]);
         for (var i = 1; i < LEVELS.length; i++) expect(scores[i]).toBeGreaterThan(scores[i - 1]);
       });
   });
@@ -1297,7 +1296,7 @@
             'puzzle ' + i + ': a symbol outside the label set');
           checked++;
         });
-        expect(checked).toBe(100);
+        expect(checked).toBe(LEVELS.length * PUZZLES_PER_LEVEL);
       });
 
     it('the letters make a real Sudoku: each row, column and box of the drawing holds the 9 symbols once',

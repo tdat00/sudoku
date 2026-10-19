@@ -73,26 +73,35 @@ Most Sudoku generators hand you a puzzle and nothing else. This one is also a wa
 4. Every puzzle you generate is kept in a list on the left, so you can open it again, or print and export
    several of them together.
 
-The difficulty is not a guess. Each level is defined by the solving techniques a person needs, and the digger
-only removes a clue while the puzzle can still be solved with the techniques of the requested level (the
-*technique-bounded oracle*, [design.md](design.md) §6.8). The same seed with the same options always gives the
-same puzzle.
+The difficulty is not a guess. A puzzle's score comes only from its empty cells and the solving techniques a
+person needs to finish it — the hardest technique counts in full, the rest of the work on a logarithmic scale —
+and the level is the score band the score falls in ([design.md](design.md) §6.6). The digger only removes a clue
+while the puzzle can still be solved with the techniques that fit the band of the requested level (the
+*technique-bounded oracle*, [design.md](design.md) §6.8), and it only returns puzzles with a complete logical
+proof. The same seed with the same options always gives the same puzzle.
+
+**Rating v2 compatibility.** "The same seed gives the same puzzle" holds within one rating/generator version.
+This version changes the scoring and the generation (rating v2), so a link or a history entry made by an older
+version may regenerate a different puzzle; the scores already stored in the history are not re-rated; the result
+cache drops the puzzles an older version stored, once; and an export keeps the `sudoku-generator/v1` format and
+gains `difficulty.ratingVersion: 2`.
 
 ## Features
 
 - **15 variants** — classic 4×4, 6×6 and 9×9; Mega 12×12 and Monster 16×16; Diagonal (X); Hyper (Windoku);
   Jigsaw; Killer; Greater-Than; Samurai, Sohei, Butterfly and Flower (overlapping grids); Wordoku.
-- **Six difficulty levels** — very easy, easy, medium, hard, expert, evil — from 21 human solving techniques
-  (singles, locked candidates, subsets, fish, wings, chains) plus 3 cage and 2 inequality techniques.
+- **Nine difficulty levels** — very easy, easy, medium, hard, very hard, expert, evil, nightmare 1 and
+  nightmare 2 — scored from 21 human solving techniques (singles, locked candidates, subsets, fish, wings,
+  chains) plus 3 cage and 2 inequality techniques; every variant offers the levels it reaches reliably.
 - **Step-by-step replay** of the generation, moved by hand (first, previous, next and last step, or a slider
   with a notch for every step): each step is one visible change of the board, the easy early removals are
   summed up in batches, and the Help ("How it works") explains the step with pseudocode.
 - **Difficulty score you can read** — the Summary tab lists every technique the puzzle needs with its uses,
-  points and total, then the empty cells and the bonus points for difficult techniques, and a Total equal to the
-  score; the Generation Steps tab shows the same table for the puzzle at each step.
+  points and its share of the score, then the empty cells, and a Total equal to the score; the Generation Steps
+  tab shows the same table for the puzzle at each step.
 - **Generated puzzles list** — every puzzle you make is saved in the browser (up to 100, newest first) and shown
   on the left as "variant" and "level: score, seed"; click one to open it again (the same seed gives the same
-  puzzle), remove one, or clear the list.
+  puzzle within one generator version), remove one, or clear the list.
 - **Bilingual interface** (English / Vietnamese), switched without a reload; every string, including the
   solving techniques and the variant rules, exists in both languages.
 - **Guaranteed result** — exactly one solution (checked by a separate solver), the requested level or, when it
@@ -117,21 +126,21 @@ The variants (`id` is what the URL parameter `v` and the code use):
 
 | `id` | Variant | Digits | Cells | Levels offered |
 |------|---------|-------:|------:|----------------|
-| `classic4` | Mini Sudoku 4×4 | 4 | 16 | veryEasy–easy |
-| `classic6` | Mini Sudoku 6×6 | 6 | 36 | veryEasy–easy |
-| `classic9` | Classic Sudoku 9×9 | 9 | 81 | veryEasy–evil |
-| `mega12` | Mega Sudoku 12×12 | 12 | 144 | veryEasy–hard |
-| `mega16` | Monster Sudoku 16×16 | 16 | 256 | veryEasy–hard |
-| `diagonalX` | Diagonal Sudoku (X) | 9 | 81 | veryEasy–evil |
-| `hyper` | Hyper Sudoku (Windoku) | 9 | 81 | veryEasy–evil |
-| `jigsaw9` | Jigsaw Sudoku | 9 | 81 | veryEasy–evil |
-| `killer` | Killer Sudoku | 9 | 81 | veryEasy–expert |
-| `greaterThan` | Greater-Than Sudoku | 9 | 81 | veryEasy–expert |
-| `samurai` | Samurai Sudoku | 9 | 369 | veryEasy–hard |
-| `sohei` | Sohei Sudoku | 9 | 288 | veryEasy–hard |
-| `butterfly` | Butterfly Sudoku | 9 | 144 | veryEasy–hard |
-| `flower` | Flower Sudoku | 9 | 189 | veryEasy–hard |
-| `wordoku` | Wordoku | 9 | 81 | veryEasy–expert |
+| `classic4` | Mini Sudoku 4×4 | 4 | 16 | veryEasy |
+| `classic6` | Mini Sudoku 6×6 | 6 | 36 | veryEasy, hard |
+| `classic9` | Classic Sudoku 9×9 | 9 | 81 | veryEasy–nightmare1 |
+| `mega12` | Mega Sudoku 12×12 | 12 | 144 | veryEasy–nightmare2 |
+| `mega16` | Monster Sudoku 16×16 | 16 | 256 | veryEasy–nightmare2 |
+| `diagonalX` | Diagonal Sudoku (X) | 9 | 81 | veryEasy–nightmare2 |
+| `hyper` | Hyper Sudoku (Windoku) | 9 | 81 | veryEasy–nightmare2 |
+| `jigsaw9` | Jigsaw Sudoku | 9 | 81 | veryEasy–nightmare2 |
+| `killer` | Killer Sudoku | 9 | 81 | veryEasy–nightmare2 |
+| `greaterThan` | Greater-Than Sudoku | 9 | 81 | veryEasy–nightmare2 |
+| `samurai` | Samurai Sudoku | 9 | 369 | veryEasy–nightmare2 |
+| `sohei` | Sohei Sudoku | 9 | 288 | veryEasy–nightmare2 |
+| `butterfly` | Butterfly Sudoku | 9 | 144 | veryEasy–nightmare2 |
+| `flower` | Flower Sudoku | 9 | 189 | veryEasy–nightmare2 |
+| `wordoku` | Wordoku | 9 | 81 | veryEasy–nightmare1 |
 
 ## Screenshots
 
@@ -183,7 +192,7 @@ differ from the defaults are written. The page has no share-link button; a link 
 | Parameter | Example | Meaning |
 |-----------|---------|---------|
 | `v` | `v=jigsaw9` | Variant id (the table above). Default `classic9`. |
-| `d` | `d=hard` | Difficulty: `veryEasy`, `easy`, `medium`, `hard`, `expert`, `evil`. Default `medium`. |
+| `d` | `d=hard` | Difficulty: `veryEasy`, `easy`, `medium`, `hard`, `veryHard`, `expert`, `evil`, `nightmare1`, `nightmare2`; a level the variant does not offer becomes the nearest one it offers. Default `medium`. |
 | `seed` | `seed=1734567890` | Seed. A whole number 0–4294967295 is used as it is; any other text is hashed to one. Missing = random. A link (or a reload) with a seed generates that puzzle as soon as the page loads. |
 | `sym` | `sym=mirrorH` | Symmetry of the given cells: `none`, `rotational180` (default), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. |
 | `mode` | `mode=letters` | Symbol set: `digits`, `letters`, `colors`, `shapes`, `word` (Wordoku only). Default: the variant's own. |
@@ -287,12 +296,17 @@ eight cells (`{ cells: [{ i, value, state }], highlight, unhighlight }`), never 
 `SG.events.VOCABULARY` is the contract for every event key.
 
 `dig`, `rate` and `tune` are three steps that repeat per *dig sample*: when the puzzle that was just dug misses
-the requested level (`tune.miss`), the next sample is dug from the same grid (up to 12 per grid), and only
-then does `retry.difficulty` start a new grid (up to `attempts`, default 8). If every attempt is used, the
-closest puzzle is returned with a notice instead of an error. `SG.pipeline.runSteps` is the same algorithm as a
+the requested level (`tune.miss`), the next sample is dug from the same grid (up to 12 per grid); when none of
+them hits, a local search starts from the closest one (it adds, removes or swaps symmetric groups of clues), and
+only then does `retry.difficulty` start a new grid (up to `attempts`, default 8). The top levels (evil and the
+nightmares) also dig fast, uniqueness-only proposals and put clues back while a proposal is too hard. Every grid
+has fixed work caps (full ratings and proposed moves, counted, never timed), so a seed gives the same puzzle on
+every machine. If every attempt is used, the closest puzzle is returned with a notice instead of an error (only
+a puzzle with a complete logical proof is ever returned). `SG.pipeline.runSteps` is the same algorithm as a
 generator that yields at natural boundaries (what the worker and the main-thread mode run), and
 `SG.pipeline.toWire` / `fromWire` carry a result across `postMessage`. The difficulty of a puzzle is
-`SG.difficulty.rate(...)`, from calibrated technique costs; use `rating.score`, never the solver's raw score.
+`SG.difficulty.rate(...)`, from the technique weights `SG.difficulty.WEIGHTS`; use `rating.score`, never the
+solver's raw score.
 
 The UI never slows the algorithm down to animate it, and its replay does not read the events. Next to them
 the digger keeps a compact **dig log** of the sample that became the puzzle (`result.digLog`: entries `pass`,
@@ -351,8 +365,9 @@ variant, level asked for and reached, seed, clues, score, time and the configura
 (`SG.history.entryOf(result)`); an imported puzzle is not listed because no seed rebuilds it. The list is the
 left panel of the page (`#history-root`; under the result on narrower screens). A puzzle that is generated again
 moves to the top; picking an entry writes its configuration to the form and generates it (the same seed gives
-the same puzzle, and the cache serves it at once when it still has it) without moving it. Each entry can be
-removed, and **Clear** empties the list.
+the same puzzle within one generator version, and the cache serves it at once when it still has it) without
+moving it; an entry made before rating v2 may regenerate a different puzzle, and its stored level and score are
+not re-rated. Each entry can be removed, and **Clear** empties the list.
 
 ### Internationalisation
 
@@ -437,7 +452,9 @@ sudoku-generator/
 ├── tests.html              the same test suites, run in the browser
 ├── design.md · task.md     the design specification (as built) and the task list with its completion summary
 ├── README.md · LICENSE     this file · the MIT licence
-├── docs/                   screenshots used by this README · final-report.md (the final QA report)
+├── docs/                   screenshots used by this README · report-v1.md (the final QA report of version 1) ·
+│                           report-v2/ (rating v2: brief and detailed reports, qualification.md = the levels
+│                           each variant offers, the researchers' reports)
 ├── assets/
 │   ├── favicon.svg         the inline favicon
 │   ├── wordlists/          isograms.en.js · isograms.vi.js   key words of Wordoku
@@ -465,7 +482,7 @@ sudoku-generator/
 │                           · result-view.js · wordbook.js (meaning of a key word) · cache.js · history.js
 │                           · export.js · a11y.js · theme.js · help.js · app.js
 └── tests/
-    ├── harness.js · node-runner.js · soak.js · perf.js
+    ├── harness.js · node-runner.js · soak.js · perf.js · qualify.js
     ├── fixtures/           puzzles and fixtures with known answers, the performance helper and the
     │                       regression hashes (regression.js, generated)
     └── suites/             one *.test.js per area, 43 in all (found automatically)
@@ -576,7 +593,7 @@ a typo fails when the file loads, not in the middle of a run):
 | Field | Meaning |
 |-------|---------|
 | `id`, `i18nKey`, `group`, `digits` | Unique id; translation key of the name; family used to group variants in the UI (`group.<group>` key); number of values D (up to 16). |
-| `difficultySupport` | Levels the variant can really generate, a subset of `veryEasy … evil`. Offer only what `node tests/soak.js --variant=<id>` can hit reliably. |
+| `difficultySupport` | Levels the variant offers, a subset of `veryEasy … nightmare2` (gaps are allowed): exactly the levels that pass the qualification of `node tests/qualify.js --variant=<id>` ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)). |
 | `defaultSymbolMode`, `symbolModes` | Symbol sets the UI may offer (`digits`, `letters`, `colors`, `shapes`, `word`). |
 | `options` | Variant options for the UI (`slider`, `select`, `boolean`, `text`). Declare labels with `i18nKey` and help with `hintKey`; `SG.variants.optionsOf(id)` gives them in one normalised shape, and the controls are built from it. |
 | `build(opts, rng)` | Returns the `PuzzleModel`; only for geometry and units. |
@@ -603,9 +620,12 @@ logic of your own.
 languages. `tests/suites/help.test.js` fails until you do, and also fails when README.md does not mention the
 new id: add a row to the table above.
 
-**5. Calibrate.** `node tests/soak.js --variant=disjoint9` prints how often each requested level is hit, the
-invariant violations and the time per puzzle. A level that is hit rarely needs a `clueFloorScale`, or must be
-dropped from `difficultySupport`.
+**5. Qualify its levels.** `node tests/qualify.js --variant=disjoint9` generates 40 puzzles per level with fixed
+seeds and offers a level when at least 36 hit it exactly within the time budget (30–35 hits: 60 more seeds, at
+least 90 of the 100); put the levels it prints into `difficultySupport` and its table into
+[docs/report-v2/qualification.md](docs/report-v2/qualification.md). `node tests/soak.js --variant=disjoint9` then shows
+how often each requested level is hit, the invariant violations and the time per puzzle. A level that misses
+can be helped by a `clueFloorScale`; otherwise it stays hidden.
 
 ## Adding a technique
 
@@ -655,9 +675,9 @@ header of `js/core/techniques.js`. A complete example — *Full House*, a unit w
 
   SG.techniques.register({
     id: 'fullHouse',
-    group: 'basic',               // one of SG.techniques.GROUPS: it decides the level that allows it
-    baseCost: 1,                  // score of one application
-    order: 5,                     // loop position, cheapest first (nakedSingle is 10)
+    group: 'basic',               // one of SG.techniques.GROUPS: the family the Help lists it under
+    baseCost: 1,                  // the solver's own raw score; the rating uses SG.difficulty.WEIGHTS
+    order: 5,                     // loop position in the fixed priority order, lower first (nakedSingle is 10)
     i18nKey: 'technique.fullHouse',
     variantScope: null,           // null = every variant; ['killer'] = only models of that variant
     assumesUniqueness: false,     // true ONLY when the deduction needs "the puzzle has one solution"
@@ -689,11 +709,15 @@ header of `js/core/techniques.js`. A complete example — *Full House*, a unit w
 3. **Strings**: `technique.<id>` (name), `technique.<id>.desc` and `technique.<id>.step` in both languages;
    `tests/suites/i18n.test.js` checks that every registered technique and every step text has them. The Help
    dialog's technique ladder lists the new technique by itself.
-4. **Level**: a level allows the groups `SG.difficulty.BASE_GROUPS[0 … level]`, so the `group` you choose
-   decides where the technique becomes available (`basic` → very easy, `locked` → easy, `subset` → medium,
-   `fish` → hard, `wing` → expert, `chain` → evil; `cage` and `ineq` belong to Killer and Greater-Than).
-   Calibrate its cost in `SG.difficulty.COSTS` and the score bands in `SG.difficulty.TABLE`
-   (`js/core/difficulty.js`), then check the hit rates with `node tests/soak.js --quick`.
+4. **Weight and level**: add the technique's weight to `WEIGHTS` in `js/core/difficulty.js`
+   (`SG.difficulty.WEIGHTS`; a rating that meets a technique without a weight fails with
+   `difficulty.unknownTechnique` — a weight is never guessed from `baseCost`). The score of a puzzle is
+   `round(80·E/(E+40) + P + 0.25·P·log₂(1 + W/P))`, where `E` is the number of empty cells, `P` the largest weight
+   used and `W` the sum of weight × uses, and the weight alone decides where the technique is allowed: the oracle
+   of a level allows every technique whose 1.25 × weight is below the level's band maximum, so a weight of 400
+   makes it available from *hard* on (500 is below hard's maximum, 700, not below medium's, 400). The `group`
+   only names its family (`cage` and `ineq` belong to Killer and Greater-Than). Then re-run the qualification,
+   `node tests/qualify.js`, and check the hit rates with `node tests/soak.js --quick`.
 5. **Tests**: add positive and negative fixtures and the soundness check to the matching
    `tests/suites/tech-<group>.test.js` (helpers in `tests/fixtures/techniques-helper.js`): a technique must
    never eliminate a value that belongs to the true solution.
@@ -703,7 +727,7 @@ header of `js/core/techniques.js`. A complete example — *Full House*, a unit w
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # every suite (43, about 3,370 tests), about three minutes
+node tests/node-runner.js                          # every suite (43, about 3,500 tests), about eight minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
@@ -714,17 +738,30 @@ The runner loads `SOURCE_FILES` with `vm.runInThisContext`, discovers `tests/fix
 engine, every variant, the solving techniques, the pipeline and its events, the worker and its client, and the
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks this README
 against the code: its variants table, URL parameters, script names, links, commands and flags, the `SG.…`
-names and the two worked examples. At the tip of this repository the runner counts 3,367 tests in 43 suites,
+names and the two worked examples. At the tip of this repository the runner counts 3,513 tests in 43 suites,
 all green; the counts of the combined project at its final review (before the split) are in
-`docs/final-report.md`.
+`docs/report-v1.md`.
+
+The suites check the generation time of every variant against the budgets of [design.md](design.md) §9.1 with
+a tolerance, so that a busy or slower machine does not fail them: twice the budget by default, three times when
+the environment variable `CI` is set (as on GitHub Actions), or the factor in `SG_TIME_FACTOR`
+(`SG_TIME_FACTOR=1` checks the budgets themselves). The budgets as such are enforced by `node tests/qualify.js`
+on the reference machine and measured by `node tests/perf.js`.
 
 - **In the browser:** open `tests.html` (it works from `file://`). Query parameters:
   `?suite=killer&filter=text&bail=1&autorun=0`.
 - **Soak and calibration** — generates hundreds of puzzles across variants and levels, checks the invariants
   I1–I7 and prints a confusion matrix of requested against achieved level, the time per puzzle against its
-  budget and a score histogram: `node tests/soak.js --quick`, `node tests/soak.js --full` (the final QA preset,
-  about 2,000 puzzles), `node tests/soak.js --variant=jigsaw9 --count=180`, `node tests/soak.js --level=hard`
-  (`--help` lists the rest).
+  budget and a score histogram: `node tests/soak.js --quick` (about 700 puzzles), `node tests/soak.js --full`
+  (the final QA preset: 25 puzzles per offered combination and 100 per classic9 level, about 3,550 puzzles),
+  `node tests/soak.js --variant=jigsaw9 --count=180`, `node tests/soak.js --level=hard`
+  (`--help` lists the rest); `--weights` and `--bands` try other technique weights or score bands without
+  editing the code.
+- **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
+  variant offers (40 fixed seeds per variant and level through the real pipeline, 60 more for a borderline level,
+  a time budget on the 95th percentile) and prints the table and the support lists; `--variant`, `--level`,
+  `--jobs`, `--json` and `--markdown` narrow it down or save it. The last run is in
+  [docs/report-v2/qualification.md](docs/report-v2/qualification.md).
 - **Performance** against the budgets of [design.md](design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. The *regression hashes* in `tests/fixtures/regression.js`
   guard against an optimisation changing a puzzle: `--check-hashes` compares, and `--update-hashes` records new
@@ -733,7 +770,7 @@ all green; the counts of the combined project at its final review (before the sp
 - **Deep statistical runs** in the mega, multigrid and variants suites are off by default; enable them with the
   environment variable `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid`; in
   PowerShell `$env:SG_DEEP = 1`).
-- **Final QA report:** `docs/final-report.md`.
+- **Final QA report:** `docs/report-v1.md`.
 
 ## Conventions
 
@@ -764,15 +801,19 @@ The full list is in [design.md](design.md) §12.2:
   too. Serve the folder to get the Web Worker.
 - **No real screen-reader run.** Keyboard operation, ARIA roles and live announcements are implemented and
   checked in a headless browser, but no one has listened to them with a screen reader yet.
-- **Difficulty calibration** (technique costs and score bands) was tuned on Classic 9×9, which has the highest
-  hit rate. The other variants use their own clue floors (`clueFloor`, `clueFloorScale`) and their hit rates are
-  measured by `tests/soak.js`; a combination that is hard to reach (a strict symmetry with a very high level)
-  returns the closest puzzle with a notice instead of the exact level.
-- **Not every level is offered everywhere**: Mini 4×4 and 6×6 stop at easy; Mega, Monster and the overlapping
-  grids stop at hard; Killer, Greater-Than and Wordoku stop at expert.
-- **Large boards are the slowest**: Samurai, Sohei, Flower and Monster 16×16. Measured in Node, a hard Samurai
-  puzzle takes about half a second at the 95th percentile (far inside the budgets of
-  [design.md](design.md) §9.1); `node tests/perf.js` measures every combination on your machine.
+- **Difficulty weights are engineering priors**, not measurements of human solvers: the weights of the 26
+  techniques and the nine score bands were chosen from measurements of generated puzzles
+  ([docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md)); the Killer weights of `ruleOf45` and
+  `cageSplit` are the first candidates for a calibration with people. A combination that is hard to reach (a
+  strict symmetry with a very high level) returns the closest puzzle with a notice instead of the exact level.
+- **Not every level is offered everywhere**: Mini 4×4 offers only very easy and Mini 6×6 very easy and hard;
+  Classic 9×9 and Wordoku stop at nightmare 1; every other variant offers all nine levels. The levels a variant
+  offers are the ones it passed in the qualification ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
+- **The hardest levels are the slowest**: measured in Node (`node tests/qualify.js`), the slowest combinations
+  are Greater-Than and Killer from very hard upwards and the nightmare levels of the large boards, with a 95th
+  percentile of 2.5–6 s and single requests up to about 11 s; most other combinations take well under a second.
+  `node tests/perf.js` measures every combination against the budgets of [design.md](design.md) §9.1 on your
+  machine.
 - **Wordoku in Vietnamese**: nine-letter words with nine different letters are rare in Vietnamese, so the
   list is short; when it is too short the English list is used and a notice says so.
 - **Settings**: the switch that turns background pre-generation off is not remembered between visits.
@@ -814,28 +855,36 @@ tạo ra như thế nào*:
    **Tóm tắt** bên cạnh cho biết độ khó của đề hoàn chỉnh và điểm của nó được cộng lên như thế nào.
 4. Mọi đề bạn tạo đều được giữ trong một danh sách ở bên trái, để mở lại, hoặc in và xuất nhiều đề cùng lúc.
 
-Độ khó không phải là phỏng đoán. Mỗi mức được định nghĩa bằng các kỹ thuật giải mà người chơi cần dùng, và bộ
-đào chỉ bỏ một số cho sẵn khi đề vẫn giải được bằng các kỹ thuật của mức đã chọn (*oracle bị giới hạn theo kỹ
-thuật*, [design.md](design.md) §6.8). Cùng seed và cùng tùy chọn luôn cho ra cùng một đề.
+Độ khó không phải là phỏng đoán. Điểm của một đề chỉ dựa vào số ô trống và các kỹ thuật giải mà người chơi cần
+dùng để giải xong — kỹ thuật khó nhất được tính đủ, phần việc còn lại tính theo thang logarit — và mức của đề là
+khoảng điểm chứa điểm đó ([design.md](design.md) §6.6). Bộ đào chỉ bỏ một số cho sẵn khi đề vẫn giải được bằng
+các kỹ thuật hợp với khoảng điểm của mức đã chọn (*oracle bị giới hạn theo kỹ thuật*, [design.md](design.md)
+§6.8), và chỉ trả về đề có lời giải logic trọn vẹn. Cùng seed và cùng tùy chọn luôn cho ra cùng một đề.
+
+**Tương thích với cách tính điểm v2.** "Cùng seed cho cùng đề" chỉ đúng trong cùng một phiên bản tính điểm/bộ
+tạo đề. Phiên bản này đổi cách tính điểm và cách tạo đề (rating v2), nên một liên kết hay một mục lịch sử do
+phiên bản cũ tạo ra có thể tạo lại thành một đề khác; điểm đã lưu trong lịch sử không được tính lại; bộ nhớ đệm
+bỏ các đề do phiên bản cũ lưu, một lần; và tệp xuất vẫn giữ định dạng `sudoku-generator/v1`, có thêm
+`difficulty.ratingVersion: 2`.
 
 ## Tính năng
 
 - **15 biến thể** — Sudoku cổ điển 4×4, 6×6 và 9×9; Khổng lồ 12×12 và Quái vật 16×16; Đường chéo (X); Siêu
   vùng (Windoku); Ghép hình (Jigsaw); Sát thủ (Killer); So sánh (Greater-Than); Samurai, Sohei, Cánh bướm và
   Bông hoa (các lưới chồng nhau); Sudoku chữ (Wordoku).
-- **Sáu mức độ khó** — rất dễ, dễ, trung bình, khó, chuyên gia, địa ngục — dựa trên 21 kỹ thuật giải của con
-  người (số đơn, ứng viên bị khóa, tập con, cá, cánh, chuỗi) cùng 3 kỹ thuật về lồng và 2 kỹ thuật về dấu so
-  sánh.
+- **Chín mức độ khó** — rất dễ, dễ, trung bình, khó, rất khó, chuyên gia, địa ngục, ác mộng 1 và ác mộng 2 —
+  tính điểm từ 21 kỹ thuật giải của con người (số đơn, ứng viên bị khóa, tập con, cá, cánh, chuỗi) cùng 3 kỹ
+  thuật về lồng và 2 kỹ thuật về dấu so sánh; mỗi biến thể chỉ có các mức mà nó đạt được một cách ổn định.
 - **Phát lại từng bước** quá trình tạo đề, do bạn tự điều khiển (bước đầu tiên, bước trước, bước tiếp theo,
   bước cuối cùng, hoặc thanh trượt có một vạch cho mỗi bước): mỗi bước là một thay đổi nhìn thấy được trên
   bảng, những lần xóa dễ ở đầu được gộp thành từng đợt, và phần Trợ giúp ("Cách hoạt động") giải thích bước
   đó kèm mã giả.
-- **Điểm độ khó đọc được** — thẻ Tóm tắt liệt kê từng kỹ thuật mà đề cần cùng số lần dùng, điểm và tổng, rồi
-  các ô trống và điểm thưởng cho kỹ thuật khó, và dòng Tổng bằng đúng điểm của đề; thẻ Các bước tạo đề cho
-  bảng tương tự ở từng bước.
+- **Điểm độ khó đọc được** — thẻ Tóm tắt liệt kê từng kỹ thuật mà đề cần cùng số lần dùng, điểm và phần điểm
+  được phân bổ cho nó, rồi các ô trống, và dòng Tổng bằng đúng điểm của đề; thẻ Các bước tạo đề cho bảng tương tự
+  ở từng bước.
 - **Danh sách các đề đã tạo** — mỗi đề bạn tạo được lưu trong trình duyệt (tối đa 100, mới nhất ở trên) và hiện
-  ở bên trái dưới dạng "biến thể" và "mức: điểm, seed"; bấm vào một đề để mở lại (cùng seed cho cùng đề), xóa
-  từng đề, hoặc xóa cả danh sách.
+  ở bên trái dưới dạng "biến thể" và "mức: điểm, seed"; bấm vào một đề để mở lại (cùng seed cho cùng đề trong
+  cùng một phiên bản bộ tạo đề), xóa từng đề, hoặc xóa cả danh sách.
 - **Giao diện song ngữ** (Anh / Việt), đổi ngay không cần tải lại trang; mọi chuỗi chữ, kể cả tên kỹ thuật giải
   và luật của từng biến thể, đều có cả hai ngôn ngữ.
 - **Kết quả được đảm bảo** — đúng một lời giải (do một bộ giải riêng kiểm tra), đúng mức độ yêu cầu hoặc, khi
@@ -910,7 +959,7 @@ qua, kể cả `trace` và `speed` của các liên kết cũ.
 | Tham số | Ví dụ | Ý nghĩa |
 |---------|-------|---------|
 | `v` | `v=jigsaw9` | Mã biến thể (bảng ở trên). Mặc định `classic9`. |
-| `d` | `d=hard` | Độ khó: `veryEasy`, `easy`, `medium`, `hard`, `expert`, `evil`. Mặc định `medium`. |
+| `d` | `d=hard` | Độ khó: `veryEasy`, `easy`, `medium`, `hard`, `veryHard`, `expert`, `evil`, `nightmare1`, `nightmare2`; mức mà biến thể không có được đổi thành mức gần nhất mà nó có. Mặc định `medium`. |
 | `seed` | `seed=1734567890` | Seed. Số nguyên 0–4294967295 được dùng nguyên văn; văn bản khác được băm thành một số. Không có = ngẫu nhiên. Liên kết (hay lần tải lại trang) có seed sẽ tạo ngay đề đó khi trang tải xong. |
 | `sym` | `sym=mirrorH` | Kiểu đối xứng của các ô cho sẵn: `none`, `rotational180` (mặc định), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. |
 | `mode` | `mode=letters` | Bộ ký hiệu: `digits`, `letters`, `colors`, `shapes`, `word` (chỉ Wordoku). Mặc định: của biến thể. |
@@ -1001,13 +1050,17 @@ Một `patch` là *phần thay đổi* của tối đa tám ô, không bao giờ
 hợp đồng cho mọi khóa sự kiện.
 
 Ba bước `dig`, `rate` và `tune` lặp lại theo từng *lần đào thử* (dig sample): khi đề vừa đào chưa đúng mức yêu
-cầu (`tune.miss`), lần đào kế tiếp được thực hiện trên cùng lưới (tối đa 12 lần mỗi lưới), và chỉ khi đó
-`retry.difficulty` mới bắt đầu một lưới mới (tối đa `attempts` lần, mặc định 8). Nếu dùng hết mọi lần thử, đề
-gần nhất được trả về kèm thông báo thay vì báo lỗi. `SG.pipeline.runSteps` là cùng thuật toán đó dưới dạng
-generator, nhường quyền ở những ranh giới tự nhiên (là cái worker và chế độ luồng chính chạy), còn
-`SG.pipeline.toWire` / `fromWire` chuyển kết quả qua `postMessage`. Độ khó của một đề là
-`SG.difficulty.rate(...)`, tính từ chi phí kỹ thuật đã hiệu chỉnh; hãy dùng `rating.score`, không dùng điểm thô
-của bộ giải.
+cầu (`tune.miss`), lần đào kế tiếp được thực hiện trên cùng lưới (tối đa 12 lần mỗi lưới); khi không lần nào
+đạt, một bước tìm kiếm cục bộ bắt đầu từ đề gần mức nhất (thêm, bỏ hoặc đổi chỗ các nhóm số cho sẵn đối xứng),
+và chỉ khi đó `retry.difficulty` mới bắt đầu một lưới mới (tối đa `attempts` lần, mặc định 8). Các mức cao nhất
+(địa ngục và ác mộng) còn đào nhanh những đề đề xuất chỉ dựa trên tính duy nhất, rồi trả lại số cho sẵn khi đề
+đề xuất còn quá khó. Mỗi lưới có giới hạn công việc cố định (số lần chấm điểm đầy đủ và số bước đề xuất, được
+đếm chứ không đo giờ), nên một seed cho cùng một đề trên mọi máy. Nếu dùng hết mọi lần thử, đề gần nhất được trả
+về kèm thông báo thay vì báo lỗi (chỉ đề có lời giải logic trọn vẹn mới được trả về). `SG.pipeline.runSteps` là
+cùng thuật toán đó dưới dạng generator, nhường quyền ở những ranh giới tự nhiên (là cái worker và chế độ luồng
+chính chạy), còn `SG.pipeline.toWire` / `fromWire` chuyển kết quả qua `postMessage`. Độ khó của một đề là
+`SG.difficulty.rate(...)`, tính từ trọng số kỹ thuật `SG.difficulty.WEIGHTS`; hãy dùng `rating.score`, không
+dùng điểm thô của bộ giải.
 
 Giao diện không bao giờ làm thuật toán chậm đi để tạo hoạt ảnh, và phần phát lại cũng không đọc các sự kiện.
 Song song với các sự kiện, bộ đào ghi một **nhật ký đào** (dig log) gọn nhẹ cho lần đào thử đã trở thành đề
@@ -1062,8 +1115,10 @@ không tồn tại ở chế độ luồng chính. Một công tắc trong Cài 
 nhỏ gọn: biến thể, mức đã chọn và mức đạt được, seed, số ô cho sẵn, điểm, thời gian và cấu hình để dựng lại đề
 (`SG.history.entryOf(result)`); đề nhập vào không được liệt kê vì không có seed nào dựng lại được. Danh sách là
 panel bên trái của trang (`#history-root`; nằm dưới phần kết quả trên màn hình hẹp). Đề được tạo lại sẽ lên đầu
-danh sách; bấm một mục sẽ ghi cấu hình của nó vào biểu mẫu rồi tạo đề (cùng seed cho cùng đề, và bộ nhớ đệm trả
-về ngay nếu còn) mà không đổi vị trí của mục. Mỗi mục có thể xóa, và nút **Xóa hết** làm trống danh sách.
+danh sách; bấm một mục sẽ ghi cấu hình của nó vào biểu mẫu rồi tạo đề (cùng seed cho cùng đề trong cùng một
+phiên bản bộ tạo đề, và bộ nhớ đệm trả về ngay nếu còn) mà không đổi vị trí của mục; một mục có từ trước rating
+v2 có thể tạo lại thành một đề khác, và mức cùng điểm đã lưu của nó không được tính lại. Mỗi mục có thể xóa, và
+nút **Xóa hết** làm trống danh sách.
 
 ### Quốc tế hóa
 
@@ -1140,7 +1195,9 @@ chúng. Không cần thêm mã giải nào, vì một nhóm chỉ là thêm mộ
 1. **Viết `js/variants/disjoint.js`** theo mẫu ở phần tiếng Anh: hàm `build()` dựng `SG.model.create({ … })`
    từ các `units`, rồi gọi `SG.variants.register({ id, i18nKey, group, digits, difficultySupport,
    defaultSymbolMode, symbolModes, options, build })`. Bộ đăng ký (`js/variants/registry.js`) kiểm tra định
-   nghĩa nên lỗi gõ sai hiện ra ngay khi tải tệp. Các trường tùy chọn: `clueFloor` / `clueFloorScale` (số gợi
+   nghĩa nên lỗi gõ sai hiện ra ngay khi tải tệp. `difficultySupport` là các mức biến thể cung cấp, một tập con
+   của `veryEasy … nightmare2` (được phép có khoảng trống): đúng các mức qua được bước kiểm định ở mục 5. Các
+   trường tùy chọn: `clueFloor` / `clueFloorScale` (số gợi
    ý tối thiểu riêng cho từng mức, thay cho số của classic9 co giãn theo `cellCount / 81`), `postGenerate` (tạo
    cấu trúc từ lời giải đã xong; mô hình là bất biến nên nó trả về một mô hình mới), `digStrategy` (đăng ký bằng
    `SG.digger.registerStrategy` rồi gọi tên ở đây), `fastSeed`, `restartThreshold`.
@@ -1160,9 +1217,12 @@ chúng. Không cần thêm mã giải nào, vì một nhóm chỉ là thêm mộ
    `help.variant.disjoint9.rules`, `.special` và `.figure` vào mảnh ngôn ngữ ở cuối tệp, bằng cả hai ngôn ngữ.
    `tests/suites/help.test.js` báo lỗi cho đến khi bạn làm xong, và cũng báo lỗi nếu README.md không nhắc đến mã
    mới: hãy thêm một dòng vào bảng ở trên.
-5. **Hiệu chỉnh.** `node tests/soak.js --variant=disjoint9` in ra tần suất đạt từng mức yêu cầu, các vi phạm
-   bất biến và thời gian mỗi đề. Mức nào hiếm khi đạt thì cần `clueFloorScale`, hoặc phải bỏ khỏi
-   `difficultySupport`.
+5. **Kiểm định các mức.** `node tests/qualify.js --variant=disjoint9` tạo 40 đề cho mỗi mức với các seed cố
+   định và chỉ cung cấp một mức khi ít nhất 36 đề đạt đúng mức đó trong ngân sách thời gian (đạt 30–35: thêm 60
+   seed, cần ít nhất 90 trên 100); hãy chép các mức nó in ra vào `difficultySupport` và bảng của nó vào
+   [docs/report-v2/qualification.md](docs/report-v2/qualification.md). Sau đó `node tests/soak.js --variant=disjoint9` cho
+   biết tần suất đạt từng mức yêu cầu, các vi phạm bất biến và thời gian mỗi đề. Mức nào không đạt có thể được
+   giúp bằng `clueFloorScale`; nếu không thì nó bị ẩn.
 
 ## Thêm một kỹ thuật
 
@@ -1180,11 +1240,15 @@ của `js/core/techniques.js`; ví dụ hoàn chỉnh *Full House* (một nhóm 
 3. **Chuỗi chữ**: `technique.<id>` (tên), `technique.<id>.desc` và `technique.<id>.step` bằng cả hai ngôn ngữ;
    `tests/suites/i18n.test.js` kiểm tra mọi kỹ thuật và mọi câu giải thích từng bước đều có đủ. Bậc thang kỹ
    thuật trong hộp thoại Trợ giúp tự liệt kê kỹ thuật mới.
-4. **Mức độ**: một mức cho phép các nhóm `SG.difficulty.BASE_GROUPS[0 … mức]`, nên `group` bạn chọn quyết định
-   kỹ thuật bắt đầu có ở đâu (`basic` → rất dễ, `locked` → dễ, `subset` → trung bình, `fish` → khó, `wing` →
-   chuyên gia, `chain` → địa ngục; `cage` và `ineq` thuộc về Killer và Greater-Than). Hiệu chỉnh chi phí của nó
-   trong `SG.difficulty.COSTS` và các dải điểm trong `SG.difficulty.TABLE` (`js/core/difficulty.js`), rồi kiểm
-   tra tỷ lệ đạt mức bằng `node tests/soak.js --quick`.
+4. **Trọng số và mức**: thêm trọng số của kỹ thuật vào `WEIGHTS` trong `js/core/difficulty.js`
+   (`SG.difficulty.WEIGHTS`; khi chấm điểm gặp một kỹ thuật không có trọng số thì báo lỗi
+   `difficulty.unknownTechnique` — trọng số không bao giờ được đoán từ `baseCost`). Điểm của một đề là
+   `round(80·E/(E+40) + P + 0.25·P·log₂(1 + W/P))`, với `E` là số ô trống, `P` là trọng số lớn nhất được dùng và
+   `W` là tổng trọng số × số lần dùng; chỉ trọng số quyết định kỹ thuật được phép từ mức nào: oracle của một mức
+   cho phép mọi kỹ thuật có 1.25 × trọng số nhỏ hơn cận trên khoảng điểm của mức đó, nên trọng số 400 cho kỹ
+   thuật có từ mức *khó* (500 nhỏ hơn cận trên 700 của mức khó, nhưng không nhỏ hơn 400 của mức trung bình).
+   `group` chỉ là tên họ kỹ thuật (`cage` và `ineq` thuộc về Killer và Greater-Than). Sau đó chạy lại bước kiểm
+   định `node tests/qualify.js` và kiểm tra tỷ lệ đạt mức bằng `node tests/soak.js --quick`.
 5. **Kiểm thử**: thêm các mẫu đúng, mẫu sai và phép kiểm tra tính chắc chắn vào
    `tests/suites/tech-<nhóm>.test.js` tương ứng (công cụ trong `tests/fixtures/techniques-helper.js`): một kỹ
    thuật không bao giờ được loại một giá trị thuộc về lời giải thật.
@@ -1194,7 +1258,7 @@ của `js/core/techniques.js`; ví dụ hoàn chỉnh *Full House* (một nhóm 
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # mọi suite (43, khoảng 3.370 bài), khoảng ba phút
+node tests/node-runner.js                          # mọi suite (43, khoảng 3.500 bài), khoảng tám phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
@@ -1205,16 +1269,27 @@ Bộ chạy nạp `SOURCE_FILES` bằng `vm.runInThisContext`, tự tìm `tests/
 giải, pipeline cùng các sự kiện của nó, worker và client của nó, và phần logic thuần của mọi module giao diện
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu README này với mã nguồn: bảng biến thể, tham số
 URL, tên các script, liên kết, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 3.367 bài trong 43 suite, tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
-khi tách) nằm trong `docs/final-report.md`.
+mã này, bộ chạy đếm 3.513 bài trong 43 suite, tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+khi tách) nằm trong `docs/report-v1.md`.
+
+Các suite so thời gian tạo đề của mọi biến thể với ngân sách ở [design.md](design.md) §9.1 kèm một hệ số dung
+sai, để một máy đang bận hoặc chậm hơn không làm chúng thất bại: gấp đôi ngân sách theo mặc định, gấp ba khi có
+biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số trong `SG_TIME_FACTOR` (`SG_TIME_FACTOR=1` kiểm
+đúng ngân sách). Bản thân các ngân sách do `node tests/qualify.js` bảo đảm trên máy tham chiếu và do
+`node tests/perf.js` đo.
 
 - **Trong trình duyệt:** mở `tests.html` (chạy được từ `file://`). Tham số truy vấn:
   `?suite=killer&filter=text&bail=1&autorun=0`.
 - **Soak và hiệu chỉnh** — tạo hàng trăm đề trên các biến thể và mức, kiểm tra các bất biến I1–I7 và in ma trận
   so sánh mức yêu cầu với mức đạt được, thời gian mỗi đề so với ngân sách và biểu đồ điểm:
-  `node tests/soak.js --quick`, `node tests/soak.js --full` (mức chạy cuối cùng để kiểm định, khoảng 2.000 đề),
+  `node tests/soak.js --quick` (khoảng 700 đề), `node tests/soak.js --full` (mức chạy cuối cùng để kiểm định:
+  25 đề cho mỗi tổ hợp được cung cấp và 100 đề cho mỗi mức của classic9, khoảng 3.550 đề),
   `node tests/soak.js --variant=jigsaw9 --count=180`, `node tests/soak.js --level=hard` (`--help` liệt kê phần
-  còn lại).
+  còn lại); `--weights` và `--bands` thử trọng số kỹ thuật hoặc khoảng điểm khác mà không phải sửa mã.
+- **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
+  seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
+  cho phân vị 95) rồi in bảng và danh sách mức; `--variant`, `--level`, `--jobs`, `--json` và `--markdown` thu
+  hẹp phạm vi hoặc lưu kết quả. Lần chạy gần nhất nằm trong [docs/report-v2/qualification.md](docs/report-v2/qualification.md).
 - **Hiệu năng** so với ngân sách ở [design.md](design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. *Mã băm hồi quy* trong `tests/fixtures/regression.js` bảo
   đảm một lần tối ưu không làm đổi đề: `--check-hashes` so sánh, còn `--update-hashes` ghi mã băm mới sau một thay
@@ -1223,7 +1298,7 @@ khi tách) nằm trong `docs/final-report.md`.
 - **Các lần chạy thống kê sâu** trong các suite mega, multigrid và variants mặc định tắt; bật bằng biến môi
   trường `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid`; trong PowerShell dùng
   `$env:SG_DEEP = 1`).
-- **Báo cáo kiểm định cuối cùng:** `docs/final-report.md`.
+- **Báo cáo kiểm định cuối cùng:** `docs/report-v1.md`.
 
 ## Quy ước
 
@@ -1252,15 +1327,18 @@ Danh sách đầy đủ ở [design.md](design.md) §12.2:
   máy chủ để có Web Worker.
 - **Chưa chạy thử với trình đọc màn hình thật.** Thao tác bằng bàn phím, vai trò ARIA và thông báo trực tiếp đã
   được cài đặt và kiểm tra trong trình duyệt không giao diện, nhưng chưa ai nghe thử bằng trình đọc màn hình.
-- **Hiệu chỉnh độ khó** (chi phí kỹ thuật và dải điểm) được chỉnh trên Sudoku cổ điển 9×9, nơi có tỷ lệ đạt
-  cao nhất. Các biến thể khác dùng ngưỡng gợi ý riêng (`clueFloor`, `clueFloorScale`) và tỷ lệ đạt của chúng do
-  `tests/soak.js` đo; tổ hợp khó đạt (đối xứng chặt kèm mức rất cao) sẽ trả về đề gần nhất kèm thông báo thay vì
-  đúng mức.
-- **Không phải mức nào cũng có ở mọi nơi**: Mini 4×4 và 6×6 dừng ở mức dễ; Khổng lồ, Quái vật và các lưới
-  chồng nhau dừng ở mức khó; Killer, So sánh và Sudoku chữ dừng ở mức chuyên gia.
-- **Bảng lớn chậm nhất**: Samurai, Sohei, Bông hoa và Quái vật 16×16. Đo trong Node, một đề Samurai mức khó mất
-  khoảng nửa giây ở phân vị 95 (còn xa mới chạm ngân sách ở [design.md](design.md) §9.1); `node tests/perf.js`
-  đo mọi tổ hợp trên máy của bạn.
+- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 26 kỹ thuật
+  và chín khoảng điểm được chọn từ các phép đo trên đề do máy tạo
+  ([docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md)); trọng số Killer của `ruleOf45` và
+  `cageSplit` là những ứng viên đầu tiên cần hiệu chỉnh với người chơi thật. Tổ hợp khó đạt (đối xứng chặt kèm
+  mức rất cao) sẽ trả về đề gần nhất kèm thông báo thay vì đúng mức.
+- **Không phải mức nào cũng có ở mọi nơi**: Mini 4×4 chỉ có mức rất dễ và Mini 6×6 có rất dễ và khó; Sudoku cổ
+  điển 9×9 và Sudoku chữ dừng ở mức ác mộng 1; mọi biến thể khác có đủ chín mức. Các mức mà một biến thể cung cấp
+  là những mức nó vượt qua trong bước kiểm định ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
+- **Các mức khó nhất chậm nhất**: đo trong Node (`node tests/qualify.js`), các tổ hợp chậm nhất là So sánh và
+  Killer từ mức rất khó trở lên và các mức ác mộng của bảng lớn, với phân vị 95 khoảng 2,5–6 giây và có yêu cầu
+  đơn lẻ đến khoảng 11 giây; phần lớn các tổ hợp khác mất chưa tới một giây. `node tests/perf.js` đo mọi tổ hợp
+  so với ngân sách ở [design.md](design.md) §9.1 trên máy của bạn.
 - **Wordoku tiếng Việt**: từ chín chữ cái khác nhau rất hiếm trong tiếng Việt nên danh sách ngắn; khi quá ngắn
   thì dùng danh sách tiếng Anh và có thông báo.
 - **Cài đặt**: công tắc tắt việc tạo sẵn đề ở nền không được nhớ giữa các lần truy cập.

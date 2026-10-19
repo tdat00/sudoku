@@ -1,0 +1,5252 @@
+{
+  "mode": "keeper-safety",
+  "node": "v26.8.2",
+  "cases": [
+    {
+      "name": "keeper-technique-bug-safety",
+      "config": {
+        "variantId": "killer",
+        "difficulty": "expert",
+        "seed": 61843,
+        "symmetry": "diagonal",
+        "maxAttempts": 1,
+        "trace": "off"
+      },
+      "score": 1791,
+      "level": "evil",
+      "warnings": [
+        "difficulty.approximate",
+        "digger.unsoundTechnique"
+      ],
+      "dfsSolutions": 1,
+      "usedGuesser": 0,
+      "solved": true,
+      "log": [
+        {
+          "op": "pass",
+          "pass": "random",
+          "clues": 81
+        },
+        {
+          "op": "accept",
+          "cells": [
+            26,
+            74
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            10
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            8,
+            72
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            11,
+            19
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            43,
+            67
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            6,
+            54
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            7,
+            63
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            44,
+            76
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            21,
+            29
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            71,
+            79
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            61,
+            69
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            24,
+            56
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            50
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            16,
+            64
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            33,
+            57
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            3,
+            27
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            22,
+            38
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            25,
+            65
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            23,
+            47
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            51,
+            59
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            4,
+            36
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            14,
+            46
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            60
+          ]
+        },
+        {
+          "op": "pass",
+          "pass": "guided",
+          "clues": 38
+        },
+        {
+          "op": "keep",
+          "cells": [
+            35,
+            75
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            1,
+            9
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            2,
+            18
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 45
+        },
+        {
+          "op": "reject",
+          "cells": [
+            62,
+            78
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 98
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 45
+        },
+        {
+          "op": "accept",
+          "cells": [
+            35,
+            75
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 103
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            1,
+            9
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            2,
+            18
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 99
+        },
+        {
+          "op": "accept",
+          "cells": [
+            17,
+            73
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            1,
+            9
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            2,
+            18
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 108
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 105
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 104
+        },
+        {
+          "op": "accept",
+          "cells": [
+            20
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 110
+        },
+        {
+          "op": "keep",
+          "cells": [
+            2,
+            18
+          ],
+          "score": 125
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 125
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 125
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 131
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 125
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 131
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 111
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 125
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 125
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 127
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 125
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            1,
+            9
+          ],
+          "score": 130
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 125
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 131
+        },
+        {
+          "op": "accept",
+          "cells": [
+            42,
+            58
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 131
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 131
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 131
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            2,
+            18
+          ],
+          "score": 136
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 136
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 131
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 133
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 135
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 131
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 131
+        },
+        {
+          "op": "keep",
+          "cells": [
+            1,
+            9
+          ],
+          "score": 135
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 134
+        },
+        {
+          "op": "accept",
+          "cells": [
+            32,
+            48
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 140
+        },
+        {
+          "op": "keep",
+          "cells": [
+            1,
+            9
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 144
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 140
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 136
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 144
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 140
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 138
+        },
+        {
+          "op": "keep",
+          "cells": [
+            2,
+            18
+          ],
+          "score": 143
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 140
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 135
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 140
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 139
+        },
+        {
+          "op": "accept",
+          "cells": [
+            1,
+            9
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 150
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 150
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 147
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 150
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 150
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 148
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 148
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 150
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 150
+        },
+        {
+          "op": "keep",
+          "cells": [
+            2,
+            18
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 148
+        },
+        {
+          "op": "accept",
+          "cells": [
+            2,
+            18
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 150
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 150
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 150
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 148
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 150
+        },
+        {
+          "op": "accept",
+          "cells": [
+            12,
+            28
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 148
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 154
+        },
+        {
+          "op": "reject",
+          "cells": [
+            13,
+            37
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 478
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 155
+        },
+        {
+          "op": "accept",
+          "cells": [
+            34,
+            66
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 479
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 473
+        },
+        {
+          "op": "reject",
+          "cells": [
+            40
+          ],
+          "reason": "tooHard"
+        },
+        {
+          "op": "reject",
+          "cells": [
+            70
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 483
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 465
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 479
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 486
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 481
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 498
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 476
+        },
+        {
+          "op": "accept",
+          "cells": [
+            15,
+            55
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 500
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 508
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 501
+        },
+        {
+          "op": "keep",
+          "cells": [
+            5,
+            45
+          ],
+          "score": 509
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 495
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 497
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 491
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 492
+        },
+        {
+          "op": "accept",
+          "cells": [
+            5,
+            45
+          ]
+        },
+        {
+          "op": "reject",
+          "cells": [
+            41,
+            49
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 539
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 530
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 502
+        },
+        {
+          "op": "reject",
+          "cells": [
+            0
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 506
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 496
+        },
+        {
+          "op": "accept",
+          "cells": [
+            31,
+            39
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            53,
+            77
+          ],
+          "score": 548
+        },
+        {
+          "op": "keep",
+          "cells": [
+            52,
+            68
+          ],
+          "score": 568
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 534
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 545
+        },
+        {
+          "op": "accept",
+          "cells": [
+            52,
+            68
+          ]
+        },
+        {
+          "op": "reject",
+          "cells": [
+            30
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "reject",
+          "cells": [
+            80
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "reject",
+          "cells": [
+            53,
+            77
+          ],
+          "reason": "tooHard"
+        },
+        {
+          "op": "pass",
+          "pass": "guided",
+          "clues": 13
+        },
+        {
+          "op": "accept",
+          "cells": [
+            53,
+            77
+          ]
+        },
+        {
+          "op": "reveal",
+          "cells": [
+            16,
+            64
+          ],
+          "reason": "search"
+        },
+        {
+          "op": "accept",
+          "cells": [
+            16,
+            64
+          ]
+        },
+        {
+          "op": "reveal",
+          "cells": [
+            15,
+            55
+          ],
+          "reason": "search"
+        }
+      ]
+    },
+    {
+      "name": "keeper-technique-bug-safety",
+      "config": {
+        "variantId": "killer",
+        "difficulty": "expert",
+        "seed": 3680590658,
+        "symmetry": "diagonal",
+        "maxAttempts": 1,
+        "trace": "off"
+      },
+      "score": 553,
+      "level": "hard",
+      "warnings": [
+        "difficulty.approximate",
+        "digger.unsoundTechnique"
+      ],
+      "dfsSolutions": 1,
+      "usedGuesser": 0,
+      "solved": true,
+      "log": [
+        {
+          "op": "pass",
+          "pass": "random",
+          "clues": 81
+        },
+        {
+          "op": "accept",
+          "cells": [
+            23,
+            47
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            1,
+            9
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            5,
+            45
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            21,
+            29
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            11,
+            19
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            53,
+            77
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            35,
+            75
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            20
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            33,
+            57
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            24,
+            56
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            2,
+            18
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            26,
+            74
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            3,
+            27
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            71,
+            79
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            7,
+            63
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            70
+          ]
+        },
+        {
+          "op": "reject",
+          "cells": [
+            12,
+            28
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "accept",
+          "cells": [
+            15,
+            55
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            16,
+            64
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            52,
+            68
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            30
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            4,
+            36
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            13,
+            37
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            34,
+            66
+          ]
+        },
+        {
+          "op": "pass",
+          "pass": "guided",
+          "clues": 38
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            10
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            22,
+            38
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            25,
+            65
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            62,
+            78
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            14,
+            46
+          ],
+          "score": 45
+        },
+        {
+          "op": "accept",
+          "cells": [
+            17,
+            73
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 99
+        },
+        {
+          "op": "reject",
+          "cells": [
+            14,
+            46
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            62,
+            78
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            10
+          ],
+          "score": 123
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            25,
+            65
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 100
+        },
+        {
+          "op": "keep",
+          "cells": [
+            22,
+            38
+          ],
+          "score": 100
+        },
+        {
+          "op": "accept",
+          "cells": [
+            10
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            22,
+            38
+          ],
+          "score": 129
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 132
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            25,
+            65
+          ],
+          "score": 130
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 123
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 123
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 129
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 107
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 121
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 123
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 110
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 126
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 123
+        },
+        {
+          "op": "keep",
+          "cells": [
+            62,
+            78
+          ],
+          "score": 124
+        },
+        {
+          "op": "accept",
+          "cells": [
+            8,
+            72
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 135
+        },
+        {
+          "op": "keep",
+          "cells": [
+            25,
+            65
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            22,
+            38
+          ],
+          "score": 141
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 117
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 136
+        },
+        {
+          "op": "keep",
+          "cells": [
+            62,
+            78
+          ],
+          "score": 131
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 133
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 133
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 117
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 133
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 133
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 133
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 133
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 133
+        },
+        {
+          "op": "reject",
+          "cells": [
+            80
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 133
+        },
+        {
+          "op": "accept",
+          "cells": [
+            22,
+            38
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            25,
+            65
+          ],
+          "score": 145
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 145
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 141
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 143
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 141
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 141
+        },
+        {
+          "op": "keep",
+          "cells": [
+            62,
+            78
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 141
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 141
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 144
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 141
+        },
+        {
+          "op": "accept",
+          "cells": [
+            25,
+            65
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            62,
+            78
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 147
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 146
+        },
+        {
+          "op": "accept",
+          "cells": [
+            62,
+            78
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 152
+        },
+        {
+          "op": "accept",
+          "cells": [
+            42,
+            58
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            40
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 154
+        },
+        {
+          "op": "accept",
+          "cells": [
+            40
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 157
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 153
+        },
+        {
+          "op": "accept",
+          "cells": [
+            6,
+            54
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 157
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 157
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 154
+        },
+        {
+          "op": "reject",
+          "cells": [
+            43,
+            67
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 155
+        },
+        {
+          "op": "accept",
+          "cells": [
+            0
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 157
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 156
+        },
+        {
+          "op": "accept",
+          "cells": [
+            60
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 160
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 157
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 157
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 159
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 155
+        },
+        {
+          "op": "accept",
+          "cells": [
+            44,
+            76
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 159
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 160
+        },
+        {
+          "op": "keep",
+          "cells": [
+            61,
+            69
+          ],
+          "score": 161
+        },
+        {
+          "op": "keep",
+          "cells": [
+            51,
+            59
+          ],
+          "score": 160
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 161
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 160
+        },
+        {
+          "op": "accept",
+          "cells": [
+            61,
+            69
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 159
+        },
+        {
+          "op": "keep",
+          "cells": [
+            31,
+            39
+          ],
+          "score": 164
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 162
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 162
+        },
+        {
+          "op": "reject",
+          "cells": [
+            51,
+            59
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "accept",
+          "cells": [
+            31,
+            39
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 549
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 165
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 164
+        },
+        {
+          "op": "accept",
+          "cells": [
+            32,
+            48
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 552
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 550
+        },
+        {
+          "op": "accept",
+          "cells": [
+            50
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            41,
+            49
+          ],
+          "score": 553
+        },
+        {
+          "op": "accept",
+          "cells": [
+            41,
+            49
+          ]
+        }
+      ]
+    },
+    {
+      "name": "keeper-technique-bug-safety",
+      "config": {
+        "variantId": "killer",
+        "difficulty": "expert",
+        "seed": 1,
+        "symmetry": "diagonal",
+        "maxAttempts": 1,
+        "trace": "off"
+      },
+      "score": 1457,
+      "level": "expert",
+      "warnings": [
+        "digger.unsoundTechnique"
+      ],
+      "dfsSolutions": 1,
+      "usedGuesser": 0,
+      "solved": true,
+      "log": [
+        {
+          "op": "pass",
+          "pass": "random",
+          "clues": 81
+        },
+        {
+          "op": "accept",
+          "cells": [
+            26,
+            74
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            4,
+            36
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            52,
+            68
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            5,
+            45
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            24,
+            56
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            31,
+            39
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            40
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            3,
+            27
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            35,
+            75
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            53,
+            77
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            61,
+            69
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            23,
+            47
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            51,
+            59
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            14,
+            46
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            41,
+            49
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            25,
+            65
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            7,
+            63
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            62,
+            78
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            16,
+            64
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            11,
+            19
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            1,
+            9
+          ]
+        },
+        {
+          "op": "accept",
+          "cells": [
+            33,
+            57
+          ]
+        },
+        {
+          "op": "pass",
+          "pass": "guided",
+          "clues": 38
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            21,
+            29
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 44
+        },
+        {
+          "op": "reject",
+          "cells": [
+            10
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            2,
+            18
+          ],
+          "score": 99
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 44
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            71,
+            79
+          ],
+          "score": 103
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 45
+        },
+        {
+          "op": "keep",
+          "cells": [
+            22,
+            38
+          ],
+          "score": 45
+        },
+        {
+          "op": "accept",
+          "cells": [
+            71,
+            79
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 103
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 112
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 103
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 109
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 103
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 103
+        },
+        {
+          "op": "keep",
+          "cells": [
+            22,
+            38
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 103
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            2,
+            18
+          ],
+          "score": 123
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 103
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 103
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 104
+        },
+        {
+          "op": "keep",
+          "cells": [
+            21,
+            29
+          ],
+          "score": 104
+        },
+        {
+          "op": "accept",
+          "cells": [
+            2,
+            18
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 114
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            12,
+            28
+          ],
+          "score": 127
+        },
+        {
+          "op": "keep",
+          "cells": [
+            22,
+            38
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            0
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 113
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 127
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            21,
+            29
+          ],
+          "score": 115
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 124
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 124
+        },
+        {
+          "op": "accept",
+          "cells": [
+            12,
+            28
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 127
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 127
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 128
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 128
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 117
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 127
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 118
+        },
+        {
+          "op": "reject",
+          "cells": [
+            0
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 128
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 127
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 128
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 134
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 128
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 127
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 127
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 128
+        },
+        {
+          "op": "keep",
+          "cells": [
+            22,
+            38
+          ],
+          "score": 138
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 128
+        },
+        {
+          "op": "keep",
+          "cells": [
+            21,
+            29
+          ],
+          "score": 123
+        },
+        {
+          "op": "accept",
+          "cells": [
+            22,
+            38
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 141
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 140
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 137
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            21,
+            29
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 136
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 139
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 141
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 123
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 138
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 141
+        },
+        {
+          "op": "keep",
+          "cells": [
+            30
+          ],
+          "score": 138
+        },
+        {
+          "op": "accept",
+          "cells": [
+            21,
+            29
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 140
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 147
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 145
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 142
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 143
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 142
+        },
+        {
+          "op": "reject",
+          "cells": [
+            30
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 126
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 140
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 141
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 145
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 143
+        },
+        {
+          "op": "keep",
+          "cells": [
+            15,
+            55
+          ],
+          "score": 148
+        },
+        {
+          "op": "accept",
+          "cells": [
+            15,
+            55
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 148
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 147
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 147
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 148
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 130
+        },
+        {
+          "op": "keep",
+          "cells": [
+            13,
+            37
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 146
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 148
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 148
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 149
+        },
+        {
+          "op": "accept",
+          "cells": [
+            13,
+            37
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 150
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 149
+        },
+        {
+          "op": "keep",
+          "cells": [
+            20
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 153
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 154
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 151
+        },
+        {
+          "op": "accept",
+          "cells": [
+            20
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            8,
+            72
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 151
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 152
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            17,
+            73
+          ],
+          "score": 158
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 157
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 157
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 158
+        },
+        {
+          "op": "keep",
+          "cells": [
+            34,
+            66
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 155
+        },
+        {
+          "op": "accept",
+          "cells": [
+            17,
+            73
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            80
+          ],
+          "score": 158
+        },
+        {
+          "op": "reject",
+          "cells": [
+            8,
+            72
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 158
+        },
+        {
+          "op": "reject",
+          "cells": [
+            34,
+            66
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 158
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 158
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 158
+        },
+        {
+          "op": "accept",
+          "cells": [
+            80
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            32,
+            48
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            43,
+            67
+          ],
+          "score": 159
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 157
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 159
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 158
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 158
+        },
+        {
+          "op": "accept",
+          "cells": [
+            43,
+            67
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 158
+        },
+        {
+          "op": "keep",
+          "cells": [
+            50
+          ],
+          "score": 160
+        },
+        {
+          "op": "reject",
+          "cells": [
+            32,
+            48
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 157
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 156
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 159
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 159
+        },
+        {
+          "op": "accept",
+          "cells": [
+            50
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 155
+        },
+        {
+          "op": "keep",
+          "cells": [
+            44,
+            76
+          ],
+          "score": 654
+        },
+        {
+          "op": "keep",
+          "cells": [
+            60
+          ],
+          "score": 160
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 159
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 155
+        },
+        {
+          "op": "accept",
+          "cells": [
+            44,
+            76
+          ]
+        },
+        {
+          "op": "keep",
+          "cells": [
+            70
+          ],
+          "score": 695
+        },
+        {
+          "op": "keep",
+          "cells": [
+            6,
+            54
+          ],
+          "score": 688
+        },
+        {
+          "op": "keep",
+          "cells": [
+            42,
+            58
+          ],
+          "score": 673
+        },
+        {
+          "op": "reject",
+          "cells": [
+            60
+          ],
+          "reason": "tooHard"
+        },
+        {
+          "op": "accept",
+          "cells": [
+            70
+          ]
+        },
+        {
+          "op": "reject",
+          "cells": [
+            6,
+            54
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "reject",
+          "cells": [
+            42,
+            58
+          ],
+          "reason": "techniques"
+        },
+        {
+          "op": "reveal",
+          "cells": [
+            40
+          ],
+          "reason": "search"
+        },
+        {
+          "op": "pass",
+          "pass": "guided",
+          "clues": 15
+        },
+        {
+          "op": "accept",
+          "cells": [
+            8,
+            72
+          ]
+        },
+        {
+          "op": "reveal",
+          "cells": [
+            17,
+            73
+          ],
+          "reason": "search"
+        }
+      ]
+    }
+  ],
+  "engineHash": "66d9f07e760f7df7"
+}

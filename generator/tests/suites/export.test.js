@@ -199,8 +199,8 @@
         expect(JSON.parse(JSON.stringify(d))).toEqual(d);
         expect(d.generatedAt).toBe(FIXED.generatedAt);
       });
-      expect(typeof E.toJson(realResult('classic4', 'easy', 1)).generatedAt).toBe('string');
-      expect(new Date(E.toJson(realResult('classic4', 'easy', 1)).generatedAt).getTime()).toBeGreaterThan(0);
+      expect(typeof E.toJson(realResult('classic4', 'veryEasy', 1)).generatedAt).toBe('string');
+      expect(new Date(E.toJson(realResult('classic4', 'veryEasy', 1)).generatedAt).getTime()).toBeGreaterThan(0);
     });
 
     it('carries the extra structure of each variant', function () {
@@ -291,7 +291,7 @@
     it('numbers several puzzles from 1 and separates them by a blank line', function () {
       ready();
       var a = realResult('classic9', 'easy', 3);
-      var b = realResult('classic4', 'easy', 2);
+      var b = realResult('classic4', 'veryEasy', 2);
       var c = realResult('killer', 'easy', 5);
       var text = inLocale('en', function () { return E.buildExportText([{ result: a }, { result: b }, { result: c }]); });
       var headers = lines(text).filter(function (line) { return line.charAt(0) === '#'; });
@@ -497,7 +497,7 @@
 
     it('a bad player address is a translated error, not an exception or a javascript: link', async function () {
       ready();
-      var r = realResult('classic4', 'easy', 1);
+      var r = realResult('classic4', 'veryEasy', 1);
       expect(await codeOf(E.buildPlayLink(r, { base: 'javascript:alert(1)' }))).toBe('exchange.invalidUrl');
       expect(await codeOf(E.buildPlayLink(r, { base: 'https://a b/' }))).toBe('exchange.invalidUrl');
       var err = await E.buildPlayLink(r, { base: 'data:text/html,x' }).then(function () { return null; },
@@ -551,7 +551,7 @@
         E.init(fakeApp);
         expect(await E.playOnline()).toBe(null);
         expect(calls).toEqual([]);
-        shown = { result: realResult('classic4', 'easy', 1), trace: [] };
+        shown = { result: realResult('classic4', 'veryEasy', 1), trace: [] };
         var info = await E.playOnline();
         expect(calls.length).toBe(1);
         expect(calls[0][0]).toBe(info.url);
@@ -573,7 +573,7 @@
 
     it('buildPlayBundle: the text of every puzzle in one compressed token, the active one by number', async function () {
       ready();
-      var list = [realResult('classic4', 'easy', 1), realResult('classic6', 'easy', 2),
+      var list = [realResult('classic4', 'veryEasy', 1), realResult('classic6', 'veryEasy', 2),
         realResult('killer', 'easy', 11)];
       var link = await E.buildPlayBundle(list, { active: 2 });
       expect(link.count).toBe(3);
@@ -602,7 +602,7 @@
 
     it('buildPlayBundle: an active index that is not in the list falls back to the first puzzle', async function () {
       ready();
-      var list = [realResult('classic4', 'easy', 1), realResult('classic4', 'easy', 2)];
+      var list = [realResult('classic4', 'veryEasy', 1), realResult('classic4', 'veryEasy', 2)];
       for (var bad of [-1, 2, 5, 1.5, null, 'x']) {
         var link = await E.buildPlayBundle(list, { active: bad });
         expect(link.active).toBe(0);
@@ -627,9 +627,9 @@
 
     it('playOnline sends the whole list, generating again what is not at hand, and the puzzle on screen is active', async function () {
       ready();
-      var screen = realResult('classic4', 'easy', 1);
-      var older = realResult('classic4', 'easy', 2);
-      var oldest = realResult('classic6', 'easy', 3);
+      var screen = realResult('classic4', 'veryEasy', 1);
+      var older = realResult('classic4', 'veryEasy', 2);
+      var oldest = realResult('classic6', 'veryEasy', 3);
       // Saved list, newest first: the puzzle on screen is the second one.
       var entries = [older, screen, oldest].map(function (r, i) { return SG.history.entryOf(r, 3000 - i); });
       var savedList = SG.history.list;
@@ -678,7 +678,7 @@
       expect(typeof module.init).toBe('function');
       var handlers = {};
       var toasts = [];
-      var shown = { result: realResult('classic4', 'easy', 1), trace: [] };
+      var shown = { result: realResult('classic4', 'veryEasy', 1), trace: [] };
       module.init({
         on: function (name, fn) { handlers[name] = fn; return function () {}; },
         getResult: function () { return shown; },

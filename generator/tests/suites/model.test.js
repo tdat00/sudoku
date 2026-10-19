@@ -640,10 +640,10 @@
     });
 
     it('declare the difficulty levels they support and a symbol mode', function () {
-      expect(SG.variants.get('classic4').difficultySupport).toEqual(['veryEasy', 'easy']);
-      expect(SG.variants.get('classic6').difficultySupport).toEqual(['veryEasy', 'easy']);
+      expect(SG.variants.get('classic4').difficultySupport).toEqual(['veryEasy']);
+      expect(SG.variants.get('classic6').difficultySupport).toEqual(['veryEasy', 'hard']);
       expect(SG.variants.get('classic9').difficultySupport)
-        .toEqual(['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil']);
+        .toEqual(['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1']);
       ['classic4', 'classic6', 'classic9'].forEach(function (id) {
         var def = SG.variants.get(id);
         expect(def.defaultSymbolMode).toBe('digits');

@@ -65,7 +65,7 @@
       expect(vm.exact).toBe(r.rating.level === 'easy');
     });
 
-    it('lists the techniques used with their uses and score, simplest first', function () {
+    it('lists the techniques used with their uses, points and share of the score, simplest first', function () {
       ready();
       var r = realResult('classic9', 'easy', 3);
       var vm = R.viewModel(r);
@@ -73,44 +73,42 @@
       expect(vm.techniques.map(function (row) { return row.id; }))
         .toEqual(chart.bars.map(function (b) { return b.id; }));
       expect(vm.techniques.length).toBeGreaterThan(0);
-      var sum = 0;
-      vm.techniques.forEach(function (row) {
+      var table = SG.difficulty.scoreTable(r.rating.techniqueCounts, r.rating.empties);
+      var parts = SG.difficulty.breakdown(r.rating.techniqueCounts, r.rating.empties);
+      vm.techniques.forEach(function (row, i) {
         var count = r.rating.techniqueCounts[row.id];
         expect(row.name).toBe(SG.i18n.t('technique.' + row.id));
         expect(row.summary).toBe(SG.i18n.has('technique.' + row.id + '.desc')
           ? SG.i18n.t('technique.' + row.id + '.desc') : '');
         expect(row.count).toBe(count);
         expect(row.countText).toBe(SG.i18n.formatNumber(count));
-        expect(row.unitScore).toBe(SG.difficulty.costOf(row.id));
-        expect(row.score).toBeCloseTo(row.unitScore *
-          (count - 1 + SG.difficulty.SCORING.firstUseMultiplier), 6);
-        // The rows are whole numbers that add up to the total (see the "parts" test below).
-        expect(Math.abs(Number(row.scoreText.replace(/[^0-9]/g, '')) - Math.round(row.score))).toBeLessThan(2);
-        sum += row.score;
+        // Points are the weight of the technique; the total is its whole share of the score (section 5.6).
+        expect(row.unitScore).toBe(SG.difficulty.WEIGHTS[row.id]);
+        expect(row.score).toBe(table.rows[i].total);
+        expect(row.scoreText).toBe(SG.i18n.formatNumber(table.rows[i].total));
+        expect(Math.abs(row.score - parts.rows[i].share)).toBeLessThan(1);
       });
-      // The technique scores are the technique part of the rating (the empty-cell bonus and the technique
-      // floor come on top).
-      expect(sum).toBeLessThan(r.rating.score + 1e-6);
       expect(vm.techniqueCounts).toEqual(r.rating.techniqueCounts);
     });
 
-    it('adds the techniques, the empty cells and the raise up to the score, as written in the table', function () {
+    it('adds the techniques and the empty cells up to the score, as written in the table', function () {
       ready();
       var withTip = realResult('classic9', 'easy', 3);
       var vmTip = R.viewModel(withTip);
       expect(vmTip.parts.empties).toBeGreaterThan(0);
-      ['empties', 'floor'].forEach(function (part) {
-        expect(SG.i18n.has('result.techniques.' + part + '.desc')).toBe(true);
-      });
-      ['easy', 'medium', 'hard'].forEach(function (level) {
+      expect(SG.i18n.has('result.techniques.empties.desc')).toBe(true);
+      expect(SG.i18n.has('result.techniques.floor')).toBe(false);
+      expect(vmTip.parts.raised).toBeUndefined();
+      ['easy', 'medium', 'hard', 'evil'].forEach(function (level) {
         var r = realResult('classic9', level, 3);
         var vm = R.viewModel(r);
         var num = function (text) { return Number(String(text).replace(/[^0-9]/g, '')); };
         var sum = vm.techniques.reduce(function (n, row) { return n + num(row.scoreText); }, 0);
-        sum += num(vm.parts.emptyText) + num(vm.parts.raisedText);
-        expect(sum).toBe(Math.round(r.rating.score));
+        sum += num(vm.parts.emptyText);
+        expect(sum).toBe(r.rating.score);
         expect(vm.parts.totalText).toBe(vm.scoreText);
         expect(vm.parts.empties).toBe(r.rating.empties);
+        expect(vm.parts.emptyUnit).toBeCloseTo(80 / (r.rating.empties + 40), 9);
       });
     });
 

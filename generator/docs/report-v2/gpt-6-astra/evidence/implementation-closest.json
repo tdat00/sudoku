@@ -1,0 +1,1203 @@
+{
+  "mode": "closest",
+  "node": "v26.8.2",
+  "cases": [
+    {
+      "name": "classic6/hard/default",
+      "config": {
+        "variantId": "classic6",
+        "difficulty": "hard",
+        "seed": 1101378241
+      },
+      "generationMs": 130.048,
+      "achieved": "veryEasy",
+      "score": 33,
+      "complete": true,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 33,
+      "revealCount": 0,
+      "fullRatings": 200,
+      "returnedDistance": 3000.9175,
+      "bestRatedCandidate": {
+        "call": 1,
+        "distance": 3000.9175,
+        "rating": {
+          "level": "veryEasy",
+          "score": 33,
+          "rawScore": 33,
+          "confidence": 0.5333333333333333,
+          "hardestTechnique": "hiddenSingleLine",
+          "hardestGroup": "basic",
+          "solved": true,
+          "empties": 24,
+          "techniqueCounts": {
+            "nakedSingle": 18,
+            "hiddenSingleBox": 4,
+            "hiddenSingleLine": 2
+          },
+          "ratingVersion": 2
+        },
+        "origin": [
+          "    at rateCounted (js\\core\\digger.js:1160:26)",
+          "    at rateStep (js\\core\\digger.js:1347:60)",
+          "    at stage (js\\core\\digger.js:141:22)",
+          "    at stage.next (<anonymous>)",
+          "    at digLevelSteps (js\\core\\digger.js:1346:27)"
+        ],
+        "givens": [
+          0,
+          0,
+          4,
+          1,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          3,
+          5,
+          0,
+          0,
+          5,
+          3,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          0,
+          0,
+          0,
+          1,
+          6,
+          0,
+          0
+        ],
+        "cages": [],
+        "signs": [],
+        "unique": true,
+        "maskErrors": [],
+        "dfsSolutions": 1,
+        "cageErrors": [],
+        "verifiedScore": 33
+      }
+    },
+    {
+      "name": "killer/veryHard/default",
+      "config": {
+        "variantId": "killer",
+        "difficulty": "veryHard",
+        "seed": 3443864736
+      },
+      "generationMs": 6374.6973,
+      "achieved": "hard",
+      "score": 682,
+      "complete": true,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 682,
+      "revealCount": 0,
+      "fullRatings": 1459,
+      "returnedDistance": 1000.0257142857142,
+      "bestRatedCandidate": {
+        "call": 747,
+        "distance": 1000.0257142857142,
+        "rating": {
+          "level": "hard",
+          "score": 682,
+          "rawScore": 682,
+          "confidence": 0.12,
+          "hardestTechnique": "ruleOf45",
+          "hardestGroup": "cage",
+          "solved": true,
+          "empties": 81,
+          "techniqueCounts": {
+            "nakedSingle": 65,
+            "hiddenSingleBox": 7,
+            "hiddenSingleLine": 2,
+            "pointing": 10,
+            "boxLine": 14,
+            "cageCombo": 36,
+            "nakedPair": 1,
+            "hiddenPair": 1,
+            "ruleOf45": 39
+          },
+          "ratingVersion": 2
+        },
+        "origin": [
+          "    at js\\variants\\killer.js:907:62",
+          "    at guarded (js\\variants\\killer.js:899:16)",
+          "    at rate (js\\variants\\killer.js:907:14)",
+          "    at searchCagesSteps (js\\variants\\killer.js:966:17)",
+          "    at searchCagesSteps.next (<anonymous>)"
+        ],
+        "givens": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "cages": [
+          {
+            "cells": [
+              0,
+              1,
+              10,
+              11,
+              19
+            ],
+            "sum": 25,
+            "distinct": true
+          },
+          {
+            "cells": [
+              2,
+              3,
+              4
+            ],
+            "sum": 13,
+            "distinct": true
+          },
+          {
+            "cells": [
+              5,
+              6,
+              14,
+              15
+            ],
+            "sum": 22,
+            "distinct": true
+          },
+          {
+            "cells": [
+              7,
+              8
+            ],
+            "sum": 14,
+            "distinct": true
+          },
+          {
+            "cells": [
+              9,
+              18
+            ],
+            "sum": 10,
+            "distinct": true
+          },
+          {
+            "cells": [
+              12,
+              13,
+              21,
+              22,
+              31
+            ],
+            "sum": 21,
+            "distinct": true
+          },
+          {
+            "cells": [
+              16,
+              23,
+              24,
+              25,
+              32
+            ],
+            "sum": 27,
+            "distinct": true
+          },
+          {
+            "cells": [
+              17,
+              26
+            ],
+            "sum": 4,
+            "distinct": true
+          },
+          {
+            "cells": [
+              20,
+              28,
+              29
+            ],
+            "sum": 17,
+            "distinct": true
+          },
+          {
+            "cells": [
+              27,
+              36,
+              45,
+              54
+            ],
+            "sum": 24,
+            "distinct": true
+          },
+          {
+            "cells": [
+              30,
+              39,
+              40
+            ],
+            "sum": 17,
+            "distinct": true
+          },
+          {
+            "cells": [
+              33,
+              41,
+              42,
+              50
+            ],
+            "sum": 20,
+            "distinct": true
+          },
+          {
+            "cells": [
+              34,
+              35,
+              43,
+              52
+            ],
+            "sum": 24,
+            "distinct": true
+          },
+          {
+            "cells": [
+              37,
+              38
+            ],
+            "sum": 9,
+            "distinct": true
+          },
+          {
+            "cells": [
+              44,
+              53
+            ],
+            "sum": 9,
+            "distinct": true
+          },
+          {
+            "cells": [
+              46,
+              47,
+              48
+            ],
+            "sum": 17,
+            "distinct": true
+          },
+          {
+            "cells": [
+              49,
+              57,
+              58,
+              66
+            ],
+            "sum": 15,
+            "distinct": true
+          },
+          {
+            "cells": [
+              51,
+              59,
+              60
+            ],
+            "sum": 10,
+            "distinct": true
+          },
+          {
+            "cells": [
+              55,
+              56
+            ],
+            "sum": 7,
+            "distinct": true
+          },
+          {
+            "cells": [
+              61,
+              62,
+              71,
+              80
+            ],
+            "sum": 28,
+            "distinct": true
+          },
+          {
+            "cells": [
+              63,
+              64
+            ],
+            "sum": 7,
+            "distinct": true
+          },
+          {
+            "cells": [
+              65,
+              72,
+              73,
+              74
+            ],
+            "sum": 24,
+            "distinct": true
+          },
+          {
+            "cells": [
+              67,
+              68,
+              69,
+              78
+            ],
+            "sum": 22,
+            "distinct": true
+          },
+          {
+            "cells": [
+              70,
+              79
+            ],
+            "sum": 4,
+            "distinct": true
+          },
+          {
+            "cells": [
+              75,
+              76,
+              77
+            ],
+            "sum": 15,
+            "distinct": true
+          }
+        ],
+        "signs": [],
+        "unique": true,
+        "maskErrors": [],
+        "dfsSolutions": 1,
+        "cageErrors": [],
+        "verifiedScore": 682
+      }
+    },
+    {
+      "name": "killer/expert/mirrorBoth",
+      "config": {
+        "variantId": "killer",
+        "difficulty": "expert",
+        "seed": 61843,
+        "symmetry": "mirrorBoth",
+        "maxAttempts": 2
+      },
+      "generationMs": 762.8557999999994,
+      "achieved": "hard",
+      "score": 631,
+      "complete": true,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 631,
+      "revealCount": 0,
+      "fullRatings": 673,
+      "returnedDistance": 2000.369,
+      "bestRatedCandidate": {
+        "call": 286,
+        "distance": 2000.369,
+        "rating": {
+          "level": "hard",
+          "score": 631,
+          "rawScore": 631,
+          "confidence": 0.46,
+          "hardestTechnique": "ruleOf45",
+          "hardestGroup": "cage",
+          "solved": true,
+          "empties": 73,
+          "techniqueCounts": {
+            "nakedSingle": 47,
+            "hiddenSingleBox": 13,
+            "hiddenSingleLine": 5,
+            "pointing": 13,
+            "boxLine": 15,
+            "cageCombo": 28,
+            "nakedPair": 1,
+            "hiddenPair": 2,
+            "ruleOf45": 18
+          },
+          "ratingVersion": 2
+        },
+        "origin": [
+          "    at rateCounted (js\\core\\digger.js:1160:26)",
+          "    at rateStep (js\\core\\digger.js:1347:60)",
+          "    at stage (js\\core\\digger.js:141:22)",
+          "    at stage.next (<anonymous>)",
+          "    at digLevelSteps (js\\core\\digger.js:1346:27)"
+        ],
+        "givens": [
+          9,
+          7,
+          0,
+          0,
+          0,
+          0,
+          0,
+          8,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          1
+        ],
+        "cages": [
+          {
+            "cells": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "sum": 28,
+            "distinct": true
+          },
+          {
+            "cells": [
+              5,
+              6,
+              14
+            ],
+            "sum": 15,
+            "distinct": true
+          },
+          {
+            "cells": [
+              7,
+              8,
+              15,
+              16,
+              17,
+              26
+            ],
+            "sum": 33,
+            "distinct": true
+          },
+          {
+            "cells": [
+              9,
+              10,
+              11,
+              18,
+              19
+            ],
+            "sum": 22,
+            "distinct": true
+          },
+          {
+            "cells": [
+              12,
+              13
+            ],
+            "sum": 8,
+            "distinct": true
+          },
+          {
+            "cells": [
+              20,
+              28,
+              29
+            ],
+            "sum": 9,
+            "distinct": true
+          },
+          {
+            "cells": [
+              21,
+              22,
+              30,
+              31
+            ],
+            "sum": 28,
+            "distinct": true
+          },
+          {
+            "cells": [
+              23,
+              24,
+              25,
+              32
+            ],
+            "sum": 17,
+            "distinct": true
+          },
+          {
+            "cells": [
+              27,
+              36,
+              37,
+              45,
+              46
+            ],
+            "sum": 28,
+            "distinct": true
+          },
+          {
+            "cells": [
+              33,
+              34,
+              35,
+              42,
+              43
+            ],
+            "sum": 21,
+            "distinct": true
+          },
+          {
+            "cells": [
+              38,
+              39,
+              47,
+              48
+            ],
+            "sum": 17,
+            "distinct": true
+          },
+          {
+            "cells": [
+              40,
+              41,
+              49
+            ],
+            "sum": 12,
+            "distinct": true
+          },
+          {
+            "cells": [
+              44,
+              51,
+              52,
+              53,
+              61,
+              62
+            ],
+            "sum": 35,
+            "distinct": true
+          },
+          {
+            "cells": [
+              50,
+              59
+            ],
+            "sum": 13,
+            "distinct": true
+          },
+          {
+            "cells": [
+              54,
+              63,
+              64,
+              72,
+              73
+            ],
+            "sum": 29,
+            "distinct": true
+          },
+          {
+            "cells": [
+              55,
+              56,
+              57,
+              58,
+              65,
+              66
+            ],
+            "sum": 30,
+            "distinct": true
+          },
+          {
+            "cells": [
+              60,
+              69
+            ],
+            "sum": 14,
+            "distinct": true
+          },
+          {
+            "cells": [
+              67,
+              68,
+              74,
+              75,
+              76,
+              77,
+              78
+            ],
+            "sum": 32,
+            "distinct": true
+          },
+          {
+            "cells": [
+              70,
+              71,
+              79,
+              80
+            ],
+            "sum": 14,
+            "distinct": true
+          }
+        ],
+        "signs": [],
+        "unique": true,
+        "maskErrors": [],
+        "dfsSolutions": 1,
+        "cageErrors": [],
+        "verifiedScore": 631
+      }
+    },
+    {
+      "name": "killer/expert/diagonal",
+      "config": {
+        "variantId": "killer",
+        "difficulty": "expert",
+        "seed": 61843,
+        "symmetry": "diagonal",
+        "maxAttempts": 2
+      },
+      "generationMs": 3785.859200000001,
+      "achieved": "veryHard",
+      "score": 790,
+      "complete": true,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 790,
+      "revealCount": 0,
+      "fullRatings": 865,
+      "returnedDistance": 1000.21,
+      "bestRatedCandidate": {
+        "call": 72,
+        "distance": 1000.054,
+        "rating": {
+          "level": "evil",
+          "score": 1581,
+          "rawScore": 1581,
+          "confidence": 0.18,
+          "hardestTechnique": "wWing",
+          "hardestGroup": "wing",
+          "solved": true,
+          "empties": 73,
+          "techniqueCounts": {
+            "nakedSingle": 55,
+            "hiddenSingleBox": 13,
+            "hiddenSingleLine": 1,
+            "pointing": 7,
+            "boxLine": 6,
+            "cageCombo": 28,
+            "nakedPair": 1,
+            "hiddenPair": 1,
+            "hiddenTriple": 1,
+            "ruleOf45": 12,
+            "simpleColouring": 2,
+            "wWing": 1
+          },
+          "ratingVersion": 2
+        },
+        "origin": [
+          "    at js\\variants\\killer.js:907:62",
+          "    at guarded (js\\variants\\killer.js:899:16)",
+          "    at rate (js\\variants\\killer.js:907:14)",
+          "    at searchCagesSteps (js\\variants\\killer.js:966:17)",
+          "    at searchCagesSteps.next (<anonymous>)"
+        ],
+        "givens": [
+          9,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          8,
+          0,
+          0,
+          4,
+          0,
+          0,
+          0,
+          9,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          9,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "cages": [
+          {
+            "cells": [
+              0,
+              9,
+              10,
+              11,
+              18
+            ],
+            "sum": 26,
+            "distinct": true
+          },
+          {
+            "cells": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "sum": 19,
+            "distinct": true
+          },
+          {
+            "cells": [
+              5,
+              6,
+              12,
+              13,
+              14
+            ],
+            "sum": 23,
+            "distinct": true
+          },
+          {
+            "cells": [
+              7,
+              8,
+              15,
+              16,
+              17,
+              26
+            ],
+            "sum": 33,
+            "distinct": true
+          },
+          {
+            "cells": [
+              19,
+              20,
+              27,
+              28,
+              29,
+              36,
+              37
+            ],
+            "sum": 32,
+            "distinct": true
+          },
+          {
+            "cells": [
+              21,
+              22,
+              30,
+              31
+            ],
+            "sum": 28,
+            "distinct": true
+          },
+          {
+            "cells": [
+              23,
+              24,
+              25,
+              32,
+              40,
+              41
+            ],
+            "sum": 26,
+            "distinct": true
+          },
+          {
+            "cells": [
+              33,
+              34,
+              35,
+              42,
+              43
+            ],
+            "sum": 21,
+            "distinct": true
+          },
+          {
+            "cells": [
+              38,
+              39,
+              47,
+              48
+            ],
+            "sum": 17,
+            "distinct": true
+          },
+          {
+            "cells": [
+              44,
+              53
+            ],
+            "sum": 8,
+            "distinct": true
+          },
+          {
+            "cells": [
+              45,
+              46,
+              54
+            ],
+            "sum": 11,
+            "distinct": true
+          },
+          {
+            "cells": [
+              49,
+              50,
+              57,
+              58
+            ],
+            "sum": 21,
+            "distinct": true
+          },
+          {
+            "cells": [
+              51,
+              52
+            ],
+            "sum": 16,
+            "distinct": true
+          },
+          {
+            "cells": [
+              55,
+              64
+            ],
+            "sum": 11,
+            "distinct": true
+          },
+          {
+            "cells": [
+              56,
+              65,
+              74
+            ],
+            "sum": 14,
+            "distinct": true
+          },
+          {
+            "cells": [
+              59,
+              60
+            ],
+            "sum": 14,
+            "distinct": true
+          },
+          {
+            "cells": [
+              61,
+              62,
+              69,
+              70,
+              71,
+              79,
+              80
+            ],
+            "sum": 30,
+            "distinct": true
+          },
+          {
+            "cells": [
+              63,
+              72,
+              73
+            ],
+            "sum": 19,
+            "distinct": true
+          },
+          {
+            "cells": [
+              66,
+              67,
+              68,
+              75,
+              76,
+              77,
+              78
+            ],
+            "sum": 36,
+            "distinct": true
+          }
+        ],
+        "signs": [],
+        "unique": true,
+        "maskErrors": [],
+        "dfsSolutions": 1,
+        "cageErrors": [],
+        "verifiedScore": 1581
+      }
+    }
+  ],
+  "engineHash": "9002e195df0dec28"
+}

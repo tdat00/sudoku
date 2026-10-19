@@ -427,7 +427,7 @@
     function fakeDef(id, overrides) {
       return Object.assign({
         id: id, i18nKey: 'variant.' + id, group: 'test', digits: 4,
-        difficultySupport: ['veryEasy', 'easy'], defaultSymbolMode: 'digits', symbolModes: ['digits'],
+        difficultySupport: ['veryEasy'], defaultSymbolMode: 'digits', symbolModes: ['digits'],
         options: [],
         build: function () { return SG.fixtures.models.boxGrid(id, 2, 2); }
       }, overrides);
@@ -462,7 +462,7 @@
     }, SLOW);
 
     it('checks I6 against the clue floor the variant declares', function () {
-      var def = fakeDef('sweepFloor', { clueFloor: { veryEasy: 3, easy: 2 } });
+      var def = fakeDef('sweepFloor', { clueFloor: { veryEasy: 3, easy: 2 }, difficultySupport: ['veryEasy', 'easy'] });
       withRegistered(def, function () {
         var report = sweepVariant(SG.variants.get('sweepFloor'), { only: ['CV0', 'CV4'] });
         expect(report.failures).toEqual([]);

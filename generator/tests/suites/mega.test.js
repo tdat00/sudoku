@@ -18,16 +18,17 @@
   var SLOW = 120000;
 
   var IDS = ['mega12', 'mega16'];
-  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard'];
+  /** The levels the puzzle tests sample (both boards offer all nine, see the definition test). */
+  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'evil', 'nightmare1'];
 
   /**
    * What each board must look like, written down independently of the builder. `budgets` are the
-   * design.md section 9.1 limits in ms for veryEasy, medium and hard; easy is held to the medium one.
+   * design.md section 9.1 limits in ms of the sampled levels.
    */
   var BOARDS = {
     mega12: {
       digits: 12, boxRows: 3, boxCols: 4, boxesAcross: 3, boxesDown: 4, peers: 11 + 11 + 6,
-      budgets: [400, 1000, 3000],
+      budgets: { veryEasy: 400, easy: 1000, medium: 1000, hard: 3000, evil: 3000, nightmare1: 4500 },
       sets: {
         letters: ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C'],
         numbers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
@@ -36,7 +37,7 @@
     },
     mega16: {
       digits: 16, boxRows: 4, boxCols: 4, boxesAcross: 4, boxesDown: 4, peers: 15 + 15 + 9,
-      budgets: [1500, 4000, 10000],
+      budgets: { veryEasy: 1500, easy: 4000, medium: 4000, hard: 10000, evil: 10000, nightmare1: 10000 },
       sets: {
         hex: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'],
         letters: ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G']
@@ -122,14 +123,9 @@
         expect(typeof def.build).toBe('function');
       });
 
-      it(id + ': offers exactly veryEasy to hard, the levels of design.md 9.1', function () {
+      it(id + ': offers every level of the nine (measured by tests/qualify.js)', function () {
         var def = SG.variants.get(id);
-        expect(def.difficultySupport).toEqual(LEVELS);
-        ['expert', 'evil'].forEach(function (level) {
-          expectCode(function () {
-            SG.pipeline.run({ variantId: id, difficulty: level, seed: 1, trace: 'off' }, null);
-          }, 'difficulty.unsupportedLevel');
-        });
+        expect(def.difficultySupport).toEqual(SG.difficulty.LEVELS);
       });
 
       it(id + ': has a pre-fill and a restart threshold far below the generic default', function () {
@@ -724,8 +720,6 @@
   // ===========================================================================================
 
   describe('mega puzzles', function () {
-    var BUDGET_OF = { veryEasy: 0, easy: 1, medium: 1, hard: 2 };
-
     function generate(id, level, seed, extra) {
       var budget = SG.budget.create({ ms: 60000 });
       var started = now();
@@ -768,7 +762,7 @@
       LEVELS.forEach(function (level) {
         it(id + ' ' + level + ': ' + SAMPLES + ' puzzles are unique, valid and inside the 9.1 time budget',
           function () {
-            var limit = b.budgets[BUDGET_OF[level]];
+            var limit = SG.test.timeLimit(b.budgets[level]);
             for (var seed = 1; seed <= SAMPLES; seed++) {
               var out = generate(id, level, seed);
               checkInvariants(id, level, out.result);
@@ -1019,8 +1013,7 @@
               expect(SG.dfs.countSolutions(result.model, result.givens, 2)).toBe(1);
             }
             times.sort(function (a, b) { return a - b; });
-            var index = { veryEasy: 0, easy: 1, medium: 1, hard: 2 }[level];
-            expect(times[18]).toBeLessThan(BOARDS[id].budgets[index]);
+            expect(times[18]).toBeLessThan(SG.test.timeLimit(BOARDS[id].budgets[level]));
             expect(exact / 20).toBeGreaterThanOrEqual(HIT_RATE);
           }, 600000);
         });

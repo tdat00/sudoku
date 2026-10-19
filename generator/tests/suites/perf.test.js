@@ -87,10 +87,10 @@
           function result(variant, level, seed) {
             return SG.pipeline.run({ variantId: variant, difficulty: level, seed: seed, trace: 'off' }, null);
           }
-          var base = result('classic4', 'easy', 1);
-          var again = result('classic4', 'easy', 1);
+          var base = result('classic4', 'veryEasy', 1);
+          var again = result('classic4', 'veryEasy', 1);
           expect(tools.hash64(tools.serialize(again))).toBe(tools.hash64(tools.serialize(base)));
-          expect(tools.hash64(tools.serialize(result('classic4', 'easy', 2))))
+          expect(tools.hash64(tools.serialize(result('classic4', 'veryEasy', 2))))
             .not.toBe(tools.hash64(tools.serialize(base)));
           expect(tools.hash64('')).toBe('811c9dc52545f491');
           expect(tools.hash64('a')).toHaveLength(16);

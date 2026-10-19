@@ -119,13 +119,22 @@
     'difficulty.easy.desc': 'Ít số cho sẵn hơn một chút. Thêm kỹ thuật ứng viên bị khóa: cặp chỉ hướng ' +
       '(Pointing) và loại trừ khối–hàng/cột.',
     'difficulty.medium': 'Trung bình',
-    'difficulty.medium.desc': 'Cần các cặp, bộ ba và bộ bốn ứng viên (tập con trần và ẩn).',
+    'difficulty.medium.desc': 'Thường dùng các cặp và bộ ba ứng viên (tập con trần và ẩn).',
     'difficulty.hard': 'Khó',
-    'difficulty.hard.desc': 'Cần các mẫu “cá” (X-Wing, Swordfish, Jellyfish) và tô màu đơn giản.',
+    'difficulty.hard.desc': 'Thường dùng bộ bốn ứng viên, các mẫu “cá” (X-Wing, Swordfish) và tô màu ' +
+      'đơn giản.',
+    'difficulty.veryHard': 'Rất khó',
+    'difficulty.veryHard.desc': 'Thường dùng một kỹ thuật cánh (XY-Wing, XYZ-Wing), Jellyfish hoặc nhiều ' +
+      'mẫu “cá”.',
     'difficulty.expert': 'Chuyên gia',
-    'difficulty.expert.desc': 'Cần các kỹ thuật cánh (XY-Wing, XYZ-Wing, W-Wing) và Unique Rectangle.',
+    'difficulty.expert.desc': 'Thường dùng nhiều kỹ thuật cánh, W-Wing hoặc Unique Rectangle, đôi khi một ' +
+      'chuỗi suy luận ngắn.',
     'difficulty.evil': 'Địa ngục',
-    'difficulty.evil.desc': 'Mức khó nhất: chuỗi suy luận và thử–sai (Nishio), với rất ít số cho sẵn.',
+    'difficulty.evil.desc': 'Thường dùng chuỗi suy luận và thử–sai (Nishio), với rất ít số cho sẵn.',
+    'difficulty.nightmare1': 'Ác mộng 1',
+    'difficulty.nightmare1.desc': 'Thường dùng nhiều chuỗi suy luận và bước thử–sai.',
+    'difficulty.nightmare2': 'Ác mộng 2',
+    'difficulty.nightmare2.desc': 'Khoảng điểm cao nhất; thường cần nhiều suy luận nâng cao.',
 
     'symmetry.none': 'Không đối xứng',
     'symmetry.rotational180': 'Xoay 180°',
@@ -190,7 +199,7 @@
       'bàn cờ được mô tả bằng dữ liệu, một bộ giải duy nhất dùng được cho mọi biến thể.',
     'explain.buildModel.how': 'Biến thể dựng các ô và bố cục (Jigsaw trước tiên tạo các vùng, bàn cờ ' +
       'nhiều lưới thì đặt từng lưới con). Sau đó liệt kê các nhóm (hàng, cột, vùng) và các ô cùng nhóm với ' +
-      'mỗi ô, rồi co giãn các ngưỡng độ khó theo kích thước bàn cờ.',
+      'mỗi ô, rồi co giãn số cho sẵn tối thiểu của mức độ theo kích thước bàn cờ.',
     'explain.buildModel.live': 'Lưới có {cells} ô và {units} nhóm',
     'explain.buildModel.code.build': 'model ← variant.build(options, rng)',
     'explain.buildModel.code.units': 'units ← các hàng + cột + vùng của mọi lưới',
@@ -246,13 +255,14 @@
     'explain.rate.what': 'Đo xem đề khó đến đâu.',
     'explain.rate.why': 'Độ khó được đo bằng những gì một người cần để giải đề, chứ không đoán theo số ' +
       'cho sẵn. Nhờ vậy ta đảm bảo được đúng mức độ bạn yêu cầu.',
-    'explain.rate.how': 'Bộ giải logic giải đề từng bước bằng các kỹ thuật của con người, từ rẻ đến đắt, ' +
-      'và đếm mỗi kỹ thuật được dùng bao nhiêu lần. Mỗi lần dùng có một chi phí; tổng điểm quyết định ' +
-      'mức độ.',
+    'explain.rate.how': 'Bộ giải logic giải đề từng bước bằng các kỹ thuật của con người, thử theo một ' +
+      'thứ tự ưu tiên kỹ thuật cố định, và đếm mỗi kỹ thuật được dùng bao nhiêu lần. Điểm gồm điểm của ' +
+      'kỹ thuật khó nhất, cộng một phần tăng theo logarit của toàn bộ khối lượng, cộng tối đa 80 cho các ' +
+      'ô trống; điểm quyết định mức độ.',
     'explain.rate.live': '{clues} số cho sẵn · điểm {score}',
     'explain.rate.code.solve': 'report ← giải đề bằng logic, với mọi kỹ thuật',
     'explain.rate.code.count': 'đếm số lần cần dùng mỗi kỹ thuật',
-    'explain.rate.code.score': 'score ← tổng chi phí của các kỹ thuật',
+    'explain.rate.code.score': 'score ← kỹ thuật khó nhất + log của tổng khối lượng + ô trống',
     'explain.rate.code.classify': 'level ← dải độ khó chứa score',
 
     'explain.tune.what': 'So kết quả với mức độ bạn yêu cầu, rồi hoàn tất.',
@@ -540,8 +550,14 @@
     'error.dfs.invalidGivens': 'Các chữ số cho sẵn không phù hợp với bàn cờ này.',
     'error.dfs.invalidLimit': 'Giới hạn số lời giải “{limit}” không hợp lệ.',
     'error.difficulty.unknownLevel': 'Không có mức độ khó “{level}”.',
+    'error.difficulty.unknownTechnique': 'Kỹ thuật giải “{technique}” chưa có điểm độ khó.',
     'error.difficulty.unsupportedLevel': '{variantId} không sinh được ở mức “{level}”. Hãy chọn mức khác.',
     'error.digger.invalidOption': 'Giá trị “{value}” không hợp lệ cho tùy chọn “{option}”.',
+    'error.digger.noRatedPuzzle': 'Không có đề {variantId} nào được chấm điểm trọn vẹn bằng suy luận. Hãy ' +
+      'thử lại với seed khác.',
+    'error.digger.objectiveGuard': 'Một lần giải của bước đào có định hướng đã vượt giới hạn công việc.',
+    'error.digger.uniqueGuard': 'Một lần kiểm tra lời giải duy nhất của bước tìm kiếm đã vượt giới hạn ' +
+      'công việc.',
     'error.digger.invalidSolution': 'Lời giải đưa cho bộ đào không hợp lệ.',
     'error.digger.notUnique': 'Đề đã đào của {variantId} không có đúng một lời giải.',
     'error.digger.invalidStrategy': 'Chiến lược đào “{id}” không hợp lệ.',

@@ -522,7 +522,7 @@
   // ---------------------------------------------------------------------------------------------
 
   describe('app: main-thread generation client', function () {
-    var CONFIG = { variantId: 'classic4', difficulty: 'easy', seed: 7, trace: 'summary' };
+    var CONFIG = { variantId: 'classic4', difficulty: 'veryEasy', seed: 7, trace: 'summary' };
 
     it('runs the pipeline and returns the same puzzle as a direct call, events in order', function () {
       var events = [];

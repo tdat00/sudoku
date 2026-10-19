@@ -1,0 +1,149 @@
+{
+  "mode": "fixtures",
+  "node": "v26.8.2",
+  "cases": [
+    {
+      "name": "regression-hash-diff",
+      "seedsUnchanged": true,
+      "removed": [
+        "classic4/easy",
+        "classic6/easy"
+      ],
+      "added": [
+        "classic6/veryEasy",
+        "classic6/hard",
+        "classic9/veryHard"
+      ],
+      "shared": [
+        {
+          "key": "classic4/veryEasy",
+          "n": 20,
+          "unchanged": 20
+        },
+        {
+          "key": "classic9/veryEasy",
+          "n": 20,
+          "unchanged": 20
+        },
+        {
+          "key": "classic9/easy",
+          "n": 20,
+          "unchanged": 0
+        },
+        {
+          "key": "classic9/medium",
+          "n": 20,
+          "unchanged": 2
+        },
+        {
+          "key": "classic9/hard",
+          "n": 20,
+          "unchanged": 4
+        },
+        {
+          "key": "classic9/expert",
+          "n": 20,
+          "unchanged": 0
+        },
+        {
+          "key": "classic9/evil",
+          "n": 20,
+          "unchanged": 4
+        },
+        {
+          "key": "mega12/medium",
+          "n": 20,
+          "unchanged": 2
+        },
+        {
+          "key": "mega16/easy",
+          "n": 20,
+          "unchanged": 0
+        },
+        {
+          "key": "diagonalX/easy",
+          "n": 20,
+          "unchanged": 0
+        },
+        {
+          "key": "diagonalX/evil",
+          "n": 20,
+          "unchanged": 0
+        },
+        {
+          "key": "hyper/hard",
+          "n": 20,
+          "unchanged": 0
+        },
+        {
+          "key": "jigsaw9/medium",
+          "n": 20,
+          "unchanged": 1
+        },
+        {
+          "key": "jigsaw9/expert",
+          "n": 20,
+          "unchanged": 1
+        },
+        {
+          "key": "killer/easy",
+          "n": 20,
+          "unchanged": 0
+        },
+        {
+          "key": "killer/hard",
+          "n": 20,
+          "unchanged": 1
+        },
+        {
+          "key": "greaterThan/medium",
+          "n": 20,
+          "unchanged": 9
+        },
+        {
+          "key": "greaterThan/hard",
+          "n": 20,
+          "unchanged": 1
+        },
+        {
+          "key": "samurai/easy",
+          "n": 20,
+          "unchanged": 0
+        },
+        {
+          "key": "sohei/veryEasy",
+          "n": 20,
+          "unchanged": 0
+        },
+        {
+          "key": "butterfly/medium",
+          "n": 20,
+          "unchanged": 2
+        },
+        {
+          "key": "flower/medium",
+          "n": 20,
+          "unchanged": 0
+        },
+        {
+          "key": "wordoku/medium",
+          "n": 20,
+          "unchanged": 4
+        }
+      ]
+    },
+    {
+      "name": "design-json-example",
+      "declaredScore": 612,
+      "actualScore": 502,
+      "confidence": 0.68
+    },
+    {
+      "name": "qualification-fingerprint-provenance",
+      "current": "9002e195df0dec28",
+      "published": "f67c9276d07d0070",
+      "withOnlyOldExplainComment": "791a67f63e466e26"
+    }
+  ],
+  "engineHash": "9002e195df0dec28"
+}

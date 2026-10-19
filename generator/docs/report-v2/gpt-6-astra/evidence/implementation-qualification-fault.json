@@ -1,0 +1,433 @@
+{
+ "protocol": "docs/difficulty-scoring/report.md section 6",
+ "seedBase": 20260601,
+ "machine": {
+  "cpu": "synthetic scheduler test",
+  "jobs": 1,
+  "node": "v26.8.2"
+ },
+ "engine": {
+  "sources": "worker-exit-fault-injection"
+ },
+ "started": "2026-10-19T10:07:03.745Z",
+ "finished": "2026-10-19T10:07:03.753Z",
+ "seconds": 0,
+ "cells": [
+  {
+   "variant": "classic4",
+   "level": "veryEasy",
+   "cellCount": 16,
+   "budget": 2000,
+   "summary": {
+    "n": 39,
+    "hits": 39,
+    "rate": 1,
+    "p50": 1,
+    "p95": 1,
+    "max": 1,
+    "verdict": "offered",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+   },
+   "requests": [
+    {
+     "key": "classic4/veryEasy",
+     "index": 0,
+     "seed": 3336360352,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 1,
+     "seed": 3353137971,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 2,
+     "seed": 3369915590,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 3,
+     "seed": 3386693209,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 4,
+     "seed": 3403470828,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 5,
+     "seed": 3420248447,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 6,
+     "seed": 3437026066,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 7,
+     "seed": 3453803685,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 8,
+     "seed": 3470581304,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 9,
+     "seed": 3487358923,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 10,
+     "seed": 2745183673,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 11,
+     "seed": 2728406054,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 12,
+     "seed": 2711628435,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 13,
+     "seed": 2694850816,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 14,
+     "seed": 2812294149,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 15,
+     "seed": 2795516530,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 16,
+     "seed": 2778738911,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 17,
+     "seed": 2761961292,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 18,
+     "seed": 2879404625,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 19,
+     "seed": 2862627006,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 20,
+     "seed": 698564418,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 21,
+     "seed": 715342037,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 22,
+     "seed": 665009180,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 23,
+     "seed": 681786799,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 24,
+     "seed": 631453942,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 25,
+     "seed": 648231561,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 26,
+     "seed": 597898704,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 27,
+     "seed": 614676323,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 28,
+     "seed": 832785370,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 29,
+     "seed": 849562989,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 30,
+     "seed": 799377227,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 31,
+     "seed": 782599608,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 32,
+     "seed": 832932465,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 33,
+     "seed": 816154846,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 34,
+     "seed": 866487703,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 35,
+     "seed": 849710084,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 36,
+     "seed": 900042941,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 37,
+     "seed": 883265322,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    },
+    {
+     "key": "classic4/veryEasy",
+     "index": 38,
+     "seed": 665156275,
+     "hit": true,
+     "valid": true,
+     "solved": true,
+     "approximate": false,
+     "ms": 1
+    }
+   ]
+  }
+ ],
+ "support": {
+  "classic4": [
+   "veryEasy"
+  ]
+ }
+}

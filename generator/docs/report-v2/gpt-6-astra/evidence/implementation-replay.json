@@ -1,0 +1,278 @@
+{
+  "mode": "replay",
+  "node": "v26.8.2",
+  "cases": [
+    {
+      "name": "classic9/nightmare1",
+      "config": {
+        "variantId": "classic9",
+        "difficulty": "nightmare1",
+        "seed": 915422351
+      },
+      "generationMs": 444.7315,
+      "achieved": "nightmare1",
+      "score": 3004,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 3004,
+      "revealCount": 3
+    },
+    {
+      "name": "mega16/evil",
+      "config": {
+        "variantId": "mega16",
+        "difficulty": "evil",
+        "seed": 478576959
+      },
+      "generationMs": 216.96819999999997,
+      "achieved": "evil",
+      "score": 2311,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [
+          {
+            "index": 11,
+            "precedingKind": "guided",
+            "cell": 98
+          },
+          {
+            "index": 11,
+            "precedingKind": "guided",
+            "cell": 157
+          }
+        ],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 2311,
+      "revealCount": 3
+    },
+    {
+      "name": "mega16/nightmare1",
+      "config": {
+        "variantId": "mega16",
+        "difficulty": "nightmare1",
+        "seed": 2422420669
+      },
+      "generationMs": 169.4602,
+      "achieved": "nightmare1",
+      "score": 3404,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [
+          {
+            "index": 12,
+            "precedingKind": "guided",
+            "cell": 92
+          },
+          {
+            "index": 12,
+            "precedingKind": "guided",
+            "cell": 163
+          }
+        ],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 3404,
+      "revealCount": 1
+    },
+    {
+      "name": "killer/expert",
+      "config": {
+        "variantId": "killer",
+        "difficulty": "expert",
+        "seed": 1314205603
+      },
+      "generationMs": 4525.7456,
+      "achieved": "expert",
+      "score": 1390,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 1390,
+      "revealCount": 1
+    },
+    {
+      "name": "greaterThan/veryHard",
+      "config": {
+        "variantId": "greaterThan",
+        "difficulty": "veryHard",
+        "seed": 222131648
+      },
+      "generationMs": 199.70470000000023,
+      "achieved": "veryHard",
+      "score": 960,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 960,
+      "revealCount": 2
+    },
+    {
+      "name": "greaterThan/nightmare2",
+      "config": {
+        "variantId": "greaterThan",
+        "difficulty": "nightmare2",
+        "seed": 2306102068
+      },
+      "generationMs": 3620.8403,
+      "achieved": "nightmare2",
+      "score": 3646,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 3646,
+      "revealCount": 1
+    },
+    {
+      "name": "wordoku/expert/mirrorBoth",
+      "config": {
+        "variantId": "wordoku",
+        "difficulty": "expert",
+        "symmetry": "mirrorBoth",
+        "seed": 61843,
+        "maxAttempts": 2
+      },
+      "generationMs": 110.79690000000119,
+      "achieved": "expert",
+      "score": 1088,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 1088,
+      "revealCount": 3
+    },
+    {
+      "name": "greaterThan/expert/mirrorBoth",
+      "config": {
+        "variantId": "greaterThan",
+        "difficulty": "expert",
+        "symmetry": "mirrorBoth",
+        "seed": 61843,
+        "maxAttempts": 2
+      },
+      "generationMs": 445.52980000000025,
+      "achieved": "expert",
+      "score": 1378,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 1378,
+      "revealCount": 2
+    },
+    {
+      "name": "greaterThan/expert/diagonal",
+      "config": {
+        "variantId": "greaterThan",
+        "difficulty": "expert",
+        "symmetry": "diagonal",
+        "seed": 61843,
+        "maxAttempts": 2
+      },
+      "generationMs": 556.6293999999998,
+      "achieved": "expert",
+      "score": 1058,
+      "complete": true,
+      "warnings": [],
+      "unique": true,
+      "validSolution": true,
+      "matchingGivens": true,
+      "maskErrors": [],
+      "replayErrors": {
+        "wrongValues": [],
+        "wrongSigns": false,
+        "markedButFilled": [],
+        "revealAlreadyVisible": [],
+        "snapshotClueMismatch": []
+      },
+      "cageErrors": [],
+      "rowTotal": 1058,
+      "revealCount": 2
+    }
+  ],
+  "engineHash": "9002e195df0dec28"
+}

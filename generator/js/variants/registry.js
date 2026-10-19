@@ -13,8 +13,12 @@
   // Keep the first registry on repeated loads: the variants registered so far must survive.
   if (SG.variants && typeof SG.variants.register === 'function') return;
 
-  /** Difficulty ids a variant may declare. Mirrors SG.difficulty.LEVELS (which loads later). */
-  const LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil'];
+  /**
+   * Difficulty ids a variant may declare: a copy of SG.difficulty.LEVELS (difficulty.js is loaded before this
+   * file in every entry point; keep the two lists equal).
+   */
+  const LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
+    'nightmare2'];
 
   /**
    * @typedef {Object} VariantDef

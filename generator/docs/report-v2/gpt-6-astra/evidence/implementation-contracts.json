@@ -1,0 +1,321 @@
+{
+  "mode": "contracts",
+  "node": "v26.8.2",
+  "cases": [
+    {
+      "name": "reveal-flush-order",
+      "steps": [
+        {
+          "kind": "random",
+          "values": [
+            5,
+            6
+          ],
+          "marks": {
+            "dug": [
+              0,
+              80
+            ],
+            "kept": [],
+            "revealed": []
+          },
+          "args": {
+            "tried": 2,
+            "removed": 2,
+            "unit": "cell",
+            "clues": 81
+          }
+        },
+        {
+          "kind": "reveal",
+          "values": [
+            5,
+            6
+          ],
+          "marks": {
+            "dug": [],
+            "kept": [],
+            "revealed": [
+              0,
+              80
+            ]
+          },
+          "args": {
+            "revealed": 2,
+            "clues": 81
+          }
+        }
+      ]
+    },
+    {
+      "name": "tie-rule",
+      "ties": [
+        {
+          "ids": [
+            "nakedQuad",
+            "ruleOf45"
+          ],
+          "hardest": "nakedQuad"
+        },
+        {
+          "ids": [
+            "jellyfish",
+            "cageSplit"
+          ],
+          "hardest": "jellyfish"
+        },
+        {
+          "ids": [
+            "ineqChain",
+            "pointing"
+          ],
+          "hardest": "ineqChain"
+        }
+      ]
+    },
+    {
+      "name": "score-examples",
+      "tables": [
+        {
+          "rows": [],
+          "empties": 0,
+          "emptyPoints": 0,
+          "emptyTotal": 0,
+          "total": 0
+        },
+        {
+          "rows": [],
+          "empties": 81,
+          "emptyPoints": 0.6611570247933884,
+          "emptyTotal": 54,
+          "total": 54
+        },
+        {
+          "rows": [
+            {
+              "id": "nakedSingle",
+              "uses": 29,
+              "points": 1,
+              "total": 6,
+              "hardest": false
+            },
+            {
+              "id": "hiddenSingleBox",
+              "uses": 19,
+              "points": 1.25,
+              "total": 4,
+              "hardest": false
+            },
+            {
+              "id": "hiddenSingleLine",
+              "uses": 5,
+              "points": 1.5,
+              "total": 1,
+              "hardest": false
+            },
+            {
+              "id": "pointing",
+              "uses": 5,
+              "points": 40,
+              "total": 38,
+              "hardest": false
+            },
+            {
+              "id": "nakedPair",
+              "uses": 1,
+              "points": 120,
+              "total": 23,
+              "hardest": false
+            },
+            {
+              "id": "xWing",
+              "uses": 1,
+              "points": 320,
+              "total": 381,
+              "hardest": true
+            }
+          ],
+          "empties": 53,
+          "emptyPoints": 0.8602150537634409,
+          "emptyTotal": 46,
+          "total": 499
+        }
+      ]
+    },
+    {
+      "name": "apportionment",
+      "n": 10000,
+      "seed": 2060619,
+      "failures": 0
+    },
+    {
+      "name": "player-locale-parity",
+      "mismatches": {
+        "en": [],
+        "vi": []
+      }
+    },
+    {
+      "name": "support-lists",
+      "support": {
+        "classic4": [
+          "veryEasy"
+        ],
+        "classic6": [
+          "veryEasy",
+          "hard"
+        ],
+        "classic9": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1"
+        ],
+        "mega12": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "mega16": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "diagonalX": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "hyper": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "jigsaw9": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "killer": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "greaterThan": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "samurai": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "sohei": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "butterfly": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "flower": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1",
+          "nightmare2"
+        ],
+        "wordoku": [
+          "veryEasy",
+          "easy",
+          "medium",
+          "hard",
+          "veryHard",
+          "expert",
+          "evil",
+          "nightmare1"
+        ]
+      }
+    },
+    {
+      "name": "omitted-difficulty-classic4",
+      "error": "difficulty.unsupportedLevel"
+    },
+    {
+      "name": "omitted-difficulty-classic6",
+      "error": "difficulty.unsupportedLevel"
+    }
+  ],
+  "engineHash": "9002e195df0dec28"
+}

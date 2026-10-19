@@ -78,8 +78,12 @@
   // Keep the first instance on repeated loads: the running application holds it.
   if (SG.cache && typeof SG.cache.createStore === 'function') return;
 
-  /** Schema version of the stored list. Changing it purges every older cache. */
-  const SCHEMA_VERSION = 1;
+  /**
+   * Schema version of the stored list. Changing it purges every older cache. 2: rating v2 (new scores,
+   * levels and puzzles; docs/report-v2/report-detailed.md section 5.8), so the puzzles cached by v1 are
+   * dropped once.
+   */
+  const SCHEMA_VERSION = 2;
   const STORAGE_KEY = 'sg.cache.v1';
   const LIMIT = 20;
   const POOL_PER_CONFIG = 2;
@@ -98,26 +102,41 @@
     'maxAttempts', 'variantOptions']);
 
   /**
-   * Expected generation time in milliseconds per variant and level (the worst of several seeds measured in
-   * Node with `trace: 'off'`, with a margin for slow tails). A configuration above `MAX_PREGEN_COST_MS` is
-   * not pre-generated. A level that is not listed is unknown (Infinity): not pre-generated either.
+   * Expected generation time in milliseconds per variant and level: the slowest of the 40 requests of the
+   * qualification (`node tests/qualify.js`, docs/report-v2/qualification.md; Node, `trace: 'off'`), rounded up
+   * (to 10 ms below 100 ms, to 50 ms below 1 s, to 500 ms above) and at least 20 ms. A configuration above
+   * `MAX_PREGEN_COST_MS` is not pre-generated. A level that is not listed is unknown (Infinity): not
+   * pre-generated either.
    */
   const COSTS = Object.freeze({
-    classic4: { veryEasy: 20, easy: 20 },
-    classic6: { veryEasy: 20, easy: 20, medium: 60 },
-    classic9: { veryEasy: 20, easy: 20, medium: 150, hard: 120, expert: 80, evil: 80 },
-    mega12: { veryEasy: 20, easy: 20, medium: 80, hard: 120 },
-    mega16: { veryEasy: 30, easy: 50, medium: 200, hard: 400 },
-    diagonalX: { veryEasy: 10, easy: 10, medium: 80, hard: 60, expert: 80, evil: 100 },
-    hyper: { veryEasy: 10, easy: 10, medium: 80, hard: 60, expert: 60, evil: 60 },
-    jigsaw9: { veryEasy: 100, easy: 100, medium: 100, hard: 100, expert: 100, evil: 120 },
-    killer: { veryEasy: 30, easy: 40, medium: 80, hard: 1000, expert: 2500 },
-    greaterThan: { veryEasy: 80, easy: 80, medium: 150, hard: 800, expert: 2000 },
-    samurai: { veryEasy: 80, easy: 40, medium: 600, hard: 700 },
-    sohei: { veryEasy: 20, easy: 20, medium: 150, hard: 400 },
-    butterfly: { veryEasy: 10, easy: 10, medium: 150, hard: 350 },
-    flower: { veryEasy: 15, easy: 15, medium: 200, hard: 400 },
-    wordoku: { veryEasy: 10, easy: 10, medium: 60, hard: 100, expert: 60 }
+    classic4: { veryEasy: 20 },
+    classic6: { veryEasy: 20, hard: 150 },
+    classic9: { veryEasy: 20, easy: 20, medium: 250, hard: 100, veryHard: 250, expert: 200, evil: 250,
+      nightmare1: 650 },
+    mega12: { veryEasy: 20, easy: 20, medium: 30, hard: 70, veryHard: 250, expert: 250, evil: 350,
+      nightmare1: 1500, nightmare2: 4000 },
+    mega16: { veryEasy: 20, easy: 20, medium: 30, hard: 150, veryHard: 3500, expert: 1500, evil: 700,
+      nightmare1: 600, nightmare2: 8500 },
+    diagonalX: { veryEasy: 20, easy: 20, medium: 50, hard: 20, veryHard: 60, expert: 70, evil: 70,
+      nightmare1: 250, nightmare2: 1500 },
+    hyper: { veryEasy: 20, easy: 20, medium: 150, hard: 20, veryHard: 300, expert: 250, evil: 90,
+      nightmare1: 150, nightmare2: 1500 },
+    jigsaw9: { veryEasy: 40, easy: 20, medium: 70, hard: 30, veryHard: 150, expert: 100, evil: 100,
+      nightmare1: 150, nightmare2: 2000 },
+    killer: { veryEasy: 20, easy: 30, medium: 1500, hard: 1500, veryHard: 11500, expert: 7000, evil: 4500,
+      nightmare1: 2000, nightmare2: 6500 },
+    greaterThan: { veryEasy: 20, easy: 40, medium: 150, hard: 8000, veryHard: 7500, expert: 3500, evil: 1500,
+      nightmare1: 400, nightmare2: 5000 },
+    samurai: { veryEasy: 20, easy: 20, medium: 200, hard: 350, veryHard: 600, expert: 500, evil: 950,
+      nightmare1: 3000, nightmare2: 5500 },
+    sohei: { veryEasy: 20, easy: 20, medium: 200, hard: 400, veryHard: 450, expert: 350, evil: 1500,
+      nightmare1: 2500, nightmare2: 4000 },
+    butterfly: { veryEasy: 20, easy: 20, medium: 80, hard: 150, veryHard: 600, expert: 300, evil: 950,
+      nightmare1: 2500, nightmare2: 3500 },
+    flower: { veryEasy: 20, easy: 20, medium: 200, hard: 950, veryHard: 500, expert: 450, evil: 250,
+      nightmare1: 2000, nightmare2: 4000 },
+    wordoku: { veryEasy: 20, easy: 20, medium: 150, hard: 200, veryHard: 150, expert: 200, evil: 300,
+      nightmare1: 850 }
   });
 
   // ---------------------------------------------------------------------------------------------

@@ -21,7 +21,9 @@
  *               framed 'cell--kept'.
  *   'signDig'   Greater-Than: a batch of signs tried (`batchSigns`); removed signs are drawn dashed, signs
  *               that had to stay red (board `setSignMarks`).
- *   'reveal'    Greater-Than: the puzzle came out too hard, more clues are shown (frame 'cell--revealed').
+ *   'reveal'    more clues are shown (frame 'cell--revealed'): the puzzle came out too hard (Greater-Than,
+ *               and the downward refinement of the top levels), or the local search shows clues again while
+ *               it looks for a harder puzzle (log entries with `reason: 'search'`).
  *   'restart'   the safety net threw a dug puzzle away and digs again from the full grid (rare).
  *   'final'     the finished puzzle: its clues, no frames.
  * Position 0 is the empty board, position k shows step k, the last position the finished puzzle. Technical
@@ -367,12 +369,15 @@
           break;
         case 'reveal': {
           const cells = cellsOf(e);
-          cells.forEach(function (c) { if (c >= 0 && c < n) values[c] = solution[c]; });
           if (opening !== null && !signsStarted) {
+            cells.forEach(function (c) { if (c >= 0 && c < n) values[c] = solution[c]; });
             opening.revealed = opening.revealed.concat(cells);
           } else {
+            // The pending batch shows the board after its own removals: it is closed before the clues of
+            // this step come back, so its snapshot never holds them.
             flush();
-            ctx.push('reveal', 'dig', null, 'replay.reveal',
+            cells.forEach(function (c) { if (c >= 0 && c < n) values[c] = solution[c]; });
+            ctx.push('reveal', 'dig', null, e.reason === 'search' ? 'replay.reveal.search' : 'replay.reveal',
               { revealed: cells.length, clues: countClues(values) },
               { revealed: cells, metrics: ctx.metrics() });
           }
@@ -586,13 +591,15 @@
       if (RATE_FREE_KINDS.indexOf(step.kind) !== -1) {
         found = { counts: {} };
       } else if (step.kind === 'final') {
-        found = result.rating && result.rating.techniqueCounts
+        found = result.rating && result.rating.techniqueCounts && result.rating.solved !== false
           ? scored(result.rating) : null;
       } else if ((step.kind === 'random' || step.kind === 'guided') && step.signs === null &&
           SG.difficulty && typeof SG.difficulty.rate === 'function') {
         try {
           const budget = SG.budget ? SG.budget.create({ ms: RATE_BUDGET_MS }) : null;
-          found = scored(SG.difficulty.rate(result.model, step.values, { budget: budget }));
+          const rating = SG.difficulty.rate(result.model, step.values, { budget: budget });
+          // Rating v2: a position without a complete logical proof has no score (not available).
+          found = rating.solved === true ? scored(rating) : null;
         } catch (err) {
           found = null;
         }
@@ -950,6 +957,8 @@
       'replay.signDig.all': 'Remove {removed}: the puzzle can still be solved without them.',
       'replay.signDig.some': 'Try to remove {tried}: {removed} removed, {kept} kept because {reason}.',
       'replay.reveal': 'The puzzle came out too hard for this level, so {revealed} more are shown.',
+      'replay.reveal.search': 'The puzzle was still too easy for this level: {revealed} shown again while ' +
+        'searching nearby for a harder one.',
       'replay.restart': 'The final check found a second solution, so the holes are dug again from the full ' +
         'grid with a plain uniqueness check ({filled}).',
       'replay.final': 'The finished puzzle: {clues}.',
@@ -1004,6 +1013,8 @@
       'replay.signDig.all': 'Bỏ {removed}: không có chúng đề vẫn giải được.',
       'replay.signDig.some': 'Thử bỏ {tried}: bỏ được {removed}, giữ lại {kept} vì {reason}.',
       'replay.reveal': 'Đề vẫn khó hơn mức đã chọn nên hiện thêm {revealed}.',
+      'replay.reveal.search': 'Đề vẫn dễ hơn mức đã chọn: hiện lại {revealed} trong khi tìm quanh đó một ' +
+        'đề khó hơn.',
       'replay.restart': 'Bước kiểm tra cuối tìm thấy lời giải thứ hai, nên các ô được đào lại từ lưới đầy ' +
         'đủ chỉ với phép kiểm tra lời giải duy nhất ({filled}).',
       'replay.final': 'Đề hoàn chỉnh: {clues}.',

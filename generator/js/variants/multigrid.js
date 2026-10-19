@@ -315,9 +315,10 @@
    * samurai 109 of 369, flower 42 of 189 clues) and 38..49 % of the dug puzzles are medium. The floor of
    * veryEasy stays: the score band of that level is so low that the puzzle needs the clues.
    * Flower additionally keeps 80 % for easy (it did before; the level is hit by every dug puzzle either way).
+   * veryHard takes the factor of hard (rating v2).
    */
-  const CLUE_FLOOR_SCALE = Object.freeze({ medium: 0.6, hard: 0.6 });
-  const FLOWER_CLUE_FLOOR_SCALE = Object.freeze({ easy: 0.8, medium: 0.6, hard: 0.6 });
+  const CLUE_FLOOR_SCALE = Object.freeze({ medium: 0.6, hard: 0.6, veryHard: 0.6 });
+  const FLOWER_CLUE_FLOOR_SCALE = Object.freeze({ easy: 0.8, medium: 0.6, hard: 0.6, veryHard: 0.6 });
 
   function definition(id, levels, extra) {
     return Object.assign({
@@ -336,15 +337,13 @@
   }
 
   /**
-   * Levels each board is offered, from measured hit rates of the pipeline with its default 8 attempts
-   * (100 seeds per level; `node tests/soak.js --variant=flower`). A missed level still returns a valid
+   * Levels each board is offered: every one of the nine, nightmare2 included, measured with the protocol of
+   * docs/report-v2/report-detailed.md section 6 (`node tests/qualify.js`, docs/report-v2/qualification.md; the
+   * top tiers come from the fast proposal dig refined into the band). A missed level still returns a valid
    * puzzle, flagged 'difficulty.approximate'.
-   *  - veryEasy .. hard: samurai and sohei 98..100 %, butterfly 96..100 %, flower 100 %.
-   *  - flower medium was hit by only 15..29 % of the puzzles while its clue floor was the classic9 one
-   *    scaled by 189 / 81; with a lower floor (`clueFloorScale`) it is 100 %, so flower offers medium too.
-   * Expert and evil have no performance milestone for these boards in design.md section 9.1.
    */
-  const STANDARD_LEVELS = ['veryEasy', 'easy', 'medium', 'hard'];
+  const STANDARD_LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
+    'nightmare2'];
 
   const DEFINITIONS = [
     definition('samurai', STANDARD_LEVELS),

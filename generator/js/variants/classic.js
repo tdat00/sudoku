@@ -118,17 +118,18 @@
   }
 
   /**
-   * classic6 offers veryEasy and easy only. Measured with `node tests/soak.js --variant=classic6
-   * --level=medium --include-unsupported --count=200`: medium was hit by 2 % (4 of 200). A 6x6 board has so
-   * few cells that the dig runs out of room before a puzzle needs a pair technique (79 % of those puzzles
-   * need singles only), and the clue floor is not what stops it (floor-bound 0 %). The closest puzzle is
-   * always 'easy'.
+   * The levels each board offers are measured, not assumed (rating v2: `node tests/qualify.js`, the protocol
+   * of docs/report-v2/report-detailed.md section 6; results in docs/report-v2/qualification.md). classic4 offers
+   * veryEasy only: a 4x4 board never needs more than singles, and singles on 16 cells stay far below the
+   * easy band. classic6 offers veryEasy and hard: its puzzles either need singles only or jump straight to
+   * a fish or subset worth a hard score (easy and medium 0 of 17; veryHard, expert and evil hit 42 to 58 %).
+   * classic9 offers everything up to nightmare1 (nightmare2 7 of 23).
    */
   const DEFINITIONS = [
-    definition('classic4', 2, 2, ['veryEasy', 'easy']),
-    definition('classic6', 2, 3, ['veryEasy', 'easy']),
-    definition('classic9', 3, 3, ['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil'],
-      fastSeedDiagonalBoxes)
+    definition('classic4', 2, 2, ['veryEasy']),
+    definition('classic6', 2, 3, ['veryEasy', 'hard']),
+    definition('classic9', 3, 3, ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil',
+      'nightmare1'], fastSeedDiagonalBoxes)
   ];
 
   // Skipping known ids keeps a second load of this file harmless.

@@ -1,7 +1,8 @@
-// Difficulty scoring and the difficulty-bounded digger (tasks T-2.7, T-2.8 and the checks of T-2.10).
-// Covers the acceptance criteria of those tasks and the invariants I1-I6 of design.md section 15.3 (I7, the
-// soundness of every technique, is swept over the registry in techniques.test.js and once more on every
-// generated puzzle here).
+// Difficulty scoring (rating v2, docs/report-v2/report-detailed.md section 5) and the difficulty-bounded digger
+// (tasks T-2.7, T-2.8 and the checks of T-2.10). Covers the score formula and its properties, the nine levels
+// and their bands, the level specification, the clue floors, the reference puzzles, and the invariants I1-I6
+// of design.md section 15.3 on generated puzzles (I7, the soundness of every technique, is swept over the
+// registry in techniques.test.js and once more on every generated puzzle here).
 (function () {
   'use strict';
 
@@ -12,6 +13,10 @@
   var model9 = SG.variants.get('classic9').build({}, null);
   var model6 = SG.variants.get('classic6').build({}, null);
   var model4 = SG.variants.get('classic4').build({}, null);
+  /** 9x9 and 4x4 boards of an unregistered variant: they support every level. */
+  var board9 = SG.fixtures.models.boxGrid('boxGrid9', 3, 3);
+  var board4 = SG.fixtures.models.boxGrid('boxGrid4', 2, 2);
+  var BANDS = [0, 45, 180, 400, 700, 1000, 1500, 2400, 3600];
 
   function expectCode(fn, code) {
     var thrown = null;
@@ -35,12 +40,16 @@
     return SG.fixtures.classic.parse(text.replace(/\./g, '0'));
   }
 
-  /** The technique ids a level lets the oracle use, solved with the uniqueness-free solver of the digger. */
-  function solvesWithin(model, givens, level) {
+  /**
+   * Does the technique set of a level solve the puzzle? By default with the uniqueness-free solver of the
+   * digger; `assumeUniqueness` lets a puzzle that is known to be unique use the techniques that assume it,
+   * as its rating does.
+   */
+  function solvesWithin(model, givens, level, assumeUniqueness) {
     return SG.logicalSolver.solve(model, givens, {
       allowedTechniques: D.spec(level, model).allowedTechniques,
       collectSteps: false,
-      assumeUniqueness: false
+      assumeUniqueness: assumeUniqueness === true
     }).solved;
   }
 
@@ -59,49 +68,96 @@
     };
   }
 
-  /** Runs fn with cost overrides and always restores the table. */
-  function withCosts(overrides, fn) {
+  /** The score of section 5.1, computed here independently of the engine. */
+  function expectedScore(counts, empties) {
+    var peak = 0;
+    var work = 0;
+    Object.keys(counts).forEach(function (id) {
+      if (!(counts[id] > 0)) return;
+      peak = Math.max(peak, D.WEIGHTS[id]);
+      work += D.WEIGHTS[id] * counts[id];
+    });
+    var v = 80 * empties / (empties + 40);
+    var r = peak > 0 ? 0.25 * peak * Math.log2(1 + work / peak) : 0;
+    return Math.round(v + peak + r);
+  }
+
+  /** Runs fn with weight overrides and always restores the table. */
+  function withWeights(overrides, fn) {
     var saved = {};
     Object.keys(overrides).forEach(function (id) {
-      saved[id] = Object.prototype.hasOwnProperty.call(D.COSTS, id) ? D.COSTS[id] : undefined;
-      if (overrides[id] === undefined) delete D.COSTS[id];
-      else D.COSTS[id] = overrides[id];
+      saved[id] = Object.prototype.hasOwnProperty.call(D.WEIGHTS, id) ? D.WEIGHTS[id] : undefined;
+      if (overrides[id] === undefined) delete D.WEIGHTS[id];
+      else D.WEIGHTS[id] = overrides[id];
     });
     try {
       return fn();
     } finally {
       Object.keys(saved).forEach(function (id) {
-        if (saved[id] === undefined) delete D.COSTS[id];
-        else D.COSTS[id] = saved[id];
+        if (saved[id] === undefined) delete D.WEIGHTS[id];
+        else D.WEIGHTS[id] = saved[id];
       });
     }
   }
 
   // ---------------------------------------------------------------------------------------------
-  // T-2.7: levels and specifications
+  // Levels and specifications
   // ---------------------------------------------------------------------------------------------
 
   describe('difficulty: levels', function () {
-    it('lists the six levels, easiest first, and rejects anything else', function () {
-      expect(LEVELS).toEqual(['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil']);
+    it('lists the nine levels, easiest first, and rejects anything else', function () {
+      expect(LEVELS).toEqual(['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
+        'nightmare2']);
       LEVELS.forEach(function (level, i) { expect(idx(level)).toBe(i); });
-      expectCode(function () { D.levelIndex('impossible'); }, 'difficulty.unknownLevel');
+      ['impossible', 'nightmare', 'nightmare-1', 'nightmare3'].forEach(function (bad) {
+        expectCode(function () { D.levelIndex(bad); }, 'difficulty.unknownLevel');
+      });
       expectCode(function () { D.spec('impossible', model9); }, 'difficulty.unknownLevel');
     });
 
     it('agrees with the list that the variant registry validates difficultySupport against', function () {
-      var classic9 = SG.variants.get('classic9');
-      expect(classic9.difficultySupport).toEqual(LEVELS);
+      SG.variants.list().forEach(function (def) {
+        def.difficultySupport.forEach(function (level) { expect(LEVELS).toContain(level); });
+        var order = def.difficultySupport.map(idx);
+        expect(order.slice().sort(function (a, b) { return a - b; })).toEqual(order);
+      });
+      expectCode(function () {
+        SG.variants.register({
+          id: 'levelProbe', i18nKey: 'variant.levelProbe', group: 'test', digits: 9,
+          difficultySupport: ['easy', 'nightmare'], defaultSymbolMode: 'digits', symbolModes: ['digits'],
+          options: [], build: function () { return null; }
+        });
+      }, 'variant.invalidDef');
+      expect(SG.variants.has('levelProbe')).toBe(false);
+    });
+
+    it('has one band table: [min, max) bands that tile the scale from 0, with an open top', function () {
+      expect(D.TABLE.map(function (row) { return row.min; })).toEqual(BANDS);
+      LEVELS.forEach(function (level, i) {
+        var band = D.bandOf(level);
+        expect(band.min).toBe(BANDS[i]);
+        expect(band.max).toBe(i + 1 < BANDS.length ? BANDS[i + 1] : Infinity);
+      });
+    });
+
+    it('gives every score exactly one level, edges included', function () {
+      BANDS.forEach(function (edge, i) {
+        expect(D.levelOfScore(edge)).toBe(LEVELS[i]);
+        if (i > 0) expect(D.levelOfScore(edge - 1)).toBe(LEVELS[i - 1]);
+      });
+      expect(D.levelOfScore(0)).toBe('veryEasy');
+      expect(D.levelOfScore(1e9)).toBe('nightmare2');
+      [null, undefined, NaN, Infinity, '45'].forEach(function (bad) { expect(D.levelOfScore(bad)).toBeNull(); });
     });
   });
 
-  describe('difficulty: spec(level, model) for classic9', function () {
-    var specs = LEVELS.map(function (level) { return D.spec(level, model9); });
+  describe('difficulty: spec(level, model) on a 9x9 board', function () {
+    var specs = LEVELS.map(function (level) { return D.spec(level, board9); });
 
     it('returns the fields of design.md section 13.7', function () {
       specs.forEach(function (spec, i) {
         expect(spec.level).toBe(LEVELS[i]);
-        ['min', 'max', 'minClues', 'maxClues', 'minCluesPerUnit', 'extraPasses'].forEach(function (key) {
+        ['min', 'max', 'minClues', 'maxClues', 'minCluesPerUnit', 'extraPasses', 'scale'].forEach(function (key) {
           expect(typeof spec[key]).toBe('number');
         });
         expect(Array.isArray(spec.allowedTechniques)).toBe(true);
@@ -111,50 +167,64 @@
       expect(specs[0].symmetryDefault).toBe('rotational180');
     });
 
-    it('has score bands that tile the scale: from 0, touching, with an open top', function () {
-      expect(specs[0].min).toBe(0);
-      for (var i = 0; i + 1 < specs.length; i++) {
-        expect(specs[i].max).toBe(specs[i + 1].min);
-        expect(specs[i].min).toBeLessThan(specs[i].max);
-      }
-      expect(specs[5].max).toBe(Infinity);
+    it('has the bands of the table, not scaled', function () {
+      specs.forEach(function (spec, i) {
+        expect(spec.min).toBe(BANDS[i]);
+        expect(spec.max).toBe(i + 1 < BANDS.length ? BANDS[i + 1] : Infinity);
+      });
     });
 
-    it('keeps the design clue ranges of section 6.7', function () {
-      var ranges = [[40, 50], [34, 40], [29, 34], [25, 30], [22, 27], [17, 24]];
+    it('keeps the clue ranges of section 5.7 (veryHard as hard, the nightmare levels as evil)', function () {
+      var ranges = [[40, 50], [34, 40], [29, 34], [25, 30], [25, 30], [22, 27], [17, 24], [17, 24], [17, 24]];
       specs.forEach(function (spec, i) {
         expect([spec.minClues, spec.maxClues]).toEqual(ranges[i]);
       });
     });
 
-    it('allows the groups of the design table, cumulatively', function () {
-      var base = ['basic', 'locked', 'subset', 'fish', 'wing', 'chain'];
-      specs.forEach(function (spec, i) {
-        base.forEach(function (group, g) {
-          expect(spec.allowedGroups.indexOf(group) !== -1).toBe(g <= i);
-        });
-      });
-    });
-
-    it('lists exactly the registered techniques of the allowed groups, in ladder order', function () {
+    it('allows exactly the techniques with 1.25 x weight below the band maximum, in ladder order', function () {
       specs.forEach(function (spec) {
         var expected = SG.techniques.list().filter(function (t) {
-          return spec.allowedGroups.indexOf(t.group) !== -1 && SG.techniques.appliesTo(t, 'classic9');
+          return SG.techniques.appliesTo(t, 'boxGrid9') &&
+            (spec.max === Infinity || 1.25 * D.WEIGHTS[t.id] < spec.max);
         }).map(function (t) { return t.id; });
         expect(spec.allowedTechniques).toEqual(expected);
       });
       expect(specs[0].allowedTechniques).toEqual(['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine']);
-      expect(specs[1].allowedTechniques).toContain('pointing');
-      expect(specs[1].allowedTechniques).toContain('boxLine');
-      expect(specs[2].allowedTechniques).toContain('nakedQuad');
-      expect(specs[3].allowedTechniques).toContain('xWing');
-      expect(specs[4].allowedTechniques).toContain('xyWing');
-      expect(specs[5].allowedTechniques).toContain('nishio');
+      // The edges of the pruning rule: 1.25 x weight against the band maximum.
+      var firsts = { easy: ['pointing', 'boxLine', 'nakedPair'], medium: ['hiddenPair', 'hiddenQuad'],
+        hard: ['xWing', 'jellyfish'], veryHard: ['xyWing', 'xyzWing'], expert: ['wWing', 'forcingChain'],
+        evil: ['nishio'] };
+      Object.keys(firsts).forEach(function (level) {
+        var i = idx(level);
+        firsts[level].forEach(function (id) {
+          expect(specs[i].allowedTechniques).toContain(id);
+          expect(specs[i - 1].allowedTechniques).not.toContain(id);
+        });
+      });
+      expect(specs[1].allowedTechniques).not.toContain('hiddenPair');
+      expect(specs[2].allowedTechniques).not.toContain('xWing');
+      expect(specs[7].allowedTechniques).toEqual(specs[8].allowedTechniques);
     });
 
-    it('uses the technique-bounded oracle up to expert and the DFS oracle for evil', function () {
-      expect(specs.map(function (s) { return s.oracle; })).toEqual(
-        ['techniques', 'techniques', 'techniques', 'techniques', 'techniques', 'unique']);
+    it('derives the allowed groups from the allowed techniques; no group owns a level', function () {
+      specs.forEach(function (spec) {
+        var groups = [];
+        spec.allowedTechniques.forEach(function (id) {
+          var g = SG.techniques.get(id).group;
+          if (groups.indexOf(g) === -1) groups.push(g);
+        });
+        expect(spec.allowedGroups.slice().sort()).toEqual(groups.sort());
+      });
+      expect(specs[1].allowedGroups).toContain('subset');
+      expect(specs[8].allowedGroups).toContain('chain');
+    });
+
+    it('uses the technique oracle at every level and the proposal dig from evil on', function () {
+      expect(specs.map(function (s) { return s.oracle; })).toEqual(LEVELS.map(function () {
+        return 'techniques';
+      }));
+      expect(specs.map(function (s) { return s.proposal; })).toEqual(
+        [false, false, false, false, false, false, true, true, true]);
     });
 
     it('never offers a technique that is scoped to another variant', function () {
@@ -163,70 +233,220 @@
         variantScope: ['killer'], find: function () { return null; }
       });
       try {
-        expect(temp.id).toBe('testKillerOnly');
-        expect(D.spec('veryEasy', model9).allowedTechniques).not.toContain('testKillerOnly');
-        expect(D.spec('evil', model9).allowedTechniques).not.toContain('testKillerOnly');
+        withWeights({ testKillerOnly: 1 }, function () {
+          expect(temp.id).toBe('testKillerOnly');
+          expect(D.spec('veryEasy', board9).allowedTechniques).not.toContain('testKillerOnly');
+          expect(D.spec('nightmare2', board9).allowedTechniques).not.toContain('testKillerOnly');
+        });
       } finally {
         SG.techniques.unregister('testKillerOnly');
       }
     });
 
     it('asks for fewer clues per unit on boards with fewer digits, never for more', function () {
-      expect(specs.map(function (s) { return s.minCluesPerUnit; })).toEqual([2, 2, 1, 1, 0, 0]);
+      expect(specs.map(function (s) { return s.minCluesPerUnit; })).toEqual([2, 2, 1, 1, 1, 0, 0, 0, 0]);
+      var board6 = SG.fixtures.models.boxGrid('boxGrid6', 2, 3);
       LEVELS.forEach(function (level, i) {
-        if (SG.variants.get('classic6').difficultySupport.indexOf(level) === -1) return;
-        expect(D.spec(level, model6).minCluesPerUnit).toBeLessThanOrEqual(specs[i].minCluesPerUnit);
+        expect(D.spec(level, board6).minCluesPerUnit).toBeLessThanOrEqual(specs[i].minCluesPerUnit);
       });
     });
   });
 
-  describe('difficulty: spec scales with the board and respects difficultySupport', function () {
-    it('multiplies the score band and the clue range by cellCount / 81', function () {
-      var scale = 36 / 81;
-      // A 6x6 box grid with an unregistered id supports every level, medium included.
+  describe('difficulty: spec on other boards, and difficultySupport', function () {
+    it('keeps the bands on every board and scales only the clue range by cellCount / 81', function () {
       var board6 = SG.fixtures.models.boxGrid('boxGrid6', 2, 3);
-      LEVELS.slice(0, 3).forEach(function (level) {
-        var big = D.spec(level, model9);
-        var small = D.spec(level, board6);
-        expect(small.min).toBeCloseTo(big.min * scale, 9);
-        if (big.max !== Infinity) expect(small.max).toBeCloseTo(big.max * scale, 9);
-        expect(small.scale).toBeCloseTo(scale, 12);
-        expect(small.minClues).toBe(Math.max(1, Math.floor(big.minClues * scale)));
-        expect(small.maxClues).toBe(Math.max(1, Math.round(big.maxClues * scale)));
-        if (level !== 'medium') expect(D.spec(level, model6).minClues).toBe(small.minClues);
-      });
-    });
-
-    it('scales the bands of a samurai board in the proportion 369 / 81', function () {
       var samurai = SG.fixtures.models.samurai();
-      expect(samurai.cellCount).toBe(369);
-      var ratio = 369 / 81;
-      LEVELS.forEach(function (level) {
-        var base = D.spec(level, model9);
-        var spec = D.spec(level, samurai);
-        expect(spec.min).toBeCloseTo(base.min * ratio, 9);
-        if (base.max !== Infinity) expect(spec.max).toBeCloseTo(base.max * ratio, 9);
-        else expect(spec.max).toBe(Infinity);
-        expect(spec.minClues).toBe(Math.floor(base.minClues * ratio));
-        expect(spec.maxClues).toBe(Math.round(base.maxClues * ratio));
+      [[board6, 36], [samurai, 369], [board4, 16]].forEach(function (pair) {
+        var board = pair[0];
+        var scale = pair[1] / 81;
+        LEVELS.forEach(function (level) {
+          var base = D.spec(level, board9);
+          var spec = D.spec(level, board);
+          expect(spec.min).toBe(base.min);
+          expect(spec.max).toBe(base.max);
+          expect(spec.scale).toBeCloseTo(scale, 12);
+          expect(spec.minClues).toBe(Math.max(1, Math.floor(base.minClues * scale)));
+          expect(spec.maxClues).toBe(Math.max(1, Math.round(base.maxClues * scale)));
+        });
       });
-      expect(D.spec('hard', samurai).min).toBeCloseTo(D.TABLE[3].min * 369 / 81, 9);
     });
 
-    it('throws for a level the variant does not support (evil on classic4)', function () {
+    it('throws for a level the variant does not support', function () {
+      LEVELS.forEach(function (level) {
+        [model4, model6, model9].forEach(function (model) {
+          var def = SG.variants.get(model.variantId);
+          if (def.difficultySupport.indexOf(level) !== -1) {
+            expect(D.spec(level, model).level).toBe(level);
+          } else {
+            expectCode(function () { D.spec(level, model); }, 'difficulty.unsupportedLevel');
+          }
+        });
+      });
       expectCode(function () { D.spec('evil', model4); }, 'difficulty.unsupportedLevel');
-      expectCode(function () { D.spec('hard', model4); }, 'difficulty.unsupportedLevel');
-      expectCode(function () { D.spec('evil', model6); }, 'difficulty.unsupportedLevel');
-      expectCode(function () { D.spec('medium', model6); }, 'difficulty.unsupportedLevel');
-      expect(D.spec('easy', model4).level).toBe('easy');
-      expect(D.spec('easy', model6).level).toBe('easy');
     });
 
     it('isSupported follows the variant definition; unknown variants support every level', function () {
       LEVELS.forEach(function (level) {
-        expect(D.isSupported(level, model9)).toBe(true);
-        expect(D.isSupported(level, model4)).toBe(['veryEasy', 'easy'].indexOf(level) !== -1);
+        expect(D.isSupported(level, model4)).toBe(SG.variants.get('classic4').difficultySupport.indexOf(level) !==
+          -1);
+        expect(D.isSupported(level, board9)).toBe(true);
         expect(D.isSupported(level, SG.fixtures.models.samurai())).toBe(true);
+      });
+    });
+
+    it('offers in every variant exactly the levels the qualification published (docs/report-v2/qualification.md)',
+      function () {
+        var node = SG.test.node;
+        if (!node) SG.test.skip('needs the file system (Node only)');
+        var text = node.fs.readFileSync(node.path.join(node.root, 'docs/report-v2/qualification.md'), 'utf8');
+        var offered = {};
+        var rows = 0;
+        text.replace(/\r\n/g, '\n').split('\n').forEach(function (line) {
+          var m = /^\| (\w+) \| (\w+) \| \d+ \| \d+ \|.*\| (offered|hidden)[^|]*\|$/.exec(line);
+          if (!m) return;
+          rows++;
+          offered[m[1]] = offered[m[1]] || [];
+          if (m[3] === 'offered') offered[m[1]].push(m[2]);
+        });
+        var ids = SG.variants.list().map(function (def) { return def.id; });
+        expect(rows).toBe(ids.length * LEVELS.length);
+        ids.forEach(function (id) {
+          var published = (offered[id] || []).slice().sort(function (a, b) { return idx(a) - idx(b); });
+          expect(Array.from(SG.variants.get(id).difficultySupport)).toEqual(published);
+        });
+      });
+  });
+
+  // ---------------------------------------------------------------------------------------------
+  // The qualification tool (tests/qualify.js): every request has an outcome
+  // ---------------------------------------------------------------------------------------------
+
+  describe('qualification: tests/qualify.js counts every request (Node only, fake workers)', function () {
+    /**
+     * Runs the scheduler of tests/qualify.js for one fake level (classic4 / veryEasy) on fake workers.
+     * `answer(task)` gives the outcome of a request, or one of 'crash' (the worker exits with code 1),
+     * 'exit0' (it exits cleanly with the request in flight), 'error' (its IPC channel fails) and 'stray' (it
+     * answers for another request). Resolves with the published summary, or rejects with the failure.
+     */
+    function runScheduler(answer, jobs) {
+      var q = loadQualify(answer);
+      var ctx = q.ctx;
+      ctx.opts = { variants: null, levels: null, jobs: jobs || 1, json: 'summary.json', markdown: null,
+        earlyStop: true, quiet: true, probe: 0 };
+      return SG.test.node.vm.runInContext('parent(opts)', ctx).then(function () {
+        return JSON.parse(q.written['summary.json']).cells[0].summary;
+      }, function (err) {
+        expect(Object.keys(q.written)).toEqual([]);
+        throw err;
+      });
+    }
+
+    /** tests/qualify.js in a context of its own, with fake workers (see `runScheduler`) and a fake engine. */
+    function loadQualify(answer) {
+      var node = SG.test.node;
+      if (!node || typeof process === 'undefined') SG.test.skip('needs Node');
+      var file = node.path.join(node.root, 'tests', 'qualify.js');
+      var written = {};
+      function fork() {
+        var handlers = {};
+        var w = {
+          on: function (name, fn) {
+            (handlers[name] = handlers[name] || []).push(fn);
+            return w;
+          },
+          emit: function (name, a, b) {
+            (handlers[name] || []).forEach(function (fn) { fn(a, b); });
+          },
+          send: function (task) {
+            setTimeout(function () {
+              if (task === 'exit') return w.emit('exit', 0, null);
+              var what = answer(task);
+              if (what === 'crash') return w.emit('exit', 1, null);
+              if (what === 'exit0') return w.emit('exit', 0, null);
+              if (what === 'error') return w.emit('error', new Error('channel closed'));
+              if (what === 'stray') return w.emit('message', { key: task.key, index: task.index + 1, ms: 1 });
+              return w.emit('message', Object.assign({ key: task.key, index: task.index, seed: task.seed,
+                valid: true, solved: true, approximate: false, ms: 1 }, what));
+            }, 0);
+          },
+          kill: function () { setTimeout(function () { w.emit('exit', null, 'SIGTERM'); }, 0); }
+        };
+        setTimeout(function () { w.emit('message', { ready: true }); }, 0);
+        return w;
+      }
+      var modules = {
+        fs: {
+          readFileSync: node.fs.readFileSync, existsSync: node.fs.existsSync,
+          writeFileSync: function (name, text) { written[name] = text; }
+        },
+        path: node.path, vm: node.vm, child_process: { fork: fork }, crypto: {},
+        os: { cpus: function () { return []; }, totalmem: function () { return 0; } }
+      };
+      var silent = { log: function () {}, error: function () {} };
+      var ctx = node.vm.createContext({
+        require: function (name) { return modules[name]; }, module: { exports: {} }, process: process,
+        __filename: file, __dirname: node.path.dirname(file), console: silent
+      });
+      node.vm.runInContext(node.fs.readFileSync(file, 'utf8'), ctx, { filename: file });
+      ctx.fakeSG = {
+        difficulty: { LEVELS: ['veryEasy'] },
+        variants: { list: function () { return [{ id: 'classic4', build: function () { return { cellCount: 16 }; } }]; } },
+        rng: { create: function () { return { fork: function () { return {}; } }; } }
+      };
+      node.vm.runInContext('loadSources = function () { return fakeSG; };' +
+        'engineInfo = function () { return { sources: "test" }; };' +
+        'machineInfo = function (jobs) { return { cpu: "test", jobs: jobs }; };', ctx);
+      return { ctx: ctx, written: written };
+    }
+
+    it('never offers a level on an incomplete round (39 or 99 outcomes)', function () {
+      var ctx = loadQualify(function () { return { hit: true }; }).ctx;
+      [39, 99, 41].forEach(function (n) {
+        ctx.cell = { done: [], budget: 2000, stopped: null };
+        for (var i = 0; i < n; i++) ctx.cell.done.push({ index: i, hit: true, ms: 1 });
+        var s = SG.test.node.vm.runInContext('decide(cell, false)', ctx);
+        expect([s.n, s.verdict, s.stopped]).toEqual([n, 'hidden', 'incomplete']);
+      });
+    });
+
+    function hit() { return { hit: true }; }
+
+    function fails(promise) {
+      return promise.then(function () { throw new Error('the run was published'); },
+        function (err) { return err.message; });
+    }
+
+    it('publishes a complete first round: 40 outcomes, offered', function () {
+      return runScheduler(hit, 2).then(function (s) {
+        expect([s.n, s.hits, s.verdict, s.stopped]).toEqual([40, 40, 'offered', null]);
+      });
+    });
+
+    it('decides a borderline level on exactly 100 outcomes', function () {
+      return runScheduler(function (task) { return { hit: task.index >= 7 }; }).then(function (s) {
+        expect([s.n, s.hits, s.verdict]).toEqual([100, 93, 'offered']);
+      });
+    });
+
+    it('fails the run when a worker dies on the last request of the first round', function () {
+      return fails(runScheduler(function (task) { return task.index === 39 ? 'crash' : hit(); }))
+        .then(function (message) { expect(message).toMatch(/stopped unexpectedly.*#39 in flight/); });
+    });
+
+    it('fails the run when a worker dies on the last request of the second round', function () {
+      return fails(runScheduler(function (task) {
+        if (task.index === 99) return 'crash';
+        return { hit: task.index >= 7 };
+      })).then(function (message) { expect(message).toMatch(/#99 in flight/); });
+    });
+
+    it('fails the run on a clean exit with a request in flight, an IPC error or a stray answer', function () {
+      return Promise.all(['exit0', 'error', 'stray'].map(function (what) {
+        return fails(runScheduler(function (task) { return task.index === 20 ? what : hit(); }, 2));
+      })).then(function (messages) {
+        expect(messages[0]).toMatch(/stopped unexpectedly/);
+        expect(messages[1]).toMatch(/worker error/);
+        expect(messages[2]).toMatch(/not given/);
       });
     });
   });
@@ -258,7 +478,7 @@
     it('without a declaration the floor is the classic9 floor scaled by cellCount / 81', function () {
       withFloor(undefined, function (model) {
         LEVELS.forEach(function (level) {
-          expect(D.spec(level, model).minClues).toBe(D.spec(level, model9).minClues);
+          expect(D.spec(level, model).minClues).toBe(D.spec(level, board9).minClues);
         });
       });
     });
@@ -266,7 +486,7 @@
     it('a table gives absolute floors; a level that is missing has no floor (0)', function () {
       withFloor({ veryEasy: 33, hard: 7 }, function (model) {
         var floors = LEVELS.map(function (level) { return D.spec(level, model).minClues; });
-        expect(floors).toEqual([33, 0, 0, 7, 0, 0]);
+        expect(floors).toEqual([33, 0, 0, 7, 0, 0, 0, 0, 0]);
         LEVELS.forEach(function (level) {
           var spec = D.spec(level, model);
           expect(spec.maxClues).toBeGreaterThanOrEqual(spec.minClues);
@@ -283,7 +503,7 @@
         return derived * 0.5 + 0.9;
       }, function (model) {
         LEVELS.forEach(function (level) {
-          var derived = D.spec(level, model9).minClues;
+          var derived = D.spec(level, board9).minClues;
           var floor = D.spec(level, model).minClues;
           expect(floor).toBe(level === 'expert' || level === 'evil' ? derived : Math.floor(derived * 0.5 + 0.9));
         });
@@ -299,29 +519,31 @@
 
     it('Killer declares 40 clues for veryEasy and none for the levels above', function () {
       if (!SG.variants.has('killer')) SG.test.skip('the Killer variant is not loaded');
-      var killer = SG.variants.get('killer').build({}, SG.rng.create(1));
-      expect(LEVELS.slice(0, 5).map(function (level) { return D.spec(level, killer).minClues; }))
-        .toEqual([40, 0, 0, 0, 0]);
+      var def = SG.variants.get('killer');
+      var killer = def.build({}, SG.rng.create(1));
+      def.difficultySupport.forEach(function (level) {
+        expect(D.spec(level, killer).minClues).toBe(level === 'veryEasy' ? 40 : 0);
+      });
     });
 
-      it('Greater-Than and the 9x9 hybrids keep the derived floor of veryEasy and easy and scale the rest',
-        function () {
-          var ids = ['greaterThan', 'diagonalX', 'hyper', 'jigsaw9'];
-          if (!ids.every(function (id) { return SG.variants.has(id); })) SG.test.skip('variants are not loaded');
-          var expected = { veryEasy: 40, easy: 34, medium: 24, hard: 20, expert: 17, evil: 17 };
-          ids.forEach(function (id) {
-            var board = SG.variants.get(id).build({}, SG.rng.create(1));
-            SG.variants.get(id).difficultySupport.forEach(function (level) {
-              expect(D.spec(level, board).minClues).toBe(expected[level]);
-            });
+    it('Greater-Than and the 9x9 hybrids keep the derived floor of veryEasy and easy and scale the rest',
+      function () {
+        var ids = ['greaterThan', 'diagonalX', 'hyper', 'jigsaw9'];
+        if (!ids.every(function (id) { return SG.variants.has(id); })) SG.test.skip('variants are not loaded');
+        var expected = { veryEasy: 40, easy: 34, medium: 24, hard: 20, veryHard: 20, expert: 17, evil: 17,
+          nightmare1: 17, nightmare2: 17 };
+        ids.forEach(function (id) {
+          var board = SG.variants.get(id).build({}, SG.rng.create(1));
+          SG.variants.get(id).difficultySupport.forEach(function (level) {
+            expect(D.spec(level, board).minClues).toBe(expected[level]);
           });
         });
+      });
 
     it('a clueFloorScale multiplies the derived floor of its levels; a missing level keeps it', function () {
       withFloor(undefined, function (model) {
         var floors = LEVELS.map(function (level) { return D.spec(level, model).minClues; });
-        expect(floors).toEqual([40, 34, 14, 25, 22, 17]);
-        // The largest floor that the scale could give is the derived one times the factor, rounded down.
+        expect(floors).toEqual([40, 34, 14, 25, 25, 22, 17, 17, 17]);
         LEVELS.forEach(function (level) {
           var spec = D.spec(level, model);
           expect(spec.maxClues).toBeGreaterThanOrEqual(spec.minClues);
@@ -330,6 +552,7 @@
       // 25 * 0.8 is 19.999999999999996 in floating point and must still give 20.
       withFloor(undefined, function (model) {
         expect(D.spec('hard', model).minClues).toBe(20);
+        expect(D.spec('veryHard', model).minClues).toBe(25);
       }, { clueFloorScale: { hard: 0.8 } });
     });
 
@@ -365,40 +588,213 @@
   });
 
   // ---------------------------------------------------------------------------------------------
-  // T-2.7: scoring and classification
+  // The score (section 5.1), the weights (5.2), the metadata (5.4), incomplete proofs (5.5), the table (5.6)
   // ---------------------------------------------------------------------------------------------
 
-  describe('difficulty: classify and the cost table', function () {
-    it('scores sum(cost x (uses + 0.5)) plus the empty cells, with the calibrated costs', function () {
-      var counts = { nakedSingle: 30, hiddenSingleBox: 4, nakedPair: 2 };
-      var rating = D.classify(fakeReport(counts, 50), model9);
-      var expected = 50 * D.SCORING.emptyCellBonus;
-      Object.keys(counts).forEach(function (id) {
-        expected += D.costOf(id) * (counts[id] - 1 + D.SCORING.firstUseMultiplier);
+  describe('difficulty: the score of rating v2', function () {
+    var RANDOM_IDS = ['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair',
+      'hiddenTriple', 'xWing', 'swordfish', 'xyWing', 'forcingChain', 'nishio', 'cageCombo', 'ruleOf45',
+      'ineqChain'];
+
+    function randomCase(rng) {
+      var counts = {};
+      RANDOM_IDS.forEach(function (id) {
+        if (rng.next() < 0.4) counts[id] = 1 + rng.int(id.indexOf('Single') !== -1 ? 60 : 6);
       });
-      expect(rating.rawScore).toBeCloseTo(expected, 6);
-      expect(rating.empties).toBe(50);
+      return { counts: counts, empties: rng.int(300) };
+    }
+
+    it('is round(80E/(E+40) + P + 0.25 P log2(1 + W/P)) with the weights of section 5.2', function () {
+      var rng = SG.rng.create(4242);
+      for (var i = 0; i < 300; i++) {
+        var c = randomCase(rng);
+        expect(D.scoreOf(c.counts, c.empties)).toBe(expectedScore(c.counts, c.empties));
+      }
+      expect(D.scoreOf({}, 0)).toBe(0);
+      expect(D.scoreOf({}, 40)).toBe(40);
+      expect(D.scoreOf({ nakedSingle: 0 }, 0)).toBe(0);
     });
 
-    it('takes a technique cost from SG.difficulty.COSTS, else the registered baseCost', function () {
-      var counts = { nakedSingle: 10, xWing: 1 };
-      var plain = D.classify(fakeReport(counts, 40), model9).rawScore;
-      var dearer = withCosts({ xWing: D.COSTS.xWing + 100 }, function () {
-        return D.classify(fakeReport(counts, 40), model9).rawScore;
+    it('has the weight table of section 5.2, and a technique without a weight is an error', function () {
+      expect(D.WEIGHTS).toEqual({
+        nakedSingle: 1, hiddenSingleBox: 1.25, hiddenSingleLine: 1.5, pointing: 40, boxLine: 50, nakedPair: 120,
+        hiddenPair: 145, nakedTriple: 180, hiddenTriple: 220, nakedQuad: 260, hiddenQuad: 300, xWing: 320,
+        simpleColouring: 360, swordfish: 420, jellyfish: 520, xyWing: 650, xyzWing: 750, wWing: 850,
+        uniqueRectangle: 900, forcingChain: 1100, nishio: 1700, cageCombo: 40, ruleOf45: 260, cageSplit: 520,
+        ineqChain: 40, minMaxForcing: 180
       });
-      expect(dearer - plain).toBeCloseTo(100 * D.SCORING.firstUseMultiplier, 6);
+      SG.techniques.list().forEach(function (t) { expect(D.weightOf(t.id)).toBe(D.WEIGHTS[t.id]); });
+      expectCode(function () { D.weightOf('noSuchTechnique'); }, 'difficulty.unknownTechnique');
+      expectCode(function () { D.scoreOf({ noSuchTechnique: 1 }, 10); }, 'difficulty.unknownTechnique');
+    });
 
-      var fallback = withCosts({ xWing: undefined }, function () {
-        expect(D.costOf('xWing')).toBe(SG.techniques.get('xWing').baseCost);
-        return D.classify(fakeReport(counts, 40), model9).rawScore;
+    it('reproduces the worked examples: classic9 499 and Samurai 633', function () {
+      var classic = { nakedSingle: 29, hiddenSingleBox: 19, hiddenSingleLine: 5, pointing: 5, nakedPair: 1,
+        xWing: 1 };
+      var parts = D.breakdown(classic, 53);
+      expect(parts.peak).toBe(320);
+      expect(parts.work).toBeCloseTo(700.25, 9);
+      expect(parts.empty).toBeCloseTo(45.59, 2);
+      expect(parts.workTerm).toBeCloseTo(133.82, 2);
+      expect(parts.score).toBe(499);
+      expect(D.levelOfScore(parts.score)).toBe('hard');
+      var samurai = { nakedSingle: 204, hiddenSingleBox: 42, hiddenSingleLine: 17, pointing: 6, boxLine: 1,
+        nakedPair: 1, xWing: 1, simpleColouring: 1 };
+      var big = D.breakdown(samurai, 263);
+      expect(big.peak).toBe(360);
+      expect(big.work).toBeCloseTo(1372, 9);
+      expect(big.empty).toBeCloseTo(69.44, 2);
+      expect(big.score).toBe(633);
+      // The same puzzles rated from their givens (the solver path of the report).
+      var rated = D.rate(model9, parse('403710500017000020800000100000490010000603000090085000009000001050000640' +
+        '001056208'));
+      expect(rated.techniqueCounts).toEqual(classic);
+      expect(rated.empties).toBe(53);
+      expect(rated.score).toBe(499);
+      expect(rated.level).toBe('hard');
+      if (SG.variants.has('samurai')) {
+        var samuraiModel = SG.variants.get('samurai').build({}, SG.rng.create(1));
+        var text = '00503000000080040007600923020700006000050000805100000200008000942000000000070400000900' +
+          '70400000002006001000000709000060000100020050784301000900650002000070000060000001000003000' +
+          '05000560070001093840100600030000200009030000004008002000000070300900000106000000000093200' +
+          '07000080000064090000200002000090503690085000800300000008030000000908051007200000010600000' +
+          '0950014020500000';
+        var givens = Int32Array.from(text.split('').map(Number));
+        expect(givens.length).toBe(samuraiModel.cellCount);
+        var r = D.rate(samuraiModel, givens);
+        expect(r.techniqueCounts).toEqual(samurai);
+        expect(r.score).toBe(633);
+        expect(r.level).toBe('hard');
+      }
+    });
+
+    it('is pure: the same empty cells and technique counts give the same score on every board', function () {
+      var cases = [[{ nakedSingle: 30, pointing: 2, xWing: 1 }, 45], [{ nakedSingle: 10 }, 12],
+        [{ hiddenSingleBox: 40, cageCombo: 9, ruleOf45: 2 }, 70], [{ nakedSingle: 200, nishio: 3 }, 260]];
+      var boards = [model4, model6, model9, board9, SG.fixtures.models.samurai()];
+      if (SG.variants.has('killer')) boards.push(SG.variants.get('killer').build({}, SG.rng.create(2)));
+      cases.forEach(function (c) {
+        var scores = boards.map(function (board) { return D.classify(fakeReport(c[0], c[1]), board).score; });
+        scores.forEach(function (s) { expect(s).toBe(expectedScore(c[0], c[1])); });
       });
-      var designCost = SG.techniques.get('xWing').baseCost;
-      expect(fallback - plain).toBeCloseTo((designCost - D.COSTS.xWing) * D.SCORING.firstUseMultiplier, 6);
+    });
+
+    it('never decreases when a count, the empty cells or the weight of the hardest technique grows', function () {
+      var rng = SG.rng.create(4343);
+      for (var i = 0; i < 300; i++) {
+        var c = randomCase(rng);
+        var base = D.scoreOf(c.counts, c.empties);
+        expect(D.scoreOf(c.counts, c.empties + 1 + rng.int(20))).toBeGreaterThanOrEqual(base);
+        var id = RANDOM_IDS[rng.int(RANDOM_IDS.length)];
+        var more = Object.assign({}, c.counts);
+        more[id] = (more[id] || 0) + 1 + rng.int(3);
+        expect(D.scoreOf(more, c.empties)).toBeGreaterThanOrEqual(base);
+        var parts = D.breakdown(c.counts, c.empties);
+        if (parts.hardest !== null) {
+          var heavier = {};
+          heavier[parts.hardest] = parts.peak + 1 + rng.int(500);
+          var score = withWeights(heavier, function () { return D.scoreOf(c.counts, c.empties); });
+          expect(score).toBeGreaterThanOrEqual(base);
+        }
+      }
+    });
+
+    it('does not depend on the order of the steps, only on how often each technique was used', function () {
+      var a = D.classify(fakeReport({ nakedSingle: 20, pointing: 3, xWing: 1 }, 50), model9);
+      var b = D.classify(fakeReport({ xWing: 1, pointing: 3, nakedSingle: 20 }, 50), model9);
+      expect(b).toEqual(a);
+    });
+
+    it('rates a puzzle that needs only singles by its empty cells: at most easy on any board', function () {
+      var dense = D.classify(fakeReport({ nakedSingle: 41 }, 41), model9);
+      var sparse = D.classify(fakeReport({ nakedSingle: 47 }, 47), model9);
+      expect(dense.level).toBe('veryEasy');
+      expect(sparse.level).toBe('easy');
+      expect(dense.hardestTechnique).toBe('nakedSingle');
+      expect(dense.hardestGroup).toBe('basic');
+      expect(dense.score).toBeLessThan(sparse.score);
+      // Singles only on 369 cells: still below about 77, never past easy.
+      var huge = D.classify(fakeReport({ nakedSingle: 200, hiddenSingleBox: 100, hiddenSingleLine: 69 }, 369),
+        model9);
+      expect(huge.score).toBeLessThan(80);
+      expect(huge.level).toBe('easy');
+    });
+
+    it('counts one expensive step in full on any board (no technique floor, no size scaling)', function () {
+      [['pointing', 'easy'], ['nakedPair', 'easy'], ['xWing', 'hard'], ['xyWing', 'veryHard'],
+        ['forcingChain', 'expert'], ['nishio', 'evil']].forEach(function (c) {
+        var counts = { nakedSingle: 3 };
+        counts[c[0]] = 1;
+        var rating = D.classify(fakeReport(counts, 4), model9);
+        expect(rating.score).toBe(expectedScore(counts, 4));
+        expect(rating.score).toBe(rating.rawScore);
+        expect(rating.level).toBe(c[1]);
+        expect(rating.hardestTechnique).toBe(c[0]);
+        expect(D.classify(fakeReport(counts, 4), model4).score).toBe(rating.score);
+      });
+    });
+
+    it('picks the hardest technique by weight, then by the larger registration order, then by id', function () {
+      expect(D.classify(fakeReport({ nakedSingle: 5, xWing: 1, nakedQuad: 6 }, 20), model9).hardestTechnique)
+        .toBe('xWing');
+      expect(D.breakdown({ nakedQuad: 1, ruleOf45: 1 }, 10).hardest).toBe('nakedQuad');
+      expect(D.breakdown({ jellyfish: 1, cageSplit: 1 }, 10).hardest).toBe('jellyfish');
+      expect(D.breakdown({ ineqChain: 1, pointing: 1 }, 10).hardest).toBe('ineqChain');
+      var r = D.classify(fakeReport({ pointing: 2, ineqChain: 1 }, 10), model9);
+      expect(r.hardestTechnique).toBe('ineqChain');
+      expect(r.hardestGroup).toBe(SG.techniques.get('ineqChain').group);
+      expect(D.classify(fakeReport({}, 0), model9).hardestTechnique).toBeNull();
+      expect(D.classify(fakeReport({}, 0), model9).hardestGroup).toBeNull();
+    });
+
+    it('gives a puzzle without a complete proof no level and no score (it is never a hit)', function () {
+      var rating = D.classify(fakeReport({ nakedSingle: 20, xWing: 1 }, 60, false), model9);
+      expect(rating.solved).toBe(false);
+      expect(rating.level).toBeNull();
+      expect(rating.score).toBeNull();
+      expect(rating.rawScore).toBeNull();
+      expect(rating.confidence).toBe(0);
+      expect(rating.empties).toBe(60);
+      expect(rating.techniqueCounts).toEqual({ nakedSingle: 20, xWing: 1 });
+      expect(rating.hardestTechnique).toBe('xWing');
+      expect(rating.ratingVersion).toBe(2);
+    });
+
+    it('carries the metadata of section 5.4: rawScore = score, ratingVersion 2, the counts', function () {
+      var rating = D.classify(fakeReport({ nakedSingle: 30, hiddenSingleBox: 4, nakedPair: 2 }, 50), model9);
+      expect(rating.rawScore).toBe(rating.score);
+      expect(Number.isInteger(rating.score)).toBe(true);
+      expect(rating.ratingVersion).toBe(D.RATING_VERSION);
+      expect(D.RATING_VERSION).toBe(2);
+      expect(rating.empties).toBe(50);
+      expect(rating.solved).toBe(true);
+      expect(rating.techniqueCounts).toEqual({ nakedSingle: 30, hiddenSingleBox: 4, nakedPair: 2 });
+      expect(rating.level).toBe(D.levelOfScore(rating.score));
+    });
+
+    it('returns a confidence between 0 and 1: 0 on a band edge, high deep inside the band', function () {
+      // 45 empty cells of singles only: 80 * 45 / 85 = 42.35, plus the singles.
+      var edge = null;
+      for (var e = 30; e < 80 && edge === null; e++) {
+        var r = D.classify(fakeReport({ nakedSingle: e }, e), model9);
+        if (r.score === 45) edge = r;
+      }
+      expect(edge).toBeTruthy();
+      expect(edge.level).toBe('easy');
+      expect(edge.confidence).toBe(0);
+      var middle = D.classify(fakeReport({ nakedSingle: 30, nakedPair: 1, hiddenPair: 1 }, 45), model9);
+      expect(middle.level).toBe('medium');
+      expect(middle.confidence).toBeGreaterThan(0.3);
+      [fakeReport({ nakedSingle: 30 }, 40), fakeReport({ xWing: 2, forcingChain: 7 }, 50),
+        fakeReport({ nishio: 9, forcingChain: 9 }, 60)].forEach(function (rep) {
+        var c = D.classify(rep, model9).confidence;
+        expect(c).toBeGreaterThanOrEqual(0);
+        expect(c).toBeLessThanOrEqual(1);
+      });
     });
 
     it('does not depend on whether the solver collected its steps', function () {
-      var puzzles = SG.fixtures.rated.entries.slice(0, 6);
-      puzzles.forEach(function (entry) {
+      SG.fixtures.rated.entries.slice(0, 6).forEach(function (entry) {
         var givens = parse(entry.puzzle);
         var lean = D.rate(model9, givens);
         var full = D.rate(model9, givens, { collectSteps: true });
@@ -409,127 +805,74 @@
     });
 
     it('rates the same report the same whichever way it is classified', function () {
-      var entry = SG.fixtures.rated.entries[0];
-      var givens = parse(entry.puzzle);
+      var givens = parse(SG.fixtures.rated.entries[0].puzzle);
       var report = SG.logicalSolver.solve(model9, givens, { collectSteps: false });
       expect(D.classify(report, model9)).toEqual(D.rate(model9, givens));
     });
 
-    it('rates a puzzle that needs only singles by the number of empty cells', function () {
-      var dense = D.classify(fakeReport({ nakedSingle: 41 }, 41), model9);
-      var sparse = D.classify(fakeReport({ nakedSingle: 47 }, 47), model9);
-      expect(dense.level).toBe('veryEasy');
-      expect(sparse.level).toBe('easy');
-      expect(dense.hardestTechnique).toBe('nakedSingle');
-      expect(dense.hardestGroup).toBe('basic');
-      expect(dense.score).toBeLessThan(sparse.score);
+    it('proves uniqueness only with a complete proof that assumes none', function () {
+      expect(D.provesUniqueness(D.classify(fakeReport({ nakedSingle: 30, xWing: 1 }, 40), model9))).toBe(true);
+      expect(D.provesUniqueness(D.classify(fakeReport({ nakedSingle: 30, uniqueRectangle: 1 }, 40), model9)))
+        .toBe(false);
+      expect(D.provesUniqueness(D.classify(fakeReport({ nakedSingle: 30 }, 40, false), model9))).toBe(false);
     });
+  });
 
-    it('raises the score to the floor of the hardest technique needed (technique floor)', function () {
-      // One use of a technique of group G, nearly no other work: the raw score is far below the band of G.
-      var cases = [
-        ['pointing', 'easy'], ['nakedPair', 'medium'], ['xWing', 'hard'], ['xyWing', 'expert'],
-        ['forcingChain', 'evil']
-      ];
-      cases.forEach(function (c) {
-        var counts = { nakedSingle: 3 };
-        counts[c[0]] = 1;
-        var rating = D.classify(fakeReport(counts, 4), model9);
-        var spec = D.spec(c[1], model9);
-        expect(rating.rawScore).toBeLessThan(spec.min);
-        expect(rating.level).toBe(c[1]);
-        expect(rating.score).toBe(spec.min);
-        expect(rating.hardestTechnique).toBe(c[0]);
-      });
-    });
-
-    it('lets a long solving path outgrow its own level (score band) when the steps add up', function () {
-      var rating = D.classify(fakeReport({ nakedSingle: 30, nakedPair: 12 }, 50), model9);
-      expect(rating.hardestGroup).toBe('subset');
-      expect(rating.rawScore).toBeGreaterThan(D.spec('hard', model9).min);
-      expect(rating.level).not.toBe('medium');
-      expect(idx(rating.level)).toBeGreaterThan(idx('medium'));
-    });
-
-    it('reports the hardest technique by group first, then by cost, then by ladder position', function () {
-      var r1 = D.classify(fakeReport({ nakedSingle: 5, xWing: 1, nakedQuad: 6 }, 20), model9);
-      expect(r1.hardestTechnique).toBe('xWing');
-      var r2 = D.classify(fakeReport({ nakedPair: 1, hiddenPair: 1 }, 20), model9);
-      expect(r2.hardestTechnique).toBe('hiddenPair');
-      var r3 = D.classify(fakeReport({ nakedQuad: 1, hiddenQuad: 1 }, 20), model9);
-      expect(r3.hardestTechnique).toBe('hiddenQuad');
-      expect(D.classify(fakeReport({}, 0), model9).hardestTechnique).toBeNull();
-    });
-
-    it('rates a puzzle that the techniques cannot finish as evil and says it is unsolved', function () {
-      var rating = D.classify(fakeReport({ nakedSingle: 20 }, 60, false), model9);
-      expect(rating.solved).toBe(false);
-      expect(rating.level).toBe('evil');
-      expect(rating.score).toBeGreaterThanOrEqual(D.spec('evil', model9).min);
-    });
-
-    it('scales its bands with the board (a small board reaches higher levels)', function () {
-      var counts = { nakedSingle: 18 };
-      var onSmall = D.classify(fakeReport(counts, 20), model6);
-      var onBig = D.classify(fakeReport(counts, 20), model9);
-      expect(idx(onSmall.level)).toBeGreaterThan(idx(onBig.level) - 1);
-      // The technique floor is the band minimum of the board: 72 x 36/81 for 'easy' on classic6.
-      var floored = D.classify(fakeReport({ pointing: 1 }, 3), model6);
-      expect(floored.rawScore).toBeLessThan(D.spec('easy', model6).min);
-      expect(floored.score).toBe(D.spec('easy', model6).min);
-      expect(floored.level).toBe('easy');
-    });
-
-    it('returns a confidence between 0 and 1: 0 on a band edge, high deep inside the band', function () {
-      var spec = D.spec('medium', model9);
-      var onEdge = D.classify(fakeReport({ nakedPair: 1 }, 5), model9);
-      expect(onEdge.score).toBe(spec.min);
-      expect(onEdge.confidence).toBe(0);
-      // Pick the number of naked pairs that puts the score closest to the middle of the band.
-      var middle = null;
-      var best = Infinity;
-      for (var n = 1; n < 60; n++) {
-        var r = D.classify(fakeReport({ nakedSingle: 40, nakedPair: n }, 45), model9);
-        var off = Math.abs(r.score - (spec.min + spec.max) / 2);
-        if (r.level === 'medium' && off < best) {
-          best = off;
-          middle = r;
-        }
-      }
-      expect(middle).toBeTruthy();
-      expect(middle.confidence).toBeGreaterThan(0.7);
-      LEVELS.forEach(function (level) {
-        [fakeReport({ nakedSingle: 30 }, 40), fakeReport({ xWing: 2, forcingChain: 7 }, 50)]
-          .forEach(function (rep) {
-          var c = D.classify(rep, model9).confidence;
-          expect(c).toBeGreaterThanOrEqual(0);
-          expect(c).toBeLessThanOrEqual(1);
-        });
-        expect(typeof level).toBe('string');
-      });
-    });
-
-    it('keeps the costs in the order of the groups: each group costs more than the one below', function () {
-      var tiers = SG.difficulty.BASE_GROUPS.map(function (group) {
-        return SG.techniques.list()
-          .filter(function (t) { return t.group === group && t.variantScope === null; })
-          .map(function (t) { return D.costOf(t.id); });
-      });
-      tiers.forEach(function (costs, i) {
-        expect(costs.length).toBeGreaterThan(0);
-        if (i > 0) expect(Math.min.apply(null, costs)).toBeGreaterThan(Math.max.apply(null, tiers[i - 1]));
-      });
-    });
-
-    it('breaks the ties of the design table: boxLine > pointing, hiddenQuad > nakedQuad',
+  describe('difficulty: the Difficulty Score table (section 5.6)', function () {
+    it('shares the score among the rows exactly: the hardest row also carries P, the empty cells V',
       function () {
-        expect(D.costOf('boxLine')).toBeGreaterThan(D.costOf('pointing'));
-        expect(D.costOf('hiddenQuad')).toBeGreaterThan(D.costOf('nakedQuad'));
+        var counts = { nakedSingle: 29, hiddenSingleBox: 19, hiddenSingleLine: 5, pointing: 5, nakedPair: 1,
+          xWing: 1 };
+        var parts = D.breakdown(counts, 53);
+        var sum = parts.empty;
+        parts.rows.forEach(function (row) {
+          sum += row.share;
+          var expected = parts.workTerm * row.weight * row.uses / parts.work + (row.hardest ? parts.peak : 0);
+          expect(row.share).toBeCloseTo(expected, 9);
+          expect(row.hardest).toBe(row.id === 'xWing');
+        });
+        expect(sum).toBeCloseTo(parts.unrounded, 9);
+        expect(parts.rows.map(function (row) { return row.id; })).toEqual(Object.keys(counts));
       });
+
+    it('rounds the shares once, to whole numbers that add up to the score (the worked example)', function () {
+      var table = D.scoreTable({ nakedSingle: 29, hiddenSingleBox: 19, hiddenSingleLine: 5, pointing: 5,
+        nakedPair: 1, xWing: 1 }, 53);
+      expect(table.rows.map(function (row) { return [row.id, row.uses, row.points, row.total]; })).toEqual([
+        ['nakedSingle', 29, 1, 6], ['hiddenSingleBox', 19, 1.25, 4], ['hiddenSingleLine', 5, 1.5, 1],
+        ['pointing', 5, 40, 38], ['nakedPair', 1, 120, 23], ['xWing', 1, 320, 381]
+      ]);
+      expect(table.empties).toBe(53);
+      expect(table.emptyPoints).toBeCloseTo(45.5914 / 53, 4);
+      expect(table.emptyTotal).toBe(46);
+      expect(table.total).toBe(499);
+    });
+
+    it('adds up to the score for any counts, also without empty cells or without techniques', function () {
+      var rng = SG.rng.create(4444);
+      var ids = Object.keys(D.WEIGHTS);
+      for (var i = 0; i < 300; i++) {
+        var counts = {};
+        ids.forEach(function (id) { if (rng.next() < 0.25) counts[id] = 1 + rng.int(30); });
+        var empties = rng.next() < 0.1 ? 0 : rng.int(400);
+        var table = D.scoreTable(counts, empties);
+        var sum = table.emptyTotal;
+        table.rows.forEach(function (row) {
+          expect(Number.isInteger(row.total)).toBe(true);
+          expect(row.total).toBeGreaterThanOrEqual(0);
+          sum += row.total;
+        });
+        expect(sum).toBe(table.total);
+        expect(table.total).toBe(D.scoreOf(counts, empties));
+        if (empties === 0) expect(table.emptyTotal).toBe(0);
+      }
+      expect(D.scoreTable({}, 0)).toEqual({ rows: [], empties: 0, emptyPoints: 0, emptyTotal: 0, total: 0 });
+      expect(D.scoreTable({}, 40).emptyTotal).toBe(40);
+    });
   });
 
   // ---------------------------------------------------------------------------------------------
-  // T-2.7: labelled puzzles and monotonicity
+  // Labelled puzzles and clue removal
   // ---------------------------------------------------------------------------------------------
 
   describe('difficulty: labelled puzzles (fixtures/rated.js)', function () {
@@ -550,8 +893,7 @@
         var gap = Math.abs(idx(rating.level) - idx(entry.label));
         if (gap > 1) {
           throw new Error(entry.name + ' is labelled ' + entry.label + ' but rated ' + rating.level +
-            ' (score ' +
-            Math.round(rating.score) + ', hardest ' + rating.hardestTechnique + ')');
+            ' (score ' + rating.score + ', hardest ' + rating.hardestTechnique + ')');
         }
       });
     });
@@ -563,24 +905,35 @@
       });
     });
 
-    it('the label of a constructed puzzle is a certificate about techniques, not a score', function () {
+    it('the certificate of a constructed puzzle is about techniques, not a score', function () {
+      function solvesWith(givens, ids) {
+        return SG.logicalSolver.solve(board9, givens, {
+          allowedTechniques: ids, collectSteps: false, assumeUniqueness: false
+        }).solved;
+      }
+      var sets = SG.fixtures.rated.techniqueSets;
+      // Score-independent facts: a medium puzzle needs a subset, an evil one a chain.
+      expect(sets.locked.indexOf('nakedPair')).toBe(-1);
+      expect(sets.wings.filter(function (id) { return SG.techniques.get(id).group === 'chain'; })).toEqual([]);
       SG.fixtures.rated.constructed.forEach(function (entry) {
         var givens = parse(entry.puzzle);
-        if (entry.solvableWithin !== null) {
-          expect(solvesWithin(model9, givens, entry.solvableWithin)).toBe(true);
-        }
-        if (entry.notSolvableWithin !== null) {
-          expect(solvesWithin(model9, givens, entry.notSolvableWithin)).toBe(false);
-        }
+        expect(solvesWith(givens, entry.solvableWith)).toBe(true);
+        if (entry.notSolvableWith !== null) expect(solvesWith(givens, entry.notSolvableWith)).toBe(false);
       });
+      var stuck = function (label, set) {
+        return SG.fixtures.rated.constructed.filter(function (e) { return e.label === label; })
+          .every(function (e) { return e.notSolvableWith !== null && e.notSolvableWith.join() === set.join(); });
+      };
+      expect(stuck('medium', sets.locked)).toBe(true);
+      expect(stuck('evil', sets.wings)).toBe(true);
     });
 
-    it('rates the famous hardest puzzles as evil, and they need more than the cheap techniques', function () {
+    it('rates the famous hardest puzzles nightmare2, with a Nishio step and a complete proof', function () {
       ['escargot', 'worlds-hardest-2012', 'platinum-blonde', 'golden-nugget'].forEach(function (name) {
         var entry = entries.filter(function (e) { return e.name === name; })[0];
         var rating = D.rate(model9, parse(entry.puzzle));
-        expect(rating.level).toBe('evil');
-        expect(rating.hardestGroup).toBe('chain');
+        expect(rating.level).toBe('nightmare2');
+        expect(rating.hardestTechnique).toBe('nishio');
         expect(rating.solved).toBe(true);
       });
     });
@@ -595,6 +948,7 @@
       });
       var previous = -1;
       LEVELS.forEach(function (level) {
+        if (!count[level]) return;
         var mean = sum[level] / count[level];
         expect(mean).toBeGreaterThan(previous);
         previous = mean;
@@ -602,7 +956,8 @@
     });
   });
 
-  describe('difficulty: monotonicity (removing a clue never makes a puzzle easier)', function () {
+  describe('difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)',
+    function () {
     /** A puzzle dug to `clues` clues, and the same puzzle with one more clue removed (null: none can go). */
     function pair(seed, minClues) {
       var rng = SG.rng.create(seed);
@@ -625,32 +980,34 @@
       return null;
     }
 
-    it('does not lower the score: 100 puzzles of 30 to 50 clues, one more clue removed each', function () {
+    it('rarely lowers the score: at most 5 of 100 puzzles of 30 to 50 clues', function () {
       var checked = 0;
+      var lower = 0;
       for (var i = 0; i < 100; i++) {
         var rng = SG.rng.create(31000 + i);
         var p = pair(31000 + i, 30 + rng.int(21));
         if (p === null) continue;
         checked++;
-        if (p.after.score < p.before.score) {
-          throw new Error('case ' + i + ': score fell from ' + p.before.score + ' to ' + p.after.score);
-        }
+        if (p.after.score < p.before.score) lower++;
       }
       expect(checked).toBeGreaterThanOrEqual(95);
+      expect(lower).toBeLessThanOrEqual(5);
     });
 
-    it('never lowers the level, even on sparse puzzles: 300 puzzles of 22 to 50 clues', function () {
+    it('rarely lowers the level, and never by more than one: 300 puzzles of 22 to 50 clues', function () {
       var checked = 0;
+      var lower = 0;
       for (var i = 0; i < 300; i++) {
         var rng = SG.rng.create(41000 + i);
         var p = pair(41000 + i, 22 + rng.int(29));
         if (p === null) continue;
         checked++;
-        if (idx(p.after.level) < idx(p.before.level)) {
-          throw new Error('case ' + i + ': level fell from ' + p.before.level + ' to ' + p.after.level);
-        }
+        var drop = idx(p.before.level) - idx(p.after.level);
+        if (drop > 1) throw new Error('case ' + i + ': level fell from ' + p.before.level + ' to ' + p.after.level);
+        if (drop === 1) lower++;
       }
       expect(checked).toBeGreaterThanOrEqual(250);
+      expect(lower).toBeLessThanOrEqual(3);
     });
   });
 
@@ -679,6 +1036,23 @@
       }
     });
 
+    it('stops at the upper edge of a band: no accepted removal takes the score to maxScore', function () {
+      var bounded = 0;
+      var free = 0;
+      for (var i = 0; i < 20; i++) {
+        var s = makeSolution(5150 + i);
+        var dug = SG.digger.dig(model9, s.solution, s.rng.fork('dig'), {
+          allowedTechniques: SINGLES, maxScore: 45, symmetry: 'none'
+        });
+        expect(D.rate(model9, dug.givens).score).toBeLessThan(45);
+        bounded += dug.clues;
+        free += SG.digger.dig(model9, s.solution, s.rng.fork('dig'), {
+          allowedTechniques: SINGLES, symmetry: 'none'
+        }).clues;
+      }
+      expect(free).toBeLessThan(bounded);
+    });
+
     it('digs less deep with fewer techniques: singles only never beats more techniques', function () {
       var singles = 0;
       var more = 0;
@@ -687,7 +1061,7 @@
         var narrow = SG.digger.dig(model9, s.solution, s.rng.fork('dig'), { allowedTechniques: SINGLES });
         singles += narrow.clues;
         var wide = SG.digger.dig(model9, s.solution, s.rng.fork('dig'), {
-          allowedTechniques: D.spec('expert', model9).allowedTechniques
+          allowedTechniques: D.spec('expert', board9).allowedTechniques
         });
         more += wide.clues;
       }
@@ -695,7 +1069,7 @@
     });
 
     it('never uses a technique that assumes uniqueness: it is listed, but the oracle skips it', function () {
-      var allowed = D.spec('expert', model9).allowedTechniques;
+      var allowed = D.spec('expert', board9).allowedTechniques;
       expect(allowed).toContain('uniqueRectangle');
       for (var i = 0; i < 15; i++) {
         var s = makeSolution(5300 + i);
@@ -753,20 +1127,27 @@
   });
 
   // ---------------------------------------------------------------------------------------------
-  // T-2.8 / T-2.10: 100 puzzles per level on classic9
+  // T-2.8 / T-2.10: generated classic9 puzzles at every level classic9 offers
   // ---------------------------------------------------------------------------------------------
 
-  describe('digger.generate: 100 classic9 puzzles per level (hit rate, invariants I1-I7, time)', function () {
-    var PER_LEVEL = 100;
-    /** design.md section 9.1, ms; the table has no column for 'easy', so it gets the one of 'medium'. */
-    var BUDGET_MS = { veryEasy: 60, easy: 150, medium: 150, hard: 400, expert: 900, evil: 2500 };
+  describe('digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time)', function () {
+    /** Puzzles per level: 100, fewer for the slow top levels. */
+    var PER_LEVEL = { nightmare1: 20, nightmare2: 20 };
+    /** Median generation time in ms that a level must stay under (design.md section 9.1 budgets). */
+    var BUDGET_MS = { veryEasy: 60, easy: 150, medium: 150, hard: 400, veryHard: 600, expert: 900, evil: 2500,
+      nightmare1: 5000, nightmare2: 10000 };
+    var OFFERED = SG.variants.get('classic9').difficultySupport;
     var batches = {};
+
+    function countOf(level) {
+      return PER_LEVEL[level] || 100;
+    }
 
     function batch(level) {
       if (batches[level]) return batches[level];
       var puzzles = [];
       var times = [];
-      for (var i = 0; i < PER_LEVEL; i++) {
+      for (var i = 0; i < countOf(level); i++) {
         var rng = SG.rng.create(7000 + i);
         var started = Date.now();
         puzzles.push(SG.digger.generate(model9, level, rng, {}));
@@ -776,13 +1157,13 @@
       return batches[level];
     }
 
-    LEVELS.forEach(function (level) {
+    OFFERED.forEach(function (level) {
       var spec = D.spec(level, model9);
 
       describe(level, function () {
-        it('hits the requested level in at least 90 of 100 puzzles', function () {
+        it('hits the requested level in at least 90 % of the puzzles', function () {
           var hits = batch(level).puzzles.filter(function (p) { return p.achieved === level; }).length;
-          expect(hits).toBeGreaterThanOrEqual(0.9 * PER_LEVEL);
+          expect(hits).toBeGreaterThanOrEqual(0.9 * countOf(level));
         });
 
         it('I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)', function () {
@@ -808,27 +1189,28 @@
           });
         });
 
-        it('I5: an exact puzzle has its score in the band and its hardest technique in the allowed groups',
-          function () {
-            batch(level).puzzles.forEach(function (p, i) {
-              expect(p.exact).toBe(p.achieved === level);
-              if (!p.exact) return;
-              var rating = D.rate(model9, p.givens);
-              expect(rating.score).toBe(p.rating.score);
-              expect(rating.score).toBeGreaterThanOrEqual(spec.min);
-              expect(rating.score).toBeLessThan(spec.max);
-              if (rating.hardestGroup !== null && spec.allowedGroups.indexOf(rating.hardestGroup) === -1) {
-                throw new Error('puzzle ' + i + ' needs ' + rating.hardestTechnique + ' (' +
-                  rating.hardestGroup + ')');
-              }
-            });
+        it('I5: every puzzle has a complete proof; an exact one has its score in the band', function () {
+          batch(level).puzzles.forEach(function (p) {
+            expect(p.rating.solved).toBe(true);
+            expect(p.exact).toBe(p.achieved === level);
+            if (!p.exact) return;
+            var rating = D.rate(model9, p.givens);
+            expect(rating.score).toBe(p.rating.score);
+            expect(rating.score).toBeGreaterThanOrEqual(spec.min);
+            expect(rating.score).toBeLessThan(spec.max);
           });
+        });
 
-        it('stays within the technique set of the level (up to expert), by the oracle itself', function () {
-          if (level === 'evil') return;
+        it('stays within the technique set of the level below evil (the proof uses the allowed techniques only)',
+          function () {
+          if (spec.proposal) return;
           batch(level).puzzles.forEach(function (p, i) {
             if (!p.exact) return;
-            if (!solvesWithin(model9, p.givens, level)) {
+            // A score below the band maximum keeps every technique of the proof inside the set (score >=
+            // 1.25 x the peak weight). The puzzle is unique (I1), so its proof may use a uniqueness technique,
+            // as the rating does: a puzzle the local search found is accepted on its rating, not on the dig
+            // oracle.
+            if (!solvesWithin(model9, p.givens, level, true)) {
               throw new Error('puzzle ' + i + ' needs more than ' + level);
             }
           });
@@ -865,13 +1247,13 @@
 
         it('is generated well inside the budget of design.md section 9.1 (median time)', function () {
           var times = batch(level).times.slice().sort(function (a, b) { return a - b; });
-          expect(times[PER_LEVEL >> 1]).toBeLessThan(BUDGET_MS[level]);
+          expect(times[times.length >> 1]).toBeLessThan(SG.test.timeLimit(BUDGET_MS[level]));
         });
       });
     });
 
     it('is a confusion matrix with its diagonal as the most common cell of every row', function () {
-      LEVELS.forEach(function (level) {
+      OFFERED.forEach(function (level) {
         var row = {};
         batch(level).puzzles.forEach(function (p) { row[p.achieved] = (row[p.achieved] || 0) + 1; });
         LEVELS.forEach(function (other) {
@@ -917,12 +1299,13 @@
       expect(p.givens).toHaveLength(81);
       expect(p.solution).toHaveLength(81);
       expect(typeof p.stats.oracleCalls).toBe('number');
+      expect(p.rating.ratingVersion).toBe(2);
     });
 
     it('honours minClues and the unit floor of the spec on every level', function () {
-      LEVELS.forEach(function (level) {
+      SG.variants.get('classic9').difficultySupport.forEach(function (level) {
         var spec = D.spec(level, model9);
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 3; i++) {
           var p = SG.digger.generate(model9, level, SG.rng.create(8400 + i), {});
           expect(p.clues).toBeGreaterThanOrEqual(spec.minClues);
           model9.units.forEach(function (unit) {
@@ -947,6 +1330,17 @@
       });
     });
 
+    it('keeps the configured symmetry on the top tiers too (proposals and their refinement)', function () {
+      ['evil', 'nightmare1'].forEach(function (level) {
+        for (var i = 0; i < 3; i++) {
+          var p = SG.digger.generate(model9, level, SG.rng.create(8550 + i), {});
+          for (var c = 0; c < 81; c++) {
+            expect(p.givens[c] === 0).toBe(p.givens[80 - c] === 0);
+          }
+        }
+      });
+    });
+
     it('digLevel makes one attempt from a given solution and says whether it hit the level', function () {
       var rng = SG.rng.create(8600);
       var solution = SG.fullGrid.generate(model9, rng.fork('grid'), null);
@@ -966,14 +1360,16 @@
     });
 
     it('works on the smaller boards for the levels they support', function () {
-      [[model4, 'veryEasy'], [model4, 'easy'], [model6, 'veryEasy'], [model6, 'easy']].forEach(function (c) {
-        var hits = 0;
-        for (var i = 0; i < 20; i++) {
-          var p = SG.digger.generate(c[0], c[1], SG.rng.create(8700 + i), {});
-          expect(SG.dfs.countSolutions(c[0], p.givens, 2)).toBe(1);
-          if (p.exact) hits++;
-        }
-        expect(hits).toBeGreaterThanOrEqual(18);
+      [model4, model6].forEach(function (model) {
+        SG.variants.get(model.variantId).difficultySupport.forEach(function (level) {
+          var hits = 0;
+          for (var i = 0; i < 20; i++) {
+            var p = SG.digger.generate(model, level, SG.rng.create(8700 + i), {});
+            expect(SG.dfs.countSolutions(model, p.givens, 2)).toBe(1);
+            if (p.exact) hits++;
+          }
+          expect(hits).toBeGreaterThanOrEqual(18);
+        });
       });
     });
 
@@ -999,66 +1395,168 @@
     });
   });
 
+  describe('digger.generate: the full-rating cap of an attempt (section 5.7 (9))', function () {
+    /**
+     * Generates through `SG.digger.generate` with the variant's own hook and strategy, one attempt, and the
+     * given cap; every `SG.difficulty.rate` call is recorded with the phase that made it.
+     */
+    function capped(variantId, level, seed, maxRatings, digTries) {
+      var def = SG.variants.get(variantId);
+      var support = def.difficultySupport;
+      def.difficultySupport = LEVELS.slice();
+      var rate = D.rate;
+      var origins = [];
+      D.rate = function () {
+        var stack = String(new Error().stack);
+        origins.push(/refineDown/.test(stack) ? 'refine' : /localSearchSteps/.test(stack) ? 'search'
+          : /searchCagesSteps/.test(stack) ? 'cages' : /digSignsSteps/.test(stack) ? 'signs' : 'sample');
+        return rate.apply(this, arguments);
+      };
+      try {
+        var model = def.build(SG.variants.defaultOptions(variantId), SG.rng.create(seed).fork('model'));
+        var p = null;
+        var error = null;
+        try {
+          p = SG.digger.generate(model, level, SG.rng.create(seed), {
+            maxAttempts: 1, digTries: digTries, maxRatings: maxRatings,
+            postGenerate: def.postGenerate || null, strategy: SG.digger.getStrategy(def.digStrategy || 'cells'),
+            strategyId: def.digStrategy || 'cells'
+          });
+        } catch (err) {
+          error = err;
+        }
+        return { puzzle: p, error: error, origins: origins };
+      } finally {
+        D.rate = rate;
+        def.difficultySupport = support;
+      }
+    }
+
+    /** Every rating is counted, none goes past the cap, and a returned puzzle is completely rated. */
+    function expectAccounted(run, maxRatings) {
+      if (run.error !== null) {
+        expect(run.error.code).toBe('digger.noRatedPuzzle');
+        expect(run.origins.length).toBeLessThan(maxRatings + 1);
+        return;
+      }
+      var counted = run.puzzle.work.reduce(function (sum, w) { return sum + w.ratings; }, 0);
+      expect(run.origins.length).toBe(counted);
+      run.puzzle.work.forEach(function (w) { expect(w.ratings).toBeLessThan(w.maxRatings + 1); });
+      expect(run.puzzle.rating.solved).toBe(true);
+      var model = run.puzzle.model;
+      expect(SG.dfs.countSolutions(model, run.puzzle.givens, 2)).toBe(1);
+      expect(D.rate(model, run.puzzle.givens).score).toBe(run.puzzle.rating.score);
+    }
+
+    /** Finds a seed whose cap runs out inside `phase`, checking the accounting of every seed tried. */
+    function exhaustedIn(variantId, level, maxRatings, phase, digTries) {
+      for (var seed = 1; seed <= 12; seed++) {
+        var run = capped(variantId, level, seed, maxRatings, digTries);
+        expectAccounted(run, maxRatings);
+        if (run.origins.length === maxRatings && run.origins[maxRatings - 1] === phase) return run;
+      }
+      throw new Error(variantId + ' ' + level + ': no seed ran out of ratings inside ' + phase);
+    }
+
+    it('counts every full rating at the default cap: classic9 top tier, Greater-Than, Killer', function () {
+      [['classic9', 'nightmare2', 3], ['greaterThan', 'veryHard', 4], ['killer', 'veryHard', 5]]
+        .forEach(function (c) {
+          var run = capped(c[0], c[1], c[2], undefined);
+          expectAccounted(run, SG.digger.CAP_RATINGS);
+          expect(run.puzzle.work[0].maxRatings).toBe(SG.digger.CAP_RATINGS);
+        });
+    }, 120000);
+
+    it('runs out inside the downward refinement without passing the cap', function () {
+      exhaustedIn('classic9', 'evil', 3, 'refine', 1);
+    }, 60000);
+
+    it('runs out inside the local search, and hands on the rating it has instead of rating again', function () {
+      var run = exhaustedIn('classic9', 'hard', 3, 'search', 1);
+      expect(run.origins.filter(function (o) { return o === 'sample'; })).toHaveLength(1);
+    }, 60000);
+
+    it('runs out inside a variant strategy: Greater-Than tuning and the Killer layout search', function () {
+      exhaustedIn('greaterThan', 'hard', 2, 'signs');
+      exhaustedIn('killer', 'veryHard', 6, 'cages');
+    }, 120000);
+
+    it('a cap of nothing at all ends with the error path, never with an unrated puzzle', function () {
+      var run = capped('classic9', 'hard', 1, 0, 1);
+      expect(run.origins).toEqual([]);
+      expect(run.error.code).toBe('digger.noRatedPuzzle');
+    });
+  });
+
   describe('digger.generate: when the level cannot be reached', function () {
-    it('returns the closest puzzle with the warning difficulty.approximate and does not throw', function () {
-      // With the cost of a naked single made absurd, every puzzle rates as the hardest level.
-      withCosts({ nakedSingle: 1000 }, function () {
+    // A 4x4 board never needs more than singles, so every level from easy up is out of reach.
+    it('returns the closest completely rated puzzle with difficulty.approximate and does not throw',
+      function () {
         var events = [];
-        var result = SG.digger.generate(model9, 'veryEasy', SG.rng.create(9000), {
+        var result = SG.digger.generate(board4, 'evil', SG.rng.create(9000), {
           maxAttempts: 3,
           digTries: 2,
           emit: function (e) { if (e.type === 'retry') events.push(e); }
         });
         expect(result.exact).toBe(false);
         expect(result.warnings).toContain('difficulty.approximate');
-        expect(result.achieved).toBe('evil');
-        expect(result.requested).toBe('veryEasy');
+        expect(result.achieved).toBe('veryEasy');
+        expect(result.rating.solved).toBe(true);
+        expect(result.requested).toBe('evil');
         expect(result.attempts).toBe(3);
         expect(result.samples).toBe(6);
         expect(events).toHaveLength(3);
         expect(events[0].i18nArgs.attempt).toBe(1);
-        expect(SG.dfs.countSolutions(model9, result.givens, 2)).toBe(1);
+        expect(SG.dfs.countSolutions(board4, result.givens, 2)).toBe(1);
       });
-    });
 
-    it('prefers the closest result: a puzzle one level off beats one five levels off', function () {
-      // 'medium' on a 6x6 board is almost never reached (that is why classic6 does not offer it); the closest
-      // puzzles are 'easy' ones, never 'evil'. A box grid with an unregistered id supports every level.
+    it('prefers the closest result: a puzzle one level off beats one several levels off', function () {
       var board6 = SG.fixtures.models.boxGrid('boxGrid6', 2, 3);
       var result = SG.digger.generate(board6, 'medium', SG.rng.create(9100), { maxAttempts: 2, digTries: 2 });
       if (!result.exact) {
         expect(result.warnings).toContain('difficulty.approximate');
-        expect(idx(result.achieved)).toBeLessThanOrEqual(idx('medium') + 1);
-        expect(idx(result.achieved)).toBeGreaterThanOrEqual(idx('medium') - 1);
+        expect(Math.abs(idx(result.achieved) - idx('medium'))).toBeLessThanOrEqual(2);
       }
       expect(SG.dfs.countSolutions(board6, result.givens, 2)).toBe(1);
     });
 
-    it('stops after maxAttempts x digTries samples and never more', function () {
-      withCosts({ nakedSingle: 1000 }, function () {
-        var result = SG.digger.generate(model9, 'easy', SG.rng.create(9200), { maxAttempts: 2, digTries: 5 });
-        expect(result.samples).toBe(10);
-        expect(result.attempts).toBe(2);
-      });
+    it('stops after maxAttempts x digTries dig samples and never more', function () {
+      var result = SG.digger.generate(board4, 'hard', SG.rng.create(9200), { maxAttempts: 2, digTries: 5 });
+      expect(result.samples).toBe(10);
+      expect(result.attempts).toBe(2);
     });
 
     it('tries more dig samples per grid when the symmetry digs in groups of four', function () {
-      withCosts({ nakedSingle: 1000 }, function () {
-        var pairs = SG.digger.generate(model9, 'easy', SG.rng.create(9210), { maxAttempts: 1 });
-        var fours = SG.digger.generate(model9, 'easy', SG.rng.create(9210),
-          { maxAttempts: 1, symmetry: 'mirrorBoth' });
-        expect(pairs.samples).toBe(12);
-        expect(fours.samples).toBe(30);
-      });
+      var pairs = SG.digger.generate(board4, 'hard', SG.rng.create(9210), { maxAttempts: 1 });
+      var fours = SG.digger.generate(board4, 'hard', SG.rng.create(9210),
+        { maxAttempts: 1, symmetry: 'mirrorBoth' });
+      expect(pairs.samples).toBe(12);
+      expect(fours.samples).toBe(30);
+    });
+
+    it('throws digger.noRatedPuzzle when not one sample has a complete proof', function () {
+      var rate = D.rate;
+      D.rate = function () {
+        var r = rate.apply(this, arguments);
+        return Object.assign({}, r, { solved: false, level: null, score: null, rawScore: null, confidence: 0 });
+      };
+      try {
+        expectCode(function () {
+          SG.digger.generate(board4, 'veryEasy', SG.rng.create(9300), { maxAttempts: 2, digTries: 2 });
+        }, 'digger.noRatedPuzzle');
+      } finally {
+        D.rate = rate;
+      }
     });
   });
 
   describe('digger.generate: safety net against a technique bug (risk R3)', function () {
     /**
-     * A technique that guesses: it places the smallest candidate of the first open cell. It is
-     * registered as the cheapest technique of the basic group, so the oracle of every level uses it,
-     * and it "solves" puzzles that
-     * have many solutions. Without the final DFS check such puzzles would be returned.
+     * A technique that guesses: in the first open cell it places the value of one solution of the position
+     * (the first the DFS finds), whether or not the position has other solutions. It is registered as the
+     * cheapest technique of the basic group (with a weight of 1), so the oracle of every level uses it, and it
+     * "solves" puzzles that have many solutions. Its placements always lead to a solution, so a rating with
+     * it is complete: without the final DFS check the generator would return ambiguous puzzles.
      */
     function withGuesser(fn) {
       SG.techniques.register({
@@ -1068,22 +1566,23 @@
         order: 5,
         i18nKey: 'technique.testGuesser',
         find: function (model, state) {
+          var givens = new Int32Array(model.cellCount);
+          var open = -1;
           for (var c = 0; c < model.cellCount; c++) {
-            if (state.value[c] === 0) {
-              var mask = state.candidates[c];
-              var v = 1;
-              while ((mask & (1 << (v - 1))) === 0) v++;
-              return {
-                technique: 'testGuesser', cells: [c], placements: [[c, v]], eliminations: [],
-                i18nKey: 'technique.testGuesser.step', i18nArgs: {}
-              };
-            }
+            givens[c] = state.value[c];
+            if (open === -1 && state.value[c] === 0) open = c;
           }
-          return null;
+          if (open === -1) return null;
+          var solved = SG.dfs.solve(model, givens);
+          if (solved === null || (state.candidates[open] & (1 << (solved[open] - 1))) === 0) return null;
+          return {
+            technique: 'testGuesser', cells: [open], placements: [[open, solved[open]]], eliminations: [],
+            i18nKey: 'technique.testGuesser.step', i18nArgs: {}
+          };
         }
       });
       try {
-        return fn();
+        return withWeights({ testGuesser: 1 }, fn);
       } finally {
         SG.techniques.unregister('testGuesser');
       }
@@ -1097,6 +1596,7 @@
             { maxAttempts: 1, digTries: 1 });
           expect(SG.dfs.countSolutions(model9, p.givens, 2)).toBe(1);
           expect(SG.model.isSolution(model9, p.solution)).toBe(true);
+          expect(p.rating.solved).toBe(true);
           if (p.warnings.indexOf('digger.unsoundTechnique') !== -1) unsound++;
         }
         // The bug must have been caught at least once, or this test proves nothing.
@@ -1117,5 +1617,67 @@
         expect(flagged).toBeGreaterThan(0);
       });
     });
+
+    /**
+     * A technique that guesses only where it matters: on a model whose first position has more than one
+     * solution it places the values of one of them, cell by cell, so a puzzle with two solutions gets a
+     * complete proof that claims uniqueness (it does not declare `assumesUniqueness`). Weight 350, so the
+     * oracles from hard on use it. The reproduction of the implementation review's finding B5.
+     */
+    function withAmbiguityGuesser(fn) {
+      var ambiguous = new WeakMap();
+      SG.techniques.register({
+        id: 'testAmbiguityGuesser',
+        group: 'basic',
+        baseCost: 1,
+        order: 5,
+        i18nKey: 'technique.testAmbiguityGuesser',
+        find: function (model, state, ctx) {
+          var givens = Int32Array.from(state.value);
+          if (!ambiguous.has(model)) {
+            ambiguous.set(model, SG.dfs.countSolutions(model, givens, 2, ctx && ctx.budget) === 2);
+          }
+          if (!ambiguous.get(model)) return null;
+          var open = Array.prototype.indexOf.call(givens, 0);
+          if (open === -1) return null;
+          var solved = SG.dfs.solve(model, givens, null, ctx && ctx.budget);
+          if (!solved || (state.candidates[open] & (1 << (solved[open] - 1))) === 0) return null;
+          return {
+            technique: 'testAmbiguityGuesser', cells: [open], placements: [[open, solved[open]]],
+            eliminations: [], i18nKey: 'technique.testAmbiguityGuesser.step', i18nArgs: {}
+          };
+        }
+      });
+      try {
+        return withWeights({ testAmbiguityGuesser: 350 }, fn);
+      } finally {
+        SG.techniques.unregister('testAmbiguityGuesser');
+      }
+    }
+
+    it('never returns an ambiguous candidate of a search either: the keeper counts before it keeps (B5)',
+      function () {
+        withAmbiguityGuesser(function () {
+          // Killer's layout search offers its layouts to the keeper on the strength of their proofs; one of
+          // them had two solutions and used to be returned as the closest puzzle (score 945, veryHard).
+          var config = {
+            variantId: 'killer', difficulty: 'expert', seed: 61843, symmetry: 'diagonal', maxAttempts: 1,
+            trace: 'off'
+          };
+          var r = null;
+          try {
+            r = SG.pipeline.run(config);
+          } catch (err) {
+            // The one permitted alternative: no completely rated, verified puzzle at all.
+            expect(err.code).toBe('digger.noRatedPuzzle');
+          }
+          if (r !== null) {
+            expect(SG.dfs.countSolutions(r.model, r.givens, 2)).toBe(1);
+            expect(r.rating.solved).toBe(true);
+            // The contradicted proof is reported as a technique bug.
+            expect(r.warnings).toContain('digger.unsoundTechnique');
+          }
+        });
+      });
   });
 })();

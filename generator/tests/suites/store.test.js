@@ -117,13 +117,35 @@
 
     it('falls back to the closest supported difficulty of the variant', function () {
       ready();
-      expect(S.sanitize({ variantId: 'classic4', difficulty: 'evil' }).difficulty).toBe('easy');
-      expect(S.sanitize({ variantId: 'classic4', difficulty: 'medium' }).difficulty).toBe('easy');
-      expect(S.sanitize({ variantId: 'killer', difficulty: 'evil' }).difficulty).toBe('expert');
-      expect(S.sanitize({ variantId: 'samurai', difficulty: 'evil' }).difficulty).toBe('hard');
+      expect(S.sanitize({ variantId: 'classic4', difficulty: 'evil' }).difficulty).toBe('veryEasy');
+      expect(S.sanitize({ variantId: 'classic4', difficulty: 'medium' }).difficulty).toBe('veryEasy');
+      expect(S.sanitize({ variantId: 'classic6', difficulty: 'evil' }).difficulty).toBe('hard');
+      expect(S.sanitize({ variantId: 'classic6', difficulty: 'medium' }).difficulty).toBe('hard');
+      expect(S.sanitize({ variantId: 'classic6', difficulty: 'easy' }).difficulty).toBe('veryEasy');
+      expect(S.sanitize({ variantId: 'killer', difficulty: 'veryHard' }).difficulty).toBe('veryHard');
+      expect(S.sanitize({ variantId: 'killer', difficulty: 'evil' }).difficulty).toBe('evil');
+      expect(S.sanitize({ variantId: 'samurai', difficulty: 'evil' }).difficulty).toBe('evil');
       expect(S.sanitize({ variantId: 'samurai', difficulty: 'easy' }).difficulty).toBe('easy');
       expect(S.sanitize({ variantId: 'classic9', difficulty: 'evil' }).difficulty).toBe('evil');
+      expect(S.sanitize({ variantId: 'classic9', difficulty: 'nightmare2' }).difficulty).toBe('nightmare1');
       expect(S.sanitize({ variantId: 'classic9', difficulty: 'bogus' }).difficulty).toBe('medium');
+    });
+
+    it('takes the easier of two equally close supported levels (a list with a gap)', function () {
+      ready();
+      var fake = {
+        id: 'fakeGap', i18nKey: 'variant.fakeGap', group: 'classic', digits: 4,
+        difficultySupport: ['hard', 'expert'], defaultSymbolMode: 'digits', symbolModes: ['digits'],
+        options: [], build: function () { throw new Error('not built'); }
+      };
+      SG.variants.register(fake);
+      try {
+        expect(S.sanitize({ variantId: 'fakeGap', difficulty: 'veryHard' }).difficulty).toBe('hard');
+        expect(S.sanitize({ variantId: 'fakeGap', difficulty: 'evil' }).difficulty).toBe('expert');
+        expect(S.sanitize({ variantId: 'fakeGap', difficulty: 'veryEasy' }).difficulty).toBe('hard');
+      } finally {
+        SG.variants.unregister('fakeGap');
+      }
     });
 
     it('keeps the symbol set inside the variant symbolModes', function () {
@@ -171,9 +193,9 @@
     it('reports the cross-option corrections', function () {
       ready();
       var r = S.sanitizeWithNotes({ variantId: 'classic4', difficulty: 'evil', symbolMode: 'word' });
-      expect(r.state.difficulty).toBe('easy');
+      expect(r.state.difficulty).toBe('veryEasy');
       expect(r.adjustments).toEqual([
-        { key: 'difficulty', from: 'evil', to: 'easy', reason: 'unsupportedDifficulty' },
+        { key: 'difficulty', from: 'evil', to: 'veryEasy', reason: 'unsupportedDifficulty' },
         { key: 'symbolMode', from: 'word', to: 'digits', reason: 'unsupportedSymbolMode' }
       ]);
       expect(S.sanitizeWithNotes({ variantId: 'classic9', difficulty: 'evil' }).adjustments).toEqual([]);
@@ -286,7 +308,10 @@
       ready();
       expect(S.parseUrl('?attempts=99').maxAttempts).toBe(20);
       expect(S.parseUrl('?attempts=0').maxAttempts).toBe(1);
-      expect(S.parseUrl('?v=classic4&d=evil').difficulty).toBe('easy');
+      expect(S.parseUrl('?v=classic4&d=evil').difficulty).toBe('veryEasy');
+      expect(S.parseUrl('?v=classic6&d=nightmare2').difficulty).toBe('hard');
+      expect(S.parseUrl('?v=classic9&d=veryHard').difficulty).toBe('veryHard');
+      expect(S.parseUrl('?v=classic9&d=nightmare-1').difficulty).toBe('medium');
       expect(S.parseUrl('?v=wordoku').symbolMode).toBe('word');
       expect(S.parseUrl('?v=classic9&mode=word').symbolMode).toBe('digits');
       expect(S.parseUrl('?o.cageSize=1').variantOptions).toEqual({});
@@ -419,14 +444,14 @@
 
     it('is accepted by SG.pipeline.run and reproduces the puzzle', function () {
       ready();
-      var state = S.parseUrl('?v=classic4&d=easy&seed=42');
+      var state = S.parseUrl('?v=classic4&d=veryEasy&seed=42');
       var first = SG.pipeline.run(S.toConfig(state), function () {}, null);
-      var again = S.toConfig(S.parseUrl('?v=classic4&d=easy&seed=42'));
+      var again = S.toConfig(S.parseUrl('?v=classic4&d=veryEasy&seed=42'));
       var second = SG.pipeline.run(again, function () {}, null);
       expect(first.seed).toBe(42);
       expect(first.config.variantId).toBe('classic4');
       expect(Array.from(first.givens)).toEqual(Array.from(second.givens));
-      var text = SG.pipeline.run(S.toConfig({ variantId: 'classic4', difficulty: 'easy', seed: 'my puzzle' }),
+      var text = SG.pipeline.run(S.toConfig({ variantId: 'classic4', difficulty: 'veryEasy', seed: 'my puzzle' }),
         function () {}, null);
       expect(text.seed).toBe(S.seedInfo('my puzzle').value);
     });
@@ -484,11 +509,11 @@
       store.subscribe(function (state, keys, meta) { seen.push(meta.adjustments); });
       store.set({ difficulty: 'evil', symbolMode: 'letters' });
       store.set({ variantId: 'classic4' });
-      expect(store.get().difficulty).toBe('easy');
+      expect(store.get().difficulty).toBe('veryEasy');
       store.set({ variantId: 'wordoku' });
       expect(store.get().symbolMode).toBe('word');
       expect(seen[1]).toEqual([
-        { key: 'difficulty', from: 'evil', to: 'easy', reason: 'unsupportedDifficulty' }
+        { key: 'difficulty', from: 'evil', to: 'veryEasy', reason: 'unsupportedDifficulty' }
       ]);
     });
 
@@ -783,7 +808,7 @@
       var e = env('?v=classic4&d=evil&junk=1&seed=7&trace=full&speed=manual');
       var store = makeStore({ env: e, storage: null });
       store.load();
-      expect(e.urls).toEqual(['/index.html?v=classic4&d=easy&seed=7#top']);
+      expect(e.urls).toEqual(['/index.html?v=classic4&d=veryEasy&seed=7#top']);
     });
 
     it('writes preferences and the last configuration under the documented keys', function () {

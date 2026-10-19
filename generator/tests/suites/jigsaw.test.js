@@ -10,12 +10,19 @@
   var J = SG.jigsaw;
   var def = SG.variants.get('jigsaw9');
 
-  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil'];
-  /** design.md 9.1, jigsaw9 row, p95 in ms. 'easy' has no column there and takes the next one. */
-  var BUDGET_MS = { veryEasy: 150, easy: 350, medium: 350, hard: 900, expert: 2000, evil: 5000 };
+  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1', 'nightmare2'];
+  /** design.md 9.1, jigsaw9 row, p95 in ms. */
+  var BUDGET_MS = { veryEasy: 150, easy: 350, medium: 350, hard: 900, veryHard: 900, expert: 2000, evil: 5000,
+    nightmare1: 5000, nightmare2: 5000 };
 
   var LAYOUT_COUNT = 200;
   var PUZZLES_PER_LEVEL = 20;
+  /** Fewer puzzles of the slowest level, so that the suite stays quick. */
+  var PER_LEVEL = { nightmare2: 8 };
+
+  function countOf(level) {
+    return PER_LEVEL[level] || PUZZLES_PER_LEVEL;
+  }
 
   function now() { return typeof performance !== 'undefined' ? performance.now() : Date.now(); }
 
@@ -791,7 +798,7 @@
       cache.puzzles = {};
       LEVELS.forEach(function (level, li) {
         cache.puzzles[level] = [];
-        for (var i = 0; i < PUZZLES_PER_LEVEL; i++) cache.puzzles[level].push(generatePuzzle(level, 700 + li * 100 + i));
+        for (var i = 0; i < countOf(level); i++) cache.puzzles[level].push(generatePuzzle(level, 700 + li * 100 + i));
       });
     }
     return cache.puzzles;
@@ -805,7 +812,7 @@
 
   describe('jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7)', function () {
     LEVELS.forEach(function (level) {
-      describe(level + ': ' + PUZZLES_PER_LEVEL + ' puzzles', function () {
+      describe(level + ': ' + countOf(level) + ' puzzles', function () {
         it('I1: exactly one solution; I2: givens are part of the solution; I3: the solution is valid', function () {
           puzzleRun()[level].forEach(function (p, i) {
             var m = p.model;
@@ -819,24 +826,24 @@
           });
         });
 
-        it('I5: a puzzle that reached the level has its score in the band and its technique in the groups; ' +
+        it('I5: every puzzle has a complete proof, and one that reached the level has its score in the band; ' +
           'I6: at least minClues givens', function () {
           var exact = 0;
           puzzleRun()[level].forEach(function (p, i) {
             var spec = SG.difficulty.spec(level, p.model);
             if (clueCount(p.givens) < spec.minClues) throw new Error('puzzle ' + i + ': too few clues');
             expect(p.config.difficulty).toBe(level);
+            expect(p.rating.solved).toBe(true);
             if (p.rating.level === level) {
               exact++;
               expect(p.rating.score).toBeGreaterThanOrEqual(spec.min);
               expect(p.rating.score).toBeLessThan(spec.max);
-              if (p.rating.hardestGroup !== null) expect(spec.allowedGroups).toContain(p.rating.hardestGroup);
               expect(p.warnings).toEqual([]);
             }
             expect(SG.difficulty.rate(p.model, p.givens).level).toBe(p.rating.level);
           });
           // The soak criterion of T-2.10 (90% on classic9) holds for jigsaw9 as well.
-          expect(exact / PUZZLES_PER_LEVEL).toBeGreaterThanOrEqual(0.9);
+          expect(exact / countOf(level)).toBeGreaterThanOrEqual(0.9);
         });
 
         it('I7: every deduction of the technique ladder on the way to the solution is sound', function () {
@@ -857,7 +864,7 @@
         it('CV6: p95 of the generation time is within the design.md 9.1 budget of ' + BUDGET_MS[level] + ' ms',
           function () {
             var times = puzzleRun()[level].map(function (p) { return p.elapsedMs; });
-            expect(percentile(times, 0.95)).toBeLessThan(BUDGET_MS[level]);
+            expect(percentile(times, 0.95)).toBeLessThan(SG.test.timeLimit(BUDGET_MS[level]));
           });
       });
     });
@@ -878,7 +885,10 @@
       var means = LEVELS.map(function (level) {
         return mean(puzzleRun()[level].map(function (p) { return clueCount(p.givens); }));
       });
-      for (var i = 1; i < means.length; i++) expect(means[i]).toBeLessThan(means[i - 1]);
+      // Rating v2: the score, not the clue count, sets the level. From medium on the means sit on a plateau
+      // (the top tiers refine their proposals by showing clues again): veryEasy > easy > every level above.
+      expect(means[0]).toBeGreaterThan(means[1]);
+      for (var i = 2; i < means.length; i++) expect(means[i]).toBeLessThan(means[1]);
     });
   });
 

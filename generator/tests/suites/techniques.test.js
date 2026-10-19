@@ -64,24 +64,24 @@
       });
     });
 
-    it('is covered by the calibrated cost table of SG.difficulty (add a COSTS entry for a new technique)',
+    it('is covered by the weight table of SG.difficulty (add a WEIGHTS entry for a new technique)',
       function () {
-        var missing = classic.filter(function (t) {
-          return !Object.prototype.hasOwnProperty.call(SG.difficulty.COSTS, t.id);
+        var missing = all.filter(function (t) {
+          return !Object.prototype.hasOwnProperty.call(SG.difficulty.WEIGHTS, t.id);
         }).map(function (t) { return t.id; });
         expect(missing).toEqual([]);
-        Object.keys(SG.difficulty.COSTS).forEach(function (id) {
+        Object.keys(SG.difficulty.WEIGHTS).forEach(function (id) {
           expect(SG.techniques.has(id)).toBe(true);
-          expect(SG.difficulty.COSTS[id]).toBeGreaterThan(0);
+          expect(SG.difficulty.WEIGHTS[id]).toBeGreaterThan(0);
         });
       });
 
-    it('puts the techniques of a group in the ladder in the order of their calibrated costs', function () {
+    it('puts the techniques of a group in the ladder in the order of their weights', function () {
       SG.techniques.GROUPS.forEach(function (group) {
-        var costs = all.filter(function (t) { return t.group === group; }).map(function (t) {
-          return SG.difficulty.costOf(t.id);
+        var weights = all.filter(function (t) { return t.group === group; }).map(function (t) {
+          return SG.difficulty.weightOf(t.id);
         });
-        for (var i = 1; i < costs.length; i++) expect(costs[i]).toBeGreaterThan(costs[i - 1]);
+        for (var i = 1; i < weights.length; i++) expect(weights[i]).toBeGreaterThan(weights[i - 1]);
       });
     });
 

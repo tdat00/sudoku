@@ -4,8 +4,9 @@
  * hole digger.
  *
  * The loop: try the registered techniques (techniques.js) in ascending `order`, apply the first Finding,
- * record a step and start again from the cheapest technique, until the grid is full, no technique applies
- * ("stuck") or the budget runs out. A stuck puzzle is a normal result (solved: false), never an error.
+ * record a step and start again from the first technique of that fixed priority order, until the grid is
+ * full, no technique applies ("stuck") or the budget runs out. A stuck puzzle is a normal result (solved:
+ * false), never an error. The order is not the order of the rating weights (SG.difficulty.WEIGHTS).
  *
  * Singles and the propagation engine (decision, please keep):
  *   `SG.constraints.propagate` places naked and hidden singles on its own. If the solver ran it after every
@@ -90,7 +91,7 @@
    *           givens (or a technique) lead to an impossible grid; it is reported, not thrown.
    * @property {SolveState} state          Final state; for a stuck puzzle the position where it got stuck.
    * @property {SolveStep[]} steps         In application order; empty unless `collectSteps`.
-   * @property {Object<string, number>} techniqueCounts  Applications per technique id, cheapest first.
+   * @property {Object<string, number>} techniqueCounts  Applications per technique id, in ladder order.
    * @property {?string} hardestTechnique  Used technique with the highest baseCost (ties: later in the
    *           ladder); null when no step was needed.
    * @property {number} score              See `SCORING`.

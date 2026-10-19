@@ -1,0 +1,12 @@
+{
+  "mode": "rejections-high",
+  "node": "v26.8.2",
+  "cases": [
+    {
+      "name": "scan-totals",
+      "runs": 90,
+      "checks": 110
+    }
+  ],
+  "engineHash": "9002e195df0dec28"
+}

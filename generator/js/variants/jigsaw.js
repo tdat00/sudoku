@@ -780,10 +780,13 @@
     i18nKey: 'variant.jigsaw9',
     group: 'regions',
     digits: SIZE,
-    difficultySupport: ['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil'],
+    // Every level of the nine (measured: `node tests/qualify.js`, docs/report-v2/qualification.md).
+    difficultySupport: ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
+      'nightmare2'],
     // The classic9 floors (29 / 25 / 22) kept the dig from reaching medium; 83 % / 80 % / 80 % of them
-    // (24 / 20 / 17) do not. Same calibration as the other 9x9 hybrids (extra-regions.js).
-    clueFloorScale: Object.freeze({ medium: 0.83, hard: 0.8, expert: 0.8 }),
+    // (24 / 20 / 17) do not. Same calibration as the other 9x9 hybrids (extra-regions.js); veryHard takes
+    // the factor of hard (rating v2).
+    clueFloorScale: Object.freeze({ medium: 0.83, hard: 0.8, veryHard: 0.8, expert: 0.8 }),
     defaultSymbolMode: 'digits',
     symbolModes: ['digits', 'letters', 'colors', 'shapes'],
     options: Object.freeze([Object.freeze({

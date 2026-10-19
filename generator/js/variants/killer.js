@@ -40,15 +40,28 @@
   const BOX = 3;
   const CELLS = DIGITS * DIGITS;
 
-  /** Size distribution of the cages per difficulty: share of cages with that many cells (design.md 8.2). */
+  /**
+   * Size distribution of the cages per difficulty: share of cages with that many cells (design.md 8.2).
+   * Rating v2: veryHard uses the shares of hard; nightmare1 and nightmare2 use those of evil and tilt them
+   * towards larger cages (`tiltFor`). Every level needs its own entry: `sizeDistribution` falls back to the
+   * medium shares for an unknown one.
+   */
   const SIZE_SHARES = {
     veryEasy: { 2: 45, 3: 40, 4: 15 },
     easy: { 2: 45, 3: 40, 4: 15 },
     medium: { 2: 30, 3: 35, 4: 25, 5: 10 },
     hard: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
+    veryHard: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
     expert: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
-    evil: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 }
+    evil: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
+    nightmare1: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
+    nightmare2: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 }
   };
+  /**
+   * Levels whose cages are tilted towards larger ones on top of the user's slider: the measured +2 (held-out
+   * run, docs/report-v2/report-detailed.md section 5.7 (7): old-evil hits 24/30 -> 30/30).
+   */
+  const LARGER_CAGES = Object.freeze({ nightmare1: 2, nightmare2: 2 });
   const MIN_TARGET = 2;
   const MAX_TARGET = 6;
   /** A cage that absorbs a leftover cell may grow to this many cells. */
@@ -210,6 +223,18 @@
       }
     }
     return { sizes: sizes, weights: weights };
+  }
+
+  /**
+   * The tilt a level's cages are grown with: the user's slider, plus `LARGER_CAGES` for the nightmare tiers,
+   * clamped to the slider's range (docs/report-v2/report-detailed.md section 5.7 (7)).
+   * @param {string} level
+   * @param {number} cageSize  The user's slider position, -2 .. 2.
+   * @returns {number}
+   */
+  function tiltFor(level, cageSize) {
+    const extra = Object.prototype.hasOwnProperty.call(LARGER_CAGES, level) ? LARGER_CAGES[level] : 0;
+    return Math.max(TILT_MIN, Math.min(TILT_MAX, cageSize + extra));
   }
 
   function pickWeighted(rng, weights) {
@@ -516,7 +541,8 @@
   /** Search nodes all the checks of one layout may use together before the repairs stop. */
   const REPAIR_NODES = 250000;
   /** Layout repairs (split / merge) allowed per level; a level with 0 skips the check altogether. */
-  const REPAIR_ATTEMPTS = { veryEasy: 0, easy: 0, medium: 0, hard: 12, expert: 12, evil: 12 };
+  const REPAIR_ATTEMPTS = { veryEasy: 0, easy: 0, medium: 0, hard: 12, veryHard: 12, expert: 12, evil: 12,
+    nightmare1: 12, nightmare2: 12 };
   /** Clues that step (c) may reveal at most. */
   const MAX_REVEALS = 24;
   const SLICE_CODE = 'killer.sliceExpired';
@@ -714,7 +740,8 @@
    *           also when the node limit ended the search).
    * @property {string[]} repairs   'split' | 'merge' per repair step, in order.
    * @property {number[]} revealed  Cells that step (c) revealed so that the layout plus these clues is
-   *           unique.
+   *           unique. When the layout search of the levels from veryHard on moved cages, the cells of the
+   *           clues it kept the moved layout unique with: these, completed to whole symmetry groups.
    * @property {number} nodes       Search nodes spent on the checks of this layout.
    * @property {number} [cageCount] Cages of the final layout (set by `postGenerate`).
    */
@@ -806,6 +833,182 @@
   }
 
   // ---------------------------------------------------------------------------------------------
+  // Structure search (rating v2, docs/report-v2/report-detailed.md section 5.7 (6))
+  // ---------------------------------------------------------------------------------------------
+
+  /** Proposed cage moves and full ratings the structure search of one attempt may use at most. */
+  const SEARCH_PROPOSALS = 8192;
+  const SEARCH_RATINGS = 256;
+
+  function ownerOf(layout) {
+    const owner = new Int32Array(CELLS).fill(-1);
+    layout.forEach(function (cells, k) { cells.forEach(function (c) { owner[c] = k; }); });
+    return owner;
+  }
+
+  /**
+   * Local search on the cage layout, before the cells are dug (the structure phase, so the Generation Steps
+   * replay digs on the final cages). Only for the levels from veryHard on, and only when the layout - with
+   * the digits the repair had to reveal (`revealed`, none for a layout that is unique on its own), completed
+   * to whole groups of the symmetry the dig uses, so that the dig can end on exactly these clues - is
+   * unique, completely rated, and too easy for the band (score below its minimum): Killer's puzzles of those
+   * levels end with a handful of clues, so a layout that is too easy cannot reach the band by digging. A move
+   * merges two neighbouring cages or hands a boundary cell to the neighbouring cage (cages stay connected,
+   * digit-distinct, of 2 to `MAX_CAGE_CELLS` cells); it is kept iff the puzzle (layout and those clues)
+   * stays unique with a complete proof and its score does not decrease and stays below the band maximum. A
+   * candidate is rated first: a complete proof that needs no technique assuming uniqueness proves uniqueness
+   * by itself (`SG.difficulty.provesUniqueness`), so a solution count only runs for the rare proof that
+   * does. Every rating and every count is one piece of at most `ANALYSIS_NODES` checks, like the searches
+   * of the layout check: a candidate that needs more is dropped (2 to 3 % of them, nearly all far above the
+   * band), which keeps the slices of a cooperative run short. The search stops on entering the band or when
+   * its caps (`SEARCH_PROPOSALS`, `SEARCH_RATINGS`, and the caps of the attempt, `ctx.caps`) are used up.
+   * Deterministic: counts, not time. The dig that follows starts from the full grid as always; when the
+   * layout ends inside the band, the dig keeps those clues (`kept`, see `digKiller`), so it can end on the
+   * puzzle the search rated instead of on other, usually easier clues. Every unique, completely rated layout
+   * it meets - kept or not, above the band too - is offered to the keeper of the run (`ctx.keeper`, see
+   * `SG.digger.generate`, which counts the solutions of a candidate before it keeps it, whatever its proof
+   * claims) with a dig log that removes every other symmetry group from the solution, so the
+   * generator can return the closest one when no sample reaches the band. Every rating goes through
+   * `SG.digger.rateCounted`, which counts it toward the full-rating cap of the attempt.
+   * @returns {Generator<undefined, {cages: number[][], kept: number[]}>} The layout to use, and the cells
+   *          the dig keeps (empty unless the layout with its clues was rated inside the band); `clueCells`:
+   *          the cells of those clues and `moved`: whether a move was kept (the layout is then unique with
+   *          `clueCells`, which `postGenerate` records as the revealed cells of the layout).
+   */
+  function* searchCagesSteps(base, solution, cages, revealed, spec, rng, ctx, info) {
+    const caps = ctx.caps;
+    const from = SG.difficulty.bandOf('veryHard').min;
+    if (!caps || !spec || !(spec.min >= from)) return { cages: cages, kept: [], clueCells: [], moved: false };
+    const keeper = ctx.keeper || null;
+    const clues = new Int32Array(CELLS);
+    const clueCells = [];
+    const groups = SG.symmetry.groups(base, ctx.symmetry || spec.symmetryDefault);
+    const groupOf = new Int32Array(CELLS).fill(-1);
+    groups.forEach(function (g, k) { g.forEach(function (c) { groupOf[c] = k; }); });
+    for (let i = 0; i < revealed.length; i++) {
+      groups[groupOf[revealed[i]]].forEach(function (c) {
+        if (clues[c] !== 0) return;
+        clues[c] = solution[c];
+        clueCells.push(c);
+      });
+    }
+    clueCells.sort(function (a, b) { return a - b; });
+    function result(layout, rating) {
+      const inBand = rating !== null && rating.solved === true && rating.score >= spec.min &&
+        rating.score < spec.max;
+      return { cages: layout, kept: inBand ? clueCells : [], clueCells: clueCells, moved: layout !== cages };
+    }
+    /** The dig log of a layout's puzzle: every symmetry group without a clue is removed from the solution. */
+    function logOfClues() {
+      const log = [{ op: 'pass', pass: 'random', clues: CELLS }];
+      groups.forEach(function (g) {
+        if (clues[g[0]] === 0) log.push({ op: 'accept', cells: Array.from(g) });
+      });
+      return log;
+    }
+    /** Offers the puzzle of a unique, completely rated layout to the keeper of the run. */
+    function offer(model, layoutCells, r) {
+      if (keeper === null) return;
+      const kept = keeper.offer({
+        model: model, givens: clues, solution: solution, rating: r, logOf: logOfClues
+      });
+      if (kept && info) {
+        infoOf.set(model, Object.assign({}, info, {
+          repairs: info.repairs.slice(),
+          revealed: layoutCells !== cages && clueCells.length > 0 ? clueCells.slice() : info.revealed.slice(),
+          cageCount: layoutCells.length
+        }));
+      }
+    }
+    const meter = { spent: 0 };
+    /** Runs one guarded piece; null when it needed more than `ANALYSIS_NODES` checks. */
+    function guarded(fn) {
+      try {
+        return fn(nodeSlice(ctx.budget, ANALYSIS_NODES, meter));
+      } catch (err) {
+        if (err instanceof SG.errors.GenerationError && err.code === SLICE_CODE) return null;
+        throw err;
+      }
+    }
+    /**
+     * A full rating, counted toward the cap of the attempt; null when the cap is used up or the piece needed
+     * more than `ANALYSIS_NODES` checks.
+     */
+    function rate(model) {
+      return guarded(function (slice) { return SG.digger.rateCounted(model, clues, slice, caps); });
+    }
+    /** Unique by its own proof, or by a solution count (one more guarded piece, see `needsCount`). */
+    function needsCount(r) {
+      return !SG.difficulty.provesUniqueness(r);
+    }
+    function counted(model) {
+      return guarded(function (slice) { return SG.dfs.countSolutions(model, clues, 2, slice); }) === 1;
+    }
+    function exhausted(proposals, ratings) {
+      return proposals >= SEARCH_PROPOSALS || ratings >= SEARCH_RATINGS ||
+        caps.proposals >= caps.maxProposals || caps.ratings >= caps.maxRatings;
+    }
+    let layout = cages;
+    const start = modelWithCages(base, layout, solution);
+    let rating = rate(start);
+    let ratings = 1;
+    let proposals = 0;
+    yield;
+    if (rating === null || rating.solved !== true) return result(layout, null);
+    if (needsCount(rating)) {
+      const unique = counted(start);
+      yield;
+      if (!unique) return result(layout, null);
+    }
+    offer(start, layout, rating);
+    // Already inside the band (its clues are kept) or above it: nothing to search.
+    if (rating.score >= spec.min) return result(layout, rating);
+    while (rating.score < spec.min && !exhausted(proposals, ratings)) {
+      proposals++;
+      caps.proposals++;
+      const owner = ownerOf(layout);
+      const c = rng.int(CELLS);
+      const nbrs = NEIGHBOURS[c].filter(function (d) { return owner[d] !== owner[c]; });
+      if (nbrs.length === 0) continue;
+      const d = nbrs[rng.int(nbrs.length)];
+      const a = owner[c];
+      const b = owner[d];
+      let next;
+      if (rng.next() < 0.5) {
+        const merged = layout[a].concat(layout[b]);
+        if (merged.length > MAX_CAGE_CELLS ||
+            popcountOf(digitMask(merged, solution)) !== merged.length) continue;
+        next = layout.filter(function (cells, k) { return k !== a && k !== b; }).concat([merged]);
+      } else {
+        const into = layout[a].concat([d]);
+        const rest = layout[b].filter(function (x) { return x !== d; });
+        if (rest.length < 2 || into.length > MAX_CAGE_CELLS ||
+            popcountOf(digitMask(into, solution)) !== into.length || !isConnected(rest)) continue;
+        next = layout.map(function (cells, k) { return k === a ? into : k === b ? rest : cells; });
+      }
+      next = normalizeCages(next);
+      const model = modelWithCages(base, next, solution);
+      ratings++;
+      const r = rate(model);
+      yield;
+      if (r === null || r.solved !== true) continue;
+      const move = r.score >= rating.score && r.score < spec.max;
+      const closer = keeper !== null && keeper.closer(r);
+      if (!move && !closer) continue;
+      if (needsCount(r)) {
+        const unique = counted(model);
+        yield;
+        if (!unique) continue;
+      }
+      if (closer) offer(model, next, r);
+      if (!move) continue;
+      layout = next;
+      rating = r;
+    }
+    return result(layout, rating);
+  }
+
+  // ---------------------------------------------------------------------------------------------
   // Pipeline hook
   // ---------------------------------------------------------------------------------------------
 
@@ -818,6 +1021,8 @@
 
   /** What `postGenerate` found out per returned model. */
   const infoOf = new WeakMap();
+  /** Per returned model: the cells its dig keeps (the clues the layout search rated inside the band). */
+  const keepOf = new WeakMap();
 
   /**
    * Pipeline hook (step 4, 'extraStructure'): grows the cages from the full grid, checks and repairs the
@@ -827,7 +1032,8 @@
    * `SG.digger.generateSteps` uses when it runs in slices: a generator with the same argument and result
    * that yields between the pieces of the layout work (see `repairLayoutSteps`); the longest piece left is
    * one search of at most `ANALYSIS_NODES` nodes. Events, random draws and the model are the same.
-   * @param {Object} ctx  `{ model, solution, rng, level, spec, attempt, budget, emit, variantId }`.
+   * @param {Object} ctx  `{ model, solution, rng, level, spec, attempt, budget, emit, variantId, caps,
+   *        symmetry }`.
    * @returns {PuzzleModel} The model with cages.
    */
   function postGenerate(ctx) {
@@ -838,7 +1044,8 @@
     const em = SG.events.toEmitter(ctx.emit);
     const base = ctx.model;
     const opts = optionsOf.get(base) || normalizeOptions({});
-    let cages = growCages(ctx.solution, ctx.rng.fork('grow'), sizeDistribution(ctx.level, opts.cageSize));
+    let cages = growCages(ctx.solution, ctx.rng.fork('grow'),
+      sizeDistribution(ctx.level, tiltFor(ctx.level, opts.cageSize)));
     yield;
 
     const report = {
@@ -848,10 +1055,16 @@
     };
     const repaired = yield* repairLayoutSteps(base, ctx.solution, cages, ctx.level, ctx.rng.fork('repair'),
       ctx.budget, report);
-    cages = repaired.cages;
+    // Rating v2: the levels from veryHard on search the layout itself before the cells are dug.
+    const searched = yield* searchCagesSteps(base, ctx.solution, repaired.cages, repaired.info.revealed,
+      ctx.spec, ctx.rng.fork('search'), ctx, repaired.info);
+    cages = searched.cages;
+    // The moved layout is unique with the revealed digits completed to whole symmetry groups.
+    if (searched.moved && searched.clueCells.length > 0) repaired.info.revealed = searched.clueCells.slice();
     const model = modelWithCages(base, cages, ctx.solution);
     repaired.info.cageCount = cages.length;
     infoOf.set(model, repaired.info);
+    if (searched.kept.length > 0) keepOf.set(model, searched.kept);
 
     let smallest = CELLS;
     let largest = 0;
@@ -891,14 +1104,19 @@
    * Dig strategy of Killer: the generic cell digger, tuned to cages. The clue floors of classic Sudoku (34
    * clues for 'easy', 2 clues per unit, ...) describe a Sudoku with no cages and are dropped (`clueFloor`,
    * `minCluesPerUnit: 0`); the guided stage runs at every level, because the score band is what stops the
-   * dig at the two easiest levels.
+   * dig at the two easiest levels. When the layout search rated the layout inside the band with a few clues
+   * (`searchCagesSteps`), the dig keeps those clues (`rejected` of `SG.digger.digStage`), so it can end on
+   * that puzzle.
    */
   function digKiller(model, solution, level, rng, options) {
     SG.comboTable.enablePropagation(ID);
-    return SG.digger.digStage(model, solution, level, rng, Object.assign({}, options, {
-      minCluesPerUnit: 0,
-      guided: true
-    }));
+    const settings = { minCluesPerUnit: 0, guided: true };
+    if (keepOf.has(model)) {
+      const keep = options && options.rejected ? Uint8Array.from(options.rejected) : new Uint8Array(CELLS);
+      keepOf.get(model).forEach(function (c) { keep[c] = 1; });
+      settings.rejected = keep;
+    }
+    return SG.digger.digStage(model, solution, level, rng, Object.assign({}, options, settings));
   }
 
   // ---------------------------------------------------------------------------------------------
@@ -967,6 +1185,7 @@
     OPTIONS: OPTIONS,
     COLOR_KIND: COLOR_KIND,
     sizeDistribution: sizeDistribution,
+    tiltFor: tiltFor,
     buildBoard: buildBoard,
     growCages: growCages,
     repairLayout: repairLayout,
@@ -1089,7 +1308,9 @@
       i18nKey: 'variant.killer',
       group: 'killer',
       digits: DIGITS,
-      difficultySupport: ['veryEasy', 'easy', 'medium', 'hard', 'expert'],
+      // Measured (`node tests/qualify.js`, docs/report-v2/qualification.md): all nine levels.
+      difficultySupport: ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
+        'nightmare2'],
       defaultSymbolMode: 'digits',
       symbolModes: ['digits', 'letters', 'colors', 'shapes'],
       options: OPTIONS,

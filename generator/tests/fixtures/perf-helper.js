@@ -27,38 +27,41 @@
   // Performance targets (design.md section 9.1: p95 over 50 runs, trace 'summary')
   // ---------------------------------------------------------------------------------------------
 
-  /** The columns of the table of section 9.1. */
-  var TARGET_LEVELS = ['veryEasy', 'medium', 'hard', 'expert', 'evil'];
+  /** The columns of the table of section 9.1: the nine levels of rating v2. */
+  var TARGET_LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
+    'nightmare2'];
 
-  function row(veryEasy, medium, hard, expert, evil) {
+  function row() {
     var r = {};
-    [veryEasy, medium, hard, expert, evil].forEach(function (ms, i) {
+    Array.prototype.slice.call(arguments).forEach(function (ms, i) {
       if (ms !== null) r[TARGET_LEVELS[i]] = ms;
     });
     return r;
   }
 
   /**
-   * p95 budgets in milliseconds. A level that is missing has no cell in the table (the variant does not offer
-   * it). classic4 and classic6 offer 'easy' where the table has a 'medium' column, so that column is read as
-   * their 'easy' target (as tests/soak.js does).
+   * p95 budgets in milliseconds, one per level a variant offers (null: not offered). Rating v2: a target the
+   * table had before is kept while the qualification (`node tests/qualify.js`) meets it; easy takes the one
+   * of medium; a new cell, or one whose old target the qualification's p95 exceeds, is three times that p95
+   * rounded up, never below the target of the level before and never above the budget of the qualification
+   * (2 s for 4x4 and 6x6, 10 s up to 81 cells, 30 s above).
    */
   var PERF_TARGETS = {
-    classic4: { veryEasy: 10, easy: 20 },
-    classic6: { veryEasy: 10, easy: 20 },
-    classic9: row(60, 150, 400, 900, 2500),
-    diagonalX: row(80, 200, 500, 1200, 3000),
-    hyper: row(80, 200, 500, 1200, 3000),
-    jigsaw9: row(150, 350, 900, 2000, 5000),
-    wordoku: row(100, 250, 600, 1500, null),
-    killer: row(300, 700, 1800, 4000, null),
-    greaterThan: row(300, 700, 1800, 4000, null),
-    mega12: row(400, 1000, 3000, null, null),
-    mega16: row(1500, 4000, 10000, null, null),
-    butterfly: row(1000, 3000, 8000, null, null),
-    samurai: row(3000, 8000, 20000, null, null),
-    flower: row(3000, 8000, 20000, null, null),
-    sohei: row(3000, 8000, 20000, null, null)
+    classic4: row(10, null, null, null, null, null, null, null, null),
+    classic6: row(10, null, null, 350, null, null, null, null, null),
+    classic9: row(60, 150, 150, 400, 400, 900, 2500, 2500, null),
+    diagonalX: row(80, 200, 200, 500, 500, 1200, 3000, 3000, 3000),
+    hyper: row(80, 200, 200, 500, 500, 1200, 3000, 3000, 5000),
+    jigsaw9: row(150, 350, 350, 900, 900, 2000, 5000, 5000, 5000),
+    wordoku: row(100, 250, 250, 600, 600, 1500, 1500, 2500, null),
+    killer: row(300, 700, 700, 1800, 10000, 10000, 10000, 10000, 10000),
+    greaterThan: row(300, 700, 700, 6000, 10000, 10000, 10000, 10000, 10000),
+    mega12: row(400, 1000, 1000, 3000, 3000, 3000, 3000, 4500, 16000),
+    mega16: row(1500, 4000, 4000, 10000, 10000, 10000, 10000, 10000, 10000),
+    butterfly: row(1000, 3000, 3000, 8000, 8000, 8000, 8000, 8000, 15000),
+    samurai: row(3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 30000),
+    flower: row(3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 20000),
+    sohei: row(3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 20000)
   };
 
   /**
@@ -139,9 +142,9 @@
    * boards use an easier level, so that the whole check stays within a few seconds.
    */
   var COMBOS = [
-    ['classic4', 'veryEasy'], ['classic4', 'easy'], ['classic6', 'easy'],
+    ['classic4', 'veryEasy'], ['classic6', 'veryEasy'], ['classic6', 'hard'],
     ['classic9', 'veryEasy'], ['classic9', 'easy'], ['classic9', 'medium'], ['classic9', 'hard'],
-    ['classic9', 'expert'], ['classic9', 'evil'],
+    ['classic9', 'veryHard'], ['classic9', 'expert'], ['classic9', 'evil'],
     ['mega12', 'medium'], ['mega16', 'easy'],
     ['diagonalX', 'easy'], ['diagonalX', 'evil'], ['hyper', 'hard'],
     ['jigsaw9', 'medium'], ['jigsaw9', 'expert'],

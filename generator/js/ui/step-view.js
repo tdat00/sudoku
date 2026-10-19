@@ -292,7 +292,7 @@
         translate('steps.techniques.help', { name: name }));
     }
 
-    /** The "?" of a row that is not a technique: the empty cells ('empties') or the raise to the level ('floor'). */
+    /** The "?" of a row that is not a technique: the empty cells ('empties'). */
     function partHelp(part, name, args) {
       return helpTip('step-part-' + part + '-help', translate('steps.techniques.' + part + '.desc', args),
         translate('steps.techniques.help', { name: name }));
@@ -306,20 +306,14 @@
     }
 
     /**
-     * The techniques the puzzle of a step needs, with the uses and the score of each. The total is the difficulty
-     * score of the puzzle of that step, the one the summary shows at the end: the techniques, plus the empty
-     * cells, plus what the hardest technique raises the score to (when it is higher). Empty when the page cannot
-     * tell for this step.
+     * The techniques the puzzle of a step needs, with the uses, the points and the share of the score of
+     * each. The total is the difficulty score of the puzzle of that step, the one the summary shows at the
+     * end: the shares of the techniques plus that of the empty cells (`SG.difficulty.scoreTable`, the
+     * allocation the summary uses too). Empty when the page cannot tell for this step.
      */
     function techniquesBlock(position) {
       const info = typeof opts.stats === 'function' ? opts.stats(position) : null;
       if (!info) return null;
-      const score = SG.difficulty && typeof SG.difficulty.techniqueScore === 'function'
-        ? SG.difficulty.techniqueScore : function () { return 0; };
-      const cellBonus = SG.difficulty && SG.difficulty.SCORING && typeof SG.difficulty.SCORING.emptyCellBonus === 'number'
-        ? SG.difficulty.SCORING.emptyCellBonus : 0;
-      const unit = SG.difficulty && typeof SG.difficulty.costOf === 'function'
-        ? SG.difficulty.costOf : function () { return 0; };
       const bars = chartModel(info.counts).bars;
       const box = html(doc, 'div', { class: 'step-detail__techniques' }, [
         html(doc, 'h3', { class: 'step-detail__subtitle' },
@@ -331,52 +325,45 @@
         return box;
       }
       const empties = Number.isFinite(info.empties) && info.empties > 0 ? info.empties : 0;
-      const emptyPoints = empties * cellBonus;
-      const exact = bars.map(function (bar) { return score(bar.id, bar.count); });
-      const techniqueTotal = exact.reduce(function (sum, points) { return sum + points; }, 0);
-      const total = typeof info.score === 'number' && isFinite(info.score)
-        ? info.score : techniqueTotal + emptyPoints;
-      const raised = total - (techniqueTotal + emptyPoints);
-      const hasEmpties = empties > 0 && emptyPoints > 0;
-      const hasFloor = raised >= 0.5;
-      const values = exact.slice();
-      if (hasEmpties) values.push(emptyPoints);
-      if (hasFloor) values.push(raised);
-      const shown = roundToTotal(values, total);
+      let table = null;
+      if (SG.difficulty && typeof SG.difficulty.scoreTable === 'function') {
+        try {
+          table = SG.difficulty.scoreTable(info.counts, empties);
+        } catch (err) {
+          table = null;
+        }
+      }
+      const byId = {};
+      if (table !== null) table.rows.forEach(function (row) { byId[row.id] = row; });
+      const hasEmpties = table !== null && table.empties > 0;
+      const total = table !== null ? table.total
+        : typeof info.score === 'number' && isFinite(info.score) ? info.score : 0;
 
-      const rows = bars.map(function (bar, i) {
+      const rows = bars.map(function (bar) {
         const previous = (info.before && info.before[bar.id]) || 0;
         const more = bar.count - previous;
         const label = html(doc, 'span', { class: 'result-table__name' }, [doc.createTextNode(bar.label)]);
         const help = techniqueHelp(bar.id, bar.label);
         if (help !== null) label.appendChild(help);
         const name = html(doc, 'th', { scope: 'row' }, [label]);
+        const row = byId[bar.id] || null;
         return html(doc, 'tr', { 'data-technique': bar.id }, [
           name,
           cell('td', formatNumber(bar.count) + (more > 0 ? ' (+' + formatNumber(more) + ')' : ''),
             'result-table__num'),
-          cell('td', formatNumber(unit(bar.id), { maximumFractionDigits: 2 }), 'result-table__num'),
-          cell('td', formatNumber(shown[i]), 'result-table__num')
+          cell('td', row !== null ? formatNumber(row.points, { maximumFractionDigits: 2 }) : '',
+            'result-table__num'),
+          cell('td', row !== null ? formatNumber(row.total) : '', 'result-table__num')
         ]);
       });
-      let next = bars.length;
       if (hasEmpties) {
+        const unit = formatNumber(table.emptyPoints, { maximumFractionDigits: 2 });
         rows.push(html(doc, 'tr', { 'data-part': 'empties' }, [
           nameCell(translate('steps.techniques.empties'),
-            partHelp('empties', translate('steps.techniques.empties'),
-              { points: formatNumber(cellBonus, { maximumFractionDigits: 2 }) })),
-          cell('td', formatNumber(empties), 'result-table__num'),
-          cell('td', formatNumber(cellBonus, { maximumFractionDigits: 2 }), 'result-table__num'),
-          cell('td', formatNumber(shown[next++]), 'result-table__num')
-        ]));
-      }
-      if (hasFloor) {
-        rows.push(html(doc, 'tr', { 'data-part': 'floor' }, [
-          nameCell(translate('steps.techniques.floor'),
-            partHelp('floor', translate('steps.techniques.floor'))),
-          cell('td', '', 'result-table__num'),
-          cell('td', '', 'result-table__num'),
-          cell('td', formatNumber(shown[next++]), 'result-table__num')
+            partHelp('empties', translate('steps.techniques.empties'), { points: unit })),
+          cell('td', formatNumber(table.empties), 'result-table__num'),
+          cell('td', unit, 'result-table__num'),
+          cell('td', formatNumber(table.emptyTotal), 'result-table__num')
         ]));
       }
       const other = rows.slice(bars.length);
@@ -511,12 +498,7 @@
       'steps.techniques.empties': 'Empty cells',
       'steps.techniques.section.technique': 'Technique',
       'steps.techniques.section.other': 'Other',
-      'steps.techniques.empties.desc': 'Every cell that is empty at the start adds {points} points: the fewer clues ' +
-        'a puzzle gives, the more there is to solve.',
-      'steps.techniques.floor': 'Bonus points for difficult techniques',
-      'steps.techniques.floor.desc': 'Every level has a minimum score. When the hardest technique the puzzle needs ' +
-        'belongs to a higher level than the points above give, bonus points bring the score up to the minimum of ' +
-        'that level.',
+      'steps.techniques.empties.desc': 'Empty cells add 80 × E ÷ (E + 40) points, at most 80.',
       'steps.techniques.total': 'Total',
       'steps.techniques.help': 'About \u201c{name}\u201d',
       'steps.detail.empty': 'Use the replay controls under the board to go through the steps of how the ' +
@@ -539,11 +521,7 @@
       'steps.techniques.empties': 'Ô trống',
       'steps.techniques.section.technique': 'Kỹ thuật',
       'steps.techniques.section.other': 'Khác',
-      'steps.techniques.empties.desc': 'Mỗi ô trống ban đầu cộng thêm {points} điểm: đề càng ít số cho sẵn thì càng ' +
-        'còn nhiều việc phải giải.',
-      'steps.techniques.floor': 'Điểm thưởng cho kỹ thuật khó',
-      'steps.techniques.floor.desc': 'Mỗi độ khó có một điểm tối thiểu. Khi kỹ thuật khó nhất mà đề cần thuộc về ' +
-        'một độ khó cao hơn so với số điểm ở trên, điểm thưởng được cộng thêm để đạt mức tối thiểu của độ khó đó.',
+      'steps.techniques.empties.desc': 'Các ô trống cộng 80 × E ÷ (E + 40) điểm, tối đa 80.',
       'steps.techniques.total': 'Tổng',
       'steps.techniques.help': 'Giải thích về \u201c{name}\u201d',
       'steps.detail.empty': 'Dùng các nút phát lại dưới bảng để xem từng bước tạo ra đề. Mô tả của mỗi bước ' +

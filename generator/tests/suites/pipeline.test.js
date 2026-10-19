@@ -121,20 +121,43 @@
     if (open !== null) throw new Error('step ' + open + ' never ends');
   }
 
-  function withCosts(overrides, fn) {
+  /** Runs fn with weight overrides of SG.difficulty.WEIGHTS and always restores the table. */
+  function withWeights(overrides, fn) {
     var saved = {};
     Object.keys(overrides).forEach(function (id) {
-      saved[id] = Object.prototype.hasOwnProperty.call(D.COSTS, id) ? D.COSTS[id] : undefined;
-      D.COSTS[id] = overrides[id];
+      saved[id] = Object.prototype.hasOwnProperty.call(D.WEIGHTS, id) ? D.WEIGHTS[id] : undefined;
+      D.WEIGHTS[id] = overrides[id];
     });
     try {
       return fn();
     } finally {
       Object.keys(saved).forEach(function (id) {
-        if (saved[id] === undefined) delete D.COSTS[id];
-        else D.COSTS[id] = saved[id];
+        if (saved[id] === undefined) delete D.WEIGHTS[id];
+        else D.WEIGHTS[id] = saved[id];
       });
     }
+  }
+
+  /**
+   * Runs fn with a registered 4x4 test variant that offers every level: a 4x4 board never needs more than
+   * singles, so every level from easy up is out of reach and the retry loop runs to its end. `extra` adds
+   * hooks. The board has 16 cells.
+   */
+  var UNREACHABLE = 'reachProbe';
+  function withUnreachable(fn, extra, id) {
+    var vid = id || UNREACHABLE;
+    var def = Object.assign({
+      id: vid,
+      i18nKey: 'variant.' + vid,
+      group: 'classic',
+      digits: 4,
+      difficultySupport: SG.difficulty.LEVELS.slice(),
+      defaultSymbolMode: 'digits',
+      symbolModes: ['digits'],
+      options: [],
+      build: function () { return SG.fixtures.models.boxGrid(vid, 2, 2); }
+    }, extra);
+    return withVariant(def, fn);
   }
 
   /** A model like `model` with another variant id (models are immutable, so a new one is built). */
@@ -334,8 +357,8 @@
         { difficulty: 'easy', seed: 19, symmetry: 'none', digOrder: 'spiral' },
         { difficulty: 'medium', seed: 20, symmetry: 'diagonal', digOrder: 'jumpOne' },
         { difficulty: 'easy', seed: 21, digOrder: 'rowByRow' },
-        { variantId: 'classic4', difficulty: 'easy', seed: 22 },
-        { variantId: 'classic6', difficulty: 'easy', seed: 23 }
+        { variantId: 'classic4', difficulty: 'veryEasy', seed: 22 },
+        { variantId: 'classic6', difficulty: 'veryEasy', seed: 23 }
       ];
       cases.forEach(function (c) {
         var out = run(c, 'full');
@@ -560,12 +583,12 @@
     });
 
     it('the retry path: the replay ends on the closest puzzle, not on the last dig', function () {
-      withCosts({ nakedSingle: 1000 }, function () {
+      withUnreachable(function () {
         var finals = 0;
         for (var s = 9000; s < 9012; s++) {
-          var out = run({ difficulty: 'veryEasy', seed: s, maxAttempts: 3 }, 'full');
+          var out = run({ variantId: UNREACHABLE, difficulty: 'evil', seed: s, maxAttempts: 3 }, 'full');
           checkEvents(out.events);
-          expect(Array.from(replay(out.events, 81).value)).toEqual(Array.from(out.result.givens));
+          expect(Array.from(replay(out.events, 16).value)).toEqual(Array.from(out.result.givens));
           finals += count(out.events, 'tune.final');
         }
         expect(finals).toBeGreaterThan(0);
@@ -573,7 +596,7 @@
     }, 60000);
 
     it('a real trace, capped to 2000 events, replays to the same board (step events all kept)', function () {
-      var out = run({ difficulty: 'hard', seed: 21 }, 'full');
+      var out = run({ difficulty: 'nightmare1', seed: 21 }, 'full');
       expect(out.events.length).toBeGreaterThan(2000);
       var capped = E.capTrace(out.events, 2000);
       expect(capped.length).toBeLessThan(2001);
@@ -793,7 +816,7 @@
 
     it('keeps what the caller chose, and does not change the object it was given', function () {
       var given = {
-        variantId: 'classic6', difficulty: 'easy', seed: 9, symbolMode: 'letters', symmetry: 'mirrorV',
+        variantId: 'classic6', difficulty: 'veryEasy', seed: 9, symbolMode: 'letters', symmetry: 'mirrorV',
         digOrder: 'spiral', maxAttempts: 3, trace: 'off', variantOptions: { a: [1, 2], b: { c: 'x' } }
       };
       var before = JSON.parse(JSON.stringify(given));
@@ -988,7 +1011,7 @@
   }
 
   describe('pipeline: the dig log (the data of the replay)', function () {
-    [['classic4', 'easy'], ['classic9', 'veryEasy'], ['classic9', 'medium'], ['classic9', 'evil'],
+    [['classic4', 'veryEasy'], ['classic9', 'veryEasy'], ['classic9', 'medium'], ['classic9', 'evil'],
       ['killer', 'easy'], ['greaterThan', 'easy'], ['greaterThan', 'medium'], ['wordoku', 'easy'],
       ['jigsaw9', 'easy']].forEach(function (pair) {
       it(pair[0] + ' ' + pair[1] + ': applied to the solution, it ends exactly on the puzzle', function () {
@@ -1051,8 +1074,8 @@
         { difficulty: 'easy', seed: 7, symmetry: 'none', digOrder: 'snake' },
         { difficulty: 'hard', seed: 8, symmetry: 'diagonal', digOrder: 'jumpOne' },
         { difficulty: 'easy', seed: 9, digOrder: 'rowByRow', maxAttempts: 2 },
-        { variantId: 'classic4', difficulty: 'easy', seed: 10 },
-        { variantId: 'classic6', difficulty: 'easy', seed: 11, maxAttempts: 2 }
+        { variantId: 'classic4', difficulty: 'veryEasy', seed: 10 },
+        { variantId: 'classic6', difficulty: 'veryEasy', seed: 11, maxAttempts: 2 }
       ];
       cases.forEach(function (c) {
         var cfg = config(c);
@@ -1087,11 +1110,14 @@
     });
 
     it('an unreachable level gives the same closest puzzle both ways, with the same warning', function () {
-      withCosts({ nakedSingle: 1000 }, function () {
-        var byHand = direct(model9, 'veryEasy', 9000, { maxAttempts: 3 });
-        var viaPipeline = P.run(config({ difficulty: 'veryEasy', seed: 9000, maxAttempts: 3 }), null);
+      withUnreachable(function () {
+        var model = SG.variants.get(UNREACHABLE).build({}, null);
+        var byHand = direct(model, 'evil', 9000, { maxAttempts: 3 });
+        var viaPipeline = P.run(config({ variantId: UNREACHABLE, difficulty: 'evil', seed: 9000, maxAttempts: 3 }),
+          null);
         expect(Array.from(viaPipeline.givens)).toEqual(Array.from(byHand.givens));
         expect(viaPipeline.warnings).toEqual(byHand.warnings);
+        expect(viaPipeline.warnings).toContain('difficulty.approximate');
         expect(viaPipeline.attempts).toBe(3);
       });
     }, 60000);
@@ -1103,8 +1129,8 @@
 
   describe('pipeline: the retry loop', function () {
     it('after each missed attempt it emits retry.difficulty with the reason, then a new grid', function () {
-      withCosts({ nakedSingle: 1000 }, function () {
-        var out = run({ difficulty: 'veryEasy', seed: 9000, maxAttempts: 3 }, 'summary');
+      withUnreachable(function () {
+        var out = run({ variantId: UNREACHABLE, difficulty: 'evil', seed: 9000, maxAttempts: 3 }, 'summary');
         var retries = out.events.filter(function (e) { return e.type === 'retry'; });
         expect(retries).toHaveLength(3);
         expect(retries.map(function (e) { return e.i18nArgs.attempt; })).toEqual([1, 2, 3]);
@@ -1113,8 +1139,8 @@
           expect(e.i18nKey).toBe('retry.difficulty');
           expect(e.i18nArgs.reason).toBe('difficulty');
           expect(e.i18nArgs.maxAttempts).toBe(3);
-          expect(e.i18nArgs.requested).toBe('veryEasy');
-          expect(e.i18nArgs.achieved).toBe('evil');
+          expect(e.i18nArgs.requested).toBe('evil');
+          expect(e.i18nArgs.achieved).toBe('veryEasy');
           expect(e.stepId).toBe('tune');
         });
         // Step 3 starts again for every attempt, numbered "attempt n of m".
@@ -1128,10 +1154,11 @@
     }, 60000);
 
     it('gives up with the closest puzzle, the warning difficulty.approximate and no exception', function () {
-      withCosts({ nakedSingle: 1000 }, function () {
-        var out = run({ difficulty: 'veryEasy', seed: 9001, maxAttempts: 2 }, 'summary');
+      withUnreachable(function () {
+        var out = run({ variantId: UNREACHABLE, difficulty: 'evil', seed: 9001, maxAttempts: 2 }, 'summary');
         expect(out.result.warnings).toEqual(['difficulty.approximate']);
-        expect(out.result.rating.level).not.toBe('veryEasy');
+        expect(out.result.rating.level).not.toBe('evil');
+        expect(out.result.rating.solved).toBe(true);
         expect(SG.dfs.countSolutions(out.result.model, out.result.givens, 2)).toBe(1);
         expect(count(out.events, 'tune.best')).toBe(1);
         var finalize = out.events.filter(function (e) {
@@ -1145,13 +1172,14 @@
     }, 60000);
 
     it('a missed dig sample is tune.miss; a reached level is tune.hit and ends the loop', function () {
-      withCosts({ nakedSingle: 1000 }, function () {
-        var out = run({ difficulty: 'veryEasy', seed: 9002, maxAttempts: 1 }, 'summary');
-        expect(count(out.events, 'tune.miss')).toBe(12);
-        expect(count(out.events, 'tune.hit')).toBe(0);
+      withUnreachable(function () {
+        var out = run({ variantId: UNREACHABLE, difficulty: 'evil', seed: 9002, maxAttempts: 1 }, 'summary');
         var miss = out.events.filter(function (e) { return e.i18nKey === 'tune.miss'; });
+        // Twelve dig samples, and the local search of the attempt (section 5.7 (6)) at the end.
+        expect(miss).toHaveLength(13);
+        expect(count(out.events, 'tune.hit')).toBe(0);
         expect(miss.map(function (e) { return e.i18nArgs.sample; })).toEqual(
-          Array.from({ length: 12 }, function (v, i) { return i + 1; }));
+          Array.from({ length: 13 }, function (v, i) { return Math.min(12, i + 1); }));
         expect(miss[0].i18nArgs.maxSamples).toBe(12);
       });
       var hit = run({ difficulty: 'easy', seed: 9003 }, 'summary');
@@ -1160,8 +1188,8 @@
     }, 60000);
 
     it('no retry events at verbosity off', function () {
-      withCosts({ nakedSingle: 1000 }, function () {
-        var out = run({ difficulty: 'veryEasy', seed: 9000, maxAttempts: 2 }, 'off');
+      withUnreachable(function () {
+        var out = run({ variantId: UNREACHABLE, difficulty: 'evil', seed: 9000, maxAttempts: 2 }, 'off');
         expect(out.events.filter(function (e) { return e.type === 'retry'; })).toHaveLength(0);
         expect(out.result.warnings).toContain('difficulty.approximate');
       });
@@ -1200,8 +1228,15 @@
           function (e) { events.push(e); });
         expect(calls).toHaveLength(1);
         var ctx = calls[0].ctx;
-        expect(Object.keys(ctx).sort()).toEqual(['attempt', 'budget', 'emit', 'level', 'model', 'rng',
-          'solution', 'spec', 'variantId']);
+        expect(Object.keys(ctx).sort()).toEqual(['attempt', 'budget', 'caps', 'emit', 'keeper', 'level', 'model',
+          'rng', 'solution', 'spec', 'symmetry', 'variantId']);
+        expect(ctx.symmetry).toBe('rotational180');
+        expect(typeof ctx.keeper.offer).toBe('function');
+        expect(typeof ctx.keeper.closer).toBe('function');
+        expect(ctx.caps.maxRatings).toBe(1024);
+        expect(ctx.caps.maxProposals).toBe(32768);
+        expect(typeof ctx.caps.ratings).toBe('number');
+        expect(typeof ctx.caps.proposals).toBe('number');
         expect(ctx.variantId).toBe('hookCtx');
         expect(ctx.model.variantId).toBe('hookCtx');
         expect(ctx.level).toBe('easy');
@@ -1223,22 +1258,18 @@
 
     it('postGenerate runs once per attempt with the grid of that attempt, and may emit events', function () {
       var attempts = [];
-      var def = hookVariant('hookEach', {
+      withUnreachable(function () {
+        var out = run({ variantId: 'hookEach', difficulty: 'evil', seed: 9000, maxAttempts: 3 }, 'full');
+        expect(attempts.map(function (a) { return a.attempt; })).toEqual([1, 2, 3]);
+        expect(new Set(attempts.map(function (a) { return a.solution; })).size).toBe(3);
+        expect(count(out.events, 'extraStructure.built')).toBe(6);
+        checkNesting(out.events);
+      }, {
         postGenerate: function (ctx) {
           attempts.push({ attempt: ctx.attempt, solution: Array.from(ctx.solution).join('') });
           ctx.emit.micro('extraStructure', 'extraStructure.built', { variantId: ctx.variantId });
         }
-      });
-      withCosts({ nakedSingle: 1000 }, function () {
-        withVariant(def, function () {
-          var out = run({ variantId: 'hookEach', difficulty: 'veryEasy', seed: 9000, maxAttempts: 3 },
-            'full');
-          expect(attempts.map(function (a) { return a.attempt; })).toEqual([1, 2, 3]);
-          expect(new Set(attempts.map(function (a) { return a.solution; })).size).toBe(3);
-          expect(count(out.events, 'extraStructure.built')).toBe(6);
-          checkNesting(out.events);
-        });
-      });
+      }, 'hookEach');
     }, 60000);
 
     it('adopts the model that postGenerate returns, for the dig, the rating and the result', function () {
@@ -1471,7 +1502,7 @@
         }
       });
       try {
-        return fn();
+        return withWeights({ testGuesser: 1 }, fn);
       } finally {
         SG.techniques.unregister('testGuesser');
       }

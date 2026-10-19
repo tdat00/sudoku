@@ -135,7 +135,7 @@
   explain.rate = describeStep('rate', 6, [
     ['solve', 0], // report <- solve the puzzle by logic, with every technique
     ['count', 0], // count how often each technique was needed
-    ['score', 0], // score <- the sum of the technique costs
+    ['score', 0], // score <- the hardest technique in full, the rest of the work on a log scale, the empties
     ['classify', 0] // level <- the difficulty band that contains the score
   ], {
     'rate.technique': 'count',

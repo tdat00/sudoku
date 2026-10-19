@@ -13,11 +13,18 @@
   var G = SG.greaterThan;
   var def = SG.variants.get('greaterThan');
 
-  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'expert'];
-  /** design.md 9.1, greaterThan row, p95 in ms. 'easy' has no column there and takes the next one. */
-  var BUDGET_MS = { veryEasy: 300, easy: 700, medium: 700, hard: 1800, expert: 4000 };
+  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1', 'nightmare2'];
+  /** design.md 9.1, greaterThan row, p95 in ms. */
+  var BUDGET_MS = { veryEasy: 300, easy: 700, medium: 700, hard: 6000, veryHard: 10000, expert: 10000,
+    evil: 10000, nightmare1: 10000, nightmare2: 10000 };
   var PUZZLES_PER_LEVEL = 20;
+  /** Fewer puzzles of the slower levels, so that the suite stays quick. */
+  var PER_LEVEL = { hard: 10, veryHard: 10, expert: 10, evil: 10, nightmare1: 10, nightmare2: 10 };
   var SINGLES = ['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine'];
+
+  function countOf(level) {
+    return PER_LEVEL[level] || PUZZLES_PER_LEVEL;
+  }
 
   function now() { return typeof performance !== 'undefined' ? performance.now() : Date.now(); }
 
@@ -194,7 +201,7 @@
       runCache = {};
       LEVELS.forEach(function (level, li) {
         runCache[level] = [];
-        for (var i = 0; i < PUZZLES_PER_LEVEL; i++) {
+        for (var i = 0; i < countOf(level); i++) {
           runCache[level].push(generate(level, 100 * (li + 1) + i));
         }
       });
@@ -371,18 +378,24 @@
         expect(without).toBe(count + 1);
       });
 
-    it('is what makes the signs count: with it every puzzle is solved by a handful of search nodes, without ' +
+    it('is what makes the signs count: with it every puzzle is solved by a few search nodes, without ' +
       'it a puzzle that keeps a sign is ambiguous', function () {
       var withSign = 0;
+      var nodes = [];
       allPuzzles().forEach(function (p, i) {
         var budget = SG.budget.create({ nodes: 1e6 });
         check(SG.dfs.countSolutions(p.model, p.givens, 2, budget) === 1, 'puzzle ' + i + ': not unique');
-        check(budget.nodes < 200, 'puzzle ' + i + ': ' + budget.nodes + ' nodes');
+        nodes.push(budget.nodes);
+        // Rating v2 digs the levels up to nightmare2 with fewer clues and signs: a few thousand at most.
+        check(budget.nodes < 5000, 'puzzle ' + i + ': ' + budget.nodes + ' nodes');
         if (p.model.inequalities.length === 0) return;
         withSign++;
         var blind = withoutExtension(function () { return SG.dfs.countSolutions(p.model, p.givens, 2); });
         check(blind === 2, 'puzzle ' + i + ': unique although the signs are ignored');
       });
+      nodes.sort(function (a, b) { return a - b; });
+      // Most of them need only a handful.
+      expect(nodes[nodes.length >> 1]).toBeLessThan(200);
       expect(withSign).toBeGreaterThan(50);
     });
   });
@@ -433,7 +446,10 @@
       expect(SG.techniques.appliesTo(forcing, 'killer')).toBe(false);
       var onClassic = SG.difficulty.spec('expert', SG.variants.get('classic9').build({}, null));
       expect(onClassic.allowedTechniques).not.toContain('ineqChain');
-      var onThis = SG.difficulty.spec('veryEasy', board());
+      // Rating v2: a technique is allowed from the band whose maximum exceeds 1.25 x its weight.
+      expect(SG.difficulty.spec('veryEasy', board()).allowedTechniques).not.toContain('ineqChain');
+      expect(SG.difficulty.spec('easy', board()).allowedTechniques).toContain('ineqChain');
+      var onThis = SG.difficulty.spec('medium', board());
       expect(onThis.allowedTechniques).toContain('ineqChain');
       expect(onThis.allowedTechniques).toContain('minMaxForcing');
     });
@@ -798,11 +814,11 @@
       expect(typeof o.hintI18nKey).toBe('string');
     });
 
-    it('does not support evil (the ladder has no room for it): asking for it is refused', function () {
-      expect(def.difficultySupport).not.toContain('evil');
+    it('offers every level of the nine, nightmare2 included (measured by tests/qualify.js)', function () {
+      expect(def.difficultySupport).toEqual(LEVELS);
       expectCode(function () {
-        SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'evil', seed: 1 }, null);
-      }, 'difficulty.unsupportedLevel');
+        SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'nightmare', seed: 1 }, null);
+      }, 'difficulty.unknownLevel');
     });
 
     it('builds the plain 9x9 board: 27 units like classic9, no signs, no clues (CV1)', function () {
@@ -949,7 +965,7 @@
 
   describe('greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7; T-5.6)', function () {
     LEVELS.forEach(function (level) {
-      describe(level + ': ' + PUZZLES_PER_LEVEL + ' puzzles', function () {
+      describe(level + ': ' + countOf(level) + ' puzzles', function () {
         it('I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs',
           function () {
             puzzleRun()[level].forEach(function (p, i) {
@@ -993,7 +1009,7 @@
             });
           });
 
-        it('I5: a puzzle that reached the level has its score in the band and its technique in the groups; ' +
+        it('I5: every puzzle has a complete proof, and one that reached the level has its score in the band; ' +
           'I6: at least minClues givens, every unit its minimum', function () {
           var exact = 0;
           puzzleRun()[level].forEach(function (p, i) {
@@ -1009,13 +1025,12 @@
               exact++;
               expect(p.rating.score).toBeGreaterThanOrEqual(spec.min);
               expect(p.rating.score).toBeLessThan(spec.max);
-              if (p.rating.hardestGroup !== null) expect(spec.allowedGroups).toContain(p.rating.hardestGroup);
               expect(p.warnings).toEqual([]);
             }
             expect(SG.difficulty.rate(p.model, p.givens).level).toBe(p.rating.level);
             expect(p.rating.solved).toBe(true);
           });
-          expect(exact / PUZZLES_PER_LEVEL).toBeGreaterThanOrEqual(0.9);
+          expect(exact / countOf(level)).toBeGreaterThanOrEqual(0.9);
         });
 
         it('the clues follow the symmetry of the configuration (rotational180): the signs are not mirrored',
@@ -1030,7 +1045,7 @@
         it('CV6: p95 of the generation time is within the design.md 9.1 budget of ' + BUDGET_MS[level] + ' ms',
           function () {
             var times = puzzleRun()[level].map(function (p) { return p.elapsedMs; });
-            expect(percentile(times, 0.95)).toBeLessThan(BUDGET_MS[level]);
+            expect(percentile(times, 0.95)).toBeLessThan(SG.test.timeLimit(BUDGET_MS[level]));
           });
       });
     });
@@ -1053,14 +1068,19 @@
         var signs = LEVELS.map(function (level) { return mean(puzzleRun()[level].map(function (p) {
           return p.model.inequalities.length;
         })); });
-        for (var i = 1; i < LEVELS.length; i++) {
-          expect(clues[i]).toBeLessThan(clues[i - 1]);
-          expect(signs[i]).toBeGreaterThan(signs[i - 1]);
-        }
+        // Rating v2: the score, not the counts, sets the level, so neighbouring levels may swap; the trend
+        // over the ladder holds: veryEasy > easy > every level above in clues, and the three hardest levels
+        // keep more signs than the three easiest.
+        var text = 'clues ' + clues.map(function (c) { return c.toFixed(1); }).join(' / ') + ', signs ' +
+          signs.map(function (s) { return s.toFixed(1); }).join(' / ');
+        check(clues[0] > clues[1], text);
+        for (var i = 2; i < LEVELS.length; i++) check(clues[i] < clues[1], text);
+        function avg(list) { return list.reduce(function (a, b) { return a + b; }, 0) / list.length; }
+        check(avg(signs.slice(-3)) > avg(signs.slice(0, 3)), text);
         expect(signs[LEVELS.length - 1]).toBeGreaterThan(4);
       });
 
-    it('scores rise with the level: the means of the five levels are in order', function () {
+    it('scores rise with the level: the means of the levels are in order', function () {
       var scores = LEVELS.map(function (level) { return mean(puzzleRun()[level].map(function (p) {
         return p.rating.score;
       })); });

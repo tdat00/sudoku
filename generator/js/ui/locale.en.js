@@ -120,14 +120,22 @@
     'difficulty.easy.desc': 'Slightly fewer clues. Adds locked candidates: pointing pairs and box/line ' +
       'reduction.',
     'difficulty.medium': 'Medium',
-    'difficulty.medium.desc': 'Needs pairs, triples and quads of candidates (naked and hidden subsets).',
+    'difficulty.medium.desc': 'Typically uses pairs and triples of candidates (naked and hidden subsets).',
     'difficulty.hard': 'Hard',
-    'difficulty.hard.desc': 'Needs fish patterns (X-Wing, Swordfish, Jellyfish) and simple colouring.',
+    'difficulty.hard.desc': 'Typically uses quads, fish patterns (X-Wing, Swordfish) and simple colouring.',
+    'difficulty.veryHard': 'Very hard',
+    'difficulty.veryHard.desc': 'Typically uses a wing (XY-Wing, XYZ-Wing), a Jellyfish or several fish ' +
+      'patterns.',
     'difficulty.expert': 'Expert',
-    'difficulty.expert.desc': 'Needs wings (XY-Wing, XYZ-Wing, W-Wing) and Unique Rectangles.',
+    'difficulty.expert.desc': 'Typically uses several wings, the W-Wing or Unique Rectangles, sometimes a ' +
+      'short forcing chain.',
     'difficulty.evil': 'Evil',
-    'difficulty.evil.desc': 'The hardest level: forcing chains and trial and error (Nishio), with very ' +
-      'few clues.',
+    'difficulty.evil.desc': 'Typically uses forcing chains and trial and error (Nishio), with very few ' +
+      'clues.',
+    'difficulty.nightmare1': 'Nightmare 1',
+    'difficulty.nightmare1.desc': 'Typically uses many forcing chains and trial-and-error steps.',
+    'difficulty.nightmare2': 'Nightmare 2',
+    'difficulty.nightmare2.desc': 'Highest score band; typically involves substantial advanced reasoning.',
 
     'symmetry.none': 'No symmetry',
     'symmetry.rotational180': 'Rotational 180\u00b0',
@@ -193,7 +201,7 @@
       'board is described as data, one solver works for every variant.',
     'explain.buildModel.how': 'The variant builds the cells and the layout (Jigsaw first grows its ' +
       'regions, multi-grid boards place their sub-grids). Then the units (rows, columns, regions) and the ' +
-      'peers of every cell are listed, and the difficulty bands are scaled to the size of the board.',
+      'peers of every cell are listed, and the clue floors of the level are scaled to the size of the board.',
     'explain.buildModel.live': 'Board with {cells} cells and {units} units',
     'explain.buildModel.code.build': 'model \u2190 variant.build(options, rng)',
     'explain.buildModel.code.units': 'units \u2190 rows + columns + regions of every grid',
@@ -253,13 +261,14 @@
     'explain.rate.what': 'Measure how hard the puzzle is.',
     'explain.rate.why': 'Difficulty is measured by what a person needs in order to solve the puzzle, not ' +
       'guessed from the number of clues. That is what lets us guarantee the level you asked for.',
-    'explain.rate.how': 'The logical solver solves the puzzle step by step with human techniques, cheapest ' +
-      'first, and counts how often each technique was needed. Every use has a cost, and the total score ' +
-      'decides the level.',
+    'explain.rate.how': 'The logical solver solves the puzzle step by step with human techniques, tried ' +
+      'in a fixed technique-priority order, and counts how often each technique was needed. The score is ' +
+      'the points of the hardest technique, plus a part that grows with the logarithm of all the work, ' +
+      'plus at most 80 for the empty cells; the score decides the level.',
     'explain.rate.live': '{clues} clues \u00b7 score {score}',
     'explain.rate.code.solve': 'report \u2190 solve the puzzle by logic, with every technique',
     'explain.rate.code.count': 'count how often each technique was needed',
-    'explain.rate.code.score': 'score \u2190 the sum of the technique costs',
+    'explain.rate.code.score': 'score \u2190 hardest technique + log of the total work + empty cells',
     'explain.rate.code.classify': 'level \u2190 the difficulty band that contains the score',
 
     'explain.tune.what': 'Compare the result with the level you asked for, and finish.',
@@ -558,9 +567,14 @@
     'error.dfs.invalidGivens': 'The given digits do not fit this board.',
     'error.dfs.invalidLimit': 'The solution limit "{limit}" is not valid.',
     'error.difficulty.unknownLevel': 'Unknown difficulty level "{level}".',
+    'error.difficulty.unknownTechnique': 'The solving technique "{technique}" has no difficulty points.',
     'error.difficulty.unsupportedLevel': '{variantId} cannot be generated at the level "{level}". Please ' +
       'choose another level.',
     'error.digger.invalidOption': 'The value "{value}" is not valid for the option "{option}".',
+    'error.digger.noRatedPuzzle': 'No puzzle of {variantId} could be rated completely by logic. Try again ' +
+      'with another seed.',
+    'error.digger.objectiveGuard': 'A solve of the guided dig ran out of its work limit.',
+    'error.digger.uniqueGuard': 'A uniqueness check of the search ran out of its work limit.',
     'error.digger.invalidSolution': 'The solution handed to the digger is not valid.',
     'error.digger.notUnique': 'The dug puzzle of {variantId} does not have exactly one solution.',
     'error.digger.invalidStrategy': 'The dig strategy "{id}" is not valid.',

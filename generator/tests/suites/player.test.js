@@ -152,7 +152,7 @@
 
   describe('player: the replay steps of a result', function () {
     var CASES = [['classic9', 'easy', 3], ['classic9', 'medium', 3], ['classic9', 'evil', 5],
-      ['classic4', 'easy', 2], ['killer', 'medium', 2], ['greaterThan', 'medium', 4], ['jigsaw9', 'easy', 6],
+      ['classic4', 'veryEasy', 2], ['killer', 'medium', 2], ['greaterThan', 'medium', 4], ['jigsaw9', 'easy', 6],
       ['wordoku', 'easy', 1], ['mega12', 'easy', 2]];
 
     CASES.forEach(function (c) {
@@ -315,6 +315,73 @@
       expect(P.batchSigns(108)).toBe(14);
       expect(P.batchSigns(10)).toBe(4);
     });
+
+    /** Every step's clue count agrees with its board, and a reveal never shows up in the step before it. */
+    function expectFaithful(steps) {
+      steps.forEach(function (s, i) {
+        if (s.metrics !== null) expect(s.metrics.clues).toBe(clues(s.values));
+        if (s.kind !== 'reveal') return;
+        s.marks.revealed.forEach(function (c) {
+          if (steps[i - 1].values[c] !== 0) {
+            throw new Error('step ' + s.index + ': cell ' + c + ' is already shown in step ' + steps[i - 1].index);
+          }
+          expect(s.values[c]).not.toBe(0);
+        });
+      });
+    }
+
+    it('closes a batch of removals before the clues of a reveal come back (the batch shows its own board)',
+      function () {
+        var base = realResult('classic9', 'veryEasy', 1);
+        var givens = Int32Array.from(base.solution);
+        var synthetic = Object.assign({}, base, { givens: givens, digLog: [
+          { op: 'pass', pass: 'random', clues: 81 },
+          { op: 'accept', cells: [0, 80] },
+          { op: 'reveal', cells: [0, 80] }
+        ] });
+        var steps = stepsOf(synthetic);
+        expect(kinds(steps)).toEqual(['solution', 'random', 'reveal', 'final']);
+        expect([steps[1].values[0], steps[1].values[80]]).toEqual([0, 0]);
+        expect([steps[2].values[0], steps[2].values[80]]).toEqual([base.solution[0], base.solution[80]]);
+        expect(steps[1].metrics.clues).toBe(79);
+        expect(steps[2].args.clues).toBe(81);
+        expectFaithful(steps);
+      });
+
+    it('on a large board, where several guided rounds share a step, a reveal still follows the whole batch',
+      function () {
+        var base = realResult('mega16', 'veryEasy', 1);
+        var n = base.model.cellCount;
+        expect(P.roundsPerStep(n)).toBeGreaterThan(2);
+        var givens = Int32Array.from(base.solution);
+        [1, n - 2].forEach(function (c) { givens[c] = 0; });
+        var synthetic = Object.assign({}, base, { givens: givens, digLog: [
+          { op: 'pass', pass: 'guided', clues: n },
+          { op: 'accept', cells: [0, n - 1] },
+          { op: 'accept', cells: [1, n - 2] },
+          { op: 'reveal', cells: [0, n - 1], reason: 'search' }
+        ] });
+        var steps = stepsOf(synthetic);
+        expect(kinds(steps)).toEqual(['solution', 'guided', 'reveal', 'final']);
+        [0, n - 1, 1, n - 2].forEach(function (c) { expect(steps[1].values[c]).toBe(0); });
+        expect(steps[1].args.rounds).toBe(2);
+        expect(steps[2].key).toBe('replay.reveal.search');
+        [0, n - 1].forEach(function (c) { expect(steps[2].values[c]).toBe(base.solution[c]); });
+        [1, n - 2].forEach(function (c) { expect(steps[2].values[c]).toBe(0); });
+        expect(sameValues(steps[2].values, givens)).toBe(true);
+        expect(sameValues(steps[steps.length - 1].values, givens)).toBe(true);
+        expectFaithful(steps);
+      });
+
+    it('real top-level results with clues shown again replay faithfully (mega16, classic9)', function () {
+      [['mega16', 'evil', 478576959], ['mega16', 'nightmare1', 2422420669], ['classic9', 'nightmare1', 3]]
+        .forEach(function (c) {
+          var result = realResult(c[0], c[1], c[2]);
+          var steps = stepsOf(result);
+          expectFaithful(steps);
+          expect(sameValues(steps[steps.length - 1].values, result.givens)).toBe(true);
+        });
+    }, 60000);
   });
 
   describe('player: the board at a position', function () {

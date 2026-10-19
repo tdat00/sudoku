@@ -164,26 +164,35 @@
   // ---------------------------------------------------------------------------------------------
 
   describe('help: the ladder, the steps and the shortcuts', function () {
-    it('lists the six levels in order, each adding its technique group', function () {
+    it('lists the nine levels in order, each with the techniques that can first appear at it', function () {
       ready();
       var lad = H.ladder();
+      var last = lad.levels.length - 1;
       expect(lad.levels.map(function (r) { return r.level; })).toEqual(SG.difficulty.LEVELS);
       lad.levels.forEach(function (row, i) {
-        expect(row.group).toBe(SG.difficulty.BASE_GROUPS[i]);
-        expect(row.techniques.length).toBeGreaterThan(0);
+        var groups = [];
         row.techniques.forEach(function (x) {
-          expect(x.group).toBe(row.group);
           expect(x.variants).toEqual([]);
+          expect(x.points).toBe(SG.difficulty.WEIGHTS[x.id]);
+          // A technique adds at least 1.25 x its points: it first fits the band whose maximum is above that.
+          expect(1.25 * x.points).toBeLessThan(row.maxScore);
+          if (i > 0) expect(1.25 * x.points).toBeGreaterThan(row.minScore - 1e-9);
+          if (groups.indexOf(x.group) === -1) groups.push(x.group);
         });
+        expect(row.groups).toEqual(groups);
+        expect(row.groupKeys).toEqual(groups.map(function (g) { return 'techniqueGroup.' + g; }));
         var orders = row.techniques.map(function (x) { return x.order; });
         expect(orders).toEqual(orders.slice().sort(function (a, b) { return a - b; }));
         expect(row.minClues).toBeGreaterThan(0);
         expect(row.maxClues).toBeGreaterThan(row.minClues - 1);
         if (i > 0) expect(row.maxClues).toBeLessThan(lad.levels[i - 1].maxClues + 1);
-        if (i < 5) expect(row.maxScore).toBe(lad.levels[i + 1].minScore);
+        if (i < last) expect(row.maxScore).toBe(lad.levels[i + 1].minScore);
       });
-      expect(lad.levels[5].maxScore).toBe(Infinity);
+      expect(lad.levels[last].maxScore).toBe(Infinity);
       expect(lad.levels[0].minScore).toBe(0);
+      expect(lad.levels[0].groups).toEqual(['basic']);
+      expect(lad.levels[7].techniques).toEqual([]);
+      expect(lad.levels[8].techniques).toEqual([]);
     });
 
     it('lists every registered technique exactly once: by level, or under the variant it belongs to', function () {
@@ -203,17 +212,19 @@
       expect(lad.variantGroups.map(function (g) { return g.group; }).sort()).toEqual(['cage', 'ineq']);
     });
 
-    it('lists a technique that is registered later, at the level of its group', function () {
+    it('lists a technique that is registered later, at the level where its points first fit', function () {
       ready();
       SG.techniques.register({
         id: 'helpProbeTechnique', group: 'subset', baseCost: 10, order: 61, i18nKey: 'technique.helpProbeTechnique',
         find: function () { return null; }
       });
+      SG.difficulty.WEIGHTS.helpProbeTechnique = 200;
       try {
         var lad = H.ladder();
         var medium = lad.levels.filter(function (r) { return r.level === 'medium'; })[0];
         expect(medium.techniques.map(function (x) { return x.id; })).toContain('helpProbeTechnique');
       } finally {
+        delete SG.difficulty.WEIGHTS.helpProbeTechnique;
         SG.techniques.unregister('helpProbeTechnique');
       }
     });
@@ -294,8 +305,9 @@
       'help.variants.intro': ['count'],
       'help.variant.facts': ['digits', 'levels', 'modes'],
       'help.variant.wordoku.figure': ['word'],
-      'help.difficulty.score': ['bonus', 'multiplier'],
+      'help.difficulty.score': ['factor', 'half', 'max', 'max'],
       'help.difficulty.scoreOpen': ['min'],
+      'help.difficulty.ladder.intro': ['bound'],
       'help.difficulty.level.adds': ['group'],
       'help.difficulty.variant.for': ['variants'],
       'help.difficulty.closest.text': ['badge', 'retry'],
@@ -342,9 +354,9 @@
     it('renders every text in both languages without a placeholder left over', function () {
       ready();
       var sample = {
-        count: 15, digits: 9, levels: 'Easy', modes: 'Digits', word: 'SUNFLOWER', multiplier: '1.5', bonus: '0.6',
-        min: '1,500', group: 'Singles', variants: 'Killer', badge: 'Closest', retry: 'Retry', main: 'Main',
-        worker: 'Worker', position: 6, length: 12
+        count: 15, digits: 9, levels: 'Easy', modes: 'Digits', word: 'SUNFLOWER', factor: '0.25', max: '80',
+        half: '40', bound: '1.25', min: '1,500', group: 'Singles', variants: 'Killer',
+        badge: 'Closest', retry: 'Retry', main: 'Main', worker: 'Worker', position: 6, length: 12
       };
       var before = SG.i18n.current;
       try {
@@ -403,16 +415,21 @@
   // ---------------------------------------------------------------------------------------------
 
   describe('help: README.md', function () {
-    var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil'];
+    var LEVELS = SG.difficulty ? SG.difficulty.LEVELS : [];
 
     function readme() {
       return readText('README.md');
     }
 
+    /** The levels of a variant as the README writes them: runs of neighbours as "a–b", gaps as ", ". */
     function levelRange(levels) {
-      var first = LEVELS.indexOf(levels[0]);
-      var last = LEVELS.indexOf(levels[levels.length - 1]);
-      return first === last ? levels[0] : levels[0] + '\u2013' + levels[levels.length - 1];
+      var runs = [];
+      levels.forEach(function (level) {
+        var last = runs[runs.length - 1];
+        if (last && LEVELS.indexOf(level) === LEVELS.indexOf(last[1]) + 1) last[1] = level;
+        else runs.push([level, level]);
+      });
+      return runs.map(function (r) { return r[0] === r[1] ? r[0] : r[0] + '\u2013' + r[1]; }).join(', ');
     }
 
     function withoutFences(text) {
@@ -603,7 +620,7 @@
       });
       expect(unresolved).toEqual([]);
       ['SG.variants.register', 'SG.pipeline.run', 'SG.events.VOCABULARY', 'SG.workerClient.generate',
-        'SG.techniques.register', 'SG.difficulty.BASE_GROUPS', 'SG.localeFragments', 'SG.app'].forEach(function (name) {
+        'SG.techniques.register', 'SG.difficulty.WEIGHTS', 'SG.localeFragments', 'SG.app'].forEach(function (name) {
         expect(names[name]).toBe(true);
       });
     });

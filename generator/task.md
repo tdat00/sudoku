@@ -801,7 +801,7 @@ The Vietnamese translation must be **natural**, not crude machine translation; k
 
 ### T-7.7 — Final review & soak run
 **Depends on:** all **Parallel:** no **Estimate:** L
-**Owned files:** `tests/soak.js` *(extended)*, `docs/final-report.md` *(the final report)*; the calibration also changed `js/core/difficulty.js` and the `clueFloor` / `clueFloorScale` fields of the variant files
+**Owned files:** `tests/soak.js` *(extended)*, `docs/report-v1.md` *(the final report)*; the calibration also changed `js/core/difficulty.js` and the `clueFloor` / `clueFloorScale` fields of the variant files
 **Description:** Run a soak of 500+ puzzles over **all** variants × difficulties. Carry out the full manual checklist in `design.md` §15.5. Produce a report: the difficulty hit rate per variant, the measured performance compared with the milestones, remaining issues, and known limitations.
 **Acceptance:** 100% of puzzles have a unique solution (I1); ≥ 90% hit the exact difficulty for `classic9`, ≥ 80% for the other variants; the entire §15.5 checklist is carried out and recorded; `node tests/node-runner.js` is fully green.
 
@@ -877,7 +877,7 @@ All tasks of this repository are **✅ done** (59 cards in the combined project;
 | T-7.4 | Themes & visuals | P7 | T-7.3 | ✅ | M | ✅ Also `css/tokens-board.css` and `assets/favicon.svg` |
 | T-7.5 | Trial play mode | P7 | T-7.4 | ✅ | L | ➡️ **Moved to the sudoku-player repository**: `js/ui/play.js`, `css/play.css`, `play.test.js`, `sg.play.v1` and the play shortcuts of the help are not in this one |
 | T-7.6 | Docs & help | P7 | T-7.4 | ✅ | M | ✅ Own stylesheet `css/help.css`; the README is checked mechanically by `help.test.js`; after the split the README is bilingual, without the play mode, with the "Play online with sudoku-player" section |
-| T-7.7 | Final review & soak | P7 | all | ✗ | L | ✅ `--full` soak: 2 125 puzzles, no invariant violation; clue-floor calibration (D1–D3); `docs/final-report.md` (written before the split); manual checklist done in Edge only (see Appendix E) |
+| T-7.7 | Final review & soak | P7 | all | ✗ | L | ✅ `--full` soak: 2 125 puzzles, no invariant violation; clue-floor calibration (D1–D3); `docs/report-v1.md` (written before the split); manual checklist done in Edge only (see Appendix E) |
 | T-7.8 | Exchange / Play online | P7 | T-7.1, T-7.2 | ✗ | M | ✅ Added after the split: `js/ui/exchange.js` (shared byte for byte with the player), the `model` block of the JSON, the Play-online section of the Export dialog and a button in the result panel, `error.exchange.*` strings, tests; checked in headless Edge over `http` and `file://` |
 
 ---
@@ -921,7 +921,7 @@ All tasks of this repository are **✅ done** (59 cards in the combined project;
 | `tests/suites/*.test.js` | the corresponding test task | — |
 | `README.md` | T-7.6 | the final documentation pass |
 | `design.md`, `task.md` | the documentation pass after T-7.7 | — |
-| `docs/final-report.md` | T-7.7 | — |
+| `docs/report-v1.md` | T-7.7 | — |
 
 ⚠️ **Three hot files** (`locale.*.js`, `index.html`, `node-runner.js`) were expected to be touched by many tasks at once. What actually kept them calm: `SOURCE_FILES` lists every planned file up front and skips missing ones (so `node-runner.js` and `tests.html` needed no edits for a planned file), and strings went into `SG.localeFragments` instead of the locale packs. The rules that were given to the agents:
 - Only **add new lines**; do not reorder or reformat the file.
@@ -980,7 +980,7 @@ After each phase, run the corresponding checkpoint. If it fails, you **must not*
 
 ## Appendix E — Completion summary
 
-**State:** all tasks of this repository are done; everything is implemented and in the repository — see `git log` (the history was rebuilt after the split, in steps that follow the phases below). `T-7.5` moved to sudoku-player; `T-7.8` was added. Per-task status: Appendix A. Deviations and decisions: [`design.md`](./design.md) §18. Final QA of the combined project, the last soak and the open points: `docs/final-report.md`.
+**State:** all tasks of this repository are done; everything is implemented and in the repository — see `git log` (the history was rebuilt after the split, in steps that follow the phases below). `T-7.5` moved to sudoku-player; `T-7.8` was added. Per-task status: Appendix A. Deviations and decisions: [`design.md`](./design.md) §18. Final QA of the combined project, the last soak and the open points: `docs/report-v1.md`.
 
 ### What shipped, per phase
 
@@ -997,7 +997,7 @@ After each phase, run the corresponding checkpoint. If it fails, you **must not*
 
 ### Test counts
 
-`node tests/node-runner.js` (about three minutes) runs **43 suites**. At the tip of this repository the count is **3,367 tests, 0 failed, 0 skipped** (after the split it was 3,498 in 42 suites; the later UI rework replaced the tests of the removed result / steps-list features, and added `history.test.js`; the combined project had 3,524 before `play.test.js` left and `exchange.test.js`, the Play-online tests and the model-block tests came; `docs/final-report.md` has the numbers of the combined project at its final review). The baseline before the UI existed was 2,348 tests in 25 suites (2,344 passed, 4 skipped: browser-only checks that needed the locale packs).
+`node tests/node-runner.js` (about three minutes) runs **43 suites**. At the tip of this repository the count is **3,367 tests, 0 failed, 0 skipped** (after the split it was 3,498 in 42 suites; the later UI rework replaced the tests of the removed result / steps-list features, and added `history.test.js`; the combined project had 3,524 before `play.test.js` left and `exchange.test.js`, the Play-online tests and the model-block tests came; `docs/report-v1.md` has the numbers of the combined project at its final review). The baseline before the UI existed was 2,348 tests in 25 suites (2,344 passed, 4 skipped: browser-only checks that needed the locale packs).
 
 ### Changes after the task cards
 
