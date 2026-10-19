@@ -27,16 +27,16 @@ const OUT_DEFAULT = path.join(PLAYER_ROOT, 'js', 'ui', 'help-examples.js');
 
 /** [variantId, preferred levels, number of seeds, optional 'highest' supported level only]. */
 const PLAN = [
-  ['classic9', ['easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1', 'nightmare2'], 120],
-  ['killer', ['easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1', 'nightmare2'], 60],
-  ['greaterThan', ['easy', 'medium', 'hard'], 12],
-  ['jigsaw9', ['hard', 'veryHard', 'expert'], 40],
-  ['diagonalX', ['hard', 'veryHard', 'expert', 'evil'], 40],
-  ['hyper', ['hard', 'veryHard', 'expert', 'evil'], 40],
+  ['classic9', ['easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'], 120],
+  ['killer', ['easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'], 60],
+  ['greaterThan', ['easy', 'normal', 'hard'], 12],
+  ['jigsaw9', ['hard', 'expert', 'master'], 40],
+  ['diagonalX', ['hard', 'expert', 'master', 'nightmare'], 40],
+  ['hyper', ['hard', 'expert', 'master', 'nightmare'], 40],
   // The rarest techniques (Jellyfish) need many hard puzzles to turn up.
-  ['classic9', ['evil', 'nightmare1', 'nightmare2'], 1500, 'highest'],
-  ['diagonalX', ['evil', 'nightmare1', 'nightmare2'], 600, 'highest'],
-  ['hyper', ['evil', 'nightmare1', 'nightmare2'], 600, 'highest']
+  ['classic9', ['nightmare', 'hell1', 'hell2'], 1500, 'highest'],
+  ['diagonalX', ['nightmare', 'hell1', 'hell2'], 600, 'highest'],
+  ['hyper', ['nightmare', 'hell1', 'hell2'], 600, 'highest']
 ];
 
 function parseArgs(argv) {

@@ -194,16 +194,16 @@
   // ---------------------------------------------------------------------------------------------
   describe('importer: difficulty metadata', function () {
     it('recognises the nine levels in ladder order', function () {
-      expect(I.LEVELS).toEqual(['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil',
-        'nightmare1', 'nightmare2']);
+      expect(I.LEVELS).toEqual(['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare',
+        'hell1', 'hell2']);
       expect(Object.isFrozen(I.LEVELS)).toBe(true);
     });
 
-    ['veryHard', 'nightmare1', 'nightmare2'].forEach(function (level) {
+    ['expert', 'hell1', 'hell2'].forEach(function (level) {
       it('keeps a v2 ' + level + ' rating through storage and sharing', function () {
         need();
         var doc = K.document('classic9');
-        var score = { veryHard: 700, nightmare1: 2400, nightmare2: 3600 }[level];
+        var score = { expert: 700, hell1: 2400, hell2: 3600 }[level];
         doc.difficulty = {
           requested: level, achieved: level, score: score, rawScore: score,
           hardestTechnique: 'nishio', ratingVersion: 2, futureField: { unused: true }
@@ -233,7 +233,7 @@
     it('leaves legacy labels and scores unchanged and does not invent a rating version', function () {
       need();
       var doc = K.document('classic9');
-      doc.difficulty = { requested: 'expert', achieved: 'hard', score: 511.925, hardestTechnique: 'xWing' };
+      doc.difficulty = { requested: 'master', achieved: 'hard', score: 511.925, hardestTechnique: 'xWing' };
       var puzzle = open(doc).puzzle;
       expect(puzzle.info.difficulty).toEqual(doc.difficulty);
       expect(puzzle.document.difficulty).toEqual(doc.difficulty);
@@ -244,11 +244,11 @@
       need();
       [1, 2, 3, null, 'future', {}, 0, -1, 1.5].forEach(function (version) {
         var doc = K.document('classic9');
-        doc.difficulty = { achieved: 'nightmare2', score: 4500, ratingVersion: version,
+        doc.difficulty = { achieved: 'hell2', score: 4500, ratingVersion: version,
           futureScoring: { name: 'another model' } };
         var outcome = open(doc);
         expect(outcome.ok).toBe(true);
-        expect(outcome.puzzle.info.difficulty.achieved).toBe('nightmare2');
+        expect(outcome.puzzle.info.difficulty.achieved).toBe('hell2');
         expect(outcome.puzzle.info.difficulty.ratingVersion)
           .toBe(Number.isSafeInteger(version) && version > 0 ? version : undefined);
       });
@@ -656,9 +656,9 @@
       var base = text('single.en').trim().split('\n');
       var header = base[0].split(',');
       var cases = [
-        ['veryHard', 'Very hard'], ['veryHard', 'Rất khó'],
-        ['nightmare1', 'Nightmare 1'], ['nightmare1', 'Ác mộng 1'],
-        ['nightmare2', 'Nightmare 2'], ['nightmare2', 'Ác mộng 2']
+        ['expert', 'Expert'], ['expert', 'Chuyên gia'],
+        ['hell1', 'Hell 1'], ['hell1', 'Địa ngục 1'],
+        ['hell2', 'Hell 2'], ['hell2', 'Địa ngục 2']
       ];
       return I.openMany(base.join('\n')).then(function (original) {
         var id = original.items[0].outcome.puzzle.id;

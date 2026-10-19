@@ -67,8 +67,8 @@
   const MAX_TEXT_CHARS = 2048;
   const EMPTY_CHARS = '.0-_';
   const SOLVE_BUDGET_MS = 6000;
-  const LEVELS = Object.freeze(['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil',
-    'nightmare1', 'nightmare2']);
+  const LEVELS = Object.freeze(['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare',
+    'hell1', 'hell2']);
 
   /** The 15 variants the player can open: the digit count and cell count each one must have. */
   const VARIANTS = Object.freeze({

@@ -13,7 +13,7 @@
  *  basis 'published'    Puzzles from tests/fixtures/classic.js whose difficulty is known from outside
  *                       this project: the example of the Wikipedia article, the famous "hardest sudoku"
  *                       puzzles of Arto Inkala and the Sudoku Players' Forum, and puzzles that the classic
- *                       fixtures name "easy" / "medium". The labels come from that outside knowledge, not
+ *                       fixtures name "easy" / "normal". The labels come from that outside knowledge, not
  *                       from this project's scorer, and were not changed to suit its output (the original
  *                       scorer rated "classic-medium" one level below its name). The original corpus used
  *                       a one-level tolerance, since no two raters agree on a name like "hard".
@@ -24,7 +24,7 @@
  *                       independently of every score and cost: `solvableWithin` is a level whose
  *                       technique set solves the puzzle (the solver is run with `assumeUniqueness: false`,
  *                       exactly like the digging oracle) and `notSolvableWithin` is a level whose
- *                       technique set gets stuck. A legacy medium puzzle, for instance, is solved with singles,
+ *                       technique set gets stuck. A legacy normal puzzle, for instance, is solved with singles,
  *                       locked candidates and subsets but not without the subsets. These frozen certificates
  *                       test the logical solver, not the current score-defined difficulty bands.
  */
@@ -64,32 +64,32 @@
     {
       name: 'classic-medium',
       puzzle: classic('classic-medium'),
-      label: 'medium',
+      label: 'normal',
       note: 'Named "classic-medium" in tests/fixtures/classic.js.'
     },
     {
       name: 'escargot',
       puzzle: classic('escargot'),
-      label: 'evil',
+      label: 'nightmare',
       note: 'Arto Inkala, "Escargot" (2006), published as one of the hardest puzzles of its time.'
     },
     {
       name: 'worlds-hardest-2012',
       puzzle: classic('worlds-hardest-2012'),
-      label: 'evil',
+      label: 'nightmare',
       note: 'Arto Inkala, the 2012 "world\'s hardest sudoku".'
     },
     {
       name: 'platinum-blonde',
       puzzle: classic('hard-platinum'),
-      label: 'evil',
-      note: '"Platinum Blonde" of the Sudoku Players\' Forum, a standard benchmark for very hard puzzles.'
+      label: 'nightmare',
+      note: '"Platinum Blonde" of the Sudoku Players\' Forum, a standard benchmark for expert puzzles.'
     },
     {
       name: 'golden-nugget',
       puzzle: classic('hard-nugget'),
-      label: 'evil',
-      note: '"Golden Nugget" of the Sudoku Players\' Forum, a standard benchmark for very hard puzzles.'
+      label: 'nightmare',
+      note: '"Golden Nugget" of the Sudoku Players\' Forum, a standard benchmark for expert puzzles.'
     }
   ].map(function (p) {
     p.basis = 'published';
@@ -110,30 +110,30 @@
       'easy', null],
     ['easy', '.23.....7.5.281..3..87.....84..1.96.2.1...4.8.35.4..71.....67..1..927.5.3.....82.',
       'easy', null],
-    ['medium', '....25.7....3....6381...2....785.93.9.......5.38.496....9...5612....1....1.58....',
-      'medium', 'easy'],
-    ['medium', '69....8.1...8....685..1.49....7...6.9.7.3.5.8.1...5....86.9..755....8...1.9....83',
-      'medium', 'easy'],
-    ['medium', '..3.4.2...4......78..23...6..1..3.78.2.7.1.9.37.9..6..1...98..57......6...6.7.3..',
-      'medium', 'easy'],
+    ['normal', '....25.7....3....6381...2....785.93.9.......5.38.496....9...5612....1....1.58....',
+      'normal', 'easy'],
+    ['normal', '69....8.1...8....685..1.49....7...6.9.7.3.5.8.1...5....86.9..755....8...1.9....83',
+      'normal', 'easy'],
+    ['normal', '..3.4.2...4......78..23...6..1..3.78.2.7.1.9.37.9..6..1...98..57......6...6.7.3..',
+      'normal', 'easy'],
     ['hard', '4.6..5..9.5.4.93....3........129..3...25.38...3..461........6....46.8.2.6..9..5.3',
-      'hard', 'medium'],
+      'hard', 'normal'],
     ['hard', '...5.82....8.6..5..61.2.87...5..4..8..7.5.3..4..3..7...24.9.68..5..3.4....92.6...',
-      'hard', 'medium'],
+      'hard', 'normal'],
     ['hard', '4....65...623.......38..2......47.8..1.....4..7.53......9..81.......349...72....3',
-      'hard', 'medium'],
-    ['expert', '..8.....97..84....54.71.8...5..74......1.2......56..2...1.57.42....36..16.....3..',
-      'expert', 'hard'],
-    ['expert', '.5..19..61..8..2....9......37.1.....24..5..31.....4.67......7....1..5..37..42..9.',
-      'expert', 'hard'],
-    ['expert', '....25.6...46.73.....84..7.4.5...681.9.....4.768...9.3.4..81.....69.28...7.45....',
-      'expert', 'hard'],
-    ['evil', '.19.7....7....85..6..5.....1.59....8.84...96.9....32.5.....7..9..76....4....5.78.',
-      null, 'expert'],
-    ['evil', '..3....9.5..6..1...97.8...2....74..67..9.8..18..16....3...1.56...6..3..9.1....8..',
-      null, 'expert'],
-    ['evil', '.7..2..4.3..1.......16...57....5..9...2...5...1..6....56...87.......4..3.4..1..2.',
-      null, 'expert']
+      'hard', 'normal'],
+    ['master', '..8.....97..84....54.71.8...5..74......1.2......56..2...1.57.42....36..16.....3..',
+      'master', 'hard'],
+    ['master', '.5..19..61..8..2....9......37.1.....24..5..31.....4.67......7....1..5..37..42..9.',
+      'master', 'hard'],
+    ['master', '....25.6...46.73.....84..7.4.5...681.9.....4.768...9.3.4..81.....69.28...7.45....',
+      'master', 'hard'],
+    ['nightmare', '.19.7....7....85..6..5.....1.59....8.84...96.9....32.5.....7..9..76....4....5.78.',
+      null, 'master'],
+    ['nightmare', '..3....9.5..6..1...97.8...2....74..67..9.8..18..16....3...1.56...6..3..9.1....8..',
+      null, 'master'],
+    ['nightmare', '.7..2..4.3..1.......16...57....5..9...2...5...1..6....56...87.......4..3.4..1..2.',
+      null, 'master']
   ];
 
   var counters = {};

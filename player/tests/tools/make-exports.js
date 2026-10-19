@@ -23,7 +23,7 @@ const SETS = {
     ['classic9', 'hard', 4]],
   structured: [['jigsaw9', 'easy', 3], ['killer', 'easy', 5], ['greaterThan', 'easy', 4], ['wordoku', 'easy', 6]],
   derived: [['diagonalX', 'easy', 6], ['hyper', 'easy', 7], ['mega12', 'easy', 2], ['mega16', 'easy', 2]],
-  multigrid: [['samurai', 'easy', 2], ['sohei', 'medium', 3], ['butterfly', 'easy', 4], ['flower', 'easy', 5]],
+  multigrid: [['samurai', 'easy', 2], ['sohei', 'normal', 3], ['butterfly', 'easy', 4], ['flower', 'easy', 5]],
   single: [['classic9', 'easy', 21]]
 };
 

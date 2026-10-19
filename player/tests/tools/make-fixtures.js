@@ -33,15 +33,15 @@ const FIXTURES = [
   { file: 'hyper', variantId: 'hyper', difficulty: 'easy', seed: 22 },
   { file: 'jigsaw9', variantId: 'jigsaw9', difficulty: 'easy', seed: 23 },
   { file: 'killer', variantId: 'killer', difficulty: 'easy', seed: 24 },
-  { file: 'greaterThan', variantId: 'greaterThan', difficulty: 'medium', seed: 26,
+  { file: 'greaterThan', variantId: 'greaterThan', difficulty: 'normal', seed: 26,
     variantOptions: { futoshiki: true } },
   { file: 'samurai', variantId: 'samurai', difficulty: 'easy', seed: 26 },
   { file: 'sohei', variantId: 'sohei', difficulty: 'easy', seed: 27 },
   { file: 'butterfly', variantId: 'butterfly', difficulty: 'easy', seed: 28 },
   { file: 'flower', variantId: 'flower', difficulty: 'easy', seed: 29 },
   { file: 'wordoku', variantId: 'wordoku', difficulty: 'easy', seed: 30, symbolMode: 'word' },
-  { file: 'classic9.vi', variantId: 'classic9', difficulty: 'medium', seed: 91, locale: 'vi' },
-  { file: 'killer.vi', variantId: 'killer', difficulty: 'medium', seed: 92, locale: 'vi' },
+  { file: 'classic9.vi', variantId: 'classic9', difficulty: 'normal', seed: 91, locale: 'vi' },
+  { file: 'killer.vi', variantId: 'killer', difficulty: 'normal', seed: 92, locale: 'vi' },
   { file: 'wordoku.vi', variantId: 'wordoku', difficulty: 'easy', seed: 93, locale: 'vi', symbolMode: 'word',
     variantOptions: { language: 'vi' } }
 ];

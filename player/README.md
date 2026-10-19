@@ -59,8 +59,8 @@ account, no build step. **Open it: [tdat00.github.io/sudoku-player](https://tdat
 - **All 15 variants** are playable: Classic 4×4, 6×6 and 9×9, Mega 12×12, Monster 16×16, Diagonal (X), Hyper
   (Windoku), Jigsaw, Killer, Greater-Than, Samurai, Sohei, Butterfly, Flower and Wordoku. The puzzle document
   carries the rebuilt model, so the player has no variant or generation code at all.
-- Imported difficulty names cover **Very easy, Easy, Medium, Hard, Very hard, Expert, Evil, Nightmare 1 and
-  Nightmare 2**, in English and Vietnamese. Generator rating-v2 documents still use `sudoku-generator/v1`;
+- Imported difficulty names cover **Very easy, Easy, Normal, Hard, Expert, Master, Nightmare, Hell 1 and
+  Hell 2**, in English and Vietnamese. Generator rating-v2 documents still use `sudoku-generator/v1`;
   the player preserves `difficulty.ratingVersion` without recalculating scores. Legacy documents and text
   exports still open, and changing rating metadata does not change a puzzle's saved-progress identity.
 - Select by mouse, touch or keyboard (arrow keys, Home / End, Page Up / Down); type a symbol or use the
@@ -187,7 +187,7 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
 - Chơi được **cả 15 biến thể**: Cổ điển 4×4, 6×6 và 9×9, Khổng lồ 12×12, Quái vật 16×16, Đường chéo (X),
   Siêu vùng (Windoku), Ghép hình, Sát thủ, So sánh, Samurai, Sohei, Cánh bướm, Bông hoa và Chữ (Wordoku). Tài
   liệu đề mang sẵn mô hình đã dựng, nên trình chơi không có mã biến thể hay mã tạo đề nào.
-- Nhận tên độ khó **Rất dễ, Dễ, Trung bình, Khó, Rất khó, Chuyên gia, Địa ngục, Ác mộng 1 và Ác mộng 2**
+- Nhận tên độ khó **Rất dễ, Dễ, Trung bình, Khó, Chuyên gia, Bậc thầy, Ác mộng, Địa ngục 1 và Địa ngục 2**
   bằng tiếng Anh và tiếng Việt. Tài liệu dùng cách chấm điểm v2 vẫn có định dạng `sudoku-generator/v1`;
   trình chơi giữ `difficulty.ratingVersion` và không tính lại điểm. Tài liệu và văn bản xuất cũ vẫn mở được;
   đổi thông tin chấm điểm không làm thay đổi định danh đề dùng để lưu tiến độ.

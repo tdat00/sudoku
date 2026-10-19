@@ -1221,10 +1221,10 @@
   });
 
   // ---------------------------------------------------------------------------------------------
-  // Acceptance: evil puzzles that the lower technique groups cannot finish
+  // Acceptance: nightmare puzzles that the lower technique groups cannot finish
   // ---------------------------------------------------------------------------------------------
 
-  describe('chain group: evil puzzles', function () {
+  describe('chain group: nightmare puzzles', function () {
     /** Applies forcingChain and nishio (and the singles they unlock) until neither finds anything. */
     function chainOnly(start, solution) {
       var state = SG.model.cloneState(start);

@@ -26,7 +26,7 @@
   }
 
   /** How far a harder puzzle is dug: the share of the cells that stay as clues (0 = as far as it goes). */
-  var CLUE_SHARE = { medium: 0.42, hard: 0.34, expert: 0 };
+  var CLUE_SHARE = { normal: 0.42, hard: 0.34, master: 0 };
   var DIGGABLE = { classic4: true, classic6: true, classic9: true, diagonalX: true, hyper: true, jigsaw9: true };
 
   /**
@@ -259,7 +259,7 @@
   describe('play: entries and notes', function () {
     it('enters, replaces and clears values; clues cannot be changed', function () {
       ready();
-      var r = realResult('classic9', 'medium', 4);
+      var r = realResult('classic9', 'normal', 4);
       var g = newGame(r);
       var open = openCells(r);
       var clue = r.givens.findIndex(function (v) { return v > 0; });
@@ -289,7 +289,7 @@
     it('notes: toggled on empty cells only, the value of a cell removes its notes, erase clears value then notes',
       function () {
         ready();
-        var r = realResult('classic9', 'medium', 4);
+        var r = realResult('classic9', 'normal', 4);
         var g = newGame(r);
         var c = openCells(r)[0];
         expect(g.toggleNote(c, 3)).toBe(true);
@@ -311,7 +311,7 @@
 
     it('a placed value leaves the notes of its peers (autoNotes), and undo brings them back', function () {
       ready();
-      var r = realResult('classic9', 'medium', 4);
+      var r = realResult('classic9', 'normal', 4);
       var g = newGame(r);
       var open = openCells(r);
       var c = open[0];
@@ -373,7 +373,7 @@
   describe('play: undo and redo', function () {
     it('undo and redo are exact: random operations against a reference of every state', function () {
       ready();
-      [['classic9', 'medium', 3], ['killer', 'easy', 2], ['classic6', 'easy', 5]].forEach(function (cfg) {
+      [['classic9', 'normal', 3], ['killer', 'easy', 2], ['classic6', 'easy', 5]].forEach(function (cfg) {
         var r = realResult(cfg[0], cfg[1], cfg[2]);
         var g = newGame(r);
         var n = r.model.cellCount;
@@ -420,7 +420,7 @@
 
     it('a new action clears the redo stack; reset forgets the history', function () {
       ready();
-      var r = realResult('classic9', 'medium', 3);
+      var r = realResult('classic9', 'normal', 3);
       var g = newGame(r);
       var open = openCells(r);
       g.setValue(open[0], 1);
@@ -441,7 +441,7 @@
 
     it('notifies subscribers of every change with the cells it touched', function () {
       ready();
-      var r = realResult('classic9', 'medium', 3);
+      var r = realResult('classic9', 'normal', 3);
       var g = newGame(r);
       var events = [];
       var off = g.subscribe(function (e) { events.push(e); });
@@ -612,7 +612,7 @@
 
     it('Greater-Than: flags a sign that is not satisfied, and a digit that cannot satisfy it', function () {
       ready();
-      var r = realResult('greaterThan', 'medium', 2);
+      var r = realResult('greaterThan', 'normal', 2);
       var model = r.model;
       var q = model.inequalities.findIndex(function (s) { return r.givens[s.a] === 0 && r.givens[s.b] === 0; });
       expect(q).toBeGreaterThanOrEqual(0);
@@ -639,7 +639,7 @@
 
     it('lists the entries that differ from the solution and counts the progress', function () {
       ready();
-      var r = realResult('classic9', 'medium', 3);
+      var r = realResult('classic9', 'normal', 3);
       var g = newGame(r);
       var open = openCells(r);
       var p0 = g.progress();
@@ -668,8 +668,8 @@
 
     it('a complete correct solution is never flagged on the way, for every kind of puzzle', function () {
       ready();
-      [['classic4', 'easy', 1], ['classic6', 'easy', 2], ['classic9', 'hard', 2], ['killer', 'medium', 3],
-        ['greaterThan', 'medium', 3], ['jigsaw9', 'medium', 2], ['mega12', 'easy', 1], ['diagonalX', 'easy', 2],
+      [['classic4', 'easy', 1], ['classic6', 'easy', 2], ['classic9', 'hard', 2], ['killer', 'normal', 3],
+        ['greaterThan', 'normal', 3], ['jigsaw9', 'normal', 2], ['mega12', 'easy', 1], ['diagonalX', 'easy', 2],
         ['wordoku', 'easy', 2], ['samurai', 'veryEasy', 2], ['flower', 'veryEasy', 1]].forEach(function (cfg) {
         var r = realResult(cfg[0], cfg[1], cfg[2]);
         var g = newGame(r);
@@ -713,7 +713,7 @@
 
     it('reveals a cell (the selected one, else the easiest) and the whole solution without a success', function () {
       ready();
-      var r = realResult('classic9', 'medium', 3);
+      var r = realResult('classic9', 'normal', 3);
       var g = newGame(r);
       var open = openCells(r);
       var shown = g.revealCell(open[5]);
@@ -874,11 +874,11 @@
   }
 
   var HINT_SAMPLE = [
-    ['classic9', 'veryEasy', 1, 60], ['classic9', 'easy', 2, 60], ['classic9', 'medium', 3, 60],
-    ['classic9', 'hard', 4, 60], ['classic9', 'expert', 5, 60], ['classic6', 'hard', 1, 40],
-    ['classic4', 'easy', 2, 40], ['killer', 'easy', 3, 30], ['greaterThan', 'medium', 2, 40],
-    ['jigsaw9', 'medium', 3, 50], ['diagonalX', 'hard', 2, 40], ['hyper', 'hard', 2, 40],
-    ['mega12', 'easy', 2, 30], ['mega16', 'veryEasy', 1, 15], ['wordoku', 'medium', 2, 40],
+    ['classic9', 'veryEasy', 1, 60], ['classic9', 'easy', 2, 60], ['classic9', 'normal', 3, 60],
+    ['classic9', 'hard', 4, 60], ['classic9', 'master', 5, 60], ['classic6', 'hard', 1, 40],
+    ['classic4', 'easy', 2, 40], ['killer', 'easy', 3, 30], ['greaterThan', 'normal', 2, 40],
+    ['jigsaw9', 'normal', 3, 50], ['diagonalX', 'hard', 2, 40], ['hyper', 'hard', 2, 40],
+    ['mega12', 'easy', 2, 30], ['mega16', 'veryEasy', 1, 15], ['wordoku', 'normal', 2, 40],
     ['samurai', 'easy', 2, 12], ['sohei', 'easy', 2, 12], ['butterfly', 'veryEasy', 2, 12],
     ['flower', 'easy', 2, 12]
   ];
@@ -951,7 +951,7 @@
     it('names the region of a hidden single and of a pair, and the cage of a Killer cage hint', function () {
       ready();
       var seenRegion = {};
-      [['classic9', 'hard', 4], ['classic9', 'expert', 5], ['killer', 'hard', 4], ['jigsaw9', 'medium', 3]]
+      [['classic9', 'hard', 4], ['classic9', 'master', 5], ['killer', 'hard', 4], ['jigsaw9', 'normal', 3]]
         .forEach(function (cfg) {
           var r = realResult(cfg[0], cfg[1], cfg[2]);
           walkHints(r, 60, function (h) {
@@ -972,7 +972,7 @@
 
     it('never suggests a wrong value, even with wrong entries on the board, and says it ignored them', function () {
       ready();
-      var r = realResult('classic9', 'medium', 3);
+      var r = realResult('classic9', 'normal', 3);
       var fresh = newGame(r);
       var base = fresh.hint();
       var g = newGame(r);
@@ -1005,7 +1005,7 @@
 
     it('uses the correct entries of the player: the hint after an entry is the next step of the grid', function () {
       ready();
-      var r = realResult('classic9', 'medium', 3);
+      var r = realResult('classic9', 'normal', 3);
       var g = newGame(r);
       var first = g.hint();
       expect(first.kind).toBe('placement');
@@ -1028,7 +1028,7 @@
     it('walks an elimination plan with nextHintStep and remembers an applied elimination', function () {
       ready();
       var found = null;
-      [['classic9', 'hard', 4], ['classic9', 'expert', 5], ['classic9', 'hard', 7], ['classic9', 'expert', 8],
+      [['classic9', 'hard', 4], ['classic9', 'master', 5], ['classic9', 'hard', 7], ['classic9', 'master', 8],
         ['diagonalX', 'hard', 2]].forEach(function (cfg) {
         if (found !== null) return;
         var r = realResult(cfg[0], cfg[1], cfg[2]);
@@ -1144,7 +1144,7 @@
 
     it('counts a hint once per step, however many levels are shown', function () {
       ready();
-      var r = realResult('classic9', 'medium', 3);
+      var r = realResult('classic9', 'normal', 3);
       var g = newGame(r);
       g.hint();
       g.hint();
@@ -1159,7 +1159,7 @@
     it('switches on the lazy cage and sign propagation before it solves (an imported puzzle)', function () {
       ready();
       var cage = realResult('killer', 'easy', 3);
-      var sign = realResult('greaterThan', 'medium', 2);
+      var sign = realResult('greaterThan', 'normal', 2);
       var listed = SG.constraints.listExtensions().slice();
       SG.comboTable.disablePropagation();
       var signId = null;

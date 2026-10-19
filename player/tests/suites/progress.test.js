@@ -75,7 +75,7 @@
       var p = make().progress;
       var saved = record(42, { state: state({ values: [1, 2, 3], notes: [4, 0, 8] }) });
       expect(p.saveProgress(legacy.id, saved)).toBe('ok');
-      doc.difficulty = { requested: 'nightmare2', achieved: 'nightmare2', score: 4000, ratingVersion: 2 };
+      doc.difficulty = { requested: 'hell2', achieved: 'hell2', score: 4000, ratingVersion: 2 };
       var outcome = SG.importer.openDocument(doc);
       expect(outcome.ok).toBe(true);
       expect(outcome.puzzle.id).toBe(legacy.id);
@@ -205,8 +205,8 @@
       var big = { pad: new Array(PG.LIMITS.docBytes).join('x') };
       expect(p.savePuzzle(id(1), big, null)).toBe('tooLarge');
       expect(p.loadPuzzle(id(1))).toBeNull();
-      var medium = { pad: new Array(150 * 1024).join('x') };
-      for (var n = 1; n <= 8; n++) expect(p.savePuzzle(id(n), medium, null)).toBe('ok');
+      var normal = { pad: new Array(150 * 1024).join('x') };
+      for (var n = 1; n <= 8; n++) expect(p.savePuzzle(id(n), normal, null)).toBe('ok');
       var kept = p.recent(50).length;
       expect(kept).toBeLessThan(8);
       expect(kept).toBeGreaterThan(3);

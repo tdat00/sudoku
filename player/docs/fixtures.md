@@ -30,10 +30,10 @@ byte), so the `model` block is made by the same `plain` function the generator u
 | `mega12`, `mega16` | Mega 12×12 (numbers 1–12) / 16×16 (hex) | easy | 12 / 16 | |
 | `diagonalX`, `hyper`, `jigsaw9` | Diagonal X, Hyper, Jigsaw | easy | 21 / 22 / 23 | |
 | `killer` | Killer (28 cages) | easy | 24 | |
-| `greaterThan` | Greater-Than, signs on the whole grid (10 signs) | medium | 26 | signs only appear from `medium` |
+| `greaterThan` | Greater-Than, signs on the whole grid (10 signs) | normal | 26 | signs only appear from `normal` |
 | `samurai`, `sohei`, `butterfly`, `flower` | multi-grid boards | easy | 26 / 27 / 28 / 29 | canvas with holes |
 | `wordoku` | Wordoku (word `DRAGONFLY`, diagonal) | easy | 30 | |
-| `classic9.vi`, `killer.vi` | classic 9 / Killer, Vietnamese labels | medium | 91 / 92 | |
+| `classic9.vi`, `killer.vi` | classic 9 / Killer, Vietnamese labels | normal | 91 / 92 | |
 | `wordoku.vi` | Wordoku with the Vietnamese word list | easy | 93 | |
 
 The documents were produced from the generator working tree at the time the player was built (before its
@@ -46,7 +46,7 @@ the score-defined ladder need not offer their former `easy` level.
 ## Rating-v2 compatibility
 The old puzzle documents and text exports are deliberately retained as import regressions. Their difficulty
 metadata is not re-labelled. `importer.test.js` additionally varies only the metadata of a fixed puzzle to
-cover `veryHard`, `nightmare1`, `nightmare2`, `ratingVersion: 2`, future optional fields, storage/share
+cover `expert`, `hell1`, `hell2`, `ratingVersion: 2`, future optional fields, storage/share
 round-trips and identity preservation. It also imports all six new EN/VI names through the text reader.
 These metadata-only cases test compatibility, not a claim that the fixture puzzle has a new measured grade.
 `i18n.test.js` pins the canonical names/descriptions and checks language parity; `progress.test.js` verifies
@@ -54,7 +54,7 @@ that an updated rating still finds the same saved game.
 
 The frozen `rated.js` puzzles keep their historical labels and technique certificates for solver tests.
 The Help examples likewise remain unchanged: they demonstrate hints, not a difficulty ladder.
-The example-finding tool searches supported v2 levels, including the highest offered nightmare tier, and
+The example-finding tool searches supported v2 levels, including the highest offered hell tier, and
 skips levels the selected generator does not offer.
 
 ## How the tests use them

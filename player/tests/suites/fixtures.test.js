@@ -52,7 +52,7 @@
     it('carry a rating, a seed and the generator labels in the language of the document', function () {
       var doc = K.document('killer.vi');
       if (doc === null) SG.test.skip('the puzzle fixtures cannot be read here (a browser on file://)');
-      expect(doc.difficulty.requested).toBe('medium');
+      expect(doc.difficulty.requested).toBe('normal');
       expect(typeof doc.seed).toBe('number');
       expect(doc.labels.variant).toBe('Sudoku Sát thủ');
       expect(doc.labels.requested).toBe('Trung bình');

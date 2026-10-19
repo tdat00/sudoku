@@ -197,8 +197,8 @@ generator) plus the additive block `model = SG.exchange.plain(SG.pipeline.toWire
 hardestTechnique, ratingVersion?}`, `generatedAt`, `locale`, `stats.clues`, `wordoku {placement, line}`.
 Everything else is ignored, so the generator may add fields.
 
-Difficulty IDs, easiest first, are `veryEasy`, `easy`, `medium`, `hard`, `veryHard`, `expert`, `evil`,
-`nightmare1`, `nightmare2`. Both language packs supply their names and descriptions; text import resolves
+Difficulty IDs, easiest first, are `veryEasy`, `easy`, `normal`, `hard`, `expert`, `master`, `nightmare`,
+`hell1`, `hell2`. Both language packs supply their names and descriptions; text import resolves
 the names in either language independently of the player's current language. The generator's rating v2
 keeps the v1 document container and adds `difficulty.ratingVersion: 2`. A positive safe integer rating version
 is preserved in the compact stored/shared document; missing or unreadable optional metadata is non-fatal.
