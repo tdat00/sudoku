@@ -306,14 +306,18 @@
             return SG.techniques.get(a).order - SG.techniques.get(b).order;
           }));
         expect(fx.detail.textContent).toContain('Techniques needed at this step');
-        // Every technique with a description has a help button that carries it, as in the summary tab.
+        // Every technique with a description has a help button that carries it, as in the summary tab; its score has
+        // a second one that explains the calculation.
         rows.forEach(function (row) {
           var id = row.getAttribute('data-technique');
           var pops = fx.doc.findAll(row, function (el) { return el.getAttribute('role') === 'tooltip'; });
-          expect(pops.length).toBe(1);
+          expect(pops.length).toBe(2);
           expect(pops[0].textContent).toBe(SG.i18n.t('technique.' + id + '.desc'));
+          expect(pops[1].textContent).toContain(' uses × ');
+          expect(pops[1].textContent).toContain('Shown as ');
           var buttons = fx.doc.findAll(row, function (el) { return el.tagName === 'BUTTON'; });
           expect(buttons[0].getAttribute('aria-label')).toBe('About \u201c' + SG.i18n.t('technique.' + id) + '\u201d');
+          expect(buttons[1].getAttribute('aria-label')).toContain('How the score of');
         });
         view.setPosition(1);
         expect(fx.detail.textContent).toContain('No solving technique is needed yet.');
@@ -338,11 +342,15 @@
         var total = fx.doc.findAll(fx.detail, function (el) { return /step-table__total/.test(el.getAttribute('class') || ''); });
         expect(total.length).toBe(1);
         expect(total[0].textContent).toContain(String(Math.round(res.rating.score)));
+        var totalTip = fx.doc.findAll(total[0], function (el) { return el.getAttribute('role') === 'tooltip'; });
+        expect(totalTip.length).toBe(1);
+        expect(totalTip[0].textContent).toContain('rounded to ' + Math.round(res.rating.score));
         var empties = fx.doc.findAll(fx.detail, function (el) { return el.getAttribute('data-part') === 'empties'; });
         expect(empties.length).toBe(1);
         var tip = fx.doc.findAll(empties[0], function (el) { return el.getAttribute('role') === 'tooltip'; });
-        expect(tip.length).toBe(1);
+        expect(tip.length).toBe(2);
         expect(tip[0].textContent).toContain('80 × E ÷ (E + 40)');
+        expect(tip[1].textContent).toContain('80 × ' + res.rating.empties);
         expect(SG.i18n.has('steps.techniques.floor')).toBe(false);
         // The rows add up to the total, as they are written.
         var parts = fx.doc.findAll(fx.detail, function (el) {
@@ -350,12 +358,14 @@
         });
         var sum = 0;
         parts.forEach(function (row) {
-          var cells = row.children;
-          sum += Number(cells[cells.length - 1].textContent.replace(/[^0-9.]/g, ''));
+          var score = fx.doc.findAll(row, function (el) { return el.getAttribute('data-role') === 'score'; });
+          expect(score.length).toBe(1);
+          sum += Number(score[0].textContent.replace(/[^0-9.]/g, ''));
         });
         expect(sum).toBe(Math.round(res.rating.score));
-        // There is no "Added" column any more: name, uses and score only.
+        // No "Points" or "Added" column: name, uses and score only.
         expect(fx.detail.textContent).not.toContain('Added');
+        expect(fx.detail.textContent).not.toContain('Points');
         var head = fx.doc.findAll(fx.detail, function (el) { return el.tagName === 'TH' && el.getAttribute('scope') === null; });
         expect(head.length).toBeGreaterThan(0);
       });

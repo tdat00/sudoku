@@ -65,7 +65,7 @@
       expect(vm.exact).toBe(r.rating.level === 'easy');
     });
 
-    it('lists the techniques used with their uses, points and share of the score, simplest first', function () {
+    it('lists the techniques used with their uses and share of the score, simplest first', function () {
       ready();
       var r = realResult('classic9', 'easy', 3);
       var vm = R.viewModel(r);
@@ -82,13 +82,27 @@
           ? SG.i18n.t('technique.' + row.id + '.desc') : '');
         expect(row.count).toBe(count);
         expect(row.countText).toBe(SG.i18n.formatNumber(count));
-        // Points are the weight of the technique; the total is its whole share of the score (section 5.6).
-        expect(row.unitScore).toBe(SG.difficulty.WEIGHTS[row.id]);
+        // The score is the whole share of the score (section 5.6); the points column is gone.
+        expect(row.unitScore).toBeUndefined();
         expect(row.score).toBe(table.rows[i].total);
         expect(row.scoreText).toBe(SG.i18n.formatNumber(table.rows[i].total));
         expect(Math.abs(row.score - parts.rows[i].share)).toBeLessThan(1);
+        // The tooltip shows the numbers the share is made of.
+        expect(row.tip).toContain(SG.i18n.formatNumber(count) + ' uses');
+        expect(row.tip).toContain(SG.i18n.formatNumber(table.work, { maximumFractionDigits: 2 }));
+        expect(row.tip).toContain('Shown as ' + row.scoreText);
+        expect(row.tip.indexOf('once in full') !== -1).toBe(table.rows[i].hardest);
       });
       expect(vm.techniqueCounts).toEqual(r.rating.techniqueCounts);
+    });
+
+    it('explains the empty cells and the total with the numbers they come from', function () {
+      ready();
+      var r = realResult('classic9', 'easy', 3);
+      var vm = R.viewModel(r);
+      expect(vm.parts.emptyTip).toContain('80 × ' + r.rating.empties);
+      expect(vm.parts.emptyTip).toContain('Shown as ' + vm.parts.emptyText);
+      expect(vm.parts.totalTip).toContain('rounded to ' + vm.scoreText);
     });
 
     it('adds the techniques and the empty cells up to the score, as written in the table', function () {
@@ -108,7 +122,7 @@
         expect(sum).toBe(r.rating.score);
         expect(vm.parts.totalText).toBe(vm.scoreText);
         expect(vm.parts.empties).toBe(r.rating.empties);
-        expect(vm.parts.emptyUnit).toBeCloseTo(80 / (r.rating.empties + 40), 9);
+        expect(vm.parts.emptyUnit).toBeUndefined();
       });
     });
 

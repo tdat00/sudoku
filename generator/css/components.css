@@ -1283,6 +1283,18 @@ dialog.modal:not([open]) {
   width: min(20rem, 70vw);
   font-weight: 400;
   text-align: start;
+  white-space: normal;
+}
+
+/* The tooltip of a score in the last column opens towards the start, so it stays inside the panel. */
+.help-tip--inline.help-tip--end .help-tip__pop {
+  inset-inline: auto 0;
+}
+
+.result-table__score {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sg-space-1);
 }
 
 .result__note {

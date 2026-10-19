@@ -286,8 +286,10 @@
     return out;
   }
 
-  // ScoreTable: { rows [{ id, uses, points (the weight), total (whole share), hardest }], empties (E), emptyPoints
-  // (V / E; 0 when E = 0), emptyTotal, total (the score: row totals and emptyTotal add up to it) }
+  // ScoreTable: { rows [{ id, uses, points (the weight), work (points x uses), share (exact, unrounded), total (whole
+  // share), hardest }], empties (E), emptyPoints (V / E; 0 when E = 0), emptyShare (V, exact), emptyTotal, peak (P),
+  // work (W), workTerm (R), unrounded (V + P + R), total (the score: row totals and emptyTotal add up to it) }.
+  // The exact numbers let the UI explain every whole number it shows.
 
   // The Difficulty Score table of Summary and Generation Steps: the exact shares of `breakdown` (techniques, then empty
   // cells) are rounded once together with `apportion`, so the whole numbers add up to the score.
@@ -298,11 +300,19 @@
     const whole = apportion(values, parts.score);
     return {
       rows: parts.rows.map(function (row, i) {
-        return { id: row.id, uses: row.uses, points: row.weight, total: whole[i], hardest: row.hardest };
+        return {
+          id: row.id, uses: row.uses, points: row.weight, work: row.work, share: row.share, total: whole[i],
+          hardest: row.hardest
+        };
       }),
       empties: parts.empties,
       emptyPoints: parts.empties > 0 ? parts.empty / parts.empties : 0,
+      emptyShare: parts.empties > 0 ? parts.empty : 0,
       emptyTotal: parts.empties > 0 ? whole[whole.length - 1] : 0,
+      peak: parts.peak,
+      work: parts.work,
+      workTerm: parts.workTerm,
+      unrounded: parts.unrounded,
       total: parts.score
     };
   }

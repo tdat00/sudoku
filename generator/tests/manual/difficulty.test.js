@@ -866,8 +866,27 @@
         expect(table.total).toBe(D.scoreOf(counts, empties));
         if (empties === 0) expect(table.emptyTotal).toBe(0);
       }
-      expect(D.scoreTable({}, 0)).toEqual({ rows: [], empties: 0, emptyPoints: 0, emptyTotal: 0, total: 0 });
+      expect(D.scoreTable({}, 0)).toEqual({ rows: [], empties: 0, emptyPoints: 0, emptyShare: 0, emptyTotal: 0,
+        peak: 0, work: 0, workTerm: 0, unrounded: 0, total: 0 });
       expect(D.scoreTable({}, 40).emptyTotal).toBe(40);
+    });
+
+    it('exposes the exact numbers behind every whole number of the table', function () {
+      var counts = { nakedSingle: 44, hiddenSingleBox: 8, pointing: 2, hiddenPair: 1, simpleColouring: 2 };
+      var table = D.scoreTable(counts, 52);
+      var parts = D.breakdown(counts, 52);
+      expect(table.peak).toBe(360);
+      expect(table.work).toBe(999);
+      expect(table.workTerm).toBeCloseTo(172.4829, 4);
+      expect(table.emptyShare).toBeCloseTo(45.2174, 4);
+      expect(table.unrounded).toBe(parts.unrounded);
+      var exact = table.emptyShare;
+      table.rows.forEach(function (row) {
+        expect(row.work).toBe(row.points * row.uses);
+        exact += row.share;
+      });
+      expect(exact).toBeCloseTo(table.unrounded, 9);
+      expect(table.rows[0].share).toBeCloseTo(172.4829 * 44 / 999, 3);
     });
   });
 

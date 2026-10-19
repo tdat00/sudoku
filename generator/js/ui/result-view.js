@@ -1,6 +1,7 @@
 /**
  * Result panel `SG.resultView`: two cards (level reached with its difficulty score, number of clues) and a table of
- * the techniques used (uses, points, share of the score). A Wordoku result also gets a card with its key word and
+ * the techniques used (uses and share of the score; a help icon next to each score explains how it is calculated).
+ * A Wordoku result also gets a card with its key word and
  * meaning while "Show the solution" is on. An approximate result (warning `difficulty.approximate`) gets a yellow
  * alert and a "Retry with a different seed" button; other warnings are listed, translated; no warning, no UI.
  * `viewModel(result)` is pure (displayed values already formatted, plus the warning keys); `create(rootEl, options)`
@@ -66,9 +67,18 @@
   }
 
   /**
-   * The techniques the puzzle needs, simplest first (technique ladder order), each with uses, points and share of the
+   * The words of a score tooltip: how a whole number of the table comes from the exact ones of
+   * `SG.difficulty.scoreTable` (`SG.stepView.scoreTip`, shared with the step table); '' when it is not loaded.
+   */
+  function scoreTip(kind, table, row) {
+    return SG.stepView && typeof SG.stepView.scoreTip === 'function'
+      ? SG.stepView.scoreTip('result.techniques.tip.', kind, table, row) : '';
+  }
+
+  /**
+   * The techniques the puzzle needs, simplest first (technique ladder order), each with uses and share of the
    * score (`SG.difficulty.scoreTable`: the hardest technique counts its points once in full, the rest of the
-   * technique part of the score is shared in proportion to points x uses).
+   * technique part of the score is shared in proportion to points x uses). `tip` explains the share.
    */
   function techniqueRows(counts, table) {
     const chart = SG.stepView && typeof SG.stepView.chartModel === 'function'
@@ -80,7 +90,6 @@
     return ids.map(function (id) {
       const count = counts[id];
       const row = byId[id] || null;
-      const unit = row !== null ? row.points : 0;
       const score = row !== null ? row.total : 0;
       const descKey = 'technique.' + id + '.desc';
       return {
@@ -89,10 +98,9 @@
         summary: hasText(descKey) ? t(descKey) : '',
         count: count,
         countText: formatNumber(count),
-        unitScore: unit,
-        unitScoreText: formatNumber(unit, { maximumFractionDigits: 2 }),
         score: score,
-        scoreText: formatNumber(score)
+        scoreText: formatNumber(score),
+        tip: row !== null ? scoreTip('technique', table, row) : ''
       };
     });
   }
@@ -108,16 +116,18 @@
   }
 
   /**
-   * How the score adds up: the technique rows (see `techniqueRows`) and the empty cells (count, average points per
-   * cell, 80 x E / (E + 40) in all). Every part is a whole number and the parts add up to the score (one rounding).
+   * How the score adds up: the technique rows (see `techniqueRows`) and the empty cells (count and 80 x E / (E + 40)
+   * in all). Every part is a whole number and the parts add up to the score (one rounding); `emptyTip` and `totalTip`
+   * explain the empty cells and the total.
    */
   function scoreBreakdown(table, score) {
     const empties = table !== null ? table.empties : 0;
     return {
       empties: empties,
-      emptyUnit: empties > 0 ? table.emptyPoints : 0,
       emptyText: empties > 0 ? formatNumber(table.emptyTotal) : '',
-      totalText: formatNumber(Math.round(score))
+      emptyTip: empties > 0 ? scoreTip('empties', table, null) : '',
+      totalText: formatNumber(Math.round(score)),
+      totalTip: table !== null ? scoreTip('total', table, null) : ''
     };
   }
 
@@ -258,13 +268,13 @@
     }
 
     /** The "?" next to a name: opens on hover, focus and click; Esc closes it. */
-    function helpTip(popId, text, name) {
+    function helpTip(popId, text, name, labelKey) {
       const pop = make(doc, 'div', {
         class: 'help-tip__pop', id: popId, role: 'tooltip', text: text
       });
       const button = make(doc, 'button', {
         type: 'button', class: 'help-tip__btn', 'aria-describedby': popId,
-        'aria-label': t('result.techniques.help', { name: name })
+        'aria-label': t(labelKey || 'result.techniques.help', { name: name })
       }, [icon(doc, 'help')]);
       const wrap = make(doc, 'span', { class: 'help-tip help-tip--inline' }, [button, pop]);
       button.addEventListener('click', function () {
@@ -288,15 +298,27 @@
       ])]);
     }
 
+    /** A score cell: the whole number (`data-role="score"`) and a help icon whose tooltip shows how it is calculated. */
+    function scoreCell(part, name, value, tip) {
+      const children = [make(doc, 'span', { 'data-role': 'score', text: value })];
+      if (tip !== '') {
+        const help = helpTip('result-score-' + part + '-help', tip, name, 'result.techniques.help.score');
+        help.className = 'help-tip help-tip--inline help-tip--end';
+        help.setAttribute('data-role', 'score-help');
+        children.push(help);
+      }
+      return make(doc, 'td', { class: 'result-table__num' }, [
+        make(doc, 'span', { class: 'result-table__score' }, children)
+      ]);
+    }
+
     function extraRows(vm) {
       const out = [];
       if (vm.parts.empties > 0) {
-        const unit = formatNumber(vm.parts.emptyUnit, { maximumFractionDigits: 2 });
         out.push(make(doc, 'tr', { 'data-part': 'empties' }, [
-          partHeader('empties', t('result.techniques.empties'), t('result.techniques.empties.desc', { points: unit })),
+          partHeader('empties', t('result.techniques.empties'), t('result.techniques.empties.desc')),
           make(doc, 'td', { class: 'result-table__num', text: formatNumber(vm.parts.empties) }),
-          make(doc, 'td', { class: 'result-table__num', text: unit }),
-          make(doc, 'td', { class: 'result-table__num', text: vm.parts.emptyText })
+          scoreCell('empties', t('result.techniques.empties'), vm.parts.emptyText, vm.parts.emptyTip)
         ]));
       }
       return out;
@@ -304,7 +326,7 @@
 
     function sectionRow(key) {
       return make(doc, 'tr', { class: 'result-table__section', 'data-section-row': key }, [
-        make(doc, 'th', { scope: 'colgroup', colspan: '4', text: t('result.techniques.section.' + key) })
+        make(doc, 'th', { scope: 'colgroup', colspan: '3', text: t('result.techniques.section.' + key) })
       ]);
     }
 
@@ -324,7 +346,6 @@
           make(doc, 'span', { class: 'visually-hidden', text: t('result.techniques.col.name') })
         ]),
         num('result.techniques.col.count'),
-        num('result.techniques.col.unit'),
         num('result.techniques.col.score')
       ]);
       const rows = vm.techniques.map(function (row) {
@@ -333,8 +354,7 @@
         return make(doc, 'tr', { 'data-technique': row.id }, [
           make(doc, 'th', { scope: 'row' }, [make(doc, 'span', { class: 'result-table__name' }, name)]),
           make(doc, 'td', { class: 'result-table__num', text: row.countText }),
-          make(doc, 'td', { class: 'result-table__num', text: row.unitScoreText }),
-          make(doc, 'td', { class: 'result-table__num', text: row.scoreText })
+          scoreCell(row.id, row.name, row.scoreText, row.tip)
         ]);
       });
       const other = extraRows(vm);
@@ -350,8 +370,7 @@
         make(doc, 'tfoot', {}, [make(doc, 'tr', { class: 'result-table__total', 'data-part': 'total' }, [
           make(doc, 'th', { scope: 'row', text: t('result.techniques.total') }),
           make(doc, 'td', { class: 'result-table__num', text: '' }),
-          make(doc, 'td', { class: 'result-table__num', text: '' }),
-          make(doc, 'td', { class: 'result-table__num', text: vm.parts.totalText })
+          scoreCell('total', t('result.techniques.total'), vm.parts.totalText, vm.parts.totalTip)
         ])])
       ])));
       box.appendChild(make(doc, 'p', { class: 'text-muted result__note', text: t('result.techniques.note') }));
@@ -473,15 +492,28 @@
       'result.techniques.none': 'No solving techniques were needed.',
       'result.techniques.col.name': 'Item',
       'result.techniques.col.count': 'Uses',
-      'result.techniques.col.unit': 'Points',
-      'result.techniques.col.score': 'Total',
+      'result.techniques.col.score': 'Score',
       'result.techniques.empties': 'Empty cells',
       'result.techniques.empties.desc': 'Empty cells add 80 × E ÷ (E + 40) points, at most 80.',
       'result.techniques.total': 'Total',
       'result.techniques.note': 'The hardest technique counts its points once in full; the rest grows with ' +
         'the logarithm of the total work (points × uses) and is shared among the techniques in proportion ' +
-        'to it — a row\'s total is its allocated share of the score, not points × uses.',
+        'to it — a row\'s score is its allocated share of the total, not uses × points. Use the ? next to a ' +
+        'score to see how it is calculated.',
       'result.techniques.help': 'About “{name}”',
+      'result.techniques.help.score': 'How the score of “{name}” is calculated',
+      'result.techniques.tip.technique': '{uses} uses × {points} points = {work} work; all the work of this ' +
+        'puzzle is {all}. The work adds 0.25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} points to the score ' +
+        '({peak} is the points of the hardest technique), shared in proportion to the work: ' +
+        '{term} × {work} ÷ {all} = {share}. Shown as {score}.',
+      'result.techniques.tip.hardest': '{uses} uses × {points} points = {work} work; all the work of this ' +
+        'puzzle is {all}. As the hardest technique it counts its {peak} points once in full. The work adds ' +
+        '0.25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} points to the score, shared in proportion to the ' +
+        'work: {term} × {work} ÷ {all} = {rest}. {peak} + {rest} = {share}. Shown as {score}.',
+      'result.techniques.tip.empties': '80 × E ÷ (E + 40) with E = {e} empty cells: 80 × {e} ÷ ({e} + 40) = ' +
+        '{value}. Shown as {score}.',
+      'result.techniques.tip.total': 'Score = empty cells {empty} + hardest technique {peak} + work {work} = ' +
+        '{sum}, rounded to {score}. The rows are rounded together, so they add up to this total.',
       'result.warning.approximate.badge': 'Closest puzzle found',
       'result.warning.approximate.levels': 'Requested: {requested}. Reached: {achieved}.',
       'result.warning.retry': 'Retry with a different seed',
@@ -506,15 +538,28 @@
       'result.techniques.none': 'Không cần kỹ thuật giải nào.',
       'result.techniques.col.name': 'Mục',
       'result.techniques.col.count': 'Lần dùng',
-      'result.techniques.col.unit': 'Điểm',
-      'result.techniques.col.score': 'Tổng',
+      'result.techniques.col.score': 'Điểm',
       'result.techniques.empties': 'Ô trống',
       'result.techniques.empties.desc': 'Các ô trống cộng 80 × E ÷ (E + 40) điểm, tối đa 80.',
       'result.techniques.total': 'Tổng',
       'result.techniques.note': 'Kỹ thuật khó nhất được tính đủ điểm một lần; phần còn lại tăng theo ' +
         'logarit của tổng khối lượng (điểm × số lần dùng) và được chia cho các kỹ thuật theo tỉ lệ đó — ' +
-        'tổng của một dòng là phần được phân bổ của điểm, không phải điểm × số lần dùng.',
+        'điểm của một dòng là phần được phân bổ của tổng, không phải số lần dùng × điểm. Bấm dấu ? cạnh ' +
+        'một điểm để xem cách tính.',
       'result.techniques.help': 'Giải thích về “{name}”',
+      'result.techniques.help.score': 'Cách tính điểm của “{name}”',
+      'result.techniques.tip.technique': '{uses} lần × {points} điểm = {work} khối lượng; toàn bộ khối lượng ' +
+        'của đề này là {all}. Khối lượng cộng 0,25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} điểm vào ' +
+        'điểm số ({peak} là điểm của kỹ thuật khó nhất), chia theo tỉ lệ khối lượng: ' +
+        '{term} × {work} ÷ {all} = {share}. Hiển thị là {score}.',
+      'result.techniques.tip.hardest': '{uses} lần × {points} điểm = {work} khối lượng; toàn bộ khối lượng ' +
+        'của đề này là {all}. Là kỹ thuật khó nhất nên được tính đủ {peak} điểm một lần. Khối lượng cộng ' +
+        '0,25 × {peak} × log2(1 + {all} ÷ {peak}) = {term} điểm vào điểm số, chia theo tỉ lệ khối lượng: ' +
+        '{term} × {work} ÷ {all} = {rest}. {peak} + {rest} = {share}. Hiển thị là {score}.',
+      'result.techniques.tip.empties': '80 × E ÷ (E + 40) với E = {e} ô trống: 80 × {e} ÷ ({e} + 40) = ' +
+        '{value}. Hiển thị là {score}.',
+      'result.techniques.tip.total': 'Điểm = ô trống {empty} + kỹ thuật khó nhất {peak} + khối lượng {work} = ' +
+        '{sum}, làm tròn thành {score}. Các dòng được làm tròn cùng nhau nên cộng lại đúng bằng tổng này.',
       'result.warning.approximate.badge': 'Đề gần nhất tìm được',
       'result.warning.approximate.levels': 'Mức đã chọn: {requested}. Mức đạt được: {achieved}.',
       'result.warning.retry': 'Thử lại với seed khác',
