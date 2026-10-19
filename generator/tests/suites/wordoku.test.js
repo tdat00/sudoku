@@ -12,10 +12,10 @@
   var W = SG.wordoku;
   var def = SG.variants.get('wordoku');
 
-  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1'];
+  var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1'];
   /** design.md 9.1, wordoku row, p95 in ms. */
-  var BUDGET_MS = { veryEasy: 100, easy: 250, medium: 250, hard: 600, veryHard: 600, expert: 1500, evil: 1500,
-    nightmare1: 2500 };
+  var BUDGET_MS = { veryEasy: 100, easy: 250, normal: 250, hard: 600, expert: 600, master: 1500, nightmare: 1500,
+    hell1: 2500 };
   var PUZZLES_PER_LEVEL = 20;
   var STEPS = ['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune'];
   /** The options of puzzle i of a level: half on the diagonal, the rest on a random row or column. */
@@ -495,9 +495,9 @@
       expect(def.digStrategy === undefined || def.digStrategy === null).toBe(true);
     });
 
-    it('does not support nightmare2 (it missed the qualification): asking for it is refused', function () {
+    it('does not support hell2 (it missed the qualification): asking for it is refused', function () {
       expectCode(function () {
-        SG.pipeline.run({ variantId: 'wordoku', difficulty: 'nightmare2', seed: 1, trace: 'off' }, null);
+        SG.pipeline.run({ variantId: 'wordoku', difficulty: 'hell2', seed: 1, trace: 'off' }, null);
       }, 'difficulty.unsupportedLevel');
     });
 
@@ -817,7 +817,7 @@
         givens += clueCount(p.givens);
         cells += 81;
         // The word is not a given of the puzzle: the nine fixed cells are not simply handed out.
-        if (p.config.difficulty === 'hard' || p.config.difficulty === 'expert') {
+        if (p.config.difficulty === 'hard' || p.config.difficulty === 'master') {
           check(onLine < 9, 'puzzle ' + i + ' (' + p.config.difficulty + '): the whole word is a clue');
           check(W.readWord(p.model, p.givens).indexOf('_') !== -1, 'puzzle ' + i + ': no blank on the line');
         }
@@ -844,7 +844,7 @@
     });
 
     it('a word of the user\'s own works end to end, on a column', function () {
-      var p = generate('medium', 4242, { variantOptions: { word: 'Bạch Dương', placement: 'column', line: 5 } });
+      var p = generate('normal', 4242, { variantOptions: { word: 'Bạch Dương', placement: 'column', line: 5 } });
       var info = W.describe(p.model);
       expect([info.word, info.placement, info.line]).toEqual(['BACHDUONG', 'column', 5]);
       expect(p.model.symbols.labels.join('')).toBe('ABCDGHNOU');
@@ -871,7 +871,7 @@
         var scores = LEVELS.map(function (l) {
           return mean(puzzleRun()[l].map(function (p) { return p.rating.score; }));
         });
-        // Rating v2: the score, not the clue count, sets the level. Past 'medium' the clue counts sit on a
+        // Rating v2: the score, not the clue count, sets the level. Past 'normal' the clue counts sit on a
         // plateau (the top tiers refine their proposals by showing clues again), as on classic9.
         expect(clues[0]).toBeGreaterThan(clues[1]);
         expect(clues[1]).toBeGreaterThan(clues[2]);
@@ -901,14 +901,14 @@
     });
 
     it('the result does not depend on the trace level or on a listening sink', function () {
-      var base = generate('medium', 31, { trace: 'summary' });
+      var base = generate('normal', 31, { trace: 'summary' });
       ['off', 'full'].forEach(function (trace) {
-        var other = SG.pipeline.run({ variantId: 'wordoku', difficulty: 'medium', seed: 31, trace: trace },
+        var other = SG.pipeline.run({ variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: trace },
           function () {});
         expect(equalArrays(base.givens, other.givens)).toBe(true);
         expect(equalArrays(base.solution, other.solution)).toBe(true);
       });
-      var silent = SG.pipeline.run({ variantId: 'wordoku', difficulty: 'medium', seed: 31, trace: 'summary' }, null);
+      var silent = SG.pipeline.run({ variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: 'summary' }, null);
       expect(equalArrays(base.givens, silent.givens)).toBe(true);
     });
 
@@ -959,7 +959,7 @@
     }
 
     it('runs the seven steps in order and reports the word line in step 4, once per full grid', function () {
-      var out = trace('medium', 11, 'summary');
+      var out = trace('normal', 11, 'summary');
       var starts = out.events.filter(function (e) { return e.type === 'step' && e.phase === 'start'; });
       expect(starts.map(function (e) { return e.stepId; }).slice(0, 7)).toEqual(STEPS);
       var found = stepFour(out.events, 'extraStructure.word');
@@ -1003,7 +1003,7 @@
 
     it('every event of a full trace is valid and in the vocabulary, and the replayed board is the puzzle',
       function () {
-        ['veryEasy', 'medium', 'expert'].forEach(function (level, i) {
+        ['veryEasy', 'normal', 'master'].forEach(function (level, i) {
           var out = trace(level, 20 + i, 'full', { variantOptions: PLACEMENT_CYCLE[i + 1] });
           checkEvents(out.events);
           var view = E.createView(81);
@@ -1267,7 +1267,7 @@
     });
 
     it('isWordSolved is true for the solution and false for anything that does not spell the word', function () {
-      var p = puzzleRun().medium[2];
+      var p = puzzleRun().normal[2];
       var info = W.describe(p.model);
       expect(W.isWordSolved(p.model, p.solution)).toBe(true);
       expect(W.isWordSolved(p.model, p.givens)).toBe(info.cells.filter(function (c) {

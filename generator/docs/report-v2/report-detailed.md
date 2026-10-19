@@ -10,6 +10,23 @@
 
 The short version, with the timeline of the session, is [`report-brief.md`](report-brief.md).
 
+> **Level names.** After the work described here, the levels were renamed for names that are easier to understand. The
+> reports of this folder, written before, use the old names; read them with this table. Only the names changed — not the
+> bands, the weights or the generation.
+>
+> | old id (this report) | new id (code, URLs, exports) | EN / VI name today |
+> |---|---|---|
+> | `veryEasy`, `easy`, `hard` | unchanged | Very easy / Rất dễ · Easy / Dễ · Hard / Khó |
+> | `medium` | `normal` | Normal / Trung bình |
+> | `veryHard` | `expert` | Expert / Chuyên gia |
+> | `expert` | `master` | Master / Bậc thầy |
+> | `evil` | `nightmare` | Nightmare / Ác mộng |
+> | `nightmare1`, `nightmare2` | `hell1`, `hell2` | Hell 1 / Địa ngục 1 · Hell 2 / Địa ngục 2 |
+>
+> The old `expert` and the new `expert` are different levels: the new `expert` is the old `veryHard`. Version 1 of the
+> generator ([`../report-v1.md`](../report-v1.md)) had the six old names `veryEasy`, `easy`, `medium`, `hard`, `expert`,
+> `evil`. [`qualification.md`](qualification.md) already uses the new names.
+
 **Documents in this folder** (the number in a file name is the order in which that researcher wrote it)
 
 | file | content |

@@ -65,7 +65,7 @@
   }
 
   function cfg(extra) {
-    return Object.assign({ variantId: 'classic9', difficulty: 'medium', seed: 1, trace: 'summary' }, extra);
+    return Object.assign({ variantId: 'classic9', difficulty: 'normal', seed: 1, trace: 'summary' }, extra);
   }
 
   /** Events without time stamps, sequence numbers, time throttled `metric` events and the elapsed time. */
@@ -119,17 +119,17 @@
 
   var CASES = [
     { variantId: 'classic4', difficulty: 'veryEasy', seed: 1, trace: 'full' },
-    { variantId: 'classic9', difficulty: 'medium', seed: 7, trace: 'summary' },
+    { variantId: 'classic9', difficulty: 'normal', seed: 7, trace: 'summary' },
     { variantId: 'classic9', difficulty: 'hard', seed: 3, trace: 'off' },
-    { variantId: 'classic9', difficulty: 'expert', seed: 11, trace: 'summary', maxAttempts: 1 },
+    { variantId: 'classic9', difficulty: 'master', seed: 11, trace: 'summary', maxAttempts: 1 },
     { variantId: 'killer', difficulty: 'easy', seed: 2, trace: 'summary' },
     { variantId: 'greaterThan', difficulty: 'easy', seed: 5, trace: 'summary' },
-    { variantId: 'jigsaw9', difficulty: 'medium', seed: 4, trace: 'summary' },
-    { variantId: 'mega12', difficulty: 'medium', seed: 1, trace: 'summary' },
+    { variantId: 'jigsaw9', difficulty: 'normal', seed: 4, trace: 'summary' },
+    { variantId: 'mega12', difficulty: 'normal', seed: 1, trace: 'summary' },
     { variantId: 'wordoku', difficulty: 'easy', seed: 9, trace: 'summary',
       variantOptions: { language: 'vi' } },
     { variantId: 'samurai', difficulty: 'veryEasy', seed: 2, trace: 'full' },
-    { variantId: 'diagonalX', difficulty: 'expert', seed: 6, trace: 'summary' }
+    { variantId: 'diagonalX', difficulty: 'master', seed: 6, trace: 'summary' }
   ];
 
   function caseName(c) {
@@ -200,7 +200,7 @@
 
     it('with a deterministic clock even the time stamps and the metric events are identical', function () {
       ['classic9', 'killer', 'jigsaw9'].forEach(function (variantId) {
-        var c = cfg({ variantId: variantId, difficulty: 'medium', seed: 21 });
+        var c = cfg({ variantId: variantId, difficulty: 'normal', seed: 21 });
         var straight = runSliced(c, 1e9, { now: tickingClock(1), cooperative: false });
         var sliced = runSliced(c, 1, { now: tickingClock(1) });
         expect(sliced.events).toEqual(straight.events);
@@ -233,7 +233,7 @@
     it('an error comes out of the next() that reaches it, after its error event, as from run()', function () {
       var events = [];
       var budget = SG.budget.create({ nodes: 30 });
-      var steps = P.runSteps(cfg({ difficulty: 'evil', seed: 5 }), function (e) { events.push(e); }, budget);
+      var steps = P.runSteps(cfg({ difficulty: 'nightmare', seed: 5 }), function (e) { events.push(e); }, budget);
       var thrown = null;
       try {
         for (var i = 0; i < 1e6; i++) if (steps.next().done) break;
@@ -245,7 +245,7 @@
       expect(events[events.length - 1].i18nKey).toBe('error.budget.exceeded');
       var plain = null;
       try {
-        P.run(cfg({ difficulty: 'evil', seed: 5 }), null, SG.budget.create({ nodes: 30 }));
+        P.run(cfg({ difficulty: 'nightmare', seed: 5 }), null, SG.budget.create({ nodes: 30 }));
       } catch (err) {
         plain = err;
       }
@@ -270,7 +270,7 @@
       var clock = SG.budget.createClock(function () { return performance.now() + offset; });
       var budget = SG.budget.create({ ms: 5000, now: clock.now });
       var events = [];
-      var steps = P.runSteps(cfg({ variantId: 'killer', difficulty: 'medium', seed: 2 }),
+      var steps = P.runSteps(cfg({ variantId: 'killer', difficulty: 'normal', seed: 2 }),
         function (e) { events.push(e); }, budget, { now: clock.now });
       var step;
       var slices = 0;
@@ -303,11 +303,11 @@
       var plainEvents = [];
       var plainEmitter = SG.events.createEmitter('summary', function (e) { plainEvents.push(e); },
         { now: tickingClock(1) });
-      var viaStage = D.generate(model, 'medium', SG.rng.create(31), options({
+      var viaStage = D.generate(model, 'normal', SG.rng.create(31), options({
         emit: plainEmitter, stage: SG.events.createStageRunner(plainEmitter, { now: tickingClock(1) })
       }));
-      var direct = D.generate(model, 'medium', SG.rng.create(31), options({}));
-      var stepped = SG.budget.drive(D.generateSteps(model, 'medium', SG.rng.create(31),
+      var direct = D.generate(model, 'normal', SG.rng.create(31), options({}));
+      var stepped = SG.budget.drive(D.generateSteps(model, 'normal', SG.rng.create(31),
         options({ cooperative: true })));
       expect(viaStage.givens).toEqual(direct.givens);
       expect(stepped.givens).toEqual(direct.givens);
@@ -319,10 +319,10 @@
     it('digStage returns the result, and with `cooperative` the generator of it', function () {
       var model = SG.variants.get('classic9').build({}, null);
       var solution = SG.fullGrid.generate(model, SG.rng.create(3), null);
-      var plain = D.digStage(model, solution, 'medium', SG.rng.create(4), {});
+      var plain = D.digStage(model, solution, 'normal', SG.rng.create(4), {});
       expect(SG.budget.isSteps(plain)).toBe(false);
       expect(plain.givens.length).toBe(81);
-      var steps = D.digStage(model, solution, 'medium', SG.rng.create(4), { cooperative: true });
+      var steps = D.digStage(model, solution, 'normal', SG.rng.create(4), { cooperative: true });
       expect(SG.budget.isSteps(steps)).toBe(true);
       var yields = 0;
       var step;
@@ -371,7 +371,7 @@
         function atOnce(m, s, level, rng, options) {
           return D.digStage(m, s, level, rng, Object.assign({}, options, { cooperative: false }));
         }
-        var steps = D.digLevelSteps(model, solution, 'medium', SG.rng.create(9),
+        var steps = D.digLevelSteps(model, solution, 'normal', SG.rng.create(9),
           { cooperative: true, strategy: atOnce });
         var yields = 0;
         while (!steps.next().done) yields++;
@@ -389,9 +389,9 @@
     // the Greater-Than ones run several rounds of the sign dig.
     var SLICED = [
       { variantId: 'killer', difficulty: 'hard', seed: 5, trace: 'full' },
-      { variantId: 'killer', difficulty: 'expert', seed: 2, trace: 'summary' },
+      { variantId: 'killer', difficulty: 'master', seed: 2, trace: 'summary' },
       { variantId: 'greaterThan', difficulty: 'hard', seed: 3, trace: 'full' },
-      { variantId: 'greaterThan', difficulty: 'expert', seed: 2, trace: 'summary' }
+      { variantId: 'greaterThan', difficulty: 'master', seed: 2, trace: 'summary' }
     ];
     /** A search of the layout check is cut off at this many nodes (ANALYSIS_NODES of killer.js). */
     var ANALYSIS_NODES = 30000;
@@ -480,8 +480,8 @@
 
     it('the Killer layout of a level that skips the check is one piece with a single yield', function () {
       var hook = SG.variants.get('killer').postGenerate;
-      var plain = hook(firstAttempt('killer', 'medium', 5));
-      var stepped = count(hook.steps(firstAttempt('killer', 'medium', 5)));
+      var plain = hook(firstAttempt('killer', 'normal', 5));
+      var stepped = count(hook.steps(firstAttempt('killer', 'normal', 5)));
       expect(stepped.value.cages).toEqual(plain.cages);
       expect(stepped.yields).toBeLessThan(3);
     });
@@ -520,7 +520,7 @@
         [SLICED[2], SLICED[3]].forEach(function (c) {
           var work = sliceWork(c);
           // Before: the whole dig of a sample, 100 000 to 230 000 nodes, in one slice. Now one sign candidate:
-          // its uniqueness check and its solve with the techniques of the level (since rating v2 the expert
+          // its uniqueness check and its solve with the techniques of the level (since rating v2 the master
           // set has forcing chains, which makes a solve a few thousand nodes longer).
           expect(work.longest.dig).toBeLessThan(16000);
           expect(work.slices.dig).toBeGreaterThan(100);
@@ -1115,7 +1115,7 @@
         var client = mainClient();
         var events = [];
         var batches = 0;
-        var c = cfg({ variantId: 'killer', difficulty: 'medium', seed: 8 });
+        var c = cfg({ variantId: 'killer', difficulty: 'normal', seed: 8 });
         return client.generate(c, function (e) { events.push(e); batches++; }).then(function (result) {
           var sync = runSync(c);
           expectSameResult(result, sync.result);
@@ -1241,7 +1241,7 @@
         now: function () { clock += 10; return clock; },
         yieldFn: function () { return Promise.resolve(); }
       });
-      return failure(client.generate(cfg({ difficulty: 'evil', seed: 5 }))).then(function (err) {
+      return failure(client.generate(cfg({ difficulty: 'nightmare', seed: 5 }))).then(function (err) {
         expectCode(err, 'budget.exceeded');
         client.dispose();
       });
@@ -1430,7 +1430,7 @@
 
     it('runs a generation in slices and speaks the protocol: batches of events, then done', function () {
       var w = createLoopback();
-      var c = cfg({ variantId: 'classic9', difficulty: 'medium', seed: 12 });
+      var c = cfg({ variantId: 'classic9', difficulty: 'normal', seed: 12 });
       w.postMessage({ type: 'generate', session: 7, config: c,
         options: { chunkMs: 0, batchMs: 1e9, maxBatch: 6 } });
       var slices = w.run();
@@ -1468,7 +1468,7 @@
 
     it('a cancel between slices stops the run at the next boundary, and is answered', function () {
       var w = createLoopback();
-      w.postMessage({ type: 'generate', session: 2, config: cfg({ variantId: 'samurai', difficulty: 'medium',
+      w.postMessage({ type: 'generate', session: 2, config: cfg({ variantId: 'samurai', difficulty: 'normal',
         seed: 3 }), options: { chunkMs: 0 } });
       w.run(8);
       expect(w.fromWorker.filter(function (m) { return m.type === 'done'; })).toHaveLength(0);
@@ -1519,7 +1519,7 @@
 
     it('stops a run that exceeds its time limit (active time) with budget.exceeded', function () {
       var w = createLoopback();
-      w.postMessage({ type: 'generate', session: 6, config: cfg({ difficulty: 'evil', seed: 5 }),
+      w.postMessage({ type: 'generate', session: 6, config: cfg({ difficulty: 'nightmare', seed: 5 }),
         options: { budgetMs: 0.000001, chunkMs: 0 } });
       w.run();
       var error = w.ofType('error')[0];
@@ -1537,7 +1537,7 @@
     });
 
     var SAME_CASES = [
-      { variantId: 'classic9', difficulty: 'medium', seed: 5, trace: 'summary' },
+      { variantId: 'classic9', difficulty: 'normal', seed: 5, trace: 'summary' },
       { variantId: 'classic6', difficulty: 'veryEasy', seed: 2, trace: 'full' },
       { variantId: 'killer', difficulty: 'easy', seed: 3, trace: 'summary' },
       { variantId: 'greaterThan', difficulty: 'easy', seed: 4, trace: 'summary' },
@@ -1581,7 +1581,7 @@
         var client = loopClient({ manual: true, killAfterMs: 5000, chunkMs: 0, batchMs: 0 });
         var loop = client.loop;
         var events = [];
-        var run = failure(client.generate(cfg({ variantId: 'samurai', difficulty: 'medium', seed: 4 }),
+        var run = failure(client.generate(cfg({ variantId: 'samurai', difficulty: 'normal', seed: 4 }),
           function (e) { events.push(e); }));
         // The page's turn: run the worker's tasks one at a time until the generate message was sent.
         return until(function () {
@@ -1613,7 +1613,7 @@
         var client = loopClient({ chunkMs: 0, batchMs: 0 });
         var first = [];
         var second = [];
-        var firstRun = failure(client.generate(cfg({ variantId: 'samurai', difficulty: 'medium', seed: 1 }),
+        var firstRun = failure(client.generate(cfg({ variantId: 'samurai', difficulty: 'normal', seed: 1 }),
           function (e) { first.push(e); }));
         return until(function () { return first.length > 0; }).then(function () {
           var secondRun = client.generate(cfg({ variantId: 'jigsaw9', difficulty: 'easy', seed: 2 }),

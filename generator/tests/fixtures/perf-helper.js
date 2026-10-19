@@ -28,8 +28,8 @@
   // ---------------------------------------------------------------------------------------------
 
   /** The columns of the table of section 9.1: the nine levels of rating v2. */
-  var TARGET_LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
-    'nightmare2'];
+  var TARGET_LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
+    'hell2'];
 
   function row() {
     var r = {};
@@ -42,7 +42,7 @@
   /**
    * p95 budgets in milliseconds, one per level a variant offers (null: not offered). Rating v2: a target the
    * table had before is kept while the qualification (`node tests/qualify.js`) meets it; easy takes the one
-   * of medium; a new cell, or one whose old target the qualification's p95 exceeds, is three times that p95
+   * of normal; a new cell, or one whose old target the qualification's p95 exceeds, is three times that p95
    * rounded up, never below the target of the level before and never above the budget of the qualification
    * (2 s for 4x4 and 6x6, 10 s up to 81 cells, 30 s above).
    */
@@ -143,15 +143,15 @@
    */
   var COMBOS = [
     ['classic4', 'veryEasy'], ['classic6', 'veryEasy'], ['classic6', 'hard'],
-    ['classic9', 'veryEasy'], ['classic9', 'easy'], ['classic9', 'medium'], ['classic9', 'hard'],
-    ['classic9', 'veryHard'], ['classic9', 'expert'], ['classic9', 'evil'],
-    ['mega12', 'medium'], ['mega16', 'easy'],
-    ['diagonalX', 'easy'], ['diagonalX', 'evil'], ['hyper', 'hard'],
-    ['jigsaw9', 'medium'], ['jigsaw9', 'expert'],
+    ['classic9', 'veryEasy'], ['classic9', 'easy'], ['classic9', 'normal'], ['classic9', 'hard'],
+    ['classic9', 'expert'], ['classic9', 'master'], ['classic9', 'nightmare'],
+    ['mega12', 'normal'], ['mega16', 'easy'],
+    ['diagonalX', 'easy'], ['diagonalX', 'nightmare'], ['hyper', 'hard'],
+    ['jigsaw9', 'normal'], ['jigsaw9', 'master'],
     ['killer', 'easy'], ['killer', 'hard'],
-    ['greaterThan', 'medium'], ['greaterThan', 'hard'],
-    ['samurai', 'easy'], ['sohei', 'veryEasy'], ['butterfly', 'medium'], ['flower', 'medium'],
-    ['wordoku', 'medium']
+    ['greaterThan', 'normal'], ['greaterThan', 'hard'],
+    ['samurai', 'easy'], ['sohei', 'veryEasy'], ['butterfly', 'normal'], ['flower', 'normal'],
+    ['wordoku', 'normal']
   ].map(function (pair) { return { variant: pair[0], level: pair[1], key: pair[0] + '/' + pair[1] }; });
 
   var HASH_OFFSETS = [0x811c9dc5, 0x2545f491];

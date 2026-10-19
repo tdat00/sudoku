@@ -44,7 +44,7 @@ A static web app written in **plain HTML + CSS + JavaScript** — no framework, 
 
 | # | Goal | Measurable criterion |
 |---|------|----------------------|
-| G1 | Fast generation | 9×9 Medium < 150 ms (p95) on a mid-range desktop |
+| G1 | Fast generation | 9×9 Normal < 150 ms (p95) on a mid-range desktop |
 | G2 | Guaranteed unique solution | 100% of generated puzzles have **exactly one solution** (unique solution) |
 | G3 | Guaranteed difficulty | ≥ 95% of generated puzzles fall within the difficulty band the user selected |
 | G4 | Support all 15 variants | See [§5](#5-variant-catalogue--mapping) |
@@ -314,9 +314,9 @@ Which modes a variant offers is its `symbolModes`: `digits`, `letters`, `colors`
 | Variant | Levels |
 |---------|--------|
 | `classic4` | veryEasy (its puzzles need nothing beyond singles) |
-| `classic6` | veryEasy, hard (a list with a gap: easy and medium are never reached, veryHard … evil only by about half of the requests) |
-| `classic9`, `wordoku` | veryEasy … nightmare1 (nightmare2 is rarely reached under the default symmetry) |
-| `mega12`, `mega16`, `diagonalX`, `hyper`, `jigsaw9`, `killer`, `greaterThan`, `samurai`, `sohei`, `butterfly`, `flower` | all nine, veryEasy … nightmare2 |
+| `classic6` | veryEasy, hard (a list with a gap: easy and normal are never reached, expert … nightmare only by about half of the requests) |
+| `classic9`, `wordoku` | veryEasy … hell1 (hell2 is rarely reached under the default symmetry) |
+| `mega12`, `mega16`, `diagonalX`, `hyper`, `jigsaw9`, `killer`, `greaterThan`, `samurai`, `sohei`, `butterfly`, `flower` | all nine, veryEasy … hell2 |
 
 ### 5.2 Multi-grid geometry
 
@@ -341,7 +341,7 @@ SG.variants.register({
   i18nKey: 'variant.diagonalX',
   group: 'extraRegions',            // UI grouping; 'group.<id>' must exist in the locale packs
   digits: 9,
-  difficultySupport: ['veryEasy','easy','medium','hard','veryHard','expert','evil','nightmare1','nightmare2'],
+  difficultySupport: ['veryEasy','easy','normal','hard','expert','master','nightmare','hell1','hell2'],
   defaultSymbolMode: 'digits',
   symbolModes: ['digits','letters','colors','shapes'],
   options: [ /* schema of variant-specific options, used to auto-generate the UI */ ],
@@ -353,7 +353,7 @@ SG.variants.register({
   // Optional: tuning
   restartThreshold: undefined,                       // failed guesses per full-grid attempt (Mega: 300 / 400)
   clueFloor: undefined,                              // own clue floor per level, see §6.7
-  clueFloorScale: { medium: 0.83, hard: 0.8, veryHard: 0.8, expert: 0.8 }   // calibration of the derived floor, see §6.7
+  clueFloorScale: { normal: 0.83, hard: 0.8, expert: 0.8, master: 0.8 }   // calibration of the derived floor, see §6.7
 });
 ```
 
@@ -552,37 +552,39 @@ The Difficulty Score table (§10.5) shows this sum: each technique row has its u
 
 ### 6.7 Difficulty definitions
 
-Nine levels (rating v2). The band is the same for every variant; the oracle of a level allows exactly the techniques whose `1.25 × weight` is below the band maximum (the column lists those that become available at that level; all of them at `nightmare2`).
+Nine levels (rating v2). The band is the same for every variant; the oracle of a level allows exactly the techniques whose `1.25 × weight` is below the band maximum (the column lists those that become available at that level; all of them at `hell2`).
 
 | Level | VI | EN | Score band | Techniques that become available | Clue floor `minClues` (classic9) | `minCluesPerUnit` |
 |-------|----|----|-----------|----------------------------------|---------------------------------:|------------------:|
 | `veryEasy` | Rất dễ | Very easy | [0, 45) | singles | 40 | 2 |
 | `easy` | Dễ | Easy | [45, 180) | pointing, box/line, naked pair; cage combination, inequality chain | 34 | 2 |
-| `medium` | Trung bình | Medium | [180, 400) | hidden pair, triples, quads; rule of 45, min/max forcing | 29 | 1 |
+| `normal` | Trung bình | Normal | [180, 400) | hidden pair, triples, quads; rule of 45, min/max forcing | 29 | 1 |
 | `hard` | Khó | Hard | [400, 700) | X-Wing, simple colouring, Swordfish, Jellyfish; cage splitting | 25 | 1 |
-| `veryHard` | Rất khó | Very hard | [700, 1000) | XY-Wing, XYZ-Wing | 25 | 1 |
-| `expert` | Chuyên gia | Expert | [1000, 1500) | W-Wing, Unique Rectangle, forcing chain | 22 | 0 |
-| `evil` | Địa ngục | Evil | [1500, 2400) | Nishio | 17 | 0 |
-| `nightmare1` | Ác mộng 1 | Nightmare 1 | [2400, 3600) | — | 17 | 0 |
-| `nightmare2` | Ác mộng 2 | Nightmare 2 | ≥ 3600 | — | 17 | 0 |
+| `expert` | Chuyên gia | Expert | [700, 1000) | XY-Wing, XYZ-Wing | 25 | 1 |
+| `master` | Bậc thầy | Master | [1000, 1500) | W-Wing, Unique Rectangle, forcing chain | 22 | 0 |
+| `nightmare` | Ác mộng | Nightmare | [1500, 2400) | Nishio | 17 | 0 |
+| `hell1` | Địa ngục 1 | Hell 1 | [2400, 3600) | — | 17 | 0 |
+| `hell2` | Địa ngục 2 | Hell 2 | ≥ 3600 | — | 17 | 0 |
 
-Bands are half-open, `[min, next min)`, so every score belongs to exactly one level; the top level has no upper bound. The canonical names and descriptions of the levels (both apps use them verbatim) are in [docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md) §5.3; the level descriptions say what a level *typically* uses, because the level comes from the score. `veryHard` takes the clue floor and unit minimum of `hard`, and the nightmare tiers those of `evil`. `maxClues` is informative only. `SG.difficulty.BASE_GROUPS` names the classic technique families in ladder order; it no longer defines the levels. No further tiers in this release: no generated puzzle reached 5,400 (report §5.3).
+Bands are half-open, `[min, next min)`, so every score belongs to exactly one level; the top level has no upper bound. The canonical names and descriptions of the levels (both apps use them verbatim) are in [docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md) §5.3; the level descriptions say what a level *typically* uses, because the level comes from the score. `expert` takes the clue floor and unit minimum of `hard`, and the hell tiers those of `nightmare`. `maxClues` is informative only. `SG.difficulty.BASE_GROUPS` names the classic technique families in ladder order; it no longer defines the levels. No further tiers in this release: no generated puzzle reached 5,400 (report §5.3).
+
+**Names of the levels.** The levels were renamed after rating v2 had been built, for names that are easier to understand: `medium` → `normal`, `veryHard` → `expert`, `expert` → `master`, `evil` → `nightmare`, `nightmare1` → `hell1`, `nightmare2` → `hell2` (VI: `normal` keeps Trung bình, `expert` is Chuyên gia, `master` Bậc thầy, `nightmare` Ác mộng, `hell1` / `hell2` Địa ngục 1 / 2). Only the names changed (ids in URLs, exports and storage, locale keys, code, documents); the bands, the weights and the generation did not. The documents of the two versions (`docs/report-v1.md`, `docs/report-v2/`, `task.md`) keep the names of their time; the mapping above reads them. A saved link, history entry or export that carries an old id is not translated: `d=expert` now means the level once called `veryHard`.
 
 **Variant scaling rule.** `SG.difficulty.spec(level, model)` starts from the classic9 row and multiplies the clue floor by `cellCount / 81`; the score band is never scaled (rating v2). A variant whose board does not follow that proportion then adjusts the floor in its definition — this is the calibration knob, and it replaced the first plan's single scaling rule:
 
-1. `clueFloorScale: { level: factor }` multiplies the derived floor of that level (a missing level has factor 1). Rating v2 gives `veryHard` the factor of `hard` and `nightmare1` / `nightmare2` that of `evil` wherever a variant declares them.
+1. `clueFloorScale: { level: factor }` multiplies the derived floor of that level (a missing level has factor 1). Rating v2 gives `expert` the factor of `hard` and `hell1` / `hell2` that of `nightmare` wherever a variant declares them.
 2. `clueFloor` — a table `{ level: clues }` (a missing level: no floor) or a function `(level, model, derivedFloor) => clues` — replaces it.
 
 The result, `spec(level, model).minClues`, is the **single number** that the digger, the pipeline, `tests/soak.js` and the variants sweep (invariant **I6**) all use. The calibration of task `T-7.7` (rating v1) measured, per variant, how often ONE dug puzzle lands on the requested level and set:
 
-| Variant | `clueFloorScale` | Effect on the share of one dug puzzle landing on the level (medium / hard / expert) |
+| Variant | `clueFloorScale` | Effect on the share of one dug puzzle landing on the level (normal / hard / master) |
 |---------|------------------|--------------------------------------------------------------------------------------|
-| `diagonalX`, `hyper`, `jigsaw9`, `greaterThan` | medium 0.83 · hard 0.80 · expert 0.80 | medium 1–49 % → 32–76 % (`hyper` 1 → 32, `jigsaw9` 8 → 50) |
-| `samurai`, `sohei`, `butterfly` | medium 0.60 · hard 0.60 | medium 2–8 % → 38–49 % |
-| `flower` | easy 0.80 · medium 0.60 · hard 0.60 | medium 9 → 49 %; `medium` is now offered |
+| `diagonalX`, `hyper`, `jigsaw9`, `greaterThan` | normal 0.83 · hard 0.80 · master 0.80 | normal 1–49 % → 32–76 % (`hyper` 1 → 32, `jigsaw9` 8 → 50) |
+| `samurai`, `sohei`, `butterfly` | normal 0.60 · hard 0.60 | normal 2–8 % → 38–49 % |
+| `flower` | easy 0.80 · normal 0.60 · hard 0.60 | normal 9 → 49 %; `normal` is now offered |
 | `killer` | `clueFloor: { veryEasy: 40 }` | the other levels dig down to a handful of clues: classic Killer shows no digits and the cages carry the information |
 
-(A 9×9 board keeps its floor above the natural stop of the dig on purpose, so that the mean clue count still falls with the level.) Classic, Mega and Wordoku are untouched. Exact-level hit rate over 150 puzzles per level before → after: butterfly medium 95 → 100 %, hyper medium 89 → 100 %, jigsaw9 medium 99 → 100 %; dug puzzles per medium puzzle: hyper 38 → 3.2, butterfly 31 → 2.1. The numbers and the reasoning are in the header of `js/core/difficulty.js`.
+(A 9×9 board keeps its floor above the natural stop of the dig on purpose, so that the mean clue count still falls with the level.) Classic, Mega and Wordoku are untouched. Exact-level hit rate over 150 puzzles per level before → after: butterfly normal 95 → 100 %, hyper normal 89 → 100 %, jigsaw9 normal 99 → 100 %; dug puzzles per normal puzzle: hyper 38 → 3.2, butterfly 31 → 2.1. The numbers and the reasoning are in the header of `js/core/difficulty.js`.
 
 **Known minimum clue count:** `classic9` = 17 (proven). Other variants have no tight bound known ⇒ it must not be hard-coded; let the digger stop on its own when no further cell can be dug. `DifficultySpec.extraPasses` is kept for the contract of §13.7 but is not used: the guided stage runs until nothing can be removed, so there is no pass to add.
 
@@ -605,7 +607,7 @@ Shuffle the cell list **once** and walk through it sequentially ⇒ each cell is
 
 **② Symmetry handled in groups**
 When symmetry is enabled, mirrored cells are **dug/restored together as one unit**, not cell by cell. Styles (`SG.symmetry.KINDS`): `none`, `rotational180` (default; the most attractive and common), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. Groups are computed on **canvas** coordinates, so a multi-grid board mirrors about the centre of the whole canvas, and a group simply shrinks where the mirrored position holds no cell.
-*Trade-off:* the stricter the symmetry, the higher the minimum clue count ⇒ the harder it is to reach the top levels. Symmetries whose groups have more than two cells (`rotational90`, `mirrorBoth`) dig in coarser steps and miss a level more often, so the generator allows 30 dig samples per grid instead of 12 for them, and the controls warn from `expert` upwards, the nightmare levels included (`SG.controls.STRICT_SYMMETRY`).
+*Trade-off:* the stricter the symmetry, the higher the minimum clue count ⇒ the harder it is to reach the top levels. Symmetries whose groups have more than two cells (`rotational90`, `mirrorBoth`) dig in coarser steps and miss a level more often, so the generator allows 30 dig samples per grid instead of 12 for them, and the controls warn from `master` upwards, the hell levels included (`SG.controls.STRICT_SYMMETRY`).
 
 **③ Cheap pruning before expensive checks (cheap pre-filters)**
 Before calling any solver, immediately reject candidates that violate:
@@ -626,7 +628,7 @@ Rating v2 adds the band's upper edge to the question: a removal is also put back
 Result: the dig never leaves the chosen band from above, and every puzzle it keeps has a complete proof with the techniques of the level. Whether it reaches the band from below is decided by the full rating (⑤), which is what makes a sample *exact*: a complete proof **and** a level equal to the requested one.
 
 *Applies to:* every level (rating v2).
-*Top tiers (`evil`, `nightmare1`, `nightmare2`):* every other sample is also a fast **proposal**: stage A with `dfs stillUnique` (§6.5) as the oracle, stage B towards puzzles the techniques below the chain group cannot finish; each uniqueness check of a removal is guarded at 200,000 search nodes (a removal that needs more is refused). The proposal is rated in full; when it is above the band it is **refined downward**: empty symmetry groups of the solution are added back one at a time in a seeded order (at most 64 full ratings) — an addition that is completely rated with a score ≥ the band minimum is kept (and the refinement stops when the score is also below the band maximum), any other addition is undone.
+*Top tiers (`nightmare`, `hell1`, `hell2`):* every other sample is also a fast **proposal**: stage A with `dfs stillUnique` (§6.5) as the oracle, stage B towards puzzles the techniques below the chain group cannot finish; each uniqueness check of a removal is guarded at 200,000 search nodes (a removal that needs more is refused). The proposal is rated in full; when it is above the band it is **refined downward**: empty symmetry groups of the solution are added back one at a time in a seeded order (at most 64 full ratings) — an addition that is completely rated with a score ≥ the band minimum is kept (and the refinement stops when the score is also below the band maximum), any other addition is undone.
 *Safety net (risk R3):* whatever oracle dug it, every puzzle is re-verified with `SG.dfs.countSolutions(…, 2) === 1` before it leaves the digger. If a technique bug ever made one ambiguous, it is replaced by a plain DFS-dug puzzle and the result carries the warning `digger.unsoundTechnique`. A candidate that the searches, the refinement or a variant's strategy offer as the closest puzzle of the run (the keeper, §6.8) does not go through the dig step, so the keeper counts its solutions itself (within the 200,000-node guard) before it keeps it, whatever its proof claims: a candidate that is not verified unique is never kept, the closest verified one stays, and a complete proof contradicted by a second solution adds the same warning.
 
 **⑤ Deferred & banded rating**
@@ -693,7 +695,7 @@ Built (`js/ui/cache.js`, §14.3):
 - **Persistent cache:** every generated puzzle is stored in `localStorage` (`sg.cache.v1`, LRU, 20 puzzles, schema-version checked). The same configuration with the same seed is served from it at once. The cache stores the puzzle only, never the trace nor the dig log; a puzzle served from the cache is shown immediately (the replay waits, with a "preparing the replay" note) and is **regenerated from the seed in the background** (an independent client); its dig log then gives the puzzle its replay through `SG.app.attachTrace(trace, digLog)`, which opens on the finished puzzle. The regenerated puzzle must equal the cached one, otherwise the entry is dropped.
 - **Background pre-generation:** once a puzzle is shown and the page has been idle for 1 s, the cache quietly pre-generates one or two puzzles with the same configuration and random seeds in a Web Worker (at most 2 per configuration, 4 in all; never while a generation runs; paused while the tab is hidden; skipped for configurations whose expected time is above 3 s; **absent in main-thread mode**). "Generate" with an empty seed field and "Generate random" hand them out instantly.
 
-Not built: *progressive difficulty (warm start)* — generating a `medium` puzzle first and then digging on to `hard`/`expert`. The guided dig of stage B covers the same need differently.
+Not built: *progressive difficulty (warm start)* — generating a `normal` puzzle first and then digging on to `hard`/`master`. The guided dig of stage B covers the same need differently.
 
 ---
 
@@ -844,16 +846,16 @@ Input: a grid that already has a complete solution.
 1. Partition all the cells into connected cages:
      - The target size is drawn at random from a difficulty-dependent distribution:
          veryEasy/easy : {2:45%, 3:40%, 4:15%}       → small cages, easy to reason about
-         medium        : {2:30%, 3:35%, 4:25%, 5:10%}
-         hard … evil   : {2:15%, 3:30%, 4:30%, 5:20%, 6:5%}   (veryHard and expert included)
-         nightmare1/2  : the evil shares, tilted towards larger cages by +2 on the cage-size slider
+         normal        : {2:30%, 3:35%, 4:25%, 5:10%}
+         hard … nightmare   : {2:15%, 3:30%, 4:30%, 5:20%, 6:5%}   (expert and master included)
+         hell1/2  : the nightmare shares, tilted towards larger cages by +2 on the cage-size slider
                          (clamp(cageSize + 2, −2, 2): +2 at the default position)
      - Constraint: the values within a cage must be PAIRWISE DIFFERENT
        (the standard Killer rule) → when growing a cage, exclude any cell whose value is already present.
 2. Compute the sum of each cage from the solution.
 3. Remove ALL clues (classic Killer gives no digits).
 4. Check for a unique solution with a cage-aware solver (`SG.dfs` with the cage propagation extension).
-   This layout check runs from hard upwards; veryEasy, easy and medium skip it, because the digger keeps the
+   This layout check runs from hard upwards; veryEasy, easy and normal skip it, because the digger keeps the
    clues those levels need and its oracle already guarantees uniqueness.
 5. If it is NOT unique, repair in this priority order (from least to most invasive):
      a. Split a large cage in the most ambiguous area into two smaller cages.
@@ -861,7 +863,7 @@ Input: a grid that already has a complete solution.
      c. Reveal 1 clue at the cell with the most candidates.
    Split / merge are tried at most 12 times, then up to 24 clues are revealed. Every check is bounded by
    search nodes (30 000 per check, 250 000 per layout), never by the clock, so the result stays reproducible.
-6. (rating v2, veryHard and above) Layout search: with the revealed digits completed to whole symmetry groups,
+6. (rating v2, expert and above) Layout search: with the revealed digits completed to whole symmetry groups,
    the puzzle is rated; while it is unique, completely rated and below the band, merge two neighbouring cages
    or hand a boundary cell to the neighbouring cage, and keep a move when the puzzle stays unique with a
    complete proof and its score does not decrease and stays below the band maximum (at most 8,192 proposed
@@ -929,7 +931,7 @@ Repeat to a fixpoint. With a long inequality chain `a<b<c<d`, bounds propagation
 
 `model.layout.cellRegion` of a multi-grid board is the canvas box slot, so an overlapped box has ONE id although two grids own it; `layout.overlays` holds one `{ kind: 'overlap', cells }` per box owned by two or more grids, and `layout.subGrids` the 9×9 outlines. The labels are `G{n}-R{r}C{c}`.
 
-> **Performance.** The first plan expected `samurai` (369 cells) and `sohei` (288 cells) to be 15–40× slower than `classic9`, with budgets of 8 s (`medium`) and 20 s (`hard`). Measured in Node by `tests/soak.js --full` (`trace: summary`, 25 puzzles per combination), the p95 is 0.29 s / 0.47 s for Samurai medium / hard, 0.16 / 0.37 s for Sohei, 0.12 / 0.20 s for Flower and 0.07 / 0.13 s for Butterfly — one to two orders of magnitude inside the budgets, because the technique-bounded oracle and the calibrated clue floors keep the digs short. The UI still runs generation in a worker, shows the empty board and a Cancel button while it runs, and Samurai downgrades a `full` trace to `summary` (the page gets `summary` anyway).
+> **Performance.** The first plan expected `samurai` (369 cells) and `sohei` (288 cells) to be 15–40× slower than `classic9`, with budgets of 8 s (`normal`) and 20 s (`hard`). Measured in Node by `tests/soak.js --full` (`trace: summary`, 25 puzzles per combination), the p95 is 0.29 s / 0.47 s for Samurai normal / hard, 0.16 / 0.37 s for Sohei, 0.12 / 0.20 s for Flower and 0.07 / 0.13 s for Butterfly — one to two orders of magnitude inside the budgets, because the technique-bounded oracle and the calibrated clue floors keep the digs short. The UI still runs generation in a worker, shows the empty board and a Cancel button while it runs, and Samurai downgrades a `full` trace to `summary` (the page gets `summary` anyway).
 >
 > **Cell-count derivation (verified):** `sohei` = 4×81 − 4 shared 3×3 boxes = 324 − 36 = **288**. `flower` = 15×15 canvas − 4 empty 3×3 corners = 225 − 36 = **189**. Earlier drafts listed 324 and 225; those were the pre-merge and full-canvas figures respectively and are wrong. The builder checks the canvas, the origins (multiples of 3) and the unique cell count and throws `multigrid.invalidGeometry` on any mismatch.
 
@@ -980,7 +982,7 @@ So they are bundled together in `js/variants/extra-regions.js`, and can **be ena
 ### 8.8 Mini 4×4 / 6×6
 
 - `classic4`: 2×2 boxes, offers only `veryEasy` (rating v2 qualification, docs/report-v2/qualification.md): its puzzles need nothing beyond singles. Very fast — used as the "smoke test" for the whole pipeline.
-- `classic6`: boxes of **2 rows × 3 columns**. Offers `veryEasy` and `hard` (rating v2 qualification, docs/report-v2/qualification.md): `easy` and `medium` were never hit, and `veryHard`, `expert` and `evil` only by about half of the requests, below the 90 % the qualification asks for.
+- `classic6`: boxes of **2 rows × 3 columns**. Offers `veryEasy` and `hard` (rating v2 qualification, docs/report-v2/qualification.md): `easy` and `normal` were never hit, and `expert`, `master` and `nightmare` only by about half of the requests, below the 90 % the qualification asks for.
 - UI: the default symbol mode stays `digits`; `shapes` and `colors` are one selection away. The first plan's "kid mode" switch was not built.
 
 ---
@@ -989,9 +991,9 @@ So they are bundled together in `js/variants/extra-regions.js`, and can **be ena
 
 ### 9.1 Performance targets (budgets)
 
-Measured on a mid-range desktop (~10th-generation Intel i5), Chrome, `trace: summary` mode. p95 over 50 runs. Rating v2 (nine levels): a target the table had before is kept while the qualification meets it, `easy` takes the target of `medium`, and a new cell is three times the p95 of the qualification rounded up, never below the target of the level before and never above the qualification's own budget (2 s / 10 s / 30 s); `tests/fixtures/perf-helper.js` holds the numbers.
+Measured on a mid-range desktop (~10th-generation Intel i5), Chrome, `trace: summary` mode. p95 over 50 runs. Rating v2 (nine levels): a target the table had before is kept while the qualification meets it, `easy` takes the target of `normal`, and a new cell is three times the p95 of the qualification rounded up, never below the target of the level before and never above the qualification's own budget (2 s / 10 s / 30 s); `tests/fixtures/perf-helper.js` holds the numbers.
 
-| Variant | veryEasy | easy | medium | hard | veryHard | expert | evil | nightmare1 | nightmare2 |
+| Variant | veryEasy | easy | normal | hard | expert | master | nightmare | hell1 | hell2 |
 |---------|---|---|---|---|---|---|---|---|---|
 | `classic4` | < 10 ms | — | — | — | — | — | — | — | — |
 | `classic6` | < 10 ms | — | — | < 350 ms | — | — | — | — | — |
@@ -1011,7 +1013,7 @@ Measured on a mid-range desktop (~10th-generation Intel i5), Chrome, `trace: sum
 
 A `—` entry = the variant does not offer that level (`difficultySupport`, [docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
 
-**Status.** `node tests/perf.js` measures every cell of this table, and `tests/soak.js` prints the same budgets next to its own timings. Measured in Node on the development machine (not in Chrome on the reference i5), every cell of the qualification run meets its target; the slowest relative to its budget are Greater-Than and Killer from `veryHard` up (p95 ≈ 5.4–5.9 s of 10 s). The cheap `perf` suite of the normal test run only warns; the *regression hashes* of `tests/fixtures/regression.js` are what keeps an optimisation honest (§15.2).
+**Status.** `node tests/perf.js` measures every cell of this table, and `tests/soak.js` prints the same budgets next to its own timings. Measured in Node on the development machine (not in Chrome on the reference i5), every cell of the qualification run meets its target; the slowest relative to its budget are Greater-Than and Killer from `expert` up (p95 ≈ 5.4–5.9 s of 10 s). The cheap `perf` suite of the normal test run only warns; the *regression hashes* of `tests/fixtures/regression.js` are what keeps an optimisation honest (§15.2).
 
 ### 9.2 Mandatory optimisation rules
 
@@ -1071,9 +1073,9 @@ SG.workerClient = {
 │  Hard: score 673,    │     ┌───────────────────┐      │ [⟲ Generate random] │
 │  seed 12345          │     │                   │      │ ───────────────     │
 │  Jigsaw Sudoku  [×]  │     │    GRID (SVG)     │      │ Variant         [▾] │
-│  Expert: score …     │     │                   │      │ Difficulty      [▾] │
+│  Master: score …     │     │                   │      │ Difficulty      [▾] │
 │  ⋮                   │     └───────────────────┘      │ Symbols         [▾] │
-│            [Clear]   │ ┌─ Summary │ Generation Steps ┐│ Seed [_______][⧉]   │
+│       [Remove all]   │ ┌─ Summary │ Generation Steps ┐│ Seed [_______][⧉]   │
 │                      │ │ cards · Difficulty Score    ││ (+ variant options) │
 │                      │ │ table (or: ⏮ ‹ › ⏭ slider,  ││ ▸ Advanced options  │
 │                      │ │ step description + table)   ││                     │
@@ -1098,7 +1100,7 @@ The page mount points are fixed ids that every module renders into (`#history-ro
 
 | Criterion | SVG | Canvas | HTML/CSS Grid |
 |-----------|-----|--------|---------------|
-| Irregular region borders (Jigsaw) | ✅ easy (path) | ⚠️ manual | ❌ very hard |
+| Irregular region borders (Jigsaw) | ✅ easy (path) | ⚠️ manual | ❌ expert |
 | Dashed cages (Killer) | ✅ `stroke-dasharray` | ⚠️ | ❌ |
 | `<`/`>` signs on the edges | ✅ | ⚠️ | ⚠️ |
 | Overlapping regions (Samurai) | ✅ | ✅ | ❌ |
@@ -1156,7 +1158,7 @@ The animations below remain in `SG.boardView` for a caller that plays events bac
 | Group | Option | Type | Default |
 |-------|--------|------|---------|
 | Basic | Variant | select (grouped) | `classic9` |
-| Basic | Difficulty | select (filtered by `difficultySupport`) | `medium` |
+| Basic | Difficulty | select (filtered by `difficultySupport`) | `normal` |
 | Basic | Symbol set | select (filtered by variant) | `digits` |
 | Basic | Seed | text + 📋 copy button; any text is accepted (a whole number 0–4294967295 as it is, anything else FNV-1a hashed, §14.2) | random (empty) |
 | Advanced | Symmetry | select + miniature preview | `rotational180` |
@@ -1464,14 +1466,14 @@ Finding = { technique, cells, placements:[[cell,value]], eliminations:[[cell,val
 ### 13.7 `SG.difficulty`
 
 ```js
-SG.difficulty.LEVELS: string[]          // ['veryEasy','easy','medium','hard','veryHard','expert','evil','nightmare1','nightmare2']
+SG.difficulty.LEVELS: string[]          // ['veryEasy','easy','normal','hard','expert','master','nightmare','hell1','hell2']
 SG.difficulty.BASE_GROUPS: string[]     // ['basic','locked','subset','fish','wing','chain'] (names only; no longer defines levels)
 SG.difficulty.WEIGHTS, TABLE, SCORING   // weights (§6.6), bands and clue floors (§6.7), formula constants
 SG.difficulty.RATING_VERSION            // 2
 SG.difficulty.spec(level, model): DifficultySpec
 DifficultySpec = { level, min, max, minClues, maxClues, minCluesPerUnit, allowedTechniques:string[],
                    allowedGroups:string[], symmetryDefault, extraPasses /* unused */, oracle: 'techniques',
-                   proposal: boolean /* evil and the nightmares */, scale }
+                   proposal: boolean /* nightmare, hell1 and hell2 */, scale }
 SG.difficulty.classify(report, model): Rating
 Rating = { level, score, rawScore /* = score */, hardestTechnique, hardestGroup, confidence, solved, empties,
            techniqueCounts, ratingVersion }       // no complete proof: level, score and rawScore are null
@@ -1514,7 +1516,7 @@ SG.pipeline.normalizeConfig(config): GenerateConfig        // defaults filled in
 SG.pipeline.toWire(result): Object                         // PuzzleResult as plain data that survives postMessage
 SG.pipeline.fromWire(wire): PuzzleResult                   // rebuilds the model, switches the lazy extensions on
 SG.pipeline.STEPS, DEFAULT_MAX_ATTEMPTS (8), FULL_TRACE_MAX_CELLS (300)
-GenerateConfig = { variantId, difficulty = 'medium', seed?, symbolMode, symmetry = 'rotational180', digOrder = 'random',
+GenerateConfig = { variantId, difficulty = 'normal', seed?, symbolMode, symmetry = 'rotational180', digOrder = 'random',
                    maxAttempts = 8, trace: 'off'|'summary'|'full' (default 'summary'; the page sends none), variantOptions: Object }
 PuzzleResult  = { model, givens, solution, rating, seed, config, timings, attempts, warnings, digLog }
 ```
@@ -1676,7 +1678,7 @@ Everything from `symbols` down is **additive**: the first plan's fields are unch
 | `lang` | `lang=vi` | Language |
 | `auto` | `auto=1` | Generate automatically as soon as the page loads (a link with a `seed` does so anyway) |
 
-`?v=classic9&d=expert&seed=42&lang=vi&auto=1` must always reproduce the **exact** same puzzle.
+`?v=classic9&d=master&seed=42&lang=vi&auto=1` must always reproduce the **exact** same puzzle.
 
 - Only values that differ from the defaults are written to the address bar. The page has no share-link button any more (the Result panel lost it); `SG.store.shareUrl` / `toSearchString(state, { full: true })` still build a link that always carries `v d sym mode` as well, and the address bar of the page itself is such a link once a seed is in it. Any other parameter is ignored and left out of the canonical URL — the `trace` and `speed` of older links included (the "Replay detail" option and the replay speed are gone, §10.4). The page never starts a generation because the URL changed; it generates **on load** when the URL has a `seed` (a shared link, or a reload after "Generate random", which writes its new seed to the URL) or `auto=1`.
 - **Seed hashing.** The state keeps the seed as the text the user typed. A decimal integer in 0…4294967295 is used as it is; anything else (letters, a negative number, a number beyond uint32) is hashed to a uint32 with FNV-1a 32 bit over the UTF-16 code units of the NFC-normalised, trimmed text — the same hash `SG.rng` uses to derive child streams. A blank seed means "random" and the `seed` of the configuration is left out.
@@ -1817,10 +1819,10 @@ Everything above has been brought in line with the implementation. This table co
 | Topic | What was built | Why |
 |-------|----------------|-----|
 | Pipeline steps 5–7 (§7.1) | `dig`, `rate` and `tune` are three steps. A missed dig sample repeats dig → rate → tune **on the same grid**, up to 12 samples per grid (30 for symmetries with groups of more than 2 cells); then `retry.difficulty` and a new grid. Events: `dig.start` (args `sample`, `maxSamples`), `tune.hit` / `tune.miss`, `retry.difficulty` | The guided dig shares its rating objective with the rater, and a full grid is much more expensive than another dig of it. The attempt counters ("Attempt n of m") are read from these events; the page no longer shows them while a run goes on (it shows the empty board), but `SG.app`'s `generate:progress` event still carries them |
-| Stage B of the dig (§6.8) | A **guided** dig: it rates up to 32 candidate removals per step and applies the one that makes the puzzle hardest, never past the band; levels from `medium` up, starting at ≈ 47 % of the cells as clues. `tune.restore` / "dig deeper with a relaxed oracle" were not built | A finished stage-A puzzle is minimal, so a relaxed oracle finds nothing to remove; random minimal puzzles need only singles 3 times in 4, so the hard levels would be hit too rarely |
-| Scoring and levels (§6.6, §6.7; rating v2) | One formula for every variant, `round(80·E/(E+40) + P + 0.25·P·log₂(1 + W/P))` from the empty cells and the technique counts only, with the weights of `SG.difficulty.WEIGHTS`; nine levels on fixed bands 0 / 45 / 180 / 400 / 700 / 1000 / 1500 / 2400 / 3600 (`veryHard`, `nightmare1`, `nightmare2` are new); no technique floor and no band scaling; a puzzle without a complete proof is unrated and never returned; each variant offers the levels it passes in the qualification. Rating v1 (`SG.difficulty.COSTS`, first-use ×1.5, 0.6 per empty cell, bands scaled by `cellCount / 81`, the technique floor) is gone | The v1 technique floor derived the score from the level, and the scaled bands rated the same technique differently on different boards; the joint report (docs/report-v2/report-detailed.md) compares the candidate formulas on the corpora of both researchers |
-| Clue floors (§6.7; **D1**) | `spec(level, model).minClues` is the one floor; a variant declares `clueFloorScale` and / or `clueFloor`; Killer: `{ veryEasy: 40 }` only; invariant I6, the digger, the pipeline, `soak.js` and the variants sweep all use it | The classic9 floor scaled by `cellCount / 81` made hard/expert unreachable for Killer and left medium/hard hit by 1–20 % of the digs on the hybrid and multi-grid boards (task `T-7.7`) |
-| Levels offered (**D2**, **D3**; rating v2) | Rating v1: `flower` offered `medium` (it had none); `classic6` did not (it had it). Rating v2: every variant offers the levels it passes in the qualification (§5.1, docs/report-v2/qualification.md) | v1: with the per-variant floor `flower medium` was hit by 49 % of the digs (was 9 %); `classic6 medium` stayed at 0–3 %. v2: one protocol decides for every variant |
+| Stage B of the dig (§6.8) | A **guided** dig: it rates up to 32 candidate removals per step and applies the one that makes the puzzle hardest, never past the band; levels from `normal` up, starting at ≈ 47 % of the cells as clues. `tune.restore` / "dig deeper with a relaxed oracle" were not built | A finished stage-A puzzle is minimal, so a relaxed oracle finds nothing to remove; random minimal puzzles need only singles 3 times in 4, so the hard levels would be hit too rarely |
+| Scoring and levels (§6.6, §6.7; rating v2) | One formula for every variant, `round(80·E/(E+40) + P + 0.25·P·log₂(1 + W/P))` from the empty cells and the technique counts only, with the weights of `SG.difficulty.WEIGHTS`; nine levels on fixed bands 0 / 45 / 180 / 400 / 700 / 1000 / 1500 / 2400 / 3600 (`expert`, `hell1`, `hell2` are new; `expert`, `master`, `nightmare` are the levels first named `veryHard`, `expert` and `evil` — see the note after the table of §6.7); no technique floor and no band scaling; a puzzle without a complete proof is unrated and never returned; each variant offers the levels it passes in the qualification. Rating v1 (`SG.difficulty.COSTS`, first-use ×1.5, 0.6 per empty cell, bands scaled by `cellCount / 81`, the technique floor) is gone | The v1 technique floor derived the score from the level, and the scaled bands rated the same technique differently on different boards; the joint report (docs/report-v2/report-detailed.md) compares the candidate formulas on the corpora of both researchers |
+| Clue floors (§6.7; **D1**) | `spec(level, model).minClues` is the one floor; a variant declares `clueFloorScale` and / or `clueFloor`; Killer: `{ veryEasy: 40 }` only; invariant I6, the digger, the pipeline, `soak.js` and the variants sweep all use it | The classic9 floor scaled by `cellCount / 81` made hard/master unreachable for Killer and left normal/hard hit by 1–20 % of the digs on the hybrid and multi-grid boards (task `T-7.7`) |
+| Levels offered (**D2**, **D3**; rating v2) | Rating v1: `flower` offered `normal` (it had none); `classic6` did not (it had it). Rating v2: every variant offers the levels it passes in the qualification (§5.1, docs/report-v2/qualification.md) | v1: with the per-variant floor `flower normal` was hit by 49 % of the digs (was 9 %); `classic6 normal` stayed at 0–3 %. v2: one protocol decides for every variant |
 | `restartThreshold` (**D4**) | `SG.fullGrid.generate` reads the variant's `restartThreshold` unless the caller passes one (Mega: 300 / 400) | It was declared but never wired |
 | Option schema (**D5**) | Variants keep their own shapes; the registry **normalises** them (`optionsOf`, `defaultOptions`, `sanitizeOptions`); the UI, the store and the cache key read only those | Parallel agents wrote slightly different schemas; normalising in one place was cheaper than renaming |
 | Calibration breadth (**D6**) | Rating v1: costs were tuned on classic9; the other variants calibrate through `clueFloorScale`. `jellyfish` is untestable on real data (never on the solving path of 3 000 natural classic9 puzzles), so its cost only follows the fish factor. `extraPasses` is unused | Classic9 has the highest hit rate; the other boards were already at 95–100 % exact hits and needed speed, not new costs |
@@ -1841,7 +1843,7 @@ Everything above has been brought in line with the implementation. This table co
 | Cache (§6.8 ⑦) | Result cache + background pool; the trace and the dig log (the replay) are **regenerated from the seed**; *progressive difficulty (warm start)* not built | A trace can be megabytes; the guided dig already covers the warm-start need |
 | Multi-grid (§8.4) | Generic MRV + `fastSeedOverlaps`; no sub-grid-wise digging sequence; p95 ≈ 0.07–0.5 s in Node instead of the planned 8–20 s budgets | The oracle and the clue floors keep the digs short |
 | Mega (§8.6) | Symbol set is the option `symbolSet`; **no** mobile minimap / horizontal scroll (the SVG scales to the width) | Scaling the viewBox was enough for the board sizes tested; the minimap is an idea (below) |
-| Killer, Greater-Than, Wordoku (§8.2, §8.3, §8.5) | Killer's layout uniqueness check / repair runs for hard and above only (veryEasy–medium rely on the clues); GT: `build` returns the empty board, signs come from `postGenerate`, the dig removes signs (revealing clue groups where the level needs them); Wordoku letters are in alphabetical order and the VI list is short, so the EN list takes over with an event | Models are immutable; uniqueness at the easy levels is guaranteed by the oracle |
+| Killer, Greater-Than, Wordoku (§8.2, §8.3, §8.5) | Killer's layout uniqueness check / repair runs for hard and above only (veryEasy–normal rely on the clues); GT: `build` returns the empty board, signs come from `postGenerate`, the dig removes signs (revealing clue groups where the level needs them); Wordoku letters are in alphabetical order and the VI list is short, so the EN list takes over with an event | Models are immutable; uniqueness at the easy levels is guaranteed by the oracle |
 | Unique-solution check (§6.5) | `stillUnique` is ≈ 3.7–4× faster than counting on remove-stays-unique calls, ≈ 1.8× over a whole dig | The first estimate (5–12×) was optimistic; the "≥ 3×" criterion was accepted in its narrower reading |
 | Order of work (§17) | P5 `T-5.1…5.8` before P4; `T-5.9`, `T-5.10` after P4 had started; the pre-generation task `T-6.3` is *not* the calibration (that is `T-2.10`) | Avoided merge conflicts on the hot files |
 | Split into two repositories (`T-7.5`, `T-7.8`) | The trial-play mode (`js/ui/play.js`, `css/play.css`, `tests/suites/play.test.js`, the `sg.play.v1` key and the play shortcuts of the help) moved to the **sudoku-player** repository. This one keeps the generator and gains `js/ui/exchange.js` (shared byte for byte), the `model` block of the JSON and the "Play" button (§10.9) that opens the puzzle in the player | A player and a generator have different users and release rhythm; the only coupling left is a documented document format, carried in a URL fragment so that no server is involved |

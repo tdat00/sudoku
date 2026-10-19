@@ -40,7 +40,7 @@
    * rotational180). Two-way symmetries and 'none' never warn.
    * @type {Object<string, string>}
    */
-  const STRICT_SYMMETRY = Object.freeze({ rotational90: 'expert', mirrorBoth: 'expert' });
+  const STRICT_SYMMETRY = Object.freeze({ rotational90: 'master', mirrorBoth: 'master' });
 
   /** The symmetry that is offered as the reliable alternative in the warning. */
   const RELIABLE_SYMMETRY = 'rotational180';

@@ -536,13 +536,13 @@
     group: 'inequality',
     digits: SIZE,
     // Every level of the nine (measured: `node tests/qualify.js`, docs/report-v2/qualification.md).
-    difficultySupport: ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
-      'nightmare2'],
+    difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
+      'hell2'],
     // The signs do part of the work of the clues, so the classic9 floors (29 / 25 / 22) kept the dig from
-    // reaching the level (49 %, 13 % and 11 % of the dug puzzles for medium, hard, expert); 83 % / 80 % /
+    // reaching the level (49 %, 13 % and 11 % of the dug puzzles for normal, hard, master); 83 % / 80 % /
     // 80 % of them (24 / 20 / 17) give 76 %, 44 % and 16 % (js/core/difficulty.js, "Calibration log").
-    // veryHard takes the factor of hard (rating v2).
-    clueFloorScale: Object.freeze({ medium: 0.83, hard: 0.8, veryHard: 0.8, expert: 0.8 }),
+    // expert takes the factor of hard (rating v2).
+    clueFloorScale: Object.freeze({ normal: 0.83, hard: 0.8, expert: 0.8, master: 0.8 }),
     defaultSymbolMode: 'digits',
     symbolModes: ['digits', 'letters', 'colors', 'shapes'],
     options: [{

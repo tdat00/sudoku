@@ -29,7 +29,7 @@
   }
 
   function config(extra) {
-    return Object.assign({ variantId: 'classic9', difficulty: 'medium', seed: 1, trace: 'summary' }, extra);
+    return Object.assign({ variantId: 'classic9', difficulty: 'normal', seed: 1, trace: 'summary' }, extra);
   }
 
   /** Runs the pipeline and collects its events. */
@@ -350,12 +350,12 @@
     it('is valid for every level, symmetry and dig order (full trace, all contracts)', function () {
       var cases = [
         { difficulty: 'veryEasy', seed: 11 }, { difficulty: 'easy', seed: 12 },
-        { difficulty: 'medium', seed: 13 }, { difficulty: 'hard', seed: 14 },
-        { difficulty: 'expert', seed: 15 }, { difficulty: 'evil', seed: 16 },
+        { difficulty: 'normal', seed: 13 }, { difficulty: 'hard', seed: 14 },
+        { difficulty: 'master', seed: 15 }, { difficulty: 'nightmare', seed: 16 },
         { difficulty: 'easy', seed: 17, symmetry: 'mirrorBoth' },
         { difficulty: 'easy', seed: 18, symmetry: 'rotational90' },
         { difficulty: 'easy', seed: 19, symmetry: 'none', digOrder: 'spiral' },
-        { difficulty: 'medium', seed: 20, symmetry: 'diagonal', digOrder: 'jumpOne' },
+        { difficulty: 'normal', seed: 20, symmetry: 'diagonal', digOrder: 'jumpOne' },
         { difficulty: 'easy', seed: 21, digOrder: 'rowByRow' },
         { variantId: 'classic4', difficulty: 'veryEasy', seed: 22 },
         { variantId: 'classic6', difficulty: 'veryEasy', seed: 23 }
@@ -503,7 +503,7 @@
     });
 
     it('digger: the dig patches rebuild the puzzle from the full grid shown at the start', function () {
-      var levels = ['veryEasy', 'medium', 'evil'];
+      var levels = ['veryEasy', 'normal', 'nightmare'];
       levels.forEach(function (level, i) {
         var rng = SG.rng.create(40 + i);
         var solution = SG.fullGrid.generate(model9, rng.fork('g'), null);
@@ -586,7 +586,7 @@
       withUnreachable(function () {
         var finals = 0;
         for (var s = 9000; s < 9012; s++) {
-          var out = run({ variantId: UNREACHABLE, difficulty: 'evil', seed: s, maxAttempts: 3 }, 'full');
+          var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: s, maxAttempts: 3 }, 'full');
           checkEvents(out.events);
           expect(Array.from(replay(out.events, 16).value)).toEqual(Array.from(out.result.givens));
           finals += count(out.events, 'tune.final');
@@ -596,7 +596,7 @@
     }, 60000);
 
     it('a real trace, capped to 2000 events, replays to the same board (step events all kept)', function () {
-      var out = run({ difficulty: 'nightmare1', seed: 21 }, 'full');
+      var out = run({ difficulty: 'hell1', seed: 21 }, 'full');
       expect(out.events.length).toBeGreaterThan(2000);
       var capped = E.capTrace(out.events, 2000);
       expect(capped.length).toBeLessThan(2001);
@@ -654,7 +654,7 @@
     function generateWork(emit) {
       var opts = emit === undefined ? {} : { emit: emit };
       for (var s = 1; s <= 24; s++) SG.digger.generate(model9, 'easy', SG.rng.create(s), opts);
-      for (var m = 1; m <= 2; m++) SG.digger.generate(model9, 'medium', SG.rng.create(m), opts);
+      for (var m = 1; m <= 2; m++) SG.digger.generate(model9, 'normal', SG.rng.create(m), opts);
     }
 
     it("generating puzzles: verbosity 'off' costs less than 2%", function () {
@@ -732,7 +732,7 @@
     it("verbosity 'summary' builds metric events only (one per 50 ms at most), no micro event", function () {
       var seen = [];
       var spy = spiedEmitter('summary', function (e) { seen.push(e); });
-      SG.digger.generate(model9, 'medium', SG.rng.create(5), { emit: spy.emitter });
+      SG.digger.generate(model9, 'normal', SG.rng.create(5), { emit: spy.emitter });
       expect(spy.calls.micro + spy.calls.microChunks + spy.calls.syncBoard + spy.calls.clearBoard).toBe(0);
       expect(spy.calls.metric).toBeGreaterThan(10);
       var metrics = seen.filter(function (e) { return e.type === 'metric'; });
@@ -805,7 +805,7 @@
     it('fills in the defaults and fixes the seed', function () {
       var cfg = P.normalizeConfig({ variantId: 'classic9', seed: 5 });
       expect(cfg).toEqual({
-        variantId: 'classic9', difficulty: 'medium', seed: 5, symbolMode: 'digits', symmetry: 'rotational180',
+        variantId: 'classic9', difficulty: 'normal', seed: 5, symbolMode: 'digits', symmetry: 'rotational180',
         digOrder: 'random', maxAttempts: 8, trace: 'summary', variantOptions: {}
       });
       expect(P.normalizeConfig({ variantId: 'classic9', seed: -1 }).seed).toBe(4294967295);
@@ -834,8 +834,8 @@
       expectCode(function () { P.normalizeConfig(null); }, 'pipeline.invalidOption');
       expectCode(function () { P.normalizeConfig({ variantId: 'nope' }); }, 'variant.unknown');
       expectCode(function () { P.normalizeConfig({}); }, 'variant.unknown');
-      bad({ difficulty: 'nightmare' }, 'difficulty.unknownLevel');
-      expectCode(function () { P.normalizeConfig({ variantId: 'classic4', difficulty: 'evil' }); },
+      bad({ difficulty: 'hell' }, 'difficulty.unknownLevel');
+      expectCode(function () { P.normalizeConfig({ variantId: 'classic4', difficulty: 'nightmare' }); },
         'difficulty.unsupportedLevel');
       bad({ seed: 'abc' }, 'rng.invalidSeed');
       bad({ seed: Infinity }, 'rng.invalidSeed');
@@ -854,15 +854,15 @@
       ['off', 'summary', 'full'].forEach(function (trace) {
         var events = [];
         var thrown = expectCode(function () {
-          P.run({ variantId: 'classic9', difficulty: 'nightmare', trace: trace },
+          P.run({ variantId: 'classic9', difficulty: 'hell', trace: trace },
             function (e) { events.push(e); });
         }, 'difficulty.unknownLevel');
         var last = events[events.length - 1];
         expect(last.type).toBe('error');
         expect(last.stepId).toBe('configure');
         expect(last.i18nKey).toBe('error.difficulty.unknownLevel');
-        expect(last.i18nArgs.level).toBe('nightmare');
-        expect(thrown.i18nArgs.level).toBe('nightmare');
+        expect(last.i18nArgs.level).toBe('hell');
+        expect(thrown.i18nArgs.level).toBe('hell');
         expect(keysOf(events)).toEqual(['configure.start', 'error.difficulty.unknownLevel']);
         checkEvents(events);
       });
@@ -889,7 +889,7 @@
     });
 
     it('holds a valid puzzle: invariants I1, I2, I3 and I6, and the model and rating', function () {
-      ['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil'].forEach(function (level, i) {
+      ['veryEasy', 'easy', 'normal', 'hard', 'master', 'nightmare'].forEach(function (level, i) {
         var out = run({ difficulty: level, seed: 30 + i });
         var r = out.result;
         var spec = D.spec(level, r.model);
@@ -1011,8 +1011,8 @@
   }
 
   describe('pipeline: the dig log (the data of the replay)', function () {
-    [['classic4', 'veryEasy'], ['classic9', 'veryEasy'], ['classic9', 'medium'], ['classic9', 'evil'],
-      ['killer', 'easy'], ['greaterThan', 'easy'], ['greaterThan', 'medium'], ['wordoku', 'easy'],
+    [['classic4', 'veryEasy'], ['classic9', 'veryEasy'], ['classic9', 'normal'], ['classic9', 'nightmare'],
+      ['killer', 'easy'], ['greaterThan', 'easy'], ['greaterThan', 'normal'], ['wordoku', 'easy'],
       ['jigsaw9', 'easy']].forEach(function (pair) {
       it(pair[0] + ' ' + pair[1] + ': applied to the solution, it ends exactly on the puzzle', function () {
         var out = run({ variantId: pair[0], difficulty: pair[1], seed: 21 }, 'off');
@@ -1027,7 +1027,7 @@
       }, 60000);
     });
 
-    it('records the guided pass from medium on: candidates kept or refused, then the hardest removed',
+    it('records the guided pass from normal on: candidates kept or refused, then the hardest removed',
       function () {
         var log = run({ difficulty: 'hard', seed: 8 }, 'off').result.digLog;
         var passes = log.filter(function (e) { return e.op === 'pass'; }).map(function (e) { return e.pass; });
@@ -1038,8 +1038,8 @@
       });
 
     it('does not depend on the trace verbosity, and is plain data that crosses the wire', function () {
-      var off = run({ difficulty: 'medium', seed: 12 }, 'off').result;
-      var full = run({ difficulty: 'medium', seed: 12 }, 'full').result;
+      var off = run({ difficulty: 'normal', seed: 12 }, 'off').result;
+      var full = run({ difficulty: 'normal', seed: 12 }, 'full').result;
       expect(full.digLog).toEqual(off.digLog);
       expect(JSON.parse(JSON.stringify(off.digLog))).toEqual(off.digLog);
       expect(P.fromWire(P.toWire(off)).digLog).toEqual(off.digLog);
@@ -1053,7 +1053,7 @@
 
   describe('pipeline: identical to calling the functions directly with the same seed', function () {
     it('classic9, every level, several seeds', function () {
-      var levels = ['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil'];
+      var levels = ['veryEasy', 'easy', 'normal', 'hard', 'master', 'nightmare'];
       levels.forEach(function (level, i) {
         [3, 77 + i].forEach(function (seed) {
           var viaPipeline = run({ difficulty: level, seed: seed }).result;
@@ -1069,7 +1069,7 @@
 
     it('with other symmetries, dig orders and attempt limits, and on the smaller boards', function () {
       var cases = [
-        { difficulty: 'medium', seed: 5, symmetry: 'mirrorBoth' },
+        { difficulty: 'normal', seed: 5, symmetry: 'mirrorBoth' },
         { difficulty: 'easy', seed: 6, symmetry: 'rotational90', digOrder: 'spiral' },
         { difficulty: 'easy', seed: 7, symmetry: 'none', digOrder: 'snake' },
         { difficulty: 'hard', seed: 8, symmetry: 'diagonal', digOrder: 'jumpOne' },
@@ -1102,9 +1102,9 @@
     });
 
     it('the same seed gives the same puzzle, another seed another one', function () {
-      var a = P.run(config({ difficulty: 'medium', seed: 1000 }), null);
-      var b = P.run(config({ difficulty: 'medium', seed: 1000 }), null);
-      var c = P.run(config({ difficulty: 'medium', seed: 1001 }), null);
+      var a = P.run(config({ difficulty: 'normal', seed: 1000 }), null);
+      var b = P.run(config({ difficulty: 'normal', seed: 1000 }), null);
+      var c = P.run(config({ difficulty: 'normal', seed: 1001 }), null);
       expect(Array.from(b.givens)).toEqual(Array.from(a.givens));
       expect(Array.from(c.givens)).not.toEqual(Array.from(a.givens));
     });
@@ -1112,8 +1112,8 @@
     it('an unreachable level gives the same closest puzzle both ways, with the same warning', function () {
       withUnreachable(function () {
         var model = SG.variants.get(UNREACHABLE).build({}, null);
-        var byHand = direct(model, 'evil', 9000, { maxAttempts: 3 });
-        var viaPipeline = P.run(config({ variantId: UNREACHABLE, difficulty: 'evil', seed: 9000, maxAttempts: 3 }),
+        var byHand = direct(model, 'nightmare', 9000, { maxAttempts: 3 });
+        var viaPipeline = P.run(config({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9000, maxAttempts: 3 }),
           null);
         expect(Array.from(viaPipeline.givens)).toEqual(Array.from(byHand.givens));
         expect(viaPipeline.warnings).toEqual(byHand.warnings);
@@ -1130,7 +1130,7 @@
   describe('pipeline: the retry loop', function () {
     it('after each missed attempt it emits retry.difficulty with the reason, then a new grid', function () {
       withUnreachable(function () {
-        var out = run({ variantId: UNREACHABLE, difficulty: 'evil', seed: 9000, maxAttempts: 3 }, 'summary');
+        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9000, maxAttempts: 3 }, 'summary');
         var retries = out.events.filter(function (e) { return e.type === 'retry'; });
         expect(retries).toHaveLength(3);
         expect(retries.map(function (e) { return e.i18nArgs.attempt; })).toEqual([1, 2, 3]);
@@ -1139,7 +1139,7 @@
           expect(e.i18nKey).toBe('retry.difficulty');
           expect(e.i18nArgs.reason).toBe('difficulty');
           expect(e.i18nArgs.maxAttempts).toBe(3);
-          expect(e.i18nArgs.requested).toBe('evil');
+          expect(e.i18nArgs.requested).toBe('nightmare');
           expect(e.i18nArgs.achieved).toBe('veryEasy');
           expect(e.stepId).toBe('tune');
         });
@@ -1155,9 +1155,9 @@
 
     it('gives up with the closest puzzle, the warning difficulty.approximate and no exception', function () {
       withUnreachable(function () {
-        var out = run({ variantId: UNREACHABLE, difficulty: 'evil', seed: 9001, maxAttempts: 2 }, 'summary');
+        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9001, maxAttempts: 2 }, 'summary');
         expect(out.result.warnings).toEqual(['difficulty.approximate']);
-        expect(out.result.rating.level).not.toBe('evil');
+        expect(out.result.rating.level).not.toBe('nightmare');
         expect(out.result.rating.solved).toBe(true);
         expect(SG.dfs.countSolutions(out.result.model, out.result.givens, 2)).toBe(1);
         expect(count(out.events, 'tune.best')).toBe(1);
@@ -1173,7 +1173,7 @@
 
     it('a missed dig sample is tune.miss; a reached level is tune.hit and ends the loop', function () {
       withUnreachable(function () {
-        var out = run({ variantId: UNREACHABLE, difficulty: 'evil', seed: 9002, maxAttempts: 1 }, 'summary');
+        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9002, maxAttempts: 1 }, 'summary');
         var miss = out.events.filter(function (e) { return e.i18nKey === 'tune.miss'; });
         // Twelve dig samples, and the local search of the attempt (section 5.7 (6)) at the end.
         expect(miss).toHaveLength(13);
@@ -1189,7 +1189,7 @@
 
     it('no retry events at verbosity off', function () {
       withUnreachable(function () {
-        var out = run({ variantId: UNREACHABLE, difficulty: 'evil', seed: 9000, maxAttempts: 2 }, 'off');
+        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9000, maxAttempts: 2 }, 'off');
         expect(out.events.filter(function (e) { return e.type === 'retry'; })).toHaveLength(0);
         expect(out.result.warnings).toContain('difficulty.approximate');
       });
@@ -1259,7 +1259,7 @@
     it('postGenerate runs once per attempt with the grid of that attempt, and may emit events', function () {
       var attempts = [];
       withUnreachable(function () {
-        var out = run({ variantId: 'hookEach', difficulty: 'evil', seed: 9000, maxAttempts: 3 }, 'full');
+        var out = run({ variantId: 'hookEach', difficulty: 'nightmare', seed: 9000, maxAttempts: 3 }, 'full');
         expect(attempts.map(function (a) { return a.attempt; })).toEqual([1, 2, 3]);
         expect(new Set(attempts.map(function (a) { return a.solution; })).size).toBe(3);
         expect(count(out.events, 'extraStructure.built')).toBe(6);
@@ -1425,8 +1425,8 @@
 
     it('a variant that behaves like classic9 gives the classic9 puzzle (the id is no seed)', function () {
       withVariant(hookVariant('hookClone'), function () {
-        var clone = P.run({ variantId: 'hookClone', difficulty: 'medium', seed: 31 }, null);
-        var classic = P.run(config({ difficulty: 'medium', seed: 31 }), null);
+        var clone = P.run({ variantId: 'hookClone', difficulty: 'normal', seed: 31 }, null);
+        var classic = P.run(config({ difficulty: 'normal', seed: 31 }), null);
         expect(Array.from(clone.givens)).toEqual(Array.from(classic.givens));
       });
     });
@@ -1540,7 +1540,7 @@
     }, 60000);
 
     it('with a sound technique set no sample is reported unsound', function () {
-      var out = run({ difficulty: 'medium', seed: 5 }, 'summary');
+      var out = run({ difficulty: 'normal', seed: 5 }, 'summary');
       expect(count(out.events, 'dig.unsound')).toBe(0);
       out.events.filter(function (e) { return e.i18nKey === 'dig.verify'; }).forEach(function (e) {
         expect(e.i18nArgs.unique).toBe(true);
@@ -1561,7 +1561,7 @@
       var thrown = null;
       var started = now();
       try {
-        P.run(config({ difficulty: 'evil', seed: 61, trace: 'full' }), function (e) {
+        P.run(config({ difficulty: 'nightmare', seed: 61, trace: 'full' }), function (e) {
           events.push(e);
           if (cancelledAt < 0 && e.i18nKey === 'dig.try') {
             cancelledAt = now();
@@ -1629,7 +1629,7 @@
       var started = now();
       var thrown = null;
       try {
-        P.run(config({ difficulty: 'evil', seed: 5, maxAttempts: 8 }), null, SG.budget.create({ ms: 1 }));
+        P.run(config({ difficulty: 'nightmare', seed: 5, maxAttempts: 8 }), null, SG.budget.create({ ms: 1 }));
       } catch (e) {
         thrown = e;
       }

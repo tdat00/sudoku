@@ -393,7 +393,7 @@
     it('tells every field that changes the puzzle apart', function () {
       const base = seeded(5, { difficulty: 'hard' });
       const variants = [
-        Object.assign({}, base, { seed: 6 }), Object.assign({}, base, { difficulty: 'expert' }),
+        Object.assign({}, base, { seed: 6 }), Object.assign({}, base, { difficulty: 'master' }),
         Object.assign({}, base, { symmetry: 'none' }), Object.assign({}, base, { digOrder: 'rowByRow' }),
         Object.assign({}, base, { maxAttempts: 3 }), Object.assign({}, base, { variantId: 'diagonalX' })
       ];
@@ -421,7 +421,7 @@
 
     const CASES = [
       { variantId: 'classic9', difficulty: 'hard', seed: 5, trace: 'full' },
-      { variantId: 'killer', difficulty: 'medium', seed: 5, trace: 'full' },
+      { variantId: 'killer', difficulty: 'normal', seed: 5, trace: 'full' },
       { variantId: 'greaterThan', difficulty: 'easy', seed: 5, trace: 'summary' },
       { variantId: 'jigsaw9', difficulty: 'easy', seed: 5, trace: 'full' },
       { variantId: 'samurai', difficulty: 'easy', seed: 5, trace: 'full' },
@@ -528,7 +528,7 @@
       expect(broken(function (d) { d.config.seed = d.seed + 1; })).toThrow(fail);
       expect(function () { C.deserialize('{nope'); }).toThrow(fail);
       expect(function () { C.deserialize(null); }).toThrow(fail);
-      expect(function () { C.deserialize({ $t: 'Evil', d: [] }); }).toThrow(fail);
+      expect(function () { C.deserialize({ $t: 'Nightmare', d: [] }); }).toThrow(fail);
     });
   });
 

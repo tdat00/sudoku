@@ -233,7 +233,7 @@
 
     it('names the variant, the levels and the technique in the language of the export (rule L6)', function () {
       ready();
-      var r = realResult('killer', 'medium', 25);
+      var r = realResult('killer', 'normal', 25);
       var en = inLocale('en', function () { return E.toJson(r, FIXED); });
       var vi = inLocale('vi', function () { return E.toJson(r, FIXED); });
       expect(en.locale).toBe('en');
@@ -242,9 +242,9 @@
       expect(vi.labels.variant).toBe('Sudoku Sát thủ');
       expect(vi.labels.achieved).not.toBe(en.labels.achieved);
       expect(vi.labels.requested).toBe('Trung bình');
-      expect(en.labels.requested).toBe('Medium');
+      expect(en.labels.requested).toBe('Normal');
       expect(vi.labels.hardestTechnique).not.toBeNull();
-      expect(vi.difficulty.requested).toBe('medium');
+      expect(vi.difficulty.requested).toBe('normal');
       expect(vi.givens).toEqual(en.givens);
       expect(E.toJson(r, { generatedAt: FIXED.generatedAt, locale: 'vi' }).locale).toBe('vi');
     });

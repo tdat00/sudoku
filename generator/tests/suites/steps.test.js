@@ -201,7 +201,7 @@
       var fx = panelFixture();
       inLocale('en', function () {
         expect(fx.detail.textContent).toBe('');
-        fx.view.setSteps(SG.player.buildSteps(result('classic9', 'medium', 3)).steps);
+        fx.view.setSteps(SG.player.buildSteps(result('classic9', 'normal', 3)).steps);
         expect(part(fx, 'step-detail__empty')).not.toBeNull();
         expect(fx.detail.textContent).toContain('replay controls');
         expect(fx.view.getPosition()).toBe(0);
@@ -210,7 +210,7 @@
 
     it('shows the number, title, summary and sentence of the current step only', function () {
       var fx = panelFixture();
-      var steps = SG.player.buildSteps(result('classic9', 'medium', 3)).steps;
+      var steps = SG.player.buildSteps(result('classic9', 'normal', 3)).steps;
       inLocale('en', function () {
         fx.view.setSteps(steps);
         fx.view.setPosition(3);
@@ -238,12 +238,12 @@
       var legend = fx.detail.nextSibling;
       expect(legend.hidden).toBe(true);
       inLocale('en', function () {
-        fx.view.setSteps(SG.player.buildSteps(result('classic9', 'medium', 3)).steps);
+        fx.view.setSteps(SG.player.buildSteps(result('classic9', 'normal', 3)).steps);
         var marks = legend.children.map(function (li) { return li.getAttribute('data-mark'); });
         expect(marks).toEqual(['dug', 'kept']);
         expect(legend.hidden).toBe(false);
         expect(legend.textContent).toContain('Removed in this step');
-        fx.view.setSteps(SG.player.buildSteps(result('greaterThan', 'medium', 4)).steps);
+        fx.view.setSteps(SG.player.buildSteps(result('greaterThan', 'normal', 4)).steps);
         var gtMarks = legend.children.map(function (li) { return li.getAttribute('data-mark'); });
         expect(gtMarks).toContain('revealed');
         expect(gtMarks).toContain('signRemoved');
@@ -256,7 +256,7 @@
 
     it('follows the language and keeps the current step', function () {
       var fx = panelFixture();
-      var steps = SG.player.buildSteps(result('killer', 'medium', 2)).steps;
+      var steps = SG.player.buildSteps(result('killer', 'normal', 2)).steps;
       fx.view.setSteps(steps);
       fx.view.setPosition(2);
       var en = fx.detail.textContent;
@@ -269,7 +269,7 @@
     });
 
     it('rates the puzzle of each step: nothing before the dig, the rating of the result at the end', function () {
-      var res = result('classic9', 'medium', 3);
+      var res = result('classic9', 'normal', 3);
       var player = SG.player.create({});
       player.load(res);
       var steps = player.getSteps();
@@ -291,7 +291,7 @@
 
     it('shows the techniques a step needs, with the uses and score each step added', function () {
       var fx = panelFixture();
-      var res = result('classic9', 'medium', 3);
+      var res = result('classic9', 'normal', 3);
       var player = SG.player.create({});
       player.load(res);
       var rootEl = fx.root;
@@ -324,7 +324,7 @@
 
     it('shows the same total at the last step as the score of the summary, whatever its parts', function () {
       var fx = panelFixture();
-      var res = result('classic9', 'medium', 3);
+      var res = result('classic9', 'normal', 3);
       var player = SG.player.create({});
       player.load(res);
       var view = V.create(fx.root, { stats: function (p) { return player.rateStep(p); } });
@@ -395,7 +395,7 @@
     });
 
     it('draws the real counts of a puzzle, cage techniques included, simplest first', function () {
-      [result('classic9', 'medium', 3), result('killer', 'medium', 2)].forEach(function (r) {
+      [result('classic9', 'normal', 3), result('killer', 'normal', 2)].forEach(function (r) {
         var counts = r.rating.techniqueCounts;
         var m = V.chartModel(counts);
         var used = Object.keys(counts).filter(function (k) { return counts[k] > 0; }).sort();
@@ -480,7 +480,7 @@
     });
 
     it('highlights the line a replay step names, or the line of an event key', function () {
-      var steps = SG.player.buildSteps(result('killer', 'medium', 2)).steps;
+      var steps = SG.player.buildSteps(result('killer', 'normal', 2)).steps;
       steps.forEach(function (s) {
         var vm = X.viewModel(s.phase, { lineLabel: s.line, metrics: s.metrics });
         expect(vm).not.toBeNull();

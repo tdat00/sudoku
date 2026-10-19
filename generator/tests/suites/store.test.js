@@ -62,7 +62,7 @@
       ready();
       var d = S.defaults();
       expect(d.variantId).toBe('classic9');
-      expect(d.difficulty).toBe('medium');
+      expect(d.difficulty).toBe('normal');
       expect(d.seed).toBe('');
       expect(d.symmetry).toBe('rotational180');
       expect(d.symbolMode).toBe('digits');
@@ -92,8 +92,8 @@
     it('returns a new object every time and sanitising the defaults changes nothing', function () {
       ready();
       var a = S.defaults();
-      a.difficulty = 'evil';
-      expect(S.defaults().difficulty).toBe('medium');
+      a.difficulty = 'nightmare';
+      expect(S.defaults().difficulty).toBe('normal');
       expect(S.sanitize(S.defaults())).toEqual(S.defaults());
     });
 
@@ -109,39 +109,39 @@
 
     it('is idempotent and does not touch its input', function () {
       ready();
-      var input = Object.freeze({ variantId: 'classic4', difficulty: 'evil', maxAttempts: 99, seed: ' 12 ' });
+      var input = Object.freeze({ variantId: 'classic4', difficulty: 'nightmare', maxAttempts: 99, seed: ' 12 ' });
       var once = S.sanitize(input);
       expect(S.sanitize(once)).toEqual(once);
-      expect(input.difficulty).toBe('evil');
+      expect(input.difficulty).toBe('nightmare');
     });
 
     it('falls back to the closest supported difficulty of the variant', function () {
       ready();
-      expect(S.sanitize({ variantId: 'classic4', difficulty: 'evil' }).difficulty).toBe('veryEasy');
-      expect(S.sanitize({ variantId: 'classic4', difficulty: 'medium' }).difficulty).toBe('veryEasy');
-      expect(S.sanitize({ variantId: 'classic6', difficulty: 'evil' }).difficulty).toBe('hard');
-      expect(S.sanitize({ variantId: 'classic6', difficulty: 'medium' }).difficulty).toBe('hard');
+      expect(S.sanitize({ variantId: 'classic4', difficulty: 'nightmare' }).difficulty).toBe('veryEasy');
+      expect(S.sanitize({ variantId: 'classic4', difficulty: 'normal' }).difficulty).toBe('veryEasy');
+      expect(S.sanitize({ variantId: 'classic6', difficulty: 'nightmare' }).difficulty).toBe('hard');
+      expect(S.sanitize({ variantId: 'classic6', difficulty: 'normal' }).difficulty).toBe('hard');
       expect(S.sanitize({ variantId: 'classic6', difficulty: 'easy' }).difficulty).toBe('veryEasy');
-      expect(S.sanitize({ variantId: 'killer', difficulty: 'veryHard' }).difficulty).toBe('veryHard');
-      expect(S.sanitize({ variantId: 'killer', difficulty: 'evil' }).difficulty).toBe('evil');
-      expect(S.sanitize({ variantId: 'samurai', difficulty: 'evil' }).difficulty).toBe('evil');
+      expect(S.sanitize({ variantId: 'killer', difficulty: 'expert' }).difficulty).toBe('expert');
+      expect(S.sanitize({ variantId: 'killer', difficulty: 'nightmare' }).difficulty).toBe('nightmare');
+      expect(S.sanitize({ variantId: 'samurai', difficulty: 'nightmare' }).difficulty).toBe('nightmare');
       expect(S.sanitize({ variantId: 'samurai', difficulty: 'easy' }).difficulty).toBe('easy');
-      expect(S.sanitize({ variantId: 'classic9', difficulty: 'evil' }).difficulty).toBe('evil');
-      expect(S.sanitize({ variantId: 'classic9', difficulty: 'nightmare2' }).difficulty).toBe('nightmare1');
-      expect(S.sanitize({ variantId: 'classic9', difficulty: 'bogus' }).difficulty).toBe('medium');
+      expect(S.sanitize({ variantId: 'classic9', difficulty: 'nightmare' }).difficulty).toBe('nightmare');
+      expect(S.sanitize({ variantId: 'classic9', difficulty: 'hell2' }).difficulty).toBe('hell1');
+      expect(S.sanitize({ variantId: 'classic9', difficulty: 'bogus' }).difficulty).toBe('normal');
     });
 
     it('takes the easier of two equally close supported levels (a list with a gap)', function () {
       ready();
       var fake = {
         id: 'fakeGap', i18nKey: 'variant.fakeGap', group: 'classic', digits: 4,
-        difficultySupport: ['hard', 'expert'], defaultSymbolMode: 'digits', symbolModes: ['digits'],
+        difficultySupport: ['hard', 'master'], defaultSymbolMode: 'digits', symbolModes: ['digits'],
         options: [], build: function () { throw new Error('not built'); }
       };
       SG.variants.register(fake);
       try {
-        expect(S.sanitize({ variantId: 'fakeGap', difficulty: 'veryHard' }).difficulty).toBe('hard');
-        expect(S.sanitize({ variantId: 'fakeGap', difficulty: 'evil' }).difficulty).toBe('expert');
+        expect(S.sanitize({ variantId: 'fakeGap', difficulty: 'expert' }).difficulty).toBe('hard');
+        expect(S.sanitize({ variantId: 'fakeGap', difficulty: 'nightmare' }).difficulty).toBe('master');
         expect(S.sanitize({ variantId: 'fakeGap', difficulty: 'veryEasy' }).difficulty).toBe('hard');
       } finally {
         SG.variants.unregister('fakeGap');
@@ -192,13 +192,13 @@
 
     it('reports the cross-option corrections', function () {
       ready();
-      var r = S.sanitizeWithNotes({ variantId: 'classic4', difficulty: 'evil', symbolMode: 'word' });
+      var r = S.sanitizeWithNotes({ variantId: 'classic4', difficulty: 'nightmare', symbolMode: 'word' });
       expect(r.state.difficulty).toBe('veryEasy');
       expect(r.adjustments).toEqual([
-        { key: 'difficulty', from: 'evil', to: 'veryEasy', reason: 'unsupportedDifficulty' },
+        { key: 'difficulty', from: 'nightmare', to: 'veryEasy', reason: 'unsupportedDifficulty' },
         { key: 'symbolMode', from: 'word', to: 'digits', reason: 'unsupportedSymbolMode' }
       ]);
-      expect(S.sanitizeWithNotes({ variantId: 'classic9', difficulty: 'evil' }).adjustments).toEqual([]);
+      expect(S.sanitizeWithNotes({ variantId: 'classic9', difficulty: 'nightmare' }).adjustments).toEqual([]);
     });
 
     it('evaluates visibleWhen like the variants declare it', function () {
@@ -246,16 +246,16 @@
   describe('store: URL parameters', function () {
     it('parses the example link of design.md 14.2', function () {
       ready();
-      var s = S.parseUrl('?v=classic9&d=expert&seed=42&lang=vi&auto=1');
+      var s = S.parseUrl('?v=classic9&d=master&seed=42&lang=vi&auto=1');
       expect(s.variantId).toBe('classic9');
-      expect(s.difficulty).toBe('expert');
+      expect(s.difficulty).toBe('master');
       expect(s.seed).toBe('42');
       expect(s.lang).toBe('vi');
       expect(s.auto).toBe(true);
       expect(S.toConfig(s).seed).toBe(42);
-      expect(S.toSearchString(s)).toBe('?d=expert&seed=42&lang=vi&auto=1');
+      expect(S.toSearchString(s)).toBe('?d=master&seed=42&lang=vi&auto=1');
       expect(S.toSearchString(s, { full: true })).toBe(
-        '?v=classic9&d=expert&seed=42&sym=rotational180&mode=digits&lang=vi&auto=1');
+        '?v=classic9&d=master&seed=42&sym=rotational180&mode=digits&lang=vi&auto=1');
     });
 
     it('writes nothing for the defaults', function () {
@@ -308,10 +308,10 @@
       ready();
       expect(S.parseUrl('?attempts=99').maxAttempts).toBe(20);
       expect(S.parseUrl('?attempts=0').maxAttempts).toBe(1);
-      expect(S.parseUrl('?v=classic4&d=evil').difficulty).toBe('veryEasy');
-      expect(S.parseUrl('?v=classic6&d=nightmare2').difficulty).toBe('hard');
-      expect(S.parseUrl('?v=classic9&d=veryHard').difficulty).toBe('veryHard');
-      expect(S.parseUrl('?v=classic9&d=nightmare-1').difficulty).toBe('medium');
+      expect(S.parseUrl('?v=classic4&d=nightmare').difficulty).toBe('veryEasy');
+      expect(S.parseUrl('?v=classic6&d=hell2').difficulty).toBe('hard');
+      expect(S.parseUrl('?v=classic9&d=expert').difficulty).toBe('expert');
+      expect(S.parseUrl('?v=classic9&d=hell-1').difficulty).toBe('normal');
       expect(S.parseUrl('?v=wordoku').symbolMode).toBe('word');
       expect(S.parseUrl('?v=classic9&mode=word').symbolMode).toBe('digits');
       expect(S.parseUrl('?o.cageSize=1').variantOptions).toEqual({});
@@ -507,13 +507,13 @@
       var store = makeStore();
       var seen = [];
       store.subscribe(function (state, keys, meta) { seen.push(meta.adjustments); });
-      store.set({ difficulty: 'evil', symbolMode: 'letters' });
+      store.set({ difficulty: 'nightmare', symbolMode: 'letters' });
       store.set({ variantId: 'classic4' });
       expect(store.get().difficulty).toBe('veryEasy');
       store.set({ variantId: 'wordoku' });
       expect(store.get().symbolMode).toBe('word');
       expect(seen[1]).toEqual([
-        { key: 'difficulty', from: 'evil', to: 'veryEasy', reason: 'unsupportedDifficulty' }
+        { key: 'difficulty', from: 'nightmare', to: 'veryEasy', reason: 'unsupportedDifficulty' }
       ]);
     });
 
@@ -631,7 +631,7 @@
           auto: true });
         store.reset();
         expect(store.get().variantId).toBe('classic9');
-        expect(store.get().difficulty).toBe('medium');
+        expect(store.get().difficulty).toBe('normal');
         expect(store.get().seed).toBe('');
         expect(store.get().auto).toBe(false);
         expect(store.get().theme).toBe('dark');
@@ -653,7 +653,7 @@
       var store = makeStore({ env: e });
       store.set({ difficulty: 'hard' });
       store.set({ variantId: 'killer', seed: '5' });
-      store.set({ difficulty: 'medium', variantId: 'classic9', seed: '' });
+      store.set({ difficulty: 'normal', variantId: 'classic9', seed: '' });
       expect(e.urls).toEqual(['/index.html?d=hard#top', '/index.html?v=killer&d=hard&seed=5#top',
         '/index.html#top']);
       expect(store.syncUrl()).toBe(true);
@@ -699,13 +699,13 @@
       ready();
       withEnglish(function () {
         var storage = memoryStorage({
-          'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'killer', difficulty: 'expert', seed: '11' }),
+          'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'killer', difficulty: 'master', seed: '11' }),
           'sg.prefs.v1': JSON.stringify({ v: 1, lang: 'vi', theme: 'dark', fontSize: 'large' })
         });
         var fromStorage = makeStore({ storage: storage });
         fromStorage.load();
         expect(fromStorage.get().variantId).toBe('killer');
-        expect(fromStorage.get().difficulty).toBe('expert');
+        expect(fromStorage.get().difficulty).toBe('master');
         expect(fromStorage.get().lang).toBe('vi');
         expect(fromStorage.get().theme).toBe('dark');
         SG.i18n.setLocale('en');
@@ -713,7 +713,7 @@
         var fromUrl = makeStore({ storage: storage, env: env('?v=hyper&lang=en') });
         fromUrl.load();
         expect(fromUrl.get().variantId).toBe('hyper');
-        expect(fromUrl.get().difficulty).toBe('medium');
+        expect(fromUrl.get().difficulty).toBe('normal');
         expect(fromUrl.get().seed).toBe('');
         expect(fromUrl.get().lang).toBe('en');
         expect(fromUrl.get().fontSize).toBe('large');
@@ -762,7 +762,7 @@
     it('does not let the receiver last configuration bend a shared link', function () {
       ready();
       var storage = memoryStorage({
-        'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'killer', difficulty: 'expert',
+        'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'killer', difficulty: 'master',
           symmetry: 'none', maxAttempts: 3, seed: '1' })
       });
       var store = makeStore({ storage: storage, env: env('?v=classic9&seed=42') });
@@ -805,7 +805,7 @@
 
     it('rewrites the URL to its canonical form after loading (old replay settings disappear)', function () {
       ready();
-      var e = env('?v=classic4&d=evil&junk=1&seed=7&trace=full&speed=manual');
+      var e = env('?v=classic4&d=nightmare&junk=1&seed=7&trace=full&speed=manual');
       var store = makeStore({ env: e, storage: null });
       store.load();
       expect(e.urls).toEqual(['/index.html?v=classic4&d=veryEasy&seed=7#top']);

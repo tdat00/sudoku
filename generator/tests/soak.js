@@ -31,7 +31,7 @@
  * (for calibration runs). The budget column is the p95 target of design.md section 9.1 (the same table as
  * tests/perf.js, tests/fixtures/perf-helper.js); `node tests/perf.js` measures it properly.
  *
- * Measuring a level a variant does not offer: `--variant=classic6 --level=expert --include-unsupported`.
+ * Measuring a level a variant does not offer: `--variant=classic6 --level=master --include-unsupported`.
  *
  * Calibration workflow: change SG.difficulty.WEIGHTS / SG.difficulty.TABLE in js/core/difficulty.js, run
  * this, read the matrix. `--weights='{"ruleOf45":145}'` and `--bands=0,45,180,400,700,1000,1500,2400,3600`
@@ -307,7 +307,7 @@ function main() {
   const variantsRun = [];
   combos.forEach((c) => { if (variantsRun.indexOf(c.id) === -1) variantsRun.push(c.id); });
 
-  /** Width of a level column ('nightmare1' is ten characters). */
+  /** Width of a level column ('hell1' is ten characters). */
   const COL = 11;
 
   for (const id of variantsRun) {

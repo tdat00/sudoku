@@ -10,7 +10,7 @@
  *  basis 'published'    Puzzles from tests/fixtures/classic.js whose difficulty is known from outside
  *                       this project: the example of the Wikipedia article, the famous "hardest sudoku"
  *                       puzzles of Arto Inkala and the Sudoku Players' Forum, and puzzles that the classic
- *                       fixtures name "easy" / "medium". The labels come from that outside knowledge, not
+ *                       fixtures name "easy" / "normal". The labels come from that outside knowledge, not
  *                       from this project's scorer, and were not changed to suit its output (the scorer
  *                       rates "classic-medium" one level below its name). A scorer is expected to land
  *                       within one level of them, not exactly on them, since no two raters agree on a
@@ -22,8 +22,8 @@
  *                       and level bands are: `solvableWith` names a set of technique ids (`TECHNIQUE_SETS`)
  *                       that solves the puzzle and `notSolvableWith` a set that gets stuck (the solver is
  *                       run with exactly those techniques and `assumeUniqueness: false`, like the digging
- *                       oracle). A medium puzzle, for instance, is solved with singles, locked candidates
- *                       and subsets but not with singles and locked candidates alone; an evil one is not
+ *                       oracle). A normal puzzle, for instance, is solved with singles, locked candidates
+ *                       and subsets but not with singles and locked candidates alone; an nightmare one is not
  *                       solved without chains. The scorer must reproduce the label from the puzzle alone,
  *                       so these fixtures also catch a calibration that drifts away from the techniques.
  */
@@ -63,32 +63,32 @@
     {
       name: 'classic-medium',
       puzzle: classic('classic-medium'),
-      label: 'medium',
+      label: 'normal',
       note: 'Named "classic-medium" in tests/fixtures/classic.js.'
     },
     {
       name: 'escargot',
       puzzle: classic('escargot'),
-      label: 'nightmare2',
+      label: 'hell2',
       note: 'Arto Inkala, "Escargot" (2006), published as one of the hardest puzzles of its time.'
     },
     {
       name: 'worlds-hardest-2012',
       puzzle: classic('worlds-hardest-2012'),
-      label: 'nightmare2',
+      label: 'hell2',
       note: 'Arto Inkala, the 2012 "world\'s hardest sudoku".'
     },
     {
       name: 'platinum-blonde',
       puzzle: classic('hard-platinum'),
-      label: 'nightmare2',
-      note: '"Platinum Blonde" of the Sudoku Players\' Forum, a standard benchmark for very hard puzzles.'
+      label: 'hell2',
+      note: '"Platinum Blonde" of the Sudoku Players\' Forum, a standard benchmark for expert puzzles.'
     },
     {
       name: 'golden-nugget',
       puzzle: classic('hard-nugget'),
-      label: 'nightmare2',
-      note: '"Golden Nugget" of the Sudoku Players\' Forum, a standard benchmark for very hard puzzles.'
+      label: 'hell2',
+      note: '"Golden Nugget" of the Sudoku Players\' Forum, a standard benchmark for expert puzzles.'
     }
   ].map(function (p) {
     p.basis = 'published';
@@ -112,9 +112,9 @@
   /**
    * [level, puzzle, solvableWith, notSolvableWith] (names of TECHNIQUE_SETS). The level is the one of the
    * score (rating v2, docs/report-v2/report-detailed.md section 4.3): the puzzles that `generate` made for
-   * 'expert' with one wing each now score 879 to 940 and are labelled veryHard. The certificates are those
-   * the puzzles were made with: a medium puzzle needs a subset (stuck with singles and locked candidates),
-   * a hard one a fish, a veryHard one a wing, an evil one a chain.
+   * 'master' with one wing each now score 879 to 940 and are labelled expert. The certificates are those
+   * the puzzles were made with: a normal puzzle needs a subset (stuck with singles and locked candidates),
+   * a hard one a fish, an expert one a wing, a nightmare one a chain.
    */
   var CONSTRUCTED_ROWS = [
     ['veryEasy', '...1...7.7....28.1.937..62591..7.532.5.9.6.4.847.2..69628..791.4.96....7.7...3...',
@@ -129,11 +129,11 @@
       'locked', null],
     ['easy', '.23.....7.5.281..3..87.....84..1.96.2.1...4.8.35.4..71.....67..1..927.5.3.....82.',
       'locked', null],
-    ['medium', '....25.7....3....6381...2....785.93.9.......5.38.496....9...5612....1....1.58....',
+    ['normal', '....25.7....3....6381...2....785.93.9.......5.38.496....9...5612....1....1.58....',
       'subsets', 'locked'],
-    ['medium', '69....8.1...8....685..1.49....7...6.9.7.3.5.8.1...5....86.9..755....8...1.9....83',
+    ['normal', '69....8.1...8....685..1.49....7...6.9.7.3.5.8.1...5....86.9..755....8...1.9....83',
       'subsets', 'locked'],
-    ['medium', '..3.4.2...4......78..23...6..1..3.78.2.7.1.9.37.9..6..1...98..57......6...6.7.3..',
+    ['normal', '..3.4.2...4......78..23...6..1..3.78.2.7.1.9.37.9..6..1...98..57......6...6.7.3..',
       'subsets', 'locked'],
     ['hard', '4.6..5..9.5.4.93....3........129..3...25.38...3..461........6....46.8.2.6..9..5.3',
       'fish', 'subsets'],
@@ -141,17 +141,17 @@
       'fish', 'subsets'],
     ['hard', '4....65...623.......38..2......47.8..1.....4..7.53......9..81.......349...72....3',
       'fish', 'subsets'],
-    ['veryHard', '..8.....97..84....54.71.8...5..74......1.2......56..2...1.57.42....36..16.....3..',
+    ['expert', '..8.....97..84....54.71.8...5..74......1.2......56..2...1.57.42....36..16.....3..',
       'wings', 'fish'],
-    ['veryHard', '.5..19..61..8..2....9......37.1.....24..5..31.....4.67......7....1..5..37..42..9.',
+    ['expert', '.5..19..61..8..2....9......37.1.....24..5..31.....4.67......7....1..5..37..42..9.',
       'wings', 'fish'],
-    ['veryHard', '....25.6...46.73.....84..7.4.5...681.9.....4.768...9.3.4..81.....69.28...7.45....',
+    ['expert', '....25.6...46.73.....84..7.4.5...681.9.....4.768...9.3.4..81.....69.28...7.45....',
       'wings', 'fish'],
-    ['evil', '.19.7....7....85..6..5.....1.59....8.84...96.9....32.5.....7..9..76....4....5.78.',
+    ['nightmare', '.19.7....7....85..6..5.....1.59....8.84...96.9....32.5.....7..9..76....4....5.78.',
       'chains', 'wings'],
-    ['evil', '..3....9.5..6..1...97.8...2....74..67..9.8..18..16....3...1.56...6..3..9.1....8..',
+    ['nightmare', '..3....9.5..6..1...97.8...2....74..67..9.8..18..16....3...1.56...6..3..9.1....8..',
       'chains', 'wings'],
-    ['evil', '.7..2..4.3..1.......16...57....5..9...2...5...1..6....56...87.......4..3.4..1..2.',
+    ['nightmare', '.7..2..4.3..1.......16...57....5..9...2...5...1..6....56...87.......4..3.4..1..2.',
       'chains', 'wings']
   ];
 

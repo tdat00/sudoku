@@ -6,7 +6,7 @@
 //                      pruning on 9x9 models, the on-demand registration and the per-variant switch
 //   - techniques       registration, fixtures, brute-force cross-check of cageCombo, soundness (invariant I7)
 //                      for cageCombo, ruleOf45 and cageSplit through SG.techHelper.assertSound
-//   - generation       20 puzzles per level (8 from veryHard on): CV1 - CV6 and the invariants I1 - I7
+//   - generation       20 puzzles per level (8 from expert on): CV1 - CV6 and the invariants I1 - I7
 //   - cages            partition, distinct digits, sums, colouring, rendering geometry (CV9)
 //   - repair           split / merge / reveal and the layout info
 //   - i18n, events     every key in both languages, every event in the vocabulary
@@ -27,12 +27,12 @@
 
   /** Puzzles of a level in the corpus. */
   function countOf(level) {
-    return SG.difficulty.levelIndex(level) >= SG.difficulty.levelIndex('veryHard') ? TOP_LEVEL_COUNT : PER_LEVEL;
+    return SG.difficulty.levelIndex(level) >= SG.difficulty.levelIndex('expert') ? TOP_LEVEL_COUNT : PER_LEVEL;
   }
 
   /** Milliseconds a pipeline run may take at the 95th percentile, design.md section 9.1 (killer row). */
-  var BUDGET_MS = { veryEasy: 300, easy: 700, medium: 700, hard: 1800, veryHard: 10000, expert: 10000,
-    evil: 10000, nightmare1: 10000, nightmare2: 10000 };
+  var BUDGET_MS = { veryEasy: 300, easy: 700, normal: 700, hard: 1800, expert: 10000, master: 10000,
+    nightmare: 10000, hell1: 10000, hell2: 10000 };
 
   function now() {
     return typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now();
@@ -541,12 +541,12 @@
       var puzzle = SG.fixtures.classic.unique[0];
       var report = SG.logicalSolver.solve(H.model('classic9'), H.parsePuzzle(H.model('classic9'), puzzle.puzzle), {});
       IDS.forEach(function (id) { expect(report.techniqueCounts[id]).toBeUndefined(); });
-      var spec = SG.difficulty.spec('expert', H.model('classic9'));
+      var spec = SG.difficulty.spec('master', H.model('classic9'));
       IDS.forEach(function (id) { expect(spec.allowedTechniques).not.toContain(id); });
       // Rating v2: a technique is allowed from the band whose maximum exceeds 1.25 x its weight.
       expect(SG.difficulty.spec('veryEasy', board).allowedTechniques).not.toContain('cageCombo');
       expect(SG.difficulty.spec('easy', board).allowedTechniques).toContain('cageCombo');
-      expect(SG.difficulty.spec('medium', board).allowedTechniques).toContain('ruleOf45');
+      expect(SG.difficulty.spec('normal', board).allowedTechniques).toContain('ruleOf45');
       expect(SG.difficulty.spec('hard', board).allowedTechniques).toContain('cageSplit');
     });
 
@@ -554,7 +554,7 @@
       IDS.forEach(function (id) {
         H.expectNoFinding(SG.test, id, emptyState(board), { model: board });
       });
-      var p = corpusOf('medium')[0].result;
+      var p = corpusOf('normal')[0].result;
       var solved = H.makeState(p.model, p.solution, { propagate: false });
       IDS.forEach(function (id) { H.expectNoFinding(SG.test, id, solved, { model: p.model }); });
     });
@@ -803,7 +803,7 @@
     // ---- determinism ------------------------------------------------------------------------
 
     it('every technique answers the same twice and never touches the state', function () {
-      var p = corpusOf('expert')[0].result;
+      var p = corpusOf('master')[0].result;
       var state = H.makeState(p.model, p.givens, { propagate: false });
       IDS.forEach(function (id) {
         var before = SG.model.cloneState(state);
@@ -867,7 +867,7 @@
         IDS.forEach(function (id) { sweepCache.firings[id] = 0; });
         var rng = SG.rng.create(31337);
         corpus().filter(function (p) {
-          return (p.level === 'hard' || p.level === 'expert') && p.seed <= 12;
+          return (p.level === 'hard' || p.level === 'master') && p.seed <= 12;
         }).forEach(function (p, index) {
           var states = positionsOf(p.result, rng.fork('p' + index));
           sweepCache.puzzles++;
@@ -885,8 +885,8 @@
       it(id + ' never removes or places a value of the true solution, and every Finding obeys the contract',
         function () {
           var result = sweep();
-          // 12 hard puzzles and the expert ones up to seed 12 (the corpus holds fewer of the top levels).
-          expect(result.puzzles).toBe(12 + Math.min(12, countOf('expert')));
+          // 12 hard puzzles and the master ones up to seed 12 (the corpus holds fewer of the top levels).
+          expect(result.puzzles).toBe(12 + Math.min(12, countOf('master')));
           expect(result.states).toBe(result.puzzles * 5 * 3);
           expect(result.firings[id]).toBeGreaterThan(MIN_FIRINGS[id]);
         });
@@ -911,7 +911,7 @@
       });
     });
 
-    it('uses the cage techniques for real: cageCombo in every puzzle from medium up, ruleOf45 in many', function () {
+    it('uses the cage techniques for real: cageCombo in every puzzle from normal up, ruleOf45 in many', function () {
       var used = { cageCombo: 0, ruleOf45: 0, cageSplit: 0 };
       var missing = 0;
       corpus().forEach(function (p) {
@@ -949,8 +949,8 @@
       expect(DEF.i18nKey).toBe('variant.killer');
       expect(DEF.digits).toBe(9);
       expect(DEF.group).toBe('killer');
-      expect(Array.from(DEF.difficultySupport)).toEqual(['veryEasy', 'easy', 'medium', 'hard', 'veryHard',
-        'expert', 'evil', 'nightmare1', 'nightmare2']);
+      expect(Array.from(DEF.difficultySupport)).toEqual(['veryEasy', 'easy', 'normal', 'hard', 'expert',
+        'master', 'nightmare', 'hell1', 'hell2']);
       expect(DEF.defaultSymbolMode).toBe('digits');
       expect(DEF.symbolModes).toContain(DEF.defaultSymbolMode);
       expect(typeof DEF.build).toBe('function');
@@ -1006,13 +1006,13 @@
 
     it('refuses a level id it does not know, with the usual error', function () {
       var error = null;
-      try { generate('nightmare3', 1); } catch (err) { error = err; }
+      try { generate('hell3', 1); } catch (err) { error = err; }
       expect(error).not.toBeNull();
       expect(error.code).toBe('difficulty.unknownLevel');
     });
   });
 
-  describe('killer: generated puzzles (20 per level, 8 from veryHard on), CV3 - CV6 and invariants I1 - I7',
+  describe('killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7',
     function () {
     it('CV3: every supported level yields its puzzles of that variant', function () {
       var expected = 0;
@@ -1128,7 +1128,7 @@
       function meanCages(tilt) {
         var total = 0;
         for (var seed = 1; seed <= 8; seed++) {
-          var r = SG.pipeline.run({ variantId: 'killer', difficulty: 'medium', seed: seed, trace: 'off',
+          var r = SG.pipeline.run({ variantId: 'killer', difficulty: 'normal', seed: seed, trace: 'off',
             variantOptions: { cageSize: tilt } }, null, null);
           total += r.model.cages.length;
         }
@@ -1200,7 +1200,7 @@
       });
 
     it('make the cells of a cage peers of each other (a cage is a partial all-different unit)', function () {
-      var model = corpusOf('medium')[0].result.model;
+      var model = corpusOf('normal')[0].result.model;
       model.cages.forEach(function (cage, k) {
         var cells = Array.from(cage.cells);
         for (var i = 0; i < cells.length; i++) {
@@ -1233,9 +1233,9 @@
       expect(Math.abs(easy[3] - 0.40)).toBeLessThan(0.08);
       expect(Math.abs(easy[4] - 0.15)).toBeLessThan(0.06);
       expect(easy[6]).toBeUndefined();
-      var medium = shares('medium');
-      expect(Math.abs(medium[2] - 0.30)).toBeLessThan(0.08);
-      expect(Math.abs(medium[5] - 0.10)).toBeLessThan(0.05);
+      var normal = shares('normal');
+      expect(Math.abs(normal[2] - 0.30)).toBeLessThan(0.08);
+      expect(Math.abs(normal[5] - 0.10)).toBeLessThan(0.05);
       var hard = shares('hard');
       expect(Math.abs(hard[4] - 0.30)).toBeLessThan(0.08);
       expect(hard[6] + (hard[7] || 0)).toBeLessThan(0.1);
@@ -1250,7 +1250,7 @@
           var rng = SG.rng.create(seed);
           var board = DEF.build({}, null);
           var grid = SG.fullGrid.generate(board, rng.fork('grid'), null);
-          K.growCages(grid, rng.fork('c'), K.sizeDistribution('medium', tilt)).forEach(function (c) {
+          K.growCages(grid, rng.fork('c'), K.sizeDistribution('normal', tilt)).forEach(function (c) {
             cells += c.length;
             count++;
           });
@@ -1448,7 +1448,7 @@
 
     it('rebuilds a model from stored cages (an import): same cages, colours and units as the generated one',
       function () {
-        var original = corpusOf('medium')[3].result.model;
+        var original = corpusOf('normal')[3].result.model;
         var rebuilt = K.modelFromCages(original.cages.map(function (c) { return { cells: Array.from(c.cells), sum: c.sum }; }));
         expect(rebuilt.cages.map(function (c) { return [Array.from(c.cells), c.sum]; }))
           .toEqual(original.cages.map(function (c) { return [Array.from(c.cells), c.sum]; }));
@@ -1456,7 +1456,7 @@
           .toEqual(original.layout.overlays.map(function (o) { return [o.kind, Array.from(o.cells)]; }));
         expect(rebuilt.units.length).toBe(original.units.length);
         expect(SG.model.validate(rebuilt).ok).toBe(true);
-        var solution = corpusOf('medium')[3].result.solution;
+        var solution = corpusOf('normal')[3].result.solution;
         expect(SG.model.isSolution(rebuilt, solution)).toBe(true);
       });
   });
@@ -1489,10 +1489,10 @@
       return SG.dfs.countSolutions(model, zeros(81), 2) === 1;
     }
 
-    it('records for hard and expert puzzles whether the cages alone are unique, and tells the truth', function () {
+    it('records for hard and master puzzles whether the cages alone are unique, and tells the truth', function () {
       var unique = 0;
       var total = 0;
-      corpus().filter(function (p) { return p.level === 'hard' || p.level === 'expert'; }).forEach(function (p) {
+      corpus().filter(function (p) { return p.level === 'hard' || p.level === 'master'; }).forEach(function (p) {
         var model = p.result.model;
         var info = K.layoutInfo(model);
         expect(info).not.toBeNull();
@@ -1515,12 +1515,12 @@
           }
         }
       });
-      expect(total).toBe(countOf('hard') + countOf('expert'));
+      expect(total).toBe(countOf('hard') + countOf('master'));
       expect(unique / total).toBeGreaterThan(0.25);
     });
 
     it('skips the check on the three lower levels: their digger keeps enough clues anyway', function () {
-      ['veryEasy', 'easy', 'medium'].forEach(function (level) {
+      ['veryEasy', 'easy', 'normal'].forEach(function (level) {
         var info = K.layoutInfo(corpusOf(level)[0].result.model);
         expect(info.checked).toBe(false);
         expect(info.unique).toBeNull();
@@ -1568,9 +1568,9 @@
     it('splitting only adds constraints: the cage count never drops during the splits of a repair', function () {
       var grid = gridOf(3);
       var rng = SG.rng.create(3);
-      var cages = K.growCages(grid, rng.fork('c'), K.sizeDistribution('expert', 0));
+      var cages = K.growCages(grid, rng.fork('c'), K.sizeDistribution('master', 0));
       var counts = [cages.length];
-      K.repairLayout(board, grid, cages, 'expert', rng.fork('r'), null, {
+      K.repairLayout(board, grid, cages, 'master', rng.fork('r'), null, {
         repair: function (action, attempt, count) { if (action === 'split') counts.push(count); }
       });
       for (var i = 1; i < counts.length; i++) expect(counts[i]).toBe(counts[i - 1] + 1);
@@ -1585,7 +1585,7 @@
         // Only cages of two and three cells: nothing to split.
         var cages = K.growCages(grid, rng.fork('c'), { sizes: [2, 3], weights: [1, 1] });
         expect(Math.max.apply(null, cages.map(function (c) { return c.length; }))).toBeLessThanOrEqual(4);
-        var out = K.repairLayout(board, grid, cages, 'expert', rng.fork('r'), null, null);
+        var out = K.repairLayout(board, grid, cages, 'master', rng.fork('r'), null, null);
         expectValidLayout(out.cages, grid);
         merges += out.info.repairs.filter(function (a) { return a === 'merge'; }).length;
         reveals += out.info.revealed.length;
@@ -1641,8 +1641,8 @@
       return gap * 1000 + off;
     }
 
-    it('expert, diagonal symmetry, two attempts (seed 61843): nothing it met and verified is closer', function () {
-      var config = { variantId: 'killer', difficulty: 'expert', seed: 61843, symmetry: 'diagonal',
+    it('master, diagonal symmetry, two attempts (seed 61843): nothing it met and verified is closer', function () {
+      var config = { variantId: 'killer', difficulty: 'master', seed: 61843, symmetry: 'diagonal',
         maxAttempts: 2, trace: 'off' };
       var rate = SG.difficulty.rate;
       var seen = [];
@@ -1658,13 +1658,13 @@
         SG.difficulty.rate = rate;
       }
       // The closest candidate the run rated that an independent DFS count proves unique.
-      seen.sort(function (a, b) { return distance(a.rating, 'expert') - distance(b.rating, 'expert'); });
+      seen.sort(function (a, b) { return distance(a.rating, 'master') - distance(b.rating, 'master'); });
       var witness = null;
       for (var i = 0; i < seen.length && witness === null; i++) {
         if (SG.dfs.countSolutions(seen[i].model, seen[i].givens, 2) === 1) witness = seen[i];
       }
       expect(witness).not.toBeNull();
-      expect(distance(result.rating, 'expert')).toBeLessThan(distance(witness.rating, 'expert') + 1e-9);
+      expect(distance(result.rating, 'master')).toBeLessThan(distance(witness.rating, 'master') + 1e-9);
 
       // The returned puzzle is valid: one solution, clues by whole symmetry groups, valid cages, a replay that
       // rebuilds it, and the score it claims.
@@ -1765,7 +1765,7 @@
       var board = DEF.build({}, null);
       var grid = SG.fullGrid.generate(board, SG.rng.create(11), null);
       var model = DEF.postGenerate({ model: board, solution: grid, rng: SG.rng.create(11).fork('extra#1'),
-        level: 'expert', spec: null, attempt: 1, budget: null, emit: em, variantId: 'killer' });
+        level: 'master', spec: null, attempt: 1, budget: null, emit: em, variantId: 'killer' });
       checkEvents(events);
       expect(model.cages.length).toBeGreaterThan(10);
       expect(SG.model.isSolution(model, grid)).toBe(true);
@@ -1775,7 +1775,7 @@
       expect(events.some(function (e) { return e.i18nKey === 'extraStructure.cages'; })).toBe(true);
       // A quiet emitter (or none at all) does not change the result.
       var again = DEF.postGenerate({ model: board, solution: grid, rng: SG.rng.create(11).fork('extra#1'),
-        level: 'expert', spec: null, attempt: 1, budget: null, emit: null, variantId: 'killer' });
+        level: 'master', spec: null, attempt: 1, budget: null, emit: null, variantId: 'killer' });
       expect(again.cages.map(function (c) { return Array.from(c.cells); }))
         .toEqual(model.cages.map(function (c) { return Array.from(c.cells); }));
     });
@@ -1845,7 +1845,7 @@
     it('uses the same placeholders in both languages, and only arguments that a Finding really carries', function () {
       var f = fragment();
       var args = {};
-      corpus().filter(function (p) { return p.level === 'hard' || p.level === 'expert'; }).slice(0, 12)
+      corpus().filter(function (p) { return p.level === 'hard' || p.level === 'master'; }).slice(0, 12)
         .forEach(function (p) {
           var report = SG.logicalSolver.solve(p.result.model, p.result.givens, { collectSteps: true });
           report.steps.forEach(function (step) {

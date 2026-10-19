@@ -10,15 +10,15 @@
   var J = SG.jigsaw;
   var def = SG.variants.get('jigsaw9');
 
-  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1', 'nightmare2'];
+  var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'];
   /** design.md 9.1, jigsaw9 row, p95 in ms. */
-  var BUDGET_MS = { veryEasy: 150, easy: 350, medium: 350, hard: 900, veryHard: 900, expert: 2000, evil: 5000,
-    nightmare1: 5000, nightmare2: 5000 };
+  var BUDGET_MS = { veryEasy: 150, easy: 350, normal: 350, hard: 900, expert: 900, master: 2000, nightmare: 5000,
+    hell1: 5000, hell2: 5000 };
 
   var LAYOUT_COUNT = 200;
   var PUZZLES_PER_LEVEL = 20;
   /** Fewer puzzles of the slowest level, so that the suite stays quick. */
-  var PER_LEVEL = { nightmare2: 8 };
+  var PER_LEVEL = { hell2: 8 };
 
   function countOf(level) {
     return PER_LEVEL[level] || PUZZLES_PER_LEVEL;
@@ -872,7 +872,7 @@
     it('the regions matter: without them the givens of a hard puzzle leave several solutions', function () {
       var total = 0;
       var ambiguous = 0;
-      ['hard', 'expert', 'evil'].forEach(function (level) {
+      ['hard', 'master', 'nightmare'].forEach(function (level) {
         puzzleRun()[level].forEach(function (p) {
           total++;
           if (SG.dfs.countSolutions(withoutRegions(p.model), p.givens, 2) === 2) ambiguous++;
@@ -885,7 +885,7 @@
       var means = LEVELS.map(function (level) {
         return mean(puzzleRun()[level].map(function (p) { return clueCount(p.givens); }));
       });
-      // Rating v2: the score, not the clue count, sets the level. From medium on the means sit on a plateau
+      // Rating v2: the score, not the clue count, sets the level. From normal on the means sit on a plateau
       // (the top tiers refine their proposals by showing clues again): veryEasy > easy > every level above.
       expect(means[0]).toBeGreaterThan(means[1]);
       for (var i = 2; i < means.length; i++) expect(means[i]).toBeLessThan(means[1]);
@@ -917,8 +917,8 @@
     });
 
     it('another seed gives another layout and another puzzle', function () {
-      var a = generatePuzzle('medium', 1000);
-      var b = generatePuzzle('medium', 1001);
+      var a = generatePuzzle('normal', 1000);
+      var b = generatePuzzle('normal', 1001);
       expect(regionList(b.model)).not.toEqual(regionList(a.model));
       expect(Array.from(b.givens)).not.toEqual(Array.from(a.givens));
     });

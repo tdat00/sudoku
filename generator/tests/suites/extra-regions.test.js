@@ -11,13 +11,13 @@
   var E = SG.events;
   var X = SG.extraRegions;
 
-  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1', 'nightmare2'];
+  var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'];
   /** design.md 9.1, the diagonalX / hyper rows (the larger of the two), p95 in ms. */
-  var BUDGET_MS = { veryEasy: 80, easy: 200, medium: 200, hard: 500, veryHard: 500, expert: 1200, evil: 3000,
-    nightmare1: 3000, nightmare2: 5000 };
+  var BUDGET_MS = { veryEasy: 80, easy: 200, normal: 200, hard: 500, expert: 500, master: 1200, nightmare: 3000,
+    hell1: 3000, hell2: 5000 };
   var PUZZLES_PER_LEVEL = 20;
   /** Fewer puzzles of the slowest level, so that the suite stays quick. */
-  var PER_LEVEL = { nightmare2: 8 };
+  var PER_LEVEL = { hell2: 8 };
   var HYBRID_PER_LEVEL = 8;
   /** The task card: dropping the extra units must leave several solutions for at least this share. */
   var NEEDED_SHARE = 0.7;
@@ -242,7 +242,7 @@
       });
     });
 
-    it('supports every difficulty level, nightmare2 included (measured by tests/qualify.js)',
+    it('supports every difficulty level, hell2 included (measured by tests/qualify.js)',
       function () {
         VARIANT_IDS.forEach(function (id) {
           expect(SG.variants.get(id).difficultySupport).toEqual(LEVELS);
@@ -575,9 +575,9 @@
           var puzzles = puzzleRun()[id][level];
           return puzzles.reduce(function (sum, p) { return sum + clueCount(p.givens); }, 0) / puzzles.length;
         });
-        // Rating v2: the score, not the clue count, sets the level. From medium on the means sit on a plateau
+        // Rating v2: the score, not the clue count, sets the level. From normal on the means sit on a plateau
         // (the top tiers refine their proposals by showing clues again), so the trend is checked as veryEasy >
-        // easy > every level from medium on.
+        // easy > every level from normal on.
         var text = id + ': mean clues ' + means.map(function (m) { return m.toFixed(1); }).join(' / ');
         check(means[0] > means[1], text);
         for (var i = 2; i < means.length; i++) check(means[i] < means[1], text);
@@ -598,7 +598,7 @@
         expect(needing / puzzles.length).toBeGreaterThanOrEqual(NEEDED_SHARE);
       });
 
-      it(id + ': from medium upwards, at least ' + Math.round(NEEDED_SHARE * 100) +
+      it(id + ': from normal upwards, at least ' + Math.round(NEEDED_SHARE * 100) +
         '% need them at every level; and at every level some do', function () {
         LEVELS.forEach(function (level, li) {
           var puzzles = puzzleRun()[id][level];
@@ -626,7 +626,7 @@
       });
     });
 
-    it('in the hybrid each family counts on its own: from medium upwards, dropping only the diagonals or ' +
+    it('in the hybrid each family counts on its own: from normal upwards, dropping only the diagonals or ' +
       'only the windows leaves several solutions for most puzzles', function () {
       var puzzles = hybridRun().filter(function (p) {
         return p.config.difficulty !== 'veryEasy' && p.config.difficulty !== 'easy';
@@ -770,7 +770,7 @@
     CONFIGS.forEach(function (cfg, k) {
       it(cfg.name + ': runs the seven steps in order, reports its unit count, and a full trace replays to ' +
         'the puzzle', function () {
-        var out = run(cfg, 'medium', 40 + k, 'full');
+        var out = run(cfg, 'normal', 40 + k, 'full');
         var starts = out.events.filter(function (e) { return e.type === 'step' && e.phase === 'start'; });
         expect(starts.map(function (e) { return e.stepId; }).slice(0, 7)).toEqual(STEPS);
         var model = out.events.filter(function (e) { return e.i18nKey === 'buildModel.model'; })[0];
@@ -826,11 +826,11 @@
 
     it('another seed gives another puzzle; the option gives another board than the plain variant',
       function () {
-      var a = generate('hyper', 'medium', 1000);
-      var b = generate('hyper', 'medium', 1001);
+      var a = generate('hyper', 'normal', 1000);
+      var b = generate('hyper', 'normal', 1001);
       expect(Array.from(b.solution)).not.toEqual(Array.from(a.solution));
-      var plain = generate('hyper', 'medium', 55);
-      var hybrid = generate('hyper', 'medium', 55, { variantOptions: { withDiagonals: true } });
+      var plain = generate('hyper', 'normal', 55);
+      var hybrid = generate('hyper', 'normal', 55, { variantOptions: { withDiagonals: true } });
       expect(hybrid.model.units.length).not.toBe(plain.model.units.length);
       expect(Array.from(hybrid.solution)).not.toEqual(Array.from(plain.solution));
     });

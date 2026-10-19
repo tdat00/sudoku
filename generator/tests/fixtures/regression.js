@@ -55,7 +55,7 @@
         'e3de19938dd3fc87', '2c8cb791d7fbc2bd', '3865e7e9a3e498d5', '7dd3dc515f1013dd',
         '3dc9f1a0f33870dc', 'a58c732983c19635', '1dc0f4ddf353bd91', '49a981108a82d77c'
       ],
-      'classic9/medium': [
+      'classic9/normal': [
         '643c9fdcc775c3a0', '9552a3d1084b7fbd', '6a5c3fd3df1aa547', 'ab91cd66e61f4b4a',
         '2d7e809fca8133bb', '02274b8f8570a9db', '7f6eef1f06f46c8b', 'fec22b176a036943',
         '344f5121108da81d', '6921fe9591ab28d9', '3642cc4b5f9aceaf', '6d6b38345497a8c8',
@@ -69,28 +69,28 @@
         'f04b340171d2e9cd', '8c6c3e4a8a1dd866', '8685946bc9f9a7cf', '3004c2f206b511ce',
         'e12c4467721b7213', 'd68d25a60ffe38ea', '25e8f2abf906d05f', 'b277386afa20f9b6'
       ],
-      'classic9/veryHard': [
+      'classic9/expert': [
         'cf5f01b2e3df218e', '63335b832060f687', 'd4c73053838ab967', 'aa605316ef7fdcda',
         'dfc2f27edb889022', '98678781ced00fad', 'a4d6d901961fa4ed', '7cfeb5c04370f9ec',
         '3f51f20c1eff1a10', '2b24125181b5be0d', '8d70a6b459b91bc8', '063cef13bd709f07',
         'e6b3e77ad6e0d956', '1ce384f24682d10e', '63fa5afc801f28f0', '608b89563e6deaea',
         '9b72e4ea0444d336', '99364360081d05bc', 'd230944fcb0b146b', 'd524902c9924d020'
       ],
-      'classic9/expert': [
+      'classic9/master': [
         '8accb2b21860029e', '1e7617daded7a8a6', '828e9388f03284b4', 'a870dde016bcfc6c',
         '0114fb0cf1cede10', 'a6974c0c61e61d80', '0a74807f75b8a62b', 'c4261f0e59b00482',
         'e2b21c3a51c55c76', '5a5b1a4d758bde81', 'da379b3467a048b8', '790437da17a235f6',
         '11ee29190ad828f5', 'd642d621986b65fd', 'a1e70ea13ee80f3d', 'e2b78540b64df61c',
         '40fb1b94a17744c8', 'c2fd8ddd43df8a51', '29347bf7614c9de3', '0653c5d7dc8f5133'
       ],
-      'classic9/evil': [
+      'classic9/nightmare': [
         '86d1e172be618b9e', 'b2617ee032a4016c', '03c94c54f91828d8', '486e7c2ec5568382',
         '345c0e526057fe6e', '12ef6c318fc0d53d', 'b1f7b262d7cb10ce', 'e6a777410136194d',
         '4164e7fe5f7fe0e2', '70b4d50356265307', '0caa79518030700d', '5b51d9e075f3fe7c',
         'b457b0449e9a0ee8', '71afbd6714c77a53', 'd21fee25b9491269', '1e3ed1b29371764e',
         'cb7becbd47a0eeb1', '333527f37c599ca7', '9f3bae9bcddae99f', '7e5d71552b14f449'
       ],
-      'mega12/medium': [
+      'mega12/normal': [
         '55a229f28ad96406', '880378cbd0717e4f', '8db24fe4df2928a0', '0b285e5e4c290fba',
         '4877d77867cbd61c', '43ed6690ac7c348c', '5d19fd7e33a754d2', 'bf726af92696d3ed',
         '7296fb88ff909bd4', '4fee7e84461263e8', 'ecd8bfc5dcb94cf9', '28adbaa28171fd1e',
@@ -111,7 +111,7 @@
         '8b4274b85cb3f894', '1f0dae37e531e613', '174c94265082505a', '18c13b85be101b29',
         'a5f3bf82e14e277e', '1767bcf67e10a03a', 'd5f4aeb7c4373de3', 'f73ba3061687a80a'
       ],
-      'diagonalX/evil': [
+      'diagonalX/nightmare': [
         'ea40905da715ad21', 'e146de8f5fc95aeb', 'edfaf735dcebeb69', '5b8f8f4f3a25a82b',
         'c839250807e79d14', '863dc6f9375bbf65', '1d28c004e14b95d8', 'd3b88366b7c46bea',
         '63a1c2db8206c8cf', 'ff322e5397ad25a7', '814f6a3a42d808d6', '0086fe024b32105e',
@@ -125,14 +125,14 @@
         '21528e4cf2bfde80', '01166d2b0fe03daf', '2c09a432d0ecf77e', 'a866ecbffbfee9cb',
         '058337e6a87c18ea', '7a89449a7dd91316', '9c6e3e5385b7e8c7', '5a740a58f4fea224'
       ],
-      'jigsaw9/medium': [
+      'jigsaw9/normal': [
         '78baffe0dd6deacc', '6735049e02d6c682', '6e3f276349ae5557', '5fdb990b0a55114f',
         '144649e1b661512d', '30889bb5698b50d9', 'c3b52dc57dfc2ca9', '3021756515303589',
         'ec1b07ec6d351380', 'de8e0f60d17b0e0c', '3dfad3feb68e1702', '14a1a28d92c4f931',
         'a503ec29aed16c35', '55bbc11b89197faf', 'ac82ffd4783b28e8', 'cff30bc307613037',
         'ae439792713099ee', '163d9ba930b4ce45', 'c0509e5c0305e4b0', 'fc4bc58f6bbb6cab'
       ],
-      'jigsaw9/expert': [
+      'jigsaw9/master': [
         '00a9e7462afbf6ba', '287cd2ac64315cf0', '6e2dad9b04ab999f', 'e059108b7a7ccdcf',
         '2aded89003eb0a0c', '70659a9abd93f086', '0d19c96ea5b72092', 'e18289dd14356fb1',
         '6cc89676da6e170a', '36a629c3bd008167', 'efa269229ffe7f8e', '1f33856b569e669f',
@@ -153,7 +153,7 @@
         '794786d964786925', '9fab0bacd7a2fee8', '4a4d846cb5e91dd0', 'e4a84af6314fd34a',
         'bfefdca26b175dd6', 'd8b8902d49afc401', '744737bca394c788', '47d25178effcb3a4'
       ],
-      'greaterThan/medium': [
+      'greaterThan/normal': [
         '0b9e0a0967037cd5', 'fe5ad79967319c8d', '6f6fe3b6940cba62', 'bb4f2fb157042f5d',
         'd868bdfcb80befd0', 'd75d790e66c3706a', 'bb06ca80cd4622cc', '691d7154cd3269c8',
         'b1a7d96720db4533', '5f337e221220ad06', '0e1dca57df81892b', '88d8fb14597a40b0',
@@ -181,21 +181,21 @@
         '07550a1e621f5682', 'df82d5a102579495', '8f489f862f61874a', '3b1caccba1d276df',
         'b83d163c35a2db28', '60f3a0f33b123ad7', '4dbb4d036c950357', 'c3ef4a82a5063d7e'
       ],
-      'butterfly/medium': [
+      'butterfly/normal': [
         '6607059829e6df7c', 'ecc8408ffc38342b', '86661d87ace8ce83', '69efd16ff1dd2d8b',
         'e2b2ef27f1471243', 'b45089011ed8de0d', '3ba9f2026059a496', '9cc84cb3b0d9c977',
         'e02a01fd4779fdf1', 'cafe3f2c51fec6e8', '32cab496bb53e0c2', '62748f556d263759',
         '83ad03391a2817d5', '477255b88169272c', '63ba0bb96373c3e5', '62fe0b1e25b256ba',
         '81465f298bc85355', '9459705a72605f4e', '86b1fe9677d0ab12', 'b4764a9ccfdb6fd8'
       ],
-      'flower/medium': [
+      'flower/normal': [
         'e97b2c5a309e5976', 'ed93d8fd938119a1', '621451872de5c3c3', 'd364ecda6bb3c8b6',
         'a70fe9cfd56db29b', '0259a9932665a8c7', 'db8e880904819e25', 'e268bb8fdf8bae5b',
         'fcb6ad2fb40c741b', '655322ea9df41c06', '1852a5b4f107ab90', '50cccfec506e1678',
         '08a95f9347524857', 'e9cfaba77d3d95c3', '039353de203380e2', '30012b41b0b5429d',
         '813616770a99fba3', '338b95d9e6741be5', '95d5de7fb560f24b', '82b606b916644655'
       ],
-      'wordoku/medium': [
+      'wordoku/normal': [
         '770b3972de3baa66', '84c18ad36aa77cf7', '9268e86a2fa8fe66', 'b89cea4224cd5526',
         '847f3093c15d8fc7', '82f6525fa7f0974b', '13c404cb2d2927c7', 'fece246665d97f82',
         'ae8755effe00e4ab', '1b02bbfe3821a58a', 'c5bc5f5b181d99bf', '796cb18ce3db12e0',

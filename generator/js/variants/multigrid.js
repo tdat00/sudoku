@@ -308,17 +308,17 @@
    * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in js/core/difficulty.js).
    * The derived floor (classic9 numbers x cellCount / 81) keeps the digger from stopping where the techniques
    * of the level let it: the grids overlap, so every shared box carries the clues of two grids and the
-   * puzzle stays solvable with singles. With the full floor medium was hit by 2..9 % of the dug puzzles (10
-   * to 31 puzzles had to be dug per medium puzzle, 5 % of the butterfly ones were missed after all 96
+   * puzzle stays solvable with singles. With the full floor normal was hit by 2..9 % of the dug puzzles (10
+   * to 31 puzzles had to be dug per normal puzzle, 5 % of the butterfly ones were missed after all 96
    * samples);
    * with 60 % of it the dig ends where the techniques end (butterfly 34 of the 144 cells, sohei 81 of 288,
-   * samurai 109 of 369, flower 42 of 189 clues) and 38..49 % of the dug puzzles are medium. The floor of
+   * samurai 109 of 369, flower 42 of 189 clues) and 38..49 % of the dug puzzles are normal. The floor of
    * veryEasy stays: the score band of that level is so low that the puzzle needs the clues.
    * Flower additionally keeps 80 % for easy (it did before; the level is hit by every dug puzzle either way).
-   * veryHard takes the factor of hard (rating v2).
+   * expert takes the factor of hard (rating v2).
    */
-  const CLUE_FLOOR_SCALE = Object.freeze({ medium: 0.6, hard: 0.6, veryHard: 0.6 });
-  const FLOWER_CLUE_FLOOR_SCALE = Object.freeze({ easy: 0.8, medium: 0.6, hard: 0.6, veryHard: 0.6 });
+  const CLUE_FLOOR_SCALE = Object.freeze({ normal: 0.6, hard: 0.6, expert: 0.6 });
+  const FLOWER_CLUE_FLOOR_SCALE = Object.freeze({ easy: 0.8, normal: 0.6, hard: 0.6, expert: 0.6 });
 
   function definition(id, levels, extra) {
     return Object.assign({
@@ -337,13 +337,13 @@
   }
 
   /**
-   * Levels each board is offered: every one of the nine, nightmare2 included, measured with the protocol of
+   * Levels each board is offered: every one of the nine, hell2 included, measured with the protocol of
    * docs/report-v2/report-detailed.md section 6 (`node tests/qualify.js`, docs/report-v2/qualification.md; the
    * top tiers come from the fast proposal dig refined into the band). A missed level still returns a valid
    * puzzle, flagged 'difficulty.approximate'.
    */
-  const STANDARD_LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
-    'nightmare2'];
+  const STANDARD_LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
+    'hell2'];
 
   const DEFINITIONS = [
     definition('samurai', STANDARD_LEVELS),

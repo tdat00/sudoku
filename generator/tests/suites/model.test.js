@@ -643,7 +643,7 @@
       expect(SG.variants.get('classic4').difficultySupport).toEqual(['veryEasy']);
       expect(SG.variants.get('classic6').difficultySupport).toEqual(['veryEasy', 'hard']);
       expect(SG.variants.get('classic9').difficultySupport)
-        .toEqual(['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1']);
+        .toEqual(['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1']);
       ['classic4', 'classic6', 'classic9'].forEach(function (id) {
         var def = SG.variants.get(id);
         expect(def.defaultSymbolMode).toBe('digits');

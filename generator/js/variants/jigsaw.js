@@ -665,7 +665,7 @@
    * Does the plain depth-first search that `SG.model.validate` uses for V8 (fixed value order, no restarts)
    * find a solution within `PLAIN_SOLVE_NODES` nodes? About one layout in four does not: it has solutions, but
    * a search with a fixed value order can wander for millions of nodes in it. Such layouts also gave slower
-   * puzzles in measurements (about twice the time at 'medium'), so they are dropped, and every model built
+   * puzzles in measurements (about twice the time at 'normal'), so they are dropped, and every model built
    * here validates conclusively.
    * @param {PuzzleModel} model
    * @returns {boolean}
@@ -781,12 +781,12 @@
     group: 'regions',
     digits: SIZE,
     // Every level of the nine (measured: `node tests/qualify.js`, docs/report-v2/qualification.md).
-    difficultySupport: ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
-      'nightmare2'],
-    // The classic9 floors (29 / 25 / 22) kept the dig from reaching medium; 83 % / 80 % / 80 % of them
-    // (24 / 20 / 17) do not. Same calibration as the other 9x9 hybrids (extra-regions.js); veryHard takes
+    difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
+      'hell2'],
+    // The classic9 floors (29 / 25 / 22) kept the dig from reaching normal; 83 % / 80 % / 80 % of them
+    // (24 / 20 / 17) do not. Same calibration as the other 9x9 hybrids (extra-regions.js); expert takes
     // the factor of hard (rating v2).
-    clueFloorScale: Object.freeze({ medium: 0.83, hard: 0.8, veryHard: 0.8, expert: 0.8 }),
+    clueFloorScale: Object.freeze({ normal: 0.83, hard: 0.8, expert: 0.8, master: 0.8 }),
     defaultSymbolMode: 'digits',
     symbolModes: ['digits', 'letters', 'colors', 'shapes'],
     options: Object.freeze([Object.freeze({

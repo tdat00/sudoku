@@ -17,8 +17,8 @@
    * Difficulty ids a variant may declare: a copy of SG.difficulty.LEVELS (difficulty.js is loaded before this
    * file in every entry point; keep the two lists equal).
    */
-  const LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
-    'nightmare2'];
+  const LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
+    'hell2'];
 
   /**
    * @typedef {Object} VariantDef

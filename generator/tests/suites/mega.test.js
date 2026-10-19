@@ -19,7 +19,7 @@
 
   var IDS = ['mega12', 'mega16'];
   /** The levels the puzzle tests sample (both boards offer all nine, see the definition test). */
-  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'evil', 'nightmare1'];
+  var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'nightmare', 'hell1'];
 
   /**
    * What each board must look like, written down independently of the builder. `budgets` are the
@@ -28,7 +28,7 @@
   var BOARDS = {
     mega12: {
       digits: 12, boxRows: 3, boxCols: 4, boxesAcross: 3, boxesDown: 4, peers: 11 + 11 + 6,
-      budgets: { veryEasy: 400, easy: 1000, medium: 1000, hard: 3000, evil: 3000, nightmare1: 4500 },
+      budgets: { veryEasy: 400, easy: 1000, normal: 1000, hard: 3000, nightmare: 3000, hell1: 4500 },
       sets: {
         letters: ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C'],
         numbers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
@@ -37,7 +37,7 @@
     },
     mega16: {
       digits: 16, boxRows: 4, boxCols: 4, boxesAcross: 4, boxesDown: 4, peers: 15 + 15 + 9,
-      budgets: { veryEasy: 1500, easy: 4000, medium: 4000, hard: 10000, evil: 10000, nightmare1: 10000 },
+      budgets: { veryEasy: 1500, easy: 4000, normal: 4000, hard: 10000, nightmare: 10000, hell1: 10000 },
       sets: {
         hex: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'],
         letters: ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G']

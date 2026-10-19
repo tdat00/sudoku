@@ -34,11 +34,11 @@
   const KIND_WINDOW = 'window';
 
   /**
-   * Levels both boards offer: every one of the nine, nightmare2 included (measured: `node tests/qualify.js`,
+   * Levels both boards offer: every one of the nine, hell2 included (measured: `node tests/qualify.js`,
    * docs/report-v2/qualification.md).
    */
-  const LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
-    'nightmare2'];
+  const LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
+    'hell2'];
 
   function fail(code, args) {
     return new SG.errors.GenerationError(code, args);
@@ -172,15 +172,15 @@
   /**
    * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in js/core/difficulty.js).
    * The two hybrids are 9x9 boards with more rules than classic9. With the classic9 floors (29 / 25 / 22
-   * clues) the digger stopped at the floor before the puzzle needed a pair technique: medium was hit by 14 %
-   * (diagonalX) and 1 % (hyper) of the dug puzzles, so the generator had to dig 7 and 38 puzzles per medium
+   * clues) the digger stopped at the floor before the puzzle needed a pair technique: normal was hit by 14 %
+   * (diagonalX) and 1 % (hyper) of the dug puzzles, so the generator had to dig 7 and 38 puzzles per normal
    * puzzle and missed the level for 11 % of the hyper ones. Where the techniques stop the dig by themselves
    * (21-24 clues, whatever the level) there is no floor to speak of, but the means of the clue counts must
    * still fall with the level, so the floors stay just above that: 24 / 20 / 17 (83 % / 80 % / 80 %) give
-   * medium 32..36 %, hard 31..73 % and expert 39..89 % of the dug puzzles. veryHard takes the factor of hard
-   * (rating v2; nightmare1/2 take that of evil, which has none).
+   * normal 32..36 %, hard 31..73 % and master 39..89 % of the dug puzzles. expert takes the factor of hard
+   * (rating v2; hell1/2 take that of nightmare, which has none).
    */
-  const CLUE_FLOOR_SCALE = Object.freeze({ medium: 0.83, hard: 0.8, veryHard: 0.8, expert: 0.8 });
+  const CLUE_FLOOR_SCALE = Object.freeze({ normal: 0.83, hard: 0.8, expert: 0.8, master: 0.8 });
 
   function definition(id, optionId, build) {
     return {

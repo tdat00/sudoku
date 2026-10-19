@@ -64,11 +64,11 @@
 
   /**
    * Levels: measured, not assumed (rating v2: `node tests/qualify.js`, docs/report-v2/qualification.md). Both
-   * boards hit every level of the nine, nightmare2 included, within the 30 s budget of larger boards; the
+   * boards hit every level of the nine, hell2 included, within the 30 s budget of larger boards; the
    * top tiers come from the fast proposal dig refined into the band.
    */
-  const LEVELS = Object.freeze(['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil',
-    'nightmare1', 'nightmare2']);
+  const LEVELS = Object.freeze(['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare',
+    'hell1', 'hell2']);
 
   /** @type {Object<string, MegaSpec>} */
   const SPECS = Object.freeze({

@@ -99,7 +99,7 @@
       expect(SG.i18n.has('result.techniques.empties.desc')).toBe(true);
       expect(SG.i18n.has('result.techniques.floor')).toBe(false);
       expect(vmTip.parts.raised).toBeUndefined();
-      ['easy', 'medium', 'hard', 'evil'].forEach(function (level) {
+      ['easy', 'normal', 'hard', 'nightmare'].forEach(function (level) {
         var r = realResult('classic9', level, 3);
         var vm = R.viewModel(r);
         var num = function (text) { return Number(String(text).replace(/[^0-9]/g, '')); };
@@ -210,15 +210,15 @@
     it('a forced difficulty.approximate result is flagged and offers the retry', function () {
       ready();
       var forced = withWarnings(realResult('classic9', 'easy', 3), ['difficulty.approximate'],
-        { level: 'medium' }, 'hard');
+        { level: 'normal' }, 'hard');
       var vm = R.viewModel(forced, {});
       expect(vm.approximate).toBe(true);
       expect(vm.retryAvailable).toBe(true);
       expect(vm.exact).toBe(false);
       expect(vm.requested).toBe('hard');
-      expect(vm.achieved).toBe('medium');
+      expect(vm.achieved).toBe('normal');
       expect(vm.requestedName).toBe('Hard');
-      expect(vm.achievedName).toBe('Medium');
+      expect(vm.achievedName).toBe('Normal');
       expect(vm.warningKeys).toEqual(['difficulty.approximate']);
       expect(vm.warnings[0].kind).toBe('approximate');
       expect(vm.warnings[0].text).toBe(SG.i18n.t('difficulty.approximate'));
@@ -250,7 +250,7 @@
     it('translates every label and unit, and formats numbers for the language', function () {
       ready();
       var r = withWarnings(realResult('classic9', 'easy', 3), ['difficulty.approximate'],
-        { level: 'medium', score: 1234.4, techniqueCounts: { nakedSingle: 3, xWing: 1 } }, 'hard');
+        { level: 'normal', score: 1234.4, techniqueCounts: { nakedSingle: 3, xWing: 1 } }, 'hard');
       var en = inLocale('en', function () { return R.viewModel(r); });
       var vi = inLocale('vi', function () { return R.viewModel(r); });
       ['achievedName', 'requestedName', 'cluesText', 'variantName']

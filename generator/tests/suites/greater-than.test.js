@@ -13,13 +13,13 @@
   var G = SG.greaterThan;
   var def = SG.variants.get('greaterThan');
 
-  var LEVELS = ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1', 'nightmare2'];
+  var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'];
   /** design.md 9.1, greaterThan row, p95 in ms. */
-  var BUDGET_MS = { veryEasy: 300, easy: 700, medium: 700, hard: 6000, veryHard: 10000, expert: 10000,
-    evil: 10000, nightmare1: 10000, nightmare2: 10000 };
+  var BUDGET_MS = { veryEasy: 300, easy: 700, normal: 700, hard: 6000, expert: 10000, master: 10000,
+    nightmare: 10000, hell1: 10000, hell2: 10000 };
   var PUZZLES_PER_LEVEL = 20;
   /** Fewer puzzles of the slower levels, so that the suite stays quick. */
-  var PER_LEVEL = { hard: 10, veryHard: 10, expert: 10, evil: 10, nightmare1: 10, nightmare2: 10 };
+  var PER_LEVEL = { hard: 10, expert: 10, master: 10, nightmare: 10, hell1: 10, hell2: 10 };
   var SINGLES = ['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine'];
 
   function countOf(level) {
@@ -219,7 +219,7 @@
   function futoshikiRun() {
     if (futoCache === null) {
       futoCache = [];
-      ['easy', 'medium', 'hard', 'expert'].forEach(function (level, li) {
+      ['easy', 'normal', 'hard', 'master'].forEach(function (level, li) {
         for (var i = 0; i < 4; i++) {
           futoCache.push(generate(level, 7000 + 10 * li + i, { variantOptions: { futoshiki: true } }));
         }
@@ -386,7 +386,7 @@
         var budget = SG.budget.create({ nodes: 1e6 });
         check(SG.dfs.countSolutions(p.model, p.givens, 2, budget) === 1, 'puzzle ' + i + ': not unique');
         nodes.push(budget.nodes);
-        // Rating v2 digs the levels up to nightmare2 with fewer clues and signs: a few thousand at most.
+        // Rating v2 digs the levels up to hell2 with fewer clues and signs: a few thousand at most.
         check(budget.nodes < 5000, 'puzzle ' + i + ': ' + budget.nodes + ' nodes');
         if (p.model.inequalities.length === 0) return;
         withSign++;
@@ -444,12 +444,12 @@
       expect(SG.techniques.appliesTo(chain, 'greaterThan')).toBe(true);
       expect(SG.techniques.appliesTo(chain, 'classic9')).toBe(false);
       expect(SG.techniques.appliesTo(forcing, 'killer')).toBe(false);
-      var onClassic = SG.difficulty.spec('expert', SG.variants.get('classic9').build({}, null));
+      var onClassic = SG.difficulty.spec('master', SG.variants.get('classic9').build({}, null));
       expect(onClassic.allowedTechniques).not.toContain('ineqChain');
       // Rating v2: a technique is allowed from the band whose maximum exceeds 1.25 x its weight.
       expect(SG.difficulty.spec('veryEasy', board()).allowedTechniques).not.toContain('ineqChain');
       expect(SG.difficulty.spec('easy', board()).allowedTechniques).toContain('ineqChain');
-      var onThis = SG.difficulty.spec('medium', board());
+      var onThis = SG.difficulty.spec('normal', board());
       expect(onThis.allowedTechniques).toContain('ineqChain');
       expect(onThis.allowedTechniques).toContain('minMaxForcing');
     });
@@ -814,10 +814,10 @@
       expect(typeof o.hintI18nKey).toBe('string');
     });
 
-    it('offers every level of the nine, nightmare2 included (measured by tests/qualify.js)', function () {
+    it('offers every level of the nine, hell2 included (measured by tests/qualify.js)', function () {
       expect(def.difficultySupport).toEqual(LEVELS);
       expectCode(function () {
-        SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'nightmare', seed: 1 }, null);
+        SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'hell', seed: 1 }, null);
       }, 'difficulty.unknownLevel');
     });
 
@@ -1090,7 +1090,7 @@
     it('the ineq techniques are used at the harder levels, and the hardest technique is not beyond the level',
       function () {
         var used = 0;
-        ['medium', 'hard', 'expert'].forEach(function (level) {
+        ['normal', 'hard', 'master'].forEach(function (level) {
           puzzleRun()[level].forEach(function (p) {
             if (p.rating.techniqueCounts.ineqChain > 0) used++;
           });
@@ -1137,7 +1137,7 @@
 
     it('returns the contract of a dig strategy: givens, clues, stats and the model without the removed signs',
       function () {
-        var r = digFrom(3, 'medium');
+        var r = digFrom(3, 'normal');
         expect(r.dug.givens instanceof Int32Array).toBe(true);
         expect(r.dug.clues).toBe(clueCount(r.dug.givens));
         ['groups', 'tried', 'accepted', 'rejected', 'skipped', 'oracleCalls'].forEach(function (k) {
@@ -1184,7 +1184,7 @@
     it('with no symmetry the clues are free', function () {
       var seen = false;
       for (var seed = 1; seed <= 8 && !seen; seed++) {
-        var r = digFrom(seed, 'medium', { symmetry: 'none' });
+        var r = digFrom(seed, 'normal', { symmetry: 'none' });
         for (var c = 0; c < 81; c++) if ((r.dug.givens[c] !== 0) !== (r.dug.givens[80 - c] !== 0)) seen = true;
       }
       expect(seen).toBe(true);
@@ -1196,14 +1196,14 @@
         var hard = [];
         for (var seed = 1; seed <= 6; seed++) {
           easy.push(digFrom(seed, 'veryEasy').dug.model.inequalities.length);
-          hard.push(digFrom(seed, 'expert').dug.model.inequalities.length);
+          hard.push(digFrom(seed, 'master').dug.model.inequalities.length);
         }
         expect(Math.max.apply(null, easy)).toBeLessThan(4);
         expect(mean(hard)).toBeGreaterThan(mean(easy));
       });
 
     it('uses the oracles it names: signs refused for "ambiguous" or "techniques", nothing else', function () {
-      var r = digFrom(5, 'expert');
+      var r = digFrom(5, 'master');
       var reasons = {};
       r.events.forEach(function (e) { if (e.i18nKey === 'dig.reject') reasons[e.i18nArgs.reason] = true; });
       Object.keys(reasons).forEach(function (k) { expect(['ambiguous', 'techniques']).toContain(k); });
@@ -1255,7 +1255,7 @@
     }
 
     it('runs the seven steps in order, builds the signs in step 4 and digs signs in step 5', function () {
-      var out = trace('medium', 11, 'summary');
+      var out = trace('normal', 11, 'summary');
       var starts = out.events.filter(function (e) { return e.type === 'step' && e.phase === 'start'; });
       expect(starts.map(function (e) { return e.stepId; }).slice(0, 7)).toEqual(STEPS);
       var built = out.events.filter(function (e) { return e.i18nKey === 'extraStructure.built'; });
@@ -1270,7 +1270,7 @@
 
     it('every event of a full trace is valid and in the vocabulary, and the replayed board is the puzzle',
       function () {
-        ['veryEasy', 'medium', 'expert'].forEach(function (level, i) {
+        ['veryEasy', 'normal', 'master'].forEach(function (level, i) {
           var out = trace(level, 20 + i, 'full');
           checkEvents(out.events);
           var view = replay(out.events);
@@ -1306,7 +1306,7 @@
 
     it('shows the empty board first: the clues of the full grid are cleared before the first sign is tried',
       function () {
-        var out = trace('medium', 12, 'full');
+        var out = trace('normal', 12, 'full');
         var first = out.events.findIndex(function (e) { return e.i18nKey === 'dig.start'; });
         var tryAt = out.events.findIndex(function (e) { return e.i18nKey === 'dig.try'; });
         var view = E.createView(81);
@@ -1343,7 +1343,7 @@
   describe('greaterThan: same seed, same puzzle (CV5 / I4)', function () {
     it('every level: two runs give the same givens, signs and solution', function () {
       LEVELS.forEach(function (level, li) {
-        [3 + li, 400 + li].slice(0, level === 'expert' || level === 'hard' ? 1 : 2).forEach(function (seed) {
+        [3 + li, 400 + li].slice(0, level === 'master' || level === 'hard' ? 1 : 2).forEach(function (seed) {
           var a = generate(level, seed);
           var b = generate(level, seed);
           expect(Array.from(b.givens)).toEqual(Array.from(a.givens));
@@ -1365,12 +1365,12 @@
     });
 
     it('another seed gives another puzzle; the same options the same one, other options another', function () {
-      var a = generate('medium', 1000);
-      var b = generate('medium', 1001);
+      var a = generate('normal', 1000);
+      var b = generate('normal', 1001);
       expect(Array.from(b.solution)).not.toEqual(Array.from(a.solution));
-      var plain = generate('expert', 55);
-      var futo1 = generate('expert', 55, { variantOptions: { futoshiki: true } });
-      var futo2 = generate('expert', 55, { variantOptions: { futoshiki: true } });
+      var plain = generate('master', 55);
+      var futo1 = generate('master', 55, { variantOptions: { futoshiki: true } });
+      var futo2 = generate('master', 55, { variantOptions: { futoshiki: true } });
       expect(Array.from(futo2.givens)).toEqual(Array.from(futo1.givens));
       expect(futo2.model.inequalities).toEqual(futo1.model.inequalities);
       expect(futo1.model.inequalities).not.toEqual(plain.model.inequalities);
@@ -1592,7 +1592,7 @@
     });
 
     it('draws one example board (a printed check of the geometry)', function () {
-      var p = puzzleRun().medium[0];
+      var p = puzzleRun().normal[0];
       var lines = draw(p.model, p.solution);
       expect(lines).toHaveLength(17);
       lines.forEach(function (l) { expect(l).toHaveLength(17); });

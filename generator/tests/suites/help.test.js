@@ -221,8 +221,8 @@
       SG.difficulty.WEIGHTS.helpProbeTechnique = 200;
       try {
         var lad = H.ladder();
-        var medium = lad.levels.filter(function (r) { return r.level === 'medium'; })[0];
-        expect(medium.techniques.map(function (x) { return x.id; })).toContain('helpProbeTechnique');
+        var normal = lad.levels.filter(function (r) { return r.level === 'normal'; })[0];
+        expect(normal.techniques.map(function (x) { return x.id; })).toContain('helpProbeTechnique');
       } finally {
         delete SG.difficulty.WEIGHTS.helpProbeTechnique;
         SG.techniques.unregister('helpProbeTechnique');

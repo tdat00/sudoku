@@ -42,26 +42,26 @@
 
   /**
    * Size distribution of the cages per difficulty: share of cages with that many cells (design.md 8.2).
-   * Rating v2: veryHard uses the shares of hard; nightmare1 and nightmare2 use those of evil and tilt them
+   * Rating v2: expert uses the shares of hard; hell1 and hell2 use those of nightmare and tilt them
    * towards larger cages (`tiltFor`). Every level needs its own entry: `sizeDistribution` falls back to the
-   * medium shares for an unknown one.
+   * normal shares for an unknown one.
    */
   const SIZE_SHARES = {
     veryEasy: { 2: 45, 3: 40, 4: 15 },
     easy: { 2: 45, 3: 40, 4: 15 },
-    medium: { 2: 30, 3: 35, 4: 25, 5: 10 },
+    normal: { 2: 30, 3: 35, 4: 25, 5: 10 },
     hard: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
-    veryHard: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
     expert: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
-    evil: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
-    nightmare1: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
-    nightmare2: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 }
+    master: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
+    nightmare: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
+    hell1: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
+    hell2: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 }
   };
   /**
    * Levels whose cages are tilted towards larger ones on top of the user's slider: the measured +2 (held-out
-   * run, docs/report-v2/report-detailed.md section 5.7 (7): old-evil hits 24/30 -> 30/30).
+   * run, docs/report-v2/report-detailed.md section 5.7 (7): old-nightmare hits 24/30 -> 30/30).
    */
-  const LARGER_CAGES = Object.freeze({ nightmare1: 2, nightmare2: 2 });
+  const LARGER_CAGES = Object.freeze({ hell1: 2, hell2: 2 });
   const MIN_TARGET = 2;
   const MAX_TARGET = 6;
   /** A cage that absorbs a leftover cell may grow to this many cells. */
@@ -208,7 +208,7 @@
    * @returns {{sizes: number[], weights: number[]}}
    */
   function sizeDistribution(level, tilt) {
-    const shares = SIZE_SHARES[level] || SIZE_SHARES.medium;
+    const shares = SIZE_SHARES[level] || SIZE_SHARES.normal;
     const sizes = [];
     const weights = [];
     for (let s = MIN_TARGET; s <= MAX_TARGET; s++) {
@@ -226,7 +226,7 @@
   }
 
   /**
-   * The tilt a level's cages are grown with: the user's slider, plus `LARGER_CAGES` for the nightmare tiers,
+   * The tilt a level's cages are grown with: the user's slider, plus `LARGER_CAGES` for the hell tiers,
    * clamped to the slider's range (docs/report-v2/report-detailed.md section 5.7 (7)).
    * @param {string} level
    * @param {number} cageSize  The user's slider position, -2 .. 2.
@@ -541,8 +541,8 @@
   /** Search nodes all the checks of one layout may use together before the repairs stop. */
   const REPAIR_NODES = 250000;
   /** Layout repairs (split / merge) allowed per level; a level with 0 skips the check altogether. */
-  const REPAIR_ATTEMPTS = { veryEasy: 0, easy: 0, medium: 0, hard: 12, veryHard: 12, expert: 12, evil: 12,
-    nightmare1: 12, nightmare2: 12 };
+  const REPAIR_ATTEMPTS = { veryEasy: 0, easy: 0, normal: 0, hard: 12, expert: 12, master: 12, nightmare: 12,
+    hell1: 12, hell2: 12 };
   /** Clues that step (c) may reveal at most. */
   const MAX_REVEALS = 24;
   const SLICE_CODE = 'killer.sliceExpired';
@@ -740,7 +740,7 @@
    *           also when the node limit ended the search).
    * @property {string[]} repairs   'split' | 'merge' per repair step, in order.
    * @property {number[]} revealed  Cells that step (c) revealed so that the layout plus these clues is
-   *           unique. When the layout search of the levels from veryHard on moved cages, the cells of the
+   *           unique. When the layout search of the levels from expert on moved cages, the cells of the
    *           clues it kept the moved layout unique with: these, completed to whole symmetry groups.
    * @property {number} nodes       Search nodes spent on the checks of this layout.
    * @property {number} [cageCount] Cages of the final layout (set by `postGenerate`).
@@ -754,7 +754,7 @@
    * @param {ArrayLike<number>} solution
    * @param {number[][]} cages      The layout to check, as cell lists.
    * @param {string} level          Sets how many repairs are allowed (0 for the two easiest levels and
-   *        medium, whose puzzles keep far more clues than any ambiguity needs, so the check is skipped).
+   *        normal, whose puzzles keep far more clues than any ambiguity needs, so the check is skipped).
    * @param {Rng} rng
    * @param {?Object} [parent]      The pipeline's budget.
    * @param {{repair: function(string, number, number): void}} [report]  Called once per repair step with
@@ -848,7 +848,7 @@
 
   /**
    * Local search on the cage layout, before the cells are dug (the structure phase, so the Generation Steps
-   * replay digs on the final cages). Only for the levels from veryHard on, and only when the layout - with
+   * replay digs on the final cages). Only for the levels from expert on, and only when the layout - with
    * the digits the repair had to reveal (`revealed`, none for a layout that is unique on its own), completed
    * to whole groups of the symmetry the dig uses, so that the dig can end on exactly these clues - is
    * unique, completely rated, and too easy for the band (score below its minimum): Killer's puzzles of those
@@ -877,7 +877,7 @@
    */
   function* searchCagesSteps(base, solution, cages, revealed, spec, rng, ctx, info) {
     const caps = ctx.caps;
-    const from = SG.difficulty.bandOf('veryHard').min;
+    const from = SG.difficulty.bandOf('expert').min;
     if (!caps || !spec || !(spec.min >= from)) return { cages: cages, kept: [], clueCells: [], moved: false };
     const keeper = ctx.keeper || null;
     const clues = new Int32Array(CELLS);
@@ -1055,7 +1055,7 @@
     };
     const repaired = yield* repairLayoutSteps(base, ctx.solution, cages, ctx.level, ctx.rng.fork('repair'),
       ctx.budget, report);
-    // Rating v2: the levels from veryHard on search the layout itself before the cells are dug.
+    // Rating v2: the levels from expert on search the layout itself before the cells are dug.
     const searched = yield* searchCagesSteps(base, ctx.solution, repaired.cages, repaired.info.revealed,
       ctx.spec, ctx.rng.fork('search'), ctx, repaired.info);
     cages = searched.cages;
@@ -1309,8 +1309,8 @@
       group: 'killer',
       digits: DIGITS,
       // Measured (`node tests/qualify.js`, docs/report-v2/qualification.md): all nine levels.
-      difficultySupport: ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1',
-        'nightmare2'],
+      difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
+        'hell2'],
       defaultSymbolMode: 'digits',
       symbolModes: ['digits', 'letters', 'colors', 'shapes'],
       options: OPTIONS,

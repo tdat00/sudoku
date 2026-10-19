@@ -118,23 +118,23 @@
     'difficulty.easy': 'Dễ',
     'difficulty.easy.desc': 'Ít số cho sẵn hơn một chút. Thêm kỹ thuật ứng viên bị khóa: cặp chỉ hướng ' +
       '(Pointing) và loại trừ khối–hàng/cột.',
-    'difficulty.medium': 'Trung bình',
-    'difficulty.medium.desc': 'Thường dùng các cặp và bộ ba ứng viên (tập con trần và ẩn).',
+    'difficulty.normal': 'Trung bình',
+    'difficulty.normal.desc': 'Thường dùng các cặp và bộ ba ứng viên (tập con trần và ẩn).',
     'difficulty.hard': 'Khó',
     'difficulty.hard.desc': 'Thường dùng bộ bốn ứng viên, các mẫu “cá” (X-Wing, Swordfish) và tô màu ' +
       'đơn giản.',
-    'difficulty.veryHard': 'Rất khó',
-    'difficulty.veryHard.desc': 'Thường dùng một kỹ thuật cánh (XY-Wing, XYZ-Wing), Jellyfish hoặc nhiều ' +
-      'mẫu “cá”.',
     'difficulty.expert': 'Chuyên gia',
-    'difficulty.expert.desc': 'Thường dùng nhiều kỹ thuật cánh, W-Wing hoặc Unique Rectangle, đôi khi một ' +
+    'difficulty.expert.desc': 'Thường dùng một kỹ thuật cánh (XY-Wing, XYZ-Wing), Jellyfish hoặc nhiều ' +
+      'mẫu “cá”.',
+    'difficulty.master': 'Bậc thầy',
+    'difficulty.master.desc': 'Thường dùng nhiều kỹ thuật cánh, W-Wing hoặc Unique Rectangle, đôi khi một ' +
       'chuỗi suy luận ngắn.',
-    'difficulty.evil': 'Địa ngục',
-    'difficulty.evil.desc': 'Thường dùng chuỗi suy luận và thử–sai (Nishio), với rất ít số cho sẵn.',
-    'difficulty.nightmare1': 'Ác mộng 1',
-    'difficulty.nightmare1.desc': 'Thường dùng nhiều chuỗi suy luận và bước thử–sai.',
-    'difficulty.nightmare2': 'Ác mộng 2',
-    'difficulty.nightmare2.desc': 'Khoảng điểm cao nhất; thường cần nhiều suy luận nâng cao.',
+    'difficulty.nightmare': 'Ác mộng',
+    'difficulty.nightmare.desc': 'Thường dùng chuỗi suy luận và thử–sai (Nishio), với rất ít số cho sẵn.',
+    'difficulty.hell1': 'Địa ngục 1',
+    'difficulty.hell1.desc': 'Thường dùng nhiều chuỗi suy luận và bước thử–sai.',
+    'difficulty.hell2': 'Địa ngục 2',
+    'difficulty.hell2.desc': 'Khoảng điểm cao nhất; thường cần nhiều suy luận nâng cao.',
 
     'symmetry.none': 'Không đối xứng',
     'symmetry.rotational180': 'Xoay 180°',

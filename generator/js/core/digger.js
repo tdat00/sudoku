@@ -21,8 +21,8 @@
  *    level), rates the result once and re-verifies it with `SG.dfs.countSolutions` (safety net against
  *    technique bugs, risk R3). A sample is exact only with a complete logical proof whose level is the
  *    requested one.
- *  - On the top tiers (evil, nightmare1, nightmare2) every other sample is the fast proposal dig (stage A
- *    with the uniqueness oracle, then the guided pass towards puzzles the techniques below 'evil' cannot
+ *  - On the top tiers (nightmare, hell1, hell2) every other sample is the fast proposal dig (stage A
+ *    with the uniqueness oracle, then the guided pass towards puzzles the techniques below 'nightmare' cannot
  *    finish; every uniqueness check of a removal is guarded at `UNIQUE_NODES` search nodes); a proposal
  *    above the band is refined downward by showing symmetric clue groups again (`refineDown`).
  *  - `generate` repeats that over fresh grids and several dig samples per grid until a puzzle is rated
@@ -279,7 +279,7 @@
   // ---------------------------------------------------------------------------------------------
 
   /**
-   * Oracle of stage A for 'evil' and for plain digging: does the puzzle still have exactly one solution
+   * Oracle of stage A for 'nightmare' and for plain digging: does the puzzle still have exactly one solution
    * after the cells of `group` were removed from `givens`? The cells are checked one after the other, each
    * with the unique-solution check of section 6.5. That is exact: removing more clues never removes
    * solutions, so if the whole group can go, every prefix of it can.
@@ -717,7 +717,7 @@
   const GUIDED_CANDIDATES = 32;
   const GUIDED_MIN_CANDIDATES = 4;
 
-  /** Objective of a removal that leaves a puzzle the techniques below 'evil' cannot finish. */
+  /** Objective of a removal that leaves a puzzle the techniques below 'nightmare' cannot finish. */
   const STUCK_SCORE = 1e9;
 
   /** Objective values below zero refuse the removal; the value says why (scores are never negative). */
@@ -753,7 +753,7 @@
    * Solver steps (budget checks) one solve of the score-targeted objective may use; beyond it the removal is
    * refused. About twice what the costliest 9x9 solve needed in a sample of 780 (44,000); it cuts the rare
    * solve of a large board's top tier that would otherwise take a second or more per candidate (a mega16
-   * nightmare2 request went from 106 s to 8 s, with the same puzzle).
+   * hell2 request went from 106 s to 8 s, with the same puzzle).
    */
   const OBJECTIVE_STEPS = 100000;
   const OBJECTIVE_GUARD_CODE = 'digger.objectiveGuard';
@@ -777,16 +777,16 @@
       const below = spec.allowedTechniques.filter(function (id) {
         return SG.techniques.get(id).group !== 'chain';
       });
-      const evilOptions = {
+      const nightmareOptions = {
         allowedTechniques: below,
         collectSteps: false,
         assumeUniqueness: true,
         budget: null
       };
-      return function evilObjective(givens, solution, group, budget, stats) {
+      return function nightmareObjective(givens, solution, group, budget, stats) {
         if (!guardedKeepsUnique(model, givens, solution, group, budget, stats)) return REFUSED_AMBIGUOUS;
-        evilOptions.budget = budget;
-        const report = SG.logicalSolver.solve(model, givens, evilOptions);
+        nightmareOptions.budget = budget;
+        const report = SG.logicalSolver.solve(model, givens, nightmareOptions);
         return report.solved ? SG.difficulty.classify(report, model).score
           : STUCK_SCORE + report.state.unsolvedCount;
       };
@@ -1801,7 +1801,7 @@
    * (see `digLevel`), all through `options.stage`. After a missed attempt it emits `retry.difficulty`.
    *
    * Rating v2 (docs/report-v2/report-detailed.md section 5.7): a sample is exact only with a complete proof
-   * whose level is the requested one. On the top tiers (`spec.proposal`: evil, nightmare1, nightmare2) the
+   * whose level is the requested one. On the top tiers (`spec.proposal`: nightmare, hell1, hell2) the
    * odd samples of an attempt are the fast proposal dig (rated at once and refined downward into the band
    * when above it, see `refineDown`), the even ones the score-targeted dig. When no sample of an attempt is
    * exact, one more sample runs the local search (`searchStrategy`) from the closest completely rated

@@ -461,7 +461,7 @@
     en: {
       'history.title': 'Generated puzzles',
       'history.empty': 'The puzzles you generate are saved here, so you can open them again.',
-      'history.clear': 'Clear',
+      'history.clear': 'Remove all',
       'history.clear.title': 'Remove every puzzle from the list',
       'history.cleared': 'The list of puzzles was cleared.',
       'history.open.title': 'Generate this puzzle again',

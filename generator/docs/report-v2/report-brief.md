@@ -8,6 +8,23 @@
 | State | implemented, reviewed and tested; **not committed or pushed** — waiting for the user's tests |
 | Details | [`report-detailed.md`](report-detailed.md) (Part I: the agreed joint report; Part II: implementation, review, verification) |
 
+> **Level names.** After the work described here, the levels were renamed for names that are easier to understand. The
+> reports of this folder, written before, use the old names; read them with this table. Only the names changed — not the
+> bands, the weights or the generation.
+>
+> | old id (this report) | new id (code, URLs, exports) | EN / VI name today |
+> |---|---|---|
+> | `veryEasy`, `easy`, `hard` | unchanged | Very easy / Rất dễ · Easy / Dễ · Hard / Khó |
+> | `medium` | `normal` | Normal / Trung bình |
+> | `veryHard` | `expert` | Expert / Chuyên gia |
+> | `expert` | `master` | Master / Bậc thầy |
+> | `evil` | `nightmare` | Nightmare / Ác mộng |
+> | `nightmare1`, `nightmare2` | `hell1`, `hell2` | Hell 1 / Địa ngục 1 · Hell 2 / Địa ngục 2 |
+>
+> The old `expert` and the new `expert` are different levels: the new `expert` is the old `veryHard`. Version 1 of the
+> generator ([`../report-v1.md`](../report-v1.md)) had the six old names `veryEasy`, `easy`, `medium`, `hard`, `expert`,
+> `evil`. [`qualification.md`](qualification.md) already uses the new names.
+
 ## What was asked
 
 Research how the generator scores a puzzle and builds a difficulty — two researchers in parallel, then a cross-check
@@ -61,6 +78,7 @@ and one joint report — and then implement it in the generator and the player:
 | 20:05 | last fixes | | B5: every fallback candidate is counted by DFS before it is kept · time checks use budget × 2 (× 3 on CI) · 3,513 tests; qualification and regression hashes unchanged |
 | 20:30 | final verification by the orchestrator | | generator 3,513 / 3,513 · player 1,628 / 1,628 · B5 probe: 3 / 3 puzzles with one solution |
 | 20:16 – 20:50 | docs reorganised | | `report-v1.md`, `report-v2/` with this brief, the detailed report, `qualification.md` and the numbered researcher files |
+| 20:38 | two requests of the user: the **Clear** button of the puzzle list is now **Remove all**; the six levels that differ are renamed (table above) | the old and new names overlap (`veryHard` → `expert` → `master`), so a chain of replacements would have mapped twice; the seeds of `qualify.js`, `soak.js` and the tests come from the level name, so the generated test puzzles changed | one-pass mapping applied to the generator and the player (ids, locale keys, texts, tests, fixtures, documents); the Vietnamese names follow (Địa ngục ↔ Ác mộng, Chuyên gia → Bậc thầy, Rất khó → Chuyên gia); the session reports keep the names of their time |
 
 ## Problems found after the implementation, and their fixes
 

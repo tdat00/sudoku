@@ -29,7 +29,7 @@
  *
  * Bands
  *   One table for every variant, not scaled by the board size (`TABLE`): a band is half open, [min, max),
- *   and `max` of a level is `min` of the next one (nightmare2 has no upper bound), so every score belongs to
+ *   and `max` of a level is `min` of the next one (hell2 has no upper bound), so every score belongs to
  *   exactly one level. There is no technique floor any more: the level is a pure function of the score.
  *
  * Clue floor per variant (invariant I6)
@@ -40,7 +40,7 @@
  *     clueFloorScale  an object { level: factor }: the derived floor of that level is multiplied by the
  *                     factor (a level that is missing has factor 1). The calibration knob of the hybrid and
  *                     multi-grid boards (diagonalX, hyper, jigsaw9, samurai, sohei, butterfly, flower,
- *                     greaterThan). veryHard takes the factor of hard, nightmare1/2 that of evil.
+ *                     greaterThan). expert takes the factor of hard, hell1/2 that of nightmare.
  *     clueFloor       an object { level: clues } with absolute floors (a level that is missing has no floor,
  *                     0), or a function (level, model, derivedFloor) => clues, which can scale the default;
  *                     `derivedFloor` already includes `clueFloorScale`.
@@ -53,8 +53,8 @@
  *   the shape (peak + logarithmic work + bounded empty cells) was chosen over a square-root sum on a common
  *   corpus of about 8,300 generated puzzles of every variant (cross-size consistency, robustness to the
  *   solver path, stability under clue removal, separation of the technique tiers); the edges keep the
- *   reference puzzles of tests/fixtures/rated.js where they belong (one-wing certificates veryHard, the
- *   constructed evil certificates evil, the four famous hardest 9x9 puzzles nightmare2). The weights are
+ *   reference puzzles of tests/fixtures/rated.js where they belong (one-wing certificates expert, the
+ *   constructed nightmare certificates nightmare, the four famous hardest 9x9 puzzles hell2). The weights are
  *   engineering priors, not human measurements; Killer's ruleOf45 and cageSplit are the first targets of a
  *   human calibration. Which levels each variant offers is measured, not assumed: `tests/qualify.js`
  *   (docs/report-v2/qualification.md).
@@ -66,8 +66,8 @@
   const hasOwn = Object.prototype.hasOwnProperty;
 
   /** Difficulty levels, easiest first. Mirrors the list SG.variants validates `difficultySupport` against. */
-  const LEVELS = Object.freeze(['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil',
-    'nightmare1', 'nightmare2']);
+  const LEVELS = Object.freeze(['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare',
+    'hell1', 'hell2']);
 
   /**
    * Technique groups of the classic techniques, simplest first. Descriptive only (the help's catalogue, the
@@ -130,25 +130,25 @@
 
   /**
    * Bands and clue ranges, easiest first. `min` is the inclusive lower score bound; the upper bound is the
-   * `min` of the next level (nightmare2: none). The clue ranges are those of classic9 (`minClues` is a floor
-   * for the digger, scaled by cellCount / 81; `maxClues` is informative only); veryHard has the floors of
-   * hard, nightmare1 and nightmare2 those of evil. The rows are not frozen, like the weights, so that
+   * `min` of the next level (hell2: none). The clue ranges are those of classic9 (`minClues` is a floor
+   * for the digger, scaled by cellCount / 81; `maxClues` is informative only); expert has the floors of
+   * hard, hell1 and hell2 those of nightmare. The rows are not frozen, like the weights, so that
    * tests/soak.js can try other bands for a calibration run; nothing else writes them.
    */
   const TABLE = Object.freeze([
     { level: 'veryEasy', min: 0, minClues: 40, maxClues: 50, minCluesPerUnit: 2, extraPasses: 1 },
     { level: 'easy', min: 45, minClues: 34, maxClues: 40, minCluesPerUnit: 2, extraPasses: 1 },
-    { level: 'medium', min: 180, minClues: 29, maxClues: 34, minCluesPerUnit: 1, extraPasses: 1 },
+    { level: 'normal', min: 180, minClues: 29, maxClues: 34, minCluesPerUnit: 1, extraPasses: 1 },
     { level: 'hard', min: 400, minClues: 25, maxClues: 30, minCluesPerUnit: 1, extraPasses: 1 },
-    { level: 'veryHard', min: 700, minClues: 25, maxClues: 30, minCluesPerUnit: 1, extraPasses: 1 },
-    { level: 'expert', min: 1000, minClues: 22, maxClues: 27, minCluesPerUnit: 0, extraPasses: 1 },
-    { level: 'evil', min: 1500, minClues: 17, maxClues: 24, minCluesPerUnit: 0, extraPasses: 1 },
-    { level: 'nightmare1', min: 2400, minClues: 17, maxClues: 24, minCluesPerUnit: 0, extraPasses: 1 },
-    { level: 'nightmare2', min: 3600, minClues: 17, maxClues: 24, minCluesPerUnit: 0, extraPasses: 1 }
+    { level: 'expert', min: 700, minClues: 25, maxClues: 30, minCluesPerUnit: 1, extraPasses: 1 },
+    { level: 'master', min: 1000, minClues: 22, maxClues: 27, minCluesPerUnit: 0, extraPasses: 1 },
+    { level: 'nightmare', min: 1500, minClues: 17, maxClues: 24, minCluesPerUnit: 0, extraPasses: 1 },
+    { level: 'hell1', min: 2400, minClues: 17, maxClues: 24, minCluesPerUnit: 0, extraPasses: 1 },
+    { level: 'hell2', min: 3600, minClues: 17, maxClues: 24, minCluesPerUnit: 0, extraPasses: 1 }
   ]);
 
   /** The top tiers: their digs may also start from the fast uniqueness-based proposal (design.md 6.8). */
-  const PROPOSAL_FROM = 'evil';
+  const PROPOSAL_FROM = 'nightmare';
 
   const DEFAULT_SYMMETRY = 'rotational180';
 
@@ -219,7 +219,7 @@
   /**
    * The score band of a level.
    * @param {string} level
-   * @returns {{min: number, max: number}} `max` is Infinity for nightmare2.
+   * @returns {{min: number, max: number}} `max` is Infinity for hell2.
    */
   function bandOf(level) {
     const i = levelIndex(level);
@@ -428,7 +428,7 @@
    * @typedef {Object} DifficultySpec
    * @property {string} level
    * @property {number} min              Lower score bound (inclusive). Not scaled.
-   * @property {number} max              Upper score bound (exclusive); Infinity for nightmare2.
+   * @property {number} max              Upper score bound (exclusive); Infinity for hell2.
    * @property {number} minClues         The digger never goes below this many givens (invariant I6): the
    *           classic9 floor scaled by cellCount / 81, unless the variant declares its own `clueFloor` (file
    *           header, "Clue floor per variant"); 0 is possible for such a variant.
@@ -436,13 +436,13 @@
    * @property {number} minCluesPerUnit  Every unit keeps at least this many givens while digging.
    * @property {string[]} allowedGroups  Groups of `allowedTechniques`.
    * @property {string[]} allowedTechniques  Registered ids that apply to the variant and can occur in a
-   *           puzzle of the band: `1.25 * w_t < max` (every technique for nightmare2), in loop order. The
+   *           puzzle of the band: `1.25 * w_t < max` (every technique for hell2), in loop order. The
    *           oracle uses them with `assumeUniqueness: false`, so a technique that relies on uniqueness
    *           (uniqueRectangle) is listed but never used there.
    * @property {string} symmetryDefault
    * @property {number} extraPasses      Kept for the contract of design.md section 13.7; not used.
    * @property {string} oracle           'techniques': the technique oracle (a complete proof) at every level.
-   * @property {boolean} proposal        A top tier (evil, nightmare1, nightmare2): the digger may also start
+   * @property {boolean} proposal        A top tier (nightmare, hell1, hell2): the digger may also start
    *           from the fast uniqueness-based proposal dig (design.md section 6.8).
    * @property {number} scale            cellCount / 81, the scale of the clue floors (not of the bands).
    */

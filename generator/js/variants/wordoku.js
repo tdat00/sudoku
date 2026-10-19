@@ -577,8 +577,8 @@
       i18nKey: 'variant.wordoku',
       group: 'wordoku',
       digits: SIZE,
-      // Measured (`node tests/qualify.js`, docs/report-v2/qualification.md): up to nightmare1, like classic9.
-      difficultySupport: ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1'],
+      // Measured (`node tests/qualify.js`, docs/report-v2/qualification.md): up to hell1, like classic9.
+      difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1'],
       defaultSymbolMode: 'word',
       symbolModes: ['word', 'digits'],
       options: OPTIONS,

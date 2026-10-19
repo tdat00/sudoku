@@ -421,7 +421,7 @@
     'help.difficulty.level.none',
     'help.difficulty.variant.title', 'help.difficulty.variant.intro', 'help.difficulty.variant.for',
     'help.difficulty.guarantee.title', 'help.difficulty.guarantee.oracle',
-    'help.difficulty.guarantee.hardest', 'help.difficulty.guarantee.evil', 'help.difficulty.guarantee.verify',
+    'help.difficulty.guarantee.hardest', 'help.difficulty.guarantee.nightmare', 'help.difficulty.guarantee.verify',
     'help.difficulty.closest.title', 'help.difficulty.closest.text',
     'help.generation.intro', 'help.generation.steps.title', 'help.generation.steps.hint',
     'help.generation.steps.hint.none', 'help.generation.current', 'help.generation.replay',
@@ -732,7 +732,7 @@
     }
 
     panel.appendChild(h('h3', { class: 'help__h3', text: t('help.difficulty.guarantee.title') }));
-    ['oracle', 'hardest', 'evil', 'verify'].forEach(function (part) {
+    ['oracle', 'hardest', 'nightmare', 'verify'].forEach(function (part) {
       panel.appendChild(h('p', { text: t('help.difficulty.guarantee.' + part) }));
     });
     panel.appendChild(h('h3', { class: 'help__h3', text: t('help.difficulty.closest.title') }));
@@ -1252,7 +1252,7 @@
         'level. If not, the generator tries another dig, searches nearby (showing, removing or swapping ' +
         'clues, and on Killer reshaping cages), or starts again from a new solution grid, up to the ' +
         'maximum number of attempts in the advanced options.',
-      'help.difficulty.guarantee.evil': 'For the highest levels the generator also digs quickly with only ' +
+      'help.difficulty.guarantee.nightmare': 'For the highest levels the generator also digs quickly with only ' +
         'a uniqueness check, and when that puzzle comes out too hard it shows clues again until the score ' +
         'falls into the band. Whatever the path, a puzzle is only accepted when the solver can finish it ' +
         'by logic.',
@@ -1279,7 +1279,7 @@
         'itself. To see how it was made, use First step, Previous step, Next step and Last step under the ' +
         'board, or drag the slider to any step; the label beside them tells which step is shown. The ' +
         'replay starts with the full solution, then shows the cages or the signs (Killer and ' +
-        'Greater-Than only), the batches of random removals and, from Medium up, the rounds in which the ' +
+        'Greater-Than only), the batches of random removals and, from Normal up, the rounds in which the ' +
         'generator rates several candidate removals and keeps the one that makes the puzzle hardest; it ' +
         'ends on the finished puzzle. Click a step in the Generation steps list to jump to it: the current ' +
         'step is highlighted with its full sentence, and the Explain button above the list opens this ' +
@@ -1510,7 +1510,7 @@
         'không, bộ sinh thử một lần đào khác, tìm quanh đó (hiện lại, bỏ hoặc đổi số cho sẵn, và với ' +
         'Killer thì đổi hình các lồng), hoặc làm lại từ một lưới lời giải mới, tối đa bằng số lần thử ' +
         'trong phần tùy chọn nâng cao.',
-      'help.difficulty.guarantee.evil': 'Với các mức cao nhất, bộ sinh còn đào nhanh chỉ với phép kiểm tra ' +
+      'help.difficulty.guarantee.nightmare': 'Với các mức cao nhất, bộ sinh còn đào nhanh chỉ với phép kiểm tra ' +
         'lời giải duy nhất, và khi đề đó ra quá khó thì hiện lại số cho sẵn cho đến khi điểm rơi vào dải. ' +
         'Dù theo cách nào, một đề chỉ được chấp nhận khi bộ giải giải hết được nó bằng suy luận.',
       'help.difficulty.guarantee.verify': 'Ở mọi mức, một bộ giải riêng còn đếm số lời giải của từng đề ' +

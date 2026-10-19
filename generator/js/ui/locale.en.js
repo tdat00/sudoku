@@ -119,23 +119,23 @@
     'difficulty.easy': 'Easy',
     'difficulty.easy.desc': 'Slightly fewer clues. Adds locked candidates: pointing pairs and box/line ' +
       'reduction.',
-    'difficulty.medium': 'Medium',
-    'difficulty.medium.desc': 'Typically uses pairs and triples of candidates (naked and hidden subsets).',
+    'difficulty.normal': 'Normal',
+    'difficulty.normal.desc': 'Typically uses pairs and triples of candidates (naked and hidden subsets).',
     'difficulty.hard': 'Hard',
     'difficulty.hard.desc': 'Typically uses quads, fish patterns (X-Wing, Swordfish) and simple colouring.',
-    'difficulty.veryHard': 'Very hard',
-    'difficulty.veryHard.desc': 'Typically uses a wing (XY-Wing, XYZ-Wing), a Jellyfish or several fish ' +
-      'patterns.',
     'difficulty.expert': 'Expert',
-    'difficulty.expert.desc': 'Typically uses several wings, the W-Wing or Unique Rectangles, sometimes a ' +
+    'difficulty.expert.desc': 'Typically uses a wing (XY-Wing, XYZ-Wing), a Jellyfish or several fish ' +
+      'patterns.',
+    'difficulty.master': 'Master',
+    'difficulty.master.desc': 'Typically uses several wings, the W-Wing or Unique Rectangles, sometimes a ' +
       'short forcing chain.',
-    'difficulty.evil': 'Evil',
-    'difficulty.evil.desc': 'Typically uses forcing chains and trial and error (Nishio), with very few ' +
+    'difficulty.nightmare': 'Nightmare',
+    'difficulty.nightmare.desc': 'Typically uses forcing chains and trial and error (Nishio), with very few ' +
       'clues.',
-    'difficulty.nightmare1': 'Nightmare 1',
-    'difficulty.nightmare1.desc': 'Typically uses many forcing chains and trial-and-error steps.',
-    'difficulty.nightmare2': 'Nightmare 2',
-    'difficulty.nightmare2.desc': 'Highest score band; typically involves substantial advanced reasoning.',
+    'difficulty.hell1': 'Hell 1',
+    'difficulty.hell1.desc': 'Typically uses many forcing chains and trial-and-error steps.',
+    'difficulty.hell2': 'Hell 2',
+    'difficulty.hell2.desc': 'Highest score band; typically involves substantial advanced reasoning.',
 
     'symmetry.none': 'No symmetry',
     'symmetry.rotational180': 'Rotational 180\u00b0',

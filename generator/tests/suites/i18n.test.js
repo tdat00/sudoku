@@ -729,11 +729,11 @@
     it('names the level and the variant of difficulty.unsupportedLevel in the current language', function () {
       packsReady();
       var err = new SG.errors.GenerationError('difficulty.unsupportedLevel',
-        { level: 'evil', variantId: 'classic4' });
-      expect(I.tError(err)).toBe('Classic Sudoku 4\u00d74 cannot be generated at the level "Evil". ' +
+        { level: 'nightmare', variantId: 'classic4' });
+      expect(I.tError(err)).toBe('Classic Sudoku 4\u00d74 cannot be generated at the level "Nightmare". ' +
         'Please choose another level.');
       expect(inLocale('vi', function () { return I.tError(err); }))
-        .toBe('Sudoku cổ điển 4×4 không sinh được ở mức “Địa ngục”. Hãy chọn mức khác.');
+        .toBe('Sudoku cổ điển 4×4 không sinh được ở mức “Ác mộng”. Hãy chọn mức khác.');
     });
 
     it('gives a generic message for an unknown code, and the message of a plain Error', function () {
@@ -821,18 +821,18 @@
         .toContain('A new grid is drawn');
       expect(I.eventText(event('retry.difficulty', Object.assign({ willRetry: false }, retry), 'retry')))
         .toContain('No attempts are left');
-      var done = { requested: 'hard', achieved: 'medium', attempts: 8, clues: 30, seed: 5, warnings: [] };
+      var done = { requested: 'hard', achieved: 'normal', attempts: 8, clues: 30, seed: 5, warnings: [] };
       var finished = function (exact) {
         return I.eventText(event('done', Object.assign({ exact: exact }, done), 'done'));
       };
-      expect(finished(true)).toContain('Done: a "Medium"');
+      expect(finished(true)).toContain('Done: a "Normal"');
       expect(finished(false)).toContain('closest');
     });
 
     it('shows a dash for a missing value and the infinity sign for an open score band', function () {
       packsReady();
       var spec = I.eventText(event('buildModel.spec',
-        { level: 'evil', scoreMin: 1500, scoreMax: null, minClues: 17 }));
+        { level: 'nightmare', scoreMin: 1500, scoreMax: null, minClues: 17 }));
       expect(spec).toContain('1500 to \u221e');
       var rated = I.eventText(event('rate.result', { level: 'veryEasy', score: 20, hardestTechnique: null,
         requested: 'veryEasy', solved: true }));

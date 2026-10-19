@@ -111,7 +111,7 @@
 
     it('moves a selection the variant cannot offer to a level it can', function () {
       ready();
-      var f = field(model('?v=classic6&d=evil'), 'difficulty');
+      var f = field(model('?v=classic6&d=nightmare'), 'difficulty');
       expect(f.value).toBe('hard');
       expect(f.hintKey).toBe('difficulty.hard.desc');
       var g = field(model('?v=classic6&d=easy'), 'difficulty');
@@ -237,7 +237,7 @@
       ready();
       var m = C.describe({ variantId: 'nope', difficulty: 7, variantOptions: [] });
       expect(m.variantId).toBe('classic9');
-      expect(field(m, 'difficulty').value).toBe('medium');
+      expect(field(m, 'difficulty').value).toBe('normal');
       expect(function () { C.describe(null); }).not.toThrow();
     });
 
@@ -266,9 +266,9 @@
     it('only uses i18n keys that exist in both language packs', function () {
       ready();
       var queries = variantIds().map(function (id) { return '?v=' + id; })
-        .concat(['?v=wordoku&o.placement=row', '?sym=rotational90&d=expert&seed=abc',
-          '?v=classic9&sym=mirrorBoth&d=evil']);
-      var adjustments = [{ key: 'difficulty', from: 'evil', to: 'easy' },
+        .concat(['?v=wordoku&o.placement=row', '?sym=rotational90&d=master&seed=abc',
+          '?v=classic9&sym=mirrorBoth&d=nightmare']);
+      var adjustments = [{ key: 'difficulty', from: 'nightmare', to: 'easy' },
         { key: 'symbolMode', from: 'letters', to: 'word' }];
       var missing = [];
       queries.forEach(function (search) {
@@ -305,12 +305,12 @@
   describe('controls: symmetry', function () {
     it('warns about a four-way symmetry together with a high difficulty', function () {
       ready();
-      var w = C.strictSymmetryWarning('rotational90', 'expert');
+      var w = C.strictSymmetryWarning('rotational90', 'master');
       expect(w.id).toBe('strictSymmetry');
       expect(w.messageKey).toBe('controls.warn.strictSymmetry');
-      expect(w.argKeys).toEqual({ symmetry: 'symmetry.rotational90', difficulty: 'difficulty.expert',
+      expect(w.argKeys).toEqual({ symmetry: 'symmetry.rotational90', difficulty: 'difficulty.master',
         alternative: 'symmetry.rotational180' });
-      expect(C.strictSymmetryWarning('mirrorBoth', 'evil')).not.toBeNull();
+      expect(C.strictSymmetryWarning('mirrorBoth', 'nightmare')).not.toBeNull();
       expect(C.strictSymmetryWarning('rotational90', 'hard')).toBeNull();
       expect(C.strictSymmetryWarning('rotational90', 'veryEasy')).toBeNull();
     });
@@ -334,25 +334,25 @@
 
     it('puts the warning on the symmetry field and in the model warnings', function () {
       ready();
-      var hot = model('?sym=rotational90&d=expert');
+      var hot = model('?sym=rotational90&d=master');
       expect(field(hot, 'symmetry').warnings.length).toBe(1);
       expect(hot.warnings.length).toBe(1);
-      expect(model('?sym=rotational90&d=medium').warnings).toEqual([]);
-      expect(model('?sym=rotational180&d=evil').warnings).toEqual([]);
+      expect(model('?sym=rotational90&d=normal').warnings).toEqual([]);
+      expect(model('?sym=rotational180&d=nightmare').warnings).toEqual([]);
     });
 
     it('writes the warning in both languages with the translated names', function () {
       ready();
       withEnglish(function () {
-        var warning = model('?sym=mirrorBoth&d=evil').warnings[0];
+        var warning = model('?sym=mirrorBoth&d=nightmare').warnings[0];
         var en = C.messageText(warning);
         expect(en).toMatch(/Mirror both ways/);
-        expect(en).toMatch(/Evil/);
+        expect(en).toMatch(/Nightmare/);
         expect(en).toMatch(/Rotational 180/);
         expect(en).not.toMatch(/[{}]/);
         I.setLocale('vi');
         var vi = C.messageText(warning);
-        expect(vi).toMatch(/Địa ngục/);
+        expect(vi).toMatch(/Ác mộng/);
         expect(vi).not.toMatch(/[{}]/);
         expect(vi).not.toBe(en);
       });
@@ -386,14 +386,14 @@
         var store = memoryStore();
         var heard = null;
         store.subscribe(function (state, keys, meta) { heard = meta.adjustments; });
-        store.set({ difficulty: 'evil' });
+        store.set({ difficulty: 'nightmare' });
         store.set({ variantId: 'classic6' });
         var m = C.describe(store.get(), { adjustments: heard });
         expect(m.notes.length).toBe(1);
         expect(m.notes[0].id).toBe('difficultyChanged');
         var text = C.messageText(m.notes[0]);
         expect(text).toMatch(/Classic Sudoku 6/);
-        expect(text).toMatch(/Evil/);
+        expect(text).toMatch(/Nightmare/);
         expect(text).toMatch(/Hard/);
         expect(text).not.toMatch(/[{}]/);
       });
@@ -725,14 +725,14 @@
       ready();
       withEnglish(function () {
         var fx = mountFixture();
-        pick(fx.byId('ctl-difficulty'), 'evil');
+        pick(fx.byId('ctl-difficulty'), 'nightmare');
         pick(fx.byId('ctl-variant'), 'classic6');
         expect(fx.store.get().difficulty).toBe('hard');
         expect(fx.texts(fx.byId('ctl-difficulty'))).toEqual(['Very easy', 'Hard']);
         expect(fx.byId('ctl-difficulty').value).toBe('hard');
         var notes = fx.byId('ctl-notes');
         expect(notes.hidden).toBe(false);
-        expect(notes.textContent).toMatch(/does not offer “Evil”/);
+        expect(notes.textContent).toMatch(/does not offer “Nightmare”/);
         expect(fx.byId('ctl-variant').getAttribute('aria-describedby')).toMatch(/ctl-notes/);
         pick(fx.byId('ctl-variant'), 'wordoku');
         expect(fx.texts(fx.byId('ctl-symbolMode'))).toEqual(['Word letters', 'Digits']);
@@ -782,7 +782,7 @@
       ready();
       withEnglish(function () {
         var fx = mountFixture();
-        pick(fx.byId('ctl-difficulty'), 'expert');
+        pick(fx.byId('ctl-difficulty'), 'master');
         expect(fx.byId('ctl-symmetry-warn').hidden).toBe(true);
         pick(fx.byId('ctl-symmetry'), 'rotational90');
         var warn = fx.byId('ctl-symmetry-warn');
@@ -870,7 +870,7 @@
       withEnglish(function () {
         var fx = mountFixture();
         pick(fx.byId('ctl-variant'), 'killer');
-        pick(fx.byId('ctl-difficulty'), 'expert');
+        pick(fx.byId('ctl-difficulty'), 'master');
         fx.byId('ctl-advanced').open = true;
         fx.byId('ctl-seed').value = '77';
         fx.byId('ctl-seed').fire('input');
@@ -879,7 +879,7 @@
         var label = fx.doc.find(fx.form, function (el) { return el.getAttribute('for') === 'ctl-variant'; });
         expect(label.textContent).toBe('Biến thể');
         expect(fx.byId('ctl-difficulty').children[0].textContent).toBe('Rất dễ');
-        expect(fx.byId('ctl-difficulty').value).toBe('expert');
+        expect(fx.byId('ctl-difficulty').value).toBe('master');
         expect(fx.byId('ctl-variant').value).toBe('killer');
         expect(fx.byId('ctl-seed').value).toBe('77');
         expect(fx.byId('ctl-advanced').open).toBe(true);
@@ -894,10 +894,10 @@
     it('follows changes made to the store from outside', function () {
       ready();
       var fx = mountFixture();
-      fx.store.set({ variantId: 'jigsaw9', difficulty: 'expert', seed: '9',
+      fx.store.set({ variantId: 'jigsaw9', difficulty: 'master', seed: '9',
         variantOptions: { compactness: 0.9 } });
       expect(fx.byId('ctl-variant').value).toBe('jigsaw9');
-      expect(fx.byId('ctl-difficulty').value).toBe('expert');
+      expect(fx.byId('ctl-difficulty').value).toBe('master');
       expect(fx.byId('ctl-seed').value).toBe('9');
       expect(fx.byId('ctl-opt-compactness').value).toBe('0.9');
       fx.store.reset();

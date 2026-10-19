@@ -90,8 +90,8 @@ gains `difficulty.ratingVersion: 2`.
 
 - **15 variants** — classic 4×4, 6×6 and 9×9; Mega 12×12 and Monster 16×16; Diagonal (X); Hyper (Windoku);
   Jigsaw; Killer; Greater-Than; Samurai, Sohei, Butterfly and Flower (overlapping grids); Wordoku.
-- **Nine difficulty levels** — very easy, easy, medium, hard, very hard, expert, evil, nightmare 1 and
-  nightmare 2 — scored from 21 human solving techniques (singles, locked candidates, subsets, fish, wings,
+- **Nine difficulty levels** — very easy, easy, normal, hard, expert, master, nightmare, hell 1 and
+  hell 2 — scored from 21 human solving techniques (singles, locked candidates, subsets, fish, wings,
   chains) plus 3 cage and 2 inequality techniques; every variant offers the levels it reaches reliably.
 - **Step-by-step replay** of the generation, moved by hand (first, previous, next and last step, or a slider
   with a notch for every step): each step is one visible change of the board, the easy early removals are
@@ -128,19 +128,19 @@ The variants (`id` is what the URL parameter `v` and the code use):
 |------|---------|-------:|------:|----------------|
 | `classic4` | Mini Sudoku 4×4 | 4 | 16 | veryEasy |
 | `classic6` | Mini Sudoku 6×6 | 6 | 36 | veryEasy, hard |
-| `classic9` | Classic Sudoku 9×9 | 9 | 81 | veryEasy–nightmare1 |
-| `mega12` | Mega Sudoku 12×12 | 12 | 144 | veryEasy–nightmare2 |
-| `mega16` | Monster Sudoku 16×16 | 16 | 256 | veryEasy–nightmare2 |
-| `diagonalX` | Diagonal Sudoku (X) | 9 | 81 | veryEasy–nightmare2 |
-| `hyper` | Hyper Sudoku (Windoku) | 9 | 81 | veryEasy–nightmare2 |
-| `jigsaw9` | Jigsaw Sudoku | 9 | 81 | veryEasy–nightmare2 |
-| `killer` | Killer Sudoku | 9 | 81 | veryEasy–nightmare2 |
-| `greaterThan` | Greater-Than Sudoku | 9 | 81 | veryEasy–nightmare2 |
-| `samurai` | Samurai Sudoku | 9 | 369 | veryEasy–nightmare2 |
-| `sohei` | Sohei Sudoku | 9 | 288 | veryEasy–nightmare2 |
-| `butterfly` | Butterfly Sudoku | 9 | 144 | veryEasy–nightmare2 |
-| `flower` | Flower Sudoku | 9 | 189 | veryEasy–nightmare2 |
-| `wordoku` | Wordoku | 9 | 81 | veryEasy–nightmare1 |
+| `classic9` | Classic Sudoku 9×9 | 9 | 81 | veryEasy–hell1 |
+| `mega12` | Mega Sudoku 12×12 | 12 | 144 | veryEasy–hell2 |
+| `mega16` | Monster Sudoku 16×16 | 16 | 256 | veryEasy–hell2 |
+| `diagonalX` | Diagonal Sudoku (X) | 9 | 81 | veryEasy–hell2 |
+| `hyper` | Hyper Sudoku (Windoku) | 9 | 81 | veryEasy–hell2 |
+| `jigsaw9` | Jigsaw Sudoku | 9 | 81 | veryEasy–hell2 |
+| `killer` | Killer Sudoku | 9 | 81 | veryEasy–hell2 |
+| `greaterThan` | Greater-Than Sudoku | 9 | 81 | veryEasy–hell2 |
+| `samurai` | Samurai Sudoku | 9 | 369 | veryEasy–hell2 |
+| `sohei` | Sohei Sudoku | 9 | 288 | veryEasy–hell2 |
+| `butterfly` | Butterfly Sudoku | 9 | 144 | veryEasy–hell2 |
+| `flower` | Flower Sudoku | 9 | 189 | veryEasy–hell2 |
+| `wordoku` | Wordoku | 9 | 81 | veryEasy–hell1 |
 
 ## Screenshots
 
@@ -192,7 +192,7 @@ differ from the defaults are written. The page has no share-link button; a link 
 | Parameter | Example | Meaning |
 |-----------|---------|---------|
 | `v` | `v=jigsaw9` | Variant id (the table above). Default `classic9`. |
-| `d` | `d=hard` | Difficulty: `veryEasy`, `easy`, `medium`, `hard`, `veryHard`, `expert`, `evil`, `nightmare1`, `nightmare2`; a level the variant does not offer becomes the nearest one it offers. Default `medium`. |
+| `d` | `d=hard` | Difficulty: `veryEasy`, `easy`, `normal`, `hard`, `expert`, `master`, `nightmare`, `hell1`, `hell2`; a level the variant does not offer becomes the nearest one it offers. Default `normal`. |
 | `seed` | `seed=1734567890` | Seed. A whole number 0–4294967295 is used as it is; any other text is hashed to one. Missing = random. A link (or a reload) with a seed generates that puzzle as soon as the page loads. |
 | `sym` | `sym=mirrorH` | Symmetry of the given cells: `none`, `rotational180` (default), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. |
 | `mode` | `mode=letters` | Symbol set: `digits`, `letters`, `colors`, `shapes`, `word` (Wordoku only). Default: the variant's own. |
@@ -203,7 +203,7 @@ differ from the defaults are written. The page has no share-link button; a link 
 | `lang` | `lang=vi` | Language: `en` or `vi`. Default: the stored choice, then the browser language. |
 | `auto` | `auto=1` | Generate as soon as the page loads (a link with a `seed` does so anyway). |
 
-`?v=classic9&d=expert&seed=42&lang=vi&auto=1` always gives the same puzzle. Settings are also kept in the
+`?v=classic9&d=master&seed=42&lang=vi&auto=1` always gives the same puzzle. Settings are also kept in the
 browser's `localStorage`: `sg.prefs.v1` (language, theme, text size, reduced motion, the colour-blind
 symbol), `sg.lastConfig.v1` (the last options), `sg.cache.v1` (up to 20 recently generated puzzles, see
 [Cache and pre-generation](#cache-and-pre-generation)), `sg.history.v1` (the list of generated puzzles on the left, up to 100). A link that names
@@ -298,8 +298,8 @@ eight cells (`{ cells: [{ i, value, state }], highlight, unhighlight }`), never 
 `dig`, `rate` and `tune` are three steps that repeat per *dig sample*: when the puzzle that was just dug misses
 the requested level (`tune.miss`), the next sample is dug from the same grid (up to 12 per grid); when none of
 them hits, a local search starts from the closest one (it adds, removes or swaps symmetric groups of clues), and
-only then does `retry.difficulty` start a new grid (up to `attempts`, default 8). The top levels (evil and the
-nightmares) also dig fast, uniqueness-only proposals and put clues back while a proposal is too hard. Every grid
+only then does `retry.difficulty` start a new grid (up to `attempts`, default 8). The top levels (nightmare, hell 1 and
+hell 2) also dig fast, uniqueness-only proposals and put clues back while a proposal is too hard. Every grid
 has fixed work caps (full ratings and proposed moves, counted, never timed), so a seed gives the same puzzle on
 every machine. If every attempt is used, the closest puzzle is returned with a notice instead of an error (only
 a puzzle with a complete logical proof is ever returned). `SG.pipeline.runSteps` is the same algorithm as a
@@ -367,7 +367,7 @@ left panel of the page (`#history-root`; under the result on narrower screens). 
 moves to the top; picking an entry writes its configuration to the form and generates it (the same seed gives
 the same puzzle within one generator version, and the cache serves it at once when it still has it) without
 moving it; an entry made before rating v2 may regenerate a different puzzle, and its stored level and score are
-not re-rated. Each entry can be removed, and **Clear** empties the list.
+not re-rated. Each entry can be removed, and **Remove all** empties the list.
 
 ### Internationalisation
 
@@ -566,7 +566,7 @@ no new solver code, because a group is just one more unit.
     i18nKey: 'variant.disjoint9',
     group: 'extraRegions',                  // 'group.<id>' must exist in the locale packs
     digits: SIZE,
-    difficultySupport: ['veryEasy', 'easy', 'medium', 'hard'],
+    difficultySupport: ['veryEasy', 'easy', 'normal', 'hard'],
     defaultSymbolMode: 'digits',
     symbolModes: ['digits', 'letters', 'colors', 'shapes'],
     options: [],
@@ -593,7 +593,7 @@ a typo fails when the file loads, not in the middle of a run):
 | Field | Meaning |
 |-------|---------|
 | `id`, `i18nKey`, `group`, `digits` | Unique id; translation key of the name; family used to group variants in the UI (`group.<group>` key); number of values D (up to 16). |
-| `difficultySupport` | Levels the variant offers, a subset of `veryEasy … nightmare2` (gaps are allowed): exactly the levels that pass the qualification of `node tests/qualify.js --variant=<id>` ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)). |
+| `difficultySupport` | Levels the variant offers, a subset of `veryEasy … hell2` (gaps are allowed): exactly the levels that pass the qualification of `node tests/qualify.js --variant=<id>` ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)). |
 | `defaultSymbolMode`, `symbolModes` | Symbol sets the UI may offer (`digits`, `letters`, `colors`, `shapes`, `word`). |
 | `options` | Variant options for the UI (`slider`, `select`, `boolean`, `text`). Declare labels with `i18nKey` and help with `hintKey`; `SG.variants.optionsOf(id)` gives them in one normalised shape, and the controls are built from it. |
 | `build(opts, rng)` | Returns the `PuzzleModel`; only for geometry and units. |
@@ -715,7 +715,7 @@ header of `js/core/techniques.js`. A complete example — *Full House*, a unit w
    `round(80·E/(E+40) + P + 0.25·P·log₂(1 + W/P))`, where `E` is the number of empty cells, `P` the largest weight
    used and `W` the sum of weight × uses, and the weight alone decides where the technique is allowed: the oracle
    of a level allows every technique whose 1.25 × weight is below the level's band maximum, so a weight of 400
-   makes it available from *hard* on (500 is below hard's maximum, 700, not below medium's, 400). The `group`
+   makes it available from *hard* on (500 is below hard's maximum, 700, not below normal's, 400). The `group`
    only names its family (`cage` and `ineq` belong to Killer and Greater-Than). Then re-run the qualification,
    `node tests/qualify.js`, and check the hit rates with `node tests/soak.js --quick`.
 5. **Tests**: add positive and negative fixtures and the soundness check to the matching
@@ -807,10 +807,10 @@ The full list is in [design.md](design.md) §12.2:
   `cageSplit` are the first candidates for a calibration with people. A combination that is hard to reach (a
   strict symmetry with a very high level) returns the closest puzzle with a notice instead of the exact level.
 - **Not every level is offered everywhere**: Mini 4×4 offers only very easy and Mini 6×6 very easy and hard;
-  Classic 9×9 and Wordoku stop at nightmare 1; every other variant offers all nine levels. The levels a variant
+  Classic 9×9 and Wordoku stop at hell 1; every other variant offers all nine levels. The levels a variant
   offers are the ones it passed in the qualification ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
 - **The hardest levels are the slowest**: measured in Node (`node tests/qualify.js`), the slowest combinations
-  are Greater-Than and Killer from very hard upwards and the nightmare levels of the large boards, with a 95th
+  are Greater-Than and Killer from expert upwards and the hell levels of the large boards, with a 95th
   percentile of 2.5–6 s and single requests up to about 11 s; most other combinations take well under a second.
   `node tests/perf.js` measures every combination against the budgets of [design.md](design.md) §9.1 on your
   machine.
@@ -872,7 +872,7 @@ bỏ các đề do phiên bản cũ lưu, một lần; và tệp xuất vẫn gi
 - **15 biến thể** — Sudoku cổ điển 4×4, 6×6 và 9×9; Khổng lồ 12×12 và Quái vật 16×16; Đường chéo (X); Siêu
   vùng (Windoku); Ghép hình (Jigsaw); Sát thủ (Killer); So sánh (Greater-Than); Samurai, Sohei, Cánh bướm và
   Bông hoa (các lưới chồng nhau); Sudoku chữ (Wordoku).
-- **Chín mức độ khó** — rất dễ, dễ, trung bình, khó, rất khó, chuyên gia, địa ngục, ác mộng 1 và ác mộng 2 —
+- **Chín mức độ khó** — rất dễ, dễ, trung bình, khó, chuyên gia, bậc thầy, ác mộng, địa ngục 1 và địa ngục 2 —
   tính điểm từ 21 kỹ thuật giải của con người (số đơn, ứng viên bị khóa, tập con, cá, cánh, chuỗi) cùng 3 kỹ
   thuật về lồng và 2 kỹ thuật về dấu so sánh; mỗi biến thể chỉ có các mức mà nó đạt được một cách ổn định.
 - **Phát lại từng bước** quá trình tạo đề, do bạn tự điều khiển (bước đầu tiên, bước trước, bước tiếp theo,
@@ -959,7 +959,7 @@ qua, kể cả `trace` và `speed` của các liên kết cũ.
 | Tham số | Ví dụ | Ý nghĩa |
 |---------|-------|---------|
 | `v` | `v=jigsaw9` | Mã biến thể (bảng ở trên). Mặc định `classic9`. |
-| `d` | `d=hard` | Độ khó: `veryEasy`, `easy`, `medium`, `hard`, `veryHard`, `expert`, `evil`, `nightmare1`, `nightmare2`; mức mà biến thể không có được đổi thành mức gần nhất mà nó có. Mặc định `medium`. |
+| `d` | `d=hard` | Độ khó: `veryEasy`, `easy`, `normal`, `hard`, `expert`, `master`, `nightmare`, `hell1`, `hell2`; mức mà biến thể không có được đổi thành mức gần nhất mà nó có. Mặc định `normal`. |
 | `seed` | `seed=1734567890` | Seed. Số nguyên 0–4294967295 được dùng nguyên văn; văn bản khác được băm thành một số. Không có = ngẫu nhiên. Liên kết (hay lần tải lại trang) có seed sẽ tạo ngay đề đó khi trang tải xong. |
 | `sym` | `sym=mirrorH` | Kiểu đối xứng của các ô cho sẵn: `none`, `rotational180` (mặc định), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. |
 | `mode` | `mode=letters` | Bộ ký hiệu: `digits`, `letters`, `colors`, `shapes`, `word` (chỉ Wordoku). Mặc định: của biến thể. |
@@ -970,7 +970,7 @@ qua, kể cả `trace` và `speed` của các liên kết cũ.
 | `lang` | `lang=vi` | Ngôn ngữ: `en` hoặc `vi`. Mặc định: lựa chọn đã lưu, rồi ngôn ngữ của trình duyệt. |
 | `auto` | `auto=1` | Tạo đề ngay khi trang tải xong (liên kết có `seed` thì tự tạo đề cả khi không có tham số này). |
 
-`?v=classic9&d=expert&seed=42&lang=vi&auto=1` luôn cho ra cùng một đề. Các thiết lập còn được lưu trong
+`?v=classic9&d=master&seed=42&lang=vi&auto=1` luôn cho ra cùng một đề. Các thiết lập còn được lưu trong
 `localStorage` của trình duyệt: `sg.prefs.v1` (ngôn ngữ, giao diện, cỡ chữ, giảm chuyển động, ký hiệu hỗ trợ
 người mù màu), `sg.lastConfig.v1` (các tùy chọn gần nhất), `sg.cache.v1` (tối đa 20 đề vừa tạo, xem
 [Bộ nhớ đệm và tạo sẵn đề](#bộ-nhớ-đệm-và-tạo-sẵn-đề)), `sg.history.v1` (danh sách các đề đã tạo ở bên trái, tối đa 100). Liên kết có nêu tham
@@ -1053,7 +1053,7 @@ Ba bước `dig`, `rate` và `tune` lặp lại theo từng *lần đào thử* 
 cầu (`tune.miss`), lần đào kế tiếp được thực hiện trên cùng lưới (tối đa 12 lần mỗi lưới); khi không lần nào
 đạt, một bước tìm kiếm cục bộ bắt đầu từ đề gần mức nhất (thêm, bỏ hoặc đổi chỗ các nhóm số cho sẵn đối xứng),
 và chỉ khi đó `retry.difficulty` mới bắt đầu một lưới mới (tối đa `attempts` lần, mặc định 8). Các mức cao nhất
-(địa ngục và ác mộng) còn đào nhanh những đề đề xuất chỉ dựa trên tính duy nhất, rồi trả lại số cho sẵn khi đề
+(ác mộng và địa ngục) còn đào nhanh những đề đề xuất chỉ dựa trên tính duy nhất, rồi trả lại số cho sẵn khi đề
 đề xuất còn quá khó. Mỗi lưới có giới hạn công việc cố định (số lần chấm điểm đầy đủ và số bước đề xuất, được
 đếm chứ không đo giờ), nên một seed cho cùng một đề trên mọi máy. Nếu dùng hết mọi lần thử, đề gần nhất được trả
 về kèm thông báo thay vì báo lỗi (chỉ đề có lời giải logic trọn vẹn mới được trả về). `SG.pipeline.runSteps` là
@@ -1196,7 +1196,7 @@ chúng. Không cần thêm mã giải nào, vì một nhóm chỉ là thêm mộ
    từ các `units`, rồi gọi `SG.variants.register({ id, i18nKey, group, digits, difficultySupport,
    defaultSymbolMode, symbolModes, options, build })`. Bộ đăng ký (`js/variants/registry.js`) kiểm tra định
    nghĩa nên lỗi gõ sai hiện ra ngay khi tải tệp. `difficultySupport` là các mức biến thể cung cấp, một tập con
-   của `veryEasy … nightmare2` (được phép có khoảng trống): đúng các mức qua được bước kiểm định ở mục 5. Các
+   của `veryEasy … hell2` (được phép có khoảng trống): đúng các mức qua được bước kiểm định ở mục 5. Các
    trường tùy chọn: `clueFloor` / `clueFloorScale` (số gợi
    ý tối thiểu riêng cho từng mức, thay cho số của classic9 co giãn theo `cellCount / 81`), `postGenerate` (tạo
    cấu trúc từ lời giải đã xong; mô hình là bất biến nên nó trả về một mô hình mới), `digStrategy` (đăng ký bằng
@@ -1333,10 +1333,10 @@ Danh sách đầy đủ ở [design.md](design.md) §12.2:
   `cageSplit` là những ứng viên đầu tiên cần hiệu chỉnh với người chơi thật. Tổ hợp khó đạt (đối xứng chặt kèm
   mức rất cao) sẽ trả về đề gần nhất kèm thông báo thay vì đúng mức.
 - **Không phải mức nào cũng có ở mọi nơi**: Mini 4×4 chỉ có mức rất dễ và Mini 6×6 có rất dễ và khó; Sudoku cổ
-  điển 9×9 và Sudoku chữ dừng ở mức ác mộng 1; mọi biến thể khác có đủ chín mức. Các mức mà một biến thể cung cấp
+  điển 9×9 và Sudoku chữ dừng ở mức địa ngục 1; mọi biến thể khác có đủ chín mức. Các mức mà một biến thể cung cấp
   là những mức nó vượt qua trong bước kiểm định ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
 - **Các mức khó nhất chậm nhất**: đo trong Node (`node tests/qualify.js`), các tổ hợp chậm nhất là So sánh và
-  Killer từ mức rất khó trở lên và các mức ác mộng của bảng lớn, với phân vị 95 khoảng 2,5–6 giây và có yêu cầu
+  Killer từ mức chuyên gia trở lên và các mức địa ngục của bảng lớn, với phân vị 95 khoảng 2,5–6 giây và có yêu cầu
   đơn lẻ đến khoảng 11 giây; phần lớn các tổ hợp khác mất chưa tới một giây. `node tests/perf.js` đo mọi tổ hợp
   so với ngân sách ở [design.md](design.md) §9.1 trên máy của bạn.
 - **Wordoku tiếng Việt**: từ chín chữ cái khác nhau rất hiếm trong tiếng Việt nên danh sách ngắn; khi quá ngắn

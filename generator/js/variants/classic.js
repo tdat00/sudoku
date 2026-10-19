@@ -122,14 +122,14 @@
    * of docs/report-v2/report-detailed.md section 6; results in docs/report-v2/qualification.md). classic4 offers
    * veryEasy only: a 4x4 board never needs more than singles, and singles on 16 cells stay far below the
    * easy band. classic6 offers veryEasy and hard: its puzzles either need singles only or jump straight to
-   * a fish or subset worth a hard score (easy and medium 0 of 17; veryHard, expert and evil hit 42 to 58 %).
-   * classic9 offers everything up to nightmare1 (nightmare2 7 of 23).
+   * a fish or subset worth a hard score (easy and normal 0 of 17; expert, master and nightmare hit 42 to 58 %).
+   * classic9 offers everything up to hell1 (hell2 7 of 23).
    */
   const DEFINITIONS = [
     definition('classic4', 2, 2, ['veryEasy']),
     definition('classic6', 2, 3, ['veryEasy', 'hard']),
-    definition('classic9', 3, 3, ['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil',
-      'nightmare1'], fastSeedDiagonalBoxes)
+    definition('classic9', 3, 3, ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare',
+      'hell1'], fastSeedDiagonalBoxes)
   ];
 
   // Skipping known ids keeps a second load of this file harmless.

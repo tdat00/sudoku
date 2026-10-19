@@ -37,7 +37,7 @@
   /** The seven steps in order; the same list as `SG.events.STEP_IDS`. */
   const STEPS = ['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune'];
 
-  const DEFAULT_DIFFICULTY = 'medium';
+  const DEFAULT_DIFFICULTY = 'normal';
   const DEFAULT_MAX_ATTEMPTS = 8;
   const DEFAULT_TRACE = 'summary';
 
@@ -57,7 +57,7 @@
   /**
    * @typedef {Object} GenerateConfig
    * @property {string} variantId
-   * @property {string} [difficulty='medium']  One of `SG.difficulty.LEVELS` that the variant supports.
+   * @property {string} [difficulty='normal']  One of `SG.difficulty.LEVELS` that the variant supports.
    * @property {number} [seed]                 Missing: a random seed. Always a uint32 after normalisation.
    * @property {string} [symbolMode]           One of the variant's `symbolModes`; default: its default.
    * @property {string} [symmetry]             One of `SG.symmetry.KINDS`; default 'rotational180'.

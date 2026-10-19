@@ -18,9 +18,9 @@
   var SLOW = 120000;
   var PERF_RUNS = 5;
   /** The cells that the suite times: cheap enough for about 20 s, and one of every kind of variant. */
-  var PERF_CELLS = ['classic4/veryEasy', 'classic9/veryEasy', 'classic9/medium', 'classic9/hard',
-    'classic9/expert', 'classic9/evil', 'diagonalX/medium', 'hyper/medium', 'jigsaw9/medium',
-    'wordoku/medium', 'killer/veryEasy', 'killer/medium', 'greaterThan/medium', 'mega12/medium',
+  var PERF_CELLS = ['classic4/veryEasy', 'classic9/veryEasy', 'classic9/normal', 'classic9/hard',
+    'classic9/master', 'classic9/nightmare', 'diagonalX/normal', 'hyper/normal', 'jigsaw9/normal',
+    'wordoku/normal', 'killer/veryEasy', 'killer/normal', 'greaterThan/normal', 'mega12/normal',
     'mega16/veryEasy', 'butterfly/veryEasy', 'samurai/veryEasy', 'flower/veryEasy', 'sohei/veryEasy'];
 
   function envFlag(name) {
@@ -119,7 +119,7 @@
             });
           })).toBe(true);
 
-          var gt = result('greaterThan', 'medium', 1);
+          var gt = result('greaterThan', 'normal', 1);
           expect(gt.model.inequalities.length).toBeGreaterThan(0);
           expect(changed(gt, function (c) {
             c.model.inequalities = gt.model.inequalities.slice(1);

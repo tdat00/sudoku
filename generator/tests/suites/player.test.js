@@ -151,8 +151,8 @@
   // ---------------------------------------------------------------------------------------------
 
   describe('player: the replay steps of a result', function () {
-    var CASES = [['classic9', 'easy', 3], ['classic9', 'medium', 3], ['classic9', 'evil', 5],
-      ['classic4', 'veryEasy', 2], ['killer', 'medium', 2], ['greaterThan', 'medium', 4], ['jigsaw9', 'easy', 6],
+    var CASES = [['classic9', 'easy', 3], ['classic9', 'normal', 3], ['classic9', 'nightmare', 5],
+      ['classic4', 'veryEasy', 2], ['killer', 'normal', 2], ['greaterThan', 'normal', 4], ['jigsaw9', 'easy', 6],
       ['wordoku', 'easy', 1], ['mega12', 'easy', 2]];
 
     CASES.forEach(function (c) {
@@ -181,7 +181,7 @@
     });
 
     it('frames what each dig step did: removed cells are empty, put-back cells keep their value', function () {
-      var result = realResult('classic9', 'medium', 3);
+      var result = realResult('classic9', 'normal', 3);
       var steps = stepsOf(result);
       var dig = steps.filter(function (s) { return s.kind === 'random' || s.kind === 'guided'; });
       expect(dig.length).toBeGreaterThan(3);
@@ -202,7 +202,7 @@
 
     it('counts the cells (or signs) the steps removed and put back, so the counters add up with the list',
       function () {
-        [['classic9', 'easy', 3], ['classic9', 'medium', 3], ['greaterThan', 'medium', 4]].forEach(function (c) {
+        [['classic9', 'easy', 3], ['classic9', 'normal', 3], ['greaterThan', 'normal', 4]].forEach(function (c) {
           var result = realResult(c[0], c[1], c[2]);
           var steps = stepsOf(result);
           var removed = 0;
@@ -241,7 +241,7 @@
     });
 
     it('shows one guided round per step on a 9x9 board, with the candidates rated and refused', function () {
-      var steps = stepsOf(realResult('classic9', 'medium', 3));
+      var steps = stepsOf(realResult('classic9', 'normal', 3));
       var guided = steps.filter(function (s) { return s.kind === 'guided'; });
       expect(guided.length).toBeGreaterThan(0);
       guided.forEach(function (s) {
@@ -257,16 +257,16 @@
     });
 
     it('Killer: the cages appear in the step after the solution', function () {
-      var steps = stepsOf(realResult('killer', 'medium', 2));
+      var steps = stepsOf(realResult('killer', 'normal', 2));
       expect(kinds(steps).slice(0, 2)).toEqual(['solution', 'cages']);
       expect(steps[0].structure).toBe(false);
       steps.slice(1).forEach(function (s) { expect(s.structure).toBe(true); });
-      expect(steps[1].args.count).toBe(realResult('killer', 'medium', 2).model.cages.length);
+      expect(steps[1].args.count).toBe(realResult('killer', 'normal', 2).model.cages.length);
       expect(sameValues(steps[1].values, steps[0].values)).toBe(true);
     });
 
     it('Greater-Than: every sign, then the starting clues, then the signs taken away batch by batch', function () {
-      var result = realResult('greaterThan', 'medium', 4);
+      var result = realResult('greaterThan', 'normal', 4);
       var built = P.buildSteps(result);
       var steps = built.steps;
       expect(kinds(steps).slice(0, 3)).toEqual(['solution', 'signs', 'clues']);
@@ -300,7 +300,7 @@
       });
 
     it('is deterministic and plain data', function () {
-      var result = realResult('classic9', 'medium', 3);
+      var result = realResult('classic9', 'normal', 3);
       var a = JSON.stringify(P.buildSteps(result), function (k, v) { return v instanceof Int32Array ? Array.from(v) : v; });
       var b = JSON.stringify(P.buildSteps(result), function (k, v) { return v instanceof Int32Array ? Array.from(v) : v; });
       expect(a).toBe(b);
@@ -374,7 +374,7 @@
       });
 
     it('real top-level results with clues shown again replay faithfully (mega16, classic9)', function () {
-      [['mega16', 'evil', 478576959], ['mega16', 'nightmare1', 2422420669], ['classic9', 'nightmare1', 3]]
+      [['mega16', 'nightmare', 478576959], ['mega16', 'hell1', 2422420669], ['classic9', 'hell1', 3]]
         .forEach(function (c) {
           var result = realResult(c[0], c[1], c[2]);
           var steps = stepsOf(result);
@@ -386,7 +386,7 @@
 
   describe('player: the board at a position', function () {
     it('is the empty grid at 0, the step after, clamped at both ends', function () {
-      var built = P.buildSteps(realResult('killer', 'medium', 2));
+      var built = P.buildSteps(realResult('killer', 'normal', 2));
       var start = P.viewAt(built, 0);
       expect(start.step).toBeNull();
       expect(clues(start.values)).toBe(0);
@@ -405,7 +405,7 @@
 
   describe('player: texts of the steps', function () {
     it('describes every step in English and Vietnamese with no placeholder left, naming the cells', function () {
-      ['classic9/medium/3', 'greaterThan/medium/4', 'killer/medium/2'].forEach(function (id) {
+      ['classic9/normal/3', 'greaterThan/normal/4', 'killer/normal/2'].forEach(function (id) {
         var parts = id.split('/');
         var result = realResult(parts[0], parts[1], Number(parts[2]));
         var steps = stepsOf(result);
@@ -464,7 +464,7 @@
 
   describe('player: manual navigation', function () {
     it('shows the finished puzzle at once after load, with every layer and no frame', function () {
-      var result = realResult('killer', 'medium', 2);
+      var result = realResult('killer', 'normal', 2);
       var r = rig(81);
       r.player.load(result);
       var s = r.player.state();
@@ -482,7 +482,7 @@
     });
 
     it('moves step by step, by jumps and by position, and the board follows', function () {
-      var result = realResult('killer', 'medium', 2);
+      var result = realResult('killer', 'normal', 2);
       var r = rig(81);
       r.player.load(result);
       var steps = r.player.getSteps();
@@ -531,7 +531,7 @@
     });
 
     it('Greater-Than: draws every sign during the replay and the puzzle\'s own model at the end', function () {
-      var result = realResult('greaterThan', 'medium', 4);
+      var result = realResult('greaterThan', 'normal', 4);
       var r = rig(81);
       r.player.load(result);
       expect(r.board.models.length).toBe(0);

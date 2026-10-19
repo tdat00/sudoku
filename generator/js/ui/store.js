@@ -50,7 +50,7 @@
   const STORAGE_VERSION = 1;
 
   const DEFAULT_VARIANT = 'classic9';
-  const DEFAULT_DIFFICULTY = 'medium';
+  const DEFAULT_DIFFICULTY = 'normal';
   const MAX_ATTEMPTS = Object.freeze({ min: 1, max: 20, default: 8 });
   const SEED_MAX_LENGTH = 64;
   const UINT32_MAX = 4294967295;
@@ -420,7 +420,7 @@
 
   /**
    * The complete state that a search string describes (defaults for everything it does not name).
-   * @param {string} search  '?v=classic9&d=expert&seed=42&lang=vi&auto=1', a full URL or a bare query.
+   * @param {string} search  '?v=classic9&d=master&seed=42&lang=vi&auto=1', a full URL or a bare query.
    * @returns {Object} A sanitised state.
    */
   function parseUrl(search) {

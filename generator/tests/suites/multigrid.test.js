@@ -27,27 +27,27 @@
     samurai: {
       canvas: 21, cells: 369, overlapBoxes: 4,
       origins: [[0, 0], [0, 12], [12, 0], [12, 12], [6, 6]],
-      levels: ['veryEasy', 'easy', 'medium', 'hard'], budgets: [3000, 8000, 20000]
+      levels: ['veryEasy', 'easy', 'normal', 'hard'], budgets: [3000, 8000, 20000]
     },
     sohei: {
       canvas: 21, cells: 288, overlapBoxes: 4,
       origins: [[0, 6], [6, 0], [6, 12], [12, 6]],
-      levels: ['veryEasy', 'easy', 'medium', 'hard'], budgets: [3000, 8000, 20000]
+      levels: ['veryEasy', 'easy', 'normal', 'hard'], budgets: [3000, 8000, 20000]
     },
     butterfly: {
       canvas: 12, cells: 144, overlapBoxes: 12,
       origins: [[0, 0], [0, 3], [3, 0], [3, 3]],
-      levels: ['veryEasy', 'easy', 'medium', 'hard'], budgets: [1000, 3000, 8000]
+      levels: ['veryEasy', 'easy', 'normal', 'hard'], budgets: [1000, 3000, 8000]
     },
     flower: {
       canvas: 15, cells: 189, overlapBoxes: 9,
       origins: [[3, 3], [0, 3], [6, 3], [3, 0], [3, 6]],
-      levels: ['veryEasy', 'easy', 'medium', 'hard'], budgets: [3000, 8000, 20000]
+      levels: ['veryEasy', 'easy', 'normal', 'hard'], budgets: [3000, 8000, 20000]
     }
   };
 
   /** Minimum share of exact hits (deep run, default 8 attempts); measured: see the report of T-5.7/T-5.8. */
-  var HIT_RATE = { veryEasy: 0.95, easy: 0.95, medium: 0.8, hard: 0.85 };
+  var HIT_RATE = { veryEasy: 0.95, easy: 0.95, normal: 0.8, hard: 0.85 };
 
   var CLASSIC = SG.variants.get('classic9').build({}, null);
   var cache = {};
@@ -210,7 +210,7 @@
         expect(def.fastSeed).toBe(MG.fastSeedOverlaps);
       });
 
-      it('offers every level of the nine, nightmare2 included (measured by tests/qualify.js)', function () {
+      it('offers every level of the nine, hell2 included (measured by tests/qualify.js)', function () {
         expect(SG.variants.get(id).difficultySupport).toEqual(SG.difficulty.LEVELS);
       });
 
@@ -930,7 +930,7 @@
   // ===========================================================================================
 
   describe('multigrid puzzles', function () {
-    var BUDGET_OF = { veryEasy: 0, easy: 1, medium: 1, hard: 2 };
+    var BUDGET_OF = { veryEasy: 0, easy: 1, normal: 1, hard: 2 };
 
     function generate(id, level, seed, extra) {
       var budget = SG.budget.create({ ms: 60000 });
@@ -1014,7 +1014,7 @@
       });
 
       it(id + ': refuses a level that does not exist', function () {
-        ['nightmare', 'nightmare3', 'impossible'].forEach(function (level) {
+        ['hell', 'hell3', 'impossible'].forEach(function (level) {
           expectCode(function () {
             SG.pipeline.run({ variantId: id, difficulty: level, seed: 1, trace: 'off' }, null);
           }, 'difficulty.unknownLevel');
@@ -1022,23 +1022,23 @@
       });
     });
 
-    it('every board offers all nine levels, flower included (its own clue floor makes medium reachable)',
+    it('every board offers all nine levels, flower included (its own clue floor makes normal reachable)',
       function () {
         IDS.forEach(function (id) {
           expect(SG.variants.get(id).difficultySupport).toEqual(SG.difficulty.LEVELS);
         });
       });
 
-    it('every board scales the derived clue floor of medium and hard down (flower easy too); ' +
+    it('every board scales the derived clue floor of normal and hard down (flower easy too); ' +
       'veryEasy keeps it',
       function () {
-        var factors = { samurai: { medium: 0.6, hard: 0.6 }, sohei: { medium: 0.6, hard: 0.6 },
-          butterfly: { medium: 0.6, hard: 0.6 }, flower: { easy: 0.8, medium: 0.6, hard: 0.6 } };
+        var factors = { samurai: { normal: 0.6, hard: 0.6 }, sohei: { normal: 0.6, hard: 0.6 },
+          butterfly: { normal: 0.6, hard: 0.6 }, flower: { easy: 0.8, normal: 0.6, hard: 0.6 } };
         var floors = {};
         IDS.forEach(function (id) {
           var board = model(id);
           floors[id] = [];
-          ['veryEasy', 'easy', 'medium', 'hard'].forEach(function (level) {
+          ['veryEasy', 'easy', 'normal', 'hard'].forEach(function (level) {
             var row = SG.difficulty.TABLE[SG.difficulty.levelIndex(level)];
             var derived = Math.max(1, Math.floor(row.minClues * board.cellCount / 81));
             var factor = factors[id][level] === undefined ? 1 : factors[id][level];
@@ -1112,7 +1112,7 @@
               expect(SG.dfs.countSolutions(result.model, result.givens, 2)).toBe(1);
             }
             times.sort(function (a, b) { return a - b; });
-            var index = { veryEasy: 0, easy: 1, medium: 1, hard: 2 }[level];
+            var index = { veryEasy: 0, easy: 1, normal: 1, hard: 2 }[level];
             expect(times[18]).toBeLessThan(SG.test.timeLimit(BOARDS[id].budgets[index]));
             expect(exact / 20).toBeGreaterThanOrEqual(HIT_RATE[level]);
           }, 600000);
