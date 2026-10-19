@@ -1,28 +1,18 @@
 /**
- * Symmetric cell groups for hole digging (design.md section 6.8, improvement 2).
- *
- * Symmetry is defined on the drawing canvas (`layout.cellRow` / `layout.cellCol`), not on a single 9x9 grid,
- * so overlapping multi-grid boards are mirrored about the centre of the whole canvas. A transformed position
- * that holds no cell is simply left out of the group: the group shrinks instead of failing.
+ * Symmetric cell groups for hole digging. Symmetry is defined on the drawing canvas (`layout.cellRow` / `cellCol`),
+ * so overlapping multi-grid boards mirror about the canvas centre; a transformed position without a cell is left
+ * out (the group shrinks instead of failing).
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  /**
-   * Symmetry kinds. Reflections are named by the axis they mirror across:
-   *  - mirrorH  mirrors across the horizontal midline (row r <-> row R-1-r)
-   *  - mirrorV  mirrors across the vertical midline   (column c <-> column C-1-c)
-   * @type {string[]}
-   */
+  // mirrorH mirrors across the horizontal midline (row r <-> R-1-r), mirrorV across the vertical one.
   const KINDS = ['none', 'rotational180', 'rotational90', 'mirrorH', 'mirrorV', 'mirrorBoth', 'diagonal',
     'antiDiagonal'];
 
-  /**
-   * Each kind lists the transforms of its symmetry group. A transform maps a canvas position (r, c) on an
-   * R x C canvas to a position, written as [row, col].
-   */
+  // Per kind, the transforms of its group: canvas position (r, c) on an R x C canvas -> [row, col].
   const TRANSFORMS = {
     none: [],
     rotational180: [function (r, c, R, C) { return [R - 1 - r, C - 1 - c]; }],
@@ -42,22 +32,12 @@
     antiDiagonal: [function (r, c, R, C) { return [C - 1 - c, R - 1 - r]; }]
   };
 
-  /** Kinds whose transform only makes sense when the canvas is a square. */
   const NEEDS_SQUARE = { rotational90: true, diagonal: true, antiDiagonal: true };
 
-  /**
-   * Partitions all cells into groups that are dug out and restored together.
-   *
-   * The groups are the orbits of the cells under the symmetry; their union is every cell exactly once. They
-   * are ordered by their lowest cell index, and each group is sorted ascending. A cell on the centre or on an
-   * axis forms a smaller group (possibly a group of one).
-   *
-   * @param {PuzzleModel} model
-   * @param {string} kind  One of `SG.symmetry.KINDS`.
-   * @returns {Int32Array[]}
-   * @throws {SG.errors.GenerationError} 'symmetry.unknownKind', or 'symmetry.needsSquareCanvas' when a
-   *         rotational90 / diagonal / antiDiagonal symmetry is asked for on a canvas that is not square.
-   */
+  // Partitions all cells into orbits under the symmetry (dug out and restored together), ordered by lowest cell
+  // index, each sorted ascending; cells on an axis or the centre form smaller groups.
+  // Throws 'symmetry.unknownKind', or 'symmetry.needsSquareCanvas' for rotational90 / diagonal / antiDiagonal on a
+  // non-square canvas.
   function groups(model, kind) {
     const transforms = TRANSFORMS[kind];
     if (!Object.prototype.hasOwnProperty.call(TRANSFORMS, kind)) {

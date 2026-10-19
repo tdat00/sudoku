@@ -1,81 +1,63 @@
 /**
- * Generation client (design.md sections 3.2, 9.3 and 13.10; task T-6.1): `SG.workerClient`. It runs a
- * generation off the main thread in a Web Worker (js/worker/gen.worker.js) when the page can have one, and
- * on the main thread, in cooperative slices, when it cannot, and gives the UI one interface for both.
+ * `SG.workerClient`: runs a generation off the main thread in a Web Worker (js/worker/gen.worker.js) when the page
+ * can have one, and on the main thread in cooperative slices when it cannot; one interface for both.
  *
- * ---------------------------------------------------------------------------------------------------------
  * API
- * ---------------------------------------------------------------------------------------------------------
- *   SG.workerClient.generate(config, onEvent) -> Promise<PuzzleResult>
- *       Starts a generation. `onEvent(event)` gets the GenerationEvents of this run in order, in batches
- *       (worker: about every 30 ms; main thread: after every slice). The promise resolves with the
- *       PuzzleResult (`model`, `givens`, `solution`, `rating`, `seed`, `config`, `timings`, `attempts`,
- *       `warnings`; the model is rebuilt here, see `SG.pipeline.fromWire`) and rejects with a
- *       `SG.errors.GenerationError` (translate it with `SG.i18n.tError`). A run that is cancelled, or
- *       replaced by the next `generate`, rejects with code 'budget.cancelled' and delivers no further events.
- *   SG.workerClient.cancel() -> boolean
- *       Cancels the running generation (true when there was one). The promise is rejected at once; the work
- *       stops at the next slice boundary (see below).
- *   SG.workerClient.mode -> 'worker' | 'main'
- *       Where generations run. Final once `ready()` has settled (the first access starts the detection in
- *       the background so that the worker is warm for the first `generate`); before that it is a guess.
- *   SG.workerClient.ready() -> Promise<'worker'|'main'>
- *       Detects Worker support: constructs the worker (`new Worker` throws for file:// in Chrome and Edge
- *       and under a CSP that forbids it) and waits for a ping/pong handshake with a timeout, so a worker that
- *       never starts cannot hang the page: the client falls back to the main thread.
- *   SG.workerClient.create(options) -> client
- *       An independent client with the same interface plus `dispose()`. A background pre-generator uses its
- *       own so that it never disturbs the foreground run. Options (all optional):
- *         forceMode 'auto' | 'worker' | 'main'   'main' never creates a worker; 'worker' does not fall back
- *                                                (`ready()` rejects). Default 'auto'.
- *         workerUrl       URL of gen.worker.js; default: next to the script of this file.
- *         workerFactory   function (url) -> Worker-like { postMessage, terminate, onmessage, onerror }.
- *         chunkMs         slice length in milliseconds (default 12), in both modes; 0 = one step per slice.
- *         batchMs         worker: flush interval of the event batches (default 30).
- *         now             clock in milliseconds (default performance.now).
- *         yieldFn         function () -> Promise, resolved when the page has had its turn (main thread
- *                         mode). Default: a MessageChannel round trip (not throttled in background tabs).
- *         maxBatch        worker: events are also flushed when this many wait (default 400).
- *         budgetMs        time limit of one run in ACTIVE milliseconds (default 120000), both modes.
- *         readyTimeoutMs  handshake timeout before the main thread takes over (default 5000).
- *         killAfterMs     a worker that has not answered a cancel after this long is terminated (150).
- *         paintFn         function () -> Promise, resolved once the busy state has been painted (main thread
- *                         mode, before the first slice). Default: two animation frames, at most 100 ms.
- *   client.dispose()      Cancels the run, terminates the worker and releases every timer and listener. The
- *                         client can be used again afterwards (it starts over).
+ *   generate(config, onEvent) -> Promise<PuzzleResult>
+ *       `onEvent(event)` gets the GenerationEvents in order, in batches (worker: about every 30 ms; main thread:
+ *       after every slice). Resolves with the PuzzleResult (the model is rebuilt here, see `SG.pipeline.fromWire`);
+ *       rejects with a `SG.errors.GenerationError` (translate with `SG.i18n.tError`). A run that is cancelled or
+ *       replaced by the next `generate` rejects with code 'budget.cancelled' and delivers no further events.
+ *   cancel() -> boolean
+ *       Cancels the running generation (true when there was one). The promise is rejected at once; the work stops
+ *       at the next slice boundary.
+ *   mode -> 'worker' | 'main'
+ *       Final once `ready()` has settled (the first access starts the detection in the background so the worker
+ *       is warm for the first `generate`); before that it is a guess.
+ *   ready() -> Promise<'worker'|'main'>
+ *       Constructs the worker (`new Worker` throws for file:// in Chrome and Edge and under a CSP that forbids it)
+ *       and waits for a ping/pong handshake with a timeout, so a worker that never starts cannot hang the page:
+ *       the client falls back to the main thread.
+ *   create(options) -> client
+ *       An independent client with the same interface plus `dispose()` (cancels the run, terminates the worker,
+ *       releases timers and listeners; the client can be used again). A background pre-generator uses its own so
+ *       that it never disturbs the foreground run. Options (all optional):
+ *         forceMode 'auto' | 'worker' | 'main'  'main' never creates a worker; 'worker' does not fall back
+ *                                               (`ready()` rejects). Default 'auto'.
+ *         workerUrl (default: next to this script), workerFactory(url) -> { postMessage, terminate, onmessage, onerror }
+ *         chunkMs (slice length, default 12; 0 = one step per slice), batchMs (worker flush interval, 30),
+ *         maxBatch (worker: also flush when this many events wait, 400), now (clock, performance.now),
+ *         budgetMs (time limit of a run in ACTIVE milliseconds, 120000), readyTimeoutMs (handshake timeout, 5000),
+ *         killAfterMs (a worker that has not answered a cancel after this long is terminated, 150),
+ *         yieldFn() -> Promise (main mode; default a MessageChannel round trip),
+ *         paintFn() -> Promise resolved once the busy state has been painted (main mode, before the first slice).
  *
- * ---------------------------------------------------------------------------------------------------------
- * MESSAGE PROTOCOL with the worker: see the header of js/worker/gen.worker.js. Every message after the
- * handshake carries the `session` number of its run; messages of any other run are ignored, so nothing of a
- * cancelled or replaced run can reach the new one.
- * ---------------------------------------------------------------------------------------------------------
+ * Worker messages: see the header of js/worker/gen.worker.js. Every message after the handshake carries the
+ * `session` number of its run; messages of any other run are ignored, so nothing of a cancelled or replaced run
+ * can reach the new one.
  *
- * CANCELLATION. `SG.pipeline.run` is synchronous. Both modes therefore run `SG.pipeline.runSteps`, which
- * yields at the natural boundaries of the algorithm (between the pipeline steps and between the oracle
- * calls of the dig), and give the thread away between slices of `chunkMs`: the page to its event loop, the
- * worker to its message queue. `cancel()` takes effect at the next boundary, in both modes. In worker mode it
- * is a cooperative 'cancel' message first (the worker stays warm and is reused); only if the worker has not
- * answered after `killAfterMs` (it is inside a piece of work that cannot be interrupted: a full grid, one
- * search of the Killer layout, one rating) is it terminated, and a new one is created
- * the next time it is needed. A SharedArrayBuffer flag would need cross-origin isolation headers, which a
- * plain static server does not send.
+ * CANCELLATION. `SG.pipeline.run` is synchronous, so both modes run `SG.pipeline.runSteps`, which yields at the
+ * natural boundaries of the algorithm (between pipeline steps and between the oracle calls of the dig), and give the
+ * thread away between slices of `chunkMs`. `cancel()` takes effect at the next boundary. In worker mode it is a
+ * cooperative 'cancel' message first (the worker stays warm); only if the worker has not answered after
+ * `killAfterMs` (it is inside work that cannot be interrupted: a full grid, one search of the Killer layout, one
+ * rating) is it terminated, and a new one is created when needed. A SharedArrayBuffer flag would need
+ * cross-origin isolation headers, which a plain static server does not send.
  *
- * GRANULARITY LIMIT of the main thread mode: a slice is never shorter than the longest piece of the work
- * that cannot be split, so the page may stall for that long. In Node measurements (summary trace, several
- * seeds) the pieces are mostly below 3 ms, even on Samurai (one dig oracle call or one rating). The
- * Greater-Than sign dig yields after every sign candidate (about 10 ms at most) and the Killer layout
- * after every analysis; its longest piece is one search of the layout (a DFS of at most ANALYSIS_NODES
- * nodes), about 70 to 90 ms. The worker has no such limit for the page, only for the latency of a cancel.
+ * GRANULARITY LIMIT of the main thread mode: a slice is never shorter than the longest piece of work that cannot be
+ * split, so the page may stall for that long. Measured in Node the pieces are mostly below 3 ms, even on Samurai.
+ * The Greater-Than sign dig yields after every sign candidate (about 10 ms at most) and the Killer layout after
+ * every analysis; its longest piece is one search of the layout (a DFS of at most ANALYSIS_NODES nodes), about 70
+ * to 90 ms. The worker has this limit only for the latency of a cancel.
  *
- * ACTIVE TIME. The time that a slice gives away is not charged to the run: the time limit (`budgetMs`,
- * default 120000), the event times `t` and the step timings count active time only, in both modes.
+ * ACTIVE TIME. Time that a slice gives away is not charged to the run: the time limit, the event times `t` and
+ * the step timings count active time only, in both modes.
  *
- * WHAT CROSSES THE WORKER BOUNDARY. The result goes through `SG.pipeline.toWire` / `fromWire`: the model is
- * reduced to plain data in the worker and rebuilt with `SG.model.create` here, and the lazy propagation
- * extensions of Killer and Greater-Than are switched on (memory.md 6.5), so `SG.dfs` works on the model.
- * The per-model side data that variants keep in WeakMaps does not cross (see `fromWire`).
+ * WORKER BOUNDARY. The result goes through `SG.pipeline.toWire` / `fromWire`: the model is reduced to plain data in
+ * the worker and rebuilt with `SG.model.create` here, with the lazy propagation extensions of Killer and Greater-Than
+ * switched on so that `SG.dfs` works on the model. Per-model side data that variants keep in WeakMaps does not cross.
  *
- * The file loads in Node without a DOM; the DOM and `Worker` are only touched inside functions.
+ * Loads in Node without a DOM; the DOM and `Worker` are touched only inside functions.
  */
 (function (root) {
   'use strict';
@@ -106,7 +88,6 @@
     return new SG.errors.GenerationError('unexpected', { message: text });
   }
 
-  /** Rebuilds a GenerationError from the plain data the worker sends. */
   function errorFromWire(data) {
     if (data === null || typeof data !== 'object' || typeof data.code !== 'string') {
       return unexpectedError(data);
@@ -131,7 +112,6 @@
     return typeof value === 'number' && isFinite(value) && value >= 0 ? value : fallback;
   }
 
-  /** The URL of gen.worker.js: next to the script tag of this file, else relative to the page. */
   function defaultWorkerUrl() {
     try {
       if (typeof document !== 'undefined') {
@@ -152,7 +132,6 @@
     return new root.Worker(url);
   }
 
-  /** Whether a worker is worth trying: the first answer of `mode` before the detection has finished. */
   function guessMode(workerFactory) {
     if (workerFactory !== null) return 'worker';
     if (typeof root.Worker !== 'function') return 'main';
@@ -161,9 +140,8 @@
   }
 
   /**
-   * A function that resolves after the page has had its turn, as a MessageChannel round trip: unlike
-   * `setTimeout(0)` it is neither clamped to 4 ms nor throttled to 1 s in a background tab. Without
-   * MessageChannel it is `setTimeout(0)`. `.close()` releases the channel.
+   * Resolves after the page has had its turn, as a MessageChannel round trip: unlike `setTimeout(0)` it is neither
+   * clamped to 4 ms nor throttled to 1 s in a background tab (falls back to `setTimeout(0)`). `.close()` releases it.
    */
   function createYield() {
     let channel = null;
@@ -197,9 +175,8 @@
   }
 
   /**
-   * Resolves once the browser has painted what the caller changed (two animation frames), so that the busy
-   * state is on screen before the first slice runs. A timer covers a hidden tab, which paints nothing.
-   * Without animation frames (Node, a worker) it resolves at once.
+   * Resolves after two animation frames, so the busy state is on screen before the first slice runs. A timer covers
+   * a hidden tab, which paints nothing; without animation frames (Node, a worker) it resolves at once.
    */
   function waitForPaint() {
     return new Promise(function (resolve) {
@@ -220,11 +197,6 @@
     });
   }
 
-  /**
-   * Creates a client. See the header for the options and the interface.
-   * @param {Object} [options]
-   * @returns {Object} `{ generate, cancel, ready, dispose, mode }`.
-   */
   function create(options) {
     const o = options || {};
     const opt = {
@@ -255,11 +227,7 @@
     let lastSession = 0;
     let lastPing = 0;
 
-    // -------------------------------------------------------------------------------------------
-    // Sessions
-    // -------------------------------------------------------------------------------------------
-
-    /** Settles a run once; returns false when it was settled before (late messages, double cancel). */
+    /** Settles a run once; false when it was settled before (late messages, double cancel). */
     function settle(s, ok, value) {
       if (s.state !== 'running') return false;
       s.state = ok ? 'done' : 'failed';
@@ -282,10 +250,6 @@
         }
       }
     }
-
-    // -------------------------------------------------------------------------------------------
-    // Worker mode
-    // -------------------------------------------------------------------------------------------
 
     function terminate(w) {
       try {
@@ -366,7 +330,6 @@
       else runInWorker(current);
     }
 
-    /** Creates the worker and waits for the handshake. Resolves true when it is alive and loaded. */
     function spawn() {
       const epoch = lifecycle;
       return new Promise(function (resolve) {
@@ -460,10 +423,6 @@
       dispatch(s);
     }
 
-    // -------------------------------------------------------------------------------------------
-    // Main thread mode
-    // -------------------------------------------------------------------------------------------
-
     function runInMain(s) {
       const clock = SG.budget.createClock(opt.now);
       const budget = SG.budget.create({ ms: opt.budgetMs, now: clock.now });
@@ -520,10 +479,6 @@
 
       Promise.resolve(opt.paintFn()).then(guarded);
     }
-
-    // -------------------------------------------------------------------------------------------
-    // Public interface
-    // -------------------------------------------------------------------------------------------
 
     function ready() {
       if (readyPromise === null) {
@@ -619,10 +574,6 @@
       get mode() { return decided !== null ? decided : guessMode(opt.workerFactory); }
     };
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // The shared client
-  // ---------------------------------------------------------------------------------------------
 
   let shared = null;
 

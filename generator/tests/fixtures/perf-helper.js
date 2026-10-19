@@ -1,6 +1,6 @@
 /**
  * Helpers of the performance and regression checks (design.md sections 9.1 and 15, task T-6.2), shared by
- * tests/perf.js (a Node script), tests/suites/perf.test.js and the browser test page. Exposed as
+ * tests/perf.js (a Node script), tests/manual/perf.test.js and the browser test page. Exposed as
  * SG.fixtures.perfTools.
  *
  *  - PERF_TARGETS    the p95 budgets of design.md section 9.1 in milliseconds, by variant and level.

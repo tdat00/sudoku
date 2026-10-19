@@ -1,88 +1,57 @@
 /**
- * Puzzle cache and background pre-generation (task T-6.3; design.md 3.3, 9.3, 9.4 and 14.3): `SG.cache`.
+ * `SG.cache`: puzzle cache and background pre-generation.
+ *  - RESULT CACHE. Every generated puzzle is stored in `localStorage` (key `sg.cache.v1`, at most 20 puzzles, least
+ *    recently used first out, schema version checked). The same configuration with the same seed is served from it
+ *    at once (no worker), because a generation is deterministic: the cached puzzle is the one a new run would produce.
+ *  - REPLAY. The cache stores the puzzle only, never the trace nor the dig log (the replay data). A puzzle served from
+ *    the cache is shown first, with the steps panel and the replay controls idle and a note "preparing the replay",
+ *    while it is regenerated from the seed in the background (an independent client; the same worker the
+ *    pre-generator uses). The regenerated puzzle must equal the cached one (givens, solution, rating); if not, the
+ *    cache entry is dropped and the puzzle is generated again. When done, its trace and dig log go to the app
+ *    (`SG.app.attachTrace(trace, digLog)`). Generating anything else meanwhile cancels the regeneration; nothing of it
+ *    can reach the new run (identity check).
+ *  - POOL. After a puzzle is shown and the page has been quiet for 1 s (no generation, no change of the form, no key
+ *    or pointer press, tab visible), one or two puzzles with the SAME configuration and random seeds are
+ *    pre-generated in a Web Worker. They are marked `pool` in the same store (at most 2 per configuration, 4 in all)
+ *    and are what "Generate" with an empty seed field and "Regenerate" hand out instantly (turning them into
+ *    ordinary cached puzzles); an explicit seed is never answered from the pool. The pre-generator never runs during
+ *    a generation, is cancelled at once when the user generates or changes the configuration, pauses while the tab is
+ *    hidden, runs one job at a time and gives up on a job that takes too long (a cost table skips configurations
+ *    known to be slow). It does NOT exist in main-thread mode (`file://`, no Worker): slices on the UI thread would
+ *    compete with the user. Serving from the cache and regenerating traces still work there.
  *
- * What it does
- *  - RESULT CACHE. Every puzzle that is generated is stored in `localStorage` (key `sg.cache.v1`, at most 20
- *    puzzles, least recently used first out, schema version checked). Asking for the same configuration with
- *    the same seed again is served from it at once (a few milliseconds, no worker), because a generation is
- *    deterministic: the cached puzzle is the one a new run would produce.
- *  - REPLAY. The cache stores the puzzle only, never the trace nor the dig log (the replay data). A puzzle
- *    served from the cache is therefore shown first, with the steps panel and the replay controls idle and a
- *    small note "preparing the replay", while it is regenerated from the seed in the background (an
- *    independent client; the same worker the pre-generator uses). The regenerated puzzle must equal the
- *    cached one (givens, solution, rating); if it does not, the cache entry is dropped and the puzzle is
- *    generated again. When the regeneration is done its trace and dig log go to the app
- *    (`SG.app.attachTrace(trace, digLog)`), so the steps panel, the explanation card and the replay controls
- *    work as after a normal run, showing the finished puzzle.
- *    Generating anything else meanwhile cancels the regeneration; nothing of it can reach the new run (it is
- *    guarded by an identity check).
- *  - POOL. After a puzzle is shown and the page has been quiet for a moment (1 s: no generation, no change of
- *    the form, no key or pointer press, tab visible), the cache quietly pre-generates one or two puzzles with
- *    the SAME configuration and random seeds in a Web Worker. They are marked `pool` in the same store (at
- *    most 2 per configuration, 4 in all) and are what "Generate" with an empty seed field, and "Regenerate",
- *    hand out instantly. Handing one out turns it into an ordinary cached puzzle. An explicit seed is never
- *    answered from the pool. The pre-generator never runs while a generation is in progress, is cancelled at
- *    once when the user generates or changes the configuration, pauses while the tab is hidden, runs only one
- *    job at a time, and gives up on a job that takes too long (a cost table skips the configurations that are
- *    known to be slow). It does NOT exist in main-thread mode (`file://`, no Worker): slices on the UI thread
- *    would compete with the user. Serving from the cache and regenerating traces still work there.
+ * Plug-in: `SG.cache.init(SG.app)` (called by app.js) replaces the generation client of the app with a wrapper
+ * (`SG.app.setClient`) of the same interface (`generate(config, onEvent, hints)`, `cancel()`, `mode`, `ready()`) and
+ * listens to the app events. A cached result is flagged `result.fromCache = true` (ignored by the wire format,
+ * exports and share links). A puzzle that `SG.app.showResult` puts on screen (an import: the 'result' event with
+ * `imported: true`, no 'generate:end') is never cached, gets no trace regeneration and disarms the pre-generator
+ * until the next generation; it may have no seed or configuration at all.
  *
- * How it plugs in: `SG.cache.init(SG.app)` (called by app.js at start-up) replaces the generation client of
- * the app with a wrapper (`SG.app.setClient`) that has the same interface (`generate(config, onEvent,
- * hints)`, `cancel()`, `mode`, `ready()`), and listens to the events of the app. A cached result is flagged
- * `result.fromCache = true` (plain data; the wire format, exports and share links ignore it).
- * A puzzle that `SG.app.showResult` puts on screen (an import: the 'result' event with `imported: true`, no
- * 'generate:end') is ignored: it is never cached, never gets a trace regeneration, and it disarms the
- * pre-generator until the next generation; it may have no seed or configuration at all.
+ * Storage: every access is wrapped in try/catch; a blocked or missing `localStorage` (a getter that throws, Safari
+ * private mode) means an in-memory LRU for the session; a `QuotaExceededError` evicts least recently used entries and
+ * retries, finally keeping the entries in memory only; a corrupt item or another schema version is purged. Every
+ * change re-reads the stored list first, so several tabs can share it. Nothing throws into the application or
+ * writes to the console.
  *
- * Storage rules (design.md 14.3): every access is wrapped in try/catch; a blocked or missing `localStorage`
- * (a getter that throws, Safari private mode) means an in-memory LRU for the session; a `QuotaExceededError`
- * evicts least recently used entries and retries, and finally keeps the entries in memory only; a corrupt
- * item or another schema version is purged. Every change re-reads the stored list first, so several tabs can
- * share it. Nothing here throws into the application or writes to the console.
+ * API: init(app) -> boolean (idempotent; false when `app` has no `setClient`), configKey(config) -> ?string
+ * (normalised: `trace` and option order ignored; a missing seed gives `*`, the key of the pool; null for an invalid
+ * configuration), get(key, { trace? }) -> ?PuzzleResult (touches the LRU order; `trace` re-applies the verbosity of
+ * the request, see `deserialize`; a corrupt entry is dropped, null returned), put(result, { pool? }), remove(key),
+ * has(key), clear(), stats(), setEnabled(on) / isEnabled() (the pre-generation preference; the cache itself always
+ * works; not persisted), createStore(...) and createController(...) (injectable storage, clocks and timers, for
+ * tests), serialize(result) (JSON-safe copy; typed arrays become `{ $t, d }`), deserialize(data, { trace? }) (the
+ * inverse), estimateCost(config) (ms; Infinity: unknown), VERSION, STORAGE_KEY, LIMIT.
  *
- * Public API (`SG.cache`)
- *   init(app) -> boolean              Starts the wrapper for `app` (idempotent; false when `app` has no
- *                                     `setClient`).
- *   configKey(config) -> ?string      The normalised key of a configuration (`trace` ignored, option order
- *                                     ignored). A config without a seed gives a key with `*` for the seed
- *                                     (the key of the pool); null for an invalid configuration.
- *   get(key, { trace? }) -> ?PuzzleResult   A cached puzzle (touches the LRU order); `trace` re-applies the
- *                                     trace verbosity of the request (see `deserialize`). A corrupt entry is
- *                                     dropped and null returned.
- *   put(result, { pool? }) -> boolean Stores a puzzle (`pool: true` marks it as pre-generated).
- *   remove(key) / has(key)            Delete / test an entry.
- *   clear()                           Empties the cache (storage and memory).
- *   stats() -> { count, pool, limit, version, persistent, dirty, bytes, enabled, pregen }.
- *   setEnabled(on) / isEnabled()      The pre-generation preference (the cache itself always works). Not
- *                                     persisted: `SG.store` has no generic preference facility.
- *   createStore({ storage, now, version, limit, key, poolPerConfig, poolTotal }) -> LRU store (injectable
- *                                     storage and clock, for tests).
- *   createController({ app, store, inner, createClient, timers, now, ... }) -> controller (the wrapper and
- *                                     the schedulers with everything injectable, for tests).
- *   serialize(result) -> Object       JSON-safe copy of a PuzzleResult (typed arrays become `{ $t, d }`).
- *   deserialize(data, { trace? }) -> PuzzleResult   The inverse; the model is rebuilt (and checked, lazy
- *                                     extensions of Killer / Greater-Than switched on). Throws
- *                                     `SG.errors.GenerationError('unexpected')` for data that is not a valid
- *                                     puzzle.
- *   estimateCost(config) -> number    Milliseconds a generation is expected to take (Infinity: unknown).
- *   VERSION, STORAGE_KEY, LIMIT       Schema version, storage key, size of the LRU.
- *
- * The file loads in Node without a DOM; the DOM and `localStorage` are only touched inside functions.
+ * Loads in Node without a DOM; the DOM and `localStorage` are touched only inside functions.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first instance on repeated loads: the running application holds it.
   if (SG.cache && typeof SG.cache.createStore === 'function') return;
 
-  /**
-   * Schema version of the stored list. Changing it purges every older cache. 2: rating v2 (new scores,
-   * levels and puzzles; docs/report-v2/report-detailed.md section 5.8), so the puzzles cached by v1 are
-   * dropped once.
-   */
+  /** Schema version of the stored list; changing it purges every older cache. */
   const SCHEMA_VERSION = 2;
   const STORAGE_KEY = 'sg.cache.v1';
   const LIMIT = 20;
@@ -97,16 +66,14 @@
 
   const NOTE_ID = 'cache-note';
 
-  /** The configuration keys of the store state that decide which puzzle a pool entry is. */
   const CONFIG_STATE_KEYS = Object.freeze(['variantId', 'difficulty', 'symbolMode', 'symmetry', 'digOrder',
     'maxAttempts', 'variantOptions']);
 
   /**
    * Expected generation time in milliseconds per variant and level: the slowest of the 40 requests of the
-   * qualification (`node tests/qualify.js`, docs/report-v2/qualification.md; Node, `trace: 'off'`), rounded up
-   * (to 10 ms below 100 ms, to 50 ms below 1 s, to 500 ms above) and at least 20 ms. A configuration above
-   * `MAX_PREGEN_COST_MS` is not pre-generated. A level that is not listed is unknown (Infinity): not
-   * pre-generated either.
+   * qualification (`node tests/qualify.js`; Node, `trace: 'off'`), rounded up (to 10 ms below 100 ms, to 50 ms below
+   * 1 s, to 500 ms above) and at least 20 ms. A configuration above `MAX_PREGEN_COST_MS` is not pre-generated; an
+   * unlisted level is unknown (Infinity), not pre-generated either.
    */
   const COSTS = Object.freeze({
     classic4: { veryEasy: 20 },
@@ -139,10 +106,6 @@
       hell1: 850 }
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Small helpers
-  // ---------------------------------------------------------------------------------------------
-
   function noop() {}
 
   function positiveInt(value, fallback) {
@@ -161,10 +124,6 @@
       return JSON.stringify(k) + ':' + stableStringify(value[k]);
     }).join(',') + '}';
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Configuration keys
-  // ---------------------------------------------------------------------------------------------
 
   function buildKey(norm, seedText) {
     return [norm.variantId, norm.difficulty, seedText, norm.symbolMode, norm.symmetry, norm.digOrder,
@@ -189,33 +148,18 @@
       cfg: buildKey(norm, '*') };
   }
 
-  /**
-   * The key of a configuration: variant, level, seed, symbol set, symmetry, dig order, attempts and variant
-   * options, normalised like the pipeline does. The trace verbosity is not part of it (it does not change the
-   * puzzle), and neither is the order of the variant options.
-   * @param {Object} config  A `GenerateConfig`.
-   * @returns {?string} null for an invalid configuration; a missing seed shows as `*`.
-   */
+  /** The key of a configuration, normalised like the pipeline does (variant, level, seed, symbol set, symmetry, dig order, attempts, variant options); neither the trace verbosity nor the order of the variant options is part of it. Null for an invalid configuration; a missing seed shows as `*`. */
   function configKey(config) {
     const info = keyInfo(config);
     return info === null ? null : info.key;
   }
 
-  /**
-   * Expected generation time of a configuration.
-   * @param {Object} config  A `GenerateConfig` (or the normalised form of one).
-   * @returns {number} Milliseconds; Infinity when the variant or the level is not in the cost table.
-   */
   function estimateCost(config) {
     const levels = config && Object.prototype.hasOwnProperty.call(COSTS, config.variantId)
       ? COSTS[config.variantId] : null;
     if (levels === null || !Object.prototype.hasOwnProperty.call(levels, config.difficulty)) return Infinity;
     return levels[config.difficulty];
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Serialisation of a PuzzleResult
-  // ---------------------------------------------------------------------------------------------
 
   const TYPED_ARRAYS = Object.freeze({
     Int8Array: Int8Array, Uint8Array: Uint8Array, Int16Array: Int16Array, Uint16Array: Uint16Array,
@@ -264,14 +208,7 @@
     return h >>> 0;
   }
 
-  /**
-   * A PuzzleResult as JSON-safe data (the wire format of `SG.pipeline.toWire`, with typed arrays wrapped),
-   * plus a checksum. Fields that are not part of a PuzzleResult (for example `fromCache`) are not stored, nor
-   * is the dig log: like the trace it only serves the replay, which a served puzzle gets back from the
-   * background regeneration (see "REPLAY" above).
-   * @param {PuzzleResult} result
-   * @returns {Object}
-   */
+  /** A PuzzleResult as JSON-safe data (the `SG.pipeline.toWire` format with typed arrays wrapped) plus a checksum. Fields that are not part of a PuzzleResult (e.g. `fromCache`) and the dig log are not stored: like the trace the dig log only serves the replay, which a served puzzle gets back from the background regeneration (see "REPLAY"). */
   function serialize(result) {
     const wire = encode(SG.pipeline.toWire(result));
     delete wire.digLog;
@@ -317,16 +254,7 @@
     }
   }
 
-  /**
-   * Rebuilds a PuzzleResult from `serialize` data (or its JSON text) and checks it: the model is valid and
-   * solved by the solution, the givens are part of the solution, the checksum matches. For Killer and
-   * Greater-Than the lazy propagation extensions are switched on (`SG.pipeline.fromWire`).
-   * @param {(Object|string)} data
-   * @param {{trace?: string}} [options]  `trace`: the verbosity of the request; `config.trace` and the
-   *        'trace.downgraded' warning are made to match what a run with it would give (see `retrace`).
-   * @returns {PuzzleResult}
-   * @throws {SG.errors.GenerationError} 'unexpected' for data that is not a valid puzzle.
-   */
+  /** Rebuilds a PuzzleResult from `serialize` data (or its JSON text) and checks it: the model is valid and solved by the solution, the givens are part of the solution, the checksum matches; Killer and Greater-Than get their lazy propagation extensions switched on (`SG.pipeline.fromWire`). `options.trace` makes `config.trace` and the 'trace.downgraded' warning match what a run with it would give (see `retrace`). Throws GenerationError 'unexpected' for data that is not a valid puzzle. */
   function deserialize(data, options) {
     let wire;
     try {
@@ -346,7 +274,6 @@
     return result;
   }
 
-  /** Whether two results are the same puzzle with the same rating. */
   function sameResult(a, b) {
     if (!a || !b || a.givens.length !== b.givens.length || a.solution.length !== b.solution.length) {
       return false;
@@ -356,10 +283,6 @@
     }
     return a.rating.level === b.rating.level && a.rating.score === b.rating.score;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // The LRU store
-  // ---------------------------------------------------------------------------------------------
 
   function isQuota(err) {
     return Boolean(err) && (err.name === 'QuotaExceededError' || err.name === 'NS_ERROR_DOM_QUOTA_REACHED' ||
@@ -380,25 +303,7 @@
    * @property {Object} data  `serialize(result)`.
    */
 
-  /**
-   * An LRU list of puzzles, persisted as `{ version, entries }` under one storage key. The newest entry is
-   * first. Entries are immutable objects (a change makes a new one). Every operation re-reads the stored list
-   * first (another tab may have changed it); when the storage cannot be used the list lives in memory.
-   * Nothing throws.
-   * @param {Object} [options]
-   * @param {?Object} [options.storage]  `localStorage`-like; null: memory only. Default: `localStorage`
-   *        (guarded: a getter that throws means memory only).
-   * @param {function(): number} [options.now]  Clock in ms (default `Date.now`).
-   * @param {*} [options.version]  Schema version (default `SCHEMA_VERSION`); a stored list of another version
-   *        is purged.
-   * @param {number} [options.limit=20]  Entries kept.
-   * @param {string} [options.key]  Storage key (default `sg.cache.v1`).
-   * @param {number} [options.poolPerConfig=2]  Pre-generated entries kept per configuration.
-   * @param {number} [options.poolTotal=4]  Pre-generated entries kept in all.
-   * @returns {{list: function(function(CacheEntry): boolean=): CacheEntry[], get: function(string,
-   *   Object=): ?CacheEntry, put: function(Object): boolean, setPool: function(string, boolean): boolean,
-   *   remove: function(string): boolean, clear: function(): void, stats: function(): Object}}
-   */
+  /** An LRU list of puzzles, persisted as `{ version, entries }` under one storage key, newest first. Entries are immutable (a change makes a new one). Every operation re-reads the stored list first (another tab may have changed it); when the storage cannot be used the list lives in memory. Nothing throws. Options: `storage` (`localStorage`-like; null = memory only; a getter that throws also means memory only), `now`, `version` (a stored list of another version is purged), `limit` (20), `key` (default `sg.cache.v1`), `poolPerConfig` (2), `poolTotal` (4). */
   function createStore(options) {
     const o = options || {};
     const version = o.version !== undefined ? o.version : SCHEMA_VERSION;
@@ -572,7 +477,6 @@
     }
 
     return {
-      /** The entries, newest first, optionally filtered. */
       list: function list(filter) {
         return guarded(function () {
           const all = snapshot();
@@ -595,12 +499,7 @@
         }, null);
       },
 
-      /**
-       * Stores an entry as the most recently used one. An entry that exists and is not in the pool stays out
-       * of it.
-       * @param {{key: string, cfg: string, data: Object, pool?: boolean}} entry
-       * @returns {boolean} Whether it was accepted.
-       */
+      /** Stores an entry as the most recently used one; an entry that exists and is not in the pool stays out of it. */
       put: function put(entry) {
         return guarded(function () {
           if (!entry || typeof entry.key !== 'string' || typeof entry.cfg !== 'string' ||
@@ -657,7 +556,6 @@
         }, undefined);
       },
 
-      /** `{ count, pool, limit, version, persistent, dirty, bytes }`. */
       stats: function stats() {
         return guarded(function () {
           const list = snapshot();
@@ -677,15 +575,10 @@
 
   let shared = null;
 
-  /** The store of the page, created on first use. */
   function sharedStore() {
     if (shared === null) shared = createStore({});
     return shared;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Store + results
-  // ---------------------------------------------------------------------------------------------
 
   function putResult(store, result, pool) {
     try {
@@ -710,11 +603,6 @@
     return null;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The note "preparing the replay"
-  // ---------------------------------------------------------------------------------------------
-
-  /** A one-line note under the replay controls (`#cache-note`); a no-op without a DOM. */
   function createNote() {
     let el = null;
     let key = null;
@@ -755,7 +643,6 @@
     return typeof document !== 'undefined' && document.visibilityState === 'hidden';
   }
 
-  /** Subscribes to visibility changes of the tab; returns the unsubscribe function. */
   function watchVisibility(fn) {
     if (typeof document === 'undefined') return noop;
     const listener = function () { fn(documentHidden()); };
@@ -763,7 +650,6 @@
     return function () { document.removeEventListener('visibilitychange', listener); };
   }
 
-  /** Subscribes to key and pointer presses (the user is not idle); returns the unsubscribe function. */
   function watchActivity(fn) {
     if (typeof document === 'undefined') return noop;
     const names = ['keydown', 'pointerdown'];
@@ -774,34 +660,7 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The controller: the client wrapper, the trace regeneration and the pre-generator
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Builds the wrapper client and the schedulers around it. Everything outside is injectable.
-   * @param {Object} options
-   * @param {Object} options.app  `SG.app` (or a stand-in): `on`, `getStore`, `getResult`, `getBoard`,
-   *        `attachTrace`, `generate`, `toast`, `announce`, `getClient`, `setClient`.
-   * @param {Object} [options.store]  The LRU store (default the shared one).
-   * @param {Object} [options.inner]  The client to wrap (default `app.getClient()`, else `SG.workerClient`).
-   * @param {function(): Object} [options.createClient]  Makes the independent background client (default
-   *        `SG.workerClient.create()`); without one nothing is served from the cache.
-   * @param {{set: function, clear: function}} [options.timers]  `set(fn, ms) -> handle` / `clear(handle)`.
-   * @param {function(): number} [options.now]  Clock in ms (shared with `timers` in tests).
-   * @param {function(): boolean} [options.isHidden]
-   * @param {function(function): function} [options.watchVisibility]  `(fn(hidden)) -> unsubscribe`.
-   * @param {function(function): function} [options.watchActivity]  `(fn()) -> unsubscribe`.
-   * @param {function(): number} [options.random]  A random uint32 (seeds of the pool).
-   * @param {Object} [options.note]  `{ show(key), hide(), refresh(), destroy() }`.
-   * @param {number} [options.idleMs=1000]  Quiet time before a pre-generation starts.
-   * @param {number} [options.maxCostMs=3000]  Configurations that cost more are not pre-generated.
-   * @param {number} [options.limitMs=8000]  A pre-generation job that runs longer is abandoned.
-   * @param {number} [options.poolTarget=2]  Pre-generated puzzles to keep per configuration.
-   * @param {boolean} [options.pregen=true]  The pre-generation preference.
-   * @returns {{client: Object, start: function, destroy: function, setEnabled: function, isEnabled:
-   *   function, state: function}}
-   */
+  /** Builds the wrapper client and the schedulers around it; everything outside is injectable. `options.app`: `SG.app` (or a stand-in) with `on`, `getStore`, `getResult`, `getBoard`, `attachTrace`, `generate`, `toast`, `announce`, `getClient`, `setClient`. Other options: `store` (default the shared LRU), `inner` (the client to wrap; default `app.getClient()`, else `SG.workerClient`), `createClient` (the independent background client, default `SG.workerClient.create()`; without one nothing is served from the cache), `timers` `{ set(fn, ms) -> handle, clear(handle) }`, `now`, `isHidden`, `watchVisibility(fn(hidden)) -> unsubscribe`, `watchActivity(fn()) -> unsubscribe`, `random` (uint32, seeds of the pool), `note` `{ show(key), hide(), refresh(), destroy() }`, `idleMs` (1000, quiet time before a pre-generation), `maxCostMs` (3000, dearer configurations are not pre-generated), `limitMs` (8000, a longer job is abandoned), `poolTarget` (2 per configuration), `pregen` (the preference, true). */
   function createController(options) {
     const o = options || {};
     const app = o.app;
@@ -861,8 +720,6 @@
       timers.set(function () { if (!destroyed) attempt(fn); }, 0);
     }
 
-    // -- background client ------------------------------------------------------------------------
-
     function clearWorkerTimer() {
       if (workerTimer !== null) {
         timers.clear(workerTimer);
@@ -902,8 +759,6 @@
       if (current.timer !== null) timers.clear(current.timer);
       if (current.client !== null) attempt(function () { current.client.cancel(); });
     }
-
-    // -- pre-generation -----------------------------------------------------------------------------
 
     function clearIdle() {
       if (idleTimer !== null) {
@@ -1021,8 +876,6 @@
         function () { finishPregen(mine, null); });
     }
 
-    // -- the foreground ---------------------------------------------------------------------------
-
     function foregroundStarted() {
       clearIdle();
       cancelJob();
@@ -1102,8 +955,6 @@
       return typeof inner.cancel === 'function' ? inner.cancel() : false;
     }
 
-    // -- the trace of a served puzzle -------------------------------------------------------------
-
     function overrides(config) {
       return {
         variantId: config.variantId,
@@ -1171,8 +1022,6 @@
         scheduleIdle();
       });
     }
-
-    // -- events of the app --------------------------------------------------------------------------
 
     function drawServed() {
       const board = attempt(function () { return app.getBoard(); });
@@ -1318,19 +1167,11 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The shared instance
-  // ---------------------------------------------------------------------------------------------
-
   let controller = null;
   let controllerApp = null;
   let enabledPreference = true;
 
-  /**
-   * Starts the cache for the application (see the file header). Idempotent.
-   * @param {Object} app  `SG.app`.
-   * @returns {boolean} False when `app` cannot take a wrapper client (no `setClient`) or has no client.
-   */
+  /** Idempotent; false when `app` cannot take a wrapper client (no `setClient`) or has no client. */
   function init(app) {
     if (controller !== null && controllerApp === app) {
       // An app that was destroyed and started again has forgotten the wrapper.
@@ -1401,10 +1242,6 @@
     setEnabled: setEnabled,
     isEnabled: function isEnabled() { return enabledPreference; }
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Strings
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

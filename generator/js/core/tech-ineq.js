@@ -1,30 +1,28 @@
 /**
- * Inequality rules of Greater-Than Sudoku (design.md sections 6.3 P5, 6.6 I1/I2 and 8.3): the propagation
- * extension and the two human techniques of the `ineq` group.
+ * Inequality rules of Greater-Than Sudoku: the propagation extension and the two human techniques of the `ineq` group.
  *
  *   id             group  baseCost  order
  *   ineqChain      ineq      12       65   bounds that travel along a chain of signs  a < b < c < ...
  *   minMaxForcing  ineq      22       85   signs combined with all-different units: a cell above k cells of
  *                                         one unit is at least k + 1 (below k cells: at most D - k)
  *
- * A model states its signs as `model.inequalities = [{ a, b }]`, meaning value[a] < value[b]. Nothing here
- * looks at the variant id: whatever model carries inequalities is propagated, and the techniques are only
- * offered to the variants listed in their `variantScope`.
+ * A model states its signs as `model.inequalities = [{ a, b }]`, meaning value[a] < value[b]. Nothing here looks at the
+ * variant id: whatever model carries inequalities is propagated; the techniques are only offered to the variants listed
+ * in their `variantScope`.
  *
- * Propagation extension (rule P5). `SG.constraints.registerExtension` is the only door into the engine, so
- * constraints.js is untouched. For `a < b` the extension applies both bound rules until nothing changes:
+ * Propagation extension: for `a < b` both bound rules are applied until nothing changes:
  *   cand[a] <- cand[a] without the values >= max(cand[b])
  *   cand[b] <- cand[b] without the values <= min(cand[a])
- * Along a chain a < b < c < d the bounds are carried all the way in one call (one sweep of the signs in
- * topological order for the minima, one backwards for the maxima), so the closure of the whole sign graph is
- * reached without looping. Registering is LAZY, by `SG.ineq.ensureExtension()`, which the Greater-Than
- * variant calls whenever it builds a model; a plain page load does not touch the engine (the engine's own
- * tests assume an empty extension registry). The extension skips every model without inequalities.
+ * Along a chain a < b < c < d the bounds are carried all the way in one call (one sweep of the signs in topological
+ * order for the minima, one backwards for the maxima), so no looping is needed. Registered LAZILY by
+ * `SG.ineq.ensureExtension()`, which the Greater-Than variant calls whenever it builds a model; a plain page load does
+ * not touch the engine (the engine's own tests assume an empty extension registry). Models without inequalities are
+ * skipped.
  *
- * The techniques are the attributable, "by hand" version of the same rule (the logical solver never runs
- * the propagation extensions, see logical-solver.js), so the two agree: `ineqChain` finds exactly what the
- * extension would remove, with the chain that justifies it. `minMaxForcing` goes beyond bound propagation by
- * using the all-different units, so it is only asked once the chain bounds are exhausted.
+ * The techniques are the attributable "by hand" version of the same rule (the logical solver never runs propagation
+ * extensions): `ineqChain` finds exactly what the extension would remove, with the chain that justifies it;
+ * `minMaxForcing` goes beyond bound propagation by using the all-different units, so it is only asked once the chain
+ * bounds are exhausted.
  *
  * i18nArgs of the Findings (plain data; cells are `SG.model.cellLabel` texts):
  *   ineqChain       { cell, bound, chain, count, direction }   chain 'R1C1 < R1C2 < R1C3', smaller first;
@@ -44,35 +42,14 @@
   /** Per model analysis (CSR sign graph, topological order, scratch). Models are immutable. */
   const analyses = new WeakMap();
 
-  // ---------------------------------------------------------------------------------------------
-  // Sign graph
-  // ---------------------------------------------------------------------------------------------
+  // SignGraph: { n (cell count), digits, cyclic (the signs cannot all hold: a cycle, a self comparison, a bad index),
+  // order (cells that touch a sign, smaller first: topological), asc (the same by ascending index), predStart / predList
+  // (CSR: predList[predStart[c] .. predStart[c + 1]) are the cells a with a < c), succStart / succList (likewise for the
+  // cells b with c < b), rank (lazily built data of `minMaxForcing`); scratch of the minimum sweep: need (lowest value
+  // the cell may still take), from (the smaller neighbour that set `need`, -1 = none), eff (lowest remaining candidate
+  // at or above `need`); scratch of the maximum sweep: lim, fromHi, effHi (the mirror images) }
 
-  /**
-   * @typedef {Object} SignGraph
-   * @property {number} n           Cell count.
-   * @property {number} digits
-   * @property {boolean} cyclic     The signs cannot all hold (a cycle, a self comparison, a bad index).
-   * @property {Int32Array} order   Cells that touch a sign, smaller cells first (topological order).
-   * @property {Int32Array} asc     The same cells by ascending index.
-   * @property {Int32Array} predStart  CSR over cells: predList[predStart[c] .. predStart[c + 1]) are the
-   *           cells a with a < c.
-   * @property {Int32Array} predList
-   * @property {Int32Array} succStart   Likewise for the cells b with c < b.
-   * @property {Int32Array} succList
-   * @property {Int32Array} need    Scratch of the minimum sweep: lowest value the cell may still take.
-   * @property {Int32Array} from    Scratch: the smaller neighbour that set `need` (-1 = none).
-   * @property {Int32Array} eff     Scratch: lowest remaining candidate at or above `need`.
-   * @property {Int32Array} lim     Scratch of the maximum sweep: highest value the cell may still take.
-   * @property {Int32Array} fromHi  Scratch: the greater neighbour that set `lim` (-1 = none).
-   * @property {Int32Array} effHi   Scratch: highest remaining candidate at or below `lim`.
-   * @property {?Object} rank       Lazily built data of `minMaxForcing`.
-   */
-
-  /**
-   * @param {PuzzleModel} model
-   * @returns {?SignGraph} null when the model has no inequalities.
-   */
+  // null when the model has no inequalities.
   function graphOf(model) {
     let g = analyses.get(model);
     if (g !== undefined) return g;
@@ -163,22 +140,14 @@
     return 32 - Math.clz32(mask);
   }
 
-  /** Mask of the values 1 .. v. */
   function upTo(v) {
     return (1 << v) - 1;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Bound sweeps (the shared core of the extension and `ineqChain`)
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Minimum sweep. For every sign cell, in topological order, `need[c]` is the lowest value it can take
-   * because of the cells below it: one more than the lowest remaining candidate of the cell below that
-   * counts highest (`eff`), and `from[c]` is that cell. `eff[c]` is the cell's lowest candidate at or above
-   * `need[c]`. The state is only read.
-   * @returns {boolean} false when some cell has no candidate left at or above its bound (contradiction).
-   */
+  // Minimum sweep. For every sign cell, in topological order, `need[c]` is the lowest value it can take because of the
+  // cells below it (one more than the lowest remaining candidate of the cell below that counts highest, `eff`), `from[c]`
+  // is that cell, and `eff[c]` is the cell's lowest candidate at or above `need[c]`. The state is only read. False when
+  // some cell has no candidate left at or above its bound (contradiction).
   function sweepMin(g, cand) {
     const order = g.order;
     const need = g.need;
@@ -230,10 +199,6 @@
     return true;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Propagation extension (P5)
-  // ---------------------------------------------------------------------------------------------
-
   const extension = {
     id: EXTENSION_ID,
     prepare: function prepare(model) {
@@ -264,36 +229,25 @@
     }
   };
 
-  /**
-   * Registers the inequality propagation with `SG.constraints` unless it already is. Safe to call any number
-   * of times. The Greater-Than variant calls it from `build`, so a model with signs is always propagated.
-   * @returns {boolean} true when this call registered it.
-   */
+  // Registers the inequality propagation with `SG.constraints` unless it already is; safe to call any number of times.
+  // The Greater-Than variant calls it from `build`. True when this call registered it.
   function ensureExtension() {
     if (SG.constraints.listExtensions().indexOf(EXTENSION_ID) !== -1) return false;
     SG.constraints.registerExtension(extension);
     return true;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // I1 ineqChain
-  // ---------------------------------------------------------------------------------------------
-
   function labelsOf(model, cells) {
     return cells.map(function (c) { return SG.model.cellLabel(model, c); });
   }
 
-  /** Candidate values of `cell` in `mask` as [cell, value] pairs, appended to `out`. */
   function pairsOf(cell, mask, out) {
     for (let m = mask; m !== 0; m &= m - 1) out.push([cell, lowestValue(m)]);
   }
 
-  /**
-   * I1: a bound travels along a chain of signs. A cell above a chain of k cells is at least k + 1, and more
-   * when a cell of the chain is known to be larger; the same holds from above. One Finding is one chain: the
-   * first cell (lowest index) whose candidates break a bound, with the cells of the chain that gives the
-   * bound, and every candidate the chain rules out on those cells.
-   */
+  // A bound travels along a chain of signs: a cell above a chain of k cells is at least k + 1 (more when a cell of the
+  // chain is known to be larger); the same holds from above. One Finding is one chain: the first cell (lowest index)
+  // whose candidates break a bound, the cells of the chain that gives the bound, and every candidate it rules out there.
   function findChain(model, state, ctx) {
     const g = graphOf(model);
     if (g === null || g.cyclic) return null;
@@ -369,16 +323,9 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // I2 minMaxForcing
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Static data of `minMaxForcing`: for every cell x and every unit U, the cells of U that are (through a
-   * chain of signs) below x, when there are at least two of them, and the same for the cells above x. The
-   * cells of one unit hold pairwise different digits, so k of them below x push x past the k-th smallest
-   * digit that they can still take together.
-   */
+  // Static data of `minMaxForcing`: for every cell x and unit U, the cells of U that are (through a chain of signs) below
+  // x when there are at least two, and likewise above x. The cells of one unit hold pairwise different digits, so k of
+  // them below x push x past the k-th smallest digit that they can still take together.
   function rankOf(model, g) {
     if (g.rank !== null) return g.rank;
     const n = g.n;
@@ -474,13 +421,10 @@
     };
   }
 
-  /**
-   * I2: signs and all-different units together. If k cells of one unit (all different) are below x, then
-   * x is larger than the k-th smallest digit that those cells can take between them, so it is at least one
-   * more; if k cells of a unit are above x it is at most one less than their k-th largest digit. The first
-   * cell (lowest index) that this prunes gives the Finding. Chains of signs are `ineqChain`'s job, which the
-   * ladder asks first.
-   */
+  // Signs and all-different units together: if k cells of one unit are below x, x is larger than the k-th smallest digit
+  // those cells can take between them, so at least one more; if k cells of a unit are above x it is at most one less than
+  // their k-th largest digit. The first cell (lowest index) this prunes gives the Finding. Chains of signs are
+  // `ineqChain`'s job, which the ladder asks first.
   function findMinMax(model, state, ctx) {
     const g = graphOf(model);
     if (g === null || g.cyclic) return null;
@@ -526,10 +470,6 @@
     return null;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Registration and strings
-  // ---------------------------------------------------------------------------------------------
-
   SG.techniques.register({
     id: 'ineqChain',
     group: 'ineq',
@@ -550,10 +490,6 @@
     find: findMinMax
   });
 
-  /**
-   * Inequality tools, exposed for the Greater-Than variant, tests and tooling.
-   * @namespace SG.ineq
-   */
   SG.ineq = {
     EXTENSION_ID: EXTENSION_ID,
     ensureExtension: ensureExtension

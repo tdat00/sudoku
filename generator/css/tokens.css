@@ -1,13 +1,12 @@
 /*
- * General design tokens (design.md 10.8, contract section 4).
- * Colours live ONLY here and in tokens-board.css. Three themes are selected with
- * <html data-theme="light|dark|high-contrast">; prefers-color-scheme is honoured only while no
- * data-theme attribute is present. Keep the dark palette of the media block identical to the
- * explicit [data-theme="dark"] block.
+ * General design tokens. Colours live ONLY here and in tokens-board.css. Three themes are selected with
+ * <html data-theme="light|dark|high-contrast">; prefers-color-scheme is honoured only while no data-theme
+ * attribute is present. Keep the dark palette of the media block identical to the explicit
+ * [data-theme="dark"] block.
  *
- * Contrast (WCAG 2.2 AA): text >= 4.5:1, UI component borders / focus ring >= 3:1; the
- * high-contrast theme targets >= 7:1 for text. tests/suites/theme.test.js computes every pair from this
- * file (and tokens-board.css), so a colour change that breaks a ratio fails the tests.
+ * Contrast (WCAG 2.2 AA): text >= 4.5:1, UI component borders / focus ring >= 3:1; the high-contrast theme
+ * targets >= 7:1 for text. tests/suites/theme.test.js computes every pair from this file (and
+ * tokens-board.css), so a colour change that breaks a ratio fails the tests.
  * --sg-color-disabled-text is the colour of disabled text (>= 4.5:1 on the disabled background: disabled
  * controls never fade with opacity). prefers-contrast: more is answered at the end of this file.
  */

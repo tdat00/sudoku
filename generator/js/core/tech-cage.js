@@ -1,35 +1,49 @@
 /**
- * Cage techniques of the Killer variant (design.md section 6.6, ladder rows K1 - K3). They apply to the
- * variant `killer` only (`variantScope`) and work on `model.cages`; everything else is read from the
- * generic unit structure, so nothing here assumes a board shape beyond "complete units of D cells".
+ * Cage techniques of the Killer variant. They apply to the variant `killer` only (`variantScope`) and work on
+ * `model.cages`; everything else is read from the generic unit structure (no board shape beyond "complete
+ * units of D
+ * cells").
  *
  *   id          group  baseCost  order
- *   cageCombo   cage      10       55   K1  Cage Sum Combination
- *   ruleOf45    cage      28       95   K2  Rule of 45 (innies / outies)
- *   cageSplit   cage      40      135   K3  Cage Splitting
+ *   cageCombo   cage      10       55   Cage Sum Combination
+ *   ruleOf45    cage      28       95   Rule of 45 (innies / outies)
+ *   cageSplit   cage      40      135   Cage Splitting
  *
- * K1 cageCombo. A cage of r open cells that must add up to s can only be filled with a digit set from the
- * combination table (`SG.comboTable`). The sets that still fit the candidates of the cells are the
- * "survivors": a cell loses every digit that occurs in none of them, and a digit that occurs in all of
- * them must be in the cage, so when only one open cell can still hold it, it goes there. A digit that must
- * be in the cage and whose possible cells all share a unit is removed from the other cells of that unit
- * ("pointing" out of a cage). Digits that are already fixed in the cage leave its other cells.
+ * cageCombo. A cage of r open cells that must add up to s can only be filled with a digit set from
+ * `SG.comboTable`. The
+ * sets that still fit the candidates of the cells are the "survivors": a cell loses every digit that occurs
+ * in none of
+ * them, and a digit that occurs in all of them must be in the cage, so when only one open cell can still hold
+ * it, it
+ * goes there; if all its possible cells share a unit it is removed from the other cells of that unit
+ * ("pointing" out of
+ * a cage). Digits already fixed in the cage leave its other cells.
  *
- * K2 ruleOf45. A set of complete units that do not overlap (k rows, k columns, k boxes) holds every digit
- * k times, so its cells add up to k * 45. The cages lying completely inside the set account for their own
- * sums; what is left are the "innies" (cells of the set in a cage that sticks out), and their sum is
- * known. The same argument on the cages that touch the set gives the sum of the "outies" (cells outside
- * the set in such a cage). A group with one open cell is a placement; a group of two to four open cells
- * is filtered exhaustively against its sum (cells that share a unit or a cage must differ).
+ * ruleOf45. A set of complete units that do not overlap (k rows, k columns, k boxes) holds every digit k
+ * times, so its
+ * cells add up to k * 45. The cages lying completely inside the set account for their own sums; what is left
+ * are the
+ * "innies" (cells of the set in a cage that sticks out), and their sum is known. The same argument on the
+ * cages that
+ * touch the set gives the sum of the "outies" (cells outside the set in such a cage). A group with one open
+ * cell is a
+ * placement; a group of two to four open cells is filtered exhaustively against its sum (cells that share a
+ * unit or a
+ * cage must differ).
  *
- * K3 cageSplit. When exactly one cage K sticks out of such a set, K falls apart into two virtual cages
- * with known sums: the innies (K inside the set) and the outies (K outside it). Each is a distinct-digit
- * cage of its own, and the two digit sets must be disjoint, because both are parts of K. Their digit sets
- * are filtered like in K1, with the disjointness as the extra condition.
+ * cageSplit. When exactly one cage K sticks out of such a set, K falls apart into two virtual cages with
+ * known sums:
+ * the innies (K inside the set) and the outies (K outside it). Each is a distinct-digit cage of its own and
+ * the two
+ * digit sets must be disjoint, because both are parts of K. Filtered like cageCombo, with disjointness as the
+ * extra
+ * condition.
  *
- * Every deduction is sound: a digit is removed or a value placed only when no assignment of the cage sums
- * and the all-different units can use it. All three read the state and return the first deduction in a
- * fixed scan order (cages by index; regions by kind, size and position).
+ * Every deduction is sound: a digit is removed or a value placed only when no assignment of the cage sums and
+ * the
+ * all-different units can use it. All three only read the state and return the first deduction in a fixed
+ * scan order
+ * (cages by index; regions by kind, size and position).
  *
  * i18nArgs of the Findings (plain data; `cells` are cell labels such as 'R4C7', `units` unit labels):
  *   cageCombo   { sum, size, cells, digits, forced }
@@ -51,9 +65,7 @@
   const comboTable = SG.comboTable;
   const toArray = SG.bits.toArray;
 
-  /** A group of open cells is searched exhaustively up to this size. */
   const MAX_ENUM = 4;
-  /** A region is the union of at most this many complete units of one kind. */
   const MAX_REGION_UNITS = 4;
   /** Groups of innies / outies longer than this are not kept (they only matter very late in a solve). */
   const MAX_GROUP = 6;
@@ -74,12 +86,11 @@
     return out;
   }
 
-  /**
-   * Digit sets that fit `count` open cells which must add up to `rest`, written into `out`: the
-   * combination table sets that avoid `forbidden`, lie inside the union of the candidates and give every
-   * cell at least one of their digits.
-   * @returns {number} How many sets were written.
-   */
+  // Digit sets that fit `count` open cells which must add up to `rest`, written into `out`: combination table
+  // sets that
+  // avoid `forbidden`, lie inside the union of the candidates and give every cell at least one of their
+  // digits.
+  // Returns how many were written.
   function survivingCombos(cand, cells, count, rest, forbidden, digits, out) {
     const list = comboTable.masks(count, rest, digits);
     let unionMask = 0;
@@ -117,14 +128,9 @@
     return false;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // K1 cageCombo
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Removes from the other cells of every unit that holds all of `positions` the digit `bit`, which the cage
-   * must contain somewhere among them.
-   */
+  // Removes `bit`, which the cage must contain somewhere among `positions`, from the other cells of every
+  // unit holding
+  // all of them.
   function pointOutOfCage(model, state, index, k, positions, count, bit, eliminations) {
     const cand = state.candidates;
     const value = state.value;
@@ -230,25 +236,17 @@
     return null;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Regions: unions of complete units, with their innies and outies
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * @typedef {Object} Region
-   * @property {string[]} unitLabels
-   * @property {boolean} useIn         ruleOf45 looks at the innies (a short group, not seen before).
-   * @property {Int32Array} innies     Cells of the region in a cage that is not completely inside it (or in
-   *           no cage at all).
-   * @property {number} inSum          Their sum: k * (1 + ... + D) minus the sums of the cages inside.
-   * @property {Uint8Array} inDistinct innies.length ^ 2 flags: 1 when two innies must differ.
-   * @property {boolean} useOut        Same for the outies.
-   * @property {Int32Array} outies     Cells outside the region in a cage that is partly inside it.
-   * @property {number} outSum         Their sum.
-   * @property {Uint8Array} outDistinct
-   * @property {number} splitCage      The only cage that sticks out of the region when it is a distinct cage
-   *           and every cell of the region is in a cage (innies and outies are then its two parts); else -1.
-   */
+  // Region: { unitLabels, useIn (ruleOf45 looks at the innies: a short group, not seen before), innies (cells
+  // of the
+  // region in a cage that is not completely inside it, or in no cage), inSum (k * (1 + ... + D) minus the
+  // sums of the
+  // cages inside), inDistinct (innies.length ^ 2 flags: 1 when two innies must differ), useOut / outies
+  // (cells outside
+  // the region in a cage partly inside it) / outSum / outDistinct (the same for the outies), splitCage (the
+  // only cage
+  // sticking out of the region when it is a distinct cage and every cell of the region is in a cage, so
+  // innies and
+  // outies are its two parts; else -1) }
 
   const regionCache = new WeakMap();
 
@@ -279,7 +277,6 @@
     return out;
   }
 
-  /** Complete units grouped by kind, in order of first appearance. */
   function unitGroups(model) {
     const groups = new Map();
     for (let u = 0; u < model.units.length; u++) {
@@ -401,10 +398,6 @@
     return regions;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // K2 ruleOf45
-  // ---------------------------------------------------------------------------------------------
-
   // State of the exhaustive search over one group of open cells.
   const enumCand = new Int32Array(MAX_ENUM);
   const enumChosen = new Int32Array(MAX_ENUM);
@@ -446,7 +439,6 @@
     }
   }
 
-  /** One group of a region (innies or outies) looked at by ruleOf45. */
   function groupFinding(model, state, region, kindIsInnie) {
     const cells = kindIsInnie ? region.innies : region.outies;
     const target = kindIsInnie ? region.inSum : region.outSum;
@@ -538,10 +530,6 @@
     }
     return null;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // K3 cageSplit
-  // ---------------------------------------------------------------------------------------------
 
   function splitFinding(model, state, index, region) {
     const cand = state.candidates;
@@ -637,10 +625,6 @@
     }
     return null;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Registration
-  // ---------------------------------------------------------------------------------------------
 
   [
     ['cageCombo', 10, 55, findCageCombo],

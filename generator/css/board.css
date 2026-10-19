@@ -3,7 +3,7 @@
  * Only var(--sg-board-*) tokens (css/tokens-board.css) and the generic --sg-color-focus, --sg-color-text,
  * --sg-font-family and --sg-space-* are used; no colour literals here.
  *
- * A board is an <svg class="sgb">; the cell classes follow design.md section 10.3:
+ * A board is an <svg class="sgb">; the cell classes are:
  *   .cell--placing .cell--backtrack .cell--removed   one-shot animations of a changed cell
  *   .hl.cell--probing .cell--technique .cell--restored .cell--selected   highlight frames (layer-overlay)
  *   .hl.cell--dug .cell--kept .cell--revealed   replay frames: removed / put back / revealed in the step
@@ -253,7 +253,7 @@
   stroke: var(--sg-board-restore);
 }
 
-/* ---- Animations (design.md section 10.3) ---- */
+/* ---- Animations ---- */
 @keyframes sgb-place {
   from { opacity: 0; transform: scale(0.55); }
   to { opacity: 1; transform: scale(1); }

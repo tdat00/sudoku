@@ -1,20 +1,11 @@
 /**
- * Explanation card (task T-4.5; design.md section 7.4): for the phase of the replay step on show (full
- * solution, extra structure, dig), the three fixed parts What / Why / How, the pseudocode of the phase with
- * the line that the step corresponds to highlighted, and a status line with the running dig counters. The
- * data comes from `SG.explain` (js/core/explain-data.js, keys only); the texts are in the locale packs. This
- * file exports `SG.explainCard` (NOT `SG.explain`).
- *
- * Pure part (runs in Node): `viewModel(stepId, ctx)` resolves everything the card shows, in the current
- * language. DOM part: `create(rootEl, options)` renders a view model into an element and re-renders it when
- * the language changes, keeping the step, the line and the metrics. The Help dialog (js/ui/help.js, tab "How
- * it works") makes one compact card per step; the one of the replay step on show gets the highlighted line
- * and the dig counters (`SG.app.getExplainContext()`).
- *
- * How the host drives it: for the replay step on show call
- * `card.show(step.phase, { lineLabel: step.line, metrics: step.metrics })`; without metrics (the full
- * solution, the extra structure) the status line is hidden. `eventKey` still picks a line from an event key
- * (`SG.explain.lineFor`) for callers that have events.
+ * Explanation card: for the phase of the replay step on show (full solution, extra structure, dig), the fixed
+ * parts What / Why / How, the pseudocode of the phase with the current line highlighted, and a status line with
+ * the running dig counters. Data comes from `SG.explain` (js/core/explain-data.js, keys only); texts are in the
+ * locale packs. Exports `SG.explainCard` (NOT `SG.explain`).
+ * `viewModel` is pure (runs in Node); `create(rootEl, options)` renders it and re-renders on language change.
+ * Host usage: `card.show(step.phase, { lineLabel: step.line, metrics: step.metrics })`; without metrics the
+ * status line is hidden. `eventKey` picks a line from an event key (`SG.explain.lineFor`).
  */
 (function (root) {
   'use strict';
@@ -23,7 +14,6 @@
 
   if (SG.explainCard && typeof SG.explainCard.create === 'function') return;
 
-  /** The classes of the code listing never indent deeper than this (the data stays within 2). */
   const MAX_INDENT = 6;
 
   function translate(key, args) {
@@ -31,7 +21,6 @@
     return key;
   }
 
-  /** Numbers of the status line, formatted for the language (at most one decimal). */
   function formatArgs(args) {
     const out = {};
     Object.keys(args).forEach(function (name) {
@@ -45,18 +34,9 @@
   }
 
   /**
-   * Everything the card shows for a step, in the current language.
-   * @param {string} stepId  One of the seven step ids.
-   * @param {Object} [ctx]
-   * @param {Object} [ctx.metrics]  Numbers for the status line (`event.metrics`); missing ones read as 0.
-   *        Without metrics there is no status line (`live` is null).
-   * @param {string} [ctx.eventKey]  `i18nKey` of the event being replayed; picks the highlighted line.
-   * @param {?string} [ctx.lineLabel]  The line to highlight, overriding `eventKey` (null = none).
-   * @returns {?{stepId: string, index: number, total: number, titleKey: string, title: string,
-   *   keys: {what: string, why: string, how: string}, what: string, why: string, how: string,
-   *   lines: Array<{label: string, indent: number, key: string, text: string, active: boolean}>,
-   *   activeLabel: ?string, live: ?{key: string, args: Object, text: string}}}
-   *   `null` for an unknown step id. `activeLabel` is the label of the highlighted line (null when none).
+   * Everything the card shows for a step id in the current language; null for an unknown id.
+   * `ctx.metrics`: numbers for the status line (missing ones read as 0; without metrics `live` is null);
+   * `ctx.lineLabel` (null = none) overrides `ctx.eventKey`, the `i18nKey` of the replayed event, to pick the line.
    */
   function viewModel(stepId, ctx) {
     const data = SG.explain && typeof SG.explain.get === 'function' ? SG.explain.get(stepId) : null;
@@ -90,10 +70,6 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // DOM
-  // ---------------------------------------------------------------------------------------------
-
   function html(doc, tag, attrs, children) {
     const el = doc.createElement(tag);
     Object.keys(attrs || {}).forEach(function (name) {
@@ -115,25 +91,9 @@
   }
 
   /**
-   * Renders the card into `rootEl`. It owns the content of that element.
-   * @param {Element} rootEl  The element that holds the card (a step of the Help dialog).
-   * @param {{compact?: boolean}} [options]  `compact`: no kicker and no title (the host has its own heading).
-   * @returns {{
-   *   show: function(string, Object=): void,
-   *   setLine: function(?string): void,
-   *   setMetrics: function(?Object): void,
-   *   clear: function(): void,
-   *   getStepId: function(): ?string,
-   *   refresh: function(): void,
-   *   destroy: function(): void
-   * }}
-   *   `show(stepId, ctx)` shows a step with the context of `viewModel` (`metrics`, `eventKey`, `lineLabel`);
-   *   `setLine(label)` highlights one pseudocode line (null: none) without touching the rest;
-   *   `setMetrics(metrics)` updates only the status line;
-   *   `clear()` goes back to the "start a generation" text;
-   *   `getStepId()` the step on show (null when cleared);
-   *   `refresh()` re-translates and redraws (done by itself on `SG.i18n.onChange`);
-   *   `destroy()` removes the listener and the card.
+   * Renders the card into `rootEl` and owns its content; `compact`: no kicker and no title. Re-translates itself on
+   * `SG.i18n.onChange`. Returns { show(stepId, ctx) (ctx as in `viewModel`), setLine(label|null), setMetrics(metrics|null),
+   * clear() (back to the "start a generation" text), getStepId(), refresh(), destroy() }.
    */
   function create(rootEl, options) {
     if (!rootEl || typeof rootEl.appendChild !== 'function') {
@@ -274,10 +234,6 @@
     viewModel: viewModel,
     create: create
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Locale fragment
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

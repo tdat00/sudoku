@@ -1,43 +1,25 @@
 /**
- * Help dialog: `SG.help`.
- *
- * Plugged in through the optional-module hook of js/ui/app.js (`init(SG.app)`): the HELP DIALOG, opened by
- * the Help button (`action { id: 'help' }`), has five tabs (variant rules,
- *    difficulty and the technique ladder, how generation works, controls and keys, about). The texts are
- *    locale keys `help.*`; what the registries already know (variant names, options, levels, technique names
- *    and descriptions, step names) is READ from them and never copied, so the help cannot drift away from
- *    the code.
+ * `SG.help`: the Help dialog, opened by the Help button (`action { id: 'help' }`) through the optional-module hook
+ * of js/ui/app.js (`init(SG.app)`). Five tabs: variant rules, difficulty and the technique ladder, how generation
+ * works, controls and keys, about. Texts are locale keys `help.*`; what the registries already know (variant names,
+ * options, levels, technique names and descriptions, step names) is READ from them and never copied, so the help
+ * cannot drift away from the code.
  *
  * Pure helpers (no DOM, used by the tests): `entries`, `ladder`, `steps`, `shortcuts`, `controlsGlossary`,
- * `illustration`, `requiredKeys`.
+ * `illustration`, `requiredKeys` (every translation key the help reads, own and foreign), plus `TAB_IDS`.
+ * API: init(app) -> boolean (idempotent), open(options?) (the modal handle of `SG.app.openModal`, or null without a
+ * DOM / before init; `options.tab`: 'variants' | 'difficulty' | 'generation' | 'shortcuts' | 'about';
+ * `options.variantId` opens that variant on the variants tab), close(), destroy(), `illustration(id)` ->
+ * `{ variantId, width, height, viewBox, markup, cells }` or null.
  *
- * ---------------------------------------------------------------------------------------------------------
- * PUBLIC API (`SG.help`)
- * ---------------------------------------------------------------------------------------------------------
- *   init(app)             -> boolean. Idempotent. Listens to `action { id: 'help' }`. `app` is `SG.app`.
- *   open(options?)        -> the modal handle of `SG.app.openModal`, or null (no DOM / not initialised).
- *                            `options.tab`: 'variants' | 'difficulty' | 'generation' | 'shortcuts' | 'about';
- *                            `options.variantId`: opens that variant on the variants tab.
- *   close()               -> closes the dialog.
- *   destroy()             -> removes everything the module added.
- *   TAB_IDS               constant.
- *   entries(variantList?) -> the variant help registry (see `entries`).
- *   ladder()              -> the difficulty ladder rows and the variant-specific techniques.
- *   steps()               -> the seven generation steps as translation keys.
- *   shortcuts()           -> the groups of keyboard shortcuts.
- *   controlsGlossary()    -> the controls and what they do, as translation keys.
- *   illustration(id)      -> `{ variantId, width, height, viewBox, markup, cells }` or null.
- *   requiredKeys()        -> every translation key the help reads from other files or from its own fragment.
- *
- * Keycaps ("Esc", "Ctrl", arrows) are printed on the keyboard and are the same in both languages, so they
- * live in `shortcuts()` as plain text; everything else goes through `SG.i18n.t`.
+ * Keycaps ("Esc", "Ctrl", arrows) are printed on the keyboard and are the same in both languages, so they live in
+ * `shortcuts()` as plain text; everything else goes through `SG.i18n.t`.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first instance on repeated loads: a running dialog must survive.
   if (SG.help && typeof SG.help.init === 'function') return;
 
   const TAB_IDS = Object.freeze(['variants', 'difficulty', 'generation', 'shortcuts', 'about']);
@@ -50,15 +32,10 @@
     return SG.i18n.t(key, args);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The variant help registry
-  // ---------------------------------------------------------------------------------------------
-
   /**
-   * The picture each variant gets: 'board' draws the empty board of the variant (regions, diagonals,
-   * windows, overlapping grids); 'killer', 'signs' and 'word' are small samples of what is special.
-   * Every registered variant needs an entry here AND the keys `help.variant.<id>.rules|special|figure`
-   * (tests/suites/help.test.js fails otherwise).
+   * The picture each variant gets: 'board' draws the empty board of the variant (regions, diagonals, windows,
+   * overlapping grids); 'killer', 'signs' and 'word' are small samples of what is special. Every registered variant
+   * needs an entry here AND the keys `help.variant.<id>.rules|special|figure` (tests/suites/help.test.js fails otherwise).
    */
   const VARIANT_HELP = Object.freeze({
     classic4: { figure: 'board' },
@@ -87,13 +64,10 @@
   }
 
   /**
-   * The help entry of one variant definition.
-   * @param {Object} def  A variant definition (a registered one, or any object with `id`, `i18nKey`, ...).
-   * @returns {Object} `{ id, generic, nameKey, groupId, groupKey, summaryKey, rulesKey, specialKey,
-   *          figureKey, figure, digits, levels, symbolModes, options: [{ id, labelKey, hintKey }], keys }`.
-   *          `generic` is
-   *          true when the help has no hand-written text for the variant: the dialog then shows its name,
-   *          summary and options only, and the test suite reports the missing entry.
+   * The help entry of one variant definition: `{ id, generic, nameKey, groupId, groupKey, summaryKey, rulesKey,
+   * specialKey, figureKey, figure, digits, levels, symbolModes, options: [{ id, labelKey, hintKey }], keys }`.
+   * `generic` is true when the help has no hand-written text for the variant: the dialog then shows its name, summary
+   * and options only, and the test suite reports the missing entry.
    */
   function entryOf(def) {
     const id = String(def && def.id);
@@ -131,20 +105,11 @@
     return entry;
   }
 
-  /**
-   * The variant help registry: one entry per variant, in registry order.
-   * @param {Object[]} [variantList]  Defaults to `SG.variants.list()`; tests inject a list with a fake
-   *        variant.
-   * @returns {Object[]} See `entryOf`.
-   */
+  /** One entry per variant, in registry order (`variantList` defaults to `SG.variants.list()`; tests inject a fake variant). */
   function entries(variantList) {
     const list = Array.isArray(variantList) ? variantList : SG.variants.list();
     return list.map(entryOf);
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Illustrations (pure: markup strings)
-  // ---------------------------------------------------------------------------------------------
 
   const sampleCache = new Map();
 
@@ -159,7 +124,6 @@
     });
   }
 
-  /** A fixed valid 9x9 grid: the numbers behind the Killer sums and the Greater-Than signs. */
   function sampleSolution() {
     return cached('solution', function () {
       const base = classicBase();
@@ -212,15 +176,7 @@
     return { model: model, state: {}, opts: {}, crop: null };
   }
 
-  /**
-   * The picture of a variant as SVG markup built by the board renderer (so it follows the board theme).
-   * Killer and Greater-Than show the top-left box of a sample puzzle, Wordoku a board with its key word,
-   * everything else the empty board with its regions, diagonals, windows or overlapping grids.
-   * @param {string} variantId  A registered variant id.
-   * @returns {?{variantId: string, width: number, height: number, viewBox: string, markup: string,
-   *          cells: number}}  `markup` goes inside an `<svg class="sgb" viewBox="...">`; null when the
-   *          renderer is missing or the variant cannot be drawn.
-   */
+  /** The picture of a variant as SVG markup built by the board renderer (so it follows the board theme): Killer and Greater-Than show the top-left box of a sample puzzle, Wordoku a board with its key word, everything else the empty board. `markup` goes inside an `<svg class="sgb" viewBox="...">`; null when the renderer is missing or the variant cannot be drawn. */
   function illustration(variantId) {
     const BV = SG.boardView;
     if (!BV || typeof BV.renderMarkup !== 'function' || !SG.variants.has(variantId)) return null;
@@ -245,10 +201,6 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Difficulty ladder, generation steps, shortcuts, controls (pure data, as translation keys)
-  // ---------------------------------------------------------------------------------------------
-
   function techniqueItem(tech) {
     const weights = SG.difficulty && SG.difficulty.WEIGHTS ? SG.difficulty.WEIGHTS : {};
     return {
@@ -267,16 +219,14 @@
   }
 
   /**
-   * The difficulty ladder of rating v2 as the registries define it: one row per level with its score band and
-   * the 9x9 clue range, and the techniques that can first appear at that level. A technique of p points adds
-   * at least 1.25 x p to the score (`SG.difficulty.SCORING.peakBound`), so it can first appear in the band
-   * whose upper edge lies above that: the pruning rule of `SG.difficulty.spec`. The techniques of a level are
-   * listed in the order the solver tries them; the levels at the top add none.
-   * @returns {{levels: Object[], variantGroups: Object[], scoring: Object}}  `levels[i]` is `{ level,
-   *          nameKey, descKey, groups, groupKeys, techniques, minClues, maxClues, minScore, maxScore }`
-   *          (`groups` are the groups of `techniques`, `maxScore` is Infinity for the last level, the clue
-   *          counts are the 9x9 numbers); `variantGroups` holds the groups with a `variantScope` (`{ group,
-   *          groupKey, techniques }`). Every technique item has its `points`.
+   * The difficulty ladder as the registries define it: one row per level with its score band and the 9x9 clue range,
+   * and the techniques that can first appear at that level. A technique of p points adds at least 1.25 x p to the
+   * score (`SG.difficulty.SCORING.peakBound`), so it can first appear in the band whose upper edge lies above that:
+   * the pruning rule of `SG.difficulty.spec`. The techniques of a level are listed in the order the solver tries
+   * them; the levels at the top add none.
+   * Returns { levels, variantGroups, scoring }: `levels[i]` is `{ level, nameKey, descKey, groups, groupKeys,
+   * techniques, minClues, maxClues, minScore, maxScore }` (`maxScore` is Infinity for the last level); `variantGroups`
+   * holds the groups with a `variantScope` (`{ group, groupKey, techniques }`). Every technique item has its `points`.
    */
   function ladder() {
     const D = SG.difficulty;
@@ -319,10 +269,6 @@
     return { levels: levels, variantGroups: variantGroups, scoring: D.SCORING };
   }
 
-  /**
-   * The seven generation steps, in order.
-   * @returns {Array<{id: string, nameKey: string, whatKey: string, whyKey: string}>}
-   */
   function steps() {
     const ids = SG.events && SG.events.STEP_IDS ? SG.events.STEP_IDS : SG.explain.STEP_IDS;
     return ids.map(function (id) {
@@ -339,12 +285,7 @@
     return { id: id, keys: keys, textKey: 'help.keys.' + id };
   }
 
-  /**
-   * The keyboard shortcuts of the page, in groups. `keys` is a list of alternatives, each a list of keycaps
-   * pressed together. A group may carry a `noteKey`: a sentence shown above its rows.
-   * @returns {Array<{id: string, titleKey: string, noteKey: ?string, rows: Array<{id: string,
-   *          keys: string[][], textKey: string}>}>}
-   */
+  /** The keyboard shortcuts of the page, in groups. `keys` is a list of alternatives, each a list of keycaps pressed together. A group may carry a `noteKey`: a sentence shown above its rows. */
   function shortcuts() {
     const arrows = [['\u2191'], ['\u2193'], ['\u2190'], ['\u2192']];
     return [
@@ -382,11 +323,7 @@
     ];
   }
 
-  /**
-   * The controls of the page and what they do: `{ labelKey, textKey }` pairs of existing translation keys
-   * (the hints of the form controls are reused, not copied). The last one is the replay under the board.
-   * @returns {Array<{id: string, labelKey: string, textKey: string}>}
-   */
+  /** `{ labelKey, textKey }` pairs of existing translation keys (the hints of the form controls are reused, not copied); the last one is the replay under the board. */
   function controlsGlossary() {
     const pair = function (id, labelKey, textKey) {
       return { id: id, labelKey: labelKey, textKey: textKey };
@@ -436,10 +373,6 @@
     'help.about.tech.title', 'help.about.tech.text', 'help.about.credits.title', 'help.about.credits.text',
   ]);
 
-  /**
-   * Every translation key the help reads, own and foreign, for the variants registered now.
-   * @returns {string[]} Sorted, without duplicates.
-   */
   function requiredKeys() {
     const set = new Set(UI_KEYS);
     const add = function (key) { if (typeof key === 'string' && key !== '') set.add(key); };
@@ -471,11 +404,6 @@
     return Array.from(set).sort();
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // DOM helpers
-  // ---------------------------------------------------------------------------------------------
-
-  /** Creates an element; attributes of null / undefined / false are skipped, `true` gives ''. */
   function h(tag, attrs, children) {
     const node = document.createElement(tag);
     Object.keys(attrs || {}).forEach(function (name) {
@@ -510,15 +438,10 @@
     }
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The help dialog
-  // ---------------------------------------------------------------------------------------------
-
   let app = null;
   let initialised = false;
   let offAction = null;
 
-  /** State of the dialog that is open (null when closed). */
   let dialog = null;
 
   function listText(keys, prefix) {
@@ -544,12 +467,7 @@
     ]);
   }
 
-  /**
-   * The text of a hint as paragraphs, like the tooltips of the form: a blank line starts a new paragraph and
-   * `**text**` is bold (the values of an option). Built with DOM nodes, never innerHTML.
-   * @param {string} text
-   * @returns {Element[]}
-   */
+  /** A hint as paragraphs, like the tooltips of the form: a blank line starts a paragraph, `**text**` is bold. Built with DOM nodes, never innerHTML. */
   function richText(text) {
     return String(text).split(/\n{2,}/).map(function (paragraph) {
       const parts = [];
@@ -662,7 +580,6 @@
     }, []));
   }
 
-  /** The names of the technique groups that can first appear at a level, or a dash when there are none. */
   function groupNames(row) {
     return row.groupKeys.length > 0 ? row.groupKeys.map(function (key) { return t(key); }).join(', ')
       : '\u2014';
@@ -964,11 +881,6 @@
     dialog.scroller.scrollTop = top;
   }
 
-  /**
-   * Opens the help dialog (or brings the open one to the front).
-   * @param {{tab?: string, variantId?: string}} [options]
-   * @returns {?Object} The modal handle of `SG.app.openModal`; null without a DOM or before `init`.
-   */
   function open(options) {
     if (typeof document === 'undefined' || app === null || typeof app.openModal !== 'function') return null;
     const o = options || {};
@@ -1025,20 +937,10 @@
     }
   }
 
-  /** Closes the help dialog, if it is open. */
   function close() {
     if (dialog !== null && dialog.handle) dialog.handle.close();
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Module hook
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Plugs the help into the application: the Help button opens the dialog.
-   * @param {Object} appApi  `SG.app`.
-   * @returns {boolean} True when the module is running (also on a repeated call).
-   */
   function init(appApi) {
     if (initialised) return true;
     if (!appApi || typeof appApi.on !== 'function') return false;
@@ -1050,7 +952,6 @@
     return true;
   }
 
-  /** Removes the dialog and the listeners. */
   function destroy() {
     close();
     if (typeof offAction === 'function') offAction();
@@ -1073,10 +974,6 @@
     illustration: illustration,
     requiredKeys: requiredKeys
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Strings of the help
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

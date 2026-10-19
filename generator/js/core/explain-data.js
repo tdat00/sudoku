@@ -1,28 +1,21 @@
 /**
- * Explanation data for the seven pipeline steps (design.md section 7.4): what the step does, why, and how,
- * its pseudocode, and a status line that follows the metrics while the step runs.
- *
- * This file is pure data. It holds translation KEYS only, never display text: the texts live in the locale
- * packs (js/ui/locale.en.js, locale.vi.js), which must define every key that `SG.explain.keys()` lists. The
- * UI card (js/ui/explain.js) reads this data; nothing here touches the DOM.
+ * Explanation data for the seven pipeline steps: what a step does, why and how, its pseudocode, and a status line that
+ * follows the metrics while it runs. Pure data: translation KEYS only (the texts live in js/ui/locale.*.js, which must
+ * define every key `SG.explain.keys()` lists); nothing here touches the DOM.
  *
  * Per step (`SG.explain[stepId]`):
- *  - `stepId`, `index` (1..7), `name` (key of the step title).
- *  - `what`, `why`, `how`  keys of the three fixed parts of the card.
- *  - `pseudocode`  the listing as an array of lines `{ label, indent, key }`. `label` names the line so the
- *    UI can highlight it, `indent` is the nesting depth, `key` is the translation key of the line's text.
- *    The comment beside every line gives the text the locale packs should carry.
- *  - `highlight`  which line is executing while an event is replayed: event `i18nKey` -> line `label`.
- *  - `liveKey` and `liveArgs`  the key of the status line and the names of its placeholders.
- *  - `live(metrics, t)`  returns `{ key, args }` for the status line; every placeholder is read from
- *    `metrics` (missing or non-numeric values read as 0). `t` (elapsed ms) is accepted and unused.
+ *  - `stepId`, `index` (1..7), `name`, `what` / `why` / `how` (keys of the fixed parts of the card).
+ *  - `pseudocode`  lines `{ label, indent, key }`: `label` lets the UI highlight the line, `indent` is the nesting
+ *    depth. The comment beside every line below is the text the locale packs should carry.
+ *  - `highlight`  event `i18nKey` -> line `label`, for the line executing while an event is replayed.
+ *  - `liveKey` and `liveArgs`  key of the status line and names of its placeholders; `live(metrics, t)` returns
+ *    `{ key, args }`, reading every placeholder from `metrics` (missing or non-numeric values read as 0); `t` is unused.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  /** The seven step ids in pipeline order (the same list as `SG.events.STEP_IDS`). */
   const STEP_IDS = ['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune'];
 
   function makeLive(key, names) {
@@ -36,13 +29,6 @@
     };
   }
 
-  /**
-   * @param {string} id
-   * @param {number} index
-   * @param {Array<[string, number]>} lines  `[label, indent]` per pseudocode line.
-   * @param {Object<string, string>} highlight  Event key -> line label.
-   * @param {string[]} liveArgs
-   */
   function describeStep(id, index, lines, highlight, liveArgs) {
     const prefix = 'explain.' + id + '.';
     return {
@@ -156,30 +142,18 @@
     'tune.final': 'package'
   }, ['clues', 'score']);
 
-  /**
-   * @param {string} stepId
-   * @returns {?Object} The explanation of a step, or null for an unknown id.
-   */
   function get(stepId) {
     return STEP_IDS.indexOf(stepId) === -1 ? null : explain[stepId];
   }
 
-  /**
-   * The pseudocode line to highlight while an event is replayed.
-   * @param {string} stepId
-   * @param {string} i18nKey  The key of the event.
-   * @returns {?string} A line label, or null when the event executes no particular line.
-   */
+  // The line label to highlight for an event, or null when it executes no particular line.
   function lineFor(stepId, i18nKey) {
     const step = get(stepId);
     if (step === null || !Object.prototype.hasOwnProperty.call(step.highlight, i18nKey)) return null;
     return step.highlight[i18nKey];
   }
 
-  /**
-   * @returns {string[]} Every translation key this file uses (step names, what / why / how, code lines and
-   *          status lines), sorted, without duplicates. Both locale packs must define them all.
-   */
+  // Every translation key this file uses, sorted, without duplicates.
   function keys() {
     const all = [];
     STEP_IDS.forEach(function (id) {

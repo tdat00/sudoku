@@ -1,84 +1,64 @@
 /**
- * Print / PDF and text export (task T-7.1; design.md sections 10.6 and 14.1) and the hand-off of a puzzle to
- * the sudoku-player web app (task T-7.8; design.md section 10.9): `SG.exportUi`. The Print button of the page
- * opens one dialog: the saved puzzles (`SG.history`) to choose from, 1, 2 or 4 puzzles per page and an
- * optional solution page for each (the puzzle on screen is ticked at first; a puzzle that is not on screen
- * is generated again from its saved settings). The "Export" button opens a dialog with the same list and
- * the readable text of the ticked puzzles, to copy. The "Play" button of the page calls `playOnline()`,
- * which opens every puzzle of the list in the player in a new tab (the one on screen is shown first).
+ * `SG.exportUi`: Print / PDF and text export, and the hand-off of puzzles to the sudoku-player web app. The Print
+ * button opens one dialog: the saved puzzles (`SG.history`) to choose from, 1, 2 or 4 per page and an optional solution
+ * page for each (the puzzle on screen is ticked at first; a puzzle that is not on screen is generated again from its
+ * saved settings). The "Export" button opens a dialog with the same list and the readable text of the ticked puzzles,
+ * to copy. The "Play" button calls `playOnline()`, which opens every puzzle of the list in the player in a new tab (the
+ * one on screen is shown first).
+ * PURE (no DOM, runs in Node): `toJson`, `buildPrintLayout`, `boardSvg`, `printTokens`, `buildPlayLink`,
+ * `buildExportText`. DOM: the dialogs, the print path and the page's `<meta name="sg-player-url">`
+ * (`pagePlayerBase`). Strings: the `export.*` fragment at the bottom of this file.
  *
- * Two layers, so that what matters runs in Node:
- *  - PURE (no DOM): `toJson`, `buildPrintLayout`, `boardSvg`, `printTokens`, `buildPlayLink`,
- *    `buildExportText`.
- *  - DOM: the dialogs, the print path and the page's `<meta name="sg-player-url">` (`pagePlayerBase`).
- *
- * ---------------------------------------------------------------------------------------------------------
- * PUBLIC API (`SG.exportUi`)
- * ---------------------------------------------------------------------------------------------------------
- *   init(app)            Idempotent. Listens to the 'action' event of `SG.app`: `{ id: 'export' }` (the Print
- *                        button) opens the dialog, `{ id: 'exportCode' }` (the Export button) calls
- *                        `openText()`, `{ id: 'play' }` (the Play button) calls `playOnline()`.
- *   open()               Opens the dialog (or focuses the open one). Returns the modal handle, null without a
- *                        DOM or an app.
- *   openText()           Opens the Export dialog: the list of saved puzzles and, in a read-only box, the text
- *                        of the ticked ones with a Copy button. Null without a DOM or an app.
- *   buildExportText(items)  -> string. The readable text of puzzles, `items` = `[{ result }]`. Each puzzle is
- *                        a header line `#number,variant,level,seed` (names in the language of the page, `x`
- *                        for the times sign) and its grid, one board row per line: a digit is a clue (10 is
- *                        `A`, 11 `B`, ...), `.` an empty cell and `_` a place of the canvas without a cell
- *                        (Samurai and the like). Puzzles are separated by a blank line. Only the clues are
- *                        written, plus, for Jigsaw, Killer, Greater-Than and Wordoku, the structure lines
- *                        of `structureLines` that Sudoku Player needs to rebuild the board.
- *   gridLines(result)    -> string[]. The grid lines of one puzzle, as above.
- *   structureLines(result) -> string[]. `regions:`, `cages:`, `signs:`, or `letters:` + `word-line:` of a
- *                        puzzle whose board the clues do not fix; [] for every other variant.
- *   close() / closeText()  Close the dialogs.
- *   toJson(result, ctx?) The JSON document of design.md 14.1 as plain data: `format`, `generatedAt`,
- *                        `variantId`, `variantOptions`, `difficulty`, `seed`, `symmetry`, `symbolMode`,
- *                        `digits`, `cellCount`, `layout`, `givens`, `solution`, `cages`, `inequalities`,
- *                        `stats`, plus the additive fields `locale`, `labels` (the names of the variant, the
- *                        level and the hardest technique in the language of the export, rule L6),
- *                        `symbols`, `wordoku` (Wordoku only), `digOrder`, `maxAttempts`, `warnings` and
- *                        `model` (the plain-data ModelSpec of `SG.model.create`, so that the player rebuilds
- *                        the board without any variant code). It is the document of the player link.
- *                        `ctx`: `{ generatedAt?: string, locale?: string }`.
- *   buildPlayLink(result, opts?) -> Promise<{ url, token, base, length, long }>. The link that opens the
- *                        puzzle in the player: `SG.exchange.playerUrl(base, SG.exchange.encode(toJson(...)))`.
- *                        `opts`: `{ base?, generatedAt?, locale?, compress? }`; `base` defaults to
- *                        `playerBase()`. Rejects with the `exchange.*` errors (`exchange.invalidUrl` for a
- *                        bad `base`). `long` is true above `LONG_LINK_CHARS` characters.
- *   buildPlayBundle(results, opts?) -> Promise<{ url, token, base, count, active, length, long }>. The link
- *                        that opens several puzzles in the player: the text of `buildExportText(results)` as
- *                        one compressed base64url text token (`SG.exchange.encodeText`), then `&active=<n>`
- *                        (the 1-based number of the puzzle to show first). `opts`: `{ base?, active?
- *                        (0-based index), compress? }`. Rejects like `buildPlayLink`.
- *   playerBase(content?) The player's address: `content` (the `content` of the page's
- *                        `<meta name="sg-player-url">`) when it is not blank, else `PLAYER_URL_DEFAULT`.
- *                        `pagePlayerBase()` reads that tag from the page.
- *   openPlayLink(url)    `window.open(url, '_blank', 'noopener')`: the player opens in a new tab.
- *   playOnline()         -> Promise. The Play button: builds the link of every puzzle of the saved list (and
- *                        the one on screen) with the one on screen active, opens it and tells a failure or a
- *                        very long link in a toast. Puzzles that are not at hand are generated again first
- *                        in a small dialog that ends with an "Open the player" button.
+ * API
+ *   init(app)   Idempotent. Listens to the 'action' event of `SG.app`: `{ id: 'export' }` (Print) opens the dialog,
+ *               `{ id: 'exportCode' }` calls `openText()`, `{ id: 'play' }` calls `playOnline()`.
+ *   open() / openText() / close() / closeText()  The Print dialog / the Export dialog (list of saved puzzles and a
+ *               read-only text box with a Copy button); an open one is focused instead. They return the modal
+ *               handle, null without a DOM or an app.
+ *   buildExportText(items) -> string. The readable text of puzzles, `items` = `[{ result }]`. Each puzzle is a
+ *               header line `#number,variant,level,seed` (names in the language of the page, `x` for the times sign)
+ *               and its grid, one board row per line: a digit is a clue (10 is `A`, 11 `B`, ...), `.` an empty cell
+ *               and `_` a place of the canvas without a cell (Samurai and the like). Puzzles are separated by a
+ *               blank line. Only the clues are written, plus, for Jigsaw, Killer, Greater-Than and Wordoku, the
+ *               `structureLines` that Sudoku Player needs to rebuild the board.
+ *   gridLines(result) -> string[]; structureLines(result) -> string[] (`regions:`, `cages:`, `signs:`, or `letters:`
+ *               + `word-line:`; [] for every other variant).
+ *   toJson(result, ctx?)  The JSON document of a puzzle as plain data: `format`, `generatedAt`, `variantId`,
+ *               `variantOptions`, `difficulty`, `seed`, `symmetry`, `symbolMode`, `digits`, `cellCount`, `layout`,
+ *               `givens`, `solution`, `cages`, `inequalities`, `stats`, plus the additive fields `locale`, `labels`
+ *               (names of the variant, the level and the hardest technique in the language of the export),
+ *               `symbols`, `wordoku` (Wordoku only), `digOrder`, `maxAttempts`, `warnings` and `model` (the
+ *               plain-data ModelSpec of `SG.model.create`, so the player rebuilds the board without any variant
+ *               code). `ctx`: `{ generatedAt?, locale? }`.
+ *   buildPlayLink(result, opts?) -> Promise<{ url, token, base, length, long }>: `SG.exchange.playerUrl(base,
+ *               SG.exchange.encode(toJson(...)))`. `opts`: `{ base?, generatedAt?, locale?, compress? }`; `base`
+ *               defaults to `playerBase()`. Rejects with the `exchange.*` errors. `long` is true above
+ *               `LONG_LINK_CHARS`.
+ *   buildPlayBundle(results, opts?) -> Promise<{ url, token, base, count, active, length, long }>: several puzzles as
+ *               one compressed text token of `buildExportText(results)` (`SG.exchange.encodeText`) plus
+ *               `&active=<n>` (the 1-based puzzle to show first). `opts`: `{ base?, active? (0-based index),
+ *               compress? }`.
+ *   playerBase(content?)  `content` of `<meta name="sg-player-url">` when not blank, else `PLAYER_URL_DEFAULT`;
+ *               `pagePlayerBase()` reads the tag. `openPlayLink(url)`: `window.open(url, '_blank', 'noopener')`.
+ *   playOnline() -> Promise. Builds the link of every puzzle of the saved list (and the one on screen) with the one
+ *               on screen active, opens it and tells a failure or a very long link in a toast. Puzzles that are not
+ *               at hand are generated again first in a small dialog that ends with an "Open the player" button.
  *   buildPrintLayout(count, perPage, includeSolutions)  The page plan of a print job.
- *   boardSvg(result, opts?)  A standalone SVG document of the puzzle (givens) or its solution, drawn from the
- *                        result itself, whatever the replay of the board shows right now.
+ *   boardSvg(result, opts?)  A standalone SVG of the puzzle (givens) or its solution, drawn from the result itself,
+ *               whatever the replay of the board shows right now.
  *   printItems(items, opts?) -> Promise<layout>. Builds `#print-root`, waits for its pictures and calls
- *                        `window.print()` (`opts.print` replaces it). `items` = `[{ result, number }]`.
- *   buildPrintRoot / clearPrint  The print container itself (css/print.css hides everything else).
- * Strings: the `export.*` fragment at the bottom of this file.
+ *               `window.print()` (`opts.print` replaces it). `items` = `[{ result, number }]`.
+ *               `buildPrintRoot` / `clearPrint`: the print container (css/print.css hides everything else).
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first definition on repeated loads.
   if (SG.exportUi && typeof SG.exportUi.toJson === 'function') return;
 
   const FORMAT = 'sudoku-generator/v1';
   const PER_PAGE_CHOICES = Object.freeze([1, 2, 4, 6]);
-  /** Columns and rows of the puzzles on a page, per number of puzzles per page. */
   const PAGE_GRID = Object.freeze({ 1: [1, 1], 2: [1, 2], 4: [2, 2], 6: [2, 3] });
   const PRINT_ROOT_ID = 'print-root';
   const IMAGE_WAIT_MS = 4000;
@@ -89,10 +69,6 @@
   /** A player link longer than this many characters may be cut by chat apps and servers. */
   const LONG_LINK_CHARS = 100000;
 
-  // ---------------------------------------------------------------------------------------------
-  // Texts and small helpers
-  // ---------------------------------------------------------------------------------------------
-
   function t(key, args) {
     return SG.i18n && typeof SG.i18n.t === 'function' ? SG.i18n.t(key, args) : key;
   }
@@ -101,7 +77,6 @@
     return !!(SG.i18n && typeof SG.i18n.has === 'function' && SG.i18n.has(key));
   }
 
-  /** The translated name of an id (`variant.killer`, `difficulty.hard`), the id itself when unknown. */
   function nameOf(prefix, id) {
     return hasText(prefix + id) ? t(prefix + id) : String(id === null || id === undefined ? '' : id);
   }
@@ -134,12 +109,6 @@
     return seed === null || seed === undefined || seed === '' ? '' : String(seed);
   }
 
-  /**
-   * What the headers and captions say about a result.
-   * @param {Object} result  A `PuzzleResult`.
-   * @returns {{variantId: string, variantName: string, level: string, levelName: string, seed: string,
-   *   clues: number, cells: number}}
-   */
   function summarize(result) {
     const config = result.config || {};
     const rating = result.rating || {};
@@ -156,10 +125,6 @@
       cells: model ? model.cellCount : result.givens.length
     };
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // JSON (design.md 14.1)
-  // ---------------------------------------------------------------------------------------------
 
   function numbers(list) {
     return Array.from(list || []);
@@ -190,13 +155,7 @@
     return out;
   }
 
-  /**
-   * The JSON document of a puzzle (design.md section 14.1), as plain data. Everything needed to rebuild the
-   * puzzle is in it; it is the document of the player link (`buildPlayLink`).
-   * @param {Object} result  A `PuzzleResult`.
-   * @param {{generatedAt?: string, locale?: string}} [ctx]
-   * @returns {Object}
-   */
+  /** The JSON document of a puzzle as plain data: everything needed to rebuild it; it is the document of the player link (`buildPlayLink`). */
   function toJson(result, ctx) {
     const c = ctx || {};
     const model = result.model;
@@ -267,35 +226,16 @@
     return data;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Play online: the hand-off to sudoku-player (design.md section 10.9)
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * The address of the player.
-   * @param {string} [content]  The `content` of `<meta name="sg-player-url">`; blank or missing = the default.
-   * @returns {string}
-   */
   function playerBase(content) {
     return typeof content === 'string' && content.trim() !== '' ? content.trim() : PLAYER_URL_DEFAULT;
   }
 
-  /** The player's address as the page states it (DOM); the default without a page or a meta tag. */
   function pagePlayerBase() {
     const meta = typeof document !== 'undefined' && document.querySelector
       ? document.querySelector('meta[name="' + PLAYER_META_NAME + '"]') : null;
     return playerBase(meta ? meta.getAttribute('content') : null);
   }
 
-  /**
-   * The link that opens a puzzle in the player: the puzzle document (`toJson`, with its `model`) in the
-   * fragment of the player's address.
-   * @param {Object} result  A `PuzzleResult` (only the document matters).
-   * @param {{base?: string, generatedAt?: string, locale?: string, compress?: boolean}} [options]
-   *        `base`: the player's address (default `pagePlayerBase()`); `compress: false` forces the plain token.
-   * @returns {Promise<{url: string, token: string, base: string, length: number, long: boolean}>}
-   *          `long`: the link is longer than `LONG_LINK_CHARS`. Rejects with the `exchange.*` errors.
-   */
   function buildPlayLink(result, options) {
     const o = options || {};
     return Promise.resolve().then(function () {
@@ -308,17 +248,6 @@
     });
   }
 
-  /**
-   * The link that opens several puzzles in the player: their readable text (`buildExportText`, which the
-   * player imports) as one compressed base64url token in the fragment of the player's address, and the
-   * number of the puzzle to show first.
-   * @param {Object[]} results  `PuzzleResult`s, in the order of the list.
-   * @param {{base?: string, active?: number, compress?: boolean}} [options]  `active`: the index (0-based) of
-   *        the puzzle to show first (default 0); `base`: the player's address (default `pagePlayerBase()`);
-   *        `compress: false` forces the plain token.
-   * @returns {Promise<{url: string, token: string, base: string, count: number, active: number,
-   *   length: number, long: boolean}>} Rejects with the `exchange.*` errors.
-   */
   function buildPlayBundle(results, options) {
     const o = options || {};
     return Promise.resolve().then(function () {
@@ -334,14 +263,9 @@
     });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Export as readable text
-  // ---------------------------------------------------------------------------------------------
-
   const EMPTY_CELL = '.';
   const OFF_BOARD = '_';
 
-  /** One character for a value: a digit up to 9, then A, B, C... (10 is A). An empty cell is a dot. */
   function cellChar(value) {
     if (!(value > 0)) return EMPTY_CELL;
     return value <= 9 ? String(value) : String.fromCharCode(55 + value);
@@ -352,12 +276,7 @@
     return String(text).replace(/\u00d7/g, 'x').replace(/[,\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
   }
 
-  /**
-   * The grid of a puzzle as text lines, one board row per line: a digit is a clue, `.` an empty cell and `_`
-   * a place of the canvas that belongs to no cell (the corners between the grids of Samurai and the like).
-   * @param {Object} result  A `PuzzleResult`.
-   * @returns {string[]}
-   */
+  /** The grid of a puzzle as text lines, one board row per line: a digit is a clue, `.` an empty cell and `_` a place of the canvas that belongs to no cell (the corners between the grids of Samurai and the like). */
   function gridLines(result) {
     const model = result.model;
     const layout = model.layout;
@@ -373,16 +292,14 @@
   }
 
   /**
-   * The lines under the grid of a puzzle whose board the clues do not fix, so that the player can rebuild it
-   * (a `key: value` line each; no grid row has a colon):
+   * The lines under the grid of a puzzle whose board the clues do not fix, so that the player can rebuild it (a
+   * `key: value` line each; no grid row has a colon):
    *   regions: 111222333 111222333 ...   Jigsaw: the region (1-9) of every cell, one group per board row
    *   cages: 13=r1c1,r1c2; 7=r1c3,r2c3   Killer: `sum=cells` of every cage, in the order of the model
    *   signs: r1c1<r1c2; r2c2<r2c1        Greater-Than: the value of the first cell is less than the second
    *   letters: A D F G L N O R Y         Wordoku: the letter of the values 1..9
    *   word-line: diagonal | row 3 | column 5   Wordoku: where the key word sits (not the word itself)
    * Every other variant is fixed by its name and the grid alone, so it gets no line.
-   * @param {Object} result  A `PuzzleResult`.
-   * @returns {string[]}
    */
   function structureLines(result) {
     const model = result.model;
@@ -414,14 +331,7 @@
     return lines;
   }
 
-  /**
-   * The readable text of puzzles. Every puzzle starts with a header line `#number,variant,level,seed` (the
-   * names in the language of the page, the level reached) and is followed by its grid, one row per line, and,
-   * for the variants whose board is not fixed by the grid (Jigsaw, Killer, Greater-Than, Wordoku), the
-   * structure lines of `structureLines`; puzzles are separated by a blank line. The seed rebuilds the rest.
-   * @param {Array<{result: Object}>} items  The puzzles, in the order they are written.
-   * @returns {string} '' for no puzzle, else the text with a final line break.
-   */
+  /** A header line `#number,variant,level,seed` (names in the page language, the level reached), the grid and the structure lines per puzzle, puzzles separated by a blank line; '' for no puzzle, else the text with a final line break. The seed rebuilds the rest. */
   function buildExportText(items) {
     const blocks = items.map(function (item, i) {
       const s = summarize(item.result);
@@ -431,37 +341,16 @@
     return blocks.length === 0 ? '' : blocks.join('\n\n') + '\n';
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Play online: opening the link
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Opens a player link in a new tab; the new page gets no handle on this one.
-   * @param {string} url
-   */
+  /** The new page gets no handle on this one (`noopener`). */
   function openPlayLink(url) {
     if (typeof root.open === 'function') root.open(url, '_blank', 'noopener');
   }
 
-  /** The long-link notice, as arguments of `export.playOnline.long`. */
   function longLinkArgs(info) {
     return { size: formatNumber(Math.round(info.length / 1000)) };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Print layout
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * The page plan of a print job: which puzzle goes where. Puzzles come first, `perPage` to a page in
-   * reading order; with `includeSolutions` the solutions follow on pages of their own, in the same order.
-   * @param {number} count  Number of puzzles.
-   * @param {number} perPage  1, 2, 4 or 6 (anything else counts as 1).
-   * @param {boolean} [includeSolutions=false]
-   * @returns {{count: number, perPage: number, columns: number, rows: number, puzzlePages: number,
-   *   solutionPages: number, pageCount: number, pages: Array<{kind: string, number: number,
-   *   items: Array<{index: number, slot: number, row: number, column: number}>}>}}
-   */
+  /** The page plan of a print job: puzzles first, `perPage` (1, 2, 4 or 6; anything else counts as 1) to a page in reading order; with `includeSolutions` the solutions follow on pages of their own, in the same order. */
   function buildPrintLayout(count, perPage, includeSolutions) {
     const n = Math.max(0, Math.floor(Number(count)) || 0);
     const per = PER_PAGE_CHOICES.indexOf(perPage) === -1 ? 1 : perPage;
@@ -487,17 +376,7 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // SVG of a puzzle
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * The board tokens for paper: no tint behind the regions and the cages (the thick lines and the dashed
-   * outlines say it), one dark ink for everything that is written or drawn, a dark thin line. The tints
-   * that carry a meaning (diagonals, windows, shared cells, the word line) stay.
-   * @param {Object<string, string>} base  Light-theme values of `SG.boardView.TOKEN_NAMES`.
-   * @returns {Object<string, string>} A new map.
-   */
+  /** The board tokens for paper: no tint behind the regions and the cages (the thick lines and the dashed outlines say it), one dark ink for everything written or drawn, a dark thin line. The tints that carry a meaning (diagonals, windows, shared cells, the word line) stay. */
   function printTokens(base) {
     const out = Object.assign({}, base);
     const ink = base['--sg-board-ink-given'];
@@ -543,18 +422,7 @@
     return desc;
   }
 
-  /**
-   * A standalone SVG document of the puzzle (its givens) or of the solution drawn into the empty cells,
-   * built from the result itself: it does not depend on what the board shows during a replay.
-   * @param {Object} result  A `PuzzleResult`.
-   * @param {Object} [options]
-   * @param {boolean} [options.solution=false]  Draw the solution too (the givens stay bold).
-   * @param {boolean} [options.print=false]  Paper look: `printTokens` and no region tint.
-   * @param {string} [options.symbolMode]  Preferred symbol mode.
-   * @param {boolean} [options.colorAuxSymbol=true]
-   * @param {Object} [options.tokens]  Resolved light-theme tokens (default: read from the page).
-   * @returns {string}
-   */
+  /** A standalone SVG of the puzzle (its givens) or of the solution drawn into the empty cells (`options.solution`; the givens stay bold), built from the result itself so it does not depend on what the board shows during a replay. `options.print`: paper look (`printTokens`, no region tint); `options.tokens`: resolved light-theme tokens (default: read from the page). */
   function boardSvg(result, options) {
     const o = options || {};
     const model = result.model;
@@ -577,11 +445,6 @@
     return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // DOM helpers
-  // ---------------------------------------------------------------------------------------------
-
-  /** Creates an element; attribute values of null / undefined / false are skipped, `true` gives ''. */
   function el(tag, attrs, children) {
     const node = document.createElement(tag);
     Object.keys(attrs || {}).forEach(function (name) {
@@ -595,7 +458,6 @@
     return node;
   }
 
-  /** An element with a translated text; `SG.i18n.applyTo` keeps it in step with the language. */
   function tx(tag, attrs, key, args) {
     const node = el(tag, Object.assign({}, attrs, { 'data-i18n': key }));
     setKey(node, key, args);
@@ -620,7 +482,6 @@
     return svg;
   }
 
-  /** A button with an optional icon and a translated label. */
   function button(key, attrs, iconName) {
     const label = tx('span', { class: 'btn__label' }, key);
     const kids = iconName ? [icon(iconName), label] : [label];
@@ -633,10 +494,6 @@
     return prefix + '-' + idCounter;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Print
-  // ---------------------------------------------------------------------------------------------
-
   function printHost() {
     let host = document.getElementById(PRINT_ROOT_ID);
     if (host === null) {
@@ -646,7 +503,6 @@
     return host;
   }
 
-  /** Empties `#print-root` (after printing, or before the next job). */
   function clearPrint() {
     if (typeof document === 'undefined') return;
     const host = document.getElementById(PRINT_ROOT_ID);
@@ -684,14 +540,7 @@
     ]);
   }
 
-  /**
-   * Builds the print container: one `<section class="print-page">` per page of `buildPrintLayout`, each
-   * puzzle a header (variant, level, seed, clues; translated) above its vector picture. css/print.css shows
-   * only this container while printing.
-   * @param {Array<{result: Object, number: ?number, symbolMode: ?string}>} items
-   * @param {{perPage?: number, solutions?: boolean}} [options]
-   * @returns {{root: Element, images: HTMLImageElement[], layout: Object}}
-   */
+  /** One `<section class="print-page">` per page of `buildPrintLayout`, each puzzle a header (variant, level, seed, clues; translated) above its vector picture. css/print.css shows only this container while printing. */
   function buildPrintRoot(items, options) {
     const o = options || {};
     const layout = buildPrintLayout(items.length, o.perPage || 1, o.solutions === true);
@@ -733,13 +582,7 @@
     ]);
   }
 
-  /**
-   * Prints puzzles: builds `#print-root`, waits until its pictures are ready, then opens the print dialog.
-   * The container is emptied again after printing.
-   * @param {Array<{result: Object, number: ?number}>} items
-   * @param {{perPage?: number, solutions?: boolean, print?: function(): void}} [options]
-   * @returns {Promise<Object>} The page plan.
-   */
+  /** Builds `#print-root`, waits until its pictures are ready, opens the print dialog and empties the container afterwards. */
   function printItems(items, options) {
     const o = options || {};
     return new Promise(function (resolve, reject) {
@@ -764,10 +607,6 @@
       });
     });
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // The dialog
-  // ---------------------------------------------------------------------------------------------
 
   /**
    * Settings that stay while the page is open: the solution pages and the puzzles per page of the Print
@@ -801,13 +640,11 @@
     return appRef && typeof appRef.getStore === 'function' ? appRef.getStore().get() : null;
   }
 
-  /** The symbol mode of the puzzle on screen (the board's mode for the same variant). */
   function screenSymbolMode(result) {
     const state = formState();
     return state && state.variantId === result.model.variantId ? state.symbolMode : null;
   }
 
-  /** The text of one puzzle in the list: variant, level, clues and, when it has one, the seed. */
   function choiceText(choice) {
     const e = choice.entry;
     const args = { variant: nameOf('variant.', e.variantId), level: nameOf('difficulty.', e.level),
@@ -815,12 +652,7 @@
     return t(e.seed === '' ? 'export.summary' : 'export.summary.seed', args);
   }
 
-  /**
-   * The puzzles the dialog offers, in the order of the saved list (newest first): `{ id, entry, result }`,
-   * where `result` is set for the puzzle on screen (no need to generate it again). A puzzle on screen that is
-   * not in the list (an imported one) comes first.
-   * @returns {{choices: Object[], currentId: ?string}}
-   */
+  /** The puzzles the dialog offers in the order of the saved list (newest first): `{ id, entry, result }`, `result` set for the puzzle on screen (no need to generate it again). A puzzle on screen that is not in the list (an imported one) comes first. */
   function pickChoices() {
     const history = SG.history;
     const list = history && typeof history.list === 'function' ? history.list() : [];
@@ -844,14 +676,7 @@
     return { choices: choices, currentId: currentId };
   }
 
-  /**
-   * The list of saved puzzles to choose from, shared by the Print and the Export dialogs: a count, Select
-   * all / Select none and one tick box per puzzle. What was ticked is remembered in `memory.selected`.
-   * @param {{selected: ?string[]}} memory
-   * @param {function(): void} onChange  Called after the user changed what is ticked.
-   * @returns {{element: Element, choices: Object[], picked: function(): Object[],
-   *   setBusy: function(boolean): void, refresh: function(): void}}
-   */
+  /** The list of saved puzzles to choose from, shared by the Print and the Export dialogs (count, Select all / none, one tick box per puzzle); what was ticked is remembered in `memory.selected`. */
   function createPicker(memory, onChange) {
     const offered = pickChoices();
     const selected = new Set();
@@ -948,15 +773,7 @@
     };
   }
 
-  /**
-   * Gets the puzzles of some choices, in order: the puzzle on screen as it is, the others generated again
-   * from their saved settings (the same seed gives the same puzzle) and remembered in `resultCache`.
-   * @param {Object[]} picks  Choices of `pickChoices`.
-   * @param {{progress?: function(number, number): void}} [hooks]  `progress(k, n)`: puzzle k of n is being
-   *        generated.
-   * @returns {{promise: Promise<Object[]>, cancel: function(): void}} The promise rejects with `ABORTED`
-   *          after `cancel()`.
-   */
+  /** The puzzle on screen as it is, the others generated again from their saved settings (the same seed gives the same puzzle) and remembered in `resultCache`. The promise rejects with `ABORTED` after `cancel()`. */
   function startFetch(picks, hooks) {
     const h = hooks || {};
     const results = [];
@@ -1031,7 +848,6 @@
     ]) };
   }
 
-  /** A status line (`role="status"`) that is set with a translated text and emptied again. */
   function statusLine() {
     const node = el('p', { class: 'print-dialog__status', 'data-role': 'status', role: 'status',
       'aria-live': 'polite' });
@@ -1053,13 +869,6 @@
     appRef.toast('danger', 'export.toast.failed', { message: err && err.message ? err.message : String(err) });
   }
 
-  /**
-   * Builds the Print dialog: how many puzzles go on a page, the solutions switch and the list of saved
-   * puzzles to choose from (body), and Cancel / Print (footer). The puzzles that are not on screen are
-   * generated again before the print dialog of the browser opens.
-   * @param {Element} container  `modal.body`.
-   * @returns {{mountFooter: function(Element): void, refresh: function(): void, destroy: function(): void}}
-   */
   function createDialog(container) {
     const app = appRef;
     const refs = {};
@@ -1077,7 +886,6 @@
       if (refs.printButton) refs.printButton.disabled = busy || picker.picked().length === 0;
     }
 
-    /** "Puzzles per page": a label and one button for each choice (1, 2 or 4), no frame. */
     function perPageField() {
       const labelId = nextId('export-per-page');
       const group = el('div', { class: 'choice-group', role: 'radiogroup', 'aria-labelledby': labelId });
@@ -1168,12 +976,6 @@
     };
   }
 
-  /**
-   * Builds the Export dialog: a read-only box with the text of the puzzles that are ticked in the list below
-   * it (it follows the list), and Close / Copy text (footer).
-   * @param {Element} container  `modal.body`.
-   * @returns {{mountFooter: function(Element): void, refresh: function(): void, destroy: function(): void}}
-   */
   function createTextDialog(container) {
     const app = appRef;
     const refs = {};
@@ -1267,14 +1069,6 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Entry points
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Opens the export dialog (or returns the one that is open).
-   * @returns {?Object} The modal handle of `SG.app.openModal`; null without a DOM or an app.
-   */
   function open() {
     if (appRef === null || typeof document === 'undefined') return null;
     if (openDialog !== null) return openDialog.modal;
@@ -1297,12 +1091,10 @@
     return modal;
   }
 
-  /** Closes the dialog if it is open. */
   function close() {
     if (openDialog !== null) openDialog.modal.close();
   }
 
-  /** Opens the link of a bundle in a new tab and tells so (and about a very long link) in toasts. */
   function openedPlayer(info) {
     openPlayLink(info.url);
     appRef.toast('info', 'export.playOnline.opened');
@@ -1316,12 +1108,7 @@
     return null;
   }
 
-  /**
-   * The Play button, when some puzzles of the list have to be generated again first: a dialog that tells the
-   * progress and ends with an "Open the player" button (a tab opened after a long wait would be taken for a
-   * pop-up, a click opens it).
-   * @returns {Promise<?Object>} The bundle that was opened, null when it was cancelled or failed.
-   */
+  /** The Play button when some puzzles have to be generated again first: a dialog with the progress and an "Open the player" button (a tab opened after a long wait would be taken for a pop-up; a click opens it). Resolves to the opened bundle, null when cancelled or failed. */
   function playAfterPreparing(choices, active) {
     return new Promise(function (resolve) {
       const refs = {};
@@ -1389,14 +1176,6 @@
     });
   }
 
-  /**
-   * "Play online" (the Play button of the page): every puzzle of the list of saved puzzles, and the puzzle on
-   * screen, go to the player in a new tab, and the puzzle on screen is the one that is shown first. Puzzles
-   * that are not at hand are generated again first (a dialog tells the progress). A very long link and a
-   * failure are told in a toast.
-   * @returns {Promise<?{url: string}>} The link that was opened; null when there is no puzzle, the user
-   *          cancelled, or it failed.
-   */
   function playOnline() {
     const offered = pickChoices();
     const choices = offered.choices;
@@ -1415,16 +1194,10 @@
     }, playFailed);
   }
 
-  /** Closes the Export dialog if it is open. */
   function closeText() {
     if (openTextDialog !== null) openTextDialog.modal.close();
   }
 
-  /**
-   * Opens the Export dialog (the Export button of the page): the text of the puzzles that are ticked in the
-   * list of saved puzzles, in a read-only box with a Copy button. Returns the open one when there is one.
-   * @returns {?Object} The modal handle of `SG.app.openModal`; null without a DOM or an app.
-   */
   function openText() {
     if (appRef === null || typeof document === 'undefined') return null;
     if (openTextDialog !== null) return openTextDialog.modal;
@@ -1448,11 +1221,6 @@
     return modal;
   }
 
-  /**
-   * Connects the module to the application: the Print button opens the dialog, the Export button the text
-   * code, the Play button opens the puzzle in the player. Idempotent.
-   * @param {Object} app  `SG.app`.
-   */
   function init(app) {
     if (!app || typeof app.on !== 'function') return;
     appRef = app;
@@ -1494,10 +1262,6 @@
     clearPrint: clearPrint,
     summarize: summarize
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Strings of the export dialog, of the printed pages and of the Play button
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

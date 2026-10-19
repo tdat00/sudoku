@@ -1,31 +1,27 @@
 /**
- * Jigsaw (irregular / nonomino) Sudoku: `jigsaw9`.
- *
- * The board is a normal 9x9 Sudoku whose boxes are replaced by nine connected regions of nine cells each.
- * A region is just another unit of the unified model (design.md section 4), so no solver, technique or digger
- * knows anything about this variant; the whole job of this file is to produce a good partition (design.md
- * section 8.1) and to wrap it into a model.
+ * Jigsaw (irregular / nonomino) Sudoku: `jigsaw9`. A normal 9x9 Sudoku whose boxes are replaced by nine
+ * connected regions of nine cells. A region is just another unit of the model, so no solver, technique or
+ * digger knows about this variant; this file only produces a good partition and wraps it into a model.
  *
  * Layout generation: seeded growth with backtracking.
  *   1. One seed per row, in distinct columns and spread evenly (one in each 3x3 box of the classic layout).
- *   2. Repeatedly the smallest region (the hungriest) takes one free neighbour cell. A move is legal only when
- *      the free space that is left can still be absorbed by the unfinished regions (see `isFeasible`). Among
- *      the legal moves one is drawn with a weight that favours cells with few free neighbours (no isolated
- *      pockets) and, through the `compactness` option, cells that touch the region on many sides.
- *   3. When the smallest region has no legal move, the last move is undone and its next candidate is tried;
- *      after `maxBacktracks` undone moves the attempt is dropped and a new one starts from fresh seeds.
- *   4. A finished partition must have nine connected regions of nine cells, none of them a bare row or column,
- *      and the board built from it must have a solution: `SG.fullGrid.generate` is run with a small node
- *      budget. Not every partition has a solution, so this check is mandatory; a partition that fails it (or
- *      exhausts the budget) is dropped like a dead end. A partition that the plain search of `SG.model.validate`
- *      cannot solve within 5000 nodes is dropped too (see `solvesPlainly`).
+ *   2. Repeatedly the smallest region takes one free neighbour cell. A move is legal only when the remaining
+ *      free space can still be absorbed by the unfinished regions (`isFeasible`). Among the legal moves one is
+ *      drawn with a weight that favours cells with few free neighbours (no isolated pockets) and, through
+ *      the `compactness` option, cells that touch the region on many sides.
+ *   3. When the smallest region has no legal move the last move is undone and its next candidate tried; after
+ *      `maxBacktracks` undone moves the attempt is dropped and a new one starts from fresh seeds.
+ *   4. A finished partition must have nine connected regions of nine cells (none a bare row or column) and
+ *      the board must have a solution: `SG.fullGrid.generate` runs with a small node budget. Not every
+ *      partition has a solution, so this check is mandatory; failing it (or exhausting the budget) is a dead
+ *      end. A partition that the plain search of `SG.model.validate` cannot solve within 5000 nodes is dropped
+ *      too (`solvesPlainly`).
  *
- * Everything is driven by the rng and by node counts only, never by the clock, so a seed gives the same layout
- * on every machine (invariant I4).
+ * Everything is driven by the rng and by node counts only, never the clock, so a seed gives the same layout
+ * on every machine.
  *
  * Renderer note: `model.layout.cellRegion[c]` is the region number (0..8, in reading order of the first cell)
- * of cell c. A thick border belongs on every cell edge whose two cells have different region numbers, and on
- * the outer edge of the grid; `layout.cellRow` / `cellCol` give the position of each cell.
+ * of cell c; a thick border belongs on every edge between different regions and on the grid's outer edge.
  */
 (function (root) {
   'use strict';
@@ -34,7 +30,7 @@
 
   const SIZE = 9;
 
-  /** Default value of the `compactness` option (design.md section 8.1). */
+  /** Default value of the `compactness` option. */
   const DEFAULT_COMPACTNESS = 0.6;
 
   /** Undone moves per growth attempt before the attempt is dropped and the seeds are drawn again. */
@@ -45,9 +41,8 @@
 
   /**
    * Budget of the solvability check: search nodes, and failed guesses per restart. Small restarts matter: a
-   * solvable layout can trap one unlucky search for a long time but nearly always yields to a fresh start. On
-   * 400 layouts the default restart size of the full grid generator left 6% of them out of nodes, this one
-   * fewer than 1%, and most of those had no solution that 8 searches of 400000 nodes could find.
+   * solvable layout can trap one unlucky search for a long time but nearly always yields to a fresh start
+   * (on 400 layouts: 6 % out of nodes with the full grid generator's restart size, under 1 % with this one).
    */
   const SOLVE_NODES = 4000;
   const SOLVE_RESTART = 200;
@@ -61,10 +56,7 @@
   /** Random seed placements tried before the even spread is given up (about 1 in 8 qualifies for 9x9). */
   const SEED_TRIES = 200;
 
-  /**
-   * The end game test of `isFeasible` (matching of free cells to regions) runs when at most this many cells
-   * per unit of `size` are still free. It is dear, and it only starts to pay off late.
-   */
+  /** `isFeasible` runs its (dear) end game matching only when at most this many cells per `size` are free. */
   const MATCH_FREE_PER_SIZE = 4;
 
   /** `isFeasible` checks every group of free fragments (Hall's condition) up to this many fragments. */
@@ -72,11 +64,10 @@
 
   /**
    * Weight of a candidate cell: exp(shape * touch) * POCKET_PENALTY^(free neighbours), where `touch` is the
-   * number of neighbours of the cell that already belong to the growing region plus DIAGONAL_WEIGHT for each
-   * owned diagonal neighbour, and shape = SHAPE_GAIN * (compactness - SHAPE_NEUTRAL). Above the neutral
-   * compactness cells that touch the region on many sides win (rounded regions); below it they lose (winding
-   * regions). Calibrated so that the mean region perimeter falls steadily from compactness 0 to 1 (about 17 to
-   * 15 on 9x9; a bare 3x3 block has 12), see jigsaw.test.js.
+   * number of neighbours already in the growing region plus DIAGONAL_WEIGHT per owned diagonal neighbour, and
+   * shape = SHAPE_GAIN * (compactness - SHAPE_NEUTRAL). Above the neutral compactness cells touching the
+   * region on many sides win (rounded regions); below it they lose (winding regions). Calibrated so the mean
+   * region perimeter falls steadily from compactness 0 to 1 (about 17 to 15 on 9x9; a 3x3 block has 12).
    */
   const SHAPE_GAIN = 4;
   const SHAPE_NEUTRAL = 0.2;
@@ -89,15 +80,9 @@
     return new SG.errors.GenerationError(code, args);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Layout checks (usable on any partition, independent of how it was made)
-  // ---------------------------------------------------------------------------------------------
-
   /**
    * Checks that `cellRegion` partitions a size x size grid into `size` connected regions of `size` cells,
-   * none of which is a bare row or column (such a region would only repeat a row or column unit).
-   * @param {ArrayLike<number>} cellRegion  Region number of every cell, row-major.
-   * @param {number} [size=9]
+   * none of which is a bare row or column (it would only repeat a row or column unit).
    * @returns {string[]} Problems found; empty when the layout is well formed.
    */
   function checkRegions(cellRegion, size) {
@@ -168,12 +153,8 @@
   }
 
   /**
-   * Mean perimeter of the regions: for every region the number of unit cell edges that separate it from
-   * another region or from the outside of the grid. A 3x3 square has 12, the most compact shape of nine cells;
-   * a snake of nine cells has up to 20. Meant for measuring `compactness`.
-   * @param {ArrayLike<number>} cellRegion
-   * @param {number} [size=9]
-   * @returns {number}
+   * Mean perimeter of the regions (unit cell edges that separate a region from another one or from the
+   * outside). A 3x3 square has 12, the most compact shape of nine cells; a snake up to 20. For `compactness`.
    */
   function meanPerimeter(cellRegion, size) {
     size = size === undefined ? SIZE : size;
@@ -190,16 +171,7 @@
     return edges / size;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Region growth
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Builds the growth engine for a size x size grid. All buffers are allocated once and reused by every
-   * attempt of one `generateRegions` call.
-   * @param {number} size
-   * @returns {{grow: function(Rng, number, number, Object): boolean, owner: Int8Array}}
-   */
+  /** Builds the growth engine for a size x size grid; buffers are allocated once and reused by every attempt. */
   function createGrower(size) {
     const n = size * size;
     const steps = n - size;
@@ -262,13 +234,11 @@
     }
 
     /**
-     * Can the unfinished regions still absorb the free cells? The free cells fall apart into fragments (4
-     * connected). Every fragment needs an unfinished region next to it, and the fragments together can only be
-     * eaten by the regions they touch: for every group of fragments, their cell total must not exceed the
-     * number of cells the touching regions still lack (Hall's condition for the transport of cells to regions;
-     * the totals of free cells and missing cells are equal, so this is also enough for the flow). When the
-     * regions are finished one after the other this reads "every fragment is a multiple of the region size";
-     * with all regions growing at once the missing cells are what counts.
+     * Can the unfinished regions still absorb the free cells? The free cells fall apart into (4-connected)
+     * fragments. Every fragment needs an unfinished region next to it, and for every group of fragments
+     * their cell total must not exceed the number of cells the touching regions still lack (Hall's
+     * condition for the transport of cells to regions; free and missing totals are equal, so it is also
+     * sufficient for the flow).
      */
     function fragmentsFeasible() {
       fragment.fill(-1);
@@ -351,9 +321,9 @@
     }
 
     /**
-     * Sharper test for the end game, when few cells are free. A region that still lacks d cells can only take
-     * free cells within d steps of it (through free cells), and every free cell must go to exactly one region,
-     * each region taking exactly what it lacks: a perfect matching of free cells to missing-cell slots.
+     * Sharper end game test: a region lacking d cells can only take free cells within d steps of it (through
+     * free cells), and every free cell goes to exactly one region, each taking exactly what it lacks: a
+     * perfect matching of free cells to missing-cell slots.
      */
     function reachMatches() {
       let free = 0;
@@ -408,9 +378,9 @@
     }
 
     /**
-     * Can the move just tried still lead to a complete partition? A necessary condition only (the search
-     * still backtracks when it is not sufficient): the free fragments must be absorbable (Hall), and in the
-     * end game the free cells must be matchable to the regions that can reach them.
+     * Can the move just tried still lead to a complete partition? Necessary only (the search still
+     * backtracks): the free fragments must be absorbable (Hall), and in the end game the free cells must be
+     * matchable to the regions that can reach them.
      */
     function isFeasible() {
       if (!fragmentsFeasible()) return false;
@@ -502,8 +472,8 @@
     }
 
     /**
-     * Draws one seed per row, in distinct columns. When the board is made of square boxes (4, 9, 16 cells
-     * wide) the seeds are also spread evenly: every box of the classic layout holds exactly one.
+     * Draws one seed per row, in distinct columns. For square boxes (4, 9, 16 cells wide) the seeds are also
+     * spread evenly: every box of the classic layout holds exactly one.
      */
     function placeSeeds(rng) {
       const cols = new Array(size);
@@ -530,11 +500,8 @@
     }
 
     /**
-     * One growth attempt.
-     * @param {Rng} rng
-     * @param {number} shape         Exponent of the weight per touching neighbour (from `compactness`).
-     * @param {number} maxBacktracks
-     * @param {{backtracks: number}} counters  `backtracks` is increased by the undone moves.
+     * One growth attempt. `shape`: exponent of the weight per touching neighbour (from `compactness`);
+     * `counters.backtracks` is increased by the undone moves.
      * @returns {boolean} True when every cell is assigned (`owner` holds the partition).
      */
     function grow(rng, shape, maxBacktracks, counters) {
@@ -578,17 +545,7 @@
     return out;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Model
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Wraps a partition into a model: rows, then columns, then the regions (27 units for 9x9).
-   * @param {string} variantId
-   * @param {number} size
-   * @param {Int32Array} cellRegion
-   * @returns {PuzzleModel}
-   */
+  /** Wraps a partition into a model: rows, then columns, then the regions (27 units for 9x9). */
   function modelFromRegions(variantId, size, cellRegion) {
     const n = size * size;
     const units = [];
@@ -642,10 +599,7 @@
 
   /**
    * Does a board built on this partition have a solution? Runs the full grid generator with a node budget;
-   * a layout that exhausts the budget is treated as unsolvable, which is safe: it is merely dropped.
-   * @param {PuzzleModel} model
-   * @param {Rng} rng
-   * @returns {boolean}
+   * a layout that exhausts the budget counts as unsolvable, which is safe: it is merely dropped.
    */
   function hasSolution(model, rng) {
     const budget = SG.budget.create({ nodes: SOLVE_NODES });
@@ -662,13 +616,10 @@
   }
 
   /**
-   * Does the plain depth-first search that `SG.model.validate` uses for V8 (fixed value order, no restarts)
-   * find a solution within `PLAIN_SOLVE_NODES` nodes? About one layout in four does not: it has solutions, but
-   * a search with a fixed value order can wander for millions of nodes in it. Such layouts also gave slower
-   * puzzles in measurements (about twice the time at 'normal'), so they are dropped, and every model built
-   * here validates conclusively.
-   * @param {PuzzleModel} model
-   * @returns {boolean}
+   * Does the plain depth-first search that `SG.model.validate` uses (fixed value order, no restarts) find a
+   * solution within `PLAIN_SOLVE_NODES` nodes? About one layout in four does not: it has solutions, but such
+   * a search can wander for millions of nodes in it, and these layouts also gave slower puzzles. They are
+   * dropped, so every model built here validates conclusively.
    */
   function solvesPlainly(model) {
     const budget = SG.budget.create({ nodes: PLAIN_SOLVE_NODES });
@@ -683,23 +634,18 @@
   /**
    * @typedef {Object} JigsawLayoutStats
    * @property {number} attempts    Growth attempts made (1 when the first one succeeded).
-   * @property {number} reseeds     attempts - 1: how often fresh seeds were drawn.
-   * @property {number} backtracks  Moves undone in total, over all attempts.
-   * @property {number} unsolvable  Finished partitions dropped because the full grid generator found no
-   *                                solution for the board (none exists, or none within the budget).
-   * @property {number} hard        Finished partitions dropped because the plain search needed too long.
+   * @property {number} reseeds     attempts - 1.
+   * @property {number} backtracks  Moves undone in total.
+   * @property {number} unsolvable  Partitions dropped because the full grid generator found no solution.
+   * @property {number} hard        Partitions dropped because the plain search needed too long.
    */
 
   /**
    * Generates a valid Jigsaw partition: `size` connected regions of `size` cells each, whose board has a
    * solution. The same rng state and options always give the same partition.
-   * @param {Rng} rng
-   * @param {Object} [options]
-   * @param {number} [options.compactness=0.6]  0..1: 1 gives rounded regions, 0 winding ones.
-   * @param {number} [options.size=9]  Board width, 2..SG.MAX_DIGITS (jigsaw9 uses 9; others are for tests).
-   * @param {number} [options.maxBacktracks=60]  Undone moves per attempt before reseeding.
-   * @param {number} [options.maxAttempts=200]
-   * @param {JigsawLayoutStats} [options.stats]  Filled with the statistics of this call.
+   * @param {Object} [options]  `compactness` (default 0.6; 1 gives rounded regions, 0 winding ones), `size`
+   *        (default 9; others are for tests), `maxBacktracks` (60), `maxAttempts` (200), `stats`
+   *        (a JigsawLayoutStats filled in).
    * @returns {Int32Array} cellRegion: the region number (0..size-1) of every cell, row-major.
    * @throws {SG.errors.GenerationError} 'jigsaw.layoutFailed' when `maxAttempts` attempts all failed.
    */
@@ -749,10 +695,6 @@
     throw fail('jigsaw.layoutFailed', { attempts: maxAttempts });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Variant definition
-  // ---------------------------------------------------------------------------------------------
-
   /** Reads the `compactness` option; a missing value means the default. */
   function readCompactness(opts) {
     const value = opts ? opts.compactness : undefined;
@@ -763,12 +705,7 @@
     return value;
   }
 
-  /**
-   * Builds a jigsaw9 model with a fresh random partition.
-   * @param {{compactness?: number}} opts  `compactness` in 0..1, default 0.6.
-   * @param {?Rng} rng  Source of all randomness; without one a fixed seed is used (same layout every time).
-   * @returns {PuzzleModel}
-   */
+  /** Builds a jigsaw9 model with a fresh partition; without an rng a fixed seed gives the same layout every time. */
   function buildJigsaw(opts, rng) {
     const compactness = readCompactness(opts);
     const cellRegion = generateRegions(rng || SG.rng.create(FALLBACK_SEED), { compactness: compactness });
@@ -780,12 +717,10 @@
     i18nKey: 'variant.jigsaw9',
     group: 'regions',
     digits: SIZE,
-    // Every level of the nine (measured: `node tests/qualify.js`, docs/report-v2/qualification.md).
     difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
       'hell2'],
     // The classic9 floors (29 / 25 / 22) kept the dig from reaching normal; 83 % / 80 % / 80 % of them
-    // (24 / 20 / 17) do not. Same calibration as the other 9x9 hybrids (extra-regions.js); expert takes
-    // the factor of hard (rating v2).
+    // (24 / 20 / 17) do not. Same calibration as extra-regions.js; expert takes the factor of hard.
     clueFloorScale: Object.freeze({ normal: 0.83, hard: 0.8, expert: 0.8, master: 0.8 }),
     defaultSymbolMode: 'digits',
     symbolModes: ['digits', 'letters', 'colors', 'shapes'],
@@ -804,7 +739,7 @@
     build: buildJigsaw
   };
 
-  // Skipping a known id keeps a second load of this file harmless (no second set of locale strings either).
+  // Skipping a known id keeps a second load harmless (no second set of locale strings either).
   if (!SG.variants.has(DEFINITION.id)) {
     SG.variants.register(DEFINITION);
 
@@ -836,10 +771,7 @@
     });
   }
 
-  /**
-   * Layout tools of the Jigsaw variant, exposed for tests and tooling.
-   * @namespace SG.jigsaw
-   */
+  /** Layout tools of the Jigsaw variant, exposed for tests and tooling. */
   SG.jigsaw = SG.jigsaw || {
     DEFAULT_COMPACTNESS: DEFAULT_COMPACTNESS,
     generateRegions: generateRegions,

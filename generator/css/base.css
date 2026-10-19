@@ -1,4 +1,4 @@
-/* Reset, typography, focus ring, accessibility helpers (design.md 10.7). No colour literals here. */
+/* Reset, typography, focus ring, accessibility helpers. No colour literals here. */
 
 *,
 *::before,
@@ -253,7 +253,7 @@ summary {
   :focus-visible {
     outline: var(--sg-focus-width) solid Highlight;
   }
-
+/* ---- Animations ---- */
   .skip-link {
     border-color: CanvasText;
   }

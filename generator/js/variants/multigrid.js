@@ -1,34 +1,31 @@
 /**
- * Overlapping multi-grid variants: samurai, sohei, butterfly and flower (design.md sections 4, 5.2, 8.4).
+ * Overlapping multi-grid variants: samurai, sohei, butterfly and flower.
  *
- * Every board is a set of ordinary 9x9 sub-grids placed on one shared canvas. Cells that sit on the same
- * canvas position are the SAME cell (one index), so an overlap needs no special solver: the units of both
- * grids simply list that index and the board is one larger constraint satisfaction problem.
+ * Every board is a set of ordinary 9x9 sub-grids on one shared canvas. Cells at the same canvas position
+ * are the SAME cell (one index), so an overlap needs no special solver: the units of both grids simply list
+ * that index and the board is one larger constraint satisfaction problem.
  *
  * Geometry. Sub-grid origins and the canvas are multiples of 3, so every overlap is made of whole 3x3 boxes
- * and a box of one grid is always a box of every other grid that covers it. Each geometry also carries the
- * number of unique cells it must produce; `buildModel` checks both and throws on any mismatch.
- *
- * Note on the unique counts. Design.md section 5.1 lists 324 for sohei and 225 for flower. Those are not
- * unique cell counts of the geometry given in section 5.2: 324 is 4 x 81 before the four shared boxes are
- * merged (4 x 81 - 4 x 9 = 288), and 225 is the area of the whole 15x15 flower canvas, whose four 3x3
- * corners hold no cell (225 - 4 x 9 = 189). The origins are the real layouts (Sudopedia, Gattai), so the
- * counts that are checked here are the arithmetic ones: samurai 369, sohei 288, butterfly 144, flower 189.
+ * and a box of one grid is a box of every other grid that covers it. Each geometry carries the number of
+ * unique cells it must produce; `buildModel` checks both and throws on any mismatch. The checked counts are
+ * arithmetic: samurai 369, sohei 288 (4 x 81 - 4 x 9 shared boxes), butterfly 144, flower 189 (the 15x15
+ * canvas minus four empty 3x3 corners). The origins are the real layouts (Sudopedia, Gattai); the 324 and 225
+ * once quoted for sohei and flower are not unique cell counts of those layouts.
  *
  * Layout data for the renderer (`model.layout`):
  *   rows, cols        canvas size in cells
- *   cellRow, cellCol  canvas position of every cell (unique per cell, V5)
+ *   cellRow, cellCol  canvas position of every cell
  *   cellRegion        canvas box slot: floor(row / 3) * (cols / 3) + floor(col / 3). One id per 3x3 box
- *                     position of the canvas, so an overlapped box has ONE id although two grids own it
+ *                     position, so an overlapped box has ONE id although two grids own it
  *   subGrids          [{ gridIndex, originRow, originCol }], each a 9x9 square on the canvas
  *   overlays          one { kind: 'overlap', cells } per 3x3 box that belongs to two or more sub-grids
- * Units come grid by grid: rows, then columns, then boxes of grid 0, then of grid 1, and so on (27 per
- * grid; unitMeta.gridIndex names the grid). The boxes of an overlap therefore appear once per grid.
+ * Units come grid by grid: rows, columns, boxes of grid 0, then of grid 1, ... (27 per grid;
+ * unitMeta.gridIndex names the grid), so the boxes of an overlap appear once per grid.
  *
- * Generation. The generic engine needs no multi-grid code. The only hook used is `fastSeed`: it decides the
- * cells that several grids share before the search starts (see `fastSeedOverlaps`). Hole digging is the
- * default 'cells' strategy; symmetry (SG.symmetry) works on canvas positions, so it mirrors about the centre
- * of the whole canvas and a group simply shrinks where the mirrored position holds no cell.
+ * Generation. The generic engine needs no multi-grid code; the only hook is `fastSeed`, which decides the
+ * cells several grids share before the search starts (`fastSeedOverlaps`). Hole digging is the default
+ * 'cells' strategy; symmetry works on canvas positions, so it mirrors about the centre of the whole canvas
+ * and a group simply shrinks where the mirrored position holds no cell.
  */
 (function (root) {
   'use strict';
@@ -52,7 +49,7 @@
     return Object.freeze(g);
   }
 
-  /** The four boards of design.md section 5.2 (see the file header for the sohei and flower counts). */
+  /** The four boards (see the file header for the cell counts). */
   const GEOMETRIES = Object.freeze({
     samurai: freezeGeometry({
       rows: 21, cols: 21, cells: 369,
@@ -85,13 +82,11 @@
 
   /**
    * Checks a geometry and returns how often each canvas position is covered by a sub-grid.
-   * @param {string} variantId  Only used in the error.
-   * @param {MultigridGeometry} geometry
    * @returns {{coverage: Uint8Array, cells: number}}  Coverage per canvas position (row * cols + col) and
    *          the number of positions covered at least once.
-   * @throws {SG.errors.GenerationError} 'multigrid.invalidGeometry' (with a readable message) when the
-   *         canvas or an origin is not a multiple of 3, a sub-grid leaves the canvas, an origin repeats, or
-   *         the unique cell count differs from `geometry.cells`.
+   * @throws {SG.errors.GenerationError} 'multigrid.invalidGeometry' when the canvas or an origin is not a
+   *         multiple of 3, a sub-grid leaves the canvas, an origin repeats, or the unique cell count differs
+   *         from `geometry.cells`.
    */
   function measure(variantId, geometry) {
     if (!geometry || typeof geometry !== 'object') throw invalidGeometry(variantId, 'geometry is missing');
@@ -137,15 +132,11 @@
   }
 
   /**
-   * Builds the model of a multi-grid board.
+   * Builds the model of a multi-grid board (`geometry` defaults to `SG.multigrid.GEOMETRIES[variantId]`).
    *
    * Cell numbering: sub-grid 0 owns the indices 0..80 in its own row-major order; every later sub-grid adds
-   * only the canvas positions that no earlier grid covers, again row-major. Cells on one canvas position
-   * share one index, which is the whole multi-grid mechanism.
-   *
-   * @param {string} variantId  'samurai' | 'sohei' | 'butterfly' | 'flower', or any id with a `geometry`.
-   * @param {MultigridGeometry} [geometry]  Defaults to `SG.multigrid.GEOMETRIES[variantId]`.
-   * @returns {PuzzleModel}
+   * only the canvas positions no earlier grid covers, again row-major. Cells on one canvas position share one
+   * index, which is the whole multi-grid mechanism.
    * @throws {SG.errors.GenerationError} 'multigrid.invalidGeometry', see `measure`.
    */
   function buildModel(variantId, geometry) {
@@ -241,10 +232,6 @@
     });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Full grid: overlap cells first
-  // ---------------------------------------------------------------------------------------------
-
   /** Per model: the cells that belong to two or more sub-grids, grouped by how many grids share them. */
   const seedPlans = new WeakMap();
 
@@ -265,13 +252,10 @@
   }
 
   /**
-   * Pre-fill of the full grid generator (the registry's `fastSeed` hook): decides the cells that several
-   * sub-grids share before anything else, most shared first, each with a random value that survives
-   * propagation. The shared cells are the most constrained ones and tie the grids together, so the search
-   * that follows starts from a board in which the grids no longer disagree about them.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state  A fresh, propagated state.
-   * @param {Rng} rng
+   * Pre-fill of the full grid generator (the `fastSeed` hook): decides the cells that several sub-grids share
+   * first, most shared first, each with a random value that survives propagation. Shared cells are the most
+   * constrained ones and tie the grids together, so the search then starts from a board in which the grids
+   * no longer disagree about them.
    * @returns {boolean} False when some shared cell had no value left (the generator then drops the seed).
    */
   function fastSeedOverlaps(model, state, rng) {
@@ -306,16 +290,12 @@
 
   /**
    * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in js/core/difficulty.js).
-   * The derived floor (classic9 numbers x cellCount / 81) keeps the digger from stopping where the techniques
-   * of the level let it: the grids overlap, so every shared box carries the clues of two grids and the
-   * puzzle stays solvable with singles. With the full floor normal was hit by 2..9 % of the dug puzzles (10
-   * to 31 puzzles had to be dug per normal puzzle, 5 % of the butterfly ones were missed after all 96
-   * samples);
-   * with 60 % of it the dig ends where the techniques end (butterfly 34 of the 144 cells, sohei 81 of 288,
-   * samurai 109 of 369, flower 42 of 189 clues) and 38..49 % of the dug puzzles are normal. The floor of
-   * veryEasy stays: the score band of that level is so low that the puzzle needs the clues.
-   * Flower additionally keeps 80 % for easy (it did before; the level is hit by every dug puzzle either way).
-   * expert takes the factor of hard (rating v2).
+   * The derived floor (classic9 numbers x cellCount / 81) stops the digger before the techniques of the
+   * level do: every shared box carries the clues of two grids, so the puzzle stays solvable with singles and
+   * normal was hit by only 2..9 % of the dug puzzles. With 60 % of the floor the dig ends where the
+   * techniques end and 38..49 % of the dug puzzles are normal. The floor of veryEasy stays: its score band
+   * is so low that the puzzle needs the clues. Flower additionally keeps 80 % for easy. expert takes the
+   * factor of hard.
    */
   const CLUE_FLOOR_SCALE = Object.freeze({ normal: 0.6, hard: 0.6, expert: 0.6 });
   const FLOWER_CLUE_FLOOR_SCALE = Object.freeze({ easy: 0.8, normal: 0.6, hard: 0.6, expert: 0.6 });
@@ -337,10 +317,9 @@
   }
 
   /**
-   * Levels each board is offered: every one of the nine, hell2 included, measured with the protocol of
-   * docs/report-v2/report-detailed.md section 6 (`node tests/qualify.js`, docs/report-v2/qualification.md; the
-   * top tiers come from the fast proposal dig refined into the band). A missed level still returns a valid
-   * puzzle, flagged 'difficulty.approximate'.
+   * Levels each board is offered: all nine, hell2 included (measured: `node tests/qualify.js`; the top tiers
+   * come from the fast proposal dig refined into the band). A missed level still returns a valid puzzle,
+   * flagged 'difficulty.approximate'.
    */
   const STANDARD_LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
     'hell2'];
@@ -352,10 +331,7 @@
     definition('flower', STANDARD_LEVELS, { clueFloorScale: FLOWER_CLUE_FLOOR_SCALE })
   ];
 
-  /**
-   * Strings of this file, in the shape the locale packs merge: `SG.localeFragments` is a list of
-   * { en: {key: text}, vi: {key: text} } objects. Both languages carry exactly the same keys.
-   */
+  /** Locale strings in the shape the locale packs merge; both languages carry exactly the same keys. */
   const LOCALE_FRAGMENT = {
     en: {
       'variant.samurai': 'Samurai Sudoku',
@@ -389,7 +365,7 @@
     }
   };
 
-  // Skipping known ids keeps a second load of this file harmless.
+  // Skipping known ids keeps a second load harmless.
   let registered = 0;
   DEFINITIONS.forEach(function (def) {
     if (!SG.variants.has(def.id)) {

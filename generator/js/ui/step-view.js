@@ -1,15 +1,10 @@
 /**
- * Steps panel (task T-4.5, reworked; design.md sections 7.3 and 10.5): the description of the replay step on
- * show. Each step is a change the board shows (the full solution, the cages or signs, a batch of
- * removals, a "hardest removal" round, the finished puzzle; see `SG.player.buildSteps`); technical work is
- * not listed. The user moves through the steps with the replay controls under the board; the panel shows the
- * number, title, summary and full sentence of the current step, and a small legend explains the frames of
- * the board.
- *
- * Pure part (runs in Node): `chartModel(counts, options)`, the geometry of the technique-frequency bar chart
- * (kept for callers; the result panel uses its ordering), and `STEP_IDS`, the seven pipeline steps (for other
- * modules' texts).
- * DOM part: `create(rootEl)` renders the description into `#step-detail` of `#steps-root`.
+ * Steps panel: the description of the replay step on show. Each step is a change the board shows (full solution,
+ * cages or signs, a batch of removals, a "hardest removal" round, the finished puzzle; see `SG.player.buildSteps`);
+ * technical work is not listed. The replay controls under the board move through the steps; the panel shows the
+ * number, title, summary and sentence of the current step and a legend of the board frames.
+ * Pure: `chartModel(counts, options)` (technique-frequency bar chart geometry, kept for callers) and `STEP_IDS`.
+ * DOM: `create(rootEl)` renders into `#step-detail` of `#steps-root`.
  */
 (function (root) {
   'use strict';
@@ -18,11 +13,10 @@
 
   if (SG.stepView && typeof SG.stepView.create === 'function') return;
 
-  /** The seven pipeline steps in order (the same list as `SG.events.STEP_IDS`). */
+  // Same list as `SG.events.STEP_IDS`.
   const STEP_IDS = Object.freeze(['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate',
     'tune']);
 
-  /** Default geometry of the chart, in SVG units. */
   const CHART_WIDTH = 300;
   const CHART_ROW = 32;
   const CHART_BAR = 8;
@@ -30,12 +24,11 @@
   const CHART_BAR_Y = 19;
   const CHART_MIN_BAR = 3;
 
-  /** The legend entries: a frame of a step's `marks` (or a sign mark of `signs`) -> translation key. */
+  /** [frame of a step's `marks` (or sign mark of `signs`), translation key] */
   const LEGEND = Object.freeze([['dug', 'steps.legend.dug'], ['kept', 'steps.legend.kept'],
     ['revealed', 'steps.legend.revealed'], ['signRemoved', 'steps.legend.signRemoved'],
     ['signKept', 'steps.legend.signKept']]);
 
-  /** Whether a step uses a legend entry. */
   function usesMark(step, name) {
     if (name === 'signRemoved') return !!(step.signs && step.signs.removed.length > 0);
     if (name === 'signKept') return !!(step.signs && step.signs.kept.length > 0);
@@ -59,10 +52,6 @@
     return !!(SG.i18n && typeof SG.i18n.has === 'function' && SG.i18n.has(key));
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Chart model (used by the result panel)
-  // ---------------------------------------------------------------------------------------------
-
   function techniqueInfo(id) {
     const reg = SG.techniques;
     if (reg && typeof reg.has === 'function' && reg.has(id)) {
@@ -77,20 +66,10 @@
   }
 
   /**
-   * Geometry of the technique-frequency bar chart. Each technique is one row: its name on the left and its
-   * count on the right above a thin bar, so long names (and Vietnamese) never collide with the bar. Bars are
-   * ordered by the technique ladder (`SG.techniques` `order`, simplest first); techniques the registry does
-   * not know come last, by id. Counts that are zero, negative or not numbers are dropped.
-   * @param {Object<string, number>} counts  `rating.techniqueCounts`.
-   * @param {Object} [options]
-   * @param {number} [options.width=300]  Width of the viewBox.
-   * @param {number} [options.rowHeight=32]
-   * @param {number} [options.barHeight=8]
-   * @param {number} [options.minBarWidth=3]  Narrowest bar of a technique that was used.
-   * @param {function(string, string): string} [options.label]  `(id, i18nKey) -> text` (default: translated).
-   * @returns {{width: number, height: number, rowHeight: number, max: number, total: number, empty: boolean,
-   *   bars: Object[]}} Each bar: `{id, key, label, group, order, count, ratio, y, labelY, valueX, barY,
-   *   barHeight, barWidth, trackWidth}`.
+   * Geometry of the technique-frequency bar chart: one row per technique (name left, count right above a thin bar, so
+   * long names never collide with the bar). Ordered by the technique ladder (`SG.techniques` `order`); unknown
+   * techniques come last, by id. Counts that are zero, negative or not numbers are dropped.
+   * `options.label(id, i18nKey)` overrides the translated label.
    */
   function chartModel(counts, options) {
     const o = options || {};
@@ -153,10 +132,6 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // DOM helpers
-  // ---------------------------------------------------------------------------------------------
-
   function html(doc, tag, attrs, children) {
     const el = doc.createElement(tag);
     Object.keys(attrs || {}).forEach(function (name) {
@@ -168,34 +143,12 @@
     return el;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The panel
-  // ---------------------------------------------------------------------------------------------
-
   /**
-   * Shows the description of the replay step on show inside `#steps-root` (`#step-detail`, created when
-   * missing): its number, title, summary and full sentence, with a legend of the board frames after it. The
-   * steps themselves are moved with the replay controls under the board.
-   *
-   * @param {Element} rootEl  `#steps-root`.
-   * @param {Object} [options]
-   * @param {function(number): ?{counts: Object<string, number>, before: Object<string, number>,
-   *   empties: (number|undefined), score: (number|undefined)}} [options.stats]
-   *   Gives the techniques the puzzle of a step needs (`SG.player` `rateStep`); without it, or when it returns
-   *   null, the step shows no technique table.
-   * @returns {{
-   *   setSteps: function(Object[]): void,
-   *   setPosition: function(number): void,
-   *   clear: function(): void,
-   *   getPosition: function(): number,
-   *   refresh: function(): void,
-   *   destroy: function(): void
-   * }}
-   *   `setSteps(steps)` takes the steps of `SG.player` (no step is on show until `setPosition`);
-   *   `setPosition(p)` shows step p (0: none, a hint to use the replay controls);
-   *   `clear()` empties the panel (nothing on show);
-   *   `refresh()` re-translates everything (done by itself on `SG.i18n.onChange`);
-   *   `destroy()` removes the listeners and what it built.
+   * Shows the description of the replay step on show inside `#steps-root` (`#step-detail`, created when missing), with
+   * a legend of the board frames after it. `options.stats(position)` gives the techniques the puzzle of a step needs
+   * (`SG.player` `rateStep`: { counts, before, empties, score }); without it, or when it returns null, the step shows
+   * no technique table. Returns { setSteps(steps) (none on show until `setPosition`), setPosition(p) (0: none, a hint
+   * to use the replay controls), clear(), getPosition(), refresh() (also done on `SG.i18n.onChange`), destroy() }.
    */
   function create(rootEl, options) {
     if (!rootEl || typeof rootEl.querySelector !== 'function') {
@@ -256,7 +209,7 @@
       return html(doc, tag, cls ? { class: cls } : {}, [doc.createTextNode(text)]);
     }
 
-    /** The small "?" next to a name: its text opens on hover, focus and click; Esc closes it. */
+    /** The "?" next to a name: opens on hover, focus and click; Esc closes it. */
     function helpTip(popId, text, label) {
       if (typeof doc.createElementNS !== 'function') return null;
       const svgNs = 'http://www.w3.org/2000/svg';
@@ -284,7 +237,6 @@
       return wrap;
     }
 
-    /** The "?" of a technique: its summary. */
     function techniqueHelp(id, name) {
       const key = 'technique.' + id + '.desc';
       if (!hasText(key)) return null;
@@ -292,13 +244,11 @@
         translate('steps.techniques.help', { name: name }));
     }
 
-    /** The "?" of a row that is not a technique: the empty cells ('empties'). */
     function partHelp(part, name, args) {
       return helpTip('step-part-' + part + '-help', translate('steps.techniques.' + part + '.desc', args),
         translate('steps.techniques.help', { name: name }));
     }
 
-    /** A row header: the name, and the "?" after it when there is one. */
     function nameCell(text, help) {
       const label = html(doc, 'span', { class: 'result-table__name' }, [doc.createTextNode(text)]);
       if (help !== null) label.appendChild(help);
@@ -306,10 +256,9 @@
     }
 
     /**
-     * The techniques the puzzle of a step needs, with the uses, the points and the share of the score of
-     * each. The total is the difficulty score of the puzzle of that step, the one the summary shows at the
-     * end: the shares of the techniques plus that of the empty cells (`SG.difficulty.scoreTable`, the
-     * allocation the summary uses too). Empty when the page cannot tell for this step.
+     * The techniques the puzzle of a step needs with uses, points and share of the score. The total is the difficulty
+     * score of the puzzle of that step (the one the summary shows at the end): the technique shares plus that of the
+     * empty cells (`SG.difficulty.scoreTable`). Empty when the page cannot tell for this step.
      */
     function techniquesBlock(position) {
       const info = typeof opts.stats === 'function' ? opts.stats(position) : null;
@@ -457,11 +406,8 @@
   }
 
   /**
-   * Whole numbers for the parts of a total that add up to the rounded total (the largest remainders get the
-   * extra points), so that a table of scores can be added up by hand. Used by the summary and the steps.
-   * @param {number[]} values  The exact parts.
-   * @param {number} total  The exact total.
-   * @returns {number[]}
+   * Whole numbers for the parts of a total that add up to the rounded total (largest remainders get the extra
+   * points), so a table of scores can be added up by hand. Used by the summary and the steps.
    */
   function roundToTotal(values, total) {
     const target = Math.round(total);
@@ -480,10 +426,6 @@
     roundToTotal: roundToTotal,
     create: create
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Locale fragment
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

@@ -1,33 +1,28 @@
 /**
  * Wordoku: `wordoku`, a 9x9 Sudoku whose nine symbols are the nine distinct letters of a key word, and where
- * one line of the finished grid (the main diagonal by default, or a row or a column) spells that word
- * (design.md section 8.5).
+ * one line of the finished grid (the main diagonal by default, or a row or a column) spells that word.
  *
- * The core never sees a letter. It works with the integers 1..9, and the letters are only the symbol set of
- * the model: `model.symbols.labels[v - 1]` is the letter of value v. The word enters the pipeline in exactly
- * one place, `model.fixedCells`: the nine cells of the chosen line are forced to the values of the word's
- * letters, and `SG.fullGrid.generate` honours them when it draws the solution. From there on the puzzle is
- * dug like `classic9`. Solvers work from `givens` alone and never see `fixedCells`, so the word is not a
- * clue: the line is dug like any other cells, the puzzle is unique without knowing the word, and the word
- * shows up by solving.
+ * The core never sees a letter: it works with the integers 1..9 and `model.symbols.labels[v - 1]` is the
+ * letter of value v (the letters of the word in alphabetical order, so the mapping is a function of the
+ * word alone, the keypad comes out sorted and the digits view does not read 1..9 down the word line). The
+ * word enters the pipeline in one place, `model.fixedCells`: the nine cells of the chosen line are forced to
+ * the values of the word's letters and `SG.fullGrid.generate` honours them when it draws the solution. From
+ * there the puzzle is dug like `classic9`. Solvers work from `givens` alone and never see `fixedCells`, so
+ * the word is not a clue: the line is dug like any other cells, the puzzle is unique without knowing the
+ * word, and the word shows up by solving.
  *
- * Value <-> letter mapping: the letters of the word in alphabetical order (value 1 = the smallest letter).
- * The order is a function of the word alone, the keypad of a renderer comes out sorted, and the digits view
- * of a puzzle does not read 1, 2, ..., 9 down the word line.
+ * Word lists (assets/wordlists): `SG.wordlists.en` / `.vi`, plain arrays of 9-letter isograms in upper-case
+ * A-Z, read lazily at build time. A Vietnamese list that is empty or short (`SG.wordoku.MIN_WORDS`) falls
+ * back to the English one, which step 4 reports with the event 'extraStructure.wordFallback'. The user can
+ * give a word of their own through the `word` option.
  *
- * Word lists (assets/wordlists): `SG.wordlists.en` and `SG.wordlists.vi`, plain arrays of 9-letter isograms
- * in upper-case A-Z, read lazily at build time. The Vietnamese list may be empty or short (see
- * `SG.wordoku.MIN_WORDS`); then the English list is used and step 4 of the pipeline says so with the event
- * 'extraStructure.wordFallback'. A word of the user's own can be given through the `word` option.
- *
- * Renderer note (CV9):
- *  - symbols: with symbol mode 'word' (the default) draw `model.symbols.labels[value - 1]`; with 'digits'
- *    draw the value itself.
- *  - highlight: `model.layout.overlays` holds one entry `{ kind: 'wordLine', cells }`, the nine cells of the
- *    line in reading order. `SG.wordoku.describe(model)` returns the same cells with the placement.
- *  - reveal: `SG.wordoku.readWord(model, values)` spells the line of a board (the solution, or what the
- *    player has filled in, '_' for an empty cell); `SG.wordoku.isWordSolved` says whether it is the key
- *    word. `describe(model).word` is the key word itself and must stay hidden until the puzzle is solved.
+ * Renderer note:
+ *  - symbols: symbol mode 'word' (default) draws `model.symbols.labels[value - 1]`, 'digits' the value.
+ *  - highlight: `model.layout.overlays` holds one `{ kind: 'wordLine', cells }` (the nine cells in reading
+ *    order); `SG.wordoku.describe(model)` returns the same cells with the placement.
+ *  - reveal: `SG.wordoku.readWord(model, values)` spells the line of a board ('_' for an empty cell) and
+ *    `isWordSolved` says whether it is the key word. `describe(model).word` is the key word itself and must
+ *    stay hidden until the puzzle is solved.
  */
 (function (root) {
   'use strict';
@@ -68,35 +63,23 @@
     return fail('pipeline.invalidOption', { option: option, value: String(value) });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Words and word lists
-  // ---------------------------------------------------------------------------------------------
-
   /**
    * Turns what a person types into the form of the word lists: diacritics dropped ('đ' becomes D), upper
    * case, everything that is not a letter A-Z removed. "Bạch Dương" gives BACHDUONG.
-   * @param {string} text
-   * @returns {string}
    */
   function normalizeWord(text) {
     return String(text).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\u0111/g, 'd')
       .replace(/\u0110/g, 'D').toUpperCase().replace(/[^A-Z]/g, '');
   }
 
-  /**
-   * @param {*} word
-   * @returns {boolean} True for a string of exactly 9 characters, upper-case letters A-Z, all distinct.
-   */
+  /** True for a string of exactly 9 characters, upper-case letters A-Z, all distinct. */
   function isIsogram(word) {
     return typeof word === 'string' && /^[A-Z]{9}$/.test(word) && new Set(word).size === SIZE;
   }
 
   /**
-   * The usable entries of a word list: those that are isograms, each once. Entries that are not are ignored
-   * here (a list of unknown origin must not break a generation run); tests check that the shipped lists have
-   * none.
-   * @param {?ArrayLike<string>} list
-   * @returns {string[]}
+   * The usable entries of a word list: those that are isograms, each once. Other entries are ignored (a list
+   * of unknown origin must not break a generation run); tests check that the shipped lists have none.
    */
   function validWords(list) {
     const out = [];
@@ -116,11 +99,9 @@
    */
 
   /**
-   * Picks the word list for a language: the list itself, or the English one when it is empty or has fewer
-   * than `MIN_WORDS` usable words. The English list has nothing to fall back to and is used as long as it
-   * has a single word.
-   * @param {string} language  'en' or 'vi'.
-   * @param {Object<string, string[]>} [lists]  Defaults to `SG.wordlists`; tests pass their own.
+   * Picks the word list for a language: the list itself, or the English one when it has fewer than
+   * `MIN_WORDS` usable words. English has nothing to fall back to and is used as long as it has one word.
+   * `lists` defaults to `SG.wordlists`; tests pass their own.
    * @returns {WordList}
    * @throws {SG.errors.GenerationError} 'wordoku.noWordList' when no usable word exists at all.
    */
@@ -142,10 +123,6 @@
     throw fail('wordoku.noWordList', { language: String(language) });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Options
-  // ---------------------------------------------------------------------------------------------
-
   /**
    * @typedef {Object} WordokuOptions
    * @property {string} placement  'diagonal' | 'row' | 'column'.
@@ -156,8 +133,6 @@
 
   /**
    * Reads and checks the variant options; missing values mean the defaults.
-   * @param {?Object} opts  { placement, line, language, word }.
-   * @returns {WordokuOptions}
    * @throws {SG.errors.GenerationError} 'pipeline.invalidOption' naming the offending option.
    */
   function normalizeOptions(opts) {
@@ -187,16 +162,7 @@
     return { placement: placement, line: line, language: language, word: word };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The board
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * The cells of a line, in reading order.
-   * @param {string} placement  'diagonal' | 'row' | 'column'.
-   * @param {number} line       0-based row or column; ignored for the diagonal.
-   * @returns {number[]}
-   */
+  /** The cells of a line, in reading order (`line`: 0-based row or column, ignored for the diagonal). */
   function lineCells(placement, line) {
     const cells = [];
     for (let i = 0; i < SIZE; i++) {
@@ -208,12 +174,8 @@
   }
 
   /**
-   * Builds the model: the classic 9x9 geometry (27 units: rows, columns, boxes) under the id 'wordoku', with
-   * the nine letters of `word` as the symbol set and the word forced onto the line through `fixedCells`.
-   * @param {string} word       An isogram, see `isIsogram`.
-   * @param {string} placement  'diagonal' | 'row' | 'column'.
-   * @param {number} line       0-based row or column; ignored for the diagonal.
-   * @returns {PuzzleModel}
+   * Builds the model: the classic 9x9 geometry (27 units) under the id 'wordoku', with the nine letters of
+   * `word` (an isogram) as the symbol set and the word forced onto the line through `fixedCells`.
    */
   function buildBoard(word, placement, line) {
     const n = SIZE * SIZE;
@@ -282,10 +244,8 @@
   }
 
   /**
-   * Builds a wordoku model: picks the key word, the line and the symbol mapping.
-   * @param {?Object} opts  The variant options, see `normalizeOptions`.
-   * @param {?Rng} rng  Source of all randomness (word and line); without one a fixed seed is used.
-   * @returns {PuzzleModel}
+   * Builds a wordoku model: picks the key word, the line and the symbol mapping. Without an rng a fixed
+   * seed is used.
    * @throws {SG.errors.GenerationError} 'pipeline.invalidOption', or 'wordoku.noWordList' when there is no
    *         word to draw.
    */
@@ -306,10 +266,6 @@
     return model;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Helpers for the renderer and the tests
-  // ---------------------------------------------------------------------------------------------
-
   /**
    * @typedef {Object} WordLine
    * @property {string} placement  'diagonal' | 'row' | 'column'.
@@ -322,7 +278,6 @@
   /**
    * Describes the word line of a wordoku model. Everything is derived from the model itself (`fixedCells`
    * and the symbol labels), so it works on a model that has crossed a worker boundary.
-   * @param {PuzzleModel} model
    * @returns {?WordLine}  null when the model has no complete word line.
    */
   function describe(model) {
@@ -353,10 +308,7 @@
   }
 
   /**
-   * Spells the word line of a board.
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} values  One value per cell, 0 = empty (a solution, or the player's board).
-   * @param {string} [blank='_']  What stands for an empty cell.
+   * Spells the word line of a board (`values`: one per cell, 0 = empty; `blank` stands for an empty cell).
    * @returns {?string}  Nine characters, or null when the model has no word line.
    */
   function readWord(model, values, blank) {
@@ -369,24 +321,15 @@
     }).join('');
   }
 
-  /**
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} values  One value per cell, 0 = empty.
-   * @returns {boolean} True when the word line of the board spells the key word.
-   */
+  /** True when the word line of the board spells the key word. */
   function isWordSolved(model, values) {
     const info = describe(model);
     return info !== null && readWord(model, values) === info.word;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Pipeline hook
-  // ---------------------------------------------------------------------------------------------
-
   /**
    * Pipeline hook (step 4, 'extraStructure'): reports where the key word lies and, when it applies, that the
    * Vietnamese list was too short. It names the line but never the word. The model is not changed.
-   * @param {Object} ctx  `{ model, solution, rng, level, spec, attempt, budget, emit, variantId }`.
    */
   function postGenerate(ctx) {
     const info = describe(ctx.model);
@@ -397,10 +340,6 @@
     const args = info.placement === 'diagonal' ? { length: SIZE } : { length: SIZE, line: info.line };
     em.step('extraStructure', 'progress', EVENT_BY_PLACEMENT[info.placement], args);
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Registration: event vocabulary, translations, variant
-  // ---------------------------------------------------------------------------------------------
 
   /** Schema of the variant options, for the generated control panel. */
   const OPTIONS = Object.freeze([
@@ -449,7 +388,7 @@
     })
   ]);
 
-  // A second load keeps the first object, so that it stays the one that the first load's hooks belong to.
+  // A second load keeps the first object, which the first load's hooks belong to.
   SG.wordoku = SG.wordoku || {
     ID: ID,
     PLACEMENTS: PLACEMENTS,
@@ -469,10 +408,9 @@
     isWordSolved: isWordSolved
   };
 
-  // Skipping a known id keeps a second load of this file harmless (no second set of locale strings either).
+  // Skipping a known id keeps a second load harmless (no second set of locale strings either).
   if (!SG.variants.has(ID)) {
-    // The variant adds events of its own to step 4. The core keeps the list of valid events in
-    // SG.events.VOCABULARY, plain data read by the UI and the tests, so they are listed there.
+    // The variant's own events for step 4, listed in SG.events.VOCABULARY (plain data read by UI and tests).
     [
       [EVENT_BY_PLACEMENT.diagonal, ['length']],
       [EVENT_BY_PLACEMENT.row, ['length', 'line']],
@@ -577,7 +515,6 @@
       i18nKey: 'variant.wordoku',
       group: 'wordoku',
       digits: SIZE,
-      // Measured (`node tests/qualify.js`, docs/report-v2/qualification.md): up to hell1, like classic9.
       difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1'],
       defaultSymbolMode: 'word',
       symbolModes: ['word', 'digits'],

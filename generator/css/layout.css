@@ -1,5 +1,5 @@
 /*
- * Page frame (design.md 10.1): header + three layouts.
+ * Page frame: header + three layouts.
  *   >= 1360px     3 columns: list of generated puzzles | board and the replay box (replay controls, tabs
  *                 Result | Step) | puzzle options
  *   768-1359px    2 columns: board, replay box and the list of puzzles | puzzle options
@@ -452,9 +452,9 @@
 }
 
 /* ---- Responsive layout ----
-   Breakpoints (the same in Sudoku Player): >= 768px two columns, >= 1360px three columns, < 768px the mobile layout
-   (one column, icon-only buttons, the options as a drawer), < 600px a smaller title. The desktop rules come first;
-   the mobile block is last so that it wins over the base rules of components.css. */
+   Breakpoints (the same in Sudoku Player): >= 768px two columns, >= 1360px three columns, < 768px the mobile
+   layout, < 600px a smaller title. The desktop rules come first; the mobile block is last so that it wins
+   over the base rules of components.css. */
 
 /* ---- >= 768px: board, replay and result | puzzle options; the list of puzzles under the result ---- */
 @media (min-width: 768px) {
@@ -475,7 +475,7 @@
   }
 }
 
-/* ---- >= 1360px: the list of puzzles gets a column of its own on the left (wide enough for "<variant> - <level>" on one line) ---- */
+/* ---- >= 1360px: the list of puzzles gets its own column on the left ---- */
 @media (min-width: 1360px) {
   .app-layout {
     grid-template-columns: clamp(19rem, 21vw, 23rem) minmax(0, 1fr) clamp(16rem, 24vw, 21.25rem);

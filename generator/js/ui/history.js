@@ -1,34 +1,22 @@
 /**
- * Puzzle history: `SG.history`. Every puzzle the page generates is added to a list that is kept in
- * `localStorage` (key `sg.history.v1`, the newest first, at most 100) and shown in the left panel
- * (`#history-root`). An entry is small: what the list shows (variant, level, seed, clues, score, time) and the
- * configuration that rebuilds the puzzle. Picking an entry writes that configuration to the form and
- * generates it again; the same seed gives the same puzzle, and the result cache serves it at once when it
- * still has it.
- *
- * Two layers, so the storage runs in Node:
- *  - `entryOf(result)`, `keyOf(config)` and `createList(options)` are PURE data and storage: no DOM. Every
- *    access to the storage is wrapped in try/catch; when it is missing or blocked the list lives in memory.
- *  - `init(app)` (called by `SG.app` at the end of start-up, like the other optional modules) fills
- *    `#history-root`, follows the 'result' and 'locale' events of the app, and `destroy()` undoes it.
- *
- * The file loads in Node without a DOM; the DOM and `localStorage` are only touched inside functions.
+ * Puzzle history `SG.history`: every generated puzzle is added to a list kept in `localStorage` (key
+ * `sg.history.v1`, newest first, at most 100) and shown in the left panel (`#history-root`). An entry holds what
+ * the list shows (variant, level, seed, clues, score, time) and the configuration that rebuilds the puzzle; picking
+ * one regenerates it (same seed, same puzzle; the result cache serves it at once when it can).
+ * `entryOf`, `keyOf` and `createList` are pure data/storage (no DOM; storage access is guarded, memory-only when
+ * blocked). `init(app)` fills the panel and follows the app's 'result' and 'locale' events; `destroy()` undoes it.
+ * Loads in Node: the DOM and `localStorage` are touched only inside functions.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first definition on repeated loads.
   if (SG.history && typeof SG.history.init === 'function') return;
 
   const STORAGE_KEY = 'sg.history.v1';
   const VERSION = 1;
   const LIMIT = 100;
-
-  // ---------------------------------------------------------------------------------------------
-  // Entries
-  // ---------------------------------------------------------------------------------------------
 
   function isNum(x) {
     return typeof x === 'number' && isFinite(x);
@@ -51,13 +39,7 @@
     return out;
   }
 
-  /**
-   * What makes a puzzle the same puzzle: the variant and its options, the level asked for, the seed and the
-   * dig settings. The symbol set only changes how it is drawn, so it is not part of the key.
-   * @param {Object} config  A `PuzzleResult.config`.
-   * @param {*} seed
-   * @returns {string}
-   */
+  /** What makes a puzzle the same puzzle: variant and options, level, seed and dig settings (not the symbol set). */
   function keyOf(config, seed) {
     const c = config || {};
     const options = plainOptions(c.variantOptions);
@@ -66,12 +48,7 @@
       optionText.join('&')].join('|');
   }
 
-  /**
-   * The list entry of a generated result.
-   * @param {Object} result  A `PuzzleResult`.
-   * @param {number} [at]  Time in ms (default now).
-   * @returns {?Object} null for a result that cannot be rebuilt (no seed or configuration).
-   */
+  /** The list entry of a result; null for one that cannot be rebuilt (no seed or configuration). `at`: ms, default now. */
   function entryOf(result, at) {
     if (result === null || typeof result !== 'object' || !result.config) return null;
     const config = result.config;
@@ -104,11 +81,7 @@
       typeof e.seed === 'string';
   }
 
-  /**
-   * The store state that rebuilds the puzzle of an entry (for `SG.app.generate`).
-   * @param {Object} entry
-   * @returns {Object}
-   */
+  /** The store state that rebuilds the entry's puzzle (for `SG.app.generate`). */
   function overridesOf(entry) {
     const out = {
       variantId: entry.variantId,
@@ -122,20 +95,9 @@
     return out;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The persisted list
-  // ---------------------------------------------------------------------------------------------
-
   /**
-   * A list of entries, newest first, persisted as `{ version, entries }` under one storage key. Every
-   * operation re-reads the stored list first (another tab may have changed it). Nothing throws.
-   * @param {Object} [options]
-   * @param {?Object} [options.storage]  `localStorage`-like; null: memory only. Default: `localStorage`
-   *        (guarded: a getter that throws means memory only).
-   * @param {number} [options.limit=100]  Entries kept.
-   * @param {string} [options.key]  Storage key (default `sg.history.v1`).
-   * @returns {{list: function(): Object[], add: function(Object, Object=): Object[],
-   *   remove: function(string): Object[], clear: function(): Object[], persistent: function(): boolean}}
+   * Entries newest first, persisted as `{ version, entries }` under one storage key. Every operation re-reads the
+   * stored list first (another tab may have changed it). Nothing throws; an unusable `storage` means memory only.
    */
   function createList(options) {
     const o = options || {};
@@ -154,7 +116,7 @@
       }
     }
 
-    // A storage that cannot be read or written leaves the list in memory for the rest of the session.
+    // An unreadable or unwritable storage leaves the list in memory for the rest of the session.
     function read() {
       const st = storage();
       if (st === null || st === undefined || failed) {
@@ -205,13 +167,7 @@
         return entries;
       },
 
-      /**
-       * Adds an entry on top. An entry that is already in the list is replaced; `touch: false` keeps its
-       * place and its time (a puzzle opened from the list does not jump to the top).
-       * @param {Object} entry
-       * @param {{touch?: boolean}} [opts]
-       * @returns {Object[]} The list after the change.
-       */
+      /** An entry already in the list is replaced; `touch: false` keeps its place and time (opening one does not move it up). */
       add: function add(entry, opts) {
         if (!validEntry(entry)) return read();
         const entries = read();
@@ -244,10 +200,6 @@
       }
     };
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // The panel
-  // ---------------------------------------------------------------------------------------------
 
   function t(key, args) {
     return SG.i18n && typeof SG.i18n.t === 'function' ? SG.i18n.t(key, args) : key;
@@ -306,19 +258,16 @@
       listeners.push({ el: el, type: type, fn: fn });
     }
 
-    // The accessible name of an item: the variant and the level.
     function title(entry) {
       return t('history.item.title', {
         variant: nameOf('variant.', entry.variantId), level: nameOf('difficulty.', entry.level)
       });
     }
 
-    // The last 6 characters of a long seed.
     function shortSeed(seed) {
       return seed.slice(-6);
     }
 
-    // "Hard: score 1234, seed 123456", the level in bold.
     function metaNodes(entry) {
       return [
         make(doc, 'strong', { class: 'history-item__level', text: nameOf('difficulty.', entry.level) }),
@@ -414,11 +363,7 @@
     return shared;
   }
 
-  /**
-   * Starts the panel for the application. Idempotent.
-   * @param {Object} app  `SG.app`.
-   * @returns {boolean} False without a DOM or without `#history-root` on the page.
-   */
+  /** Idempotent; false without a DOM or without `#history-root`. */
   function init(app) {
     if (typeof document === 'undefined' || !app || typeof app.on !== 'function') return false;
     if (controller !== null && controllerApp === app) {
@@ -431,7 +376,6 @@
     return controller !== null;
   }
 
-  /** Stops the panel and empties it (for tests and hot reloads). */
   function destroy() {
     if (controller !== null) controller.destroy();
     controller = null;
@@ -451,10 +395,6 @@
     init: init,
     destroy: destroy
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Strings
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

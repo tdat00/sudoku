@@ -1,30 +1,23 @@
 /**
- * Generation control panel (design.md 10.4, T-4.4): `SG.controls`.
- *
- * The whole form is generated from data, never from hand-written HTML per variant:
- *  - `describe(state, ctx)` is PURE (no DOM): it turns a store state into the form model, a list of fields
- *    with their choices, visibility, disabled flag and warnings. Everything that depends on the variant or on
- *    another option is decided here: the levels offered (`difficultySupport`), the symbol sets
- *    (`symbolModes`), the variant specific options (`SG.variants.optionsOf`, `visibleWhen`), the strict
- *    symmetry warning. It is what the tests exercise.
- *  - `mount(rootEl, store, opts)` renders that model into the `<form>` and wires the events to the store. It
- *    renders once, then updates the controls in place (a control that has the focus keeps it); only a
- *    language change rebuilds the labels, and only a variant change rebuilds the variant options.
- *
- * The form never starts a generation (app.js owns the Generate / Cancel / Export buttons). Strings are keys
- * of `SG.i18n` (`controls.*` fragment at the bottom of this file, plus the base packs).
- *
- * Field ids of the model: 'variant', 'difficulty', 'symbolMode', 'seed', 'symmetry' (advanced), 'digOrder',
- * 'maxAttempts', 'showSolution' and 'opt.<optionId>' for the options of the variant.
- *
- * The description of a field (`hintKey`) is shown in a help tooltip next to the label, not under the control.
+ * `SG.controls`: the generation form, generated from data, never from hand-written HTML per variant.
+ *  - `describe(state, ctx)` is PURE (no DOM): a store state -> the form model (fields with choices, visibility,
+ *    disabled flag and warnings). Everything that depends on the variant or on another option is decided here: the
+ *    levels offered (`difficultySupport`), the symbol sets (`symbolModes`), the variant options
+ *    (`SG.variants.optionsOf`, `visibleWhen`), the strict symmetry warning. The tests exercise it.
+ *  - `mount(rootEl, store, opts)` renders the model into the `<form>` and wires the events to the store. It renders
+ *    once, then updates controls in place (a focused control keeps its focus); only a language change rebuilds the
+ *    labels, and only a variant change rebuilds the variant options.
+ * The form never starts a generation (app.js owns Generate / Cancel / Export). Strings: `controls.*` fragment at the
+ * bottom of this file plus the base packs.
+ * Field ids: 'variant', 'difficulty', 'symbolMode', 'seed', 'symmetry' (advanced), 'digOrder', 'maxAttempts',
+ * 'showSolution' and 'opt.<optionId>' for variant options. The description of a field (`hintKey`) is shown in a
+ * help tooltip next to the label, not under the control.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first definition on repeated loads.
   if (SG.controls && typeof SG.controls.mount === 'function') return;
 
   const hasOwn = Object.prototype.hasOwnProperty;
@@ -33,21 +26,15 @@
   const TOAST_MS = 2600;
 
   /**
-   * Strict symmetry rule (data, so it is easy to tune): symmetry kind -> the first difficulty level at which
-   * combining it with that kind deserves a warning. The four-way symmetries dig four cells at a time; the
-   * digger (js/core/digger.js, "coarse" groups) then needs more samples and attempts and misses the requested
-   * level more often (a classic9 run takes 1.3-1.8 full grids on average from 'hard' on, against 1.0-1.2 with
-   * rotational180). Two-way symmetries and 'none' never warn.
-   * @type {Object<string, string>}
+   * Strict symmetry rule (data, easy to tune): symmetry kind -> first difficulty level at which combining it with that
+   * kind deserves a warning. Four-way symmetries dig four cells at a time; the digger ("coarse" groups in
+   * js/core/digger.js) then needs more samples and attempts and misses the requested level more often (a classic9
+   * run takes 1.3-1.8 full grids on average from 'hard' on, against 1.0-1.2 with rotational180). Two-way symmetries
+   * and 'none' never warn.
    */
   const STRICT_SYMMETRY = Object.freeze({ rotational90: 'master', mirrorBoth: 'master' });
 
-  /** The symmetry that is offered as the reliable alternative in the warning. */
   const RELIABLE_SYMMETRY = 'rotational180';
-
-  // ---------------------------------------------------------------------------------------------
-  // Texts
-  // ---------------------------------------------------------------------------------------------
 
   function t(key, args) {
     return SG.i18n.t(key, args);
@@ -61,23 +48,12 @@
     return SG.i18n.formatNumber(value);
   }
 
-  /** Text of a message model `{ messageKey, args, argKeys }`; the `argKeys` values are translated keys. */
   function messageText(message) {
     const args = Object.assign({}, message.args);
     Object.keys(message.argKeys || {}).forEach(function (name) { args[name] = t(message.argKeys[name]); });
     return t(message.messageKey, args);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Form model (pure)
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * The strict symmetry warning for a symmetry / difficulty pair, or null.
-   * @param {string} symmetry
-   * @param {string} difficulty
-   * @returns {?{id: string, messageKey: string, argKeys: Object<string, string>}}
-   */
   function strictSymmetryWarning(symmetry, difficulty) {
     if (!hasOwn.call(STRICT_SYMMETRY, symmetry)) return null;
     const ladder = SG.difficulty.LEVELS;
@@ -94,7 +70,6 @@
   }
 
   const PREVIEW_SIZE = 9;
-  /** The cell whose symmetric partners the preview highlights. */
   const PREVIEW_CELL = Object.freeze({ row: 1, col: 2 });
   const PREVIEW_MID = PREVIEW_SIZE / 2;
   const PREVIEW_AXES = Object.freeze({
@@ -106,13 +81,7 @@
   });
   const PREVIEW_CENTRE = Object.freeze({ rotational180: true, rotational90: true });
 
-  /**
-   * Miniature of a symmetry on a 9x9 board: the cells that are removed together with one sample cell, the
-   * mirror axes (lines in board units) and whether the centre is marked.
-   * @param {string} kind  One of `SG.symmetry.KINDS`.
-   * @returns {{kind: string, size: number, marked: Array<{row: number, col: number}>,
-   *   axes: number[][], centre: boolean}}
-   */
+  /** Miniature of a symmetry on a 9x9 board: the cells removed together with one sample cell, the mirror axes (lines in board units) and whether the centre is marked. */
   function symmetryPreview(kind) {
     const n = PREVIEW_SIZE;
     const cellRow = new Int32Array(n * n);
@@ -250,7 +219,6 @@
     return field;
   }
 
-  /** One variant option (a `NormalizedOption`) as a form field. */
   function optionField(item, s, section) {
     const field = baseField('opt.' + item.id, null, section, item.type, item.labelKey);
     field.optionId = item.id;
@@ -286,7 +254,6 @@
     }
   });
 
-  /** Polite notes about options the form changed by itself (`adjustments` of `sanitizeWithNotes`). */
   function noteModels(s, adjustments) {
     const notes = [];
     (adjustments || []).forEach(function (a) {
@@ -306,30 +273,21 @@
    * @property {string} id           'variant' | 'difficulty' | ... | 'opt.<optionId>'
    * @property {?string} stateKey    Key of the store state (null for variant options).
    * @property {?string} optionId    Option id for variant options, else null.
-   * @property {('basic'|'options'|'advanced')} section  'options': variant options shown under the basic
-   *           fields; 'advanced': inside the "Advanced" disclosure.
+   * @property {('basic'|'options'|'advanced')} section  'options': variant options shown under the basic fields;
+   *           'advanced': inside the "Advanced" disclosure.
    * @property {('select'|'slider'|'number'|'boolean'|'text'|'seed')} type
-   * @property {string} labelKey
    * @property {?string} hintKey     Help text (a description for the variant and the difficulty).
-   * @property {*} value
-   * @property {Array<{value: *, labelKey: ?string, label: string}>} choices  Selects only; `label` is the
-   *           fallback text when `labelKey` is null.
-   * @property {boolean} visible     False for an option hidden by its `visibleWhen`, and for a symbol set
-   *           with a single choice (nothing to choose).
+   * @property {Array<{value: *, labelKey: ?string, label: string}>} choices  Selects only; `label` is the fallback
+   *           text when `labelKey` is null.
+   * @property {boolean} visible     False for an option hidden by its `visibleWhen`, and for a symbol set with a
+   *           single choice (nothing to choose).
    * @property {boolean} disabled    A select with a single choice.
    * @property {Array<Object>} warnings  Non-blocking `{ id, messageKey, argKeys }`.
-   * Plus, by type: min / max / step / defaultValue / minLabelKey / maxLabelKey / defaultLabelKey (slider,
-   * number), maxLength / placeholderKey (text, seed), `groups` (variant), `preview` (symmetry), `seed` and
-   * `info` (seed).
+   * Plus, by type: min / max / step / defaultValue / minLabelKey / maxLabelKey / defaultLabelKey (slider, number),
+   * maxLength / placeholderKey (text, seed), `groups` (variant), `preview` (symmetry), `seed` and `info` (seed).
    */
 
-  /**
-   * The form model for a state. Pure: no DOM, no storage.
-   * @param {Object} state  A store state (sanitised first).
-   * @param {{adjustments: Array<Object>}} [ctx]  The corrections the store reported for the last change; they
-   *        become `notes`.
-   * @returns {{variantId: string, fields: FormField[], notes: Array<Object>, warnings: Array<Object>}}
-   */
+  /** The form model for a state (sanitised first). Pure. `ctx.adjustments`: the corrections the store reported for the last change; they become `notes`. Returns { variantId, fields, notes, warnings }. */
   function describe(state, ctx) {
     const s = SG.store.sanitize(state);
     const def = SG.variants.get(s.variantId);
@@ -354,15 +312,10 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // DOM helpers
-  // ---------------------------------------------------------------------------------------------
-
   function domId(fieldId) {
     return ID_PREFIX + fieldId.replace(/[^A-Za-z0-9_-]/g, '-');
   }
 
-  /** Creates an element; `attrs` values of null / undefined / false are skipped, `true` gives ''. */
   function make(doc, tag, attrs, children) {
     const node = doc.createElement(tag);
     Object.keys(attrs || {}).forEach(function (name) {
@@ -403,11 +356,9 @@
     return c.labelKey ? t(c.labelKey) : c.label;
   }
 
-  /** The panel is narrow: alerts use the small text size and tighter spacing (design tokens only). */
   const ALERT_STYLE = 'gap: var(--sg-space-2); padding: var(--sg-space-2) var(--sg-space-3); ' +
     'font-size: var(--sg-font-size-sm)';
 
-  /** Alert boxes (`.alert`) inside a container; rebuilt only when the texts changed. */
   function renderAlerts(doc, box, messages, modifier, withIcon, idPrefix) {
     const texts = messages.map(messageText);
     const signature = texts.join('\n');
@@ -428,7 +379,6 @@
     box.hidden = texts.length === 0;
   }
 
-  /** `aria-describedby` from the elements that currently carry something to read. */
   function describeBy(control, elements) {
     const ids = [];
     elements.forEach(function (el) {
@@ -438,10 +388,8 @@
     else control.removeAttribute('aria-describedby');
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Field widgets. Each returns { node, control, update(field) }; `commit(field, value, resync)` writes to
-  // the store, `extras()` lists more elements that describe the control (the variant's notes).
-  // ---------------------------------------------------------------------------------------------
+  // Field widgets: each returns { node, control, update(field) }; `commit(field, value, resync)` writes to the store,
+  // `extras()` lists more elements that describe the control (the variant's notes).
 
   function renderChoices(doc, select, f) {
     const signature = f.choices.map(function (c) { return String(c.value); }).join('|');
@@ -460,16 +408,11 @@
     }
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The help tooltip next to a field label. The description of a field lives here, not under the control.
-  // It opens on hover, on keyboard focus and on click / tap (so it works on a phone), Esc closes it, and it
-  // is styled text (not a native `title`): see `richText`.
-  // ---------------------------------------------------------------------------------------------
+  // Help tooltip next to a field label (the description of a field lives here, not under the control): opens on
+  // hover, keyboard focus and click / tap (so it works on a phone), Esc closes it; styled text, not a native `title`
+  // (see `richText`).
 
-  /**
-   * Tooltip text with light formatting, built with DOM nodes (never innerHTML): a blank line starts a new
-   * paragraph and `**text**` is bold. Plain text is a single paragraph.
-   */
+  /** Tooltip text built with DOM nodes (never innerHTML): a blank line starts a paragraph, `**text**` is bold. */
   function richText(doc, text) {
     return String(text).split(/\n{2,}/).map(function (paragraph) {
       const p = make(doc, 'p', {});
@@ -483,7 +426,6 @@
 
   const tipDocs = typeof WeakSet === 'function' ? new WeakSet() : null;
 
-  /** One click listener per document that closes the tooltips opened by a click elsewhere. */
   function closeTipsOnOutsideClick(doc) {
     if (tipDocs === null || tipDocs.has(doc) || typeof doc.addEventListener !== 'function') return;
     tipDocs.add(doc);
@@ -777,10 +719,6 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Clipboard
-  // ---------------------------------------------------------------------------------------------
-
   function fallbackCopy(doc, text) {
     let ok = false;
     const area = make(doc, 'textarea', {
@@ -800,13 +738,7 @@
     return ok;
   }
 
-  /**
-   * Copies text to the clipboard: `navigator.clipboard` when it exists, else a hidden textarea and
-   * `document.execCommand('copy')`.
-   * @param {string} text
-   * @param {Object} [doc]  The document (default: the global one).
-   * @returns {Promise<boolean>} Whether the text was copied.
-   */
+  /** `navigator.clipboard` when it exists, else a hidden textarea and `document.execCommand('copy')`. Resolves to whether the text was copied. */
   function copyText(text, doc) {
     const d = doc || (typeof document !== 'undefined' ? document : null);
     const nav = typeof navigator !== 'undefined' ? navigator : null;
@@ -818,20 +750,7 @@
     return Promise.resolve(d ? fallbackCopy(d, text) : false);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Mounting
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Builds the form into `rootEl` (the `<form id="controls-form">`) and keeps it in step with the store.
-   * @param {Element} rootEl
-   * @param {Object} store  A store of `SG.store.create` (get / set / subscribe / newSeed).
-   * @param {Object} [options]
-   * @param {function(string, Object, string): void} [options.notify]  `notify(messageKey, args, kind)` with
-   *        kind 'success' | 'warning' | 'danger', for the seed buttons; default: a toast in `#toast-root`.
-   * @param {function(): void} [options.onSubmit]  Called when Enter is pressed in the seed field.
-   * @returns {{refresh: function(): void, destroy: function(): void, focusFirst: function(): void}}
-   */
+  /** Builds the form into `rootEl` (the `<form id="controls-form">`) and keeps it in step with the store (get / set / subscribe / newSeed). `options.notify(messageKey, args, kind)` ('success' | 'warning' | 'danger') serves the seed buttons (default: a toast in `#toast-root`); `options.onSubmit` runs on Enter in the seed field. Returns { refresh, destroy, focusFirst }. */
   function mount(rootEl, store, options) {
     if (!rootEl || !store) throw new TypeError('SG.controls.mount needs a root element and a store');
     const opts = options || {};
@@ -1020,9 +939,6 @@
     };
   }
 
-  /**
-   * @namespace SG.controls
-   */
   SG.controls = {
     STRICT_SYMMETRY: STRICT_SYMMETRY,
     describe: describe,
@@ -1032,10 +948,6 @@
     copyText: copyText,
     mount: mount
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Strings of the form
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

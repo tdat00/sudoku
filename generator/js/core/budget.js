@@ -1,43 +1,23 @@
 /**
- * Work budget and cancellation token shared by every long running routine.
- *
- * Hot loops call `budget.check()` once per search node. It is cheap on purpose: the flags are tested on
- * every call, but the clock (and the optional external cancel poll) is only sampled every 1024 ticks.
- * Once a limit is hit, every further `check()` keeps throwing.
- *
- * It also holds the run control of resumable generation (see `SG.pipeline.runSteps`): an active clock that
- * does not count the time given away between slices, and `drive`, which runs a stepper to its end.
+ * Work budget and cancellation token shared by every long running routine. Hot loops call `check()` once per
+ * node: the flags are tested every call, but the clock (and the external cancel poll) only every 1024 ticks.
+ * Once a limit is hit every further `check()` keeps throwing. Also holds the run control of resumable generation
+ * (see `SG.pipeline.runSteps`): an active clock and `drive`.
  */
 (function (root) {
   'use strict';
 
   var SG = root.SG = root.SG || {};
 
-  /** Number of ticks between two clock samples. */
   var CLOCK_INTERVAL = 1024;
 
-  /**
-   * @typedef {Object} Budget
-   * @property {function(number=): void} tick  Records n (default 1) units of work without any checking.
-   * @property {function(): void} check        Counts one tick, then throws a GenerationError if cancelled
-   *                                           ('budget.cancelled') or out of nodes or time
-   *                                           ('budget.exceeded').
-   * @property {function(): void} cancel       Cancels the budget; the next check() throws at once.
-   * @property {function(): number} elapsedMs  Milliseconds since creation.
-   * @property {boolean} isCancelled           True after cancel() (read only).
-   * @property {number} nodes                  Ticks recorded so far (read only).
-   */
+  // Budget: tick(n = 1) records work; check() counts one tick and throws GenerationError
+  // 'budget.cancelled' or 'budget.exceeded'; cancel(); elapsedMs(); read-only isCancelled and nodes.
 
   /**
-   * Creates a budget. All limits are optional; with no options the budget never expires.
-   * @param {Object} [options]
-   * @param {number} [options.ms]       Wall-clock limit in milliseconds.
-   * @param {number} [options.nodes]    Maximum number of ticks (check() calls plus tick() units).
-   * @param {function(): void} [options.onCancel]  Called once, when cancel() is invoked first time.
-   * @param {function(): *} [options.shouldCancel] Polled with the clock sample; a truthy result cancels
-   *                                               the budget (for flags set from outside, e.g. in shared memory).
-   * @param {function(): number} [options.now]     Clock in milliseconds; defaults to Date.now.
-   * @returns {Budget}
+   * Creates a budget; all options are optional (none = never expires). `ms`: wall-clock limit; `nodes`: max ticks;
+   * `onCancel`: called once on the first cancel(); `shouldCancel`: polled with the clock sample, for flags set from
+   * outside (e.g. shared memory); `now`: clock in ms, default Date.now.
    */
   function create(options) {
     options = options || {};
@@ -109,31 +89,14 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Run control for resumable ("stepper") generation
-  // ---------------------------------------------------------------------------------------------
-
   function defaultNow() {
     return typeof performance !== 'undefined' && typeof performance.now === 'function'
       ? performance.now() : Date.now();
   }
 
-  /**
-   * @typedef {Object} ActiveClock
-   * @property {function(): number} now      Milliseconds spent running so far (bound: pass it as an option).
-   * @property {function(): void} resume     Starts counting (idempotent). A new clock is paused.
-   * @property {function(): void} pause      Stops counting (idempotent); time passing now is not counted.
-   * @property {boolean} running             True between resume() and pause() (read only).
-   */
-
-  /**
-   * A clock that only counts the time it is running. A scheduler that runs a generation in slices resumes it
-   * before each slice and pauses it after, so that the time given away to the page (or to the message loop
-   * of a worker) is charged to nothing: `SG.budget.create({ ms, now: clock.now })` then limits the work done,
-   * and event times and step timings (`now` option of `SG.pipeline.runSteps`) show active time only.
-   * @param {function(): number} [rawNow]  Source of milliseconds; default `performance.now`.
-   * @returns {ActiveClock}
-   */
+  // Clock that only counts while running. A scheduler running generation in slices resumes it before and pauses it
+  // after each slice, so time given away to the page is charged to nothing: pass `clock.now` as the budget `now`
+  // and as `now` of `SG.pipeline.runSteps`. resume()/pause() are idempotent; a new clock is paused.
   function createClock(rawNow) {
     var read = typeof rawNow === 'function' ? rawNow : defaultNow;
     var counted = 0;
@@ -150,24 +113,14 @@
     };
   }
 
-  /**
-   * True for what a `function*` returns (and any other iterator): the "steps" of a resumable computation.
-   * @param {*} x
-   * @returns {boolean}
-   */
+  // True for the iterator a `function*` returns (the "steps" of a resumable computation).
   function isSteps(x) {
     return x !== null && typeof x === 'object' && typeof x.next === 'function' &&
       typeof x[Symbol.iterator] === 'function';
   }
 
-  /**
-   * Runs a resumable computation (the iterator of a `*Steps` function) to its end without ever giving the
-   * thread away and returns what it returned. This is how every synchronous API (`SG.pipeline.run`,
-   * `SG.digger.generate`, ...) is built on its stepper: the yields are ignored and the result is the same.
-   * A value that is not an iterator is returned as it is.
-   * @param {*} steps
-   * @returns {*}
-   */
+  // Runs a resumable computation (the iterator of a `*Steps` function) to its end without yielding the thread and
+  // returns its result; this is how every synchronous API is built on its stepper. Non-iterators are returned as is.
   function drive(steps) {
     if (!isSteps(steps)) return steps;
     for (;;) {

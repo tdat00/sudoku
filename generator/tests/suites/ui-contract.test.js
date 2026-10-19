@@ -510,6 +510,18 @@
       expect(suites.filter(function (name) { return listed.indexOf(name) === -1; })).toEqual([]);
     });
 
+    it('every suite in tests/manual is listed in the MANUAL_SUITE_FILES of tests.html, and only there', function () {
+      var listed = quotedList(readText('tests.html'), 'var MANUAL_SUITE_FILES');
+      var quick = quotedList(readText('tests.html'), 'var SUITE_FILES');
+      expect(listed).not.toBeNull();
+      var suites = listDir('tests/manual', '.test.js').map(function (name) {
+        return name.slice(0, -'.test.js'.length);
+      });
+      expect(suites.length).toBeGreaterThan(0);
+      expect(suites.filter(function (name) { return listed.indexOf(name) === -1; })).toEqual([]);
+      expect(listed.filter(function (name) { return quick.indexOf(name) !== -1; })).toEqual([]);
+    });
+
     it('the list reader of this file notices a missing entry', function () {
       var listed = quotedList("var SUITE_FILES = [\n  'a', 'b', // c\n  'd'\n];", 'var SUITE_FILES');
       expect(listed).toEqual(['a', 'b', 'd']);

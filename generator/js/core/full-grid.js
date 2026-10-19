@@ -1,35 +1,24 @@
 /**
- * Full grid generation (design.md section 6.2): a randomised depth-first search with MRV branching and
- * constraint propagation, wrapped in a Las Vegas restart.
- *
- * The search itself is `SG.dfs.searchFrom`. When it needs more than `restartThreshold` failed guesses the
- * attempt is dropped and a new one starts from an independent child stream of the rng. This pays off on
- * large and overlapping boards, where one unlucky early guess can trap plain DFS for a very long time.
- *
- * Variant specific speed-ups are not special cased here: a variant may register `fastSeed(model, state,
- * rng)` and a `restartThreshold` in `SG.variants`, and this module simply uses them when the model's
- * variant has them (an explicit option of the caller wins over the variant's value).
- *
- * Events (design.md section 7): with `options.emit` the generator reports the step and, when the emitter
- * wants `micro` events (verbosity 'full'), every placement, conflict, backtrack and restart as delta patches
- * of at most 8 cells; applying them in order rebuilds the finished grid exactly. The plain search is
- * `SG.dfs.searchFrom`, which has no hooks. At 'off' and 'summary' (and without an emitter) that search runs
- * unchanged, so instrumentation costs nothing there. At 'full' the same search runs as `searchTraced`, a
- * line-for-line copy of `SG.dfs` search that draws the same random numbers in the same order and therefore
- * finds the same grid; the tests assert that.
+ * Full grid generation: randomised DFS (`SG.dfs.searchFrom`) with MRV branching and propagation, inside a Las Vegas
+ * restart: after `restartThreshold` failed guesses the attempt is dropped and a new one starts from a child rng
+ * stream (one unlucky early guess can trap plain DFS on large or overlapping boards).
+ * A variant may register `fastSeed(model, state, rng)` and `restartThreshold` in `SG.variants`; they are used
+ * unless the caller passes the option explicitly.
+ * Events: with `options.emit` at verbosity 'full', `searchTraced` runs instead of the plain search. It is a
+ * line-for-line copy that draws the same random numbers in the same order (tests assert the same grid) and reports
+ * every placement, conflict, backtrack and restart as delta patches of at most 8 cells.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  /** Failed guesses allowed per attempt, per cell, before the attempt is restarted. */
+  // Failed guesses allowed per cell and attempt before a restart.
   const RESTART_FACTOR = 50;
 
-  /** Restarted attempts before the final attempt runs without a backtrack limit. */
+  // Restarts before the last attempt runs without a backtrack limit.
   const DEFAULT_MAX_RESTARTS = 50;
 
-  /** Buffers of the traced search, one set per model. */
   const pools = new WeakMap();
 
   function fail(code, args) {
@@ -45,18 +34,12 @@
     return def !== null && typeof def.fastSeed === 'function' ? def.fastSeed : null;
   }
 
-  /** The `restartThreshold` the variant declares, or null when it declares none (or an unusable one). */
   function variantRestartThreshold(model) {
     const def = variantDef(model);
     return def !== null && Number.isInteger(def.restartThreshold) && def.restartThreshold >= 1
       ? def.restartThreshold : null;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Traced search (used only when the emitter wants micro events)
-  // ---------------------------------------------------------------------------------------------
-
-  /** Reports the moves of the search as `micro` events and keeps the counters of their metrics. */
   function createGridTracer(em, placedAtStart) {
     let placed = placedAtStart;
     let backtracks = 0;
@@ -89,13 +72,9 @@
     };
   }
 
-  /**
-   * The search of `SG.dfs.searchFrom` (limit 1) with calls to `tr` at every move. It must stay in step with
-   * that search: the same branching cell, the same candidate order, the same random draws, the same
-   * backtrack count. `state` itself is left untouched. Like the DFS, it keeps one pool of buffers per model
-   * and is therefore not re-entrant for the same model.
-   * @returns {{found: number, solution: ?Int32Array, backtracks: number, aborted: boolean}}
-   */
+  // The search of `SG.dfs.searchFrom` (limit 1) with `tr` called at every move. Must stay in step with it: same
+  // branching cell, candidate order, random draws and backtrack count. `state` is left untouched. Not re-entrant
+  // for one model (one buffer pool per model, like the DFS).
   function searchTraced(model, state, options, tr) {
     const n = model.cellCount;
     const digits = model.digits;
@@ -202,30 +181,13 @@
     return { found: solution !== null ? 1 : 0, solution: solution, backtracks: backtracks, aborted: aborted };
   }
 
-  /**
-   * Generates a complete, valid grid for the model.
-   *
-   * Cells listed in `fixedCells` (the option, or else `model.fixedCells`) are forced to their value first.
-   * Same model, same rng seed and same options always give the same grid, whatever `emit` does.
-   *
-   * @param {PuzzleModel} model
-   * @param {Rng} rng
-   * @param {Object} [budget]
-   * @param {Object} [options]
-   * @param {boolean} [options.fastSeed=true]   Use the variant's `fastSeed` hook when it has one.
-   * @param {number} [options.restartThreshold] Failed guesses per attempt. Default: the `restartThreshold`
-   *        of the model's variant definition when it declares one (mega12 / mega16), else cellCount * 50.
-   * @param {number} [options.maxRestarts=50]   Restarts before the last attempt runs unlimited.
-   * @param {ArrayLike<number>} [options.fixedCells]  Overrides `model.fixedCells` (0 = free).
-   * @param {Object} [options.stats]  Filled with { attempts, restarts, backtracks, fastSeed }.
-   * @param {?(Emitter|function(Object): void)} [options.emit]  Receives the events, see the file header.
-   * @param {boolean} [options.stepEvents=true]  Emit the 'fullGrid' step start and end events; the pipeline
-   *        passes false because it emits them itself.
-   * @param {{attempt: number, maxAttempts: number}} [options.where]  Goes into the step start event.
-   * @returns {Int32Array} Values 1..D, one per cell.
-   * @throws {SG.errors.GenerationError} 'fullGrid.invalidFixedCells' when the fixed cells contradict each
-   *         other, 'fullGrid.unsatisfiable' when the model has no solution at all, or a budget error.
-   */
+  // Generates a complete valid grid (Int32Array, values 1..D). Cells in `fixedCells` (option, else model.fixedCells;
+  // 0 = free) are forced first. Same model, seed and options give the same grid, whatever `emit` does.
+  // Options: fastSeed (use the variant hook, default true), restartThreshold (default: the variant's, else
+  // cellCount * 50), maxRestarts (default 50, then the last attempt runs unlimited), fixedCells, stats
+  // ({ attempts, restarts, backtracks, fastSeed }), emit, stepEvents (false when the pipeline emits the
+  // 'fullGrid' step events itself), where ({ attempt, maxAttempts }).
+  // Throws 'fullGrid.invalidFixedCells', 'fullGrid.unsatisfiable' or a budget error.
   function generate(model, rng, budget, options) {
     options = options || {};
     rng = rng || SG.rng.create();

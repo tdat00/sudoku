@@ -10,10 +10,6 @@
   /**
    * Builds a square grid whose boxes are `boxRows` rows by `boxCols` columns.
    * Cell (r, c) has index r * D + c; units are listed rows, then columns, then boxes (27 units for 9x9).
-   * @param {string} variantId
-   * @param {number} boxRows
-   * @param {number} boxCols
-   * @returns {PuzzleModel}
    */
   function buildClassic(variantId, boxRows, boxCols) {
     const D = boxRows * boxCols;
@@ -79,9 +75,6 @@
   /**
    * Full grid pre-fill for classic9: the three boxes on the main diagonal share no row or column, so each
    * can take an independent random permutation. Any such filling extends to a complete grid.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state
-   * @param {Rng} rng
    * @returns {boolean} False when a cell could not be assigned (for example it clashes with a fixed cell).
    */
   function fastSeedDiagonalBoxes(model, state, rng) {
@@ -118,12 +111,9 @@
   }
 
   /**
-   * The levels each board offers are measured, not assumed (rating v2: `node tests/qualify.js`, the protocol
-   * of docs/report-v2/report-detailed.md section 6; results in docs/report-v2/qualification.md). classic4 offers
-   * veryEasy only: a 4x4 board never needs more than singles, and singles on 16 cells stay far below the
-   * easy band. classic6 offers veryEasy and hard: its puzzles either need singles only or jump straight to
-   * a fish or subset worth a hard score (easy and normal 0 of 17; expert, master and nightmare hit 42 to 58 %).
-   * classic9 offers everything up to hell1 (hell2 7 of 23).
+   * The levels each board offers are measured, not assumed (`node tests/qualify.js`, docs/report-v2/qualification.md).
+   * classic4: a 4x4 board never needs more than singles. classic6: puzzles either need singles only or jump
+   * straight to a fish or subset worth a hard score. classic9: everything up to hell1 (hell2 was reached in 7 of 23).
    */
   const DEFINITIONS = [
     definition('classic4', 2, 2, ['veryEasy']),

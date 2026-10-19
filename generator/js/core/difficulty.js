@@ -1,12 +1,9 @@
 /**
- * Difficulty model, rating v2 (docs/report-v2/report-detailed.md section 5; design.md sections 6.6 and 6.7;
- * API of section 13.7): the nine levels, the specification the hole digger works to for a level, and the
- * rating of a finished puzzle.
+ * Difficulty model, rating v2: the nine levels, the specification the hole digger works to for a level, and the
+ * rating of a finished puzzle (docs/report-v2/report-detailed.md sections 4-5).
  *
- * Score
- * -----
- * One formula for every variant and every board size. Its only inputs are the number of cells that are
- * empty at the start (E) and how often each technique was applied in the logical solve (n_t):
+ * Score: one formula for every variant and board size. Its only inputs are the number of cells empty at the start
+ * (E) and how often each technique was applied in the logical solve (n_t):
  *
  *   P     = max { w_t : n_t > 0 }             the weight of the hardest technique used (0: none)
  *   W     = sum over t of w_t * n_t           the work: points x uses
@@ -15,49 +12,33 @@
  *   score = Math.round(V + P + R)             ONE rounding of the unrounded sum
  *   level = the level whose band [min, max) contains the score
  *
- * The weights `w_t` are the table `WEIGHTS` below; a technique without a weight is an error, never a
- * guessed cost. Nothing else enters the score: not the requested level, not the variant, not the board
- * size, not the clue density. A puzzle on a large board does not become harder through its singles (V is
- * bounded and the work only counts logarithmically), and one expensive step counts in full on any board
- * (through P). The score never decreases when a count, E or the weight of the hardest technique grows; it
- * is NOT monotone under the removal of a clue (the proof changes), so the digger never assumes that.
+ * The weights w_t are the table `WEIGHTS`; a technique without a weight is an error, never a guessed cost. Nothing
+ * else enters the score (not the requested level, variant, board size or clue density): a large board does not become
+ * harder through its singles (V is bounded, the work counts logarithmically) and one expensive step counts in full on
+ * any board (through P). The score never decreases when a count, E or the hardest weight grows, but it is NOT
+ * monotone under the removal of a clue (the proof changes), so the digger never assumes that.
  *
- * Complete proofs only
- *   A rating is published only for a complete logical proof (`report.solved === true`). Without one the
- *   rating has no level and no score (`level: null`, `score: null`): it is never a hit of the generator and
- *   no score is ever derived from the cells left open.
+ * A rating is published only for a complete logical proof (`report.solved`); otherwise level and score are null.
  *
- * Bands
- *   One table for every variant, not scaled by the board size (`TABLE`): a band is half open, [min, max),
- *   and `max` of a level is `min` of the next one (hell2 has no upper bound), so every score belongs to
- *   exactly one level. There is no technique floor any more: the level is a pure function of the score.
+ * Bands: one table (`TABLE`) for every variant, not scaled by board size. A band is [min, max); `max` of a level is
+ * `min` of the next one (hell2 has no upper bound), so the level is a pure function of the score.
  *
- * Clue floor per variant (invariant I6)
- *   `spec(level, model).minClues` is the one number every check of invariant I6 ("a puzzle has at least
- *   `minClues` givens") uses, whatever the variant. By default it is the classic9 floor of the level
- *   (`TABLE[i].minClues`) times cellCount / 81 (at least 1). A variant whose board does not follow that
- *   proportion declares its own in its definition (`SG.variants.register`), with up to two optional fields:
- *     clueFloorScale  an object { level: factor }: the derived floor of that level is multiplied by the
- *                     factor (a level that is missing has factor 1). The calibration knob of the hybrid and
- *                     multi-grid boards (diagonalX, hyper, jigsaw9, samurai, sohei, butterfly, flower,
- *                     greaterThan). expert takes the factor of hard, hell1/2 that of nightmare.
- *     clueFloor       an object { level: clues } with absolute floors (a level that is missing has no floor,
- *                     0), or a function (level, model, derivedFloor) => clues, which can scale the default;
- *                     `derivedFloor` already includes `clueFloorScale`.
- *   Killer: { veryEasy: 40 } (the other levels dig down to a handful of clues).
- *   Only `spec` reads the fields. The digger, the pipeline, `tests/soak.js` and `tests/qualify.js` take the
- *   floor from `spec`.
+ * Clue floor (invariant I6): `spec(level, model).minClues` is the number every "at least minClues givens" check uses.
+ * Default: the classic9 floor of the level (`TABLE[i].minClues`) times cellCount / 81 (at least 1). A variant whose
+ * board does not follow that proportion declares in `SG.variants.register`, optionally:
+ *   clueFloorScale  { level: factor } multiplying the derived floor (missing level: 1); the calibration knob of the
+ *                   hybrid and multi-grid boards. expert takes the factor of hard, hell1/2 that of nightmare.
+ *   clueFloor       { level: clues } absolute floors (missing level: 0), or a function
+ *                   (level, model, derivedFloor) => clues; `derivedFloor` already includes `clueFloorScale`.
+ * Killer: { veryEasy: 40 } (the other levels dig down to a handful of clues). Only `spec` reads these fields.
  *
- * Calibration
- *   The weights and the band edges are those agreed in docs/report-v2/report-detailed.md (sections 4 and 5):
- *   the shape (peak + logarithmic work + bounded empty cells) was chosen over a square-root sum on a common
- *   corpus of about 8,300 generated puzzles of every variant (cross-size consistency, robustness to the
- *   solver path, stability under clue removal, separation of the technique tiers); the edges keep the
- *   reference puzzles of tests/fixtures/rated.js where they belong (one-wing certificates expert, the
- *   constructed nightmare certificates nightmare, the four famous hardest 9x9 puzzles hell2). The weights are
- *   engineering priors, not human measurements; Killer's ruleOf45 and cageSplit are the first targets of a
- *   human calibration. Which levels each variant offers is measured, not assumed: `tests/qualify.js`
- *   (docs/report-v2/qualification.md).
+ * Calibration: the weights and band edges are those of docs/report-v2/report-detailed.md. The shape (peak +
+ * logarithmic work + bounded empty cells) was chosen on a corpus of ~8,300 generated puzzles (cross-size
+ * consistency, robustness to the solver path, stability under clue removal, separation of the technique tiers); the
+ * edges keep the reference puzzles of tests/fixtures/rated.js in their levels (one-wing certificates expert,
+ * constructed nightmare certificates nightmare, the four famous hardest 9x9 puzzles hell2). The weights are
+ * engineering priors, not human measurements (Killer's ruleOf45 and cageSplit are the first targets of a human
+ * calibration). Which levels a variant offers is measured by `tests/qualify.js`, not assumed.
  */
 (function (root) {
   'use strict';
@@ -65,40 +46,28 @@
   const SG = root.SG = root.SG || {};
   const hasOwn = Object.prototype.hasOwnProperty;
 
-  /** Difficulty levels, easiest first. Mirrors the list SG.variants validates `difficultySupport` against. */
+  // Easiest first; mirrors the list SG.variants validates `difficultySupport` against.
   const LEVELS = Object.freeze(['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare',
     'hell1', 'hell2']);
 
-  /**
-   * Technique groups of the classic techniques, simplest first. Descriptive only (the help's catalogue, the
-   * order of the score table): no group owns a level any more.
-   */
+  // Technique groups, simplest first. Descriptive only (help catalogue, score table order): no group owns a level.
   const BASE_GROUPS = Object.freeze(['basic', 'locked', 'subset', 'fish', 'wing', 'chain']);
 
-  /** Groups that only exist for one variant family (Killer cages, Greater-Than signs). */
   const VARIANT_GROUPS = Object.freeze(['cage', 'ineq']);
 
-  /** Version of the rating (weights, bands, formula); exported with every rating. */
   const RATING_VERSION = 2;
 
-  /** Reference size of the clue floors: classic9. The score bands are not scaled. */
+  // Reference size of the clue floors (classic9); the score bands are not scaled.
   const REFERENCE_CELLS = 81;
 
-  /**
-   * Constants of the score (see the file header): the empty-cell term is `emptyCellMax * E / (E +
-   * emptyCellHalf)`, the work term `workFactor * P * log2(1 + W / P)`; `peakBound` is the factor of the lower
-   * bound `peakBound * w` of the technique part of any puzzle that uses a technique of weight w
-   * (R >= 0.25 P because W >= P), which `spec` uses to prune the techniques of a band.
-   */
+  // Constants of the score: V = emptyCellMax * E / (E + emptyCellHalf), R = workFactor * P * log2(1 + W / P).
+  // `peakBound` is the factor of the lower bound of the technique part of a puzzle using a technique of weight w
+  // (R >= 0.25 P because W >= P), which `spec` uses to prune the techniques of a band.
   const SCORING = Object.freeze({ emptyCellMax: 80, emptyCellHalf: 40, workFactor: 0.25, peakBound: 1.25 });
 
-  /**
-   * Weight of each technique (docs/report-v2/report-detailed.md section 5.2). The weights replace the
-   * registered `baseCost` in the rating only; the solver's order and its own raw score are unchanged. A new
-   * technique needs an entry here (`weightOf` throws without one). Not frozen, like the cost table it
-   * replaces, so that a test can change a weight for its duration; nothing else writes it.
-   * @type {Object<string, number>}
-   */
+  // Weight of each technique. Replaces the registered `baseCost` in the rating only (the solver's order and raw score
+  // are unchanged). A new technique needs an entry (`weightOf` throws without one). Not frozen, so a test can change a
+  // weight for its duration; nothing else writes it.
   const WEIGHTS = {
     nakedSingle: 1,
     hiddenSingleBox: 1.25,
@@ -128,13 +97,10 @@
     minMaxForcing: 180
   };
 
-  /**
-   * Bands and clue ranges, easiest first. `min` is the inclusive lower score bound; the upper bound is the
-   * `min` of the next level (hell2: none). The clue ranges are those of classic9 (`minClues` is a floor
-   * for the digger, scaled by cellCount / 81; `maxClues` is informative only); expert has the floors of
-   * hard, hell1 and hell2 those of nightmare. The rows are not frozen, like the weights, so that
-   * tests/soak.js can try other bands for a calibration run; nothing else writes them.
-   */
+  // Bands and clue ranges, easiest first. `min` is the inclusive lower score bound (the upper one is the next level's
+  // `min`). Clue ranges are classic9's: minClues is a floor for the digger, scaled by cellCount / 81; maxClues is
+  // informative. expert has the floors of hard, hell1 and hell2 those of nightmare. Rows are not frozen, so
+  // tests/soak.js can try other bands for a calibration run.
   const TABLE = Object.freeze([
     { level: 'veryEasy', min: 0, minClues: 40, maxClues: 50, minCluesPerUnit: 2, extraPasses: 1 },
     { level: 'easy', min: 45, minClues: 34, maxClues: 40, minCluesPerUnit: 2, extraPasses: 1 },
@@ -147,7 +113,7 @@
     { level: 'hell2', min: 3600, minClues: 17, maxClues: 24, minCluesPerUnit: 0, extraPasses: 1 }
   ]);
 
-  /** The top tiers: their digs may also start from the fast uniqueness-based proposal (design.md 6.8). */
+  // The top tiers: their digs may also start from the fast uniqueness-based proposal.
   const PROPOSAL_FROM = 'nightmare';
 
   const DEFAULT_SYMMETRY = 'rotational180';
@@ -167,23 +133,17 @@
     return i;
   }
 
-  /** Clue scale of a board: cellCount / 81 (1 without a model). */
   function scaleOf(model) {
     return model && model.cellCount > 0 ? model.cellCount / REFERENCE_CELLS : 1;
   }
 
-  /** The registered definition of the model's variant, or null (a test board, or no model at all). */
   function variantOf(model) {
     if (!model || !SG.variants || !SG.variants.has(model.variantId)) return null;
     return SG.variants.get(model.variantId);
   }
 
-  /**
-   * Clue range of a level on one board: the classic9 numbers scaled by cellCount / 81, multiplied by the
-   * variant's `clueFloorScale` for the level, then replaced by what the variant declares as `clueFloor` (see
-   * "Clue floor per variant" in the file header).
-   * @returns {{minClues: number, maxClues: number}}
-   */
+  // Clue range of a level on one board: the classic9 numbers scaled by cellCount / 81, times the variant's
+  // `clueFloorScale` for the level, then replaced by its `clueFloor` (see "Clue floor" in the file header).
   function clueRange(level, row, model, scale) {
     const def = variantOf(model);
     const factors = def === null ? undefined : def.clueFloorScale;
@@ -206,31 +166,20 @@
     };
   }
 
-  /** Lower score bound of level index `i`. */
   function bandMin(i) {
     return TABLE[i].min;
   }
 
-  /** Exclusive upper score bound of level index `i` (Infinity for the top level). */
+  // Exclusive; Infinity for the top level.
   function bandMax(i) {
     return i + 1 < TABLE.length ? TABLE[i + 1].min : Infinity;
   }
 
-  /**
-   * The score band of a level.
-   * @param {string} level
-   * @returns {{min: number, max: number}} `max` is Infinity for hell2.
-   */
   function bandOf(level) {
     const i = levelIndex(level);
     return { min: bandMin(i), max: bandMax(i) };
   }
 
-  /**
-   * The level of a score (`null` for a missing or non-finite score).
-   * @param {?number} score
-   * @returns {?string}
-   */
   function levelOfScore(score) {
     if (typeof score !== 'number' || !isFinite(score)) return null;
     let found = 0;
@@ -240,25 +189,13 @@
     return LEVELS[found];
   }
 
-  /**
-   * Is the level on the variant's `difficultySupport` list? Models of variants that are not registered (test
-   * boards) support every level.
-   * @param {string} level
-   * @param {PuzzleModel} model
-   * @returns {boolean}
-   */
+  // Models of variants that are not registered (test boards) support every level.
   function isSupported(level, model) {
     levelIndex(level);
     if (!model || !SG.variants || !SG.variants.has(model.variantId)) return true;
     return SG.variants.get(model.variantId).difficultySupport.indexOf(level) !== -1;
   }
 
-  /**
-   * Weight of one technique (`WEIGHTS`).
-   * @param {string} id
-   * @returns {number}
-   * @throws {SG.errors.GenerationError} 'difficulty.unknownTechnique' for a technique without a weight.
-   */
   function weightOf(id) {
     if (!hasOwn.call(WEIGHTS, id)) {
       throw fail('difficulty.unknownTechnique', { technique: String(id) },
@@ -272,10 +209,7 @@
     return SG.techniques && SG.techniques.has && SG.techniques.has(id) ? SG.techniques.get(id).order : 0;
   }
 
-  /**
-   * Does technique `a` outrank `b` as the hardest one: the larger weight, then the larger registration
-   * `order`, then the id that comes first in ascending code-unit order.
-   */
+  // Does `a` outrank `b` as the hardest technique: larger weight, then larger registration `order`, then smaller id.
   function outranks(a, b) {
     const wa = WEIGHTS[a];
     const wb = WEIGHTS[b];
@@ -286,40 +220,15 @@
     return a < b;
   }
 
-  /**
-   * @typedef {Object} ScoreRow
-   * @property {string} id
-   * @property {number} uses     n_t
-   * @property {number} weight   w_t
-   * @property {number} work     w_t * n_t
-   * @property {number} share    The row's allocated share of the score: R * w_t * n_t / W, plus P on the
-   *           row of the hardest technique. Unrounded.
-   * @property {boolean} hardest This row carries P.
-   */
+  // ScoreRow: { id, uses (n_t), weight (w_t), work (w_t * n_t), share (R * w_t * n_t / W, plus P on the hardest row;
+  // unrounded), hardest }
+  // ScoreBreakdown: { rows (techniques used, solver order), empties (E), empty (V, unrounded), peak (P), work (W),
+  // workTerm (R), hardest (provides P; null when no technique was used), unrounded (V + P + R), score (rounded) }
 
-  /**
-   * @typedef {Object} ScoreBreakdown
-   * @property {ScoreRow[]} rows   The techniques used, in the solver's order (registration `order`).
-   * @property {number} empties    E
-   * @property {number} empty      V, the empty cells' share (unrounded).
-   * @property {number} peak       P
-   * @property {number} work       W
-   * @property {number} workTerm   R
-   * @property {?string} hardest   The technique that provides P (null when no technique was used).
-   * @property {number} unrounded  V + P + R
-   * @property {number} score      Math.round(V + P + R)
-   */
 
-  /**
-   * The score of a technique count and an empty-cell count, with its exact apportionment over the rows of
-   * the Difficulty Score table (docs/report-v2/report-detailed.md section 5.6): every technique row gets
-   * `R * w_t * n_t / W`, the row of the hardest technique also `P`, the empty cells `V`; the shares add up to
-   * the unrounded sum, whose single rounding is the score. Summary and Generation Steps use this one helper.
-   * @param {Object<string, number>} counts  Technique id -> uses (ids with 0 uses are ignored).
-   * @param {number} empties  Cells empty at the start.
-   * @returns {ScoreBreakdown}
-   * @throws {SG.errors.GenerationError} 'difficulty.unknownTechnique' for a technique without a weight.
-   */
+  // Score of a technique count and an empty-cell count, with its exact apportionment: every technique row gets
+  // R * w_t * n_t / W, the hardest row also P, the empty cells V; the shares add up to the unrounded sum, whose single
+  // rounding is the score. Summary and Generation Steps use this one helper.
   function breakdown(counts, empties) {
     const ids = Object.keys(counts || {}).filter(function (id) { return counts[id] > 0; });
     ids.forEach(weightOf);
@@ -360,24 +269,12 @@
     };
   }
 
-  /**
-   * The score of a technique count and an empty-cell count (see the file header).
-   * @param {Object<string, number>} counts
-   * @param {number} empties
-   * @returns {number} An integer.
-   */
   function scoreOf(counts, empties) {
     return breakdown(counts, empties).score;
   }
 
-  /**
-   * Whole numbers for parts that add up to a rounded total: every part is rounded down and the points still
-   * missing go to the largest remainders (the earlier part first on a tie). The same rule as
-   * `SG.stepView.roundToTotal`.
-   * @param {number[]} values  The exact parts.
-   * @param {number} total  The exact total.
-   * @returns {number[]}
-   */
+  // Whole numbers for parts of a rounded total: every part is rounded down and the missing points go to the largest
+  // remainders (earlier part first on a tie); same rule as `SG.stepView.roundToTotal`.
   function apportion(values, total) {
     const target = Math.round(total);
     const out = values.map(function (v) { return Math.floor(v); });
@@ -389,25 +286,11 @@
     return out;
   }
 
-  /**
-   * @typedef {Object} ScoreTable
-   * @property {Array<{id: string, uses: number, points: number, total: number, hardest: boolean}>} rows
-   *           One row per technique used, in the solver's order: its uses, its points (the weight) and its
-   *           whole share of the score.
-   * @property {number} empties     E (0: the table has no empty-cell row).
-   * @property {number} emptyPoints V / E, the average points of an empty cell (0 when E = 0).
-   * @property {number} emptyTotal  The whole share of the empty cells.
-   * @property {number} total       The score; the row totals and `emptyTotal` add up to it.
-   */
+  // ScoreTable: { rows [{ id, uses, points (the weight), total (whole share), hardest }], empties (E), emptyPoints
+  // (V / E; 0 when E = 0), emptyTotal, total (the score: row totals and emptyTotal add up to it) }
 
-  /**
-   * The Difficulty Score table of the Summary and the Generation Steps (docs/report-v2/report-detailed.md
-   * section 5.6), the one allocation helper both use: the exact shares of `breakdown` (techniques, then the
-   * empty cells) are rounded once together with `apportion`, so the whole numbers add up to the score.
-   * @param {Object<string, number>} counts
-   * @param {number} empties
-   * @returns {ScoreTable}
-   */
+  // The Difficulty Score table of Summary and Generation Steps: the exact shares of `breakdown` (techniques, then empty
+  // cells) are rounded once together with `apportion`, so the whole numbers add up to the score.
   function scoreTable(counts, empties) {
     const parts = breakdown(counts, empties);
     const values = parts.rows.map(function (row) { return row.share; });
@@ -424,38 +307,17 @@
     };
   }
 
-  /**
-   * @typedef {Object} DifficultySpec
-   * @property {string} level
-   * @property {number} min              Lower score bound (inclusive). Not scaled.
-   * @property {number} max              Upper score bound (exclusive); Infinity for hell2.
-   * @property {number} minClues         The digger never goes below this many givens (invariant I6): the
-   *           classic9 floor scaled by cellCount / 81, unless the variant declares its own `clueFloor` (file
-   *           header, "Clue floor per variant"); 0 is possible for such a variant.
-   * @property {number} maxClues         Upper end of the clue range (informative).
-   * @property {number} minCluesPerUnit  Every unit keeps at least this many givens while digging.
-   * @property {string[]} allowedGroups  Groups of `allowedTechniques`.
-   * @property {string[]} allowedTechniques  Registered ids that apply to the variant and can occur in a
-   *           puzzle of the band: `1.25 * w_t < max` (every technique for hell2), in loop order. The
-   *           oracle uses them with `assumeUniqueness: false`, so a technique that relies on uniqueness
-   *           (uniqueRectangle) is listed but never used there.
-   * @property {string} symmetryDefault
-   * @property {number} extraPasses      Kept for the contract of design.md section 13.7; not used.
-   * @property {string} oracle           'techniques': the technique oracle (a complete proof) at every level.
-   * @property {boolean} proposal        A top tier (nightmare, hell1, hell2): the digger may also start
-   *           from the fast uniqueness-based proposal dig (design.md section 6.8).
-   * @property {number} scale            cellCount / 81, the scale of the clue floors (not of the bands).
-   */
+  // DifficultySpec: { level, min (inclusive, not scaled), max (exclusive; Infinity for hell2), minClues (the digger never
+  // goes below it, invariant I6: classic9 floor scaled by cellCount / 81 unless the variant declares `clueFloor`; may be
+  // 0), maxClues (informative), minCluesPerUnit (every unit keeps at least this many givens while digging),
+  // allowedGroups, allowedTechniques (registered ids that apply to the variant and can occur in the band: 1.25 * w_t <
+  // max, all for hell2, in loop order; the oracle runs them with assumeUniqueness: false, so uniqueRectangle is listed
+  // but never used there), symmetryDefault, extraPasses (unused), oracle ('techniques': a complete proof at every
+  // level), proposal (top tier: the digger may also start from the fast uniqueness-based proposal dig), scale
+  // (cellCount / 81, the scale of the clue floors) }
 
-  /**
-   * The specification the hole digger works to for one level on one board: score band, clue range and the
-   * technique set (docs/report-v2/report-detailed.md section 5.7).
-   * @param {string} level  One of `SG.difficulty.LEVELS`.
-   * @param {PuzzleModel} model
-   * @returns {DifficultySpec}
-   * @throws {SG.errors.GenerationError} 'difficulty.unknownLevel', or 'difficulty.unsupportedLevel' when the
-   *         variant's `difficultySupport` does not list the level.
-   */
+  // The specification the hole digger works to for one level on one board: score band, clue range and technique set.
+  // Throws 'difficulty.unknownLevel', or 'difficulty.unsupportedLevel' when the variant's `difficultySupport` lacks it.
   function spec(level, model) {
     const i = levelIndex(level);
     if (!isSupported(level, model)) {
@@ -494,10 +356,7 @@
     };
   }
 
-  /**
-   * Cells empty at the start of a solver report. The solver scores the empty cells itself; what is left of
-   * its (uncalibrated) score after its technique part is theirs.
-   */
+  // Cells empty at the start of a solver report: what is left of its own score after its technique part.
   function emptiesOf(report) {
     const counts = report.techniqueCounts || {};
     const solverScoring = SG.logicalSolver.SCORING;
@@ -509,30 +368,14 @@
     return Math.max(0, Math.round((report.score - uncalibrated) / solverScoring.emptyCellBonus));
   }
 
-  /**
-   * @typedef {Object} Rating
-   * @property {?string} level             The level of the score; null without a complete proof.
-   * @property {?number} score             The score (an integer); null without a complete proof.
-   * @property {?number} rawScore          Equal to `score` (kept so that exported files keep their format).
-   * @property {?string} hardestTechnique  The used technique of the largest weight (ties: the larger
-   *           registration `order`, then the id first in code-unit order); null when no step was needed.
-   * @property {?string} hardestGroup      Group of `hardestTechnique`.
-   * @property {number} confidence         0..1, how deep inside its band the score lies (0 = on an edge, or
-   *           no complete proof).
-   * @property {boolean} solved            The logical solver finished the grid (a complete proof).
-   * @property {number} empties            Cells empty at the start.
-   * @property {Object<string, number>} techniqueCounts
-   * @property {number} ratingVersion      2.
-   */
+  // Rating: { level (null without a complete proof), score (integer; null likewise), rawScore (= score; kept for
+  // exported files), hardestTechnique (largest weight; ties: larger registration `order`, then id; null when no step
+  // was needed), hardestGroup, confidence (0..1: how deep inside its band the score lies; 0 on an edge or without a
+  // proof), solved, empties, techniqueCounts, ratingVersion (2) }
 
-  /**
-   * Rates the result of `SG.logicalSolver.solve`. Works with `collectSteps` on or off, since only the
-   * technique counts are used. Run the solver with every technique and `assumeUniqueness: true` (that is
-   * what `rate` does) so that the rating does not depend on a restricted technique set.
-   * @param {SolveReport} report
-   * @param {PuzzleModel} [model]  Not used by the score (kept for the API of section 13.7).
-   * @returns {Rating}
-   */
+  // Rates the result of `SG.logicalSolver.solve`; only the technique counts are used, so `collectSteps` may be on or
+  // off. Solve with every technique and `assumeUniqueness: true` (what `rate` does) so the rating does not depend on a
+  // restricted technique set.
   function classify(report, model) {
     const empties = emptiesOf(report);
     const counts = report.techniqueCounts || {};
@@ -569,14 +412,9 @@
     }, base);
   }
 
-  /**
-   * Does a rating prove by itself that its puzzle has exactly one solution? A complete logical proof whose
-   * techniques never assume uniqueness does: sound deductions never remove a candidate of any solution, so a
-   * puzzle with two solutions can never be finished. A proof that used a technique with `assumesUniqueness`
-   * (Unique Rectangle) proves nothing about uniqueness; the caller checks with a solution count.
-   * @param {Rating} rating
-   * @returns {boolean}
-   */
+  // Does a rating prove by itself that the puzzle has exactly one solution? A complete proof whose techniques never
+  // assume uniqueness does: sound deductions never remove a candidate of any solution, so a two-solution puzzle can
+  // never be finished. With an `assumesUniqueness` technique (Unique Rectangle) it proves nothing; count solutions.
   function provesUniqueness(rating) {
     if (!rating || rating.solved !== true) return false;
     const counts = rating.techniqueCounts || {};
@@ -585,16 +423,7 @@
     });
   }
 
-  /**
-   * Rates a puzzle: solves it with every registered technique (uniqueness assumed, which is right for a
-   * finished puzzle) and classifies the report.
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} givens
-   * @param {Object} [options]
-   * @param {Object} [options.budget]
-   * @param {boolean} [options.collectSteps=false]  Also keep the steps, available as `rating.steps`.
-   * @returns {Rating}
-   */
+  // Rates a puzzle: solves it with every registered technique (uniqueness assumed) and classifies; `collectSteps` keeps `rating.steps`.
   function rate(model, givens, options) {
     const opts = options || {};
     const report = SG.logicalSolver.solve(model, givens, {

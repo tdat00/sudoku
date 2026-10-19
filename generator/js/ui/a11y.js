@@ -1,49 +1,37 @@
 /**
- * Accessibility (task T-7.3, design.md 10.7): `SG.a11y`. Everything the page needs on top of the markup of
- * the other modules, added through the app events and the DOM, never by changing their code:
- *
- *   - the board as an ARIA grid: the root `<svg>` gets `role="grid"` (the title and description stay its
- *     name and description), the cell rectangles of `layer-cells` are moved into `<g role="row">` groups and
- *     get `role="gridcell"`, `aria-rowindex` / `aria-colindex` (canvas position: the holes of a multi-grid
- *     canvas are simply not there) and a translated `aria-label`; every other layer is `aria-hidden` (the
- *     label carries the value, the cage sum and the signs). One cell is in the tab order (roving tabindex);
- *     arrow keys, Home, End, Ctrl+Home, Ctrl+End, Page Up and Page Down move between REAL cells (holes are
- *     skipped); Enter and Space send the click of the cell to the board when it has a click hook
- *     (`setInteractive(true)` + `setOnCellClick`). A focus ring is drawn on top of the board
+ * `SG.a11y`: everything the page needs on top of the markup of the other modules, added through the app events and
+ * the DOM, never by changing their code.
+ *   - the board as an ARIA grid: the root `<svg>` gets `role="grid"` (the title and description stay its name and
+ *     description), the cell rectangles of `layer-cells` move into `<g role="row">` groups and get `role="gridcell"`,
+ *     `aria-rowindex` / `aria-colindex` (canvas position: the holes of a multi-grid canvas are simply not there) and
+ *     a translated `aria-label`; every other layer is `aria-hidden` (the label carries the value, cage sum and
+ *     signs). One cell is in the tab order (roving tabindex); arrow keys, Home, End, Ctrl+Home, Ctrl+End, Page Up and
+ *     Page Down move between REAL cells (holes are skipped); Enter and Space send the click of the cell to the board
+ *     when it has a click hook (`setInteractive(true)` + `setOnCellClick`). A focus ring is drawn on top of the board
  *     (`.a11y-ring`).
- *   - labels follow the DOM of the board: a MutationObserver on the value and cell layers re-labels only the
- *     cells that changed, a locale change re-labels all of them.
- *   - `aria-live` announcements, de-duplicated and rate limited, sent with `SG.app.announce`: the start of a
- *     generation ('generate:start') and a language change. Steps are never announced here: the generator
- *     runs at full speed, and during the replay the status line (`#status-line`, polite) reads every step.
- *   - the Settings dialog (`action {id: 'settings'}` -> `SG.app.openModal`): theme, text size, reduced
- *     motion and the colour-blind symbol go through the store (`SG.store`, no new storage key); the board
- *     coordinates and the background pre-generation (`SG.cache.setEnabled`, when `SG.cache` is loaded) are
- *     session settings (the store has no such preference; neither survives a reload).
- *   - the skip link moves the focus to `#main`; toasts and live announcements stay visible and audible while
- *     a modal dialog is open.
- *
- * Pure part (runs in Node, see tests/suites/a11y.test.js): `cellPosition`, `cellExtras`, `valueInfo`,
- * `cellLabel`, `moveTarget`, `pageStep`, `createAnnouncer`.
- *
- * PUBLIC API (`SG.a11y`)
- *   init(app)            idempotent; called by app.js at start-up. Returns true when it is running.
- *   destroy()            removes every listener / observer and the semantics added to the board.
- *   openSettings()       opens the Settings dialog (the 'settings' action does the same); returns the modal.
- *   closeSettings()      closes it.
- *   getGrid()            the board grid controller (or null): `{ labelOf(i), focusCell(i), current(),
- *                        refresh(), apply(), destroy() }`. 'cellfocus' ({ cell }) is emitted through
- *                        `SG.app.emit` whenever a cell takes the focus (other modules can follow it).
- *   attachGrid(board, hooks?)  the grid controller itself, for another board view.
- *   Pure helpers listed above, plus `NAV_KEYS`, `THEME_CHOICES`, `FONT_CHOICES` and `APPEARANCE_DEFAULTS`
- *   (the data of the Settings dialog).
+ *   - labels follow the DOM of the board: a MutationObserver on the value and cell layers re-labels only the cells
+ *     that changed; a locale change re-labels all of them.
+ *   - `aria-live` announcements, de-duplicated and rate limited, via `SG.app.announce`: the start of a generation
+ *     ('generate:start') and a language change. Steps are never announced here: the generator runs at full speed,
+ *     and during the replay the status line (`#status-line`, polite) reads every step.
+ *   - the Settings dialog (`action {id: 'settings'}` -> `SG.app.openModal`): theme, text size, reduced motion and the
+ *     colour-blind symbol go through the store (`SG.store`, no new storage key); the board coordinates and the
+ *     background pre-generation (`SG.cache.setEnabled`) are session settings (no stored preference).
+ *   - the skip link moves the focus to `#main`; toasts and live announcements stay visible and audible while a modal
+ *     dialog is open.
+ * Pure part (runs in Node): `cellPosition`, `cellExtras`, `valueInfo`, `cellLabel`, `moveTarget`, `pageStep`,
+ * `createAnnouncer`.
+ * API: init(app) (idempotent, called by app.js; true when running), destroy(), openSettings() (returns the modal; the
+ * 'settings' action does the same), closeSettings(), getGrid() (the grid controller or null: `{ labelOf(i),
+ * focusCell(i), current(), refresh(), apply(), destroy() }`; 'cellfocus' ({ cell }) is emitted through `SG.app.emit`
+ * whenever a cell takes the focus), attachGrid(board, hooks?) (the grid controller for another board view), plus the
+ * pure helpers, `NAV_KEYS`, `THEME_CHOICES`, `FONT_CHOICES` and `APPEARANCE_DEFAULTS`.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first instance on repeated loads: the running page must survive.
   if (SG.a11y && typeof SG.a11y.init === 'function') return;
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -64,18 +52,7 @@
     if (typeof console !== 'undefined' && typeof console.error === 'function') console.error(err);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Cell labels (pure)
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Where a cell is, in the words of the puzzle. Single boards: `{ grid: 0, row, col }` (1-based). Multi-grid
-   * boards: the coordinates are those of the first sub-grid that holds the cell (the numbering of
-   * `SG.model.cellLabel`, 'G2-R4C7'), `shared` lists the other grids that hold it (the overlap cells).
-   * @param {Object} geo  Board geometry: `cellRow`, `cellCol`, `subGrids`, `originX/Y`, `cell`.
-   * @param {number} i  Cell index.
-   * @returns {{grid: number, row: number, col: number, shared: number[]}}
-   */
+  /** Where a cell is: `{ grid: 0, row, col }` (1-based) on single boards; on multi-grid boards the coordinates are those of the first sub-grid that holds the cell (numbering of `SG.model.cellLabel`, 'G2-R4C7') and `shared` lists the other grids that hold it (overlap cells). */
   function cellPosition(geo, i) {
     const row = geo.cellRow[i];
     const col = geo.cellCol[i];
@@ -107,12 +84,7 @@
     return null;
   }
 
-  /**
-   * What the label of a cell says besides its position and value: the cage sum (Killer) and the
-   * inequality signs of its edges (Greater-Than; 'less' = the cell is smaller than that neighbour).
-   * @param {Object} geo  Board geometry (`cages` [{cells, sum}], `signs` [{a, b}] with value[a] < value[b]).
-   * @returns {{cage: Map<number, number>, relations: Map<number, Array<{rel: string, dir: string}>>}}
-   */
+  /** What a cell label says besides position and value: the cage sum (Killer) and the inequality signs of its edges (Greater-Than; 'less' = the cell is smaller than that neighbour). `geo.cages` is [{cells, sum}], `geo.signs` [{a, b}] with value[a] < value[b]. */
   function cellExtras(geo) {
     const cage = new Map();
     const relations = new Map();
@@ -131,12 +103,7 @@
     return { cage: cage, relations: relations };
   }
 
-  /**
-   * The value a cell shows, from what the board DOM holds.
-   * @param {{text: string, kind: string, colorIndex: ?number, shape: ?string}} raw  The text of the cell, its
-   *        kind ('given' | 'placed' | 'solution'), the 0-based palette index of colour mode and the shape.
-   * @returns {{state: string, value: string}} state 'empty' | 'value' | 'given' | 'solution'.
-   */
+  /** `raw.kind` is 'given' | 'placed' | 'solution'; the result `state` is 'empty' | 'value' | 'given' | 'solution'. */
   function valueInfo(raw) {
     const symbols = SG.symbols;
     let value = raw.text;
@@ -150,14 +117,7 @@
     return { state: raw.kind === 'given' || raw.kind === 'solution' ? raw.kind : 'value', value: value };
   }
 
-  /**
-   * The accessible name of a cell: 'Row 4, column 7, value 5' ('Hàng 4, cột 7, giá trị 5'); multi-grid
-   * boards say 'Grid 2, row 4, column 7'; empty cells say 'empty'; a Killer cell adds 'cage sum 15'; a
-   * Greater-Than cell adds 'less than the cell to the right'.
-   * @param {Object} info  `{ grid, row, col, shared?, state, value, cageSum?, relations? }`.
-   * @param {function(string, Object=): string} [translate]  Defaults to `SG.i18n.t`.
-   * @returns {string}
-   */
+  /** The accessible name of a cell: 'Row 4, column 7, value 5' ('Hàng 4, cột 7, giá trị 5'); multi-grid boards say 'Grid 2, row 4, column 7'; empty cells say 'empty'; a Killer cell adds 'cage sum 15'; a Greater-Than cell adds 'less than the cell to the right'. */
   function cellLabel(info, translate) {
     const tr = typeof translate === 'function' ? translate : t;
     const parts = [info.grid > 0
@@ -176,10 +136,6 @@
     });
     return parts.join(', ');
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Keyboard navigation (pure)
-  // ---------------------------------------------------------------------------------------------
 
   /** The first real cell met from (row, col) in direction (dRow, dCol), -1 at the edge of the canvas. */
   function scan(geo, row, col, dRow, dCol) {
@@ -201,15 +157,7 @@
     return Math.max(2, Math.round(Math.sqrt(digits)));
   }
 
-  /**
-   * Where a navigation key moves the focus. The geometry decides: a hole of the canvas is skipped (the
-   * next real cell in that direction is taken), nothing wraps around.
-   * @param {Object} geo  Board geometry (`rows`, `cols`, `at` canvas lookup, `cellRow`, `cellCol`).
-   * @param {number} from  The focused cell.
-   * @param {string} key  One of `NAV_KEYS`.
-   * @param {boolean} [ctrl]  Home / End go to the first / last cell of the whole board.
-   * @returns {number} The target cell; `from` when the key does not move.
-   */
+  /** Where a navigation key moves the focus: a hole of the canvas is skipped (the next real cell in that direction is taken), nothing wraps around. `ctrl`: Home / End go to the first / last cell of the whole board. Returns `from` when the key does not move. */
   function moveTarget(geo, from, key, ctrl) {
     const row = geo.cellRow[from];
     const col = geo.cellCol[from];
@@ -250,24 +198,12 @@
     return next >= 0 ? next : from;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Announcements (pure)
-  // ---------------------------------------------------------------------------------------------
-
   /**
-   * A de-duplicating, rate-limited speaker. A text is said at once when the last one is older than
-   * `minGap`; otherwise it waits (the newest waiting text replaces older ones) and is said when the gap is
-   * over. The same text is not said twice within `repeatWindow`.
-   * @param {Object} options
-   * @param {function(string): void} options.say  Speaks a text (`SG.app.announce`).
-   * @param {function(): number} [options.now]  Clock in ms (default `Date.now`).
-   * @param {function(function(): void, number): *} [options.setTimer]  Default `setTimeout`.
-   * @param {function(*): void} [options.clearTimer]  Default `clearTimeout`.
-   * @param {number} [options.minGap=1500]
-   * @param {number} [options.repeatWindow=6000]
-   * @returns {{push: function(string): boolean, cancel: function(): void, reset: function(): void,
-   *   hold: function(number): void, pending: function(): ?string, last: function(): ?string}}  `hold(ms)`
-   *   keeps the next text from being said for `ms` (the app has just said something important).
+   * A de-duplicating, rate-limited speaker. A text is said at once when the last one is older than `minGap` (1500 ms);
+   * otherwise it waits (the newest waiting text replaces older ones) and is said when the gap is over. The same text
+   * is not said twice within `repeatWindow` (6000 ms). `hold(ms)` keeps the next text from being said for `ms` (the app
+   * has just said something important). Options: `say(text)`, `now`, `setTimer`, `clearTimer` (defaults: `Date.now`,
+   * `setTimeout`, `clearTimeout`).
    */
   function createAnnouncer(options) {
     const o = Object.assign({
@@ -332,22 +268,12 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The board as a grid (DOM)
-  // ---------------------------------------------------------------------------------------------
-
   function svgElement(doc, name, attrs) {
     const node = doc.createElementNS(SVG_NS, name);
     Object.keys(attrs || {}).forEach(function (key) { node.setAttribute(key, attrs[key]); });
     return node;
   }
 
-  /**
-   * Gives the board view the semantics of a grid and keeps them in step with it (see the file header).
-   * @param {Object} board  The `SG.boardView` view (`svg`, `getGeometry`, `getCellElement`).
-   * @param {{emit?: function(string, *): void}} [hooks]
-   * @returns {Object} `{ apply, refresh, labelOf, focusCell, current, destroy }`.
-   */
   function attachGrid(board, hooks) {
     const svg = board.svg;
     const doc = svg.ownerDocument;
@@ -522,7 +448,6 @@
       });
     }
 
-    /** Puts the rectangles of the cells into one row group per canvas row, in reading order. */
     function wrapRows(layer) {
       const byRow = new Map();
       for (let i = 0; i < geo.cellCount; i++) {
@@ -552,7 +477,6 @@
       layer.setAttribute('data-a11y', 'rows');
     }
 
-    /** Puts the cell rectangles back where the board view made them and removes what `apply` added. */
     function clearStructure() {
       const layer = svg.querySelector('.layer-cells');
       if (layer !== null) {
@@ -576,7 +500,7 @@
       labels = [];
     }
 
-    /** (Re)builds the semantics; runs again whenever the board rebuilds its tree. */
+    /** Runs again whenever the board rebuilds its tree. */
     function apply() {
       if (destroyed) return;
       const layer = svg.querySelector('.layer-cells');
@@ -655,11 +579,6 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Settings dialog
-  // ---------------------------------------------------------------------------------------------
-
-  /** The choices of the Settings dialog (values are those of the store). */
   const THEME_CHOICES = Object.freeze([
     Object.freeze({ value: 'auto', key: 'a11y.settings.theme.auto' }),
     Object.freeze({ value: 'light', key: 'a11y.settings.theme.light' }),
@@ -676,7 +595,6 @@
     Object.freeze({ value: 'large', key: 'a11y.settings.font.large', sample: 'A+' })
   ]);
 
-  /** What "Reset to defaults" writes to the store. */
   const APPEARANCE_DEFAULTS = Object.freeze({ theme: 'auto', fontSize: 'normal', reducedMotion: false,
     colorAuxSymbol: true });
 
@@ -759,7 +677,6 @@
     return !!SG.cache && typeof SG.cache.setEnabled === 'function' && typeof SG.cache.isEnabled === 'function';
   }
 
-  /** Brings the controls of an open Settings dialog in line with the store. */
   function syncSettings() {
     if (ctx.modal === null) return;
     const state = ctx.app.getStore().get();
@@ -823,10 +740,6 @@
     SG.i18n.applyTo(container);
   }
 
-  /**
-   * Opens the Settings dialog (or returns the one that is open).
-   * @returns {?Object} The modal of `SG.app.openModal`; null without a DOM or before `init`.
-   */
   function openSettings() {
     if (ctx.app === null || typeof document === 'undefined') return null;
     if (ctx.modal !== null) return ctx.modal;
@@ -847,10 +760,6 @@
   function closeSettings() {
     if (ctx.modal !== null) ctx.modal.close();
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Announcements (wiring)
-  // ---------------------------------------------------------------------------------------------
 
   function variantName(id) {
     return SG.i18n.has('variant.' + id) ? t('variant.' + id) : String(id);
@@ -888,10 +797,6 @@
   function onAction(payload) {
     if (payload && payload.id === 'settings') openSettings();
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Start-up
-  // ---------------------------------------------------------------------------------------------
 
   /** The skip link focuses `#main` itself (a fragment link would also leave '#main' in the address). */
   function wireSkipLink() {
@@ -941,7 +846,6 @@
     reconcile();
   }
 
-  /** Removes everything `init` added (tests and hot reloads). */
   function destroy() {
     ctx.off.splice(0).forEach(function (off) { off(); });
     if (ctx.modal !== null) ctx.modal.close();
@@ -958,11 +862,6 @@
     ctx.unwatchModals = null;
   }
 
-  /**
-   * Starts the module (called by app.js at start-up; safe to call again).
-   * @param {Object} app  `SG.app`.
-   * @returns {boolean} Whether the module is running (false without a DOM).
-   */
   function init(app) {
     if (typeof document === 'undefined' || !app) return false;
     if (ctx.app === app) return true;
@@ -1005,10 +904,6 @@
     closeSettings: closeSettings,
     getGrid: function getGrid() { return ctx.grid; }
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Strings
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

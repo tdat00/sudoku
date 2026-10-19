@@ -1,9 +1,7 @@
 /**
- * Strings of the static page frame (index.html): header, landmarks, control-panel actions, the replay
- * player shell, the steps panel and the live regions. Pure data - the file never touches the DOM.
- *
- * Keys are prefixed `shell.` (page frame) or `player.` (the replay buttons, shared with js/ui/player.js).
- * `app.title` is owned by the base locale packs and only used from the HTML.
+ * Strings of the static page frame (index.html): header, landmarks, actions, replay player shell, steps panel and
+ * live regions. Pure data, never touches the DOM. Keys are `shell.` (page frame) or `player.` (replay buttons,
+ * shared with js/ui/player.js); `app.title` belongs to the base packs and is only used from the HTML.
  */
 (function (root) {
   'use strict';

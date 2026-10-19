@@ -1,14 +1,10 @@
 /**
  * Word book of the Wordoku key words: what a word means, shown when the puzzle is solved.
- *
- * The data are plain tables in assets/wordbook (`SG.wordbookData.en`, `SG.wordbookData.vi`), keyed by the
- * word as it is on the board (upper-case A-Z, no diacritics):
+ * Tables live in assets/wordbook (`SG.wordbookData.en|vi`), keyed by the board word (upper-case A-Z, no diacritics):
  *   en  KEY -> [spelling, pos, English definition, Vietnamese explanation]
- *   vi  KEY -> [spelling with diacritics ('bạch dương'), pos, Vietnamese definition]
- * `pos` is 'n' (noun), 'v' (verb), 'a' (adjective), 'd' (adverb) or 'o' (other). The tables are read lazily, so
- * the files may load in any order.
- *
- * `lookup` is pure: it reads the tables and returns data, the UI decides how to show it.
+ *   vi  KEY -> [spelling with diacritics, pos, Vietnamese definition]
+ * `pos` is 'n', 'v', 'a', 'd' (adverb) or 'o'. Tables are read lazily, so files may load in any order.
+ * `lookup` is pure: the UI decides how to show the data.
  */
 (function (root) {
   'use strict';
@@ -20,23 +16,17 @@
   const LANGUAGES = Object.freeze(['vi', 'en']);
 
   /**
-   * @typedef {Object} WordEntry
-   * @property {string} language  'en' or 'vi': the language of the word itself.
-   * @property {string} text      The word as it is spelled (Vietnamese with its diacritics).
-   * @property {string} pos      'n' | 'v' | 'a' | 'd' | 'o' (noun, verb, adjective, adverb, other).
-   * @property {string} meaning   The explanation in the requested locale (the other language when missing).
-   * @property {string} other     The explanation in the other language for an English word, else ''.
+   * @typedef {Object} WordEntry  `language` ('en'|'vi') is that of the word itself, `text` its spelling.
+   * @property {string} pos      'n' | 'v' | 'a' | 'd' | 'o'.
+   * @property {string} meaning  The explanation in the requested locale (the other language when missing).
+   * @property {string} other    The explanation in the other language for an English word, else ''.
    */
 
   function tables() {
     return SG.wordbookData || {};
   }
 
-  /**
-   * @param {string} word    The key word as on the board, upper-case A-Z.
-   * @param {string} locale  Language of the explanation: 'en' or 'vi'.
-   * @returns {WordEntry[]}  Every entry that has this key (usually one, none for a word of the player's own).
-   */
+  /** Every entry with this key (usually one, none for a word of the player's own); `locale` is 'en' or 'vi'. */
   function lookup(word, locale) {
     const out = [];
     if (typeof word !== 'string' || word === '') return out;

@@ -1,25 +1,23 @@
 /**
- * SVG board view (tasks T-4.3 and T-5.9 glue): draws every variant of the generator and updates it from
- * the delta patches of the event stream, touching only the DOM nodes of the cells that changed.
+ * SVG board view: draws every variant of the generator and updates it from the delta patches of the event stream,
+ * touching only the DOM nodes of the cells that changed.
  *
- * Layers of the SVG tree (design.md section 10.2), bottom to top:
- *   layer-regions   paper, jigsaw region tints, diagonal / window / overlap / word-line overlays and the
- *                   pale colours of Killer cages
+ * Layers of the SVG tree, bottom to top (`setLayerVisible(name, flag)` shows or hides one by its `data-layer` name:
+ * regions, overlays, word, cages, ineq, cells, values, grid, coords, overlay):
+ *   layer-regions   paper, jigsaw region tints, diagonal / window / overlap / word-line overlays and the pale
+ *                   colours of Killer cages
  *   layer-cells     one <rect class="cell" data-cell="i"> per cell: state and colour-mode background
  *   layer-cages     Killer: dashed inset outline of each cage and its sum (top-left cell)
  *   layer-ineq      Greater-Than: the sign on the edge between two cells
  *   layer-values    per cell one <text> (digits, letters, word) and one <use> (geometric symbol)
- *   layer-grid      thin lines inside a region, thick between regions and on the outer border, sub-grid
- *                   outlines of multi-grid boards, optional row / column coordinates
- *   layer-overlay   effects: highlighted (probed, technique, selected) cells and the replay frames (removed,
- *                   put back, revealed in the step on show)
- * `setLayerVisible(name, flag)` shows or hides a layer by its `data-layer` name: regions, overlays, word,
- * cages, ineq, cells, values, grid, coords, overlay.
+ *   layer-grid      thin lines inside a region, thick between regions and on the outer border, sub-grid outlines
+ *                   of multi-grid boards, optional row / column coordinates
+ *   layer-overlay   effects: highlighted (probed, technique, selected) cells and the replay frames (removed, put
+ *                   back, revealed in the step on show)
  *
  * Pure part (runs in Node): `geometry(model, opts)` computes all coordinates, line segments and paths,
  * `renderMarkup(model, state, opts)` the inner SVG markup and `exportSvg(...)` a standalone SVG string.
  * DOM part: `create(svgEl, model, opts)` builds the tree once from that markup and then only patches nodes.
- *
  * Units: one cell is 40 board units; the SVG viewBox scales the whole board, there is no resize code.
  */
 (function (root) {
@@ -31,12 +29,10 @@
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
 
-  /** Cell size, outer margin and extra margin of the coordinate labels, in board units. */
   const CELL = 40;
   const MARGIN = 6;
   const COORD = 16;
 
-  /** Cage outline inset, label font size, chevron size of an inequality sign (board units). */
   const CAGE_INSET = 4;
   const CAGE_FONT = 10.5;
   const SIGN_APEX = 5;
@@ -60,10 +56,6 @@
 
   let viewCounter = 0;
 
-  // ---------------------------------------------------------------------------------------------
-  // Small helpers
-  // ---------------------------------------------------------------------------------------------
-
   function num(x) {
     return String(Math.round(x * 100) / 100);
   }
@@ -84,11 +76,6 @@
     });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Geometry (pure)
-  // ---------------------------------------------------------------------------------------------
-
-  /** Path of the union of cell squares: one sub-path per horizontal run of cells of a row. */
   function cellsPath(cells, geo) {
     const sorted = sortedByRowCol(cells, geo.cellRow, geo.cellCol);
     let d = '';
@@ -270,7 +257,6 @@
     return loops;
   }
 
-  /** Dashed outline of a cage: the boundary of its cells moved `inset` units to the inside. */
   function cageOutline(cells, geo, inset) {
     let d = '';
     boundaryLoops(cells, geo.cellRow, geo.cellCol).forEach(function (loop) {
@@ -330,17 +316,14 @@
   const geometryCache = new WeakMap();
 
   /**
-   * Pure geometry of a model. Cached per model and option set; treat the result as read-only.
-   * @param {PuzzleModel} model
-   * @param {{showCoords?: boolean, regionTint?: (boolean|'auto')}} [opts]
-   * @returns {Object} Canvas: `cell`, `width`, `height` (viewBox), `rows`, `cols`, `originX/Y`; per cell
-   *          `cellX[i]`, `cellY[i]` (top-left), `cellRow`, `cellCol`, `at` (canvas lookup, -1 = hole);
-   *          lines: `edges.thin`, `edges.thick` (every edge as {orientation, row, col, a, b, x1..y2}; b or
-   *          a is -1 on the outer border) and the merged `paths.thin`, `paths.thick`, `paths.paper`;
-   *          `subGrids` [{gridIndex, x, y, size}] (multi-grid only); `regions` [{id, token, cells, d}]
-   *          (jigsaw tints); `overlays` [{index, kind, group, cells, d}]; `cages` [{index, sum, cells, d,
-   *          labelCell, labelX, labelY, color}]; `signs` [{index, a, b, x, y, direction, glyph, d}];
-   *          `coords` {cols, rows} or null; `value` {font, shiftY}.
+   * Pure geometry of a model, cached per model and option set; treat the result as read-only. `opts`: `showCoords`,
+   * `regionTint`. Returns the canvas: `cell`, `width`, `height` (viewBox), `rows`, `cols`, `originX/Y`; per cell
+   * `cellX[i]`, `cellY[i]` (top-left), `cellRow`, `cellCol`, `at` (canvas lookup, -1 = hole); lines: `edges.thin`,
+   * `edges.thick` (every edge as {orientation, row, col, a, b, x1..y2}; b or a is -1 on the outer border) and the
+   * merged `paths.thin`, `paths.thick`, `paths.paper`; `subGrids` [{gridIndex, x, y, size}] (multi-grid only);
+   * `regions` [{id, token, cells, d}] (jigsaw tints); `overlays` [{index, kind, group, cells, d}]; `cages` [{index,
+   * sum, cells, d, labelCell, labelX, labelY, color}]; `signs` [{index, a, b, x, y, direction, glyph, d}]; `coords`
+   * {cols, rows} or null; `value` {font, shiftY}.
    */
   function geometry(model, opts) {
     const o = opts || {};
@@ -495,10 +478,6 @@
     return s;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Cell display (pure)
-  // ---------------------------------------------------------------------------------------------
-
   function emptyGlyph() {
     return { text: null, shape: null, colorIndex: null, label: '' };
   }
@@ -512,19 +491,7 @@
       shape: null, colorIndex: null, label: '' };
   }
 
-  /**
-   * What one cell shows, from the board state.
-   * @param {PuzzleModel} model
-   * @param {{values: ArrayLike<number>, states?: ArrayLike<string>, givens?: ?ArrayLike<number>,
-   *          solution?: ?ArrayLike<number>}} st
-   * @param {number} i
-   * @param {string} mode
-   * @param {boolean} aux  Draw the geometric symbol in colour mode.
-   * @returns {{kind: string, value: number, stateClass: string, color: string, text: string,
-   *          lenClass: string, shape: ?string}} `kind` is 'empty' | 'placed' | 'given' | 'solution';
-   *          `value` the shown value (the solution value counts); `stateClass` the state of the background;
-   *          `color` the colour-mode class of the background (' cell--c3' or '').
-   */
+  /** What one cell shows, from the board state. `kind` is 'empty' | 'placed' | 'given' | 'solution'; `value` the shown value (the solution value counts); `stateClass` the state of the background; `color` the colour-mode class of the background (' cell--c3' or ''); `aux`: draw the geometric symbol in colour mode. */
   function cellView(model, st, i, mode, aux) {
     const actual = st.values[i] | 0;
     const state = st.states ? st.states[i] : undefined;
@@ -564,10 +531,6 @@
     return cv.shape === null ? 'sym sym--off' : 'sym sym--' + cv.kind + (hasAux ? ' sym--aux' : '');
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Markup (pure)
-  // ---------------------------------------------------------------------------------------------
-
   function hiddenClass(opts, name) {
     return opts.hiddenLayers && opts.hiddenLayers.indexOf(name) !== -1 ? ' is-hidden' : '';
   }
@@ -589,17 +552,7 @@
     };
   }
 
-  /**
-   * Inner markup of the board SVG (everything inside the root element), without the title and description
-   * unless `opts.title` is given.
-   * @param {PuzzleModel} model
-   * @param {{values?: Int32Array, states?: string[], givens?: ?Int32Array, solution?: ?Int32Array}} [state]
-   * @param {{symbolMode?: string, showCoords?: boolean, colorAuxSymbol?: boolean, regionTint?: boolean,
-   *          idPrefix?: string, inline?: boolean, hiddenLayers?: string[], title?: string, desc?: string,
-   *          titleId?: string, descId?: string}} [opts]  `inline` = export form: no <use>, no data
-   *          attributes, no empty elements, no <defs>.
-   * @returns {string}
-   */
+  /** Inner markup of the board SVG (everything inside the root element), without title and description unless `opts.title` is given. `opts.inline` = export form: no <use>, no data attributes, no empty elements, no <defs>. */
   function renderMarkup(model, state, opts) {
     const o = opts || {};
     const st = stateOf(model, state);
@@ -627,7 +580,6 @@
       out += '</defs>';
     }
 
-    // layer-regions
     let regions = '<path class="paper" d="' + geo.paths.paper + '"/>';
     if (geo.regions.length > 0) {
       regions += group('tint', 'regions', o, geo.regions.map(function (r) {
@@ -646,7 +598,6 @@
     });
     out += '<g class="layer-regions">' + regions + '</g>';
 
-    // layer-cells
     let cellRects = '';
     const cvs = new Array(n);
     for (i = 0; i < n; i++) {
@@ -660,7 +611,6 @@
     }
     out += group('layer-cells', 'cells', o, cellRects);
 
-    // layer-cages
     if (geo.cages.length > 0) {
       let cages = '';
       geo.cages.forEach(function (cage) {
@@ -675,12 +625,10 @@
       out += group('layer-cages', 'cages', o, '');
     }
 
-    // layer-ineq
     out += group('layer-ineq', 'ineq', o, geo.signs.map(function (s) {
       return '<path class="sign" d="' + s.d + '"' + (inline ? '' : ' data-sign="' + s.index + '"') + '/>';
     }).join(''));
 
-    // layer-values
     const vx = half;
     const vy = half + geo.value.shiftY;
     let values = '';
@@ -706,7 +654,6 @@
     }
     out += group('layer-values', 'values', o, values, ' style="font-size:' + geo.value.font + 'px"');
 
-    // layer-grid
     let grid = '';
     if (geo.paths.thin !== '') grid += '<path class="grid-thin" d="' + geo.paths.thin + '"/>';
     if (geo.paths.thick !== '') grid += '<path class="grid-thick" d="' + geo.paths.thick + '"/>';
@@ -731,10 +678,6 @@
     out += group('layer-overlay', 'overlay', o, '');
     return out;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Standalone export (pure given resolved tokens)
-  // ---------------------------------------------------------------------------------------------
 
   /**
    * Static rules of a standalone SVG, written against the board tokens (`var(--sg-board-*)`); `exportSvg`
@@ -791,16 +734,7 @@
     return Object.freeze(found);
   })();
 
-  /**
-   * A standalone SVG document of a board state.
-   * @param {PuzzleModel} model
-   * @param {Object} state  See `renderMarkup`.
-   * @param {Object} [opts]  `symbolMode`, `showCoords`, `colorAuxSymbol`, `hiddenLayers`, `title`, `desc`,
-   *        `scale` (width and height attributes = viewBox size * scale, default 1).
-   * @param {Object<string, string>} [tokens]  Resolved values of `TOKEN_NAMES` (the caller reads them from
-   *        the light theme); a missing token becomes `currentColor`.
-   * @returns {string}
-   */
+  /** A standalone SVG document of a board state. `tokens`: resolved values of `TOKEN_NAMES` (the caller reads them from the light theme; a missing one becomes `currentColor`); `opts.scale`: width and height attributes = viewBox size * scale (default 1). */
   function exportSvg(model, state, opts, tokens) {
     const o = Object.assign({}, opts || {}, { inline: true });
     const geo = geometry(model, o);
@@ -822,54 +756,12 @@
       inner + '\n</svg>\n';
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // DOM view
-  // ---------------------------------------------------------------------------------------------
-
   function normalizeHighlightClass(cls) {
     const c = cls === undefined || cls === null || cls === '' ? 'cell--probing' : String(cls);
     return c.indexOf('cell--') === 0 ? c : 'cell--' + c;
   }
 
-  /**
-   * @typedef {Object} BoardView
-   * @property {function(Patch, {animate?: boolean, highlightClass?: string}=): void} applyPatch
-   * @property {function(ArrayLike<number>, string[]=): void} setValues
-   * @property {function(?ArrayLike<number>): void} setGivens
-   * @property {function(?ArrayLike<number>): void} showSolution
-   * @property {function(ArrayLike<number>, string=): void} highlight
-   * @property {function(ArrayLike<number>): void} unhighlight
-   * @property {function(): void} clearHighlights
-   * @property {function(?Object): void} setSignMarks  Greater-Than: hide or mark signs by index.
-   * @property {function(string): void} setSymbolMode
-   * @property {function(string, boolean): void} setLayerVisible
-   * @property {function(string): boolean} isLayerVisible
-   * @property {function(boolean): void} setColorAuxSymbol  Colour mode: draw the geometric symbol (default).
-   * @property {function(boolean): void} setAnimate
-   * @property {function(boolean): void} setInteractive
-   * @property {function(function(number, Event): void): void} setOnCellClick
-   * @property {function(boolean): void} setShowCoords  Rebuilds the tree (the margins change).
-   * @property {function(PuzzleModel): void} setModel   Rebuilds the tree, keeps values / givens / solution.
-   * @property {function(): void} refreshText           Title + description (also runs on a locale change).
-   * @property {function(): void} pulseDone             One-shot "bounce" of a finished board.
-   * @property {function(number): ?Element} getCellElement
-   * @property {function(): Object} getGeometry
-   * @property {function(): {values: Int32Array, states: string[]}} getState
-   * @property {function(): string} toSvgString
-   * @property {function(number=): Promise<Blob>} toPngBlob
-   * @property {function(): void} destroy
-   */
-
-  /**
-   * Builds the board into an `<svg>` element and returns the live view. The tree is built once; patches
-   * only change the class, text and `href` of the nodes of the cells they touch.
-   * @param {SVGSVGElement} svgEl
-   * @param {PuzzleModel} model
-   * @param {{symbolMode?: string, showCoords?: boolean, interactive?: boolean, animate?: boolean,
-   *          colorAuxSymbol?: boolean, highlightClass?: string,
-   *          onCellClick?: function(number, Event): void}} [opts]
-   * @returns {BoardView}
-   */
+  /** Builds the board into an `<svg>` element and returns the live view. The tree is built once; patches only change the class, text and `href` of the nodes of the cells they touch. */
   function create(svgEl, model, opts) {
     const options = Object.assign({ symbolMode: 'digits', showCoords: false, interactive: false,
       animate: true, colorAuxSymbol: true }, opts || {});
@@ -929,7 +821,6 @@
       return ms;
     }
 
-    /** Runs `fn` after `ms`, replacing a timer that is pending under the same key. */
     function later(key, fn, ms) {
       const old = timers.get(key);
       if (old !== undefined) root.clearTimeout(old);
@@ -974,13 +865,7 @@
       }, durationMs(token, fallback) + 60);
     }
 
-    /**
-     * Brings the DOM of one cell in line with the state; writes only what differs from what is shown.
-     * @param {number} i
-     * @param {boolean} anim   Start a one-shot animation for what changed.
-     * @param {boolean} [flash]  The patch wrote the state 'backtracked' to this cell: flash it red even if
-     *        it was empty before (a conflicting guess never held a value).
-     */
+    /** Writes only what differs from what is shown. `flash`: the patch wrote the state 'backtracked' to this cell: flash it red even if it was empty before (a conflicting guess never held a value). */
     function renderCell(i, anim, flash) {
       const actual = st.values[i] | 0;
       const prev = lastActual[i];
@@ -1225,14 +1110,7 @@
     const view = {
       svg: svgEl,
 
-      /**
-       * Applies one event patch: cells first, then unhighlight, then highlight.
-       * @param {{cells?: Array<{i: number, value: number, state?: string}>, highlight?: number[],
-       *          unhighlight?: number[]}} patch
-       * @param {{animate?: boolean, highlightClass?: string}} [popts]  `animate: false` skips the one-shot
-       *        animation of this patch; `highlightClass` names the highlight style (default
-       *        `options.highlightClass`, else 'cell--probing').
-       */
+      /** Applies one event patch: cells first, then unhighlight, then highlight. `popts.animate: false` skips the one-shot animation of this patch; `popts.highlightClass` names the highlight style (default `options.highlightClass`, else 'cell--probing'). */
       applyPatch: function applyPatch(patch, popts) {
         const anim = !popts || popts.animate !== false;
         const cells = patch.cells;
@@ -1256,11 +1134,7 @@
         }
       },
 
-      /**
-       * Replaces every value at once (no animation).
-       * @param {ArrayLike<number>} values  One per cell, 0 = empty.
-       * @param {string[]} [states]  'empty' | 'placed' | 'given' | 'backtracked' per cell; default by value.
-       */
+      /** Replaces every value at once (no animation); `states` ('empty' | 'placed' | 'given' | 'backtracked' per cell) default by value. */
       setValues: function setValues(values, states) {
         resetTransient();
         for (let i = 0; i < n; i++) {
@@ -1272,30 +1146,22 @@
         refreshText();
       },
 
-      /** Marks the cells that are clues (bold, given colour); `null` clears the marks. */
       setGivens: function setGivens(givens) {
         st.givens = givens ? Int32Array.from(givens) : null;
         renderAll();
       },
 
-      /** Draws the solution in the empty cells (light italic); `null` hides it. */
       showSolution: function showSolution(solution) {
         st.solution = solution ? Int32Array.from(solution) : null;
         renderAll();
       },
 
-      /**
-       * Highlights cells with an overlay frame.
-       * @param {ArrayLike<number>} cells
-       * @param {string} [cls]  'cell--probing' (default), 'cell--technique', 'cell--restored',
-       *        'cell--selected' or any class defined in css/board.css; the 'cell--' prefix is optional.
-       */
+      /** `cls`: 'cell--probing' (default), 'cell--technique', 'cell--restored', 'cell--selected' or any class defined in css/board.css; the 'cell--' prefix is optional. */
       highlight: function highlight(cells, cls) {
         const c = normalizeHighlightClass(cls !== undefined ? cls : options.highlightClass);
         for (let k = 0; k < cells.length; k++) addHighlight(cells[k], c);
       },
 
-      /** Removes the highlight of the given cells. */
       unhighlight: function unhighlight(cells) {
         for (let k = 0; k < cells.length; k++) removeHighlight(cells[k]);
       },
@@ -1304,13 +1170,7 @@
         Array.from(hl.keys()).forEach(removeHighlight);
       },
 
-      /**
-       * Marks Greater-Than signs by their index in `model.inequalities` (the `data-sign` attribute of the
-       * sign): `hidden` are not drawn, `removed` are drawn faded (signs that the step on show takes away),
-       * `kept` in the colour of a restored cell (signs that had to stay). The marks survive a rebuild of the
-       * tree; `null` clears them.
-       * @param {?{hidden?: ArrayLike<number>, removed?: ArrayLike<number>, kept?: ArrayLike<number>}} marks
-       */
+      /** Marks Greater-Than signs by their index in `model.inequalities` (the `data-sign` attribute): `hidden` are not drawn, `removed` are drawn faded (signs the step on show takes away), `kept` in the colour of a restored cell (signs that had to stay). The marks survive a rebuild of the tree; `null` clears them. */
       setSignMarks: function setSignMarks(marks) {
         signMarks = marks ? {
           hidden: new Set(marks.hidden || []),
@@ -1320,7 +1180,6 @@
         applySignMarks();
       },
 
-      /** Changes how values are drawn; the tree is not rebuilt. */
       setSymbolMode: function setSymbolMode(next) {
         if (next === mode) return;
         mode = next;
@@ -1329,13 +1188,11 @@
         renderAll();
       },
 
-      /** Colour mode: draw (default) or leave out the auxiliary geometric symbol. */
       setColorAuxSymbol: function setColorAuxSymbol(flag) {
         aux = flag !== false;
         renderAll();
       },
 
-      /** Shows or hides a layer, see LAYERS. */
       setLayerVisible: function setLayerVisible(name, visible) {
         if (visible === false) hidden.add(name);
         else hidden.delete(name);
@@ -1347,7 +1204,6 @@
         return !hidden.has(name);
       },
 
-      /** Switches the one-shot animations on or off (they also respect reduced motion). */
       setAnimate: function setAnimate(flag) {
         animate = flag !== false;
         svgEl.setAttribute('data-animate', animate ? 'on' : 'off');
@@ -1367,7 +1223,6 @@
         options.onCellClick = fn;
       },
 
-      /** Shows or hides the row and column coordinates (rebuilds the tree: the margins change). */
       setShowCoords: function setShowCoords(flag) {
         if ((flag === true) === (options.showCoords === true)) return;
         options.showCoords = flag === true;
@@ -1389,10 +1244,8 @@
         build();
       },
 
-      /** Updates the title and description (call it after the values changed, or on a locale change). */
       refreshText: refreshText,
 
-      /** Gives the board a one-shot "bounce" (class board--done). */
       pulseDone: function pulseDone() {
         if (!motionOn()) return;
         svgEl.classList.remove('board--done');
@@ -1410,12 +1263,10 @@
         return geo;
       },
 
-      /** @returns {{values: Int32Array, states: string[]}} A copy of what the view shows. */
       getState: function getState() {
         return { values: Int32Array.from(st.values), states: st.states.slice() };
       },
 
-      /** A standalone light-theme SVG document of the current state (no highlights). */
       toSvgString: function toSvgString(exportOptions) {
         const eo = Object.assign({}, markupOptions(),
           { title: titleEl.textContent, desc: descEl.textContent },
@@ -1423,11 +1274,7 @@
         return exportSvg(model, stateOfView(), eo, resolveTokens('light'));
       },
 
-      /**
-       * Renders the standalone SVG onto a canvas (browser only).
-       * @param {number} [scale=2]  Pixels per board unit; the PNG is `viewBox size * scale` pixels.
-       * @returns {Promise<Blob>}
-       */
+      /** Renders the standalone SVG onto a canvas (browser only); the PNG is viewBox size * `scale` (default 2) pixels. */
       toPngBlob: function toPngBlob(scale) {
         const k = scale > 0 ? scale : 2;
         const text = view.toSvgString({ scale: 1 });
@@ -1449,12 +1296,7 @@
     return view;
   }
 
-  /**
-   * Resolved values of the board tokens (and the font family) for a theme, read from a probe element with
-   * `data-sg-theme` (see css/tokens-board.css), so `<html data-theme>` is never touched. Browser only.
-   * @param {string} [theme='light']  'light' | 'dark' | 'high-contrast'.
-   * @returns {Object<string, string>} Token name -> value.
-   */
+  /** Resolved values of the board tokens (and the font family) for a theme, read from a probe element with `data-sg-theme` (see css/tokens-board.css), so `<html data-theme>` is never touched. Browser only. */
   function resolveTokens(theme) {
     const out = {};
     if (typeof document === 'undefined' || !document.body) return out;
@@ -1504,10 +1346,6 @@
     staticCss: staticCss,
     resolveTokens: resolveTokens
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Locale fragment
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

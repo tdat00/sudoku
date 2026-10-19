@@ -1,32 +1,28 @@
 /**
- * Mega variants: mega12 (12x12, boxes of 3 rows x 4 columns) and mega16 (16x16, 4x4 boxes) - design.md 8.6.
+ * Mega variants: mega12 (12x12, boxes of 3 rows x 4 columns) and mega16 (16x16, 4x4 boxes).
  *
- * Both boards are classic grids with bigger boxes, so the generic engine runs unchanged: a candidate mask
- * of 16 digits still fits in the low 16 bits of an int32 (digit 16 is bit 15, which keeps it positive).
+ * Both boards are classic grids with bigger boxes, so the generic engine runs unchanged (a candidate mask of
+ * 16 digits still fits in the low 16 bits of an int32; digit 16 is bit 15, which keeps it positive).
  * Everything that differs from classic9 is data: the box shape, the symbol set and the generator tuning.
  *
- * Symbols are a presentation concern. The core only ever sees the integers 1..D, and
- * `model.symbols.labels[v - 1]` is the text a renderer draws for value v. The set is the `symbolSet`
- * option of the variant:
+ * Symbols are a presentation concern: the core only sees the integers 1..D and `model.symbols.labels[v - 1]`
+ * is the text drawn for value v. The set is the `symbolSet` option:
  *   mega12  'letters' (default)  1-9, A, B, C      'numbers'  1-12
  *   mega16  'hex' (default)      0-9, A-F          'letters'  1-9, A-G
- * Mind the 'hex' set: its first label is '0' and it belongs to the value 1. The value 0 of a solve state
- * still means "empty", and the givens array still uses 0 for an empty cell.
+ * Mind the 'hex' set: its first label is '0' and it belongs to the value 1 (value 0 still means "empty").
  *
- * Layout data for the renderer (`model.layout`): rows = cols = D, cellRow / cellCol, and `cellRegion` = the
- * box index, boxes numbered row-major (mega12: 4 box rows x 3 box columns, mega16: 4 x 4). Units come as
- * the D rows, the D columns and the D boxes: 36 units for mega12, 48 for mega16. A 16x16 board is 256
- * cells, so a 'full' trace is still allowed (the pipeline downgrades it above 300 cells).
+ * Layout for the renderer: rows = cols = D, `cellRegion` = the row-major box index. Units are the D rows,
+ * D columns and D boxes (36 for mega12, 48 for mega16). 16x16 has 256 cells, so a 'full' trace is still
+ * allowed (the pipeline downgrades it above 300 cells).
  *
- * Generation tuning (measured on 5000 seeds per board, see the task report):
- *  - `fastSeed` fills the boxes on the diagonal of the box grid with random permutations. They share no
- *    row and no column, so the fill cannot fail; it fixes a quarter of the board before the search starts
- *    and cuts the mean time of a full grid by about 30 %.
- *  - `restartThreshold` is the number of failed guesses after which the search of the full grid starts
- *    over with a fresh random stream. Backtracking on a 16x16 board has a heavy tail (a few seeds in a
- *    thousand need thousands of guesses), and a restart is cheap, so the threshold is far below the
- *    generic default of cellCount * 50. It is a field of the variant definition for the generator to
- *    read; `SG.fullGrid.generate` takes the same number as its `restartThreshold` option.
+ * Generation tuning:
+ *  - `fastSeed` fills the boxes on the diagonal of the box grid with random permutations. They share no row
+ *    or column, so the fill cannot fail; it fixes a quarter of the board and cuts the mean time of a full
+ *    grid by about 30 %.
+ *  - `restartThreshold`: failed guesses after which the full grid search restarts with a fresh random
+ *    stream. Backtracking on 16x16 has a heavy tail (a few seeds in a thousand need thousands of guesses)
+ *    and a restart is cheap, so it is far below the generic default of cellCount * 50.
+ *    `SG.fullGrid.generate` takes the same number as its `restartThreshold` option.
  */
 (function (root) {
   'use strict';
@@ -53,19 +49,16 @@
 
   /**
    * @typedef {Object} MegaSpec
-   * @property {string} id
    * @property {number} boxRows   Rows of one box.
    * @property {number} boxCols   Columns of one box; boxRows * boxCols = D.
-   * @property {string[]} difficultySupport
    * @property {number} restartThreshold  Failed guesses per attempt of the full grid search.
    * @property {Array<{value: string, make: function(number): string[]}>} symbolSets
    *           The first is the default; `make(D)` returns the labels of the values 1..D.
    */
 
   /**
-   * Levels: measured, not assumed (rating v2: `node tests/qualify.js`, docs/report-v2/qualification.md). Both
-   * boards hit every level of the nine, hell2 included, within the 30 s budget of larger boards; the
-   * top tiers come from the fast proposal dig refined into the band.
+   * Levels are measured (`node tests/qualify.js`): both boards hit every level, hell2 included, within the
+   * 30 s budget of larger boards; the top tiers come from the fast proposal dig refined into the band.
    */
   const LEVELS = Object.freeze(['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare',
     'hell1', 'hell2']);
@@ -108,10 +101,7 @@
   }
 
   /**
-   * Labels of a symbol set of a mega variant.
-   * @param {string} variantId  'mega12' or 'mega16'.
-   * @param {string} [setId]    A symbol set of that variant; missing: its default.
-   * @returns {string[]} labels[v - 1] is the symbol of value v.
+   * Labels of a symbol set of a mega variant (`setId` missing: its default); labels[v - 1] is the symbol of v.
    * @throws {SG.errors.GenerationError} 'pipeline.invalidOption' for an unknown set.
    */
   function symbolLabels(variantId, setId) {
@@ -120,10 +110,7 @@
 
   /**
    * Builds a square board whose boxes are `boxRows` rows by `boxCols` columns, like the classic builder.
-   * Cell (r, c) has index r * D + c; units are listed rows, then columns, then boxes.
-   * @param {MegaSpec} spec
-   * @param {Object} [opts]  Variant options: `symbolSet`, one of the ids of the spec.
-   * @returns {PuzzleModel}
+   * Units are listed rows, then columns, then boxes. `opts.symbolSet` is one of the ids of the spec.
    * @throws {SG.errors.GenerationError} 'pipeline.invalidOption' for an unknown symbol set.
    */
   function buildMega(spec, opts) {
@@ -192,13 +179,10 @@
   }
 
   /**
-   * Makes the pre-fill of a box shape. The boxes on the diagonal of the box grid (box k down and k across)
-   * share no row and no column, so each takes its own random permutation of 1..D and any such fill extends
-   * to a complete grid.
-   * @param {number} boxRows
-   * @param {number} boxCols
-   * @returns {function(PuzzleModel, SolveState, Rng): boolean} The `fastSeed` hook of the registry; it
-   *          returns false when a cell could not be assigned (it clashes with a fixed cell).
+   * Makes the pre-fill of a box shape: the boxes on the diagonal of the box grid share no row or column, so
+   * each takes its own random permutation of 1..D and any such fill extends to a complete grid.
+   * @returns {function(PuzzleModel, SolveState, Rng): boolean} The `fastSeed` hook; it returns false when a
+   *          cell could not be assigned (it clashes with a fixed cell).
    */
   function makeFastSeed(boxRows, boxCols) {
     const D = boxRows * boxCols;
@@ -221,10 +205,7 @@
     };
   }
 
-  /**
-   * Option schema of the symbol set. `choices[i].i18nKey` names a choice; `i18nKey` and `hintKey` name the
-   * control itself.
-   */
+  /** Option schema of the symbol set (`choices[i].i18nKey` names a choice). */
   function symbolSetOption(spec) {
     return Object.freeze({
       id: 'symbolSet',
@@ -255,10 +236,7 @@
     };
   }
 
-  /**
-   * Strings of this file, in the shape the locale packs merge: `SG.localeFragments` is a list of
-   * { en: {key: text}, vi: {key: text} } objects. Both languages carry exactly the same keys.
-   */
+  /** Locale strings in the shape the locale packs merge; both languages carry exactly the same keys. */
   const LOCALE_FRAGMENT = {
     en: {
       'variant.mega12': 'Mega Sudoku 12×12',
@@ -294,10 +272,7 @@
     }
   };
 
-  /**
-   * Mega board tools, exposed for tests and tooling.
-   * @namespace SG.mega
-   */
+  /** Mega board tools, exposed for tests and tooling. */
   SG.mega = SG.mega || {
     SPECS: SPECS,
     symbolLabels: symbolLabels,
@@ -305,7 +280,7 @@
     makeFastSeed: makeFastSeed
   };
 
-  // Skipping known ids keeps a second load of this file harmless (no second set of locale strings either).
+  // Skipping known ids keeps a second load harmless (no second set of locale strings either).
   let registered = 0;
   [SPECS.mega12, SPECS.mega16].forEach(function (spec) {
     if (!SG.variants.has(spec.id)) {

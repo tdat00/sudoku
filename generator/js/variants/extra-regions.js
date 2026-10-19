@@ -1,23 +1,14 @@
 /**
  * Extra-region variants: `diagonalX` (Sudoku X) and `hyper` (Hyper Sudoku / Windoku).
  *
- * Both are classic9 plus additional all-different units (design.md sections 4.1 and 8.7), so they share one
- * builder and no solver, technique or digger needs to know about them:
- *   - diagonalX adds the two diagonals (2 units, 29 in all);
- *   - hyper adds four 3x3 windows whose top-left corners are (1,1), (1,5), (5,1) and (5,5) (4 units, 31);
- *   - both together (`diagonalX` with `withHyper`, or `hyper` with `withDiagonals`) give the same hybrid
- *     board of 33 units, the unit order and the layout being identical whichever variant it was asked for.
+ * Both are classic9 plus additional all-different units, so they share one builder and no solver, technique
+ * or digger needs to know about them: diagonalX adds the two diagonals (29 units), hyper adds four 3x3
+ * windows with top-left corners (1,1), (1,5), (5,1), (5,5) (31 units); both together give the same 33-unit
+ * hybrid whichever variant it was asked for. Unit order: rows, columns, boxes, diagonals, windows.
  *
- * Unit order: 9 rows, 9 columns, 9 boxes (exactly as classic9), then the diagonals, then the windows.
- *
- * Renderer note (`model.layout.overlays`): one entry `{ kind, cells }` per extra unit, in the order of the
- * extra units, so `overlays[i]` describes `units[27 + i]`. `kind` is 'diag' for a diagonal (the main one,
- * then the anti-diagonal) and 'window' for a hyper window (reading order of the window corners); `cells` is
- * an Int32Array of cell indices (row-major index r * 9 + c). Shade those cells with a translucent fill:
- * overlays overlap each other (both diagonals share the centre cell, a diagonal crosses windows), so the
- * fills must blend instead of replacing each other. `layout.cellRow` / `cellCol` give each cell's position.
- *
- * Both variants use `unitMeta.kind` 'diag' / 'window' and the labels D1, D2 / W1 .. W4.
+ * `model.layout.overlays[i]` is `{ kind: 'diag' | 'window', cells: Int32Array }` and describes `units[27 + i]`.
+ * Overlays overlap each other (the diagonals share the centre cell, a diagonal crosses windows), so the
+ * renderer must shade them with translucent fills that blend.
  */
 (function (root) {
   'use strict';
@@ -33,10 +24,7 @@
   const KIND_DIAG = 'diag';
   const KIND_WINDOW = 'window';
 
-  /**
-   * Levels both boards offer: every one of the nine, hell2 included (measured: `node tests/qualify.js`,
-   * docs/report-v2/qualification.md).
-   */
+  /** Both boards offer every level, hell2 included (measured: `node tests/qualify.js`). */
   const LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
     'hell2'];
 
@@ -44,7 +32,7 @@
     return new SG.errors.GenerationError(code, args);
   }
 
-  /** Cells of the main diagonal, then of the anti-diagonal, as row-major indices. */
+  /** Main diagonal, then anti-diagonal, as row-major indices. */
   function diagonalCells() {
     const main = [];
     const anti = [];
@@ -64,12 +52,7 @@
     return cells;
   }
 
-  /**
-   * Builds a 9x9 board with the standard rows, columns and boxes plus the chosen extra units.
-   * @param {string} variantId  Id the model carries; use the id of the registered variant.
-   * @param {{diagonals: boolean, windows: boolean}} extras  Which extra units to add.
-   * @returns {PuzzleModel}
-   */
+  /** Builds a 9x9 board with the standard rows, columns and boxes plus the chosen extra units. */
   function buildBoard(variantId, extras) {
     const n = SIZE * SIZE;
     const cellRow = new Int32Array(n);
@@ -151,8 +134,6 @@
 
   /**
    * Builds a Diagonal (X) board: 29 units, or 33 with the option `withHyper`.
-   * @param {{withHyper?: boolean}} [opts]
-   * @returns {PuzzleModel}
    * @throws {SG.errors.GenerationError} 'pipeline.invalidOption' when `withHyper` is not a boolean.
    */
   function buildDiagonalX(opts) {
@@ -161,8 +142,6 @@
 
   /**
    * Builds a Hyper (Windoku) board: 31 units, or 33 with the option `withDiagonals`.
-   * @param {{withDiagonals?: boolean}} [opts]
-   * @returns {PuzzleModel}
    * @throws {SG.errors.GenerationError} 'pipeline.invalidOption' when `withDiagonals` is not a boolean.
    */
   function buildHyper(opts) {
@@ -171,14 +150,10 @@
 
   /**
    * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in js/core/difficulty.js).
-   * The two hybrids are 9x9 boards with more rules than classic9. With the classic9 floors (29 / 25 / 22
-   * clues) the digger stopped at the floor before the puzzle needed a pair technique: normal was hit by 14 %
-   * (diagonalX) and 1 % (hyper) of the dug puzzles, so the generator had to dig 7 and 38 puzzles per normal
-   * puzzle and missed the level for 11 % of the hyper ones. Where the techniques stop the dig by themselves
-   * (21-24 clues, whatever the level) there is no floor to speak of, but the means of the clue counts must
-   * still fall with the level, so the floors stay just above that: 24 / 20 / 17 (83 % / 80 % / 80 %) give
-   * normal 32..36 %, hard 31..73 % and master 39..89 % of the dug puzzles. expert takes the factor of hard
-   * (rating v2; hell1/2 take that of nightmare, which has none).
+   * With the classic9 floors (29 / 25 / 22 clues) the digger stopped at the floor before these harder 9x9
+   * boards needed a pair technique, so normal was rarely reached. Floors of 24 / 20 / 17 (83 % / 80 % / 80 %)
+   * sit just above where the techniques stop the dig by themselves, which keeps the mean clue count falling
+   * with the level. expert takes the factor of hard; hell1/2 take that of nightmare, which has none.
    */
   const CLUE_FLOOR_SCALE = Object.freeze({ normal: 0.83, hard: 0.8, expert: 0.8, master: 0.8 });
 
@@ -209,7 +184,7 @@
     definition('hyper', 'withDiagonals', buildHyper)
   ];
 
-  // Skipping known ids keeps a second load of this file harmless (no second set of locale strings either).
+  // Skipping known ids keeps a second load harmless (no second set of locale strings either).
   let registered = false;
   DEFINITIONS.forEach(function (def) {
     if (!SG.variants.has(def.id)) {
@@ -247,10 +222,7 @@
     });
   }
 
-  /**
-   * Extra-region tools, exposed for tests and tooling.
-   * @namespace SG.extraRegions
-   */
+  /** Extra-region tools, exposed for tests and tooling. */
   SG.extraRegions = SG.extraRegions || {
     WINDOW_ORIGINS: WINDOW_ORIGINS,
     KIND_DIAG: KIND_DIAG,

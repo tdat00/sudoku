@@ -1,10 +1,8 @@
 /**
- * English language pack: the shared strings (steps, explanations, techniques, difficulty, symmetry, variants,
- * events, errors, generic words). Modules that own their strings (variants, controls, ...) add them through
- * `SG.localeFragments` instead; see js/ui/i18n.js. Keep the key set identical to locale.vi.js.
- *
- * Placeholders are written `{name}`; the names are the `i18nArgs` of the technique findings and of the
- * events (see `SG.events.VOCABULARY`). Plural forms use the suffixes `_one` / `_other`.
+ * English language pack: shared strings (steps, explanations, techniques, difficulty, symmetry, variants, events,
+ * errors, generic words). Modules that own their strings add them through `SG.localeFragments` (see js/ui/i18n.js).
+ * Keep the key set identical to locale.vi.js. Placeholders are `{name}` (the `i18nArgs` of technique findings and
+ * events, see `SG.events.VOCABULARY`); plural forms use the suffixes `_one` / `_other`.
  */
 (function (root) {
   'use strict';
@@ -17,9 +15,7 @@
     Object.keys(section).forEach(function (key) { pack[key] = section[key]; });
   }
 
-  // ---------------------------------------------------------------------------------------------
   // General words, units and durations
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'app.title': 'Sudoku Generator',
@@ -78,9 +74,7 @@
     'duration.s': '{value} s'
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Variants, groups, difficulty, symmetry, symbol sets, dig orders, technique groups, trace levels
-  // ---------------------------------------------------------------------------------------------
+  // Variants, difficulty, symmetry, symbol sets, dig orders, technique groups, trace levels
 
   add({
     'variant.classic4': 'Classic Sudoku 4\u00d74',
@@ -172,9 +166,7 @@
     'traceLevel.full': 'Full detail'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // The seven steps and their explanation cards (SG.explain.keys())
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'step.configure.name': 'Prepare the settings',
@@ -285,10 +277,7 @@
     'explain.tune.code.package': 'package the result'
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Techniques: names and plain descriptions (cageCombo, ruleOf45, cageSplit, ineqChain and minMaxForcing
-  // have their names in the fragments of tech-ineq.js and killer.js)
-  // ---------------------------------------------------------------------------------------------
+  // Techniques: names and descriptions (cageCombo, ruleOf45, cageSplit, ineqChain, minMaxForcing are named in tech-ineq.js and killer.js)
 
   add({
     'technique.nakedSingle': 'Naked Single',
@@ -364,10 +353,8 @@
       'and an outside part, each with a sum of its own.'
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Texts of the solving steps: one per `i18nKey` of a technique finding. Placeholders are exactly the
-  // `i18nArgs` of the finding. {unit}, {box}, {line} are unit labels (R4, C2, B3), {cell...} cell labels.
-  // ---------------------------------------------------------------------------------------------
+  // Solving-step texts, one per `i18nKey` of a technique finding; placeholders are its `i18nArgs` ({unit}, {box}, {line}
+  // are unit labels such as R4, C2, B3; {cell...} are cell labels).
 
   add({
     'technique.nakedSingle.step': '{cell} has only one candidate left: {digit}. So {cell} must be {digit}.',
@@ -446,10 +433,7 @@
       'would end in a contradiction. So {digit} is removed from {label}.'
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Event log lines: one per key of SG.events.vocabularyKeys() (killer.js and wordoku.js add their own
-  // extraStructure lines and jigsaw.js / multigrid.js / wordoku.js their error texts).
-  // ---------------------------------------------------------------------------------------------
+  // Event log lines, one per key of SG.events.vocabularyKeys() (killer, wordoku, jigsaw and multigrid add their own)
 
   add({
     'configure.start': 'Reading the settings.',
@@ -545,9 +529,7 @@
     'trace.coalesced_other': 'The log skips {dropped} detailed steps here.'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Warnings of a finished puzzle (PuzzleResult.warnings) and error messages (error.<code>)
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'difficulty.approximate': 'The generator could not hit the requested level exactly, so this is the ' +

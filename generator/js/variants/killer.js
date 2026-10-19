@@ -1,31 +1,28 @@
 /**
- * Killer Sudoku (design.md sections 5.1, 6.3, 8.2): a classic 9x9 board whose cells are also grouped into
- * cages. Each cage shows a sum and holds pairwise distinct digits that add up to it. Classic Killer shows
- * no given digits, so the cages carry all the information; the digger keeps only the few clues that the
- * level (and the cage layout) needs.
+ * Killer Sudoku: a classic 9x9 board whose cells are also grouped into cages. Each cage shows a sum and
+ * holds pairwise distinct digits that add up to it. Classic Killer shows no given digits, so the cages
+ * carry the information; the digger keeps only the few clues that the level (and the cage layout) needs.
  *
  * How the pieces fit (no `if (variant === 'killer')` exists anywhere in js/core):
- *   - `build` returns the plain 9x9 board without cages, because the cages come from the solution and the
- *     solution does not exist yet at step 2 of the pipeline.
- *   - `postGenerate` (pipeline step 4, 'extraStructure') grows the cages from the full grid, checks that
- *     the puzzle without any clue has a single solution, repairs the cage layout when it does not,
- *     colours the cages and returns the model with the cages in it (models are immutable, so it returns a
- *     new one).
- *   - cage propagation lives in combo-table.js (a constraint extension that this file switches on for the
- *     variant), the cage techniques in tech-cage.js, and `digStrategy: 'killer'` (registered below) tunes
- *     the hole digger to cages.
+ *   - `build` returns the plain 9x9 board without cages: the cages come from the solution, which does not
+ *     exist yet at step 2 of the pipeline.
+ *   - `postGenerate` (step 4, 'extraStructure') grows the cages from the full grid, checks that the puzzle
+ *     without any clue has a single solution, repairs the cage layout when it does not, colours the cages
+ *     and returns a new model (models are immutable) with the cages in it.
+ *   - cage propagation lives in combo-table.js (a constraint extension this file switches on), the cage
+ *     techniques in tech-cage.js, and `digStrategy: 'killer'` tunes the hole digger to cages.
  *
  * What the model carries for the renderer:
- *   - `model.cages[k]`  { cells, sum, distinct: true }. Cells are sorted in reading order, so `cells[0]`
- *     is the top-left cell of the cage: that is where the sum label goes.
- *   - `model.layout.overlays`  one entry per used colour, `{ kind: 'cageColor0' ... 'cageColor4', cells }`:
- *     the cells of all cages that get that pale background colour. No two cages that share an edge have
- *     the same colour. `SG.killer.describeCages(model)` returns the same information per cage.
+ *   - `model.cages[k]` { cells, sum, distinct: true }; cells are in reading order, so `cells[0]` is the
+ *     top-left cell, where the sum label goes.
+ *   - `model.layout.overlays` one entry per used colour, `{ kind: 'cageColor0' ... 'cageColor4', cells }`:
+ *     the cells of all cages with that pale background. Cages sharing an edge never share a colour.
+ *     `SG.killer.describeCages(model)` returns the same information per cage.
  *   - every cage with at least two cells is also a partial all-different unit (`kind: 'cage'`, label
- *     'K<n>'), which is how the engine makes the cells of a cage peers of each other.
+ *     'K<n>'), which makes the cells of a cage peers of each other.
  *
- * Variant options (`variantOptions`): `{ cageSize: -2..2 }`, default 0. It tilts the cage size
- * distribution of the difficulty towards smaller (negative) or larger (positive) cages.
+ * Variant option `cageSize` (-2..2, default 0) tilts the cage size distribution of the level towards
+ * smaller (negative) or larger (positive) cages.
  */
 (function (root) {
   'use strict';
@@ -41,10 +38,9 @@
   const CELLS = DIGITS * DIGITS;
 
   /**
-   * Size distribution of the cages per difficulty: share of cages with that many cells (design.md 8.2).
-   * Rating v2: expert uses the shares of hard; hell1 and hell2 use those of nightmare and tilt them
-   * towards larger cages (`tiltFor`). Every level needs its own entry: `sizeDistribution` falls back to the
-   * normal shares for an unknown one.
+   * Size distribution of the cages per difficulty: share of cages with that many cells. expert uses the
+   * shares of hard; hell1 and hell2 those of nightmare, tilted towards larger cages (`tiltFor`). Every level
+   * needs its own entry: `sizeDistribution` falls back to the normal shares for an unknown one.
    */
   const SIZE_SHARES = {
     veryEasy: { 2: 45, 3: 40, 4: 15 },
@@ -57,34 +53,22 @@
     hell1: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 },
     hell2: { 2: 15, 3: 30, 4: 30, 5: 20, 6: 5 }
   };
-  /**
-   * Levels whose cages are tilted towards larger ones on top of the user's slider: the measured +2 (held-out
-   * run, docs/report-v2/report-detailed.md section 5.7 (7): old-nightmare hits 24/30 -> 30/30).
-   */
+  /** Levels whose cages are tilted towards larger ones on top of the user's slider (measured: +2). */
   const LARGER_CAGES = Object.freeze({ hell1: 2, hell2: 2 });
   const MIN_TARGET = 2;
   const MAX_TARGET = 6;
   /** A cage that absorbs a leftover cell may grow to this many cells. */
   const MAX_CAGE_CELLS = 7;
 
-  /** The slider of the cage size option. */
   const TILT_MIN = -2;
   const TILT_MAX = 2;
 
   /** Pale background colours: at most this many classes ('cageColor0' ... 'cageColor4'). */
   const COLOR_KIND = 'cageColor';
 
-  // ---------------------------------------------------------------------------------------------
-  // The board without cages
-  // ---------------------------------------------------------------------------------------------
-
   /** Options stored per base model, so that `postGenerate` can read what `build` was given. */
   const optionsOf = new WeakMap();
 
-  /**
-   * @param {Object} [opts]  Raw variant options.
-   * @returns {{cageSize: number}} Normalised options.
-   */
   function normalizeOptions(opts) {
     let tilt = opts && typeof opts.cageSize === 'number' && isFinite(opts.cageSize) ? opts.cageSize : 0;
     tilt = Math.max(TILT_MIN, Math.min(TILT_MAX, Math.round(tilt)));
@@ -92,10 +76,8 @@
   }
 
   /**
-   * Builds the plain 9x9 board of Killer: rows, columns and 3x3 boxes, no cages. It remembers the variant
+   * Builds the plain 9x9 board of Killer (rows, columns, 3x3 boxes, no cages). It remembers the variant
    * options for `postGenerate`, which receives this very model.
-   * @param {Object} [opts]  Raw variant options (`{ cageSize }`).
-   * @returns {PuzzleModel}
    */
   function buildBoard(opts) {
     const units = [];
@@ -154,10 +136,8 @@
     return model;
   }
 
-  /**
-   * Full grid pre-fill (same idea as classic9): the three boxes on the main diagonal share no row or column,
-   * so each can take an independent random permutation and the grid still completes.
-   */
+  /** Full grid pre-fill (as for classic9): the three diagonal boxes share no row or column, so each takes
+   *  an independent random permutation. */
   function fastSeedDiagonalBoxes(model, state, rng) {
     const region = model.layout.cellRegion;
     const values = new Array(DIGITS);
@@ -174,11 +154,6 @@
     return true;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Geometry helpers
-  // ---------------------------------------------------------------------------------------------
-
-  /** Orthogonal neighbours of every cell. */
   const NEIGHBOURS = (function () {
     const out = [];
     for (let cell = 0; cell < CELLS; cell++) {
@@ -194,18 +169,10 @@
     return out;
   })();
 
-  // ---------------------------------------------------------------------------------------------
-  // Cage layout: growth
-  // ---------------------------------------------------------------------------------------------
-
   /**
    * Share of each target size for a level, tilted by the slider: the weight of size s is multiplied by
    * exp(0.55 * tilt * (s - 3.5)), so a positive tilt favours large cages and a negative one small cages.
-   * A floor keeps every size available, so that a slider position can add sizes the level itself does not
-   * use.
-   * @param {string} level
-   * @param {number} tilt  -2 .. 2
-   * @returns {{sizes: number[], weights: number[]}}
+   * A floor keeps every size available, so a slider position can add sizes the level itself does not use.
    */
   function sizeDistribution(level, tilt) {
     const shares = SIZE_SHARES[level] || SIZE_SHARES.normal;
@@ -225,13 +192,7 @@
     return { sizes: sizes, weights: weights };
   }
 
-  /**
-   * The tilt a level's cages are grown with: the user's slider, plus `LARGER_CAGES` for the hell tiers,
-   * clamped to the slider's range (docs/report-v2/report-detailed.md section 5.7 (7)).
-   * @param {string} level
-   * @param {number} cageSize  The user's slider position, -2 .. 2.
-   * @returns {number}
-   */
+  /** The tilt a level's cages are grown with: the user's slider plus `LARGER_CAGES`, clamped to -2 .. 2. */
   function tiltFor(level, cageSize) {
     const extra = Object.prototype.hasOwnProperty.call(LARGER_CAGES, level) ? LARGER_CAGES[level] : 0;
     return Math.max(TILT_MIN, Math.min(TILT_MAX, cageSize + extra));
@@ -249,14 +210,10 @@
   }
 
   /**
-   * Partitions the board into connected groups of cells with pairwise distinct solution values.
-   * Cages are grown one after the other; the next one starts at the free cell with the fewest free
-   * neighbours (so corners and pockets are used up first and no cell is stranded), and a cage prefers to
-   * grow into cells that have few free neighbours for the same reason. A cell that ends up alone is merged
-   * into a neighbouring cage when one has room and a digit that differs.
-   * @param {ArrayLike<number>} solution
-   * @param {Rng} rng
-   * @param {{sizes: number[], weights: number[]}} dist
+   * Partitions the board into connected groups of cells with pairwise distinct solution values. Cages grow
+   * one after the other; the next one starts at the free cell with the fewest free neighbours (corners and
+   * pockets go first, so no cell is stranded) and a cage prefers cells with few free neighbours for the same
+   * reason. A cell left alone is merged into a neighbouring cage that has room and a different digit.
    * @returns {number[][]} Cages as ascending cell lists, ordered by their first cell.
    */
   function growCages(solution, rng, dist) {
@@ -348,23 +305,16 @@
     return mask;
   }
 
-  /** Drops removed cages, sorts every cage ascending and the cages by their first cell. */
   function normalizeCages(cages) {
     return cages.filter(function (c) { return c !== null; })
       .map(function (c) { return c.slice().sort(function (a, b) { return a - b; }); })
       .sort(function (a, b) { return a[0] - b[0]; });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Colouring
-  // ---------------------------------------------------------------------------------------------
-
   /**
    * Colours the cages so that cages sharing an edge never share a colour (DSATUR, then a bounded search when
-   * the greedy result needs more colours than the palette). Depends on the cages only, so the colouring of a
-   * model can always be recomputed.
-   * @param {Array<ArrayLike<number>>} cages  Cell lists.
-   * @param {number} [palette=4]  Number of colours to try first; the search widens it when it must.
+   * the greedy result needs more colours than the palette). Depends on the cages only.
+   * @param {number} [palette=4]  Colours to try first; the search widens it when it must.
    * @returns {Int32Array} Colour class (0, 1, ...) of every cage.
    */
   function colorCages(cages, palette) {
@@ -451,16 +401,9 @@
     return search(0) ? color : null;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The model with cages
-  // ---------------------------------------------------------------------------------------------
-
   /**
-   * Builds the puzzle model for cages with known sums.
-   * @param {PuzzleModel} base  The board without cages.
-   * @param {Array<{cells: ArrayLike<number>, sum: number}>} list  The cages, in the order they keep in the
-   *        model (the colouring depends on it).
-   * @returns {PuzzleModel}
+   * Builds the puzzle model for cages with known sums. `list` keeps its order in the model (the colouring
+   * depends on it).
    */
   function assemble(base, list) {
     // The first Killer model switches cage propagation on for every solver that works on it.
@@ -504,13 +447,7 @@
     });
   }
 
-  /**
-   * Builds the puzzle model for a cage layout; each cage gets the sum of the solution over its cells.
-   * @param {PuzzleModel} base      The board without cages.
-   * @param {number[][]} cages      Cell lists.
-   * @param {ArrayLike<number>} solution
-   * @returns {PuzzleModel}
-   */
+  /** Builds the puzzle model for a cage layout; each cage gets the sum of the solution over its cells. */
   function modelWithCages(base, cages, solution) {
     return assemble(base, cages.map(function (cells) {
       let sum = 0;
@@ -520,21 +457,14 @@
   }
 
   /**
-   * The model of a Killer puzzle whose cages are known: the way back from stored data (an imported puzzle)
-   * to a model, with the same units, colours and propagation as a generated one. Cages keep their order, so
-   * the colours come out the same as before.
-   * @param {Array<{cells: ArrayLike<number>, sum: number}>} cages
-   * @returns {PuzzleModel}
+   * The model of a Killer puzzle whose cages are known: the way back from stored data (an imported puzzle),
+   * with the same units, colours (cages keep their order) and propagation as a generated one.
    */
   function modelFromCages(cages) {
     return assemble(buildBoard({}), cages.map(function (cage) {
       return { cells: Array.from(cage.cells), sum: cage.sum };
     }));
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Uniqueness check and repair (design.md section 8.2, steps 4 and 5)
-  // ---------------------------------------------------------------------------------------------
 
   /** Search nodes one uniqueness check may use. Nodes, not milliseconds: the outcome stays reproducible. */
   const ANALYSIS_NODES = 30000;
@@ -548,8 +478,8 @@
   const SLICE_CODE = 'killer.sliceExpired';
 
   /**
-   * A budget that stops a single analysis after `limit` checks, counts every check in `meter.spent`, and
-   * defers to the pipeline's budget (cancellation, time limit).
+   * A budget that stops a single analysis after `limit` checks, counts them in `meter.spent` and defers to
+   * the pipeline's budget.
    */
   function nodeSlice(parent, limit, meter) {
     let used = 0;
@@ -570,8 +500,8 @@
 
   /**
    * Is the puzzle made of the cages and the given clues unique? A second solution is looked for first (cheap
-   * when there are many), and only when none turns up are the solutions counted. A generator: it yields
-   * after each of its searches, the smallest piece of the work (a search is cut off at `ANALYSIS_NODES`).
+   * when there are many), and only when none turns up are the solutions counted. A generator that yields
+   * after each search (cut off at `ANALYSIS_NODES`).
    * @returns {Generator<undefined, {unique: boolean, unknown: boolean, alt: ?Int32Array}>}  `alt` is another
    *          solution when one was found, `unknown` is true when the node limit ended the search.
    */
@@ -739,26 +669,19 @@
    * @property {?boolean} unique    The cages alone give a single solution (null when not checked; false
    *           also when the node limit ended the search).
    * @property {string[]} repairs   'split' | 'merge' per repair step, in order.
-   * @property {number[]} revealed  Cells that step (c) revealed so that the layout plus these clues is
-   *           unique. When the layout search of the levels from expert on moved cages, the cells of the
-   *           clues it kept the moved layout unique with: these, completed to whole symmetry groups.
+   * @property {number[]} revealed  Cells that step (c) revealed so that layout plus these clues is unique
+   *           (after a layout search that moved cages: the clues it kept the layout unique with, completed
+   *           to whole symmetry groups).
    * @property {number} nodes       Search nodes spent on the checks of this layout.
    * @property {number} [cageCount] Cages of the final layout (set by `postGenerate`).
    */
 
   /**
-   * Checks that the cage layout alone has one solution and repairs it when it does not (design.md 8.2
-   * step 5): (a) cut a large cage in the ambiguous area, else (b) merge small neighbours there, and when
-   * that is exhausted or the attempts are used up, (c) reveal clues at the most ambiguous cells.
-   * @param {PuzzleModel} base      The board without cages.
-   * @param {ArrayLike<number>} solution
-   * @param {number[][]} cages      The layout to check, as cell lists.
-   * @param {string} level          Sets how many repairs are allowed (0 for the two easiest levels and
-   *        normal, whose puzzles keep far more clues than any ambiguity needs, so the check is skipped).
-   * @param {Rng} rng
-   * @param {?Object} [parent]      The pipeline's budget.
-   * @param {{repair: function(string, number, number): void}} [report]  Called once per repair step with
-   *        (action, attempt, cage count).
+   * Checks that the cage layout alone has one solution and repairs it when it does not: (a) cut a large cage
+   * in the ambiguous area, else (b) merge small neighbours there, and when that is exhausted or the attempts
+   * are used up, (c) reveal clues at the most ambiguous cells. `level` sets how many repairs are allowed
+   * (0 for the two easiest levels and normal, whose puzzles keep far more clues than any ambiguity needs,
+   * so the check is skipped). `report.repair(action, attempt, cageCount)` is called per repair step.
    * @returns {{cages: number[][], info: LayoutInfo}}
    */
   function repairLayout(base, solution, cages, level, rng, parent, report) {
@@ -766,9 +689,8 @@
   }
 
   /**
-   * The resumable form of `repairLayout`: a generator that returns what it returns. It yields after each
-   * model it assembles and after each search of the uniqueness checks, the pieces of the work that cannot be
-   * cut any finer (a search is limited to `ANALYSIS_NODES`). Same random draws, same result.
+   * The resumable form of `repairLayout`: yields after each model it assembles and after each search of the
+   * uniqueness checks. Same random draws, same result.
    * @returns {Generator<undefined, {cages: number[][], info: LayoutInfo}>}
    */
   function* repairLayoutSteps(base, solution, cages, level, rng, parent, report) {
@@ -832,10 +754,6 @@
     return n;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Structure search (rating v2, docs/report-v2/report-detailed.md section 5.7 (6))
-  // ---------------------------------------------------------------------------------------------
-
   /** Proposed cage moves and full ratings the structure search of one attempt may use at most. */
   const SEARCH_PROPOSALS = 8192;
   const SEARCH_RATINGS = 256;
@@ -847,33 +765,29 @@
   }
 
   /**
-   * Local search on the cage layout, before the cells are dug (the structure phase, so the Generation Steps
-   * replay digs on the final cages). Only for the levels from expert on, and only when the layout - with
-   * the digits the repair had to reveal (`revealed`, none for a layout that is unique on its own), completed
-   * to whole groups of the symmetry the dig uses, so that the dig can end on exactly these clues - is
-   * unique, completely rated, and too easy for the band (score below its minimum): Killer's puzzles of those
-   * levels end with a handful of clues, so a layout that is too easy cannot reach the band by digging. A move
-   * merges two neighbouring cages or hands a boundary cell to the neighbouring cage (cages stay connected,
-   * digit-distinct, of 2 to `MAX_CAGE_CELLS` cells); it is kept iff the puzzle (layout and those clues)
-   * stays unique with a complete proof and its score does not decrease and stays below the band maximum. A
-   * candidate is rated first: a complete proof that needs no technique assuming uniqueness proves uniqueness
-   * by itself (`SG.difficulty.provesUniqueness`), so a solution count only runs for the rare proof that
-   * does. Every rating and every count is one piece of at most `ANALYSIS_NODES` checks, like the searches
-   * of the layout check: a candidate that needs more is dropped (2 to 3 % of them, nearly all far above the
-   * band), which keeps the slices of a cooperative run short. The search stops on entering the band or when
-   * its caps (`SEARCH_PROPOSALS`, `SEARCH_RATINGS`, and the caps of the attempt, `ctx.caps`) are used up.
-   * Deterministic: counts, not time. The dig that follows starts from the full grid as always; when the
-   * layout ends inside the band, the dig keeps those clues (`kept`, see `digKiller`), so it can end on the
-   * puzzle the search rated instead of on other, usually easier clues. Every unique, completely rated layout
-   * it meets - kept or not, above the band too - is offered to the keeper of the run (`ctx.keeper`, see
-   * `SG.digger.generate`, which counts the solutions of a candidate before it keeps it, whatever its proof
-   * claims) with a dig log that removes every other symmetry group from the solution, so the
-   * generator can return the closest one when no sample reaches the band. Every rating goes through
-   * `SG.digger.rateCounted`, which counts it toward the full-rating cap of the attempt.
-   * @returns {Generator<undefined, {cages: number[][], kept: number[]}>} The layout to use, and the cells
-   *          the dig keeps (empty unless the layout with its clues was rated inside the band); `clueCells`:
-   *          the cells of those clues and `moved`: whether a move was kept (the layout is then unique with
-   *          `clueCells`, which `postGenerate` records as the revealed cells of the layout).
+   * Local search on the cage layout, before the cells are dug (so the Generation Steps replay digs on the
+   * final cages). Only for the levels from expert on: Killer puzzles of those levels end with a handful of
+   * clues, so a layout that is too easy (score below the band minimum) cannot reach the band by digging.
+   * It applies when the layout - together with the digits the repair had to reveal (`revealed`), completed
+   * to whole groups of the dig's symmetry so the dig can end on exactly these clues - is unique, completely
+   * rated and too easy. A move merges two neighbouring cages or hands a boundary cell to the neighbouring
+   * cage (cages stay connected, digit-distinct, of 2 to `MAX_CAGE_CELLS` cells); it is kept iff the puzzle
+   * stays unique with a complete proof and its score does not decrease and stays below the band maximum.
+   * A candidate is rated first: a complete proof that needs no technique assuming uniqueness proves
+   * uniqueness by itself (`SG.difficulty.provesUniqueness`), so a solution count only runs for the rare
+   * proof that does. Every rating and count is one piece of at most `ANALYSIS_NODES` checks; a candidate
+   * needing more is dropped (2 to 3 %, nearly all far above the band), which keeps cooperative slices short.
+   * The search stops on entering the band or when its caps (`SEARCH_PROPOSALS`, `SEARCH_RATINGS`, `ctx.caps`)
+   * are used up. Deterministic: counts, not time.
+   *
+   * The dig that follows starts from the full grid as always; when the layout ends inside the band the dig
+   * keeps those clues (`kept`, see `digKiller`), so it can end on the puzzle that was rated. Every unique,
+   * completely rated layout met (kept or not) is offered to the keeper of the run (`ctx.keeper`) with a dig
+   * log that removes every other symmetry group from the solution, so the generator can return the closest
+   * one when no sample reaches the band. Ratings go through `SG.digger.rateCounted` (the attempt's cap).
+   * @returns {Generator<undefined, {cages: number[][], kept: number[]}>} The layout, and the cells the dig
+   *          keeps (empty unless the layout with its clues was rated inside the band); `clueCells`: the cells
+   *          of those clues, `moved`: whether a move was kept (the layout is then unique with `clueCells`).
    */
   function* searchCagesSteps(base, solution, cages, revealed, spec, rng, ctx, info) {
     const caps = ctx.caps;
@@ -930,10 +844,8 @@
         throw err;
       }
     }
-    /**
-     * A full rating, counted toward the cap of the attempt; null when the cap is used up or the piece needed
-     * more than `ANALYSIS_NODES` checks.
-     */
+    /** A full rating, counted toward the attempt's cap; null when the cap is used up or it needed too much.
+    /** */
     function rate(model) {
       return guarded(function (slice) { return SG.digger.rateCounted(model, clues, slice, caps); });
     }
@@ -1008,10 +920,6 @@
     return result(layout, rating);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Pipeline hook
-  // ---------------------------------------------------------------------------------------------
-
   /** Event key of each repair step. */
   const REPAIR_EVENT = {
     split: 'extraStructure.repairSplit',
@@ -1019,22 +927,17 @@
     reveal: 'extraStructure.repairReveal'
   };
 
-  /** What `postGenerate` found out per returned model. */
   const infoOf = new WeakMap();
   /** Per returned model: the cells its dig keeps (the clues the layout search rated inside the band). */
   const keepOf = new WeakMap();
 
   /**
    * Pipeline hook (step 4, 'extraStructure'): grows the cages from the full grid, checks and repairs the
-   * layout, colours it, and returns the model that has the cages.
-   *
-   * It is `postGenerate.steps` driven to its end. `steps` is the resumable twin that
-   * `SG.digger.generateSteps` uses when it runs in slices: a generator with the same argument and result
-   * that yields between the pieces of the layout work (see `repairLayoutSteps`); the longest piece left is
-   * one search of at most `ANALYSIS_NODES` nodes. Events, random draws and the model are the same.
+   * layout, colours it, and returns the model that has the cages. It is `postGenerate.steps` driven to its
+   * end; `steps` is the resumable twin that `SG.digger.generateSteps` uses when it runs in slices (see
+   * `repairLayoutSteps`), with the same events, random draws and model.
    * @param {Object} ctx  `{ model, solution, rng, level, spec, attempt, budget, emit, variantId, caps,
    *        symmetry }`.
-   * @returns {PuzzleModel} The model with cages.
    */
   function postGenerate(ctx) {
     return SG.budget.drive(postGenerateSteps(ctx));
@@ -1055,7 +958,7 @@
     };
     const repaired = yield* repairLayoutSteps(base, ctx.solution, cages, ctx.level, ctx.rng.fork('repair'),
       ctx.budget, report);
-    // Rating v2: the levels from expert on search the layout itself before the cells are dug.
+    // The levels from expert on search the layout itself before the cells are dug.
     const searched = yield* searchCagesSteps(base, ctx.solution, repaired.cages, repaired.info.revealed,
       ctx.spec, ctx.rng.fork('search'), ctx, repaired.info);
     cages = searched.cages;
@@ -1091,22 +994,19 @@
   postGenerate.steps = postGenerateSteps;
 
   /**
-   * Clue floor of the digger per level, declared as the `clueFloor` of the variant so that
-   * `spec().minClues` (and with it invariant I6) is the same number. Only 'veryEasy' has one: the score band
-   * of that level is so low that a puzzle needs about 40 clues to stay inside it (singles are scored per
-   * placement, and an empty cell adds to the score), so the digger must not dig below what the band allows.
-   * Every other level digs as far as the score band and the techniques of the level permit, which leaves a
-   * Killer puzzle with a handful of clues (floor 0).
+   * Clue floor of the digger per level (the `clueFloor` of the variant, so `spec().minClues` agrees). Only
+   * 'veryEasy' has one: its score band is so low that a puzzle needs about 40 clues to stay inside it
+   * (singles are scored per placement, and an empty cell adds to the score). Every other level digs as far
+   * as the band and the techniques permit, which leaves a handful of clues (floor 0).
    */
   const MIN_CLUES = Object.freeze({ veryEasy: 40 });
 
   /**
    * Dig strategy of Killer: the generic cell digger, tuned to cages. The clue floors of classic Sudoku (34
-   * clues for 'easy', 2 clues per unit, ...) describe a Sudoku with no cages and are dropped (`clueFloor`,
+   * clues for 'easy', 2 per unit, ...) describe a Sudoku with no cages and are dropped (`clueFloor`,
    * `minCluesPerUnit: 0`); the guided stage runs at every level, because the score band is what stops the
-   * dig at the two easiest levels. When the layout search rated the layout inside the band with a few clues
-   * (`searchCagesSteps`), the dig keeps those clues (`rejected` of `SG.digger.digStage`), so it can end on
-   * that puzzle.
+   * dig at the two easiest levels. Clues the layout search rated inside the band are kept (`rejected` of
+   * `SG.digger.digStage`), so the dig can end on that puzzle.
    */
   function digKiller(model, solution, level, rng, options) {
     SG.comboTable.enablePropagation(ID);
@@ -1119,16 +1019,11 @@
     return SG.digger.digStage(model, solution, level, rng, Object.assign({}, options, settings));
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Helpers for the renderer and the tests
-  // ---------------------------------------------------------------------------------------------
-
   /**
-   * Cage data in the form a renderer wants.
-   * @param {PuzzleModel} model  A Killer model with cages.
+   * Cage data in the form a renderer wants. `labelCell` is the top-left cell, where the sum is written;
+   * `color` is the pale background class (0..4) from the `cageColor<k>` overlays, -1 when the model has none.
    * @returns {Array<{index: number, cells: number[], sum: number, size: number, color: number,
-   *          labelCell: number}>}  `labelCell` is the top-left cell, where the sum is written; `color` is the
-   *          pale background class (0..4) from the `cageColor<k>` overlays, -1 when the model has none.
+   *          labelCell: number}>}
    */
   function describeCages(model) {
     const colorOf = new Int32Array(model.cellCount).fill(-1);
@@ -1156,16 +1051,11 @@
     });
   }
 
-  /**
-   * What the cage layout repair did for a model that `postGenerate` returned.
-   * @param {PuzzleModel} model
-   * @returns {?LayoutInfo}  null for any other model.
-   */
+  /** What the cage layout repair did for a model `postGenerate` returned (null for any other model). */
   function layoutInfo(model) {
     return infoOf.get(model) || null;
   }
 
-  /** Schema of the variant options, for the generated control panel. */
   const OPTIONS = Object.freeze([Object.freeze({
     id: 'cageSize',
     type: 'slider',
@@ -1197,19 +1087,13 @@
     layoutInfo: layoutInfo
   };
 
-  // ---------------------------------------------------------------------------------------------
-  // Registration: dig strategy, event vocabulary, translations, variant
-  // ---------------------------------------------------------------------------------------------
-
   try {
     SG.digger.getStrategy(ID);
   } catch (err) {
     SG.digger.registerStrategy(ID, digKiller);
   }
 
-  // The variant adds events of its own to step 4. The core keeps the list of valid events in
-  // SG.events.VOCABULARY, which is plain data meant to be read by the UI and the tests, so they are
-  // listed there.
+  // The variant's own events for step 4, listed in SG.events.VOCABULARY (plain data read by UI and tests).
   [
     ['extraStructure.cages', ['cages', 'minSize', 'maxSize', 'colors']],
     ['extraStructure.repairSplit', ['attempt', 'cages']],
@@ -1308,7 +1192,6 @@
       i18nKey: 'variant.killer',
       group: 'killer',
       digits: DIGITS,
-      // Measured (`node tests/qualify.js`, docs/report-v2/qualification.md): all nine levels.
       difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
         'hell2'],
       defaultSymbolMode: 'digits',

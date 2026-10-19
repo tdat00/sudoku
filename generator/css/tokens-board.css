@@ -1,7 +1,6 @@
 /*
- * Board tokens (owned by the board view): every colour, line width and animation duration the SVG board
- * uses. Colour literals live only here and in tokens.css; board.css and js/ui/board-view.js reference the
- * custom properties below (and the generic --sg-color-focus, --sg-font-family, --sg-font-mono).
+ * Board tokens: every colour, line width and animation duration the SVG board uses. Colour literals live
+ * only here and in tokens.css; board.css and js/ui/board-view.js reference the custom properties below.
  *
  * Line widths are unitless on purpose: they are SVG user units of the board viewBox (one cell = 40 units),
  * so the board scales as one picture.
@@ -14,8 +13,8 @@
  * light band, so neighbouring entries keep a luminance contrast of at least 3:1, and every entry is drawn
  * together with a geometric symbol (two-tone: --sg-board-sym-ink with a --sg-board-sym-edge outline).
  *
- * --sg-board-focus is the keyboard focus ring of a cell (js/ui/a11y.js); the high-contrast board has a white
- * paper on a black page, so it cannot reuse the yellow --sg-color-focus.
+ * --sg-board-focus is the keyboard focus ring of a cell; the high-contrast board has a white paper on a
+ * black page, so it cannot reuse the yellow --sg-color-focus.
  */
 
 :root,

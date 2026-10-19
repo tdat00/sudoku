@@ -30,7 +30,7 @@ jobs:
           node-version: '24'
 
       - name: Run tests
-        run: node tests/node-runner.js
+        run: node tests/node-runner.js --all
 
       - name: Prepare site
         run: |

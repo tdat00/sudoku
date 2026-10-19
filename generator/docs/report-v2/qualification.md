@@ -2,11 +2,11 @@
 
 Every variant offers exactly the difficulty levels that pass the qualification protocol of the joint report
 ([report-detailed.md](report-detailed.md) §6). The lists below are the `difficultySupport` of
-the variant definitions (`js/variants/*.js`); `tests/suites/difficulty.test.js` checks that they are the same.
+the variant definitions (`js/variants/*.js`); `tests/manual/difficulty.test.js` (a manual suite: `node tests/node-runner.js --suite=difficulty`) checks that they are the same.
 
 ## Protocol
 
-`node tests/qualify.js` runs it (options: `--variant`, `--level`, `--jobs`, `--json`, `--markdown`, `--help`).
+`node tests/qualify.js` runs it (options: `--variant`, `--level`, `--jobs`, `--json`, `--markdown`, `--probe`, `--no-early-stop`, `--quiet`, `--help`).
 
 - For every variant with its default options and symmetry, and every level, 40 puzzles are generated with fixed
   seeds through the real pipeline (`SG.pipeline.run`, with the 120 s active-time guard of the application). Request

@@ -1,33 +1,25 @@
 /**
- * Greater-Than Sudoku (design.md sections 5.3, 8.3 and 9.1): a 9x9 Sudoku with inequality signs between
- * neighbouring cells. The signs are part of the model (`model.inequalities`, value[a] < value[b]), and
- * models are immutable, so the variant works in three steps that fit the generator's hooks:
+ * Greater-Than Sudoku: a 9x9 Sudoku with inequality signs between neighbouring cells. The signs are part of
+ * the model (`model.inequalities`, value[a] < value[b]) and models are immutable, so the variant works in
+ * three steps that fit the generator's hooks:
+ *   build         the empty board (classic 9x9 geometry, no signs: a sign needs a solution);
+ *   postGenerate  step 4 'extraStructure': a sign goes on EVERY pair of neighbouring cells of one box (option
+ *                 `futoshiki`: of the whole grid) and the model is replaced by one that carries them;
+ *   digStrategy   step 5 'dig': the strategy 'signs' (`digSigns`) digs SIGNS, not cells.
  *
- *   build         the empty board: the classic 9x9 geometry, no signs yet (a sign needs a solution). It is
- *                 what `SG.techHelper.model('greaterThan')` and the full grid step see, and it stays a plain
- *                 Sudoku for them.
- *   postGenerate  step 4 'extraStructure': once the full grid exists, a sign is put on EVERY pair of
- *                 neighbouring cells of one box (option `futoshiki`: of the whole grid), and the model is
- *                 replaced by one that carries them.
- *   digStrategy   step 5 'dig': the registered strategy 'signs' (`digSigns`) digs SIGNS, not cells.
+ * Sign dig, one sample:
+ *   1. All clues are removed; a few are revealed again so the puzzle can be solved at all (never fewer than
+ *      the level's `minClues`, with the configured symmetry).
+ *   2. Signs are shuffled and removed one by one with the technique-bounded oracle: a sign stays removed
+ *      while the techniques of the level can still solve the puzzle.
+ *   3. Every sign still redundant for uniqueness is removed with a plain uniqueness check, so the sign set
+ *      ends minimal.
+ *   4. A puzzle the level's techniques cannot finish, or that is rated above the level, is too hard: one more
+ *      group of clues is revealed and steps 2 and 3 run again on the signs that are left.
+ * Clues follow the configured symmetry; signs do not (they are placed by the solution).
  *
- * The sign dig (design.md section 8.3, one sample):
- *   1. All numeric clues are removed; a few are revealed again so the puzzle can be solved at all, never
- *      fewer than the level's `minClues` (invariant I6) and with the symmetry of the configuration.
- *   2. The signs are shuffled and removed one by one, with the technique-bounded oracle of section 6.8 (4):
- *      a sign stays removed while the puzzle can still be solved by the techniques of the level.
- *   3. Every sign that is still redundant for uniqueness is removed too, with a plain uniqueness check
- *      ("until the uniqueness threshold"). The sign set is then minimal: removing any sign that is left
- *      would give the puzzle a second solution.
- *   4. A puzzle that the techniques of the level cannot finish, or that is rated above the level, is too
- *      hard: one more group of clues is revealed and steps 2 and 3 run again on the signs that are left.
- *
- * The numeric clues follow the symmetry of the configuration; the signs do not (a sign is placed by the
- * solution, so it has no mirror image to keep in step).
- *
- * What a renderer needs (see `signEdges`): per sign `{ a, b }` with value[a] < value[b], a and b being
- * orthogonal neighbours on the canvas. The sign is drawn on their shared edge, at the midpoint of the two
- * cell centres; its apex (the point of the `<`) is on the side of the SMALLER cell a and it opens towards b.
+ * Renderer contract (see `signEdges`): a sign is `{ a, b }`, value[a] < value[b], a and b orthogonal
+ * neighbours; it is drawn at the midpoint of their centres with its apex on the SMALLER cell a.
  */
 (function (root) {
   'use strict';
@@ -50,15 +42,7 @@
   /** Scope of the signs per model: `postGenerate` only gets the model, so it reads the option from here. */
   const scopes = new WeakMap();
 
-  // ---------------------------------------------------------------------------------------------
-  // The board and its signs
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * The classic 9x9 geometry under the id 'greaterThan': rows, columns and 3x3 boxes (27 units in that
-   * order, like `classic9`), no inequalities.
-   * @returns {PuzzleModel}
-   */
+  /** The classic 9x9 geometry under the id 'greaterThan' (27 units like `classic9`), no inequalities. */
   function buildBoard() {
     SG.ineq.ensureExtension();
     const n = SIZE * SIZE;
@@ -116,12 +100,7 @@
     });
   }
 
-  /**
-   * A copy of `model` with another set of signs (models are immutable). Everything else is shared.
-   * @param {PuzzleModel} model
-   * @param {Array<{a: number, b: number}>} signs  value[a] < value[b] for each.
-   * @returns {PuzzleModel}
-   */
+  /** A copy of `model` with another set of signs (`{a, b}`: value[a] < value[b]); everything else is shared. */
   function withSigns(model, signs) {
     SG.ineq.ensureExtension();
     const next = SG.model.create({
@@ -143,13 +122,8 @@
 
   /**
    * Signs for a solved grid: one for every pair of orthogonal neighbours inside the same box (scope 'box'),
-   * or for every pair of neighbours of the grid (scope 'grid', the Futoshiki rule). Each sign is oriented by
-   * the solution: `{ a, b }` with solution[a] < solution[b]. Order: row by row, the right neighbour before
-   * the one below.
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} solution
-   * @param {string} [scope='box']  'box' or 'grid'.
-   * @returns {Array<{a: number, b: number}>}
+   * or of the whole grid (scope 'grid', the Futoshiki rule), oriented by the solution. Order: row by row,
+   * the right neighbour before the one below.
    */
   function placeSigns(model, solution, scope) {
     const layout = model.layout;
@@ -175,13 +149,10 @@
   }
 
   /**
-   * Where and how to draw each sign of a model. Cells are on the canvas grid, so `(midRow, midCol)` is the
-   * midpoint of the two cell centres, in cell units (a cell centre has integer coordinates).
-   *
-   * `direction` runs from the smaller cell a to the greater cell b: 'right', 'left', 'down' or 'up'. The
-   * glyph is the sign as it reads in that direction: '<' when a is left of b, '>' when a is right of b, and
-   * for the vertical case the apex points at the smaller cell, '∧' when a is above b and '∨' when below.
-   * @param {PuzzleModel} model
+   * Where and how to draw each sign. `(midRow, midCol)` is the midpoint of the two cell centres in cell
+   * units. `direction` runs from the smaller cell a to the greater cell b ('right', 'left', 'down', 'up');
+   * the glyph is '<' / '>' horizontally and, vertically, '∧' when a is above b and '∨' when below (the apex
+   * points at the smaller cell).
    * @returns {Array<{index: number, a: number, b: number, midRow: number, midCol: number,
    *          direction: string, glyph: string}>}
    */
@@ -215,10 +186,6 @@
     });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Variant hooks
-  // ---------------------------------------------------------------------------------------------
-
   function fail(code, args) {
     return new SG.errors.GenerationError(code, args);
   }
@@ -230,12 +197,7 @@
     throw fail('pipeline.invalidOption', { option: 'futoshiki', value: String(flag) });
   }
 
-  /**
-   * @param {{futoshiki?: boolean}} opts  `futoshiki`: signs on every neighbouring pair of the grid instead
-   *        of the pairs inside a box.
-   * @param {?Rng} rng  Not used: the board has nothing random in it.
-   * @returns {PuzzleModel}
-   */
+  /** `opts.futoshiki`: signs on every neighbouring pair of the grid instead of the pairs inside a box. */
   function build(opts) {
     const scope = readScope(opts);
     const model = buildBoard();
@@ -243,21 +205,13 @@
     return model;
   }
 
-  /**
-   * Pipeline hook of step 4: puts the signs on the solved grid and returns the model that carries them.
-   * @param {Object} ctx  `{ model, solution, ... }` as given by `SG.digger.generate`.
-   * @returns {PuzzleModel}
-   */
+  /** Pipeline hook of step 4: puts the signs on the solved grid and returns the model that carries them. */
   function postGenerate(ctx) {
     const scope = scopes.get(ctx.model) || SCOPE_BOX;
     const next = withSigns(ctx.model, placeSigns(ctx.model, ctx.solution, scope));
     scopes.set(next, scope);
     return next;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // The sign dig
-  // ---------------------------------------------------------------------------------------------
 
   /** Solves with the given technique ids only; a solved report also proves that the puzzle is unique. */
   function solveWithin(model, givens, allowed, budget) {
@@ -270,28 +224,16 @@
   }
 
   /**
-   * Dig strategy 'signs' (design.md section 8.3): starts from the model with every sign and no clue and
-   * returns the puzzle with a minimal sign set. Registered with `SG.digger.registerStrategy`; it has the
-   * contract of `SG.digger.digStage` and returns the thinned model.
+   * Dig strategy 'signs': starts from the model with every sign and no clue and returns the puzzle with a
+   * minimal sign set. Registered with `SG.digger.registerStrategy`; same contract as `SG.digger.digStage`.
+   * With `options.cooperative` it returns the generator of `digSignsSteps` instead of the result.
    *
-   * Events: only keys of the shared vocabulary are used. `dig.try` / `dig.accept` / `dig.reject` carry the
-   * two cells that the sign joins in `cells` (the sign sits between them) and highlight them; the board of
-   * the replay shows the clues, which are cleared first and revealed with `dig.restore`.
+   * Events use the shared vocabulary only: `dig.try` / `dig.accept` / `dig.reject` carry the two cells the
+   * sign joins; the clues are cleared first and revealed with `dig.restore`.
    *
-   * Dig log (`options.log`, see `SG.digger`): `{ op: 'signs', signs: [[a, b], ...] }` (every sign, value[a] <
-   * value[b]), `{ op: 'clear' }` (the board is emptied), `{ op: 'reveal', cells }` (clues shown since the
-   * last reveal), `{ op: 'pass', pass, clues }`, and `accept` / `reject` entries whose `cells` are the two
-   * cells of the sign and `sign` its index in the `signs` list.
-   *
-   * @param {PuzzleModel} model  With every sign (see `postGenerate`).
-   * @param {ArrayLike<number>} solution
-   * @param {string} level
-   * @param {Rng} rng
-   * @param {Object} [options]  The resolved options of `SG.digger.digLevel` (`spec`, `symmetry`,
-   *        `minClues`, `minCluesPerUnit`, `budget`, `emit`, `cooperative`).
-   * @param {boolean} [options.cooperative=false]  The caller can run the dig in slices: the function then
-   *        returns a generator of the `DugPuzzle` instead of the result, which yields between the sign
-   *        candidates and the other pieces of the work (a solve, a rating); see `digSignsSteps`.
+   * Dig log (`options.log`): `{ op: 'signs', signs: [[a, b], ...] }`, `{ op: 'clear' }`,
+   * `{ op: 'reveal', cells }` (clues shown since the last reveal), `{ op: 'pass', pass, clues }`, and
+   * `accept` / `reject` entries whose `cells` are the sign's two cells and `sign` its index in `signs`.
    * @returns {DugPuzzle|Generator<undefined, DugPuzzle>}
    */
   function digSigns(model, solution, level, rng, options) {
@@ -300,15 +242,9 @@
   }
 
   /**
-   * The resumable form of `digSigns`: a generator that returns the `DugPuzzle`. It yields after every sign
-   * candidate that was tried (one oracle call, the unit of the work) and after the solves and the rating of
-   * the other pieces, never inside the search. `digSigns` without `cooperative` is this generator driven to
-   * its end, so the events, the random draws and the puzzle are the same.
-   * @param {PuzzleModel} model  With every sign.
-   * @param {ArrayLike<number>} solution
-   * @param {string} level
-   * @param {Rng} rng
-   * @param {Object} [options]  Those of `digSigns`.
+   * The resumable form of `digSigns`: yields after every sign candidate tried (one oracle call) and after
+   * the solves and ratings of the other pieces, never inside the search. `digSigns` without `cooperative`
+   * drives it to the end, so events, random draws and the puzzle are identical.
    * @returns {Generator<undefined, DugPuzzle>}
    */
   function* digSignsSteps(model, solution, level, rng, options) {
@@ -374,7 +310,7 @@
       if (em.wantsMicro) em.micro('dig', 'dig.pass.' + phase, { pass: name, clues: clues });
     }
 
-    // --- the oracles: null = the sign may go, otherwise the reason it has to stay -------------------
+    // Oracles: null = the sign may go, otherwise the reason it has to stay.
 
     function uniqueOracle(trial) {
       stats.oracleCalls++;
@@ -421,7 +357,7 @@
       tracePass('end', name);
     }
 
-    // --- 1. no clues, then as few as the level and the techniques need ------------------------------
+    // 1. no clues, then as few as the level and the techniques need
 
     if (log !== null) {
       log.push({ op: 'signs', signs: signs.map(function (s) { return [s.a, s.b]; }) });
@@ -432,7 +368,6 @@
     const groupOrder = rng.shuffle(groups.map(function (g, index) { return index; }));
     for (let k = 0; k < groupOrder.length && clues < minClues; k++) revealGroup(groupOrder[k]);
 
-    // Every unit keeps its minimum of clues (the cells are picked at random).
     for (let u = 0; u < model.units.length && minPerUnit > 0; u++) {
       const open = Array.from(model.units[u]).filter(function (c) { return givens[c] === 0; });
       rng.shuffle(open);
@@ -456,7 +391,7 @@
       showClues();
     }
 
-    // --- 2.-4. dig the signs, rate, and reveal clues while the puzzle is too hard -------------------
+    // 2.-4. dig the signs, rate, and reveal clues while the puzzle is too hard
 
     const caps = options.caps || null;
     const keeper = options.keeper || null;
@@ -487,15 +422,14 @@
         if (rating === null) break;
         finalRating = rating;
         finalModel = current;
-        // A unique (the signs are a minimal unique set), completely rated position: the run may fall back
-        // on it if it is the closest one (docs/report-v2/report-detailed.md section 5.7 (6)).
+        // A unique, completely rated position: the run may fall back on it if it is the closest one.
         if (keeper !== null && log !== null && rating.solved) {
           keeper.offer({
             model: current, givens: givens, solution: solution, rating: rating, stats: stats,
             logOf: function () { return log.slice(); }
           });
         }
-        // Rating v2: a rating without a complete proof has no level; it counts as too hard.
+        // A rating without a complete proof has no level; it counts as too hard.
         tooHard = rating.level === null || SG.difficulty.levelIndex(rating.level) > levelIndex;
       }
       if (!tooHard || round === MAX_TUNE_ROUNDS) break;
@@ -516,10 +450,6 @@
     return { givens: givens, clues: clues, stats: stats, model: withSigns(model, aliveSigns()) };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Registration
-  // ---------------------------------------------------------------------------------------------
-
   /** Adds the sign dig to the digger unless an earlier load of this file did. */
   function registerStrategy() {
     try {
@@ -535,13 +465,11 @@
     i18nKey: 'variant.greaterThan',
     group: 'inequality',
     digits: SIZE,
-    // Every level of the nine (measured: `node tests/qualify.js`, docs/report-v2/qualification.md).
     difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
       'hell2'],
     // The signs do part of the work of the clues, so the classic9 floors (29 / 25 / 22) kept the dig from
-    // reaching the level (49 %, 13 % and 11 % of the dug puzzles for normal, hard, master); 83 % / 80 % /
-    // 80 % of them (24 / 20 / 17) give 76 %, 44 % and 16 % (js/core/difficulty.js, "Calibration log").
-    // expert takes the factor of hard (rating v2).
+    // reaching the level; 83 % / 80 % / 80 % of them fit better (js/core/difficulty.js, "Calibration log").
+    // expert takes the factor of hard.
     clueFloorScale: Object.freeze({ normal: 0.83, hard: 0.8, expert: 0.8, master: 0.8 }),
     defaultSymbolMode: 'digits',
     symbolModes: ['digits', 'letters', 'colors', 'shapes'],
@@ -560,10 +488,7 @@
   registerStrategy();
   if (!SG.variants.has(DEFINITION.id)) SG.variants.register(DEFINITION);
 
-  /**
-   * Greater-Than tools, exposed for tests and tooling.
-   * @namespace SG.greaterThan
-   */
+  /** Greater-Than tools, exposed for tests and tooling. */
   SG.greaterThan = {
     VARIANT_ID: VARIANT_ID,
     STRATEGY_ID: STRATEGY_ID,

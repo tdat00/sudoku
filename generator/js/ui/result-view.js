@@ -1,46 +1,30 @@
 /**
- * Result panel (task T-4.8; design.md section 10.5): `SG.resultView`. What the user wants to know once a
- * puzzle is finished: two small cards (the level reached with its difficulty score, and the number of
- * clues) and a table of the techniques used with how often each was applied and what each adds to the
- * score. A Wordoku result also gets a card with its key word and what the word means, while the "Show the
- * solution" setting is on. A result that is only the closest puzzle found (warning `difficulty.approximate`) gets a yellow
- * alert and a "Retry with a different seed" button; the other warnings are listed, translated. No warning,
- * no warning UI.
- *
- * Two layers, so everything that matters runs in Node:
- *  - `viewModel(result)` is PURE: every displayed value (already formatted for the current language) and
- *    the warning keys, no DOM.
- *  - `create(rootEl, options)` renders a view model into `#result-root` and keeps it in step with the
- *    language.
- *
- * Strings are keys of `SG.i18n` (`result.*` fragment at the bottom of this file, plus the base packs).
+ * Result panel `SG.resultView`: two cards (level reached with its difficulty score, number of clues) and a table of
+ * the techniques used (uses, points, share of the score). A Wordoku result also gets a card with its key word and
+ * meaning while "Show the solution" is on. An approximate result (warning `difficulty.approximate`) gets a yellow
+ * alert and a "Retry with a different seed" button; other warnings are listed, translated; no warning, no UI.
+ * `viewModel(result)` is pure (displayed values already formatted, plus the warning keys); `create(rootEl, options)`
+ * renders it into `#result-root` and follows the language. Strings: `result.*` fragment at the bottom + base packs.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first definition on repeated loads.
   if (SG.resultView && typeof SG.resultView.create === 'function') return;
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
 
-  /** Word-book part of speech -> key of its name. */
   const POS_KEYS = Object.freeze({
     n: 'result.word.pos.n', v: 'result.word.pos.v', a: 'result.word.pos.a', d: 'result.word.pos.d',
     o: 'result.word.pos.o'
   });
 
-  /** Warning key -> kind; any other key is listed as 'other'. */
   const WARNING_KINDS = Object.freeze({
     'difficulty.approximate': 'approximate',
     'digger.unsoundTechnique': 'unsound',
     'trace.downgraded': 'downgraded'
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Texts
-  // ---------------------------------------------------------------------------------------------
 
   function t(key, args) {
     return SG.i18n && typeof SG.i18n.t === 'function' ? SG.i18n.t(key, args) : key;
@@ -50,7 +34,6 @@
     return !!(SG.i18n && typeof SG.i18n.has === 'function' && SG.i18n.has(key));
   }
 
-  /** The translated name of an id (`difficulty.hard`, `technique.xWing`), the id itself when unknown. */
   function nameOf(prefix, id) {
     return hasText(prefix + id) ? t(prefix + id) : String(id);
   }
@@ -59,10 +42,6 @@
     return SG.i18n && typeof SG.i18n.formatNumber === 'function' ? SG.i18n.formatNumber(n, options)
       : String(n);
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Pure part
-  // ---------------------------------------------------------------------------------------------
 
   function countClues(givens) {
     let n = 0;
@@ -87,10 +66,9 @@
   }
 
   /**
-   * The techniques the puzzle needs, simplest first (the order of the technique ladder), each with the number
-   * of times it was applied, its points and its share of the difficulty score (`SG.difficulty.scoreTable`:
-   * the hardest technique counts its points once in full, the rest of the score that comes from the
-   * techniques is shared in proportion to points x uses).
+   * The techniques the puzzle needs, simplest first (technique ladder order), each with uses, points and share of the
+   * score (`SG.difficulty.scoreTable`: the hardest technique counts its points once in full, the rest of the
+   * technique part of the score is shared in proportion to points x uses).
    */
   function techniqueRows(counts, table) {
     const chart = SG.stepView && typeof SG.stepView.chartModel === 'function'
@@ -119,7 +97,6 @@
     });
   }
 
-  /** The Difficulty Score table of a rating (`SG.difficulty.scoreTable`), or null when it cannot be made. */
   function scoreTableOf(counts, rating) {
     if (!SG.difficulty || typeof SG.difficulty.scoreTable !== 'function') return null;
     const empties = typeof rating.empties === 'number' && rating.empties > 0 ? rating.empties : 0;
@@ -131,10 +108,8 @@
   }
 
   /**
-   * How the score of the puzzle adds up: the techniques (their rows, see `techniqueRows`) and the empty cells
-   * (their count, the average points of a cell, 80 x E / (E + 40) in all). Every part is a whole number and
-   * the parts add up to the score (one rounding, `SG.difficulty.scoreTable`).
-   * @returns {{empties: number, emptyUnit: number, emptyText: string, totalText: string}}
+   * How the score adds up: the technique rows (see `techniqueRows`) and the empty cells (count, average points per
+   * cell, 80 x E / (E + 40) in all). Every part is a whole number and the parts add up to the score (one rounding).
    */
   function scoreBreakdown(table, score) {
     const empties = table !== null ? table.empties : 0;
@@ -146,17 +121,7 @@
     };
   }
 
-  /**
-   * Everything the panel shows for a result, in the current language.
-   * @param {Object} result  A `PuzzleResult`.
-   * @returns {?{variantId: string, variantName: string, requested: string, requestedName: string,
-   *   achieved: string, achievedName: string, exact: boolean, clues: number, cells: number,
-   *   cluesText: string, score: number, scoreText: string, techniqueCounts: Object<string, number>,
-   *   techniques: Array<{id: string, name: string, summary: string, count: number, countText: string,
-   *   unitScore: number, unitScoreText: string, score: number, scoreText: string}>,
-   *   warnings: Array<{key: string, kind: string, text: string}>,
-   *   warningKeys: string[], approximate: boolean, retryAvailable: boolean}} `null` for a missing result.
-   */
+  /** Everything the panel shows for a result in the current language; null for a missing result. */
   function viewModel(result) {
     if (result === null || typeof result !== 'object') return null;
     const config = result.config || {};
@@ -198,17 +163,7 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // DOM
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * The key word of a Wordoku result and what it means, for the card of the panel.
-   * @param {Object} result  A `PuzzleResult`.
-   * @returns {?{word: string, text: string, language: string, posName: string, meaning: string,
-   *   other: string}} `null` when the puzzle is not a Wordoku. A word without an entry in the word book
-   *   (one the user typed) gives its letters and no meaning.
-   */
+  /** Key word of a Wordoku result and its meaning; null when not a Wordoku. A word missing from the word book (typed by the user) gives its letters and no meaning. */
   function wordInfo(result) {
     if (result === null || typeof result !== 'object' || !result.model || result.model.variantId !== 'wordoku' ||
         !SG.wordoku || typeof SG.wordoku.describe !== 'function') {
@@ -228,7 +183,6 @@
     };
   }
 
-  /** Creates an element; attribute values of null / undefined / false are skipped, `true` gives ''. */
   function make(doc, tag, attrs, children) {
     const node = doc.createElement(tag);
     Object.keys(attrs || {}).forEach(function (name) {
@@ -256,19 +210,10 @@
   /**
    * @typedef {Object} ResultViewOptions
    * @property {function(): void} [onRetry]  The "Retry with a different seed" button.
-   * @property {function(): boolean} [showWord]  Whether a Wordoku result gets the card with its key word and
-   *   the meaning (the "Show the solution" setting); without it there is no such card.
+   * @property {function(): boolean} [showWord]  Whether a Wordoku result gets the key-word card ("Show the solution").
    */
 
-  /**
-   * Renders the panel into `#result-root` (the element is emptied first and keeps nothing else).
-   * @param {Element} rootEl
-   * @param {ResultViewOptions} [options]
-   * @returns {{show: function(Object): void, clear: function(): void, refresh: function(): void,
-   *   destroy: function(): void, isShown: function(): boolean}}
-   *   `show(result)` replaces the panel; `clear()` empties it; `refresh()` re-translates and redraws;
-   *   `destroy()` removes the listener and the panel.
-   */
+  /** Renders the panel into `#result-root` (emptied first). Returns { show(result), clear(), refresh(), destroy(), isShown() }. */
   function create(rootEl, options) {
     if (!rootEl || typeof rootEl.appendChild !== 'function') {
       throw new TypeError('SG.resultView.create needs the #result-root element');
@@ -312,7 +257,7 @@
       });
     }
 
-    /** The small "?" next to a name: its text opens on hover, focus and click; Esc closes it. */
+    /** The "?" next to a name: opens on hover, focus and click; Esc closes it. */
     function helpTip(popId, text, name) {
       const pop = make(doc, 'div', {
         class: 'help-tip__pop', id: popId, role: 'tooltip', text: text
@@ -337,14 +282,12 @@
       return helpTip('result-tech-' + row.id + '-help', row.summary, row.name);
     }
 
-    /** A row header of a row that is not a technique: the name and its "?". */
     function partHeader(part, name, text) {
       return make(doc, 'th', { scope: 'row' }, [make(doc, 'span', { class: 'result-table__name' }, [
         make(doc, 'span', { text: name }), helpTip('result-part-' + part + '-help', text, name)
       ])]);
     }
 
-    /** The rows that complete the technique rows to the score: the empty cells. */
     function extraRows(vm) {
       const out = [];
       if (vm.parts.empties > 0) {
@@ -359,7 +302,6 @@
       return out;
     }
 
-    /** A heading row that opens a group of rows of the table ("Technique", "Other"). */
     function sectionRow(key) {
       return make(doc, 'tr', { class: 'result-table__section', 'data-section-row': key }, [
         make(doc, 'th', { scope: 'colgroup', colspan: '4', text: t('result.techniques.section.' + key) })
@@ -416,7 +358,6 @@
       return box;
     }
 
-    /** The key word as a stat box like Difficulty and Clues: label, word, then the meaning in small print. */
     function wordCard(info) {
       const children = [
         make(doc, 'dt', { class: 'stat__label', text: t('result.word.title') }),
@@ -510,10 +451,6 @@
     wordInfo: wordInfo,
     create: create
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Strings of the panel
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

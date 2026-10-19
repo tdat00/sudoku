@@ -1,19 +1,18 @@
 /*
- * Print styles (task T-7.1; design.md section 10.6). Linked with media="print" in index.html.
+ * Print styles, linked with media="print" in index.html.
  *
- * While printing, only `#print-root` is shown: the container that js/ui/export.js builds just before it
- * calls window.print(). It holds one <section class="print-page"> per page, and in it the puzzles
- * (<article class="print-item">: a header line, then the board as a vector picture). Everything else of the
- * page (header, controls, board, panels, dialogs, toasts) is hidden, so no control can reach the paper.
+ * While printing only `#print-root` is shown: the container that js/ui/export.js builds just before it calls
+ * window.print(), with one <section class="print-page"> per page holding the puzzles (<article
+ * class="print-item">: a header line, then the board as a vector picture). Everything else is hidden, so no
+ * control can reach the paper.
  *
  * Paper: the margins are set here; the size is left to the printer (A4 or Letter). A page is laid out for
- * the smaller of the two printable areas, 186 mm wide and 250 mm tall, so the same plan fits both.
- * Puzzles per page (data-per-page): 1 = 1 column x 1 row, 2 = 1 x 2, 4 = 2 x 2, 6 = 2 x 3.
+ * the smaller of the two printable areas, 186 mm x 250 mm, so the same plan fits both. Puzzles per page
+ * (data-per-page): 1 = 1 column x 1 row, 2 = 1 x 2, 4 = 2 x 2, 6 = 2 x 3.
  *
- * Colour: the board pictures carry their own colours (light palette, no tint behind regions and cages, dark
- * lines and ink). This file only needs the paper itself: the system colours Canvas / CanvasText with a forced
- * light colour scheme, so a dark or high-contrast theme never prints light text on white. No colour
- * literals, no tokens that change with the theme.
+ * Colour: the board pictures carry their own colours (light palette, dark lines and ink). This file only
+ * needs the paper itself: the system colours Canvas / CanvasText with a forced light colour scheme, so a
+ * dark or high-contrast theme never prints light text on white. No colour literals, no theme tokens.
  */
 
 @page {

@@ -4,7 +4,12 @@
 /*
  * Headless test runner (Node >= 18, built-in modules only).
  *
- *   node tests/node-runner.js [--suite=<name>[,<name>]] [--filter=<text>] [--bail] [--verbose] [--help]
+ *   node tests/node-runner.js [--all | --manual] [--suite=<name>[,<name>]] [--filter=<text>] [--bail] [--verbose] [--help]
+ *
+ * Two sets of suites:
+ *   tests/suites/  the quick set (default, about 45 s): what a developer or an agent runs after every change;
+ *   tests/manual/  the heavy suites (about 8 minutes: every variant, every level, performance, regression hashes).
+ *                  Run them with --all (CI does) or --manual, or by name with --suite=<name>.
  *
  * Exit code: 0 when every test passed, 1 on any failure, load error, unknown suite or when no test ran.
  *
@@ -21,8 +26,8 @@
  *   - Keep the order in sync with index.html and js/worker/gen.worker.js (design.md 12.2) and the
  *     file list in tests.html.
  *
- * Test discovery is automatic: tests/fixtures/*.js load first, then tests/suites/*.test.js in
- * alphabetical order. Adding a suite or fixture needs no change here.
+ * Test discovery is automatic: tests/fixtures/*.js load first, then tests/suites/*.test.js (and
+ * tests/manual/*.test.js when asked) in alphabetical order. Adding a suite or fixture needs no change here.
  *
  * Suites loaded by vm.runInThisContext do not have `require`. Node helpers for suites that need the
  * file system are exposed as `SG.test.node` = { fs, path, vm, root } (undefined in a browser).
@@ -99,6 +104,7 @@ const ROOT = path.resolve(__dirname, '..');
 const HARNESS_FILE = 'tests/harness.js';
 const FIXTURES_DIR = 'tests/fixtures';
 const SUITES_DIR = 'tests/suites';
+const MANUAL_DIR = 'tests/manual';
 const SUITE_SUFFIX = '.test.js';
 
 const USE_COLOR = Boolean(process.stdout.isTTY) && !process.env.NO_COLOR;
@@ -115,7 +121,11 @@ const bold = (t) => paint('1', t);
 const USAGE = [
   'Usage: node tests/node-runner.js [options]',
   '',
-  '  --suite=<name>[,<name>]  run only these suites (file name without ".test.js")',
+  'Without options only the quick suites of tests/suites run.',
+  '',
+  '  --all                    run the quick suites and the manual (heavy) ones of tests/manual',
+  '  --manual                 run only the manual (heavy) suites',
+  '  --suite=<name>[,<name>]  run only these suites, quick or manual (file name without ".test.js")',
   '  --filter=<text>          run only tests whose full name contains <text> (case-insensitive)',
   '  --bail                   stop after the first failing test',
   '  --verbose                print every test, skipped source files and benchmark timings',
@@ -123,10 +133,12 @@ const USAGE = [
 ].join('\n');
 
 function parseArgs(argv) {
-  const opts = { suites: [], filter: null, bail: false, verbose: false, help: false };
+  const opts = { suites: [], filter: null, bail: false, verbose: false, help: false, all: false, manual: false };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === '--bail') opts.bail = true;
+    else if (arg === '--all') opts.all = true;
+    else if (arg === '--manual') opts.manual = true;
     else if (arg === '--verbose') opts.verbose = true;
     else if (arg === '--help' || arg === '-h') opts.help = true;
     else {
@@ -224,19 +236,26 @@ async function main() {
     }
   }
 
-  const suiteFiles = listFiles(SUITES_DIR, SUITE_SUFFIX);
-  const available = suiteFiles.map((f) => f.slice(0, -SUITE_SUFFIX.length));
+  const nameOf = (f) => f.slice(0, -SUITE_SUFFIX.length);
+  const quick = listFiles(SUITES_DIR, SUITE_SUFFIX).map(nameOf);
+  const manual = listFiles(MANUAL_DIR, SUITE_SUFFIX).map(nameOf);
+  const available = quick.concat(manual).sort();
+  const dirOf = (name) => (manual.includes(name) ? MANUAL_DIR : SUITES_DIR);
   const unknown = opts.suites.filter((s) => !available.includes(s));
   if (unknown.length > 0) {
     console.error('Unknown suite: ' + unknown.join(', ') + '\nAvailable suites: ' + available.join(', '));
     return 1;
   }
-  const selected = opts.suites.length > 0 ? available.filter((s) => opts.suites.includes(s)) : available;
+  let selected;
+  if (opts.suites.length > 0) selected = available.filter((s) => opts.suites.includes(s));
+  else if (opts.all) selected = available;
+  else if (opts.manual) selected = manual;
+  else selected = quick;
 
   for (const name of selected) {
     SG.test.setSuite(name);
     try {
-      runFile(SUITES_DIR + '/' + name + SUITE_SUFFIX);
+      runFile(dirOf(name) + '/' + name + SUITE_SUFFIX);
     } catch (err) {
       SG.test.addLoadError(name, err);
     }
@@ -245,6 +264,9 @@ async function main() {
   console.log(bold('Sudoku Generator tests') + dim('  (node ' + process.version + ')'));
   console.log('Sources: ' + loaded.length + ' loaded, ' + missing.length + ' planned but not created yet' +
     (opts.verbose ? '' : dim(' (--verbose lists them)')));
+  if (opts.suites.length === 0 && !opts.all && !opts.manual && manual.length > 0) {
+    console.log(dim('Quick suites only (' + quick.length + '); --all also runs the ' + manual.length + ' manual ones of tests/manual.'));
+  }
   if (opts.verbose) {
     loaded.forEach((f) => console.log('  loaded  ' + f));
     missing.forEach((f) => console.log(dim('  missing ' + f)));

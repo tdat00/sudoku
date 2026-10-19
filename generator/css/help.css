@@ -1,10 +1,8 @@
 /*
  * Help dialog (js/ui/help.js). Only var(--sg-*) tokens: no colour literals.
- *
- *   .help                     content of the dialog: .help__tabs (tablist) + .help__panel (tabpanels)
- *   .help-variant             one <details class="disclosure"> per variant, with a .help-figure picture
- *   .help-table, .help-keys, .help-terms, .help-steplist, .help-rung   the content blocks of the other tabs
- * Motion is switched off by the global reduced-motion rules of base.css.
+ *   .help             dialog content: .help__tabs (tablist) + .help__panel (tabpanels)
+ *   .help-variant     one <details class="disclosure"> per variant, with a .help-figure picture
+ *   .help-table, .help-keys, .help-terms, .help-steplist, .help-rung   content blocks of the other tabs
  */
 
 /* ---- Dialog: tabs ---- */

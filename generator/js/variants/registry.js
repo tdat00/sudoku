@@ -1,9 +1,7 @@
 /**
  * Variant registry. Every variant registers one definition here; the generator never asks "which variant
- * is this" with an if-chain, it asks the registry (design.md section 5.3).
- *
- * Registering validates the definition, so a typo shows up when the variant file loads and not in the
- * middle of a generation run.
+ * is this" with an if-chain, it asks the registry. Registering validates the definition, so a typo shows up
+ * when the variant file loads and not in the middle of a generation run.
  */
 (function (root) {
   'use strict';
@@ -13,10 +11,7 @@
   // Keep the first registry on repeated loads: the variants registered so far must survive.
   if (SG.variants && typeof SG.variants.register === 'function') return;
 
-  /**
-   * Difficulty ids a variant may declare: a copy of SG.difficulty.LEVELS (difficulty.js is loaded before this
-   * file in every entry point; keep the two lists equal).
-   */
+  /** Difficulty ids a variant may declare: a copy of SG.difficulty.LEVELS (loaded earlier); keep the two equal. */
   const LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
     'hell2'];
 
@@ -36,19 +31,17 @@
    * @property {function(Object): void} [postGenerate]  Pipeline hook, runs once the full grid exists.
    * @property {string} [digStrategy]       Alternative digging strategy id, e.g. 'signs'.
    * @property {function(PuzzleModel, SolveState, Rng): boolean} [fastSeed]
-   *     Optional pre-fill used by the full grid generator. It assigns a few cells of a fresh state through
-   *     `SG.constraints.assign` and returns false when it could not, in which case the state is discarded.
-   * @property {number} [restartThreshold]  Optional positive integer: failed guesses per attempt of the full
-   *     grid search before it restarts. `SG.fullGrid.generate` uses it unless its caller passes the option;
-   *     without either the default is cellCount * 50.
+   *     Pre-fill used by the full grid generator: assigns a few cells of a fresh state through
+   *     `SG.constraints.assign` and returns false when it could not (the state is then discarded).
+   * @property {number} [restartThreshold]  Failed guesses per attempt of the full grid search before it
+   *     restarts (default cellCount * 50; `SG.fullGrid.generate`'s own option wins).
    * @property {(Object<string, number>|function(string, PuzzleModel, number): number)} [clueFloor]
-   *     Optional own clue floor (invariant I6) in place of the one `SG.difficulty.spec` derives from the
-   *     classic9 numbers (cellCount / 81): a table { level: clues } (a missing level: no floor) or a
-   *     function (level, model, derivedFloor) => clues. See "Clue floor per variant" in
-   *     js/core/difficulty.js.
+   *     Own clue floor in place of the one `SG.difficulty.spec` derives from the classic9 numbers: a table
+   *     { level: clues } (a missing level: no floor) or a function (level, model, derivedFloor) => clues.
+   *     See "Clue floor per variant" in js/core/difficulty.js.
    * @property {Object<string, number>} [clueFloorScale]
-   *     Optional calibration of the derived floor: { level: factor } with a finite factor >= 0; the derived
-   *     floor of that level is multiplied by it (missing level: 1). It is applied before `clueFloor`.
+   *     Calibration of the derived floor: { level: factor >= 0 } (missing level: 1); applied before
+   *     `clueFloor`.
    */
 
   /**
@@ -58,8 +51,7 @@
    * @property {('slider'|'select'|'boolean'|'text')} type
    * @property {string} labelKey        Translation key of the control's label.
    * @property {?string} hintKey        Translation key of the help text.
-   * @property {(number|string|boolean)} default  Value used when the option is not set; a number for a
-   *           slider, one of the choice values for a select, a boolean, a string for a text.
+   * @property {(number|string|boolean)} default  Value used when the option is not set.
    * @property {?number} min            Slider only (else null).
    * @property {?number} max            Slider only.
    * @property {?number} step           Slider only; 1 when the variant declares none.
@@ -163,7 +155,6 @@
 
   /**
    * Adds a variant.
-   * @param {VariantDef} def
    * @throws {SG.errors.GenerationError} 'variant.invalidDef' for a malformed definition,
    *         'variant.duplicate' when the id is already registered.
    */
@@ -173,45 +164,26 @@
     definitions.set(def.id, def);
   }
 
-  /**
-   * @param {string} id
-   * @returns {VariantDef}
-   * @throws {SG.errors.GenerationError} 'variant.unknown' when nothing is registered under `id`.
-   */
+  /** @throws {SG.errors.GenerationError} 'variant.unknown' when nothing is registered under `id`. */
   function get(id) {
     const def = definitions.get(id);
     if (def === undefined) throw new SG.errors.GenerationError('variant.unknown', { id: String(id) });
     return def;
   }
 
-  /**
-   * @param {string} id
-   * @returns {boolean} Whether a variant with this id is registered.
-   */
   function has(id) {
     return definitions.has(id);
   }
 
-  /**
-   * @returns {VariantDef[]} Every registered variant, in registration order (a fresh array).
-   */
+  /** Every registered variant, in registration order (a fresh array). */
   function list() {
     return Array.from(definitions.values());
   }
 
-  /**
-   * Removes a variant. Meant for tests and tooling that register temporary variants.
-   * @param {string} id
-   * @returns {boolean} True when something was removed.
-   */
+  /** Removes a variant (for tests and tooling that register temporary variants); true when something was removed. */
   function unregister(id) {
     return definitions.delete(id);
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Options: one normalised schema for the UI, and the sanitiser that stands between the UI / URL and
-  // `variant.build`.
-  // ---------------------------------------------------------------------------------------------
 
   function hasOwn(obj, key) {
     return Object.prototype.hasOwnProperty.call(obj, key);
@@ -304,11 +276,9 @@
   }
 
   /**
-   * The options of a variant in ONE shape, whatever the variant declares: see `NormalizedOption`. Pure;
-   * every call returns fresh objects (only `visibleWhen`, which passes through, is shared with the
-   * definition). The UI builds its controls from this and never reads `def.options`.
-   * @param {(string|VariantDef)} idOrDef  A registered variant id, or a definition (it need not be
-   *        registered).
+   * The options of a variant in ONE shape, whatever the variant declares (see `NormalizedOption`). Pure;
+   * every call returns fresh objects (only `visibleWhen` is shared with the definition). The UI builds its
+   * controls from this and never reads `def.options`. `idOrDef` may be an unregistered definition.
    * @returns {NormalizedOption[]}  In declaration order; [] for a variant without options.
    * @throws {SG.errors.GenerationError} 'variant.unknown' for an unknown id, 'variant.invalidDef' for an
    *         option that is malformed (no id, unknown type, a default outside min..max or the choices, ...).
@@ -325,10 +295,7 @@
     });
   }
 
-  /**
-   * @param {(string|VariantDef)} idOrDef
-   * @returns {Object<string, (number|string|boolean)>}  { optionId: default } for every option.
-   */
+  /** { optionId: default } for every option. */
   function defaultOptions(idOrDef) {
     const out = {};
     optionsOf(idOrDef).forEach(function (item) { out[item.id] = item.default; });
@@ -391,12 +358,8 @@
    * finite, clamped to min..max and snapped to the step, a select must name one of its choices, a boolean
    * is coerced ('true', 'false', 0, 1, ...), a text loses control characters, is trimmed and cut to
    * `maxLength`. A value that cannot be coerced becomes the option's default; a key that is not an option
-   * of the variant is dropped. Keys that are absent stay absent (merge with `defaultOptions` for a complete
-   * set): `Object.assign(defaultOptions(id), sanitizeOptions(id, raw))`. Idempotent. Never throws for bad
-   * values.
-   * @param {(string|VariantDef)} idOrDef
-   * @param {*} raw  Normally a plain object { optionId: value }; anything else gives {}.
-   * @returns {Object<string, (number|string|boolean)>}
+   * of the variant is dropped. Absent keys stay absent (merge with `defaultOptions` for a complete set).
+   * Idempotent; never throws for bad values. `raw` is normally a plain object; anything else gives {}.
    */
   function sanitizeOptions(idOrDef, raw) {
     const items = optionsOf(idOrDef);

@@ -1,8 +1,8 @@
 /**
- * Vietnamese language pack: the same keys as locale.en.js, in natural Vietnamese. Established terms
- * (X-Wing, Swordfish, Jigsaw, Killer, seed, ...) stay as they are, with a short Vietnamese explanation
- * where it helps. Placeholders `{name}` must match the English text of the same key; plural keys
- * (`_one` / `_other`) exist in both languages (Vietnamese has no plural, so both forms read the same).
+ * Vietnamese language pack: the same keys as locale.en.js, in natural Vietnamese. Established terms (X-Wing,
+ * Swordfish, Jigsaw, Killer, seed, ...) stay as they are, with a short explanation where it helps. Placeholders
+ * `{name}` must match the English text of the key; plural keys (`_one` / `_other`) exist in both languages
+ * (Vietnamese has no plural, so both forms read the same).
  */
 (function (root) {
   'use strict';
@@ -15,9 +15,7 @@
     Object.keys(section).forEach(function (key) { pack[key] = section[key]; });
   }
 
-  // ---------------------------------------------------------------------------------------------
   // General words, units and durations
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'app.title': 'Trình sinh Sudoku',
@@ -76,9 +74,7 @@
     'duration.s': '{value} giây'
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Variants, groups, difficulty, symmetry, symbol sets, dig orders, technique groups, trace levels
-  // ---------------------------------------------------------------------------------------------
+  // Variants, difficulty, symmetry, symbol sets, dig orders, technique groups, trace levels
 
   add({
     'variant.classic4': 'Sudoku cổ điển 4×4',
@@ -171,9 +167,7 @@
     'traceLevel.full': 'Chi tiết đầy đủ'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // The seven steps and their explanation cards (SG.explain.keys())
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'step.configure.name': 'Chuẩn bị cấu hình',
@@ -279,10 +273,7 @@
     'explain.tune.code.package': 'đóng gói kết quả'
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Techniques: names and plain descriptions (cageCombo, ruleOf45, cageSplit, ineqChain and minMaxForcing
-  // have their names in the fragments of tech-ineq.js and killer.js)
-  // ---------------------------------------------------------------------------------------------
+  // Techniques: names and descriptions (cageCombo, ruleOf45, cageSplit, ineqChain, minMaxForcing are named in tech-ineq.js and killer.js)
 
   add({
     'technique.nakedSingle': 'Ô một ứng viên (Naked Single)',
@@ -357,9 +348,7 @@
       'phần bên ngoài, mỗi phần có tổng riêng.'
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Texts of the solving steps: one per `i18nKey` of a technique finding (same placeholders as English)
-  // ---------------------------------------------------------------------------------------------
+  // Solving-step texts, one per `i18nKey` of a technique finding (same placeholders as English)
 
   add({
     'technique.nakedSingle.step': 'Ô {cell} chỉ còn đúng một ứng viên là {digit}, nên ô này là {digit}.',
@@ -431,9 +420,7 @@
       'giản sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Event log lines
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'configure.start': 'Đang đọc các thiết lập.',
@@ -528,9 +515,7 @@
     'trace.coalesced_other': 'Nhật ký bỏ qua {dropped} bước chi tiết ở đây.'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Warnings of a finished puzzle (PuzzleResult.warnings) and error messages (error.<code>)
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'difficulty.approximate': 'Bộ sinh không đạt chính xác mức độ yêu cầu, nên đây là đề gần nhất mà nó ' +

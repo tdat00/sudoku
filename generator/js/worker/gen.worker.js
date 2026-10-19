@@ -1,52 +1,37 @@
 /**
- * Web Worker of the generator (design.md sections 3.2, 9.3; task T-6.1). It runs `SG.pipeline.runSteps` off
- * the main thread and reports back through `postMessage`. The page talks to it through `SG.workerClient`
- * (js/worker/worker-client.js); nothing else should.
+ * Web Worker of the generator: runs `SG.pipeline.runSteps` off the main thread and reports through `postMessage`.
+ * Only `SG.workerClient` (js/worker/worker-client.js) should talk to it.
+ * It loads the core, the variants and the word lists with `importScripts`, in exactly the order of `SOURCE_FILES`
+ * in tests/node-runner.js up to the word lists (a test compares the two lists); never the UI or the client.
  *
- * It loads the core, the variants and the word lists with `importScripts`, in exactly the order of
- * `SOURCE_FILES` in tests/node-runner.js up to the word lists (a test compares the two lists). It never
- * loads the UI or the client.
- *
- * ---------------------------------------------------------------------------------------------------------
- * PROTOCOL (every message is a plain object with a `type`; `session` is the number the client gave the run)
- * ---------------------------------------------------------------------------------------------------------
+ * PROTOCOL (plain objects with a `type`; `session` is the number the client gave the run)
  *   page -> worker
- *     { type: 'ping', id }                      Handshake. Answered with 'pong'.
+ *     { type: 'ping', id }                  Handshake, answered with 'pong'.
  *     { type: 'generate', session, config, options }
- *                                               Starts a run (a run in progress is dropped). `config` is a
- *                                               GenerateConfig. `options` (all optional): chunkMs (slice
- *                                               length, default 12), batchMs (events are sent at most this
- *                                               often, default 30), maxBatch (...or when this many are
- *                                               waiting, default 400), budgetMs (time limit of the run in
- *                                               active milliseconds, default 120000).
- *     { type: 'cancel', session }               Drops that run (or any run when `session` is missing).
+ *         Starts a run (a run in progress is dropped). `config` is a GenerateConfig. `options` (all optional):
+ *         chunkMs (slice length, default 12), batchMs (events are sent at most this often, default 30),
+ *         maxBatch (...or when this many are waiting, default 400), budgetMs (time limit of the run in active
+ *         milliseconds, default 120000).
+ *     { type: 'cancel', session }           Drops that run (or any run when `session` is missing).
  *   worker -> page
- *     { type: 'pong', id, ok, error? }          `ok` is false when the scripts failed to load; `error` is the
- *                                               error data (below) of that failure.
- *     { type: 'events', session, events }       A batch of GenerationEvents, in order, never empty.
- *     { type: 'done', session, result }         The PuzzleResult as `SG.pipeline.toWire` data; all events of
- *                                               the run were sent before it.
- *     { type: 'error', session, error }         `error` = { code, i18nArgs, name, message }: a
- *                                               GenerationError as plain data ('unexpected' with
- *                                               `i18nArgs.message` for any other error). The events
- *                                               (including the 'error' event) were sent before it.
- *     { type: 'cancelled', session }            Answer to 'cancel': the worker is free again.
+ *     { type: 'pong', id, ok, error? }      `ok` is false when the scripts failed to load; `error` as below.
+ *     { type: 'events', session, events }   A batch of GenerationEvents, in order, never empty.
+ *     { type: 'done', session, result }     The PuzzleResult as `SG.pipeline.toWire` data; all events of the run
+ *                                           were sent before it.
+ *     { type: 'error', session, error }     `error` = { code, i18nArgs, name, message }: a GenerationError as plain
+ *         data ('unexpected' with `i18nArgs.message` for any other error). The events (including the 'error'
+ *         event) were sent before it.
+ *     { type: 'cancelled', session }        Answer to 'cancel': the worker is free again.
  *
- * ---------------------------------------------------------------------------------------------------------
- * HOW CANCELLATION WORKS
- * ---------------------------------------------------------------------------------------------------------
- * `SG.pipeline.run` is synchronous, so a worker that called it could not read a 'cancel' message until it
- * finished. The worker runs the resumable form instead and works in slices of `chunkMs`: after each slice it
- * hands the thread back to its own message loop (a MessageChannel message, which is not throttled like a
- * timer), the queued 'cancel' (or a new 'generate') is handled, and the next slice is a task behind it. A
- * cancel therefore takes effect at the next boundary of the algorithm (see `SG.digger.generateSteps` for
- * the granularity: some milliseconds, and up to about 90 ms inside one non-resumable piece, such as one
- * search of the Killer layout; the Greater-Than sign dig yields after every sign candidate, about 10 ms).
- * The client does not wait for that: it settles the promise at
- * once and terminates the worker as a last resort if no answer comes in time.
- *
- * Time given back to the message loop is not charged to the run: the budget and the timings use an active
- * clock (`SG.budget.createClock`) that only counts while a slice runs.
+ * CANCELLATION: `SG.pipeline.run` is synchronous, so a worker calling it could not read a 'cancel' message. The
+ * worker runs the resumable form in slices of `chunkMs`; after each slice it hands the thread back to its own
+ * message loop (a MessageChannel message, which is not throttled like a timer), the queued 'cancel' (or a new
+ * 'generate') is handled, and the next slice is a task behind it. A cancel takes effect at the next boundary of the
+ * algorithm (see `SG.digger.generateSteps`: some ms, up to about 90 ms inside one non-resumable piece such as one
+ * Killer layout search; the Greater-Than sign dig yields after every sign candidate, ~10 ms). The client does not
+ * wait for that: it settles the promise at once and terminates the worker as a last resort.
+ * Time given back to the message loop is not charged to the run: the budget and the timings use an active clock
+ * (`SG.budget.createClock`) that only counts while a slice runs.
  */
 (function (scope) {
   'use strict';
@@ -103,7 +88,6 @@
     loadError = err;
   }
 
-  /** The run in progress, or null. A worker runs one generation at a time. */
   let active = null;
 
   function clockNow() {
@@ -128,7 +112,6 @@
     }
   }
 
-  /** An error as plain data, in the shape `SG.i18n.tError` reads. */
   function errorData(err) {
     const coded = err !== null && typeof err === 'object' && typeof err.code === 'string';
     const message = err !== null && typeof err === 'object' && err.message !== undefined
@@ -212,7 +195,6 @@
     }
   }
 
-  /** Runs one slice of the run, then lets the message loop in before the next one. */
   function slice(run) {
     if (active !== run) return;
     const began = clockNow();

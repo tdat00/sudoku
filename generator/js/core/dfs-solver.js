@@ -1,22 +1,11 @@
 /**
- * Depth-first solver that finds and counts solutions (design.md sections 6.4 and 6.5).
- *
- * The search branches on the cell with the fewest candidates (MRV) and propagates after every guess with
- * the shared engine in `SG.constraints`, so it works unchanged for every variant and for the registered
- * constraint extensions. Search positions live in a pool of preallocated states, one per depth, owned by
- * the model; a branch copies its parent with `TypedArray.set`, so a search allocates nothing per node.
- *
- * The pool is shared by all calls for one model, which makes the functions non re-entrant for the same
- * model; nothing in here calls back into user code, so that never matters in practice.
- *
- * Allocation review (task T-6.2, rules R1-R7 of design.md section 9.2): `search` and `stillUnique` allocate
- * nothing per node. The state of a depth is created the first time that depth is reached and then reused
- * (`ensureDepth`); a branch is a `TypedArray.set` of its parent, the value order is a per-depth `Int32Array`,
- * the MRV loop uses the branch-free `bits.popcount`, and there is no try/catch, console call or `.slice()`
- * on the search path (`solve` and `searchFrom` copy the solution once, when they return it). Measured with
- * a heap probe (`node tests/perf.js --alloc`; a plain 9x9 board, killer, greaterThan, samurai): under 50
- * bytes per call of `countSolutions` and 5 of `stillUnique`, which is the one-time depth buffers spread over
- * the calls.
+ * Depth-first solver that finds and counts solutions. Branches on the cell with the fewest candidates (MRV) and
+ * propagates after every guess with `SG.constraints`, so it works for every variant and constraint extension.
+ * Search positions live in a per-model pool of preallocated states, one per depth (a branch copies its parent with
+ * `TypedArray.set`); the pool is shared by all calls for one model, so the functions are not re-entrant for it.
+ * Allocation rule: `search` and `stillUnique` allocate nothing per node (per-depth buffers are created once by
+ * `ensureDepth`; MRV uses branch-free `bits.popcount`; no try/catch, console call or `.slice()` on the search path;
+ * `solve` and `searchFrom` copy the solution once on return). Check with `node tests/perf.js --alloc`.
  */
 (function (root) {
   'use strict';
@@ -92,10 +81,6 @@
     return new SG.errors.GenerationError('dfs.invalidGivens', Object.assign({ reason: reason }, details));
   }
 
-  /**
-   * Writes the givens into pool state 0 and propagates.
-   * @returns {boolean} false when the givens already contradict each other.
-   */
   function load(ws, givens) {
     const model = ws.model;
     const n = ws.n;
@@ -119,10 +104,7 @@
     return SG.constraints.propagate(model, st, ws.budget === NO_BUDGET ? null : ws.budget);
   }
 
-  /**
-   * Explores the position in `ws.states[depth]` (already propagated). Returns true when the search should
-   * stop: enough solutions were found, or the backtrack limit was hit (`ws.aborted`).
-   */
+  // Explores ws.states[depth] (already propagated); true = stop (enough solutions, or backtrack limit hit: ws.aborted).
   function search(ws, depth) {
     const st = ws.states[depth];
     const val = st.value;
@@ -184,16 +166,8 @@
     return false;
   }
 
-  /**
-   * Finds one solution.
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} givens  One entry per cell, 0 for an empty cell.
-   * @param {Rng} [rng]  When given, values are tried in random order (a random solution); else ascending.
-   * @param {Object} [budget]
-   * @returns {Int32Array|null} A complete assignment, or null when the givens have no solution.
-   * @throws {SG.errors.GenerationError} 'dfs.invalidGivens' for a wrong length or a value outside 1..D,
-   *         'budget.exceeded' / 'budget.cancelled' from the budget.
-   */
+  // Finds one solution (random value order when `rng` is given, else ascending); null when there is none.
+  // Throws 'dfs.invalidGivens' (wrong length or a value outside 1..D) or the budget's errors.
   function solve(model, givens, rng, budget) {
     const ws = getWorkspace(model);
     begin(ws, 1, rng, budget, true);
@@ -202,14 +176,7 @@
     return ws.found > 0 ? ws.solution.slice() : null;
   }
 
-  /**
-   * Counts solutions, stopping as soon as `limit` of them are found.
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} givens
-   * @param {number} [limit=2]  With the default, 2 means "two or more".
-   * @param {Object} [budget]
-   * @returns {number} 0 .. limit
-   */
+  // Counts solutions, stopping once `limit` (default 2, i.e. "two or more") are found.
   function countSolutions(model, givens, limit, budget) {
     const cap = limit === undefined ? 2 : limit;
     if (!(Number.isInteger(cap) && cap >= 1)) {
@@ -222,7 +189,6 @@
     return ws.found;
   }
 
-  /** Rejects givens of the wrong length or with a value outside 1..D (0 marks an empty cell). */
   function checkGivens(ws, givens) {
     const n = ws.n;
     if (!givens || givens.length !== n) {
@@ -237,11 +203,7 @@
     }
   }
 
-  /**
-   * Records the givens (the clue at `skip` ignored) in `ws.baseVal` and the values used in each unit in
-   * `ws.baseMask`. One pass over the cells; no peer is touched.
-   * @returns {boolean} false when two givens clash inside a unit.
-   */
+  // Records the givens (the clue at `skip` ignored) in ws.baseVal and the values used per unit in ws.baseMask; false when two givens clash in a unit.
   function buildMasks(ws, givens, skip) {
     const n = ws.n;
     const cellUnits = ws.model.cellUnits;
@@ -262,7 +224,6 @@
     return true;
   }
 
-  /** Candidates of a cell after peer elimination only: the values no given in its units uses. */
   function baseCandidates(ws, cell) {
     const v = ws.baseVal[cell];
     if (v !== 0) return 1 << (v - 1);
@@ -272,10 +233,7 @@
     return ws.fullMask & ~used;
   }
 
-  /**
-   * Second stage: fills `ws.baseCand` for every cell, which makes the base a peer-consistent state.
-   * @returns {boolean} false when an open cell has no candidate left.
-   */
+  // Fills ws.baseCand for every cell, making the base peer-consistent; false when an open cell has no candidate.
   function completeBase(ws) {
     for (let c = 0; c < ws.n; c++) {
       const m = baseCandidates(ws, c);
@@ -304,28 +262,15 @@
     return false;
   }
 
-  /**
-   * Unique-solution check after removing one clue (design.md section 6.5). Instead of re-solving the whole
-   * puzzle, it propagates the puzzle without the clue once, and then asks for each alternative value w of
-   * the cell whether forcing cell = w leaves any solution. The puzzle stays unique exactly when none does.
-   *
-   * It also skips work the general solver cannot skip. Cheap tests come first: if the removed cell is a
-   * naked single (its peers' givens rule out every other value) or a hidden single of the peer-consistent
-   * puzzle, the clue was redundant and the answer is true at once, with no propagation or search; that is
-   * the common case early in digging. Only then is the puzzle loaded from per-unit value masks (instead of
-   * one peer sweep per given) and propagated, and that propagation stops as soon as the cell is decided.
-   * `solve` and `countSolutions` keep the plain loader because nothing about them is time critical.
-   *
-   * Precondition: the puzzle that still has the clue (cell = trueValue) has exactly one solution. The cheap
-   * tests rely on it and do not look for clashes between givens elsewhere in the grid.
-   * `givens` may or may not still contain the clue at `cell`; it is ignored either way.
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} givens
-   * @param {number} cell
-   * @param {number} trueValue  The value of the cell in the unique solution.
-   * @param {Object} [budget]
-   * @returns {boolean} true when the puzzle without the clue still has exactly one solution.
-   */
+  // Unique-solution check after removing one clue. Instead of re-solving, it propagates the puzzle without the clue
+  // once, then asks for each alternative value w of the cell whether forcing cell = w leaves any solution; the puzzle
+  // stays unique exactly when none does.
+  // Cheap tests come first: if the removed cell is a naked single or a hidden single of the peer-consistent puzzle,
+  // the clue was redundant and the answer is true at once (the common case early in digging). Only then is the puzzle
+  // loaded from per-unit value masks (not one peer sweep per given) and propagated, stopping as soon as the cell is
+  // decided. `solve` and `countSolutions` keep the plain loader: they are not time critical.
+  // Precondition: the puzzle with the clue (cell = trueValue) has exactly one solution; the cheap tests rely on it
+  // and do not look for clashes between givens elsewhere. `givens` may or may not still contain the clue at `cell`.
   function stillUnique(model, givens, cell, trueValue, budget) {
     const ws = getWorkspace(model);
     begin(ws, 1, null, budget, false);
@@ -396,18 +341,9 @@
     return true;
   }
 
-  /**
-   * Randomised completion of an already propagated state, for the full grid generator. Not part of the
-   * section 13.5 contract. The state is copied; `state` itself is left untouched.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state
-   * @param {Object} [options]
-   * @param {Rng} [options.rng]
-   * @param {Object} [options.budget]
-   * @param {number} [options.limit=1]            Stop after this many solutions.
-   * @param {number} [options.maxBacktracks=Infinity]  Give up (aborted: true) after this many failed guesses.
-   * @returns {{found: number, solution: Int32Array|null, backtracks: number, aborted: boolean}}
-   */
+  // Randomised completion of an already propagated state, for the full grid generator; `state` is copied, not touched.
+  // options: rng, budget, limit (default 1), maxBacktracks (default Infinity; aborted: true when exceeded).
+  // Returns { found, solution, backtracks, aborted }.
   function searchFrom(model, state, options) {
     options = options || {};
     const ws = getWorkspace(model);

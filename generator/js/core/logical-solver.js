@@ -1,28 +1,18 @@
 /**
- * Logical solver (design.md section 6.6): solves a puzzle the way a person does, one named technique at a
- * time, and reports which techniques were needed. It is the difficulty yardstick and the oracle of the
- * hole digger.
+ * Logical solver: solves like a person, one named technique at a time, and reports which were needed (the
+ * difficulty yardstick and the oracle of the hole digger).
+ * Loop: try the registered techniques (techniques.js) in ascending `order`, apply the first Finding, record a step
+ * and restart from the first technique, until the grid is full, nothing applies ("stuck": a normal result, solved:
+ * false) or the budget runs out. This priority order is not the order of the rating weights (SG.difficulty.WEIGHTS).
  *
- * The loop: try the registered techniques (techniques.js) in ascending `order`, apply the first Finding,
- * record a step and start again from the first technique of that fixed priority order, until the grid is
- * full, no technique applies ("stuck") or the budget runs out. A stuck puzzle is a normal result (solved:
- * false), never an error. The order is not the order of the rating weights (SG.difficulty.WEIGHTS).
- *
- * Singles and the propagation engine (decision, please keep):
- *   `SG.constraints.propagate` places naked and hidden singles on its own. If the solver ran it after every
- *   step, singles would be consumed silently: they would be neither attributed nor scored, and
- *   `allowedTechniques: ['nakedSingle']` would still solve puzzles that need hidden singles. So the solver
- *   never calls `propagate`. It starts from a peer consistent grid (every given is entered with
- *   `SG.constraints.assign`, which only removes the value from the peers) and applies every Finding with
- *   `assign` (placements) and `eliminate` (eliminations), which also only do peer elimination. Naked and
- *   hidden singles are then ordinary techniques (tech-basic.js) found, scored and explained like any other.
- *   Rules that are not all-different (cage sums, inequalities) are likewise left to their techniques
- *   (tech-cage.js, tech-ineq.js) instead of the propagation extensions.
- *   The solver is not tied to the engine's per-model scratch buffers: it never has a propagate, place or
- *   dfs call open while a technique runs, so it can be used from anywhere, including recursively.
- *
- * Budget: `budget.check()` runs once per applied step and once before a puzzle is declared stuck. Errors it
- * throws ('budget.exceeded', 'budget.cancelled') propagate to the caller like they do in `SG.dfs`.
+ * Singles and the propagation engine (decision, please keep): `SG.constraints.propagate` places naked and hidden
+ * singles on its own, which would consume them silently (neither attributed nor scored, and
+ * `allowedTechniques: ['nakedSingle']` would still solve puzzles that need hidden singles). So the solver never
+ * calls `propagate`: it enters givens with `SG.constraints.assign` and applies every Finding with `assign` /
+ * `eliminate` (peer elimination only). Singles are ordinary techniques (tech-basic.js); cage sums and inequalities
+ * are left to their techniques (tech-cage.js, tech-ineq.js). No propagate, place or dfs call is open while a
+ * technique runs, so the solver can be used recursively.
+ * `budget.check()` runs once per applied step and once before a puzzle is declared stuck; its errors propagate.
  */
 (function (root) {
   'use strict';
@@ -32,11 +22,7 @@
   // Keep the first solver on repeated loads.
   if (SG.logicalSolver && typeof SG.logicalSolver.solve === 'function') return;
 
-  /**
-   * Scoring constants of design.md section 6.6.
-   *   score = sum over applications of baseCost x (first use of that technique ? firstUseMultiplier : 1)
-   *           + (cells empty at the start) x emptyCellBonus
-   */
+  // score = sum over applications of baseCost x (first use of that technique ? firstUseMultiplier : 1) + (cells empty at the start) x emptyCellBonus
   const SCORING = Object.freeze({ firstUseMultiplier: 1.5, emptyCellBonus: 0.6 });
 
   const STUCK = 0;
@@ -44,7 +30,6 @@
   const CONTRADICTION = 2;
   const STATUS_NAMES = ['stuck', 'solved', 'contradiction'];
 
-  /** Builds a GenerationError whose message names the problem, so a failing test is readable at a glance. */
   function fail(code, args, text) {
     const err = new SG.errors.GenerationError(code, args);
     err.message = code + ': ' + text;
@@ -56,48 +41,18 @@
       'technique "' + tech.id + '" returned an invalid Finding: ' + reason);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Setup
-  // ---------------------------------------------------------------------------------------------
+  // SolveOptions: allowedTechniques (ids, null = every registered technique that applies; ids excluded by `variantScope`
+  // or `assumeUniqueness` are skipped, an unregistered id throws 'solver.unknownTechnique'), collectSteps (default true;
+  // false builds no step objects), budget, stopOnStuck (default true; false completes a stuck puzzle by DFS into
+  // `report.solution`), assumeUniqueness (default true; false skips techniques that rely on a unique solution, which
+  // verifies uniqueness). Any other key is passed to the techniques as `ctx.options`.
 
-  /**
-   * @typedef {Object} SolveOptions
-   * @property {?string[]} [allowedTechniques=null]  Ids to use; null = every registered technique that
-   *           applies. Ids that are registered but excluded by `variantScope` or `assumeUniqueness` are
-   *           skipped; an id that is not registered throws 'solver.unknownTechnique'.
-   * @property {boolean} [collectSteps=true]   Record `steps`. With false no step objects are built.
-   * @property {Object} [budget]               A `SG.budget`; see the file header.
-   * @property {boolean} [stopOnStuck=true]    When false and the loop is stuck, the remaining cells are
-   *           completed with the DFS solver into `report.solution` (the stuck `state` is kept as it is).
-   * @property {boolean} [assumeUniqueness=true]  When false, techniques that rely on a unique solution are
-   *           skipped, which is how the solver can be used to verify uniqueness.
-   * Any other key is passed through to the techniques as `ctx.options`.
-   */
+  // SolveStep: { technique, i18nKey, i18nArgs, cells, eliminations, placements }; the last two hold only real changes.
 
-  /**
-   * @typedef {Object} SolveStep
-   * @property {string} technique
-   * @property {string} i18nKey
-   * @property {Object} i18nArgs
-   * @property {number[]} cells
-   * @property {Array<[number, number]>} eliminations  Only candidates that were really removed.
-   * @property {Array<[number, number]>} placements    Only cells that were really filled.
-   */
-
-  /**
-   * @typedef {Object} SolveReport
-   * @property {boolean} solved            The grid was filled by the techniques and is a valid solution.
-   * @property {string} status             'solved' | 'stuck' | 'contradiction'. A contradiction means the
-   *           givens (or a technique) lead to an impossible grid; it is reported, not thrown.
-   * @property {SolveState} state          Final state; for a stuck puzzle the position where it got stuck.
-   * @property {SolveStep[]} steps         In application order; empty unless `collectSteps`.
-   * @property {Object<string, number>} techniqueCounts  Applications per technique id, in ladder order.
-   * @property {?string} hardestTechnique  Used technique with the highest baseCost (ties: later in the
-   *           ladder); null when no step was needed.
-   * @property {number} score              See `SCORING`.
-   * @property {?Int32Array} solution      A full solution found by DFS when `stopOnStuck` is false and the
-   *           loop got stuck; null otherwise.
-   */
+  // SolveReport: { solved, status ('solved' | 'stuck' | 'contradiction': impossible givens are reported, not thrown),
+  // state (final; where it got stuck), steps (application order; empty unless collectSteps), techniqueCounts (per id,
+  // ladder order), hardestTechnique (highest baseCost, ties: later in the ladder; null if no step), score (see SCORING),
+  // solution (DFS completion when stopOnStuck is false and stuck, else null) }.
 
   function normalizeOptions(options) {
     const src = options === undefined || options === null ? {} : options;
@@ -125,7 +80,6 @@
     return opts;
   }
 
-  /** The techniques this call may use, in loop order. */
   function buildLadder(model, opts) {
     let allowed = null;
     if (opts.allowedTechniques !== null) {
@@ -144,11 +98,7 @@
     });
   }
 
-  /**
-   * Enters the givens into a fresh state, peer elimination only.
-   * @returns {{ok: boolean, empty: number}} ok = false when the givens contradict each other; empty = number
-   *          of cells without a given.
-   */
+  // Enters the givens into a fresh state (peer elimination only). ok = false when they contradict; empty = cells without a given.
   function loadGivens(model, state, givens) {
     const n = model.cellCount;
     if (!givens || givens.length !== n) {
@@ -172,10 +122,6 @@
     }
     return { ok: ok, empty: empty };
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Applying a Finding
-  // ---------------------------------------------------------------------------------------------
 
   function checkFinding(tech, finding) {
     if (finding === null || typeof finding !== 'object') {
@@ -220,12 +166,7 @@
     }
   }
 
-  /**
-   * Applies a validated Finding with `assign` / `eliminate`. Placements that are already in place and
-   * eliminations of candidates that are already gone are ignored.
-   * @param {Object} effect  Receives the effective placements and eliminations when `collect` is true.
-   * @returns {number} Number of changes made, or -1 when the Finding leads to a contradiction.
-   */
+  // Applies a validated Finding with assign / eliminate, ignoring placements and eliminations already in effect. Returns the number of changes, or -1 on contradiction; `effect` gets the effective changes when `collect`.
   function applyFinding(model, state, tech, finding, collect, effect) {
     const n = model.cellCount;
     const digits = model.digits;
@@ -264,10 +205,6 @@
     return changed;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The loop
-  // ---------------------------------------------------------------------------------------------
-
   function sameState(a, b) {
     if (a.unsolvedCount !== b.unsolvedCount) return false;
     for (let i = 0; i < a.candidates.length; i++) {
@@ -276,10 +213,6 @@
     return true;
   }
 
-  /**
-   * Runs the ladder until the grid is full or no technique applies.
-   * @returns {number} STUCK, SOLVED or CONTRADICTION.
-   */
   function iterate(model, state, ladder, ctx, run) {
     const budget = ctx.budget;
     const collect = run.steps !== null;
@@ -347,24 +280,15 @@
     return SG.model.isSolution(model, state.value) ? SOLVED : CONTRADICTION;
   }
 
-  /** Completes a stuck position with the DFS solver. The state itself is left alone. */
   function completeByDfs(model, state, budget) {
     const copy = SG.model.cloneState(state);
     if (!SG.constraints.propagate(model, copy, budget)) return null;
     return SG.dfs.searchFrom(model, copy, { limit: 1, budget: budget }).solution;
   }
 
-  /**
-   * Solves a puzzle with the registered human techniques.
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} givens  One entry per cell, 0 for an empty cell.
-   * @param {SolveOptions} [options]
-   * @returns {SolveReport}
-   * @throws {SG.errors.GenerationError} 'solver.invalidGivens', 'solver.invalidOption',
-   *         'solver.unknownTechnique'; the bug guards 'solver.emptyFinding', 'solver.noEffect',
-   *         'solver.invalidFinding' (and 'solver.stateMutated' with SG.DEBUG) naming the technique; and the
-   *         budget's own errors. Never for a puzzle that is merely stuck.
-   */
+  // Solves with the registered human techniques. Throws 'solver.invalidGivens', 'solver.invalidOption',
+  // 'solver.unknownTechnique', the bug guards 'solver.emptyFinding' / 'solver.noEffect' / 'solver.invalidFinding'
+  // ('solver.stateMutated' with SG.DEBUG) naming the technique, and budget errors; never for a merely stuck puzzle.
   function solve(model, givens, options) {
     const opts = normalizeOptions(options);
     const ladder = buildLadder(model, opts);

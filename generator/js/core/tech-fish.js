@@ -1,6 +1,5 @@
 /**
- * Fish techniques (group `fish`): X-Wing, Swordfish, Jellyfish and Simple Colouring. Registers itself in
- * SG.techniques (techniques.js, which defines the contract every `find` obeys).
+ * Fish techniques (group `fish`): X-Wing, Swordfish, Jellyfish and Simple Colouring; registers itself in SG.techniques.
  *
  *   id               baseCost  order
  *   xWing                32     110     basic fish of size 2
@@ -8,40 +7,33 @@
  *   swordfish            42     130     basic fish of size 3
  *   jellyfish            56     160     basic fish of size 4
  *
- * ---- Basic fish (ONE routine, `findFish`, parameterised by the size n = 2, 3, 4) -------------------
- * For a digit d pick n "base" lines of one orientation (rows, or columns) such that d's candidate cells of
- * every base line all lie in the same n "cover" lines of the other orientation. Every base line holds d
- * exactly once (it is a complete unit), so the n placements of d sit in n different cover lines, and as a
- * cover line holds d at most once each cover line gets exactly one of them. So d is removed from every
- * cell of the cover lines that is not part of a base line. Both orientations are searched.
- *
- * Lines are the units whose `unitMeta.kind` is 'row' or 'col'; nothing is computed from cell indices, so
- * the routine works for any digit count and any model that has such units. Only complete units
- * (`ctx.completeUnits[u] === 1`) are used. A base line is skipped for a digit when
- *   - the digit is already placed in it (nothing left to decide there),
- *   - it has fewer than 2 candidate cells (that is a hidden single, a cheaper technique),
- *   - one of its candidate cells lies in several lines of its own kind (overlapping sub-grids of a
- *     multi-grid variant: the base lines would not be disjoint) or in no line of the other kind.
+ * Basic fish (ONE routine, `findFish`, size n = 2, 3, 4): for a digit d pick n "base" lines of one orientation such that
+ * d's candidate cells of every base line all lie in the same n "cover" lines of the other orientation. Every base line
+ * holds d exactly once (it is a complete unit), so the n placements sit in n different cover lines, and as a cover line
+ * holds d at most once, each cover line gets exactly one of them. So d is removed from every cell of the cover lines
+ * that is not part of a base line. Both orientations are searched.
+ * Lines are the units whose `unitMeta.kind` is 'row' or 'col'; nothing is computed from cell indices. Only complete
+ * units (`ctx.completeUnits[u] === 1`) are used. A base line is skipped for a digit when
+ *   - the digit is already placed in it,
+ *   - it has fewer than 2 candidate cells (a hidden single, a cheaper technique),
+ *   - a candidate cell lies in several lines of its own kind (overlapping sub-grids: the base lines would not be
+ *     disjoint) or in no line of the other kind.
  * Skipping a line only ever makes the technique find less, never something wrong.
  *
- * ---- Simple Colouring ---------------------------------------------------------------------------
- * For a digit d, a unit that is complete, has no d placed and has exactly two cells that can still be d is
- * a strong link: exactly one of the two cells is d. Cells joined by strong links form connected
- * components; each is two-coloured by walking the links (the start cell, the lowest index, gets colour 1).
- * In a component all cells of one colour are d and all of the other are not. Two rules, both applied per
- * component, the first one wins:
- *   - wrap: two cells of the SAME colour of the SAME component see each other (are peers). That colour
- *     cannot be the true one, so d is removed from every cell of that colour.
- *   - trap: a candidate cell outside the component that sees a cell of each colour. One colour is true,
- *     so the cell sees a d either way and cannot be d itself.
- * A component whose two-colouring fails (an odd cycle of strong links) or in which both colours wrap
- * belongs to a contradictory position: it is ignored, nothing is deduced from it.
+ * Simple Colouring: for a digit d, a complete unit with no d placed and exactly two cells that can still be d is a
+ * strong link (exactly one of the two is d). Cells joined by strong links form components, two-coloured by walking the
+ * links (the start cell, the lowest index, gets colour 1); all cells of one colour are d and none of the other. Two
+ * rules per component, the first one wins:
+ *   - wrap: two cells of the SAME colour see each other (are peers). That colour cannot be true, so d is removed from
+ *     every cell of that colour.
+ *   - trap: a candidate cell outside the component that sees a cell of each colour sees a d either way, so it cannot
+ *     be d itself.
+ * A component whose two-colouring fails (an odd cycle of strong links) or in which both colours wrap is contradictory
+ * and ignored.
  *
- * ---- Performance -----------------------------------------------------------------------------------
- * Per model data (the lines, the owner line of every cell, all scratch buffers) is built once and kept in
- * a WeakMap, so `find` allocates only the Finding it returns. The fish search is a depth-first selection
- * of base lines that drops a branch as soon as its covers outnumber n. `find` is not re-entrant (it shares
- * the scratch buffers), which the solver never needs.
+ * Performance: per model data (the lines, the owner line of every cell, all scratch buffers) is built once in a WeakMap,
+ * so `find` allocates only the Finding it returns. The fish search is a depth-first selection of base lines that drops
+ * a branch as soon as its covers outnumber n. `find` is not re-entrant (it shares the scratch buffers).
  */
 (function (root) {
   'use strict';
@@ -54,17 +46,10 @@
   /** Largest fish size (Jellyfish); sizes the per-line cover lists. */
   const MAX_FISH = 4;
 
-  /** Per model data, see infoFor. */
   const infos = new WeakMap();
 
-  // ---------------------------------------------------------------------------------------------
-  // Per model data
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * For one orientation: the cell -> unit table. A cell maps to the complete unit of that kind that holds
-   * it, or to -1 when it lies in none or in more than one.
-   */
+  // cell -> unit table of one orientation: the complete unit of that kind holding the cell, or -1 when it lies in none or
+  // in more than one.
   function ownerTable(model, lineUnits) {
     const owner = new Int32Array(model.cellCount).fill(-1);
     const seen = new Uint8Array(model.cellCount);
@@ -80,12 +65,8 @@
     return owner;
   }
 
-  /**
-   * Builds (once per model and per `completeUnits` table) the lines and every scratch buffer.
-   * @param {PuzzleModel} model
-   * @param {Object} ctx  Technique context; `ctx.completeUnits` decides which units count as lines.
-   * @returns {Object}
-   */
+  // Builds (once per model and `completeUnits` table) the lines and every scratch buffer; `ctx.completeUnits` decides
+  // which units count as lines.
   function infoFor(model, ctx) {
     let info = infos.get(model);
     if (info !== undefined && info.complete === ctx.completeUnits) return info;
@@ -150,14 +131,8 @@
     return a - b;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Basic fish (X-Wing, Swordfish, Jellyfish)
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Eliminations and Finding for the base lines chosen in `info.sel`; null when the pattern removes
-   * nothing. The covers are `info.union[0 .. size - 1]`.
-   */
+  // Eliminations and Finding for the base lines in `info.sel` (the covers are `info.union[0 .. size - 1]`); null when the
+  // pattern removes nothing.
   function fishFinding(info) {
     const f = info.frame;
     const model = f.model;
@@ -216,11 +191,9 @@
     };
   }
 
-  /**
-   * Depth-first choice of `size` base lines out of the eligible ones (indices ascending, so every
-   * combination is visited once). `depth` lines are chosen already, `from` is the first index to try.
-   * Branches whose covers outnumber the fish size are cut. Returns true once `f.result` is set.
-   */
+  // Depth-first choice of `size` base lines out of the eligible ones (indices ascending, so every combination is visited
+  // once); `depth` are chosen already, `from` is the first index to try. Branches whose covers outnumber the fish size are
+  // cut. Returns true once `f.result` is set.
   function extendBases(info, depth, from) {
     const f = info.frame;
     const size = f.size;
@@ -251,10 +224,7 @@
     return false;
   }
 
-  /**
-   * Lists the eligible base lines of one digit and orientation into the scratch buffers.
-   * @returns {number} How many there are.
-   */
+  // Lists the eligible base lines of one digit and orientation into the scratch buffers; returns how many there are.
   function collectBases(model, state, info, size, digit, orient) {
     const cand = state.candidates;
     const val = state.value;
@@ -302,15 +272,8 @@
     return count;
   }
 
-  /**
-   * The generic fish: every digit, rows as base lines then columns as base lines, first pattern found.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state
-   * @param {Object} ctx
-   * @param {number} size  2 = X-Wing, 3 = Swordfish, 4 = Jellyfish.
-   * @param {string} id    Technique id for the Finding.
-   * @returns {?Finding}
-   */
+  // The generic fish (size 2 = X-Wing, 3 = Swordfish, 4 = Jellyfish): every digit, rows as base lines then columns, first
+  // pattern found.
   function findFish(model, state, ctx, size, id) {
     const info = infoFor(model, ctx);
     const frame = { model: model, state: state, size: size, id: id, digit: 0, bit: 0, orient: ROW,
@@ -336,16 +299,8 @@
     return null;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Simple Colouring
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Fills unitCount / unitA / unitB for one digit: 2 for a strong link (then unitA, unitB are its cells),
-   * otherwise -1 for a unit that cannot give one (incomplete, digit placed) or the candidate count capped
-   * at 3.
-   * @returns {number} How many strong links there are.
-   */
+  // Fills unitCount / unitA / unitB for one digit: 2 for a strong link (unitA, unitB are its cells), otherwise -1 for a
+  // unit that cannot give one (incomplete, digit placed) or the candidate count capped at 3. Returns the number of links.
   function findStrongLinks(model, state, ctx, info, digit) {
     const cand = state.candidates;
     const val = state.value;
@@ -378,7 +333,6 @@
     return links;
   }
 
-  /** Whether the open cell `c` (a candidate for the digit) is an end of some strong link. */
   function hasStrongLink(model, info, c) {
     const cu = model.cellUnits[c];
     for (let k = 0; k < cu.length; k++) {
@@ -387,11 +341,8 @@
     return false;
   }
 
-  /**
-   * Walks the strong links from `start`, writes the colours (1 / 2) and the component id, and queues the
-   * component's cells in `info.queue`.
-   * @returns {{size: number, consistent: boolean}}
-   */
+  // Walks the strong links from `start`, writes the colours (1 / 2) and the component id, and queues the component's
+  // cells in `info.queue`.
   function colourComponent(model, info, start, compId) {
     const queue = info.queue;
     const colour = info.colour;
@@ -444,10 +395,8 @@
     };
   }
 
-  /**
-   * Rule "wrap" for the component in `info.queue[0 .. size - 1]`: the cells to clear, or null.
-   * `info.witness` receives two same-coloured cells that see each other.
-   */
+  // Rule "wrap" for the component in `info.queue[0 .. size - 1]`: the cells to clear, or null; `info.witness` receives two
+  // same-coloured cells that see each other.
   function wrapTargets(model, info, size, compId) {
     const queue = info.queue;
     let wrapped = 0;
@@ -530,13 +479,6 @@
     return null;
   }
 
-  /**
-   * Simple Colouring: wrap and trap on the strong-link components of every digit, first one found.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state
-   * @param {Object} ctx
-   * @returns {?Finding}
-   */
   function findSimpleColouring(model, state, ctx) {
     const info = infoFor(model, ctx);
     for (let digit = 1; digit <= model.digits; digit++) {
@@ -546,10 +488,6 @@
     }
     return null;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Registration
-  // ---------------------------------------------------------------------------------------------
 
   function define(id, baseCost, order, find) {
     if (SG.techniques.has(id)) return;

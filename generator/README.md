@@ -319,9 +319,9 @@ of random removals, about a ninth of the board tried per step, with the removed 
 that had to go back framed dashed red; rounds of the guided dig, each taking the removal that makes the
 puzzle hardest; for Greater-Than the batches of signs taken away and the clues shown when the puzzle came out
 too hard; and the finished puzzle. The technical work (settings, board model, rating, tuning, samples that
-missed the level) is not shown. A Classic 9×9 *easy* puzzle with seed 3, for example, replays in 7 steps: the
-full solution, five batches of random removals (9, 10, 10 and 10 cells, then "8 cells removed · 2 cells put
-back") and the finished puzzle with 34 clues. `SG.player.create()` is the manual player (first, previous,
+missed the level) is not shown. A Classic 9×9 *easy* puzzle with seed 3, for example, replays in 9 steps: the
+full solution, five batches of random removals (9, 10, 10, 10 and 4 cells), two rounds of the guided dig (2
+cells each) and the finished puzzle with 34 clues. `SG.player.create()` is the manual player (first, previous,
 next, last, seek; position 0 is the empty grid), `SG.stepView.create()` the description of the step on show
 (with a legend of the board frames and the techniques the puzzle needs at that step). The explanation
 of the seven steps lives in the Help dialog (tab "How it works"): one collapsible entry per step with its
@@ -485,7 +485,10 @@ sudoku-generator/
     ├── harness.js · node-runner.js · soak.js · perf.js · qualify.js
     ├── fixtures/           puzzles and fixtures with known answers, the performance helper and the
     │                       regression hashes (regression.js, generated)
-    └── suites/             one *.test.js per area, 43 in all (found automatically)
+    ├── suites/             the quick set, run by default: one *.test.js per area, 36 in all (found
+    │                       automatically), smoke.test.js among them
+    └── manual/             the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
+                            extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
 
 ## Adding a variant
@@ -605,14 +608,16 @@ the other variants is natural): `index.html` (a `<script>` tag), `tests.html` (`
 `tests/node-runner.js` (`SOURCE_FILES`) and `js/worker/gen.worker.js` (`SCRIPTS`, with a path relative to
 `js/worker/`). `ui-contract.test.js` checks that the four agree.
 
-**3. Tests you get for free.** `tests/suites/variants.test.js` loops over `SG.variants.list()`, so the new
-variant is covered without editing any test: CV0 the definition, CV1 every model passes
+**3. Tests you get for free.** `tests/manual/variants.test.js` (a heavy suite: `node tests/node-runner.js
+--suite=variants`) loops over `SG.variants.list()`, so the new variant is covered without editing any test: CV0 the definition, CV1 every model passes
 `SG.model.validate`, CV2 full grids, CV3 a puzzle at every declared level (and the other levels are
 refused), CV4 the invariants I1–I7 of [design.md](design.md) §15.3 (one solution, givens ⊂ solution, …; I6 uses the
 variant's own clue floor), CV5 the same seed gives the same puzzle, CV6 no generation hangs, CV7 the names,
-option labels and level names exist in both languages. Write an
-extra suite (`tests/suites/disjoint.test.js`, and add its name to `SUITE_FILES` in `tests.html`) only for
-logic of your own.
+option labels and level names exist in both languages. The quick set counts the variants too: add the id to
+`EXPECTED_IDS` in `tests/suites/smoke.test.js`, which then generates a puzzle of the new variant at its easiest
+level. Write an extra suite (`tests/suites/disjoint.test.js`, or `tests/manual/disjoint.test.js` when it is heavy,
+and add its name to `SUITE_FILES`, or to `MANUAL_SUITE_FILES` for a heavy one, in `tests.html`;
+`tests/suites/ui-contract.test.js` enforces it) only for logic of your own.
 
 **4. Add its help entry.** The in-app Help must explain every variant. In `js/ui/help.js` add the id to
 `VARIANT_HELP` (`{ figure: 'board' }` draws the empty board automatically) and add the three texts
@@ -625,7 +630,8 @@ seeds and offers a level when at least 36 hit it exactly within the time budget 
 least 90 of the 100); put the levels it prints into `difficultySupport` and its table into
 [docs/report-v2/qualification.md](docs/report-v2/qualification.md). `node tests/soak.js --variant=disjoint9` then shows
 how often each requested level is hit, the invariant violations and the time per puzzle. A level that misses
-can be helped by a `clueFloorScale`; otherwise it stays hidden.
+can be helped by a `clueFloorScale`; otherwise it stays hidden. The manual suite `difficulty` (`node tests/node-runner.js
+--suite=difficulty`) checks that the lists in the definitions and in that file agree.
 
 ## Adding a technique
 
@@ -727,19 +733,32 @@ header of `js/core/techniques.js`. A complete example — *Full House*, a unit w
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # every suite (43, about 3,500 tests), about eight minutes
-node tests/node-runner.js --suite=killer,variants  # only these suites (file name without .test.js)
+node tests/node-runner.js                          # the quick set (36 suites, about 2,520 tests), under a minute
+node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8, about eight minutes)
+node tests/node-runner.js --all                    # quick + manual (44 suites, about 3,560 tests), about nine minutes
+node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
+**Two sets of suites, so that development stays fast.** `tests/suites/` is the **quick set**: 36 suites, about
+2,520 tests, about 50 seconds, and what runs by default. It includes `smoke.test.js`, which generates one puzzle
+per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
+`tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
+`extra-regions`, `wordoku` and `jigsaw`, about eight minutes together — which are not part of the default run:
+run them with `--manual` (only these) or `--all` (quick and manual, about nine minutes), or by name with
+`--suite=killer`, which works for any suite. While developing, run the quick set, and a heavy suite by name when you
+touch its area; run `--all` before a release and whenever you touch generation, scoring or a variant. The CI
+workflow runs `node tests/node-runner.js --all` before every deploy.
+
 The runner loads `SOURCE_FILES` with `vm.runInThisContext`, discovers `tests/fixtures/*.js` and
-`tests/suites/*.test.js` by itself, and exits with a code other than 0 on any failure. The suites cover the
+`tests/suites/*.test.js` (and `tests/manual/*.test.js` with `--manual` or `--all`) by itself, and exits with a code
+other than 0 on any failure. The suites cover the
 engine, every variant, the solving techniques, the pipeline and its events, the worker and its client, and the
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks this README
 against the code: its variants table, URL parameters, script names, links, commands and flags, the `SG.…`
-names and the two worked examples. At the tip of this repository the runner counts 3,513 tests in 43 suites,
-all green; the counts of the combined project at its final review (before the split) are in
+names and the two worked examples. At the tip of this repository the runner counts about 3,560 tests in 44 suites
+(about 2,520 in the 36 quick ones), all green; the counts of the combined project at its final review (before the split) are in
 `docs/report-v1.md`.
 
 The suites check the generation time of every variant against the budgets of [design.md](design.md) §9.1 with
@@ -748,8 +767,9 @@ the environment variable `CI` is set (as on GitHub Actions), or the factor in `S
 (`SG_TIME_FACTOR=1` checks the budgets themselves). The budgets as such are enforced by `node tests/qualify.js`
 on the reference machine and measured by `node tests/perf.js`.
 
-- **In the browser:** open `tests.html` (it works from `file://`). Query parameters:
-  `?suite=killer&filter=text&bail=1&autorun=0`.
+- **In the browser:** open `tests.html` (it works from `file://`). It loads the quick suites; `?all=1` also
+  loads the manual ones, `?manual=1` runs only the manual ones and `?suite=<name>` works for both. Other query
+  parameters: `filter`, `bail=1` and `autorun=0`, e.g. `?suite=killer&filter=text&bail=1&autorun=0`.
 - **Soak and calibration** — generates hundreds of puzzles across variants and levels, checks the invariants
   I1–I7 and prints a confusion matrix of requested against achieved level, the time per puzzle against its
   budget and a score histogram: `node tests/soak.js --quick` (about 700 puzzles), `node tests/soak.js --full`
@@ -760,15 +780,16 @@ on the reference machine and measured by `node tests/perf.js`.
 - **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
   variant offers (40 fixed seeds per variant and level through the real pipeline, 60 more for a borderline level,
   a time budget on the 95th percentile) and prints the table and the support lists; `--variant`, `--level`,
-  `--jobs`, `--json` and `--markdown` narrow it down or save it. The last run is in
+  `--jobs`, `--json` and `--markdown` narrow it down or save it; `--probe=N` takes a quick look (N seeds per level, no verdict). The last run is in
   [docs/report-v2/qualification.md](docs/report-v2/qualification.md).
 - **Performance** against the budgets of [design.md](design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. The *regression hashes* in `tests/fixtures/regression.js`
-  guard against an optimisation changing a puzzle: `--check-hashes` compares, and `--update-hashes` records new
+  guard against an optimisation changing a puzzle (the quick `smoke` suite checks a sample of them, the manual
+  `perf` suite all of them): `--check-hashes` compares, and `--update-hashes` records new
   ones after a change that is meant to alter puzzles (a calibration, a new digging rule). `--alloc` probes the
   hot loops for allocation.
 - **Deep statistical runs** in the mega, multigrid and variants suites are off by default; enable them with the
-  environment variable `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid`; in
+  environment variable `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; in
   PowerShell `$env:SG_DEEP = 1`).
 - **Final QA report:** `docs/report-v1.md`.
 
@@ -811,7 +832,8 @@ The full list is in [design.md](design.md) §12.2:
   offers are the ones it passed in the qualification ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
 - **The hardest levels are the slowest**: measured in Node (`node tests/qualify.js`), the slowest combinations
   are Greater-Than and Killer from expert upwards and the hell levels of the large boards, with a 95th
-  percentile of 2.5–6 s and single requests up to about 11 s; most other combinations take well under a second.
+  percentile of up to about 9.5 s (Greater-Than expert; Killer expert and nightmare 8–9 s; Monster 16×16 and
+  Samurai hell 2 6–7 s) and single requests up to about 13 s; most other combinations take well under a second.
   `node tests/perf.js` measures every combination against the budgets of [design.md](design.md) §9.1 on your
   machine.
 - **Wordoku in Vietnamese**: nine-letter words with nine different letters are rare in Vietnamese, so the
@@ -1073,9 +1095,9 @@ hoặc các dấu (So sánh); từng đợt xóa ô ngẫu nhiên, mỗi bước
 được đóng khung, ô phải trả lại được đóng khung nét đứt màu đỏ; các vòng đào có định hướng, mỗi vòng chọn cách
 xóa làm đề khó nhất; ở biến thể So sánh còn có các đợt bỏ dấu và các số cho sẵn được hiện thêm khi đề khó quá
 mức; cuối cùng là đề hoàn chỉnh. Phần việc kỹ thuật (cấu hình, mô hình bảng, chấm điểm, hiệu chỉnh, các lần
-đào trượt mức) không được hiện. Ví dụ, một đề Cổ điển 9×9 mức *dễ* với seed 3 phát lại trong 7 bước: lời giải
-đầy đủ, năm đợt xóa ngẫu nhiên (9, 10, 10 và 10 ô, rồi "xóa 8 ô · trả lại 2 ô") và đề hoàn chỉnh với 34 số
-cho sẵn. `SG.player.create()` là bộ phát lại điều khiển bằng tay (về đầu, lùi, tiến, đến cuối, nhảy đến một
+đào trượt mức) không được hiện. Ví dụ, một đề Cổ điển 9×9 mức *dễ* với seed 3 phát lại trong 9 bước: lời giải
+đầy đủ, năm đợt xóa ngẫu nhiên (9, 10, 10, 10 rồi 4 ô), hai vòng đào có định hướng (mỗi vòng xóa 2 ô) và đề
+hoàn chỉnh với 34 số cho sẵn. `SG.player.create()` là bộ phát lại điều khiển bằng tay (về đầu, lùi, tiến, đến cuối, nhảy đến một
 vị trí; vị trí 0 là lưới trống), `SG.stepView.create()` là phần mô tả bước đang xem (kèm chú giải các khung trên
 bảng và bảng điểm của các kỹ thuật mà đề cần ở bước đó). Lời giải thích của
 bảy bước nằm trong hộp thoại Trợ giúp (thẻ "Cách hoạt động"): mỗi bước một mục thu gọn / mở rộng được, với
@@ -1164,7 +1186,7 @@ một `try/catch` riêng:
 
 | Module | Làm gì |
 |--------|--------|
-| `SG.exportUi` | Hộp thoại In đề (in / PDF đề đang hiển thị, có thể kèm lời giải ở một trang riêng), nút **Xuất văn bản** (`action { id: 'exportCode' }`: các đề đã chọn dưới dạng văn bản dễ đọc, `buildExportText(items)`) và nút **Chơi** (`action { id: 'play' }`: mở đề trong sudoku-player, xem ở trên) |
+| `SG.exportUi` | Hộp thoại In đề (in / PDF các đề chọn từ danh sách đã lưu, 1, 2 hoặc 4 đề mỗi trang, có thể kèm lời giải ở các trang riêng), nút **Xuất văn bản** (`action { id: 'exportCode' }`: các đề đã chọn dưới dạng văn bản dễ đọc, `buildExportText(items)`) và nút **Chơi** (`action { id: 'play' }`: mở đề trong sudoku-player, xem ở trên) |
 | `SG.a11y` | Bảng dưới dạng lưới ARIA với điều hướng bằng bàn phím, thông báo trực tiếp (khi bắt đầu tạo đề, khi đổi ngôn ngữ), hộp thoại Cài đặt |
 | `SG.theme` | Giao diện sáng, tối, tương phản cao (và "tự động"), gợi ý cho các trạng thái trống / bận / lỗi |
 | `SG.help` | Hộp thoại Trợ giúp (luật, bậc thang kỹ thuật, phím tắt) |
@@ -1183,7 +1205,8 @@ nguyên từng byte.
 ### Cây thư mục
 
 Xem [cây thư mục ở phần tiếng Anh](#directory-tree): `index.html`, `tests.html`, `css/`, `js/core/` (bộ máy,
-không DOM), `js/variants/`, `js/worker/`, `js/ui/` (gồm `exchange.js`), `assets/wordlists/`, `docs/` và `tests/`.
+không DOM), `js/variants/`, `js/worker/`, `js/ui/` (gồm `exchange.js`), `assets/wordlists/`, `assets/wordbook/`, `docs/` và
+`tests/` (`tests/suites/`: bộ kiểm thử nhanh, chạy mặc định; `tests/manual/`: 8 suite nặng).
 
 ## Thêm một biến thể
 
@@ -1205,13 +1228,17 @@ chúng. Không cần thêm mã giải nào, vì một nhóm chỉ là thêm mộ
    `index.html` (thẻ `<script>`), `tests.html` (`SOURCE_FILES`), `tests/node-runner.js` (`SOURCE_FILES`) và
    `js/worker/gen.worker.js` (`SCRIPTS`, đường dẫn tính từ `js/worker/`). `ui-contract.test.js` kiểm tra bốn nơi
    khớp nhau.
-3. **Các bài kiểm tra có sẵn.** `tests/suites/variants.test.js` duyệt `SG.variants.list()`, nên biến thể mới
+3. **Các bài kiểm tra có sẵn.** `tests/manual/variants.test.js` (suite nặng: `node tests/node-runner.js
+   --suite=variants`) duyệt `SG.variants.list()`, nên biến thể mới
    được kiểm tra mà không phải sửa bài nào: CV0 định nghĩa, CV1 mọi mô hình qua `SG.model.validate`, CV2 lưới
    đầy đủ, CV3 một đề ở mọi mức đã khai báo (các mức khác bị từ chối), CV4 các bất biến I1–I7 của
    [design.md](design.md) §15.3 (I6 dùng ngưỡng gợi ý riêng của biến thể), CV5 cùng seed cho cùng đề, CV6 không lần
    tạo nào bị treo, CV7 tên, nhãn tùy chọn và tên mức có trong cả hai
-   ngôn ngữ. Chỉ viết thêm một suite riêng (`tests/suites/disjoint.test.js`, và thêm tên của nó vào
-   `SUITE_FILES` trong `tests.html`) cho logic riêng của bạn.
+   ngôn ngữ. Bộ nhanh cũng đếm các biến thể: hãy thêm mã vào `EXPECTED_IDS` trong
+   `tests/suites/smoke.test.js`, suite này sẽ tạo một đề của biến thể mới ở mức dễ nhất. Chỉ viết thêm một suite
+   riêng (`tests/suites/disjoint.test.js`, hoặc `tests/manual/disjoint.test.js` nếu nó nặng, và thêm tên của nó vào
+   `SUITE_FILES`, hoặc `MANUAL_SUITE_FILES` cho suite nặng, trong `tests.html`; `tests/suites/ui-contract.test.js`
+   bắt buộc điều này) cho logic riêng của bạn.
 4. **Thêm mục trợ giúp.** Phần Trợ giúp trong ứng dụng phải giải thích mọi biến thể. Trong `js/ui/help.js`,
    thêm mã vào `VARIANT_HELP` (`{ figure: 'board' }` tự vẽ bảng trống) và thêm ba đoạn chữ
    `help.variant.disjoint9.rules`, `.special` và `.figure` vào mảnh ngôn ngữ ở cuối tệp, bằng cả hai ngôn ngữ.
@@ -1222,7 +1249,8 @@ chúng. Không cần thêm mã giải nào, vì một nhóm chỉ là thêm mộ
    seed, cần ít nhất 90 trên 100); hãy chép các mức nó in ra vào `difficultySupport` và bảng của nó vào
    [docs/report-v2/qualification.md](docs/report-v2/qualification.md). Sau đó `node tests/soak.js --variant=disjoint9` cho
    biết tần suất đạt từng mức yêu cầu, các vi phạm bất biến và thời gian mỗi đề. Mức nào không đạt có thể được
-   giúp bằng `clueFloorScale`; nếu không thì nó bị ẩn.
+   giúp bằng `clueFloorScale`; nếu không thì nó bị ẩn. Suite thủ công `difficulty` (`node tests/node-runner.js
+   --suite=difficulty`) kiểm tra danh sách trong định nghĩa và trong tệp đó khớp nhau.
 
 ## Thêm một kỹ thuật
 
@@ -1258,18 +1286,31 @@ của `js/core/techniques.js`; ví dụ hoàn chỉnh *Full House* (một nhóm 
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # mọi suite (43, khoảng 3.500 bài), khoảng tám phút
-node tests/node-runner.js --suite=killer,variants  # chỉ các suite này (tên tệp bỏ .test.js)
+node tests/node-runner.js                          # bộ nhanh (36 suite, khoảng 2.520 bài), chưa tới một phút
+node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
+node tests/node-runner.js --all                    # nhanh + thủ công (44 suite, khoảng 3.560 bài), khoảng chín phút
+node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
+**Hai nhóm suite, để việc phát triển luôn nhanh.** `tests/suites/` là **bộ nhanh**: 36 suite, khoảng 2.520 bài,
+khoảng 50 giây, và là thứ chạy mặc định. Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
+tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
+`variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw`, tổng cộng khoảng
+tám phút — không thuộc lần chạy mặc định: chạy bằng `--manual` (chỉ các suite này) hoặc `--all` (nhanh và thủ công,
+khoảng chín phút), hay theo tên bằng `--suite=killer` (dùng được cho mọi suite). Khi đang phát triển, hãy chạy bộ
+nhanh, và chạy theo tên một suite nặng khi bạn đụng đến vùng của nó; chạy `--all` trước khi phát hành và mỗi khi
+đụng đến việc sinh đề, tính điểm hay một biến thể. Workflow CI chạy `node tests/node-runner.js --all` trước mỗi
+lần triển khai.
+
 Bộ chạy nạp `SOURCE_FILES` bằng `vm.runInThisContext`, tự tìm `tests/fixtures/*.js` và
-`tests/suites/*.test.js`, và thoát với mã khác 0 khi có lỗi. Các suite bao phủ bộ máy, mọi biến thể, các kỹ thuật
+`tests/suites/*.test.js` (cùng `tests/manual/*.test.js` khi có `--manual` hoặc `--all`), và thoát với mã khác 0 khi
+có lỗi. Các suite bao phủ bộ máy, mọi biến thể, các kỹ thuật
 giải, pipeline cùng các sự kiện của nó, worker và client của nó, và phần logic thuần của mọi module giao diện
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu README này với mã nguồn: bảng biến thể, tham số
 URL, tên các script, liên kết, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 3.513 bài trong 43 suite, tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm khoảng 3.560 bài trong 44 suite (khoảng 2.520 bài trong 36 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong `docs/report-v1.md`.
 
 Các suite so thời gian tạo đề của mọi biến thể với ngân sách ở [design.md](design.md) §9.1 kèm một hệ số dung
@@ -1278,8 +1319,9 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
 đúng ngân sách). Bản thân các ngân sách do `node tests/qualify.js` bảo đảm trên máy tham chiếu và do
 `node tests/perf.js` đo.
 
-- **Trong trình duyệt:** mở `tests.html` (chạy được từ `file://`). Tham số truy vấn:
-  `?suite=killer&filter=text&bail=1&autorun=0`.
+- **Trong trình duyệt:** mở `tests.html` (chạy được từ `file://`). Trang nạp các suite nhanh; `?all=1` nạp thêm
+  các suite thủ công, `?manual=1` chỉ chạy các suite thủ công và `?suite=<tên>` dùng được cho cả hai. Các tham số
+  truy vấn khác: `filter`, `bail=1` và `autorun=0`, ví dụ `?suite=killer&filter=text&bail=1&autorun=0`.
 - **Soak và hiệu chỉnh** — tạo hàng trăm đề trên các biến thể và mức, kiểm tra các bất biến I1–I7 và in ma trận
   so sánh mức yêu cầu với mức đạt được, thời gian mỗi đề so với ngân sách và biểu đồ điểm:
   `node tests/soak.js --quick` (khoảng 700 đề), `node tests/soak.js --full` (mức chạy cuối cùng để kiểm định:
@@ -1289,14 +1331,15 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
   cho phân vị 95) rồi in bảng và danh sách mức; `--variant`, `--level`, `--jobs`, `--json` và `--markdown` thu
-  hẹp phạm vi hoặc lưu kết quả. Lần chạy gần nhất nằm trong [docs/report-v2/qualification.md](docs/report-v2/qualification.md).
+  hẹp phạm vi hoặc lưu kết quả; `--probe=N` xem nhanh (N seed mỗi mức, không kết luận). Lần chạy gần nhất nằm trong [docs/report-v2/qualification.md](docs/report-v2/qualification.md).
 - **Hiệu năng** so với ngân sách ở [design.md](design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. *Mã băm hồi quy* trong `tests/fixtures/regression.js` bảo
-  đảm một lần tối ưu không làm đổi đề: `--check-hashes` so sánh, còn `--update-hashes` ghi mã băm mới sau một thay
+  đảm một lần tối ưu không làm đổi đề (suite nhanh `smoke` kiểm tra một mẫu của chúng, suite thủ công `perf` kiểm
+  tra tất cả): `--check-hashes` so sánh, còn `--update-hashes` ghi mã băm mới sau một thay
   đổi chủ ý làm đổi đề (hiệu chỉnh, quy tắc đào mới). `--alloc` dò các vòng lặp nóng xem có cấp phát bộ nhớ
   không.
 - **Các lần chạy thống kê sâu** trong các suite mega, multigrid và variants mặc định tắt; bật bằng biến môi
-  trường `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid`; trong PowerShell dùng
+  trường `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; trong PowerShell dùng
   `$env:SG_DEEP = 1`).
 - **Báo cáo kiểm định cuối cùng:** `docs/report-v1.md`.
 
@@ -1336,8 +1379,9 @@ Danh sách đầy đủ ở [design.md](design.md) §12.2:
   điển 9×9 và Sudoku chữ dừng ở mức địa ngục 1; mọi biến thể khác có đủ chín mức. Các mức mà một biến thể cung cấp
   là những mức nó vượt qua trong bước kiểm định ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
 - **Các mức khó nhất chậm nhất**: đo trong Node (`node tests/qualify.js`), các tổ hợp chậm nhất là So sánh và
-  Killer từ mức chuyên gia trở lên và các mức địa ngục của bảng lớn, với phân vị 95 khoảng 2,5–6 giây và có yêu cầu
-  đơn lẻ đến khoảng 11 giây; phần lớn các tổ hợp khác mất chưa tới một giây. `node tests/perf.js` đo mọi tổ hợp
+  Killer từ mức chuyên gia trở lên và các mức địa ngục của bảng lớn, với phân vị 95 đến khoảng 9,5 giây (So sánh
+  chuyên gia; Killer chuyên gia và ác mộng 8–9 giây; Quái vật 16×16 và Samurai địa ngục 2 khoảng 6–7 giây) và có
+  yêu cầu đơn lẻ đến khoảng 13 giây; phần lớn các tổ hợp khác mất chưa tới một giây. `node tests/perf.js` đo mọi tổ hợp
   so với ngân sách ở [design.md](design.md) §9.1 trên máy của bạn.
 - **Wordoku tiếng Việt**: từ chín chữ cái khác nhau rất hiếm trong tiếng Việt nên danh sách ngắn; khi quá ngắn
   thì dùng danh sách tiếng Anh và có thông báo.

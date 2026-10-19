@@ -1,9 +1,6 @@
 /**
- * Seeded random number generator (mulberry32) with deterministic child streams.
- *
- * Same seed => same sequence, on every platform. `fork(tag)` derives an independent stream from
- * (seed, tag) only, so one pipeline stage can change how many numbers it draws without disturbing the
- * numbers seen by any other stage.
+ * Seeded RNG (mulberry32): same seed => same sequence on every platform. `fork(tag)` derives an independent
+ * stream from (seed, tag) only, so a stage can change how many numbers it draws without disturbing other stages.
  */
 (function (root) {
   'use strict';
@@ -12,17 +9,8 @@
 
   var TWO_POW_32 = 4294967296;
 
-  /**
-   * @typedef {Object} Rng
-   * @property {number} seed              The normalised uint32 seed this stream started from.
-   * @property {function(): number} next  Next float in [0, 1).
-   * @property {function(number): number} int      Integer in [0, n) for n >= 1.
-   * @property {function(Array): *} pick           Uniformly chosen element, undefined for an empty array.
-   * @property {function(Array): Array} shuffle    In-place Fisher-Yates shuffle, returns the same array.
-   * @property {function(string): Rng} fork        Independent child stream derived from (seed, tag).
-   */
+  // Rng: seed (normalised uint32), next() in [0, 1), int(n) in [0, n), pick(arr), shuffle(arr) (in place), fork(tag).
 
-  /** FNV-1a 32-bit hash over the UTF-16 code units of a string. */
   function hashString(str) {
     var h = 0x811c9dc5;
     for (var i = 0; i < str.length; i++) {
@@ -32,10 +20,7 @@
     return h >>> 0;
   }
 
-  /**
-   * Mixes a seed with a tag hash (murmur3 finaliser). For a fixed seed the mapping from tag hash to
-   * child seed is a bijection, so different tag hashes can never produce the same child seed.
-   */
+  // Murmur3 finaliser; for a fixed seed, tag hash -> child seed is a bijection, so tags never collide.
   function mixSeed(seed, tagHash) {
     var h = (seed ^ Math.imul(tagHash, 0x9e3779b1)) | 0;
     h = Math.imul(h ^ (h >>> 16), 0x85ebca6b);
@@ -43,10 +28,6 @@
     return (h ^ (h >>> 16)) >>> 0;
   }
 
-  /**
-   * Builds a fresh seed for callers that were not given one.
-   * @returns {number} uint32
-   */
   function randomSeed() {
     return (Date.now() ^ (Math.random() * TWO_POW_32)) >>> 0;
   }
@@ -59,11 +40,6 @@
     return seed >>> 0;
   }
 
-  /**
-   * Creates a random stream.
-   * @param {number} [seed] Any finite number, reduced modulo 2^32. A random seed is used if omitted.
-   * @returns {Rng}
-   */
   function create(seed) {
     var seed32 = normalizeSeed(seed);
     var state = seed32 | 0;

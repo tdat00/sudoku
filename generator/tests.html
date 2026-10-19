@@ -80,9 +80,10 @@
        * Browser test page. It works from file:// because it only injects classic <script> tags.
        *
        * SOURCE_FILES / FIXTURE_FILES / SUITE_FILES list everything that is planned, in load order.
-       * A file that does not exist yet is skipped (it is listed at the bottom of the page), so
-       * later phases need no edit here. Keep SOURCE_FILES in sync with tests/node-runner.js, and
-       * add a name to SUITE_FILES only for a suite that is not planned in design.md section 15.2.
+       * A file that does not exist yet is skipped (it is listed at the bottom of the page).
+       * Keep SOURCE_FILES in sync with tests/node-runner.js. SUITE_FILES are the quick suites of
+       * tests/suites (always loaded); MANUAL_SUITE_FILES are the heavy ones of tests/manual, loaded
+       * only with ?all=1 (both sets), ?manual=1 (only the heavy ones) or ?suite=<name>.
        */
       var SOURCE_FILES = [
         'js/core/ns.js', 'js/core/errors.js', 'js/core/bits.js', 'js/core/budget.js', 'js/core/rng.js',
@@ -108,16 +109,21 @@
       var FIXTURE_FILES = ['classic', 'techniques-helper', 'techniques', 'rated', 'perf-helper', 'regression']
         .map(function (n) { return 'tests/fixtures/' + n + '.js'; });
       var SUITE_FILES = [
-        'a11y', 'bits', 'cache', 'constraints', 'controls', 'difficulty', 'digger', 'events', 'exchange', 'export',
-        'format', 'full-grid', 'greater-than', 'help', 'history', 'i18n', 'jigsaw', 'killer', 'logical-solver', 'mega', 'model',
-        'multigrid', 'extra-regions', 'perf', 'pipeline', 'player', 'purity', 'result-view', 'rng',
+        'a11y', 'bits', 'cache', 'constraints', 'controls', 'digger', 'events', 'exchange', 'export',
+        'format', 'full-grid', 'help', 'history', 'i18n', 'logical-solver', 'mega', 'model',
+        'multigrid', 'pipeline', 'player', 'purity', 'result-view', 'rng', 'smoke',
         'solver', 'steps', 'store', 'tech-basic', 'tech-cage', 'tech-chain', 'tech-fish', 'tech-ineq',
-        'tech-subset', 'tech-wing', 'techniques', 'theme', 'ui-contract', 'variants', 'wordoku', 'worker'
+        'tech-subset', 'tech-wing', 'techniques', 'theme', 'ui-contract', 'worker'
+      ];
+      var MANUAL_SUITE_FILES = [
+        'difficulty', 'extra-regions', 'greater-than', 'jigsaw', 'killer', 'perf', 'variants', 'wordoku'
       ];
 
       var SG = window.SG;
       var $ = function (id) { return document.getElementById(id); };
       var params = new URLSearchParams(window.location.search);
+      var onlyManual = params.get('manual') === '1';
+      var withManual = onlyManual || params.get('all') === '1' || MANUAL_SUITE_FILES.indexOf(params.get('suite')) !== -1;
       var currentError = null;
       var running = false;
 
@@ -156,7 +162,10 @@
           .concat(FIXTURE_FILES.map(function (f) { return { file: f, suite: null }; }))
           .concat(SUITE_FILES.map(function (name) {
             return { file: 'tests/suites/' + name + '.test.js', suite: name };
-          }));
+          }))
+          .concat(withManual ? MANUAL_SUITE_FILES.map(function (name) {
+            return { file: 'tests/manual/' + name + '.test.js', suite: name };
+          }) : []);
 
         for (var i = 0; i < queue.length; i++) {
           var item = queue[i];
@@ -207,7 +216,7 @@
         var list = null;
         var group = null;
         var results = await SG.test.run({
-          suite: $('suite').value,
+          suite: $('suite').value || (onlyManual ? MANUAL_SUITE_FILES : ''),
           filter: $('filter').value,
           bail: $('bail').checked,
           yieldMs: 40,
@@ -283,6 +292,12 @@
           $('suite').appendChild(option);
         });
         $('suite').value = params.get('suite') || '';
+        if (!withManual) {
+          var notice = $('notice');
+          notice.hidden = false;
+          notice.textContent = 'Quick suites only (' + SUITE_FILES.length + '). Add ?all=1 to the address to also run the ' +
+            MANUAL_SUITE_FILES.length + ' manual (heavy) suites of tests/manual, or ?manual=1 for those alone.';
+        }
         $('run').disabled = false;
         if (params.get('autorun') !== '0') return runTests();
         $('summary').textContent = 'Loaded. Press Run.';
