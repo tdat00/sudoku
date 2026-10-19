@@ -42,9 +42,11 @@ account, no build step. **Open it: [tdat00.github.io/sudoku-player](https://tdat
    **every puzzle of the generator's list** in the address (`#puzzle=<token>&active=<n>`: their text, compressed
    and URL-safe), which is read in your browser and then removed from the address bar. All the puzzles go into
    the list on the left, and the one that was on screen in the generator opens first.
-2. Or press **Import** and paste the text of Sudoku Generator's **Export** box (one or many puzzles of any
-   variant — a header line `#1,variant,level,seed`, the grid, and for Jigsaw, Killer, Greater-Than and Wordoku a
-   few lines that describe the board); you can also drop a text file anywhere on the page. Every puzzle that can
+2. Or press **Import** and paste the text of Sudoku Generator's **Export** box (one or many puzzles, up to 200
+   in one text, of any variant — a header line
+>>>> `#1,variant,level,seed`, the grid, and for Jigsaw, Killer, Greater-Than and Wordoku a
+   few lines that describe the board); you can also drop a text file (up to 8 MB) anywhere on the page.
+>>>> Every puzzle that can
    be rebuilt goes into the list on the left and the first one opens; one that cannot (for example a text from an
    older generator without those lines) is listed as skipped. A link (`…#puzzle=<token>`) or one line of 81
    (9×9), 36 (6×6) or 16 (4×4) characters where `.`, `0`, `-` and `_` mean an empty cell also work. The
@@ -61,15 +63,19 @@ account, no build step. **Open it: [tdat00.github.io/sudoku-player](https://tdat
   carries the rebuilt model, so the player has no variant or generation code at all.
 - Imported difficulty names cover **Very easy, Easy, Normal, Hard, Expert, Master, Nightmare, Hell 1 and
   Hell 2**, in English and Vietnamese. Generator rating-v2 documents still use `sudoku-generator/v1`;
-  the player preserves `difficulty.ratingVersion` without recalculating scores. Legacy documents and text
-  exports still open, and changing rating metadata does not change a puzzle's saved-progress identity.
+  the player preserves `difficulty.ratingVersion` without recalculating scores. Older documents and text
+  exports still open, but the previous ids (`medium`, `veryHard`, `evil`, `nightmare1`, `nightmare2`) are not
+  translated: such a puzzle opens with an unknown difficulty (no level in its title). Changing rating metadata
+  does not change a puzzle's saved-progress identity.
+>>>>
 - Select by mouse, touch or keyboard (arrow keys, Home / End, Page Up / Down); type a symbol or use the
   on-screen number pad; notes (`N`); erase; undo / redo (`Ctrl+Z`, `Ctrl+Y`).
 - Error checking: off, rule conflicts (repeats, cage sums, signs) or every wrong entry as you type.
 - **Hints** in three steps (the technique and where to look, the cells, the move) that are always correct and
   name one of 26 techniques, with a translated name and description.
 - Symbol modes: digits, letters, colours (always with a shape), shapes and the Wordoku word; a solved Wordoku
-  shows its key word.
+  shows its key word and, when the built-in word book knows the word, its meaning.
+>>>>
 - A timer that pauses when you leave the tab, completion detection and reveal-a-cell.
 - **Saved progress** per puzzle (the last 100 puzzles) and the last 100 imported puzzles; opening the same puzzle
   again offers *Continue* or *Start over*.
@@ -93,7 +99,9 @@ account, no build step. **Open it: [tdat00.github.io/sudoku-player](https://tdat
 
 There is nothing to install or build. Open `index.html` in a browser (it works from `file://`), or serve the
 folder with any static server, for example `python -m http.server` or `npx serve`, and open
-`http://localhost:8000/`. Add `?lang=vi` for Vietnamese.
+`http://localhost:8000/`. Add `?lang=vi` for Vietnamese (the guide too: `help.html?lang=vi`; `help.html#tech-xWing`
+opens one technique).
+>>>>
 
 The puzzle link looks like `…/index.html#puzzle=<token>` (with `&active=<n>` for a list of puzzles). The token is
 compressed and URL-safe: the text of the puzzles of the generator's Play button (`t.…`), or the document of one
@@ -121,21 +129,27 @@ If the browser blocks storage, the player says so and keeps your game in memory 
 ## Tests
 
 ```
-node tests/node-runner.js          # every suite; no packages (run on Node 24)
+node tests/node-runner.js          # every suite (28, about 15 seconds); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 
-`tests.html` runs the same suites in a browser (the ones that read the fixtures need `http://`). The
-fixtures in `tests/fixtures/puzzles/` are real documents made by Sudoku Generator
-([`docs/fixtures.md`](./docs/fixtures.md)). The browser run in headless Edge over the DevTools protocol is
-recorded in [`docs/qa.md`](./docs/qa.md).
+These Node tests are quick and are the default set: developers and coding agents run `node tests/node-runner.js`
+(or a few suites with `--suite=`) while developing, and the deployment workflow runs all of them. `tests.html`
+runs the same suites in a browser (the ones that read the fixtures need `http://`). The fixtures in
+`tests/fixtures/puzzles/` are real documents made by Sudoku Generator ([`docs/fixtures.md`](./docs/fixtures.md)).
+
+The slow checks are the **browser scripts** in `tests/browser/` (`node tests/browser/run-all.js`: headless Edge
+over the DevTools protocol, several minutes). They are **manual**, not part of the workflow, and are run only
+when a change touches the UI; the run is recorded in [`docs/qa.md`](./docs/qa.md).
+>>>>
 
 [Back to top](#top)
 
 ## Deploy on GitHub Pages
 
 Choose **Settings → Pages → Build and deployment → Source → GitHub Actions**. The
-[deployment workflow](.github/workflows/pages.yml) runs the Node 24 tests and publishes the app after every
+[deployment workflow](.github/workflows/pages.yml) runs all the Node 24 tests (`node tests/node-runner.js`, not the browser scripts) and publishes the app after every
+>>>>
 push to `main`; you can also run it manually from the **Actions** tab. Only the app files and licence are
 published, not the tests or working notes. The live app is at
 **[tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)**. Sudoku Generator's “Play”
@@ -170,9 +184,11 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
    trang này với **mọi đề trong danh sách của trình sinh đề** nằm trong địa chỉ (`#puzzle=<mã>&active=<n>`: văn
    bản của các đề, đã nén và an toàn cho URL); mã được đọc ngay trong trình duyệt rồi xóa khỏi thanh địa chỉ.
    Tất cả các đề vào danh sách bên trái, và đề đang hiển thị ở trình sinh đề được mở trước.
-2. Hoặc bấm **Nhập đề** rồi dán nội dung ô **Xuất** của Trình sinh đề Sudoku (một hay nhiều đề thuộc mọi biến
-   thể — dòng tiêu đề `#1,biến thể,mức,seed`, lưới, và với Ghép hình, Sát thủ, So sánh, Wordoku có thêm vài dòng
-   mô tả bàn cờ); cũng có thể thả tệp văn bản vào bất kỳ đâu trên trang. Mọi đề dựng lại được sẽ vào danh sách
+2. Hoặc bấm **Nhập đề** rồi dán nội dung ô **Xuất** của Trình sinh đề Sudoku (một hay nhiều đề, tối đa 200 đề trong một
+   văn bản, thuộc mọi biến thể — dòng
+>>>> tiêu đề `#1,biến thể,mức,seed`, lưới, và với Ghép hình, Sát thủ, So sánh, Wordoku có thêm vài dòng
+   mô tả bàn cờ); cũng có thể thả tệp văn bản (tối đa 8 MB) vào bất kỳ đâu trên trang.
+>>>> Mọi đề dựng lại được sẽ vào danh sách
    bên trái và đề đầu tiên được mở; đề không dựng lại được (ví dụ văn bản từ trình sinh đề cũ thiếu các dòng
    đó) được liệt kê là bị bỏ qua. Liên kết (`…#puzzle=<mã>`) hay một dòng 81 (9×9), 36 (6×6) hoặc 16 (4×4) ký
    tự, trong đó `.`, `0`, `-`, `_` là ô trống, cũng dùng được. Nút **Chia sẻ** (trước nút Nhập đề) cho liên kết
@@ -189,15 +205,19 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
   liệu đề mang sẵn mô hình đã dựng, nên trình chơi không có mã biến thể hay mã tạo đề nào.
 - Nhận tên độ khó **Rất dễ, Dễ, Trung bình, Khó, Chuyên gia, Bậc thầy, Ác mộng, Địa ngục 1 và Địa ngục 2**
   bằng tiếng Anh và tiếng Việt. Tài liệu dùng cách chấm điểm v2 vẫn có định dạng `sudoku-generator/v1`;
-  trình chơi giữ `difficulty.ratingVersion` và không tính lại điểm. Tài liệu và văn bản xuất cũ vẫn mở được;
-  đổi thông tin chấm điểm không làm thay đổi định danh đề dùng để lưu tiến độ.
+  trình chơi giữ `difficulty.ratingVersion` và không tính lại điểm. Tài liệu và văn bản xuất cũ vẫn mở được,
+  nhưng các mã cũ (`medium`, `veryHard`, `evil`, `nightmare1`, `nightmare2`) không được dịch sang mã mới: đề đó
+  mở với độ khó không xác định (tiêu đề không có mức). Đổi thông tin chấm điểm không làm thay đổi định danh đề
+  dùng để lưu tiến độ.
+>>>>
 - Chọn ô bằng chuột, cảm ứng hay bàn phím (mũi tên, Home / End, Page Up / Down); gõ ký hiệu hoặc dùng bàn phím
   số trên màn hình; ghi chú (`N`); xóa; hoàn tác / làm lại (`Ctrl+Z`, `Ctrl+Y`).
 - Kiểm tra lỗi: tắt, vi phạm luật (trùng số, tổng lồng, dấu so sánh) hoặc mọi ô sai ngay khi gõ.
 - **Gợi ý** ba bước (kỹ thuật và nơi cần nhìn, các ô, nước đi), luôn đúng và nêu tên một trong 26 kỹ thuật, kèm
   tên và mô tả đã dịch.
 - Kiểu ký hiệu: chữ số, chữ cái, màu (luôn kèm hình), hình và chữ của Wordoku; Wordoku giải xong sẽ hiện từ
-  khóa.
+  khóa và, nếu sách từ có sẵn trong trình chơi biết từ đó, cả nghĩa của từ.
+>>>>
 - Đồng hồ tạm dừng khi bạn rời tab, nhận biết hoàn thành và hiện một ô.
 - **Tiến độ được lưu** cho từng đề (100 đề gần nhất) và 100 đề đã nhập gần nhất; mở lại đúng đề đó sẽ hỏi *Tiếp
   tục* hay *Chơi lại từ đầu*.
@@ -220,7 +240,9 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
 
 Không cần cài đặt hay biên dịch. Mở `index.html` trong trình duyệt (chạy được từ `file://`), hoặc phục vụ thư
 mục bằng bất kỳ máy chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở
-`http://localhost:8000/`. Thêm `?lang=vi` để dùng tiếng Việt.
+`http://localhost:8000/`. Thêm `?lang=vi` để dùng tiếng Việt (trang hướng dẫn cũng vậy:
+`help.html?lang=vi`; `help.html#tech-xWing` mở thẳng một kỹ thuật).
+>>>>
 
 Liên kết đề có dạng `…/index.html#puzzle=<mã>` (kèm `&active=<n>` cho một danh sách đề). Mã đã nén và an toàn cho
 URL: văn bản các đề của nút Chơi ở trình sinh đề (`t.…`), hoặc tài liệu của một đề (`z.…`); phần sau dấu `#`
@@ -248,20 +270,27 @@ Nếu trình duyệt chặn lưu trữ, trình chơi sẽ báo và giữ ván ch
 ## Kiểm thử
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử; không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (28 bộ, khoảng 15 giây); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 
+Các kiểm thử Node này chạy nhanh và là bộ mặc định: lập trình viên và các tác tử lập trình chạy
+`node tests/node-runner.js` (hoặc vài bộ với `--suite=`) trong lúc phát triển, còn workflow triển khai chạy tất cả.
 `tests.html` chạy cùng các bộ kiểm thử trong trình duyệt (những bộ đọc tệp mẫu cần `http://`). Các tệp mẫu trong
 `tests/fixtures/puzzles/` là tài liệu thật do Trình sinh đề Sudoku tạo ra ([`docs/fixtures.md`](./docs/fixtures.md)).
-Lần chạy trình duyệt (Edge không giao diện qua giao thức DevTools) được ghi lại trong [`docs/qa.md`](./docs/qa.md).
+
+Phần chạy chậm là các **script trình duyệt** trong `tests/browser/` (`node tests/browser/run-all.js`: Edge không giao
+diện qua giao thức DevTools, vài phút). Chúng chạy **thủ công**, không nằm trong workflow, và chỉ cần chạy khi thay
+đổi đụng tới giao diện; lần chạy được ghi lại trong [`docs/qa.md`](./docs/qa.md).
+>>>>
 
 [Lên đầu trang](#top)
 
 ## Đưa lên GitHub Pages
 
 Chọn **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-[Workflow triển khai](.github/workflows/pages.yml) chạy các kiểm thử trên Node 24 và xuất bản ứng dụng sau mỗi
+[Workflow triển khai](.github/workflows/pages.yml) chạy mọi kiểm thử Node 24 (`node tests/node-runner.js`, không gồm các script trình duyệt) và xuất bản
+>>>> ứng dụng sau mỗi
 lần đẩy lên `main`; bạn cũng có thể chạy thủ công từ thẻ **Actions**. Chỉ các tệp ứng dụng và giấy phép được
 xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng trực tuyến tại
 **[tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)**. Nút “Chơi” của Trình

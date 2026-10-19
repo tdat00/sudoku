@@ -1,45 +1,27 @@
 /**
- * Help (design.md section 8.3): `SG.help`, the page `help.html` that the Help button of the player opens in a
- * new tab (there is no dialog).
+ * Help: `SG.help`, the page `help.html` that the Help button opens in a new tab (there is no dialog). Sections: the
+ * basics of playing, how hints work, the techniques - grouped, one tab per technique with its explanation and a
+ * REAL example drawn like the hint card of the player - and the keyboard; a side table of contents lists them.
  *
- * The page has four sections: the basics of playing, how the hints work (the hints are part of the guide), the
- * techniques that solve harder puzzles - each with a REAL example - and the keyboard. The techniques are in
- * groups, and each group has a tab for every technique: the tab shows what the technique says and a board drawn
- * the way the hint card of the player draws it. The table of contents on the side lists the sections, the groups
- * and the names of the techniques.
- *
- * The examples are fixed data, not computed when the page opens: `SG.helpExamples[id]` (js/ui/help-examples.js,
- * made by tests/tools/make-technique-examples.js) is a snapshot of a puzzle partway through, with the notes of the
- * cells that matter and what the player's own hint said at that moment. `buildExample` turns it into a board and a
- * hint, `drawExample` draws it with `SG.play.renderSnapshot` and the words of `SG.play.describeHint`, so the text
- * is the hint's, in either language.
- *
- * PUBLIC API (`SG.help`)
- *   SECTION_IDS            the sections, in order.
- *   BASIC_STEPS            the steps of the basics.
- *   SHORTCUTS              the rows of the keyboard section.
- *   buildExample(id)       -> { id, variantId, model, givens, values, notes, hint } | null. Pure (no DOM).
- *   drawExample(el, id)    draws the example of a technique, its explanation and a legend into `el`.
- *   selectTechnique(id)    shows the tab of a technique (and draws its example); false when it is not on the page.
- *   render(rootEl?)        builds the sections into `#help-root` (and the contents into `#help-toc`).
- *   start()                what help.html calls at load: language and theme from the stored preferences, the
- *                          header switches, the first render; returns false on a page without `#help-root`.
+ * The examples are fixed data, not computed when the page opens: `SG.helpExamples[id]` (js/ui/help-examples.js, made
+ * by tests/tools/make-technique-examples.js) is a snapshot of a puzzle partway through, with the notes that matter
+ * and what the player's own hint said at that moment. `buildExample` (pure, no DOM) turns it into a board and a
+ * hint; `drawExample` draws it with `SG.play.renderSnapshot` and the words of `SG.play.describeHint`, so the text is
+ * the hint's, in either language. `start()` is what help.html calls at load (language and theme from the stored
+ * preferences, header switches, first render); it returns false on a page without `#help-root`.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first instance on repeated loads.
   if (SG.help && typeof SG.help.start === 'function') return;
 
   const SECTION_IDS = Object.freeze(['how', 'hints', 'techniques', 'keys']);
 
-  /** The steps of "the basics", in order: the texts are `help.how.<id>.title` and `.text`. */
   const BASIC_STEPS = Object.freeze(['get', 'select', 'enter', 'notes', 'check', 'hint', 'play', 'symbols',
     'save', 'solved']);
 
-  /** The keyboard section: the keys of each row and the key of its description. */
   const SHORTCUTS = Object.freeze([
     Object.freeze({ id: 'move',
       keys: Object.freeze([['←', '→', '↑', '↓'], ['Home', 'End'], ['Page Up', 'Page Down']]) }),
@@ -58,7 +40,6 @@
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const WIDE_QUERY = '(min-width: 60rem)';
 
-  /** Where each technique's tab and panel are, by technique id (rebuilt by every render). */
   const tabs = new Map();
 
   function t(key, args) {
@@ -82,11 +63,6 @@
     return node;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The examples
-  // ---------------------------------------------------------------------------------------------
-
-  /** The cell digits of a snapshot string (81 characters, '.' for an empty cell). */
   function digitsOf(text) {
     return Array.from(text).map(function (ch) { return ch === '.' ? 0 : Number(ch); });
   }
@@ -103,12 +79,7 @@
     return SG.textBoards.DERIVED.indexOf(ex.variant) !== -1 ? SG.textBoards.buildVariant(ex.variant) : null;
   }
 
-  /**
-   * The example of a technique, ready to draw: nothing is played, it is the snapshot of `SG.helpExamples`.
-   * @param {string} id  A technique id of `SG.techniques`.
-   * @returns {?{id: string, variantId: string, model: Object, givens: number[], values: number[],
-   *   notes: number[], hint: Object}} null for an unknown technique or a board it cannot build.
-   */
+  /** The example of a technique, ready to draw (nothing is played, it is the `SG.helpExamples` snapshot); null for an unknown technique or a board it cannot build. */
   function buildExample(id) {
     const ex = SG.helpExamples && Object.prototype.hasOwnProperty.call(SG.helpExamples, id)
       ? SG.helpExamples[id] : null;
@@ -144,13 +115,6 @@
     return list;
   }
 
-  /**
-   * Draws the example of a technique into `container`: the board with the marks of the hint, what the hint says
-   * and a legend of the marks.
-   * @param {Element} container
-   * @param {string} id  A technique id.
-   * @returns {boolean} Whether the example could be drawn.
-   */
   function drawExample(container, id) {
     container.textContent = '';
     let example = null;
@@ -195,10 +159,6 @@
     return true;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The sections
-  // ---------------------------------------------------------------------------------------------
-
   function paragraph(key, cls) {
     return h('p', { class: cls || null, text: t(key) });
   }
@@ -232,7 +192,6 @@
       paragraph('help.hints.sound', 'help__tip')]);
   }
 
-  /** Shows the tab of a technique, hides the others of its group and draws its example the first time. */
   function selectTechnique(id, focus) {
     const entry = tabs.get(id);
     if (entry === undefined) return false;
@@ -263,7 +222,6 @@
     selectTechnique(ids[next], true);
   }
 
-  /** One technique of a group: its tab, and its panel (what it says, and the example). */
   function techniquePanel(tech, group, ids) {
     const nameKey = tech.i18nKey || 'technique.' + tech.id;
     const description = SG.i18n.has('technique.' + tech.id + '.desc') ? t('technique.' + tech.id + '.desc') : '';
@@ -334,11 +292,6 @@
 
   const RENDERERS = { how: renderHow, hints: renderHints, techniques: renderTechniques, keys: renderKeys };
 
-  // ---------------------------------------------------------------------------------------------
-  // The table of contents
-  // ---------------------------------------------------------------------------------------------
-
-  /** Scrolls to the group of a technique after its tab was shown. */
   function goToTechnique(id) {
     if (!selectTechnique(id, false)) return false;
     const group = root.document.getElementById('group-' + tabs.get(id).group);
@@ -358,7 +311,6 @@
     return link;
   }
 
-  /** The contents: the sections, and under the techniques their groups with the name of every technique. */
   function renderToc(nav) {
     nav.textContent = '';
     nav.setAttribute('aria-labelledby', 'help-toc-title');
@@ -397,7 +349,6 @@
     nav.appendChild(details);
   }
 
-  /** Marks the section on screen in the contents. */
   function watchSections() {
     if (typeof root.IntersectionObserver !== 'function') return;
     const links = {};
@@ -424,17 +375,12 @@
     watchSections.observer = observer;
   }
 
-  /** Shows the technique that the address names (`help.html#tech-xWing`) and scrolls to it. */
   function openFromHash() {
     const hash = root.location ? root.location.hash : '';
     const found = /^#tech-([A-Za-z0-9]+)$/.exec(hash);
     if (found !== null) goToTechnique(found[1]);
   }
 
-  /**
-   * Builds the sections in the current language (and the contents).
-   * @param {Element} [rootEl]  Default: `#help-root`.
-   */
   function render(rootEl) {
     const host = rootEl || root.document.getElementById('help-root');
     if (!host) return;
@@ -455,11 +401,6 @@
     root.document.title = t('help.page.title') + ' - ' + t('app.title');
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The page
-  // ---------------------------------------------------------------------------------------------
-
-  /** Tells the CSS how tall the floating header is, so the contents and the anchors sit below it. */
   function measureHeader() {
     const header = root.document.querySelector('.app-header');
     if (header === null) return;
@@ -472,11 +413,6 @@
     });
   }
 
-  /**
-   * Starts the page: the language and the theme of the player's stored preferences, the switches of the header
-   * (they change the same preferences) and the first render.
-   * @returns {boolean} False on a page without `#help-root`.
-   */
   function start() {
     if (typeof document === 'undefined' || document.getElementById('help-root') === null) return false;
     const store = SG.store.instance();
@@ -525,10 +461,6 @@
     render: render,
     start: start
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Strings
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

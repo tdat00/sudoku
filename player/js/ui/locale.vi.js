@@ -1,11 +1,7 @@
 /**
- * Vietnamese language pack: the shared strings of the player (general words, variant and difficulty
- * names, board vocabulary, the names, descriptions and step texts of the techniques a hint can mention,
- * errors). Modules that own their strings add them through `SG.localeFragments` instead; see
- * js/ui/i18n.js. Keep the key set identical to locale.en.js.
- *
- * Placeholders are written `{name}`; for a technique they are the `i18nArgs` of its findings. Plural
- * forms use the suffixes `_one` / `_other`.
+ * Vietnamese language pack: the shared strings of the player. Modules that own their strings add them through
+ * `SG.localeFragments` instead (see js/ui/i18n.js). Keep the key set identical to locale.en.js.
+ * Placeholders are `{name}` (for a technique, the `i18nArgs` of its findings); plural forms use `_one` / `_other`.
  */
 (function (root) {
   'use strict';
@@ -17,10 +13,6 @@
   function add(section) {
     Object.keys(section).forEach(function (key) { pack[key] = section[key]; });
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // General words, units and durations
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'app.title': 'Trình chơi Sudoku',
@@ -63,10 +55,6 @@
     'duration.ms': '{value} ms',
     'duration.s': '{value} giây'
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Variant and difficulty names
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'variant.classic4': 'Sudoku cổ điển 4×4',
@@ -136,9 +124,7 @@
     'variant.wordoku': 'Sudoku Chữ'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Board vocabulary
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'unitKind.box': 'khối',
@@ -155,9 +141,7 @@
     'symbolMode.word': 'Chữ của từ khóa'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Techniques: names, descriptions and the sentence of one step
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'techniqueGroup.basic': 'Số đơn',
@@ -321,9 +305,7 @@
       'ngoài) có tổng {restSum} và chỉ dùng được các chữ số {restDigits}. Các ứng viên khác bị loại.'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Errors (the code of a GenerationError is the key after `error.`)
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'error.unknown': 'Đã xảy ra lỗi ({code}).',

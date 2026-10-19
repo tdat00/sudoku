@@ -27,7 +27,8 @@ byte), so the `model` block is made by the same `plain` function the generator u
 | File | Variant | Level | Seed | Notes |
 |------|---------|-------|-----:|-------|
 | `classic4`, `classic6`, `classic9` | classic 4 / 6 / 9 | easy | 4 / 6 / 9 | |
-| `mega12`, `mega16` | Mega 12×12 (numbers 1–12) / 16×16 (hex) | easy | 12 / 16 | |
+| `mega12`, `mega16` | Mega 12×12 (1–9, A–C)
+>>>> / 16×16 (hex) | easy | 12 / 16 | |
 | `diagonalX`, `hyper`, `jigsaw9` | Diagonal X, Hyper, Jigsaw | easy | 21 / 22 / 23 | |
 | `killer` | Killer (28 cages) | easy | 24 | |
 | `greaterThan` | Greater-Than, signs on the whole grid (10 signs) | normal | 26 | signs only appear from `normal` |
@@ -43,7 +44,15 @@ The table describes the committed legacy files, not a promise that the current g
 For new captures, `make-fixtures.js` and `make-exports.js` request `veryEasy` for classic4/classic6 because
 the score-defined ladder need not offer their former `easy` level.
 
+## Text exports
+`tests/fixtures/exports/` holds the real output of the generator's Export box, each in English (`<name>.en.txt`) and
+Vietnamese (`<name>.vi.txt`): `single`, `classic-mixed`, `structured`, `derived`, `multigrid`. They are what the
+player's Import takes; `SG.testkit.exportText(name)` reads one and `importer.test.js` opens it. They are made the
+same way (`node tests/tools/make-exports.js <path-to-sudoku-generator>`, which only reads the generator) and are
+committed, so they are needed again only when the generator's text format changes.
+
 ## Rating-v2 compatibility
+>>>>
 The old puzzle documents and text exports are deliberately retained as import regressions. Their difficulty
 metadata is not re-labelled. `importer.test.js` additionally varies only the metadata of a fixed puzzle to
 cover `expert`, `hell1`, `hell2`, `ratingVersion: 2`, future optional fields, storage/share
@@ -53,9 +62,12 @@ These metadata-only cases test compatibility, not a claim that the fixture puzzl
 that an updated rating still finds the same saved game.
 
 The frozen `rated.js` puzzles keep their historical labels and technique certificates for solver tests.
-The Help examples likewise remain unchanged: they demonstrate hints, not a difficulty ladder.
-The example-finding tool searches supported v2 levels, including the highest offered hell tier, and
-skips levels the selected generator does not offer.
+The Help examples (`js/ui/help-examples.js`) are puzzles made by the previous generator version: only the level
+labels in their `source.puzzle` were re-labelled by hand to the rating-v2 levels; the puzzles and hints are
+unchanged (they demonstrate hints, not a difficulty ladder). Regenerating them needs the current generator
+(`node tests/tools/make-technique-examples.js <path-to-generator>`); the tool searches supported v2 levels,
+including the highest offered hell tier, and skips levels the selected generator does not offer.
+>>>>
 
 ## How the tests use them
 `SG.testkit.document(name)` reads and parses a file (Node: `fs`; browser: a synchronous request, so a browser

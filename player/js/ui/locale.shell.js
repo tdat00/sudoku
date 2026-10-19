@@ -1,9 +1,6 @@
 /**
- * Strings of the static page frame (index.html): header, the welcome screen, landmarks and the live
- * regions. Pure data - the file never touches the DOM.
- *
- * Keys are prefixed `shell.`. `app.title` is owned by the base locale packs and only used from the HTML.
- * The strings of the dynamic parts (open dialog, info card, recent list, ...) live in js/ui/app.js.
+ * Strings of the static page frame (index.html): header, welcome screen, landmarks and live regions; keys are
+ * prefixed `shell.`. `app.title` is owned by the base packs. Strings of the dynamic parts live in js/ui/app.js.
  */
 (function (root) {
   'use strict';

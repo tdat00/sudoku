@@ -1,9 +1,9 @@
 /*
- * Page frame (design.md 8.1): header, the welcome screen and the layouts of a puzzle on screen.
+ * Page frame: header, the welcome screen and the layouts of a puzzle on screen.
  *   >= 1360px   three columns: list of puzzles | summary and board | side panel (status, play tools, pad, options)
  *   >= 768px    two columns: summary and board, then the list of puzzles | the side panel
  *   <  768px    one column: board, side panel, then the list of puzzles
- * The column sizes and breakpoints are those of Sudoku Generator, so the two pages share one layout.
+ * Column sizes and breakpoints are those of Sudoku Generator, so the two pages share one layout.
  * The play UI itself (tools, pad, hint card, status bar) is styled by play.css.
  */
 
@@ -337,8 +337,7 @@
   min-width: 0;
 }
 
-/* Same column sizes and breakpoints as Sudoku Generator (css/layout.css there). */
-/* >= 768px: board | side panel, the list of puzzles under the board. */
+/* >= 768px: board | side panel, the list of puzzles under the board (as in Sudoku Generator's css/layout.css). */
 @media (min-width: 768px) {
   .player-layout {
     grid-template-columns: minmax(0, 1fr) clamp(16rem, 30vw, 21.25rem);

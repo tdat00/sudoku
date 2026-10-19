@@ -1,41 +1,24 @@
 /**
  * Work budget and cancellation token shared by every long running routine.
- *
- * Hot loops call `budget.check()` once per search node. It is cheap on purpose: the flags are tested on
- * every call, but the clock (and the optional external cancel poll) is only sampled every 1024 ticks.
- * Once a limit is hit, every further `check()` keeps throwing.
+ * Hot loops call `budget.check()` once per node; the clock (and the optional external cancel poll) is only
+ * sampled every 1024 ticks. Once a limit is hit, every further `check()` keeps throwing.
  */
 (function (root) {
   'use strict';
 
   var SG = root.SG = root.SG || {};
 
-  /** Number of ticks between two clock samples. */
   var CLOCK_INTERVAL = 1024;
 
   /**
    * @typedef {Object} Budget
-   * @property {function(number=): void} tick  Records n (default 1) units of work without any checking.
-   * @property {function(): void} check        Counts one tick, then throws a GenerationError if cancelled
-   *                                           ('budget.cancelled') or out of nodes or time
-   *                                           ('budget.exceeded').
-   * @property {function(): void} cancel       Cancels the budget; the next check() throws at once.
-   * @property {function(): number} elapsedMs  Milliseconds since creation.
-   * @property {boolean} isCancelled           True after cancel() (read only).
-   * @property {number} nodes                  Ticks recorded so far (read only).
+   * `check()` counts one tick and throws a GenerationError ('budget.cancelled' or 'budget.exceeded');
+   * `tick(n)` only counts. `cancel()` makes the next check() throw. `isCancelled` and `nodes` are read only.
    */
 
   /**
-   * Creates a budget. All limits are optional; with no options the budget never expires.
-   * @param {Object} [options]
-   * @param {number} [options.ms]       Wall-clock limit in milliseconds.
-   * @param {number} [options.nodes]    Maximum number of ticks (check() calls plus tick() units).
-   * @param {function(): void} [options.onCancel]  Called once, when cancel() is invoked first time.
-   * @param {function(): *} [options.shouldCancel] Polled with the clock sample; a truthy result cancels
-   *                                               the budget (for flags set from outside, e.g. in shared
-   *                                               memory).
-   * @param {function(): number} [options.now]     Clock in milliseconds; defaults to Date.now.
-   * @returns {Budget}
+   * All limits are optional (none = never expires). `shouldCancel` is polled with the clock sample, for flags
+   * set from outside (e.g. shared memory); `now` defaults to Date.now.
    */
   function create(options) {
     options = options || {};

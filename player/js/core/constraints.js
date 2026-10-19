@@ -1,14 +1,10 @@
 /**
- * Constraint propagation (design.md section 6.3).
+ * Constraint propagation. Built in, variant independent rules (they only look at units and peers) run on a work queue
+ * of changed cells and units to rescan, until a fixpoint:
+ *   P1 peer elimination (fixing c = v clears v from every peer), P2 naked single, P3 hidden single,
+ *   P6 contradiction (a cell without candidates, or a unit with no room for some value).
  *
- * Built in rules, all variant independent because they only look at units and peers:
- *   P1 peer elimination      fixing c = v clears v from every peer of c
- *   P2 naked single          a cell with one candidate left is fixed
- *   P3 hidden single         a value that fits only one cell of a unit is placed there
- *   P6 contradiction         a cell without candidates, or a unit with no room for some value, fails
- * They run on a work queue of changed cells and of units to rescan, until nothing is left (a fixpoint).
- *
- * EXTENSION POINT for rules that are not all-different (cage sums P4, inequalities P5, ...):
+ * EXTENSION POINT for rules that are not all-different (cage sums, inequalities); they register from their own files:
  *
  *   SG.constraints.registerExtension({
  *     id: 'cage',
@@ -16,27 +12,20 @@
  *     propagate: function (model, state, data, ctx) { return true; } // required, false = contradiction
  *   });
  *
- * - `prepare` returns the per-model data the extension needs (lookup tables, cell -> cage maps) or
- *   null/undefined/false when the model has nothing for it; the extension is then skipped for that model.
- *   It is called once per model and cached, and again whenever extensions are (un)registered.
- * - `propagate` runs every time the built in rules reach a fixpoint. `ctx.changed[0 .. ctx.changedCount)`
- *   lists the cells whose candidates changed since the previous extension round (on a full `propagate` call
- *   that is every cell), so an extension can limit its work to the affected cages. The array is scratch
- *   memory that is only valid during the call.
- * - It changes the state only through `ctx.restrict(cell, mask)`, `ctx.eliminate(cell, value)` and
- *   `ctx.assign(cell, value)`. Each returns false on a contradiction (and the extension should then return
- *   false), and each queues the cell, so the built in rules react to the change and the extensions run
- *   again until a round changes nothing.
- * - An extension is stateless: everything it knows about a position is in `state` and `data`, so states can
- *   still be cloned freely. It must not call `propagate` or `place` for the same model (no re-entrance).
- * Cage and inequality propagators register from their own files; this file does not need to change.
+ * - `prepare` returns the per-model data (lookup tables, cell -> cage maps), or null/undefined/false when the model has
+ *   nothing for it (the extension is then skipped). Cached per model; called again whenever extensions are (un)registered.
+ * - `propagate` runs each time the built in rules reach a fixpoint. `ctx.changed[0 .. ctx.changedCount)` lists the cells
+ *   whose candidates changed since the previous extension round (all cells on a full `propagate`); the array is scratch
+ *   memory, valid only during the call.
+ * - Change the state only through `ctx.restrict(cell, mask)`, `ctx.eliminate(cell, value)` and `ctx.assign(cell, value)`:
+ *   each returns false on a contradiction (then return false too) and queues the cell, so the built in rules react and
+ *   extensions rerun until a round changes nothing.
+ * - Extensions are stateless (everything is in `state` and `data`, so states can be cloned freely) and must not call
+ *   `propagate` or `place` for the same model (no re-entrance).
  *
- * Allocation review (task T-6.2, rules R1-R7 of design.md section 9.2): `runCore`, `run`, `pushCell`,
- * `popCell`, `markUnits` and `popUnit` touch only the typed arrays of the per-model plan (queues, flags,
- * log), contain no try/catch (it lives in `runExtensions`, once per extension round) and no console call.
- * Measured with a heap probe (`node tests/perf.js --alloc`: 20000 calls on a 9x9 puzzle, state refilled
- * with `set`): `propagate`, `place` and `propagateSwept` allocate under 5 bytes per call, the noise of the
- * probe.
+ * Allocation rule: `runCore`, `run`, `pushCell`, `popCell`, `markUnits` and `popUnit` touch only the typed arrays of the
+ * per-model plan and have no try/catch (it lives in `runExtensions`) or console call; `propagate`, `place` and
+ * `propagateSwept` allocate nothing measurable (`node tests/perf.js --alloc`).
  */
 (function (root) {
   'use strict';
@@ -51,10 +40,6 @@
 
   const extensions = [];
   let extensionVersion = 0;
-
-  // ---------------------------------------------------------------------------------------------
-  // Plans: reusable scratch buffers (rule R2, no allocation while propagating)
-  // ---------------------------------------------------------------------------------------------
 
   function createPlan(model) {
     const n = model.cellCount;
@@ -184,14 +169,8 @@
     plan.logCount = 0;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The propagation loop
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Runs the extensions once. Kept apart from `runCore` so the hot loop stays free of try/catch (rule R4);
-   * if an extension or the budget throws, the queues are cleaned before the error moves on.
-   */
+  // Runs the extensions once, apart from `runCore` so the hot loop stays free of try/catch; if an extension or the budget
+  // throws, the queues are cleaned before the error moves on.
   function runExtensions(plan, state) {
     const ctx = plan.ctx;
     const active = plan.active;
@@ -213,7 +192,6 @@
     }
   }
 
-  /** Drains the cell and unit queues with the built in rules. Returns false on a contradiction. */
   function runCore(plan, state, track) {
     const model = plan.model;
     const cand = state.candidates;
@@ -295,7 +273,6 @@
     }
   }
 
-  /** Core rules, then extension rounds until a round changes nothing. */
   function run(plan, state, budget) {
     const track = plan.active.length > 0;
     plan.state = state;
@@ -322,26 +299,11 @@
     return ok;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Public API
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Like `propagate`, for a state that is already peer-consistent: every fixed value has been removed from
-   * the candidates of its peers (a state built from per-unit masks, as the unique-solution check does). Only
-   * the cells with a single candidate and the units are scanned, which is several times cheaper than a full
-   * rescan. With constraint extensions registered it falls back to the full `propagate`, since an extension
-   * must see every cell once.
-   *
-   * With `watchCell` the run also ends as soon as that cell is down to one candidate, even though the state
-   * is then not at a fixpoint (the result is still sound: it is only less propagated). Callers use it when
-   * all they need to know is what the watched cell must be. Not part of the section 13.4 contract.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state  Modified in place.
-   * @param {Object} [budget]
-   * @param {number} [watchCell]
-   * @returns {boolean} false when the state is contradictory.
-   */
+  // Like `propagate`, for a state that is already peer-consistent (every fixed value removed from its peers' candidates,
+  // e.g. built from per-unit masks): only cells with a single candidate and the units are scanned, several times cheaper
+  // than a full rescan. With extensions registered it falls back to `propagate` (an extension must see every cell once).
+  // With `watchCell` the run also ends as soon as that cell is down to one candidate; the state is then not at a fixpoint
+  // (still sound, only less propagated). Returns false when the state is contradictory.
   function propagateSwept(model, state, budget, watchCell) {
     const plan = getPlan(model);
     if (plan.active.length > 0) return propagate(model, state, budget);
@@ -368,14 +330,8 @@
     return run(plan, state, budget);
   }
 
-  /**
-   * Propagates a state to a fixpoint (P1, P2, P3, P6 plus the registered extensions). It rescans the whole
-   * state, so it also works on a state that was edited from outside.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state  Modified in place.
-   * @param {Object} [budget]   Checked once per extension round.
-   * @returns {boolean} false when the state is contradictory (it never throws for that).
-   */
+  // Propagates to a fixpoint (P1, P2, P3, P6 plus extensions); rescans the whole state, so it also works after outside
+  // edits. Returns false on a contradiction (never throws for that).
   function propagate(model, state, budget) {
     const plan = getPlan(model);
     for (let c = 0; c < plan.n; c++) pushCell(plan, c);
@@ -389,14 +345,7 @@
     return run(plan, state, budget);
   }
 
-  /**
-   * Removes `value` from the candidates of `cell`. Nothing is propagated; call `propagate` afterwards.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state
-   * @param {number} cell
-   * @param {number} value  1-based.
-   * @returns {boolean} false when the cell is left without candidates.
-   */
+  // Removes `value` from the candidates of `cell`; nothing is propagated. False when the cell is left without candidates.
   function eliminate(model, state, cell, value) {
     const cand = state.candidates;
     const old = cand[cell];
@@ -407,16 +356,8 @@
     return true;
   }
 
-  /**
-   * Fixes `cell` to `value` and applies P1 to its peers. Follow-up deductions (naked and hidden singles)
-   * are left to `propagate`.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state
-   * @param {number} cell
-   * @param {number} value  1-based.
-   * @returns {boolean} false when the value is no longer possible in the cell or a peer loses its last
-   *          candidate.
-   */
+  // Fixes `cell` to `value` and applies P1 to its peers; naked and hidden singles are left to `propagate`. False when the
+  // value is no longer possible in the cell or a peer loses its last candidate.
   function assign(model, state, cell, value) {
     const cand = state.candidates;
     const bit = 1 << (value - 1);
@@ -441,17 +382,8 @@
     return true;
   }
 
-  /**
-   * `assign` plus incremental propagation: only the consequences of this one placement are followed, which
-   * is what a search needs at every node. The state must already be at a fixpoint (for example the result
-   * of `propagate`). Not part of the section 13.4 contract; it is an addition for the solvers.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state
-   * @param {number} cell
-   * @param {number} value  1-based.
-   * @param {Object} [budget]
-   * @returns {boolean} false on a contradiction.
-   */
+  // `assign` plus incremental propagation: only the consequences of this placement are followed, as a search needs at
+  // every node. The state must already be at a fixpoint (e.g. the result of `propagate`). False on a contradiction.
   function place(model, state, cell, value, budget) {
     const bit = 1 << (value - 1);
     if ((state.candidates[cell] & bit) === 0) return false;
@@ -467,16 +399,8 @@
     return run(plan, state, budget);
   }
 
-  /**
-   * @typedef {Object} ConstraintExtension
-   * @property {string} id
-   * @property {function(PuzzleModel): *} [prepare]
-   * @property {function(PuzzleModel, SolveState, *, Object): boolean} propagate
-   *
-   * Registers a propagation extension (see the file header for the protocol).
-   * @param {ConstraintExtension} ext
-   * @throws {SG.errors.GenerationError} 'constraints.invalidExtension' or 'constraints.duplicateExtension'.
-   */
+  // Registers a propagation extension { id, prepare?, propagate } (protocol: see the file header).
+  // Throws 'constraints.invalidExtension' or 'constraints.duplicateExtension'.
   function registerExtension(ext) {
     if (!ext || typeof ext.id !== 'string' || ext.id === '' || typeof ext.propagate !== 'function' ||
         (ext.prepare !== undefined && typeof ext.prepare !== 'function')) {
@@ -489,10 +413,6 @@
     extensionVersion++;
   }
 
-  /**
-   * @param {string} id
-   * @returns {boolean} True when an extension was removed.
-   */
   function unregisterExtension(id) {
     const index = extensions.findIndex(function (e) { return e.id === id; });
     if (index === -1) return false;
@@ -501,26 +421,16 @@
     return true;
   }
 
-  /**
-   * @returns {string[]} Ids of the registered extensions, in the order they run.
-   */
   function listExtensions() {
     return extensions.map(function (e) { return e.id; });
   }
 
-  /**
-   * Test support: the registered extension objects, and a way to put such a list back. Lazy extensions
-   * (cage sums, inequalities) register once per page and never again, so a suite that wants a pristine
-   * registry must restore what it found instead of unregistering it for good.
-   * @returns {ConstraintExtension[]} A copy of the registered extensions, in run order.
-   */
+  // Test support: the registered extensions in run order, and a way to put them back. Lazy extensions (cage sums,
+  // inequalities) register once per page, so a suite that wants a pristine registry must restore what it found.
   function extensionSnapshot() {
     return extensions.slice();
   }
 
-  /**
-   * @param {ConstraintExtension[]} list  Replaces the registered extensions (see `extensionSnapshot`).
-   */
   function extensionRestore(list) {
     extensions.length = 0;
     for (let i = 0; i < list.length; i++) extensions.push(list[i]);

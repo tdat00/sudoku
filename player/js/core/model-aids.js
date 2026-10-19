@@ -1,38 +1,22 @@
 /**
- * Small readers of a rebuilt `PuzzleModel` that the generator's variant code used to provide and the
- * player's screens still need. Everything is derived from the model itself, so it works on a model that
- * came out of a puzzle document without any variant code.
- *
- *   signEdges(model)     where and how to draw each Greater-Than sign (board view, cell labels)
- *   describeWord(model)  the key word line of a Wordoku board: which cells, which letters, the word
- *   readWord(model, values, blank?)  spells that line for a (partial) board
- *   isWordSolved(model, values)      true when the line of the board spells the key word
- *   symbolModes(model)   the symbol sets a board can be shown in (the first is the default)
- *
- * Pure data, no DOM.
+ * Readers of a rebuilt `PuzzleModel` that the player's screens need: `signEdges` (where to draw each Greater-Than
+ * sign), `describeWord` / `readWord` / `isWordSolved` (the Wordoku key-word line) and `symbolModes`.
+ * Everything is derived from the model itself, so it works without any variant code. Pure data, no DOM.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first definition on repeated loads.
   if (SG.modelAids && typeof SG.modelAids.signEdges === 'function') return;
 
-  /** Length of the word line of a Wordoku board (a 9x9 grid). */
   const WORD_LENGTH = 9;
 
   /**
-   * Where and how to draw each sign of a model. Cells are on the canvas grid, so `(midRow, midCol)` is the
-   * midpoint of the two cell centres, in cell units (a cell centre has integer coordinates).
-   *
-   * `direction` runs from the smaller cell a to the greater cell b: 'right', 'left', 'down' or 'up'. The
-   * glyph is the sign as it reads in that direction: '<' when a is left of b, '>' when a is right of b, and
-   * for the vertical case the apex points at the smaller cell, '\u2227' when a is above b and '\u2228' when
-   * below.
-   * @param {PuzzleModel} model
-   * @returns {Array<{index: number, a: number, b: number, midRow: number, midCol: number,
-   *          direction: string, glyph: string}>}
+   * Where and how to draw each sign. `(midRow, midCol)` is the midpoint of the two cell centres in cell units
+   * (a centre has integer coordinates). `direction` runs from the smaller cell a to the greater cell b; the glyph
+   * reads in that direction: '<' / '>' horizontally, and vertically the apex points at the smaller cell
+   * ('\u2227' when a is above b, '\u2228' when below).
    */
   function signEdges(model) {
     const row = model.layout.cellRow;
@@ -66,18 +50,10 @@
 
   /**
    * @typedef {Object} WordLine
-   * @property {string} placement  'diagonal' | 'row' | 'column'.
-   * @property {?number} line      1-based number of the row or column; null for the diagonal.
-   * @property {number[]} cells    The nine cells of the line in reading order (top to bottom for a column).
-   * @property {string[]} letters  The letter of each of those cells.
-   * @property {string} word       The key word: `letters` joined. Keep it hidden until the puzzle is solved.
+   * `placement` is 'diagonal' | 'row' | 'column'; `line` the 1-based row/column (null for the diagonal); `cells`
+   * the nine cells in reading order. `word` is the letters joined: keep it hidden until the puzzle is solved.
    */
 
-  /**
-   * Describes the word line of a Wordoku model, from `fixedCells` and the symbol labels.
-   * @param {PuzzleModel} model
-   * @returns {?WordLine}  null when the model has no complete word line.
-   */
   function describeWord(model) {
     if (model === null || typeof model !== 'object' || !model.fixedCells || !model.symbols) return null;
     const cells = [];
@@ -105,13 +81,6 @@
     return { placement: placement, line: line, cells: cells, letters: letters, word: letters.join('') };
   }
 
-  /**
-   * Spells the word line of a board.
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} values  One value per cell, 0 = empty (a solution, or the player's board).
-   * @param {string} [blank='_']  What stands for an empty cell.
-   * @returns {?string}  Nine characters, or null when the model has no word line.
-   */
   function readWord(model, values, blank) {
     const info = describeWord(model);
     if (info === null) return null;
@@ -122,22 +91,15 @@
     }).join('');
   }
 
-  /**
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} values  One value per cell, 0 = empty.
-   * @returns {boolean} True when the word line of the board spells the key word.
-   */
   function isWordSolved(model, values) {
     const info = describeWord(model);
     return info !== null && readWord(model, values) === info.word;
   }
 
   /**
-   * The symbol sets a board can be shown in: a Wordoku board its key-word letters (or plain digits), a board
-   * with more than nine values (Mega) its own digits only, every other board digits, letters, colours and
-   * shapes. The first entry is the default.
-   * @param {PuzzleModel} model
-   * @returns {string[]}
+   * The symbol sets a board can be shown in (the first is the default): a Wordoku board its key-word letters or
+   * plain digits, a board with more than nine values (Mega) its own digits only, any other board digits, letters,
+   * colours and shapes.
    */
   function symbolModes(model) {
     if (model.symbols && model.symbols.mode === 'word') return ['word', 'digits'];

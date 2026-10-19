@@ -1,37 +1,21 @@
 /**
- * Themes and the look of the page (design.md 8.5): `SG.theme`.
- *
- * WHO APPLIES WHAT (single source of truth)
+ * Themes and the look of the page: `SG.theme`.
  *   - index.html runs a tiny inline script before the stylesheets paint: it reads the stored preferences
- *     (`sg.player.prefs.v1`, the key of js/ui/store.js) and sets `data-theme`, `data-motion` and the font
- *     size, so the first paint already has the right look (no flash). Nothing but that script runs without
- *     this file.
- *   - this module applies the preferences to the document whenever the store changes: `data-theme` (removed
- *     for 'auto', so `prefers-color-scheme` rules), `data-motion`, `--sg-font-size-base`, the `aria-pressed`
- *     of the header theme buttons (which it also wires to the store), the `<meta name="theme-color">` of
- *     the effective theme, a smooth colour transition on a theme change (class `is-theming`, colours only,
- *     never under reduced motion), and the tracking of the operating-system colour scheme while the
- *     preference is 'auto'.
- *
+ *     (`sg.player.prefs.v1`, the key of js/ui/store.js) and sets `data-theme`, `data-motion` and the font size, so
+ *     the first paint already has the right look (no flash). Nothing but that script runs without this file.
+ *   - this module applies the preferences whenever the store changes: `data-theme` (removed for 'auto', so
+ *     `prefers-color-scheme` rules), `data-motion`, `--sg-font-size-base`, the `aria-pressed` of the header theme
+ *     buttons (which it also wires to the store), `<meta name="theme-color">`, a colours-only transition on a
+ *     theme change (class `is-theming`, never under reduced motion), and the operating-system colour scheme
+ *     while the preference is 'auto'.
  * Pure part (runs in Node, see tests/suites/theme.test.js): `resolveTheme`, `attributeFor`, `nextTheme`,
- * `fontSizeValue`.
- *
- * PUBLIC API (`SG.theme`)
- *   init(app)         idempotent; called by app.js at start-up. Returns true when it is running.
- *   destroy()         removes listeners and the attributes added by `init`.
- *   get()             the theme preference: 'auto' | 'light' | 'dark' | 'high-contrast'.
- *   set(theme)        stores a preference; returns it.
- *   cycle()           the next preference (auto -> light -> dark -> high-contrast -> auto); returns it.
- *   apply(state)      brings the document in line with a store state; returns the effective theme.
- *   effective()       the theme in use right now (resolves 'auto' with the operating-system scheme).
- *   Pure helpers listed above, plus `THEMES` and `FONT_SIZES`.
+ * `fontSizeValue`. `init(app)` is idempotent; `cycle()` goes auto -> light -> dark -> high-contrast -> auto.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first instance on repeated loads: the running page must survive.
   if (SG.theme && typeof SG.theme.init === 'function') return;
 
   const THEMES = Object.freeze(['auto', 'light', 'dark', 'high-contrast']);
@@ -41,52 +25,23 @@
 
   const TRANSITION_MS = 400;
 
-  // ---------------------------------------------------------------------------------------------
-  // Pure helpers
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * The theme that is on screen for a preference.
-   * @param {string} pref  'auto' | 'light' | 'dark' | 'high-contrast' (anything else counts as 'auto').
-   * @param {boolean} [prefersDark]  The operating-system colour scheme, used only for 'auto'.
-   * @returns {string} 'light' | 'dark' | 'high-contrast'.
-   */
   function resolveTheme(pref, prefersDark) {
     if (pref === 'light' || pref === 'dark' || pref === 'high-contrast') return pref;
     return prefersDark === true ? 'dark' : 'light';
   }
 
-  /**
-   * The `data-theme` attribute of a preference.
-   * @param {string} pref
-   * @returns {?string} The attribute value; null for 'auto' (no attribute: `prefers-color-scheme` rules).
-   */
   function attributeFor(pref) {
     return pref === 'light' || pref === 'dark' || pref === 'high-contrast' ? pref : null;
   }
 
-  /**
-   * The preference after `pref` in the order of `THEMES`.
-   * @param {string} pref
-   * @returns {string}
-   */
   function nextTheme(pref) {
     const at = THEMES.indexOf(pref);
     return THEMES[(at + 1) % THEMES.length];
   }
 
-  /**
-   * The font-size setting as a value for `--sg-font-size-base`.
-   * @param {string} size  'small' | 'normal' | 'large'.
-   * @returns {string} '87.5%' | '100%' | '125%'; the normal size for anything else.
-   */
   function fontSizeValue(size) {
     return Object.prototype.hasOwnProperty.call(FONT_SIZES, size) ? FONT_SIZES[size] : FONT_SIZES.normal;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // DOM
-  // ---------------------------------------------------------------------------------------------
 
   const ctx = {
     app: null,
@@ -115,10 +70,6 @@
     return ctx.app ? ctx.app.getStore().get() : null;
   }
 
-  /**
-   * The theme in use right now.
-   * @returns {string} 'light' | 'dark' | 'high-contrast'.
-   */
   function effective() {
     const state = storeState();
     return resolveTheme(state ? state.theme : 'auto', prefersDark());
@@ -160,11 +111,6 @@
     }
   }
 
-  /**
-   * Brings the document in line with a store state; writes only what differs.
-   * @param {Object} [state]  A store state (`theme`, `fontSize`, `reducedMotion`); default: the store's.
-   * @returns {?string} The effective theme; null without a DOM or a state.
-   */
   function apply(state) {
     if (typeof document === 'undefined') return null;
     const s = state || storeState();
@@ -188,30 +134,17 @@
     return resolveTheme(s.theme, prefersDark());
   }
 
-  /**
-   * The current theme preference.
-   * @returns {string} 'auto' | 'light' | 'dark' | 'high-contrast'.
-   */
   function get() {
     const state = storeState();
     return state ? state.theme : 'auto';
   }
 
-  /**
-   * Chooses a theme (stored in the preferences; the store change applies it).
-   * @param {string} theme  One of `THEMES`; anything else is ignored.
-   * @returns {string} The preference after the call.
-   */
   function set(theme) {
     if (!ctx.app || THEMES.indexOf(theme) === -1) return get();
     ctx.app.getStore().set({ theme: theme }, { source: 'theme' });
     return get();
   }
 
-  /**
-   * Moves to the next theme preference.
-   * @returns {string} The new preference.
-   */
   function cycle() {
     return set(nextTheme(get()));
   }
@@ -220,7 +153,6 @@
     if (payload && payload.state) apply(payload.state);
   }
 
-  /** Removes everything `init` added. */
   function destroy() {
     ctx.off.splice(0).forEach(function (off) { off(); });
     ctx.clicks.splice(0).forEach(function (off) { off(); });
@@ -235,7 +167,6 @@
     ctx.onColorChange = null;
   }
 
-  /** The header buttons `[data-theme-value]` choose a theme. */
   function wireButtons() {
     Array.prototype.forEach.call(document.querySelectorAll('[data-theme-value]'), function (button) {
       const onClick = function () { set(button.getAttribute('data-theme-value')); };
@@ -244,11 +175,6 @@
     });
   }
 
-  /**
-   * Starts the module (called by app.js at start-up; safe to call again).
-   * @param {Object} app  `SG.app`.
-   * @returns {boolean} Whether the module is running (false without a DOM).
-   */
   function init(app) {
     if (typeof document === 'undefined' || !app) return false;
     if (ctx.app === app) return true;

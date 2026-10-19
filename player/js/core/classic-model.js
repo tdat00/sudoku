@@ -1,47 +1,28 @@
 /**
- * The boards the player can rebuild without a `model` block: the classic 4x4 (2x2 boxes), 6x6 (boxes of 2 rows
- * x 3 columns) and 9x9 (3x3 boxes), and the four overlapping boards (Samurai, Sohei, Butterfly, Flower).
- *
- * The player has no variant registry. These builders are what a plain text puzzle (a line of 16, 36 or
- * 81 characters), the text export of the generator (clues only) and a classic document without a `model`
- * block are played on. They build the same boards as the generator's variants (cell (r, c) of a classic board
- * is index r * D + c; units are rows, then columns, then boxes, labelled R1.., C1.., B1.. - or G1-R1.. on an
- * overlapping board), so a puzzle has the same cells and the same hint texts whichever way it arrived.
- *
- * Pure data, no DOM, no randomness.
+ * The boards the player can rebuild without a `model` block: classic 4x4, 6x6 (2x3 boxes) and 9x9, and the
+ * overlapping boards (Samurai, Sohei, Butterfly, Flower). They match the generator's variants (cell (r, c) is
+ * index r * D + c; units are rows, columns, boxes, labelled R1.., C1.., B1.. or G1-R1.. when overlapping), so
+ * a puzzle has the same cells and hint texts whichever way it arrived. Pure data: no DOM, no randomness.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first definition on repeated loads.
   if (SG.classicModel && typeof SG.classicModel.build === 'function') return;
 
-  /** Box shape (rows x columns) of each supported size, and the variant id the board is known by. */
   const SIZES = Object.freeze({
     4: Object.freeze({ variantId: 'classic4', boxRows: 2, boxCols: 2 }),
     6: Object.freeze({ variantId: 'classic6', boxRows: 2, boxCols: 3 }),
     9: Object.freeze({ variantId: 'classic9', boxRows: 3, boxCols: 3 })
   });
 
-  /** The side lengths that have a classic board. */
   const DIGITS = Object.freeze([4, 6, 9]);
 
-  /**
-   * @param {number} digits  4, 6 or 9.
-   * @returns {?string} The variant id of that size ('classic4' ...), null for any other number.
-   */
   function variantIdOf(digits) {
     return Object.prototype.hasOwnProperty.call(SIZES, digits) ? SIZES[digits].variantId : null;
   }
 
-  /**
-   * Builds the classic model of a side length.
-   * @param {number} digits  4, 6 or 9.
-   * @returns {PuzzleModel}
-   * @throws {SG.errors.GenerationError} 'model.invalidSpec' for any other size.
-   */
   function build(digits) {
     if (variantIdOf(digits) === null) {
       throw new SG.errors.GenerationError('model.invalidSpec',
@@ -109,11 +90,7 @@
     });
   }
 
-  /**
-   * The overlapping boards (design.md sections 4 and 5.2 of the generator): the canvas size and the [row, col]
-   * of every 9x9 sub-grid. They are fixed per variant, so the board of a puzzle that arrives as clues only
-   * (the generator's text export) can be rebuilt from the variant alone.
-   */
+  /** Canvas size and [row, col] of every 9x9 sub-grid; fixed per variant so a clues-only text export can be rebuilt. */
   const MULTIGRID = Object.freeze({
     samurai: Object.freeze({ rows: 21, cols: 21, cells: 369,
       origins: Object.freeze([[0, 0], [0, 12], [12, 0], [12, 12], [6, 6]]) }),
@@ -129,31 +106,24 @@
     return Object.prototype.hasOwnProperty.call(object, key);
   }
 
-  /** @returns {boolean} Whether `variantId` is one of the overlapping boards (samurai, sohei, ...). */
   function isMultigrid(variantId) {
     return typeof variantId === 'string' && hasOwn(MULTIGRID, variantId);
   }
 
-  /** @returns {boolean} Whether the player can build the board of `variantId` without a `model` block. */
   function buildable(variantId) {
     return isMultigrid(variantId) || Object.keys(SIZES).some(function (d) {
       return SIZES[d].variantId === variantId;
     });
   }
 
-  /** @returns {?Object} `{ rows, cols, cells, origins }` of an overlapping board, null for any other id. */
   function geometryOf(variantId) {
     return isMultigrid(variantId) ? MULTIGRID[variantId] : null;
   }
 
   /**
-   * Builds an overlapping board, the way the generator does: sub-grid 0 owns the indices 0..80 in its own
-   * row-major order, every later sub-grid adds only the canvas positions no earlier grid covers (row-major),
-   * and cells on one canvas position share one index. Units are rows, columns and boxes of each sub-grid
-   * (labelled G1-R1 ...); every 3x3 box position that two or more sub-grids share is an `overlap` overlay.
-   * @param {string} variantId  'samurai' | 'sohei' | 'butterfly' | 'flower'.
-   * @returns {PuzzleModel}
-   * @throws {SG.errors.GenerationError} 'model.invalidSpec' for any other id.
+   * Same construction as the generator: sub-grid 0 owns indices 0..80 in row-major order, each later sub-grid adds only
+   * the canvas positions no earlier grid covers, and cells on one canvas position share one index. A 3x3 box
+   * position shared by two or more sub-grids is an `overlap` overlay.
    */
   function buildMultigrid(variantId) {
     if (!isMultigrid(variantId)) {
@@ -247,7 +217,6 @@
     });
   }
 
-  /** Builds the board of a variant that needs no `model` block: classic 4 / 6 / 9 or an overlapping board. */
   function buildVariant(variantId) {
     if (isMultigrid(variantId)) return buildMultigrid(variantId);
     for (const digits of DIGITS) {

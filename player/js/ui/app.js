@@ -1,43 +1,25 @@
 /**
- * The player app (design.md sections 2.3, 7, 8): `SG.app`. Starts the page, opens puzzles, keeps the progress
- * and wires the other modules. Everything the reused modules (`play.js`, `a11y.js`, `theme.js`)
- * need from the app is the small surface below (the one the generator's app offered them).
+ * The player app: `SG.app`. Starts the page, opens puzzles, keeps the progress and wires the other modules. The
+ * reused modules (`play.js`, `a11y.js`, `theme.js`) need only the small surface below from it.
  *
- * Opening a puzzle (every way ends in `openPuzzle`):
+ * Every way of opening a puzzle ends in `openPuzzle`, through `SG.importer.open`:
  *   - `#puzzle=<token>` in the address (the generator's "Play online" link): checked at start-up and on
  *     `hashchange`; the fragment is removed with `history.replaceState` as soon as it was read
  *   - the Open dialog (file picker, paste box), a file dropped anywhere on the page, a paste on the page
  *   - the recent list, and a reload without a fragment (the puzzle that was on the board)
- *   All of them go through `SG.importer.open`; an opened puzzle with saved progress asks "Continue" or "Start
- *   over" (the recent list and a reload continue without asking).
+ * A puzzle with saved progress asks "Continue" or "Start over" (the recent list and a reload continue silently).
  *
- * PUBLIC API (`SG.app`)
- *   start()                         starts the app; idempotent; returns true when it is running (false
- *                                   without a DOM). Called by the last script of index.html.
- *   getStore()                      the preferences store (`SG.store`).
- *   getBoard()                      the board view (`SG.boardView`), null before `start`.
- *   getResult()                     `{ result: puzzle, trace: [] }` for the puzzle on the board, else null
- *                                   ("result" is the opened puzzle: `model`, `givens`, `solution`, ...).
- *   getPuzzle()                     the puzzle on the board, or null.
- *   toast(kind, key, args)          a translated toast ('success' | 'warning' | 'danger' | 'info').
- *   openModal({titleKey, titleArgs, body, footer, wide, onClose})  a modal dialog in `#modal-root`; returns
- *                                   `{ el, panel, body, footer, close(), setTitle(key, args) }` (null without
- *                                   a DOM). Focus goes to the first control and comes back on close.
- *   announce(text)                  says something to screen readers (`#a11y-live`).
- *   on(name, fn) / emit(name, payload)  events, see below; `on` returns the function that unsubscribes.
- *   showResult(puzzle, options)     puts a puzzle on the board, no questions asked: `{ state, symbolMode,
- *                                   focus, source }`; returns a Promise of true.
- *   open(input, options)            opens text (JSON, token, link, 16 / 36 / 81 characters) or a File / Blob
- *                                   through the importer: Promise of true when a puzzle is on the board.
- *   openPuzzle(puzzle, options)     a puzzle from `SG.importer`; `options.resume`: 'ask' (default),
- *                                   'continue' or 'fresh'; Promise of whether the puzzle is on the board.
- *   openOpenDialog()                the Import dialog.
- *   openShareDialog()               the Share dialog: the link that opens the puzzle on the board in the player
- *                                   (the same kind of link as the generator's Play button); null without a puzzle.
- *   clearSavedData()                forgets the saved puzzles and progress (not the preferences).
- *   saveNow()                       writes the progress of the game on the board at once.
+ * API (`SG.app`): `start()` (idempotent; false without a DOM; called by the last script of index.html), `getStore()`,
+ * `getBoard()` (null before `start`), `getResult()` -> `{ result: puzzle, trace: [] }` or null, `getPuzzle()`,
+ * `toast(kind, key, args)` ('success' | 'warning' | 'danger' | 'info'), `announce(text)` (screen readers,
+ * `#a11y-live`), `openModal({titleKey, titleArgs, body, footer, wide, onClose})` -> `{ el, panel, body, footer,
+ * close(), setTitle(key, args) }` (focus goes to the first control and comes back on close), `on(name, fn)` (returns
+ * the unsubscribe function) / `emit(name, payload)`, `showResult(puzzle, { state, symbolMode, focus, source })`
+ * (no questions asked), `open(input, options)` (text, token, link or a File / Blob; Promise of whether a puzzle is
+ * on the board), `openPuzzle(puzzle, { resume: 'ask' | 'continue' | 'fresh' })`, `openOpenDialog()`,
+ * `openShareDialog()` (null without a puzzle), `clearSavedData()` (not the preferences), `saveNow()`.
  *
- * Events (`on(name, fn)`; `fn(payload, name)`):
+ * Events (`fn(payload, name)`):
  *   'result'     a puzzle is on the board: `{ result: puzzle, trace: [] }`
  *   'settings'   a preference changed: `{ state, keys, source }`
  *   'locale'     the language changed: `{ locale }`
@@ -52,7 +34,6 @@
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first instance on repeated loads: the running page must survive.
   if (SG.app && typeof SG.app.start === 'function') return;
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -68,10 +49,6 @@
   const DEFAULT_GENERATOR_URL = 'https://tdat00.github.io/sudoku-generator/';
   const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), ' +
     'textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-  // ---------------------------------------------------------------------------------------------
-  // Small helpers
-  // ---------------------------------------------------------------------------------------------
 
   function t(key, args) {
     return SG.i18n.t(key, args);
@@ -94,7 +71,6 @@
     return typeof document !== 'undefined' ? document.getElementById(id) : null;
   }
 
-  /** Creates an element; attribute values of null / undefined / false are skipped, `true` gives ''. */
   function make(tag, attrs, children) {
     const node = document.createElement(tag);
     Object.keys(attrs || {}).forEach(function (name) {
@@ -147,17 +123,12 @@
     return typeof level === 'string' && SG.i18n.has(key) ? t(key) : '';
   }
 
-  /** The generator's address from `<meta name="sg-generator-url">`; http(s) only. */
   function generatorUrl() {
     const meta = typeof document !== 'undefined' ?
       document.querySelector('meta[name="sg-generator-url"]') : null;
     const value = meta ? meta.getAttribute('content') : null;
     return typeof value === 'string' && /^https?:\/\/[^\s]+$/i.test(value) ? value : DEFAULT_GENERATOR_URL;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // State
-  // ---------------------------------------------------------------------------------------------
 
   const listeners = {};
   const toasts = [];
@@ -180,10 +151,6 @@
   let openDialog = null;
   let shareDialog = null;
 
-  // ---------------------------------------------------------------------------------------------
-  // Events
-  // ---------------------------------------------------------------------------------------------
-
   function on(name, fn) {
     if (typeof name !== 'string' || typeof fn !== 'function') {
       throw new TypeError('SG.app.on needs an event name and a function');
@@ -204,10 +171,6 @@
       }
     });
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Live region, toasts, modals
-  // ---------------------------------------------------------------------------------------------
 
   function announce(text) {
     const host = byId('a11y-live');
@@ -397,10 +360,6 @@
     modals.slice().forEach(function (record) { record.close(); });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Progress: saving and the storage warnings
-  // ---------------------------------------------------------------------------------------------
-
   function setStatus(key, args) {
     if (els !== null && els.status !== null) els.status.textContent = key === null ? '' : t(key, args);
   }
@@ -424,7 +383,6 @@
     return open <= 0 ? 100 : Math.max(0, Math.min(100, Math.round(100 * p.filled / open)));
   }
 
-  /** Writes the progress of the game on the board (nothing for a puzzle nobody touched). */
   function saveNow() {
     root.clearTimeout(saveTimer);
     saveTimer = null;
@@ -474,10 +432,6 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The page: heading, recent list
-  // ---------------------------------------------------------------------------------------------
-
   function showLayout(hasPuzzle) {
     els.welcome.hidden = hasPuzzle;
     els.layout.hidden = !hasPuzzle;
@@ -491,7 +445,6 @@
       t('player.heading.level', { variant: variantName(current.variantId), level: level });
   }
 
-  /** "<variant> - <level> (Seed: <seed>)"; the level and the seed are left out when the puzzle has none. */
   function summaryTitle() {
     if (current === null) return '';
     const d = current.info && current.info.difficulty;
@@ -529,7 +482,6 @@
     return parts.join(' · ');
   }
 
-  /** "<Level>: 30 clues, 45% filled" with the level in bold, as in the generator's list. */
   function recentMetaNodes(item) {
     const meta = item.meta || {};
     const rest = [];
@@ -578,7 +530,6 @@
     return make('li', { class: 'history-item', 'data-id': item.id, 'data-status': statusKey }, [open, status, remove]);
   }
 
-  /** The items of the list, one `li` each (the left panel and the welcome screen both use them). */
   function fillRecent(list, items) {
     items.forEach(function (item) { list.appendChild(recentItem(item)); });
     return list;
@@ -611,10 +562,6 @@
     renderRecent();
     toast('info', 'player.recent.cleared');
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Putting a puzzle on the board
-  // ---------------------------------------------------------------------------------------------
 
   function placePuzzle(puzzle, options) {
     const o = options || {};
@@ -716,7 +663,6 @@
     return Promise.resolve(true);
   }
 
-  /** Opens a puzzle of the recent list: the stored document, its progress, no questions. */
   function openStored(id) {
     const entry = saved.loadPuzzle(id);
     if (entry === null) {
@@ -733,10 +679,6 @@
     }
     return openPuzzle(outcome.puzzle, { resume: 'continue', source: 'recent', focus: true });
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Errors
-  // ---------------------------------------------------------------------------------------------
 
   function issueTexts(issues) {
     return (issues || []).map(function (issue) {
@@ -778,10 +720,6 @@
     return modal;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Opening from text and files
-  // ---------------------------------------------------------------------------------------------
-
   function failure(issue) {
     return Object.assign(new Error(issue.key), { issue: issue });
   }
@@ -800,7 +738,6 @@
     });
   }
 
-  /** The first error of a skipped puzzle, with its place in the text ("#3 Killer Sudoku: ..."). */
   function skippedText(item) {
     const first = issueTexts(item.outcome.errors)[0] || t('player.error.nothing');
     return item.label === '' ? first : item.label + ': ' + first;
@@ -833,13 +770,7 @@
     return modal;
   }
 
-  /**
-   * Several puzzles came in (the text of the generator's Export box, or a bundle of the Play button): every
-   * good one goes into the list of puzzles, the one on screen in the generator (`o.active`, the number of the
-   * puzzle in the text) or else the first one is put on the board, and the ones that cannot be played are
-   * listed.
-   * @returns {Promise<boolean>} Whether a puzzle is on the board.
-   */
+  /** Several puzzles came in: every good one goes into the list, the one on screen in the generator (`o.active`) or else the first is put on the board, and the unplayable ones are listed. */
   function importBatch(items, source, o) {
     const good = items.filter(function (item) { return item.outcome.ok; });
     const skipped = items.filter(function (item) { return !item.outcome.ok; });
@@ -904,11 +835,6 @@
     });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The Share dialog: the link that opens this puzzle in the player (the generator's "Play" link)
-  // ---------------------------------------------------------------------------------------------
-
-  /** The player's address from `<meta name="sg-player-url">` (http(s) only), else the default. */
   function playerBase() {
     const meta = typeof document !== 'undefined' ?
       document.querySelector('meta[name="sg-player-url"]') : null;
@@ -917,7 +843,6 @@
       value.trim() : DEFAULT_PLAYER_URL;
   }
 
-  /** The link of the puzzle on the board: the puzzle document in the fragment, as `buildPlayLink` of the generator. */
   function buildShareLink() {
     return Promise.resolve().then(function () {
       if (current === null) throw failure({ key: 'player.error.nothing', args: {} });
@@ -928,7 +853,6 @@
     });
   }
 
-  /** Copies text to the clipboard; the promise tells whether it worked. `field` is selected as a fallback. */
   function copyText(text, field) {
     if (root.navigator && root.navigator.clipboard && typeof root.navigator.clipboard.writeText === 'function') {
       return root.navigator.clipboard.writeText(text).then(function () { return true; }, function () {
@@ -1004,14 +928,7 @@
     return modal;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The Open dialog
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * An element whose text has `{generator}` in it (player.open.intro ...): the placeholder becomes a link to
-   * Sudoku Generator (`generatorUrl()`, a new tab). It is drawn again on a language change.
-   */
+  /** Elements whose text has `{generator}` in it (player.open.intro ...): the placeholder becomes a link to Sudoku Generator, redrawn on a language change. */
   const generatorTexts = [];
 
   function renderGeneratorText(entry) {
@@ -1110,11 +1027,6 @@
     return modal;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Page-wide drop and paste
-  // ---------------------------------------------------------------------------------------------
-
-  /** Whether text dropped on the page is worth importing: the generator's export text, or a puzzle line / link. */
   function looksImportable(text) {
     return SG.importer.exportBlocks(text) !== null || SG.importer.detect(text).kind !== 'unknown';
   }
@@ -1178,10 +1090,6 @@
     });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The address: #puzzle=<token>
-  // ---------------------------------------------------------------------------------------------
-
   function removeFragment() {
     try {
       if (root.history && typeof root.history.replaceState === 'function') {
@@ -1210,10 +1118,6 @@
     return open(token, { source: 'link', focus: false, active: active === null ? undefined : active });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Preferences -> page
-  // ---------------------------------------------------------------------------------------------
-
   function syncLangButtons(lang) {
     Array.prototype.forEach.call(document.querySelectorAll('[data-lang]'), function (button) {
       button.setAttribute('aria-pressed', button.getAttribute('data-lang') === lang ? 'true' : 'false');
@@ -1238,10 +1142,6 @@
     if (board !== null) board.refreshText();
     emit('locale', { locale: code });
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Start-up
-  // ---------------------------------------------------------------------------------------------
 
   function lookup() {
     return {
@@ -1289,7 +1189,6 @@
     listen(root, 'hashchange', function () { safely(openFragment); });
   }
 
-  /** The puzzle of the last visit, with its progress. */
   function restoreLast() {
     const id = saved.getLast();
     if (id === null) return false;
@@ -1379,10 +1278,6 @@
   };
 
   SG.app = api;
-
-  // ---------------------------------------------------------------------------------------------
-  // Strings
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

@@ -1,123 +1,85 @@
 /**
- * Technique registry: the list of human solving techniques the logical solver (logical-solver.js) can use.
- * Every technique lives in its own file (tech-basic.js, tech-subset.js, ...) and registers itself here, so
- * adding one never touches the solver.
+ * Technique registry: the human solving techniques the logical solver (logical-solver.js) can use. Every technique
+ * lives in its own tech-*.js file and registers itself here, so adding one never touches the solver.
  *
- * ===========================================================================================
- * CONTRACT FOR TECHNIQUE AUTHORS (frozen - several files are written against it in parallel)
- * ===========================================================================================
- *
- * Registering (at load time, in your own tech-*.js file):
+ * CONTRACT FOR TECHNIQUE AUTHORS
  *
  *   SG.techniques.register({
- *     id: 'xWing',                  // unique, camelCase (/^[A-Za-z][A-Za-z0-9_]*$/), key in techniqueCounts
+ *     id: 'xWing',                  // unique, /^[A-Za-z][A-Za-z0-9_]*$/, key in techniqueCounts
  *     group: 'fish',                // one of SG.techniques.GROUPS
- *     baseCost: 32,                 // score of one application (ladder table below), finite number > 0
- *     order: 110,                   // position in the loop, cheap -> expensive (ladder table below)
+ *     baseCost: 32,                 // score of one application, finite number > 0
+ *     order: 110,                   // position in the loop, cheap -> expensive (ties: baseCost, then id)
  *     i18nKey: 'technique.xWing',   // translation key of the technique NAME
  *     variantScope: null,           // null = every variant; or ['killer'] = only models with that variantId
  *     assumesUniqueness: false,     // true ONLY when the deduction relies on "the puzzle has one solution"
  *     find: function (model, state, ctx) { return finding || null; }
  *   });
  *
- * `variantScope` and `assumesUniqueness` may be left out (defaults null / false). Any other missing or
- * invalid field, and any key that is not listed above (a typo such as `assumeUniqueness` is the classic
- * one), throws SG.errors.GenerationError 'technique.invalidDef'. A duplicate id throws 'technique.duplicate'.
- * `assumesUniqueness: true` techniques (Unique Rectangle) are skipped when the solver is called with
- * `assumeUniqueness: false`, which is how uniqueness is verified without circular reasoning.
+ * `variantScope` and `assumesUniqueness` may be left out. Any other missing or invalid field, and any unknown key
+ * (a typo such as `assumeUniqueness` is the classic one), throws GenerationError 'technique.invalidDef'; a
+ * duplicate id throws 'technique.duplicate'. `assumesUniqueness: true` techniques (Unique Rectangle) are skipped
+ * when the solver runs with `assumeUniqueness: false`, which verifies uniqueness without circular reasoning.
+ * `order` follows the cost so a cheaper deduction is never skipped for a dearer one. hiddenSingleBox covers every
+ * unit that is not a row or column (2 points), hiddenSingleLine rows and columns (3 points).
  *
  * What find(model, state, ctx) must do:
- *   - READ `state`, never write to it (no SG.constraints.eliminate/assign/place/propagate on `state`). The
- *     solver applies the Finding itself, which is what keeps attribution and scoring correct. With
- *     SG.DEBUG on, the solver throws 'solver.stateMutated' when a technique changes the state.
- *   - Return null when the technique does not apply. Otherwise return ONE deduction (one pattern instance,
- *     the first one found in a deterministic scan order; no randomness): the solver applies it, records one
- *     step and asks the whole ladder again from the cheapest technique.
- *   - Work on any unit shape: use model.units / model.cellUnits / model.peers, never assume rows, columns or
- *     3x3 boxes. A unit is "complete" (a digit must appear in it exactly once) only when
- *     `ctx.completeUnits[u] === 1` (size === digits and not `partial`); hidden-single style reasoning is
- *     only valid on those.
+ *   - READ `state`, never write to it (no SG.constraints.eliminate/assign/place/propagate on it): the solver applies
+ *     the Finding itself, which keeps attribution and scoring correct. With SG.DEBUG on, a changed state throws
+ *     'solver.stateMutated'. A technique that needs a trial (Nishio, chains) works on its OWN copy,
+ *     `SG.model.cloneState(state)`; propagate or SG.dfs.* on that copy is fine because the solver never has an
+ *     engine call open while find runs (the engine keeps per-model scratch buffers and is not re-entrant).
+ *     Never do it from inside a SG.constraints extension.
+ *   - Return null when the technique does not apply; otherwise ONE deduction (one pattern instance, the first in a
+ *     deterministic scan order, no randomness). The solver applies it, records one step and asks the whole ladder
+ *     again from the cheapest technique.
+ *   - Work on any unit shape (model.units / cellUnits / peers); never assume rows, columns or 3x3 boxes. A unit is
+ *     "complete" (a digit appears exactly once) only when `ctx.completeUnits[u] === 1` (size === digits and not
+ *     `partial`); hidden-single style reasoning is only valid on those.
  *   - A cell is solved when `state.value[c] !== 0`; its candidates are then just its own value.
- *   - Return a Finding that CHANGES the state: at least one placement into a still open cell or one
- *     elimination of a candidate that is currently present. List only real eliminations. A Finding with no
- *     placements and no eliminations, or one that changes nothing, would loop forever, so the solver throws
+ *   - Return a Finding that CHANGES the state: a placement into a still open cell or an elimination of a present
+ *     candidate; list only real ones. Otherwise the loop would never end, so the solver throws
  *     'solver.emptyFinding' / 'solver.noEffect' naming the technique.
- *   - Call `ctx.check()` inside long loops (budget). An expensive technique may catch the
- *     'budget.exceeded' error and return null; it must not swallow any other error.
- *   - Never write to `state` (no SG.constraints.assign / eliminate / place / propagate on it). A technique
- *     that needs a trial (Nishio, chains) works on its OWN copy, `SG.model.cloneState(state)`; running
- *     SG.constraints.propagate or SG.dfs.* on that copy is fine, because the solver never has an engine call
- *     open while find runs (the engine keeps per-model scratch buffers, so it is not re-entrant), and
- *     this is covered by tests. Never do it from inside a SG.constraints extension.
+ *   - Call `ctx.check()` inside long loops. An expensive technique may catch 'budget.exceeded' and return null; it
+ *     must not swallow any other error.
  *
- * Finding (the return value of find):
- *
+ * Finding:
  *   {
  *     technique: 'xWing',                  // MUST equal the id of the technique returning it
- *     cells: [12, 14, 48, 50],             // cells that justify the deduction, for highlighting (indices)
- *     placements: [[cell, value], ...],    // values to fix; [] when there are none
- *     eliminations: [[cell, value], ...],  // candidates to remove; [] when there are none
+ *     cells: [12, 14, 48, 50],             // cells that justify the deduction, for highlighting
+ *     placements: [[cell, value], ...],    // values to fix; [] when none
+ *     eliminations: [[cell, value], ...],  // candidates to remove; [] when none
  *     i18nKey: 'technique.xWing.step',     // translation key of the explanation of THIS step
  *     i18nArgs: { digit: 5, unit: 'R4' }   // plain JSON data for the translation (no functions)
  *   }
+ * `cell` is a 0-based index, `value` a 1-based digit. The solver copies the arrays before storing a step, so a
+ * technique may reuse its own buffers.
  *
- * `cell` is a 0-based cell index, `value` a 1-based digit. `placements`, `eliminations` and `cells` must be
- * arrays (the solver copies them before storing a step, so a technique may reuse its own buffers).
- *
- * ctx (the same object for every find call of one solve; frozen):
- *   ctx.check()              budget check, a no-op when the caller gave no budget
+ * ctx (one frozen object per solve):
+ *   ctx.check()              budget check, a no-op without a budget
  *   ctx.budget               the budget object or null
- *   ctx.assumeUniqueness     the option of the solver call (only matters to a technique that cares)
+ *   ctx.assumeUniqueness     the option of the solver call
  *   ctx.digits, ctx.fullMask D and the mask of all digits
- *   ctx.completeUnits        Uint8Array over units: 1 = complete unit (see above)
- *   ctx.options              the (normalised) options of the solver call; unknown keys pass through, so
+ *   ctx.completeUnits        Uint8Array over units: 1 = complete unit
+ *   ctx.options              the normalised solver options; unknown keys pass through, so
  *                            solve(model, givens, { maxChainLength: 8 }) shows as ctx.options.maxChainLength
- *
- * Ladder: ids, groups, baseCost (design.md section 6.6) and the `order` that keeps the loop cheap -> dear.
- * `order` follows the cost, so a cheaper deduction is never skipped for a dearer one. Ties are broken by
- * baseCost, then id.
- *
- *   id                 group    baseCost  order | id                 group    baseCost  order
- *   nakedSingle        basic        1       10  | xWing              fish        32      110
- *   hiddenSingleBox    basic        2       20  | simpleColouring    fish        36      120
- *   hiddenSingleLine   basic        3       30  | swordfish          fish        42      130
- *   pointing           locked       7       40  | xyWing             wing        48      140
- *   boxLine            locked       7       50  | xyzWing            wing        54      150
- *   nakedPair          subset       9       60  | jellyfish          fish        56      160
- *   hiddenPair         subset      11       70  | wWing              wing        60      170
- *   nakedTriple        subset      15       80  | uniqueRectangle*   wing        66      180
- *   hiddenTriple       subset      18       90  | forcingChain       chain       90      190
- *   nakedQuad          subset      24      100  | nishio             chain      140      200
- *   hiddenQuad         subset      24      105  |      (* assumesUniqueness: true)
- *
- *   Variant specific (scope in brackets), interleaved by cost: cageCombo [killer] cage 10 -> 65,
- *   ineqChain [greaterThan] ineq 12 -> 75, ineqMinMax [greaterThan] ineq 22 -> 95,
- *   cageRule45 [killer] cage 28 -> 108, cageSplit [killer] cage 40 -> 125.
- *
- * hiddenSingleBox covers every unit that is not a row or a column (box, region, diagonal, window: 2 points),
- * hiddenSingleLine covers rows and columns (3 points), which is how the ladder scores them apart.
- * ===========================================================================================
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first registry on repeated loads: the techniques registered so far must survive.
   if (SG.techniques && typeof SG.techniques.register === 'function') return;
 
-  /** Technique groups; the difficulty levels of design.md section 6.7 are expressed in these. */
+  /** Technique groups. */
   const GROUPS = Object.freeze(['basic', 'locked', 'subset', 'fish', 'wing', 'chain', 'cage', 'ineq']);
 
   const ID_PATTERN = /^[A-Za-z][A-Za-z0-9_]*$/;
   const ALLOWED_KEYS = ['id', 'group', 'baseCost', 'order', 'i18nKey', 'variantScope', 'assumesUniqueness',
     'find'];
 
-  /** Registered definitions by id, and the same definitions in loop order. */
   const byId = new Map();
   let sorted = [];
 
-  /** Per model derived data. Models are immutable, so it never goes stale. */
   const modelInfo = new WeakMap();
 
   function noop() {}
@@ -175,34 +137,15 @@
   }
 
   /**
-   * @typedef {Object} TechniqueDef
-   * @property {string} id
-   * @property {string} group              One of `SG.techniques.GROUPS`.
-   * @property {number} baseCost           Score of one application.
-   * @property {number} order              Loop position, ascending = tried first.
-   * @property {string} i18nKey            Translation key of the technique name.
-   * @property {?string[]} variantScope    Variant ids the technique applies to; null = all.
-   * @property {boolean} assumesUniqueness True when the deduction relies on a unique solution.
-   * @property {function(PuzzleModel, SolveState, Object): ?Finding} find
+   * @typedef {Object} TechniqueDef  id, group, baseCost, order, i18nKey, variantScope (null = all), assumesUniqueness and
+   * find(model, state, ctx) -> ?Finding, as in the file header.
    */
 
-  /**
-   * @typedef {Object} Finding
-   * @property {string} technique   Id of the technique that found it.
-   * @property {number[]} cells     Cells that justify the deduction (for highlighting).
-   * @property {Array<[number, number]>} placements    [cell, value] pairs to fix.
-   * @property {Array<[number, number]>} eliminations  [cell, value] candidates to remove.
-   * @property {string} i18nKey     Translation key of this step's explanation.
-   * @property {Object} i18nArgs    Plain data for the translation.
-   */
+  /** @typedef {Object} Finding  technique, cells, placements, eliminations, i18nKey, i18nArgs, as in the file header. */
 
   /**
-   * Adds a technique. The stored definition is a frozen, normalised copy (`variantScope` is null or a frozen
-   * array, `assumesUniqueness` is always a boolean).
-   * @param {Object} def  See the contract in the file header.
-   * @returns {TechniqueDef} The stored definition.
-   * @throws {SG.errors.GenerationError} 'technique.invalidDef' for a missing, invalid or unknown field,
-   *         'technique.duplicate' when the id is already registered.
+   * Adds a technique; the stored definition is a frozen, normalised copy (`variantScope` null or a frozen array,
+   * `assumesUniqueness` always a boolean). Throws 'technique.invalidDef' / 'technique.duplicate'.
    */
   function register(def) {
     validate(def);
@@ -226,30 +169,16 @@
     return stored;
   }
 
-  /**
-   * Removes a technique. Meant for tests and tooling that register temporary techniques.
-   * @param {string} id
-   * @returns {boolean} True when something was removed.
-   */
   function unregister(id) {
     const removed = byId.delete(id);
     if (removed) resort();
     return removed;
   }
 
-  /**
-   * @param {string} id
-   * @returns {boolean} Whether a technique with this id is registered.
-   */
   function has(id) {
     return byId.has(id);
   }
 
-  /**
-   * @param {string} id
-   * @returns {TechniqueDef}
-   * @throws {SG.errors.GenerationError} 'technique.unknown' when nothing is registered under `id`.
-   */
   function get(id) {
     const def = byId.get(id);
     if (def === undefined) {
@@ -260,18 +189,10 @@
     return def;
   }
 
-  /**
-   * @returns {TechniqueDef[]} Every registered technique in loop order (a fresh array, cheap first).
-   */
   function list() {
     return sorted.slice();
   }
 
-  /**
-   * @param {TechniqueDef} def
-   * @param {string} variantId
-   * @returns {boolean} Whether the technique's `variantScope` admits the variant.
-   */
   function appliesTo(def, variantId) {
     return def.variantScope === null || def.variantScope.indexOf(variantId) !== -1;
   }
@@ -291,12 +212,9 @@
   }
 
   /**
-   * Builds the `ctx` argument of `find` (see the file header). The logical solver creates one per solve;
-   * tests that call a technique directly create their own.
-   * @param {PuzzleModel} model
-   * @param {Object} [options]  Solver options; only `budget` and `assumeUniqueness` (default true) are read
-   *        here, the whole object is exposed as `ctx.options`.
-   * @returns {Object} A frozen context.
+   * Builds the `ctx` argument of `find` (the logical solver creates one per solve; tests that call a technique
+   * directly create their own). Only `budget` and `assumeUniqueness` (default true) are read from `options`; the
+   * whole object is exposed as `ctx.options`.
    */
   function createContext(model, options) {
     const opts = options || {};

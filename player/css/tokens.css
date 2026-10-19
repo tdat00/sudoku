@@ -1,9 +1,8 @@
 /*
- * General design tokens (design.md 8.5).
- * Colours live ONLY here and in tokens-board.css. Three themes are selected with
- * <html data-theme="light|dark|high-contrast">; prefers-color-scheme is honoured only while no
- * data-theme attribute is present. Keep the dark palette of the media block identical to the
- * explicit [data-theme="dark"] block.
+ * General design tokens. Colours live ONLY here and in tokens-board.css. Three themes are selected with
+ * <html data-theme="light|dark|high-contrast">; prefers-color-scheme is honoured only while no data-theme
+ * attribute is present. Keep the dark palette of the media block identical to the explicit
+ * [data-theme="dark"] block.
  *
  * Contrast (WCAG 2.2 AA): text >= 4.5:1, UI component borders / focus ring >= 3:1; the
  * high-contrast theme targets >= 7:1 for text. tests/suites/theme.test.js computes every pair from this

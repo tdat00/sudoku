@@ -1,7 +1,6 @@
 /*
  * Play (js/ui/play.js): the status bar, the tools, the number pad and the hint card in the side panel, and
- * the overlay layer drawn into the board SVG. Only var(--...) tokens are used
- * (css/tokens.css, css/tokens-board.css); a translucent tint is the
+ * the overlay layer drawn into the board SVG. Only var(--...) tokens are used; a translucent tint is the
  * token colour with fill-opacity (SVG) or opacity (a pseudo-element), so the three themes need no extra
  * tokens and no colour function is written here.
  *

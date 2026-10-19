@@ -1,13 +1,11 @@
 /*
  * The guide (help.html, js/ui/help.js). Only var(--sg-*) tokens: no colour literals.
- *
  *   .help-page, .help-page__head, .help-page__layout   the frame of the page
  *   .help-toc                                          the contents: sections, groups, the techniques
  *   .help-section, .help-steps, .help__tip, .help-keys the content blocks (cards)
  *   .help-group, .help-tabs, .help-tab, .help-technique   a group of techniques with a tab for each
  *   .help-example, .help-legend, .help-swatch          the example of a technique: the board and its marks
- * The marks of the board itself (.layer-play .is-hint-*) come from play.css. Motion is switched off by the
- * global reduced-motion rules of base.css.
+ * The marks of the board itself (.layer-play .is-hint-*) come from play.css.
  */
 
 .help-brand {

@@ -1,40 +1,25 @@
 /**
- * Preferences and safe storage (design.md section 7): `SG.store`.
- *
- *   - `createStorage(backend?)` wraps `localStorage` so that nothing ever throws into the app. Every access
- *     is in try / catch (even reading `window.localStorage` can throw when storage is blocked), and an
- *     in-memory map backs it: a value that could not be persisted (blocked storage, a full quota) is still
- *     read back for the rest of the session. `setItem` says what happened: 'ok', 'quota' (the caller may
+ * Preferences and safe storage: `SG.store`.
+ *   - `createStorage(backend?)` wraps `localStorage` so that nothing ever throws into the app (even reading
+ *     `window.localStorage` can throw when storage is blocked). An in-memory map backs it: a value that could not
+ *     be persisted is still read back for the rest of the session. `setItem` returns 'ok', 'quota' (the caller may
  *     free space and retry) or 'blocked'.
- *   - `createStore(storage)` keeps the preferences of the player: language, theme, text size, reduced
- *     motion, the colour-blind symbol, the check mode and the notes behaviour. The stored value is
- *     versioned (`{ v: 1, ... }`); anything else (corrupt JSON, another version, a value of the wrong type)
- *     falls back to the defaults field by field.
- *   - `parseUrl(search)` reads `?lang=` (the only URL parameter of the player; the puzzle travels in the
- *     fragment, see exchange.js).
+ *   - `createStore(storage)` keeps the player's preferences. The stored value is versioned (`{ v: 1, ... }`);
+ *     anything else (corrupt JSON, another version, a wrong type) falls back to the defaults field by field.
+ *   - `parseUrl(search)` reads `?lang=`, the only URL parameter of the player (the puzzle travels in the fragment,
+ *     see exchange.js).
+ * Keys are prefixed `sg.player.` on purpose: GitHub Pages serves the generator and the player from one origin,
+ * which shares `localStorage`.
  *
- * The keys are prefixed `sg.player.` on purpose: GitHub Pages serves the generator and the player from one
- * origin, which shares `localStorage`.
- *
- * PUBLIC API (`SG.store`)
- *   KEY, VERSION, DEFAULTS, THEMES, FONT_SIZES, CHECK_MODES, LANGS
- *   defaults() -> a fresh copy of the defaults
- *   sanitize(input, base?) -> a complete, valid preferences object (invalid fields come from `base` or the
- *       defaults)
- *   parseUrl(search) -> { lang: 'en' | 'vi' | null }
- *   createStorage(backend?) -> { getItem, setItem, removeItem, keys, persistent }
- *   storage() -> the shared storage of the page (over `localStorage`)
- *   createStore(storage) -> store; instance() -> the shared store
- * store: get() -> state, set(patch, meta?) -> state, subscribe(fn) -> off, load(sources?) -> state,
- *   reset() -> state (every preference but the language back to its default). `fn(state, changedKeys,
- *   meta)`. `meta.persist === false` keeps a change out of the storage; `meta.source` says who changed it.
+ * store: get() -> state, set(patch, meta?) -> state, subscribe(fn) -> off, load(sources?) -> state, reset() -> state
+ * (every preference but the language back to its default). `fn(state, changedKeys, meta)`; `meta.persist === false`
+ * keeps a change out of the storage; `meta.source` says who changed it.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first definition on repeated loads: the running page must survive.
   if (SG.store && typeof SG.store.createStore === 'function') return;
 
   const KEY = 'sg.player.prefs.v1';
@@ -55,7 +40,6 @@
     showCoords: false
   });
 
-  /** For each preference: does a value fit? */
   const VALID = {
     lang: function (v) { return LANGS.indexOf(v) !== -1; },
     theme: function (v) { return THEMES.indexOf(v) !== -1; },
@@ -72,11 +56,6 @@
     return Object.assign({}, DEFAULTS);
   }
 
-  /**
-   * @param {*} input  Anything; only the known fields with a fitting value are taken.
-   * @param {Object} [base]  What an invalid or missing field falls back to (default: the defaults).
-   * @returns {Object} A complete preferences object.
-   */
   function sanitize(input, base) {
     const out = Object.assign({}, base || DEFAULTS);
     if (input === null || typeof input !== 'object') return out;
@@ -88,10 +67,6 @@
     return out;
   }
 
-  /**
-   * @param {string} search  `location.search`.
-   * @returns {{lang: ?string}}
-   */
   function parseUrl(search) {
     let lang = null;
     if (typeof search === 'string') {
@@ -103,10 +78,6 @@
     }
     return { lang: lang };
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Safe storage
-  // ---------------------------------------------------------------------------------------------
 
   function isQuota(err) {
     return !!err && (err.name === 'QuotaExceededError' || err.name === 'NS_ERROR_DOM_QUOTA_REACHED' ||
@@ -121,12 +92,6 @@
     }
   }
 
-  /**
-   * A key-value storage that never throws.
-   * @param {*} [backend]  A `Storage`-like object; default: `window.localStorage` (null when blocked).
-   * @returns {{getItem: function(string): ?string, setItem: function(string, string): string,
-   *   removeItem: function(string): void, keys: function(): string[], persistent: function(): boolean}}
-   */
   function createStorage(backend) {
     const memory = new Map();
     let store = backend === undefined ? defaultBackend() : backend;
@@ -177,15 +142,10 @@
 
   let sharedStorage = null;
 
-  /** @returns {Object} The storage of the page (created on first use). */
   function storage() {
     if (sharedStorage === null) sharedStorage = createStorage();
     return sharedStorage;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // The preferences store
-  // ---------------------------------------------------------------------------------------------
 
   function readStored(backend) {
     const raw = backend.getItem(KEY);
@@ -198,10 +158,6 @@
     }
   }
 
-  /**
-   * @param {Object} [backend]  A storage from `createStorage`; default: the shared one.
-   * @returns {Object} The store, see the file header.
-   */
   function createStore(backend) {
     const disk = backend || storage();
     let state = defaults();
@@ -248,12 +204,7 @@
         listeners.push(fn);
         return function off() { listeners = listeners.filter(function (other) { return other !== fn; }); };
       },
-      /**
-       * Reads the stored preferences; the language is chosen like every other start-up language (the `lang`
-       * of the URL, then the stored one, then the browser's, then English) and is not stored by this call.
-       * @param {{search?: string, navigator?: *}} [sources]
-       * @returns {Object} The state.
-       */
+      /** Reads the stored preferences; the language is chosen like every start-up language (URL `lang`, stored, browser, English) and is not stored by this call. */
       load: function load(sources) {
         const s = sources || {};
         const stored = readStored(disk);
@@ -283,7 +234,6 @@
 
   let sharedStore = null;
 
-  /** @returns {Object} The shared store of the page (created on first use). */
   function instance() {
     if (sharedStore === null) sharedStore = createStore(storage());
     return sharedStore;

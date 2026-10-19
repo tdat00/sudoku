@@ -1,33 +1,20 @@
 /**
- * Subset techniques: Naked and Hidden Pair / Triple / Quad (design.md section 6.6, ladder rows 6 - 10).
- * Registers nakedPair, hiddenPair, nakedTriple, hiddenTriple, nakedQuad and hiddenQuad in SG.techniques.
+ * Subset techniques: Naked and Hidden Pair / Triple / Quad (nakedPair, hiddenPair, nakedTriple, hiddenTriple, nakedQuad,
+ * hiddenQuad). All six share ONE engine: a subset of size k is a group of k "items" whose combined mask has exactly k bits.
  *
- * All six share ONE engine. A subset of size k is a group of k "items" whose combined mask has exactly k
- * bits:
+ *   naked   items are the open cells of a unit; an item's mask is its candidate digits. The k cells must hold those k
+ *           digits, so every other cell of the unit loses them. Valid in any all-different unit.
+ *   hidden  items are the digits still to be placed in a unit; an item's mask is the set of unit positions where the
+ *           digit can go. Those k digits must fill those k cells, so the cells lose every other digit. Valid only in a
+ *           complete unit (ctx.completeUnits[u] === 1), where each digit occurs exactly once.
  *
- *   naked   items are the open cells of a unit and an item's mask is its candidate digits. The k cells
- *           must hold those k digits, so every other cell of the unit loses them. Valid in any
- *           all-different unit.
- *   hidden  items are the digits still to be placed in a unit and an item's mask is the set of unit
- *           positions where the digit can go. Those k digits must fill those k cells, so the cells lose
- *           every other digit. Valid only in a complete unit (ctx.completeUnits[u] === 1), where each
- *           digit occurs exactly once.
+ * Degenerate subsets are rejected: a k-subset is reported only when NO proper part of it is already a smaller subset (j
+ * items with at most j bits). Otherwise a known naked pair would come back as a naked triple "pair + a cell that is now
+ * a naked single"; this also keeps the scoring honest (the cheapest technique that explains a deduction gets the
+ * credit). An item with a single bit is such a part of size 1, so naked and hidden singles never take part.
  *
- * The two modes differ only in how items are collected and what is removed; the combination search, its
- * pruning and the degeneracy test are shared.
- *
- * Degenerate subsets are rejected: a k-subset is reported only when NO proper part of it is already a
- * smaller subset (j items with at most j bits). Otherwise a naked pair that is already known would come
- * back as a naked triple "pair + a cell that is now a naked single", and a hidden pair as a hidden
- * triple. That also keeps the scoring honest: the cheapest technique that explains a deduction is the one
- * that gets credited. An item with a single bit is such a part of size 1, so a cell with one candidate
- * that is not placed yet (a naked single) and a digit with one place (a hidden single) never take part.
- *
- * Scan order is fixed: units by index, then combinations of items in ascending order (cells by position
- * in the unit, digits ascending). The first combination that removes a candidate is returned.
- *
- * Works on any unit shape (rows, columns, boxes, jigsaw regions, diagonals, windows, partial units for
- * the naked variants) and any digit count; nothing assumes a 3x3 box. The state is only read.
+ * Scan order is fixed: units by index, then item combinations ascending (cells by unit position, digits ascending); the
+ * first combination that removes a candidate is returned. Works on any unit shape and digit count; state is only read.
  */
 (function (root) {
   'use strict';
@@ -37,14 +24,12 @@
   const popcount = SG.bits.popcount;
   const lowestBitIndex = SG.bits.lowestBitIndex;
 
-  /** Largest subset size; the subset tables are sized for it. */
   const MAX_SIZE = 4;
   /** Unit positions are kept in an int32 mask, so a longer unit (never valid: D <= 16) is not scanned. */
   const MAX_UNIT = 30;
-  /** The enumeration asks the budget once per this many search nodes (a power of two). */
+  // The enumeration asks the budget once per this many search nodes (a power of two).
   const CHECK_EVERY = 256;
 
-  /** BIT_COUNT[s] = number of members of the subset s (a bit mask over the picked items). */
   const BIT_COUNT = new Uint8Array(1 << MAX_SIZE);
   for (let s = 1; s < BIT_COUNT.length; s++) BIT_COUNT[s] = BIT_COUNT[s >> 1] + (s & 1);
 
@@ -59,10 +44,8 @@
   let nodes = 0;       // search nodes, only used to space the budget checks
   let openMask = 0;    // positions of the unsolved cells of the unit being scanned
 
-  /**
-   * Naked mode: collects the open cells that could belong to a subset of `size` (2..size candidates).
-   * @returns {number} Number of items, or 0 when the unit has too few open cells to eliminate anything.
-   */
+  // Naked mode: collects the open cells with 2..size candidates. Returns the number of items, or 0 when the unit has too
+  // few open cells to eliminate anything.
   function collectCells(cells, value, cand, size) {
     let open = 0;
     let count = 0;
@@ -83,10 +66,8 @@
     return open > size ? count : 0;
   }
 
-  /**
-   * Hidden mode: collects the digits that have 2..size places left in the unit.
-   * @returns {number} Number of items, or 0 when the unit has too few open cells to eliminate anything.
-   */
+  // Hidden mode: collects the digits with 2..size places left in the unit. Returns the number of items, or 0 when the
+  // unit has too few open cells to eliminate anything.
   function collectDigits(cells, value, cand, digits, size) {
     let open = 0;
     let count = 0;
@@ -118,11 +99,8 @@
     return count;
   }
 
-  /**
-   * Fixes item `idx` as member number `lvl` of the combination and updates the subset unions.
-   * @returns {boolean} False when no combination that starts like this can be a valid subset: the bits of
-   *          some part already exceed `size`, or some proper part is itself a smaller subset (degenerate).
-   */
+  // Fixes item `idx` as member `lvl` of the combination and updates the subset unions. False when no combination that
+  // starts like this can be valid: the bits of some part exceed `size`, or a proper part is a smaller subset (degenerate).
   function extend(lvl, idx, size) {
     const mask = itemMask[idx];
     const base = 1 << lvl;
@@ -141,11 +119,8 @@
     picked[0] = -1;
   }
 
-  /**
-   * Advances `picked` to the next valid combination of `size` out of `count` items (depth first, ascending).
-   * Call startSearch() first; call again to continue after a combination that did not lead anywhere.
-   * @returns {boolean} False when the combinations are used up.
-   */
+  // Advances `picked` to the next valid combination (depth first, ascending). Call startSearch() first; call again to
+  // continue after a combination that led nowhere. False when the combinations are used up.
   function nextCombination(count, size, ctx) {
     while (level >= 0) {
       const idx = ++picked[level];
@@ -162,11 +137,9 @@
     return false;
   }
 
-  /**
-   * Builds the Finding for the combination in `picked`, or returns null when it would remove nothing.
-   * With P the unit positions of the subset cells and D its digits, naked removes D from the other open
-   * cells and hidden removes every digit but D from the cells in P.
-   */
+  // Builds the Finding for the combination in `picked`, or null when it would remove nothing. With P the unit positions
+  // of the subset cells and D its digits: naked removes D from the other open cells, hidden removes every digit but D
+  // from the cells in P.
   function conclude(model, u, cand, def) {
     const size = def.size;
     const hidden = def.hidden;
@@ -214,14 +187,6 @@
     };
   }
 
-  /**
-   * The shared engine behind the six techniques.
-   * @param {PuzzleModel} model
-   * @param {SolveState} state  Only read.
-   * @param {Object} ctx        See SG.techniques.
-   * @param {{id: string, size: number, hidden: boolean, stepKey: string}} def
-   * @returns {?Finding}
-   */
   function findSubset(model, state, ctx, def) {
     const size = def.size;
     const hidden = def.hidden;
@@ -245,7 +210,7 @@
     return null;
   }
 
-  // id, subset size, hidden?, base cost, order: the ladder of design.md section 6.6 / techniques.js.
+  // id, subset size, hidden?, base cost, order (see techniques.js).
   const LADDER = [
     ['nakedPair', 2, false, 9, 60],
     ['hiddenPair', 2, true, 11, 70],
@@ -262,7 +227,6 @@
       hidden: row[2],
       stepKey: 'technique.' + row[0] + '.step'
     };
-    // Skipping known ids keeps a second load of this file harmless.
     if (SG.techniques.has(def.id)) return;
     SG.techniques.register({
       id: def.id,

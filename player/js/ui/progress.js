@@ -1,44 +1,29 @@
 /**
- * Saved progress (design.md section 7): `SG.progress`. What the player keeps in the browser so that a reload
- * or a return visit carries on where the person was, all through the safe storage of `SG.store` (every access in
- * try / catch, blocked storage = memory for the session):
+ * Saved progress: `SG.progress`. What the player keeps in the browser so that a reload or return visit carries on
+ * where the person was, all through the safe storage of `SG.store`:
  *
  *   sg.player.progress.v1  { version, entries: [{ id, at, symbolMode, percent, solved, state }] }, LRU of 100;
  *                          `state` is a `game.serialize()` whose history is cut to the last 300 undo and 100
  *                          redo steps
  *   sg.player.puzzles.v1   { version, entries: [{ id, at, doc, meta }] }, LRU of 100; the imported documents
  *                          (a document over 160 kB is not stored, the total stays under 900 kB)
- *   sg.player.last.v1      the id of the puzzle on the board  (a reload without a fragment restores it)
+ *   sg.player.last.v1      the id of the puzzle on the board (a reload without a fragment restores it)
  *
- * An id is `SG.importer.puzzleId(model, givens)`: the same variant and the same clues are the same puzzle, so
- * opening a puzzle again finds its progress. Anything that does not fit (corrupt JSON, another `version`, an
- * entry of the wrong shape) is dropped, never thrown; a full storage (`QuotaExceededError`) evicts the least
- * recently used entries and retries.
+ * An id is `SG.importer.puzzleId(model, givens)`: same variant and clues = same puzzle, so opening a puzzle again
+ * finds its progress. Anything that does not fit (corrupt JSON, another `version`, an entry of the wrong shape) is
+ * dropped, never thrown; a full storage (`QuotaExceededError`) evicts the least recently used entries and retries.
  *
- * PUBLIC API (`SG.progress`)
- *   KEYS, VERSION, LIMITS            the constants above
- *   validId(id)                      whether `id` looks like a puzzle id
- *   trimState(state)                 a copy of a saved game with the history cut to the limits
- *   createProgress(storage?, now?)   -> progress; `storage` from `SG.store.createStorage` (default: the
- *                                    shared one), `now()` a clock in ms (default Date.now)
- *   instance()                       the shared progress of the page
- * progress:
- *   saveProgress(id, { symbolMode, percent, solved, state }) -> 'ok' | 'quota' | 'blocked' | 'invalid'
- *   loadProgress(id) -> entry | null          removeProgress(id)          progressList() -> entries
- *   savePuzzle(id, doc, meta?) -> 'ok' | 'quota' | 'blocked' | 'tooLarge' | 'invalid'
- *   loadPuzzle(id) -> { id, at, doc, meta } | null      removePuzzle(id)
- *   recent(limit?) -> [{ id, at, meta, percent, solved, hasProgress }], the stored puzzles, newest added first (playing one does not move it)
- *   forget(id)                       the progress and the stored document of one puzzle
- *   setLast(id) / getLast() / clearLast()
- *   clear()                           every key of the player except the preferences
- *   persistent()                     false while the storage is blocked or full (memory only)
+ * `saveProgress` returns 'ok' | 'quota' | 'blocked' | 'invalid'; `savePuzzle` also 'tooLarge'. `recent(limit?)`
+ * lists the stored puzzles newest added first (playing one does not move it). `forget(id)` drops the progress and
+ * the document of one puzzle; `clear()` every key of the player except the preferences; `persistent()` is false
+ * while the storage is blocked or full (memory only). `createProgress(storage?, now?)` takes a `SG.store.createStorage`
+ * and a clock in ms (default Date.now).
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first definition on repeated loads: the running page must survive.
   if (SG.progress && typeof SG.progress.createProgress === 'function') return;
 
   const VERSION = 1;
@@ -79,11 +64,6 @@
       (entry.meta === null || isObject(entry.meta));
   }
 
-  /**
-   * A saved game with its history cut: the most recent steps stay (they are at the end of each stack).
-   * @param {Object} state  `game.serialize()`.
-   * @returns {Object} A shallow copy; `state` itself is untouched.
-   */
   function trimState(state) {
     const copy = Object.assign({}, state);
     if (Array.isArray(copy.undo) && copy.undo.length > LIMITS.undoSteps) {
@@ -99,16 +79,10 @@
     return b.at - a.at;
   }
 
-  /**
-   * @param {Object} [backend]  A storage from `SG.store.createStorage`; default: the shared one.
-   * @param {function(): number} [now]
-   * @returns {Object} The progress store, see the file header.
-   */
   function createProgress(backend, now) {
     const disk = backend || SG.store.storage();
     const clock = typeof now === 'function' ? now : function () { return Date.now(); };
 
-    /** The valid entries of a list key; a damaged or foreign value is removed. */
     function readEntries(key, valid) {
       const raw = disk.getItem(key);
       if (raw === null) return [];
@@ -149,8 +123,6 @@
       }
     }
 
-    // ---- progress ----------------------------------------------------------------------------------
-
     function saveProgress(id, record) {
       const ok = validId(id) && isObject(record) && isObject(record.state) &&
         Number.isInteger(record.percent) && record.percent >= 0 && record.percent <= 100;
@@ -185,8 +157,6 @@
     function progressList() {
       return readEntries(KEYS.progress, validProgressEntry);
     }
-
-    // ---- opened puzzles ----------------------------------------------------------------------------
 
     function savePuzzle(id, doc, meta) {
       if (!validId(id) || !isObject(doc)) return 'invalid';
@@ -250,8 +220,6 @@
       if (getLast() === id) clearLast();
     }
 
-    // ---- the puzzle on the board ---------------------------------------------------------------------
-
     function setLast(id) {
       if (validId(id)) disk.setItem(KEYS.last, id);
     }
@@ -289,7 +257,6 @@
 
   let shared = null;
 
-  /** @returns {Object} The progress store of the page (over the shared storage), created on first use. */
   function instance() {
     if (shared === null) shared = createProgress();
     return shared;

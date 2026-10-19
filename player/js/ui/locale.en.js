@@ -1,11 +1,7 @@
 /**
- * English language pack: the shared strings of the player (general words, variant and difficulty
- * names, board vocabulary, the names, descriptions and step texts of the techniques a hint can mention,
- * errors). Modules that own their strings add them through `SG.localeFragments` instead; see
- * js/ui/i18n.js. Keep the key set identical to locale.vi.js.
- *
- * Placeholders are written `{name}`; for a technique they are the `i18nArgs` of its findings. Plural
- * forms use the suffixes `_one` / `_other`.
+ * English language pack: the shared strings of the player. Modules that own their strings add them through
+ * `SG.localeFragments` instead (see js/ui/i18n.js). Keep the key set identical to locale.vi.js.
+ * Placeholders are `{name}` (for a technique, the `i18nArgs` of its findings); plural forms use `_one` / `_other`.
  */
 (function (root) {
   'use strict';
@@ -17,10 +13,6 @@
   function add(section) {
     Object.keys(section).forEach(function (key) { pack[key] = section[key]; });
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // General words, units and durations
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'app.title': 'Sudoku Player',
@@ -63,10 +55,6 @@
     'duration.ms': '{value} ms',
     'duration.s': '{value} s'
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Variant and difficulty names
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'variant.classic4': 'Classic Sudoku 4×4',
@@ -135,9 +123,7 @@
     'variant.wordoku': 'Wordoku'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Board vocabulary
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'unitKind.box': 'box',
@@ -154,9 +140,7 @@
     'symbolMode.word': 'Word letters'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Techniques: names, descriptions and the sentence of one step
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'techniqueGroup.basic': 'Singles',
@@ -330,9 +314,7 @@
       'are removed.'
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Errors (the code of a GenerationError is the key after `error.`)
-  // ---------------------------------------------------------------------------------------------
 
   add({
     'error.unknown': 'Something went wrong ({code}).',

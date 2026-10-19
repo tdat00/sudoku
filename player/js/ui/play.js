@@ -1,65 +1,43 @@
 /**
- * Play (design.md section 6): the user solves the opened puzzle on the board, with notes, undo / redo,
- * error checking, hints that name the technique they use, a timer and completion detection. The entries live
- * in the module's own overlay layer of the board SVG (`<g class="layer-play">`), so the board view only
- * ever draws the clues.
+ * Play: the user solves the opened puzzle on the board, with notes, undo / redo, error checking, hints that name
+ * the technique they use, a timer and completion detection. The entries live in the module's own overlay layer of
+ * the board SVG (`<g class="layer-play">`), so the board view only ever draws the clues.
  *
  * Two layers, so everything can be tested in Node:
- *  - `SG.play.createGame(model, givens, solution, options)`  the PURE game engine: entries, notes, exact
- *    undo / redo, rule conflicts, wrong entries, hints, a timer on an injected clock, completion detection
- *    and a serialisable state. No DOM, no timers.
- *  - `SG.play.init(app)`  the DOM layer, started by app.js at start-up: the status bar (`#play-status`), the
- *    tools, number pad and hint card (`#play-root`, with the puzzle actions behind a toggle), the Options frame
- *    (`#options-root`: symbols, check mode, notes switch), the popup over the board, the overlay layer, keyboard
- *    and pointer input. `attach(puzzle)` puts a puzzle in play, `detach()` takes it out again.
+ *  - `SG.play.createGame(model, givens, solution, { now, autoNotes })`  the PURE game engine: entries, notes, exact
+ *    undo / redo, rule conflicts, wrong entries, hints, a timer on an injected clock, completion detection and a
+ *    serialisable state. No DOM, no timers. `autoNotes` (default true): a placed value leaves the notes of its
+ *    peers. `restoreGame(model, givens, solution, data)` rebuilds a game from `game.serialize()` (TypeError for
+ *    data that does not belong to this puzzle).
+ *  - `SG.play.init(app)`  the DOM layer, started by app.js: the status bar (`#play-status`), the tools, number pad and
+ *    hint card (`#play-root`), the Options frame (`#options-root`: symbols, check mode, notes switch), the popup over
+ *    the board, the overlay layer, keyboard and pointer input. `attach(puzzle, {state?, symbolMode?, focus?})` puts
+ *    a puzzle (what `SG.importer` returns) in play, `detach()` takes it out. The app emits `play:game` ({ game,
+ *    puzzle }) on attach and `play:change` (the game's event, or { type: 'symbols' }) on every change.
+ * Pure helpers: `describeHint`, `localizeArgs`, `groupEliminations`, `valueText`, `noteLayout`, `padLayout`,
+ * `cellAtPoint`, `moveSelection` (jumps over holes of the canvas), `createKeyReader` (also two-character symbols such
+ * as 10-12), `typedLabels`.
  *
- * ---------------------------------------------------------------------------------------------------------
- * PUBLIC API (`SG.play`)
- * ---------------------------------------------------------------------------------------------------------
- *   createGame(model, givens, solution, options?)  -> Game (below). `options`: `now()` clock in ms,
- *                      `autoNotes` (default true: a placed value leaves the notes of its peers).
- *   restoreGame(model, givens, solution, data, options?) -> Game from `game.serialize()` (throws TypeError
- *                      for data that does not belong to this puzzle).
- *   describeHint(model, hint, opts?) -> translated texts of a hint (technique name + description, region,
- *                      cells, action, explanation); `localizeArgs`, `groupEliminations`, `valueText`.
- *   noteLayout(digits) -> { cols, rows } of the note mini grid; padLayout(digits, maxCols) -> { cols, rows }.
- *   cellAtPoint(geo, x, y) -> cell index under a board point, -1 for none; moveSelection(geo, cell, dRow,
- *                      dCol) -> next cell in a direction (jumps over holes), same cell at the edge.
- *   createKeyReader(labels) -> reads typed characters into values (also two-character symbols such as 10-12).
- *   typedLabels(model, mode) -> the text of each value as the board draws it.
- *   init(app) / attach(puzzle, {state?, symbolMode?, focus?}) / detach() / isActive() / getGame() /
- *   getSymbolMode() / setSymbolMode(mode) / select(cell) / destroy()  the DOM layer. `puzzle` is what
- *                      `SG.importer` returns (`model`, `givens`, `solution`); `state` a `game.serialize()`.
- *                      The app emits `play:game` ({ game, puzzle }) when a game is attached and
- *                      `play:change` (the event of the game, or { type: 'symbols' }) on every change.
- *   CHECK_MODES, SAVE_VERSION, HINT_LEVELS.
+ * Game: values (getValue userValue isGiven getNotes snapshot); editing (setValue(cell, v, {amend}) clearValue
+ * erase toggleNote fillNotes undo redo canUndo canRedo reset); checking (conflicts wrongCells check progress
+ * isSolved, status() = 'idle' | 'playing' | 'solved' | 'gaveUp'); hints (hint nextHintStep applyHint clearHint
+ * currentHint revealCell revealSolution); timer (startTimer pauseTimer(by) resumeTimer(by) elapsedMs timerState);
+ * subscribe(fn) -> off, setOptions, getOptions, serialize, counters. Every change calls the subscribers with
+ * `{ type, cells, values, solved }`; `type` is one of 'set', 'erase', 'note', 'fillNotes', 'undo', 'redo', 'hint',
+ * 'reveal', 'revealAll', 'reset', 'check', 'timer', 'solved'.
  *
- * Game (`createGame`):
- *   values        getValue(i) userValue(i) isGiven(i) getNotes(i) snapshot()
- *   editing       setValue(cell, v, {amend}) clearValue(cell) erase(cell) toggleNote(cell, v) fillNotes()
- *                 undo() redo() canUndo() canRedo() reset()
- *   checking      conflicts() wrongCells() check() progress() isSolved() status()
- *                 'idle' | 'playing' | 'solved' | 'gaveUp'
- *   hints         hint() nextHintStep() applyHint() clearHint() currentHint() revealCell(cell?)
- *                 revealSolution()
- *   timer         startTimer() pauseTimer(by) resumeTimer(by) elapsedMs() timerState()
- *   other         subscribe(fn) -> off, setOptions({autoNotes}), getOptions(), serialize(), counters()
- * Every change calls the subscribers with `{ type, cells, values, solved }`; `type` is one of 'set', 'erase',
- * 'note', 'fillNotes', 'undo', 'redo', 'hint', 'reveal', 'revealAll', 'reset', 'check', 'timer', 'solved'.
- *
- * Hints. The next logical step is the first step of `SG.logicalSolver.solve` on the grid of givens plus the
- * user's CORRECT entries (wrong entries are ignored and counted in `hint.ignored`). Every step is checked
- * against the solution before it is shown, so a hint never suggests a wrong value; when the solver is stuck
- * the hint says so (`ok: false, reason: 'stuck'`). The steps of one solve form a plan: the user walks it with
- * `hint()` (level 1 technique and region, 2 the cells, 3 the placement or elimination),
- * `nextHintStep()` and `applyHint()`. An applied elimination is remembered, so the next plan skips it.
+ * Hints. The next logical step is the first step of `SG.logicalSolver.solve` on the givens plus the user's CORRECT
+ * entries (wrong entries are ignored and counted in `hint.ignored`). Every step is checked against the solution
+ * before it is shown, so a hint never suggests a wrong value; when the solver is stuck the hint says so
+ * (`ok: false, reason: 'stuck'`). The steps of one solve form a plan the user walks with `hint()` (level 1
+ * technique and region, 2 the cells, 3 the placement or elimination), `nextHintStep()` and `applyHint()`. An applied
+ * elimination is remembered, so the next plan skips it.
  */
 (function (root) {
   'use strict';
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first instance on repeated loads: a running game must survive.
   if (SG.play && typeof SG.play.createGame === 'function') return;
 
   const SAVE_VERSION = 1;
@@ -68,10 +46,6 @@
   const HINT_LEVELS = 3;
   const KEY_TIMEOUT_MS = 1200;
   const CHECK_MODES = Object.freeze(['off', 'conflicts', 'live']);
-
-  // ---------------------------------------------------------------------------------------------
-  // Pure helpers
-  // ---------------------------------------------------------------------------------------------
 
   function fail(message) {
     return new TypeError('SG.play: ' + message);
@@ -104,37 +78,19 @@
       ? performance.now() : Date.now();
   }
 
-  /**
-   * The mini grid of the candidate notes of a cell: 3x3 for 9 digits, 2x3 for 6, 2x2 for 4, 3x4 for 12 and
-   * 4x4 for 16 (columns by rows: 3 columns x 2 rows for 6, 4 columns x 3 rows for 12).
-   * @param {number} digits
-   * @returns {{cols: number, rows: number}}
-   */
+  /** The mini grid of the candidate notes of a cell (columns x rows): 3x3 for 9 digits, 3x2 for 6, 2x2 for 4, 4x3 for 12, 4x4 for 16. */
   function noteLayout(digits) {
     const d = Math.max(1, digits | 0);
     const cols = Math.ceil(Math.sqrt(d));
     return { cols: cols, rows: Math.ceil(d / cols) };
   }
 
-  /**
-   * Rows and columns of the number pad: at most `maxCols` buttons in a row, rows of about equal length.
-   * @param {number} digits
-   * @param {number} maxCols
-   * @returns {{cols: number, rows: number}}
-   */
   function padLayout(digits, maxCols) {
     const d = Math.max(1, digits | 0);
     const rows = Math.ceil(d / Math.max(1, maxCols | 0));
     return { cols: Math.ceil(d / rows), rows: rows };
   }
 
-  /**
-   * The cell under a point of the board, in board (viewBox) units.
-   * @param {Object} geo  `SG.boardView.geometry(model)`.
-   * @param {number} x
-   * @param {number} y
-   * @returns {number} Cell index, -1 outside the cells and on holes of the canvas.
-   */
   function cellAtPoint(geo, x, y) {
     const col = Math.floor((x - geo.originX) / geo.cell);
     const row = Math.floor((y - geo.originY) / geo.cell);
@@ -142,15 +98,6 @@
     return geo.at[row * geo.cols + col];
   }
 
-  /**
-   * The next cell in a direction. Holes of a multi-grid canvas are jumped over; at the edge the selection
-   * stays where it is.
-   * @param {Object} geo
-   * @param {number} cell
-   * @param {number} dRow  -1, 0 or 1.
-   * @param {number} dCol  -1, 0 or 1.
-   * @returns {number}
-   */
   function moveSelection(geo, cell, dRow, dCol) {
     if (!(cell >= 0)) return cell;
     let row = geo.cellRow[cell] + dRow;
@@ -164,13 +111,7 @@
     return cell;
   }
 
-  /**
-   * The text of every value as the board draws it in a symbol mode ('5', 'C', 'A' of a letter set, the
-   * letter of a Wordoku). Colour and shape modes have no text: they fall back to the label of the model.
-   * @param {PuzzleModel} model
-   * @param {string} [mode='digits']
-   * @returns {string[]} Entry v - 1 is the text of value v.
-   */
+  /** The text of every value as the board draws it in a symbol mode; colour and shape modes have no text and fall back to the label of the model. Entry v - 1 is value v. */
   function typedLabels(model, mode) {
     const out = [];
     const labels = model.symbols && model.symbols.labels;
@@ -190,14 +131,6 @@
     return out;
   }
 
-  /**
-   * What a hint or a message calls a value: the text of the symbol, or the translated name of a colour or
-   * a shape (where the board draws no text).
-   * @param {PuzzleModel} model
-   * @param {number} value
-   * @param {string} [mode='digits']
-   * @returns {string}
-   */
   function valueText(model, value, mode) {
     if (SG.symbols && typeof SG.symbols.glyph === 'function') {
       const g = SG.symbols.glyph(mode || 'digits', value, model, {});
@@ -208,15 +141,10 @@
   }
 
   /**
-   * Reads typed characters into values. Symbols of one character give their value at once; a set with
-   * two-character symbols (mega12 numbers 1-12) gives the shorter value first (`pending: true`) and the
-   * longer one when the next character arrives within the timeout (`continued: true`: it replaces the
-   * pending one). Digits 1-9 stand for the first nine values when no symbol starts with them (typing 5 in
-   * a letter or word set).
-   * @param {string[]} labels  The symbol of each value (`typedLabels`).
-   * @param {{timeoutMs?: number}} [options]
-   * @returns {{feed: function(string, number): ?{value: ?number, pending: boolean, continued: boolean},
-   *            reset: function(): void, labels: string[]}}
+   * Reads typed characters into values. One-character symbols give their value at once; a set with two-character
+   * symbols (mega12 numbers 1-12) gives the shorter value first (`pending: true`) and the longer one when the next
+   * character arrives within the timeout (`continued: true`: it replaces the pending one). Digits 1-9 stand for the
+   * first nine values when no symbol starts with them (typing 5 in a letter or word set).
    */
   function createKeyReader(labels, options) {
     const timeout = options && options.timeoutMs > 0 ? options.timeoutMs : KEY_TIMEOUT_MS;
@@ -280,11 +208,6 @@
     };
   }
 
-  /**
-   * Groups eliminations by digit.
-   * @param {Array<[number, number]>} eliminations  `[cell, value]` pairs.
-   * @returns {Array<{value: number, cells: number[]}>} Ascending by value; cells ascending.
-   */
   function groupEliminations(eliminations) {
     const byValue = new Map();
     (eliminations || []).forEach(function (pair) {
@@ -299,14 +222,7 @@
   const DIGIT_ARGS = ['digit', 'digitX', 'digitY'];
   const DIGIT_LIST_ARGS = ['digits', 'forced', 'partDigits'];
 
-  /**
-   * The arguments of a step text with every digit written the way the board draws it (a hexadecimal 0 is
-   * value 1, a Wordoku value is a letter) and every chain cell as a label.
-   * @param {PuzzleModel} model
-   * @param {Object} args  `step.i18nArgs`.
-   * @param {string} [mode]  Symbol mode of the board.
-   * @returns {Object} A copy.
-   */
+  /** A copy of a step's i18nArgs with every digit written the way the board draws it (a hexadecimal 0 is value 1, a Wordoku value is a letter) and every chain cell as a label. */
   function localizeArgs(model, args, mode) {
     const out = Object.assign({}, args || {});
     DIGIT_ARGS.forEach(function (key) {
@@ -333,14 +249,7 @@
     return cells.map(function (c) { return SG.model.cellLabel(model, c); });
   }
 
-  /**
-   * The translated texts of a hint.
-   * @param {PuzzleModel} model
-   * @param {Object} hint  What `game.hint()` returned.
-   * @param {{mode?: string}} [opts]  `mode` is the symbol mode of the board.
-   * @returns {Object} `{ ok: false, reason, text }` for a hint without a step; else `title` (technique name),
-   *          `description`, `region`, `cells`, `action`, `explanation`, `ignored` (a text, '' for none).
-   */
+  /** The translated texts of a hint: `{ ok: false, reason, text }` for a hint without a step; else `title`, `description`, `region`, `cells`, `action`, `explanation`, `ignored` (a text, '' for none). */
   function describeHint(model, hint, opts) {
     const mode = opts && opts.mode ? opts.mode : 'digits';
     if (!hint || hint.ok !== true) {
@@ -377,18 +286,6 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Game engine (pure)
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * Creates a game.
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} givens    One entry per cell, 0 = empty (the clues of the puzzle).
-   * @param {ArrayLike<number>} solution  The full solution.
-   * @param {{now?: function(): number, autoNotes?: boolean, state?: Object}} [options]
-   * @returns {Object} The game, see the file header.
-   */
   function createGame(model, givens, solution, options) {
     if (!model || !(model.cellCount > 0)) throw fail('a puzzle model is required');
     const n = model.cellCount;
@@ -410,8 +307,6 @@
     let undoStack = [];
     let redoStack = [];
     let solved = false;
-
-    // ---- small readers ----------------------------------------------------------------------------
 
     function validCell(cell) {
       return Number.isInteger(cell) && cell >= 0 && cell < n;
@@ -443,8 +338,6 @@
       return mask;
     }
 
-    // ---- events ----------------------------------------------------------------------------------
-
     function emit(info) {
       listeners.slice().forEach(function (fn) {
         try {
@@ -454,8 +347,6 @@
         }
       });
     }
-
-    // ---- timer -----------------------------------------------------------------------------------
 
     function stopTimer() {
       if (tm.since !== null) {
@@ -479,8 +370,6 @@
       return tm.elapsed + (tm.since !== null ? Math.max(0, clock() - tm.since) : 0);
     }
 
-    // ---- solved / status -------------------------------------------------------------------------
-
     function hasGaveUp() {
       return undoStack.some(function (entry) { return entry.gaveUp === true; });
     }
@@ -500,8 +389,6 @@
       return tm.started ? 'playing' : 'idle';
     }
 
-    // ---- history ---------------------------------------------------------------------------------
-
     function recordCell(rec, cell, v, mask) {
       if (values[cell] === v && notes[cell] === mask) return;
       rec.push([cell, values[cell], v, notes[cell], mask]);
@@ -509,7 +396,6 @@
       notes[cell] = mask;
     }
 
-    /** Puts a value into a cell: its notes go, and (with `autoNotes`) the digit leaves its peers' notes. */
     function placeInto(rec, cell, v) {
       recordCell(rec, cell, v, 0);
       if (!settings.autoNotes) return;
@@ -575,8 +461,6 @@
       settle(type, touchedCells(rec), valuesChanged(rec));
       return true;
     }
-
-    // ---- editing ---------------------------------------------------------------------------------
 
     function setValue(cell, v, o) {
       if (!validCell(cell) || !(Number.isInteger(v) && v >= 1 && v <= D)) return false;
@@ -672,9 +556,6 @@
       emit({ type: 'reset', cells: cells, values: true, solved: false });
     }
 
-    // ---- checking --------------------------------------------------------------------------------
-
-    /** The sums a cage can still reach with `open` more cells: [min, max], or null when it cannot be done. */
     function cageRange(cage, used, open) {
       if (open === 0) return [0, 0];
       if (!cage.distinct) return [open, open * D];
@@ -690,11 +571,7 @@
       return [min, max];
     }
 
-    /**
-     * The rule conflicts among the visible values (clues and entries): the same digit twice in a unit, a
-     * cage that repeats a digit or can no longer reach its sum, a sign that is not satisfied.
-     * @returns {{cells: number[], units: number[], cages: number[], signs: number[]}}
-     */
+    /** The rule conflicts among the visible values: a digit twice in a unit, a cage that repeats a digit or can no longer reach its sum, an unsatisfied sign. */
     function conflicts() {
       const flag = new Uint8Array(n);
       const badUnits = [];
@@ -766,7 +643,6 @@
       return { cells: cells, units: badUnits, cages: badCages, signs: badSigns };
     }
 
-    /** Entries that differ from the solution. */
     function wrongCells() {
       const out = [];
       for (let i = 0; i < n; i++) if (values[i] > 0 && values[i] !== sol[i]) out.push(i);
@@ -803,8 +679,6 @@
         ok: wrong.length === 0 && found.cells.length === 0, complete: solved
       };
     }
-
-    // ---- hints -----------------------------------------------------------------------------------
 
     function ensureExtensions() {
       if (model.cages.length > 0 && SG.comboTable) SG.comboTable.enablePropagation(model.variantId);
@@ -1013,7 +887,6 @@
       return commit('hint', rec);
     }
 
-    /** The open cell with the fewest candidates: the least arbitrary cell to reveal. */
     function easiestCell() {
       const grid = userGrid();
       let best = -1;
@@ -1048,8 +921,6 @@
       return commit('revealAll', rec, { gaveUp: true });
     }
 
-    // ---- timer API -------------------------------------------------------------------------------
-
     function pauseTimer(by) {
       if (!tm.started || tm.since === null) return false;
       tm.elapsed += clock() - tm.since;
@@ -1068,7 +939,6 @@
       return true;
     }
 
-    /** Starts the clock of a game nobody has played yet (the Play button; a first move does the same). */
     function startTimer() {
       if (tm.started || solved) return false;
       tm.started = true;
@@ -1082,8 +952,6 @@
       return { started: tm.started, running: tm.since !== null, paused: tm.pausedBy !== null,
         pausedBy: tm.pausedBy, elapsedMs: elapsedMs() };
     }
-
-    // ---- state -----------------------------------------------------------------------------------
 
     function serializeEntries(list) {
       return list.map(function (e) {
@@ -1170,12 +1038,9 @@
       cellCount: n,
       digits: D,
 
-      /** @returns {number} The value shown in a cell: the clue, else the entry (0 = empty). */
       getValue: cellValue,
-      /** @returns {number} The entry of the user (0 for none, also on a clue). */
       userValue: function userValue(cell) { return validCell(cell) ? values[cell] : 0; },
       isGiven: function isGiven(cell) { return validCell(cell) && given[cell] > 0; },
-      /** @returns {number} Bit mask of the notes of a cell (bit v - 1 = value v). */
       getNotes: function getNotes(cell) { return validCell(cell) ? notes[cell] : 0; },
       snapshot: function snapshot() { return { values: values.slice(), notes: notes.slice() }; },
 
@@ -1230,24 +1095,11 @@
     };
   }
 
-  /**
-   * Rebuilds a game from `game.serialize()`. A running timer comes back paused (resume it to carry on).
-   * @param {PuzzleModel} model
-   * @param {ArrayLike<number>} givens
-   * @param {ArrayLike<number>} solution
-   * @param {Object} data
-   * @param {Object} [options]  See `createGame`.
-   * @returns {Object}
-   * @throws {TypeError} For data that does not belong to this puzzle.
-   */
+  /** Rebuilds a game from `game.serialize()`; a running timer comes back paused. Throws TypeError for data that does not belong to this puzzle. */
   function restoreGame(model, givens, solution, data, options) {
     if (data === null || typeof data !== 'object') throw fail('invalid saved game');
     return createGame(model, givens, solution, Object.assign({}, options || {}, { state: data }));
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // DOM layer
-  // ---------------------------------------------------------------------------------------------
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const CLOCK_MS = 500;
@@ -1262,7 +1114,6 @@
   const NOTE_TOP_CAGE = 11;
   const ARROWS = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] };
 
-  /** Icons the sprite of index.html does not have (24 x 24 box, drawn with the stroke of `.icon`). */
   const ICON_PATHS = {
     undo: 'M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11',
     redo: 'm15 14 5-5-5-5M20 9H9.5a5.5 5.5 0 0 0 0 11H13',
@@ -1296,18 +1147,11 @@
   }
 
   /**
-   * Draws a snapshot of a game on a board view, in the same layer and with the same classes as the play
-   * overlay: the values the player entered, the notes of the cells that matter and the marks of a hint (the
-   * region, the cells that justify it, the cells it changes, the candidates it removes). The Help page uses it
-   * to show a technique at work. Symbols are drawn as text (digits, letters).
-   * @param {Object} board  The view `SG.boardView.create` made for `model`.
-   * @param {Element} svgEl  Its svg element.
-   * @param {PuzzleModel} model
-   * @param {{values: ArrayLike<number>, notes: ArrayLike<number>, hint?: Object, mode?: string,
-   *   notesIn?: number[]}} snap  `values`: the entries of the player (the board draws the givens itself);
-   *   `notes`: the bit mask of every cell; `hint`: what `game.hint()` returned; `notesIn`: the cells whose notes
-   *   are drawn (default: the cells of the region, of the hint and the ones it changes).
-   * @returns {Element} The layer.
+   * Draws a snapshot of a game on a board view, in the same layer and with the same classes as the play overlay: the
+   * player's entries, the notes of the cells that matter and the marks of a hint. The Help page uses it to show a
+   * technique at work; symbols are drawn as text. `snap`: `values` (the player's entries; the board draws the givens),
+   * `notes` (bit mask per cell), `hint` (what `game.hint()` returned), `notesIn` (cells whose notes are drawn; default
+   * the region, the hint cells and the ones it changes).
    */
   function renderSnapshot(board, svgEl, model, snap) {
     const geo = board.getGeometry();
@@ -1382,11 +1226,6 @@
     return whole < 1000 ? tr('duration.s', { value: '0' }) : SG.i18n.formatDuration(whole);
   }
 
-  /**
-   * Builds the controller of the DOM layer for the running app.
-   * @param {Object} app  `SG.app`.
-   * @returns {Object} `{ start, attach, detach, isActive, getGame, select, symbolMode, destroy }`.
-   */
   function createController(app) {
     const doc = root.document;
     const els = {};
@@ -1414,8 +1253,6 @@
     let popupOpen = false;
     let moreOpen = false;
 
-    // ---- translation of the static texts ---------------------------------------------------------
-
     function bindText(el, key, attr) {
       const entry = { el: el, key: key, attr: attr || null };
       bound.push(entry);
@@ -1438,7 +1275,6 @@
       return typeof app.getStore === 'function' ? app.getStore() : null;
     }
 
-    /** A preference of the store (`check`, `autoNotes`); the defaults when there is no store. */
     function pref(name) {
       const st = store();
       const state = st === null ? null : st.get();
@@ -1458,8 +1294,6 @@
     function labelOf(cell) {
       return SG.model.cellLabel(game.model, cell);
     }
-
-    // ---- user interface -------------------------------------------------------------------------
 
     function toolButton(id, iconName, key, onClick) {
       const button = h('button', { type: 'button', class: 'play__tool', 'data-tool': id }, [
@@ -1532,12 +1366,10 @@
       ]);
       els.status = h('div', { class: 'play__status', hidden: true }, [els.statusRow, els.progress]);
       statusHost.appendChild(els.status);
-      // The page's status line (saved / not saved) goes inside the box, below the timer row.
       const statusLine = statusHost.querySelector('.status-row');
       if (statusLine !== null) els.status.appendChild(statusLine);
       els.statusHost = statusHost;
 
-      // What the key word of a solved Wordoku means (hidden until the word line is revealed).
       els.wordTitle = h('div', { class: 'play__word-title' });
       bindText(els.wordTitle, 'play.word.title');
       els.wordText = h('div', { class: 'play__word-text' });
@@ -1563,16 +1395,14 @@
       bindText(els.pad, 'play.pad.label', 'aria-label');
       els.hintCard = buildHintCard();
 
-      // One radio per symbol mode, one per line; the rows are rebuilt for every puzzle (refreshSymbolControl).
       const symbolsLegend = h('legend', { class: 'field-group__legend' });
       bindText(symbolsLegend, 'play.symbols.label');
       els.symbolsList = h('div', { class: 'play__choices' });
       els.symbolsRow = h('fieldset', { class: 'field-group play__symbols' }, [symbolsLegend, els.symbolsList]);
 
       els.keys = h('div', { class: 'play__keys' }, [els.tools, els.pad]);
-      // The actions on this puzzle (fill in all notes, reveal a cell): out of the way until the play frame is
-      // expanded, so that none of them is pressed by mistake. The toggle sits right under the pad, in the same
-      // frame (on a small screen, in the bar that is fixed to the bottom).
+      // The actions on this puzzle (fill in all notes, reveal a cell) stay out of the way until the play frame is
+      // expanded, so none is pressed by mistake; the toggle sits right under the pad.
       els.moreIcon = icon('chevron-down');
       els.moreLabel = h('span', { class: 'btn__label' });
       els.moreToggle = h('button', { type: 'button', class: 'btn btn--ghost btn--sm play__more-toggle',
@@ -1589,9 +1419,7 @@
       els.root = h('div', { class: 'play', 'data-active': 'false' }, [els.panel]);
       panelHost.appendChild(els.root);
 
-      // The Options frame below the play frame: how to show the symbols and the two checking preferences (the
-      // ones of the Settings dialog).
-      // The check mode: one radio per mode, one per line (the Settings dialog has the same choice).
+      // The Options frame below the play frame: symbols and the two checking preferences (as in the Settings dialog).
       els.checkRadios = CHECK_MODES.map(function (mode) {
         const input = h('input', { type: 'radio', name: 'play-check', value: mode });
         input.checked = pref('check') === mode;
@@ -1618,7 +1446,6 @@
       bindText(autoLabel, 'play.options.autoNotes');
       const title = h('span', { class: 'play__options-title' });
       bindText(title, 'play.options.summary');
-      // Collapsible, closed at first (the play frame above is what a player needs all the time).
       els.optionsBox = h('details', { class: 'disclosure play__options', hidden: true }, [
         h('summary', {}, [title]),
         h('div', { class: 'disclosure__body play__options-body' }, [
@@ -1630,7 +1457,6 @@
       optionsHost.appendChild(els.optionsBox);
       els.legend = doc.getElementById('board-legend');
 
-      // The popup over the board (see renderPopup): the keys of the pad, Notes, Erase and Close.
       const popupTool = function (iconName, key, onClick) {
         const button = h('button', { type: 'button', class: 'play__ptool' }, [icon(iconName)]);
         bindText(button, key, 'aria-label');
@@ -1654,11 +1480,7 @@
       return true;
     }
 
-    /**
-     * Where the status box lives. On a wide screen it is the box at the top of the side panel. On a small
-     * screen the Play / Pause / Reset buttons join Share / Import above the puzzle (on the left), and the box
-     * with the time, the progress and the status line follows on the next line.
-     */
+    /** Where the status box lives: the top of the side panel on a wide screen; on a small screen the Play / Pause / Reset buttons join Share / Import above the puzzle and the box follows on the next line. */
     function placeStatus() {
       if (els.status === undefined) return;
       const actions = doc.querySelector('.main-actions');
@@ -1672,11 +1494,7 @@
       }
     }
 
-    /**
-     * The actions on the puzzle, in the play frame once it is expanded: fill in all notes, reveal a cell and
-     * reveal the solution. They only concern the puzzle on the board, so they are not in Settings. (Starting
-     * the game over is the Reset button of the status box.)
-     */
+    /** The actions on the puzzle, in the play frame once expanded: fill in all notes, reveal a cell, reveal the solution. (Starting over is the Reset button of the status box.) */
     function makeActions() {
       const button = function (key, onClick) {
         const node = h('button', { type: 'button', class: 'btn btn--secondary btn--sm', 'data-i18n': key });
@@ -1693,7 +1511,6 @@
         [els.actions.fill, els.actions.cell]);
     }
 
-    /** Expands or collapses the actions of the play frame (collapsed at first and for every puzzle). */
     function setMore(open) {
       moreOpen = open === true;
       if (!moreOpen) disarmReveal();
@@ -1705,7 +1522,6 @@
       syncKeysHeight();
     }
 
-    /** Keeps the actions in step with the game. */
     function refreshActions() {
       const set = els.actions;
       if (set === undefined) return;
@@ -1716,8 +1532,6 @@
       set.cell.textContent = tr(key);
       set.cell.classList.toggle('is-armed', revealTimer !== null);
     }
-
-    // ---- symbols ----------------------------------------------------------------------------------
 
     function refreshSymbolControl() {
       const modes = SG.symbols.modesFor(game.model);
@@ -1739,7 +1553,6 @@
       });
     }
 
-    /** The legend under the board names the colours and shapes; digits and letters need none. */
     function renderLegend() {
       if (els.legend === null) return;
       const mode = currentMode();
@@ -1761,8 +1574,6 @@
       refreshAll();
       return true;
     }
-
-    // ---- overlay layer ---------------------------------------------------------------------------
 
     function glyphOf(v) {
       return SG.symbols.glyph(currentMode(), v, game.model, { colorAuxSymbol: auxOn(), label: false });
@@ -1971,8 +1782,6 @@
       if (layer !== null) layer.g.classList.toggle('is-paused', game.timerState().pausedBy === 'user');
     }
 
-    // ---- state of the panel -----------------------------------------------------------------------
-
     function canEdit() {
       if (!active || game === null) return false;
       const status = game.status();
@@ -2006,7 +1815,6 @@
           String(game.digits <= 9 ? game.digits : Math.ceil(game.digits / 2)));
         els.popupPad.style.setProperty('--play-pad-cols', String(padLayout(game.digits,
           game.digits > 9 ? POPUP_COLS_BIG : POPUP_COLS).cols));
-        // The pad of the side panel and the pad of the popup over the board have the same keys.
         [[els.pad, 'play__key'], [els.popupPad, 'play__pkey']].forEach(function (pair) {
           pair[0].textContent = '';
           for (let v = 1; v <= game.digits; v++) {
@@ -2035,14 +1843,10 @@
       });
     }
 
-    // ---- the popup over the board ----------------------------------------------------------------
-
-    /** Whether the screen is small: the keys are fixed to the bottom and there is no popup. */
     function isSmallScreen() {
       return typeof root.matchMedia === 'function' && root.matchMedia(SMALL_SCREEN).matches;
     }
 
-    /** Tells the page how tall the fixed bar of keys is, so nothing hides behind it (0 when it is not fixed). */
     function syncKeysHeight() {
       if (els.keys === undefined || root.document === undefined) return;
       const fixed = active && root.getComputedStyle(els.keys).position === 'fixed';
@@ -2050,11 +1854,7 @@
         fixed ? els.keys.offsetHeight + 'px' : '0px');
     }
 
-    /**
-     * The popup with the keys of the pad, Notes, Erase and Close, next to the cell that was clicked, so a
-     * value can be entered without leaving the board. It follows the selected cell until it is closed
-     * (Escape, its Close button), and is not shown for a given, a paused or a solved game.
-     */
+    /** The popup with the pad keys, Notes, Erase and Close next to the clicked cell; it follows the selected cell until closed and is not shown for a given, paused or solved game. */
     function renderPopup() {
       if (els.popup === undefined || els.popup.parentNode === null) return;
       const wanted = popupOpen && active && sel >= 0 && canEdit() && !game.isGiven(sel) && !isSmallScreen();
@@ -2126,7 +1926,6 @@
       updateClock();
     }
 
-    /** Announces a message to screen readers (there is no message box on the page); `quiet` skips it. */
     function say(kind, build, quiet) {
       if (build === null || quiet === true || typeof app.announce !== 'function') return;
       app.announce(build());
@@ -2144,8 +1943,6 @@
       renderPopup();
       syncKeysHeight();
     }
-
-    // ---- selection and focus ----------------------------------------------------------------------
 
     function focusBoard() {
       if (svg === null) return;
@@ -2204,8 +2001,6 @@
       const value = target.getAttribute('data-cell');
       if (value !== null && value !== '') select(Number(value), false);
     }
-
-    // ---- editing ----------------------------------------------------------------------------------
 
     function requireCell() {
       if (sel >= 0) return true;
@@ -2298,7 +2093,6 @@
       });
     }
 
-    /** Reveals the selected cell (the easiest open one without a selection), after a confirming second press. */
     function askRevealCell() {
       if (!canEdit()) return;
       if (revealTimer === null) {
@@ -2362,8 +2156,6 @@
       game.resumeTimer('auto');
       return game.pauseTimer('user');
     }
-
-    // ---- hints ------------------------------------------------------------------------------------
 
     function show(el, visible) {
       el.hidden = !visible;
@@ -2441,9 +2233,6 @@
       afterHintChange();
     }
 
-    // ---- game events ------------------------------------------------------------------------------
-
-    /** The dictionary entries of the key word of the current game, in the language of the page. */
     function wordEntries(info) {
       if (!info || !SG.wordbook) return [];
       return SG.wordbook.lookup(info.word, SG.i18n.current);
@@ -2457,7 +2246,6 @@
       return tr(POS_KEYS[entry.pos] || POS_KEYS.o);
     }
 
-    /** Fills the word card (word, part of speech, meaning); it stays hidden for a word without an entry. */
     function renderWordCard(visible) {
       if (els.wordCard === undefined) return;
       const info = visible && active ? SG.modelAids.describeWord(game.model) : null;
@@ -2481,7 +2269,6 @@
       renderWordCard(reveal);
     }
 
-    /** The success text about the key word: the word, with its meaning when the word book knows it. */
     function wordSentence(info) {
       const entry = wordEntries(info)[0];
       if (entry === undefined) return tr('play.success.word', { word: info.word });
@@ -2510,7 +2297,6 @@
       if (typeof app.toast === 'function') app.toast('success', 'play.success.toast', { time: time });
     }
 
-    /** A game that is already finished when it is attached (a reload): the message without the fanfare. */
     function showFinished() {
       const status = game.status();
       renderWordCard(SG.modelAids.describeWord(game.model) !== null);
@@ -2558,8 +2344,6 @@
       else if (!game.isSolved() && game.timerState().running) startClock();
       app.emit('play:change', info);
     }
-
-    // ---- keyboard ---------------------------------------------------------------------------------
 
     function isButton(el) {
       return el && (el.tagName === 'BUTTON' || el.tagName === 'A');
@@ -2659,8 +2443,6 @@
     function resumeAuto() {
       if (active && game !== null && game.resumeTimer('auto')) startClock();
     }
-
-    // ---- attaching and detaching ------------------------------------------------------------------
 
     function listen(target, type, fn) {
       target.addEventListener(type, fn);
@@ -2770,8 +2552,6 @@
       return true;
     }
 
-    // ---- app events -------------------------------------------------------------------------------
-
     function onSettings(payload) {
       const keys = payload && payload.keys ? payload.keys : [];
       if (keys.indexOf('check') !== -1) {
@@ -2842,11 +2622,6 @@
     };
   }
 
-  /**
-   * Starts the DOM layer (app.js calls it at start-up). Idempotent; does nothing without the mount points.
-   * @param {Object} app  `SG.app`.
-   * @returns {boolean} Whether play is available.
-   */
   function init(app) {
     if (typeof document === 'undefined' || !app || typeof app.on !== 'function') return false;
     if (controller !== null) return true;
@@ -2856,53 +2631,38 @@
     return true;
   }
 
-  /**
-   * Puts a puzzle in play on the board of the app.
-   * @param {Object} puzzle  `model`, `givens`, `solution` (what `SG.importer` returns).
-   * @param {{state?: Object, symbolMode?: string, focus?: boolean}} [options]  `state`: a saved
-   *        `game.serialize()` (a state that does not fit is ignored); `focus`: move the focus to the board.
-   * @returns {?Object} The game; null when play is not available.
-   */
   function attach(puzzle, options) {
     return controller !== null ? controller.attach(puzzle, options) : null;
   }
 
-  /** Takes the puzzle out of play (the board and the panel stay as they are). @returns {boolean} Was on. */
   function detach() {
     return controller !== null && controller.detach();
   }
 
-  /** Pauses the game in play when it is running. @returns {boolean} Whether it was paused. */
   function pauseGame() {
     return controller !== null && controller.pauseGame();
   }
 
-  /** @returns {boolean} Whether a puzzle is in play. */
   function isActive() {
     return controller !== null && controller.isActive();
   }
 
-  /** @returns {?Object} The game of the puzzle in play (null before the first `attach`). */
   function getGame() {
     return controller !== null ? controller.getGame() : null;
   }
 
-  /** @returns {string} The symbol mode of the board ('digits' without a board). */
   function getSymbolMode() {
     return controller !== null && controller.isActive() ? controller.symbolMode() : 'digits';
   }
 
-  /** Switches the symbol mode of the puzzle in play. @returns {boolean} Whether it was accepted. */
   function setSymbolMode(mode) {
     return controller !== null && controller.setSymbolMode(mode);
   }
 
-  /** Selects a cell (a puzzle must be in play). */
   function select(cell) {
     if (controller !== null && controller.isActive()) controller.select(cell, true);
   }
 
-  /** Removes everything play added to the page (for tests and hot reloads). */
   function destroy() {
     if (controller !== null) controller.destroy();
     controller = null;
@@ -2936,10 +2696,6 @@
     cellAtPoint: cellAtPoint,
     moveSelection: moveSelection
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Strings of play
-  // ---------------------------------------------------------------------------------------------
 
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({

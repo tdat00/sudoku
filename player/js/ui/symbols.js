@@ -1,22 +1,17 @@
 /**
- * Presentation layer of the board symbols: how a value 1..D is shown. The core only knows the
- * integers 1..D; this file turns a value into what the board draws, per symbol mode, and builds the legend.
- *
- * Modes:
- *   digits   the label of the model (`model.symbols.labels`, so mega16 draws '0'..'F'); the plain value for
- *            a model whose labels are word letters (wordoku)
+ * Presentation of the board symbols: how a value 1..D is shown. The core only knows the integers 1..D; this file
+ * turns a value into what the board draws, per symbol mode, and builds the legend.
+ *   digits   the label of the model (`model.symbols.labels`, so mega16 draws '0'..'F'); the plain value for a
+ *            model whose labels are word letters (wordoku)
  *   letters  A, B, C, ...
- *   colors   a palette fill (`--sg-board-sym-1..16`) PLUS a small geometric symbol, so colour is never the
- *            only carrier of the value (switch the symbol off with `opts.colorAuxSymbol === false`)
+ *   colors   a palette fill (`--sg-board-sym-1..16`) PLUS a small geometric symbol, so colour is never the only
+ *            carrier of the value (`opts.colorAuxSymbol === false` switches the symbol off)
  *   shapes   one of 16 geometric shapes
- *   word     the letters of the model (`model.symbols.labels`, wordoku)
- *
- * Everything here is pure (no DOM): a glyph is plain data, a legend is data or an SVG/HTML string, and
- * switching the mode never touches the puzzle. Texts go through `SG.i18n.t` (`symbols.*` keys, fragment at
- * the bottom of this file); without `SG.i18n` (Node) the English fragment is read directly.
- *
- * Colour index: `colorIndex` is 0-based, palette token `--sg-board-sym-<colorIndex + 1>`; entry i is always
- * drawn with shape `DEFAULT_AUX_SHAPES[i]`, so colour mode and shapes mode agree on what value v looks like.
+ *   word     the letters of the model (wordoku)
+ * Everything is pure (no DOM): a glyph is plain data, a legend is data or an SVG/HTML string. Texts go through
+ * `SG.i18n.t` (`symbols.*` keys, fragment at the bottom); without `SG.i18n` (Node) the English fragment is used.
+ * `colorIndex` is 0-based (token `--sg-board-sym-<colorIndex + 1>`); entry i is always drawn with shape
+ * `DEFAULT_AUX_SHAPES[i]`, so colour mode and shapes mode agree on what value v looks like.
  */
 (function (root) {
   'use strict';
@@ -25,19 +20,15 @@
 
   if (SG.symbols && typeof SG.symbols.glyph === 'function') return;
 
-  /** Every symbol mode, in the order a selector lists them. */
   const MODES = Object.freeze(['digits', 'letters', 'colors', 'shapes', 'word']);
 
-  /** Number of palette entries (`--sg-board-sym-1..16`); at most `SG.MAX_DIGITS` values need one each. */
   const PALETTE_SIZE = 16;
 
-  /** Shape of palette entry i (and of value i + 1 in shapes mode). 16 distinct geometric shapes. */
   const DEFAULT_AUX_SHAPES = Object.freeze([
     'circle', 'square', 'triangle', 'diamond', 'star', 'plus', 'hexagon', 'heart',
     'cross', 'ring', 'frame', 'triangleDown', 'star4', 'semicircle', 'hourglass', 'house'
   ]);
 
-  /** Nominal radius of a shape in board units (a cell is 40 units wide). */
   const SHAPE_RADIUS = 13;
 
   const EN_FALLBACK = { en: {} };
@@ -46,7 +37,6 @@
     return Math.round(x * 100) / 100;
   }
 
-  /** Path data of a closed polygon given as [x, y] pairs in unit coordinates. */
   function polygon(points, cx, cy, r) {
     return 'M' + points.map(function (p) {
       return round(cx + p[0] * r) + ' ' + round(cy + p[1] * r);
@@ -128,24 +118,12 @@
     }
   };
 
-  /**
-   * Path data (SVG `d`) of a shape, centred on (cx, cy) with nominal radius r. Rings and frames use two
-   * sub-paths: draw them with `fill-rule="evenodd"` (`SG.symbols.FILL_RULE`).
-   * @param {string} id  One of `DEFAULT_AUX_SHAPES`.
-   * @param {number} cx
-   * @param {number} cy
-   * @param {number} [r]  Defaults to `SHAPE_RADIUS`.
-   * @returns {string}
-   */
+  /** Path data (SVG `d`) of a shape centred on (cx, cy) with nominal radius r. Rings and frames use two sub-paths: draw them with `fill-rule="evenodd"` (`SG.symbols.FILL_RULE`). */
   function shapePath(id, cx, cy, r) {
     const build = SHAPE_BUILDERS[id];
     if (build === undefined) return '';
     return build(cx, cy, r === undefined ? SHAPE_RADIUS : r);
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Text helpers
-  // ---------------------------------------------------------------------------------------------
 
   function fill(template, args) {
     return String(template).replace(/\{(\w+)\}/g, function (m, name) {
@@ -153,7 +131,6 @@
     });
   }
 
-  /** `SG.i18n.t` when it exists, else the English text of this file's fragment. */
   function tr(key, args) {
     if (SG.i18n && typeof SG.i18n.t === 'function') return SG.i18n.t(key, args);
     const text = EN_FALLBACK.en[key];
@@ -181,15 +158,6 @@
     return labels !== null && labels[value - 1] !== undefined ? String(labels[value - 1]) : letterOf(value);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Public API
-  // ---------------------------------------------------------------------------------------------
-
-  /**
-   * The symbol modes a board offers (`SG.modelAids.symbolModes`, in the order of `MODES`).
-   * @param {PuzzleModel} model
-   * @returns {string[]} At least ['digits'].
-   */
   function modesFor(model) {
     const offered = SG.modelAids && model ? SG.modelAids.symbolModes(model) : ['digits'];
     const out = MODES.filter(function (m) { return offered.indexOf(m) !== -1; });
@@ -197,26 +165,12 @@
   }
 
   /**
-   * What the board draws for a value.
-   * @typedef {Object} Glyph
-   * @property {?string} text        Text to draw (digits, letters, word), else null.
-   * @property {?string} shape       Id of the geometric shape to draw (shapes mode, colour mode with the
-   *                                 auxiliary symbol), else null.
-   * @property {?number} colorIndex  0-based palette index (colour mode), else null.
-   * @property {string}  label       Accessible text; the translated 'empty' for value 0. '' when the glyph
-   *                                 was asked for without a label (`opts.label === false`).
+   * @typedef {Object} Glyph  What the board draws for a value: `text` (digits, letters, word) or null; `shape` (shapes
+   * mode, or colour mode with the auxiliary symbol) or null; `colorIndex` (colour mode) or null; `label`, the
+   * accessible text (the translated 'empty' for 0; '' when asked without a label via `opts.label === false`).
    */
 
-  /**
-   * Maps a value to its display in a symbol mode.
-   * @param {string} mode   'digits' | 'letters' | 'colors' | 'shapes' | 'word'.
-   * @param {number} value  0 (empty) or 1..D.
-   * @param {PuzzleModel} [model]  Supplies `symbols.labels`; optional for letters, colors and shapes.
-   * @param {{colorAuxSymbol?: boolean, label?: boolean}} [opts]  `colorAuxSymbol === false` drops the symbol
-   *        of colour mode; `label === false` skips the (translated) label, which the board does not need
-   *        while drawing.
-   * @returns {Glyph}
-   */
+  /** Maps a value (0 = empty, else 1..D) to its display in a symbol mode; `opts.label === false` skips the translated label, which the board does not need while drawing. */
   function glyph(mode, value, model, opts) {
     const wantLabel = !(opts && opts.label === false);
     if (!(value >= 1)) {
@@ -251,13 +205,6 @@
     }
   }
 
-  /**
-   * The legend of a mode: what value 1..D looks like.
-   * @param {string} mode
-   * @param {PuzzleModel} model  Supplies the digit count D and the labels.
-   * @param {{colorAuxSymbol?: boolean}} [opts]
-   * @returns {Array<Glyph & {value: number}>}
-   */
   function legend(mode, model, opts) {
     const out = [];
     const D = model && model.digits ? model.digits : 9;
@@ -273,11 +220,6 @@
       .replace(/"/g, '&quot;');
   }
 
-  /**
-   * SVG markup of one legend swatch (a 32 x 32 picture): the colour square, the shape or the text.
-   * @param {Glyph} g
-   * @returns {string}
-   */
   function swatchMarkup(g) {
     let inner = '';
     if (g.colorIndex !== null) {
@@ -296,16 +238,7 @@
       'focusable="false">' + inner + '</svg>';
   }
 
-  /**
-   * HTML of a legend list (`<ul class="sgb-legend">`), translated; swatches are inline SVG and styled by
-   * css/board.css.
-   * @param {string} mode
-   * @param {PuzzleModel} model
-   * @param {{colorAuxSymbol?: boolean, showText?: boolean}} [opts]  `showText === false` leaves out the
-   *        translated name next to each colour or shape swatch (digits and letters never get one, the
-   *        swatch is the text; every item keeps an accessible name).
-   * @returns {string}
-   */
+  /** HTML of a legend list (`<ul class="sgb-legend">`), styled by css/board.css. `opts.showText === false` leaves out the name next to colour and shape swatches (every item keeps an accessible name). */
   function legendMarkup(mode, model, opts) {
     const items = legend(mode, model, opts).map(function (item) {
       const named = item.text === null && !(opts && opts.showText === false);
@@ -319,14 +252,6 @@
       items.join('') + '</ul>';
   }
 
-  /**
-   * Renders a legend into an element (browser only).
-   * @param {Element} el
-   * @param {string} mode
-   * @param {PuzzleModel} model
-   * @param {Object} [opts]  See `legendMarkup`.
-   * @returns {Element} `el`.
-   */
   function renderLegend(el, mode, model, opts) {
     el.innerHTML = legendMarkup(mode, model, opts);
     return el;
@@ -346,10 +271,6 @@
     swatchMarkup: swatchMarkup,
     shapePath: shapePath
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Locale fragment
-  // ---------------------------------------------------------------------------------------------
 
   const FRAGMENT = {
     en: {

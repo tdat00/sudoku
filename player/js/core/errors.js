@@ -1,7 +1,4 @@
-/**
- * Core error types. Errors thrown by the core carry a machine readable `code` (for example
- * 'budget.exceeded') so that the UI can translate them through the i18n layer.
- */
+/** Core error types: errors carry a machine readable `code` (e.g. 'budget.exceeded') that the UI translates via i18n. */
 (function (root) {
   'use strict';
 
@@ -11,16 +8,8 @@
   // Keep the first class on repeated loads so that older instances still pass `instanceof`.
   if (errors.GenerationError) return;
 
-  /**
-   * Error raised by generation, solving and budget code.
-   * @property {string} code      Stable dotted identifier, used as i18n key suffix, e.g. 'budget.exceeded'.
-   * @property {Object} i18nArgs  Named values for the translated message template.
-   */
+  /** `code` is a stable dotted id used as i18n key suffix; `i18nArgs` fills the message template. */
   class GenerationError extends Error {
-    /**
-     * @param {string} code Dotted error code, e.g. 'x.y'.
-     * @param {Object} [i18nArgs] Arguments for the translated message; defaults to an empty object.
-     */
     constructor(code, i18nArgs) {
       super(code);
       this.name = 'GenerationError';
