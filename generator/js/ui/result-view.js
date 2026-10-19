@@ -1,6 +1,6 @@
 /**
  * Result panel `SG.resultView`: two cards (level reached with its difficulty score, number of clues) and a table of
- * the techniques used (uses and share of the score; a help icon next to each score explains how it is calculated).
+ * the techniques used (uses, points per use and share of the score; a help icon next to each score explains how it is calculated).
  * A Wordoku result also gets a card with its key word and
  * meaning while "Show the solution" is on. An approximate result (warning `difficulty.approximate`) gets a yellow
  * alert and a "Retry with a different seed" button; other warnings are listed, translated; no warning, no UI.
@@ -90,6 +90,7 @@
     return ids.map(function (id) {
       const count = counts[id];
       const row = byId[id] || null;
+      const unit = row !== null ? row.points : 0;
       const score = row !== null ? row.total : 0;
       const descKey = 'technique.' + id + '.desc';
       return {
@@ -98,6 +99,8 @@
         summary: hasText(descKey) ? t(descKey) : '',
         count: count,
         countText: formatNumber(count),
+        unitScore: unit,
+        unitScoreText: formatNumber(unit, { maximumFractionDigits: 2 }),
         score: score,
         scoreText: formatNumber(score),
         tip: row !== null ? scoreTip('technique', table, row) : null
@@ -124,6 +127,7 @@
     const empties = table !== null ? table.empties : 0;
     return {
       empties: empties,
+      emptyUnit: empties > 0 ? table.emptyPoints : 0,
       emptyText: empties > 0 ? formatNumber(table.emptyTotal) : '',
       emptyTip: empties > 0 ? scoreTip('empties', table, null) : null,
       totalText: formatNumber(Math.round(score)),
@@ -319,6 +323,8 @@
         out.push(make(doc, 'tr', { 'data-part': 'empties' }, [
           partHeader('empties', t('result.techniques.empties'), t('result.techniques.empties.desc')),
           make(doc, 'td', { class: 'result-table__num', text: formatNumber(vm.parts.empties) }),
+          make(doc, 'td', { class: 'result-table__num',
+            text: formatNumber(vm.parts.emptyUnit, { maximumFractionDigits: 2 }) }),
           scoreCell('empties', t('result.techniques.empties'), vm.parts.emptyText, vm.parts.emptyTip)
         ]));
       }
@@ -327,7 +333,7 @@
 
     function sectionRow(key) {
       return make(doc, 'tr', { class: 'result-table__section', 'data-section-row': key }, [
-        make(doc, 'th', { scope: 'colgroup', colspan: '3', text: t('result.techniques.section.' + key) })
+        make(doc, 'th', { scope: 'colgroup', colspan: '4', text: t('result.techniques.section.' + key) })
       ]);
     }
 
@@ -347,6 +353,7 @@
           make(doc, 'span', { class: 'visually-hidden', text: t('result.techniques.col.name') })
         ]),
         num('result.techniques.col.count'),
+        num('result.techniques.col.unit'),
         num('result.techniques.col.score')
       ]);
       const rows = vm.techniques.map(function (row) {
@@ -355,6 +362,7 @@
         return make(doc, 'tr', { 'data-technique': row.id }, [
           make(doc, 'th', { scope: 'row' }, [make(doc, 'span', { class: 'result-table__name' }, name)]),
           make(doc, 'td', { class: 'result-table__num', text: row.countText }),
+          make(doc, 'td', { class: 'result-table__num', text: row.unitScoreText }),
           scoreCell(row.id, row.name, row.scoreText, row.tip)
         ]);
       });
@@ -370,6 +378,7 @@
       ].concat(groups, [
         make(doc, 'tfoot', {}, [make(doc, 'tr', { class: 'result-table__total', 'data-part': 'total' }, [
           make(doc, 'th', { scope: 'row', text: t('result.techniques.total') }),
+          make(doc, 'td', { class: 'result-table__num', text: '' }),
           make(doc, 'td', { class: 'result-table__num', text: '' }),
           scoreCell('total', t('result.techniques.total'), vm.parts.totalText, vm.parts.totalTip)
         ])])
@@ -493,6 +502,7 @@
       'result.techniques.none': 'No solving techniques were needed.',
       'result.techniques.col.name': 'Item',
       'result.techniques.col.count': 'Uses',
+      'result.techniques.col.unit': 'Points per use',
       'result.techniques.col.score': 'Score',
       'result.techniques.empties': 'Empty cells',
       'result.techniques.empties.desc': 'Empty cells add 80 × E ÷ (E + 40) points, at most 80.',
@@ -539,6 +549,7 @@
       'result.techniques.none': 'Không cần kỹ thuật giải nào.',
       'result.techniques.col.name': 'Mục',
       'result.techniques.col.count': 'Lần dùng',
+      'result.techniques.col.unit': 'Điểm mỗi lần',
       'result.techniques.col.score': 'Điểm',
       'result.techniques.empties': 'Ô trống',
       'result.techniques.empties.desc': 'Các ô trống cộng 80 × E ÷ (E + 40) điểm, tối đa 80.',

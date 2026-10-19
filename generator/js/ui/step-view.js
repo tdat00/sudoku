@@ -424,6 +424,8 @@
           name,
           cell('td', formatNumber(bar.count) + (more > 0 ? ' (+' + formatNumber(more) + ')' : ''),
             'result-table__num'),
+          cell('td', row !== null ? formatNumber(row.points, { maximumFractionDigits: 2 }) : '',
+            'result-table__num'),
           row !== null
             ? scoreCell(bar.id, bar.label, formatNumber(row.total),
               scoreTip('steps.techniques.tip.', 'technique', table, row))
@@ -435,6 +437,7 @@
           nameCell(translate('steps.techniques.empties'),
             partHelp('empties', translate('steps.techniques.empties'))),
           cell('td', formatNumber(table.empties), 'result-table__num'),
+          cell('td', formatNumber(table.emptyPoints, { maximumFractionDigits: 2 }), 'result-table__num'),
           scoreCell('empties', translate('steps.techniques.empties'), formatNumber(table.emptyTotal),
             scoreTip('steps.techniques.tip.', 'empties', table, null))
         ]));
@@ -444,17 +447,19 @@
         html(doc, 'th', {}, [html(doc, 'span', { class: 'visually-hidden' },
           [doc.createTextNode(translate('steps.techniques.col.name'))])]),
         cell('th', translate('steps.techniques.col.count'), 'result-table__num'),
+        cell('th', translate('steps.techniques.col.unit'), 'result-table__num'),
         cell('th', translate('steps.techniques.col.score'), 'result-table__num')
       ]);
       const foot = html(doc, 'tr', { class: 'step-table__total' }, [
         cell('th', translate('steps.techniques.total')),
+        cell('td', '', 'result-table__num'),
         cell('td', '', 'result-table__num'),
         scoreCell('total', translate('steps.techniques.total'), formatNumber(Math.round(total)),
           table !== null ? scoreTip('steps.techniques.tip.', 'total', table, null) : null)
       ]);
       const section = function (key) {
         return html(doc, 'tr', { class: 'result-table__section', 'data-section-row': key }, [
-          html(doc, 'th', { scope: 'colgroup', colspan: '3' },
+          html(doc, 'th', { scope: 'colgroup', colspan: '4' },
             [doc.createTextNode(translate('steps.techniques.section.' + key))])
         ]);
       };
@@ -561,6 +566,7 @@
       'steps.techniques.none': 'No solving technique is needed yet.',
       'steps.techniques.col.name': 'Item',
       'steps.techniques.col.count': 'Uses',
+      'steps.techniques.col.unit': 'Points per use',
       'steps.techniques.col.score': 'Score',
       'steps.techniques.empties': 'Empty cells',
       'steps.techniques.section.technique': 'Technique',
@@ -596,6 +602,7 @@
       'steps.techniques.none': 'Chưa cần kỹ thuật giải nào.',
       'steps.techniques.col.name': 'Mục',
       'steps.techniques.col.count': 'Lần dùng',
+      'steps.techniques.col.unit': 'Điểm mỗi lần',
       'steps.techniques.col.score': 'Điểm',
       'steps.techniques.empties': 'Ô trống',
       'steps.techniques.section.technique': 'Kỹ thuật',

@@ -365,9 +365,9 @@
           sum += Number(score[0].textContent.replace(/[^0-9.]/g, ''));
         });
         expect(sum).toBe(Math.round(res.rating.score));
-        // No "Points" or "Added" column: name, uses and score only.
+        // Columns: name, uses, points per use and score (no "Added" column).
         expect(fx.detail.textContent).not.toContain('Added');
-        expect(fx.detail.textContent).not.toContain('Points');
+        expect(fx.detail.textContent).toContain('Points per use');
         var head = fx.doc.findAll(fx.detail, function (el) { return el.tagName === 'TH' && el.getAttribute('scope') === null; });
         expect(head.length).toBeGreaterThan(0);
       });

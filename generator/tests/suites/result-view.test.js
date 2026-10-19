@@ -82,8 +82,9 @@
           ? SG.i18n.t('technique.' + row.id + '.desc') : '');
         expect(row.count).toBe(count);
         expect(row.countText).toBe(SG.i18n.formatNumber(count));
-        // The score is the whole share of the score (section 5.6); the points column is gone.
-        expect(row.unitScore).toBeUndefined();
+        // The points are the weight of the technique; the score is its whole share of the score (section 5.6).
+        expect(row.unitScore).toBe(SG.difficulty.WEIGHTS[row.id]);
+        expect(row.unitScoreText).toBe(SG.i18n.formatNumber(row.unitScore, { maximumFractionDigits: 2 }));
         expect(row.score).toBe(table.rows[i].total);
         expect(row.scoreText).toBe(SG.i18n.formatNumber(table.rows[i].total));
         expect(Math.abs(row.score - parts.rows[i].share)).toBeLessThan(1);
@@ -128,7 +129,7 @@
         expect(sum).toBe(r.rating.score);
         expect(vm.parts.totalText).toBe(vm.scoreText);
         expect(vm.parts.empties).toBe(r.rating.empties);
-        expect(vm.parts.emptyUnit).toBeUndefined();
+        expect(vm.parts.emptyUnit).toBeCloseTo(80 / (r.rating.empties + 40), 9);
       });
     });
 
