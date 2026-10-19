@@ -192,6 +192,88 @@
   });
 
   // ---------------------------------------------------------------------------------------------
+  describe('importer: difficulty metadata', function () {
+    it('recognises the nine levels in ladder order', function () {
+      expect(I.LEVELS).toEqual(['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil',
+        'nightmare1', 'nightmare2']);
+      expect(Object.isFrozen(I.LEVELS)).toBe(true);
+    });
+
+    ['veryHard', 'nightmare1', 'nightmare2'].forEach(function (level) {
+      it('keeps a v2 ' + level + ' rating through storage and sharing', function () {
+        need();
+        var doc = K.document('classic9');
+        var score = { veryHard: 700, nightmare1: 2400, nightmare2: 3600 }[level];
+        doc.difficulty = {
+          requested: level, achieved: level, score: score, rawScore: score,
+          hardestTechnique: 'nishio', ratingVersion: 2, futureField: { unused: true }
+        };
+        var outcome = open(doc);
+        expect(outcome.ok).toBe(true);
+        expect(outcome.errors).toEqual([]);
+        var puzzle = outcome.puzzle;
+        expect(puzzle.info.difficulty).toEqual({
+          requested: level, achieved: level, score: score, hardestTechnique: 'nishio', ratingVersion: 2
+        });
+        expect(puzzle.document.format).toBe('sudoku-generator/v1');
+        expect(puzzle.document.difficulty.ratingVersion).toBe(2);
+        var reopened = I.openDocument(puzzle.document);
+        expect(reopened.ok).toBe(true);
+        expect(reopened.puzzle.info.difficulty).toEqual(puzzle.info.difficulty);
+        return SG.exchange.encode(puzzle.document).then(function (token) {
+          return I.open(token);
+        }).then(function (shared) {
+          expect(shared.ok).toBe(true);
+          expect(shared.puzzle.id).toBe(puzzle.id);
+          expect(shared.puzzle.info.difficulty).toEqual(puzzle.info.difficulty);
+        });
+      });
+    });
+
+    it('leaves legacy labels and scores unchanged and does not invent a rating version', function () {
+      need();
+      var doc = K.document('classic9');
+      doc.difficulty = { requested: 'expert', achieved: 'hard', score: 511.925, hardestTechnique: 'xWing' };
+      var puzzle = open(doc).puzzle;
+      expect(puzzle.info.difficulty).toEqual(doc.difficulty);
+      expect(puzzle.document.difficulty).toEqual(doc.difficulty);
+      expect(puzzle.info.difficulty.ratingVersion).toBeUndefined();
+    });
+
+    it('tolerates future and malformed optional rating metadata without rejecting the puzzle', function () {
+      need();
+      [1, 2, 3, null, 'future', {}, 0, -1, 1.5].forEach(function (version) {
+        var doc = K.document('classic9');
+        doc.difficulty = { achieved: 'nightmare2', score: 4500, ratingVersion: version,
+          futureScoring: { name: 'another model' } };
+        var outcome = open(doc);
+        expect(outcome.ok).toBe(true);
+        expect(outcome.puzzle.info.difficulty.achieved).toBe('nightmare2');
+        expect(outcome.puzzle.info.difficulty.ratingVersion)
+          .toBe(Number.isSafeInteger(version) && version > 0 ? version : undefined);
+      });
+      var unknown = K.document('classic9');
+      unknown.difficulty = { requested: 'futureLevel', achieved: 'futureLevel', ratingVersion: 3 };
+      var opened = open(unknown);
+      expect(opened.ok).toBe(true);
+      expect(opened.puzzle.info.difficulty).toBeNull();
+    });
+
+    it('keeps puzzle identity independent of the rating, level and version', function () {
+      need();
+      var doc = K.document('classic9');
+      var legacy = open(doc).puzzle;
+      I.LEVELS.forEach(function (level) {
+        doc.difficulty = { requested: level, achieved: level, score: 3600, ratingVersion: 2 };
+        var current = open(doc).puzzle;
+        expect(current.id).toBe(legacy.id);
+        expect(Array.from(current.givens)).toEqual(Array.from(legacy.givens));
+        expect(Array.from(current.solution)).toEqual(Array.from(legacy.solution));
+      });
+    });
+  });
+
+  // ---------------------------------------------------------------------------------------------
   describe('importer: tokens, links, JSON text', function () {
     it('opens a document from a compressed token, a plain token, a link and a bare fragment', function () {
       need();
@@ -567,6 +649,30 @@
         expect(result.items.length).toBe(4);
         expect(result.items.every(function (item) { return item.outcome.ok; })).toBe(true);
         expect(result.items[3].outcome.puzzle.info.difficulty.achieved).toBe('hard');
+      });
+    });
+
+    it('reads every new difficulty name in English and Vietnamese without changing the puzzle', function () {
+      var base = text('single.en').trim().split('\n');
+      var header = base[0].split(',');
+      var cases = [
+        ['veryHard', 'Very hard'], ['veryHard', 'Rất khó'],
+        ['nightmare1', 'Nightmare 1'], ['nightmare1', 'Ác mộng 1'],
+        ['nightmare2', 'Nightmare 2'], ['nightmare2', 'Ác mộng 2']
+      ];
+      return I.openMany(base.join('\n')).then(function (original) {
+        var id = original.items[0].outcome.puzzle.id;
+        return Promise.all(cases.map(function (c) {
+          var changed = header.slice();
+          changed[2] = c[1];
+          return I.openMany([changed.join(',')].concat(base.slice(1)).join('\r\n')).then(function (result) {
+            var outcome = result.items[0].outcome;
+            expect(outcome.ok).toBe(true);
+            expect(outcome.puzzle.info.difficulty.achieved).toBe(c[0]);
+            expect(outcome.puzzle.info.difficulty.ratingVersion).toBeUndefined();
+            expect(outcome.puzzle.id).toBe(id);
+          });
+        }));
       });
     });
 

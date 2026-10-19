@@ -194,8 +194,16 @@ The document is the generator's puzzle JSON (`format: 'sudoku-generator/v1'`, de
 generator) plus the additive block `model = SG.exchange.plain(SG.pipeline.toWire(result).model)`: `variantId`,
 `digits`, `units`, `unitMeta`, `cages`, `inequalities`, `layout`, `symbols`, `fixedCells`. What the player reads:
 `variantId`, `givens`, `solution`, `model`, `seed`, `symbolMode`, `difficulty {requested, achieved, score,
-hardestTechnique}`, `generatedAt`, `locale`, `stats.clues`, `wordoku {placement, line}`. Everything else is
-ignored, so the generator may add fields.
+hardestTechnique, ratingVersion?}`, `generatedAt`, `locale`, `stats.clues`, `wordoku {placement, line}`.
+Everything else is ignored, so the generator may add fields.
+
+Difficulty IDs, easiest first, are `veryEasy`, `easy`, `medium`, `hard`, `veryHard`, `expert`, `evil`,
+`nightmare1`, `nightmare2`. Both language packs supply their names and descriptions; text import resolves
+the names in either language independently of the player's current language. The generator's rating v2
+keeps the v1 document container and adds `difficulty.ratingVersion: 2`. A positive safe integer rating version
+is preserved in the compact stored/shared document; missing or unreadable optional metadata is non-fatal.
+The player does not re-score imported puzzles, infer a version from a text header, or change legacy scores.
+Difficulty and rating version are not part of puzzle identity, so they cannot reset saved progress.
 
 At start-up and on `hashchange` the page looks for `#puzzle=<token>` (and `active`); after the puzzles are on
 the board the fragment is removed with `history.replaceState`. The generator's link base is
@@ -391,4 +399,3 @@ the app.
 - **Hints** can only explain the 26 known techniques; a position that needs more says "stuck" and offers to
   reveal a cell.
 - **Not done**: a real screen-reader run, Firefox / Safari, a real phone, a long-session performance profile.
-

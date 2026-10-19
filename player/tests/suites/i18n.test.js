@@ -770,6 +770,42 @@
       });
     }
 
+    it('uses the canonical v2 difficulty names and descriptions in both languages', function () {
+      packsReady();
+      var names = [
+        ['veryEasy', 'Very easy', 'Rất dễ'], ['easy', 'Easy', 'Dễ'],
+        ['medium', 'Medium', 'Trung bình'], ['hard', 'Hard', 'Khó'],
+        ['veryHard', 'Very hard', 'Rất khó'], ['expert', 'Expert', 'Chuyên gia'],
+        ['evil', 'Evil', 'Địa ngục'], ['nightmare1', 'Nightmare 1', 'Ác mộng 1'],
+        ['nightmare2', 'Nightmare 2', 'Ác mộng 2']
+      ];
+      var descriptions = [
+        ['medium', 'Typically uses pairs and triples of candidates (naked and hidden subsets).',
+          'Thường dùng các cặp và bộ ba ứng viên (tập con trần và ẩn).'],
+        ['hard', 'Typically uses quads, fish patterns (X-Wing, Swordfish) and simple colouring.',
+          'Thường dùng bộ bốn ứng viên, các mẫu “cá” (X-Wing, Swordfish) và tô màu đơn giản.'],
+        ['veryHard', 'Typically uses a wing (XY-Wing, XYZ-Wing), a Jellyfish or several fish patterns.',
+          'Thường dùng một kỹ thuật cánh (XY-Wing, XYZ-Wing), Jellyfish hoặc nhiều mẫu “cá”.'],
+        ['expert', 'Typically uses several wings, the W-Wing or Unique Rectangles, sometimes a short forcing chain.',
+          'Thường dùng nhiều kỹ thuật cánh, W-Wing hoặc Unique Rectangle, đôi khi một chuỗi suy luận ngắn.'],
+        ['evil', 'Typically uses forcing chains and trial and error (Nishio), with very few clues.',
+          'Thường dùng chuỗi suy luận và thử–sai (Nishio), với rất ít số cho sẵn.'],
+        ['nightmare1', 'Typically uses many forcing chains and trial-and-error steps.',
+          'Thường dùng nhiều chuỗi suy luận và bước thử–sai.'],
+        ['nightmare2', 'Highest score band; typically involves substantial advanced reasoning.',
+          'Khoảng điểm cao nhất; thường cần nhiều suy luận nâng cao.']
+      ];
+      expect(names.map(function (row) { return row[0]; })).toEqual(SG.importer.LEVELS);
+      names.forEach(function (row) {
+        expect(SG.locales.en['difficulty.' + row[0]]).toBe(row[1]);
+        expect(SG.locales.vi['difficulty.' + row[0]]).toBe(row[2]);
+      });
+      descriptions.forEach(function (row) {
+        expect(SG.locales.en['difficulty.' + row[0] + '.desc']).toBe(row[1]);
+        expect(SG.locales.vi['difficulty.' + row[0] + '.desc']).toBe(row[2]);
+      });
+    });
+
     it('has the name, the description and the group of every variant and difficulty level', function () {
       packsReady();
       var ids = Object.keys(SG.importer.VARIANTS);

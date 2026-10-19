@@ -49,8 +49,8 @@
  *   - uniqueness: 'unique' | 'multiple' | 'unknown' (the search ran out of time).
  *   - solutionSource: 'stored' (the document's own) | 'computed' (found with the DFS solver).
  *   - info: { source, seed, generatedAt, locale, difficulty, clues, cellCount, digits, wordoku } for the
- *     info card; `difficulty` is { requested, achieved, score, hardestTechnique } or null; `wordoku` is
- *     { placement, line } or null (the key word is never part of it).
+ *     info card; `difficulty` is { requested, achieved, score, hardestTechnique, ratingVersion? } or null;
+ *     `wordoku` is { placement, line } or null (the key word is never part of it).
  *   - document: the plain, size-bounded document the puzzle can be rebuilt from (what is stored for the
  *     "recent puzzles" list; `openDocument(puzzle.document)` gives the same puzzle).
  */
@@ -67,7 +67,8 @@
   const MAX_TEXT_CHARS = 2048;
   const EMPTY_CHARS = '.0-_';
   const SOLVE_BUDGET_MS = 6000;
-  const LEVELS = Object.freeze(['veryEasy', 'easy', 'medium', 'hard', 'expert', 'evil']);
+  const LEVELS = Object.freeze(['veryEasy', 'easy', 'medium', 'hard', 'veryHard', 'expert', 'evil',
+    'nightmare1', 'nightmare2']);
 
   /** The 15 variants the player can open: the digit count and cell count each one must have. */
   const VARIANTS = Object.freeze({
@@ -710,7 +711,11 @@
     const score = typeof rawScore === 'number' && isFinite(rawScore) ? rawScore : null;
     const name = difficulty.hardestTechnique;
     const hardest = typeof name === 'string' && name.length <= 40 ? name : null;
-    return { requested: requested, achieved: achieved, score: score, hardestTechnique: hardest };
+    const result = { requested: requested, achieved: achieved, score: score, hardestTechnique: hardest };
+    if (Number.isSafeInteger(difficulty.ratingVersion) && difficulty.ratingVersion > 0) {
+      result.ratingVersion = difficulty.ratingVersion;
+    }
+    return result;
   }
 
   function readDate(text) {
@@ -724,10 +729,7 @@
       format: FORMAT,
       generatedAt: info.generatedAt,
       variantId: model.variantId,
-      difficulty: info.difficulty === null ? null : {
-        requested: info.difficulty.requested, achieved: info.difficulty.achieved,
-        score: info.difficulty.score, hardestTechnique: info.difficulty.hardestTechnique
-      },
+      difficulty: info.difficulty === null ? null : Object.assign({}, info.difficulty),
       seed: info.seed,
       symbolMode: info.symbolMode,
       digits: model.digits,

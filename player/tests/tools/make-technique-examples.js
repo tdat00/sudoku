@@ -25,18 +25,18 @@ const { execFileSync } = require('child_process');
 const PLAYER_ROOT = path.resolve(__dirname, '..', '..');
 const OUT_DEFAULT = path.join(PLAYER_ROOT, 'js', 'ui', 'help-examples.js');
 
-/** The puzzles to look through: [variantId, levels, number of seeds]. */
+/** [variantId, preferred levels, number of seeds, optional 'highest' supported level only]. */
 const PLAN = [
-  ['classic9', ['easy', 'medium', 'hard', 'expert', 'evil'], 120],
-  ['killer', ['easy', 'medium', 'hard', 'expert'], 60],
+  ['classic9', ['easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1', 'nightmare2'], 120],
+  ['killer', ['easy', 'medium', 'hard', 'veryHard', 'expert', 'evil', 'nightmare1', 'nightmare2'], 60],
   ['greaterThan', ['easy', 'medium', 'hard'], 12],
-  ['jigsaw9', ['hard', 'expert'], 40],
-  ['diagonalX', ['hard', 'expert', 'evil'], 40],
-  ['hyper', ['hard', 'expert', 'evil'], 40],
+  ['jigsaw9', ['hard', 'veryHard', 'expert'], 40],
+  ['diagonalX', ['hard', 'veryHard', 'expert', 'evil'], 40],
+  ['hyper', ['hard', 'veryHard', 'expert', 'evil'], 40],
   // The rarest techniques (Jellyfish) need many hard puzzles to turn up.
-  ['classic9', ['evil'], 1500],
-  ['diagonalX', ['evil'], 600],
-  ['hyper', ['evil'], 600]
+  ['classic9', ['evil', 'nightmare1', 'nightmare2'], 1500, 'highest'],
+  ['diagonalX', ['evil', 'nightmare1', 'nightmare2'], 600, 'highest'],
+  ['hyper', ['evil', 'nightmare1', 'nightmare2'], 600, 'highest']
 ];
 
 function parseArgs(argv) {
@@ -73,7 +73,10 @@ function stage1(opts) {
   SG.i18n.setLocale('en');
   const list = [];
   PLAN.forEach(function (row) {
-    row[1].forEach(function (level) {
+    const supported = SG.variants.get(row[0]).difficultySupport;
+    let levels = row[1].filter(function (level) { return supported.indexOf(level) !== -1; });
+    if (row[3] === 'highest') levels = levels.slice(-1);
+    levels.forEach(function (level) {
       for (let seed = 1; seed <= row[2]; seed++) {
         const result = SG.pipeline.run({ variantId: row[0], difficulty: level, seed: seed, trace: 'off',
           variantOptions: {} }, null);

@@ -24,8 +24,8 @@ const GENERATED_AT = '2026-01-15T10:00:00.000Z';
 
 /** One entry per file: the generator config and the language of the labels the document carries. */
 const FIXTURES = [
-  { file: 'classic4', variantId: 'classic4', difficulty: 'easy', seed: 4 },
-  { file: 'classic6', variantId: 'classic6', difficulty: 'easy', seed: 6 },
+  { file: 'classic4', variantId: 'classic4', difficulty: 'veryEasy', seed: 4 },
+  { file: 'classic6', variantId: 'classic6', difficulty: 'veryEasy', seed: 6 },
   { file: 'classic9', variantId: 'classic9', difficulty: 'easy', seed: 9 },
   { file: 'mega12', variantId: 'mega12', difficulty: 'easy', seed: 12 },
   { file: 'mega16', variantId: 'mega16', difficulty: 'easy', seed: 16 },

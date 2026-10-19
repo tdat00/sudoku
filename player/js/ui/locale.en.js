@@ -96,14 +96,20 @@
     'difficulty.easy.desc': 'Slightly fewer clues. Adds locked candidates: pointing pairs and box/line ' +
       'reduction.',
     'difficulty.medium': 'Medium',
-    'difficulty.medium.desc': 'Needs pairs, triples and quads of candidates (naked and hidden subsets).',
+    'difficulty.medium.desc': 'Typically uses pairs and triples of candidates (naked and hidden subsets).',
     'difficulty.hard': 'Hard',
-    'difficulty.hard.desc': 'Needs fish patterns (X-Wing, Swordfish, Jellyfish) and simple colouring.',
+    'difficulty.hard.desc': 'Typically uses quads, fish patterns (X-Wing, Swordfish) and simple colouring.',
+    'difficulty.veryHard': 'Very hard',
+    'difficulty.veryHard.desc': 'Typically uses a wing (XY-Wing, XYZ-Wing), a Jellyfish or several fish patterns.',
     'difficulty.expert': 'Expert',
-    'difficulty.expert.desc': 'Needs wings (XY-Wing, XYZ-Wing, W-Wing) and Unique Rectangles.',
+    'difficulty.expert.desc': 'Typically uses several wings, the W-Wing or Unique Rectangles, sometimes a short ' +
+      'forcing chain.',
     'difficulty.evil': 'Evil',
-    'difficulty.evil.desc': 'The hardest level: forcing chains and trial and error (Nishio), with very ' +
-      'few clues.',
+    'difficulty.evil.desc': 'Typically uses forcing chains and trial and error (Nishio), with very few clues.',
+    'difficulty.nightmare1': 'Nightmare 1',
+    'difficulty.nightmare1.desc': 'Typically uses many forcing chains and trial-and-error steps.',
+    'difficulty.nightmare2': 'Nightmare 2',
+    'difficulty.nightmare2.desc': 'Highest score band; typically involves substantial advanced reasoning.',
     'variant.mega12': 'Mega Sudoku 12×12',
     'variant.mega12.desc': 'A 12×12 grid with boxes of 3 rows × 4 columns. Each row, column and box holds ' +
       'all 12 symbols once.',

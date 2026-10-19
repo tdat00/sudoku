@@ -67,6 +67,27 @@
   }
 
   describe('progress: saving and loading a game', function () {
+    it('finds existing progress when the same puzzle arrives with a new difficulty or rating version', function () {
+      ready();
+      var doc = SG.testkit.document('classic9');
+      if (doc === null) SG.test.skip('the puzzle fixtures cannot be read here (a browser on file://)');
+      var legacy = SG.importer.openDocument(doc).puzzle;
+      var p = make().progress;
+      var saved = record(42, { state: state({ values: [1, 2, 3], notes: [4, 0, 8] }) });
+      expect(p.saveProgress(legacy.id, saved)).toBe('ok');
+      doc.difficulty = { requested: 'nightmare2', achieved: 'nightmare2', score: 4000, ratingVersion: 2 };
+      var outcome = SG.importer.openDocument(doc);
+      expect(outcome.ok).toBe(true);
+      expect(outcome.puzzle.id).toBe(legacy.id);
+      expect(p.savePuzzle(outcome.puzzle.id, outcome.puzzle.document, { variantId: 'classic9' })).toBe('ok');
+      expect(p.loadProgress(outcome.puzzle.id).state).toEqual(saved.state);
+      expect(p.loadProgress(outcome.puzzle.id).percent).toBe(42);
+      var reopened = SG.importer.openDocument(p.loadPuzzle(outcome.puzzle.id).doc);
+      expect(reopened.ok).toBe(true);
+      expect(reopened.puzzle.info.difficulty.ratingVersion).toBe(2);
+      expect(p.loadProgress(reopened.puzzle.id).state).toEqual(saved.state);
+    });
+
     it('keeps the state, percentage and symbol mode of a puzzle, and says when it is not there', function () {
       ready();
       var p = make().progress;

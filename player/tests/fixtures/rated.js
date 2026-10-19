@@ -4,8 +4,9 @@
  * scorer of its own). Exposed as SG.fixtures.rated = { entries, published, constructed }. Every puzzle has
  * exactly one solution.
  *
- * Entry: { name, puzzle (81 chars, '.' = empty), label (a level name: veryEasy ... evil), basis, note,
+ * Entry: { name, puzzle (81 chars, '.' = empty), label (a legacy level name), basis, note,
  *          solvableWithin?, notSolvableWithin? }
+ * Labels and technique certificates retain their pre-v2 meaning; they are not the player's accepted-level list.
  *
  * Two kinds of labels, kept apart on purpose:
  *
@@ -13,20 +14,19 @@
  *                       this project: the example of the Wikipedia article, the famous "hardest sudoku"
  *                       puzzles of Arto Inkala and the Sudoku Players' Forum, and puzzles that the classic
  *                       fixtures name "easy" / "medium". The labels come from that outside knowledge, not
- *                       from this project's scorer, and were not changed to suit its output (the scorer
- *                       rates "classic-medium" one level below its name). A scorer is expected to land
- *                       within one level of them, not exactly on them, since no two raters agree on a
- *                       name like "hard".
+ *                       from this project's scorer, and were not changed to suit its output (the original
+ *                       scorer rated "classic-medium" one level below its name). The original corpus used
+ *                       a one-level tolerance, since no two raters agree on a name like "hard".
+ *                       These historical labels are not recalculated by the player.
  *
  *  basis 'constructed'  Puzzles made by SG.digger.generate for one level and then frozen. The label is
  *                       not the scorer's opinion but a certificate about techniques, which tests check
  *                       independently of every score and cost: `solvableWithin` is a level whose
  *                       technique set solves the puzzle (the solver is run with `assumeUniqueness: false`,
  *                       exactly like the digging oracle) and `notSolvableWithin` is a level whose
- *                       technique set gets stuck. A medium puzzle, for instance, is solved with singles,
- *                       locked candidates and subsets but not without the subsets. The scorer must
- *                       reproduce that level from the puzzle alone, so these fixtures also catch a
- *                       calibration that drifts away from the technique groups.
+ *                       technique set gets stuck. A legacy medium puzzle, for instance, is solved with singles,
+ *                       locked candidates and subsets but not without the subsets. These frozen certificates
+ *                       test the logical solver, not the current score-defined difficulty bands.
  */
 (function () {
   'use strict';

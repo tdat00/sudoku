@@ -16,7 +16,27 @@ sends; the mouse and touch events are real too (`Input.dispatchMouseEvent` / `di
 uses synthetic `DragEvent`s with a `DataTransfer` that holds a real `File`; the file picker uses
 `DOM.setFileInputFiles`.
 
-## Result of the last run
+## Rating-v2 verification (2026-10-19)
+The nine imported difficulty IDs and canonical EN/VI texts were checked with Node **v26.8.2**:
+
+```
+node tests/node-runner.js --suite=importer,i18n,progress   # 178 / 178
+node tests/node-runner.js                                # 1,628 / 1,628; 28 suites
+node tests/browser/run-all.js                            # all seven runs passed
+```
+
+The importer tests cover v2 metadata, optional future/malformed metadata, legacy fractional scores, all six
+new localised names, storage/share round-trips and unchanged puzzle identity. The progress test keeps a
+saved game when the same puzzle arrives with a different rating/version. The committed legacy fixtures and
+Help examples were not regenerated.
+
+Edge and Node's `WebSocket`/`fetch` were available, and all test HTTP/DevTools ports were checked as unused
+before the browser run. Both fragment modes passed; `open.js` passed 86/86, `play.js` 48/48, `ui.js` 43/43,
+`visual.js` 42/42 and `help.js` 23/23. This was an automated rerun, not another manual screenshot review.
+No layout, gameplay or hint code changed. Node emitted its experimental `localStorage` warning without a
+test failure.
+
+## Earlier browser baseline
 | Script | What | Result |
 |--------|------|--------|
 | `fragment.js file`, `fragment.js http` | the 18 fixtures (15 variants + 3 Vietnamese) through `#puzzle=<token>`, over `file://` and over `http://`: board built, one grid cell per model cell, play overlay, ARIA grid, info card, symbol modes, fragment removed, no console error | 18 / 18 both |

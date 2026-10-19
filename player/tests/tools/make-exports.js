@@ -19,7 +19,7 @@ const PLAYER_ROOT = path.resolve(__dirname, '..', '..');
 
 /** One entry per file: the puzzles written, in this order, as [variantId, difficulty, seed]. */
 const SETS = {
-  'classic-mixed': [['classic9', 'easy', 3], ['classic4', 'easy', 2], ['classic6', 'easy', 7],
+  'classic-mixed': [['classic9', 'easy', 3], ['classic4', 'veryEasy', 2], ['classic6', 'veryEasy', 7],
     ['classic9', 'hard', 4]],
   structured: [['jigsaw9', 'easy', 3], ['killer', 'easy', 5], ['greaterThan', 'easy', 4], ['wordoku', 'easy', 6]],
   derived: [['diagonalX', 'easy', 6], ['hyper', 'easy', 7], ['mega12', 'easy', 2], ['mega16', 'easy', 2]],
