@@ -35,10 +35,21 @@ jobs:
           suites=$(ls ../core/tests/suites | sed 's/\.test\.js$//' | paste -sd, -)
           node tests/node-runner.js --suite="$suites"
 
+  # The quick and the heavy suites together (--all), in parallel jobs of about 2 to 4 minutes each; the groups
+  # are in .github/scripts/generator-suites.sh (the group "rest" is every suite that no other group names).
   test-generator:
-    name: Test generator
+    name: Test generator (${{ matrix.name }})
     needs: test-core
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { group: sweep, name: variant sweep }
+          - { group: engine, name: techniques and killer }
+          - { group: rules, name: rule variants }
+          - { group: rating, name: rating, speed and pipeline }
+          - { group: rest, name: other suites }
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -50,7 +61,7 @@ jobs:
 
       - name: Run the generator tests
         working-directory: generator
-        run: node tests/node-runner.js --all
+        run: node tests/node-runner.js --suite="$(bash ../.github/scripts/generator-suites.sh ${{ matrix.group }})"
 
   test-player:
     name: Test player

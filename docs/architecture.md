@@ -78,7 +78,8 @@ The player's own share link is built from its page address, so a copied link wor
 
 ## Publishing
 
-`.github/workflows/pages.yml` runs the tests (core first, then the generator and the player in parallel) and
+`.github/workflows/pages.yml` runs the tests (core first, then the player and the generator in parallel, the generator
+in five jobs of about 2 to 4 minutes, grouped by `.github/scripts/generator-suites.sh`) and
 publishes one site:
 
 ```
