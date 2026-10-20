@@ -46,11 +46,12 @@
  * (cages by index; regions by kind, size and position).
  *
  * i18nArgs of the Findings (plain data; `cells` are cell labels such as 'R4C7', `units` unit labels):
- *   cageCombo   { sum, size, cells, digits, forced }
- *               digits = digits of the surviving combinations, forced = digits every combination needs
- *   ruleOf45    { kind, units, sum, cells }
- *               kind 'innie' | 'outie'; sum = what the open cells add up to
- *   ruleOf45 (placement)   { kind, units, sum, cell, digit }
+ *   cageCombo   { sum, size, cells, digits, forced, rule? }
+ *               digits = digits of the surviving combinations, forced = digits every combination needs;
+ *               rule = 'noForced' when there is none (the text without the sentence about forced digits)
+ *   ruleOf45    { kind, units, sum, cells, rule? }
+ *               kind 'innie' | 'outie'; sum = what the open cells add up to; rule = 'outie' for the outies
+ *   ruleOf45 (placement)   { kind, units, sum, cell, digit, rule? }
  *   cageSplit   { sum, units, part, partSum, partDigits, rest, restSum, restDigits }
  *               part = the open cells of the innies, rest = the open cells of the outies
  */
@@ -209,19 +210,23 @@
 
     const cells = [];
     for (i = s; i < e; i++) cells.push(index.cells[i]);
+    const forced = toArray(always & valid);
+    const args = {
+      sum: index.sum[k],
+      size: e - s,
+      cells: labelsOf(model, cells, cells.length),
+      digits: toArray(valid),
+      forced: forced
+    };
+    // Without a digit that every combination needs, the text leaves out the sentence about it.
+    if (forced.length === 0) args.rule = 'noForced';
     return {
       technique: 'cageCombo',
       cells: cells,
       placements: placements,
       eliminations: eliminations,
       i18nKey: 'technique.cageCombo.step',
-      i18nArgs: {
-        sum: index.sum[k],
-        size: e - s,
-        cells: labelsOf(model, cells, cells.length),
-        digits: toArray(valid),
-        forced: toArray(always & valid)
-      }
+      i18nArgs: args
     };
   }
 
@@ -455,6 +460,8 @@
     if (open === 0) return null;
     const rest = target - solved;
     const kind = kindIsInnie ? 'innie' : 'outie';
+    // The outies have texts of their own (`technique.ruleOf45.step.outie` and `.place.outie`).
+    const rule = kindIsInnie ? {} : { rule: 'outie' };
 
     if (open === 1) {
       const cell = cells[openIndex[0]];
@@ -465,13 +472,13 @@
         placements: [[cell, rest]],
         eliminations: [],
         i18nKey: 'technique.ruleOf45.place',
-        i18nArgs: {
+        i18nArgs: Object.assign({
           kind: kind,
           units: region.unitLabels,
           sum: rest,
           cell: SG.model.cellLabel(model, cell),
           digit: rest
-        }
+        }, rule)
       };
     }
     if (open > MAX_ENUM || region.splitCage >= 0) return null;
@@ -510,12 +517,12 @@
       placements: [],
       eliminations: eliminations,
       i18nKey: 'technique.ruleOf45.step',
-      i18nArgs: {
+      i18nArgs: Object.assign({
         kind: kind,
         units: region.unitLabels,
         sum: rest,
         cells: labelsOf(model, openCells, openCells.length)
-      }
+      }, rule)
     };
   }
 

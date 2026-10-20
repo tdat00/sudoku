@@ -518,8 +518,9 @@
       'help.how.checkModes': 'Tip: a Killer cage whose sum can no longer be reached, or a Greater-Than ' +
         'sign that is broken, is flagged as a rule conflict.',
       'help.hints.intro': 'A hint finds the next logical step from your current grid and names the ' +
-        'technique behind it. It never guesses and never suggests a wrong value. Notes help it: with all ' +
-        'the notes filled in, you see exactly what each technique sees.',
+        'technique behind it. It never guesses and never suggests a wrong value. It does not read your ' +
+        'notes, but with all the notes filled in you see exactly what each technique sees. Until you ' +
+        'apply a step, the hint stays on the same step: the nearest one that is not done yet.',
       'help.hints.level1.title': 'First: the technique.',
       'help.hints.level1.text': 'Its name, what it means, and the region (row, column, box, cage…) to ' +
         'look at.',
@@ -614,8 +615,9 @@
       'help.how.checkModes': 'Mẹo: một lồng Sát thủ không thể đạt tổng nữa, hay một dấu so sánh bị vi ' +
         'phạm, sẽ được đánh dấu là vi phạm luật.',
       'help.hints.intro': 'Gợi ý tìm bước suy luận tiếp theo từ lưới hiện tại của bạn và nêu tên kỹ thuật ' +
-        'đứng sau nó. Gợi ý không bao giờ đoán mò và không bao giờ đề xuất giá trị sai. Ghi chú giúp ích ' +
-        'cho nó: khi đã điền sẵn mọi ghi chú, bạn thấy đúng những gì từng kỹ thuật nhìn thấy.',
+        'đứng sau nó. Gợi ý không bao giờ đoán mò và không bao giờ đề xuất giá trị sai. Gợi ý không đọc ' +
+        'ghi chú của bạn, nhưng khi đã điền sẵn mọi ghi chú, bạn thấy đúng những gì từng kỹ thuật nhìn ' +
+        'thấy. Cho đến khi bạn áp dụng một bước, gợi ý vẫn dừng ở bước đó: bước gần nhất chưa làm xong.',
       'help.hints.level1.title': 'Trước hết: kỹ thuật.',
       'help.hints.level1.text': 'Tên kỹ thuật, ý nghĩa của nó và vùng (hàng, cột, khối, lồng…) cần nhìn ' +
         'vào.',

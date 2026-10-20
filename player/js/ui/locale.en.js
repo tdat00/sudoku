@@ -218,8 +218,9 @@
       'deductions then lead to a contradiction, the candidate is false.',
     'technique.cageCombo.desc': 'The digits of a cage are all different and add up to its sum, which ' +
       'often leaves only a few possible combinations.',
-    'technique.ruleOf45.desc': 'Every row, column and box adds up to 45. Cages that lie entirely inside a ' +
-      'group tell you the sum of its remaining cells.',
+    'technique.ruleOf45.desc': 'Every row, column and box adds up to 45, and so do several of them together ' +
+      '(45 each). Cages that lie entirely inside such a group tell you the sum of its remaining cells; ' +
+      'cages that stick out of it do the same for the cells just outside.',
     'technique.cageSplit.desc': 'A cage that sticks out of a row, column or box splits into an inside ' +
       'part and an outside part, each with a sum of its own.',
     'technique.nakedSingle.step': '{cell} has only one candidate left: {digit}. So {cell} must be {digit}.',
@@ -298,20 +299,29 @@
       'would end in a contradiction. So {digit} is removed from {label}.',
     'technique.cageCombo': 'Cage Sum Combination',
     'technique.cageCombo.step': 'A cage with sum {sum} over {size} cells ({cells}) can only be written ' +
-      'with the digits {digits}. Every other candidate in it is impossible, and a digit that the cage ' +
-      'must contain ({forced}) is removed from the other cells of any row, column or box that holds all ' +
-      'of its possible places.',
+      'with the digits {digits}. Every other candidate in it is impossible. A digit that every ' +
+      'combination needs ({forced}) must be somewhere in the cage: it is placed when only one cell can ' +
+      'still hold it, and otherwise removed from the other cells of any row, column or box that holds ' +
+      'all of its possible places.',
+    'technique.cageCombo.step.noForced': 'A cage with sum {sum} over {size} cells ({cells}) can only be ' +
+      'written with the digits {digits}. Every other candidate in it is impossible.',
     'technique.ruleOf45': 'Rule of 45',
     'technique.ruleOf45.step': 'Rule of 45 on {units}: every unit holds the digits 1 to 9 once, so after ' +
       'subtracting the cages that lie entirely inside, the cells {cells} must add up to {sum}. Candidates ' +
       'that cannot reach that sum are removed.',
+    'technique.ruleOf45.step.outie': 'Rule of 45 on {units}: every unit holds the digits 1 to 9 once, ' +
+      'so the cages that lie inside or stick out of them cover the units plus some cells outside. Those ' +
+      'cells {cells} must add up to {sum}. Candidates that cannot reach that sum are removed.',
     'technique.ruleOf45.place': 'Rule of 45 on {units}: after subtracting the cages that lie entirely ' +
       'inside, the last open cell {cell} has to make up the remaining {sum}, so it is {digit}.',
+    'technique.ruleOf45.place.outie': 'Rule of 45 on {units}: the cages that lie inside or stick out of ' +
+      'them cover the units plus some cells outside. The last open cell {cell} of those has to make up ' +
+      'the remaining {sum}, so it is {digit}.',
     'technique.cageSplit': 'Cage Splitting',
     'technique.cageSplit.step': 'The cage with sum {sum} sticks out of {units} and splits in two: the ' +
       'cells {part} (inside) add up to {partSum} and can only use the digits {partDigits}; the cells ' +
-      '{rest} (outside) add up to {restSum} and can only use the digits {restDigits}. Other candidates ' +
-      'are removed.'
+      '{rest} (outside) add up to {restSum} and can only use the digits {restDigits}. Both parts belong ' +
+      'to one cage, so they share no digit. Other candidates are removed.'
   });
 
   // Errors (the code of a GenerationError is the key after `error.`)

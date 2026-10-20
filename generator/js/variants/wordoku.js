@@ -453,7 +453,7 @@
         'variant.wordoku.word': 'Your own word',
         'variant.wordoku.word.hint':
           'Leave empty for a random word. A word of your own needs exactly nine different letters; ' +
-          'diacritics and spaces are ignored.',
+          'diacritics are dropped and anything that is not a letter is ignored.',
         'variant.wordoku.word.placeholder': 'Random word',
         'extraStructure.wordDiagonal':
           'Key word of {length} letters, written along the main diagonal of the solution. Its cells are ' +
@@ -491,8 +491,8 @@
         'variant.wordoku.language.vi': 'Tiếng Việt',
         'variant.wordoku.word': 'Từ của riêng bạn',
         'variant.wordoku.word.hint':
-          'Để trống để lấy từ ngẫu nhiên. Từ của bạn phải có đúng chín chữ cái khác nhau; dấu và khoảng ' +
-          'trắng sẽ được bỏ qua.',
+          'Để trống để lấy từ ngẫu nhiên. Từ của bạn phải có đúng chín chữ cái khác nhau; dấu được bỏ đi ' +
+          'và mọi ký tự không phải chữ cái sẽ được bỏ qua.',
         'variant.wordoku.word.placeholder': 'Từ ngẫu nhiên',
         'extraStructure.wordDiagonal':
           'Từ khóa gồm {length} chữ cái, nằm trên đường chéo chính của lời giải. Các ô của nó được đào ' +

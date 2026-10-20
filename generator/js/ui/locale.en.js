@@ -347,8 +347,9 @@
       'deductions then lead to a contradiction, the candidate is false.',
     'technique.cageCombo.desc': 'The digits of a cage are all different and add up to its sum, which often ' +
       'leaves only a few possible combinations.',
-    'technique.ruleOf45.desc': 'Every row, column and box adds up to 45. Cages that lie entirely inside a ' +
-      'group tell you the sum of its remaining cells.',
+    'technique.ruleOf45.desc': 'Every row, column and box adds up to 45, and so do several of them together ' +
+      '(45 each). Cages that lie entirely inside such a group tell you the sum of its remaining cells; ' +
+      'cages that stick out of it do the same for the cells just outside.',
     'technique.cageSplit.desc': 'A cage that sticks out of a row, column or box splits into an inside part ' +
       'and an outside part, each with a sum of its own.'
   });

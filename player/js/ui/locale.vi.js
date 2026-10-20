@@ -218,8 +218,9 @@
       'giản sau đó dẫn đến mâu thuẫn thì ứng viên ấy là sai.',
     'technique.cageCombo.desc': 'Các chữ số trong một lồng đều khác nhau và cộng lại bằng tổng của lồng, ' +
       'nên thường chỉ còn vài tổ hợp khả dĩ.',
-    'technique.ruleOf45.desc': 'Mỗi hàng, cột và khối có tổng bằng 45. Các lồng nằm trọn trong một nhóm ' +
-      'cho biết tổng của những ô còn lại.',
+    'technique.ruleOf45.desc': 'Mỗi hàng, cột và khối có tổng bằng 45, nhiều nhóm cùng loại gộp lại thì ' +
+      'mỗi nhóm 45. Các lồng nằm trọn trong một nhóm cho biết tổng của những ô còn lại; các lồng nhô ' +
+      'ra khỏi nhóm cho biết tổng của những ô ngay bên ngoài.',
     'technique.cageSplit.desc': 'Một lồng nhô ra khỏi hàng, cột hoặc khối thì tách thành phần bên trong ' +
       'và phần bên ngoài, mỗi phần có tổng riêng.',
     'technique.nakedSingle.step': 'Ô {cell} chỉ còn đúng một ứng viên là {digit}, nên ô này là {digit}.',
@@ -291,18 +292,29 @@
       'giản sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.',
     'technique.cageCombo': 'Tổ hợp tổng lồng',
     'technique.cageCombo.step': 'Lồng có tổng {sum} gồm {size} ô ({cells}) chỉ có thể viết bằng các chữ ' +
-      'số {digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra, và chữ số bắt buộc phải có trong ' +
-      'lồng ({forced}) bị loại khỏi các ô còn lại của hàng, cột hoặc vùng chứa toàn bộ vị trí khả dĩ của nó.',
+      'số {digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra. Chữ số mà mọi tổ hợp đều cần ' +
+      '({forced}) phải nằm đâu đó trong lồng: nếu chỉ còn một ô có thể chứa nó thì điền vào ô đó, nếu ' +
+      'không thì nó bị loại khỏi các ô còn lại của hàng, cột hoặc vùng chứa toàn bộ vị trí khả dĩ của nó.',
+    'technique.cageCombo.step.noForced': 'Lồng có tổng {sum} gồm {size} ô ({cells}) chỉ có thể viết bằng ' +
+      'các chữ số {digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra.',
     'technique.ruleOf45': 'Quy tắc 45',
     'technique.ruleOf45.step': 'Quy tắc 45 trên {units}: mỗi hàng, cột hoặc vùng chứa đủ các chữ số từ 1 ' +
       'đến 9 (tổng 45), nên sau khi trừ các lồng nằm trọn bên trong, các ô {cells} phải có tổng bằng ' +
       '{sum}. Những ứng viên không thể đạt được tổng đó bị loại.',
+    'technique.ruleOf45.step.outie': 'Quy tắc 45 trên {units}: mỗi hàng, cột hoặc vùng chứa đủ các chữ số ' +
+      'từ 1 đến 9 (tổng 45), nên các lồng nằm trong hoặc nhô ra khỏi chúng phủ các nhóm cộng thêm một ' +
+      'số ô bên ngoài. Các ô {cells} đó phải có tổng bằng {sum}. Những ứng viên không thể đạt được tổng ' +
+      'đó bị loại.',
     'technique.ruleOf45.place': 'Quy tắc 45 trên {units}: sau khi trừ các lồng nằm trọn bên trong, ô còn ' +
       'lại {cell} phải bù đúng phần còn thiếu là {sum}, nên ô này là {digit}.',
+    'technique.ruleOf45.place.outie': 'Quy tắc 45 trên {units}: các lồng nằm trong hoặc nhô ra khỏi chúng ' +
+      'phủ các nhóm cộng thêm một số ô bên ngoài. Ô còn lại {cell} trong số đó phải bù đúng phần còn ' +
+      'thiếu là {sum}, nên ô này là {digit}.',
     'technique.cageSplit': 'Tách lồng',
     'technique.cageSplit.step': 'Lồng có tổng {sum} nhô ra khỏi {units} nên tách được làm hai phần: các ô ' +
       '{part} (bên trong) có tổng {partSum} và chỉ dùng được các chữ số {partDigits}; các ô {rest} (bên ' +
-      'ngoài) có tổng {restSum} và chỉ dùng được các chữ số {restDigits}. Các ứng viên khác bị loại.'
+      'ngoài) có tổng {restSum} và chỉ dùng được các chữ số {restDigits}. Hai phần thuộc cùng một lồng ' +
+      'nên không có chữ số chung. Các ứng viên khác bị loại.'
   });
 
   // Errors (the code of a GenerationError is the key after `error.`)

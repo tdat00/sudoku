@@ -342,8 +342,9 @@
       'giản sau đó dẫn đến mâu thuẫn thì ứng viên ấy là sai.',
     'technique.cageCombo.desc': 'Các chữ số trong một lồng đều khác nhau và cộng lại bằng tổng của lồng, ' +
       'nên thường chỉ còn vài tổ hợp khả dĩ.',
-    'technique.ruleOf45.desc': 'Mỗi hàng, cột và khối có tổng bằng 45. Các lồng nằm trọn trong một nhóm ' +
-      'cho biết tổng của những ô còn lại.',
+    'technique.ruleOf45.desc': 'Mỗi hàng, cột và khối có tổng bằng 45, nhiều nhóm cùng loại gộp lại thì ' +
+      'mỗi nhóm 45. Các lồng nằm trọn trong một nhóm cho biết tổng của những ô còn lại; các lồng nhô ' +
+      'ra khỏi nhóm cho biết tổng của những ô ngay bên ngoài.',
     'technique.cageSplit.desc': 'Một lồng nhô ra khỏi hàng, cột hoặc khối thì tách thành phần bên trong và ' +
       'phần bên ngoài, mỗi phần có tổng riêng.'
   });

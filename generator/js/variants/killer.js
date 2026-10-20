@@ -1123,21 +1123,31 @@
       'variant.killer.cageSize.auto': 'By difficulty',
       'technique.cageCombo': 'Cage Sum Combination',
       'technique.cageCombo.step': 'A cage with sum {sum} over {size} cells ({cells}) can only be ' +
-        'written with the digits {digits}. Every other candidate in it is impossible, and a digit that ' +
-        'the cage must contain ({forced}) is removed from the other cells of any row, column or box ' +
+        'written with the digits {digits}. Every other candidate in it is impossible. A digit that ' +
+        'every combination needs ({forced}) must be somewhere in the cage: it is placed when only one ' +
+        'cell can still hold it, and otherwise removed from the other cells of any row, column or box ' +
         'that holds all of its possible places.',
+      'technique.cageCombo.step.noForced': 'A cage with sum {sum} over {size} cells ({cells}) can only ' +
+        'be written with the digits {digits}. Every other candidate in it is impossible.',
       'technique.ruleOf45': 'Rule of 45',
       'technique.ruleOf45.step': 'Rule of 45 on {units}: every unit holds the digits 1 to 9 once, so ' +
         'after subtracting the cages that lie entirely inside, the cells {cells} must add up to {sum}. ' +
         'Candidates that cannot reach that sum are removed.',
+      'technique.ruleOf45.step.outie': 'Rule of 45 on {units}: every unit holds the digits 1 to 9 ' +
+        'once, so the cages that lie inside or stick out of them cover the units plus some cells ' +
+        'outside. Those cells {cells} must add up to {sum}. Candidates that cannot reach that sum are ' +
+        'removed.',
       'technique.ruleOf45.place': 'Rule of 45 on {units}: after subtracting the cages that lie ' +
         'entirely inside, the last open cell {cell} has to make up the remaining {sum}, so it is ' +
         '{digit}.',
+      'technique.ruleOf45.place.outie': 'Rule of 45 on {units}: the cages that lie inside or stick out ' +
+        'of them cover the units plus some cells outside. The last open cell {cell} of those has to ' +
+        'make up the remaining {sum}, so it is {digit}.',
       'technique.cageSplit': 'Cage Splitting',
       'technique.cageSplit.step': 'The cage with sum {sum} sticks out of {units} and splits in two: ' +
         'the cells {part} (inside) add up to {partSum} and can only use the digits {partDigits}; the ' +
-        'cells {rest} (outside) add up to {restSum} and can only use the digits {restDigits}. Other ' +
-        'candidates are removed.',
+        'cells {rest} (outside) add up to {restSum} and can only use the digits {restDigits}. Both ' +
+        'parts belong to one cage, so they share no digit. Other candidates are removed.',
       'extraStructure.cages': 'Cages built: {cages} cages of {minSize} to {maxSize} cells, painted ' +
         'with {colors} pale colours so that neighbouring cages differ.',
       'extraStructure.repairSplit': 'Repair {attempt}: a large cage is split in two where the puzzle ' +
@@ -1160,20 +1170,30 @@
       'variant.killer.cageSize.auto': 'Theo độ khó',
       'technique.cageCombo': 'Tổ hợp tổng lồng',
       'technique.cageCombo.step': 'Lồng có tổng {sum} gồm {size} ô ({cells}) chỉ có thể viết bằng ' +
-        'các chữ số {digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra, và chữ số bắt buộc ' +
-        'phải có trong lồng ({forced}) bị loại khỏi các ô còn lại của hàng, cột hoặc khối chứa toàn ' +
+        'các chữ số {digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra. Chữ số mà mọi tổ ' +
+        'hợp đều cần ({forced}) phải nằm đâu đó trong lồng: nếu chỉ còn một ô có thể chứa nó thì ' +
+        'điền vào ô đó, nếu không thì nó bị loại khỏi các ô còn lại của hàng, cột hoặc khối chứa toàn ' +
         'bộ vị trí khả dĩ của nó.',
+      'technique.cageCombo.step.noForced': 'Lồng có tổng {sum} gồm {size} ô ({cells}) chỉ có thể viết ' +
+        'bằng các chữ số {digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra.',
       'technique.ruleOf45': 'Quy tắc 45',
       'technique.ruleOf45.step': 'Quy tắc 45 trên {units}: mỗi nhóm chứa đủ các chữ ' +
         'số từ 1 đến 9 (tổng 45), nên sau khi trừ các lồng nằm trọn bên trong, các ô {cells} phải có ' +
         'tổng bằng {sum}. Những ứng viên không thể đạt được tổng đó bị loại.',
+      'technique.ruleOf45.step.outie': 'Quy tắc 45 trên {units}: mỗi nhóm chứa đủ các chữ số từ 1 đến ' +
+        '9 (tổng 45), nên các lồng nằm trong hoặc nhô ra khỏi chúng phủ các nhóm cộng thêm một số ô ' +
+        'bên ngoài. Các ô {cells} đó phải có tổng bằng {sum}. Những ứng viên không thể đạt được tổng ' +
+        'đó bị loại.',
       'technique.ruleOf45.place': 'Quy tắc 45 trên {units}: sau khi trừ các lồng nằm trọn bên trong, ' +
         'ô còn lại {cell} phải bù đúng phần còn thiếu là {sum}, nên ô này là {digit}.',
+      'technique.ruleOf45.place.outie': 'Quy tắc 45 trên {units}: các lồng nằm trong hoặc nhô ra khỏi ' +
+        'chúng phủ các nhóm cộng thêm một số ô bên ngoài. Ô còn lại {cell} trong số đó phải bù đúng ' +
+        'phần còn thiếu là {sum}, nên ô này là {digit}.',
       'technique.cageSplit': 'Tách lồng',
       'technique.cageSplit.step': 'Lồng có tổng {sum} nhô ra khỏi {units} nên tách được làm hai ' +
         'phần: các ô {part} (bên trong) có tổng {partSum} và chỉ dùng được các chữ số {partDigits}; ' +
-        'các ô {rest} (bên ngoài) có tổng {restSum} và chỉ dùng được các chữ số {restDigits}. Các ứng ' +
-        'viên khác bị loại.',
+        'các ô {rest} (bên ngoài) có tổng {restSum} và chỉ dùng được các chữ số {restDigits}. Hai ' +
+        'phần thuộc cùng một lồng nên không có chữ số chung. Các ứng viên khác bị loại.',
       'extraStructure.cages': 'Đã dựng {cages} lồng, mỗi lồng từ {minSize} đến {maxSize} ô, tô ' +
         '{colors} màu nhạt sao cho các lồng kề nhau khác màu.',
       'extraStructure.repairSplit': 'Sửa lần {attempt}: tách một lồng lớn thành hai ở vùng còn nhiều ' +

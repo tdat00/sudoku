@@ -993,6 +993,31 @@
       expect(plain).not.toBe(trap);
     });
 
+    it('writes the cage techniques without a sentence about a digit or a region that is not there', function () {
+      packsReady();
+      var combo = { sum: 19, size: 3, cells: ['R1C1', 'R2C1', 'R2C2'], digits: [2, 3, 4, 5, 6, 7, 8, 9], forced: [] };
+      var plain = I.t('technique.cageCombo.step', Object.assign({ rule: 'noForced' }, combo));
+      expect(plain).toContain('2, 3, 4, 5, 6, 7, 8, 9');
+      expect(plain).not.toContain('()');
+      var needed = I.t('technique.cageCombo.step', Object.assign({}, combo, { forced: [4] }));
+      expect(needed).toContain('(4)');
+      var inner = { kind: 'innie', units: ['R1'], sum: 12, cells: ['R1C1', 'R1C2'] };
+      var outer = Object.assign({}, inner, { kind: 'outie', rule: 'outie' });
+      expect(I.t('technique.ruleOf45.step', outer)).not.toBe(I.t('technique.ruleOf45.step', inner));
+      var last = { kind: 'outie', units: ['R1'], sum: 7, cell: 'R2C1', digit: 7 };
+      expect(I.t('technique.ruleOf45.place', Object.assign({ rule: 'outie' }, last)))
+        .not.toBe(I.t('technique.ruleOf45.place', last));
+      LOCALES.forEach(function (code) {
+        inLocale(code, function () {
+          [I.t('technique.cageCombo.step', Object.assign({ rule: 'noForced' }, combo)),
+            I.t('technique.ruleOf45.step', outer),
+            I.t('technique.ruleOf45.place', Object.assign({ rule: 'outie' }, last))].forEach(function (text) {
+            expect(/[{}]|undefined/.test(text)).toBe(false);
+          });
+        });
+      });
+    });
+
     it('writes a forcing chain with the labels of the board', function () {
       packsReady();
       var model = H ? H.model('classic9') : SG.variants.get('classic9').build({}, null);
