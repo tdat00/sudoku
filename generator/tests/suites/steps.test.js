@@ -395,6 +395,55 @@
   });
 
   // ---------------------------------------------------------------------------------------------
+  // Help tips of the score table: they open below the icon, or above it when there is no room below
+  // ---------------------------------------------------------------------------------------------
+
+  describe('stepView: placeTip', function () {
+    function fakeTip(iconBottom, popHeight, windowHeight) {
+      var attrs = {};
+      var pop = { offsetHeight: popHeight };
+      return {
+        attrs: attrs,
+        ownerDocument: { defaultView: { innerHeight: windowHeight } },
+        querySelector: function () { return pop; },
+        setAttribute: function (name, value) { attrs[name] = value; },
+        removeAttribute: function (name) { delete attrs[name]; },
+        getBoundingClientRect: function () { return { top: iconBottom - 24, bottom: iconBottom }; }
+      };
+    }
+
+    it('keeps the pop-up below the icon when it fits', function () {
+      var tip = fakeTip(200, 150, 800);
+      V.placeTip(tip);
+      expect(tip.attrs['data-above']).toBeUndefined();
+      expect(tip.attrs['data-measure']).toBeUndefined();
+    });
+
+    it('opens it above the icon when it does not fit below and there is more room above', function () {
+      var tip = fakeTip(700, 300, 800);
+      V.placeTip(tip);
+      expect(tip.attrs['data-above']).toBe('');
+      expect(tip.attrs['data-measure']).toBeUndefined();
+    });
+
+    it('stays below when there is no more room above (a tall pop-up near the top)', function () {
+      var tip = fakeTip(120, 500, 400);
+      V.placeTip(tip);
+      expect(tip.attrs['data-above']).toBeUndefined();
+    });
+
+    it('forgets an earlier choice when the room changes, and ignores a stand-in without layout', function () {
+      var tip = fakeTip(700, 300, 800);
+      V.placeTip(tip);
+      expect(tip.attrs['data-above']).toBe('');
+      tip.getBoundingClientRect = function () { return { top: 50, bottom: 74 }; };
+      V.placeTip(tip);
+      expect(tip.attrs['data-above']).toBeUndefined();
+      expect(function () { V.placeTip({ querySelector: function () { return null; } }); }).not.toThrow();
+    });
+  });
+
+  // ---------------------------------------------------------------------------------------------
   // Chart model (drawn by the result panel)
   // ---------------------------------------------------------------------------------------------
 

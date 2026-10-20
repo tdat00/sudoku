@@ -160,6 +160,24 @@
     });
   }
 
+  /**
+   * Opens a help tip towards the side of its icon that has room: below by default, above when the pop-up
+   * does not fit under the icon and there is more room over it (the last rows of a table are near the bottom
+   * of the window). Measured each time the tip is about to show, so scrolling and resizing are taken into account.
+   */
+  function placeTip(wrap) {
+    const pop = typeof wrap.querySelector === 'function' ? wrap.querySelector('.help-tip__pop') : null;
+    const view = wrap.ownerDocument && wrap.ownerDocument.defaultView;
+    if (pop === null || !view || typeof wrap.getBoundingClientRect !== 'function') return;
+    wrap.removeAttribute('data-above');
+    wrap.setAttribute('data-measure', '');
+    const need = pop.offsetHeight + 8;
+    wrap.removeAttribute('data-measure');
+    const box = wrap.getBoundingClientRect();
+    const below = view.innerHeight - box.bottom;
+    if (need > below && box.top > below) wrap.setAttribute('data-above', '');
+  }
+
   /** The nodes of a tip model: each formula under its label, then the notes. */
   function renderScoreTip(doc, model) {
     return model.lines.map(function (line, i) {
@@ -334,9 +352,16 @@
         type: 'button', class: 'help-tip__btn', 'aria-describedby': popId, 'aria-label': label
       }, [svg]);
       const wrap = html(doc, 'span', { class: 'help-tip help-tip--inline' }, [button, pop]);
+      ['mouseenter', 'focusin'].forEach(function (name) {
+        wrap.addEventListener(name, function () { placeTip(wrap); });
+      });
       button.addEventListener('click', function () {
-        if (wrap.getAttribute('data-open') === null) wrap.setAttribute('data-open', '');
-        else wrap.removeAttribute('data-open');
+        if (wrap.getAttribute('data-open') === null) {
+          placeTip(wrap);
+          wrap.setAttribute('data-open', '');
+        } else {
+          wrap.removeAttribute('data-open');
+        }
       });
       wrap.addEventListener('keydown', function (event) {
         if (event.key === 'Escape') wrap.removeAttribute('data-open');
@@ -569,6 +594,7 @@
     scoreTip: scoreTip,
     scoreTipText: scoreTipText,
     renderScoreTip: renderScoreTip,
+    placeTip: placeTip,
     roundToTotal: roundToTotal,
     create: create
   };

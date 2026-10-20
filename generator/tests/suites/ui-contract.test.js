@@ -62,7 +62,7 @@
     controls: ['describe', 'mount', 'copyText'],
     symbols: ['modesFor', 'glyph', 'legend', 'legendMarkup', 'renderLegend'],
     boardView: ['create', 'geometry', 'renderMarkup', 'exportSvg', 'cellView', 'resolveTokens'],
-    stepView: ['create', 'chartModel'],
+    stepView: ['create', 'chartModel', 'placeTip'],
     explainCard: ['create', 'viewModel'],
     player: ['create', 'buildSteps', 'viewAt', 'describeStep', 'stepTitle', 'stepMeta', 'positionText'],
     resultView: ['create', 'viewModel'],
@@ -439,6 +439,16 @@
         // The replay is manual: no play button, no speed buttons.
         expect(count('data-speed')).toEqual([]);
         expect(ids['btn-play']).toBeUndefined();
+      });
+
+    it('starts with Generate and Generate random both enabled (the random one never waits for a first run)',
+      function () {
+        var page = readHtml(readText('index.html'));
+        ['btn-generate', 'btn-regenerate'].forEach(function (id) {
+          var button = page.elements.filter(function (el) { return el.attrs.id === id; })[0];
+          expect(button).toBeDefined();
+          expect(button.attrs.disabled).toBeUndefined();
+        });
       });
 
     it('has no hard-coded visible text: every text node, title and label is translated', function () {

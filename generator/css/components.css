@@ -1328,6 +1328,18 @@ dialog.modal:not([open]) {
   width: min(26rem, 85vw);
 }
 
+/* Set by SG.stepView.placeTip when the pop-up does not fit under the icon: it opens above it. */
+.help-tip--inline[data-above] .help-tip__pop {
+  top: auto;
+  bottom: calc(100% + 0.25rem);
+}
+
+/* While the pop-up is measured: laid out but invisible. */
+.help-tip[data-measure] .help-tip__pop {
+  display: block;
+  visibility: hidden;
+}
+
 .score-tip__line + .score-tip__line {
   margin-top: var(--sg-space-2);
 }

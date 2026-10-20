@@ -283,9 +283,19 @@
         'aria-label': t(labelKey || 'result.techniques.help', { name: name })
       }, [icon(doc, 'help')]);
       const wrap = make(doc, 'span', { class: 'help-tip help-tip--inline' }, [button, pop]);
+      const place = SG.stepView && typeof SG.stepView.placeTip === 'function' ? SG.stepView.placeTip : null;
+      if (place !== null) {
+        ['mouseenter', 'focusin'].forEach(function (name) {
+          wrap.addEventListener(name, function () { place(wrap); });
+        });
+      }
       button.addEventListener('click', function () {
-        if (wrap.getAttribute('data-open') === null) wrap.setAttribute('data-open', '');
-        else wrap.removeAttribute('data-open');
+        if (wrap.getAttribute('data-open') === null) {
+          if (place !== null) place(wrap);
+          wrap.setAttribute('data-open', '');
+        } else {
+          wrap.removeAttribute('data-open');
+        }
       });
       wrap.addEventListener('keydown', function (event) {
         if (event.key === 'Escape') wrap.removeAttribute('data-open');
