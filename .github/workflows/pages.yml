@@ -15,11 +15,30 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  # The shared suites of core/tests run first and fast (the player runner plugs its boards into them), so a
+  # broken engine fails the run before the slow generator suites start.
+  test-core:
+    name: Test core
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Run the core tests
+        working-directory: player
+        run: |
+          suites=$(ls ../core/tests/suites | sed 's/\.test\.js$//' | paste -sd, -)
+          node tests/node-runner.js --suite="$suites"
+
+  test-generator:
+    name: Test generator
+    needs: test-core
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -33,9 +52,32 @@ jobs:
         working-directory: generator
         run: node tests/node-runner.js --all
 
+  test-player:
+    name: Test player
+    needs: test-core
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
       - name: Run the player tests
         working-directory: player
         run: node tests/node-runner.js
+
+  deploy:
+    needs: [test-generator, test-player]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
 
       # One site: / (landing page), /generator/, /player/ and /core/, the code both apps load with ../core.
       # The tests, the design notes and the documents are not published.

@@ -294,11 +294,12 @@
       });
     });
 
-    it('offers in every variant exactly the levels the qualification published (docs/report-v2/qualification.md)',
+    it('offers in every variant exactly the levels the qualification published (docs/difficulty-rating/qualification.md)',
       function () {
         var node = SG.test.node;
         if (!node) SG.test.skip('needs the file system (Node only)');
-        var text = node.fs.readFileSync(node.path.join(node.root, 'docs/report-v2/qualification.md'), 'utf8');
+        var text = node.fs.readFileSync(
+          node.path.join(node.root, '..', 'docs', 'difficulty-rating', 'qualification.md'), 'utf8');
         var offered = {};
         var rows = 0;
         text.replace(/\r\n/g, '\n').split('\n').forEach(function (line) {

@@ -78,7 +78,8 @@ The player's own share link is built from its page address, so a copied link wor
 
 ## Publishing
 
-`.github/workflows/pages.yml` runs the tests of both apps and publishes one site:
+`.github/workflows/pages.yml` runs the tests (core first, then the generator and the player in parallel) and
+publishes one site:
 
 ```
 https://tdat00.github.io/sudoku/            the landing page (index.html at the root of the repository)
