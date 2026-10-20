@@ -12,9 +12,6 @@ html {
   text-size-adjust: 100%;
   accent-color: var(--sg-color-accent);
   scroll-padding-top: var(--sg-space-4);
-  /* Always leave room for the vertical scrollbar, so the layout is as wide as Sudoku Generator's (which is
-     taller and always scrolls) whether or not this page scrolls. */
-  scrollbar-gutter: stable;
 }
 
 body {
@@ -200,6 +197,15 @@ summary {
   transform: none;
 }
 
+/* ---- Small typographic utilities ---- */
+.text-muted {
+  color: var(--sg-color-text-muted);
+}
+
+.mono {
+  font-family: var(--sg-font-mono);
+}
+
 /* ---- Reduced motion: system preference or Settings switch (data-motion="off") ---- */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -226,7 +232,7 @@ summary {
 }
 
 /* ---- Smooth theme switching: colours only, and never under reduced motion ----
-   js/ui/theme.js adds .is-theming to <html> for a moment around a change of theme. */
+   the theme.js of each project (js/ui/theme.js) adds .is-theming to <html> for a moment around a change of theme. */
 @media (prefers-reduced-motion: no-preference) {
   :root.is-theming:not([data-motion="off"]),
   :root.is-theming:not([data-motion="off"]) *,
@@ -247,7 +253,7 @@ summary {
   :focus-visible {
     outline: var(--sg-focus-width) solid Highlight;
   }
-
+/* ---- Animations ---- */
   .skip-link {
     border-color: CanvasText;
   }

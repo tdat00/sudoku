@@ -152,38 +152,12 @@
    * Where and how to draw each sign. `(midRow, midCol)` is the midpoint of the two cell centres in cell
    * units. `direction` runs from the smaller cell a to the greater cell b ('right', 'left', 'down', 'up');
    * the glyph is '<' / '>' horizontally and, vertically, '∧' when a is above b and '∨' when below (the apex
-   * points at the smaller cell).
+   * points at the smaller cell). Read from the model alone, so it is `SG.modelAids.signEdges` of the core.
    * @returns {Array<{index: number, a: number, b: number, midRow: number, midCol: number,
    *          direction: string, glyph: string}>}
    */
   function signEdges(model) {
-    const row = model.layout.cellRow;
-    const col = model.layout.cellCol;
-    return model.inequalities.map(function (q, index) {
-      const dr = row[q.b] - row[q.a];
-      const dc = col[q.b] - col[q.a];
-      let direction = 'right';
-      let glyph = '<';
-      if (dc === -1 && dr === 0) {
-        direction = 'left';
-        glyph = '>';
-      } else if (dr === 1 && dc === 0) {
-        direction = 'down';
-        glyph = '\u2227';
-      } else if (dr === -1 && dc === 0) {
-        direction = 'up';
-        glyph = '\u2228';
-      }
-      return {
-        index: index,
-        a: q.a,
-        b: q.b,
-        midRow: (row[q.a] + row[q.b]) / 2,
-        midCol: (col[q.a] + col[q.b]) / 2,
-        direction: direction,
-        glyph: glyph
-      };
-    });
+    return SG.modelAids.signEdges(model);
   }
 
   function fail(code, args) {

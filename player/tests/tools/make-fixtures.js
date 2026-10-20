@@ -12,7 +12,7 @@
  *
  *   SG.exportUi.toJson(result, ctx)  +  model: SG.exchange.plain(SG.pipeline.toWire(result).model)
  *
- * `SG.exchange` is the player's own copy of js/ui/exchange.js (the file both repositories share). The fixtures
+ * `SG.exchange` is the player's own copy of ../core/js/ui/exchange.js (the file both repositories share). The fixtures
  * are committed, so this script is only needed when the document format changes (see docs/fixtures.md).
  */
 const fs = require('fs');

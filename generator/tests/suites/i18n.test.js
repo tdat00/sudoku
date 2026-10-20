@@ -1114,7 +1114,7 @@
       packsReady();
       var codes = [];
       readSources('js/engine', /\.js$/).concat(readSources('../core/js/engine', /\.js$/)).concat(readSources('js/variants', /\.js$/))
-        .concat(readSources('js/ui', /^exchange\.js$/)).forEach(function (source) {
+        .concat(readSources('../core/js/ui', /^exchange\.js$/)).forEach(function (source) {
         allMatches(source.text, /(?:GenerationError\(|\bfail\(|\berror\()\s*'([A-Za-z]+\.[A-Za-z]+)'/)
           .forEach(function (code) { codes.push(code); });
         allMatches(source.text, /_CODE\s*=\s*'([A-Za-z]+\.[A-Za-z]+)'/).forEach(function (code) {

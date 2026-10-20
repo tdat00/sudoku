@@ -1,11 +1,13 @@
 /*
- * Board styles (SVG board of js/ui/board-view.js and the symbol legend of js/ui/symbols.js).
- * Only var(--sg-board-*) tokens (css/tokens-board.css) and the generic --sg-color-focus, --sg-color-text,
+ * Board styles (SVG board of core/js/ui/board-view.js and the symbol legend of core/js/ui/symbols.js).
+ * Only var(--sg-board-*) tokens (core/css/tokens-board.css) and the generic --sg-color-focus, --sg-color-text,
  * --sg-font-family and --sg-space-* are used; no colour literals here.
  *
  * A board is an <svg class="sgb">; the cell classes are:
  *   .cell--placing .cell--backtrack .cell--removed   one-shot animations of a changed cell
  *   .hl.cell--probing .cell--technique .cell--restored .cell--selected   highlight frames (layer-overlay)
+ *   .hl.cell--dug .cell--kept .cell--revealed   replay frames: removed / put back / revealed in the step
+ *   .sign--hidden .sign--removed .sign--kept   Greater-Than signs during the replay
  *   .board--done                                      the "bounce" of a finished board
  * Keep the static rules in step with `staticCss()` of board-view.js (the standalone SVG export).
  */
@@ -214,6 +216,41 @@
 .sgb .hl.cell--selected {
   stroke: var(--sg-board-selected);
   fill: var(--sg-board-selected-fill);
+}
+
+/* Replay frames: what the step on show did. Static, no animation; the dash tells them apart without
+   colour. */
+.sgb .hl.cell--dug {
+  stroke: var(--sg-board-probe);
+  fill: var(--sg-board-probe);
+  fill-opacity: 0.12;
+}
+
+.sgb .hl.cell--kept {
+  stroke: var(--sg-board-restore);
+  stroke-dasharray: 6 4;
+  fill: var(--sg-board-restore);
+  fill-opacity: 0.1;
+}
+
+.sgb .hl.cell--revealed {
+  stroke: var(--sg-board-technique);
+  stroke-dasharray: 2 3;
+  fill: var(--sg-board-technique-fill);
+}
+
+/* Greater-Than signs during the replay: not there yet / taken away in this step / had to stay. */
+.sgb .sign.sign--hidden {
+  display: none;
+}
+
+.sgb .sign.sign--removed {
+  stroke-dasharray: 3 4;
+  opacity: 0.45;
+}
+
+.sgb .sign.sign--kept {
+  stroke: var(--sg-board-restore);
 }
 
 /* ---- Animations ---- */

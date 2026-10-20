@@ -593,8 +593,8 @@
 
     it('uses only tokens and no colour literal in css/steps.css', function () {
       var css = source('css/steps.css').replace(/\/\*[\s\S]*?\*\//g, '');
-      var tokens = source('css/tokens.css');
-      var boardTokens = source('css/tokens-board.css');
+      var tokens = source('../core/css/tokens.css');
+      var boardTokens = source('../core/css/tokens-board.css');
       expect(css).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
       expect(css).not.toMatch(/\b(?:rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\(/);
       expect(css).not.toMatch(/:\s*(?:white|black|red|green|blue|gray|grey|yellow|orange|purple)\b/);

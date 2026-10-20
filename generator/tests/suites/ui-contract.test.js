@@ -308,19 +308,26 @@
   describe('ui contract: no colour literal outside css/tokens.css and css/tokens-board.css', function () {
     var TOKEN_FILES = ['tokens.css', 'tokens-board.css'];
 
+    /** The shared stylesheets of core/css and the project's own, as paths from the project root. */
+    var sheets = ['../core/css', 'css'].reduce(function (all, dir) {
+      return all.concat(listDir(dir, '.css').map(function (name) { return dir + '/' + name; }));
+    }, []);
+
     it('has the stylesheets to check', function () {
-      var files = listDir('css', '.css');
-      ['base.css', 'layout.css', 'components.css'].forEach(function (name) { expect(files).toContain(name); });
+      var names = sheets.map(function (rel) { return rel.slice(rel.lastIndexOf('/') + 1); });
+      ['base.css', 'layout.css', 'components.css'].forEach(function (name) { expect(names).toContain(name); });
     });
 
-    listDir('css', '.css').forEach(function (name) {
-      if (TOKEN_FILES.indexOf(name) !== -1) return;
-      it('css/' + name + ' uses var(--sg-...) tokens only', function () {
-        expect(cssColorLiterals(readText('css/' + name))).toEqual([]);
+    sheets.forEach(function (rel) {
+      if (TOKEN_FILES.indexOf(rel.slice(rel.lastIndexOf('/') + 1)) !== -1) return;
+      it(rel + ' uses var(--sg-...) tokens only', function () {
+        expect(cssColorLiterals(readText(rel))).toEqual([]);
       });
     });
 
-    var scripts = listDir('js/ui', '.js').map(function (name) { return 'js/ui/' + name; });
+    var scripts = ['../core/js/ui', 'js/ui'].reduce(function (all, dir) {
+      return all.concat(listDir(dir, '.js').map(function (name) { return dir + '/' + name; }));
+    }, []);
     if (exists('js/worker/worker-client.js')) scripts.push('js/worker/worker-client.js');
 
     scripts.forEach(function (rel) {

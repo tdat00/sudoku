@@ -890,7 +890,8 @@
       if (!NODE) SG.test.skip('needs the Node runner to read the sources');
       packsReady();
       var codes = [];
-      readSources('js/engine', /\.js$/).concat(readSources('../core/js/engine', /\.js$/)).concat(readSources('js/ui', /\.js$/)).forEach(function (source) {
+      readSources('js/engine', /\.js$/).concat(readSources('../core/js/engine', /\.js$/)).concat(readSources('js/ui', /\.js$/))
+        .concat(readSources('../core/js/ui', /\.js$/)).forEach(function (source) {
         allMatches(source.text, /(?:GenerationError\(|\bfail\(|\berror\()\s*'([A-Za-z]+\.[A-Za-z]+)'/)
           .forEach(function (code) { codes.push(code); });
         allMatches(source.text, /_CODE\s*=\s*'([A-Za-z]+\.[A-Za-z]+)'/).forEach(function (code) {
@@ -917,7 +918,7 @@
         // Every literal key passed to the translation helpers of the UI files: t('a.b'), tr('a.b'), titleKey,
         // toast(kind, 'a.b'), the key attributes of data-i18n.
         var used = [];
-        readSources('js/ui', /\.js$/).forEach(function (source) {
+        readSources('js/ui', /\.js$/).concat(readSources('../core/js/ui', /\.js$/)).forEach(function (source) {
           allMatches(source.text, /\b(?:t|tr|translate|tx|hasText)\(\s*'([a-z][A-Za-z0-9]*(?:\.[A-Za-z0-9_]+)+)'/)
             .forEach(function (key) { used.push(key); });
           allMatches(source.text, /\b(?:titleKey|labelKey|textKey|hintKey|i18n):\s*'([a-z][A-Za-z0-9]*\.[A-Za-z0-9_.]+)'/)

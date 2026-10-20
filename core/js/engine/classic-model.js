@@ -1,6 +1,7 @@
 /**
- * The boards the player can rebuild without a `model` block: classic 4x4, 6x6 (2x3 boxes) and 9x9, and the
- * overlapping boards (Samurai, Sohei, Butterfly, Flower). They match the generator's variants (cell (r, c) is
+ * The boards that can be rebuilt without a `model` block: classic 4x4, 6x6 (2x3 boxes) and 9x9, and the
+ * overlapping boards (Samurai, Sohei, Butterfly, Flower). The generator's classic variants are built from this
+ * (and its overlapping variants follow the same construction: cell (r, c) is
  * index r * D + c; units are rows, columns, boxes, labelled R1.., C1.., B1.. or G1-R1.. when overlapping), so
  * a puzzle has the same cells and hint texts whichever way it arrived. Pure data: no DOM, no randomness.
  */

@@ -3,7 +3,7 @@
  * generator): KEY -> [spelling with diacritics, pos, Vietnamese definition].
  * pos: 'n' noun, 'v' verb, 'a' adjective, 'd' adverb, 'o' other.
  * KEY is the spelling without diacritics and spaces ('đ' -> D), nine distinct upper-case letters A-Z.
- * Read through js/ui/wordbook.js.
+ * Read through ../core/js/ui/wordbook.js.
  */
 (function (root) {
   'use strict';

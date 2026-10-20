@@ -1,6 +1,6 @@
 /*
  * Board tokens: every colour, line width and animation duration the SVG board uses. Colour literals live
- * only here and in tokens.css; board.css and js/ui/board-view.js reference the custom properties below.
+ * only here and in tokens.css; board.css and core/js/ui/board-view.js reference the custom properties below.
  *
  * Line widths are unitless on purpose: they are SVG user units of the board viewBox (one cell = 40 units),
  * so the board scales as one picture.

@@ -1534,7 +1534,7 @@
     }
 
     function refreshSymbolControl() {
-      const modes = SG.symbols.modesFor(game.model);
+      const modes = SG.symbols.modesFor(SG.modelAids.symbolModes(game.model));
       els.symbolsRow.hidden = modes.length < 2;
       els.symbolsList.textContent = '';
       modes.forEach(function (mode) {
@@ -1563,7 +1563,7 @@
     }
 
     function setSymbolMode(mode) {
-      if (!active || SG.symbols.modesFor(game.model).indexOf(mode) === -1) return false;
+      if (!active || SG.symbols.modesFor(SG.modelAids.symbolModes(game.model)).indexOf(mode) === -1) return false;
       if (mode !== currentMode()) {
         board.setSymbolMode(mode);
         reader = createKeyReader(typedLabels(game.model, mode));
@@ -2471,7 +2471,7 @@
       puzzle = next;
       geo = board.getGeometry();
       game = makeGame(opt.state);
-      const modes = SG.symbols.modesFor(game.model);
+      const modes = SG.symbols.modesFor(SG.modelAids.symbolModes(game.model));
       const wanted = opt.symbolMode || puzzle.symbolMode;
       board.setSymbolMode(modes.indexOf(wanted) !== -1 ? wanted : modes[0]);
       board.setValues(puzzle.givens);

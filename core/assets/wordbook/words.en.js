@@ -2,7 +2,7 @@
  * Word book of the English Wordoku key words (one entry per word of assets/wordlists/isograms.en.js in the
  * generator): KEY -> [spelling, pos, English definition, Vietnamese explanation].
  * pos: 'n' noun, 'v' verb, 'a' adjective, 'd' adverb, 'o' other.
- * KEY is the word as it is on the board: nine distinct upper-case letters A-Z. Read through js/ui/wordbook.js.
+ * KEY is the word as it is on the board: nine distinct upper-case letters A-Z. Read through ../core/js/ui/wordbook.js.
  */
 (function (root) {
   'use strict';

@@ -33,6 +33,13 @@
     return env.fs.readdirSync(abs).filter(function (name) { return name.endsWith(suffix); }).sort();
   }
 
+  /** Every stylesheet of the page: the shared ones of core/css and the project's own, as { name, rel }. */
+  function cssFiles() {
+    return ['../core/css', 'css'].reduce(function (all, dir) {
+      return all.concat(listFiles(dir, '.css').map(function (name) { return { name: name, rel: dir + '/' + name }; }));
+    }, []);
+  }
+
   // ---------------------------------------------------------------------------------------------
   // A small CSS reader: rules with their selectors, declarations and media query
   // ---------------------------------------------------------------------------------------------
@@ -228,10 +235,10 @@
 
   function rulesOf(file) {
     if (file === 'tokens.css') {
-      if (generalRules === null) generalRules = parseRules(read('css/tokens.css'));
+      if (generalRules === null) generalRules = parseRules(read('../core/css/tokens.css'));
       return generalRules;
     }
-    if (boardRules === null) boardRules = parseRules(read('css/tokens-board.css'));
+    if (boardRules === null) boardRules = parseRules(read('../core/css/tokens-board.css'));
     return boardRules;
   }
 
@@ -485,12 +492,12 @@
 
   describe('theme: colours exist only in the token files and the favicon', function () {
     it('no stylesheet other than the two token files has a colour literal', function () {
-      var offenders = listFiles('css', '.css').filter(function (name) {
-        return name !== 'tokens.css' && name !== 'tokens-board.css' && hasCssColor(read('css/' + name));
-      });
+      var offenders = cssFiles().filter(function (file) {
+        return file.name !== 'tokens.css' && file.name !== 'tokens-board.css' && hasCssColor(read(file.rel));
+      }).map(function (file) { return file.rel; });
       expect(offenders).toEqual([]);
-      expect(hasCssColor(read('css/tokens.css'))).toBe(true);
-      expect(hasCssColor(read('css/tokens-board.css'))).toBe(true);
+      expect(hasCssColor(read('../core/css/tokens.css'))).toBe(true);
+      expect(hasCssColor(read('../core/css/tokens-board.css'))).toBe(true);
     });
 
     it('no script or page has a colour literal in code or style (comments aside)', function () {
@@ -606,7 +613,7 @@
     }
 
     it('base.css switches animations and transitions off for the system preference and for data-motion="off"', function () {
-      var css = read('css/base.css');
+      var css = read('../core/css/base.css');
       motionOff(css, ':root[data-motion="off"] *');
       var reduce = /@media \(prefers-reduced-motion: reduce\)\s*\{([\s\S]*?)\n\}/.exec(css)[1];
       var off = /:root\[data-motion="off"\] \*,[\s\S]*?\{([\s\S]*?)\}/.exec(css)[1];
@@ -629,7 +636,7 @@
     });
 
     it('the board has its own switches (class, system preference, data-motion, animate: false)', function () {
-      var css = read('css/board.css');
+      var css = read('../core/css/board.css');
       expect(css).toContain('@media (prefers-reduced-motion: reduce)');
       expect(css).toContain(':root[data-motion="off"] .sgb');
       expect(css).toContain('.sgb[data-animate="off"]');
@@ -637,7 +644,7 @@
     });
 
     it('the theme change fades colours only, and only when motion is allowed', function () {
-      var css = read('css/base.css');
+      var css = read('../core/css/base.css');
       var block = /@media \(prefers-reduced-motion: no-preference\)\s*\{([\s\S]*?)\n\}/.exec(css);
       expect(block).not.toBeNull();
       var text = block[1];
@@ -651,10 +658,10 @@
     it('no stylesheet starts an animation or a transition outside the reach of these rules', function () {
       // Every animation / transition of the other files is a plain declaration, covered by the rules above:
       // none of them sets `!important` (which could beat them) or an animation on a selector outside <html>.
-      listFiles('css', '.css').forEach(function (name) {
-        var css = stripComments(read('css/' + name));
+      cssFiles().forEach(function (file) {
+        var css = stripComments(read(file.rel));
         css.replace(/(animation|transition)(?:-[a-z]+)?\s*:[^;{}]*;/g, function (decl) {
-          if (name === 'base.css' || name === 'board.css') return decl;
+          if (file.name === 'base.css' || file.name === 'board.css') return decl;
           expect(/!important/.test(decl)).toBe(false);
           return decl;
         });
@@ -677,14 +684,14 @@
       it('.' + effect.cls + ' exists, animates with ' + effect.token + ' = ' + effect.ms + ' ms', function () {
         var tokens = themeTokens(rulesOf('tokens-board.css'), 'light');
         expect(tokens[effect.token]).toBe(effect.ms + 'ms');
-        var css = stripComments(read('css/board.css'));
+        var css = stripComments(read('../core/css/board.css'));
         var rule = new RegExp('\\.' + effect.cls + '\\s*\\{[^}]*animation:[^;]*var\\(' + effect.token + '\\)');
         expect(rule.test(css)).toBe(true);
       });
     });
 
     it('every effect has a keyframes definition', function () {
-      var css = stripComments(read('css/board.css'));
+      var css = stripComments(read('../core/css/board.css'));
       ['sgb-place', 'sgb-remove', 'sgb-backtrack', 'sgb-probe', 'sgb-technique', 'sgb-restored', 'sgb-done']
         .forEach(function (name) { expect(css).toContain('@keyframes ' + name); });
     });
@@ -692,11 +699,11 @@
 
   describe('theme: forced colours and increased contrast', function () {
     it('base.css keeps a visible focus ring and the pressed / selected states in forced-colors mode', function () {
-      expect(read('css/base.css')).toContain('@media (forced-colors: active)');
+      expect(read('../core/css/base.css')).toContain('@media (forced-colors: active)');
       var components = read('css/components.css');
       expect(components).toContain('@media (forced-colors: active)');
       expect(components).toContain('.choice:has(> input:checked)');
-      expect(read('css/board.css')).toContain('@media (forced-colors: active)');
+      expect(read('../core/css/board.css')).toContain('@media (forced-colors: active)');
     });
 
     it('tokens.css answers prefers-contrast: more with text-coloured borders and a thicker focus ring', function () {

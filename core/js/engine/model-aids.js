@@ -1,6 +1,6 @@
 /**
- * Readers of a rebuilt `PuzzleModel` that the player's screens need: `signEdges` (where to draw each Greater-Than
- * sign), `describeWord` / `readWord` / `isWordSolved` (the Wordoku key-word line) and `symbolModes`.
+ * Readers of a `PuzzleModel` that the screens of both projects need: `signEdges` (where to draw each Greater-Than
+ * sign), `describeWord` / `readWord` / `isWordSolved` (the key-word line of a word board) and `symbolModes`.
  * Everything is derived from the model itself, so it works without any variant code. Pure data, no DOM.
  */
 (function (root) {
@@ -97,7 +97,7 @@
   }
 
   /**
-   * The symbol sets a board can be shown in (the first is the default): a Wordoku board its key-word letters or
+   * The symbol sets a board can be shown in (the first is the default): a word board its key-word letters or
    * plain digits, a board with more than nine values (Mega) its own digits only, any other board digits, letters,
    * colours and shapes.
    */

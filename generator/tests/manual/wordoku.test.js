@@ -186,12 +186,12 @@
       expect(SG.wordlists.vi).not.toContain('BACHTUYET');
     });
 
-    it('every word of both lists has an entry in the word book (assets/wordbook), and every entry a word',
+    it('every word of both lists has an entry in the word book (core/assets/wordbook), and every entry a word',
       function () {
         var env = SG.test.node;
         if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
         ['en', 'vi'].forEach(function (lang) {
-          var text = env.fs.readFileSync(env.path.join(env.root, 'assets/wordbook/words.' + lang + '.js'), 'utf8');
+          var text = env.fs.readFileSync(env.path.join(env.root, '../core/assets/wordbook/words.' + lang + '.js'), 'utf8');
           var sandbox = {};
           env.vm.runInNewContext(text, sandbox);
           var book = sandbox.SG.wordbookData[lang];

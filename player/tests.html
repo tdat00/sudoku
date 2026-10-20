@@ -103,10 +103,10 @@
         '../core/js/engine/tech-chain.js',
         '../core/js/engine/tech-cage.js',
         '../core/js/engine/tech-ineq.js',
-        'js/engine/model-aids.js',
+        '../core/js/engine/model-aids.js',
         '../core/js/engine/classic-model.js',
         'js/engine/text-boards.js',
-        'js/ui/exchange.js',
+        '../core/js/ui/exchange.js',
         'js/ui/importer.js',
         'js/ui/i18n.js',
         'js/ui/locale.en.js',
@@ -114,13 +114,13 @@
         'js/ui/locale.shell.js',
         'js/ui/store.js',
         'js/ui/theme.js',
-        'js/ui/symbols.js',
-        'js/ui/board-view.js',
+        '../core/js/ui/symbols.js',
+        '../core/js/ui/board-view.js',
         'js/ui/a11y.js',
         'js/ui/progress.js',
-        'assets/wordbook/words.vi.js',
-        'assets/wordbook/words.en.js',
-        'js/ui/wordbook.js',
+        '../core/assets/wordbook/words.vi.js',
+        '../core/assets/wordbook/words.en.js',
+        '../core/js/ui/wordbook.js',
         'js/ui/play.js',
         'js/ui/help-examples.js',
         'js/ui/help.js',
@@ -136,23 +136,25 @@
       ];
       var CORE_SUITE_FILES = [
         'bits',
+        'board-view',
         'constraints',
+        'exchange',
         'harness',
         'logical-solver',
         'model',
         'solver',
+        'symbols',
         'tech-basic',
         'tech-chain',
         'tech-fish',
         'tech-subset',
         'tech-wing',
-        'techniques'
+        'techniques',
+        'wordbook'
       ];
       var SUITE_FILES = [
         'a11y',
         'app',
-        'board-view',
-        'exchange',
         'fixtures',
         'help',
         'i18n',
@@ -161,11 +163,9 @@
         'play',
         'progress',
         'store',
-        'symbols',
         'text-boards',
         'theme',
-        'ui-contract',
-        'wordbook'
+        'ui-contract'
       ];
 
       var SG = window.SG;

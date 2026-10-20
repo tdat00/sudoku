@@ -11,6 +11,12 @@
   --sg-layout-max-width: 120rem;
 }
 
+/* Always leave room for the vertical scrollbar, so the layout is as wide as Sudoku Generator's (which is taller and
+   always scrolls) whether or not this page scrolls. */
+html {
+  scrollbar-gutter: stable;
+}
+
 .sprite {
   position: absolute;
   width: 0;

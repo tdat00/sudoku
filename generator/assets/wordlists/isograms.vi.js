@@ -5,14 +5,14 @@
  * common noun or verb of at most three syllables written WITHOUT diacritics and without spaces
  * ("chuyên gia" -> CHUYENGIA, "đ" -> D). Each one still has to be exactly 9 distinct letters A-Z; the comment
  * shows the real spelling. tests/suites/wordoku.test.js fails the build on an entry that is not, or that has
- * no entry in assets/wordbook/words.vi.js (the spelling with diacritics and the meaning shown when the puzzle
- * is solved).
+ * no entry in core/assets/wordbook/words.vi.js (the spelling with diacritics and the meaning shown when the
+ * puzzle is solved).
  *
  * Valid entries are rare, so this list is much shorter than the English one: js/variants/wordoku.js falls
  * back to the English list (with a notice) when it holds fewer than `SG.wordoku.MIN_WORDS` entries.
  *
  * Plain data on `SG.wordlists.vi`, read lazily by js/variants/wordoku.js, so this file may load before or
- * after the variant. Generated together with assets/wordbook/words.vi.js.
+ * after the variant. Generated together with core/assets/wordbook/words.vi.js.
  */
 (function (root) {
   'use strict';

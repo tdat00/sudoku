@@ -161,9 +161,13 @@
     return labels !== null && labels[value - 1] !== undefined ? String(labels[value - 1]) : letterOf(value);
   }
 
-  /** The symbol modes a variant offers (its registry `symbolModes`, in the order of `MODES`); at least ['digits']. */
-  function modesFor(variantDef) {
-    const offered = variantDef && Array.isArray(variantDef.symbolModes) ? variantDef.symbolModes : ['digits'];
+  /**
+   * The symbol modes offered, in the order of `MODES`; at least ['digits']. `source` is the list of modes a board
+   * offers (`SG.modelAids.symbolModes(model)`) or a variant definition (its registry `symbolModes`).
+   */
+  function modesFor(source) {
+    const offered = Array.isArray(source) ? source
+      : (source && Array.isArray(source.symbolModes) ? source.symbolModes : ['digits']);
     const out = MODES.filter(function (m) { return offered.indexOf(m) !== -1; });
     return out.length > 0 ? out : ['digits'];
   }

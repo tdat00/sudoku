@@ -57,6 +57,7 @@
     '../../../core/js/engine/tech-cage.js',
     '../../../core/js/engine/tech-ineq.js',
     '../../../core/js/engine/classic-model.js',
+    '../../../core/js/engine/model-aids.js',
     '../engine/difficulty.js',
     '../engine/full-grid.js',
     '../engine/symmetry.js',

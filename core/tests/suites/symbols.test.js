@@ -24,15 +24,15 @@
       ready();
       ['classic4', 'classic6', 'classic9', 'diagonalX', 'hyper', 'jigsaw9', 'killer', 'greaterThan',
         'samurai', 'sohei', 'butterfly', 'flower'].forEach(function (id) {
-        expect(S.modesFor(SG.testkit.model(id))).toEqual(['digits', 'letters', 'colors', 'shapes']);
+        expect(S.modesFor(SG.modelAids.symbolModes(SG.testkit.model(id)))).toEqual(['digits', 'letters', 'colors', 'shapes']);
       });
     });
 
     it('mega boards keep hexadecimal digits only; wordoku offers the word and the digits', function () {
       ready();
-      expect(S.modesFor(SG.testkit.model('mega12'))).toEqual(['digits']);
-      expect(S.modesFor(SG.testkit.model('mega16'))).toEqual(['digits']);
-      expect(S.modesFor(SG.testkit.model('wordoku'))).toEqual(['digits', 'word']);
+      expect(S.modesFor(SG.modelAids.symbolModes(SG.testkit.model('mega12')))).toEqual(['digits']);
+      expect(S.modesFor(SG.modelAids.symbolModes(SG.testkit.model('mega16')))).toEqual(['digits']);
+      expect(S.modesFor(SG.modelAids.symbolModes(SG.testkit.model('wordoku')))).toEqual(['digits', 'word']);
     });
 
     it('anything unknown falls back to digits', function () {

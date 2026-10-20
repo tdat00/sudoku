@@ -9,6 +9,7 @@
   var SG = root.SG = root.SG || {};
 
   SG.testkit = Object.assign(SG.testkit || {}, {
+    VARIANT_IDS: SG.variants.list().map(function (def) { return def.id; }),
     provider: {
       has: function has(id) { return SG.variants.has(id); },
       build: function build(id) { return SG.variants.get(id).build({}, null); }

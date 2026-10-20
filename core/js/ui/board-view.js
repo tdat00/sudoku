@@ -1,6 +1,6 @@
 /**
- * SVG board view: draws every variant of the generator and updates it from the delta patches of the event stream,
- * touching only the DOM nodes of the cells that changed.
+ * SVG board view, shared by the generator and the player: draws every variant and updates it from the delta
+ * patches of the event stream, touching only the DOM nodes of the cells that changed.
  *
  * Layers of the SVG tree, bottom to top (`setLayerVisible(name, flag)` shows or hides one by its `data-layer` name:
  * regions, overlays, word, cages, ineq, cells, values, grid, coords, overlay):
@@ -280,21 +280,7 @@
   const DIRECTIONS = { right: [1, 0], left: [-1, 0], down: [0, 1], up: [0, -1] };
 
   function computeSigns(model) {
-    if (SG.greaterThan && typeof SG.greaterThan.signEdges === 'function') {
-      return SG.greaterThan.signEdges(model);
-    }
-    const row = model.layout.cellRow;
-    const col = model.layout.cellCol;
-    return model.inequalities.map(function (q, index) {
-      const dr = row[q.b] - row[q.a];
-      const dc = col[q.b] - col[q.a];
-      let direction = 'right';
-      if (dc === -1 && dr === 0) direction = 'left';
-      else if (dr === 1 && dc === 0) direction = 'down';
-      else if (dr === -1 && dc === 0) direction = 'up';
-      return { index: index, a: q.a, b: q.b, midRow: (row[q.a] + row[q.b]) / 2,
-        midCol: (col[q.a] + col[q.b]) / 2, direction: direction, glyph: '' };
-    });
+    return SG.modelAids.signEdges(model);
   }
 
   /** Chevron that opens towards the greater cell; its apex points at the smaller one. */

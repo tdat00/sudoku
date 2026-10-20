@@ -1,5 +1,5 @@
 /**
- * Puzzle exchange between sudoku-generator and sudoku-player. This file is shared byte for byte by both repos.
+ * Puzzle exchange between the generator and the player: the one module both of them load from core.
  * Turns a puzzle document (JSON, `format: 'sudoku-generator/v1'`) into a token carried in a URL fragment
  * (`#puzzle=<token>`, never sent to a server) and back. No DOM; runs in browsers and Node >= 18
  * (needs `CompressionStream`, `Blob`, `TextEncoder`, `btoa`/`atob`).

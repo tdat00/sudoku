@@ -133,7 +133,7 @@
 
     it('has no import, export or require in js/', function () {
       needNode();
-      ENGINE_DIRS.concat(['js/ui']).forEach(function (dir) {
+      ENGINE_DIRS.concat(['../core/js/ui', 'js/ui']).forEach(function (dir) {
         listDir(dir, '.js').forEach(function (name) {
           var code = stripJsComments(readText(dir + '/' + name));
           expect(/^\s*(?:import\s|export\s)|\brequire\(/m.test(code) ? dir + '/' + name : '').toBe('');
@@ -157,7 +157,7 @@
         'worker-client', 'gen.worker', 'step-view', 'explain', 'result-view', 'export', 'cache', 'controls',
         'print'];
       var offenders = [];
-      ENGINE_DIRS.concat(['js/ui', 'css']).forEach(function (dir) {
+      ENGINE_DIRS.concat(['../core/js/ui', 'js/ui', '../core/css', 'css']).forEach(function (dir) {
         listDir(dir, '').forEach(function (name) {
           var base = name.replace(/\.[a-z]+$/, '');
           if (banned.indexOf(base) !== -1) offenders.push(dir + '/' + name);
@@ -172,7 +172,7 @@
       needNode();
       var pattern = new RegExp('\\bSG\\.(?:' + FORBIDDEN.join('|') + ')\\b');
       var offenders = [];
-      ENGINE_DIRS.concat(['js/ui']).forEach(function (dir) {
+      ENGINE_DIRS.concat(['../core/js/ui', 'js/ui']).forEach(function (dir) {
         listDir(dir, '.js').forEach(function (name) {
           var code = stripJsComments(readText(dir + '/' + name));
           if (pattern.test(code)) offenders.push(dir + '/' + name + ': ' + pattern.exec(code)[0]);
@@ -332,19 +332,26 @@
   describe('ui contract: no colour literal outside css/tokens.css and css/tokens-board.css', function () {
     var TOKEN_FILES = ['tokens.css', 'tokens-board.css'];
 
+    /** The shared stylesheets of core/css and the project's own, as paths from the project root. */
+    var sheets = ['../core/css', 'css'].reduce(function (all, dir) {
+      return all.concat(listDir(dir, '.css').map(function (name) { return dir + '/' + name; }));
+    }, []);
+
     it('has the stylesheets to check', function () {
-      var files = listDir('css', '.css');
-      ['base.css', 'layout.css', 'components.css'].forEach(function (name) { expect(files).toContain(name); });
+      var names = sheets.map(function (rel) { return rel.slice(rel.lastIndexOf('/') + 1); });
+      ['base.css', 'layout.css', 'components.css'].forEach(function (name) { expect(names).toContain(name); });
     });
 
-    listDir('css', '.css').forEach(function (name) {
-      if (TOKEN_FILES.indexOf(name) !== -1) return;
-      it('css/' + name + ' uses var(--sg-...) tokens only', function () {
-        expect(cssColorLiterals(readText('css/' + name))).toEqual([]);
+    sheets.forEach(function (rel) {
+      if (TOKEN_FILES.indexOf(rel.slice(rel.lastIndexOf('/') + 1)) !== -1) return;
+      it(rel + ' uses var(--sg-...) tokens only', function () {
+        expect(cssColorLiterals(readText(rel))).toEqual([]);
       });
     });
 
-    var scripts = listDir('js/ui', '.js').map(function (name) { return 'js/ui/' + name; });
+    var scripts = ['../core/js/ui', 'js/ui'].reduce(function (all, dir) {
+      return all.concat(listDir(dir, '.js').map(function (name) { return dir + '/' + name; }));
+    }, []);
 
     scripts.forEach(function (rel) {
       // JavaScript may read the computed value of a token, it never writes a colour of its own. The board's
@@ -497,8 +504,8 @@
   // help.html is the guide that the Help button opens in a new tab: it needs the core (the examples replay the
   // hints), the strings and the board, and none of the page of the player.
   var HELP_ONLY = ['js/ui/help-examples.js', 'js/ui/help.js'];
-  var NOT_IN_GUIDE = ['js/ui/exchange.js', 'js/ui/importer.js', 'js/ui/a11y.js', 'js/ui/progress.js', 'js/ui/app.js',
-    'assets/wordbook/words.vi.js', 'assets/wordbook/words.en.js', 'js/ui/wordbook.js'];
+  var NOT_IN_GUIDE = ['../core/js/ui/exchange.js', 'js/ui/importer.js', 'js/ui/a11y.js', 'js/ui/progress.js', 'js/ui/app.js',
+    '../core/assets/wordbook/words.vi.js', '../core/assets/wordbook/words.en.js', '../core/js/ui/wordbook.js'];
 
   describe('ui contract: help.html', function () {
     var page = readHtml(readText('help.html'));

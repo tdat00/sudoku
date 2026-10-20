@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Address of the sudoku-player web app; the Play button of the main panel opens it with the puzzle in
-       the URL fragment (js/ui/exchange.js, js/ui/export.js). -->
+       the URL fragment (../core/js/ui/exchange.js, js/ui/export.js). -->
   <meta name="sg-player-url" content="https://tdat00.github.io/sudoku-player/">
   <title data-i18n="app.title">Sudoku Generator</title>
   <!-- First paint without a flash (SG.theme): applies the stored theme, motion and text size before the
@@ -26,12 +26,12 @@
     })();
   </script>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/tokens-board.css">
-  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="../core/css/tokens.css">
+  <link rel="stylesheet" href="../core/css/tokens-board.css">
+  <link rel="stylesheet" href="../core/css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/board.css">
+  <link rel="stylesheet" href="../core/css/board.css">
   <link rel="stylesheet" href="css/steps.css">
   <link rel="stylesheet" href="css/help.css">
   <link rel="stylesheet" href="css/print.css" media="print">
@@ -363,6 +363,7 @@
   <script src="../core/js/engine/tech-cage.js"></script>
   <script src="../core/js/engine/tech-ineq.js"></script>
   <script src="../core/js/engine/classic-model.js"></script>
+  <script src="../core/js/engine/model-aids.js"></script>
   <script src="js/engine/difficulty.js"></script>
   <script src="js/engine/full-grid.js"></script>
   <script src="js/engine/symmetry.js"></script>
@@ -382,21 +383,21 @@
   <script src="assets/wordlists/isograms.en.js"></script>
   <script src="assets/wordlists/isograms.vi.js"></script>
   <script src="js/worker/worker-client.js"></script>
-  <script src="js/ui/exchange.js"></script>
+  <script src="../core/js/ui/exchange.js"></script>
   <script src="js/ui/i18n.js"></script>
   <script src="js/ui/locale.en.js"></script>
   <script src="js/ui/locale.vi.js"></script>
   <script src="js/ui/locale.shell.js"></script>
-  <script src="js/ui/symbols.js"></script>
-  <script src="js/ui/board-view.js"></script>
+  <script src="../core/js/ui/symbols.js"></script>
+  <script src="../core/js/ui/board-view.js"></script>
   <script src="js/ui/store.js"></script>
   <script src="js/ui/controls.js"></script>
   <script src="js/ui/step-view.js"></script>
   <script src="js/ui/explain.js"></script>
   <script src="js/ui/player.js"></script>
-  <script src="assets/wordbook/words.vi.js"></script>
-  <script src="assets/wordbook/words.en.js"></script>
-  <script src="js/ui/wordbook.js"></script>
+  <script src="../core/assets/wordbook/words.vi.js"></script>
+  <script src="../core/assets/wordbook/words.en.js"></script>
+  <script src="../core/js/ui/wordbook.js"></script>
   <script src="js/ui/result-view.js"></script>
   <script src="js/ui/cache.js"></script>
   <script src="js/ui/history.js"></script>
