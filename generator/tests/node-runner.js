@@ -7,7 +7,8 @@
  *   node tests/node-runner.js [--all | --manual] [--suite=<name>[,<name>]] [--filter=<text>] [--bail] [--verbose] [--help]
  *
  * Two sets of suites:
- *   tests/suites/  the quick set (default, about 45 s): what a developer or an agent runs after every change;
+ *   tests/suites/  the quick set (default, about 60 s): what a developer or an agent runs after every change,
+ *                  together with ../core/tests/suites, the engine suites shared with the player;
  *   tests/manual/  the heavy suites (about 8 minutes: every variant, every level, performance, regression hashes).
  *                  Run them with --all (CI does) or --manual, or by name with --suite=<name>.
  *
@@ -26,8 +27,9 @@
  *   - Keep the order in sync with index.html and js/worker/gen.worker.js (design.md 12.2) and the
  *     file list in tests.html.
  *
- * Test discovery is automatic: tests/fixtures/*.js load first, then tests/suites/*.test.js (and
- * tests/manual/*.test.js when asked) in alphabetical order. Adding a suite or fixture needs no change here.
+ * Test discovery is automatic: the harness and the fixtures of ../core/tests and tests/fixtures/*.js load first, then
+ * the suites of ../core/tests/suites and tests/suites/*.test.js (and tests/manual/*.test.js when asked), each
+ * directory in alphabetical order; a suite name must be unique. Adding a suite or fixture needs no change here.
  *
  * Suites loaded by vm.runInThisContext do not have `require`. Node helpers for suites that need the
  * file system are exposed as `SG.test.node` = { fs, path, vm, root } (undefined in a browser).
@@ -102,9 +104,10 @@ const path = require('path');
 const vm = require('vm');
 
 const ROOT = path.resolve(__dirname, '..');
-const HARNESS_FILE = 'tests/harness.js';
-const FIXTURES_DIR = 'tests/fixtures';
-const SUITES_DIR = 'tests/suites';
+const HARNESS_FILE = '../core/tests/harness.js';
+// The suites and fixtures shared with the other project (core/tests) come first, then the project's own.
+const FIXTURES_DIRS = ['../core/tests/fixtures', 'tests/fixtures'];
+const SUITES_DIRS = ['../core/tests/suites', 'tests/suites'];
 const MANUAL_DIR = 'tests/manual';
 const SUITE_SUFFIX = '.test.js';
 
@@ -171,6 +174,20 @@ function listFiles(relDir, suffix) {
     .sort();
 }
 
+/** The suites of every directory as { name, dir }; a name must be unique across the shared and the own suites. */
+function listSuites(dirs) {
+  const found = [];
+  for (const dir of dirs) {
+    for (const file of listFiles(dir, SUITE_SUFFIX)) {
+      const name = file.slice(0, -SUITE_SUFFIX.length);
+      const clash = found.find((s) => s.name === name);
+      if (clash) throw new Error('Suite "' + name + '" exists in both ' + clash.dir + ' and ' + dir);
+      found.push({ name: name, dir: dir });
+    }
+  }
+  return found;
+}
+
 function formatMs(ms) {
   return ms >= 1000 ? (ms / 1000).toFixed(2) + ' s' : Math.round(ms) + ' ms';
 }
@@ -228,20 +245,23 @@ async function main() {
     }
   }
 
-  for (const name of listFiles(FIXTURES_DIR, '.js')) {
-    try {
-      runFile(FIXTURES_DIR + '/' + name);
-    } catch (err) {
-      console.error(red('Failed to load fixture ' + name + ':') + '\n' + (err && err.stack ? err.stack : err));
-      return 1;
+  for (const dir of FIXTURES_DIRS) {
+    for (const name of listFiles(dir, '.js')) {
+      try {
+        runFile(dir + '/' + name);
+      } catch (err) {
+        console.error(red('Failed to load fixture ' + name + ':') + '\n' + (err && err.stack ? err.stack : err));
+        return 1;
+      }
     }
   }
 
-  const nameOf = (f) => f.slice(0, -SUITE_SUFFIX.length);
-  const quick = listFiles(SUITES_DIR, SUITE_SUFFIX).map(nameOf);
-  const manual = listFiles(MANUAL_DIR, SUITE_SUFFIX).map(nameOf);
+  const quickList = listSuites(SUITES_DIRS);
+  const manualList = listSuites([MANUAL_DIR]);
+  const quick = quickList.map((s) => s.name);
+  const manual = manualList.map((s) => s.name);
   const available = quick.concat(manual).sort();
-  const dirOf = (name) => (manual.includes(name) ? MANUAL_DIR : SUITES_DIR);
+  const dirOf = (name) => quickList.concat(manualList).find((s) => s.name === name).dir;
   const unknown = opts.suites.filter((s) => !available.includes(s));
   if (unknown.length > 0) {
     console.error('Unknown suite: ' + unknown.join(', ') + '\nAvailable suites: ' + available.join(', '));

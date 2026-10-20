@@ -20,7 +20,8 @@
  *   - Only edit the array when you add a source file; put it in its correct dependency position and keep
  *     the relative order of the other entries.
  *
- * Test discovery is automatic: tests/fixtures/*.js load first, then tests/suites/*.test.js in
+ * Test discovery is automatic: the harness and the fixtures of ../core/tests and tests/fixtures/*.js load first, then
+ * the suites of ../core/tests/suites (shared with the generator) and tests/suites/*.test.js; each directory in
  * alphabetical order. Adding a suite or fixture needs no change here.
  *
  * Suites loaded by vm.runInThisContext do not have `require`. Node helpers for suites that need the
@@ -74,9 +75,10 @@ const path = require('path');
 const vm = require('vm');
 
 const ROOT = path.resolve(__dirname, '..');
-const HARNESS_FILE = 'tests/harness.js';
-const FIXTURES_DIR = 'tests/fixtures';
-const SUITES_DIR = 'tests/suites';
+const HARNESS_FILE = '../core/tests/harness.js';
+// The suites and fixtures shared with the other project (core/tests) come first, then the project's own.
+const FIXTURES_DIRS = ['../core/tests/fixtures', 'tests/fixtures'];
+const SUITES_DIRS = ['../core/tests/suites', 'tests/suites'];
 const SUITE_SUFFIX = '.test.js';
 
 const USE_COLOR = Boolean(process.stdout.isTTY) && !process.env.NO_COLOR;
@@ -136,6 +138,20 @@ function listFiles(relDir, suffix) {
     .sort();
 }
 
+/** The suites of every directory as { name, dir }; a name must be unique across the shared and the own suites. */
+function listSuites(dirs) {
+  const found = [];
+  for (const dir of dirs) {
+    for (const file of listFiles(dir, SUITE_SUFFIX)) {
+      const name = file.slice(0, -SUITE_SUFFIX.length);
+      const clash = found.find((s) => s.name === name);
+      if (clash) throw new Error('Suite "' + name + '" exists in both ' + clash.dir + ' and ' + dir);
+      found.push({ name: name, dir: dir });
+    }
+  }
+  return found;
+}
+
 function formatMs(ms) {
   return ms >= 1000 ? (ms / 1000).toFixed(2) + ' s' : Math.round(ms) + ' ms';
 }
@@ -193,17 +209,19 @@ async function main() {
     }
   }
 
-  for (const name of listFiles(FIXTURES_DIR, '.js')) {
-    try {
-      runFile(FIXTURES_DIR + '/' + name);
-    } catch (err) {
-      console.error(red('Failed to load fixture ' + name + ':') + '\n' + (err && err.stack ? err.stack : err));
-      return 1;
+  for (const dir of FIXTURES_DIRS) {
+    for (const name of listFiles(dir, '.js')) {
+      try {
+        runFile(dir + '/' + name);
+      } catch (err) {
+        console.error(red('Failed to load fixture ' + name + ':') + '\n' + (err && err.stack ? err.stack : err));
+        return 1;
+      }
     }
   }
 
-  const suiteFiles = listFiles(SUITES_DIR, SUITE_SUFFIX);
-  const available = suiteFiles.map((f) => f.slice(0, -SUITE_SUFFIX.length));
+  const suiteList = listSuites(SUITES_DIRS);
+  const available = suiteList.map((s) => s.name);
   const unknown = opts.suites.filter((s) => !available.includes(s));
   if (unknown.length > 0) {
     console.error('Unknown suite: ' + unknown.join(', ') + '\nAvailable suites: ' + available.join(', '));
@@ -214,7 +232,7 @@ async function main() {
   for (const name of selected) {
     SG.test.setSuite(name);
     try {
-      runFile(SUITES_DIR + '/' + name + SUITE_SUFFIX);
+      runFile(suiteList.find((s) => s.name === name).dir + '/' + name + SUITE_SUFFIX);
     } catch (err) {
       SG.test.addLoadError(name, err);
     }

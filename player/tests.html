@@ -71,7 +71,7 @@
     <ul id="missing-list"></ul>
   </details>
 
-  <script src="tests/harness.js"></script>
+  <script src="../core/tests/harness.js"></script>
   <script>
     (function () {
       'use strict';
@@ -79,7 +79,8 @@
       /*
        * Browser test page. It works from file:// because it only injects classic <script> tags.
        *
-       * SOURCE_FILES / FIXTURE_FILES / SUITE_FILES list everything in load order, one file per line.
+       * SOURCE_FILES / FIXTURE_FILES / CORE_SUITE_FILES / SUITE_FILES list everything in load order, one file per
+       * line (CORE_SUITE_FILES: the suites of ../core/tests/suites that the generator shares).
        * A file that does not exist is skipped (it is listed at the bottom of the page). Keep SOURCE_FILES
        * in sync with tests/node-runner.js and the <script> tags of index.html (ui-contract.test.js checks).
        * The suites that read tests/fixtures/puzzles/*.json need http:// (they skip themselves on file://).
@@ -126,37 +127,41 @@
         'js/ui/app.js'
       ];
       var FIXTURE_FILES = [
-        'tests/fixtures/classic.js',
+        '../core/tests/fixtures/classic.js',
+        '../core/tests/fixtures/techniques-helper.js',
+        '../core/tests/fixtures/techniques.js',
+        '../core/tests/fixtures/testkit.js',
         'tests/fixtures/rated.js',
-        'tests/fixtures/techniques-helper.js',
-        'tests/fixtures/techniques.js',
-        'tests/fixtures/testkit.js'
+        'tests/fixtures/puzzle-documents.js'
       ];
-      var SUITE_FILES = [
-        'a11y',
-        'app',
+      var CORE_SUITE_FILES = [
         'bits',
-        'board-view',
         'constraints',
-        'exchange',
-        'fixtures',
-        'help',
-        'i18n',
-        'importer',
+        'harness',
         'logical-solver',
         'model',
-        'model-aids',
-        'play',
-        'progress',
         'solver',
-        'store',
-        'symbols',
         'tech-basic',
         'tech-chain',
         'tech-fish',
         'tech-subset',
         'tech-wing',
-        'techniques',
+        'techniques'
+      ];
+      var SUITE_FILES = [
+        'a11y',
+        'app',
+        'board-view',
+        'exchange',
+        'fixtures',
+        'help',
+        'i18n',
+        'importer',
+        'model-aids',
+        'play',
+        'progress',
+        'store',
+        'symbols',
         'text-boards',
         'theme',
         'ui-contract',
@@ -202,6 +207,9 @@
         var broken = [];
         var queue = SOURCE_FILES.map(function (f) { return { file: f, suite: null }; })
           .concat(FIXTURE_FILES.map(function (f) { return { file: f, suite: null }; }))
+          .concat(CORE_SUITE_FILES.map(function (name) {
+            return { file: '../core/tests/suites/' + name + '.test.js', suite: name };
+          }))
           .concat(SUITE_FILES.map(function (name) {
             return { file: 'tests/suites/' + name + '.test.js', suite: name };
           }));

@@ -576,6 +576,17 @@
       expect(suites.filter(function (name) { return listed.indexOf(name) === -1; })).toEqual([]);
     });
 
+    it('every suite in ../core/tests/suites is listed in the CORE_SUITE_FILES of tests.html', function () {
+      var listed = quotedList(readText('tests.html'), 'var CORE_SUITE_FILES');
+      expect(listed).not.toBeNull();
+      var suites = listDir('../core/tests/suites', '.test.js').map(function (name) {
+        return name.slice(0, -'.test.js'.length);
+      });
+      expect(suites.length).toBeGreaterThan(5);
+      expect(suites.filter(function (name) { return listed.indexOf(name) === -1; })).toEqual([]);
+      expect(listed.filter(function (name) { return suites.indexOf(name) === -1; })).toEqual([]);
+    });
+
     it('the list reader of this file notices a missing entry', function () {
       var listed = quotedList("var SUITE_FILES = [\n  'a', 'b', // c\n  'd'\n];", 'var SUITE_FILES');
       expect(listed).toEqual(['a', 'b', 'd']);

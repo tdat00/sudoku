@@ -146,11 +146,9 @@
       if (tech.variantScope !== null) {
         it(tech.id + ' (scoped to ' + tech.variantScope.join(', ') + ') never eliminates the true solution',
           function () {
-            var variants = tech.variantScope.filter(function (id) {
-              return SG.testkit.VARIANT_IDS.indexOf(id) !== -1 && SG.testkit.document(id) !== null;
-            });
+            var variants = tech.variantScope.filter(function (id) { return SG.testkit.hasVariant(id); });
             if (variants.length === 0) {
-              SG.test.skip('no puzzle fixture of its scope can be read here: ' + tech.variantScope.join(', '));
+              SG.test.skip('no board of its scope can be built here: ' + tech.variantScope.join(', '));
             }
             variants.forEach(function (id) {
               var stats = H.assertSound(SG.test, tech.id, { model: H.model(id), count: count });
