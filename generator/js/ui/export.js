@@ -63,8 +63,9 @@
   const PRINT_ROOT_ID = 'print-root';
   const IMAGE_WAIT_MS = 4000;
   const SVG_NS = 'http://www.w3.org/2000/svg';
-  /** Where the sudoku-player web app lives, unless the page says otherwise (`<meta name="sg-player-url">`). */
-  const PLAYER_URL_DEFAULT = 'https://tdat00.github.io/sudoku-player/';
+  /** Where the player web app lives, unless the page says otherwise (`<meta name="sg-player-url">`): next to this page.
+   * It names the page itself, not its folder: opened from a disk (file://) a folder shows a file listing. */
+  const PLAYER_URL_DEFAULT = '../player/index.html';
   const PLAYER_META_NAME = 'sg-player-url';
   /** A player link longer than this many characters may be cut by chat apps and servers. */
   const LONG_LINK_CHARS = 100000;

@@ -2,17 +2,17 @@
 'use strict';
 
 /*
- * Regenerates the puzzle documents of tests/fixtures/puzzles/ from a checkout of sudoku-generator.
+ * Regenerates the puzzle documents of tests/fixtures/puzzles/ with the generator of this repository.
  *
- *   node tests/tools/make-fixtures.js <path-to-sudoku-generator> [--only=classic9,killer] [--out=<dir>]
+ *   node tests/tools/make-fixtures.js [path-to-generator] [--only=classic9,killer] [--out=<dir>]
  *
- * The generator repository is only READ: its sources are loaded with vm.runInThisContext, the way its own
+ * The generator (default: ../generator) is only READ: its sources are loaded with vm.runInThisContext, the way its own
  * tests/node-runner.js does. For each puzzle the script runs `SG.pipeline.run` at an easy level with a fixed
  * seed and writes the document that the generator's "Play online" feature sends:
  *
  *   SG.exportUi.toJson(result, ctx)  +  model: SG.exchange.plain(SG.pipeline.toWire(result).model)
  *
- * `SG.exchange` is the player's own copy of ../core/js/ui/exchange.js (the file both repositories share). The fixtures
+ * `SG.exchange` is ../core/js/ui/exchange.js, which the generator's source list loads. The fixtures
  * are committed, so this script is only needed when the document format changes (see docs/fixtures.md).
  */
 const fs = require('fs');
@@ -20,6 +20,8 @@ const path = require('path');
 const vm = require('vm');
 
 const PLAYER_ROOT = path.resolve(__dirname, '..', '..');
+/** The generator sits next to the player in the repository. */
+const DEFAULT_GENERATOR = path.resolve(PLAYER_ROOT, '..', 'generator');
 const GENERATED_AT = '2026-01-15T10:00:00.000Z';
 
 /** One entry per file: the generator config and the language of the labels the document carries. */
@@ -55,7 +57,7 @@ function parseArgs(argv) {
     else if (!arg.startsWith('--') && opts.generator === null) opts.generator = path.resolve(arg);
     else throw new Error('Unknown argument: ' + arg);
   });
-  if (opts.generator === null) throw new Error('Usage: node tests/tools/make-fixtures.js <generator-repo>');
+  if (opts.generator === null) opts.generator = DEFAULT_GENERATOR;
   return opts;
 }
 
@@ -73,13 +75,12 @@ function generatorSources(root) {
 
 function main() {
   const opts = parseArgs(process.argv.slice(2));
-  runFile(path.join(opts.generator, 'tests', 'harness.js'));
+  runFile(path.join(opts.generator, '..', 'core', 'tests', 'harness.js'));
   generatorSources(opts.generator).forEach(function (rel) {
     const abs = path.join(opts.generator, rel);
     if (fs.existsSync(abs)) runFile(abs);
   });
   const SG = globalThis.SG;
-  runFile(path.join(PLAYER_ROOT, 'js', 'ui', 'exchange.js'));
   if (!SG.exportUi || !SG.pipeline || !SG.exchange) throw new Error('the generator sources did not load');
 
   fs.mkdirSync(opts.out, { recursive: true });

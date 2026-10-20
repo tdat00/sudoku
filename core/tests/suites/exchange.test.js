@@ -106,7 +106,7 @@
       var url = X.playerUrl('https://example.org/sudoku-player/', token);
       expect(url).toBe('https://example.org/sudoku-player/#puzzle=' + token);
       expect(X.playerUrl('https://example.org/p/#old=1', token)).toBe('https://example.org/p/#puzzle=' + token);
-      expect(X.playerUrl('../sudoku-player/index.html', token)).toBe('../sudoku-player/index.html#puzzle=' + token);
+      expect(X.playerUrl('../player/index.html', token)).toBe('../player/index.html#puzzle=' + token);
       expect(X.tokenFromHash(url.slice(url.indexOf('#')))).toBe(token);
     });
 

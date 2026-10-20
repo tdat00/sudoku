@@ -140,7 +140,7 @@
     it('the generator link comes from the meta tag, and index.html carries it', function () {
       ready();
       var html = read('index.html');
-      var meta = '<meta name="sg-generator-url" content="https://tdat00.github.io/sudoku-generator/">';
+      var meta = '<meta name="sg-generator-url" content="../generator/index.html">';
       expect(html).toContain(meta);
     });
   });

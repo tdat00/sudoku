@@ -219,7 +219,8 @@ function serve(port) {
     '.md': 'text/plain; charset=utf-8', '.png': 'image/png' };
   const server = http.createServer(function (req, res) {
     const url = decodeURIComponent(req.url.split('?')[0]);
-    const file = path.normalize(path.join(SITE, url === '/' ? SITE_PATH + '/index.html' : url));
+    const asked = url === '/' ? SITE_PATH + '/' : url;
+    const file = path.normalize(path.join(SITE, asked.endsWith('/') ? asked + 'index.html' : asked));
     if (!file.startsWith(SITE) || file.indexOf('.scratch') !== -1 || file.indexOf('.git') !== -1) {
       res.writeHead(403);
       res.end();

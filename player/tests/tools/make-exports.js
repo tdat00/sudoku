@@ -2,13 +2,13 @@
 'use strict';
 
 /*
- * Regenerates the text fixtures of tests/fixtures/exports/ from a checkout of sudoku-generator.
+ * Regenerates the text fixtures of tests/fixtures/exports/ with the generator of this repository.
  *
- *   node tests/tools/make-exports.js <path-to-sudoku-generator> [--out=<dir>]
+ *   node tests/tools/make-exports.js [path-to-generator] [--out=<dir>]
  *
  * Each file is the real output of the generator's "Export" box (`SG.exportUi.buildExportText`), in English
  * (`<name>.en.txt`) and in Vietnamese (`<name>.vi.txt`): this is what the player's Import takes. The generator
- * repository is only READ (its sources are loaded with vm.runInThisContext, as its tests/node-runner.js does).
+ * (default: ../generator) is only READ (its sources are loaded with vm.runInThisContext, as its tests/node-runner.js does).
  * The fixtures are committed, so this is only needed when the generator's text format changes.
  */
 const fs = require('fs');
@@ -16,6 +16,8 @@ const path = require('path');
 const vm = require('vm');
 
 const PLAYER_ROOT = path.resolve(__dirname, '..', '..');
+/** The generator sits next to the player in the repository. */
+const DEFAULT_GENERATOR = path.resolve(PLAYER_ROOT, '..', 'generator');
 
 /** One entry per file: the puzzles written, in this order, as [variantId, difficulty, seed]. */
 const SETS = {
@@ -35,7 +37,7 @@ function parseArgs(argv) {
     else if (!arg.startsWith('--') && opts.generator === null) opts.generator = path.resolve(arg);
     else throw new Error('Unknown argument: ' + arg);
   });
-  if (opts.generator === null) throw new Error('Usage: node tests/tools/make-exports.js <generator-repo>');
+  if (opts.generator === null) opts.generator = DEFAULT_GENERATOR;
   return opts;
 }
 

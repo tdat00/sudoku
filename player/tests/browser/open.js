@@ -147,7 +147,8 @@ const variantOf = function (page) { return page.eval('SG.app.getPuzzle() && SG.a
     await page.click('#btn-share');
     await page.waitFor('!!document.getElementById("share-link") && document.getElementById("share-link").value !== ""', 4000);
     const shareUrl = await page.eval('document.getElementById("share-link").value');
-    check('the Share dialog shows a player link with the puzzle in the fragment', /^https:\/\/tdat00\.github\.io\/sudoku-player\/#puzzle=[jz]\.[A-Za-z0-9_-]+$/.test(shareUrl), shareUrl.slice(0, 80));
+    const playerBase = base;
+    check('the Share dialog shows a player link (absolute, though the page names it relatively) with the puzzle in the fragment', shareUrl.indexOf(playerBase + '#puzzle=') === 0 && /#puzzle=[jz]\.[A-Za-z0-9_-]+$/.test(shareUrl), shareUrl.slice(0, 80));
     check('and a Copy button', await page.eval('!document.getElementById("share-copy").disabled'));
     await page.shot('share-dialog');
     await page.key('Escape');
@@ -155,7 +156,7 @@ const variantOf = function (page) { return page.eval('SG.app.getPuzzle() && SG.a
     await page.eval('localStorage.clear()');
     await page.goto('about:blank', 50);
     await page.goto(base, 600);
-    await page.eval('void SG.app.open(' + JSON.stringify(shareUrl.replace('https://tdat00.github.io/sudoku-player/', '')) + ', {source: "link"})');
+    await page.eval('void SG.app.open(' + JSON.stringify(shareUrl.replace(playerBase, '')) + ', {source: "link"})');
     try { await page.waitFor('SG.app.getPuzzle() !== null', 4000); } catch (err) { /* below */ }
     check('the shared link opens the same puzzle in a fresh player', (await page.eval('SG.app.getPuzzle() && SG.app.getPuzzle().id')) === shareId);
     await openText(line81);
@@ -195,9 +196,9 @@ const variantOf = function (page) { return page.eval('SG.app.getPuzzle() && SG.a
     await page.click('#btn-open');
     await page.waitFor('!!document.getElementById("open-text")', 2000);
     check('the Import dialog focuses its text box', await page.eval('document.activeElement && document.activeElement.id === "open-text"'));
-    check('"Sudoku Generator" in the Import dialog links to the generator (new tab), in the lead and in the hint', await page.eval('(function(){var l=Array.from(document.querySelectorAll("dialog.modal[open] a.generator-link"));return l.length===2&&l.every(function(a){return a.getAttribute("href")==="https://tdat00.github.io/sudoku-generator/"&&a.target==="_blank"&&/noopener/.test(a.rel)&&a.textContent==="Sudoku Generator";})&&/exported from Sudoku Generator\\.$/.test(document.querySelector("dialog.modal[open] .modal__lead").textContent);})()'));
+    check('"Sudoku Generator" in the Import dialog links to the generator (new tab), in the lead and in the hint', await page.eval('(function(){var l=Array.from(document.querySelectorAll("dialog.modal[open] a.generator-link"));return l.length===2&&l.every(function(a){return a.getAttribute("href")==="../generator/index.html"&&a.target==="_blank"&&/noopener/.test(a.rel)&&a.textContent==="Sudoku Generator";})&&/exported from Sudoku Generator\\.$/.test(document.querySelector("dialog.modal[open] .modal__lead").textContent);})()'));
     await page.eval('SG.app.getStore().set({lang:"vi"},{source:"test"})');
-    check('and the link follows the language', await page.eval('(function(){var l=Array.from(document.querySelectorAll("dialog.modal[open] a.generator-link"));return l.length===2&&l.every(function(a){return a.textContent==="Trình sinh đề Sudoku"&&a.getAttribute("href")==="https://tdat00.github.io/sudoku-generator/";});})()'));
+    check('and the link follows the language', await page.eval('(function(){var l=Array.from(document.querySelectorAll("dialog.modal[open] a.generator-link"));return l.length===2&&l.every(function(a){return a.textContent==="Trình sinh đề Sudoku"&&a.getAttribute("href")==="../generator/index.html";});})()'));
     await page.eval('SG.app.getStore().set({lang:"en"},{source:"test"})');
     await page.eval('document.getElementById("open-text").focus()');
     await page.eval('(function(){var t=document.getElementById("open-text");t.value=' + JSON.stringify(line81) + ';})()');

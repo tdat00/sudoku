@@ -4,9 +4,9 @@
 /*
  * Finds a concrete example for every technique of the Help page and writes js/ui/help-examples.js.
  *
- *   node tests/tools/make-technique-examples.js <path-to-sudoku-generator> [--puzzles=<n>] [--out=<file>]
+ *   node tests/tools/make-technique-examples.js [path-to-generator] [--puzzles=<n>] [--out=<file>]
  *
- * Stage 1 (a child process that loads the generator, which is only READ) makes a list of puzzles of several
+ * Stage 1 (a child process that loads the generator, default ../generator, which is only READ) makes a list of puzzles of several
  * variants and levels, as the text of the generator's Export box. Stage 2 plays each of them the way a person
  * who keeps asking for hints would: fill in all the notes, ask for a hint, apply it, and so on until the
  * game is stuck or solved. The first hint of every technique is a candidate for its example, and the easiest
@@ -23,6 +23,8 @@ const vm = require('vm');
 const { execFileSync } = require('child_process');
 
 const PLAYER_ROOT = path.resolve(__dirname, '..', '..');
+/** The generator sits next to the player in the repository. */
+const DEFAULT_GENERATOR = path.resolve(PLAYER_ROOT, '..', 'generator');
 const OUT_DEFAULT = path.join(PLAYER_ROOT, 'js', 'ui', 'help-examples.js');
 
 /** [variantId, preferred levels, number of seeds, optional 'highest' supported level only]. */
@@ -49,7 +51,7 @@ function parseArgs(argv) {
     else if (!arg.startsWith('--') && opts.generator === null) opts.generator = path.resolve(arg);
     else throw new Error('Unknown argument: ' + arg);
   });
-  if (opts.generator === null) throw new Error('Usage: node tests/tools/make-technique-examples.js <generator-repo>');
+  if (opts.generator === null) opts.generator = DEFAULT_GENERATOR;
   return opts;
 }
 

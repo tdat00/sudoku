@@ -45,8 +45,10 @@
   const RECENT_SHOWN = 100;
   const REPORT_SHOWN = 8;
   const LONG_LINK_CHARS = 100000;
-  const DEFAULT_PLAYER_URL = 'https://tdat00.github.io/sudoku-player/';
-  const DEFAULT_GENERATOR_URL = 'https://tdat00.github.io/sudoku-generator/';
+  // Relative to the page: the player and the generator are folders of one site. They name the page itself, not its
+  // folder, because opened from a disk (file://) a folder shows a file listing instead of the page.
+  const DEFAULT_PLAYER_URL = './index.html';
+  const DEFAULT_GENERATOR_URL = '../generator/index.html';
   const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), ' +
     'textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -127,7 +129,7 @@
     const meta = typeof document !== 'undefined' ?
       document.querySelector('meta[name="sg-generator-url"]') : null;
     const value = meta ? meta.getAttribute('content') : null;
-    return typeof value === 'string' && /^https?:\/\/[^\s]+$/i.test(value) ? value : DEFAULT_GENERATOR_URL;
+    return typeof value === 'string' && SG.exchange.isAllowedBase(value) ? value.trim() : DEFAULT_GENERATOR_URL;
   }
 
   const listeners = {};
@@ -839,8 +841,19 @@
     const meta = typeof document !== 'undefined' ?
       document.querySelector('meta[name="sg-player-url"]') : null;
     const value = meta ? meta.getAttribute('content') : null;
-    return typeof value === 'string' && value.trim() !== '' && SG.exchange.isAllowedBase(value) ?
+    const base = typeof value === 'string' && value.trim() !== '' && SG.exchange.isAllowedBase(value) ?
       value.trim() : DEFAULT_PLAYER_URL;
+    return absoluteUrl(base);
+  }
+
+  /** A link to share must work away from this page, so a relative base is resolved against the page. */
+  function absoluteUrl(base) {
+    if (typeof document === 'undefined' || typeof URL !== 'function') return base;
+    try {
+      return new URL(base, document.baseURI).href;
+    } catch (err) {
+      return base;
+    }
   }
 
   function buildShareLink() {

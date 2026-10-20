@@ -570,7 +570,9 @@
       sheets.forEach(function (href) { expect(exists(href) ? '' : href + ' is missing').toBe(''); });
       var meta = page.elements.filter(function (el) { return el.tag === 'meta' && el.attrs.name === 'sg-generator-url'; });
       expect(meta).toHaveLength(1);
-      expect(meta[0].attrs.content).toBe('https://tdat00.github.io/sudoku-generator/');
+      expect(meta[0].attrs.content).toBe('../generator/index.html');
+      // A page, not a folder: opened from a disk a folder shows a file listing instead of the page.
+      expect(needNode().fs.statSync(needNode().path.join(needNode().root, meta[0].attrs.content)).isFile()).toBe(true);
     });
 
     it('every suite in tests/suites is listed in the SUITE_FILES of tests.html', function () {

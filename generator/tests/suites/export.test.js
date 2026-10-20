@@ -428,7 +428,7 @@
 
   describe('export: Play online (the link to sudoku-player)', function () {
     var FIXED = { generatedAt: '2026-10-15T11:00:00.000Z' };
-    var BASE = 'https://tdat00.github.io/sudoku-player/';
+    var BASE = '../player/index.html';
 
     function codeOf(promise) {
       return promise.then(function () { return null; }, function (err) { return err && err.code; });
@@ -452,6 +452,8 @@
       expect(meta).not.toBe(null);
       expect(meta[1]).toBe(E.PLAYER_URL_DEFAULT);
       expect(SG.exchange.isAllowedBase(meta[1])).toBe(true);
+      // A page, not a folder: opened from a disk a folder shows a file listing instead of the player.
+      expect(NODE.fs.statSync(NODE.path.join(NODE.root, meta[1])).isFile()).toBe(true);
     });
 
     it('builds the link: the base, then #puzzle= and a token that decodes to the document of toJson', async function () {
