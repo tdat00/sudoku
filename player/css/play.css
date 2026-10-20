@@ -293,6 +293,35 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--sg-space-2);
+  padding-inline-end: 1.75rem;
+}
+
+/* A small close button in the top right corner of the card. */
+.play__hint-close {
+  position: absolute;
+  top: var(--sg-space-1);
+  inset-inline-end: var(--sg-space-1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--sg-radius-2);
+  background: transparent;
+  color: var(--sg-color-text-muted);
+  cursor: pointer;
+}
+
+.play__hint-close .icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.play__hint-close:hover {
+  background: var(--sg-color-hover);
+  color: var(--sg-color-text);
 }
 
 .play__hint-title {

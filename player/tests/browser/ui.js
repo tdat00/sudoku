@@ -76,6 +76,7 @@ const describeActive = '(function(){var a=document.activeElement;if(!a)return "n
     const opened = await page.eval('(function(){var t=document.querySelector("#play-root .play__more-toggle"),b=document.getElementById("play-more");var tops=Array.from(b.querySelectorAll(".btn")).map(function(e){return Math.round(e.getBoundingClientRect().top);});return {expanded:t.getAttribute("aria-expanded"),visible:b.getBoundingClientRect().height>0,oneEach:new Set(tops).size===tops.length,inFrame:!!b.closest(".play__panel"),texts:Array.from(b.querySelectorAll(".btn")).map(function(e){return e.textContent.trim();})};})()');
     check('expanding the play frame shows Fill in all notes and Reveal a cell, one per line, and no Reveal the solution or Reset', opened.expanded === 'true' && opened.visible && opened.oneEach && opened.inFrame && opened.texts.join('|') === 'Fill in all notes|Reveal a cell', JSON.stringify(opened));
     await page.shot('ui-play-more');
+    check('Fill in all notes and Reveal a cell each have an icon', await page.eval('Array.from(document.querySelectorAll("#play-more .btn")).every(function(b){return !!b.querySelector("svg.icon path");})'));
     const revealedBefore = await page.eval('SG.play.getGame().progress().filled');
     await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].click()');
     const asked = await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].textContent.trim()');
@@ -83,6 +84,7 @@ const describeActive = '(function(){var a=document.activeElement;if(!a)return "n
     await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].click()');
     check('the second press fills a cell', (await page.eval('SG.play.getGame().progress().filled')) === revealedBefore + 1);
     check('and the button is back to its name', await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].textContent.trim()') === 'Reveal a cell');
+    check('and keeps its icon through the changes of the label', await page.eval('!!document.querySelectorAll("#play-more .btn")[1].querySelector("svg.icon path")'));
     await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].click()');
     await page.eval('SG.play.select(' + cell + ')');
     check('moving to another cell cancels the question', await page.eval('Array.from(document.querySelectorAll("#play-more .btn"))[1].textContent.trim()') === 'Reveal a cell');

@@ -1122,7 +1122,11 @@
     notes: 'M4 20l1-4.5L16.5 4a2.1 2.1 0 0 1 3 3L8 18.5zM14.5 6l3 3',
     reset: 'M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5',
     hint: 'M9 18h6M10 21.5h4M12 2.5a6.5 6.5 0 0 0-3.7 11.8c.6.5 1 1.2 1 1.9v.8h5.4v-.8c0-.7.4-1.4 1-1.9' +
-      'A6.5 6.5 0 0 0 12 2.5z'
+      'A6.5 6.5 0 0 0 12 2.5z',
+    // A grid of candidates (the notes of every cell).
+    fillNotes: 'M6 6h.01M12 6h.01M18 6h.01M6 12h.01M12 12h.01M18 12h.01M6 18h.01M12 18h.01M18 18h.01',
+    // An eye: show what is hidden.
+    reveal: 'M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12zM12 9.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6z'
   };
 
   let controller = null;
@@ -1309,7 +1313,6 @@
     function buildHintCard() {
       const card = {
         title: h('h3', { class: 'play__hint-title' }),
-        step: h('span', { class: 'badge badge--accent play__hint-step' }),
         desc: h('p', { class: 'play__hint-desc' }),
         region: h('p', { class: 'play__hint-line' }),
         cells: h('p', { class: 'play__hint-line' }),
@@ -1318,23 +1321,22 @@
         note: h('p', { class: 'play__hint-note' }),
         more: h('button', { type: 'button', class: 'btn btn--secondary btn--sm' }),
         apply: h('button', { type: 'button', class: 'btn btn--primary btn--sm' }),
-        next: h('button', { type: 'button', class: 'btn btn--secondary btn--sm' }),
         reveal: h('button', { type: 'button', class: 'btn btn--secondary btn--sm' }),
-        close: h('button', { type: 'button', class: 'btn btn--ghost btn--sm' })
+        close: h('button', { type: 'button', class: 'play__hint-close' }, [icon('x')])
       };
       bindText(card.more, 'play.hint.more');
-      bindText(card.next, 'play.hint.next');
       bindText(card.reveal, 'play.hint.reveal');
-      bindText(card.close, 'play.hint.close');
+      bindText(card.close, 'play.hint.close', 'aria-label');
+      bindText(card.close, 'play.hint.close', 'title');
       card.more.addEventListener('click', showHint);
       card.apply.addEventListener('click', applyHint);
-      card.next.addEventListener('click', nextHint);
       card.reveal.addEventListener('click', revealCell);
       card.close.addEventListener('click', closeHint);
       card.root = h('div', { class: 'play__hint', hidden: true, 'aria-live': 'polite' }, [
-        h('div', { class: 'play__hint-head' }, [card.title, card.step]),
+        card.close,
+        h('div', { class: 'play__hint-head' }, [card.title]),
         card.desc, card.region, card.cells, card.action, card.explain, card.note,
-        h('div', { class: 'play__hint-buttons' }, [card.more, card.apply, card.next, card.reveal, card.close])
+        h('div', { class: 'play__hint-buttons' }, [card.more, card.apply, card.reveal])
       ]);
       return card;
     }
@@ -1496,15 +1498,17 @@
 
     /** The actions on the puzzle, in the play frame once expanded: fill in all notes, reveal a cell, reveal the solution. (Starting over is the Reset button of the status box.) */
     function makeActions() {
-      const button = function (key, onClick) {
-        const node = h('button', { type: 'button', class: 'btn btn--secondary btn--sm', 'data-i18n': key });
-        node.textContent = tr(key);
+      const button = function (key, iconName, onClick) {
+        const label = h('span', { 'data-i18n': key });
+        label.textContent = tr(key);
+        const node = h('button', { type: 'button', class: 'btn btn--secondary btn--sm' }, [icon(iconName), label]);
+        node.label = label;
         node.addEventListener('click', onClick);
         return node;
       };
       els.actions = {
-        fill: button('play.options.fillNotes', fillNotes),
-        cell: button('play.options.revealCell', askRevealCell)
+        fill: button('play.options.fillNotes', 'fillNotes', fillNotes),
+        cell: button('play.options.revealCell', 'reveal', askRevealCell)
       };
       refreshActions();
       return h('div', { class: 'play__actions play__option-buttons', 'data-setting': 'puzzle' },
@@ -1528,8 +1532,8 @@
       const editable = canEdit();
       [set.fill, set.cell].forEach(function (node) { node.disabled = !editable; });
       const key = revealTimer === null ? 'play.options.revealCell' : 'play.options.revealCell.confirm';
-      set.cell.setAttribute('data-i18n', key);
-      set.cell.textContent = tr(key);
+      set.cell.label.setAttribute('data-i18n', key);
+      set.cell.label.textContent = tr(key);
       set.cell.classList.toggle('is-armed', revealTimer !== null);
     }
 
@@ -2172,8 +2176,6 @@
       const ok = d.ok === true;
       const level = ok ? hint.level : 3;
       card.title.textContent = ok ? d.title : tr('play.tool.hint');
-      show(card.step, ok);
-      if (ok) card.step.textContent = tr('play.hint.step', { step: hint.step + 1, steps: hint.steps });
       card.desc.textContent = ok ? d.description : d.text;
       show(card.desc, card.desc.textContent !== '');
       card.region.textContent = ok ? d.region : '';
@@ -2196,7 +2198,6 @@
         card.apply.textContent = tr(hint.kind === 'placement' ? 'play.hint.apply.place'
           : 'play.hint.apply.eliminate');
       }
-      show(card.next, ok && hint.level >= 3 && hint.step + 1 < hint.steps);
       show(card.reveal, !ok && hint.reason === 'stuck');
     }
 
@@ -2209,12 +2210,6 @@
     function showHint() {
       if (!canEdit()) return;
       hint = game.hint();
-      afterHintChange();
-    }
-
-    function nextHint() {
-      if (!canEdit()) return;
-      hint = game.nextHintStep();
       afterHintChange();
     }
 
@@ -2772,7 +2767,6 @@
       'play.word.pos.d': 'adverb',
       'play.word.pos.o': 'word',
       'play.success.toast': 'Puzzle solved in {time}!',
-      'play.hint.step': 'Step {step} of {steps}',
       'play.hint.region': 'Look in {kind} {label}.',
       'play.hint.region.cage': 'Look at the cage with sum {sum}.',
       'play.hint.noRegion': 'Look for this pattern in the whole grid.',
@@ -2782,14 +2776,12 @@
       'play.hint.more': 'Show more',
       'play.hint.apply.place': 'Fill it in',
       'play.hint.apply.eliminate': 'Remove from my notes',
-      'play.hint.next': 'Next step',
       'play.hint.close': 'Close hint',
       'play.hint.reveal': 'Reveal one cell',
       'play.hint.ignored_one': '{count} of your entries is wrong and was ignored for this hint.',
       'play.hint.ignored_other': '{count} of your entries are wrong and were ignored for this hint.',
-      'play.hint.stuck': 'No logical step found from here. Either the puzzle needs a harder technique than ' +
-        'the solver knows, or a wrong entry is in the way. Use Check to look for mistakes, or reveal one ' +
-        'cell.',
+      'play.hint.stuck': 'No logical step found from here: the puzzle needs a harder technique than ' +
+        'the solver knows. You can reveal one cell to move on.',
       'play.hint.solved': 'Nothing to hint: every cell is already correct.',
       'play.hint.unavailable': 'A hint is not available right now.'
     },
@@ -2866,7 +2858,6 @@
       'play.word.pos.d': 'trạng từ',
       'play.word.pos.o': 'từ',
       'play.success.toast': 'Đã giải xong đề trong {time}!',
-      'play.hint.step': 'Bước {step}/{steps}',
       'play.hint.region': 'Hãy nhìn vào {kind} {label}.',
       'play.hint.region.cage': 'Hãy nhìn vào lồng có tổng {sum}.',
       'play.hint.noRegion': 'Hãy tìm mẫu này trên toàn bộ lưới.',
@@ -2876,13 +2867,12 @@
       'play.hint.more': 'Xem thêm',
       'play.hint.apply.place': 'Điền giúp tôi',
       'play.hint.apply.eliminate': 'Xóa khỏi ghi chú của tôi',
-      'play.hint.next': 'Bước tiếp theo',
       'play.hint.close': 'Đóng gợi ý',
       'play.hint.reveal': 'Hiện một ô',
       'play.hint.ignored_one': '{count} ô bạn điền bị sai nên đã được bỏ qua khi tìm gợi ý.',
       'play.hint.ignored_other': '{count} ô bạn điền bị sai nên đã được bỏ qua khi tìm gợi ý.',
-      'play.hint.stuck': 'Không tìm được bước suy luận nào từ vị trí này. Hoặc đề cần kỹ thuật khó hơn mức ' +
-        'bộ giải biết, hoặc có ô điền sai đang cản đường. Hãy dùng Kiểm tra để tìm lỗi, hoặc hiện một ô.',
+      'play.hint.stuck': 'Không tìm được bước suy luận nào từ vị trí này: đề cần kỹ thuật khó hơn mức ' +
+        'bộ giải biết. Bạn có thể hiện một ô để đi tiếp.',
       'play.hint.solved': 'Không còn gì để gợi ý: mọi ô đều đã đúng.',
       'play.hint.unavailable': 'Hiện chưa thể đưa ra gợi ý.'
     }

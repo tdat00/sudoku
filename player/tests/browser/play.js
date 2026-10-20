@@ -118,6 +118,12 @@ async function clickCell(page, i) {
     const h1 = await page.eval('(function(){var c=document.querySelector(".play__hint");return {vis:!c.hidden,title:c.querySelector(".play__hint-title").textContent,desc:c.querySelector(".play__hint-desc").textContent.length,action:!c.querySelector(".play__hint-action").hidden};})()');
     check('hint level 1 names the technique', h1.vis && h1.title.length > 3 && h1.desc > 10 && !h1.action, JSON.stringify(h1));
     await page.shot('play-hint-1');
+    const card = await page.eval('(function(){var c=document.querySelector(".play__hint"),x=c.querySelector(".play__hint-close"),r=c.getBoundingClientRect(),xr=x&&x.getBoundingClientRect();return {close:!!x,inButtons:!!c.querySelector(".play__hint-buttons .play__hint-close"),icon:!!(x&&x.querySelector("svg")),label:x&&x.getAttribute("aria-label"),topRight:!!xr&&xr.top-r.top<16&&r.right-xr.right<16,small:!!xr&&xr.width<=32,texts:Array.from(c.querySelectorAll("button")).map(function(b){return b.textContent.trim();}).filter(Boolean)};})()');
+    check('the hint card has a small close button in its top right corner and no Next step', card.close && !card.inButtons && card.icon && card.label === 'Close hint' && card.topRight && card.small && card.texts.indexOf('Next step') === -1, JSON.stringify(card));
+    await page.eval('document.querySelector(".play__hint-close").click()');
+    check('the close button hides the hint', await page.eval('document.querySelector(".play__hint").hidden'));
+    await page.click('[data-tool=hint]');
+    check('asking again gives the same step (the nearest one that is not done)', await page.eval('document.querySelector(".play__hint-title").textContent') === h1.title, h1.title);
     await page.eval('Array.from(document.querySelectorAll(".play__hint-buttons button")).filter(function(b){return !b.hidden;})[0].click()');
     await sleep(100);
     await page.eval('Array.from(document.querySelectorAll(".play__hint-buttons button")).filter(function(b){return !b.hidden;})[0].click()');

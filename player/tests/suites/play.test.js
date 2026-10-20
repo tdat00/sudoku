@@ -1025,6 +1025,24 @@
       expect(other.hint().placements).toEqual(next.placements);
     });
 
+    it('always points at the nearest step that is not done: closing a hint and asking again gives the same one',
+      function () {
+        ready();
+        var r = realResult('classic9', 'normal', 3);
+        var g = newGame(r);
+        var first = g.hint();
+        expect(first.step).toBe(0);
+        g.hint();
+        g.hint();
+        g.clearHint();
+        var again = g.hint();
+        expect(again.step).toBe(first.step);
+        expect(again.level).toBe(1);
+        expect(again.technique).toBe(first.technique);
+        expect(again.cells).toEqual(first.cells);
+        expect(again.placements).toEqual(first.placements);
+      });
+
     it('walks an elimination plan with nextHintStep and remembers an applied elimination', function () {
       ready();
       var found = null;
