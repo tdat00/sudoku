@@ -83,7 +83,7 @@ in five jobs of about 2 to 4 minutes, grouped by `.github/scripts/generator-suit
 publishes one site:
 
 ```
-https://tdat00.github.io/sudoku/            the landing page (index.html at the root of the repository)
+https://tdat00.github.io/sudoku/            redirects to /generator/ (index.html at the root of the repository)
 https://tdat00.github.io/sudoku/generator/  Sudoku Generator
 https://tdat00.github.io/sudoku/player/     Sudoku Player
 https://tdat00.github.io/sudoku/core/       the shared code, loaded by both (js/, css/, assets/ only: no tests)

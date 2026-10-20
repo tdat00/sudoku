@@ -273,7 +273,6 @@
 
   let session = 0;
   let busy = false;
-  let everRan = false;
   let current = null;
   let live = null;
   let boardModel = null;
@@ -539,7 +538,7 @@
     els.generate.classList.toggle('is-busy', busy);
     els.generate.setAttribute('aria-busy', busy ? 'true' : 'false');
     els.cancel.hidden = !busy;
-    els.regenerate.disabled = busy || !everRan;
+    els.regenerate.disabled = busy;
     els.exportBtn.disabled = busy || current === null || listenerCount('action') === 0;
     if (els.playBtn) els.playBtn.disabled = els.exportBtn.disabled;
     if (els.exportCodeBtn) els.exportCodeBtn.disabled = els.exportBtn.disabled;
@@ -678,7 +677,6 @@
   }
 
   function beginRun(token, state, config, buffer) {
-    everRan = true;
     current = null;
     live = { token: token };
     showTab('result');
@@ -789,7 +787,6 @@
     const buffer = SG.events.createTraceBuffer();
     (Array.isArray(opts.trace) ? opts.trace : []).forEach(function (event) { buffer.push(event); });
     focusInControls = false;
-    everRan = true;
     current = null;
     live = null;
     player.reset();
@@ -1122,7 +1119,6 @@
     controls = resultView = stepView = player = board = null;
     boardModel = null;
     els = null;
-    everRan = false;
     solutionOn = false;
     focusInControls = false;
     symbolMode = 'digits';

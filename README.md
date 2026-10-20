@@ -113,7 +113,7 @@ The heavy suites of the generator (`--all`, `--manual`, `soak`, `perf`, `qualify
 
 | Address | Content |
 |---|---|
-| [tdat00.github.io/sudoku/](https://tdat00.github.io/sudoku/) | a landing page that links to both apps |
+| [tdat00.github.io/sudoku/](https://tdat00.github.io/sudoku/) | redirects to the generator (`generator/`) |
 | [tdat00.github.io/sudoku/generator/](https://tdat00.github.io/sudoku/generator/) | Sudoku Generator |
 | [tdat00.github.io/sudoku/player/](https://tdat00.github.io/sudoku/player/) | Sudoku Player |
 | `…/sudoku/core/` | the shared code both apps load (no tests) |
@@ -212,7 +212,7 @@ dụng và [AGENTS.md](AGENTS.md) để biết các tác tử AI được chạy
 
 | Địa chỉ | Nội dung |
 |---|---|
-| [tdat00.github.io/sudoku/](https://tdat00.github.io/sudoku/) | trang giới thiệu có liên kết tới cả hai ứng dụng |
+| [tdat00.github.io/sudoku/](https://tdat00.github.io/sudoku/) | chuyển thẳng tới trình tạo đề (`generator/`) |
 | [tdat00.github.io/sudoku/generator/](https://tdat00.github.io/sudoku/generator/) | Sudoku Generator |
 | [tdat00.github.io/sudoku/player/](https://tdat00.github.io/sudoku/player/) | Sudoku Player |
 | `…/sudoku/core/` | phần mã dùng chung mà cả hai ứng dụng nạp (không gồm kiểm thử) |
