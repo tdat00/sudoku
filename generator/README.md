@@ -3,8 +3,10 @@
 <a id="top"></a>
 
 **Live apps · Ứng dụng trực tuyến:**
-[Sudoku Generator](https://tdat00.github.io/sudoku-generator/) ([GitHub](https://github.com/tdat00/sudoku-generator)) ·
-[Sudoku Player](https://tdat00.github.io/sudoku-player/) ([GitHub](https://github.com/tdat00/sudoku-player))
+[Sudoku Generator](https://tdat00.github.io/sudoku/generator/) ·
+[Sudoku Player](https://tdat00.github.io/sudoku/player/) ·
+[GitHub](https://github.com/tdat00/sudoku) — the generator is in `generator/`, the player in `player/`, what they share in `core/`
+(see [the overview](../README.md))
 
 - [Table of Contents](#english)
   - [What it is](#what-it-is)
@@ -40,16 +42,16 @@
 A static web app, written in plain HTML, CSS and JavaScript, that generates Sudoku puzzles in **15 variants**,
 **guarantees the difficulty you ask for**, and **shows you how every puzzle is made** — step by step, in
 English or Vietnamese. No framework, no build step, no server, no external library. To *solve* a puzzle it has
-made, use its sibling app **[sudoku-player](https://github.com/tdat00/sudoku-player)**: the "Play" button
+made, use its sibling app **[sudoku-player](../player/README.md)**: the "Play" button
 opens the puzzle there ([details](#play-online-with-sudoku-player)).
 
 Một ứng dụng web tĩnh viết bằng HTML, CSS và JavaScript thuần, tạo đề Sudoku cho **15 biến thể**, **đảm bảo
 đúng độ khó bạn chọn** và **cho bạn xem từng bước đề được tạo ra** — bằng tiếng Anh hoặc tiếng Việt. Không
 framework, không bước biên dịch, không máy chủ, không thư viện ngoài. Muốn *giải* một đề vừa tạo, hãy dùng ứng
-dụng anh em **[sudoku-player](https://github.com/tdat00/sudoku-player)**: nút "Chơi" mở đề đó ở bên
+dụng anh em **[sudoku-player](../player/README.md)**: nút "Chơi" mở đề đó ở bên
 ấy ([chi tiết](#chơi-trực-tuyến-với-sudoku-player)). (Phần tiếng Việt nằm ở [phía dưới](#tieng-viet).)
 
-![The generator in the light theme: a classic 9×9 puzzle halfway through the replay of its generation](docs/screenshot-classic9-light.png)
+![The generator in the light theme: a classic 9×9 puzzle halfway through the replay of its generation](../docs/screenshots/screenshot-classic9-light.png)
 
 ---
 
@@ -111,14 +113,14 @@ gains `difficulty.ratingVersion: 2`.
 - **Text export** — the **Export** button next to **Print** shows the puzzles you tick in the saved list as readable text (`#1,Classic Sudoku 9x9,Hard,<seed>` then one grid row per line, `.` for empty cells) with a Copy
   button, to copy into a file or another tool.
 - **Play online** — the **Play** button next to **Print** hands every puzzle of the saved list, with the one on
-  screen first, to the separate [sudoku-player](https://github.com/tdat00/sudoku-player)
+  screen first, to the separate [sudoku-player](../player/README.md)
   web app, where you solve them with notes, undo/redo, checking, hints that name the technique and a timer. The
   puzzles travel inside the link (after the `#`), compressed, so nothing is uploaded; see
   [Play online with sudoku-player](#play-online-with-sudoku-player).
 - **Accessible** — keyboard navigation, ARIA grid, live announcements, light, dark and high-contrast themes,
   adjustable text size, reduced motion.
 - **In-app help** — the rules of all 15 variants, the technique ladder and keyboard shortcuts.
-- **Static and offline** — open `index.html`, or serve the folder with any static server; the generator itself
+- **Static and offline** — open `generator/index.html`, or serve the repository with any static server; the generator itself
   never sends anything anywhere. Recently generated puzzles are cached in the browser, and the next one is
   quietly pre-generated in the background, so *Generate* is often instant.
 
@@ -146,41 +148,42 @@ The variants (`id` is what the URL parameter `v` and the code use):
 
 Replaying the generation of a Classic 9×9 puzzle (light theme, English):
 
-![Classic 9×9 in the light theme, halfway through the replay](docs/screenshot-classic9-light.png)
+![Classic 9×9 in the light theme, halfway through the replay](../docs/screenshots/screenshot-classic9-light.png)
 
 The same page in the dark theme and in Vietnamese:
 
-![Classic 9×9 in the dark theme, Vietnamese interface](docs/screenshot-classic9-dark-vi.png)
+![Classic 9×9 in the dark theme, Vietnamese interface](../docs/screenshots/screenshot-classic9-dark-vi.png)
 
 A Killer puzzle with its cages:
 
-![A Killer Sudoku with dashed cages and their sums](docs/screenshot-killer.png)
+![A Killer Sudoku with dashed cages and their sums](../docs/screenshots/screenshot-killer.png)
 
 ## Running it
 
 You need only a web browser (Chrome or Edge 100+, Firefox 100+, Safari 15.4+).
 
-**The quickest way** — open `index.html` in the browser (double-click it, or drag it onto a window). It works
+**The quickest way** — open `generator/index.html` in the browser (double-click it, or drag it onto a window). It works
 from `file://`, but browsers do not allow Web Workers there, so the generator runs on the main thread in small
 slices: the page stays responsive between slices but may pause
 for a moment on a large board (one unsplittable piece of work can take up to a few hundred milliseconds),
 **Cancel** takes effect at the next slice, and the background pre-generation of the next puzzle is off.
 
-**Recommended** — serve the folder with any static server. Then the generator runs in a Web Worker, the page stays smooth, **Cancel** works at once and the next puzzle is quietly
+**Recommended** — serve the repository with any static server (the root, not `generator/`: the page loads the code it
+shares with the player from `../core`). Then the generator runs in a Web Worker, the page stays smooth, **Cancel** works at once and the next puzzle is quietly
 pre-generated while you look at this one:
 
 ```bash
-cd sudoku-generator
-python -m http.server 8000      # then open http://localhost:8000/
+cd sudoku                       # the root of the repository
+python -m http.server 8000      # then open http://localhost:8000/generator/
 # or:  npx serve .
 ```
 
-**GitHub Pages** — the app uses only relative paths, so it works from any sub-path with no configuration.
+**GitHub Pages** — the apps use only relative paths, so they work from any sub-path with no configuration.
 Choose *Settings → Pages → Build and deployment → Source → GitHub Actions*. The
-[deployment workflow](.github/workflows/pages.yml) runs the Node 24 tests and publishes the app after every
-push to `main`; you can also run it manually from the **Actions** tab. Only the app files and licence are
-published, not the tests or working notes. The live app is at
-**[tdat00.github.io/sudoku-generator](https://tdat00.github.io/sudoku-generator/)**.
+[deployment workflow](../.github/workflows/pages.yml) of the repository runs the Node 24 tests and publishes the
+generator, the player and the code they share after every push to `main`; you can also run it manually from the
+**Actions** tab. Only the app files and licence are published, not the tests or working notes. The live app is at
+**[tdat00.github.io/sudoku/generator](https://tdat00.github.io/sudoku/generator/)**.
 
 Open the **Help** button for the rules of every variant, the technique ladder and the keyboard shortcuts.
 
@@ -212,27 +215,28 @@ page keeps everything in memory for the session.
 
 ## Play online with sudoku-player
 
-This repository only **generates** puzzles. Solving them is the job of its sibling,
-**[sudoku-player](https://github.com/tdat00/sudoku-player)** (published at
-[tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)): a separate static app with a grid you can fill in, candidate notes,
+The generator only **generates** puzzles. Solving them is the job of its sibling,
+**[sudoku-player](../player/README.md)** (published at
+[tdat00.github.io/sudoku/player](https://tdat00.github.io/sudoku/player/)): a separate static app with a grid you can fill in, candidate notes,
 undo/redo, error checking, hints that name the logical technique, a timer, progress saved per puzzle, all 15
 variants, English / Vietnamese, themes and accessibility.
 
 **How the puzzles get there.** Press the **Play** button next to **Print** in the main panel. The page takes
 **every puzzle of the saved list** (and the puzzle on screen, if it is not in the list), writes them as the
 readable text of the **Export** box, packs that text into one token and opens
-`https://tdat00.github.io/sudoku-player/#puzzle=<token>&active=<n>` in a new tab (`window.open(url, '_blank',
+`../player/index.html#puzzle=<token>&active=<n>` (the player, next to the generator on the same site) in a new tab (`window.open(url, '_blank',
 'noopener')`). `active` is the number of the puzzle that was on screen: the player puts exactly that one on its
 board and lists all the others. Puzzles that are not at hand are generated again from their seed first (a small
 dialog shows the progress and ends with an **Open the player** button). The token is in the URL **fragment**,
 which a browser never sends to a server, so nothing is uploaded. Because it is compressed text, not documents,
 a hundred puzzles fit in a link of a few tens of kB; when the link is longer than about 100 kB a toast warns
 that some apps and servers cut long links. The player's address comes from
-`<meta name="sg-player-url" content="https://tdat00.github.io/sudoku-player/">` in `index.html`: change it to
-point at your own copy.
+`<meta name="sg-player-url" content="../player/index.html">` in `index.html`, a path relative to the generator's
+page: it names the page, not its folder, because a folder shows a file listing when the pages are opened from a disk.
+Change it to point at another copy of the player.
 
-**The exchange format** — the only coupling between the two repositories, implemented by `js/ui/exchange.js`
-(`SG.exchange`, the same file byte for byte in both, with the suite `tests/suites/exchange.test.js`):
+**The exchange format** — the only coupling between the two apps, implemented by `core/js/ui/exchange.js`
+(`SG.exchange`, the one file both load, with the suite `core/tests/suites/exchange.test.js`):
 
 - A **bundle** (the Play button) is the text of `SG.exportUi.buildExportText`: per puzzle a header line
   `#<n>,<variant>,<level>,<seed>`, the grid and, for Jigsaw, Killer, Greater-Than and Wordoku, a few structure
@@ -262,27 +266,31 @@ point at your own copy.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
-│ UI            js/ui/        app · controls · board-view (SVG) · step-view · explain · player  │
-│                             · result-view · i18n · store · export · exchange · a11y …         │
+│ UI            js/ui/        app · controls · step-view · explain · player · result-view       │
+│                             · i18n · store · export · a11y …                                  │
+│               ../core/js/ui/   board-view (SVG) · symbols · exchange · wordbook  (shared)      │
 ├──────────────────────────────────────────────────────────────────────────────────────────────┤
 │ ORCHESTRATION js/worker/    worker-client (Web Worker, or the main-thread fallback)           │
 │                             gen.worker.js (runs the pipeline off the main thread)             │
 ├──────────────────────────────────────────────────────────────────────────────────────────────┤
-│ GENERATION    js/core/      pipeline · full-grid · digger · symmetry · difficulty · events    │
+│ GENERATION    js/engine/    pipeline · full-grid · digger · symmetry · difficulty · events    │
 ├──────────────────────────────────────────────────────────────────────────────────────────────┤
-│ SOLVER        js/core/      dfs-solver · logical-solver · techniques + tech-*.js              │
+│ SOLVER        ../core/js/engine/   dfs-solver · logical-solver · techniques + tech-*.js       │
+│                                    (shared with the player)                                  │
 ├──────────────────────────────────────────────────────────────────────────────────────────────┤
-│ MODEL         js/core/ and js/variants/    model · constraints · bits · rng · 15 variants     │
+│ MODEL         ../core/js/engine/ · js/engine/ · js/variants/                                  │
+│                             model · constraints · bits · classic-model · rng · 15 variants    │
 └──────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-A lower layer never knows about a higher one. `js/core/` and `js/variants/` never touch the DOM, which is what
-lets the whole engine run in Node for the tests.
+A lower layer never knows about a higher one. The engines (`../core/js/engine/`, `js/engine/`) and `js/variants/`
+never touch the DOM, which is what lets the whole engine run in Node for the tests. `../core` is the code the
+generator shares with the player (see [the overview](../README.md)); it knows nothing about the generator.
 
 **One model for every variant.** A puzzle is a set of cells, a list of *units* (groups of cells that must hold
 different values: rows, columns, boxes, jigsaw regions, diagonals, windows, cages) and optional extras (cage
 sums, inequalities). Samurai and friends are just a bigger model whose grids share cell indices. So one
-solver and one generator serve all 15 variants, and `js/core/` has no `if (variant === …)` anywhere:
+solver and one generator serve all 15 variants, and the engines have no `if (variant === …)` anywhere:
 differences go through the registry (`SG.variants`).
 
 ### The generation pipeline and its event stream
@@ -311,7 +319,7 @@ solver's raw score.
 The UI never slows the algorithm down to animate it, and its replay does not read the events. Next to them
 the digger keeps a compact **dig log** of the sample that became the puzzle (`result.digLog`: entries `pass`,
 `accept`, `reject`, `keep` and `restart`, plus `signs`, `clear`, `reveal` and sign verdicts for Greater-Than;
-the header of `js/core/digger.js` describes them). It is the same whatever the trace verbosity, the thread or
+the header of `js/engine/digger.js` describes them). It is the same whatever the trace verbosity, the thread or
 the board size, and `toWire` / `fromWire` carry it. After a run the board shows the finished puzzle at once;
 nothing plays by itself. `SG.player.buildSteps(result)` (pure) turns the log into the steps of the replay,
 each one a change the board shows: the full solution; the cages (Killer) or the signs (Greater-Than); batches
@@ -406,10 +414,11 @@ through `vm.runInThisContext`:
 
 Because there are no imports, **load order is the dependency graph**. `SOURCE_FILES` in
 `tests/node-runner.js` is the single source of truth; the same order is repeated in `index.html` (`<script>`
-tags), in the `SOURCE_FILES` array of `tests.html`, and — for the core, the variants and the word lists only,
+tags), in the `SOURCE_FILES` array of `tests.html` and — for the engines, the variants and the word lists only,
 never the UI — in `js/worker/gen.worker.js`. `tests/suites/ui-contract.test.js` fails when they drift apart.
 **Adding a JavaScript file means adding it to all four places.** Files that do not exist yet are skipped by
-the runner and `tests.html`.
+the runner and `tests.html`. The files of `core` are listed by their path from this folder
+(`../core/js/engine/model.js`); a file added to `core` that the player needs too goes into the player's lists as well.
 
 ### The UI modules
 
@@ -441,53 +450,54 @@ dialogs with `SG.app.openModal()` and reads the puzzle with `SG.app.getResult()`
 is not in the list needs one more entry in the `OPTIONAL_MODULES` list of `app.js`. Every UI file must **load
 in Node without a DOM** (top-level code only defines functions and pushes locale fragments; the DOM is touched
 inside functions called at run time), and keeps its logic in pure, testable functions next to the DOM code.
-`js/ui/exchange.js` (`SG.exchange`) is not one of these modules: it is a DOM-free helper that `exportUi` uses
-and that sudoku-player shares byte for byte.
+`core/js/ui/exchange.js` (`SG.exchange`) is not one of these modules: it is a DOM-free helper that `exportUi` uses
+and that the player loads too.
 
 ### Directory tree
 
 ```
-sudoku-generator/
-├── index.html              the page: every <script> tag, in dependency order; the sg-player-url meta tag
-├── tests.html              the same test suites, run in the browser
-├── design.md · task.md     the design specification (as built) and the task list with its completion summary
-├── README.md · LICENSE     this file · the MIT licence
-├── docs/                   screenshots used by this README · report-v1.md (the final QA report of version 1) ·
-│                           report-v2/ (rating v2: brief and detailed reports, qualification.md = the levels
-│                           each variant offers, the researchers' reports)
-├── assets/
-│   ├── favicon.svg         the inline favicon
-│   ├── wordlists/          isograms.en.js · isograms.vi.js   key words of Wordoku
-│   └── wordbook/           words.en.js · words.vi.js   spelling, part of speech and meaning of each key word
-├── css/
-│   ├── tokens.css          colours (3 themes), spacing, motion: the only place for colour literals
-│   ├── tokens-board.css    colours of the board (3 themes)
-│   ├── base.css · layout.css · components.css · board.css · steps.css
-│   ├── help.css · print.css
-├── js/
-│   ├── core/               engine, no DOM
-│   │   ├── ns.js · errors.js · bits.js · budget.js · rng.js
-│   │   ├── model.js · constraints.js · combo-table.js         model and propagation
-│   │   ├── dfs-solver.js · logical-solver.js · techniques.js  solvers and the technique registry
-│   │   ├── tech-basic.js · tech-subset.js · tech-fish.js · tech-wing.js · tech-chain.js
-│   │   ├── tech-cage.js · tech-ineq.js                        Killer and Greater-Than techniques
-│   │   ├── difficulty.js · full-grid.js · symmetry.js · digger.js
-│   │   └── events.js · explain-data.js · pipeline.js          the seven steps and their events
-│   ├── variants/           registry.js · classic.js · mega.js · extra-regions.js · jigsaw.js · killer.js
-│   │                       · greater-than.js · multigrid.js · wordoku.js
-│   ├── worker/             gen.worker.js · worker-client.js
-│   └── ui/                 exchange.js (link to sudoku-player) · i18n.js · locale.en.js · locale.vi.js
-│                           · locale.shell.js · symbols.js · board-view.js · store.js · controls.js
-│                           · step-view.js · explain.js · player.js (replay of the generation)
-│                           · result-view.js · wordbook.js (meaning of a key word) · cache.js · history.js
-│                           · export.js · a11y.js · theme.js · help.js · app.js
-└── tests/
-    ├── harness.js · node-runner.js · soak.js · perf.js · qualify.js
-    ├── fixtures/           puzzles and fixtures with known answers, the performance helper and the
-    │                       regression hashes (regression.js, generated)
-    ├── suites/             the quick set, run by default: one *.test.js per area, 36 in all (found
-    │                       automatically), smoke.test.js among them
-    └── manual/             the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
+sudoku/                     the repository (see ../README.md for the whole layout)
+├── .github/workflows/      pages.yml: tests, then publishes generator/, player/ and core/
+├── LICENSE · .gitignore    the MIT licence · files ignored by git
+├── docs/                   documents of both apps, by feature (the screenshots of this README are in
+│                           docs/screenshots/)
+├── core/                   what the generator and the player share (see ../docs/architecture.md)
+│   ├── js/engine/          ns · errors · bits · budget · model · constraints · combo-table · dfs-solver
+│   │                       · techniques · logical-solver · tech-*.js · classic-model · model-aids
+│   ├── js/ui/              exchange · wordbook · symbols · board-view
+│   ├── css/                tokens.css · tokens-board.css · base.css · board.css
+│   ├── assets/wordbook/    words.en.js · words.vi.js   spelling, part of speech and meaning of each key word
+│   └── tests/              harness.js · fixtures/ · suites/   the suites of the shared code (16 suites)
+├── player/                 the player
+└── generator/              this app
+    ├── index.html          the page: every <script> tag, in dependency order; the sg-player-url meta tag
+    ├── tests.html          the same test suites, run in the browser
+    ├── design.md · task.md the design specification (as built) and the task list with its completion summary
+    ├── README.md           this file
+    ├── assets/
+    │   ├── favicon.svg     the inline favicon
+    │   └── wordlists/      isograms.en.js · isograms.vi.js   key words of Wordoku
+    ├── css/
+    │   ├── layout.css · components.css · steps.css · help.css · print.css
+    │   └── (tokens, base and board styles come from ../core/css)
+    ├── js/
+    │   ├── engine/         the generation engine, no DOM
+    │   │   ├── rng.js · difficulty.js · full-grid.js · symmetry.js · digger.js
+    │   │   └── events.js · explain-data.js · pipeline.js      the seven steps and their events
+    │   ├── variants/       registry.js · classic.js · mega.js · extra-regions.js · jigsaw.js · killer.js
+    │   │                   · greater-than.js · multigrid.js · wordoku.js
+    │   ├── worker/         gen.worker.js · worker-client.js
+    │   └── ui/             i18n.js · locale.en.js · locale.vi.js · locale.shell.js · store.js · controls.js
+    │                       · step-view.js · explain.js · player.js (replay of the generation)
+    │                       · result-view.js · cache.js · history.js · export.js · a11y.js · theme.js
+    │                       · help.js · app.js
+    └── tests/
+        ├── node-runner.js · soak.js · perf.js · qualify.js
+        ├── fixtures/       the fixtures of the generator (rated puzzles, the performance helper, the
+        │                   regression hashes in regression.js, generated, and the testkit provider)
+        ├── suites/         the quick set, run by default together with ../core/tests/suites: one *.test.js per
+        │                   area, 26 of the generator's own (found automatically), smoke.test.js among them
+        └── manual/         the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
                             extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
 
@@ -596,11 +606,11 @@ a typo fails when the file loads, not in the middle of a run):
 | Field | Meaning |
 |-------|---------|
 | `id`, `i18nKey`, `group`, `digits` | Unique id; translation key of the name; family used to group variants in the UI (`group.<group>` key); number of values D (up to 16). |
-| `difficultySupport` | Levels the variant offers, a subset of `veryEasy … hell2` (gaps are allowed): exactly the levels that pass the qualification of `node tests/qualify.js --variant=<id>` ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)). |
+| `difficultySupport` | Levels the variant offers, a subset of `veryEasy … hell2` (gaps are allowed): exactly the levels that pass the qualification of `node tests/qualify.js --variant=<id>` ([docs/difficulty-rating/qualification.md](../docs/difficulty-rating/qualification.md)). |
 | `defaultSymbolMode`, `symbolModes` | Symbol sets the UI may offer (`digits`, `letters`, `colors`, `shapes`, `word`). |
 | `options` | Variant options for the UI (`slider`, `select`, `boolean`, `text`). Declare labels with `i18nKey` and help with `hintKey`; `SG.variants.optionsOf(id)` gives them in one normalised shape, and the controls are built from it. |
 | `build(opts, rng)` | Returns the `PuzzleModel`; only for geometry and units. |
-| `clueFloor`, `clueFloorScale` | Optional own minimum number of clues per level, in place of the classic9 numbers scaled by `cellCount / 81` (see "Clue floor per variant" in `js/core/difficulty.js`). Use them when the generic floor makes a level unreachable. |
+| `clueFloor`, `clueFloorScale` | Optional own minimum number of clues per level, in place of the classic9 numbers scaled by `cellCount / 81` (see "Clue floor per variant" in `js/engine/difficulty.js`). Use them when the generic floor makes a level unreachable. |
 | `postGenerate(ctx)`, `digStrategy`, `fastSeed`, `restartThreshold` | Optional pipeline hooks: structure made from the finished solution (Killer cages, Greater-Than signs; models are immutable, so it returns a new model), an alternative digging strategy (registered with `SG.digger.registerStrategy` and named here), a pre-fill and a restart threshold of the full-grid search. |
 
 **2. Load the file — add its path to all four script lists**, anywhere after `js/variants/registry.js` (next to
@@ -628,7 +638,7 @@ new id: add a row to the table above.
 **5. Qualify its levels.** `node tests/qualify.js --variant=disjoint9` generates 40 puzzles per level with fixed
 seeds and offers a level when at least 36 hit it exactly within the time budget (30–35 hits: 60 more seeds, at
 least 90 of the 100); put the levels it prints into `difficultySupport` and its table into
-[docs/report-v2/qualification.md](docs/report-v2/qualification.md). `node tests/soak.js --variant=disjoint9` then shows
+[docs/difficulty-rating/qualification.md](../docs/difficulty-rating/qualification.md). `node tests/soak.js --variant=disjoint9` then shows
 how often each requested level is hit, the invariant violations and the time per puzzle. A level that misses
 can be helped by a `clueFloorScale`; otherwise it stays hidden. The manual suite `difficulty` (`node tests/node-runner.js
 --suite=difficulty`) checks that the lists in the definitions and in that file agree.
@@ -637,10 +647,10 @@ can be helped by a `clueFloorScale`; otherwise it stays hidden. The manual suite
 
 A solving technique is one function that finds *one deduction* in the current candidates. It lives in its
 own `tech-*.js` file and registers itself, so the solver and the digger never change. The full contract is the
-header of `js/core/techniques.js`. A complete example — *Full House*, a unit with a single open cell:
+header of `../core/js/engine/techniques.js`. A complete example — *Full House*, a unit with a single open cell:
 
 ```js
-// js/core/tech-fullhouse.js
+// ../core/js/engine/tech-fullhouse.js
 (function (root) {
   'use strict';
 
@@ -711,11 +721,12 @@ header of `js/core/techniques.js`. A complete example — *Full House*, a unit w
    the state; no randomness; work on any unit shape through `model.units` (never assume rows and boxes); call
    `ctx.check()` in long loops.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
-   [How it works](#how-it-works).
+   [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
+   `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
 3. **Strings**: `technique.<id>` (name), `technique.<id>.desc` and `technique.<id>.step` in both languages;
    `tests/suites/i18n.test.js` checks that every registered technique and every step text has them. The Help
    dialog's technique ladder lists the new technique by itself.
-4. **Weight and level**: add the technique's weight to `WEIGHTS` in `js/core/difficulty.js`
+4. **Weight and level**: add the technique's weight to `WEIGHTS` in `js/engine/difficulty.js`
    (`SG.difficulty.WEIGHTS`; a rating that meets a technique without a weight fails with
    `difficulty.unknownTechnique` — a weight is never guessed from `baseCost`). The score of a puzzle is
    `round(80·E/(E+40) + P + 0.25·P·log₂(1 + W/P))`, where `E` is the number of empty cells, `P` the largest weight
@@ -725,24 +736,25 @@ header of `js/core/techniques.js`. A complete example — *Full House*, a unit w
    only names its family (`cage` and `ineq` belong to Killer and Greater-Than). Then re-run the qualification,
    `node tests/qualify.js`, and check the hit rates with `node tests/soak.js --quick`.
 5. **Tests**: add positive and negative fixtures and the soundness check to the matching
-   `tests/suites/tech-<group>.test.js` (helpers in `tests/fixtures/techniques-helper.js`): a technique must
-   never eliminate a value that belongs to the true solution.
+   `../core/tests/suites/tech-<group>.test.js` (helpers in `../core/tests/fixtures/techniques-helper.js`): a technique
+   must never eliminate a value that belongs to the true solution.
 
 ## Running the tests
 
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (36 suites, about 2,520 tests), under a minute
+node tests/node-runner.js                          # the quick set (42 suites, about 2,600 tests), about a minute
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8, about eight minutes)
-node tests/node-runner.js --all                    # quick + manual (44 suites, about 3,560 tests), about nine minutes
+node tests/node-runner.js --all                    # quick + manual (50 suites, about 3,630 tests), about nine minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** `tests/suites/` is the **quick set**: 36 suites, about
-2,520 tests, about 50 seconds, and what runs by default. It includes `smoke.test.js`, which generates one puzzle
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 42 suites, about
+2,600 tests, about one minute — the 26 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
 `extra-regions`, `wordoku` and `jigsaw`, about eight minutes together — which are not part of the default run:
@@ -751,15 +763,17 @@ run them with `--manual` (only these) or `--all` (quick and manual, about nine m
 touch its area; run `--all` before a release and whenever you touch generation, scoring or a variant. The CI
 workflow runs `node tests/node-runner.js --all` before every deploy.
 
-The runner loads `SOURCE_FILES` with `vm.runInThisContext`, discovers `tests/fixtures/*.js` and
-`tests/suites/*.test.js` (and `tests/manual/*.test.js` with `--manual` or `--all`) by itself, and exits with a code
-other than 0 on any failure. The suites cover the
+The runner loads `SOURCE_FILES` with `vm.runInThisContext`, discovers `../core/tests/fixtures/*.js`,
+`tests/fixtures/*.js`, `../core/tests/suites/*.test.js` and `tests/suites/*.test.js` (and `tests/manual/*.test.js` with
+`--manual` or `--all`) by itself, and exits with a code other than 0 on any failure. The shared suites build the
+boards of every variant through `SG.testkit` (`../core/tests/fixtures/testkit.js`), and `tests/fixtures/testkit-provider.js`
+tells it to take them from the variant registry. The suites cover the
 engine, every variant, the solving techniques, the pipeline and its events, the worker and its client, and the
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks this README
 against the code: its variants table, URL parameters, script names, links, commands and flags, the `SG.…`
-names and the two worked examples. At the tip of this repository the runner counts about 3,560 tests in 44 suites
-(about 2,520 in the 36 quick ones), all green; the counts of the combined project at its final review (before the split) are in
-`docs/report-v1.md`.
+names and the two worked examples. At the tip of this repository the runner counts about 3,630 tests in 50 suites
+(about 2,600 in the 42 quick ones), all green; the counts of the combined project at its final review (before the split) are in
+[docs/qa/final-review-v1.md](../docs/qa/final-review-v1.md).
 
 The suites check the generation time of every variant against the budgets of [design.md](design.md) §9.1 with
 a tolerance, so that a busy or slower machine does not fail them: twice the budget by default, three times when
@@ -781,7 +795,7 @@ on the reference machine and measured by `node tests/perf.js`.
   variant offers (40 fixed seeds per variant and level through the real pipeline, 60 more for a borderline level,
   a time budget on the 95th percentile) and prints the table and the support lists; `--variant`, `--level`,
   `--jobs`, `--json` and `--markdown` narrow it down or save it; `--probe=N` takes a quick look (N seeds per level, no verdict). The last run is in
-  [docs/report-v2/qualification.md](docs/report-v2/qualification.md).
+  [docs/difficulty-rating/qualification.md](../docs/difficulty-rating/qualification.md).
 - **Performance** against the budgets of [design.md](design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. The *regression hashes* in `tests/fixtures/regression.js`
   guard against an optimisation changing a puzzle (the quick `smoke` suite checks a sample of them, the manual
@@ -791,7 +805,7 @@ on the reference machine and measured by `node tests/perf.js`.
 - **Deep statistical runs** in the mega, multigrid and variants suites are off by default; enable them with the
   environment variable `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; in
   PowerShell `$env:SG_DEEP = 1`).
-- **Final QA report:** `docs/report-v1.md`.
+- **Final QA report:** [docs/qa/final-review-v1.md](../docs/qa/final-review-v1.md).
 
 ## Conventions
 
@@ -803,11 +817,11 @@ The full list is in [design.md](design.md) §12.2:
   comments only where the code is hard to follow, JSDoc on every public API.
 - `camelCase` for variables and functions, `PascalCase` for types, `UPPER_SNAKE` for constants, `kebab-case.js`
   for files.
-- `js/core/` and `js/variants/` never touch the DOM; DOM, `window` and `localStorage` are used only in
-  `js/ui/` and `js/worker/worker-client.js`. A test checks it.
+- The engines (`../core/js/engine/`, `js/engine/`) and `js/variants/` never touch the DOM; DOM, `window` and `localStorage`
+  are used only in `js/ui/`, `../core/js/ui/` and `js/worker/worker-client.js`. A test checks it.
 - Every displayed string goes through `SG.i18n.t()` and exists in English and Vietnamese; `<html lang>`
   follows the language.
-- No colour literal outside `css/tokens.css` and `css/tokens-board.css`; everything else uses
+- No colour literal outside `../core/css/tokens.css` and `../core/css/tokens-board.css`; everything else uses
   `var(--sg-…)` tokens. A test checks it.
 - Core errors are `SG.errors.GenerationError` with a `code` that has a translation.
 - Every function that can run for more than 50 ms takes a `budget` and calls `budget.check()`.
@@ -819,17 +833,17 @@ The full list is in [design.md](design.md) §12.2:
   page stays responsive and **Cancel** works at the next slice, but one piece of work cannot be split — in
   Killer a single search slice takes 70–86 ms, a Greater-Than sign dig 50–70 ms, the cage layout of a hard
   Killer up to about 300 ms — and the page may pause for that long. Background pre-generation is off there
-  too. Serve the folder to get the Web Worker.
+  too. Serve the repository to get the Web Worker.
 - **No real screen-reader run.** Keyboard operation, ARIA roles and live announcements are implemented and
   checked in a headless browser, but no one has listened to them with a screen reader yet.
 - **Difficulty weights are engineering priors**, not measurements of human solvers: the weights of the 26
   techniques and the nine score bands were chosen from measurements of generated puzzles
-  ([docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md)); the Killer weights of `ruleOf45` and
+  ([docs/difficulty-rating/report-detailed.md](../docs/difficulty-rating/report-detailed.md)); the Killer weights of `ruleOf45` and
   `cageSplit` are the first candidates for a calibration with people. A combination that is hard to reach (a
   strict symmetry with a very high level) returns the closest puzzle with a notice instead of the exact level.
 - **Not every level is offered everywhere**: Mini 4×4 offers only very easy and Mini 6×6 very easy and hard;
   Classic 9×9 and Wordoku stop at hell 1; every other variant offers all nine levels. The levels a variant
-  offers are the ones it passed in the qualification ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
+  offers are the ones it passed in the qualification ([docs/difficulty-rating/qualification.md](../docs/difficulty-rating/qualification.md)).
 - **The hardest levels are the slowest**: measured in Node (`node tests/qualify.js`), the slowest combinations
   are Greater-Than and Killer from expert upwards and the hell levels of the large boards, with a 95th
   percentile of up to about 9.5 s (Greater-Than expert; Killer expert and nightmare 8–9 s; Monster 16×16 and
@@ -843,7 +857,7 @@ The full list is in [design.md](design.md) §12.2:
   screen width instead), and a "warm start" that digs a harder puzzle from an easier one.
 - **Browsers**: developed and checked in Chromium-based Edge only; Firefox 100+ and Safari 15.4+ are the
   supported targets but have not been tried, and neither has a real phone.
-- **Play online** needs the player to be published at the address of the `sg-player-url` meta tag, and a
+- **Play online** needs the player to be at the address of the `sg-player-url` meta tag (by default `../player/index.html`, so serve or publish the whole repository), and a
   browser that does not block pop-ups for the page. A link longer than about 100 kB (a very long list of
   puzzles) may be cut by chat apps and servers and then does not open every puzzle in the player.
 
@@ -851,7 +865,7 @@ The full list is in [design.md](design.md) §12.2:
 
 Released under the [MIT licence](../LICENSE) © 2026 Dat Le. The algorithms follow the well-known literature on
 Sudoku generation and solving; the design decisions are recorded in [design.md](design.md). The sibling
-project that plays the puzzles is [sudoku-player](https://github.com/tdat00/sudoku-player).
+project that plays the puzzles is [sudoku-player](../player/README.md); the code they share is in `core/`.
 
 [Back to top](#top)
 
@@ -918,13 +932,13 @@ bỏ các đề do phiên bản cũ lưu, một lần; và tệp xuất vẫn gi
   Dán vào tệp hoặc công cụ khác.
 - **Chơi trực tuyến** — nút **Chơi** cạnh nút **In đề** chuyển mọi đề trong danh sách đã tạo, đề đang hiển thị
   đứng đầu, sang ứng dụng riêng
-  [sudoku-player](https://github.com/tdat00/sudoku-player), nơi bạn giải đề với ghi chú, hoàn tác / làm lại, kiểm
+  [sudoku-player](../player/README.md), nơi bạn giải đề với ghi chú, hoàn tác / làm lại, kiểm
   tra, gợi ý nêu tên kỹ thuật và đồng hồ. Các đề nằm ngay trong liên kết (sau dấu `#`), đã được nén, nên không có
   gì bị tải lên; xem [Chơi trực tuyến với sudoku-player](#chơi-trực-tuyến-với-sudoku-player).
 - **Dễ tiếp cận** — điều hướng bằng bàn phím, lưới ARIA, thông báo trực tiếp, giao diện sáng, tối và tương
   phản cao, chỉnh cỡ chữ, giảm chuyển động.
 - **Trợ giúp ngay trong ứng dụng** — luật của cả 15 biến thể, bậc thang kỹ thuật và phím tắt.
-- **Tĩnh và chạy ngoại tuyến** — mở `index.html`, hoặc phục vụ thư mục bằng một máy chủ tĩnh bất kỳ; bản thân
+- **Tĩnh và chạy ngoại tuyến** — mở `generator/index.html`, hoặc phục vụ kho mã bằng một máy chủ tĩnh bất kỳ; bản thân
   trình tạo không gửi gì đi đâu cả. Các đề vừa tạo được lưu đệm trong trình duyệt và đề kế tiếp được âm thầm tạo
   sẵn ở nền, nên nút *Tạo đề* thường cho kết quả ngay.
 
@@ -934,41 +948,42 @@ Danh sách biến thể nằm ở [bảng phía trên](#features) (cột `id` l�
 
 Phát lại quá trình tạo đề Sudoku cổ điển 9×9 (giao diện sáng, tiếng Anh):
 
-![Sudoku cổ điển 9×9 ở giao diện sáng, đang phát lại giữa chừng](docs/screenshot-classic9-light.png)
+![Sudoku cổ điển 9×9 ở giao diện sáng, đang phát lại giữa chừng](../docs/screenshots/screenshot-classic9-light.png)
 
 Cùng trang đó ở giao diện tối và bằng tiếng Việt:
 
-![Sudoku cổ điển 9×9 ở giao diện tối, giao diện tiếng Việt](docs/screenshot-classic9-dark-vi.png)
+![Sudoku cổ điển 9×9 ở giao diện tối, giao diện tiếng Việt](../docs/screenshots/screenshot-classic9-dark-vi.png)
 
 Một đề Sát thủ (Killer) với các lồng:
 
-![Đề Killer Sudoku với các lồng nét đứt và tổng của chúng](docs/screenshot-killer.png)
+![Đề Killer Sudoku với các lồng nét đứt và tổng của chúng](../docs/screenshots/screenshot-killer.png)
 
 ## Cách chạy
 
 Bạn chỉ cần một trình duyệt web (Chrome hoặc Edge 100+, Firefox 100+, Safari 15.4+).
 
-**Cách nhanh nhất** — mở `index.html` bằng trình duyệt (bấm đúp, hoặc kéo thả vào cửa sổ). Cách này chạy được
+**Cách nhanh nhất** — mở `generator/index.html` bằng trình duyệt (bấm đúp, hoặc kéo thả vào cửa sổ). Cách này chạy được
 từ `file://`, nhưng trình duyệt không cho dùng Web Worker ở đó nên bộ sinh chạy trên luồng chính theo từng lát
 nhỏ: trang vẫn phản hồi giữa các lát nhưng với bảng lớn có thể khựng một
 lúc (có những đoạn việc không chia nhỏ được, lâu nhất vài trăm mili giây), nút **Hủy** có tác dụng ở lát kế
 tiếp, và việc tạo sẵn đề kế tiếp ở nền bị tắt.
 
-**Khuyến nghị** — phục vụ thư mục bằng một máy chủ tĩnh bất kỳ. Khi đó bộ sinh chạy trong Web Worker, trang luôn mượt, nút **Hủy** có tác dụng ngay và đề kế tiếp được âm thầm tạo sẵn trong lúc
+**Khuyến nghị** — phục vụ kho mã bằng một máy chủ tĩnh bất kỳ (thư mục gốc, không phải `generator/`: trang nạp phần
+mã dùng chung với trình chơi từ `../core`). Khi đó bộ sinh chạy trong Web Worker, trang luôn mượt, nút **Hủy** có tác dụng ngay và đề kế tiếp được âm thầm tạo sẵn trong lúc
 bạn xem đề này:
 
 ```bash
-cd sudoku-generator
-python -m http.server 8000      # rồi mở http://localhost:8000/
+cd sudoku                       # thư mục gốc của kho mã
+python -m http.server 8000      # rồi mở http://localhost:8000/generator/
 # hoặc:  npx serve .
 ```
 
-**GitHub Pages** — ứng dụng chỉ dùng đường dẫn tương đối nên chạy được ở mọi đường dẫn con mà không cần cấu
+**GitHub Pages** — các ứng dụng chỉ dùng đường dẫn tương đối nên chạy được ở mọi đường dẫn con mà không cần cấu
 hình. Chọn *Settings → Pages → Build and deployment → Source → GitHub Actions*.
-[Workflow triển khai](.github/workflows/pages.yml) chạy các kiểm thử trên Node 24 và xuất bản ứng dụng sau mỗi
-lần đẩy lên `main`; bạn cũng có thể chạy thủ công từ thẻ **Actions**. Chỉ các tệp ứng dụng và giấy phép được
-xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng trực tuyến tại
-**[tdat00.github.io/sudoku-generator](https://tdat00.github.io/sudoku-generator/)**.
+[Workflow triển khai](../.github/workflows/pages.yml) của kho mã chạy các kiểm thử trên Node 24 và xuất bản trình
+tạo đề, trình chơi và phần mã dùng chung sau mỗi lần đẩy lên `main`; bạn cũng có thể chạy thủ công từ thẻ
+**Actions**. Chỉ các tệp ứng dụng và giấy phép được xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng
+trực tuyến tại **[tdat00.github.io/sudoku/generator](https://tdat00.github.io/sudoku/generator/)**.
 
 Bấm nút **Trợ giúp** để xem luật của từng biến thể, bậc thang kỹ thuật và các phím tắt.
 
@@ -1001,8 +1016,8 @@ suốt phiên.
 
 ## Chơi trực tuyến với sudoku-player
 
-Kho mã này chỉ **tạo** đề. Việc giải đề do dự án anh em đảm nhận:
-**[sudoku-player](https://github.com/tdat00/sudoku-player)** (đăng tại [tdat00.github.io/sudoku-player](https://tdat00.github.io/sudoku-player/)) —
+Trình tạo đề chỉ **tạo** đề. Việc giải đề do dự án anh em đảm nhận:
+**[sudoku-player](../player/README.md)** (đăng tại [tdat00.github.io/sudoku/player](https://tdat00.github.io/sudoku/player/)) —
 một ứng dụng tĩnh riêng với lưới để bạn điền số, ghi chú ứng viên, hoàn tác / làm lại, kiểm tra lỗi, gợi ý nêu
 tên kỹ thuật logic, đồng hồ, tiến độ được lưu theo từng đề, đủ 15 biến thể, tiếng Anh / Việt, giao diện và trợ
 năng.
@@ -1010,18 +1025,19 @@ năng.
 **Các đề sang đó bằng cách nào.** Bấm nút **Chơi** cạnh nút **In đề** ở khung chính. Trang lấy **mọi đề trong
 danh sách đã tạo** (và đề đang hiển thị nếu nó không có trong danh sách), ghi chúng thành văn bản dễ đọc của
 hộp **Xuất văn bản**, nén văn bản đó thành một mã (token) rồi mở
-`https://tdat00.github.io/sudoku-player/#puzzle=<token>&active=<n>` trong thẻ mới (`window.open(url, '_blank',
+`../player/index.html#puzzle=<token>&active=<n>` (trình chơi, nằm cạnh trình tạo đề trên cùng một trang web) trong thẻ mới (`window.open(url, '_blank',
 'noopener')`). `active` là số thứ tự của đề đang hiển thị: trình chơi đặt đúng đề đó lên bảng và liệt kê tất cả
 các đề còn lại. Đề nào chưa có sẵn sẽ được tạo lại từ seed trước (một hộp thoại nhỏ báo tiến độ và kết thúc bằng
 nút **Mở trình chơi**). Mã nằm ở **phần fragment** của URL — trình duyệt không bao giờ gửi phần này lên máy chủ —
 nên không có gì bị tải lên. Vì là văn bản đã nén chứ không phải tài liệu, một trăm đề vẫn vừa trong liên kết dài
 vài chục kB; khi liên kết dài hơn khoảng 100 kB, một thông báo cảnh báo rằng một số ứng dụng và máy chủ cắt bớt
 liên kết dài. Địa chỉ của trình chơi lấy từ
-`<meta name="sg-player-url" content="https://tdat00.github.io/sudoku-player/">` trong `index.html`: hãy đổi nó
-nếu bạn có bản riêng.
+`<meta name="sg-player-url" content="../player/index.html">` trong `index.html`, một đường dẫn tương đối so với
+trang của trình tạo đề: nó chỉ đích danh trang, không chỉ thư mục, vì khi mở từ ổ đĩa một thư mục sẽ hiện danh sách
+tệp. Hãy đổi nó nếu bạn có bản trình chơi ở nơi khác.
 
-**Định dạng trao đổi** — mối liên kết duy nhất giữa hai kho mã, do `js/ui/exchange.js` (`SG.exchange`, cùng
-một tệp, giống từng byte ở cả hai bên, kèm bộ kiểm thử `tests/suites/exchange.test.js`) cài đặt:
+**Định dạng trao đổi** — mối liên kết duy nhất giữa hai ứng dụng, do `core/js/ui/exchange.js` (`SG.exchange`, một
+tệp duy nhất mà cả hai cùng nạp, kèm bộ kiểm thử `core/tests/suites/exchange.test.js`) cài đặt:
 
 - Một **gói đề** (nút Chơi) là văn bản của `SG.exportUi.buildExportText`: mỗi đề gồm một dòng tiêu đề
   `#<số>,<biến thể>,<mức độ>,<seed>`, lưới và, với Ghép hình, Sát thủ, So sánh và Wordoku, vài dòng cấu trúc.
@@ -1049,17 +1065,18 @@ một tệp, giống từng byte ở cả hai bên, kèm bộ kiểm thử `test
 
 ### Các tầng
 
-Sơ đồ các tầng ở [phần tiếng Anh](#layers). Tóm tắt: **giao diện** (`js/ui/`) → **điều phối** (`js/worker/`:
-Web Worker hoặc phương án dự phòng trên luồng chính) → **sinh đề** (`js/core/`: pipeline, full-grid, digger,
-difficulty, events) → **bộ giải** (`dfs-solver`, `logical-solver`, `techniques` và các `tech-*.js`) → **mô
-hình** (`model`, `constraints`, `bits`, `rng` và 15 biến thể trong `js/variants/`). Tầng dưới không bao giờ biết
-tầng trên. `js/core/` và `js/variants/` không chạm vào DOM, nhờ đó toàn bộ bộ máy chạy được trong Node để kiểm
-thử.
+Sơ đồ các tầng ở [phần tiếng Anh](#layers). Tóm tắt: **giao diện** (`js/ui/` và `../core/js/ui/`) → **điều phối**
+(`js/worker/`: Web Worker hoặc phương án dự phòng trên luồng chính) → **sinh đề** (`js/engine/`: pipeline, full-grid,
+digger, difficulty, events) → **bộ giải** (`../core/js/engine/`: `dfs-solver`, `logical-solver`, `techniques` và các
+`tech-*.js`, dùng chung với trình chơi) → **mô hình** (`model`, `constraints`, `bits`, `classic-model` ở `../core`;
+`rng` và 15 biến thể trong `js/variants/`). Tầng dưới không bao giờ biết tầng trên. Các bộ máy (`../core/js/engine/`,
+`js/engine/`) và `js/variants/` không chạm vào DOM, nhờ đó toàn bộ bộ máy chạy được trong Node để kiểm thử.
+`../core` là phần mã dùng chung với trình chơi (xem [tổng quan](../README.md)); nó không biết gì về trình tạo đề.
 
 **Một mô hình cho mọi biến thể.** Một đề là một tập ô, một danh sách *nhóm* (các ô phải chứa giá trị khác
 nhau: hàng, cột, khối, vùng jigsaw, đường chéo, cửa sổ, lồng) và các phần bổ sung tùy chọn (tổng của lồng, dấu
 so sánh). Samurai và các biến thể cùng loại chỉ là một mô hình lớn hơn mà các lưới dùng chung chỉ số ô. Vì vậy
-một bộ giải và một bộ sinh phục vụ cả 15 biến thể, và trong `js/core/` không có chỗ nào viết
+một bộ giải và một bộ sinh phục vụ cả 15 biến thể, và trong các bộ máy không có chỗ nào viết
 `if (variant === …)`: mọi khác biệt đi qua bộ đăng ký (`SG.variants`).
 
 ### Pipeline sinh đề và luồng sự kiện
@@ -1087,7 +1104,7 @@ dùng điểm thô của bộ giải.
 Giao diện không bao giờ làm thuật toán chậm đi để tạo hoạt ảnh, và phần phát lại cũng không đọc các sự kiện.
 Song song với các sự kiện, bộ đào ghi một **nhật ký đào** (dig log) gọn nhẹ cho lần đào thử đã trở thành đề
 (`result.digLog`: các mục `pass`, `accept`, `reject`, `keep` và `restart`, cộng thêm `signs`, `clear`,
-`reveal` và kết quả thử từng dấu ở biến thể So sánh; phần đầu của `js/core/digger.js` mô tả chúng). Nhật ký
+`reveal` và kết quả thử từng dấu ở biến thể So sánh; phần đầu của `js/engine/digger.js` mô tả chúng). Nhật ký
 này như nhau bất kể mức ghi trace, luồng chạy hay kích thước bảng, và được `toWire` / `fromWire` mang theo.
 Tạo xong, bảng hiện ngay đề hoàn chỉnh; không có gì tự chạy. `SG.player.buildSteps(result)` (hàm thuần) biến
 nhật ký thành các bước phát lại, mỗi bước là một thay đổi hiện trên bảng: lời giải đầy đủ; các lồng (Killer)
@@ -1166,7 +1183,8 @@ là nguồn sự thật duy nhất; cùng thứ tự đó được lặp lại t
 `SOURCE_FILES` của `tests.html` và — chỉ cho phần lõi, các biến thể và danh sách từ, không bao giờ cho giao
 diện — trong `js/worker/gen.worker.js`. `tests/suites/ui-contract.test.js` báo lỗi khi chúng lệch nhau.
 **Thêm một tệp JavaScript nghĩa là thêm nó vào cả bốn nơi.** Các tệp chưa tồn tại bị bộ chạy và `tests.html`
-bỏ qua.
+bỏ qua. Các tệp của `core` được liệt kê bằng đường dẫn từ thư mục này (`../core/js/engine/model.js`); tệp thêm vào
+`core` mà trình chơi cũng cần thì phải thêm vào các danh sách của trình chơi nữa.
 
 ### Các module giao diện
 
@@ -1198,15 +1216,15 @@ giúp ở đầu trang phát `action { id: 'export' | 'exportCode' | 'play' | 's
 `SG.app.openModal()` và đọc đề bằng `SG.app.getResult()`; tên không có
 trong danh sách cần thêm một mục vào danh sách `OPTIONAL_MODULES` của `app.js`. Mọi tệp giao diện phải **nạp được
 trong Node không cần DOM** (mã ở mức trên cùng chỉ định nghĩa hàm và đẩy các mảnh ngôn ngữ; DOM chỉ được chạm trong
-các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, kiểm thử được, nằm cạnh mã DOM. `js/ui/exchange.js`
-(`SG.exchange`) không thuộc nhóm này: đó là phần phụ trợ không DOM mà `exportUi` dùng và sudoku-player chia sẻ
-nguyên từng byte.
+các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, kiểm thử được, nằm cạnh mã DOM. `core/js/ui/exchange.js`
+(`SG.exchange`) không thuộc nhóm này: đó là phần phụ trợ không DOM mà `exportUi` dùng và trình chơi cũng nạp.
 
 ### Cây thư mục
 
-Xem [cây thư mục ở phần tiếng Anh](#directory-tree): `index.html`, `tests.html`, `css/`, `js/core/` (bộ máy,
-không DOM), `js/variants/`, `js/worker/`, `js/ui/` (gồm `exchange.js`), `assets/wordlists/`, `assets/wordbook/`, `docs/` và
-`tests/` (`tests/suites/`: bộ kiểm thử nhanh, chạy mặc định; `tests/manual/`: 8 suite nặng).
+Xem [cây thư mục ở phần tiếng Anh](#directory-tree): `generator/` gồm `index.html`, `tests.html`, `css/`, `js/engine/`
+(bộ sinh đề, không DOM), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
+thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng); phần dùng chung với trình chơi nằm
+ở `core/` (bộ máy giải, `exchange`, `wordbook`, `symbols`, `board-view`, css nền và từ điển), tài liệu ở `docs/`.
 
 ## Thêm một biến thể
 
@@ -1247,7 +1265,7 @@ chúng. Không cần thêm mã giải nào, vì một nhóm chỉ là thêm mộ
 5. **Kiểm định các mức.** `node tests/qualify.js --variant=disjoint9` tạo 40 đề cho mỗi mức với các seed cố
    định và chỉ cung cấp một mức khi ít nhất 36 đề đạt đúng mức đó trong ngân sách thời gian (đạt 30–35: thêm 60
    seed, cần ít nhất 90 trên 100); hãy chép các mức nó in ra vào `difficultySupport` và bảng của nó vào
-   [docs/report-v2/qualification.md](docs/report-v2/qualification.md). Sau đó `node tests/soak.js --variant=disjoint9` cho
+   [docs/difficulty-rating/qualification.md](../docs/difficulty-rating/qualification.md). Sau đó `node tests/soak.js --variant=disjoint9` cho
    biết tần suất đạt từng mức yêu cầu, các vi phạm bất biến và thời gian mỗi đề. Mức nào không đạt có thể được
    giúp bằng `clueFloorScale`; nếu không thì nó bị ẩn. Suite thủ công `difficulty` (`node tests/node-runner.js
    --suite=difficulty`) kiểm tra danh sách trong định nghĩa và trong tệp đó khớp nhau.
@@ -1256,7 +1274,7 @@ chúng. Không cần thêm mã giải nào, vì một nhóm chỉ là thêm mộ
 
 Một kỹ thuật giải là một hàm tìm *một phép suy luận* trong các ứng viên hiện tại. Nó nằm trong một tệp
 `tech-*.js` riêng và tự đăng ký, nên bộ giải và bộ đào không bao giờ phải đổi. Hợp đồng đầy đủ nằm ở phần đầu
-của `js/core/techniques.js`; ví dụ hoàn chỉnh *Full House* (một nhóm chỉ còn một ô trống) nằm ở
+của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (một nhóm chỉ còn một ô trống) nằm ở
 [phần tiếng Anh](#adding-a-technique).
 
 1. **Quy tắc của `find`**: chỉ đọc `state`, không bao giờ ghi vào (bộ giải tự áp dụng kết quả, nhờ đó điểm số
@@ -1268,7 +1286,7 @@ của `js/core/techniques.js`; ví dụ hoàn chỉnh *Full House* (một nhóm 
 3. **Chuỗi chữ**: `technique.<id>` (tên), `technique.<id>.desc` và `technique.<id>.step` bằng cả hai ngôn ngữ;
    `tests/suites/i18n.test.js` kiểm tra mọi kỹ thuật và mọi câu giải thích từng bước đều có đủ. Bậc thang kỹ
    thuật trong hộp thoại Trợ giúp tự liệt kê kỹ thuật mới.
-4. **Trọng số và mức**: thêm trọng số của kỹ thuật vào `WEIGHTS` trong `js/core/difficulty.js`
+4. **Trọng số và mức**: thêm trọng số của kỹ thuật vào `WEIGHTS` trong `js/engine/difficulty.js`
    (`SG.difficulty.WEIGHTS`; khi chấm điểm gặp một kỹ thuật không có trọng số thì báo lỗi
    `difficulty.unknownTechnique` — trọng số không bao giờ được đoán từ `baseCost`). Điểm của một đề là
    `round(80·E/(E+40) + P + 0.25·P·log₂(1 + W/P))`, với `E` là số ô trống, `P` là trọng số lớn nhất được dùng và
@@ -1278,7 +1296,7 @@ của `js/core/techniques.js`; ví dụ hoàn chỉnh *Full House* (một nhóm 
    `group` chỉ là tên họ kỹ thuật (`cage` và `ineq` thuộc về Killer và Greater-Than). Sau đó chạy lại bước kiểm
    định `node tests/qualify.js` và kiểm tra tỷ lệ đạt mức bằng `node tests/soak.js --quick`.
 5. **Kiểm thử**: thêm các mẫu đúng, mẫu sai và phép kiểm tra tính chắc chắn vào
-   `tests/suites/tech-<nhóm>.test.js` tương ứng (công cụ trong `tests/fixtures/techniques-helper.js`): một kỹ
+   `../core/tests/suites/tech-<nhóm>.test.js` tương ứng (công cụ trong `../core/tests/fixtures/techniques-helper.js`): một kỹ
    thuật không bao giờ được loại một giá trị thuộc về lời giải thật.
 
 ## Chạy kiểm thử
@@ -1286,16 +1304,17 @@ của `js/core/techniques.js`; ví dụ hoàn chỉnh *Full House* (một nhóm 
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (36 suite, khoảng 2.520 bài), chưa tới một phút
+node tests/node-runner.js                          # bộ nhanh (42 suite, khoảng 2.600 bài), khoảng một phút
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
-node tests/node-runner.js --all                    # nhanh + thủ công (44 suite, khoảng 3.560 bài), khoảng chín phút
+node tests/node-runner.js --all                    # nhanh + thủ công (50 suite, khoảng 3.630 bài), khoảng chín phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** `tests/suites/` là **bộ nhanh**: 36 suite, khoảng 2.520 bài,
-khoảng 50 giây, và là thứ chạy mặc định. Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 42 suite, khoảng 2.600 bài,
+khoảng một phút — 26 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+bậc thang kỹ thuật, định dạng trao đổi, hiển thị bảng, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw`, tổng cộng khoảng
 tám phút — không thuộc lần chạy mặc định: chạy bằng `--manual` (chỉ các suite này) hoặc `--all` (nhanh và thủ công,
@@ -1304,14 +1323,15 @@ nhanh, và chạy theo tên một suite nặng khi bạn đụng đến vùng c�
 đụng đến việc sinh đề, tính điểm hay một biến thể. Workflow CI chạy `node tests/node-runner.js --all` trước mỗi
 lần triển khai.
 
-Bộ chạy nạp `SOURCE_FILES` bằng `vm.runInThisContext`, tự tìm `tests/fixtures/*.js` và
-`tests/suites/*.test.js` (cùng `tests/manual/*.test.js` khi có `--manual` hoặc `--all`), và thoát với mã khác 0 khi
-có lỗi. Các suite bao phủ bộ máy, mọi biến thể, các kỹ thuật
+Bộ chạy nạp `SOURCE_FILES` bằng `vm.runInThisContext`, tự tìm `../core/tests/fixtures/*.js`, `tests/fixtures/*.js`,
+`../core/tests/suites/*.test.js` và `tests/suites/*.test.js` (cùng `tests/manual/*.test.js` khi có `--manual` hoặc
+`--all`), và thoát với mã khác 0 khi có lỗi. Các suite dùng chung dựng bảng của mọi biến thể qua `SG.testkit`
+(`../core/tests/fixtures/testkit.js`); `tests/fixtures/testkit-provider.js` bảo nó lấy các bảng từ bộ đăng ký biến thể. Các suite bao phủ bộ máy, mọi biến thể, các kỹ thuật
 giải, pipeline cùng các sự kiện của nó, worker và client của nó, và phần logic thuần của mọi module giao diện
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu README này với mã nguồn: bảng biến thể, tham số
 URL, tên các script, liên kết, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm khoảng 3.560 bài trong 44 suite (khoảng 2.520 bài trong 36 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
-khi tách) nằm trong `docs/report-v1.md`.
+mã này, bộ chạy đếm khoảng 3.630 bài trong 50 suite (khoảng 2.600 bài trong 42 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+khi tách) nằm trong [docs/qa/final-review-v1.md](../docs/qa/final-review-v1.md).
 
 Các suite so thời gian tạo đề của mọi biến thể với ngân sách ở [design.md](design.md) §9.1 kèm một hệ số dung
 sai, để một máy đang bận hoặc chậm hơn không làm chúng thất bại: gấp đôi ngân sách theo mặc định, gấp ba khi có
@@ -1331,7 +1351,7 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
   cho phân vị 95) rồi in bảng và danh sách mức; `--variant`, `--level`, `--jobs`, `--json` và `--markdown` thu
-  hẹp phạm vi hoặc lưu kết quả; `--probe=N` xem nhanh (N seed mỗi mức, không kết luận). Lần chạy gần nhất nằm trong [docs/report-v2/qualification.md](docs/report-v2/qualification.md).
+  hẹp phạm vi hoặc lưu kết quả; `--probe=N` xem nhanh (N seed mỗi mức, không kết luận). Lần chạy gần nhất nằm trong [docs/difficulty-rating/qualification.md](../docs/difficulty-rating/qualification.md).
 - **Hiệu năng** so với ngân sách ở [design.md](design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. *Mã băm hồi quy* trong `tests/fixtures/regression.js` bảo
   đảm một lần tối ưu không làm đổi đề (suite nhanh `smoke` kiểm tra một mẫu của chúng, suite thủ công `perf` kiểm
@@ -1341,7 +1361,7 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
 - **Các lần chạy thống kê sâu** trong các suite mega, multigrid và variants mặc định tắt; bật bằng biến môi
   trường `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; trong PowerShell dùng
   `$env:SG_DEEP = 1`).
-- **Báo cáo kiểm định cuối cùng:** `docs/report-v1.md`.
+- **Báo cáo kiểm định cuối cùng:** [docs/qa/final-review-v1.md](../docs/qa/final-review-v1.md).
 
 ## Quy ước
 
@@ -1352,10 +1372,10 @@ Danh sách đầy đủ ở [design.md](design.md) §12.2:
 - ES2020 không module, thụt lề 2 dấu cách, nháy đơn, dấu chấm phẩy, dòng tối đa 110 ký tự, chú thích bằng tiếng
   Anh và chỉ ở chỗ khó hiểu, JSDoc cho mọi API công khai.
 - `camelCase` cho biến và hàm, `PascalCase` cho kiểu, `UPPER_SNAKE` cho hằng, `kebab-case.js` cho tên tệp.
-- `js/core/` và `js/variants/` không bao giờ chạm vào DOM; DOM, `window` và `localStorage` chỉ dùng trong
+- Các bộ máy (`../core/js/engine/`, `js/engine/`) và `js/variants/` không bao giờ chạm vào DOM; DOM, `window` và `localStorage` chỉ dùng trong
   `js/ui/` và `js/worker/worker-client.js`. Có bài kiểm tra cho điều này.
 - Mọi chuỗi hiển thị đều qua `SG.i18n.t()` và có cả tiếng Anh lẫn tiếng Việt; `<html lang>` theo ngôn ngữ.
-- Không có màu viết thẳng ngoài `css/tokens.css` và `css/tokens-board.css`; mọi nơi khác dùng token
+- Không có màu viết thẳng ngoài `../core/css/tokens.css` và `../core/css/tokens-board.css`; mọi nơi khác dùng token
   `var(--sg-…)`. Có bài kiểm tra cho điều này.
 - Lỗi của phần lõi là `SG.errors.GenerationError` với một `code` có bản dịch.
 - Hàm nào có thể chạy quá 50 ms đều nhận `budget` và gọi `budget.check()`.
@@ -1366,18 +1386,18 @@ Danh sách đầy đủ ở [design.md](design.md) §12.2:
 - **Chế độ `file://`** kém mượt hơn: bộ sinh chạy trên luồng chính theo từng lát khoảng 12 ms, nên trang vẫn
   phản hồi và nút **Hủy** có tác dụng ở lát kế tiếp, nhưng có những đoạn việc không chia nhỏ được — ở Killer một
   lát tìm kiếm mất 70–86 ms, một lần đào dấu ở So sánh 50–70 ms, bố cục lồng của một đề Killer khó đến khoảng
-  300 ms — và trang có thể khựng chừng đó thời gian. Việc tạo sẵn đề ở nền cũng bị tắt. Hãy phục vụ thư mục bằng
+  300 ms — và trang có thể khựng chừng đó thời gian. Việc tạo sẵn đề ở nền cũng bị tắt. Hãy phục vụ kho mã bằng
   máy chủ để có Web Worker.
 - **Chưa chạy thử với trình đọc màn hình thật.** Thao tác bằng bàn phím, vai trò ARIA và thông báo trực tiếp đã
   được cài đặt và kiểm tra trong trình duyệt không giao diện, nhưng chưa ai nghe thử bằng trình đọc màn hình.
 - **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 26 kỹ thuật
   và chín khoảng điểm được chọn từ các phép đo trên đề do máy tạo
-  ([docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md)); trọng số Killer của `ruleOf45` và
+  ([docs/difficulty-rating/report-detailed.md](../docs/difficulty-rating/report-detailed.md)); trọng số Killer của `ruleOf45` và
   `cageSplit` là những ứng viên đầu tiên cần hiệu chỉnh với người chơi thật. Tổ hợp khó đạt (đối xứng chặt kèm
   mức rất cao) sẽ trả về đề gần nhất kèm thông báo thay vì đúng mức.
 - **Không phải mức nào cũng có ở mọi nơi**: Mini 4×4 chỉ có mức rất dễ và Mini 6×6 có rất dễ và khó; Sudoku cổ
   điển 9×9 và Sudoku chữ dừng ở mức địa ngục 1; mọi biến thể khác có đủ chín mức. Các mức mà một biến thể cung cấp
-  là những mức nó vượt qua trong bước kiểm định ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
+  là những mức nó vượt qua trong bước kiểm định ([docs/difficulty-rating/qualification.md](../docs/difficulty-rating/qualification.md)).
 - **Các mức khó nhất chậm nhất**: đo trong Node (`node tests/qualify.js`), các tổ hợp chậm nhất là So sánh và
   Killer từ mức chuyên gia trở lên và các mức địa ngục của bảng lớn, với phân vị 95 đến khoảng 9,5 giây (So sánh
   chuyên gia; Killer chuyên gia và ác mộng 8–9 giây; Quái vật 16×16 và Samurai địa ngục 2 khoảng 6–7 giây) và có
@@ -1398,6 +1418,6 @@ Danh sách đầy đủ ở [design.md](design.md) §12.2:
 
 Phát hành theo [giấy phép MIT](../LICENSE) © 2026 Dat Le. Các thuật toán theo tài liệu phổ biến về sinh và giải
 Sudoku; các quyết định thiết kế được ghi trong [design.md](design.md). Dự án anh em dùng để chơi các đề này là
-[sudoku-player](https://github.com/tdat00/sudoku-player).
+[sudoku-player](../player/README.md).
 
 [Lên đầu trang](#top)

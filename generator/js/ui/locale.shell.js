@@ -70,7 +70,7 @@
       'shell.result.label': 'Result',
       'shell.footer.copyright': '\u00a9 2026 Dat Le. Released under the MIT licence.',
       'shell.footer.repo': 'Source code on GitHub',
-      'shell.footer.repo.title': 'Open the repository of sudoku-generator on GitHub (new tab)',
+      'shell.footer.repo.title': 'Open the source of the generator in the sudoku repository on GitHub (new tab)',
       'shell.toast.label': 'Notifications'
     },
     vi: {
@@ -135,7 +135,7 @@
       'shell.result.label': 'Kết quả',
       'shell.footer.copyright': '\u00a9 2026 Dat Le. Phát hành theo giấy phép MIT.',
       'shell.footer.repo': 'Mã nguồn trên GitHub',
-      'shell.footer.repo.title': 'Mở kho mã sudoku-generator trên GitHub (tab mới)',
+      'shell.footer.repo.title': 'Mở mã nguồn của trình sinh đề trong kho mã sudoku trên GitHub (tab mới)',
       'shell.toast.label': 'Thông báo'
     }
   };

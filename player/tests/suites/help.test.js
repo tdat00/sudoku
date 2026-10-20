@@ -258,8 +258,8 @@
       var text = read('README.md');
       expect(text).toContain('- [Table of Contents](#english)');
       expect(text).toContain('- [Mục lục](#tiếng-việt)');
-      expect(text).toContain('https://tdat00.github.io/sudoku-player/');
-      expect(text).toContain('https://tdat00.github.io/sudoku-generator/');
+      expect(text).toContain('https://tdat00.github.io/sudoku/player/');
+      expect(text).toContain('https://tdat00.github.io/sudoku/generator/');
       // GitHub's slug of a heading: lower case, spaces to hyphens, punctuation dropped.
       var anchors = { top: true };
       (text.match(/<a id="([\w-]+)"><\/a>/g) || []).forEach(function (a) { anchors[/id="([\w-]+)"/.exec(a)[1]] = true; });
@@ -315,7 +315,7 @@
       expect(text).toContain('#puzzle=<token>');
       expect(text).toContain('#puzzle=<mã>');
       expect(text).toContain('sg-generator-url');
-      expect(text).toContain('https://tdat00.github.io/sudoku-generator/');
+      expect(text).toContain('../generator/index.html');
     });
 
     it('says how to run, test and deploy it, and every file it links to exists', function () {
@@ -324,8 +324,8 @@
       var text = read('README.md');
       ['node tests/node-runner.js', 'file://', 'python -m http.server', 'GitHub Pages', 'GitHub Actions']
         .forEach(function (part) { expect(text).toContain(part); });
-      (text.match(/\]\(\.\/([\w./-]+)\)/g) || []).forEach(function (link) {
-        var rel = /\(\.\/([\w./-]+)\)/.exec(link)[1];
+      (text.match(/\]\(\.{1,2}\/([\w./-]+)\)/g) || []).forEach(function (link) {
+        var rel = /\((\.{1,2}\/[\w./-]+)\)/.exec(link)[1];
         expect(env.fs.existsSync(env.path.join(env.root, rel))).toBe(true);
       });
     });

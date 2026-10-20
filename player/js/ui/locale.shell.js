@@ -56,7 +56,7 @@
       'shell.toast.label': 'Notifications',
       'shell.footer.copyright': '\u00a9 2026 Dat Le. Released under the MIT licence.',
       'shell.footer.repo': 'Source code on GitHub',
-      'shell.footer.repo.title': 'Open the repository of sudoku-player on GitHub (new tab)'
+      'shell.footer.repo.title': 'Open the source of the player in the sudoku repository on GitHub (new tab)'
     },
     vi: {
       'shell.skip': 'Chuyển tới bàn cờ',
@@ -106,7 +106,7 @@
       'shell.toast.label': 'Thông báo',
       'shell.footer.copyright': '\u00a9 2026 Dat Le. Phát hành theo giấy phép MIT.',
       'shell.footer.repo': 'Mã nguồn trên GitHub',
-      'shell.footer.repo.title': 'Mở kho mã sudoku-player trên GitHub (tab mới)'
+      'shell.footer.repo.title': 'Mở mã nguồn của trình chơi trong kho mã sudoku trên GitHub (tab mới)'
     }
   };
 

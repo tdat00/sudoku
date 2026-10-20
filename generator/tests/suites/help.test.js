@@ -577,7 +577,7 @@
         }
       });
       expect(images).toBeGreaterThan(2);
-      expect(exists('docs')).toBe(true);
+      expect(exists('../docs')).toBe(true);
     });
 
     it('uses only real commands: the scripts exist and know every option it shows', function () {
@@ -657,7 +657,7 @@
     it('has a worked technique example that registers and solves soundly', function () {
       needNode();
       var block = fencedBlocks(readme()).filter(function (b) {
-        return b.code.indexOf('// js/core/tech-fullhouse.js') === 0;
+        return b.code.indexOf('// ../core/js/engine/tech-fullhouse.js') === 0;
       })[0];
       expect(block).toBeTruthy();
       var ctx = sandbox();
