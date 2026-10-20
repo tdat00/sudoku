@@ -1,5 +1,7 @@
 # Sudoku Generator — Task Breakdown
 
+> **Note (one repository).** This document describes the app as built when it was a repository of its own, and it is kept as written. The generator and the player now live in one repository: paths such as `js/core/…`, `docs/…` or `tests/harness.js` are in `core/`, `generator/…`, `player/…` or `docs/` — see [where the old paths went](../docs/architecture.md#where-the-old-paths-went).
+
 > **For:** the executing AI agents. **Source document:** [`design.md`](./design.md) — **must be read before starting any task.**
 > **Version:** 1.2 · **Total tasks:** 60 cards (the 59 of the combined project + `T-7.8`; `T-7.5` moved to sudoku-player, so 59 are done here) · **Root directory:** `sudoku-generator/` (this repository holds the generator only; the combined project was split, see `T-7.5` and `T-7.8`)
 > **Status: all tasks of this repository are done** (per-task status in [Appendix A](#appendix-a--task-summary-table), summary of what shipped and the test counts in [Appendix E](#appendix-e--completion-summary)). `T-7.5` (trial play mode) **moved to the sudoku-player repository**; `T-7.8` (exchange / "Play online") was added here. The task cards below are kept as they were written; only facts that turned out wrong (file ownership, the number of script lists) were corrected, and where the implementation deviated from a card the note is in Appendix A and in [`design.md`](./design.md) §18. This file was translated from the original Vietnamese at the user's request.

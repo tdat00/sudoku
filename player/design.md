@@ -1,5 +1,7 @@
 # Sudoku Player — Design Document
 
+> **Note (one repository).** This document describes the app as built when it was a repository of its own, and it is kept as written. The generator and the player now live in one repository: paths such as `js/core/…`, `docs/…` or `tests/harness.js` are in `core/`, `generator/…`, `player/…` or `docs/` — see [where the old paths went](../docs/architecture.md#where-the-old-paths-went).
+
 > The player is the second half of a split project. **sudoku-generator** makes Sudoku puzzles (15 variants, a
 > logical difficulty rating, a step-by-step replay of how each puzzle was made). **sudoku-player** — this
 > repository — opens such a puzzle in a browser and lets people **play** it. The only coupling between the two

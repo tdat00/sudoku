@@ -1,0 +1,3 @@
+# The tests compare these text fixtures byte for byte (they split on blank lines): a Windows checkout must not turn
+# their line breaks into CRLF.
+player/tests/fixtures/exports/*.txt text eol=lf

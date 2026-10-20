@@ -1,5 +1,7 @@
 # Sudoku Generator — Design Document
 
+> **Note (one repository).** This document describes the app as built when it was a repository of its own, and it is kept as written. The generator and the player now live in one repository: paths such as `js/core/…`, `docs/…` or `tests/harness.js` are in `core/`, `generator/…`, `player/…` or `docs/` — see [where the old paths went](../docs/architecture.md#where-the-old-paths-went).
+
 > **Document language:** English (translated from the original Vietnamese specification at the user's request; the Vietnamese UI strings quoted in §7.4 and §11 are product copy and stay in Vietnamese).
 > **Version:** 1.2 · **Status:** Implemented — all tasks of [`task.md`](./task.md) are done. The sections below describe the implementation as built. Where it differs from the first plan the text says so, and [§18](#18-implementation-notes--deviations) lists every deviation in one table. This repository holds **the generator only**: it was split off a combined project, and the trial-play mode now lives in the sibling repository [sudoku-player](https://github.com/tdat00/sudoku-player), which opens the puzzles this one hands over ([§10.9](#109-hand-off-to-the-player-exchange)).
 > **Related documents:** [`task.md`](./task.md) — the task list the agents worked from, with a completion summary (Appendix E) · [`README.md`](./README.md) — how to run, test and extend · `docs/report-v1.md` — final QA report (written before the split and before the UI rework of §10.1, so its screenshots and UI notes are a snapshot).
@@ -309,7 +311,7 @@ Every variant builder **must** pass `SG.model.validate(model)`:
 
 Which modes a variant offers is its `symbolModes`: `digits`, `letters`, `colors`, `shapes` for every variant except Mega (`digits` only — its symbol set is the variant option `symbolSet`, see [§8.6](#86-mega-1212--1616)) and Wordoku (`word`, `digits`).
 
-**Levels offered** (`difficultySupport`; the UI only lists these, and `SG.pipeline` refuses the others with `difficulty.unsupportedLevel`). Rating v2: the levels each variant passed in the qualification (`node tests/qualify.js`, protocol and table in [docs/report-v2/qualification.md](docs/report-v2/qualification.md)):
+**Levels offered** (`difficultySupport`; the UI only lists these, and `SG.pipeline` refuses the others with `difficulty.unsupportedLevel`). Rating v2: the levels each variant passed in the qualification (`node tests/qualify.js`, protocol and table in [docs/report-v2/qualification.md](../docs/difficulty-rating/qualification.md)):
 
 | Variant | Levels |
 |---------|--------|
@@ -357,7 +359,7 @@ SG.variants.register({
 });
 ```
 
-`difficultySupport` lists the levels the variant offers: exactly those that pass the qualification of `node tests/qualify.js --variant=<id>` ([docs/report-v2/qualification.md](docs/report-v2/qualification.md)); a list may have gaps.
+`difficultySupport` lists the levels the variant offers: exactly those that pass the qualification of `node tests/qualify.js --variant=<id>` ([docs/report-v2/qualification.md](../docs/difficulty-rating/qualification.md)); a list may have gaps.
 
 `register` validates the definition (a typo fails when the file loads, not in the middle of a run) and rejects a duplicate `id`. The UI never reads `options` directly: `SG.variants.optionsOf(id)` returns them in one normalised shape (§13.8). The worked example of a complete new variant is in [`README.md`](./README.md#adding-a-variant).
 
@@ -521,11 +523,11 @@ The loop: repeatedly **try the techniques in a fixed technique-priority order** 
 
 `cage` techniques have `variantScope: ['killer']` and `ineq` techniques `['greaterThan']`: the solver and the digger only use a technique whose scope contains the model's variant. The Vietnamese names of the techniques live in the locale pack (`technique.<id>`), which is authoritative; the first plan's Vietnamese names were not kept.
 
-> The scores of the first plan were **starting values**; the calibration of task `T-2.10` replaced them with calibrated costs (`SG.difficulty.COSTS`, rating v1), and rating v2 replaced those with the weights above ([docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md) §5.2: singles stay close together so that their order does not matter, cage combinations and inequality chains start at the locked-candidate level, the rule of 45 and cage splitting sit among strong subsets and fish). The weights are engineering priors, not measurements of human solvers. Task `T-6.3` of the first plan referred to pre-generation, not calibration.
+> The scores of the first plan were **starting values**; the calibration of task `T-2.10` replaced them with calibrated costs (`SG.difficulty.COSTS`, rating v1), and rating v2 replaced those with the weights above ([docs/report-v2/report-detailed.md](../docs/difficulty-rating/report-detailed.md) §5.2: singles stay close together so that their order does not matter, cage combinations and inequality chains start at the locked-candidate level, the rule of 45 and cage splitting sit among strong subsets and fish). The weights are engineering priors, not measurements of human solvers. Task `T-6.3` of the first plan referred to pre-generation, not calibration.
 
 #### Difficulty scoring
 
-Rating v2 (the joint report [docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md) §5 is the specification):
+Rating v2 (the joint report [docs/report-v2/report-detailed.md](../docs/difficulty-rating/report-detailed.md) §5 is the specification):
 
 ```
 precondition  a complete logical proof (rating.solved); otherwise the puzzle is unrated: no score, no level
@@ -566,7 +568,7 @@ Nine levels (rating v2). The band is the same for every variant; the oracle of a
 | `hell1` | Địa ngục 1 | Hell 1 | [2400, 3600) | — | 17 | 0 |
 | `hell2` | Địa ngục 2 | Hell 2 | ≥ 3600 | — | 17 | 0 |
 
-Bands are half-open, `[min, next min)`, so every score belongs to exactly one level; the top level has no upper bound. The canonical names and descriptions of the levels (both apps use them verbatim) are in [docs/report-v2/report-detailed.md](docs/report-v2/report-detailed.md) §5.3; the level descriptions say what a level *typically* uses, because the level comes from the score. `expert` takes the clue floor and unit minimum of `hard`, and the hell tiers those of `nightmare`. `maxClues` is informative only. `SG.difficulty.BASE_GROUPS` names the classic technique families in ladder order; it no longer defines the levels. No further tiers in this release: no generated puzzle reached 5,400 (report §5.3).
+Bands are half-open, `[min, next min)`, so every score belongs to exactly one level; the top level has no upper bound. The canonical names and descriptions of the levels (both apps use them verbatim) are in [docs/report-v2/report-detailed.md](../docs/difficulty-rating/report-detailed.md) §5.3; the level descriptions say what a level *typically* uses, because the level comes from the score. `expert` takes the clue floor and unit minimum of `hard`, and the hell tiers those of `nightmare`. `maxClues` is informative only. `SG.difficulty.BASE_GROUPS` names the classic technique families in ladder order; it no longer defines the levels. No further tiers in this release: no generated puzzle reached 5,400 (report §5.3).
 
 **Names of the levels.** The levels were renamed after rating v2 had been built, for names that are easier to understand: `medium` → `normal`, `veryHard` → `expert`, `expert` → `master`, `evil` → `nightmare`, `nightmare1` → `hell1`, `nightmare2` → `hell2` (VI: `normal` keeps Trung bình, `expert` is Chuyên gia, `master` Bậc thầy, `nightmare` Ác mộng, `hell1` / `hell2` Địa ngục 1 / 2). Only the names changed (ids in URLs, exports and storage, locale keys, code, documents); the bands, the weights and the generation did not. The documents of the two versions (`docs/report-v1.md`, `docs/report-v2/`, `task.md`) keep the names of their time; the mapping above reads them. A saved link, history entry or export that carries an old id is not translated: `d=expert` now means the level once called `veryHard`.
 
@@ -1011,7 +1013,7 @@ Measured on a mid-range desktop (~10th-generation Intel i5), Chrome, `trace: sum
 | `flower` | < 3 s | < 8 s | < 8 s | < 20 s | < 20 s | < 20 s | < 20 s | < 20 s | < 20 s |
 | `sohei` | < 3 s | < 8 s | < 8 s | < 20 s | < 20 s | < 20 s | < 20 s | < 20 s | < 20 s |
 
-A `—` entry = the variant does not offer that level (`difficultySupport`, [docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
+A `—` entry = the variant does not offer that level (`difficultySupport`, [docs/report-v2/qualification.md](../docs/difficulty-rating/qualification.md)).
 
 **Status.** `node tests/perf.js` measures every cell of this table, and `tests/soak.js` prints the same budgets next to its own timings. Measured in Node on the development machine (not in Chrome on the reference i5), every cell of the qualification run meets its target; the slowest relative to its budget are Greater-Than and Killer from `expert` up (p95 ≈ 8.2–9.5 s of 10 s: Greater-Than `expert` 9.5 s, which is borderline and depends on a quiet machine, Killer `expert` 8.7 s and `nightmare` 8.2 s). The `perf` suite of `tests/manual/` only warns about a slow cell; the *regression hashes* of `tests/fixtures/regression.js` are what keeps an optimisation honest (§15.2).
 
@@ -1767,7 +1769,7 @@ These are assertions that **must never be false**, checked in every generation t
 
 ### 15.4 Fuzz / soak testing
 
-`tests/soak.js` — generates puzzles for every (variant × level) combination, checks I1–I7 on each one, and prints a confusion matrix per variant (requested level in the rows, achieved level in the columns), the time per puzzle against the §9.1 budget, and a score histogram on the bands of the nine levels. Presets: `--quick` (20 per classic9 level and 5 per other offered combination, ≈ 700 puzzles, the P2 checkpoint), `--count=N` (default 500), `--per-combo=N` and `--full` (25 per offered combination, 100 per classic9 level, ≈ 3 550 puzzles, the final QA preset); `--variant`, `--level`, `--seed`, and `--weights` / `--bands` to try other technique weights or bands without editing the file. Exit code 0 requires no invariant violation, ≥ 90 % exact hits on every classic9 level and ≥ 80 % on every other combination (`--no-gate` always exits 0). It is not part of any suite run (too slow); it was the tool of the calibrations of tasks `T-2.10` and `T-7.7`. Which levels a variant offers at all is decided by the qualification, `tests/qualify.js` (protocol of report §6; results in [docs/report-v2/qualification.md](docs/report-v2/qualification.md)).
+`tests/soak.js` — generates puzzles for every (variant × level) combination, checks I1–I7 on each one, and prints a confusion matrix per variant (requested level in the rows, achieved level in the columns), the time per puzzle against the §9.1 budget, and a score histogram on the bands of the nine levels. Presets: `--quick` (20 per classic9 level and 5 per other offered combination, ≈ 700 puzzles, the P2 checkpoint), `--count=N` (default 500), `--per-combo=N` and `--full` (25 per offered combination, 100 per classic9 level, ≈ 3 550 puzzles, the final QA preset); `--variant`, `--level`, `--seed`, and `--weights` / `--bands` to try other technique weights or bands without editing the file. Exit code 0 requires no invariant violation, ≥ 90 % exact hits on every classic9 level and ≥ 80 % on every other combination (`--no-gate` always exits 0). It is not part of any suite run (too slow); it was the tool of the calibrations of tasks `T-2.10` and `T-7.7`. Which levels a variant offers at all is decided by the qualification, `tests/qualify.js` (protocol of report §6; results in [docs/report-v2/qualification.md](../docs/difficulty-rating/qualification.md)).
 
 ### 15.5 Mandatory manual testing (checklist)
 

@@ -1,5 +1,7 @@
 # Sudoku Player — Task Breakdown
 
+> **Note (one repository).** This document describes the app as built when it was a repository of its own, and it is kept as written. The generator and the player now live in one repository: paths such as `js/core/…`, `docs/…` or `tests/harness.js` are in `core/`, `generator/…`, `player/…` or `docs/` — see [where the old paths went](../docs/architecture.md#where-the-old-paths-went).
+
 > Source of truth for the design: [`design.md`](./design.md).
 > The tasks are numbered in **development order**; each phase ends with a green `node tests/node-runner.js` and
 > is one commit of the history (the commit subject names the phase). Status values: `planned` · `done` ·
