@@ -289,7 +289,7 @@
   };
 
   /**
-   * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in js/core/difficulty.js).
+   * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in js/engine/difficulty.js).
    * The derived floor (classic9 numbers x cellCount / 81) stops the digger before the techniques of the
    * level do: every shared box carries the clues of two grids, so the puzzle stays solvable with singles and
    * normal was hit by only 2..9 % of the dug puzzles. With 60 % of the floor the dig ends where the

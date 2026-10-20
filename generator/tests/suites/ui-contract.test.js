@@ -492,7 +492,7 @@
           return /^\.\.?\//.test(p) ? NODE.path.posix.normalize('js/worker/' + p) : p;
         });
         var expected = sourceFilesOfRunner().filter(function (rel) {
-          return /^(?:js\/core|js\/variants|assets\/wordlists)\//.test(rel);
+          return /^(?:\.\.\/core\/js\/engine|js\/engine|js\/variants|assets\/wordlists)\//.test(rel);
         });
         expect(normalised).toEqual(expected);
         paths.forEach(function (p) {

@@ -1,4 +1,4 @@
-// Wing techniques (task T-2.5), js/core/tech-wing.js: XY-Wing, XYZ-Wing, W-Wing and Unique Rectangle.
+// Wing techniques (task T-2.5), ../core/js/engine/tech-wing.js: XY-Wing, XYZ-Wing, W-Wing and Unique Rectangle.
 //
 // Where the fixtures come from:
 //   - published: puzzles of the SudokuWiki.org strategy pages (Y-Wing, XYZ-Wing, W-Wing, Unique Rectangles).

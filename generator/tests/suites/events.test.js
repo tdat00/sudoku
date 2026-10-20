@@ -892,7 +892,7 @@
     it('the source has no display strings: every string literal is an identifier or a key', function () {
       var env = SG.test.node;
       if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
-      var text = env.fs.readFileSync(env.path.join(env.root, 'js/core/explain-data.js'), 'utf8');
+      var text = env.fs.readFileSync(env.path.join(env.root, 'js/engine/explain-data.js'), 'utf8');
       var code = text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
       var literals = code.match(/'(?:[^'\\\n]|\\.)*'|"(?:[^"\\\n]|\\.)*"|`[^`]*`/g) || [];
       expect(literals.length).toBeGreaterThan(50);

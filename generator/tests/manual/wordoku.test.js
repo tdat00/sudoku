@@ -1337,15 +1337,17 @@
   describe('wordoku: code hygiene', function () {
     var OWN_FILES = ['js/variants/wordoku.js', 'assets/wordlists/isograms.en.js', 'assets/wordlists/isograms.vi.js'];
 
-    it('has no mention of wordoku in js/core: it reaches the core only through the registry and the hooks',
+    it('has no mention of wordoku in the engines: it reaches the core only through the registry and the hooks',
       function () {
         var env = SG.test.node;
         if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
-        var dir = env.path.join(env.root, 'js/core');
-        env.fs.readdirSync(dir).filter(function (n) { return n.endsWith('.js'); }).forEach(function (name) {
-          var text = env.fs.readFileSync(env.path.join(dir, name), 'utf8');
-          text.split(/\r?\n/).forEach(function (line, i) {
-            if (/wordoku/i.test(line)) throw new Error('js/core/' + name + ':' + (i + 1) + ' mentions wordoku: ' + line.trim());
+        ['../core/js/engine', 'js/engine'].forEach(function (rel) {
+          var dir = env.path.join(env.root, rel);
+          env.fs.readdirSync(dir).filter(function (n) { return n.endsWith('.js'); }).forEach(function (name) {
+            var text = env.fs.readFileSync(env.path.join(dir, name), 'utf8');
+            text.split(/\r?\n/).forEach(function (line, i) {
+              if (/wordoku/i.test(line)) throw new Error(rel + '/' + name + ':' + (i + 1) + ' mentions wordoku: ' + line.trim());
+            });
           });
         });
       });

@@ -21,7 +21,7 @@
  * Invariant I5 (rating v2): every puzzle has a complete logical proof, and an exact one has its score in the
  * band of its level. Invariant I6 compares the clue count with `SG.difficulty.spec(level, model).minClues`,
  * which is the variant's own floor (`clueFloorScale` / `clueFloor` of its definition, see
- * js/core/difficulty.js). The soak is not part of the normal test run (node tests/node-runner.js): it takes
+ * js/engine/difficulty.js). The soak is not part of the normal test run (node tests/node-runner.js): it takes
  * a while and has no pass/fail per puzzle, only totals. Which levels a variant offers is decided by
  * `node tests/qualify.js`, not by this tool.
  *
@@ -33,7 +33,7 @@
  *
  * Measuring a level a variant does not offer: `--variant=classic6 --level=master --include-unsupported`.
  *
- * Calibration workflow: change SG.difficulty.WEIGHTS / SG.difficulty.TABLE in js/core/difficulty.js, run
+ * Calibration workflow: change SG.difficulty.WEIGHTS / SG.difficulty.TABLE in js/engine/difficulty.js, run
  * this, read the matrix. `--weights='{"ruleOf45":145}'` and `--bands=0,45,180,400,700,1000,1500,2400,3600`
  * try a change without editing the file (they patch the tables for the run and are printed in the header).
  *

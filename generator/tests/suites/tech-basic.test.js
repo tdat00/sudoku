@@ -1,4 +1,4 @@
-// Techniques of the `basic` and `locked` groups (task T-2.2, js/core/tech-basic.js):
+// Techniques of the `basic` and `locked` groups (task T-2.2, ../core/js/engine/tech-basic.js):
 // nakedSingle, hiddenSingleBox, hiddenSingleLine, pointing and boxLine.
 //
 // Three kinds of evidence:

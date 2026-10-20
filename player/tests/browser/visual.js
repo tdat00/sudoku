@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { launch, newPage, serve, sleep, ROOT } = require('./lib.js');
 
-const base = 'http://127.0.0.1:8771/index.html';
+const base = 'http://127.0.0.1:8771/player/index.html';
 const checks = [];
 function check(name, ok, detail) {
   checks.push({ name, ok });

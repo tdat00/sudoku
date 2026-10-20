@@ -539,6 +539,7 @@
       var missing = scripts.filter(function (src) { return !exists(src); });
       expect(missing).toEqual([]);
       var unmentioned = scripts.filter(function (src) {
+        if (src.indexOf('../core/') === 0) return false;
         return text.indexOf(NODE.path.posix.basename(src)) === -1;
       });
       expect(unmentioned).toEqual([]);

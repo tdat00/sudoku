@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const { launch, newPage, serve, sleep, ROOT } = require('./lib.js');
 
-const base = 'http://127.0.0.1:8768/index.html';
+const base = 'http://127.0.0.1:8768/player/index.html';
 const dir = path.join(ROOT, 'tests/fixtures/puzzles');
 const NAMES = fs.readdirSync(dir).map(function (n) { return n.replace('.json', ''); });
 const checks = [];

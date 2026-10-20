@@ -1,6 +1,6 @@
 'use strict';
 // Helpers of the browser run (docs/qa.md): launches headless Edge, talks to it over the DevTools protocol (the
-// global WebSocket of Node 22+) and serves the repository over http. Everything stays inside the repository:
+// global WebSocket of Node 22+) and serves the repository (player and core) over http. Everything stays inside the repository:
 // profiles in .scratch-profile (deleted when the browser closes), screenshots in .scratch-shots; both are
 // ignored by git. Set EDGE_PATH for another Chromium-based browser.
 const cp = require('child_process');
@@ -9,6 +9,9 @@ const http = require('http');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..', '..');
+// The player loads the shared code from ../core, so the server starts at the repository root.
+const SITE = path.resolve(ROOT, '..');
+const SITE_PATH = '/' + path.basename(ROOT);
 const EDGE = process.env.EDGE_PATH || (process.platform === 'win32' ?
   'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe' : 'microsoft-edge');
 const SHOTS = path.join(ROOT, '.scratch-shots');
@@ -216,8 +219,8 @@ function serve(port) {
     '.md': 'text/plain; charset=utf-8', '.png': 'image/png' };
   const server = http.createServer(function (req, res) {
     const url = decodeURIComponent(req.url.split('?')[0]);
-    const file = path.normalize(path.join(ROOT, url === '/' ? 'index.html' : url));
-    if (!file.startsWith(ROOT) || file.indexOf('.scratch') !== -1 || file.indexOf('.git') !== -1) {
+    const file = path.normalize(path.join(SITE, url === '/' ? SITE_PATH + '/index.html' : url));
+    if (!file.startsWith(SITE) || file.indexOf('.scratch') !== -1 || file.indexOf('.git') !== -1) {
       res.writeHead(403);
       res.end();
       return;

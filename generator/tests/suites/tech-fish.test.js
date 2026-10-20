@@ -1,4 +1,4 @@
-// Fish techniques (task T-2.4): X-Wing, Simple Colouring, Swordfish, Jellyfish (js/core/tech-fish.js).
+// Fish techniques (task T-2.4): X-Wing, Simple Colouring, Swordfish, Jellyfish (../core/js/engine/tech-fish.js).
 //
 // Fixtures: the published positions are the example boards of the SudokuWiki strategy pages (X-Wing,
 // Swordfish, Jellyfish, Simple Colouring). Each one is the puzzle plus the candidate grid the page shows when

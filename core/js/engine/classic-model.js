@@ -90,7 +90,7 @@
     });
   }
 
-  /** Canvas size and [row, col] of every 9x9 sub-grid; fixed per variant so a clues-only text export can be rebuilt. */
+  /** Canvas size and [row, col] of every 9x9 sub-grid; fixed per variant so a clues-only text of the Export box can be rebuilt. */
   const MULTIGRID = Object.freeze({
     samurai: Object.freeze({ rows: 21, cols: 21, cells: 369,
       origins: Object.freeze([[0, 0], [0, 12], [12, 0], [12, 12], [6, 6]]) }),

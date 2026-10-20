@@ -161,7 +161,7 @@
       model = SG.model.create(doc.model);
       if (model.cages.length > 0) SG.comboTable.enablePropagation(model.variantId);
       if (model.inequalities.length > 0) {
-        if (!SG.ineq) SG.test.skip('needs js/core/tech-ineq.js (the Greater-Than propagation extension)');
+        if (!SG.ineq) SG.test.skip('needs ../core/js/engine/tech-ineq.js (the Greater-Than propagation extension)');
         SG.ineq.ensureExtension();
       }
     }

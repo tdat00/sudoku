@@ -849,7 +849,7 @@ The full list is in [design.md](design.md) §12.2:
 
 ## Licence and credits
 
-Released under the [MIT licence](LICENSE) © 2026 Dat Le. The algorithms follow the well-known literature on
+Released under the [MIT licence](../LICENSE) © 2026 Dat Le. The algorithms follow the well-known literature on
 Sudoku generation and solving; the design decisions are recorded in [design.md](design.md). The sibling
 project that plays the puzzles is [sudoku-player](https://github.com/tdat00/sudoku-player).
 
@@ -1396,7 +1396,7 @@ Danh sách đầy đủ ở [design.md](design.md) §12.2:
 
 ## Giấy phép và ghi công
 
-Phát hành theo [giấy phép MIT](LICENSE) © 2026 Dat Le. Các thuật toán theo tài liệu phổ biến về sinh và giải
+Phát hành theo [giấy phép MIT](../LICENSE) © 2026 Dat Le. Các thuật toán theo tài liệu phổ biến về sinh và giải
 Sudoku; các quyết định thiết kế được ghi trong [design.md](design.md). Dự án anh em dùng để chơi các đề này là
 [sudoku-player](https://github.com/tdat00/sudoku-player).
 

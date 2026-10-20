@@ -38,7 +38,7 @@
    * @property {(Object<string, number>|function(string, PuzzleModel, number): number)} [clueFloor]
    *     Own clue floor in place of the one `SG.difficulty.spec` derives from the classic9 numbers: a table
    *     { level: clues } (a missing level: no floor) or a function (level, model, derivedFloor) => clues.
-   *     See "Clue floor per variant" in js/core/difficulty.js.
+   *     See "Clue floor per variant" in js/engine/difficulty.js.
    * @property {Object<string, number>} [clueFloorScale]
    *     Calibration of the derived floor: { level: factor >= 0 } (missing level: 1); applied before
    *     `clueFloor`.

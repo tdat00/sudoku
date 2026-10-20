@@ -76,7 +76,7 @@
       };
       SG.nsTestMarker = marker;
       SG.setDebug(true);
-      return reloadScript('js/core/ns.js').then(function () {
+      return reloadScript('../core/js/engine/ns.js').then(function () {
         expect(SG.nsTestMarker).toBe(marker);
         expect(SG.DEBUG).toBe(true);
         expect(SG.VERSION).toBe(before.version);
@@ -93,7 +93,7 @@
     it('loading errors.js again keeps the original GenerationError class', function () {
       var Original = SG.errors.GenerationError;
       var earlier = new Original('x.y');
-      return reloadScript('js/core/errors.js').then(function () {
+      return reloadScript('../core/js/engine/errors.js').then(function () {
         expect(SG.errors.GenerationError).toBe(Original);
         expect(earlier instanceof SG.errors.GenerationError).toBe(true);
       });
@@ -101,7 +101,7 @@
   });
 
   describe('core files in a bare environment (Node only)', function () {
-    var FILES = ['js/core/ns.js', 'js/core/errors.js', 'js/core/bits.js', 'js/core/budget.js'];
+    var FILES = ['../core/js/engine/ns.js', '../core/js/engine/errors.js', '../core/js/engine/bits.js', '../core/js/engine/budget.js'];
 
     function loadInto(context) {
       var env = SG.test.node;

@@ -468,7 +468,7 @@
     difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
       'hell2'],
     // The signs do part of the work of the clues, so the classic9 floors (29 / 25 / 22) kept the dig from
-    // reaching the level; 83 % / 80 % / 80 % of them fit better (js/core/difficulty.js, "Calibration log").
+    // reaching the level; 83 % / 80 % / 80 % of them fit better (js/engine/difficulty.js, "Calibration log").
     // expert takes the factor of hard.
     clueFloorScale: Object.freeze({ normal: 0.83, hard: 0.8, expert: 0.8, master: 0.8 }),
     defaultSymbolMode: 'digits',

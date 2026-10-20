@@ -224,7 +224,7 @@
     it('is not special-cased in the core: no variant ids in the generator or solver sources', function () {
       var env = SG.test.node;
       if (!env) SG.test.skip('needs the Node file system');
-      ['js/core/full-grid.js', 'js/core/dfs-solver.js', 'js/core/constraints.js', 'js/core/digger.js']
+      ['js/engine/full-grid.js', '../core/js/engine/dfs-solver.js', '../core/js/engine/constraints.js', 'js/engine/digger.js']
         .forEach(function (rel) {
           var text = env.fs.readFileSync(env.path.join(env.root, rel), 'utf8');
           expect(/classic|variantId\s*===|variantId\s*==/.test(text)).toBe(false);

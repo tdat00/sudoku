@@ -3,7 +3,7 @@
  * holds pairwise distinct digits that add up to it. Classic Killer shows no given digits, so the cages
  * carry the information; the digger keeps only the few clues that the level (and the cage layout) needs.
  *
- * How the pieces fit (no `if (variant === 'killer')` exists anywhere in js/core):
+ * How the pieces fit (no `if (variant === 'killer')` exists anywhere in core/js/engine or js/engine):
  *   - `build` returns the plain 9x9 board without cages: the cages come from the solution, which does not
  *     exist yet at step 2 of the pipeline.
  *   - `postGenerate` (step 4, 'extraStructure') grows the cages from the full grid, checks that the puzzle

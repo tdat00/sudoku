@@ -1,7 +1,7 @@
 /**
  * Explanation card: for the phase of the replay step on show (full solution, extra structure, dig), the fixed
  * parts What / Why / How, the pseudocode of the phase with the current line highlighted, and a status line with
- * the running dig counters. Data comes from `SG.explain` (js/core/explain-data.js, keys only); texts are in the
+ * the running dig counters. Data comes from `SG.explain` (js/engine/explain-data.js, keys only); texts are in the
  * locale packs. Exports `SG.explainCard` (NOT `SG.explain`).
  * `viewModel` is pure (runs in Node); `create(rootEl, options)` renders it and re-renders on language change.
  * Host usage: `card.show(step.phase, { lineLabel: step.line, metrics: step.metrics })`; without metrics the

@@ -1,8 +1,9 @@
 /**
- * Unified puzzle model: every variant is a CSP of cells, all-different units, optional cages / inequalities and a
- * drawing layout. Immutable once built (`create`); what changes while solving lives in a separate `SolveState`, so
- * cloning a search position is one typed-array copy. `create` only builds data and deliberately does not reject
- * malformed unit lists, so `validate` can report every problem of a hand-made model.
+ * Unified puzzle model: every variant is a constraint satisfaction problem made of cells, all-different units,
+ * optional cages / inequalities and a drawing layout. The model is immutable once built (`create`); everything
+ * that changes while solving lives in a separate `SolveState`, so cloning a search position is one typed-array
+ * copy. `create` only builds data and never rejects a malformed unit list, so that `validate` can report every
+ * problem of a hand-made model.
  */
 (function (root) {
   'use strict';
@@ -11,24 +12,36 @@
 
   const MAX_ERRORS = 50;
 
-  // Default budget of the V8 trial solve: small, because validation must stay cheap.
+  // Budget of the V8 trial solve: small, because validation must stay cheap.
   const V8_NODES = 50000;
   const V8_MS = 500;
 
-  // UnitMeta: { kind ('row' | 'col' | 'box' | 'region' | 'diag' | 'window'), gridIndex (sub-grid, 0 for single-grid),
-  // label ('R3', 'C7', 'B5'), partial? (may hold fewer than D cells; all-different only) }
+  /**
+   * @typedef {Object} UnitMeta
+   * `kind` is 'row' | 'col' | 'box' | 'region' | 'diag' | 'window' (free text allowed); `partial` marks an
+   * all-different unit that may hold fewer than D cells; `label` is e.g. 'R3'.
+   */
 
-  // ModelSpec (input of `create`): variantId, digits (D, 1..SG.MAX_DIGITS), cellCount (default layout.cellRow.length),
-  // units (cell indices of each all-different unit), unitMeta (same length; missing entries get defaults),
-  // cages [{ cells, sum, distinct? }], inequalities [{ a, b }] (value[a] < value[b]), layout { rows, cols, cellRow,
-  // cellCol, cellRegion?, overlays?, subGrids? }, symbols { mode, labels } (labels[v - 1] is the symbol of v),
-  // fixedCells (one entry per cell: 0 = free, v > 0 = forced to v; or a list of [cell, value] pairs).
+  /**
+   * @typedef {Object} ModelSpec  Input of `create`.
+   * `cellCount` defaults to `layout.cellRow.length`; `unitMeta` has one entry per unit (missing ones get defaults);
+   * `inequalities` mean value[a] < value[b]; `symbols.labels[v - 1]` is the symbol of value v; `fixedCells` is
+   * either one entry per cell (0 = free, v > 0 = forced to v) or a list of [cell, value] pairs.
+   * `layout` is { rows, cols, cellRow, cellCol, cellRegion?, overlays?, subGrids? }.
+   */
 
-  // PuzzleModel (immutable): the ModelSpec fields normalised to typed arrays, plus cellUnits (units containing each
-  // cell) and peers (cells sharing a unit with each cell, ascending). fixedCells is used by the full grid generator
-  // only; solvers work from `givens` alone.
+  /**
+   * @typedef {Object} PuzzleModel  Immutable. Same fields as the spec, normalised to typed arrays, plus:
+   * `cellUnits` (units containing each cell) and `peers` (cells sharing a unit with each cell, ascending).
+   * `fixedCells` has one entry per cell (0 = free, v > 0 = forced to v); it marks the key word line of a board with
+   * one (the solvers work from `givens` alone).
+   */
 
-  // SolveState: candidates (bit v - 1 set while value v is possible), value (0 while undecided), unsolvedCount.
+  /**
+   * @typedef {Object} SolveState
+   * `candidates`: bit (v - 1) set while value v is still possible in the cell; `value`: fixed value, 0 while
+   * undecided; `unsolvedCount`: number of cells whose value is 0.
+   */
 
   function invalidSpec(reason) {
     return new SG.errors.GenerationError('model.invalidSpec', { reason: reason });
@@ -63,6 +76,7 @@
     return out;
   }
 
+  /** Builds `cellUnits` and `peers`; indices out of range are skipped (validate reports them). */
   function buildIncidence(units, n) {
     const counts = new Int32Array(n);
     const stamp = new Int32Array(n);
@@ -160,7 +174,6 @@
     });
   }
 
-  // Builds an immutable model from a spec. Throws 'model.invalidSpec' when a required field is missing or malformed.
   function create(spec) {
     if (!spec || typeof spec !== 'object') throw invalidSpec('spec must be an object');
     if (typeof spec.variantId !== 'string' || spec.variantId === '') {
@@ -410,9 +423,10 @@
     if (solution === null) addError(errors, 'V8: the model has no complete solution');
   }
 
-  // Checks the model invariants V1-V8. V8, a trial solve with a small budget, only runs when V1-V7 pass and `SG.dfs`
-  // is loaded (`options.solve = false` skips it; `options.budget`). A trial solve that runs out of budget is
-  // inconclusive: a warning, never an error. Returns { ok, errors, warnings }.
+  /**
+   * Checks the model invariants V1-V8. V8 (a trial solve with a small budget) only runs when V1-V7 pass and `SG.dfs`
+   * is loaded; a trial solve that runs out of budget is inconclusive and reported in `warnings`, never as an error.
+   */
   function validate(model, options) {
     options = options || {};
     const errors = [];
@@ -436,7 +450,7 @@
     };
   }
 
-  // Copies a state; with `into` (built for the same model) the buffers are reused, without allocating.
+  /** Copies a state; with `into` (built for the same model) the copy is written into its buffers without allocating. */
   function cloneState(state, into) {
     if (into) {
       into.candidates.set(state.candidates);
@@ -451,7 +465,7 @@
     };
   }
 
-  // Label 'R4C7' (1-based), prefixed with the sub-grid on multi-grid layouts ('G2-R4C7'); a cell in an overlap uses the first sub-grid containing it.
+  /** Human label of a cell: 'R4C7' (1-based), prefixed 'G2-' on multi-grid layouts; an overlap cell is labelled by the first sub-grid containing it. */
   function cellLabel(model, cellIndex) {
     const layout = model.layout;
     const row = layout.cellRow[cellIndex];
@@ -468,7 +482,7 @@
     return 'R' + (row + 1) + 'C' + (col + 1);
   }
 
-  // Independent check of a complete assignment against every unit, cage and inequality; it shares no code with the solver, so it is the oracle for "the solution is valid".
+  /** Independent check of a complete assignment against every unit, cage and inequality; shares no code with the solver, so it is the oracle for "solution is valid". */
   function isSolution(model, values) {
     const n = model.cellCount;
     const D = model.digits;

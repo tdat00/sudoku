@@ -6,7 +6,7 @@
   var SG = (typeof self !== 'undefined' ? self : globalThis).SG;
 
   var FORBIDDEN = ['document.', 'window.', 'localStorage', 'alert(', 'import ', 'export ', 'require('];
-  var SCANNED_DIRS = ['js/core', 'js/variants'];
+  var SCANNED_DIRS = ['../core/js/engine', 'js/engine', 'js/variants'];
 
   /** @returns {Array<{line:number, token:string}>} every forbidden token found, with its line number. */
   function findViolations(text) {
@@ -71,7 +71,7 @@
     });
   });
 
-  describe('source purity (js/core, js/variants)', function () {
+  describe('source purity (core/js/engine, js/engine, js/variants)', function () {
     var env = SG.test.node;
 
     if (!env || !env.fs) {
@@ -86,7 +86,7 @@
 
     it('finds the core files to scan', function () {
       requireNode();
-      ['js/core/ns.js', 'js/core/errors.js', 'js/core/bits.js', 'js/core/budget.js', 'js/core/rng.js']
+      ['../core/js/engine/ns.js', '../core/js/engine/errors.js', '../core/js/engine/bits.js', '../core/js/engine/budget.js', 'js/engine/rng.js']
         .forEach(function (rel) { expect(files).toContain(rel); });
     });
 

@@ -1,7 +1,7 @@
 // Internationalisation (task T-4.1 / T-4.9, design.md section 11): SG.i18n and the two language packs.
 // Everything runs on Node without a DOM (a tiny fake DOM stands in where the DOM is the subject). The
 // coverage tests are computed from the code (explain data, event vocabulary, variant registry, technique
-// registry, error codes thrown in js/core and js/variants, data-i18n attributes of index.html), so a key
+// registry, error codes thrown in the engines and js/variants, data-i18n attributes of index.html), so a key
 // that a later change needs but does not define makes a test fail here.
 (function () {
   'use strict';
@@ -854,12 +854,12 @@
       checkBoth('unit kinds', kinds.map(function (kind) { return 'unitKind.' + kind; }));
     });
 
-    it('has the text of every solving step a technique can produce (read from js/core/tech-*.js)',
+    it('has the text of every solving step a technique can produce (read from core/js/engine/tech-*.js)',
       function () {
       if (!NODE) SG.test.skip('needs the Node runner to read the sources');
       packsReady();
       var required = [];
-      var sources = readSources('js/core', /^tech-.*\.js$/);
+      var sources = readSources('js/engine', /^tech-.*\.js$/).concat(readSources('../core/js/engine', /^tech-.*\.js$/));
       expect(sources.length).toBeGreaterThan(5);
       sources.forEach(function (source) {
         var kinds = allMatches(source.text, /\bKIND_[A-Z_]+ = '([A-Za-z]+)'/);
@@ -885,12 +885,12 @@
       expect(unique(required)).toContain('technique.forcingChain.step.contradiction');
     });
 
-    it('has a message for every error code thrown in js/core and js/ui, and the generic ones',
+    it('has a message for every error code thrown in the engines and js/ui, and the generic ones',
       function () {
       if (!NODE) SG.test.skip('needs the Node runner to read the sources');
       packsReady();
       var codes = [];
-      readSources('js/core', /\.js$/).concat(readSources('js/ui', /\.js$/)).forEach(function (source) {
+      readSources('js/engine', /\.js$/).concat(readSources('../core/js/engine', /\.js$/)).concat(readSources('js/ui', /\.js$/)).forEach(function (source) {
         allMatches(source.text, /(?:GenerationError\(|\bfail\(|\berror\()\s*'([A-Za-z]+\.[A-Za-z]+)'/)
           .forEach(function (code) { codes.push(code); });
         allMatches(source.text, /_CODE\s*=\s*'([A-Za-z]+\.[A-Za-z]+)'/).forEach(function (code) {

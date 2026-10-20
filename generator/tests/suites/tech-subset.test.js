@@ -1,5 +1,5 @@
 // Subset techniques (task T-2.3): nakedPair, hiddenPair, nakedTriple, hiddenTriple, nakedQuad, hiddenQuad,
-// all served by one engine in js/core/tech-subset.js.
+// all served by one engine in ../core/js/engine/tech-subset.js.
 //
 // Layout of this suite:
 //   registration     ids, groups, costs and order of the six techniques
@@ -537,10 +537,10 @@
 
     it('is not registered twice when the file is loaded a second time', function () {
       var source = SG.test.node && SG.test.node.fs.readFileSync(
-        SG.test.node.path.join(SG.test.node.root, 'js/core/tech-subset.js'), 'utf8');
+        SG.test.node.path.join(SG.test.node.root, '../core/js/engine/tech-subset.js'), 'utf8');
       if (!source) SG.test.skip('needs the Node runner to reload the source');
       var before = SG.techniques.list().length;
-      SG.test.node.vm.runInThisContext(source, { filename: 'js/core/tech-subset.js' });
+      SG.test.node.vm.runInThisContext(source, { filename: '../core/js/engine/tech-subset.js' });
       expect(SG.techniques.list().length).toBe(before);
     });
   });

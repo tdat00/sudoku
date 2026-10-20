@@ -1885,17 +1885,19 @@
   });
 
   describe('killer: code hygiene', function () {
-    it('has no variant check in js/core: Killer reaches the core only through the registry, the hooks and variantScope',
+    it('has no variant check in the engines: Killer reaches the core only through the registry, the hooks and variantScope',
       function () {
         var env = SG.test.node;
         if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
-        var dir = env.path.join(env.root, 'js/core');
-        env.fs.readdirSync(dir).filter(function (n) { return n.endsWith('.js'); }).forEach(function (name) {
-          var text = env.fs.readFileSync(env.path.join(dir, name), 'utf8');
-          text.split(/\r?\n/).forEach(function (line, i) {
-            if (/(===?|!==?)\s*['"]killer['"]|['"]killer['"]\s*(===?|!==?)|indexOf\(\s*['"]killer['"]/.test(line)) {
-              throw new Error('js/core/' + name + ':' + (i + 1) + ' compares with "killer": ' + line.trim());
-            }
+        ['../core/js/engine', 'js/engine'].forEach(function (rel) {
+          var dir = env.path.join(env.root, rel);
+          env.fs.readdirSync(dir).filter(function (n) { return n.endsWith('.js'); }).forEach(function (name) {
+            var text = env.fs.readFileSync(env.path.join(dir, name), 'utf8');
+            text.split(/\r?\n/).forEach(function (line, i) {
+              if (/(===?|!==?)\s*['"]killer['"]|['"]killer['"]\s*(===?|!==?)|indexOf\(\s*['"]killer['"]/.test(line)) {
+                throw new Error(rel + '/' + name + ':' + (i + 1) + ' compares with "killer": ' + line.trim());
+              }
+            });
           });
         });
       });
@@ -1903,7 +1905,7 @@
     it('keeps the three files of the task free of DOM access and module syntax', function () {
       var env = SG.test.node;
       if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
-      ['js/core/combo-table.js', 'js/core/tech-cage.js', 'js/variants/killer.js'].forEach(function (rel) {
+      ['../core/js/engine/combo-table.js', '../core/js/engine/tech-cage.js', 'js/variants/killer.js'].forEach(function (rel) {
         var text = env.fs.readFileSync(env.path.join(env.root, rel), 'utf8');
         ['document.', 'window.', 'localStorage', 'alert(', 'import ', 'export ', 'require('].forEach(function (token) {
           expect(text.indexOf(token)).toBe(-1);

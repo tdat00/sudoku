@@ -5,7 +5,7 @@
 // the contents, follows the language and the theme of the player, and fits a phone.
 const { launch, newPage, serve, sleep } = require('./lib.js');
 
-const base = 'http://127.0.0.1:8772/help.html';
+const base = 'http://127.0.0.1:8772/player/help.html';
 const checks = [];
 function check(name, ok, detail) {
   checks.push({ name, ok });

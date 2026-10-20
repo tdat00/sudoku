@@ -149,7 +149,7 @@
   }
 
   /**
-   * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in js/core/difficulty.js).
+   * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in js/engine/difficulty.js).
    * With the classic9 floors (29 / 25 / 22 clues) the digger stopped at the floor before these harder 9x9
    * boards needed a pair technique, so normal was rarely reached. Floors of 24 / 20 / 17 (83 % / 80 % / 80 %)
    * sit just above where the techniques stop the dig by themselves, which keeps the mean clue count falling

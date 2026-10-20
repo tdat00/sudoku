@@ -10,7 +10,7 @@ const mode = process.argv[2] || 'file';
 (async function () {
   const server = mode === 'http' ? await serve(8765) : null;
   const browser = await launch({ port: 9334, name: 'q2' });
-  const base = mode === 'http' ? 'http://127.0.0.1:8765/index.html' : 'file:///' + ROOT.replace(/\\/g, '/') + '/index.html';
+  const base = mode === 'http' ? 'http://127.0.0.1:8765/player/index.html' : 'file:///' + ROOT.replace(/\\/g, '/') + '/index.html';
   const results = [];
   try {
     const page = await newPage(browser);

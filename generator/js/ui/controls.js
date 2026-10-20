@@ -28,7 +28,7 @@
   /**
    * Strict symmetry rule (data, easy to tune): symmetry kind -> first difficulty level at which combining it with that
    * kind deserves a warning. Four-way symmetries dig four cells at a time; the digger ("coarse" groups in
-   * js/core/digger.js) then needs more samples and attempts and misses the requested level more often (a classic9
+   * js/engine/digger.js) then needs more samples and attempts and misses the requested level more often (a classic9
    * run takes 1.3-1.8 full grids on average from 'hard' on, against 1.0-1.2 with rotational180). Two-way symmetries
    * and 'none' never warn.
    */

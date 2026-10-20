@@ -1,5 +1,5 @@
 // UI contract: what every module promises to the others and to the page, checked on Node without a DOM.
-// 1. the function surface of each module, 2. every file loads without a DOM, js/core has no DOM and the player
+// 1. the function surface of each module, 2. every file loads without a DOM, the engines have no DOM and the player
 // holds none of the generator's modules, 3. no colour literal outside the token files, 4. index.html: mount
 // points, no hard-coded visible text, script order equal to SOURCE_FILES (node-runner.js, tests.html),
 // 5. every suite is listed in tests.html. Pure source scans: the files are read as text, nothing here needs a
@@ -10,6 +10,9 @@
   var root = typeof self !== 'undefined' ? self : globalThis;
   var SG = root.SG;
   var NODE = SG.test.node;
+
+  /** The engine shared with the generator (core/) and the player's own. */
+  var ENGINE_DIRS = ['../core/js/engine', 'js/engine'];
 
   function needNode() {
     if (!NODE || !NODE.fs) SG.test.skip('needs the Node file system; skipped in the browser');
@@ -117,18 +120,20 @@
       expect(absent).toBe('');
     });
 
-    it('js/core touches no DOM, storage or browser global (and js/ui keeps them inside functions)', function () {
+    it('the engines touch no DOM, storage or browser global (and js/ui keeps them inside functions)', function () {
       needNode();
-      listDir('js/core', '.js').forEach(function (name) {
-        var code = stripJsComments(readText('js/core/' + name));
-        var hit = /\b(?:document|window|localStorage|sessionStorage|navigator|location|XMLHttpRequest)\b/.exec(code);
-        expect(hit === null ? '' : name + ': ' + hit[0]).toBe('');
+      ENGINE_DIRS.forEach(function (dir) {
+        listDir(dir, '.js').forEach(function (name) {
+          var code = stripJsComments(readText(dir + '/' + name));
+          var hit = /\b(?:document|window|localStorage|sessionStorage|navigator|location|XMLHttpRequest)\b/.exec(code);
+          expect(hit === null ? '' : dir + '/' + name + ': ' + hit[0]).toBe('');
+        });
       });
     });
 
     it('has no import, export or require in js/', function () {
       needNode();
-      ['js/core', 'js/ui'].forEach(function (dir) {
+      ENGINE_DIRS.concat(['js/ui']).forEach(function (dir) {
         listDir(dir, '.js').forEach(function (name) {
           var code = stripJsComments(readText(dir + '/' + name));
           expect(/^\s*(?:import\s|export\s)|\brequire\(/m.test(code) ? dir + '/' + name : '').toBe('');
@@ -152,7 +157,7 @@
         'worker-client', 'gen.worker', 'step-view', 'explain', 'result-view', 'export', 'cache', 'controls',
         'print'];
       var offenders = [];
-      ['js/core', 'js/ui', 'css'].forEach(function (dir) {
+      ENGINE_DIRS.concat(['js/ui', 'css']).forEach(function (dir) {
         listDir(dir, '').forEach(function (name) {
           var base = name.replace(/\.[a-z]+$/, '');
           if (banned.indexOf(base) !== -1) offenders.push(dir + '/' + name);
@@ -167,7 +172,7 @@
       needNode();
       var pattern = new RegExp('\\bSG\\.(?:' + FORBIDDEN.join('|') + ')\\b');
       var offenders = [];
-      ['js/core', 'js/ui'].forEach(function (dir) {
+      ENGINE_DIRS.concat(['js/ui']).forEach(function (dir) {
         listDir(dir, '.js').forEach(function (name) {
           var code = stripJsComments(readText(dir + '/' + name));
           if (pattern.test(code)) offenders.push(dir + '/' + name + ': ' + pattern.exec(code)[0]);

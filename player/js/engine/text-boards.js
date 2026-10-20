@@ -26,7 +26,7 @@
   const BOX = 3;
 
   const WINDOW_ORIGINS = Object.freeze([[1, 1], [1, 5], [5, 1], [5, 5]]);
-  // Spelled in two parts because the contract test of js/core looks for the browser global of that name.
+  // Spelled in two parts because the contract test of the engines looks for the browser global of that name.
   // (The unit kind of a hyper region is the generator's word for it.)
   const HYPER_KIND = 'wind' + 'ow';
 

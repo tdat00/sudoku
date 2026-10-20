@@ -82,7 +82,7 @@
 
   // ---------------------------------------------------------------------------------------------
   // Proof checker for forcingChain Findings. It re-derives every link from the state with its own
-  // definitions; nothing here is shared with js/core/tech-chain.js.
+  // definitions; nothing here is shared with ../core/js/engine/tech-chain.js.
   // ---------------------------------------------------------------------------------------------
 
   function isOpen(state, cell, digit) {
