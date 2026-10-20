@@ -529,6 +529,14 @@
       expect(listed.filter(function (name) { return quick.indexOf(name) !== -1; })).toEqual([]);
     });
 
+    it('the Pages workflow of the repository publishes this app and the code it shares', function () {
+      var workflow = readText('../.github/workflows/pages.yml');
+      expect(workflow).toContain('generator/index.html');
+      expect(workflow).toContain('core/js');
+      expect(workflow).toContain('core/css');
+      expect(workflow).toContain('core/assets');
+    });
+
     it('every suite in ../core/tests/suites is listed in the CORE_SUITE_FILES of tests.html', function () {
       var listed = quotedList(readText('tests.html'), 'var CORE_SUITE_FILES');
       expect(listed).not.toBeNull();

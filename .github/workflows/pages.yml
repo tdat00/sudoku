@@ -29,13 +29,23 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Run tests
+      - name: Run the generator tests
+        working-directory: generator
         run: node tests/node-runner.js --all
 
+      - name: Run the player tests
+        working-directory: player
+        run: node tests/node-runner.js
+
+      # One site: / (landing page), /generator/, /player/ and /core/, the code both apps load with ../core.
+      # The tests, the design notes and the documents are not published.
       - name: Prepare site
         run: |
-          mkdir _site
-          cp -R index.html css js assets LICENSE _site/
+          mkdir -p _site/generator _site/player _site/core
+          cp index.html LICENSE _site/
+          cp -R generator/index.html generator/css generator/js generator/assets _site/generator/
+          cp -R player/index.html player/help.html player/css player/js player/assets _site/player/
+          cp -R core/js core/css core/assets _site/core/
 
       - name: Configure Pages
         uses: actions/configure-pages@v6

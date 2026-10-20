@@ -551,8 +551,10 @@
       expect(exists('help.html')).toBe(true);
     });
 
-    it('is published with the app', function () {
-      expect(readText('.github/workflows/pages.yml')).toContain('help.html');
+    it('is published with the app, next to the shared code', function () {
+      var workflow = readText('../.github/workflows/pages.yml');
+      expect(workflow).toContain('player/help.html');
+      expect(workflow).toContain('core/js');
     });
   });
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sudoku</title>
+  <link rel="icon" type="image/svg+xml" href="generator/assets/favicon.svg">
+  <link rel="stylesheet" href="core/css/tokens.css">
+  <link rel="stylesheet" href="core/css/base.css">
+  <style>
+    main { max-width: 40rem; margin: 0 auto; padding: 2rem 1rem; }
+    ul { list-style: none; margin: 1.5rem 0; padding: 0; display: grid; gap: 1rem; }
+    li { padding: 1rem; background: var(--sg-color-surface); border: 1px solid var(--sg-color-border); border-radius: 0.5rem; }
+    li a { font-size: 1.25rem; font-weight: 600; }
+    p { margin: 0.5rem 0 0; color: var(--sg-color-text-muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Sudoku</h1>
+    <ul>
+      <li>
+        <a href="generator/index.html">Sudoku Generator</a>
+        <p>Makes puzzles of 15 variants, guarantees the difficulty you ask for and shows how each one is made.</p>
+        <p>Tạo đề 15 biến thể, đảm bảo đúng độ khó bạn chọn và cho xem cách đề được tạo ra.</p>
+      </li>
+      <li>
+        <a href="player/index.html">Sudoku Player</a>
+        <p>Opens a puzzle from the generator, or one you paste, and lets you play it: notes, undo, hints that name the technique.</p>
+        <p>Mở đề từ trình tạo đề, hoặc đề bạn dán vào, để chơi: ghi chú, hoàn tác, gợi ý nêu tên kỹ thuật.</p>
+      </li>
+    </ul>
+    <p><a href="https://github.com/tdat00/sudoku">GitHub</a> · MIT</p>
+  </main>
+</body>
+</html>
