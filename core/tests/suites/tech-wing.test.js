@@ -1,4 +1,4 @@
-// Wing techniques (task T-2.5), ../core/js/engine/tech-wing.js: XY-Wing, XYZ-Wing, W-Wing and Unique Rectangle.
+// Wing techniques (../core/js/engine/tech-wing.js): XY-Wing, XYZ-Wing, W-Wing and Unique Rectangle.
 //
 // Where the fixtures come from:
 //   - published: puzzles of the SudokuWiki.org strategy pages (Y-Wing, XYZ-Wing, W-Wing, Unique Rectangles).
@@ -46,10 +46,6 @@
     ur2b: '000805000090040060030090001008000040500604003070000200100080009060010030000206000',
     ur2c: '070903080000020000200407001605000109020000060708000205900205006000070000010309020'
   };
-
-  // ---------------------------------------------------------------------------------------------
-  // Small helpers
-  // ---------------------------------------------------------------------------------------------
 
   function fail(message) {
     throw new SG.test.AssertionError(message);
@@ -192,10 +188,7 @@
     });
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Independent oracles. They only use model.units, never model.peers.
-  // ---------------------------------------------------------------------------------------------
-
   var seesCache = new WeakMap();
 
   function seesMatrix(model) {
@@ -375,8 +368,8 @@
   }
 
   /**
-   * What the four cells are as a Unique Rectangle: { type: 1, target, common } or
-   * { type: 2, roofs, digit, common }; null when they are neither.
+   * What the four cells are as a Unique Rectangle: { type: 1, target, common } or { type: 2, roofs, digit,
+   * common }; null when they are neither.
    */
   function urKind(model, state, cells) {
     if (!cells.every(function (c) { return open(state, c); })) return null;
@@ -549,10 +542,6 @@
     return fired;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Registration
-  // ---------------------------------------------------------------------------------------------
-
   describe('wing techniques: registration', function () {
     var EXPECTED = {
       xyWing: { baseCost: 48, order: 140, assumesUniqueness: false },
@@ -661,10 +650,6 @@
         { model: model9 });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // XY-Wing
-  // ---------------------------------------------------------------------------------------------
 
   describe('xyWing', function () {
     it('SudokuWiki Y-Wing example 1: pivot R1C1 {1,7}, pincers R1C7 {2,7} and R5C1 {1,2}', function () {
@@ -785,10 +770,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // XYZ-Wing
-  // ---------------------------------------------------------------------------------------------
-
   describe('xyzWing', function () {
     it('SudokuWiki XYZ-Wing example 1: hinge R6C9 {1,2,4}, pincers R4C9 {1,2} and R6C1 {1,4}', function () {
       var state = published(PUBLISHED.xyz1, { R6C1: '14' });
@@ -879,10 +860,6 @@
         { assumeUniqueness: false });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // W-Wing
-  // ---------------------------------------------------------------------------------------------
 
   describe('wWing', function () {
     it('SudokuWiki W-Wing example 1: R1C6 and R6C5 {3,6}, strong link on 6 in column 3', function () {
@@ -1031,10 +1008,6 @@
         { assumeUniqueness: false });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Unique Rectangle
-  // ---------------------------------------------------------------------------------------------
 
   describe('uniqueRectangle: published examples', function () {
     it('SudokuWiki type 1: R4C1 {1,2,5,9} over three {2,9} cells loses 2 and 9', function () {
@@ -1364,18 +1337,8 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Soundness (invariant I7) and the oracle comparison
-  // ---------------------------------------------------------------------------------------------
-
+  // 9 digits: the sweep of techniques.test.js.
   describe('wing techniques: soundness (invariant I7)', function () {
-    IDS.forEach(function (id) {
-      it(id + ' never removes a solution digit (9 digits, 300 states, fires at least 3 times)', function () {
-        var stats = H.assertSound(SG.test, id, { count: 300, minFirings: 3 });
-        expect(stats.firings).toBeGreaterThanOrEqual(3);
-      });
-    });
-
     IDS.forEach(function (id) {
       it(id + ' stays sound on 6 digits', function () {
         H.assertSound(SG.test, id, { model: model6, count: 200, minFirings: 3 });

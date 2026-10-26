@@ -2,8 +2,8 @@
 'use strict';
 
 /*
- * Soak test and calibration tool for the difficulty system (task T-2.10, design.md section 15.4; rating v2,
- * docs/report-v2/report-detailed.md).
+ * Soak test and calibration tool for the difficulty system (design.md section 15.4; rating v2,
+ * docs/difficulty-rating/report-detailed.md).
  *
  *   node tests/soak.js [--quick | --full] [--count=N] [--per-combo=N] [--seed=N] [--variant=id[,id]]
  *                      [--level=id[,id]] [--weights=JSON] [--bands=a,b,c,d,e,f,g,h,i] [--no-gate]
@@ -26,10 +26,9 @@
  * `node tests/qualify.js`, not by this tool.
  *
  * Exit code: 0 when no invariant was violated, every level of classic9 reached a hit rate of at least 90%
- * (the criterion of task T-2.10 and of the P2 checkpoint, `--quick`) and every other variant and level at
- * least 80% (the criterion of task T-7.7); 1 otherwise; 2 for a usage error. `--no-gate` always exits 0
- * (for calibration runs). The budget column is the p95 target of design.md section 9.1 (the same table as
- * tests/perf.js, tests/fixtures/perf-helper.js); `node tests/perf.js` measures it properly.
+ * and every other variant and level at least 80%; 1 otherwise; 2 for a usage error. `--no-gate` always
+ * exits 0 (for calibration runs). The budget column is the p95 target of design.md section 9.1 (the same
+ * table as tests/perf.js, tests/fixtures/perf-helper.js); `node tests/perf.js` measures it properly.
  *
  * Measuring a level a variant does not offer: `--variant=classic6 --level=master --include-unsupported`.
  *
@@ -38,7 +37,7 @@
  * try a change without editing the file (they patch the tables for the run and are printed in the header).
  *
  * The source files are the ones listed in SOURCE_FILES of tests/node-runner.js (read from it, so the two
- * cannot drift apart); files that do not exist yet are skipped.
+ * cannot drift apart); files that do not exist are skipped.
  */
 
 const fs = require('fs');
@@ -50,9 +49,9 @@ const ROOT = path.resolve(__dirname, '..');
 const USAGE = [
   'Usage: node tests/soak.js [options]',
   '',
-  '  --quick            about 700 puzzles (20 per classic9 level, 5 per other combination): P2 checkpoint',
-  '  --full             final QA preset (task T-7.7): 25 puzzles per (variant, level) combination, 100 per',
-  '                     classic9 level (about 3,550 puzzles); same as --per-combo=25',
+  '  --quick            about 700 puzzles (20 per classic9 level, 5 per other combination)',
+  '  --full             25 puzzles per (variant, level) combination, 100 per classic9 level',
+  '                     (about 3,550 puzzles); same as --per-combo=25',
   '  --per-combo=N      N puzzles per (variant, level) combination (4N for each classic9 level)',
   '  --count=N          total number of puzzles (default 500), shared out over the combinations',
   '  --seed=N           base seed (default 20260101); every puzzle derives its own stream from it',
@@ -109,13 +108,9 @@ function loadSources() {
   return globalThis.SG;
 }
 
-// -------------------------------------------------------------------------------------------------
-// Budgets: the p95 targets of design.md section 9.1, from the table of tests/fixtures/perf-helper.js.
-// -------------------------------------------------------------------------------------------------
-
 /** Combinations that carry more weight when the puzzles are shared out: classic9 is the one that is gated. */
 const GATED_VARIANT = 'classic9';
-/** Hit rates every other variant and level must reach (task T-7.7); classic9 needs 0.9 (task T-2.10). */
+/** Hit rate every other variant and level must reach; classic9 needs 0.9. */
 const OTHER_MIN_HIT = 0.8;
 
 function percentile(sorted, p) {
@@ -271,7 +266,7 @@ function main() {
           note('I5', combo, i, 'score ' + r.score + ' hardest ' + r.hardestTechnique);
         }
       }
-      // I6: at least spec.minClues givens; the floor is the variant's own (`clueScale` / `clueFloor`).
+      // I6: at least spec.minClues givens; the floor is the variant's own (`clueFloorScale` / `clueFloor`).
       if (p.clues < spec.minClues) note('I6', combo, i, p.clues + ' < ' + spec.minClues);
       // I7: every deduction of the full ladder on the way to the solution is sound.
       const report = SG.logicalSolver.solve(model, p.givens, { collectSteps: true });

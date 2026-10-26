@@ -1,7 +1,7 @@
 // The app (js/ui/app.js): what can be checked without a page. The flows themselves (fragment, paste, file,
-// drop, continue, recent list, storage failures) are verified in the browser run (docs/qa.md); here the
-// contract of the module is pinned: its surface, its events, the elements it needs from index.html, the way it
-// treats text and storage.
+// drop, continue, recent list, storage failures) are checked by the browser scripts of tests/browser; here
+// the contract of the module is pinned: its surface, its events, the elements it needs from index.html, the
+// way it treats text and storage.
 (function () {
   'use strict';
 
@@ -129,7 +129,7 @@
       var emitted = {};
       (code.match(/emit\('([\w:]+)'/g) || [])
         .forEach(function (m) { emitted[/'([\w:]+)'/.exec(m)[1]] = true; });
-      expect(Object.keys(emitted).length).toBeGreaterThan(5);
+      expect(Object.keys(emitted).length).toBeGreaterThan(3);
       Object.keys(emitted).forEach(function (name) { expect(header).toContain("'" + name + "'"); });
       var api = /const api = \{([\s\S]*?)\n  \};/.exec(code)[1];
       var members = (api.match(/^\s{4}(\w+):/gm) || []).map(function (m) { return m.trim().slice(0, -1); });

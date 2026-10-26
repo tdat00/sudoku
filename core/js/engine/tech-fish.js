@@ -1,5 +1,6 @@
 /**
- * Fish techniques (group `fish`): X-Wing, Swordfish, Jellyfish and Simple Colouring; registers itself in SG.techniques.
+ * Fish techniques (group `fish`): X-Wing, Swordfish, Jellyfish and Simple Colouring; registers itself in
+ * SG.techniques.
  *
  *   id               baseCost  order
  *   xWing                32     110     basic fish of size 2
@@ -7,33 +8,35 @@
  *   swordfish            42     130     basic fish of size 3
  *   jellyfish            56     160     basic fish of size 4
  *
- * Basic fish (ONE routine, `findFish`, size n = 2, 3, 4): for a digit d pick n "base" lines of one orientation such that
- * d's candidate cells of every base line all lie in the same n "cover" lines of the other orientation. Every base line
- * holds d exactly once (it is a complete unit), so the n placements sit in n different cover lines, and as a cover line
- * holds d at most once, each cover line gets exactly one of them. So d is removed from every cell of the cover lines
- * that is not part of a base line. Both orientations are searched.
- * Lines are the units whose `unitMeta.kind` is 'row' or 'col'; nothing is computed from cell indices. Only complete
- * units (`ctx.completeUnits[u] === 1`) are used. A base line is skipped for a digit when
+ * Basic fish (ONE routine, `findFish`, size n = 2, 3, 4): for a digit d pick n "base" lines of one
+ * orientation such that d's candidate cells of every base line all lie in the same n "cover" lines of the
+ * other orientation. Every base line holds d exactly once (it is a complete unit), so the n placements sit in
+ * n different cover lines, and as a cover line holds d at most once, each cover line gets exactly one of
+ * them. So d is removed from every cell of the cover lines that is not part of a base line. Both orientations
+ * are searched. Lines are the units whose `unitMeta.kind` is 'row' or 'col'; nothing is computed from cell
+ * indices. Only complete units (`ctx.completeUnits[u] === 1`) are used. A base line is skipped for a digit
+ * when
  *   - the digit is already placed in it,
  *   - it has fewer than 2 candidate cells (a hidden single, a cheaper technique),
- *   - a candidate cell lies in several lines of its own kind (overlapping sub-grids: the base lines would not be
- *     disjoint) or in no line of the other kind.
+ *   - a candidate cell lies in several lines of its own kind (overlapping sub-grids: the base lines would not
+ *     be disjoint) or in no line of the other kind.
  * Skipping a line only ever makes the technique find less, never something wrong.
  *
- * Simple Colouring: for a digit d, a complete unit with no d placed and exactly two cells that can still be d is a
- * strong link (exactly one of the two is d). Cells joined by strong links form components, two-coloured by walking the
- * links (the start cell, the lowest index, gets colour 1); all cells of one colour are d and none of the other. Two
- * rules per component, the first one wins:
- *   - wrap: two cells of the SAME colour see each other (are peers). That colour cannot be true, so d is removed from
- *     every cell of that colour.
- *   - trap: a candidate cell outside the component that sees a cell of each colour sees a d either way, so it cannot
- *     be d itself.
- * A component whose two-colouring fails (an odd cycle of strong links) or in which both colours wrap is contradictory
- * and ignored.
+ * Simple Colouring: for a digit d, a complete unit with no d placed and exactly two cells that can still be d
+ * is a strong link (exactly one of the two is d). Cells joined by strong links form components, two-coloured
+ * by walking the links (the start cell, the lowest index, gets colour 1); all cells of one colour are d and
+ * none of the other. Two rules per component, the first one wins:
+ *   - wrap: two cells of the SAME colour see each other (are peers). That colour cannot be true, so d is
+ *     removed from every cell of that colour.
+ *   - trap: a candidate cell outside the component that sees a cell of each colour sees a d either way, so it
+ *     cannot be d itself.
+ * A component whose two-colouring fails (an odd cycle of strong links) or in which both colours wrap is
+ * contradictory and ignored.
  *
- * Performance: per model data (the lines, the owner line of every cell, all scratch buffers) is built once in a WeakMap,
- * so `find` allocates only the Finding it returns. The fish search is a depth-first selection of base lines that drops
- * a branch as soon as its covers outnumber n. `find` is not re-entrant (it shares the scratch buffers).
+ * Performance: per model data (the lines, the owner line of every cell, all scratch buffers) is built once in
+ * a WeakMap, so `find` allocates only the Finding it returns. The fish search is a depth-first selection of
+ * base lines that drops a branch as soon as its covers outnumber n. `find` is not re-entrant (it shares the
+ * scratch buffers).
  */
 (function (root) {
   'use strict';
@@ -48,8 +51,8 @@
 
   const infos = new WeakMap();
 
-  // cell -> unit table of one orientation: the complete unit of that kind holding the cell, or -1 when it lies in none or
-  // in more than one.
+  // cell -> unit table of one orientation: the complete unit of that kind holding the cell, or -1 when it
+  // lies in none or in more than one.
   function ownerTable(model, lineUnits) {
     const owner = new Int32Array(model.cellCount).fill(-1);
     const seen = new Uint8Array(model.cellCount);
@@ -65,8 +68,8 @@
     return owner;
   }
 
-  // Builds (once per model and `completeUnits` table) the lines and every scratch buffer; `ctx.completeUnits` decides
-  // which units count as lines.
+  // Builds (once per model and `completeUnits` table) the lines and every scratch buffer; `ctx.completeUnits`
+  // decides which units count as lines.
   function infoFor(model, ctx) {
     let info = infos.get(model);
     if (info !== undefined && info.complete === ctx.completeUnits) return info;
@@ -131,8 +134,8 @@
     return a - b;
   }
 
-  // Eliminations and Finding for the base lines in `info.sel` (the covers are `info.union[0 .. size - 1]`); null when the
-  // pattern removes nothing.
+  // Eliminations and Finding for the base lines in `info.sel` (the covers are `info.union[0 .. size - 1]`);
+  // null when the pattern removes nothing.
   function fishFinding(info) {
     const f = info.frame;
     const model = f.model;
@@ -191,9 +194,9 @@
     };
   }
 
-  // Depth-first choice of `size` base lines out of the eligible ones (indices ascending, so every combination is visited
-  // once); `depth` are chosen already, `from` is the first index to try. Branches whose covers outnumber the fish size are
-  // cut. Returns true once `f.result` is set.
+  // Depth-first choice of `size` base lines out of the eligible ones (indices ascending, so every combination
+  // is visited once); `depth` are chosen already, `from` is the first index to try. Branches whose covers
+  // outnumber the fish size are cut. Returns true once `f.result` is set.
   function extendBases(info, depth, from) {
     const f = info.frame;
     const size = f.size;
@@ -224,7 +227,8 @@
     return false;
   }
 
-  // Lists the eligible base lines of one digit and orientation into the scratch buffers; returns how many there are.
+  // Lists the eligible base lines of one digit and orientation into the scratch buffers; returns how many
+  // there are.
   function collectBases(model, state, info, size, digit, orient) {
     const cand = state.candidates;
     const val = state.value;
@@ -272,8 +276,8 @@
     return count;
   }
 
-  // The generic fish (size 2 = X-Wing, 3 = Swordfish, 4 = Jellyfish): every digit, rows as base lines then columns, first
-  // pattern found.
+  // The generic fish (size 2 = X-Wing, 3 = Swordfish, 4 = Jellyfish): every digit, rows as base lines then
+  // columns, first pattern found.
   function findFish(model, state, ctx, size, id) {
     const info = infoFor(model, ctx);
     const frame = { model: model, state: state, size: size, id: id, digit: 0, bit: 0, orient: ROW,
@@ -299,8 +303,9 @@
     return null;
   }
 
-  // Fills unitCount / unitA / unitB for one digit: 2 for a strong link (unitA, unitB are its cells), otherwise -1 for a
-  // unit that cannot give one (incomplete, digit placed) or the candidate count capped at 3. Returns the number of links.
+  // Fills unitCount / unitA / unitB for one digit: 2 for a strong link (unitA, unitB are its cells),
+  // otherwise -1 for a unit that cannot give one (incomplete, digit placed) or the candidate count capped at
+  // 3. Returns the number of links.
   function findStrongLinks(model, state, ctx, info, digit) {
     const cand = state.candidates;
     const val = state.value;
@@ -341,8 +346,8 @@
     return false;
   }
 
-  // Walks the strong links from `start`, writes the colours (1 / 2) and the component id, and queues the component's
-  // cells in `info.queue`.
+  // Walks the strong links from `start`, writes the colours (1 / 2) and the component id, and queues the
+  // component's cells in `info.queue`.
   function colourComponent(model, info, start, compId) {
     const queue = info.queue;
     const colour = info.colour;
@@ -395,8 +400,8 @@
     };
   }
 
-  // Rule "wrap" for the component in `info.queue[0 .. size - 1]`: the cells to clear, or null; `info.witness` receives two
-  // same-coloured cells that see each other.
+  // Rule "wrap" for the component in `info.queue[0 .. size - 1]`: the cells to clear, or null; `info.witness`
+  // receives two same-coloured cells that see each other.
   function wrapTargets(model, info, size, compId) {
     const queue = info.queue;
     let wrapped = 0;

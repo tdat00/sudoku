@@ -1,10 +1,10 @@
 /**
- * Steps panel: the description of the replay step on show. Each step is a change the board shows (full solution,
- * cages or signs, a batch of removals, a "hardest removal" round, the finished puzzle; see `SG.player.buildSteps`);
- * technical work is not listed. The replay controls under the board move through the steps; the panel shows the
- * number, title, summary and sentence of the current step and a legend of the board frames.
- * Pure: `chartModel(counts, options)` (technique-frequency bar chart geometry, kept for callers) and `STEP_IDS`.
- * DOM: `create(rootEl)` renders into `#step-detail` of `#steps-root`.
+ * Steps panel: the description of the replay step on show. Each step is a change the board shows (full
+ * solution, cages or signs, a batch of removals, a "hardest removal" round, the finished puzzle; see
+ * `SG.player.buildSteps`); technical work is not listed. The replay controls under the board move through the
+ * steps; the panel shows the number, title, summary and sentence of the current step and a legend of the
+ * board frames. Pure: `chartModel(counts, options)` (technique order, labels and bar geometry) and
+ * `STEP_IDS`. DOM: `create(rootEl)` renders into `#step-detail` of `#steps-root`.
  */
 (function (root) {
   'use strict';
@@ -65,21 +65,21 @@
     return hasText(key) ? translate(key) : id;
   }
 
-  // Tokens of a formula (`scoreTip`): a string is plain text, { v } a variable (italic), { b } a result (bold),
-  // { sub: [tokens] } a subscript, { frac: [[tokens], [tokens]] } a fraction.
+  // Tokens of a formula (`scoreTip`): a string is plain text, { v } a variable (italic), { b } a result
+  // (bold), { sub: [tokens] } a subscript, { frac: [[tokens], [tokens]] } a fraction.
   function V(x) { return { v: x }; }
   function B(x) { return { b: x }; }
   function SUB() { return { sub: Array.prototype.slice.call(arguments) }; }
   function FRAC(top, bottom) { return { frac: [top, bottom] }; }
 
   /**
-   * The model of a score tooltip: how a whole number of the Difficulty Score table comes from the exact numbers of
-   * `SG.difficulty.scoreTable`, as formulas with the real values:
-   * { lines: [{ label, math: [tokens], then: [tokens] }], notes: [text] } (`then` is the same formula with the
-   * numbers put in). The hardest technique also gets P in full, the empty cells V, and the work term R is shared
-   * among the techniques in proportion to their work. `prefix` is the locale prefix ('...tip.'), `kind` is
-   * 'technique' (with its `row`), 'empties' or 'total'. Pure data; `renderScoreTip` draws it and `scoreTipText`
-   * flattens it.
+   * The model of a score tooltip: how a whole number of the Difficulty Score table comes from the exact
+   * numbers of `SG.difficulty.scoreTable`, as formulas with the real values:
+   * { lines: [{ label, math: [tokens], then: [tokens] }], notes: [text] } (`then` is the same formula with
+   * the numbers put in). The hardest technique also gets P in full, the empty cells V, and the work term R is
+   * shared among the techniques in proportion to their work. `prefix` is the locale prefix ('...tip.'),
+   * `kind` is 'technique' (with its `row`), 'empties' or 'total'. Pure data; `renderScoreTip` draws it and
+   * `scoreTipText` flattens it.
    */
   function scoreTip(prefix, kind, table, row) {
     const f = function (n) {
@@ -138,7 +138,7 @@
     }).join('');
   }
 
-  /** The plain text of a tip model (one line per formula, then the notes): for tests and text-only readers. */
+  /** One line per formula, then the notes. */
   function scoreTipText(model) {
     if (model === null || typeof model !== 'object') return '';
     return model.lines.map(function (line) {
@@ -161,9 +161,10 @@
   }
 
   /**
-   * Opens a help tip towards the side of its icon that has room: below by default, above when the pop-up
-   * does not fit under the icon and there is more room over it (the last rows of a table are near the bottom
-   * of the window). Measured each time the tip is about to show, so scrolling and resizing are taken into account.
+   * Opens a help tip towards the side of its icon that has room: below by default, above when the pop-up does
+   * not fit under the icon and there is more room over it (the last rows of a table are near the bottom of
+   * the window). Measured each time the tip is about to show, so scrolling and resizing are taken into
+   * account.
    */
   function placeTip(wrap) {
     const pop = typeof wrap.querySelector === 'function' ? wrap.querySelector('.help-tip__pop') : null;
@@ -192,9 +193,9 @@
   }
 
   /**
-   * Geometry of the technique-frequency bar chart: one row per technique (name left, count right above a thin bar, so
-   * long names never collide with the bar). Ordered by the technique ladder (`SG.techniques` `order`); unknown
-   * techniques come last, by id. Counts that are zero, negative or not numbers are dropped.
+   * Geometry of the technique-frequency bar chart: one row per technique (name left, count right above a thin
+   * bar, so long names never collide with the bar). Ordered by the technique ladder (`SG.techniques`
+   * `order`); unknown techniques come last, by id. Counts that are zero, negative or not numbers are dropped.
    * `options.label(id, i18nKey)` overrides the translated label.
    */
   function chartModel(counts, options) {
@@ -270,11 +271,12 @@
   }
 
   /**
-   * Shows the description of the replay step on show inside `#steps-root` (`#step-detail`, created when missing), with
-   * a legend of the board frames after it. `options.stats(position)` gives the techniques the puzzle of a step needs
-   * (`SG.player` `rateStep`: { counts, before, empties, score }); without it, or when it returns null, the step shows
-   * no technique table. Returns { setSteps(steps) (none on show until `setPosition`), setPosition(p) (0: none, a hint
-   * to use the replay controls), clear(), getPosition(), refresh() (also done on `SG.i18n.onChange`), destroy() }.
+   * Shows the description of the replay step on show inside `#steps-root` (`#step-detail`, created when
+   * missing), with a legend of the board frames after it. `options.stats(position)` gives the techniques the
+   * puzzle of a step needs (`SG.player` `rateStep`: { counts, before, empties, score }); without it, or when
+   * it returns null, the step shows no technique table. Returns { setSteps(steps) (none on show until
+   * `setPosition`), setPosition(p) (0: none, a hint to use the replay controls), clear(), getPosition(),
+   * refresh() (also done on `SG.i18n.onChange`), destroy() }.
    */
   function create(rootEl, options) {
     if (!rootEl || typeof rootEl.querySelector !== 'function') {
@@ -335,7 +337,7 @@
       return html(doc, tag, cls ? { class: cls } : {}, [doc.createTextNode(text)]);
     }
 
-    /** The "?" next to a name: opens on hover, focus and click; Esc closes it. `content` is text or an array of nodes. */
+    /** Opens on hover, focus and click; Esc closes it. `content` is text or an array of nodes. */
     function helpTip(popId, content, label) {
       if (typeof doc.createElementNS !== 'function') return null;
       const svgNs = 'http://www.w3.org/2000/svg';
@@ -388,8 +390,9 @@
       return html(doc, 'th', { scope: 'row' }, [label]);
     }
 
-    /** A score cell: the whole number (`data-role="score"`) and a help icon whose tooltip shows how it is calculated
-     * (`tip` is a `scoreTip` model; null: no icon). */
+    /**
+     * The whole number (`data-role="score"`) and a help icon for the `scoreTip` model `tip` (null: no icon).
+     */
     function scoreCell(part, name, value, tip) {
       const children = [html(doc, 'span', { 'data-role': 'score' }, [doc.createTextNode(value)])];
       const help = tip === null ? null : helpTip('step-score-' + part + '-help', renderScoreTip(doc, tip),
@@ -405,9 +408,9 @@
 
     /**
      * The techniques the puzzle of a step needs with uses and share of the score. The total is the difficulty
-     * score of the puzzle of that step (the one the summary shows at the end): the technique shares plus that of the
-     * empty cells (`SG.difficulty.scoreTable`). Each score has a help icon that explains how it was calculated. Empty
-     * when the page cannot tell for this step.
+     * score of the puzzle of that step (the one the summary shows at the end): the technique shares plus that
+     * of the empty cells (`SG.difficulty.scoreTable`). Each score has a help icon that explains how it was
+     * calculated. Empty when the page cannot tell for this step.
      */
     function techniquesBlock(position) {
       const info = typeof opts.stats === 'function' ? opts.stats(position) : null;
@@ -602,7 +605,7 @@
   SG.localeFragments = SG.localeFragments || [];
   SG.localeFragments.push({
     en: {
-      'steps.title': 'Step {number} - {title}',
+      'steps.title': 'Step {number} – {title}',
       'steps.techniques.title': 'Techniques needed at this step',
       'steps.techniques.none': 'No solving technique is needed yet.',
       'steps.techniques.col.name': 'Item',
@@ -641,11 +644,11 @@
       'steps.legend.dug': 'Removed in this step',
       'steps.legend.kept': 'Tried, but put back',
       'steps.legend.revealed': 'Clue shown in this step',
-      'steps.legend.signRemoved': 'Sign taken away in this step',
+      'steps.legend.signRemoved': 'Sign removed in this step',
       'steps.legend.signKept': 'Sign tried, but kept'
     },
     vi: {
-      'steps.title': 'Bước {number} - {title}',
+      'steps.title': 'Bước {number} – {title}',
       'steps.techniques.title': 'Kỹ thuật cần dùng ở bước này',
       'steps.techniques.none': 'Chưa cần kỹ thuật giải nào.',
       'steps.techniques.col.name': 'Mục',
@@ -678,9 +681,9 @@
       'steps.techniques.tip.where.empties': 'E = số ô trống.',
       'steps.techniques.tip.where.total': 'V = ô trống, P = kỹ thuật khó nhất, R = phần khối lượng.',
       'steps.techniques.tip.rounding': 'Các dòng được làm tròn cùng nhau nên cộng lại đúng bằng tổng.',
-      'steps.detail.empty': 'Dùng các nút phát lại dưới bảng để xem từng bước tạo ra đề. Mô tả của mỗi bước ' +
-        'hiện ở đây.',
-      'steps.legend.label': 'Các khung trên bảng',
+      'steps.detail.empty': 'Dùng các nút phát lại dưới bàn cờ để xem từng bước tạo ra đề. Mô tả của mỗi ' +
+        'bước hiện ở đây.',
+      'steps.legend.label': 'Các khung trên bàn cờ',
       'steps.legend.dug': 'Bị xóa ở bước này',
       'steps.legend.kept': 'Đã thử nhưng trả lại',
       'steps.legend.revealed': 'Số cho sẵn được hiện ở bước này',

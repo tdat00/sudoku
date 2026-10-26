@@ -1,6 +1,6 @@
 /*
- * Board styles (SVG board of core/js/ui/board-view.js and the symbol legend of core/js/ui/symbols.js).
- * Only var(--sg-board-*) tokens (core/css/tokens-board.css) and the generic --sg-color-focus, --sg-color-text,
+ * Board styles (SVG board of core/js/ui/board-view.js and the symbol legend of core/js/ui/symbols.js). Only
+ * var(--sg-board-*) tokens (core/css/tokens-board.css) and the generic --sg-color-focus, --sg-color-text,
  * --sg-font-family and --sg-space-* are used; no colour literals here.
  *
  * A board is an <svg class="sgb">; the cell classes are:

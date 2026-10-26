@@ -1,14 +1,14 @@
 /**
- * Help: `SG.help`, the page `help.html` that the Help button opens in a new tab (there is no dialog). Sections: the
- * basics of playing, how hints work, the techniques - grouped, one tab per technique with its explanation and a
- * REAL example drawn like the hint card of the player - and the keyboard; a side table of contents lists them.
+ * Help: `SG.help`, the page help.html that the Help button opens in a new tab. Sections: the basics, how
+ * hints work, the techniques (grouped, one tab per technique with its explanation and a real example drawn
+ * like the hint card of the player) and the keyboard; a side table of contents lists them.
  *
- * The examples are fixed data, not computed when the page opens: `SG.helpExamples[id]` (js/ui/help-examples.js, made
- * by tests/tools/make-technique-examples.js) is a snapshot of a puzzle partway through, with the notes that matter
- * and what the player's own hint said at that moment. `buildExample` (pure, no DOM) turns it into a board and a
- * hint; `drawExample` draws it with `SG.play.renderSnapshot` and the words of `SG.play.describeHint`, so the text is
- * the hint's, in either language. `start()` is what help.html calls at load (language and theme from the stored
- * preferences, header switches, first render); it returns false on a page without `#help-root`.
+ * The examples are fixed data: `SG.helpExamples[id]` (js/ui/help-examples.js, made by
+ * tests/tools/make-technique-examples.js) is a snapshot of a puzzle partway through, with the notes that
+ * matter and the hint the player gave at that moment. `buildExample` (no DOM) turns it into a board and a
+ * hint; `drawExample` draws it with `SG.play.renderSnapshot` and the words of `SG.play.describeHint`, so the
+ * text is the hint's, in either language. `start()` runs the page; it returns false on a page without
+ * `#help-root`.
  */
 (function (root) {
   'use strict';
@@ -67,7 +67,6 @@
     return Array.from(text).map(function (ch) { return ch === '.' ? 0 : Number(ch); });
   }
 
-  /** The board of a snapshot: a plain 9x9, or a Killer or Greater-Than board from its cages or signs. */
   function modelOf(ex) {
     if (ex.variant === 'killer' && Array.isArray(ex.cages)) {
       return SG.textBoards.create(SG.textBoards.killerSpec(ex.cages));
@@ -79,7 +78,7 @@
     return SG.textBoards.DERIVED.indexOf(ex.variant) !== -1 ? SG.textBoards.buildVariant(ex.variant) : null;
   }
 
-  /** The example of a technique, ready to draw (nothing is played, it is the `SG.helpExamples` snapshot); null for an unknown technique or a board it cannot build. */
+  /** Null for an unknown technique or a board that cannot be built. */
   function buildExample(id) {
     const ex = SG.helpExamples && Object.prototype.hasOwnProperty.call(SG.helpExamples, id)
       ? SG.helpExamples[id] : null;
@@ -177,7 +176,8 @@
         root.document.createTextNode(t('help.how.' + id + '.text'))
       ]));
     });
-    return section('how', [paragraph('help.how.intro', 'help__lead'), list, paragraph('help.how.checkModes', 'help__tip')]);
+    return section('how', [paragraph('help.how.intro', 'help__lead'), list,
+      paragraph('help.how.checkModes', 'help__tip')]);
   }
 
   function renderHints() {
@@ -230,7 +230,9 @@
       text: t(nameKey) });
     tab.addEventListener('click', function () { selectTechnique(tech.id, false); });
     tab.addEventListener('keydown', function (event) { onTabKey(event, ids); });
-    const head = h('div', { class: 'help-technique__head' }, [h('h4', { class: 'help-technique__name', text: t(nameKey) })]);
+    const head = h('div', { class: 'help-technique__head' }, [
+      h('h4', { class: 'help-technique__name', text: t(nameKey) })
+    ]);
     if (Array.isArray(tech.variantScope) && tech.variantScope.length > 0) {
       const scope = tech.variantScope.map(function (variant) {
         return SG.i18n.has('variant.' + variant) ? t('variant.' + variant) : variant;
@@ -258,13 +260,13 @@
       if (members.length === 0) return;
       const ids = members.map(function (tech) { return tech.id; });
       const list = h('div', { class: 'help-tabs', role: 'tablist', 'aria-label': t('techniqueGroup.' + group) });
-      const panels = h('div', { class: 'help-group__panels' });
+      const panels = h('div');
       members.forEach(function (tech) {
         const made = techniquePanel(tech, group, ids);
         list.appendChild(made.tab);
         panels.appendChild(made.panel);
       });
-      children.push(h('div', { class: 'help-group', id: 'group-' + group, 'data-group': group }, [
+      children.push(h('div', { class: 'help-group', id: 'group-' + group }, [
         h('h3', { class: 'help-group__title', text: t('techniqueGroup.' + group) }),
         list,
         panels
@@ -300,7 +302,8 @@
   }
 
   function techniqueLink(tech) {
-    const link = h('a', { href: '#tech-' + tech.id, class: 'help-toc__tech', text: t(tech.i18nKey || 'technique.' + tech.id) });
+    const link = h('a', { href: '#tech-' + tech.id, class: 'help-toc__tech',
+      text: t(tech.i18nKey || 'technique.' + tech.id) });
     link.addEventListener('click', function (event) {
       if (!goToTechnique(tech.id)) return;
       event.preventDefault();
@@ -324,7 +327,7 @@
     const techs = SG.techniques && typeof SG.techniques.list === 'function' ? SG.techniques.list() : [];
     const groups = SG.techniques && SG.techniques.GROUPS ? SG.techniques.GROUPS : [];
     SECTION_IDS.forEach(function (id) {
-      const item = h('li', { class: 'help-toc__item' }, [
+      const item = h('li', {}, [
         h('a', { href: '#help-' + id, class: 'help-toc__section', 'data-section': id,
           text: t('help.section.' + id) })
       ]);
@@ -336,7 +339,7 @@
           if (members.length === 0) return;
           const names = h('ul', { class: 'help-toc__techs', role: 'list' });
           members.forEach(function (tech) { names.appendChild(h('li', {}, [techniqueLink(tech)])); });
-          sub.appendChild(h('li', { class: 'help-toc__group' }, [
+          sub.appendChild(h('li', {}, [
             h('span', { class: 'help-toc__group-name', text: t('techniqueGroup.' + group) }),
             names
           ]));
@@ -457,7 +460,6 @@
     BASIC_STEPS: BASIC_STEPS,
     buildExample: buildExample,
     drawExample: drawExample,
-    selectTechnique: selectTechnique,
     render: render,
     start: start
   };
@@ -549,14 +551,14 @@
       'help.keys.intro': 'Everything can be done from the keyboard.',
       'help.keys.move': 'Move between cells. Home and End go to the ends of the row, Page Up and Page ' +
         'Down move a box up or down. On boards with several grids the keys skip the gaps.',
-      'help.keys.enter': 'Enter a symbol in the selected cell: digits and letters as the board shows ' +
-        'them. Symbols with two characters (10 to 12 on Mega 12×12) take two keystrokes.',
+      'help.keys.enter': 'Enter a symbol in the selected cell: digits and letters as the board shows them. ' +
+        'Symbols with two characters (10 to 12 on Mega Sudoku 12×12) take two keystrokes.',
       'help.keys.erase': 'Erase the selected cell: its value, then its notes.',
       'help.keys.notes': 'Switch between entering values and entering notes.',
       'help.keys.hint': 'Ask for a hint, and again for more detail.',
       'help.keys.undo': 'Undo.',
       'help.keys.redo': 'Redo.',
-      'help.keys.escape': 'Close the hint card, a pop-up or a dialog.',
+      'help.keys.escape': 'Close the hint card, the pop-up pad or a dialog.',
       'help.keys.tab': 'Move between the areas of the page (header, board, tools, pad, side panel). ' +
         'The skip link at the top jumps to the puzzle.',
       'help.keys.paste': 'Paste a puzzle anywhere on the page to open it: a link, the text of a ' +
@@ -574,19 +576,19 @@
       'help.section.hints': 'Dùng gợi ý',
       'help.section.techniques': 'Kỹ thuật cho đề khó',
       'help.section.keys': 'Bàn phím',
-      'help.how.intro': 'Mọi câu đố Sudoku đều có một luật cốt lõi: điền vào lưới sao cho không ký hiệu ' +
-        'nào lặp lại trong một hàng, một cột hay một vùng. Một số biến thể có thêm luật riêng (lồng có ' +
-        'tổng, dấu so sánh giữa các ô, vùng phụ); bảng đã vẽ sẵn chúng. Đây là cách chơi ở đây.',
+      'help.how.intro': 'Mọi đề Sudoku đều có một luật cốt lõi: điền vào lưới sao cho không ký hiệu nào ' +
+        'lặp lại trong một hàng, một cột hay một vùng. Một số biến thể có thêm luật riêng (lồng có tổng, ' +
+        'dấu so sánh giữa các ô, vùng bổ sung); bàn cờ đã vẽ sẵn chúng. Đây là cách chơi ở đây.',
       'help.how.get.title': 'Lấy một đề.',
-      'help.how.get.text': 'Trong Trình sinh đề Sudoku, bấm Chơi: mọi đề trong danh sách của nó được chuyển ' +
-        'sang đây, và đề bạn đang xem được mở trước. Hoặc bấm Nhập đề rồi dán nội dung ô Xuất của trình ' +
-        'sinh đề. Các đề đã nhập được liệt kê ở bên trái.',
+      'help.how.get.text': 'Trong Trình sinh đề Sudoku, bấm Chơi: mọi đề trong danh sách của nó được ' +
+        'chuyển sang đây, và đề bạn đang xem được mở trước. Hoặc bấm Nhập đề rồi dán nội dung hộp Xuất văn ' +
+        'bản của trình sinh đề. Các đề đã nhập được liệt kê ở bên trái.',
       'help.how.select.title': 'Chọn một ô.',
       'help.how.select.text': 'Nhấp hoặc chạm vào ô, hoặc di chuyển bằng các phím mũi tên. Các ô cho sẵn ' +
         'là cố định và không đổi được.',
       'help.how.enter.title': 'Điền một ký hiệu.',
-      'help.how.enter.text': 'Gõ ký hiệu, hoặc bấm một phím trên bàn phím số dưới bảng (trên màn hình rộng, ' +
-        'một bàn phím nhỏ còn hiện ngay cạnh ô). Bấm lại cùng ký hiệu để xóa ô.',
+      'help.how.enter.text': 'Gõ ký hiệu, hoặc bấm một phím trên bàn phím số dưới bàn cờ (trên màn hình ' +
+        'rộng, một bàn phím nhỏ còn hiện ngay cạnh ô). Bấm lại cùng ký hiệu để xóa ô.',
       'help.how.notes.title': 'Dùng ghi chú.',
       'help.how.notes.text': 'Bật Ghi chú (N) để đánh dấu các ký hiệu mà ô còn có thể nhận; chúng được vẽ ' +
         'nhỏ trong ô. “Thêm thao tác” dưới bàn phím số có thể điền sẵn mọi ghi chú giúp bạn. Ký hiệu bạn ' +
@@ -601,10 +603,10 @@
         'lần bấm cho thấy thêm, cho đến chính nước đi. Gợi ý luôn đúng. Các mục sau giải thích chúng.',
       'help.how.play.title': 'Chơi, Tạm dừng, Đặt lại.',
       'help.how.play.text': 'Đồng hồ chạy từ nước đi đầu tiên của bạn, hoặc khi bạn bấm Chơi. Tạm dừng làm ' +
-        'đồng hồ dừng và ẩn bảng; rời khỏi tab hay mở đề khác cũng tự tạm dừng. Khi ván đang tạm dừng ' +
+        'đồng hồ dừng và ẩn bàn cờ; rời khỏi tab hay mở đề khác cũng tự tạm dừng. Khi ván đang tạm dừng ' +
         'hoặc đã giải xong, Đặt lại cho chơi lại từ đầu.',
       'help.how.symbols.title': 'Đổi cách hiển thị ký hiệu.',
-      'help.how.symbols.text': 'Khi bảng cho phép, Tùy chọn cho bạn chuyển giữa chữ số, chữ cái, màu và ' +
+      'help.how.symbols.text': 'Khi bàn cờ cho phép, Tùy chọn cho bạn chuyển giữa chữ số, chữ cái, màu và ' +
         'hình. Màu luôn kèm một hình nhỏ, nên vẫn phân biệt được mà không cần nhìn màu.',
       'help.how.save.title': 'Quay lại sau.',
       'help.how.save.text': 'Tiến độ được tự động lưu trên thiết bị này, và không có gì được gửi đi đâu ' +
@@ -644,17 +646,17 @@
       'help.example.legend.keep': 'Số cần điền',
       'help.keys.intro': 'Mọi thao tác đều làm được bằng bàn phím.',
       'help.keys.move': 'Di chuyển giữa các ô. Home và End đến hai đầu hàng, Page Up và Page Down nhảy lên ' +
-        'hoặc xuống một khối. Trên bảng nhiều lưới, các phím bỏ qua các khoảng trống.',
-      'help.keys.enter': 'Điền ký hiệu vào ô đang chọn: chữ số và chữ cái như bảng hiển thị. Ký hiệu hai ký ' +
-        'tự (10 đến 12 trên Mega 12×12) cần gõ hai phím.',
+        'hoặc xuống một khối. Trên bàn cờ nhiều lưới, các phím bỏ qua các khoảng trống.',
+      'help.keys.enter': 'Điền ký hiệu vào ô đang chọn: chữ số và chữ cái như bàn cờ hiển thị. Ký hiệu hai ' +
+        'ký tự (10 đến 12 trên Sudoku Khổng lồ 12×12) cần gõ hai phím.',
       'help.keys.erase': 'Xóa ô đang chọn: giá trị trước, rồi đến ghi chú.',
       'help.keys.notes': 'Chuyển giữa điền giá trị và ghi chú.',
       'help.keys.hint': 'Xin gợi ý, và bấm lại để xem chi tiết hơn.',
       'help.keys.undo': 'Hoàn tác.',
       'help.keys.redo': 'Làm lại.',
       'help.keys.escape': 'Đóng thẻ gợi ý, bàn phím nhỏ hoặc một hộp thoại.',
-      'help.keys.tab': 'Chuyển giữa các vùng của trang (đầu trang, bảng, công cụ, bàn phím số, bảng bên). ' +
-        'Liên kết bỏ qua ở đầu trang nhảy thẳng tới đề.',
+      'help.keys.tab': 'Chuyển giữa các vùng của trang (đầu trang, bàn cờ, công cụ, bàn phím số, bảng ' +
+        'bên). Liên kết bỏ qua ở đầu trang nhảy thẳng tới đề.',
       'help.keys.paste': 'Dán một đề vào bất kỳ đâu trên trang để mở nó: liên kết, nội dung tệp đề, hoặc ' +
         'một dòng 81, 36 hay 16 ký tự.',
       'help.keys.openBox': 'Trong ô văn bản của hộp thoại Nhập đề: nhập các đề vừa dán.'

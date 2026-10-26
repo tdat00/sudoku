@@ -1,8 +1,8 @@
 /**
  * Work budget and cancellation token shared by every long running routine. Hot loops call `check()` once per
  * node: the flags are tested every call, but the clock (and the external cancel poll) only every 1024 ticks.
- * Once a limit is hit every further `check()` keeps throwing. Also holds the run control of resumable generation
- * (see `SG.pipeline.runSteps`): an active clock and `drive`.
+ * Once a limit is hit every further `check()` keeps throwing. Also holds the run control of resumable
+ * generation (see `SG.pipeline.runSteps`): an active clock and `drive`.
  */
 (function (root) {
   'use strict';
@@ -15,9 +15,9 @@
   // 'budget.cancelled' or 'budget.exceeded'; cancel(); elapsedMs(); read-only isCancelled and nodes.
 
   /**
-   * Creates a budget; all options are optional (none = never expires). `ms`: wall-clock limit; `nodes`: max ticks;
-   * `onCancel`: called once on the first cancel(); `shouldCancel`: polled with the clock sample, for flags set from
-   * outside (e.g. shared memory); `now`: clock in ms, default Date.now.
+   * Creates a budget; all options are optional (none = never expires). `ms`: wall-clock limit; `nodes`: max
+   * ticks; `onCancel`: called once on the first cancel(); `shouldCancel`: polled with the clock sample, for
+   * flags set from outside (e.g. shared memory); `now`: clock in ms, default Date.now.
    */
   function create(options) {
     options = options || {};
@@ -94,9 +94,10 @@
       ? performance.now() : Date.now();
   }
 
-  // Clock that only counts while running. A scheduler running generation in slices resumes it before and pauses it
-  // after each slice, so time given away to the page is charged to nothing: pass `clock.now` as the budget `now`
-  // and as `now` of `SG.pipeline.runSteps`. resume()/pause() are idempotent; a new clock is paused.
+  // Clock that only counts while running. A scheduler running generation in slices resumes it before and
+  // pauses it after each slice, so time given away to the page is charged to nothing: pass `clock.now` as the
+  // budget `now` and as `now` of `SG.pipeline.runSteps`. resume()/pause() are idempotent; a new clock is
+  // paused.
   function createClock(rawNow) {
     var read = typeof rawNow === 'function' ? rawNow : defaultNow;
     var counted = 0;
@@ -119,8 +120,9 @@
       typeof x[Symbol.iterator] === 'function';
   }
 
-  // Runs a resumable computation (the iterator of a `*Steps` function) to its end without yielding the thread and
-  // returns its result; this is how every synchronous API is built on its stepper. Non-iterators are returned as is.
+  // Runs a resumable computation (the iterator of a `*Steps` function) to its end without yielding the thread
+  // and returns its result; this is how every synchronous API is built on its stepper. Non-iterators are
+  // returned as is.
   function drive(steps) {
     if (!isSteps(steps)) return steps;
     for (;;) {

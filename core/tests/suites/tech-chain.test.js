@@ -1,4 +1,4 @@
-// Chain techniques (task T-2.6): Forcing Chain / X-Cycle (`forcingChain`) and Nishio (`nishio`).
+// Chain techniques: Forcing Chain / X-Cycle (`forcingChain`) and Nishio (`nishio`).
 //
 // Soundness matters most here: an unsound chain silently produces puzzles without a solution (risk R3). So
 // besides the shared invariant I7 check (SG.techHelper.assertSound) the suite
@@ -20,10 +20,6 @@
   var model4 = H.model('classic4');
   var CHAIN_IDS = ['forcingChain', 'nishio'];
   var EVIL = ['escargot', 'worlds-hardest-2012', 'hard-platinum', 'hard-nugget', 'hard-b', 'hard-c'];
-
-  // ---------------------------------------------------------------------------------------------
-  // Helpers
-  // ---------------------------------------------------------------------------------------------
 
   function fail(message) {
     throw new SG.test.AssertionError(message);
@@ -80,11 +76,8 @@
     return SG.constraints.propagate(m, state);
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Proof checker for forcingChain Findings. It re-derives every link from the state with its own
   // definitions; nothing here is shared with ../core/js/engine/tech-chain.js.
-  // ---------------------------------------------------------------------------------------------
-
   function isOpen(state, cell, digit) {
     return state.value[cell] === 0 && (state.candidates[cell] & bitOf(digit)) !== 0;
   }
@@ -198,10 +191,7 @@
     return problems;
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Exhaustive oracle: which candidates belong to at least one solution of a position?
-  // ---------------------------------------------------------------------------------------------
-
   function supportedMasks(m, state) {
     var out = new Int32Array(m.cellCount);
     for (var c = 0; c < m.cellCount; c++) {
@@ -260,10 +250,6 @@
     }
     return firings;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Position generators
-  // ---------------------------------------------------------------------------------------------
 
   /** A position that keeps the solution but is otherwise random: some cells placed, wrong candidates kept. */
   function prunedFromSolution(m, solution, rng, placedShare, keepShare) {
@@ -416,10 +402,6 @@
     return rings[n];
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Fixtures
-  // ---------------------------------------------------------------------------------------------
-
   /**
    * Positions where the lower technique groups are stuck, typed in as published candidate grids (so they do
    * not depend on how the lower techniques are implemented): the givens and the candidates of the 81 cells,
@@ -527,10 +509,6 @@
     return H.makeState(model9, fx.puzzle, { candidates: candidates });
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Registration
-  // ---------------------------------------------------------------------------------------------
-
   describe('chain group: registration', function () {
     it('registers forcingChain and nishio with the ladder values of design.md 6.6', function () {
       var fc = SG.techniques.get('forcingChain');
@@ -559,10 +537,6 @@
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Soundness (invariant I7)
-  // ---------------------------------------------------------------------------------------------
 
   describe('chain group: soundness (I7)', function () {
     it('forcingChain never removes a solution candidate (300 states)', function () {
@@ -652,10 +626,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Twin solution positions: every candidate is part of a solution, so nothing may be found
-  // ---------------------------------------------------------------------------------------------
-
   describe('chain group: positions without any valid deduction', function () {
     // forcingChain gets no length limit. nishio stays at depth 1 in the bulk loops (a nested trial of a
     // position where nothing can be refuted costs the whole search space) and has its own depth 2 test.
@@ -765,10 +736,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // forcingChain: the chains it reports are valid proofs
-  // ---------------------------------------------------------------------------------------------
-
   describe('forcingChain: chain proofs', function () {
     it('every reported chain alternates strong and weak links and justifies its deduction', function () {
       var counts = { endpoints: 0, contradiction: 0, forced: 0 };
@@ -813,10 +780,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Fixtures
-  // ---------------------------------------------------------------------------------------------
-
   describe('forcingChain: fixtures', function () {
     CHAIN_FIXTURES.forEach(function (fx) {
       it('reports the ' + fx.name, function () {
@@ -851,10 +814,6 @@
       expect(chainProblems(model9, state, finding)).toEqual([]);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // maxChainLength
-  // ---------------------------------------------------------------------------------------------
 
   describe('forcingChain: maxChainLength', function () {
     var states;
@@ -950,10 +909,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Termination
-  // ---------------------------------------------------------------------------------------------
-
   describe('forcingChain: cyclic link graphs', function () {
     function budgetedRun(m, state, options) {
       var budget = SG.budget.create({});
@@ -1017,10 +972,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Budget
-  // ---------------------------------------------------------------------------------------------
-
   describe('chain group: budget', function () {
     var decoyState = (function () {
       var base = F.parse(fixture('wikipedia-example').solution);
@@ -1081,10 +1032,6 @@
       expect(err.code).toBe('budget.exceeded');
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // nishio
-  // ---------------------------------------------------------------------------------------------
 
   describe('nishio', function () {
     it('eliminates the first candidate whose assumption contradicts (escargot, depth 1)', function () {
@@ -1220,10 +1167,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
   // Acceptance: nightmare puzzles that the lower technique groups cannot finish
-  // ---------------------------------------------------------------------------------------------
-
   describe('chain group: nightmare puzzles', function () {
     /** Applies forcingChain and nishio (and the singles they unlock) until neither finds anything. */
     function chainOnly(start, solution) {

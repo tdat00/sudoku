@@ -1,6 +1,7 @@
-// The puzzle documents of tests/fixtures/puzzles/ (made by the generator, see docs/fixtures.md): each one is a
-// well-formed document whose `model` block builds a valid model with exactly one solution, independent of the
-// importer, so a broken fixture is found here and not through a confusing importer failure.
+// The puzzle documents of tests/fixtures/puzzles/ (made by the generator, see
+// docs/puzzle-exchange/fixtures.md): each one is a well-formed document whose `model` block builds a valid
+// model with exactly one solution, independent of the importer, so a broken fixture is found here and not
+// through a confusing importer failure.
 (function () {
   'use strict';
 

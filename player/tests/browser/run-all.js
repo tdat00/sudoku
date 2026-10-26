@@ -1,6 +1,6 @@
 'use strict';
-// Runs every browser script one after the other and prints one line each. Needs Edge (EDGE_PATH) and Node 22+.
-// Usage: node tests/browser/run-all.js
+// Runs every browser script one after the other and prints one line each. Needs Edge (EDGE_PATH) and
+// Node 22+. Usage: node tests/browser/run-all.js
 const cp = require('child_process');
 const path = require('path');
 

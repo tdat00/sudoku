@@ -1,19 +1,18 @@
 /**
- * `SG.textBoards`: the boards of the generator's other variants, rebuilt from what its text export carries (the clues
- * and, for some variants, the structure lines under the grid). `SG.classicModel` does the classic and overlapping
- * boards; this file adds the boards the variant alone fixes (DERIVED: Diagonal, Hyper, Mega 12x12, Monster 16x16) and
- * the ones that need structure lines (STRUCTURED: Jigsaw regions, Killer cages, Greater-Than signs, Wordoku letters
- * and word line).
+ * `SG.textBoards`: the boards of the generator's other variants, rebuilt from what its text export carries
+ * (the clues and, for some variants, structure lines under the grid). `SG.classicModel` builds the classic
+ * and overlapping boards; this file adds those the variant alone fixes (DERIVED: Diagonal, Hyper, Mega 12x12,
+ * Monster 16x16) and those that need structure lines (Jigsaw regions, Killer cages, Greater-Than signs,
+ * Wordoku letters and word line).
  *
- * Every spec function returns a PLAIN ModelSpec (arrays only, the shape of the `model` block of a puzzle document)
- * so the importer can store it; `create` turns it into a `PuzzleModel`. The specs equal the models the generator's
- * variants build (same units in the same order, labels, layout, overlays, symbols), so a puzzle has the same cells
- * and hint texts whichever way it arrived; tests compare them with the fixture documents.
+ * Every spec function returns a plain ModelSpec (arrays only, the shape of the `model` block of a puzzle
+ * document) so the importer can store it; `create` turns it into a `PuzzleModel`. The specs must equal the
+ * models of the generator's variants (same units in the same order, labels, layout, overlays, symbols), so a
+ * puzzle has the same cells and hint texts however it arrived; tests compare them with the fixture documents.
  *
- * `buildable(variantId)` / `buildVariant(variantId)` cover classic, overlapping and DERIVED boards. `killerSpec(cages)`
- * takes [{ cells, sum }] in the order they keep; `greaterThanSpec(signs)` [{ a, b }] (value[a] < value[b]);
- * `wordokuSpec(labels, lineCells, fixedValues)` the nine letters (value v = labels[v - 1]), the nine cells of the word
- * line and the value of the word's i-th letter (all 0 when unknown yet). Pure data, no DOM, no randomness.
+ * `killerSpec(cages)` takes [{ cells, sum }] in their order; `greaterThanSpec(signs)` [{ a, b }] (value[a] <
+ * value[b]); `wordokuSpec(labels, lineCells, fixedValues)` the nine letters (value v = labels[v - 1]), the
+ * nine cells of the word line and the value of the word's i-th letter (all 0 while unknown).
  */
 (function (root) {
   'use strict';
@@ -26,8 +25,7 @@
   const BOX = 3;
 
   const WINDOW_ORIGINS = Object.freeze([[1, 1], [1, 5], [5, 1], [5, 5]]);
-  // Spelled in two parts because the contract test of the engines looks for the browser global of that name.
-  // (The unit kind of a hyper region is the generator's word for it.)
+  // Split so that the ui-contract scan for browser globals does not match the generator's unit kind.
   const HYPER_KIND = 'wind' + 'ow';
 
   const DERIVED_BOARDS = Object.freeze({
@@ -38,7 +36,6 @@
   });
 
   const DERIVED = Object.freeze(Object.keys(DERIVED_BOARDS));
-  const STRUCTURED = Object.freeze(['jigsaw9', 'killer', 'greaterThan', 'wordoku']);
 
   function fail(reason) {
     return new SG.errors.GenerationError('model.invalidSpec', { reason: reason });
@@ -54,7 +51,7 @@
     return out;
   }
 
-  /** A square board whose boxes are boxRows x boxCols: rows, columns, boxes, then `extraUnits`, each also an overlay of its kind (how the generator draws diagonals and windows). */
+  /** Rows, columns, boxes, then `extraUnits`, each also an overlay of its kind (as the generator has it). */
   function gridSpec(variantId, D, boxRows, boxCols, extraUnits) {
     const n = D * D;
     const boxesAcross = D / boxCols;
@@ -223,7 +220,8 @@
     return search(0) ? color : null;
   }
 
-  /** Colours the cages so that cages sharing an edge never share a colour; it depends on the cages only, so the player recomputes the generator's pale backgrounds. */
+  // Cages sharing an edge never share a colour. It depends on the cages only, so the colours match the
+  // generator's.
   function colorCages(cages) {
     const count = cages.length;
     const ownerOf = new Array(SIZE * SIZE).fill(-1);
@@ -305,7 +303,7 @@
     return spec;
   }
 
-  /** Switches the lazy propagation of the rules a model carries on (without it the solver ignores them). */
+  // The cage and inequality propagation is registered lazily; without it the solver ignores those rules.
   function create(spec) {
     if (spec.cages && spec.cages.length > 0 && SG.comboTable) SG.comboTable.enablePropagation(spec.variantId);
     if (spec.inequalities && spec.inequalities.length > 0 && SG.ineq) SG.ineq.ensureExtension();
@@ -323,10 +321,8 @@
 
   SG.textBoards = {
     DERIVED: DERIVED,
-    STRUCTURED: STRUCTURED,
     buildable: buildable,
     buildVariant: buildVariant,
-    derivedSpec: derivedSpec,
     jigsawSpec: jigsawSpec,
     killerSpec: killerSpec,
     greaterThanSpec: greaterThanSpec,

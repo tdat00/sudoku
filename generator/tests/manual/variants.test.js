@@ -1,6 +1,6 @@
-// Variant test suite (task T-5.10): ONE sweep that runs over SG.variants.list(), so a variant added later
-// is tested without editing this file. It applies the acceptance criteria CV1-CV7 of task.md section P5 to
-// every registered variant (CV8 is the sweep itself):
+// Variant test suite: ONE sweep that runs over SG.variants.list(), so a variant added later is tested
+// without editing this file. It applies the acceptance criteria CV1-CV7 of task.md section P5 to every
+// registered variant (CV8 is the sweep itself):
 //
 //   CV0  the definition and its difficulty spec are sound (levels, symbol modes, options, clue floor)
 //   CV1  every model the variant builds passes SG.model.validate (default options and every option value)
@@ -10,7 +10,7 @@
 //   CV5  the same seed gives the same puzzle
 //   CV6  soft only: no generation may hang (the milestones of design.md 9.1 are asserted by perf.test.js)
 //   CV7  the variant name, its option labels / hints / choices and difficulty.<level> exist in both locale
-//        packs (skipped while SG.i18n / SG.locales do not exist)
+//        packs (skipped where SG.i18n / SG.locales are not loaded)
 //
 // The checks are plain functions of (definition, context): `SG.test.variantSweep.sweepVariant(def)` runs
 // all of them on any definition, registered or not, and reports pass / fail / skip per check. Default
@@ -68,9 +68,7 @@
     return null;
   }
 
-  // ===========================================================================================
   // Corpus: the puzzles every check of one variant shares (generated once, on first use)
-  // ===========================================================================================
 
   var contexts = new WeakMap();
 
@@ -106,9 +104,7 @@
     return ctx;
   }
 
-  // ===========================================================================================
   // The checks. Each one throws on failure (expect() or Error) and returns normally on success.
-  // ===========================================================================================
 
   function buildModel(def, options, seed) {
     return def.build(options || {}, SG.rng.create(seed || 1).fork('model'));
@@ -305,9 +301,9 @@
     });
   }
 
-  // ---- CV7 ----------------------------------------------------------------------------------
+  // CV7
 
-  /** { en: Object, vi: Object } of the merged locale packs, or null while they do not exist. */
+  /** { en: Object, vi: Object } of the merged locale packs, or null when they are not loaded. */
   function localePacks() {
     if (!SG.i18n || typeof SG.i18n.keys !== 'function' || !SG.locales) return null;
     var en = SG.i18n.keys('en');
@@ -339,7 +335,7 @@
 
   function checkLocales(def) {
     var packs = localePacks();
-    if (packs === null) SG.test.skip('the locale packs (SG.i18n / SG.locales) do not exist yet');
+    if (packs === null) SG.test.skip('the locale packs (SG.i18n / SG.locales) are not loaded here');
     var missing = [];
     var mismatched = [];
     keysOf(def).forEach(function (key) {
@@ -403,10 +399,6 @@
     volumeOf: volumeOf
   };
 
-  // ===========================================================================================
-  // The sweep itself (CV8): one describe per registered variant
-  // ===========================================================================================
-
   var covered = variantsUnderTest().map(function (def) { return def.id; });
 
   variantsUnderTest().forEach(function (def) {
@@ -418,10 +410,6 @@
       });
     });
   });
-
-  // ===========================================================================================
-  // CV8: variants that are added later are covered automatically
-  // ===========================================================================================
 
   describe('variants: the sweep covers every registered variant', function () {
     function fakeDef(id, overrides) {
@@ -462,7 +450,9 @@
     }, SLOW);
 
     it('checks I6 against the clue floor the variant declares', function () {
-      var def = fakeDef('sweepFloor', { clueFloor: { veryEasy: 3, easy: 2 }, difficultySupport: ['veryEasy', 'easy'] });
+      var def = fakeDef('sweepFloor', {
+        clueFloor: { veryEasy: 3, easy: 2 }, difficultySupport: ['veryEasy', 'easy']
+      });
       withRegistered(def, function () {
         var report = sweepVariant(SG.variants.get('sweepFloor'), { only: ['CV0', 'CV4'] });
         expect(report.failures).toEqual([]);
@@ -475,7 +465,7 @@
     it('has teeth: an invalid model fails CV1, and puzzles below the declared floor fail CV4', function () {
       var broken = fakeDef('sweepBroken', {
         build: function () {
-          // No unit lists cell 0 any more: model.validate reports V3.
+          // No unit lists cell 0: model.validate reports V3.
           var m = SG.fixtures.models.boxGrid('sweepBroken', 2, 2);
           return Object.assign({}, m, {
             units: m.units.filter(function (u) { return Array.prototype.indexOf.call(u, 0) === -1; })
@@ -501,10 +491,6 @@
       });
     }, SLOW);
   });
-
-  // ===========================================================================================
-  // D5: the normalised option schema (SG.variants.optionsOf / defaultOptions / sanitizeOptions)
-  // ===========================================================================================
 
   describe('variants: the normalised option schema', function () {
     var V = SG.variants;

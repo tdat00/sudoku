@@ -1,5 +1,5 @@
 // Board view: the pure part (geometry and markup) for the 15 variants of the fixtures. The DOM part (patches,
-// pulses, click hooks) is verified in the browser run (docs/qa.md).
+// pulses, click hooks) is verified in the browser run (docs/qa/browser-run.md).
 (function () {
   'use strict';
 

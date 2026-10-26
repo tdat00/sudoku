@@ -1,31 +1,22 @@
 /**
  * Cage sum combinations and the cage propagation extension (rule P4).
  *
- * 1. Combination table: `SG.comboTable.table[size][sum]` lists, as bit masks, every set of `size` pairwise
- *   distinct
- *    digits from 1..9 with that sum. Built once on load (512 masks, a few KB); this is what makes Killer
- *    affordable: a
- *    cage is reduced to a handful of digit sets, and a cage cell can only hold a digit occurring in one of
- *    them.
- * 2. Extension: `SG.comboTable.enablePropagation(variantId)` registers it with
- *   `SG.constraints.registerExtension`, so
- *    cage sums work in the DFS solver and the digger without constraints.js knowing about Killer. Per cage,
- *    until
+ * 1. Combination table: `table[size][sum]` lists, as bit masks, every set of `size` distinct digits from 1..9
+ *    with that sum (512 masks, built on load). This is what makes Killer affordable: a cage cell can only
+ *    hold a digit occurring in one of the few sets that fit.
+ * 2. Extension: `enablePropagation(variantId)` registers it with `SG.constraints.registerExtension`, so cage
+ *    sums work in the DFS solver and the digger without constraints.js knowing about Killer. Per cage, until
  *    nothing changes:
  *      - bounds:        sum - (largest the others can be) <= cell <= sum - (smallest the others can be);
- *      - combinations:  only table sets that fit the cells' candidates survive; the cells keep the union of
- *        those sets
+ *      - combinations:  only table sets that fit the cells' candidates survive; the cells keep their union
  *                       (digits already fixed in the cage leave the other cells);
  *      - forced digits: a digit in every surviving set that fits one cell only is placed there.
- *    Registered on demand (first Killer model with cages) and acting only on models of variants that asked
- *    for it:
- *    other models (even a plain board that carries a `cages` list) pay nothing and are unaffected.
+ *    It acts only on models of variants that asked for it: other models (even a plain board that carries a
+ *    `cages` list) pay nothing and are unaffected.
  *
  * Soundness: every rule only removes digits that no assignment satisfying the cage can use, and a complete
- * assignment
- * passes only when each cage sum is exact and (distinct cage) no digit repeats, so the DFS counts solutions
- * correctly
- * even when the cage cells are not peers of each other.
+ * assignment passes only when each cage sum is exact and (distinct cage) no digit repeats, so the DFS counts
+ * solutions correctly even when the cage cells are not peers of each other.
  */
 (function (root) {
   'use strict';
@@ -43,8 +34,7 @@
 
   const EMPTY = Object.freeze([]);
 
-  // comboTable[size][sum] = frozen ascending masks; sizes 0..9, sums 0..45; an impossible pair holds an empty
-  // array.
+  // comboTable[size][sum] = frozen ascending masks; sizes 0..9, sums 0..45; an impossible pair holds [].
   const comboTable = (function build() {
     const lists = [];
     for (let size = 0; size <= TABLE_DIGITS; size++) {
@@ -62,7 +52,7 @@
     }));
   })();
 
-  /** Tables restricted to the digits 1..D, built on demand for a board with D < 9. */
+  // Tables restricted to the digits 1..D, built on demand for a board with D < 9.
   const restricted = new Map();
 
   function tableFor(digits) {
@@ -80,15 +70,12 @@
     return t;
   }
 
-  // Masks (bit v - 1 = digit v, ascending) of the digit sets making `sum` out of `size` distinct digits from
-  // 1..digits
-  // (default 9); empty when impossible.
+  // Masks of the digit sets making `sum` out of `size` distinct digits from 1..digits (default 9).
   function masks(size, sum, digits) {
     if (!(size >= 0 && size <= TABLE_DIGITS && sum >= 0 && sum <= MAX_SUM)) return EMPTY;
     return tableFor(digits === undefined ? TABLE_DIGITS : digits)[size][sum];
   }
 
-  // Mask of every digit that occurs in at least one combination (0 when there is none).
   function union(size, sum, digits) {
     const list = masks(size, sum, digits);
     let u = 0;
@@ -96,7 +83,6 @@
     return u;
   }
 
-  // Mask of the digits that occur in every combination (0 when there is none).
   function common(size, sum, digits) {
     const list = masks(size, sum, digits);
     if (list.length === 0) return 0;
@@ -114,14 +100,11 @@
     return size * d - size * (size - 1) / 2;
   }
 
-  // CageIndex: flat typed-array view of `model.cages`: count, cageOf (per cell; -1 outside every cage), start
-  // (count + 1
-  // offsets into `cells`), cells (all cages back to back), size, sum, distinct (1 when the digits must all
-  // differ).
-
   const indexes = new WeakMap();
 
-  // Cached per model (models are immutable); do not modify the arrays.
+  // Flat typed-array view of `model.cages`, cached per model (do not modify): count, cageOf (per cell, -1
+  // outside every cage), start (count + 1 offsets into `cells`), cells (all cages back to back), size, sum,
+  // distinct.
   function cageIndex(model) {
     let index = indexes.get(model);
     if (index !== undefined) return index;
@@ -309,14 +292,9 @@
 
   const enabledVariants = new Set();
 
-  // Registers the cage propagation with `SG.constraints` and switches it on for the models of one variant.
-  // Nothing is
-  // registered until a variant asks (Killer does when it builds a model with cages); models of other variants
-  // (e.g. a
-  // test board that merely carries `cages`) are left alone. Idempotent per variant. Code that builds a Killer
-  // model by
-  // other means must call it before solving with `SG.dfs` (`SG.killer.modelFromCages` does). True when it
-  // changed anything.
+  // Switches the cage propagation on for the models of one variant (Killer does when it builds a model with
+  // cages). Code that builds a Killer model by other means must call it before solving with `SG.dfs`.
+  // Idempotent per variant; true when it changed anything.
   function enablePropagation(variantId) {
     if (enabledVariants.has(variantId)) return false;
     enabledVariants.add(variantId);
@@ -326,7 +304,7 @@
     return true;
   }
 
-  // Removes the cage propagation and forgets every variant (for tests).
+  // For tests: removes the extension and forgets every variant.
   function disablePropagation() {
     enabledVariants.clear();
     return SG.constraints.unregisterExtension(cageExtension.id);

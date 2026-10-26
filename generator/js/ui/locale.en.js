@@ -1,8 +1,9 @@
 /**
- * English language pack: shared strings (steps, explanations, techniques, difficulty, symmetry, variants, events,
- * errors, generic words). Modules that own their strings add them through `SG.localeFragments` (see js/ui/i18n.js).
- * Keep the key set identical to locale.vi.js. Placeholders are `{name}` (the `i18nArgs` of technique findings and
- * events, see `SG.events.VOCABULARY`); plural forms use the suffixes `_one` / `_other`.
+ * English language pack: shared strings (steps, explanations, techniques, difficulty, symmetry, variants,
+ * events, errors, generic words). Modules that own their strings add them through `SG.localeFragments` (see
+ * js/ui/i18n.js). Keep the key set identical to locale.vi.js. Placeholders are `{name}` (the `i18nArgs` of
+ * technique findings and events, see `SG.events.VOCABULARY`); plural forms use the suffixes `_one` /
+ * `_other`.
  */
 (function (root) {
   'use strict';
@@ -157,7 +158,7 @@
     'techniqueGroup.subset': 'Pairs, triples and quads',
     'techniqueGroup.fish': 'Fish and colouring',
     'techniqueGroup.wing': 'Wings',
-    'techniqueGroup.chain': 'Chains and trial',
+    'techniqueGroup.chain': 'Chains and trial and error',
     'techniqueGroup.cage': 'Cage rules',
     'techniqueGroup.ineq': 'Inequality rules',
 
@@ -173,7 +174,7 @@
     'step.buildModel.name': 'Build the board model',
     'step.fullGrid.name': 'Generate a full solution',
     'step.extraStructure.name': 'Build the extra structure',
-    'step.dig.name': 'Dig holes with checking',
+    'step.dig.name': 'Dig holes and check each one',
     'step.rate.name': 'Rate the difficulty',
     'step.tune.name': 'Tune and finish',
 
@@ -277,7 +278,8 @@
     'explain.tune.code.package': 'package the result'
   });
 
-  // Techniques: names and descriptions (cageCombo, ruleOf45, cageSplit, ineqChain, minMaxForcing are named in tech-ineq.js and killer.js)
+  // Techniques (cageCombo, ruleOf45, cageSplit, ineqChain, minMaxForcing are named in tech-ineq.js and
+  // killer.js)
 
   add({
     'technique.nakedSingle': 'Naked Single',
@@ -354,8 +356,8 @@
       'and an outside part, each with a sum of its own.'
   });
 
-  // Solving-step texts, one per `i18nKey` of a technique finding; placeholders are its `i18nArgs` ({unit}, {box}, {line}
-  // are unit labels such as R4, C2, B3; {cell...} are cell labels).
+  // Solving-step texts, one per `i18nKey` of a technique finding; placeholders are its `i18nArgs` ({unit},
+  // {box}, {line} are unit labels such as R4, C2, B3; {cell...} are cell labels).
 
   add({
     'technique.nakedSingle.step': '{cell} has only one candidate left: {digit}. So {cell} must be {digit}.',
@@ -434,7 +436,8 @@
       'would end in a contradiction. So {digit} is removed from {label}.'
   });
 
-  // Event log lines, one per key of SG.events.vocabularyKeys() (killer, wordoku, jigsaw and multigrid add their own)
+  // Event log lines, one per key of SG.events.vocabularyKeys() (killer, wordoku, jigsaw and multigrid add
+  // their own)
 
   add({
     'configure.start': 'Reading the settings.',

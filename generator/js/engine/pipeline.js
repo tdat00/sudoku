@@ -1,18 +1,19 @@
 /**
- * Generation pipeline: `SG.pipeline.run(config, emit, budget)` turns a GenerateConfig into a PuzzleResult through
- * seven steps, reported as events: configure, buildModel, fullGrid, extraStructure (`variant.postGenerate`), dig,
- * rate, tune. fullGrid..tune repeat per attempt (a new grid after `retry.difficulty`), dig..tune per dig sample.
- * dig = every removal plus the uniqueness check, rate = rating of the finished puzzle, tune = band check: accept or retry.
+ * Generation pipeline: `SG.pipeline.run(config, emit, budget)` turns a GenerateConfig into a PuzzleResult
+ * through seven steps, reported as events: configure, buildModel, fullGrid, extraStructure
+ * (`variant.postGenerate`), dig, rate, tune. fullGrid..tune repeat per attempt (a new grid after
+ * `retry.difficulty`), dig..tune per dig sample. dig = every removal plus the uniqueness check, rate = rating
+ * of the finished puzzle, tune = band check: accept or retry.
  *
- * The restart loop (which grid, which dig sample, which puzzle is closest) lives in `SG.digger.generate`, so the
- * puzzle is the same through the pipeline or by direct calls; `generate` forks the random streams by fixed names
- * ('grid#A', 'extra#A', 'dig#A.T'; this file only adds 'model'). The pipeline owns config, model, step events and
- * timings, variant hooks, warnings, budget and result. The emitter never feeds back into the algorithm, so the
- * puzzle does not depend on `config.trace`.
+ * The restart loop (which grid, which dig sample, which puzzle is closest) lives in `SG.digger.generate`, so
+ * the puzzle is the same through the pipeline or by direct calls; `generate` forks the random streams by
+ * fixed names ('grid#A', 'extra#A', 'dig#A.T'; this file only adds 'model'). The pipeline owns config, model,
+ * step events and timings, variant hooks, warnings, budget and result. The emitter never feeds back into the
+ * algorithm, so the puzzle does not depend on `config.trace`.
  *
- * `run` is `runSteps` (a generator that yields at natural boundaries, for schedulers running it in slices: the
- * `SG.workerClient` fallback and the worker) driven to its end, so events, puzzle and budget accounting cannot
- * differ. `toWire` / `fromWire` carry a result across `postMessage`.
+ * `run` is `runSteps` (a generator that yields at natural boundaries, for schedulers running it in slices:
+ * the `SG.workerClient` fallback and the worker) driven to its end, so events, puzzle and budget accounting
+ * cannot differ. `toWire` / `fromWire` carry a result across `postMessage`.
  */
 (function (root) {
   'use strict';
@@ -38,15 +39,16 @@
     return x === Infinity ? null : x;
   }
 
-  // GenerateConfig: variantId, difficulty (default 'normal'; a level the variant supports), seed (default random; uint32
-  // once normalised), symbolMode (default: the variant's), symmetry (SG.symmetry.KINDS, default 'rotational180'),
-  // digOrder (SG.digger.ORDERS, default 'random'), maxAttempts (default 8: full grids tried before settling for the
-  // closest puzzle), trace ('off' | 'summary' | 'full', default 'summary'), variantOptions (plain data for variant.build).
+  // GenerateConfig: variantId, difficulty (default 'normal'; a level the variant supports), seed (default
+  // random; uint32 once normalised), symbolMode (default: the variant's), symmetry (SG.symmetry.KINDS,
+  // default 'rotational180'), digOrder (SG.digger.ORDERS, default 'random'), maxAttempts (default 8: full
+  // grids tried before settling for the closest puzzle), trace ('off' | 'summary' | 'full', default
+  // 'summary'), variantOptions (plain data for variant.build).
 
   // Normalises and validates a configuration (defaults filled, seed fixed) into plain data that goes into
-  // PuzzleResult.config and survives postMessage. Throws GenerationError ('variant.unknown', 'difficulty.unknownLevel',
-  // 'difficulty.unsupportedLevel', 'rng.invalidSeed', 'symmetry.unknownKind', 'digger.invalidOption',
-  // 'events.invalidVerbosity', 'pipeline.invalidOption').
+  // PuzzleResult.config and survives postMessage. Throws GenerationError ('variant.unknown',
+  // 'difficulty.unknownLevel', 'difficulty.unsupportedLevel', 'rng.invalidSeed', 'symmetry.unknownKind',
+  // 'digger.invalidOption', 'events.invalidVerbosity', 'pipeline.invalidOption').
   function normalizeConfig(config) {
     if (config === null || typeof config !== 'object') {
       throw fail('pipeline.invalidOption', { option: 'config' });
@@ -100,35 +102,38 @@
     };
   }
 
-  // PuzzleResult: model (with the structure `postGenerate` added), givens (0 = empty; a subset of solution), solution,
-  // rating (SG.difficulty.rate; rating.level is the achieved level, config.difficulty the requested one), seed, config
-  // (normalised; `trace` as applied), timings (ms per step id, all seven keys, summed over attempts and samples),
-  // attempts (full grids generated), warnings (i18n keys: 'difficulty.approximate' = closest puzzle returned,
-  // 'digger.unsoundTechnique', 'trace.downgraded'), digLog (dig log of SG.digger.generate for the sample that became the
-  // puzzle; the UI builds its replay from it, whatever `config.trace` was).
+  // PuzzleResult: model (with the structure `postGenerate` added), givens (0 = empty; a subset of solution),
+  // solution, rating (SG.difficulty.rate; rating.level is the achieved level, config.difficulty the requested
+  // one), seed, config (normalised; `trace` as applied), timings (ms per step id, all seven keys, summed over
+  // attempts and samples), attempts (full grids generated), warnings (i18n keys: 'difficulty.approximate' =
+  // closest puzzle returned, 'digger.unsoundTechnique', 'trace.downgraded'), digLog (dig log of
+  // SG.digger.generate for the sample that became the puzzle; the UI builds its replay from it, whatever
+  // `config.trace` was).
 
-  // `emit` is a sink function, an `SG.events` emitter (which decides the verbosity) or null; a sink gets an emitter with
-  // verbosity `config.trace`. At 'off' only step start/end, `done` and `error` events are sent. On failure an `error`
-  // event is sent and the error rethrown; an unreachable level is not a failure: the closest puzzle is returned with
-  // warning 'difficulty.approximate'. This is `runSteps` driven to its end without yielding.
-  // Throws the errors of `normalizeConfig`, 'digger.unknownStrategy', 'budget.exceeded', 'budget.cancelled'.
+  // `emit` is a sink function, an `SG.events` emitter (which decides the verbosity) or null; a sink gets an
+  // emitter with verbosity `config.trace`. At 'off' only step start/end, `done` and `error` events are sent.
+  // On failure an `error` event is sent and the error rethrown; an unreachable level is not a failure: the
+  // closest puzzle is returned with warning 'difficulty.approximate'. This is `runSteps` driven to its end
+  // without yielding. Throws the errors of `normalizeConfig`, 'digger.unknownStrategy', 'budget.exceeded',
+  // 'budget.cancelled'.
   function run(config, emit, budget) {
     return SG.budget.drive(runSteps(config, emit, budget, { cooperative: false }));
   }
 
-  // Resumable form of `run`: a generator returning the PuzzleResult, so a scheduler can run generation in slices:
+  // Resumable form of `run`: a generator returning the PuzzleResult, so a scheduler can run generation in
+  // slices:
   //     const steps = SG.pipeline.runSteps(config, sink, budget, { now: clock.now });
   //     for (let s = steps.next(); !s.done; s = steps.next()) { ... if (timeIsUp) await yieldToUI(); }
-  // Yields (a bare `yield`) after every pipeline step and, inside the dig, after each oracle call or rated candidate
-  // (see `SG.digger.generateSteps` for the granularity limits). Events, random draws, budget accounting and result are
-  // those of `run`. Errors are thrown from the `.next()` that reaches them, after the `error` event. To give up, stop
-  // calling `.next()` (and call `.return()`): no event is sent. Do not resume it from two callers; the engine is not
-  // re-entrant per model, so nothing may solve the model being generated between slices (the sink should only
-  // collect events).
+  // Yields (a bare `yield`) after every pipeline step and, inside the dig, after each oracle call or rated
+  // candidate (see `SG.digger.generateSteps` for the granularity limits). Events, random draws, budget
+  // accounting and result are those of `run`. Errors are thrown from the `.next()` that reaches them, after
+  // the `error` event. To give up, stop calling `.next()` (and call `.return()`): no event is sent. Do not
+  // resume it from two callers; the engine is not re-entrant per model, so nothing may solve the model being
+  // generated between slices (the sink should only collect events).
   // To keep the time between slices out of the run, pass `budget` and `now` from an active clock
-  // (`SG.budget.createClock`) that the scheduler resumes before and pauses after each slice.
-  // options: now (clock of event times, step timings and elapsed time; default performance.now), cooperative
-  // (default true; false = never yield), metricIntervalMs (throttle of `metric` events, default 50 ms of `now`).
+  // (`SG.budget.createClock`) that the scheduler resumes before and pauses after each slice. options: now
+  // (clock of event times, step timings and elapsed time; default performance.now), cooperative (default
+  // true; false = never yield), metricIntervalMs (throttle of `metric` events, default 50 ms of `now`).
   function* runSteps(config, emit, budget, options) {
     options = options || {};
     const clock = typeof options.now === 'function' ? options.now : now;
@@ -281,8 +286,8 @@
   }
 
   // The PuzzleResult as data that survives postMessage and nothing else: the model is reduced to what
-  // `SG.model.create` needs (`cellUnits` and `peers` are derived and stay behind). Typed arrays are shared, not
-  // copied; the clone `postMessage` makes is the copy.
+  // `SG.model.create` needs (`cellUnits` and `peers` are derived and stay behind). Typed arrays are shared,
+  // not copied; the clone `postMessage` makes is the copy.
   function toWire(result) {
     return {
       v: WIRE_VERSION,
@@ -300,10 +305,11 @@
   }
 
   // Rebuilds a PuzzleResult from `toWire` data on the receiving thread. The model is created anew with
-  // `SG.model.create` and the lazy propagation extensions are switched on (`SG.comboTable.enablePropagation` for cages,
-  // `SG.ineq.ensureExtension` for signs): without them `SG.dfs` would ignore cage sums and signs and count solutions
-  // of a different puzzle. Per-model side data the variants keep in WeakMaps (layout report, sign scope, build notes)
-  // does not cross; the UI does not read it. Throws 'unexpected' for data of another wire version.
+  // `SG.model.create` and the lazy propagation extensions are switched on (`SG.comboTable.enablePropagation`
+  // for cages, `SG.ineq.ensureExtension` for signs): without them `SG.dfs` would ignore cage sums and signs
+  // and count solutions of a different puzzle. Per-model side data the variants keep in WeakMaps (layout
+  // report, sign scope, build notes) does not cross; the UI does not read it. Throws 'unexpected' for data of
+  // another wire version.
   function fromWire(wire) {
     if (wire === null || typeof wire !== 'object' || wire.v !== WIRE_VERSION || !wire.model) {
       throw fail('unexpected', { message: 'unsupported result format' });

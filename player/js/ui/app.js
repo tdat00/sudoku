@@ -1,33 +1,31 @@
 /**
- * The player app: `SG.app`. Starts the page, opens puzzles, keeps the progress and wires the other modules. The
- * reused modules (`play.js`, `a11y.js`, `theme.js`) need only the small surface below from it.
+ * The player app: `SG.app`. Starts the page, opens puzzles, keeps the progress and wires the other modules
+ * (`play.js`, `a11y.js`, `theme.js`), which use only the surface below.
  *
- * Every way of opening a puzzle ends in `openPuzzle`, through `SG.importer.open`:
- *   - `#puzzle=<token>` in the address (the generator's "Play online" link): checked at start-up and on
- *     `hashchange`; the fragment is removed with `history.replaceState` as soon as it was read
- *   - the Open dialog (file picker, paste box), a file dropped anywhere on the page, a paste on the page
+ * Every way of opening a puzzle ends in `openPuzzle`, through `SG.importer`:
+ *   - `#puzzle=<token>` in the address (the generator's "Play" link), read at start-up and on
+ *     `hashchange`, then removed with `history.replaceState`
+ *   - the Open dialog (paste box), a file dropped anywhere on the page, a paste on the page
  *   - the recent list, and a reload without a fragment (the puzzle that was on the board)
- * A puzzle with saved progress asks "Continue" or "Start over" (the recent list and a reload continue silently).
+ * A puzzle with saved progress asks "Continue" or "Start over" (the recent list and a reload continue
+ * silently).
  *
- * API (`SG.app`): `start()` (idempotent; false without a DOM; called by the last script of index.html), `getStore()`,
- * `getBoard()` (null before `start`), `getResult()` -> `{ result: puzzle, trace: [] }` or null, `getPuzzle()`,
- * `toast(kind, key, args)` ('success' | 'warning' | 'danger' | 'info'), `announce(text)` (screen readers,
- * `#a11y-live`), `openModal({titleKey, titleArgs, body, footer, wide, onClose})` -> `{ el, panel, body, footer,
- * close(), setTitle(key, args) }` (focus goes to the first control and comes back on close), `on(name, fn)` (returns
- * the unsubscribe function) / `emit(name, payload)`, `showResult(puzzle, { state, symbolMode, focus, source })`
- * (no questions asked), `open(input, options)` (text, token, link or a File / Blob; Promise of whether a puzzle is
- * on the board), `openPuzzle(puzzle, { resume: 'ask' | 'continue' | 'fresh' })`, `openOpenDialog()`,
- * `openShareDialog()` (null without a puzzle), `clearSavedData()` (not the preferences), `saveNow()`.
+ * API: `start()` (idempotent; false without a DOM), `getStore()`, `getBoard()` (null before `start`),
+ * `getResult()` -> `{ result: puzzle, trace: [] }` or null, `getPuzzle()`, `toast(kind, key, args)`
+ * ('success' | 'warning' | 'danger' | 'info'), `announce(text)` (screen readers, `#a11y-live`), `openModal({
+ * titleKey, titleArgs, body, footer, wide, onClose })` -> `{ el, panel, body, footer, close(), setTitle(key,
+ * args) }`, `on(name, fn)` -> off / `emit(name, payload)`, `showResult(puzzle, { state, symbolMode, focus })`
+ * (no questions asked), `open(input, options)` (text, token, link or File; Promise of whether a puzzle is on
+ * the board), `openPuzzle(puzzle, { resume: 'ask' | 'continue' | 'fresh' })`, `openOpenDialog()`,
+ * `openShareDialog()` (null without a puzzle), `saveNow()`.
  *
  * Events (`fn(payload, name)`):
- *   'result'     a puzzle is on the board: `{ result: puzzle, trace: [] }`
- *   'settings'   a preference changed: `{ state, keys, source }`
- *   'locale'     the language changed: `{ locale }`
- *   'theme'      the theme preference changed: `{ theme }`
- *   'action'     a button was used: `{ id: 'open' | 'share' | 'settings' }` (Help is a link to help.html)
- *   'play:game'  a game was attached to the board: `{ game, puzzle }` (emitted by play.js)
- *   'play:change' the game changed (emitted by play.js); the progress is saved shortly after
- *   'data:cleared' the saved data were deleted
+ *   'result'      a puzzle is on the board: `{ result: puzzle, trace: [] }`
+ *   'settings'    a preference changed: `{ state, keys, source }`
+ *   'locale'      the language changed: `{ locale }`
+ *   'action'      a button was used: `{ id: 'open' | 'share' | 'settings' }`
+ *   'play:game'   play.js attached a game to the board: `{ game, puzzle }`
+ *   'play:change' play.js changed the game; the progress is saved shortly after
  */
 (function (root) {
   'use strict';
@@ -45,8 +43,7 @@
   const RECENT_SHOWN = 100;
   const REPORT_SHOWN = 8;
   const LONG_LINK_CHARS = 100000;
-  // Relative to the page: the player and the generator are folders of one site. They name the page itself, not its
-  // folder, because opened from a disk (file://) a folder shows a file listing instead of the page.
+  // Pages, not folders: opened from a disk (file://) a folder shows a file listing instead of the page.
   const DEFAULT_PLAYER_URL = './index.html';
   const DEFAULT_GENERATOR_URL = '../generator/index.html';
   const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), ' +
@@ -198,7 +195,7 @@
     const closeButton = make('button', {
       type: 'button', class: 'btn btn--ghost btn--icon btn--sm toast__close', 'aria-label': t('common.close')
     }, [icon('x')]);
-    const node = make('div', { class: 'toast toast--' + type, 'data-kind': type }, [
+    const node = make('div', { class: 'toast toast--' + type }, [
       make('span', { class: 'toast__message', text: text }),
       closeButton
     ]);
@@ -258,7 +255,7 @@
     let titleArgs = o.titleArgs;
     const title = make('h2', { class: 'modal__title', id: id, text: t(titleKey, titleArgs) });
     const closeButton = make('button', {
-      type: 'button', class: 'btn btn--ghost btn--icon btn--sm', 'data-role': 'modal-close',
+      type: 'button', class: 'btn btn--ghost btn--icon btn--sm',
       'aria-label': t('common.close'), title: t('common.close')
     }, [icon('x')]);
     const bodyEl = make('div', { class: 'modal__body' });
@@ -419,21 +416,6 @@
     }, SAVE_DELAY_MS);
   }
 
-  function metaOf(puzzle) {
-    const info = puzzle.info || {};
-    const d = info.difficulty || null;
-    return {
-      variantId: puzzle.variantId,
-      requested: d ? d.requested : null,
-      achieved: d ? d.achieved : null,
-      clues: info.clues,
-      cellCount: info.cellCount,
-      seed: info.seed === undefined ? null : info.seed,
-      generatedAt: info.generatedAt || null,
-      source: info.source || null
-    };
-  }
-
   function showLayout(hasPuzzle) {
     els.welcome.hidden = hasPuzzle;
     els.layout.hidden = !hasPuzzle;
@@ -497,7 +479,7 @@
     return nodes;
   }
 
-  // Same markup as the generator's list of puzzles (js/ui/history.js there), so both pages share one style.
+  // The markup of the generator's list of puzzles (its js/ui/history.js), so both pages share one style.
   function recentItem(item) {
     const meta = item.meta || {};
     const name = variantName(meta.variantId || item.id.split('-')[0]);
@@ -505,12 +487,11 @@
     const isCurrent = current !== null && current.id === item.id;
     const title = make('span', { class: 'history-item__title', text: name });
     const statusKey = item.solved ? 'solved' : item.hasProgress ? 'progress' : 'new';
-    // Only a solved puzzle and one in progress get an icon; a new one has none.
     const status = statusKey === 'new' ? null : make('span', {
       class: 'history-item__status', 'data-status': statusKey, 'aria-hidden': 'true'
     }, [icon('status-' + statusKey)]);
     const open = make('button', {
-      type: 'button', class: 'history-item__open', 'data-role': 'open', 'data-id': item.id,
+      type: 'button', class: 'history-item__open', 'data-role': 'open',
       'aria-label': t('player.recent.open', { name: name, details: details })
     }, [
       title,
@@ -520,7 +501,7 @@
     open.addEventListener('click', function () { safely(function () { openStored(item.id); }); });
     const removeLabel = t('player.recent.remove', { name: name });
     const remove = make('button', {
-      type: 'button', class: 'btn btn--ghost btn--icon btn--sm history-item__remove', 'data-role': 'remove',
+      type: 'button', class: 'btn btn--ghost btn--icon btn--sm history-item__remove',
       'aria-label': removeLabel, title: removeLabel
     }, [icon('x')]);
     remove.addEventListener('click', function () {
@@ -529,7 +510,7 @@
       renderRecent();
       announce(t('player.recent.removed'));
     });
-    return make('li', { class: 'history-item', 'data-id': item.id, 'data-status': statusKey }, [open, status, remove]);
+    return make('li', { class: 'history-item' }, [open, status, remove]);
   }
 
   function fillRecent(list, items) {
@@ -582,7 +563,7 @@
     if (SG.play) {
       SG.play.attach(puzzle, { state: o.state, symbolMode: o.symbolMode, focus: o.focus === true });
     }
-    saved.savePuzzle(puzzle.id, puzzle.document, metaOf(puzzle));
+    saved.savePuzzle(puzzle.id, puzzle.document);
     saved.setLast(puzzle.id);
     if (o.state) hasSavedProgress = true;
     renderHeading();
@@ -772,7 +753,7 @@
     return modal;
   }
 
-  /** Several puzzles came in: every good one goes into the list, the one on screen in the generator (`o.active`) or else the first is put on the board, and the unplayable ones are listed. */
+  /** Every good puzzle goes into the list, `o.active` (or the first) onto the board; the rest is reported. */
   function importBatch(items, source, o) {
     const good = items.filter(function (item) { return item.outcome.ok; });
     const skipped = items.filter(function (item) { return !item.outcome.ok; });
@@ -786,10 +767,9 @@
     // Saved last to first, so that the first puzzle of the text is the newest one of the list.
     good.slice().reverse().forEach(function (item) {
       const puzzle = item.outcome.puzzle;
-      saved.savePuzzle(puzzle.id, puzzle.document, metaOf(puzzle));
+      saved.savePuzzle(puzzle.id, puzzle.document);
     });
     const warned = good.filter(function (item) { return item.outcome.warnings.length > 0; }).length;
-    // The puzzle that was on screen in the generator (its number in the text), else the first one.
     const wanted = good.filter(function (item) { return item.index === o.active; });
     const first = wanted.length > 0 ? wanted[0] : good[0];
     return openPuzzle(first.outcome.puzzle, { resume: 'continue', source: source, focus: o.focus !== false })
@@ -813,7 +793,9 @@
     }).then(function (result) {
       if (seq !== openSeq) return false;
       const active = typeof o.active === 'number' ? o.active : result.active;
-      if (result.items.length !== 1) return importBatch(result.items, source, Object.assign({}, o, { active: active }));
+      if (result.items.length !== 1) {
+        return importBatch(result.items, source, Object.assign({}, o, { active: active }));
+      }
       const outcome = result.items[0].outcome;
       if (!outcome.ok) {
         showErrors(outcome.errors);
@@ -846,7 +828,7 @@
     return absoluteUrl(base);
   }
 
-  /** A link to share must work away from this page, so a relative base is resolved against the page. */
+  // A shared link must work away from this page, so a relative base is resolved against the page.
   function absoluteUrl(base) {
     if (typeof document === 'undefined' || typeof URL !== 'function') return base;
     try {
@@ -896,7 +878,7 @@
       body: function (body) {
         body.appendChild(make('p', { class: 'modal__lead', i18n: 'player.share.lead' }));
         refs.box = make('textarea', {
-          class: 'textarea share-link', id: 'share-link', rows: '5', readonly: true, spellcheck: 'false',
+          id: 'share-link', rows: '5', readonly: true, spellcheck: 'false',
           autocomplete: 'off', autocapitalize: 'off', 'aria-label': t('player.share.label')
         });
         refs.box.addEventListener('focus', function () { refs.box.select(); });
@@ -926,7 +908,8 @@
       refs.box.value = info.url;
       refs.copy.disabled = false;
       if (info.long) {
-        refs.hint.textContent = t('player.share.long', { size: SG.i18n.formatNumber(Math.round(info.url.length / 1000)) });
+        const size = SG.i18n.formatNumber(Math.round(info.url.length / 1000));
+        refs.hint.textContent = t('player.share.long', { size: size });
         refs.hint.hidden = false;
       }
       refs.box.focus();
@@ -941,7 +924,7 @@
     return modal;
   }
 
-  /** Elements whose text has `{generator}` in it (player.open.intro ...): the placeholder becomes a link to Sudoku Generator, redrawn on a language change. */
+  // Texts with `{generator}` (player.open.intro ...) show a link to Sudoku Generator there.
   const generatorTexts = [];
 
   function renderGeneratorText(entry) {
@@ -1005,7 +988,7 @@
       body: function (body) {
         body.appendChild(generatorText('p', { class: 'modal__lead' }, 'player.open.intro'));
         refs.text = make('textarea', {
-          class: 'textarea open-text', id: 'open-text', rows: '5', spellcheck: 'false', autocomplete: 'off',
+          class: 'open-text', id: 'open-text', rows: '5', spellcheck: 'false', autocomplete: 'off',
           autocapitalize: 'off', 'aria-describedby': 'open-text-hint open-errors'
         });
         refs.text.addEventListener('keydown', function (event) {
@@ -1035,7 +1018,7 @@
     });
     if (modal === null) return null;
     openDialog = { modal: modal, showErrors: showDialogErrors };
-    // The first focusable thing is now the link to the generator in the lead: the text box is what is wanted.
+    // The first focusable element is the generator link of the lead; the text box is what is wanted.
     if (refs.text !== null) refs.text.focus();
     return modal;
   }
@@ -1144,7 +1127,6 @@
       if (keys.indexOf('reducedMotion') !== -1) board.setAnimate(!state.reducedMotion);
     }
     emit('settings', { state: state, keys: keys, source: meta && meta.source ? meta.source : 'store' });
-    if (keys.indexOf('theme') !== -1) emit('theme', { theme: state.theme });
   }
 
   function onLocaleChange(code) {
@@ -1260,16 +1242,6 @@
     return true;
   }
 
-  function clearSavedData() {
-    saved.clear();
-    hasSavedProgress = false;
-    storageWarned = false;
-    renderRecent();
-    setStatus(null);
-    emit('data:cleared', {});
-    toast('success', 'player.clear.done');
-  }
-
   const api = {
     start: start,
     getStore: function getStore() { return store; },
@@ -1286,7 +1258,6 @@
     openPuzzle: openPuzzle,
     openOpenDialog: openOpenDialog,
     openShareDialog: openShareDialog,
-    clearSavedData: clearSavedData,
     saveNow: saveNow
   };
 
@@ -1313,9 +1284,9 @@
       'player.open.intro': 'Paste the puzzles you exported from {generator}.',
       'player.generator.name': 'Sudoku Generator',
       'player.open.paste.label': 'Paste puzzles',
-      'player.open.paste.hint': 'The text of the “Export” box of {generator}, with one or many puzzles ' +
-        'of any variant. A “Play online” link or a line of 81 (9×9), 36 (6×6) or 16 (4×4) characters where ' +
-        '. 0 - _ mean an empty cell also works. Ctrl+Enter imports it.',
+      'player.open.paste.hint': 'The text of the “Export” box of {generator}, with one or many puzzles of ' +
+        'any variant. A link from its “Play” button or a line of 81 (9×9), 36 (6×6) or 16 (4×4) characters ' +
+        'where . 0 - _ mean an empty cell also works. Ctrl+Enter imports it.',
       'player.open.submit': 'Import',
       'player.error.title': 'Nothing could be imported',
       'player.error.lead': 'Nothing was changed on the board. What went wrong:',
@@ -1360,8 +1331,7 @@
       'player.recent.clues_other': '{count} clues',
       'player.recent.progress': '{percent}% filled',
       'player.recent.solved': 'Solved',
-      'player.recent.new': 'Not started',
-      'player.clear.done': 'Saved puzzles and progress were deleted from this browser.'
+      'player.recent.new': 'Not started'
     },
     vi: {
       'player.heading.level': '{variant} · {level}',
@@ -1382,9 +1352,9 @@
       'player.open.intro': 'Dán các đề bạn đã xuất từ {generator}.',
       'player.generator.name': 'Trình sinh đề Sudoku',
       'player.open.paste.label': 'Dán đề',
-      'player.open.paste.hint': 'Nội dung ô “Xuất” của {generator}, một hay nhiều đề thuộc mọi ' +
-        'biến thể. Liên kết “Chơi trực tuyến” hoặc một dòng 81 (9×9), 36 ' +
-        '(6×6), 16 (4×4) ký tự, trong đó . 0 - _ là ô trống, cũng dùng được. Nhấn Ctrl+Enter để nhập.',
+      'player.open.paste.hint': 'Nội dung hộp “Xuất văn bản” của {generator}, một hay nhiều đề thuộc mọi ' +
+        'biến thể. Liên kết từ nút “Chơi” hoặc một dòng 81 (9×9), 36 (6×6), 16 (4×4) ký tự, trong đó . 0 - ' +
+        '_ là ô trống, cũng dùng được. Nhấn Ctrl+Enter để nhập.',
       'player.open.submit': 'Nhập',
       'player.error.title': 'Không nhập được đề nào',
       'player.error.lead': 'Bàn cờ không bị thay đổi. Đã xảy ra lỗi:',
@@ -1428,8 +1398,7 @@
       'player.recent.clues_other': '{count} số cho sẵn',
       'player.recent.progress': 'đã điền {percent}%',
       'player.recent.solved': 'Đã giải',
-      'player.recent.new': 'Chưa chơi',
-      'player.clear.done': 'Đã xóa các đề và tiến độ đã lưu khỏi trình duyệt này.'
+      'player.recent.new': 'Chưa chơi'
     }
   });
 

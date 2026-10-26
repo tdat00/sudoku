@@ -2,16 +2,16 @@
 'use strict';
 
 /*
- * Performance measurement against design.md section 9.1 (task T-6.2).
+ * Performance measurement against design.md section 9.1.
  *
  *   node tests/perf.js [--variant=a,b] [--level=a,b] [--runs=50] [--quick] [--warmup=N] [--seed=N]
- *                      [--ascii] [--gate] [--update-hashes] [--check-hashes] [--help]
+ *                      [--ascii] [--gate] [--update-hashes] [--check-hashes] [--alloc] [--help]
  *
  * For every cell of the table of section 9.1 (a variant and a level it offers) it generates --runs puzzles
  * (default 50) through SG.pipeline.run with trace 'summary' and prints the p50 / p95 / max time next to the
  * p95 target, with a tick or a cross. The cells are those of SG.fixtures.perfTools.PERF_TARGETS
- * (tests/fixtures/perf-helper.js). The acceptance of T-6.2 is that at least 90 % of the cells meet their
- * target; every miss needs a written justification, so the script ends with the list of misses.
+ * (tests/fixtures/perf-helper.js). At least 90 % of the cells must meet their target; every miss needs a
+ * written justification, so the script ends with the list of misses.
  *
  *   --quick            8 runs per cell and only the cells whose target is 2 s or less (a few seconds in all)
  *   --warmup=N         untimed runs of each cell before the timed ones (default 0: cold start included)
@@ -30,7 +30,7 @@
  * `SG_UPDATE_HASHES=1 node tests/node-runner.js --suite=perf` does the same from the test runner.
  *
  * The source files are the ones listed in SOURCE_FILES of tests/node-runner.js, minus the UI files (the
- * engine does not use them); files that do not exist yet are skipped.
+ * engine does not use them); files that do not exist are skipped.
  */
 
 const fs = require('fs');

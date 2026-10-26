@@ -1,5 +1,5 @@
-// SG.store (js/ui/store.js): the preferences of the player and the safe storage under them. Nothing may throw,
-// whatever the browser does with localStorage.
+// SG.store (js/ui/store.js): the preferences of the player and the safe storage under them. Nothing may
+// throw, whatever the browser does with localStorage.
 (function () {
   'use strict';
 

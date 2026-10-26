@@ -1,9 +1,8 @@
-// Logical solver framework (task T-2.1): the technique registry (techniques.js), the solve loop
+// Logical solver framework: the technique registry (techniques.js), the solve loop
 // (logical-solver.js) and the shared technique test helper (tests/fixtures/techniques-helper.js).
 //
-// The real techniques arrive in T-2.2 ... T-2.6. This suite therefore registers TEMPORARY stub techniques
-// (ids starting with "stub") inside the tests that need them and removes them again in afterEach, so the
-// registry that other suites (and the real techniques) see is never touched.
+// The tests register TEMPORARY stub techniques (ids starting with "stub") and remove them again in
+// afterEach, so the registry that other suites (and the real techniques) see is never touched.
 (function () {
   'use strict';
 
@@ -25,10 +24,7 @@
   var debugAtLoad = SG.DEBUG;
   var registered = [];
 
-  // ---------------------------------------------------------------------------------------------
   // Stub techniques and small helpers
-  // ---------------------------------------------------------------------------------------------
-
   function reg(def) {
     var stored = SG.techniques.register(def);
     registered.push(stored.id);
@@ -115,16 +111,6 @@
     reg(stubDef('stubHiddenSingle', 2, 20, findHiddenSingle));
   }
 
-  /** A stub that removes `value` from `cell` once, then reports nothing. */
-  function onceEliminating(id, order, cell, value) {
-    var used = false;
-    return stubDef(id, 1, order, function () {
-      if (used) return null;
-      used = true;
-      return finding(id, [cell], [], [[cell, value]]);
-    });
-  }
-
   function entry(name) {
     return F.unique.filter(function (e) { return e.name === name; })[0];
   }
@@ -190,10 +176,6 @@
     var dug = SG.testkit.dig(model, solution, rng.fork('dig'), { symmetry: 'none', minClues: minClues || 0 });
     return { givens: dug.givens, solution: solution };
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Registry
-  // ---------------------------------------------------------------------------------------------
 
   describe('SG.techniques registry', function () {
     function valid(overrides) {
@@ -355,11 +337,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Acceptance: singles solve the easy puzzles
-  // ---------------------------------------------------------------------------------------------
-
-  describe('solve: easy puzzles with singles only (T-2.1 acceptance)', function () {
+  describe('solve: easy puzzles with singles only', function () {
     EASY.forEach(function (name) {
       it('solves ' + name + ' with allowedTechniques [nakedSingle, hiddenSingle]', function () {
         registerSingles();
@@ -482,10 +460,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Stuck, contradictions, edge inputs
-  // ---------------------------------------------------------------------------------------------
-
   describe('solve: stuck puzzles and other end states never throw', function () {
     it('a puzzle that needs more than singles returns solved:false with the stuck state', function () {
       registerSingles();
@@ -586,10 +560,6 @@
       expect(report.status).toBe('contradiction');
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Ladder semantics
-  // ---------------------------------------------------------------------------------------------
 
   describe('solve: the technique ladder', function () {
     it('tries techniques in ascending order and restarts from the cheapest after every step', function () {
@@ -772,11 +742,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Scoring and the report
-  // ---------------------------------------------------------------------------------------------
-
-  describe('solve: scoring (design.md section 6.6)', function () {
+  describe('solve: scoring', function () {
     it('score = baseCost x (1.5 on first use) + empty cells x 0.6, worked out by hand', function () {
       registerSingles();
       // Cells 0 and 15 are empty: two naked singles. 1 x 1.5 + 1 x 1 + 2 x 0.6 = 3.7
@@ -935,10 +901,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Bug guards: a buggy technique must fail loudly
-  // ---------------------------------------------------------------------------------------------
-
   describe('solve: a faulty technique fails loudly and by name', function () {
     /** Registers 'stubBroken' returning whatever make() builds; returns a function that runs the solver. */
     function broken(make) {
@@ -1034,10 +996,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Budget and stopOnStuck
-  // ---------------------------------------------------------------------------------------------
-
   describe('solve: budget and stopOnStuck', function () {
     it('checks the budget once per applied step and throws the budget error', function () {
       registerSingles();
@@ -1102,11 +1060,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Speed
-  // ---------------------------------------------------------------------------------------------
-
-  describe('solve: collectSteps:false is faster (T-2.1 acceptance, >= 15%)', function () {
+  describe('solve: collectSteps:false is faster (>= 15%)', function () {
     var puzzles = EASY.map(puzzle);
 
     function runAll(collect) {
@@ -1141,10 +1095,6 @@
       expect(fast).toBeLessThan(slow * 0.85);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // SG.techHelper
-  // ---------------------------------------------------------------------------------------------
 
   describe('SG.techHelper: states and conversions', function () {
     it('model() caches models and defaults to classic9', function () {

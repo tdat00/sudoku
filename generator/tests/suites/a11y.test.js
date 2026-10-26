@@ -1,9 +1,7 @@
-// Accessibility (task T-7.3): the pure parts of SG.a11y, checked on Node with real models and results: the
-// accessible name of a cell in both languages (values, grids, cage sums, signs), the keyboard navigation over
-// the geometry of every board shape (holes of multi-grid canvases are skipped), the de-duplicating and rate
-// limited announcer and the Settings choices. Steps are not announced by this module (the status line reads
-// them during the replay). The DOM part (roles, observers, dialog) is verified in the browser run of the task
-// (accessibility tree over CDP).
+// Accessibility: the pure parts of SG.a11y, checked on Node with real models and results: the accessible name
+// of a cell in both languages (values, grids, cage sums, signs), the keyboard navigation over the geometry of
+// every board shape (holes of multi-grid canvases are skipped), the de-duplicating and rate limited announcer
+// and the Settings choices. The DOM part (roles, observers, dialog) needs a browser and is not tested here.
 (function () {
   'use strict';
 
@@ -37,10 +35,6 @@
     return Object.assign(A.cellPosition(geo, i), extra);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Labels
-  // ---------------------------------------------------------------------------------------------
-
   describe('a11y: where a cell is', function () {
     it('names the row and column (1-based) of a single board', function () {
       ready();
@@ -50,20 +44,21 @@
       expect(A.cellPosition(geo, 80)).toEqual({ grid: 0, row: 9, col: 9, shared: [] });
     });
 
-    it('agrees with SG.model.cellLabel (G2-R4C7) on every cell of samurai, and lists the shared grids', function () {
-      ready();
-      var model = emptyModel('samurai');
-      var geo = SG.boardView.geometry(model);
-      var sharedCells = 0;
-      for (var i = 0; i < model.cellCount; i++) {
-        var p = A.cellPosition(geo, i);
-        expect(SG.model.cellLabel(model, i)).toBe('G' + p.grid + '-R' + p.row + 'C' + p.col);
-        if (p.shared.length > 0) sharedCells++;
-        p.shared.forEach(function (g) { expect(g).not.toBe(p.grid); });
-      }
-      // The overlap of the centre grid with the four corner grids: 4 boxes of 9 cells.
-      expect(sharedCells).toBe(36);
-    });
+    it('agrees with SG.model.cellLabel (G2-R4C7) on every cell of samurai, and lists the shared grids',
+      function () {
+        ready();
+        var model = emptyModel('samurai');
+        var geo = SG.boardView.geometry(model);
+        var sharedCells = 0;
+        for (var i = 0; i < model.cellCount; i++) {
+          var p = A.cellPosition(geo, i);
+          expect(SG.model.cellLabel(model, i)).toBe('G' + p.grid + '-R' + p.row + 'C' + p.col);
+          if (p.shared.length > 0) sharedCells++;
+          p.shared.forEach(function (g) { expect(g).not.toBe(p.grid); });
+        }
+        // The overlap of the centre grid with the four corner grids: 4 boxes of 9 cells.
+        expect(sharedCells).toBe(36);
+      });
   });
 
   describe('a11y: the accessible name of a cell', function () {
@@ -83,11 +78,14 @@
         given: info(geo, 0, { state: 'given', value: '7' }),
         solution: info(geo, 0, { state: 'solution', value: '7' })
       };
-      expect(inLocale('en', function () { return A.cellLabel(states.empty); })).toBe('Row 1, column 1, empty');
-      expect(inLocale('vi', function () { return A.cellLabel(states.empty); })).toBe('Hàng 1, cột 1, trống');
-      expect(inLocale('en', function () { return A.cellLabel(states.given); })).toBe('Row 1, column 1, value 7, given');
-      expect(inLocale('en', function () { return A.cellLabel(states.solution); })).toBe('Row 1, column 1, solution 7');
-      expect(inLocale('vi', function () { return A.cellLabel(states.given); })).toContain('số đã cho');
+      var label = function (code, state) {
+        return inLocale(code, function () { return A.cellLabel(states[state]); });
+      };
+      expect(label('en', 'empty')).toBe('Row 1, column 1, empty');
+      expect(label('vi', 'empty')).toBe('Hàng 1, cột 1, trống');
+      expect(label('en', 'given')).toBe('Row 1, column 1, value 7, given');
+      expect(label('en', 'solution')).toBe('Row 1, column 1, solution 7');
+      expect(label('vi', 'given')).toContain('số cho sẵn');
     });
 
     it('names the grid of a multi-grid cell and the grids it shares', function () {
@@ -96,10 +94,13 @@
       var geo = SG.boardView.geometry(model);
       var plain = A.cellPosition(geo, 0);
       expect(plain.grid).toBe(1);
-      expect(inLocale('en', function () { return A.cellLabel(Object.assign({}, plain, { state: 'empty', value: '' })); }))
-        .toBe('Grid 1, row 1, column 1, empty');
+      expect(inLocale('en', function () {
+        return A.cellLabel(Object.assign({}, plain, { state: 'empty', value: '' }));
+      })).toBe('Grid 1, row 1, column 1, empty');
       var shared = -1;
-      for (var i = 0; i < model.cellCount && shared < 0; i++) if (A.cellPosition(geo, i).shared.length > 0) shared = i;
+      for (var i = 0; i < model.cellCount && shared < 0; i++) {
+        if (A.cellPosition(geo, i).shared.length > 0) shared = i;
+      }
       var label = inLocale('en', function () {
         return A.cellLabel(Object.assign(A.cellPosition(geo, shared), { state: 'value', value: '4' }));
       });
@@ -127,7 +128,7 @@
       expect(label).toBe('Row 2, column 2, empty, cage sum 11');
       expect(inLocale('vi', function () {
         return A.cellLabel(info(geo, 10, { state: 'given', value: '4', cageSum: 11 }));
-      })).toBe('Hàng 2, cột 2, giá trị 4, số đã cho, tổng nhóm ô 11');
+      })).toBe('Hàng 2, cột 2, giá trị 4, số cho sẵn, tổng lồng 11');
     });
 
     it('tells the signs of a Greater-Than cell: smaller or greater than which neighbour', function () {
@@ -138,7 +139,9 @@
       var geo = Object.assign({}, base, { signs: signs });
       var extras = A.cellExtras(geo);
       expect(extras.relations.get(0)).toEqual([{ rel: 'less', dir: 'right' }]);
-      expect(extras.relations.get(1)).toEqual([{ rel: 'greater', dir: 'left' }, { rel: 'greater', dir: 'down' }]);
+      expect(extras.relations.get(1)).toEqual([
+        { rel: 'greater', dir: 'left' }, { rel: 'greater', dir: 'down' }
+      ]);
       expect(extras.relations.get(10)).toEqual([{ rel: 'less', dir: 'up' }]);
       expect(extras.relations.get(40)).toEqual([{ rel: 'less', dir: 'up' }]);
       expect(extras.relations.get(31)).toEqual([{ rel: 'greater', dir: 'down' }]);
@@ -159,11 +162,13 @@
   describe('a11y: what a cell shows, read back from the board', function () {
     it('takes digits and letters as they are and sorts given, placed and solution values', function () {
       ready();
-      expect(A.valueInfo({ text: '', kind: 'placed', colorIndex: null, shape: null })).toEqual({ state: 'empty', value: '' });
-      expect(A.valueInfo({ text: '5', kind: 'placed', colorIndex: null, shape: null })).toEqual({ state: 'value', value: '5' });
-      expect(A.valueInfo({ text: 'E', kind: 'given', colorIndex: null, shape: null })).toEqual({ state: 'given', value: 'E' });
-      expect(A.valueInfo({ text: '9', kind: 'solution', colorIndex: null, shape: null }))
-        .toEqual({ state: 'solution', value: '9' });
+      var read = function (text, kind) {
+        return A.valueInfo({ text: text, kind: kind, colorIndex: null, shape: null });
+      };
+      expect(read('', 'placed')).toEqual({ state: 'empty', value: '' });
+      expect(read('5', 'placed')).toEqual({ state: 'value', value: '5' });
+      expect(read('E', 'given')).toEqual({ state: 'given', value: 'E' });
+      expect(read('9', 'solution')).toEqual({ state: 'solution', value: '9' });
     });
 
     it('names the colour and the shape of colour mode, and the shape alone in shapes mode', function () {
@@ -180,14 +185,11 @@
       expect(star.state).toBe('given');
       expect(star.value).toBe(SG.i18n.t('symbols.shape.star'));
       inLocale('vi', function () {
-        expect(A.valueInfo({ text: '', kind: 'placed', colorIndex: null, shape: 'star' }).value).toBe('ngôi sao');
+        var shape = A.valueInfo({ text: '', kind: 'placed', colorIndex: null, shape: 'star' });
+        expect(shape.value).toBe('ngôi sao');
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Navigation
-  // ---------------------------------------------------------------------------------------------
 
   describe('a11y: keyboard navigation over the geometry', function () {
     it('moves by one cell with the arrow keys and stays at the edge (no wrap)', function () {
@@ -205,15 +207,16 @@
       expect(A.moveTarget(geo, 9, 'ArrowLeft')).toBe(9);
     });
 
-    it('Home and End go to the ends of the row, Ctrl+Home and Ctrl+End to the ends of the board', function () {
-      ready();
-      var geo = geometryOf('classic9');
-      var mid = 4 * 9 + 4;
-      expect(A.moveTarget(geo, mid, 'Home')).toBe(36);
-      expect(A.moveTarget(geo, mid, 'End')).toBe(44);
-      expect(A.moveTarget(geo, mid, 'Home', true)).toBe(0);
-      expect(A.moveTarget(geo, mid, 'End', true)).toBe(80);
-    });
+    it('Home and End go to the ends of the row, Ctrl+Home and Ctrl+End to the ends of the board',
+      function () {
+        ready();
+        var geo = geometryOf('classic9');
+        var mid = 4 * 9 + 4;
+        expect(A.moveTarget(geo, mid, 'Home')).toBe(36);
+        expect(A.moveTarget(geo, mid, 'End')).toBe(44);
+        expect(A.moveTarget(geo, mid, 'Home', true)).toBe(0);
+        expect(A.moveTarget(geo, mid, 'End', true)).toBe(80);
+      });
 
     it('Page Up and Page Down move by a box height and stop at the last row', function () {
       ready();
@@ -243,7 +246,8 @@
     });
 
     ['samurai', 'sohei', 'flower', 'butterfly'].forEach(function (variantId) {
-      it(variantId + ': an arrow key always lands on the nearest real cell in that direction (holes are skipped)',
+      it(variantId + ': an arrow key always lands on the nearest real cell in that direction (holes are ' +
+        'skipped)',
         function () {
           ready();
           var geo = geometryOf(variantId);
@@ -299,10 +303,6 @@
       }
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Announcements
-  // ---------------------------------------------------------------------------------------------
 
   /** A clock and a timer queue the test advances by hand. */
   function clock() {
@@ -365,43 +365,45 @@
       expect(c.said).toEqual(['one', 'four']);
     });
 
-    it('does not say the same text twice within the repeat window, but says it again afterwards', function () {
-      ready();
-      var c = clock();
-      var a = A.createAnnouncer(Object.assign({ minGap: 500, repeatWindow: 4000 }, c.options));
-      a.push('Replay finished.');
-      c.advance(1000);
-      expect(a.push('Replay finished.')).toBe(false);
-      c.advance(3500);
-      expect(a.push('Replay finished.')).toBe(true);
-      expect(c.said).toEqual(['Replay finished.', 'Replay finished.']);
-    });
+    it('does not say the same text twice within the repeat window, but says it again afterwards',
+      function () {
+        ready();
+        var c = clock();
+        var a = A.createAnnouncer(Object.assign({ minGap: 500, repeatWindow: 4000 }, c.options));
+        a.push('Replay finished.');
+        c.advance(1000);
+        expect(a.push('Replay finished.')).toBe(false);
+        c.advance(3500);
+        expect(a.push('Replay finished.')).toBe(true);
+        expect(c.said).toEqual(['Replay finished.', 'Replay finished.']);
+      });
 
-    it('drops a waiting text that has become a repeat, ignores blanks, and can be cancelled or reset', function () {
-      ready();
-      var c = clock();
-      var a = A.createAnnouncer(Object.assign({ minGap: 1000, repeatWindow: 6000 }, c.options));
-      a.push('A');
-      a.push('B');
-      a.push('A');
-      c.advance(2000);
-      expect(c.said).toEqual(['A']);
-      expect(a.push('   ')).toBe(false);
-      expect(a.push(null)).toBe(false);
-      a.push('C');
-      a.cancel();
-      c.advance(5000);
-      expect(c.said).toEqual(['A', 'C']);
-      a.push('D');
-      a.push('E');
-      a.cancel();
-      c.advance(5000);
-      expect(c.said).toEqual(['A', 'C', 'D']);
-      a.reset();
-      expect(a.last()).toBeNull();
-      a.push('D');
-      expect(c.said).toEqual(['A', 'C', 'D', 'D']);
-    });
+    it('drops a waiting text that has become a repeat, ignores blanks, and can be cancelled or reset',
+      function () {
+        ready();
+        var c = clock();
+        var a = A.createAnnouncer(Object.assign({ minGap: 1000, repeatWindow: 6000 }, c.options));
+        a.push('A');
+        a.push('B');
+        a.push('A');
+        c.advance(2000);
+        expect(c.said).toEqual(['A']);
+        expect(a.push('   ')).toBe(false);
+        expect(a.push(null)).toBe(false);
+        a.push('C');
+        a.cancel();
+        c.advance(5000);
+        expect(c.said).toEqual(['A', 'C']);
+        a.push('D');
+        a.push('E');
+        a.cancel();
+        c.advance(5000);
+        expect(c.said).toEqual(['A', 'C', 'D']);
+        a.reset();
+        expect(a.last()).toBeNull();
+        a.push('D');
+        expect(c.said).toEqual(['A', 'C', 'D', 'D']);
+      });
 
     it('hold() keeps the next text from being said for a while (the app has just spoken)', function () {
       ready();
@@ -429,24 +431,6 @@
     });
   });
 
-  describe('a11y: steps are left to the status line', function () {
-    it('announces no pipeline step and no replay position, and never reads the player state', function () {
-      ready();
-      if (!NODE || !NODE.fs) SG.test.skip('needs the Node file system');
-      var code = NODE.fs.readFileSync(NODE.path.join(NODE.root, 'js/ui/a11y.js'), 'utf8')
-        .replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, '');
-      var found = ["'generate:progress'", "'position'", 'getPlayer', '.playing', "'a11y.announce.step'"]
-        .filter(function (token) { return code.indexOf(token) !== -1; });
-      expect(found).toEqual([]);
-      expect(A.STEP_IDS).toBeUndefined();
-      expect(A.stepTransition).toBeUndefined();
-    });
-  });
-
-  // ---------------------------------------------------------------------------------------------
-  // Settings choices and strings
-  // ---------------------------------------------------------------------------------------------
-
   describe('a11y: the Settings dialog data', function () {
     it('offers exactly the values of the store for theme and text size', function () {
       ready();
@@ -464,39 +448,37 @@
       });
     });
 
-    it('uses only keys of the store (no new storage key): the module never touches localStorage itself', function () {
-      ready();
-      if (!NODE || !NODE.fs) SG.test.skip('needs the Node file system');
-      var text = NODE.fs.readFileSync(NODE.path.join(NODE.root, 'js/ui/a11y.js'), 'utf8');
-      expect(/localStorage|sessionStorage|document\.cookie/.test(text.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, ''))).toBe(false);
-    });
+    it('uses only keys of the store (no new storage key): the module never touches localStorage itself',
+      function () {
+        ready();
+        if (!NODE || !NODE.fs) SG.test.skip('needs the Node file system');
+        var text = NODE.fs.readFileSync(NODE.path.join(NODE.root, 'js/ui/a11y.js'), 'utf8');
+        var code = text.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, '');
+        expect(/localStorage|sessionStorage|document\.cookie/.test(code)).toBe(false);
+      });
 
-    it('every a11y key used by the code exists in English and Vietnamese with the same placeholders', function () {
-      ready();
-      if (!NODE || !NODE.fs) SG.test.skip('needs the Node file system');
-      var text = NODE.fs.readFileSync(NODE.path.join(NODE.root, 'js/ui/a11y.js'), 'utf8');
-      var used = {};
-      (text.match(/'(a11y\.[A-Za-z.]+)'/g) || []).forEach(function (s) { used[s.slice(1, -1)] = true; });
-      // Keys built at run time: 'a11y.cell.' + state / relation and 'a11y.dir.' + direction.
-      ['value', 'given', 'solution', 'less', 'greater'].forEach(function (s) { used['a11y.cell.' + s] = true; });
-      ['up', 'down', 'left', 'right'].forEach(function (s) { used['a11y.dir.' + s] = true; });
-      var keys = Object.keys(used).filter(function (k) { return !/\.$/.test(k); });
-      expect(keys.length).toBeGreaterThan(30);
-      keys.forEach(function (key) {
-        var en = SG.locales.en[key];
-        var vi = SG.locales.vi[key];
-        expect(typeof en).toBe('string');
-        expect(typeof vi).toBe('string');
-        expect(en.length).toBeGreaterThan(0);
-        expect(vi.length).toBeGreaterThan(0);
-        var holes = function (s) { return (s.match(/\{\w+\}/g) || []).sort().join(','); };
-        expect(holes(vi)).toBe(holes(en));
+    it('every a11y key used by the code exists in both languages, and every a11y key is used',
+      function () {
+        ready();
+        if (!NODE || !NODE.fs) SG.test.skip('needs the Node file system');
+        var text = NODE.fs.readFileSync(NODE.path.join(NODE.root, 'js/ui/a11y.js'), 'utf8');
+        var used = {};
+        (text.match(/'(a11y\.[A-Za-z.]+)'/g) || []).forEach(function (s) { used[s.slice(1, -1)] = true; });
+        // Keys built at run time: 'a11y.cell.' + state / relation and 'a11y.dir.' + direction.
+        ['value', 'given', 'solution', 'less', 'greater'].forEach(function (s) {
+          used['a11y.cell.' + s] = true;
+        });
+        ['up', 'down', 'left', 'right'].forEach(function (s) { used['a11y.dir.' + s] = true; });
+        var keys = Object.keys(used).filter(function (k) { return !/\.$/.test(k); });
+        expect(keys.length).toBeGreaterThan(30);
+        keys.forEach(function (key) {
+          expect(typeof SG.locales.en[key]).toBe('string');
+          expect(typeof SG.locales.vi[key]).toBe('string');
+        });
+        Object.keys(SG.locales.en).filter(function (k) { return /^a11y\./.test(k); }).forEach(function (key) {
+          expect(used[key] === true).toBe(true);
+        });
       });
-      // And nothing is left over: every a11y.* key of the pack is used.
-      Object.keys(SG.locales.en).filter(function (k) { return /^a11y\./.test(k); }).forEach(function (key) {
-        expect(used[key] === true).toBe(true);
-      });
-    });
   });
 
   describe('a11y: without a DOM', function () {

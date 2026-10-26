@@ -1,13 +1,11 @@
 /*
  * Reusable components. Class vocabulary shared with every UI module:
- *   .btn (+ --primary --secondary --ghost --danger --icon --sm --block, state: disabled)
+ *   .btn (+ --primary --secondary --ghost --icon --sm, state: disabled)
  *   .segmented > .segmented__btn[aria-pressed="true"]
- *   .field > .field__label + .input|.select|.textarea + .field__hint + .field__error
+ *   .field > .field__label + .textarea + .field__hint + .field__error
  *   .field-group (fieldset) > .field-group__legend, .checkbox, .switch, .disclosure
- *   .card, .badge (+ --accent --success --warning --danger), .alert (+ --warning ...)
- *   .toast (+ --success --warning --danger) inside #toast-root, .modal inside #modal-root
- *   .progress, .stack
- *   Player parts at the end: .drop-zone, .history-list, .welcome
+ *   .badge--accent, .toast (+ --success --warning --danger) inside #toast-root, .modal inside #modal-root
+ *   Player parts at the end: .history-list, the Open dialog
  */
 
 /* ---- Buttons ---- */
@@ -50,11 +48,6 @@
   background: transparent;
 }
 
-.btn--danger {
-  border-color: var(--sg-color-danger);
-  color: var(--sg-color-danger);
-}
-
 .btn--icon {
   width: var(--sg-control-height);
   padding: 0;
@@ -71,29 +64,21 @@
   padding: 0;
 }
 
-.btn--block {
-  width: 100%;
-}
-
-.btn--primary:where(:hover, :active):not(:disabled, [aria-disabled="true"]) {
+.btn--primary:where(:hover, :active):not(:disabled) {
   border-color: var(--sg-color-accent-hover);
   background: var(--sg-color-accent-hover);
 }
 
-.btn--secondary:where(:hover, :active):not(:disabled, [aria-disabled="true"]),
-.btn--ghost:where(:hover, :active):not(:disabled, [aria-disabled="true"]) {
+.btn--secondary:where(:hover, :active):not(:disabled),
+.btn--ghost:where(:hover, :active):not(:disabled) {
   background: var(--sg-color-hover);
 }
 
-.btn--danger:where(:hover, :active):not(:disabled, [aria-disabled="true"]) {
-  background: var(--sg-color-danger-bg);
-}
-
-.btn:active:not(:disabled, [aria-disabled="true"]) {
+.btn:active:not(:disabled) {
   transform: translateY(1px);
 }
 
-.btn:is(:disabled, [aria-disabled="true"]) {
+.btn:disabled {
   border-color: var(--sg-color-divider);
   border-style: dashed;
   background: var(--sg-color-surface-2);
@@ -101,13 +86,12 @@
   cursor: not-allowed;
 }
 
-.btn--ghost:is(:disabled, [aria-disabled="true"]) {
+.btn--ghost:disabled {
   border-color: transparent;
   background: transparent;
 }
 
-
-/* ---- Segmented control (language, theme, replay speed) ---- */
+/* ---- Segmented control (language, theme) ---- */
 .segmented {
   display: inline-flex;
   max-width: 100%;
@@ -143,10 +127,6 @@
   border-radius: 0 var(--sg-radius-2) var(--sg-radius-2) 0;
 }
 
-.segmented__btn:only-child {
-  border-radius: var(--sg-radius-2);
-}
-
 .segmented__btn--icon {
   flex: none;
   width: 2.25rem;
@@ -157,7 +137,7 @@
   background: var(--sg-color-hover);
 }
 
-.segmented__btn:is([aria-pressed="true"], [aria-checked="true"], .is-active) {
+.segmented__btn[aria-pressed="true"] {
   z-index: 1;
   border-color: var(--sg-color-accent);
   background: var(--sg-color-accent);
@@ -166,11 +146,6 @@
 
 .segmented__btn:focus-visible {
   z-index: 2;
-}
-
-.segmented__btn:disabled {
-  background: var(--sg-color-surface-2);
-  color: var(--sg-color-disabled-text);
 }
 
 /* ---- Form fields ---- */
@@ -197,15 +172,7 @@
   font-weight: 600;
 }
 
-.field--inline {
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sg-space-3);
-}
-
-.field--invalid :is(.input, .select, .textarea, input, select, textarea),
-:is(.input, .select, .textarea, input, select, textarea)[aria-invalid="true"] {
+textarea[aria-invalid="true"] {
   border-color: var(--sg-color-danger);
 }
 
@@ -224,76 +191,24 @@
   font-weight: 650;
 }
 
-.input,
-.select,
-.textarea,
-input[type="text"],
-input[type="number"],
-input[type="search"],
-input[type="url"],
-select,
 textarea {
   width: 100%;
   min-height: var(--sg-control-height);
-  padding: 0 var(--sg-space-3);
+  padding: var(--sg-space-2) var(--sg-space-3);
   border: 1px solid var(--sg-color-border);
   border-radius: var(--sg-radius-2);
   background-color: var(--sg-color-surface);
   color: var(--sg-color-text);
 }
 
-.textarea,
-textarea {
-  padding: var(--sg-space-2) var(--sg-space-3);
-}
-
-.input:hover,
-.select:hover,
-.textarea:hover,
-input[type="text"]:hover,
-input[type="number"]:hover,
-input[type="search"]:hover,
-input[type="url"]:hover,
-select:hover,
 textarea:hover {
   border-color: var(--sg-color-text-muted);
 }
 
-.input:disabled,
-.select:disabled,
-.textarea:disabled,
-input[type="text"]:disabled,
-input[type="number"]:disabled,
-input[type="search"]:disabled,
-select:disabled,
-textarea:disabled {
-  border-style: dashed;
-  background-color: var(--sg-color-surface-2);
-  color: var(--sg-color-disabled-text);
-}
-
 /* The browser default placeholder grey fails 4.5:1 on dark surfaces. */
-.input::placeholder,
-input::placeholder,
 textarea::placeholder {
   color: var(--sg-color-text-muted);
   opacity: 1;
-}
-
-.select,
-select {
-  padding-inline-end: 2.25rem;
-  background-image:
-    linear-gradient(45deg, transparent 50%, currentColor 50%),
-    linear-gradient(135deg, currentColor 50%, transparent 50%);
-  background-position:
-    calc(100% - 1.3rem) 50%,
-    calc(100% - 0.9rem) 50%;
-  background-size: 0.4rem 0.4rem;
-  background-repeat: no-repeat;
-  -webkit-appearance: none;
-  appearance: none;
-  text-overflow: ellipsis;
 }
 
 /* ---- Checkbox / radio ---- */
@@ -421,26 +336,7 @@ select {
   padding: var(--sg-space-1) var(--sg-space-3) var(--sg-space-3);
 }
 
-/* ---- Cards, stat cards ---- */
-.card {
-  padding: var(--sg-space-4);
-  border: 1px solid var(--sg-color-divider);
-  border-radius: var(--sg-radius-3);
-  background: var(--sg-color-surface);
-  box-shadow: var(--sg-shadow-1);
-}
-
-.card--flat {
-  background: var(--sg-color-surface-2);
-  box-shadow: none;
-}
-
-.card__title {
-  margin: 0 0 var(--sg-space-3);
-  font-size: var(--sg-font-size-lg);
-}
-
-/* ---- Badges and alerts ---- */
+/* ---- Badge ---- */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -460,110 +356,6 @@ select {
   border-color: var(--sg-color-accent);
   background: var(--sg-color-accent-soft);
   color: var(--sg-color-accent);
-}
-
-.badge--success {
-  border-color: var(--sg-color-success);
-  background: var(--sg-color-success-bg);
-  color: var(--sg-color-success);
-}
-
-.badge--warning {
-  border-color: var(--sg-color-warning);
-  background: var(--sg-color-warning-bg);
-  color: var(--sg-color-warning);
-}
-
-.badge--danger {
-  border-color: var(--sg-color-danger);
-  background: var(--sg-color-danger-bg);
-  color: var(--sg-color-danger);
-}
-
-.alert {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--sg-space-3);
-  padding: var(--sg-space-3) var(--sg-space-4);
-  border: 1px solid var(--sg-color-border);
-  border-inline-start-width: 4px;
-  border-radius: var(--sg-radius-2);
-  background: var(--sg-color-surface-2);
-  color: var(--sg-color-text);
-}
-
-.alert > .icon {
-  margin-top: 0.125rem;
-}
-
-.alert--success {
-  border-color: var(--sg-color-success);
-  background: var(--sg-color-success-bg);
-}
-
-.alert--success > .icon {
-  color: var(--sg-color-success);
-}
-
-.alert--warning {
-  border-color: var(--sg-color-warning);
-  background: var(--sg-color-warning-bg);
-}
-
-.alert--warning > .icon {
-  color: var(--sg-color-warning);
-}
-
-.alert--danger {
-  border-color: var(--sg-color-danger);
-  background: var(--sg-color-danger-bg);
-}
-
-.alert--danger > .icon {
-  color: var(--sg-color-danger);
-}
-
-/* ---- Progress ---- */
-.progress {
-  position: relative;
-  height: 0.5rem;
-  overflow: hidden;
-  border-radius: var(--sg-radius-pill);
-  background: var(--sg-color-track);
-}
-
-.progress__bar {
-  display: block;
-  width: var(--sg-progress, 0%);
-  height: 100%;
-  border-radius: inherit;
-  background: var(--sg-color-accent);
-  transition: width var(--sg-motion-fast) linear;
-}
-
-.progress--indeterminate .progress__bar {
-  width: 35%;
-  animation: sg-indeterminate 1.2s ease-in-out infinite;
-}
-
-progress.progress {
-  display: block;
-  width: 100%;
-  border: 0;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-progress.progress::-webkit-progress-bar {
-  background: var(--sg-color-track);
-}
-
-progress.progress::-webkit-progress-value {
-  background: var(--sg-color-accent);
-}
-
-progress.progress::-moz-progress-bar {
-  background: var(--sg-color-accent);
 }
 
 /* ---- Toasts (announced by #toast-root, role="status") ---- */
@@ -690,7 +482,6 @@ dialog.modal:not([open]) {
 }
 
 .modal__title {
-  margin: 0;
   font-size: var(--sg-font-size-lg);
 }
 
@@ -713,30 +504,7 @@ dialog.modal:not([open]) {
   background: var(--sg-color-surface-2);
 }
 
-/* ---- Layout helpers ---- */
-.stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sg-space-3);
-}
-
 /* ---- Keyframes (neutralised by the reduced-motion rules in base.css) ---- */
-@keyframes sg-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes sg-indeterminate {
-  from {
-    transform: translateX(-100%);
-  }
-
-  to {
-    transform: translateX(290%);
-  }
-}
-
 @keyframes sg-toast-in {
   from {
     opacity: 0;
@@ -761,7 +529,6 @@ dialog.modal:not([open]) {
 
 @media (forced-colors: active) {
   .switch__track,
-  .progress,
   .badge {
     border: 2px solid currentColor;
   }
@@ -833,13 +600,9 @@ dialog.modal:not([open]) {
   gap: var(--sg-space-1);
 }
 
-.setting__note {
-  margin: 0;
-}
-
 @media (forced-colors: active) {
   .choice:has(> input:checked),
-  .segmented__btn:is([aria-pressed="true"], [aria-checked="true"], .is-active) {
+  .segmented__btn[aria-pressed="true"] {
     border-width: 3px;
     text-decoration: underline;
   }
@@ -851,19 +614,12 @@ dialog.modal:not([open]) {
   margin: 0 0 var(--sg-space-3);
 }
 
-/* List of puzzles (left panel and welcome screen): the same rules as the list of generated puzzles of Sudoku
-   Generator (css/components.css there), with the check mark of a solved puzzle added. */
+/* List of puzzles (left panel and welcome screen): the rules of the generator's list of puzzles, plus the
+   status icon. */
 .history-list {
   display: flex;
   flex-direction: column;
   gap: var(--sg-space-1);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.history-list[hidden] {
-  display: none;
 }
 
 .history-item {
@@ -904,7 +660,7 @@ dialog.modal:not([open]) {
   white-space: nowrap;
 }
 
-/* A large, faded icon between the name and the remove button: Solved or In progress (a new puzzle has none). */
+/* A large, faded icon between the name and the remove button: Solved or In progress. */
 .history-item__status {
   position: absolute;
   top: 50%;
@@ -963,9 +719,7 @@ dialog.modal:not([open]) {
 }
 
 .open-text {
-  width: 100%;
   min-height: 7rem;
-  font-family: var(--sg-font-family);
   font-size: var(--sg-font-size-sm);
 }
 
@@ -973,15 +727,10 @@ dialog.modal:not([open]) {
   margin-top: var(--sg-space-2);
 }
 
-.open-errors[hidden] {
-  display: none;
-}
-
 .error-list {
   display: flex;
   flex-direction: column;
   gap: var(--sg-space-2);
-  margin: 0;
   padding-inline-start: var(--sg-space-5);
   list-style: disc;
 }

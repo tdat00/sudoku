@@ -1,23 +1,22 @@
 /**
- * Saved progress: `SG.progress`. What the player keeps in the browser so that a reload or return visit carries on
- * where the person was, all through the safe storage of `SG.store`:
+ * Saved progress: `SG.progress`, all through the safe storage of `SG.store`:
  *
- *   sg.player.progress.v1  { version, entries: [{ id, at, symbolMode, percent, solved, state }] }, LRU of 100;
- *                          `state` is a `game.serialize()` whose history is cut to the last 300 undo and 100
- *                          redo steps
- *   sg.player.puzzles.v1   { version, entries: [{ id, at, doc, meta }] }, LRU of 100; the imported documents
- *                          (a document over 160 kB is not stored, the total stays under 900 kB)
+ *   sg.player.progress.v1  { version, entries: [{ id, at, symbolMode, percent, solved, state }] }, LRU of
+ *                          100; `state` is a `game.serialize()` cut to the last 300 undo and 100 redo steps
+ *   sg.player.puzzles.v1   { version, entries: [{ id, at, doc }] }, LRU of 100: the imported documents (one
+ *                          over 160 kB is not stored, the total stays under 900 kB). The recent list reads
+ *                          variant, level and clues from the id and `doc`; a stored `meta` (older versions)
+ *                          is ignored and dropped at the next write
  *   sg.player.last.v1      the id of the puzzle on the board (a reload without a fragment restores it)
  *
- * An id is `SG.importer.puzzleId(model, givens)`: same variant and clues = same puzzle, so opening a puzzle again
- * finds its progress. Anything that does not fit (corrupt JSON, another `version`, an entry of the wrong shape) is
- * dropped, never thrown; a full storage (`QuotaExceededError`) evicts the least recently used entries and retries.
+ * An id is `SG.importer.puzzleId(model, givens)`: same variant and clues = same puzzle. Anything that does
+ * not fit (corrupt JSON, another `version`, an entry of the wrong shape) is dropped, never thrown; a full
+ * storage evicts the least recently used entries and retries.
  *
- * `saveProgress` returns 'ok' | 'quota' | 'blocked' | 'invalid'; `savePuzzle` also 'tooLarge'. `recent(limit?)`
- * lists the stored puzzles newest added first (playing one does not move it). `forget(id)` drops the progress and
- * the document of one puzzle; `clear()` every key of the player except the preferences; `persistent()` is false
- * while the storage is blocked or full (memory only). `createProgress(storage?, now?)` takes a `SG.store.createStorage`
- * and a clock in ms (default Date.now).
+ * `saveProgress` returns 'ok' | 'quota' | 'blocked' | 'invalid'; `savePuzzle` also 'tooLarge'.
+ * `recent(limit?)` lists the puzzles newest added first (playing one does not move it). `clear()` removes
+ * every key of the player except the preferences; `persistent()` is false while the storage is blocked or
+ * full. `createProgress(storage?, now?)` takes a `SG.store.createStorage` and a clock in ms.
  */
 (function (root) {
   'use strict';
@@ -38,8 +37,7 @@
     docBytes: 160 * 1024,
     puzzlesBytes: 900 * 1024,
     undoSteps: 300,
-    redoSteps: 100,
-    metaBytes: 2048
+    redoSteps: 100
   });
 
   const ID_PATTERN = /^[A-Za-z0-9]{3,24}-[0-9a-f]{16}$/;
@@ -60,8 +58,22 @@
   }
 
   function validPuzzleEntry(entry) {
-    return isObject(entry) && validId(entry.id) && Number.isFinite(entry.at) && isObject(entry.doc) &&
-      (entry.meta === null || isObject(entry.meta));
+    return isObject(entry) && validId(entry.id) && Number.isFinite(entry.at) && isObject(entry.doc);
+  }
+
+  function storedPuzzle(entry) {
+    return { id: entry.id, at: entry.at, doc: entry.doc };
+  }
+
+  /** What the recent list shows of a stored document: variant, achieved level and number of clues. */
+  function metaOf(id, doc) {
+    const difficulty = isObject(doc.difficulty) ? doc.difficulty : null;
+    const stats = isObject(doc.stats) ? doc.stats : null;
+    return {
+      variantId: id.slice(0, id.indexOf('-')),
+      achieved: difficulty !== null && typeof difficulty.achieved === 'string' ? difficulty.achieved : null,
+      clues: stats !== null && Number.isInteger(stats.clues) ? stats.clues : null
+    };
   }
 
   function trimState(state) {
@@ -158,7 +170,11 @@
       return readEntries(KEYS.progress, validProgressEntry);
     }
 
-    function savePuzzle(id, doc, meta) {
+    function readPuzzles() {
+      return readEntries(KEYS.puzzles, validPuzzleEntry).map(storedPuzzle);
+    }
+
+    function savePuzzle(id, doc) {
       if (!validId(id) || !isObject(doc)) return 'invalid';
       let docText = '';
       try {
@@ -167,15 +183,10 @@
         return 'invalid';
       }
       if (docText.length > LIMITS.docBytes) return 'tooLarge';
-      let small = null;
-      if (isObject(meta)) {
-        const text = JSON.stringify(meta);
-        small = text.length <= LIMITS.metaBytes ? JSON.parse(text) : null;
-      }
       // A puzzle keeps its place and the time it was first added: opening or saving it never moves it.
-      const all = readEntries(KEYS.puzzles, validPuzzleEntry);
+      const all = readPuzzles();
       const at = all.findIndex(function (e) { return e.id === id; });
-      const entry = { id: id, at: at === -1 ? clock() : all[at].at, doc: JSON.parse(docText), meta: small };
+      const entry = { id: id, at: at === -1 ? clock() : all[at].at, doc: JSON.parse(docText) };
       const list = all.slice();
       if (at === -1) list.unshift(entry);
       else list[at] = entry;
@@ -187,12 +198,12 @@
 
     function loadPuzzle(id) {
       if (!validId(id)) return null;
-      const found = readEntries(KEYS.puzzles, validPuzzleEntry).filter(function (e) { return e.id === id; });
+      const found = readPuzzles().filter(function (e) { return e.id === id; });
       return found.length > 0 ? found[0] : null;
     }
 
     function removePuzzle(id) {
-      const list = readEntries(KEYS.puzzles, validPuzzleEntry);
+      const list = readPuzzles();
       const rest = list.filter(function (e) { return e.id !== id; });
       if (rest.length !== list.length) writeEntries(KEYS.puzzles, rest, null);
     }
@@ -201,12 +212,12 @@
       const max = limit > 0 ? limit : LIMITS.puzzleEntries;
       const progress = new Map();
       readEntries(KEYS.progress, validProgressEntry).forEach(function (e) { progress.set(e.id, e); });
-      return readEntries(KEYS.puzzles, validPuzzleEntry).map(function (p) {
+      return readPuzzles().map(function (p) {
         const saved = progress.get(p.id);
         return {
           id: p.id,
           at: p.at,
-          meta: p.meta || null,
+          meta: metaOf(p.id, p.doc),
           percent: saved === undefined ? 0 : saved.percent,
           solved: saved !== undefined && saved.solved,
           hasProgress: saved !== undefined
@@ -244,7 +255,6 @@
       progressList: progressList,
       savePuzzle: savePuzzle,
       loadPuzzle: loadPuzzle,
-      removePuzzle: removePuzzle,
       recent: recent,
       forget: forget,
       setLast: setLast,

@@ -1,5 +1,5 @@
-// Constraint propagation (task T-1.3): peer elimination, naked and hidden singles, contradiction detection,
-// soundness against known solutions, and the extension hook that cage and inequality rules will plug into.
+// Constraint propagation: peer elimination, naked and hidden singles, contradiction detection, soundness
+// against known solutions, and the extension hook that cage and inequality rules plug into.
 (function () {
   'use strict';
 

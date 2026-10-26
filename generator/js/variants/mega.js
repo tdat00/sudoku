@@ -101,7 +101,8 @@
   }
 
   /**
-   * Labels of a symbol set of a mega variant (`setId` missing: its default); labels[v - 1] is the symbol of v.
+   * Labels of a symbol set of a mega variant (`setId` missing: its default); labels[v - 1] is the symbol of
+   * v.
    * @throws {SG.errors.GenerationError} 'pipeline.invalidOption' for an unknown set.
    */
   function symbolLabels(variantId, setId) {

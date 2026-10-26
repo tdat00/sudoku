@@ -1,12 +1,12 @@
 /*
  * Reusable components. Class vocabulary shared with every UI module:
- *   .btn (+ --primary --secondary --ghost --danger --icon --sm --block, state: disabled / .is-busy)
+ *   .btn (+ --primary --secondary --ghost --icon --sm --block, state: disabled / .is-busy)
  *   .segmented > .segmented__btn[aria-pressed="true"]
- *   .field > .field__label + .input|.select|.slider|.textarea + .field__hint + .field__error
- *   .field-group (fieldset) > .field-group__legend, .input-group, .checkbox, .switch, .disclosure
- *   .card, .stat-grid > .stat, .badge (+ --accent --success --warning --danger), .alert (+ --warning ...)
+ *   .field > .field__label + .input|.select|.slider|.textarea + .field__hint
+ *   .field-group (fieldset) > .field-group__legend, .input-group, .switch, .disclosure
+ *   .card, .stat-grid > .stat, .badge (+ --warning), .alert (+ --warning)
  *   .toast (+ --success --warning --danger) inside #toast-root, .modal inside #modal-root
- *   .progress, .is-busy, .stack, .cluster
+ *   .is-busy, .stack, .cluster
  */
 
 /* ---- Buttons ---- */
@@ -45,15 +45,6 @@
   background: var(--sg-color-surface-2);
 }
 
-.btn--ghost {
-  background: transparent;
-}
-
-.btn--danger {
-  border-color: var(--sg-color-danger);
-  color: var(--sg-color-danger);
-}
-
 .btn--icon {
   width: var(--sg-control-height);
   padding: 0;
@@ -74,25 +65,21 @@
   width: 100%;
 }
 
-.btn--primary:where(:hover, :active):not(:disabled, [aria-disabled="true"]) {
+.btn--primary:where(:hover, :active):not(:disabled) {
   border-color: var(--sg-color-accent-hover);
   background: var(--sg-color-accent-hover);
 }
 
-.btn--secondary:where(:hover, :active):not(:disabled, [aria-disabled="true"]),
-.btn--ghost:where(:hover, :active):not(:disabled, [aria-disabled="true"]) {
+.btn--secondary:where(:hover, :active):not(:disabled),
+.btn--ghost:where(:hover, :active):not(:disabled) {
   background: var(--sg-color-hover);
 }
 
-.btn--danger:where(:hover, :active):not(:disabled, [aria-disabled="true"]) {
-  background: var(--sg-color-danger-bg);
-}
-
-.btn:active:not(:disabled, [aria-disabled="true"]) {
+.btn:active:not(:disabled) {
   transform: translateY(1px);
 }
 
-.btn:is(:disabled, [aria-disabled="true"]) {
+.btn:disabled {
   border-color: var(--sg-color-divider);
   border-style: dashed;
   background: var(--sg-color-surface-2);
@@ -100,7 +87,7 @@
   cursor: not-allowed;
 }
 
-.btn--ghost:is(:disabled, [aria-disabled="true"]) {
+.btn--ghost:disabled {
   border-color: transparent;
   background: transparent;
 }
@@ -132,14 +119,12 @@
   pointer-events: none;
 }
 
-.board-frame.is-busy,
-.card.is-busy {
+.board-frame.is-busy {
   position: relative;
   overflow: hidden;
 }
 
-.board-frame.is-busy::before,
-.card.is-busy::before {
+.board-frame.is-busy::before {
   content: "";
   position: absolute;
   top: 0;
@@ -150,7 +135,7 @@
   animation: sg-indeterminate 1.2s ease-in-out infinite;
 }
 
-/* ---- Segmented control (language, theme, replay speed) ---- */
+/* ---- Segmented control (language, theme) ---- */
 .segmented {
   display: inline-flex;
   max-width: 100%;
@@ -186,10 +171,6 @@
   border-radius: 0 var(--sg-radius-2) var(--sg-radius-2) 0;
 }
 
-.segmented__btn:only-child {
-  border-radius: var(--sg-radius-2);
-}
-
 .segmented__btn--icon {
   flex: none;
   width: 2.25rem;
@@ -200,7 +181,7 @@
   background: var(--sg-color-hover);
 }
 
-.segmented__btn:is([aria-pressed="true"], [aria-checked="true"], .is-active) {
+.segmented__btn[aria-pressed="true"] {
   z-index: 1;
   border-color: var(--sg-color-accent);
   background: var(--sg-color-accent);
@@ -209,11 +190,6 @@
 
 .segmented__btn:focus-visible {
   z-index: 2;
-}
-
-.segmented__btn:disabled {
-  background: var(--sg-color-surface-2);
-  color: var(--sg-color-disabled-text);
 }
 
 /* ---- Form fields ---- */
@@ -232,12 +208,6 @@
 .field__hint {
   color: var(--sg-color-text-muted);
   font-size: 0.8125rem;
-}
-
-.field__error {
-  color: var(--sg-color-danger);
-  font-size: 0.8125rem;
-  font-weight: 600;
 }
 
 .field--inline {
@@ -327,11 +297,6 @@
   display: none;
 }
 
-.field--invalid :is(.input, .select, .textarea, input, select, textarea),
-:is(.input, .select, .textarea, input, select, textarea)[aria-invalid="true"] {
-  border-color: var(--sg-color-danger);
-}
-
 .field-group {
   display: flex;
   flex-direction: column;
@@ -363,8 +328,6 @@
 .textarea,
 input[type="text"],
 input[type="number"],
-input[type="search"],
-input[type="url"],
 select,
 textarea {
   width: 100%;
@@ -386,8 +349,6 @@ textarea {
 .textarea:hover,
 input[type="text"]:hover,
 input[type="number"]:hover,
-input[type="search"]:hover,
-input[type="url"]:hover,
 select:hover,
 textarea:hover {
   border-color: var(--sg-color-text-muted);
@@ -398,7 +359,6 @@ textarea:hover {
 .textarea:disabled,
 input[type="text"]:disabled,
 input[type="number"]:disabled,
-input[type="search"]:disabled,
 select:disabled,
 textarea:disabled {
   border-style: dashed;
@@ -483,21 +443,6 @@ input[type="range"]::-moz-range-thumb {
 .slider:disabled,
 input[type="range"]:disabled {
   opacity: 0.55;
-}
-
-/* ---- Checkbox / radio ---- */
-.checkbox {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--sg-space-2);
-  cursor: pointer;
-}
-
-.checkbox > input {
-  flex: none;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin: 0.125rem 0 0;
 }
 
 /* ---- Switch: <label class="switch"><input class="switch__input" type="checkbox" role="switch">
@@ -673,28 +618,10 @@ input[type="range"]:disabled {
   white-space: nowrap;
 }
 
-.badge--accent {
-  border-color: var(--sg-color-accent);
-  background: var(--sg-color-accent-soft);
-  color: var(--sg-color-accent);
-}
-
-.badge--success {
-  border-color: var(--sg-color-success);
-  background: var(--sg-color-success-bg);
-  color: var(--sg-color-success);
-}
-
 .badge--warning {
   border-color: var(--sg-color-warning);
   background: var(--sg-color-warning-bg);
   color: var(--sg-color-warning);
-}
-
-.badge--danger {
-  border-color: var(--sg-color-danger);
-  background: var(--sg-color-danger-bg);
-  color: var(--sg-color-danger);
 }
 
 .alert {
@@ -713,15 +640,6 @@ input[type="range"]:disabled {
   margin-top: 0.125rem;
 }
 
-.alert--success {
-  border-color: var(--sg-color-success);
-  background: var(--sg-color-success-bg);
-}
-
-.alert--success > .icon {
-  color: var(--sg-color-success);
-}
-
 .alert--warning {
   border-color: var(--sg-color-warning);
   background: var(--sg-color-warning-bg);
@@ -729,58 +647,6 @@ input[type="range"]:disabled {
 
 .alert--warning > .icon {
   color: var(--sg-color-warning);
-}
-
-.alert--danger {
-  border-color: var(--sg-color-danger);
-  background: var(--sg-color-danger-bg);
-}
-
-.alert--danger > .icon {
-  color: var(--sg-color-danger);
-}
-
-/* ---- Progress ---- */
-.progress {
-  position: relative;
-  height: 0.5rem;
-  overflow: hidden;
-  border-radius: var(--sg-radius-pill);
-  background: var(--sg-color-track);
-}
-
-.progress__bar {
-  display: block;
-  width: var(--sg-progress, 0%);
-  height: 100%;
-  border-radius: inherit;
-  background: var(--sg-color-accent);
-  transition: width var(--sg-motion-fast) linear;
-}
-
-.progress--indeterminate .progress__bar {
-  width: 35%;
-  animation: sg-indeterminate 1.2s ease-in-out infinite;
-}
-
-progress.progress {
-  display: block;
-  width: 100%;
-  border: 0;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-progress.progress::-webkit-progress-bar {
-  background: var(--sg-color-track);
-}
-
-progress.progress::-webkit-progress-value {
-  background: var(--sg-color-accent);
-}
-
-progress.progress::-moz-progress-bar {
-  background: var(--sg-color-accent);
 }
 
 /* ---- Toasts (announced by #toast-root, role="status") ---- */
@@ -1050,7 +916,6 @@ dialog.modal:not([open]) {
 
 @media (forced-colors: active) {
   .switch__track,
-  .progress,
   .badge {
     border: 2px solid currentColor;
   }
@@ -1073,7 +938,6 @@ dialog.modal:not([open]) {
 .history-item {
   position: relative;
   min-width: 0;
-  border-radius: 0;
 }
 
 .history-item:hover {
@@ -1084,7 +948,6 @@ dialog.modal:not([open]) {
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: 0;
   min-width: 0;
   padding: 0.5rem 2rem 0.5rem var(--sg-space-3);
   border: 0;
@@ -1159,10 +1022,6 @@ dialog.modal:not([open]) {
   margin: 0;
 }
 
-.result__warning {
-  align-items: flex-start;
-}
-
 .result__warning-body {
   align-items: flex-start;
   gap: var(--sg-space-2);
@@ -1201,12 +1060,6 @@ dialog.modal:not([open]) {
 }
 
 .result__section {
-  min-width: 0;
-}
-
-/* The key word of a Wordoku and what it means (shown with "Show the solution"): a stat box that takes the
-   whole row, since a meaning is longer than a number. */
-.stat--wide {
   min-width: 0;
 }
 
@@ -1317,7 +1170,6 @@ dialog.modal:not([open]) {
   top: calc(100% + 0.25rem);
   inset-inline: 0 auto;
   width: min(20rem, 70vw);
-  font-weight: 400;
   text-align: start;
   white-space: normal;
 }
@@ -1485,7 +1337,7 @@ dialog.modal:not([open]) {
 
 @media (forced-colors: active) {
   .choice:has(> input:checked),
-  .segmented__btn:is([aria-pressed="true"], [aria-checked="true"], .is-active) {
+  .segmented__btn[aria-pressed="true"] {
     border-width: 3px;
     text-decoration: underline;
   }

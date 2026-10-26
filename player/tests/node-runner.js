@@ -8,25 +8,14 @@
  *
  * Exit code: 0 when every test passed, 1 on any failure, load error, unknown suite or when no test ran.
  *
- * ===========================================================================================
- * SOURCE_FILES CONTRACT - read before touching this file
- * ===========================================================================================
- * SOURCE_FILES lists every source file of the player, in dependency load order. A file that is listed but
- * does not exist is skipped silently (listed with --verbose), so a development step that adds a file only
- * has to add its line. This array is the single source of truth of the load order:
+ * SOURCE_FILES is the load order of the player's sources. It must match the <script> tags of index.html and
+ * help.html (each without the modules it does not need) and the SOURCE_FILES of tests.html;
+ * ui-contract.test.js checks them. A listed file that does not exist is skipped (--verbose lists it).
  *
- *   - Keep the order in sync with the <script> tags of index.html and the lists of tests.html
- *     (design.md section 12.2); ui-contract.test.js fails when they drift apart.
- *   - Only edit the array when you add a source file; put it in its correct dependency position and keep
- *     the relative order of the other entries.
- *
- * Test discovery is automatic: the harness and the fixtures of ../core/tests and tests/fixtures/*.js load first, then
- * the suites of ../core/tests/suites (shared with the generator) and tests/suites/*.test.js; each directory in
- * alphabetical order. Adding a suite or fixture needs no change here.
- *
- * Suites loaded by vm.runInThisContext do not have `require`. Node helpers for suites that need the
- * file system are exposed as `SG.test.node` = { fs, path, vm, root } (undefined in a browser).
- * ===========================================================================================
+ * The harness and the fixtures (../core/tests/fixtures, then tests/fixtures) load first, then the suites of
+ * ../core/tests/suites (shared with the generator) and tests/suites, each directory in alphabetical order.
+ * Suites run through vm.runInThisContext have no `require`: `SG.test.node` = { fs, path, vm, root } gives
+ * them the file system (undefined in a browser).
  */
 const SOURCE_FILES = [
   '../core/js/engine/ns.js',
@@ -76,7 +65,6 @@ const vm = require('vm');
 
 const ROOT = path.resolve(__dirname, '..');
 const HARNESS_FILE = '../core/tests/harness.js';
-// The suites and fixtures shared with the other project (core/tests) come first, then the project's own.
 const FIXTURES_DIRS = ['../core/tests/fixtures', 'tests/fixtures'];
 const SUITES_DIRS = ['../core/tests/suites', 'tests/suites'];
 const SUITE_SUFFIX = '.test.js';
@@ -138,7 +126,7 @@ function listFiles(relDir, suffix) {
     .sort();
 }
 
-/** The suites of every directory as { name, dir }; a name must be unique across the shared and the own suites. */
+/** The suites of every directory as { name, dir }; a name must be unique across all directories. */
 function listSuites(dirs) {
   const found = [];
   for (const dir of dirs) {

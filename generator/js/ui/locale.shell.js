@@ -1,7 +1,8 @@
 /**
- * Strings of the static page frame (index.html): header, landmarks, actions, replay player shell, steps panel and
- * live regions. Pure data, never touches the DOM. Keys are `shell.` (page frame) or `player.` (replay buttons,
- * shared with js/ui/player.js); `app.title` belongs to the base packs and is only used from the HTML.
+ * Strings of the static page frame (index.html): header, landmarks, actions, replay player shell, steps panel
+ * and live regions. Pure data, never touches the DOM. Keys are `shell.` (page frame) or `player.` (replay
+ * buttons, shared with js/ui/player.js); `app.title` belongs to the base packs and is only used from the
+ * HTML.
  */
 (function (root) {
   'use strict';
@@ -41,7 +42,7 @@
       'shell.btn.cancel.title': 'Stop the running generation',
       'shell.mainActions.label': 'Puzzle actions',
       'shell.btn.playOnline': 'Play',
-      'shell.btn.playOnline.title': 'Open your puzzles in sudoku-player to solve them (this one first)',
+      'shell.btn.playOnline.title': 'Open your puzzles in Sudoku Player to solve them (this one first)',
       'shell.btn.export': 'Print',
       'shell.btn.export.title': 'Print the puzzle or save it as a PDF',
       'shell.btn.exportCode': 'Export',
@@ -53,19 +54,19 @@
 
       'shell.player.heading': 'Replay',
       'player.label': 'Replay controls',
-      'player.first': 'Go to the start (the empty grid)',
+      'player.first': 'First step (the empty grid)',
       'player.prev': 'Previous step',
       'player.next': 'Next step',
-      'player.last': 'Go to the finished puzzle',
+      'player.last': 'Last step (the finished puzzle)',
       'player.scrubber': 'Replay step',
 
 
       'shell.steps.heading': 'Step description',
       'shell.tabs.label': 'Summary and generation steps',
       'shell.tab.result': 'Summary',
-      'shell.tab.steps': 'Generation Steps',
+      'shell.tab.steps': 'Generation steps',
       'shell.btn.explain': 'Explain',
-      'shell.btn.explain.title': 'Open the Help to read how the current step works',
+      'shell.btn.explain.title': 'Open help to read how the current step works',
 
       'shell.result.label': 'Result',
       'shell.footer.copyright': '\u00a9 2026 Dat Le. Released under the MIT licence.',
@@ -74,7 +75,7 @@
       'shell.toast.label': 'Notifications'
     },
     vi: {
-      'shell.skip': 'Bỏ qua, đến nội dung chính',
+      'shell.skip': 'Chuyển tới nội dung chính',
 
       'shell.lang.label': 'Ngôn ngữ',
       'shell.lang.en.short': 'EN',
@@ -106,22 +107,22 @@
       'shell.btn.cancel.title': 'Dừng quá trình tạo đề đang chạy',
       'shell.mainActions.label': 'Thao tác với đề',
       'shell.btn.playOnline': 'Chơi',
-      'shell.btn.playOnline.title': 'Mở các đề của bạn trong sudoku-player để giải (đề này đứng đầu)',
+      'shell.btn.playOnline.title': 'Mở các đề của bạn trong Trình chơi Sudoku để giải (đề này đứng đầu)',
       'shell.btn.export': 'In đề',
       'shell.btn.export.title': 'In đề hoặc lưu thành PDF',
       'shell.btn.exportCode': 'Xuất văn bản',
       'shell.btn.exportCode.title': 'Xuất các đề bạn chọn dưới dạng văn bản đọc được',
 
-      'shell.board.heading': 'Bảng đề bài',
-      'shell.board.title': 'Bảng Sudoku',
+      'shell.board.heading': 'Bàn cờ của đề',
+      'shell.board.title': 'Bàn cờ Sudoku',
       'shell.board.desc': 'Đề bài vừa tạo sẽ hiển thị ở đây.',
 
       'shell.player.heading': 'Phát lại',
       'player.label': 'Điều khiển phát lại',
-      'player.first': 'Về lúc bắt đầu (lưới trống)',
+      'player.first': 'Bước đầu tiên (lưới trống)',
       'player.prev': 'Bước trước',
       'player.next': 'Bước tiếp theo',
-      'player.last': 'Đến đề hoàn chỉnh',
+      'player.last': 'Bước cuối cùng (đề hoàn chỉnh)',
       'player.scrubber': 'Bước phát lại',
 
 
@@ -130,7 +131,7 @@
       'shell.tab.result': 'Tóm tắt',
       'shell.tab.steps': 'Các bước tạo đề',
       'shell.btn.explain': 'Giải thích',
-      'shell.btn.explain.title': 'Mở phần Trợ giúp để đọc cách bước hiện tại hoạt động',
+      'shell.btn.explain.title': 'Mở phần trợ giúp để đọc cách bước hiện tại hoạt động',
 
       'shell.result.label': 'Kết quả',
       'shell.footer.copyright': '\u00a9 2026 Dat Le. Phát hành theo giấy phép MIT.',

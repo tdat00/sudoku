@@ -4,36 +4,29 @@
 /*
  * Headless test runner (Node >= 18, built-in modules only).
  *
- *   node tests/node-runner.js [--all | --manual] [--suite=<name>[,<name>]] [--filter=<text>] [--bail] [--verbose] [--help]
+ *   node tests/node-runner.js [--all | --manual] [--suite=<name>[,<name>]] [--filter=<text>] [--bail]
+ *                             [--verbose] [--help]
  *
  * Two sets of suites:
  *   tests/suites/  the quick set (default, about 60 s): what a developer or an agent runs after every change,
  *                  together with ../core/tests/suites, the engine suites shared with the player;
- *   tests/manual/  the heavy suites (about 8 minutes: every variant, every level, performance, regression hashes).
- *                  Run them with --all (CI does) or --manual, or by name with --suite=<name>.
+ *   tests/manual/  the heavy suites (about 8 minutes: every variant, every level, performance, regression
+ *                  hashes). Run them with --all (CI does) or --manual, or by name with --suite=<name>.
  *
  * Exit code: 0 when every test passed, 1 on any failure, load error, unknown suite or when no test ran.
  *
- * ===========================================================================================
- * SOURCE_FILES CONTRACT - read before touching this file
- * ===========================================================================================
- * SOURCE_FILES lists EVERY source file planned in design.md section 12.1, in dependency load order,
- * including files that do not exist yet. Missing files are skipped silently (listed with --verbose).
- * That is deliberate: a later phase that creates one of these files never has to edit this runner,
- * so this file is not a merge-conflict hotspot.
+ * SOURCE_FILES lists every source file in dependency load order. It is the reference order: index.html,
+ * js/worker/gen.worker.js (design.md 12.2) and tests.html repeat it, and the ui-contract suite checks that
+ * they agree. tests/soak.js, perf.js and qualify.js read the array from this file. A listed file that does
+ * not exist is skipped (listed with --verbose).
  *
- *   - Only edit the array when you add a source file that is NOT in it yet; put it in its correct
- *     dependency position and keep the relative order of the other entries.
- *   - Keep the order in sync with index.html and js/worker/gen.worker.js (design.md 12.2) and the
- *     file list in tests.html.
- *
- * Test discovery is automatic: the harness and the fixtures of ../core/tests and tests/fixtures/*.js load first, then
- * the suites of ../core/tests/suites and tests/suites/*.test.js (and tests/manual/*.test.js when asked), each
- * directory in alphabetical order; a suite name must be unique. Adding a suite or fixture needs no change here.
+ * Test discovery is automatic: the harness and the fixtures of ../core/tests and tests/fixtures/*.js load
+ * first, then the suites of ../core/tests/suites and tests/suites/*.test.js (and tests/manual/*.test.js when
+ * asked), each directory in alphabetical order; a suite name must be unique. Adding a suite or fixture needs
+ * no change here.
  *
  * Suites loaded by vm.runInThisContext do not have `require`. Node helpers for suites that need the
  * file system are exposed as `SG.test.node` = { fs, path, vm, root } (undefined in a browser).
- * ===========================================================================================
  */
 const SOURCE_FILES = [
   '../core/js/engine/ns.js',
@@ -138,7 +131,9 @@ const USAGE = [
 ].join('\n');
 
 function parseArgs(argv) {
-  const opts = { suites: [], filter: null, bail: false, verbose: false, help: false, all: false, manual: false };
+  const opts = {
+    suites: [], filter: null, bail: false, verbose: false, help: false, all: false, manual: false
+  };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === '--bail') opts.bail = true;
@@ -175,7 +170,7 @@ function listFiles(relDir, suffix) {
     .sort();
 }
 
-/** The suites of every directory as { name, dir }; a name must be unique across the shared and the own suites. */
+/** The suites of every directory as { name, dir }; a name must be unique across all directories. */
 function listSuites(dirs) {
   const found = [];
   for (const dir of dirs) {
@@ -207,7 +202,8 @@ function printTest(record) {
   const time = dim('(' + formatMs(record.ms) + ')');
   if (record.status === 'pass') console.log('  ' + green('ok  ') + ' ' + record.fullName + ' ' + time);
   else if (record.status === 'skip') {
-    console.log('  ' + yellow('skip') + ' ' + record.fullName + (record.reason ? dim(' - ' + record.reason) : ''));
+    const reason = record.reason ? dim(' - ' + record.reason) : '';
+    console.log('  ' + yellow('skip') + ' ' + record.fullName + reason);
   } else console.log(formatFailure(record, true));
 }
 
@@ -241,7 +237,8 @@ async function main() {
       runFile(rel);
       loaded.push(rel);
     } catch (err) {
-      console.error(red('Failed to load source file ' + rel + ':') + '\n' + (err && err.stack ? err.stack : err));
+      console.error(red('Failed to load source file ' + rel + ':') + '\n' +
+        (err && err.stack ? err.stack : err));
       return 1;
     }
   }
@@ -251,7 +248,8 @@ async function main() {
       try {
         runFile(dir + '/' + name);
       } catch (err) {
-        console.error(red('Failed to load fixture ' + name + ':') + '\n' + (err && err.stack ? err.stack : err));
+        console.error(red('Failed to load fixture ' + name + ':') + '\n' +
+          (err && err.stack ? err.stack : err));
         return 1;
       }
     }
@@ -284,10 +282,11 @@ async function main() {
   }
 
   console.log(bold('Sudoku Generator tests') + dim('  (node ' + process.version + ')'));
-  console.log('Sources: ' + loaded.length + ' loaded, ' + missing.length + ' planned but not created yet' +
+  console.log('Sources: ' + loaded.length + ' loaded, ' + missing.length + ' missing' +
     (opts.verbose ? '' : dim(' (--verbose lists them)')));
   if (opts.suites.length === 0 && !opts.all && !opts.manual && manual.length > 0) {
-    console.log(dim('Quick suites only (' + quick.length + '); --all also runs the ' + manual.length + ' manual ones of tests/manual.'));
+    console.log(dim('Quick suites only (' + quick.length + '); --all also runs the ' + manual.length +
+      ' manual ones of tests/manual.'));
   }
   if (opts.verbose) {
     loaded.forEach((f) => console.log('  loaded  ' + f));
@@ -317,8 +316,8 @@ async function main() {
   if (opts.verbose && results.benches.length > 0) {
     console.log('\n' + bold('Benchmarks:'));
     results.benches.forEach((b) => {
-      console.log('  ' + b.name + ': ' + b.msPerOp.toFixed(4) + ' ms/op, ' + Math.round(b.opsPerSec) + ' ops/s (' +
-        b.iterations + ' iterations)');
+      console.log('  ' + b.name + ': ' + b.msPerOp.toFixed(4) + ' ms/op, ' + Math.round(b.opsPerSec) +
+        ' ops/s (' + b.iterations + ' iterations)');
     });
   }
 
@@ -326,8 +325,8 @@ async function main() {
   console.log('');
   console.log('Suites: ' + results.suites.length);
   console.log('Tests:  ' + results.total + ' total, ' + green(results.passed + ' passed') + ', ' +
-    (results.failed > 0 ? red(results.failed + ' failed') : '0 failed') + ', ' + results.skipped + ' skipped' +
-    (results.bailed ? yellow('  (stopped early: --bail)') : ''));
+    (results.failed > 0 ? red(results.failed + ' failed') : '0 failed') + ', ' + results.skipped +
+    ' skipped' + (results.bailed ? yellow('  (stopped early: --bail)') : ''));
   console.log('Time:   ' + formatMs(results.ms) + ' running tests, ' + formatMs(wallMs) + ' total');
 
   if (results.total === 0) {

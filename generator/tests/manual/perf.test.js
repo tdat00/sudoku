@@ -1,4 +1,4 @@
-// Performance (warn only) and regression hashes of generated puzzles (task T-6.2, design.md 9.1 and 9.2).
+// Performance (warn only) and regression hashes of generated puzzles (design.md 9.1 and 9.2).
 //
 //  - "perf": a few cells of the table of design.md section 9.1 with few runs each. It never fails the build:
 //    a cell over its p95 target is reported as a skipped test with the numbers as the reason (the full
@@ -26,10 +26,6 @@
   function envFlag(name) {
     return typeof process !== 'undefined' && process.env && process.env[name] === '1';
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // perf (warn only)
-  // ---------------------------------------------------------------------------------------------
 
   describe('perf: generation time against design.md section 9.1 (warn only, ' + PERF_RUNS + ' runs per cell)',
     function () {
@@ -68,10 +64,6 @@
         }, SLOW);
       });
     });
-
-  // ---------------------------------------------------------------------------------------------
-  // regression hashes
-  // ---------------------------------------------------------------------------------------------
 
   describe('regression: puzzles of fixed seeds are unchanged (hashes of tests/fixtures/regression.js)',
     function () {

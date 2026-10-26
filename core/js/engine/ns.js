@@ -1,7 +1,7 @@
 /**
  * Core namespace: creates the global `SG`. Idempotent (never replaces an existing member) and must run
- * unchanged in a page, a Web Worker and Node, so it relies only on the `root` passed to the IIFE.
- * The core never reads the URL or environment; host-dependent state such as the debug flag comes via `SG.setDebug`.
+ * unchanged in a page, a Web Worker and Node, so it relies only on the `root` passed to the IIFE. The core
+ * never reads the URL or environment; host-dependent state such as the debug flag comes via `SG.setDebug`.
  */
 (function (root) {
   'use strict';

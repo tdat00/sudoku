@@ -1,10 +1,10 @@
-// Subset techniques (task T-2.3): nakedPair, hiddenPair, nakedTriple, hiddenTriple, nakedQuad, hiddenQuad,
-// all served by one engine in ../core/js/engine/tech-subset.js.
+// Subset techniques: nakedPair, hiddenPair, nakedTriple, hiddenTriple, nakedQuad, hiddenQuad, all served by
+// one engine in ../core/js/engine/tech-subset.js. Soundness on classic9 and the empty and solved boards are
+// checked for every technique by techniques.test.js.
 //
 // Layout of this suite:
 //   registration     ids, groups, costs and order of the six techniques
-//   <technique>      positive and negative fixtures (hand made candidate grids and real puzzle positions) and
-//                    the soundness check of invariant I7 for each of the six
+//   <technique>      positive and negative fixtures (hand made candidate grids and real puzzle positions)
 //   duplicates       a smaller subset is never reported again as a bigger one (nor a degenerate subset)
 //   oracle           the engine against a deliberately naive brute-force implementation, on random states
 //   shapes           other digit counts (4, 6, 12, 16), jigsaw / diagonal / window units, partial units
@@ -132,10 +132,6 @@
     ]
   };
 
-  // ---------------------------------------------------------------------------------------------
-  // Helpers
-  // ---------------------------------------------------------------------------------------------
-
   function now() { return typeof performance !== 'undefined' ? performance.now() : Date.now(); }
 
   function find(id, model, state, options) {
@@ -246,10 +242,7 @@
     throw new Error('no unit ' + label);
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Brute-force oracle
-  // ---------------------------------------------------------------------------------------------
-
   /** Calls visit(indices) for every combination in lexicographic order; stops at the first truthy result. */
   function eachCombination(n, k, visit) {
     var chosen = [];
@@ -373,10 +366,6 @@
       });
     });
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Random states
-  // ---------------------------------------------------------------------------------------------
 
   /**
    * Random peer-consistent states that contain a known solution, for models the puzzle corpus of the helper
@@ -504,10 +493,6 @@
     return shapedModel('subset-jigsaw', 9, 0, 0, [], regions);
   })();
 
-  // ---------------------------------------------------------------------------------------------
-  // Registration
-  // ---------------------------------------------------------------------------------------------
-
   describe('subset techniques: registration', function () {
     it('registers the six techniques of the subset group with the ladder cost and order', function () {
       IDS.forEach(function (id) {
@@ -544,10 +529,6 @@
       expect(SG.techniques.list().length).toBe(before);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Naked Pair
-  // ---------------------------------------------------------------------------------------------
 
   describe('nakedPair', function () {
     it('finds a pair in a row and removes its digits from the other cells of the row', function () {
@@ -611,20 +592,7 @@
         '4569']), '3456789');
       H.expectNoFinding(SG.test, 'nakedPair', state);
     });
-
-    it('is quiet on a position that is already solved or untouched', function () {
-      H.expectNoFinding(SG.test, 'nakedPair', H.makeState(model9, F.unique[0].puzzle));
-      H.expectNoFinding(SG.test, 'nakedPair', H.makeState(model9, zeros(model9)));
-    });
-
-    it('is sound (I7)', function () {
-      H.assertSound(SG.test, 'nakedPair', { count: 300, minFirings: 3 });
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Hidden Pair
-  // ---------------------------------------------------------------------------------------------
 
   describe('hiddenPair', function () {
     it('finds two digits that fit only two cells of a row and strips the other candidates', function () {
@@ -676,20 +644,7 @@
         '4568', '3579']));
       H.expectNoFinding(SG.test, 'hiddenPair', state);
     });
-
-    it('is quiet on a position that is already solved or untouched', function () {
-      H.expectNoFinding(SG.test, 'hiddenPair', H.makeState(model9, F.unique[0].puzzle));
-      H.expectNoFinding(SG.test, 'hiddenPair', H.makeState(model9, zeros(model9)));
-    });
-
-    it('is sound (I7)', function () {
-      H.assertSound(SG.test, 'hiddenPair', { count: 300, minFirings: 3 });
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Naked Triple
-  // ---------------------------------------------------------------------------------------------
 
   describe('nakedTriple', function () {
     it('finds three cells that share three digits, however the digits are spread', function () {
@@ -736,20 +691,7 @@
         '4789']), '456789');
       H.expectNoFinding(SG.test, 'nakedTriple', state);
     });
-
-    it('is quiet on a position that is already solved or untouched', function () {
-      H.expectNoFinding(SG.test, 'nakedTriple', H.makeState(model9, F.unique[0].puzzle));
-      H.expectNoFinding(SG.test, 'nakedTriple', H.makeState(model9, zeros(model9)));
-    });
-
-    it('is sound (I7)', function () {
-      H.assertSound(SG.test, 'nakedTriple', { count: 300, minFirings: 3 });
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Hidden Triple
-  // ---------------------------------------------------------------------------------------------
 
   describe('hiddenTriple', function () {
     it('finds three digits that fit only three cells of a row', function () {
@@ -796,20 +738,7 @@
         '5689']), '456789');
       H.expectNoFinding(SG.test, 'hiddenTriple', state);
     });
-
-    it('is quiet on a position that is already solved or untouched', function () {
-      H.expectNoFinding(SG.test, 'hiddenTriple', H.makeState(model9, F.unique[0].puzzle));
-      H.expectNoFinding(SG.test, 'hiddenTriple', H.makeState(model9, zeros(model9)));
-    });
-
-    it('is sound (I7)', function () {
-      H.assertSound(SG.test, 'hiddenTriple', { count: 300, minFirings: 3 });
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Naked Quad
-  // ---------------------------------------------------------------------------------------------
 
   describe('nakedQuad', function () {
     it('finds four cells that share four digits', function () {
@@ -855,20 +784,7 @@
         '6789']), '56789');
       H.expectNoFinding(SG.test, 'nakedQuad', state);
     });
-
-    it('is quiet on a position that is already solved or untouched', function () {
-      H.expectNoFinding(SG.test, 'nakedQuad', H.makeState(model9, F.unique[0].puzzle));
-      H.expectNoFinding(SG.test, 'nakedQuad', H.makeState(model9, zeros(model9)));
-    });
-
-    it('is sound (I7)', function () {
-      H.assertSound(SG.test, 'nakedQuad', { count: 300, minFirings: 3 });
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Hidden Quad
-  // ---------------------------------------------------------------------------------------------
 
   describe('hiddenQuad', function () {
     it('finds four digits that fit only four cells of a row', function () {
@@ -901,20 +817,7 @@
         '6789']), '56789');
       H.expectNoFinding(SG.test, 'hiddenQuad', state);
     });
-
-    it('is quiet on a position that is already solved or untouched', function () {
-      H.expectNoFinding(SG.test, 'hiddenQuad', H.makeState(model9, F.unique[0].puzzle));
-      H.expectNoFinding(SG.test, 'hiddenQuad', H.makeState(model9, zeros(model9)));
-    });
-
-    it('is sound (I7)', function () {
-      H.assertSound(SG.test, 'hiddenQuad', { count: 300, minFirings: 3 });
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // No duplicate reporting
-  // ---------------------------------------------------------------------------------------------
 
   describe('subset techniques: no duplicate reporting', function () {
     /**
@@ -1029,10 +932,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // The engine against the brute-force oracle
-  // ---------------------------------------------------------------------------------------------
-
   describe('subset techniques: oracle comparison', function () {
     /** Walks states and compares find() with the oracle at every step; returns how often it fired. */
     function compareOn(id, model, items, maxSteps) {
@@ -1086,10 +985,6 @@
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Other digit counts and unit shapes
-  // ---------------------------------------------------------------------------------------------
 
   describe('subset techniques: any digit count', function () {
     it('4x4: naked and hidden pair', function () {
@@ -1296,10 +1191,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Contract
-  // ---------------------------------------------------------------------------------------------
-
   describe('subset techniques: contract', function () {
     it('returns one deduction: no placements, real eliminations, cells inside the unit', function () {
       var items = H.randomStatesWithKnownSolution(model9, SG.testkit.rng.create(2468), 80);
@@ -1409,10 +1300,6 @@
       IDS.forEach(function (id) { expect(used[id]).toBe(true); });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Performance
-  // ---------------------------------------------------------------------------------------------
 
   describe('subset techniques: performance', function () {
     /** Positions where the technique is used up, so that find() has to scan every unit and returns null. */

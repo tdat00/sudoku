@@ -1,13 +1,13 @@
 /**
- * Depth-first solver that finds and counts solutions. Branches on the cell with the fewest candidates (MRV) and
- * propagates after every guess with `SG.constraints`, so it works for every variant and constraint extension.
- * Search positions live in a pool of preallocated states, one per depth, owned by the model; a branch copies its
- * parent with `TypedArray.set`. The pool is shared by all calls for one model, so the functions are not
- * re-entrant for the same model (nothing here calls back into user code).
+ * Depth-first solver that finds and counts solutions. Branches on the cell with the fewest candidates (MRV)
+ * and propagates after every guess with `SG.constraints`, so it works for every variant and constraint
+ * extension. Search positions live in a pool of preallocated states, one per depth, owned by the model; a
+ * branch copies its parent with `TypedArray.set`. The pool is shared by all calls for one model, so the
+ * functions are not re-entrant for the same model (nothing here calls back into user code).
  *
- * `search` and `stillUnique` allocate nothing per node: depth states are created once (`ensureDepth`), the value
- * order is a per-depth `Int32Array`, the MRV loop uses `bits.popcount`, and the search path has no try/catch,
- * console call or `.slice()`. Keep it that way (`node tests/perf.js --alloc` measures it).
+ * `search` and `stillUnique` allocate nothing per node: depth states are created once (`ensureDepth`), the
+ * value order is a per-depth `Int32Array`, the MRV loop uses `bits.popcount`, and the search path has no
+ * try/catch, console call or `.slice()`. Keep it that way (`node tests/perf.js --alloc` measures it).
  */
 (function (root) {
   'use strict';
@@ -105,7 +105,10 @@
     return SG.constraints.propagate(model, st, ws.budget === NO_BUDGET ? null : ws.budget);
   }
 
-  /** Explores the (already propagated) position in `ws.states[depth]`; true when the search should stop (enough solutions or `ws.aborted`). */
+  /**
+   * Explores the (already propagated) position in `ws.states[depth]`; true when the search should stop
+   * (enough solutions or `ws.aborted`).
+   */
   function search(ws, depth) {
     const st = ws.states[depth];
     const val = st.value;
@@ -168,8 +171,8 @@
   }
 
   /**
-   * Finds one solution (random value order when `rng` is given, else ascending); null when the givens have none.
-   * Throws 'dfs.invalidGivens' for a wrong length or value outside 1..D, and the budget's errors.
+   * Finds one solution (random value order when `rng` is given, else ascending); null when the givens have
+   * none. Throws 'dfs.invalidGivens' for a wrong length or value outside 1..D, and the budget's errors.
    */
   function solve(model, givens, rng, budget) {
     const ws = getWorkspace(model);
@@ -206,7 +209,10 @@
     }
   }
 
-  /** Records the givens (except the clue at `skip`) in `ws.baseVal` and the values used per unit in `ws.baseMask`; false when two givens clash. */
+  /**
+   * Records the givens (except the clue at `skip`) in `ws.baseVal` and the values used per unit in
+   * `ws.baseMask`; false when two givens clash.
+   */
   function buildMasks(ws, givens, skip) {
     const n = ws.n;
     const cellUnits = ws.model.cellUnits;
@@ -264,15 +270,17 @@
   }
 
   /**
-   * Unique-solution check after removing one clue. It propagates the puzzle without the clue once, then asks for
-   * each alternative value w of the cell whether forcing cell = w leaves any solution; unique iff none does.
+   * Unique-solution check after removing one clue. It propagates the puzzle without the clue once, then asks
+   * for each alternative value w of the cell whether forcing cell = w leaves any solution; unique iff none
+   * does.
    *
-   * Cheap tests come first: if the cell is a naked single or a hidden single of the peer-consistent puzzle, the
-   * clue was redundant and the answer is true at once (the common case early in digging). Only then is the puzzle
-   * loaded from per-unit value masks and propagated, stopping as soon as the cell is decided.
+   * Cheap tests come first: if the cell is a naked single or a hidden single of the peer-consistent puzzle,
+   * the clue was redundant and the answer is true at once (the common case early in digging). Only then is
+   * the puzzle loaded from per-unit value masks and propagated, stopping as soon as the cell is decided.
    *
-   * Precondition: the puzzle that still has the clue (cell = trueValue) has exactly one solution; the cheap tests
-   * rely on it and do not look for clashes elsewhere. `givens` may or may not contain the clue at `cell`.
+   * Precondition: the puzzle that still has the clue (cell = trueValue) has exactly one solution; the cheap
+   * tests rely on it and do not look for clashes elsewhere. `givens` may or may not contain the clue at
+   * `cell`.
    */
   function stillUnique(model, givens, cell, trueValue, budget) {
     const ws = getWorkspace(model);
@@ -344,7 +352,10 @@
     return true;
   }
 
-  /** A bounded or randomised completion of an already propagated state (tests use it for random solved grids); `state` is copied, not modified. */
+  /**
+   * A bounded or randomised completion of an already propagated state (tests use it for random solved grids);
+   * `state` is copied, not modified.
+   */
   function searchFrom(model, state, options) {
     options = options || {};
     const ws = getWorkspace(model);

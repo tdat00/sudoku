@@ -1,6 +1,6 @@
 /**
- * Puzzles with a known difficulty, for validating `SG.difficulty.classify` (task T-2.9). Exposed as
- * SG.fixtures.rated = { entries, published, constructed }. Every puzzle has exactly one solution.
+ * Puzzles with a known difficulty, for validating `SG.difficulty.classify`. Exposed as
+ * SG.fixtures.rated = { entries, constructed, techniqueSets }. Every puzzle has exactly one solution.
  *
  * Entry: { name, puzzle (81 chars, '.' = empty), label (a level of SG.difficulty.LEVELS), basis, note,
  *          solvableWith?, notSolvableWith? (technique ids) }
@@ -17,15 +17,16 @@
  *                       name like "hard".
  *
  *  basis 'constructed'  Puzzles made by SG.digger.generate and then frozen. The label is the level of
- *                       their score (rating v2, docs/report-v2/report-detailed.md section 4.3). Each one
- *                       also carries a certificate about techniques that holds whatever the scores, weights
- *                       and level bands are: `solvableWith` names a set of technique ids (`TECHNIQUE_SETS`)
- *                       that solves the puzzle and `notSolvableWith` a set that gets stuck (the solver is
- *                       run with exactly those techniques and `assumeUniqueness: false`, like the digging
- *                       oracle). A normal puzzle, for instance, is solved with singles, locked candidates
- *                       and subsets but not with singles and locked candidates alone; an nightmare one is not
- *                       solved without chains. The scorer must reproduce the label from the puzzle alone,
- *                       so these fixtures also catch a calibration that drifts away from the techniques.
+ *                       their score (rating v2, docs/difficulty-rating/report-detailed.md section 4.3).
+ *                       Each one also carries a certificate about techniques that holds whatever the scores,
+ *                       weights and level bands are: `solvableWith` names a set of technique ids
+ *                       (`TECHNIQUE_SETS`) that solves the puzzle and `notSolvableWith` a set that gets stuck
+ *                       (the solver is run with exactly those techniques and `assumeUniqueness: false`, like
+ *                       the digging oracle). A normal puzzle, for instance, is solved with singles, locked
+ *                       candidates and subsets but not with singles and locked candidates alone; a nightmare
+ *                       one is not solved without chains. The scorer must reproduce the label from the
+ *                       puzzle alone, so these fixtures also catch a calibration that drifts away from the
+ *                       techniques.
  */
 (function () {
   'use strict';
@@ -111,8 +112,8 @@
 
   /**
    * [level, puzzle, solvableWith, notSolvableWith] (names of TECHNIQUE_SETS). The level is the one of the
-   * score (rating v2, docs/report-v2/report-detailed.md section 4.3): the puzzles that `generate` made for
-   * 'master' with one wing each now score 879 to 940 and are labelled expert. The certificates are those
+   * score (rating v2, docs/difficulty-rating/report-detailed.md section 4.3): the puzzles that `generate`
+   * made for 'master' with one wing each score 879 to 940 and are labelled expert. The certificates are those
    * the puzzles were made with: a normal puzzle needs a subset (stuck with singles and locked candidates),
    * a hard one a fish, an expert one a wing, a nightmare one a chain.
    */
@@ -172,7 +173,6 @@
 
   SG.fixtures.rated = {
     entries: PUBLISHED.concat(CONSTRUCTED),
-    published: PUBLISHED,
     constructed: CONSTRUCTED,
     techniqueSets: TECHNIQUE_SETS
   };

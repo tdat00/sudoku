@@ -1,19 +1,19 @@
 /**
- * `SG.help`: the Help dialog, opened by the Help button (`action { id: 'help' }`) through the optional-module hook
- * of js/ui/app.js (`init(SG.app)`). Five tabs: variant rules, difficulty and the technique ladder, how generation
- * works, controls and keys, about. Texts are locale keys `help.*`; what the registries already know (variant names,
- * options, levels, technique names and descriptions, step names) is READ from them and never copied, so the help
- * cannot drift away from the code.
+ * `SG.help`: the Help dialog, opened by the Help button (`action { id: 'help' }`) through the optional-module
+ * hook of js/ui/app.js (`init(SG.app)`). Five tabs: variant rules, difficulty and the technique ladder, how
+ * generation works, controls and keys, about. Texts are locale keys `help.*`; what the registries already
+ * know (variant names, options, levels, technique names and descriptions, step names) is READ from them and
+ * never copied, so the help cannot drift away from the code.
  *
  * Pure helpers (no DOM, used by the tests): `entries`, `ladder`, `steps`, `shortcuts`, `controlsGlossary`,
- * `illustration`, `requiredKeys` (every translation key the help reads, own and foreign), plus `TAB_IDS`.
- * API: init(app) -> boolean (idempotent), open(options?) (the modal handle of `SG.app.openModal`, or null without a
- * DOM / before init; `options.tab`: 'variants' | 'difficulty' | 'generation' | 'shortcuts' | 'about';
- * `options.variantId` opens that variant on the variants tab), close(), destroy(), `illustration(id)` ->
- * `{ variantId, width, height, viewBox, markup, cells }` or null.
+ * `illustration`, `requiredKeys` (every translation key the help reads, own and foreign). API: init(app) ->
+ * boolean (idempotent), open(options?) (the modal handle of `SG.app.openModal`, or null without a DOM /
+ * before init; `options.tab`: 'variants' | 'difficulty' | 'generation' | 'shortcuts' | 'about';
+ * `options.variantId` opens that variant on the variants tab), close(), destroy(), `illustration(id)` -> `{
+ * variantId, width, height, viewBox, markup, cells }` or null.
  *
- * Keycaps ("Esc", "Ctrl", arrows) are printed on the keyboard and are the same in both languages, so they live in
- * `shortcuts()` as plain text; everything else goes through `SG.i18n.t`.
+ * Keycaps ("Esc", "Ctrl", arrows) are printed on the keyboard and are the same in both languages, so they
+ * live in `shortcuts()` as plain text; everything else goes through `SG.i18n.t`.
  */
 (function (root) {
   'use strict';
@@ -34,8 +34,9 @@
 
   /**
    * The picture each variant gets: 'board' draws the empty board of the variant (regions, diagonals, windows,
-   * overlapping grids); 'killer', 'signs' and 'word' are small samples of what is special. Every registered variant
-   * needs an entry here AND the keys `help.variant.<id>.rules|special|figure` (tests/suites/help.test.js fails otherwise).
+   * overlapping grids); 'killer', 'signs' and 'word' are small samples of what is special. Every registered
+   * variant needs an entry here AND the keys `help.variant.<id>.rules|special|figure`
+   * (tests/suites/help.test.js fails otherwise).
    */
   const VARIANT_HELP = Object.freeze({
     classic4: { figure: 'board' },
@@ -64,10 +65,10 @@
   }
 
   /**
-   * The help entry of one variant definition: `{ id, generic, nameKey, groupId, groupKey, summaryKey, rulesKey,
-   * specialKey, figureKey, figure, digits, levels, symbolModes, options: [{ id, labelKey, hintKey }], keys }`.
-   * `generic` is true when the help has no hand-written text for the variant: the dialog then shows its name, summary
-   * and options only, and the test suite reports the missing entry.
+   * The help entry of one variant definition: `{ id, generic, nameKey, groupId, groupKey, summaryKey,
+   * rulesKey, specialKey, figureKey, figure, digits, levels, symbolModes, options: [{ id, labelKey, hintKey
+   * }], keys }`. `generic` is true when the help has no hand-written text for the variant: the dialog then
+   * shows its name, summary and options only, and the test suite reports the missing entry.
    */
   function entryOf(def) {
     const id = String(def && def.id);
@@ -105,7 +106,7 @@
     return entry;
   }
 
-  /** One entry per variant, in registry order (`variantList` defaults to `SG.variants.list()`; tests inject a fake variant). */
+  /** One entry per variant, in registry order (`variantList`: default `SG.variants.list()`). */
   function entries(variantList) {
     const list = Array.isArray(variantList) ? variantList : SG.variants.list();
     return list.map(entryOf);
@@ -176,7 +177,12 @@
     return { model: model, state: {}, opts: {}, crop: null };
   }
 
-  /** The picture of a variant as SVG markup built by the board renderer (so it follows the board theme): Killer and Greater-Than show the top-left box of a sample puzzle, Wordoku a board with its key word, everything else the empty board. `markup` goes inside an `<svg class="sgb" viewBox="...">`; null when the renderer is missing or the variant cannot be drawn. */
+  /**
+   * SVG markup from the board renderer (so it follows the board theme): Killer and Greater-Than show the
+   * top-left box of a sample puzzle, Wordoku a board with its key word, others the empty board. `markup` goes
+   * inside an `<svg class="sgb" viewBox="...">`; null when the renderer is missing or the variant cannot be
+   * drawn.
+   */
   function illustration(variantId) {
     const BV = SG.boardView;
     if (!BV || typeof BV.renderMarkup !== 'function' || !SG.variants.has(variantId)) return null;
@@ -219,14 +225,15 @@
   }
 
   /**
-   * The difficulty ladder as the registries define it: one row per level with its score band and the 9x9 clue range,
-   * and the techniques that can first appear at that level. A technique of p points adds at least 1.25 x p to the
-   * score (`SG.difficulty.SCORING.peakBound`), so it can first appear in the band whose upper edge lies above that:
-   * the pruning rule of `SG.difficulty.spec`. The techniques of a level are listed in the order the solver tries
-   * them; the levels at the top add none.
+   * The difficulty ladder as the registries define it: one row per level with its score band and the 9x9 clue
+   * range, and the techniques that can first appear at that level. A technique of p points adds at least 1.25
+   * x p to the score (`SG.difficulty.SCORING.peakBound`), so it can first appear in the band whose upper edge
+   * lies above that: the pruning rule of `SG.difficulty.spec`. The techniques of a level are listed in the
+   * order the solver tries them; the levels at the top add none.
    * Returns { levels, variantGroups, scoring }: `levels[i]` is `{ level, nameKey, descKey, groups, groupKeys,
-   * techniques, minClues, maxClues, minScore, maxScore }` (`maxScore` is Infinity for the last level); `variantGroups`
-   * holds the groups with a `variantScope` (`{ group, groupKey, techniques }`). Every technique item has its `points`.
+   * techniques, minClues, maxClues, minScore, maxScore }` (`maxScore` is Infinity for the last level);
+   * `variantGroups` holds the groups with a `variantScope` (`{ group, groupKey, techniques }`). Every
+   * technique item has its `points`.
    */
   function ladder() {
     const D = SG.difficulty;
@@ -285,7 +292,7 @@
     return { id: id, keys: keys, textKey: 'help.keys.' + id };
   }
 
-  /** The keyboard shortcuts of the page, in groups. `keys` is a list of alternatives, each a list of keycaps pressed together. A group may carry a `noteKey`: a sentence shown above its rows. */
+  /** Groups of shortcuts; `keys` lists alternatives, each a list of keycaps pressed together. */
   function shortcuts() {
     const arrows = [['\u2191'], ['\u2193'], ['\u2190'], ['\u2192']];
     return [
@@ -323,7 +330,7 @@
     ];
   }
 
-  /** `{ labelKey, textKey }` pairs of existing translation keys (the hints of the form controls are reused, not copied); the last one is the replay under the board. */
+  /** `{ labelKey, textKey }` pairs of existing keys (the hints of the form are reused, not copied). */
   function controlsGlossary() {
     const pair = function (id, labelKey, textKey) {
       return { id: id, labelKey: labelKey, textKey: textKey };
@@ -467,7 +474,9 @@
     ]);
   }
 
-  /** A hint as paragraphs, like the tooltips of the form: a blank line starts a paragraph, `**text**` is bold. Built with DOM nodes, never innerHTML. */
+  /**
+   * Like the form tooltips: a blank line starts a paragraph, `**text**` is bold. DOM nodes, never innerHTML.
+   */
   function richText(text) {
     return String(text).split(/\n{2,}/).map(function (paragraph) {
       const parts = [];
@@ -961,7 +970,6 @@
   }
 
   SG.help = {
-    TAB_IDS: TAB_IDS,
     init: init,
     open: open,
     close: close,
@@ -1012,7 +1020,7 @@
       'help.variant.classic6.rules': 'Fill the 6×6 grid so that every row, every column and every box ' +
         'contains each of the digits 1 to 6 exactly once. The boxes are 2 rows high and 3 columns wide.',
       'help.variant.classic6.special': 'The boxes are wider than they are tall, so a box and a row overlap ' +
-        'in a different way than on the 9×9 board. A comfortable board for learning the basic techniques.',
+        'in a different way from the 9×9 board. A comfortable board for learning the basic techniques.',
       'help.variant.classic6.figure': 'The empty 6×6 board with its six boxes of 2 rows by 3 columns.',
       'help.variant.classic9.rules': 'The classic puzzle. Fill the 9×9 grid so that every row, every ' +
         'column and every 3×3 box contains each of the digits 1 to 9 exactly once. The given digits are ' +
@@ -1105,8 +1113,8 @@
         'or a column.',
       'help.variant.wordoku.special': 'The word is not shown while the puzzle is unsolved; solve it to ' +
         'read it. Choose an English or a Vietnamese word list (Vietnamese words are written without ' +
-        'accents, and English is used when the Vietnamese list is too short), or type a word of your own ' +
-        'with nine different letters. The Digits symbol set plays the same puzzle with numbers.',
+        'diacritics, and English is used when the Vietnamese list is too short), or type a word of your ' +
+        'own with nine different letters. The Digits symbol set plays the same puzzle with numbers.',
       'help.variant.wordoku.figure': 'A Wordoku board with the key word {word} written along the main ' +
         'diagonal.',
 
@@ -1225,10 +1233,9 @@
       'help.about.privacy.text': 'Everything runs inside your browser. Puzzles are generated on your own ' +
         'device and nothing is sent to a server; there are no accounts, no trackers and no cookies. The ' +
         'only things kept are small items in the local storage of your browser: your language, theme and ' +
-        'last options, and a few recently generated puzzles, so that ' +
-        'the same one can be shown again at once. \u201cPlay online\u201d opens the separate sudoku-player ' +
-        'page in a new tab; the puzzle travels only inside the address, after the \u201c#\u201d, which a ' +
-        'browser never sends to a server.',
+        'last options, and a few recently generated puzzles, so that the same one can be shown again at ' +
+        'once. “Play” opens the separate Sudoku Player page in a new tab; the puzzle travels only inside ' +
+        'the address, after the “#”, which a browser never sends to a server.',
       'help.about.repro.title': 'Sharing and reproducing a puzzle',
       'help.about.repro.text': 'The seed together with the variant, the level and the options fully ' +
         'determines the puzzle, and the address bar keeps them. Copy the link, ' +
@@ -1253,7 +1260,7 @@
 
       'help.variants.intro': 'Mọi biến thể đều theo cùng một ý tưởng của Sudoku: điền vào lưới sao cho ' +
         'không có nhóm ô nào (hàng, cột, khối hay vùng) lặp lại một ký hiệu. Hãy mở từng biến thể để xem ' +
-        'luật chơi, các tùy chọn và hình minh họa bảng của nó. Có tất cả {count} biến thể, xếp theo nhóm.',
+        'luật chơi, các tùy chọn và hình minh họa bàn cờ của nó. Có tất cả {count} biến thể, xếp theo nhóm.',
       'help.variants.levelsNote': 'Mỗi biến thể chỉ cung cấp những mức độ khó mà nó tạo được một cách ổn ' +
         'định và nhanh chóng, nên một số biến thể có ít hơn chín mức, và danh sách có thể bỏ qua một mức. ' +
         'Các mức của từng biến thể được liệt ' +
@@ -1269,113 +1276,117 @@
       'help.variant.classic4.rules': 'Điền vào lưới 4×4 sao cho mỗi hàng, mỗi cột và mỗi khối 2×2 đều chứa ' +
         'các chữ số từ 1 đến 4, mỗi số đúng một lần. Một số ô đã được cho sẵn; bạn chỉ dùng suy luận để ' +
         'tìm các ô còn lại, và luôn chỉ có đúng một lời giải.',
-      'help.variant.classic4.special': 'Bảng nhỏ nhất và tạo nhanh nhất: rất hợp để xem lần đầu bộ sinh ' +
-        'hoạt động ra sao, cũng là khởi đầu nhẹ nhàng cho trẻ em (hãy thử bộ ký hiệu Hình khối hoặc Màu ' +
-        'sắc).',
-      'help.variant.classic4.figure': 'Bảng 4×4 trống: mỗi khối viền nét đậm chứa các chữ số từ 1 đến 4, ' +
+      'help.variant.classic4.special': 'Bàn cờ nhỏ nhất và tạo nhanh nhất: rất hợp để xem lần đầu trình ' +
+        'sinh đề hoạt động ra sao, cũng là khởi đầu nhẹ nhàng cho trẻ em (hãy thử bộ ký hiệu Hình dạng ' +
+        'hoặc Màu sắc).',
+      'help.variant.classic4.figure': 'Bàn cờ 4×4 trống: mỗi khối viền nét đậm chứa các chữ số từ 1 đến 4, ' +
         'mỗi số một lần.',
       'help.variant.classic6.rules': 'Điền vào lưới 6×6 sao cho mỗi hàng, mỗi cột và mỗi khối đều chứa các ' +
         'chữ số từ 1 đến 6, mỗi số đúng một lần. Mỗi khối cao 2 hàng và rộng 3 cột.',
       'help.variant.classic6.special': 'Khối rộng hơn chiều cao, nên khối và hàng giao nhau theo cách khác ' +
-        'với bảng 9×9. Một bảng dễ chịu để làm quen với các kỹ thuật cơ bản.',
-      'help.variant.classic6.figure': 'Bảng 6×6 trống với sáu khối, mỗi khối 2 hàng × 3 cột.',
+        'với bàn cờ 9×9. Một bàn cờ dễ chịu để làm quen với các kỹ thuật cơ bản.',
+      'help.variant.classic6.figure': 'Bàn cờ 6×6 trống với sáu khối, mỗi khối 2 hàng × 3 cột.',
       'help.variant.classic9.rules': 'Đề cổ điển. Điền vào lưới 9×9 sao cho mỗi hàng, mỗi cột và mỗi ' +
         'khối 3×3 đều chứa các chữ số từ 1 đến 9, mỗi số đúng một lần. Các số cho sẵn vừa đủ để lời giải ' +
         'là duy nhất.',
-      'help.variant.classic9.special': 'Biến thể chuẩn của bộ sinh: thang độ khó và các bậc kỹ thuật được ' +
-        'chỉnh trước hết trên bảng này.',
-      'help.variant.classic9.figure': 'Bảng 9×9 trống với chín khối 3×3.',
+      'help.variant.classic9.special': 'Biến thể chuẩn của trình sinh đề: thang độ khó và các bậc kỹ thuật ' +
+        'được chỉnh trước hết trên bàn cờ này.',
+      'help.variant.classic9.figure': 'Bàn cờ 9×9 trống với chín khối 3×3.',
       'help.variant.mega12.rules': 'Điền vào lưới 12×12 sao cho mỗi hàng, mỗi cột và mỗi khối đều chứa đủ ' +
         '12 ký hiệu, mỗi ký hiệu đúng một lần. Mỗi khối cao 3 hàng và rộng 4 cột. Các ký hiệu là chữ số từ ' +
         '1 đến 9 rồi đến A, B, C, hoặc các số từ 1 đến 12.',
-      'help.variant.mega12.special': 'Bảng lớn: việc tạo đề lâu hơn, và trên màn hình nhỏ lưới khá rộng ' +
-        'nên hãy cuộn hoặc thu phóng. Tùy chọn bộ ký hiệu chỉ đổi cách vẽ các giá trị; bản thân đề ' +
-        'không thay đổi.',
-      'help.variant.mega12.figure': 'Bảng 12×12 trống với mười hai khối, mỗi khối 3 hàng × 4 cột.',
+      'help.variant.mega12.special': 'Bàn cờ lớn: việc tạo đề lâu hơn, và trên màn hình nhỏ lưới khá rộng ' +
+        'nên hãy cuộn hoặc thu phóng. Tùy chọn bộ ký hiệu chỉ đổi cách vẽ các giá trị; bản thân đề không ' +
+        'thay đổi.',
+      'help.variant.mega12.figure': 'Bàn cờ 12×12 trống với mười hai khối, mỗi khối 3 hàng × 4 cột.',
       'help.variant.mega16.rules': 'Điền vào lưới 16×16 sao cho mỗi hàng, mỗi cột và mỗi khối 4×4 đều chứa ' +
         'đủ 16 ký hiệu, mỗi ký hiệu đúng một lần. Mặc định các ký hiệu là chữ số hệ thập lục phân từ 0 đến ' +
         '9 và từ A đến F; bạn cũng có thể dùng từ 1 đến 9 và từ A đến G.',
-      'help.variant.mega16.special': 'Bảng một lưới lớn nhất, còn gọi là Sudoku Quái vật. Các ô khá nhỏ ' +
-        'nên hãy dùng màn hình lớn hoặc phóng to. Thời gian tạo đề lâu hơn bảng 9×9; trang vẫn mượt khi bộ ' +
-        'sinh chạy ở luồng nền.',
-      'help.variant.mega16.figure': 'Bảng 16×16 trống với mười sáu khối 4×4.',
+      'help.variant.mega16.special': 'Bàn cờ một lưới lớn nhất, còn gọi là Sudoku Quái vật. Các ô khá nhỏ ' +
+        'nên hãy dùng màn hình lớn hoặc phóng to. Thời gian tạo đề lâu hơn bàn cờ 9×9; trang vẫn mượt khi ' +
+        'trình sinh đề chạy ở luồng nền.',
+      'help.variant.mega16.figure': 'Bàn cờ 16×16 trống với mười sáu khối 4×4.',
       'help.variant.diagonalX.rules': 'Luật Sudoku 9×9 cổ điển, thêm một luật nữa: mỗi đường chéo dài, từ ' +
         'góc này sang góc đối diện, cũng phải chứa các chữ số từ 1 đến 9, mỗi số đúng một lần.',
-      'help.variant.diagonalX.special': 'Hai đường chéo được tô màu trên bảng. Mỗi ô nằm trên đường chéo ' +
+      'help.variant.diagonalX.special': 'Hai đường chéo được tô màu trên bàn cờ. Mỗi ô nằm trên đường chéo ' +
         'phải thỏa mãn cùng lúc bốn nhóm (hàng, cột, khối và đường chéo), nên đề có nhiều suy luận hơn. ' +
-        'Tùy chọn nâng cao thêm cả bốn cửa sổ của Hyper để tạo ra một biến thể lai.',
-      'help.variant.diagonalX.figure': 'Bảng 9×9 với hai đường chéo được tô màu.',
-      'help.variant.hyper.rules': 'Luật Sudoku 9×9 cổ điển, thêm bốn cửa sổ 3×3 được tô bóng. Mỗi cửa sổ ' +
-        'cũng phải chứa các chữ số từ 1 đến 9, mỗi số đúng một lần. Các cửa sổ nằm lùi vào một ô so với ' +
-        'các góc của lưới: hàng và cột 2 đến 4 và 6 đến 8.',
-      'help.variant.hyper.special': 'Còn gọi là Windoku. Các cửa sổ chồng lên những khối thông thường nên ' +
-        'một chữ số thường có ít chỗ đặt hơn. Tùy chọn nâng cao thêm cả hai đường chéo để tạo ra một biến ' +
-        'thể lai.',
-      'help.variant.hyper.figure': 'Bảng 9×9 với bốn cửa sổ được tô bóng.',
+        'Tùy chọn nâng cao thêm cả bốn vùng siêu của Sudoku Siêu vùng để tạo ra một biến thể lai.',
+      'help.variant.diagonalX.figure': 'Bàn cờ 9×9 với hai đường chéo được tô màu.',
+      'help.variant.hyper.rules': 'Luật Sudoku 9×9 cổ điển, thêm bốn vùng siêu 3×3 được tô màu. Mỗi vùng ' +
+        'siêu cũng phải chứa các chữ số từ 1 đến 9, mỗi số đúng một lần. Các vùng siêu nằm lùi vào một ô ' +
+        'so với các góc của lưới: hàng và cột 2 đến 4 và 6 đến 8.',
+      'help.variant.hyper.special': 'Còn gọi là Windoku. Các vùng siêu chồng lên những khối thông thường ' +
+        'nên một chữ số thường có ít chỗ đặt hơn. Tùy chọn nâng cao thêm cả hai đường chéo để tạo ra một ' +
+        'biến thể lai.',
+      'help.variant.hyper.figure': 'Bàn cờ 9×9 với bốn vùng siêu được tô màu.',
       'help.variant.jigsaw9.rules': 'Chín khối 3×3 được thay bằng chín vùng không đều, mỗi vùng gồm chín ô ' +
         'và có viền đậm. Mỗi hàng, mỗi cột và mỗi vùng đều chứa các chữ số từ 1 đến 9, mỗi số đúng một lần.',
       'help.variant.jigsaw9.special': 'Mỗi đề có một bộ vùng khác nhau nên không có khuôn khối nào để dựa ' +
         'vào: hãy đọc hình dạng của chúng. Tùy chọn độ gọn chọn giữa các vùng tròn trịa, gọn gàng và các ' +
         'vùng ngoằn ngoèo như con rắn, khó nhìn hơn.',
-      'help.variant.jigsaw9.figure': 'Một bố cục Jigsaw mẫu: chín vùng tô màu, mỗi vùng chín ô.',
+      'help.variant.jigsaw9.figure': 'Một bố cục Ghép hình mẫu: chín vùng tô màu, mỗi vùng chín ô.',
       'help.variant.killer.rules': 'Các ô được gom thành những lồng viền nét đứt, và con số nhỏ ở góc lồng ' +
         'là tổng của nó. Các chữ số trong một lồng phải cộng lại bằng tổng đó và không được lặp lại trong ' +
         'lồng. Các luật hàng, cột và khối thông thường vẫn áp dụng. Hầu như không có chữ số cho sẵn.',
-      'help.variant.killer.special': 'Các kỹ thuật về lồng (Tổ hợp tổng của lồng, Quy tắc 45, Tách lồng) ' +
-        'là một phần của bậc thang độ khó. Bộ sinh tạo lồng từ lời giải, kiểm tra xem các tổng có xác định ' +
-        'đúng một lời giải hay không, và mở thêm vài chữ số khi chưa đủ; mức dễ nhất mở nhiều nhất. Tùy ' +
-        'chọn kích thước lồng nghiêng đề về các lồng nhỏ hơn hoặc lớn hơn.',
-      'help.variant.killer.figure': 'Một phần bảng Killer: các lồng nét đứt, mỗi lồng ghi tổng ở góc trên ' +
-        'bên trái.',
+      'help.variant.killer.special': 'Các kỹ thuật về lồng (Tổ hợp tổng lồng, Quy tắc 45, Tách lồng) là ' +
+        'một phần của bậc thang độ khó. Trình sinh đề tạo lồng từ lời giải, kiểm tra xem các tổng có xác ' +
+        'định đúng một lời giải hay không, và mở thêm vài chữ số khi chưa đủ; mức dễ nhất mở nhiều nhất. ' +
+        'Tùy chọn cỡ lồng nghiêng đề về các lồng nhỏ hơn hoặc lớn hơn.',
+      'help.variant.killer.figure': 'Một phần bàn cờ Sát thủ: các lồng nét đứt, mỗi lồng ghi tổng ở góc ' +
+        'trên bên trái.',
       'help.variant.greaterThan.rules': 'Các dấu giữa hai ô cạnh nhau cho biết chữ số nào lớn hơn. Đầu ' +
         'nhọn của dấu < hoặc > hướng về phía chữ số nhỏ hơn và mở ra phía chữ số lớn hơn. Các luật hàng, ' +
         'cột và khối thông thường vẫn áp dụng.',
       'help.variant.greaterThan.special': 'Mặc định các dấu chỉ đặt giữa những ô cạnh nhau trong cùng một ' +
-        'khối; tùy chọn Futoshiki đặt thêm cả giữa các ô cạnh nhau thuộc hai khối khác nhau. Bộ sinh bỏ ' +
-        'bớt dấu chứ không chỉ bỏ chữ số: nó chỉ giữ đủ số dấu để có một lời giải duy nhất ở mức đã chọn.',
-      'help.variant.greaterThan.figure': 'Một phần bảng So sánh: các dấu giữa những ô cạnh nhau trong một ' +
-        'khối.',
+        'khối; tùy chọn Futoshiki đặt thêm cả giữa các ô cạnh nhau thuộc hai khối khác nhau. Trình sinh đề ' +
+        'bỏ bớt dấu chứ không chỉ bỏ chữ số: nó chỉ giữ đủ số dấu để có một lời giải duy nhất ở mức đã ' +
+        'chọn.',
+      'help.variant.greaterThan.figure': 'Một phần bàn cờ So sánh: các dấu giữa những ô cạnh nhau trong ' +
+        'một khối.',
       'help.variant.samurai.rules': 'Năm lưới 9×9 chồng lên nhau theo hình chữ X: bốn lưới ở góc và một ' +
         'lưới ở giữa. Lưới giữa dùng chung một khối 3×3 với từng lưới góc. Mỗi lưới theo luật cổ điển, và ' +
         'khối dùng chung được tính cho cả hai lưới cùng lúc. Tổng cộng 369 ô.',
-      'help.variant.samurai.special': 'Một trong những bảng lớn nhất, nên việc tạo đề mất vài giây, chạy ở ' +
-        'nền và có thể hủy. Kiểu đối xứng bạn chọn áp dụng cho toàn bộ khung chứ không phải riêng từng lưới.',
-      'help.variant.samurai.figure': 'Bảng Samurai: năm lưới 9×9 chồng lên nhau.',
+      'help.variant.samurai.special': 'Một trong những bàn cờ lớn nhất, nên việc tạo đề mất vài giây, chạy ' +
+        'ở nền và có thể hủy. Kiểu đối xứng bạn chọn áp dụng cho toàn bộ khung chứ không phải riêng từng ' +
+        'lưới.',
+      'help.variant.samurai.figure': 'Bàn cờ Samurai: năm lưới 9×9 chồng lên nhau.',
       'help.variant.sohei.rules': 'Bốn lưới 9×9 xếp thành một vòng quanh một khoảng trống ở giữa. Mỗi lưới ' +
         'dùng chung một khối 3×3 với từng lưới trong hai lưới bên cạnh. Mỗi lưới theo luật cổ điển, và ' +
         'khối dùng chung được tính cho cả hai lưới cùng lúc. Tổng cộng 288 ô.',
       'help.variant.sohei.special': 'Hai góc của mỗi lưới gắn chặt với các lưới bên cạnh, nên một chữ số ' +
         'đặt trong khối dùng chung giúp được cả hai lưới cùng lúc. Khoảng trống ở giữa không thuộc lưới nào.',
-      'help.variant.sohei.figure': 'Bảng Sohei: bốn lưới 9×9 chồng lên nhau quanh một khoảng trống ở giữa.',
+      'help.variant.sohei.figure': 'Bàn cờ Sohei: bốn lưới 9×9 chồng lên nhau quanh một khoảng trống ở ' +
+        'giữa.',
       'help.variant.butterfly.rules': 'Bốn lưới 9×9, mỗi lưới lệch ba ô so với lưới kế tiếp, chồng lên ' +
         'nhau ở một vùng 6×6 ở giữa (tổng cộng 144 ô). Mỗi lưới theo luật cổ điển, và một ô nằm trong vùng ' +
         'chồng phải thỏa mãn mọi lưới chứa nó.',
       'help.variant.butterfly.special': 'Vùng 6×6 ở giữa thuộc cả bốn lưới cùng lúc, nên một chữ số đặt ở ' +
         'đó được kiểm tra theo bốn lưới.',
-      'help.variant.butterfly.figure': 'Bảng Cánh bướm: bốn lưới 9×9 chồng lên nhau.',
+      'help.variant.butterfly.figure': 'Bàn cờ Cánh bướm: bốn lưới 9×9 chồng lên nhau.',
       'help.variant.flower.rules': 'Năm lưới 9×9: một lưới ở giữa và bốn cánh hoa ở phía trên, dưới, trái, ' +
         'phải của nó, mỗi cánh lệch ba ô. Một cánh chồng lên lưới giữa ở một dải 6×9 ô, và các cánh còn ' +
         'chồng lên nhau gần các góc của lưới giữa. Tổng cộng 189 ô; mỗi lưới theo luật cổ điển.',
       'help.variant.flower.special': 'Mức chồng lấn dày đặc nhất trong các biến thể: nhiều ô thuộc hai ' +
         'hoặc ba lưới, nên mỗi lần đặt số đều kéo theo nhiều hệ quả.',
-      'help.variant.flower.figure': 'Bảng Bông hoa: một lưới giữa và bốn cánh hoa chồng lên nhau.',
+      'help.variant.flower.figure': 'Bàn cờ Bông hoa: một lưới giữa và bốn cánh hoa chồng lên nhau.',
       'help.variant.wordoku.rules': 'Một đề Sudoku 9×9 chơi bằng chín chữ cái thay cho chữ số: mỗi hàng, ' +
         'cột và khối 3×3 đều chứa đủ chín chữ cái, mỗi chữ đúng một lần. Chín chữ cái là các chữ của một ' +
         'từ khóa ẩn, được viết dọc theo một đường của lời giải: mặc định là đường chéo chính, hoặc một ' +
         'hàng hay một cột.',
       'help.variant.wordoku.special': 'Từ khóa không hiện khi đề chưa giải xong; giải xong bạn sẽ đọc được ' +
-        'nó. Bạn có thể chọn danh sách từ tiếng Anh hoặc tiếng Việt (từ tiếng Việt viết không dấu, và nếu ' +
-        'danh sách tiếng Việt quá ngắn thì dùng tiếng Anh), hoặc tự nhập một từ gồm chín chữ cái khác ' +
-        'nhau. Bộ ký hiệu Chữ số chơi cùng đề đó bằng số.',
-      'help.variant.wordoku.figure': 'Một bảng Wordoku với từ khóa {word} viết dọc theo đường chéo chính.',
+        'nó. Bạn có thể chọn kho từ tiếng Anh hoặc tiếng Việt (từ tiếng Việt viết không dấu, và nếu kho từ ' +
+        'tiếng Việt quá ít từ thì dùng tiếng Anh), hoặc tự nhập một từ gồm chín chữ cái khác nhau. Bộ ký ' +
+        'hiệu Chữ số chơi cùng đề đó bằng số.',
+      'help.variant.wordoku.figure': 'Một bàn cờ Sudoku Chữ với từ khóa {word} viết dọc theo đường chéo ' +
+        'chính.',
 
       'help.difficulty.intro': 'Độ khó của một đề không phải là phỏng đoán: nó được tính từ các kỹ thuật ' +
         'giải mà người chơi cần dùng và từ số ô trống, với cùng một công thức trên mọi bàn cờ. Mỗi kỹ ' +
-        'thuật có một số điểm, và điểm số quyết định mức độ. Bộ sinh chỉ bỏ một số cho sẵn khi đề vẫn giải ' +
-        'được bằng các kỹ thuật phù hợp với mức đã chọn.',
+        'thuật có một số điểm, và điểm số quyết định mức độ. Trình sinh đề chỉ bỏ một số cho sẵn khi đề ' +
+        'vẫn giải được bằng các kỹ thuật phù hợp với mức đã chọn.',
       'help.difficulty.levels.title': 'Chín mức độ khó',
       'help.difficulty.levels.caption': 'Các mức độ khó, các nhóm kỹ thuật có thể bắt đầu xuất hiện ở mỗi ' +
-        'mức, số lượng số cho sẵn thường gặp trên bảng 9×9 và dải điểm',
+        'mức, số lượng số cho sẵn thường gặp trên bàn cờ 9×9 và dải điểm',
       'help.difficulty.col.level': 'Mức độ',
       'help.difficulty.col.adds': 'Bổ sung',
       'help.difficulty.col.clues': 'Số cho sẵn (9×9)',
@@ -1398,18 +1409,20 @@
         'cho chúng. Chúng cũng có điểm như mọi kỹ thuật khác và được tính vào điểm số theo cùng một cách.',
       'help.difficulty.variant.for': 'Dành cho: {variants}',
       'help.difficulty.guarantee.title': 'Mức độ khó được đảm bảo như thế nào',
-      'help.difficulty.guarantee.oracle': 'Khi bỏ bớt số cho sẵn, sau mỗi lần bỏ bộ sinh đặt một câu hỏi: ' +
-        'đề có còn giải được chỉ bằng các kỹ thuật phù hợp với mức đã chọn, mà điểm không vượt quá đầu ' +
-        'trên của dải không? Nếu có, số đó được giữ ở trạng thái đã bỏ; nếu không, nó được đặt lại. Mọi kỹ ' +
-        'thuật đều là suy luận chắc chắn đúng, nên một đề giải được theo cách này cũng có đúng một lời giải.',
+      'help.difficulty.guarantee.oracle': 'Khi bỏ bớt số cho sẵn, sau mỗi lần bỏ, trình sinh đề đặt một ' +
+        'câu hỏi: đề có còn giải được chỉ bằng các kỹ thuật phù hợp với mức đã chọn, mà điểm không vượt ' +
+        'quá đầu trên của dải không? Nếu có, số đó được giữ ở trạng thái đã bỏ; nếu không, nó được đặt ' +
+        'lại. Mọi kỹ thuật đều là suy luận chắc chắn đúng, nên một đề giải được theo cách này cũng có đúng ' +
+        'một lời giải.',
       'help.difficulty.guarantee.hardest': 'Cuối cùng đề được chấm điểm với mọi kỹ thuật. Đề được chấp ' +
         'nhận khi bộ giải giải hết được đề bằng suy luận và điểm số nằm trong dải của mức đã chọn. Nếu ' +
-        'không, bộ sinh thử một lần đào khác, tìm quanh đó (hiện lại, bỏ hoặc đổi số cho sẵn, và với ' +
-        'Killer thì đổi hình các lồng), hoặc làm lại từ một lưới lời giải mới, tối đa bằng số lần thử ' +
-        'trong phần tùy chọn nâng cao.',
-      'help.difficulty.guarantee.nightmare': 'Với các mức cao nhất, bộ sinh còn đào nhanh chỉ với phép kiểm tra ' +
-        'lời giải duy nhất, và khi đề đó ra quá khó thì hiện lại số cho sẵn cho đến khi điểm rơi vào dải. ' +
-        'Dù theo cách nào, một đề chỉ được chấp nhận khi bộ giải giải hết được nó bằng suy luận.',
+        'không, trình sinh đề thử một lần đào khác, tìm quanh đó (hiện lại, bỏ hoặc đổi số cho sẵn, và với ' +
+        'Sudoku Sát thủ thì đổi hình các lồng), hoặc làm lại từ một lưới lời giải mới, tối đa bằng số lần ' +
+        'thử trong phần tùy chọn nâng cao.',
+      'help.difficulty.guarantee.nightmare': 'Với các mức cao nhất, trình sinh đề còn đào nhanh chỉ với ' +
+        'phép kiểm tra lời giải duy nhất, và khi đề đó ra quá khó thì hiện lại số cho sẵn cho đến khi điểm ' +
+        'rơi vào dải. Dù theo cách nào, một đề chỉ được chấp nhận khi bộ giải giải hết được nó bằng suy ' +
+        'luận.',
       'help.difficulty.guarantee.verify': 'Ở mọi mức, một bộ giải riêng còn đếm số lời giải của từng đề ' +
         'hoàn chỉnh như một lớp bảo vệ. Một đề có nhiều hơn một lời giải sẽ không bao giờ đến tay bạn.',
       'help.difficulty.closest.title': 'Khi không đạt được mức độ yêu cầu',
@@ -1418,62 +1431,62 @@
         'được, đánh dấu “{badge}”, kèm mức mà nó thực sự đạt. Đề vẫn hợp lệ và vẫn có đúng một lời giải; ' +
         'chỉ độ khó là khác. Hãy dùng “{retry}” hoặc tăng số lần thử.',
 
-      'help.generation.intro': 'Mỗi đề được tạo qua bảy bước, luôn theo cùng một thứ tự. Bộ sinh chạy các ' +
-        'bước này hết tốc độ và chỉ ghi lại một nhật ký ngắn về những gì nó đã làm. Phần phát lại bên dưới ' +
-        'bảng được dựng từ nhật ký đó: nó cho thấy những bước nhìn thấy được trên bảng chứ không phải từng ' +
-        'bước xử lý bên trong, nên việc xem lại không bao giờ làm thuật toán chậm đi.',
+      'help.generation.intro': 'Mỗi đề được tạo qua bảy bước, luôn theo cùng một thứ tự. Trình sinh đề ' +
+        'chạy các bước này hết tốc độ và chỉ ghi lại một nhật ký ngắn về những gì nó đã làm. Phần phát lại ' +
+        'bên dưới bàn cờ được dựng từ nhật ký đó: nó cho thấy những bước nhìn thấy được trên bàn cờ chứ ' +
+        'không phải từng bước xử lý bên trong, nên việc xem lại không bao giờ làm thuật toán chậm đi.',
       'help.generation.steps.title': 'Bảy bước',
       'help.generation.steps.hint': 'Mở một bước để đọc nó làm gì, tại sao và bằng cách nào, kèm mã giả. ' +
         'Bước mà phần phát lại đang hiển thị được đánh dấu và mở sẵn: dòng đang chạy được tô sáng.',
       'help.generation.steps.hint.none': 'Mở một bước để đọc nó làm gì, tại sao và bằng cách nào, kèm mã ' +
         'giả. Hãy tạo một đề và xem lại từng bước để biết bước nào đang là hiện tại.',
       'help.generation.current': 'Hiện tại: bước phát lại {position}/{length}',
-      'help.generation.replay': 'Khi đề đã sẵn sàng, bảng hiện ngay đề hoàn chỉnh; không có gì tự chạy. ' +
+      'help.generation.replay': 'Khi đề đã sẵn sàng, bàn cờ hiện ngay đề hoàn chỉnh; không có gì tự chạy. ' +
         'Muốn xem đề được làm ra thế nào, hãy dùng các nút Bước đầu tiên, Bước trước, Bước tiếp theo và ' +
-        'Bước cuối cùng bên dưới bảng, hoặc kéo thanh trượt đến bước bất kỳ; nhãn bên cạnh cho biết bước ' +
+        'Bước cuối cùng bên dưới bàn cờ, hoặc kéo thanh trượt đến bước bất kỳ; nhãn bên cạnh cho biết bước ' +
         'nào đang được hiển thị. Phần phát lại bắt đầu từ lời giải đầy đủ, rồi đến các lồng hoặc các dấu ' +
         'so sánh (chỉ có ở Sudoku Sát thủ và Sudoku So sánh), các đợt xóa ô ngẫu nhiên và, từ mức Trung ' +
-        'bình trở lên, các vòng mà bộ sinh đánh giá nhiều cách xóa ô rồi chọn cách làm đề khó nhất; ' +
+        'bình trở lên, các vòng mà trình sinh đề đánh giá nhiều cách xóa ô rồi chọn cách làm đề khó nhất; ' +
         'cuối cùng là đề hoàn chỉnh. Bấm vào một bước trong danh sách Các bước tạo đề để nhảy đến bước đó: ' +
         'bước hiện tại được tô sáng kèm câu mô tả đầy đủ, còn nút Giải thích phía trên danh sách mở trang ' +
-        'này ở đúng bước tương ứng. Trên bảng, khung màu hổ phách đánh dấu các ô bị xóa ở bước hiện tại, ' +
+        'này ở đúng bước tương ứng. Trên bàn cờ, khung màu hổ phách đánh dấu các ô bị xóa ở bước hiện tại, ' +
         'còn khung màu đỏ đánh dấu các ô được trả lại.',
-      'help.generation.seed': 'Seed là con số khởi động mọi lựa chọn ngẫu nhiên. Với cùng một phiên bản bộ ' +
-        'tạo đề, cùng seed và cùng tùy chọn sẽ luôn cho ra cùng một đề, nên đề nào cũng có thể chia sẻ và ' +
-        'tạo lại; một liên kết hay một mục lịch sử do phiên bản cũ tạo ra có thể cho ra một đề khác. Để ' +
-        'trống nếu bạn muốn mỗi lần một đề ngẫu nhiên mới.',
-      'help.generation.worker': 'Khi trang được phục vụ qua http hoặc https, bộ sinh chạy trong Web Worker ' +
-        'nên trang luôn mượt và nút Hủy có tác dụng ngay. Khi mở trực tiếp index.html từ ổ đĩa, trình ' +
-        'duyệt không cho dùng worker: bộ sinh khi đó chạy trên luồng chính, huy hiệu ghi “{main}” thay vì ' +
-        '“{worker}”, và trang có thể khựng một lúc với bảng lớn.',
+      'help.generation.seed': 'Seed là con số khởi động mọi lựa chọn ngẫu nhiên. Với cùng một phiên bản ' +
+        'trình sinh đề, cùng seed và cùng tùy chọn sẽ luôn cho ra cùng một đề, nên đề nào cũng có thể chia ' +
+        'sẻ và tạo lại; một liên kết hay một mục lịch sử do phiên bản cũ tạo ra có thể cho ra một đề khác. ' +
+        'Để trống nếu bạn muốn mỗi lần một đề ngẫu nhiên mới.',
+      'help.generation.worker': 'Khi trang được phục vụ qua http hoặc https, trình sinh đề chạy trong Web ' +
+        'Worker nên trang luôn mượt và nút Hủy có tác dụng ngay. Khi mở trực tiếp index.html từ ổ đĩa, ' +
+        'trình duyệt không cho dùng worker: trình sinh đề khi đó chạy trên luồng chính, huy hiệu ghi ' +
+        '“{main}” thay vì “{worker}”, và trang có thể khựng một lúc với bàn cờ lớn.',
 
       'help.shortcuts.intro': 'Mọi thao tác đều làm được bằng bàn phím. Các phím này dùng được ở bất kỳ ' +
         'đâu con trỏ đang đứng, trừ khi có ghi chú khác.',
       'help.keys.group.general': 'Ở mọi nơi',
       'help.keys.group.replay': 'Phát lại',
-      'help.keys.group.board': 'Bảng',
+      'help.keys.group.board': 'Bàn cờ',
       'help.keys.tab': 'Chuyển đến điều khiển kế tiếp hoặc phía trước.',
       'help.keys.activate': 'Bấm nút đang được chọn, hoặc mở và đóng một mục.',
       'help.keys.escape': 'Đóng hộp thoại đang mở.',
       'help.keys.tabs': 'Trên các thẻ của hộp thoại này: chuyển thẻ, hoặc nhảy đến thẻ đầu hay thẻ cuối.',
       'help.keys.scrubber': 'Trên thanh trượt phát lại: lùi hoặc tiến một bước.',
       'help.keys.scrubberEnds': 'Trên thanh trượt phát lại: nhảy đến đầu hoặc cuối.',
-      'help.keys.cells': 'Trên bảng: chuyển sang ô bên cạnh.',
-      'help.keys.rowEnds': 'Trên bảng: nhảy đến ô đầu hoặc ô cuối của hàng.',
-      'help.keys.boardEnds': 'Trên bảng: nhảy đến ô đầu hoặc ô cuối của toàn bộ bảng.',
-      'help.keys.pages': 'Trên bảng: lên hoặc xuống nhiều hàng cùng lúc.',
+      'help.keys.cells': 'Trên bàn cờ: chuyển sang ô bên cạnh.',
+      'help.keys.rowEnds': 'Trên bàn cờ: nhảy đến ô đầu hoặc ô cuối của hàng.',
+      'help.keys.boardEnds': 'Trên bàn cờ: nhảy đến ô đầu hoặc ô cuối của toàn bộ bàn cờ.',
+      'help.keys.pages': 'Trên bàn cờ: lên hoặc xuống nhiều hàng cùng lúc.',
       'help.controls.title': 'Các điều khiển',
       'help.controls.intro': 'Bảng tùy chọn bên trái (thanh Tùy chọn trên điện thoại) quyết định đề được ' +
         'tạo ra thế nào; các nút bên dưới bắt đầu việc tạo đề. Đây là các điều khiển, kể cả phần phát lại ' +
-        'bên dưới bảng.',
+        'bên dưới bàn cờ.',
       'help.controls.variant': 'Chọn một biến thể. Các tùy chọn riêng của nó hiện ngay bên dưới.',
       'help.controls.difficulty': 'Các kỹ thuật cần dùng để giải đề đòi hỏi nhiều đến đâu. Biến thể nào ' +
         'không có mức đó sẽ chuyển sang mức gần nhất mà nó có.',
       'help.controls.symmetry': 'Các số cho sẵn được bỏ theo từng nhóm tương ứng, nên hình dạng các ô cho ' +
         'sẵn đối xứng. Đối xứng càng chặt thì các mức cao nhất càng khó đạt.',
       'help.controls.symbolMode': 'Chỉ đổi cách vẽ các giá trị (chữ số, chữ cái, màu kèm hình, hoặc hình ' +
-        'khối). Đề không thay đổi.',
-      'help.controls.replay': 'Bên dưới bảng, Bước đầu tiên và Bước cuối cùng nhảy về đầu hoặc đến cuối ' +
+        'dạng). Đề không thay đổi.',
+      'help.controls.replay': 'Bên dưới bàn cờ, Bước đầu tiên và Bước cuối cùng nhảy về đầu hoặc đến cuối ' +
         'phần phát lại, Bước trước và Bước tiếp theo chuyển từng bước một, còn thanh trượt đưa thẳng đến ' +
         'bước bất kỳ. Nhãn bên cạnh cho biết bước nào đang được hiển thị.',
 
@@ -1481,9 +1494,9 @@
       'help.about.privacy.text': 'Mọi thứ chạy ngay trong trình duyệt của bạn. Đề được tạo trên chính ' +
         'thiết bị của bạn và không có gì được gửi đến máy chủ; không có tài khoản, không theo dõi và không ' +
         'dùng cookie. Chỉ có một vài mục nhỏ được lưu trong bộ nhớ cục bộ của trình duyệt: ngôn ngữ, giao ' +
-        'diện và các tùy chọn gần nhất của bạn, và vài đề vừa tạo ' +
-        'để có thể hiện lại ngay. “Chơi trực tuyến” mở trang sudoku-player riêng trong một thẻ mới; đề chỉ ' +
-        'nằm trong địa chỉ, sau dấu “#”, phần mà trình duyệt không bao giờ gửi đến máy chủ.',
+        'diện và các tùy chọn gần nhất của bạn, và vài đề vừa tạo để có thể hiện lại ngay. “Chơi” mở trang ' +
+        'Trình chơi Sudoku riêng trong một tab mới; đề chỉ nằm trong địa chỉ, sau dấu “#”, phần mà trình ' +
+        'duyệt không bao giờ gửi đến máy chủ.',
       'help.about.repro.title': 'Chia sẻ và tạo lại một đề',
       'help.about.repro.text': 'Seed cùng với biến thể, mức độ khó và các tùy chọn xác định hoàn toàn đề, ' +
         'và thanh địa chỉ luôn giữ chúng. Hãy sao chép liên kết, và bất kỳ ai mở nó ' +

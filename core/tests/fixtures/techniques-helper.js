@@ -1,18 +1,15 @@
 /**
- * Shared test helper for the logical techniques (T-2.2 ... T-2.6, reused by T-2.9). Exposed as SG.techHelper.
- * Loaded automatically by tests/node-runner.js (every tests/fixtures/*.js is). It needs the core sources and
+ * Shared test helper for the logical techniques, exposed as SG.techHelper. It needs the core sources and
  * tests/harness.js and does no work at load time.
  *
- * ===========================================================================================
- * HOW TO USE IT FROM A TECHNIQUE SUITE (read this first)
- * ===========================================================================================
+ * How a technique suite uses it:
  *   var H = SG.techHelper;
  *   var model = H.model('classic9');                    // cached PuzzleModel of any registered variant id
  *
- *   // 1. Soundness (invariant I7). EVERY technique suite must have this test; it is the most important one.
- *   it('is sound', function () {
- *     H.assertSound(SG.test, 'xWing', { count: 300, minFirings: 3 });
- *   });
+ *   // 1. Soundness (invariant I7), the most important check. techniques.test.js runs it for EVERY
+ *   //    registered technique on classic9 ({ count: 300, minFirings: 3 }); a technique suite adds other
+ *   //    boards and seeds.
+ *   H.assertSound(SG.test, 'xWing', { model: H.model('classic6'), count: 200, minFirings: 3 });
  *
  *   // 2. Positive fixture: this state must produce this Finding (values below are only an illustration).
  *   var state = H.makeState(model, puzzleString81);
@@ -28,9 +25,10 @@
  * `t` (first argument of the assert functions) is the assertion kit. Pass `SG.test` (or null): failures are
  * thrown as SG.test.AssertionError, like any other failed expect().
  *
- * ---- API --------------------------------------------------------------------------------------------
+ * API:
  * H.model(variantId = 'classic9')
- *     A cached PuzzleModel of a variant id: the classic boards, or the model of a puzzle fixture (SG.testkit).
+ *     A cached PuzzleModel of a variant id: the classic boards, or the model of a puzzle fixture
+ *     (SG.testkit).
  *
  * H.makeState(model, givens, opts?) -> SolveState
  *     givens: an Int32Array/array with one entry per cell (0 = empty) or a string: whitespace is ignored,
@@ -92,7 +90,6 @@
  *
  * H.parsePuzzle(model, text) / H.puzzleString(model, givens) / H.cell(model, ref) / H.label(model, cell)
  *     Conversions between strings, cell indices and 'R4C7' labels.
- * ===========================================================================================
  */
 (function () {
   'use strict';
@@ -105,19 +102,12 @@
   var KINDS = ['initial', 'propagated', 'pruned', 'pruned'];
   var MIN_OPEN_AFTER_PRUNING = 8;
 
-  // ---------------------------------------------------------------------------------------------
-  // Failures
-  // ---------------------------------------------------------------------------------------------
-
   function fail(t, message) {
     var E = (t && t.AssertionError) || (SG.test && SG.test.AssertionError) || Error;
     throw new E(message);
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Models, cells, puzzle strings
-  // ---------------------------------------------------------------------------------------------
-
   var models = {};
   /** state -> model, filled by every helper that creates a state. */
   var owners = new WeakMap();
@@ -190,10 +180,6 @@
     return s;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // States
-  // ---------------------------------------------------------------------------------------------
-
   function bind(state, m) {
     owners.set(state, m);
     return state;
@@ -262,10 +248,6 @@
     }
     return true;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Findings
-  // ---------------------------------------------------------------------------------------------
 
   function isPlainData(v) {
     if (v === null) return true;
@@ -493,10 +475,7 @@
     }
   }
 
-  // ---------------------------------------------------------------------------------------------
   // States with a known solution
-  // ---------------------------------------------------------------------------------------------
-
   /** Puzzles (unique by construction) per model and seed; grown on demand and shared by every caller. */
   var corpora = new Map();
 

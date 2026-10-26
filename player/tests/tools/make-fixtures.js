@@ -6,9 +6,9 @@
  *
  *   node tests/tools/make-fixtures.js [path-to-generator] [--only=classic9,killer] [--out=<dir>]
  *
- * The generator (default: ../generator) is only READ: its sources are loaded with vm.runInThisContext, the way its own
- * tests/node-runner.js does. For each puzzle the script runs `SG.pipeline.run` at an easy level with a fixed
- * seed and writes the document that the generator's "Play online" feature sends:
+ * The generator (default: ../generator) is only READ: its sources are loaded with vm.runInThisContext, the
+ * way its own tests/node-runner.js does. For each puzzle the script runs `SG.pipeline.run` at an easy level
+ * with a fixed seed and writes the document that the generator's "Play online" feature sends:
  *
  *   SG.exportUi.toJson(result, ctx)  +  model: SG.exchange.plain(SG.pipeline.toWire(result).model)
  *

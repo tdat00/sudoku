@@ -1,45 +1,20 @@
 /**
- * `SG.player`: replay of a generation. After a generation the board shows the finished puzzle; the replay steps back
- * through how it was made, one VISIBLE change of the board at a time (First / Previous / Next / Last buttons and the
- * slider; nothing plays by itself). It is built from the result itself (`PuzzleResult.solution`, `.model`,
- * `.digLog`, the compact dig log recorded by `SG.digger`), not from the event trace, so it is the same whatever
- * the trace verbosity, the board size or the thread.
+ * `SG.player`: replay of a generation (design.md 7.3). After a generation the board shows the finished
+ * puzzle; the replay steps back through how it was made, one VISIBLE change of the board at a time, nothing
+ * plays by itself. It is built from the result (`solution`, `model` and the dig log `digLog` of
+ * `SG.digger`), not from the event trace, so it is the same whatever the trace verbosity or the thread.
  *
- * Steps (`buildSteps(result)`, pure), each a change that the board shows:
- *   'solution'  the full grid.
- *   'cages'     Killer: the cages and their sums appear.
- *   'signs'     Greater-Than: a sign appears on every pair of neighbours it applies to.
- *   'clues'     Greater-Than: the grid is emptied and a few clues are kept.
- *   'random'    a batch of random removals (about a ninth of the board per step, `batchCells`): what could go is
- *               removed (frame 'cell--dug'), what had to stay goes back ('cell--kept'). Every batch removes
- *               something; refusals after the last removal join the last batch.
- *   'guided'    a round (several on large boards, `roundsPerStep`) of the guided dig: candidate removals are rated
- *               and the one that makes the puzzle hardest is removed; refused candidates are framed 'cell--kept'.
- *   'signDig'   Greater-Than: a batch of signs tried (`batchSigns`); removed signs are drawn dashed, signs that had
- *               to stay red (board `setSignMarks`).
- *   'reveal'    more clues are shown (frame 'cell--revealed'): the puzzle came out too hard (Greater-Than, and the
- *               downward refinement of the top levels), or the local search shows clues again while it looks for
- *               a harder puzzle (log entries with `reason: 'search'`).
- *   'restart'   the safety net threw a dug puzzle away and digs again from the full grid (rare).
- *   'final'     the finished puzzle: its clues, no frames.
- * Position 0 is the empty board, position k shows step k, the last position the finished puzzle. Technical work
- * (settings, model, rating, tuning, samples that missed the level) is not shown. A result without a dig log replays
- * as solution, structure and finished puzzle.
+ * `buildSteps(result)` (pure): step kinds 'solution', 'cages', 'signs', 'clues', 'random', 'guided',
+ * 'signDig', 'reveal', 'restart', 'final'; step objects `{ index, kind, phase, line, key, args, values,
+ * structure, marks, signs, metrics }`. `metrics` count what the board shows (cells, or signs), so they add up
+ * with the steps; a dig batch also has `reasons`, the refusals per reason ('ambiguous', 'techniques',
+ * 'tooHard'). A result without a dig log replays as solution, structure and finished puzzle.
  *
- * Step objects are plain data: `{ index, kind, phase, line, key, args, values, structure, marks, signs, metrics }`.
- * `phase` and `line` name the `SG.explain` explanation and its pseudocode line, `key` / `args` the sentence
- * (`describeStep`), `values` the board after the step, `structure` whether cages and signs are drawn, `marks` the
- * frames `{ dug, kept, revealed }`, `signs` (Greater-Than) the sign marks `{ hidden, removed, kept }` by index into
- * `buildSteps().signs`, `metrics` the running dig counters `{ attempts, accepted, rejected, clues }` (null outside
- * the dig), counted in what the board shows: cells (or signs) removed so far and put back so far, `attempts` their
- * sum, so they add up with the steps; a dig batch also has `reasons`, the refusals per reason ('ambiguous',
- * 'techniques', 'tooHard').
- *
- * `create(options)`: `load(result)` builds the steps and shows the LAST position; `first`, `prev`, `next`, `last`,
- * `seek(position)` move; `bindControls(rootEl)` wires `#btn-first #btn-prev #btn-next #btn-last #scrubber
- * #player-time`; `reset()` forgets the puzzle. Callbacks: `onPosition({ position, length, step, direction })` after
- * every move ('forward' | 'backward' | 'seek'), `onStateChange({ position, length, finished, loaded })` when the
- * length or the end flag change.
+ * `create(options)`: `load(result)` builds the steps and shows the LAST position; `first`, `prev`, `next`,
+ * `last`, `seek(position)` move; `bindControls(rootEl)` wires `#btn-first #btn-prev #btn-next #btn-last
+ * #scrubber #player-time`; `reset()` forgets the puzzle. Callbacks: `onPosition({ position, length, step,
+ * direction })` after every move ('forward' | 'backward' | 'seek'), `onStateChange({ position, length,
+ * finished, loaded })` when the length or the end flag change.
  */
 (function (root) {
   'use strict';
@@ -93,7 +68,10 @@
     return names.length === 1 ? names[0] : 'mixed';
   }
 
-  /** `signs` lists every sign of a Greater-Than dig as `[a, b]` (value[a] < value[b]); the sign marks of the steps index it. Returns { steps, signs, cellCount }. */
+  /**
+   * Returns { steps, signs, cellCount }; `signs` lists every sign of a Greater-Than dig as `[a, b]`
+   * (value[a] < value[b]), indexed by the sign marks of the steps.
+   */
   function buildSteps(result) {
     const model = result.model;
     const n = model.cellCount;
@@ -496,10 +474,10 @@
   }
 
   /**
-   * Creates the player. `options.board`: a `SG.boardView` view (without one only callbacks and controls work); used:
-   * `setValues`, `setGivens`, `clearHighlights`, `highlight`, `setLayerVisible`, and for Greater-Than `setModel` and
-   * `setSignMarks`. Returns { load, reset, first, prev, next, last, seek, state, describe, getSteps, getStep,
-   * bindControls, destroy }.
+   * Creates the player. `options.board`: a `SG.boardView` view (without one only callbacks and controls
+   * work); used: `setValues`, `setGivens`, `clearHighlights`, `highlight`, `setLayerVisible`, and for
+   * Greater-Than `setModel` and `setSignMarks`. Returns { load, reset, first, prev, next, last, seek, state,
+   * describe, getSteps, getStep, bindControls, destroy }.
    */
   function create(options) {
     const o = options || {};
@@ -518,10 +496,10 @@
     let rated = Object.create(null);
 
     /**
-     * What the puzzle at a position needs: `{ counts, empties, score }` (technique id -> uses, empty cells, difficulty
-     * score), or null when it cannot be told (steps that change signs or clues, a rating that runs out of its time, no
-     * solver in this page). Steps that only build the solution or its cages need nothing; the finished puzzle is the
-     * rating of the result.
+     * What the puzzle at a position needs: `{ counts, empties, score }` (technique id -> uses, empty cells,
+     * difficulty score), or null when it cannot be told (steps that change signs or clues, a rating that runs
+     * out of its time, no solver in this page). Steps that only build the solution or its cages need nothing;
+     * the finished puzzle is the rating of the result.
      */
     function scored(rating) {
       return {
@@ -556,7 +534,9 @@
       return found;
     }
 
-    /** The techniques the puzzle of step p (1..length) needs, with the ones it needed before that step for comparison; null when unknown. */
+    /**
+     * The techniques the puzzle of step p (1..length) needs, and those of the step before; null when unknown.
+     */
     function rateStep(p) {
       if (built === null || !(p >= 1 && p <= built.steps.length)) return null;
       const now = techniquesAt(p);
@@ -704,7 +684,9 @@
       emitState();
     }
 
-    /** Builds the steps and shows the LAST position, the finished puzzle; `opts.position` starts elsewhere. */
+    /**
+     * Builds the steps and shows the LAST position, the finished puzzle; `opts.position` starts elsewhere.
+     */
     function load(res, opts) {
       if (destroyed) return;
       result = res;
@@ -743,7 +725,10 @@
       ui = null;
     }
 
-    /** `#scrubber` is the position (0 .. length, translated `aria-valuetext`); the controls are disabled while nothing is loaded and re-translate on a language change. Returns a function that removes the listeners (also done by `destroy`). */
+    /**
+     * `#scrubber` is the position (0 .. length). The controls are disabled while nothing is loaded and follow
+     * the language. Returns a function that removes the listeners (`destroy` does it too).
+     */
     function bindControls(rootEl) {
       unbindControls();
       if (destroyed || !rootEl || typeof rootEl.querySelector !== 'function') return unbindControls;
@@ -819,7 +804,6 @@
     LAYER_NAMES: LAYER_NAMES,
     STRUCTURE_LAYERS: STRUCTURE_LAYERS,
     KINDS: KINDS,
-    MARK_CLASSES: MARK_CLASSES,
     batchCells: batchCells,
     roundsPerStep: roundsPerStep,
     batchSigns: batchSigns,

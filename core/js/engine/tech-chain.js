@@ -1,6 +1,7 @@
 /**
- * Chain techniques (group `chain`): Forcing Chain / X-Cycle and Nishio. The most expensive techniques, so both honour
- * `ctx.check()` and turn a `budget.exceeded` into "nothing found" (other errors, e.g. `budget.cancelled`, propagate).
+ * Chain techniques (group `chain`): Forcing Chain / X-Cycle and Nishio. The most expensive techniques, so
+ * both honour `ctx.check()` and turn a `budget.exceeded` into "nothing found" (other errors, e.g.
+ * `budget.cancelled`, propagate).
  *
  *   id            baseCost  order
  *   forcingChain      90     190
@@ -8,42 +9,47 @@
  *
  * forcingChain: alternating inference chains over a strong / weak link graph.
  * A node is a candidate (cell, digit) of an open cell. Links, defined on the current state:
- *   weak link   "at most one of the two is true": same cell and different digits, or the same digit in two cells that
- *               share a unit (`model.peers`). Valid for every unit shape, partial units included.
- *   strong link "at least one of the two is true": the only two candidates of a cell, or the only two cells of a
- *               COMPLETE unit (`ctx.completeUnits`) that still allow a digit (a partial unit never yields one: a digit
- *               may be absent from it).
+ *   weak link   "at most one of the two is true": same cell and different digits, or the same digit in two
+ *               cells that share a unit (`model.peers`). Valid for every unit shape, partial units included.
+ *   strong link "at least one of the two is true": the only two candidates of a cell, or the only two
+ *               cells of a COMPLETE unit (`ctx.completeUnits`) that still allow a digit (a partial unit
+ *               never yields one: a digit may be absent from it).
  * Every link is an implication between literals ("node is true" / "node is false"):
  *   weak(a, b):    a is true  =>  b is false
  *   strong(a, b):  a is false =>  b is true
- * so the graph over LITERALS has two kinds of edges: true -> false (weak) and false -> true (strong). The polarity of a
- * literal decides which kind of link may leave it, which guarantees alternation, and a chain is just a path. Implications
- * compose, so a path "A => B" is a proof whatever nodes it revisits (soundness never depends on the chain being simple).
+ * so the graph over LITERALS has two kinds of edges: true -> false (weak) and false -> true (strong). The
+ * polarity of a literal decides which kind of link may leave it, which guarantees alternation, and a chain is
+ * just a path. Implications compose, so a path "A => B" is a proof whatever nodes it revisits (soundness
+ * never depends on the chain being simple).
  *
- * Search: breadth first from every literal, at most `maxChainLength` links deep (default 12, `ctx.options.maxChainLength`).
- * Every literal is visited once per search (so it terminates on cyclic graphs). The search from a start literal stops at
- * its first proof, and the whole scan keeps the SHORTEST proof found (ties: first in scan order).
- *   endpoints      Start "s is false", reach "t is true": at least one of s, t is true, so every candidate weakly linked
- *                  to both is eliminated. Covers X-chains, alternating inference chains, W-wing like patterns and every
- *                  elimination of a continuous nice loop.
- *   contradiction  Start "s is true", reach both "m is true" and "m is false" for some node m: s is eliminated (a loop
- *                  back to s is the case m = s).
+ * Search: breadth first from every literal, at most `maxChainLength` links deep (default 12,
+ * `ctx.options.maxChainLength`). Every literal is visited once per search (so it terminates on cyclic
+ * graphs). The search from a start literal stops at its first proof, and the whole scan keeps the SHORTEST
+ * proof found (ties: first in scan order).
+ *   endpoints      Start "s is false", reach "t is true": at least one of s, t is true, so every candidate
+ *                  weakly linked to both is eliminated. Covers X-chains, alternating inference chains, W-wing
+ *                  like patterns and every elimination of a continuous nice loop.
+ *   contradiction  Start "s is true", reach both "m is true" and "m is false" for some node m: s is
+ *                  eliminated (a loop back to s is the case m = s).
  *   forced         Start "s is false", reach both polarities of some node: s is placed.
- * A search only PROVES things; cutting it short (length limit, budget) can only lose deductions, never produce a wrong one.
- * Finding.i18nArgs: { kind, length, chains }; `chains` are paths of [cell, digit, truth] (truth 1 = candidate true, 0 =
- * false), start literal first. `endpoints` has one chain, `contradiction` and `forced` two, ending in both polarities of
- * the same node. i18nKey: 'technique.forcingChain.step.endpoints' | '.contradiction' | '.forced'.
+ * A search only PROVES things; cutting it short (length limit, budget) can only lose deductions, never
+ * produce a wrong one. Finding.i18nArgs: { kind, length, chains }; `chains` are paths of [cell, digit, truth]
+ * (truth 1 = candidate true, 0 = false), start literal first. `endpoints` has one chain, `contradiction` and
+ * `forced` two, ending in both polarities of the same node.
+ * i18nKey: 'technique.forcingChain.step.endpoints' | '.contradiction' | '.forced'.
  *
- * nishio: controlled trial and error. For every open cell (fewest candidates first) and each of its candidates, assume it
- * true on a COPY of the state and run `SG.constraints.place` (peer elimination, singles, registered extensions); a
- * contradiction eliminates the candidate. The first one found is returned; the state passed to find() is never written.
- * The guess is bounded, which keeps it a technique and not a search: `ctx.options.maxNishioDepth` (default 2, at most 3)
- * is the deepest nesting. Depth 2 also lets the trial refute candidates of its cells with at most 3 candidates by a
- * depth 1 trial of their own, remove them from the COPY, propagate and repeat; a contradiction anywhere refutes the
- * assumption (limiting nested guesses to such cells keeps 12x12 and 16x16 boards below a second). The scan runs level
- * by level, so a deduction never needs a deeper guess than necessary. Everything derived inside a trial holds under its
- * assumption only and only the final contradiction leaves it, so nesting is sound. `maxChainLength` does not apply.
- * Finding: i18nKey 'technique.nishio.step', i18nArgs { cell, label, digit, depth } (the nesting of the guess needed).
+ * nishio: controlled trial and error. For every open cell (fewest candidates first) and each of its
+ * candidates, assume it true on a COPY of the state and run `SG.constraints.place` (peer elimination,
+ * singles, registered extensions); a contradiction eliminates the candidate. The first one found is returned;
+ * the state passed to find() is never written. The guess is bounded, which keeps it a technique and not a
+ * search: `ctx.options.maxNishioDepth` (default 2, at most 3) is the deepest nesting. Depth 2 also lets the
+ * trial refute candidates of its cells with at most 3 candidates by a depth 1 trial of their own, remove them
+ * from the COPY, propagate and repeat; a contradiction anywhere refutes the assumption (limiting nested
+ * guesses to such cells keeps 12x12 and 16x16 boards below a second). The scan runs level by level, so a
+ * deduction never needs a deeper guess than necessary. Everything derived inside a trial holds under its
+ * assumption only and only the final contradiction leaves it, so nesting is sound. `maxChainLength` does not
+ * apply. Finding: i18nKey 'technique.nishio.step', i18nArgs { cell, label, digit, depth } (the nesting of the
+ * guess needed).
  */
 (function (root) {
   'use strict';
@@ -106,24 +112,24 @@
     return s;
   }
 
-  // Chain length limit: ctx.options.maxChainLength when it is a number (Infinity and values below 1 included), else the
-  // default.
+  // Chain length limit: ctx.options.maxChainLength when it is a number (Infinity and values below 1
+  // included), else the default.
   function chainLimit(ctx) {
     const raw = ctx.options ? ctx.options.maxChainLength : undefined;
     if (typeof raw !== 'number' || Number.isNaN(raw)) return DEFAULT_MAX_CHAIN_LENGTH;
     return raw === Infinity ? Infinity : Math.floor(raw);
   }
 
-  // Nishio depth: ctx.options.maxNishioDepth as a whole number in 0..3 (0 or less turns the technique off), else the
-  // default.
+  // Nishio depth: ctx.options.maxNishioDepth as a whole number in 0..3 (0 or less turns the technique off),
+  // else the default.
   function nishioDepth(ctx) {
     const raw = ctx.options ? ctx.options.maxNishioDepth : undefined;
     if (typeof raw !== 'number' || Number.isNaN(raw)) return DEFAULT_MAX_NISHIO_DEPTH;
     return Math.min(Math.floor(raw), NISHIO_DEPTH_CEILING);
   }
 
-  // Runs a search and treats a spent budget as "no result". Only 'budget.exceeded' is swallowed; the logical solver
-  // notices the spent budget on its own at the next check.
+  // Runs a search and treats a spent budget as "no result". Only 'budget.exceeded' is swallowed; the logical
+  // solver notices the spent budget on its own at the next check.
   function withBudget(search) {
     return function find(model, state, ctx) {
       try {
@@ -135,8 +141,8 @@
     };
   }
 
-  // Collects the strong links of `state` as pairs of nodes and lays them out as adjacency lists (`sStart` / `sTo`,
-  // compressed rows) in a fixed order: cell links by cell, then unit links by unit.
+  // Collects the strong links of `state` as pairs of nodes and lays them out as adjacency lists (`sStart` /
+  // `sTo`, compressed rows) in a fixed order: cell links by cell, then unit links by unit.
   function buildStrongLinks(model, state, completeUnits, s) {
     const digits = model.digits;
     const cand = state.candidates;
@@ -215,8 +221,8 @@
     }
   }
 
-  // Writes the weak neighbours of `node` (open candidates that cannot be true together with it) into `buf`; returns how
-  // many.
+  // Writes the weak neighbours of `node` (open candidates that cannot be true together with it) into `buf`;
+  // returns how many.
   function collectWeak(r, node, buf) {
     const digits = r.digits;
     const cell = (node / digits) | 0;
@@ -247,8 +253,8 @@
     return a - ca * digits === b - cb * digits && r.s.peerMatrix[ca * r.n + cb] === 1;
   }
 
-  // The candidates weakly linked to both the start node and `t`, which "at least one of them is true" rules out; null
-  // when there are none.
+  // The candidates weakly linked to both the start node and `t`, which "at least one of them is true" rules
+  // out; null when there are none.
   function commonWeak(r, t) {
     let out = null;
     const list = r.s.weakOfStart;
@@ -280,8 +286,8 @@
     return true;
   }
 
-  // Visits a literal reached from `from` after `nd` links; true when this proves something. Opposite polarities of one
-  // node in the same search are a contradiction of the start assumption.
+  // Visits a literal reached from `from` after `nd` links; true when this proves something. Opposite
+  // polarities of one node in the same search are a contradiction of the start assumption.
   function visit(r, next, from, nd) {
     const s = r.s;
     if (s.stamp[next] === r.stampId) return false;
@@ -422,8 +428,9 @@
     return r.best === null ? null : buildChainFinding(model, r.best);
   }
 
-  // Whether assuming `digit` in `cell` on top of `base` (not modified) leads to a contradiction; with `depth` > 1 nested
-  // guesses of `depth - 1` are tried inside the copy. `level` selects the scratch state of this nesting level.
+  // Whether assuming `digit` in `cell` on top of `base` (not modified) leads to a contradiction; with `depth`
+  // > 1 nested guesses of `depth - 1` are tried inside the copy. `level` selects the scratch state of this
+  // nesting level.
   function refutes(r, base, cell, digit, depth, level) {
     const model = r.model;
     let trial = r.pool[level];

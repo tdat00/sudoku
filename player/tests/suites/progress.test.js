@@ -79,7 +79,7 @@
       var outcome = SG.importer.openDocument(doc);
       expect(outcome.ok).toBe(true);
       expect(outcome.puzzle.id).toBe(legacy.id);
-      expect(p.savePuzzle(outcome.puzzle.id, outcome.puzzle.document, { variantId: 'classic9' })).toBe('ok');
+      expect(p.savePuzzle(outcome.puzzle.id, outcome.puzzle.document)).toBe('ok');
       expect(p.loadProgress(outcome.puzzle.id).state).toEqual(saved.state);
       expect(p.loadProgress(outcome.puzzle.id).percent).toBe(42);
       var reopened = SG.importer.openDocument(p.loadPuzzle(outcome.puzzle.id).doc);
@@ -164,7 +164,7 @@
       ready();
       var p = make().progress;
       p.saveProgress(id(1), record(10));
-      p.savePuzzle(id(1), { format: 'x' }, { variantId: 'classic9' });
+      p.savePuzzle(id(1), { format: 'x' });
       p.setLast(id(1));
       p.removeProgress(id(1));
       expect(p.loadProgress(id(1))).toBeNull();
@@ -178,22 +178,60 @@
   });
 
   describe('progress: the stored documents and the recent list', function () {
-    it('stores a document with its meta and gives it back', function () {
+    it('stores a document and gives it back, without anything next to it', function () {
       ready();
-      var p = make().progress;
-      var meta = { variantId: 'classic9', clues: 30 };
-      expect(p.savePuzzle(id(1), { format: 'sudoku-generator/puzzle', n: 1 }, meta)).toBe('ok');
+      var m = make();
+      var p = m.progress;
+      expect(p.savePuzzle(id(1), { format: 'sudoku-generator/puzzle', n: 1 })).toBe('ok');
       var got = p.loadPuzzle(id(1));
       expect(got.doc.n).toBe(1);
-      expect(got.meta.clues).toBe(30);
+      expect(Object.keys(got).sort()).toEqual(['at', 'doc', 'id']);
+      var stored = JSON.parse(m.backend.getItem(PG.KEYS.puzzles)).entries[0];
+      expect(Object.keys(stored).sort()).toEqual(['at', 'doc', 'id']);
       expect(p.loadPuzzle(id(2))).toBeNull();
+    });
+
+    it('lists the variant, level and clues of a real puzzle, read from its document', function () {
+      ready();
+      var doc = SG.testkit.document('killer');
+      if (doc === null) SG.test.skip('the puzzle fixtures cannot be read here (a browser on file://)');
+      var puzzle = SG.importer.openDocument(doc).puzzle;
+      var p = make().progress;
+      p.savePuzzle(puzzle.id, puzzle.document);
+      var info = puzzle.info;
+      expect(p.recent()[0].meta).toEqual({ variantId: puzzle.variantId,
+        achieved: info.difficulty ? info.difficulty.achieved : null, clues: info.clues });
+    });
+
+    it('reads the entries an older version stored with a meta, and drops it at the next write', function () {
+      ready();
+      var m = make();
+      var oldMeta = { variantId: 'classic9', requested: 'hard', achieved: 'hard', clues: 25, cellCount: 81,
+        seed: 7, generatedAt: null, source: 'paste' };
+      var old = [
+        { id: id(2), at: 20, doc: { n: 2, variantId: 'classic9', difficulty: { achieved: 'hard' },
+          stats: { clues: 25 } }, meta: oldMeta },
+        { id: id(1), at: 10, doc: { n: 1 }, meta: null }
+      ];
+      m.backend.setItem(PG.KEYS.puzzles, JSON.stringify({ version: 1, entries: old }));
+      var list = m.progress.recent();
+      expect(list.map(function (e) { return e.id; })).toEqual([id(2), id(1)]);
+      expect(list[0].meta).toEqual({ variantId: 'classic9', achieved: 'hard', clues: 25 });
+      expect(list[1].meta).toEqual({ variantId: 'classic9', achieved: null, clues: null });
+      expect(m.progress.loadPuzzle(id(2)).doc.n).toBe(2);
+      expect('meta' in m.progress.loadPuzzle(id(2))).toBe(false);
+      m.progress.savePuzzle(id(3), { n: 3 });
+      JSON.parse(m.backend.getItem(PG.KEYS.puzzles)).entries.forEach(function (e) {
+        expect('meta' in e).toBe(false);
+      });
+      expect(m.progress.recent().map(function (e) { return e.id; })).toEqual([id(3), id(2), id(1)]);
     });
 
     it('keeps the last 100 documents', function () {
       ready();
       var p = make().progress;
       var max = PG.LIMITS.puzzleEntries;
-      for (var n = 1; n <= max + 4; n++) p.savePuzzle(id(n), { n: n }, null);
+      for (var n = 1; n <= max + 4; n++) p.savePuzzle(id(n), { n: n });
       expect(p.recent(max + 50).length).toBe(max);
       expect(p.loadPuzzle(id(4))).toBeNull();
       expect(p.loadPuzzle(id(5)).doc.n).toBe(5);
@@ -203,10 +241,10 @@
       ready();
       var p = make().progress;
       var big = { pad: new Array(PG.LIMITS.docBytes).join('x') };
-      expect(p.savePuzzle(id(1), big, null)).toBe('tooLarge');
+      expect(p.savePuzzle(id(1), big)).toBe('tooLarge');
       expect(p.loadPuzzle(id(1))).toBeNull();
       var normal = { pad: new Array(150 * 1024).join('x') };
-      for (var n = 1; n <= 8; n++) expect(p.savePuzzle(id(n), normal, null)).toBe('ok');
+      for (var n = 1; n <= 8; n++) expect(p.savePuzzle(id(n), normal)).toBe('ok');
       var kept = p.recent(50).length;
       expect(kept).toBeLessThan(8);
       expect(kept).toBeGreaterThan(3);
@@ -216,12 +254,12 @@
     it('lists the stored puzzles newest added first with their progress, and keeps the order when played', function () {
       ready();
       var p = make().progress;
-      p.savePuzzle(id(1), { n: 1 }, { variantId: 'classic9' });
-      p.savePuzzle(id(2), { n: 2 }, { variantId: 'killer' });
-      p.savePuzzle(id(3), { n: 3 }, null);
+      p.savePuzzle(id(1), { n: 1 });
+      p.savePuzzle(id(2), { n: 2, difficulty: { achieved: 'easy' }, stats: { clues: 30 } });
+      p.savePuzzle(id(3), { n: 3 });
       p.saveProgress(id(1), record(55, { solved: false }));
       p.saveProgress(id(2), record(100, { solved: true }));
-      p.savePuzzle(id(1), { n: 1 }, { variantId: 'classic9' });
+      p.savePuzzle(id(1), { n: 1 });
       var list = p.recent();
       expect(list.map(function (e) { return e.id; })).toEqual([id(3), id(2), id(1)]);
       var byId = {};
@@ -229,8 +267,9 @@
       expect(byId[id(1)].percent).toBe(55);
       expect(byId[id(1)].hasProgress).toBe(true);
       expect(byId[id(2)].solved).toBe(true);
+      expect(byId[id(2)].meta).toEqual({ variantId: 'classic9', achieved: 'easy', clues: 30 });
       expect(byId[id(3)].hasProgress).toBe(false);
-      expect(byId[id(3)].meta).toBeNull();
+      expect(byId[id(3)].meta).toEqual({ variantId: 'classic9', achieved: null, clues: null });
       expect(p.recent(2).length).toBe(2);
     });
 
@@ -239,23 +278,15 @@
       var backend = fakeBackend();
       var p = PG.createProgress(SG.store.createStorage(backend), function () { return 5000; });
       // A batch import saves the puzzles last to first within one millisecond.
-      [4, 3, 2, 1].forEach(function (n) { p.savePuzzle(id(n), { n: n }, null); });
+      [4, 3, 2, 1].forEach(function (n) { p.savePuzzle(id(n), { n: n }); });
       var order = function () { return p.recent().map(function (e) { return e.id; }); };
       expect(order()).toEqual([id(1), id(2), id(3), id(4)]);
-      p.savePuzzle(id(4), { n: 4 }, { variantId: 'classic9' });
-      p.savePuzzle(id(2), { n: 2 }, null);
+      p.savePuzzle(id(4), { n: 4, stats: { clues: 22 } });
+      p.savePuzzle(id(2), { n: 2 });
       expect(order()).toEqual([id(1), id(2), id(3), id(4)]);
-      expect(p.recent().filter(function (e) { return e.id === id(4); })[0].meta).toEqual({ variantId: 'classic9' });
-      p.savePuzzle(id(5), { n: 5 }, null);
+      expect(p.recent().filter(function (e) { return e.id === id(4); })[0].meta.clues).toBe(22);
+      p.savePuzzle(id(5), { n: 5 });
       expect(order()).toEqual([id(5), id(1), id(2), id(3), id(4)]);
-    });
-
-    it('drops a meta that is too big instead of the puzzle', function () {
-      ready();
-      var p = make().progress;
-      var big = { text: new Array(PG.LIMITS.metaBytes + 10).join('m') };
-      expect(p.savePuzzle(id(1), { n: 1 }, big)).toBe('ok');
-      expect(p.loadPuzzle(id(1)).meta).toBeNull();
     });
   });
 
@@ -278,7 +309,7 @@
       ready();
       var p = make().progress;
       p.saveProgress(id(1), record(1));
-      p.savePuzzle(id(1), { n: 1 }, null);
+      p.savePuzzle(id(1), { n: 1 });
       p.setLast(id(1));
       p.clear();
       expect(p.progressList()).toEqual([]);
@@ -358,7 +389,7 @@
       var m = make({ blocked: true });
       expect(m.progress.saveProgress(id(1), record(33))).toBe('blocked');
       expect(m.progress.loadProgress(id(1)).percent).toBe(33);
-      expect(m.progress.savePuzzle(id(1), { n: 1 }, null)).toBe('blocked');
+      expect(m.progress.savePuzzle(id(1), { n: 1 })).toBe('blocked');
       expect(m.progress.loadPuzzle(id(1)).doc.n).toBe(1);
       m.progress.setLast(id(1));
       expect(m.progress.getLast()).toBe(id(1));

@@ -1,6 +1,7 @@
 'use strict';
 // Browser run: viewports (1440 / 900 / 375 with touch emulation), themes, symbol modes, hints in Vietnamese,
-// the Wordoku key word, reduced motion, the colour scheme and blocked storage. Usage: node tests/browser/visual.js
+// the Wordoku key word, reduced motion, the colour scheme and blocked storage.
+// Usage: node tests/browser/visual.js
 const fs = require('fs');
 const path = require('path');
 const { launch, newPage, serve, sleep, ROOT } = require('./lib.js');

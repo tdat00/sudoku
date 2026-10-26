@@ -1,6 +1,6 @@
 'use strict';
-// Browser run: play a puzzle with real input events: values, conflicts, notes, undo / redo, hints, completion,
-// reload, the Continue flow and the recent list. Usage: node tests/browser/play.js
+// Browser run: play a puzzle with real input events: values, conflicts, notes, undo / redo, hints,
+// completion, reload, the Continue flow and the recent list. Usage: node tests/browser/play.js
 const fs = require('fs');
 const path = require('path');
 const { launch, newPage, serve, sleep, ROOT } = require('./lib.js');

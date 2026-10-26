@@ -75,10 +75,6 @@
     <symbol id="ic-play" viewBox="0 0 24 24">
       <path d="M7 4.5v15l13-7.5z" fill="currentColor"></path>
     </symbol>
-    <symbol id="ic-pause" viewBox="0 0 24 24">
-      <rect x="6" y="4.5" width="4.2" height="15" rx="1" fill="currentColor" stroke="none"></rect>
-      <rect x="13.8" y="4.5" width="4.2" height="15" rx="1" fill="currentColor" stroke="none"></rect>
-    </symbol>
     <symbol id="ic-next" viewBox="0 0 24 24">
       <path d="M9 5l7 7-7 7"></path>
     </symbol>
@@ -88,9 +84,6 @@
     </symbol>
     <symbol id="ic-chevron-up" viewBox="0 0 24 24">
       <path d="M6 15l6-6 6 6"></path>
-    </symbol>
-    <symbol id="ic-chevron-down" viewBox="0 0 24 24">
-      <path d="M6 9l6 6 6-6"></path>
     </symbol>
     <symbol id="ic-sliders" viewBox="0 0 24 24">
       <path d="M4 7h8M18 7h2M4 17h2M12 17h8"></path>
@@ -111,9 +104,6 @@
     </symbol>
     <symbol id="ic-x" viewBox="0 0 24 24">
       <path d="M6 6l12 12M18 6L6 18"></path>
-    </symbol>
-    <symbol id="ic-check" viewBox="0 0 24 24">
-      <path d="M5 12.5l4.5 4.5L19 7.5"></path>
     </symbol>
     <symbol id="ic-copy" viewBox="0 0 24 24">
       <rect x="9" y="9" width="11" height="11" rx="2"></rect>
@@ -197,7 +187,7 @@
       <svg class="icon drawer-toggle__chevron" aria-hidden="true" focusable="false"><use href="#ic-chevron-up"></use></svg>
     </button>
 
-    <aside id="history-root" class="panel panel--history" aria-labelledby="history-heading">
+    <aside id="history-root" class="panel" aria-labelledby="history-heading">
       <div class="panel__header">
         <h2 id="history-heading" class="panel__title" data-i18n="history.title"></h2>
         <button id="history-clear" type="button" class="btn btn--ghost btn--sm" disabled
@@ -234,7 +224,7 @@
         </div>
       </div>
 
-      <section id="board-root" class="board-area" aria-labelledby="board-heading">
+      <section id="board-root" aria-labelledby="board-heading">
         <h2 id="board-heading" class="visually-hidden" data-i18n="shell.board.heading"></h2>
         <div class="board-frame">
           <svg id="board-svg" class="board-svg" viewBox="0 0 9 9" preserveAspectRatio="xMidYMid meet"
@@ -303,7 +293,7 @@
     </main>
 
     <div class="app-side">
-      <aside id="controls-root" class="panel panel--controls" aria-labelledby="controls-heading">
+      <aside id="controls-root" class="panel" aria-labelledby="controls-heading">
         <h2 id="controls-heading" class="panel__title" data-i18n="shell.controls.heading"></h2>
         <div class="controls-actions" role="group" data-i18n-attr="aria-label:shell.actions.label">
           <button id="btn-generate" type="button" class="btn btn--primary btn--block"
@@ -311,7 +301,7 @@
             <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-sparkle"></use></svg>
             <span class="btn__label" data-i18n="shell.btn.generate"></span>
           </button>
-          <button id="btn-regenerate" type="button" class="btn           btn--secondary btn--block"
+          <button id="btn-regenerate" type="button" class="btn btn--secondary btn--block"
             data-i18n-attr="title:shell.btn.regenerate.title">
             <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-refresh"></use></svg>
             <span class="btn__label" data-i18n="shell.btn.regenerate"></span>

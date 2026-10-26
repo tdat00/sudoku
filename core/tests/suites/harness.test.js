@@ -1,5 +1,5 @@
-// Self-tests of the test infrastructure that every suite relies on: core/tests/harness.js (expect, deep equality, the
-// runner and its isolation).
+// Self-tests of the test infrastructure that every suite relies on: core/tests/harness.js (expect, deep
+// equality, the runner and its isolation).
 (function () {
   'use strict';
 

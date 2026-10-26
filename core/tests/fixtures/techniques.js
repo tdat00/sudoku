@@ -1,5 +1,5 @@
 /**
- * Fixtures for the logical techniques (task T-2.9): for every technique of the classic ladder, two positions
+ * Fixtures for the logical techniques: for every technique of the classic ladder, two positions
  * where it fires (with the exact Finding) and positions where it must find nothing. Exposed as
  * SG.fixtures.techniques and exercised by tests/suites/techniques.test.js.
  *
@@ -729,8 +729,6 @@
     ids: Object.keys(BY_ID),
     byId: BY_ID,
     nothingToFind: NOTHING_TO_FIND,
-    ladder: LADDER,
-    before: before,
-    through: through
+    ladder: LADDER
   };
 })();

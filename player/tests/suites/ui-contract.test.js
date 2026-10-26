@@ -1,7 +1,7 @@
 // UI contract: what every module promises to the others and to the page, checked on Node without a DOM.
-// 1. the function surface of each module, 2. every file loads without a DOM, the engines have no DOM and the player
-// holds none of the generator's modules, 3. no colour literal outside the token files, 4. index.html: mount
-// points, no hard-coded visible text, script order equal to SOURCE_FILES (node-runner.js, tests.html),
+// 1. the function surface of each module, 2. every file loads without a DOM, the engines have no DOM and the
+// player holds none of the generator's modules, 3. no colour literal outside the token files, 4. index.html:
+// mount points, no hard-coded visible text, script order equal to SOURCE_FILES (node-runner.js, tests.html),
 // 5. every suite is listed in tests.html. Pure source scans: the files are read as text, nothing here needs a
 // browser.
 (function () {
@@ -91,7 +91,7 @@
       var text = readText('js/ui/app.js');
       var header = text.slice(0, text.indexOf('(function (root)'));
       SURFACE.app.forEach(function (member) { expect(header).toContain(member); });
-      ['result', 'locale', 'theme', 'settings', 'action'].forEach(function (name) {
+      ['result', 'locale', 'settings', 'action'].forEach(function (name) {
         expect(header).toContain("'" + name + "'");
       });
     });
@@ -501,8 +501,8 @@
     });
   });
 
-  // help.html is the guide that the Help button opens in a new tab: it needs the core (the examples replay the
-  // hints), the strings and the board, and none of the page of the player.
+  // help.html is the guide that the Help button opens in a new tab: it needs the core (the examples replay
+  // the hints), the strings and the board, and none of the page of the player.
   var HELP_ONLY = ['js/ui/help-examples.js', 'js/ui/help.js'];
   var NOT_IN_GUIDE = ['../core/js/ui/exchange.js', 'js/ui/importer.js', 'js/ui/a11y.js', 'js/ui/progress.js', 'js/ui/app.js',
     '../core/assets/wordbook/words.vi.js', '../core/assets/wordbook/words.en.js', '../core/js/ui/wordbook.js'];

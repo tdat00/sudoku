@@ -1,7 +1,7 @@
 /**
- * Generation event system. The generator runs at full speed and records a trace of `GenerationEvent`s; the UI replays
- * it at the user's speed. Transport agnostic: an event is plain data (numbers, strings, booleans, null, arrays, plain
- * objects), so it survives `postMessage` / `structuredClone`; it never carries a function, typed array or class instance.
+ * Generation event system: the generator records a trace of `GenerationEvent`s. Transport agnostic: an event
+ * is plain data (numbers, strings, booleans, null, arrays, plain objects), so it survives `postMessage` /
+ * `structuredClone`; it never carries a function, typed array or class instance.
  *
  * Contents
  *  - `createEmitter(verbosity, sink)`  stamps `t` and `seq`, filters by verbosity, throttles `metric`.
@@ -9,20 +9,23 @@
  *  - `createView`, `cloneView`  the plain state a patch is applied to (replay engine, tests).
  *  - `capTrace`, `createTraceBuffer`  trace size limit.
  *  - `createStageRunner`  runs one pipeline step: start/end events, timing, budget check.
- *  - `VOCABULARY`  every event key with its arguments: the contract between the producers (core, pipeline, variants)
- *    and the consumers (UI, locale packs, tests).
+ *  - `VOCABULARY`  every event key with its arguments: the contract between the producers (core, pipeline,
+ *    variants) and the consumers (UI, locale packs, tests).
  *
- * Every event has `type`, `stepId`, `phase`, `t` (ms since the emitter was created) and `seq` (0, 1, 2, ... in emission
- * order, so it equals the array index of an uncapped trace), optionally `i18nKey`, `i18nArgs`, `patch`, `metrics`.
- * `stepId` is one of the seven step ids, or 'pipeline' for `done` and for errors outside a step.
+ * Every event has `type`, `stepId`, `phase`, `t` (ms since the emitter was created) and `seq` (0, 1, 2, ...
+ * in emission order, so it equals the array index of an uncapped trace), optionally `i18nKey`, `i18nArgs`,
+ * `patch`, `metrics`. `stepId` is one of the seven step ids, or 'pipeline' for `done` and for errors outside
+ * a step.
  *
- * Verbosity: 'off' passes only `step` start/end, `done` and `error`. 'summary' adds `step` progress, `retry` and
- * `metric` (at most one every 50 ms). 'full' adds every `micro` event (each placement, backtrack and dig).
+ * Verbosity: 'off' passes only `step` start/end, `done` and `error`. 'summary' adds `step` progress, `retry`
+ * and `metric` (at most one every 50 ms). 'full' adds every `micro` event (each placement, backtrack and
+ * dig).
  *
  * Patch: `{ cells?: [{i, value, state}], highlight?: [i], unhighlight?: [i] }`, a delta of at most 8 cells
- * (`MAX_PATCH_CELLS`); `highlight` plus `unhighlight` name at most 8 cells together. Applied in this order: `cells`, then
- * `unhighlight`, then `highlight`. Cell states: 'empty', 'placed' (a digit of the grid or puzzle), 'given' (reserved for
- * the UI), 'backtracked' (emptied again by the search; the digit tried is in the event arguments, the UI flashes it red).
+ * (`MAX_PATCH_CELLS`); `highlight` plus `unhighlight` name at most 8 cells together. Applied in this order:
+ * `cells`, then `unhighlight`, then `highlight`. Cell states: 'empty', 'placed' (a digit of the grid or
+ * puzzle), 'given' (reserved for the UI), 'backtracked' (emptied again by the search; the digit tried is in
+ * the event arguments, the UI flashes it red).
  */
 (function (root) {
   'use strict';
@@ -108,7 +111,8 @@
     }
   }
 
-  // BoardView (the state a patch is applied to; not sent anywhere): { value: Int32Array, state: string[], highlight: Uint8Array (1 while highlighted) }
+  // BoardView (the state a patch is applied to; not sent anywhere): { value: Int32Array, state: string[],
+  // highlight: Uint8Array (1 while highlighted) }
 
   function invalidPatch(reason) {
     return fail('events.invalidPatch', { reason: reason });
@@ -151,8 +155,9 @@
     return problems;
   }
 
-  // Builds a validated patch from loose changes. Cells may omit `state` ('empty' for value 0, else 'placed'). Empty
-  // fields are left out, so the patch of "no change" is `{}`. Throws 'events.invalidPatch' when malformed or too large.
+  // Builds a validated patch from loose changes. Cells may omit `state` ('empty' for value 0, else 'placed').
+  // Empty fields are left out, so the patch of "no change" is `{}`. Throws 'events.invalidPatch' when
+  // malformed or too large.
   function makePatch(changes) {
     if (changes === null || typeof changes !== 'object') throw invalidPatch('changes must be an object');
     const patch = {};
@@ -187,8 +192,8 @@
     };
   }
 
-  // Applies a patch to a view in place (`cells`, then `unhighlight`, then `highlight`). Throws 'events.invalidPatch' for a
-  // cell outside the view.
+  // Applies a patch to a view in place (`cells`, then `unhighlight`, then `highlight`). Throws
+  // 'events.invalidPatch' for a cell outside the view.
   function applyPatch(view, patch) {
     const n = view.value.length;
     const cells = patch.cells;
@@ -223,10 +228,10 @@
     return prev.value[i] === 0 ? 'empty' : 'placed';
   }
 
-  // The inverse of a patch: applied to the state AFTER the patch it restores the state BEFORE it, for every cell and
-  // highlight the patch touched; the replay engine stores it next to each patch to step backwards without recomputation.
-  // `prevState` is the state before the patch (a BoardView); missing `state` entries read as 'empty' / 'placed' by value,
-  // a missing `highlight` as "nothing highlighted".
+  // The inverse of a patch: applied to the state AFTER the patch it restores the state BEFORE it, for every
+  // cell and highlight the patch touched; the replay engine stores it next to each patch to step backwards
+  // without recomputation. `prevState` is the state before the patch (a BoardView); missing `state` entries
+  // read as 'empty' / 'placed' by value, a missing `highlight` as "nothing highlighted".
   function invertPatch(patch, prevState) {
     const inverse = {};
     if (patch.cells !== undefined && patch.cells.length > 0) {
@@ -257,8 +262,8 @@
     return inverse;
   }
 
-  // Folds patches into one with the same net effect: the last write to a cell, and the last highlight or unhighlight of a
-  // cell, wins. The result can exceed the 8-cell limit; `splitPatch` cuts it up again.
+  // Folds patches into one with the same net effect: the last write to a cell, and the last highlight or
+  // unhighlight of a cell, wins. The result can exceed the 8-cell limit; `splitPatch` cuts it up again.
   function mergePatches(patches) {
     const cells = new Map();
     const lights = new Map();
@@ -288,8 +293,8 @@
     return merged;
   }
 
-  // Cuts a patch into patches that respect the limits; applying them in sequence equals applying the original. The empty
-  // patch stays one empty patch.
+  // Cuts a patch into patches that respect the limits; applying them in sequence equals applying the
+  // original. The empty patch stays one empty patch.
   function splitPatch(patch) {
     const out = [];
     const cells = patch.cells || [];
@@ -303,8 +308,8 @@
     return out;
   }
 
-  // GenerationEvent metrics: { clues, accepted, rejected, attempts, placed, backtracks, restarts, score }, whichever apply
-  // to the step.
+  // GenerationEvent metrics: { clues, accepted, rejected, attempts, placed, backtracks, restarts, score },
+  // whichever apply to the step.
 
   // Optional parts that are undefined or null are left out of the event.
   function createEvent(type, stepId, phase, seq, t, fields) {
@@ -350,22 +355,25 @@
     return problems;
   }
 
-  // Emitter: { isEmitter, verbosity, wantsMicro, wantsMetrics, count (events handed to the sink), view (what the replay of
-  // the emitted events would show; null until bound), setVerbosity(v),
+  // Emitter: { isEmitter, verbosity, wantsMicro, wantsMetrics, count (events handed to the sink), view (what
+  // the replay of the emitted events would show; null until bound), setVerbosity(v),
   //   emit(partialEvent) -> whether the sink got it, step(stepId, phase, i18nKey, i18nArgs, metrics),
   //   micro(stepId, i18nKey, i18nArgs, patch, metrics), retry(stepId, i18nKey, i18nArgs, metrics),
-  //   metric(stepId, metrics) (throttled to one per 50 ms; `metrics` may be a function that is only called when the event
-  //   is sent), done(i18nArgs, metrics) (stepId 'pipeline', key 'done'), error(stepId, error) (key 'error.' + error.code),
-  //   bindBoard(cellCount) (starts tracking the view), syncBoard(stepId, i18nKey, i18nArgs, values) (emits chunked patches
-  //   that bring the replayed board to the values), clearBoard(stepId, i18nKey, i18nArgs) (syncBoard to an empty board),
-  //   microChunks(stepId, i18nKey, i18nArgs, cellChanges, metrics) (one `micro` event per 8 cells with the same key; `part`
-  //   and `parts` are added to the arguments when it takes more than one); the last three return the number of events }
-  // `wantsMicro` is true when `micro` events reach a sink: the hot paths of the core pick their instrumented variant once,
-  // at entry, from this flag, so a quiet emitter runs the plain code and instrumentation costs nothing.
+  //   metric(stepId, metrics) (throttled to one per 50 ms; `metrics` may be a function that is only called
+  //   when the event is sent), done(i18nArgs, metrics) (stepId 'pipeline', key 'done'), error(stepId, error)
+  //   (key 'error.' + error.code), bindBoard(cellCount) (starts tracking the view), syncBoard(stepId,
+  //   i18nKey, i18nArgs, values) (emits chunked patches that bring the replayed board to the values),
+  //   clearBoard(stepId, i18nKey, i18nArgs) (syncBoard to an empty board), microChunks(stepId, i18nKey,
+  //   i18nArgs, cellChanges, metrics) (one `micro` event per 8 cells with the same key; `part` and `parts`
+  //   are added to the arguments when it takes more than one); the last three return the number of events }
+  // `wantsMicro` is true when `micro` events reach a sink: the hot paths of the core pick their instrumented
+  // variant once, at entry, from this flag, so a quiet emitter runs the plain code and instrumentation costs
+  // nothing.
 
-  // Creates an emitter. The sink receives each event the verbosity lets through, in order, with `t` and `seq` stamped on.
-  // A null sink is allowed: nothing is built or sent, and every method does nothing. Options: now (ms clock, default
-  // `performance.now`), metricIntervalMs (default 50). Throws 'events.invalidVerbosity', 'events.invalidSink'.
+  // Creates an emitter. The sink receives each event the verbosity lets through, in order, with `t` and `seq`
+  // stamped on. A null sink is allowed: nothing is built or sent, and every method does nothing. Options: now
+  // (ms clock, default `performance.now`), metricIntervalMs (default 50). Throws 'events.invalidVerbosity',
+  // 'events.invalidSink'.
   function createEmitter(verbosity, sink, options) {
     options = options || {};
     if (LEVEL_OF[verbosity] === undefined) {
@@ -543,8 +551,9 @@
 
   const NULL_EMITTER = createEmitter('off', null);
 
-  // Turns whatever a caller passed as `emit` into an emitter: an emitter stays as it is, a plain function becomes a 'full'
-  // emitter that feeds it (a bare callback wants everything), null or undefined become the shared `NULL_EMITTER`.
+  // Turns whatever a caller passed as `emit` into an emitter: an emitter stays as it is, a plain function
+  // becomes a 'full' emitter that feeds it (a bare callback wants everything), null or undefined become the
+  // shared `NULL_EMITTER`.
   function toEmitter(target) {
     if (target !== null && target !== undefined) {
       if (target.isEmitter === true) return target;
@@ -553,11 +562,12 @@
     return NULL_EMITTER;
   }
 
-  // Creates the runner of pipeline steps. `stage(stepId, args, fn)` emits the step's start event, checks the budget (so a
-  // cancel is noticed at every step boundary), calls `fn(scope)`, emits the end event and adds the elapsed time to
-  // `stage.timings[stepId]`. `fn` can set `scope.args` and `scope.metrics` for the end event; its return value is the
-  // return value of `stage`. When `fn` throws, no end event is sent and `stage.current` keeps the id of the failed step.
-  // Options: budget (a SG.budget, checked at every step start), timings (collects ms per step id; default a new object), now.
+  // Creates the runner of pipeline steps. `stage(stepId, args, fn)` emits the step's start event, checks the
+  // budget (so a cancel is noticed at every step boundary), calls `fn(scope)`, emits the end event and adds
+  // the elapsed time to `stage.timings[stepId]`. `fn` can set `scope.args` and `scope.metrics` for the end
+  // event; its return value is the return value of `stage`. When `fn` throws, no end event is sent and
+  // `stage.current` keeps the id of the failed step. Options: budget (a SG.budget, checked at every step
+  // start), timings (collects ms per step id; default a new object), now.
   function createStageRunner(emitter, options) {
     options = options || {};
     const budget = options.budget || null;
@@ -605,11 +615,12 @@
     return max + 1;
   }
 
-  // Keeps exactly `keepMicro` of the `microTotal` micro events (spread evenly) and every other event. What the dropped
-  // events changed is made up for by synthesized 'trace.coalesced' events placed just before the next kept event: two
-  // boards are tracked, the one the original trace has reached (`truth`) and the one the capped trace has shown so far
-  // (`shown`), and a synthesized event carries exactly the cells and highlights on which they differ, so a highlight that
-  // was set and cleared again, or a digit that was placed and backtracked, costs nothing.
+  // Keeps exactly `keepMicro` of the `microTotal` micro events (spread evenly) and every other event. What
+  // the dropped events changed is made up for by synthesized 'trace.coalesced' events placed just before the
+  // next kept event: two boards are tracked, the one the original trace has reached (`truth`) and the one the
+  // capped trace has shown so far (`shown`), and a synthesized event carries exactly the cells and highlights
+  // on which they differ, so a highlight that was set and cleared again, or a digit that was placed and
+  // backtracked, costs nothing.
   function decimate(events, microTotal, keepMicro, cellCount) {
     const out = [];
     const truth = createView(cellCount);
@@ -685,12 +696,13 @@
     return out;
   }
 
-  // Limits a trace to `maxEvents` (default 20000) by thinning out the `micro` events; every other event (`step`, `metric`,
-  // `retry`, `done`, `error`) is always kept. The kept micro events are spread evenly; what the dropped ones changed is
-  // carried by synthesized `micro` events with the key 'trace.coalesced' (arguments `dropped`, and `part` / `parts` when it
-  // takes several), placed just before the next kept event and carrying its `seq` and `t` (so `seq` never decreases), so the
-  // replay still ends on exactly the same board. As many micro events are kept as the limit allows; if the step events
-  // alone exceed the limit, all micro events go and only the synthesized ones remain. Returns a new array.
+  // Limits a trace to `maxEvents` (default 20000) by thinning out the `micro` events; every other event
+  // (`step`, `metric`, `retry`, `done`, `error`) is always kept. The kept micro events are spread evenly;
+  // what the dropped ones changed is carried by synthesized `micro` events with the key 'trace.coalesced'
+  // (arguments `dropped`, and `part` / `parts` when it takes several), placed just before the next kept event
+  // and carrying its `seq` and `t` (so `seq` never decreases), so the replay still ends on exactly the same
+  // board. As many micro events are kept as the limit allows; if the step events alone exceed the limit, all
+  // micro events go and only the synthesized ones remain. Returns a new array.
   function capTrace(events, maxEvents) {
     const max = maxEvents === undefined ? DEFAULT_MAX_TRACE_EVENTS : maxEvents;
     if (!(max >= 1)) throw fail('events.invalidLimit', { maxEvents: String(maxEvents) });
@@ -718,10 +730,11 @@
     return best;
   }
 
-  // TraceBuffer: { push(event), events() (the trace within the limit; a new array), clear(), size, dropped (events thinned out so far) }
+  // TraceBuffer: { push(event), events() (the trace within the limit; a new array), clear(), size, dropped
+  // (events thinned out so far) }
 
-  // A growing trace that never holds much more than `maxTraceEvents` (default 20000): at a quarter over the limit it is
-  // thinned with `capTrace`, so the cost stays amortised. Clear it before the next generation.
+  // A growing trace that never holds much more than `maxTraceEvents` (default 20000): at a quarter over the
+  // limit it is thinned with `capTrace`, so the cost stays amortised. Clear it before the next generation.
   function createTraceBuffer(options) {
     const max = options && options.maxTraceEvents !== undefined ? options.maxTraceEvents
       : DEFAULT_MAX_TRACE_EVENTS;
@@ -752,9 +765,10 @@
     };
   }
 
-  // VocabularyEntry: { type, stepId ('*' = any step), phase, key (the `i18nKey`; null for `metric` events; 'error.*' stands
-  // for 'error.' plus any error code), level (lowest verbosity that emits it), args (names that may appear in `i18nArgs`;
-  // `part`, `parts` and `count` are allowed on any `micro` event carrying cells), patch (patch fields the event may carry) }
+  // VocabularyEntry: { type, stepId ('*' = any step), phase, key (the `i18nKey`; null for `metric` events;
+  // 'error.*' stands for 'error.' plus any error code), level (lowest verbosity that emits it), args (names
+  // that may appear in `i18nArgs`; `part`, `parts` and `count` are allowed on any `micro` event carrying
+  // cells), patch (patch fields the event may carry) }
 
   function entry(type, stepId, phase, key, level, args, patch) {
     return {
@@ -763,7 +777,8 @@
   }
 
   /**
-   * Every event the core emits (locale packs must define a translation for every `key`; the UI reads the `args`). Per step:
+   * Every event the core emits (locale packs must define a translation for every `key`; the UI reads the
+   * `args`). Per step:
    *  - 1 configure: start, config, end.
    *  - 2 buildModel: start, model, spec, traceDowngraded, end.
    *  - 3 fullGrid: start, clear, fixed, seed, place, conflict, backtrack, restart, end.

@@ -1,7 +1,7 @@
-// The cost table of the generator (SG.difficulty.WEIGHTS) against the technique registry of the engine: every
-// registered technique needs a weight, and the weights of a group follow the ladder. The techniques themselves are
-// tested by the shared suite core/tests/suites/techniques.test.js; a technique registered later is covered here
-// without editing this file.
+// The cost table of the generator (SG.difficulty.WEIGHTS) against the technique registry of the engine:
+// every registered technique needs a weight, and the weights of a group follow the ladder. The techniques
+// themselves are tested by the shared suite core/tests/suites/techniques.test.js; a technique registered
+// later is covered here without editing this file.
 (function () {
   'use strict';
 

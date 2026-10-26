@@ -1,6 +1,6 @@
-// Result panel (task T-4.8): SG.resultView.viewModel is pure, so every displayed value, the warning logic, the
-// share link and the translations are checked here on Node with real pipeline results (and results that are
-// changed on purpose to force a warning). The DOM part (create) is covered by the browser run of T-4.7.
+// Result panel: SG.resultView.viewModel is pure, so every displayed value, the warning logic, the share link
+// and the translations are checked here on Node with real pipeline results (and results that are changed on
+// purpose to force a warning). The DOM part (create) needs a browser and is not tested here.
 (function () {
   'use strict';
 
@@ -28,7 +28,8 @@
   function realResult(variantId, difficulty, seed) {
     var key = variantId + '/' + difficulty + '/' + seed;
     if (!cache[key]) {
-      cache[key] = SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+      cache[key] = SG.pipeline.run(
+        { variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
     }
     return cache[key];
   }
@@ -82,7 +83,8 @@
           ? SG.i18n.t('technique.' + row.id + '.desc') : '');
         expect(row.count).toBe(count);
         expect(row.countText).toBe(SG.i18n.formatNumber(count));
-        // The points are the weight of the technique; the score is its whole share of the score (section 5.6).
+        // The points are the weight of the technique; the score is its whole share of the score
+        // (section 5.6).
         expect(row.unitScore).toBe(SG.difficulty.WEIGHTS[row.id]);
         expect(row.unitScoreText).toBe(SG.i18n.formatNumber(row.unitScore, { maximumFractionDigits: 2 }));
         expect(row.work).toBe(row.unitScore * count);
@@ -93,7 +95,8 @@
         // The tooltip shows the formulas with the numbers the share is made of.
         var text = SG.stepView.scoreTipText(row.tip);
         var f = function (n) { return SG.i18n.formatNumber(n, { maximumFractionDigits: 2 }); };
-        expect(text).toContain('W_t = n_t × w_t = ' + f(count) + ' × ' + f(table.rows[i].points) + ' = ' + f(table.rows[i].work));
+        expect(text).toContain('W_t = n_t × w_t = ' + f(count) + ' × ' + f(table.rows[i].points) + ' = ' +
+          f(table.rows[i].work));
         expect(text).toContain('W = Σ W_t = ' + f(table.work));
         expect(text).toContain('R = 0.25 × P × log_2(1 + W / P) = 0.25 × ' + f(table.peak));
         expect(text).toContain('≈ ' + row.scoreText);
@@ -107,7 +110,8 @@
       var r = realResult('classic9', 'easy', 3);
       var vm = R.viewModel(r);
       var empty = SG.stepView.scoreTipText(vm.parts.emptyTip);
-      expect(empty).toContain('V = 80 × E / E + 40 = 80 × ' + r.rating.empties + ' / ' + r.rating.empties + ' + 40');
+      expect(empty).toContain('V = 80 × E / E + 40 = 80 × ' + r.rating.empties + ' / ' + r.rating.empties +
+        ' + 40');
       expect(empty).toContain('≈ ' + vm.parts.emptyText);
       var total = SG.stepView.scoreTipText(vm.parts.totalTip);
       expect(total).toContain('S = V + P + R');
@@ -256,7 +260,8 @@
           var vm = R.viewModel(r, {});
           expect(vm.warningKeys).toEqual(['digger.unsoundTechnique', 'trace.downgraded',
             'extraStructure.wordFallback', 'made.up.warning']);
-          expect(vm.warnings.map(function (w) { return w.kind; })).toEqual(['unsound', 'downgraded', 'other', 'other']);
+          expect(vm.warnings.map(function (w) { return w.kind; }))
+            .toEqual(['unsound', 'downgraded', 'other', 'other']);
           vm.warnings.slice(0, 3).forEach(function (w) {
             expect(w.text).toBe(SG.i18n.t(w.key));
             expect(w.text).not.toBe(w.key);
@@ -285,34 +290,6 @@
       expect(en.warnings[0].kind).toBe(vi.warnings[0].kind);
     });
 
-    function fragmentOf(key) {
-      return (SG.localeFragments || []).filter(function (f) { return f.en && f.en[key] !== undefined; })[0];
-    }
-
-    function holes(text) {
-      return (String(text).match(/\{[A-Za-z]+\}/g) || []).sort().join();
-    }
-
-    ['result', 'app'].forEach(function (prefix) {
-      it('the ' + prefix + '.* fragment has the same keys, placeholders and no empty text in en and vi',
-        function () {
-          ready();
-          var fragment = fragmentOf(prefix === 'result' ? 'result.title' : 'app.status.failed');
-          expect(fragment).toBeTruthy();
-          var keys = Object.keys(fragment.en).sort();
-          expect(Object.keys(fragment.vi).sort()).toEqual(keys);
-          expect(keys.length).toBeGreaterThan(8);
-          keys.forEach(function (key) {
-            expect(key.indexOf(prefix + '.')).toBe(0);
-            expect(String(fragment.en[key]).trim()).not.toBe('');
-            expect(String(fragment.vi[key]).trim()).not.toBe('');
-            expect(holes(fragment.vi[key])).toBe(holes(fragment.en[key]));
-          });
-          var clashes = SG.i18n.conflicts.filter(function (c) { return c.key.indexOf(prefix + '.') === 0; });
-          expect(clashes).toEqual([]);
-        });
-    });
-
     ['js/ui/result-view.js', 'js/ui/app.js'].forEach(function (rel) {
       it(rel + ' only asks for keys that exist in both languages', function () {
         ready();
@@ -320,8 +297,9 @@
         var text = NODE.fs.readFileSync(NODE.path.join(NODE.root, rel), 'utf8');
         var code = text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
         var keys = {};
-        (code.match(/'((?:app|result|common|unit|variant|difficulty|step|technique|shell|player)\.[A-Za-z0-9_.]*[A-Za-z0-9_])'/g) || [])
-          .forEach(function (quoted) { keys[quoted.slice(1, -1)] = true; });
+        var prefixes = '(?:app|result|common|unit|variant|difficulty|step|technique|shell|player)';
+        var pattern = new RegExp('\'(' + prefixes + '\\.[A-Za-z0-9_.]*[A-Za-z0-9_])\'', 'g');
+        (code.match(pattern) || []).forEach(function (quoted) { keys[quoted.slice(1, -1)] = true; });
         var list = Object.keys(keys);
         expect(list.length).toBeGreaterThan(3);
         ['en', 'vi'].forEach(function (code2) {

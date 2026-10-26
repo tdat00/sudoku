@@ -4,8 +4,9 @@
  * ../core/tests/fixtures/testkit.js:
  *
  *   SG.testkit.documentNames()               the file names (without .json) of the puzzle fixtures
- *   SG.testkit.exportText(name)              the text of tests/fixtures/exports/<name>.txt (real output of the
- *                                            generator's Export box, made by tests/tools/make-exports.js)
+ *   SG.testkit.exportText(name)              the text of tests/fixtures/exports/<name>.txt (the real
+ *                                            output of the generator's Export box, made by
+ *                                            tests/tools/make-exports.js)
  *   SG.testkit.document(name)                the parsed document, or null when it cannot be read here (a
  *                                            browser on file://; the suites then skip themselves)
  *   SG.testkit.VARIANT_IDS                   the variant ids that have a document
@@ -53,7 +54,7 @@
     return doc === null ? null : JSON.parse(JSON.stringify(doc));
   }
 
-  /** The text of tests/fixtures/exports/<name>.txt: real output of Sudoku Generator's "Export" box; null if unreadable. */
+  /** The text of tests/fixtures/exports/<name>.txt; null when it cannot be read. */
   function exportText(name) {
     var env = SG.test && SG.test.node;
     var rel = 'tests/fixtures/exports/' + name + '.txt';

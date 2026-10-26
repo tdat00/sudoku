@@ -141,10 +141,7 @@
     contradictory: CONTRADICTORY
   };
 
-  // -------------------------------------------------------------------------------------------------
   // Overlapping grids on a shared canvas
-  // -------------------------------------------------------------------------------------------------
-
   /**
    * Builds a model out of 9x9 sub-grids placed on a square canvas. Cells at the same canvas position are one
    * cell, so the units of overlapping grids share cell indices. Standard 3x3 boxes.
@@ -210,8 +207,6 @@
   }
 
   SG.fixtures.models = {
-    buildMultiGrid: buildMultiGrid,
-
     /**
      * A square grid with boxRows x boxCols boxes, built independently of the classic variants so that the
      * engine can be tested at digit counts the registry does not offer yet (12 and 16).

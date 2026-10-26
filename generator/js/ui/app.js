@@ -1,80 +1,80 @@
 /**
- * `SG.app`: application wiring. It owns the page: reads the URL and the stored preferences, builds the board, the
- * controls, the replay player, the steps panel and the result panel, runs a generation, and replays how the puzzle
- * was made (from `PuzzleResult.digLog`). Every other UI module is a self-contained building block; this file only
- * connects them. It starts by itself when the DOM is ready (nothing happens without a DOM or without the mount
- * points of index.html, so the file also loads in Node and in tests.html).
+ * `SG.app`: application wiring. It owns the page: reads the URL and the stored preferences, builds the board,
+ * the controls, the replay player, the steps panel and the result panel, runs a generation, and replays how
+ * the puzzle was made (from `PuzzleResult.digLog`). Every other UI module is a self-contained building block;
+ * this file only connects them. It starts by itself when the DOM is ready (nothing happens without a DOM or
+ * without the mount points of index.html, so the file also loads in Node and in tests.html).
  *
  * PUBLIC API (later modules - export, a11y, theme, help, cache - use only this)
- *   getStore()  -> the shared `SG.store` instance.
- *   getBoard()  -> the CURRENT `SG.boardView` view (null before start). The same view object lives for the whole
- *                  session; a new puzzle is installed with `board.setModel`. Do not keep a model of your own: read
- *                  `getResult()`.
- *   getPlayer() / getStepView() -> the replay player / the steps panel (null before start).
- *   getExplainContext() -> `{ stepId, lineLabel, metrics, position, length }` or null: what the Help dialog explains
- *                  as the current step. `stepId` is the pipeline step ('fullGrid', 'extraStructure' or 'dig') of the
- *                  replay step on show, `lineLabel` the pseudocode line, `metrics` the dig counters (null outside the
- *                  dig). Null while there is no replay.
- *   getResult() -> `{ result, trace }` of the last successful generation, or null while nothing is shown (before the
- *                  first run, during a run, after an error or a cancel).
- *   generate(overrides?, options?) -> Promise<?PuzzleResult>. Starts a generation from the store state. `overrides`
- *                  is a partial store state (e.g. `{ seed: '42', difficulty: 'hard' }`) written to the store first,
- *                  so the form shows what is being generated. A run that is replaced by a newer one, cancelled, or
- *                  that fails resolves with null (failures are reported through the 'generate:error' event and a
- *                  toast, never as a rejection). `options.random` (true for `regenerate()`) tells the client that the
- *                  seed was just drawn at random, so any random puzzle of the same configuration will do (the cache
- *                  serves a pre-generated one); it reaches the client as `client.generate(config, onEvent, { random })`.
- *   regenerate() -> Promise<?PuzzleResult>. A new random seed is written to the store, then `generate()`.
- *   getClient() / setClient(next)  The generation client in use / replaces it (a wrapper with the same interface;
- *                  null restores the default). Call it between runs.
- *   attachTrace(trace, digLog?) -> boolean. Gives the puzzle on screen what arrived after it was shown (a result
- *                  served from the cache has no dig log and `getResult().trace === []`): the trace, and the dig log
- *                  when the result had none. The player then loads the replay at its END (the finished puzzle).
- *                  False when nothing is shown, a run is in progress or there is still no dig log. Fires 'trace'.
+ *   getStore()   the shared `SG.store` instance.
+ *   getBoard()   the CURRENT `SG.boardView` view (null before start). The same view lives for the whole
+ *                session; a new puzzle is installed with `board.setModel`. Do not keep a model of your own:
+ *                read `getResult()`.
+ *   getPlayer() / getStepView()   the replay player / the steps panel (null before start).
+ *   getExplainContext()   `{ stepId, lineLabel, metrics, position, length }` or null (no replay): what the
+ *                Help dialog explains as the current step. `stepId` is the pipeline step ('fullGrid',
+ *                'extraStructure' or 'dig') of the replay step on show, `lineLabel` the pseudocode line,
+ *                `metrics` the dig counters (null outside the dig).
+ *   getResult()   `{ result, trace }` of the last successful generation, or null while nothing is shown
+ *                (before the first run, during a run, after an error or a cancel).
+ *   generate(overrides?, options?) -> Promise<?PuzzleResult>. Starts a generation from the store state.
+ *                `overrides` is a partial store state (e.g. `{ seed: '42' }`) written to the store first, so
+ *                the form shows what is being generated. A run that is replaced, cancelled or fails resolves
+ *                with null (failures go to the 'generate:error' event and a toast, never a rejection).
+ *                `options.random` (true for `regenerate()`) tells the client that any random puzzle of the
+ *                same configuration will do (the cache serves a pre-generated one); it reaches the client as
+ *                `client.generate(config, onEvent, { random })`.
+ *   regenerate() -> Promise<?PuzzleResult>. Writes a new random seed to the store, then `generate()`.
+ *   getClient() / setClient(next)   the generation client in use / replaces it (a wrapper with the same
+ *                interface; null restores the default). Call it between runs.
+ *   attachTrace(trace, digLog?) -> boolean. Gives the puzzle on screen what arrived after it was shown (a
+ *                result served from the cache has no dig log and `getResult().trace === []`): the trace, and
+ *                the dig log when the result had none. The player then loads the replay at its END. False
+ *                when nothing is shown, a run is in progress or there is still no dig log. Fires 'trace'.
  *   cancel() -> boolean. Stops the running generation (see the limit of the main-thread client below).
- *   showResult(result, { trace }) -> boolean. Shows a `PuzzleResult` that was not generated by the pipeline run of
- *                  this page: the board shows its clues, the result panel what it can, the replay is built when the
- *                  result has a `digLog`; `trace` (default none) is kept as its events. A running generation is
- *                  replaced. Fires 'result' with `{ result, trace, imported: true }` (and not 'generate:end').
- *   toast(kind, key, args?) -> { close() }. `kind`: 'success' | 'warning' | 'danger' | 'info'; `key`: translation key.
+ *   showResult(result, { trace }) -> boolean. Shows a `PuzzleResult` that this page did not generate: the
+ *                board shows its clues, the result panel what it can, the replay is built when the result has
+ *                a `digLog`; `trace` (default none) is kept as its events. A running generation is replaced.
+ *                Fires 'result' with `{ result, trace, imported: true }` (and not 'generate:end').
+ *   toast(kind, key, args?) -> { close() }. `kind`: 'success' | 'warning' | 'danger' | 'info'.
  *   openModal({ titleKey, titleArgs, body, footer, wide, onClose }) -> { el, panel, body, footer, close(),
- *                  setTitle(key, args) }. A `<dialog class="modal">` in `#modal-root`: `body` / `footer` are a Node or
- *                  `function (container)` that fills the given container (and may return a Node). Esc, the backdrop
- *                  and the close button close it, focus returns to where it was, `body.is-modal-open` is set while
- *                  one is open. `onClose()` runs once.
- *   announce(text) -> writes `text` to the polite live region `#a11y-live`.
+ *                setTitle(key, args) }. A `<dialog class="modal">` in `#modal-root`; `body` / `footer` are a
+ *                Node or `function (container)` that fills it (and may return a Node). Esc, the backdrop and
+ *                the close button close it, the focus goes back, `body.is-modal-open` is set while one is
+ *                open. `onClose()` runs once.
+ *   announce(text)   writes `text` to the polite live region `#a11y-live`.
  *   on(name, fn) -> off(); `emit(name, payload)` (modules may emit their own events). Events of the app:
  *       'generate:start'     { config }
- *       'generate:progress'  one `GenerationEvent` (worker mode: while the run goes on; main thread: all at the end)
+ *       'generate:progress'  one `GenerationEvent` (worker: while the run goes on; main thread: at the end)
  *       'generate:end'       the `PuzzleResult`
  *       'generate:error'     the error (a `GenerationError` or any `Error`)
  *       'generate:cancel'    null
  *       'result'             `{ result, trace }`, after the board shows the new puzzle
  *       'trace'              `{ result, trace }`, after `attachTrace` gave the puzzle its replay
- *       'position'           `{ position, length, step, direction }` after every move of the replay (`step` is a
- *                            step of `SG.player.buildSteps`, null at position 0)
- *       'locale' { locale } | 'theme' { theme } | 'settings' { state, keys, meta } for every change of the store
- *       'action'             { id }: a click on `#btn-export` ('export': Print), `#btn-export-code` ('exportCode'),
- *                            `#btn-play-online` ('play'), `#btn-settings` ('settings'), `#btn-help` ('help') or
- *                            `#btn-explain` ('help' with `tab: 'generation'`); when nobody listens the user gets an
- *                            "unavailable" toast
- *   start() / destroy()  idempotent; `start` runs automatically on DOMContentLoaded.
+ *       'position'           `{ position, length, step, direction }` after every move of the replay
+ *                            (`step` is a step of `SG.player.buildSteps`, null at position 0)
+ *       'locale' { locale } | 'theme' { theme } | 'settings' { state, keys, meta }   every store change
+ *       'action'             { id }: a click on `#btn-export` ('export': Print), `#btn-export-code`
+ *                            ('exportCode'), `#btn-play-online` ('play'), `#btn-settings` ('settings'),
+ *                            `#btn-help` ('help') or `#btn-explain` ('help' with `tab: 'generation'`); when
+ *                            nobody listens the user gets an "unavailable" toast
+ *   start() / destroy()   idempotent; `start` runs automatically on DOMContentLoaded.
  *
  * OPTIONAL MODULES: at the end of start-up the app calls `init(SG.app)` on each of `SG.exportUi`, `SG.a11y`,
- * `SG.theme`, `SG.help`, `SG.cache`, `SG.history` that exists, in this order, each in its own try/catch (a module
- * that throws is logged and skipped). `#btn-export`, `#btn-export-code` and `#btn-play-online` are enabled once a
- * puzzle is shown AND somebody listens to 'action'.
+ * `SG.theme`, `SG.help`, `SG.cache`, `SG.history` that exists, in this order, each in its own try/catch (a
+ * module that throws is logged and skipped). `#btn-export`, `#btn-export-code` and `#btn-play-online` are
+ * enabled once a puzzle is shown AND somebody listens to 'action'.
  *
  * Generation client: `SG.workerClient || directClient`; a client is `{ generate(config, onEvent) ->
  * Promise<PuzzleResult>, cancel(), mode: 'worker' | 'main', ready()? }`. The internal `directClient` runs
- * `SG.pipeline.run` on the main thread. LIMIT: that pipeline is synchronous and cannot yield, so the page cannot
- * respond while it runs and `cancel()` (or a newer `generate`) only takes effect while the client is still waiting to
- * paint the busy state; a run that has started always finishes (or hits its time budget) and its result is then
- * dropped by the session token of the app. `SG.workerClient` removes the limit.
+ * `SG.pipeline.run` on the main thread. LIMIT: that pipeline is synchronous and cannot yield, so the page
+ * cannot respond while it runs and `cancel()` (or a newer `generate`) only takes effect while the client is
+ * still waiting to paint the busy state; a run that has started always finishes (or hits its time budget) and
+ * its result is then dropped by the session token of the app. `SG.workerClient` removes the limit.
  *
- * Replay contract: the board is built from the FINAL model of the result and shows the finished puzzle at once;
- * nothing plays by itself. The player builds the replay steps from `result.digLog` (not from the trace) and its
- * `onPosition` is the one place that drives the steps panel.
+ * Replay contract: the board is built from the FINAL model of the result and shows the finished puzzle at
+ * once; nothing plays by itself. The player builds the replay steps from `result.digLog` (not from the trace)
+ * and its `onPosition` is the one place that drives the steps panel.
  */
 (function (root) {
   'use strict';
@@ -163,7 +163,9 @@
     return Object.prototype.hasOwnProperty.call(FONT_SIZES, size) ? FONT_SIZES[size] : FONT_SIZES.normal;
   }
 
-  /** The `data-theme` value of a theme setting; null for 'auto' (no attribute: `prefers-color-scheme` rules). */
+  /**
+   * The `data-theme` value of a theme setting; null for 'auto' (no attribute: `prefers-color-scheme` rules).
+   */
   function themeAttribute(theme) {
     return theme === 'light' || theme === 'dark' || theme === 'high-contrast' ? theme : null;
   }
@@ -172,7 +174,10 @@
     return new SG.errors.GenerationError('budget.cancelled', {});
   }
 
-  /** Calls `run` after the browser has painted: two animation frames, then a zero timeout; a timer covers a hidden tab, which paints nothing. Returns a function that cancels. */
+  /**
+   * Calls `run` after the next paint (two frames, then a zero timeout; a timer covers a hidden tab). Returns
+   * cancel.
+   */
   function waitForPaint(run) {
     let frame1 = null;
     let frame2 = null;
@@ -206,7 +211,10 @@
     };
   }
 
-  /** The main-thread generation client, with the interface of `SG.workerClient`: it yields so that the busy state is painted, then runs `SG.pipeline.run` synchronously, buffers the events and hands them to `onEvent` when the run is over. LIMIT: see the file header (a cancel is only possible before the run starts). */
+  /**
+   * The main-thread client (interface of `SG.workerClient`): waits for the busy state to paint, runs
+   * `SG.pipeline.run` synchronously and hands the buffered events to `onEvent` at the end. See LIMIT above.
+   */
   const directClient = (function () {
     let token = 0;
     let abort = null;
@@ -286,7 +294,7 @@
     return listeners[name] ? listeners[name].length : 0;
   }
 
-  /** Subscribes to an app event (see the file header); a throwing listener is logged. Returns a function that removes the listener. */
+  /** A throwing listener is logged. Returns the function that removes the listener. */
   function on(name, fn) {
     if (typeof name !== 'string' || typeof fn !== 'function') {
       throw new TypeError('SG.app.on needs an event name and a function');
@@ -370,7 +378,7 @@
     }
   }
 
-  /** Opens a modal dialog in `#modal-root` (see the file header); null without a DOM. */
+  /** See the file header; null without a DOM. */
   function openModal(options) {
     const host = byId('modal-root');
     if (host === null) return null;
@@ -503,7 +511,9 @@
     return SG.i18n.has(key) ? t(key) : String(level);
   }
 
-  /** Heading of the main panel: "<variant> - <difficulty> (Seed: <seed>)" and the variant description. It describes the puzzle on screen, or the options in the form while there is none. */
+  /**
+   * "<variant> - <difficulty> (Seed: <seed>)" of the puzzle on screen, or of the form while there is none.
+   */
   function updateHeading() {
     if (els === null || els.heading === null || store === null) return;
     const state = store.get();
@@ -837,7 +847,10 @@
     return client;
   }
 
-  /** For a module that wraps the client (the cache); null or undefined restores the default. Call it between runs. */
+  /**
+   * For a module that wraps the client (the cache); null or undefined restores the default. Call it between
+   * runs.
+   */
   function setClient(next) {
     client = next || SG.workerClient || directClient;
   }

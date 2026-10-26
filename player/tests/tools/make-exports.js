@@ -7,9 +7,10 @@
  *   node tests/tools/make-exports.js [path-to-generator] [--out=<dir>]
  *
  * Each file is the real output of the generator's "Export" box (`SG.exportUi.buildExportText`), in English
- * (`<name>.en.txt`) and in Vietnamese (`<name>.vi.txt`): this is what the player's Import takes. The generator
- * (default: ../generator) is only READ (its sources are loaded with vm.runInThisContext, as its tests/node-runner.js does).
- * The fixtures are committed, so this is only needed when the generator's text format changes.
+ * (`<name>.en.txt`) and in Vietnamese (`<name>.vi.txt`): this is what the player's Import takes. The
+ * generator (default: ../generator) is only READ (its sources are loaded with vm.runInThisContext, as its
+ * tests/node-runner.js does). The fixtures are committed, so this is only needed when the generator's text
+ * format changes.
  */
 const fs = require('fs');
 const path = require('path');

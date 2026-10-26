@@ -1,10 +1,10 @@
 /**
  * `SG.store`: application state.
- *  - PURE functions (no DOM, no storage): `defaults`, `sanitize`, `parseUrl`, `toUrlParams`, `toSearchString`,
- *    `toConfig`, `seedInfo`, ... What the tests and the controls rely on.
- *  - `create({ storage, location, history, navigator })`: a stateful store with `get / set / subscribe / load / save
- *    / syncUrl / newSeed / reset`. Everything it touches is injected, so it runs in Node; the shared browser instance
- *    is `SG.store.instance()`.
+ *  - PURE functions (no DOM, no storage): `defaults`, `sanitize`, `parseUrl`, `toUrlParams`,
+ *    `toSearchString`, `toConfig`, `seedInfo`, ... What the tests and the controls rely on.
+ *  - `create({ storage, location, history, navigator })`: a stateful store with `get / set / subscribe / load
+ *    / save / syncUrl / newSeed / reset`. Everything it touches is injected, so it runs in Node; the shared
+ *    browser instance is `SG.store.instance()`.
  *
  * The state is plain data (frozen when read):
  *   puzzle configuration   variantId, difficulty, seed (text, '' = random), symmetry, symbolMode, digOrder,
@@ -13,24 +13,12 @@
  *   session                auto (URL only: generate on load)
  *   preferences            lang, theme ('auto'|'light'|'dark'|'high-contrast'), fontSize
  *                          ('small'|'normal'|'large'), reducedMotion, colorAuxSymbol
- * There is no trace verbosity and no replay speed: the replay is built from the dig log of the result, so `toConfig`
- * leaves `trace` out and the pipeline applies its default ('summary'). The store never touches the DOM (`data-theme`
- * and friends are applied by theme.js / app.js) and never triggers a generation.
+ * There is no trace verbosity or replay speed: `toConfig` leaves `trace` out. The store never touches the
+ * DOM (theme.js / app.js apply the preferences) and never triggers a generation.
  *
- * URL: `v d seed sym mode lang auto`, plus `order attempts sol` and the variant options as `o.<optionId>`. Only
- * values that differ from the defaults are written, except for share links (`toSearchString(state, { full: true })`)
- * which always carry `v d sym mode`. Same link => same puzzle. Any other parameter (`trace` and `speed` of older
- * links included, and such fields in older stored data) is ignored and left out of the canonical URL.
- *
- * Seeds: the state keeps the text the user typed. A decimal integer in 0..4294967295 is used as it is; anything else
- * (letters, a negative number, a number beyond uint32) is HASHED to a uint32 with FNV-1a 32 bit over the UTF-16 code
- * units of the NFC-normalised, trimmed text (the hash `SG.rng` itself uses for its child streams). A blank seed
- * means "random" (`config.seed` is left out).
- *
- * Storage: `sg.prefs.v1` (preferences) and `sg.lastConfig.v1` (the last configuration). Every access is wrapped in
- * try/catch; when the storage is missing or blocked the values live in memory. Priority at start-up (`load`):
- * URL > stored values > defaults; when the URL carries any puzzle parameter it is the whole puzzle configuration and
- * the stored one is ignored (a shared link must not be bent by the receiver's last settings).
+ * URL parameters, seed hashing and the start-up priority (URL > stored values > defaults; a URL with any
+ * puzzle parameter is the whole configuration): design.md 14.2. Storage (`sg.prefs.v1`,
+ * `sg.lastConfig.v1`; every access guarded, memory only when blocked): 14.3.
  */
 (function (root) {
   'use strict';
@@ -41,7 +29,6 @@
 
   const PREFS_KEY = 'sg.prefs.v1';
   const LAST_CONFIG_KEY = 'sg.lastConfig.v1';
-  const STORAGE_VERSION = 1;
 
   const DEFAULT_VARIANT = 'classic9';
   const DEFAULT_DIFFICULTY = 'normal';
@@ -119,7 +106,9 @@
     return h >>> 0;
   }
 
-  /** `random`: blank (value null); `number`: a decimal integer in 0..4294967295 (value = that number); `text`: anything else, value = its FNV-1a hash (see the file header). */
+  /**
+   * `random` (blank, value null), `number` (0..4294967295, value = it) or `text` (value = its FNV-1a hash).
+   */
   function seedInfo(text) {
     const source = typeof text === 'number' && Number.isFinite(text) ? String(text) : text;
     if (typeof source !== 'string') return { kind: 'random', value: null };
@@ -132,7 +121,9 @@
     return { kind: 'text', value: hashText(trimmed) };
   }
 
-  /** `visibleWhen` is the variant's own descriptor `{ otherOptionId: [values] }`: the option is visible while every named option holds one of its values. */
+  /**
+   * `visibleWhen` `{ otherOptionId: [values] }`: visible while every named option holds one of its values.
+   */
   function isOptionVisible(item, values) {
     const when = item ? item.visibleWhen : null;
     if (when === null || when === undefined || typeof when !== 'object') return true;
@@ -194,10 +185,10 @@
 
   /**
    * The workhorse behind `sanitize`: a complete, valid state from anything. Invalid values become those of
-   * `fallback`; cross-option constraints are enforced (the difficulty must be one the variant supports, the symbol set
-   * one of its `symbolModes`, hidden options are reset). When `notes` is an array, every cross-option correction of a
-   * value that was valid on its own is pushed on it as `{ key, from, to, reason }` (reason: 'unsupportedDifficulty' |
-   * 'unsupportedSymbolMode').
+   * `fallback`; cross-option constraints are enforced (the difficulty must be one the variant supports, the
+   * symbol set one of its `symbolModes`, hidden options are reset). When `notes` is an array, every
+   * cross-option correction of a value that was valid on its own is pushed on it as `{ key, from, to, reason
+   * }` (reason: 'unsupportedDifficulty' | 'unsupportedSymbolMode').
    */
   function normalize(input, notes, fallback) {
     const raw = isPlainObject(input) ? input : {};
@@ -249,18 +240,21 @@
     return out;
   }
 
-  /** A complete, valid state from any input (a partial object, junk, null); idempotent, the input is not modified. Unknown values become the defaults; the difficulty becomes the closest supported level, the symbol set the variant's default, options go through `SG.variants.sanitizeOptions`, `maxAttempts` is clamped to 1..20. */
+  /** A complete, valid state from any input (partial, junk, null); idempotent, the input is not modified. */
   function sanitize(state) {
     return normalize(state, null, defaults());
   }
 
-  /** `sanitize` that also reports the cross-option corrections `{ key, from, to, reason }`, for a polite note in the UI. */
+  /** `sanitize` that also reports the cross-option corrections `{ key, from, to, reason }`. */
   function sanitizeWithNotes(state) {
     const adjustments = [];
     return { state: normalize(state, adjustments, defaults()), adjustments: adjustments };
   }
 
-  /** The `GenerateConfig` of `SG.pipeline` for a state (sanitised first). Pure. A blank seed leaves `seed` out (the pipeline picks a random one); `trace` is always left out (the pipeline default 'summary' applies; the replay does not depend on it). */
+  /**
+   * The `GenerateConfig` of a state (sanitised first). A blank seed leaves `seed` out; `trace` is always left
+   * out.
+   */
   function toConfig(state) {
     const s = sanitize(state);
     const config = {
@@ -286,7 +280,7 @@
     }
   }
 
-  /** Query parameters of a search string, a URL or a bare query, as a plain object (the last value wins). */
+  /** A search string, a URL or a bare query as a plain object (the last value wins). */
   function parseQuery(search) {
     let text = typeof search === 'string' ? search : '';
     const hash = text.indexOf('#');
@@ -307,7 +301,11 @@
   /** URL parameters that make a link a puzzle configuration (not just a language or `auto`). */
   const CONFIG_PARAMS = ['v', 'd', 'seed', 'sym', 'mode', 'order', 'attempts', 'sol'];
 
-  /** Reads a search string into a PARTIAL state: only the parameters that were present and valid by themselves. `variantOptions` holds the raw `o.<id>` values (sanitised against the variant by `sanitize`); `hasConfig` tells whether the link names a puzzle parameter. */
+  /**
+   * A PARTIAL state: only the parameters that were present and valid by themselves. `variantOptions` holds
+   * the raw `o.<id>` values (`sanitize` checks them); `hasConfig` tells whether the link names a puzzle
+   * parameter.
+   */
   function readUrl(search) {
     const q = parseQuery(search);
     const patch = {};
@@ -346,7 +344,7 @@
     return draft;
   }
 
-  /** The complete state that a search string (a full URL or a bare query) describes: defaults for everything it does not name; sanitised. */
+  /** The complete, sanitised state of a search string; defaults for what it does not name. */
   function parseUrl(search) {
     return sanitize(applyUrlPatch(defaults(), readUrl(search).patch));
   }
@@ -356,7 +354,10 @@
     return String(value);
   }
 
-  /** The URL parameters of a state, in a fixed order, as an object of strings. Only values that differ from the defaults (the default symbol set is the variant's) are included; `full` adds `v d sym mode` always, for share links; `options.auto` overrides `state.auto`. */
+  /**
+   * In a fixed order, as strings; only values that differ from the defaults. `options.full` always adds
+   * `v d sym mode` (share links); `options.auto` overrides `state.auto`.
+   */
   function toUrlParams(state, options) {
     const opts = options || {};
     const full = opts.full === true;
@@ -390,13 +391,15 @@
     return pairs.length === 0 ? '' : '?' + pairs.join('&');
   }
 
-  /** A share link: `base` (usually `location.href`; query and fragment removed) + the full parameters of the state; `options.auto` makes the link generate on load. */
+  /**
+   * `base` without query and fragment, plus the full parameters; `options.auto` makes it generate on load.
+   */
   function shareUrl(state, base, options) {
     const origin = String(base === undefined || base === null ? '' : base).replace(/[?#].*$/, '');
     return origin + toSearchString(state, { full: true, auto: options ? options.auto : undefined });
   }
 
-  /** Wraps a `localStorage`-like object: every access is guarded and a failure (blocked storage, private mode, quota) makes the values live in memory instead. */
+  /** Every access is guarded; a failure (blocked storage, private mode, quota) keeps the values in memory. */
   function guardedStorage(raw) {
     const memory = new Map();
     const guard = { persistent: raw !== null && raw !== undefined };
@@ -500,12 +503,12 @@
 
   /**
    * @typedef {Object} Store
-   * @property {function(Object, Object=): Object} set  `set(patch, meta)`: merges a partial state, sanitises it (an
-   *   invalid value keeps the previous one; the cross-option constraints are enforced), saves it and updates the URL
-   *   unless `meta.persist === false`, switches `SG.i18n` when `lang` changed, and tells the subscribers.
-   *   `variantOptions` in a patch is merged into the current options; a new `variantId` resets the options (to the
-   *   patch's, else to the defaults) and keeps the difficulty / symbol set when the new variant allows them (a symbol
-   *   set that was the default follows the variant's default).
+   * @property {function(Object, Object=): Object} set  `set(patch, meta)`: merges a partial state,
+   *   sanitises it (an invalid value keeps the previous one; the cross-option constraints are enforced),
+   *   saves it and updates the URL unless `meta.persist === false`, switches `SG.i18n` when `lang` changed,
+   *   and tells the subscribers. `variantOptions` in a patch is merged into the current options; a new
+   *   `variantId` resets the options (to the patch's, else to the defaults) and keeps the difficulty / symbol
+   *   set when the new variant allows them (a symbol set that was the default follows the variant's default).
    * @property {function(function(Object, string[], Object): void): function(): void} subscribe  Callbacks get
    *   `(state, changedKeys, meta)`; `meta` is the caller's object plus `adjustments` (the corrections of
    *   `sanitizeWithNotes`). Returns the unsubscribe function.
@@ -516,7 +519,11 @@
    * @property {function(): boolean} persistent  False once the storage turned out to be unavailable.
    */
 
-  /** Creates a store; everything is injectable so it runs without a browser. `storage`: `localStorage`-like, null = memory only (default `window.localStorage`); `location`: `{ search, pathname, hash }`; `history`: `{ replaceState }`; `navigator`: `{ languages, language }` for the start language; `random()` returns a uint32 (default `SG.rng.randomSeed`). */
+  /**
+   * Everything is injectable: `storage` (`localStorage`-like, null = memory only), `location` `{ search,
+   * pathname, hash }`, `history` `{ replaceState }`, `navigator` `{ languages, language }`, `random()` (a
+   * uint32, default `SG.rng.randomSeed`).
+   */
   function create(options) {
     const opts = options || {};
     const rawStorage = opts.storage !== undefined ? opts.storage
@@ -568,8 +575,8 @@
     }
 
     function save() {
-      const prefs = Object.assign({ v: STORAGE_VERSION }, pick(state, PREF_KEYS));
-      const last = Object.assign({ v: STORAGE_VERSION }, pick(state, CONFIG_KEYS));
+      const prefs = pick(state, PREF_KEYS);
+      const last = pick(state, CONFIG_KEYS);
       const a = storage.write(PREFS_KEY, JSON.stringify(prefs));
       const b = storage.write(LAST_CONFIG_KEY, JSON.stringify(last));
       return a && b;
@@ -690,7 +697,7 @@
 
   let shared = null;
 
-  /** The shared browser store, created on first use. It loads nothing by itself: app.js calls `SG.store.instance().load()` at start-up. */
+  /** The shared browser store, created on first use; app.js calls its `load()` at start-up. */
   function instance() {
     if (shared === null) shared = create({});
     return shared;

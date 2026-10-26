@@ -6,15 +6,15 @@
  *
  *   node tests/tools/make-technique-examples.js [path-to-generator] [--puzzles=<n>] [--out=<file>]
  *
- * Stage 1 (a child process that loads the generator, default ../generator, which is only READ) makes a list of puzzles of several
- * variants and levels, as the text of the generator's Export box. Stage 2 plays each of them the way a person
- * who keeps asking for hints would: fill in all the notes, ask for a hint, apply it, and so on until the
- * game is stuck or solved. The first hint of every technique is a candidate for its example, and the easiest
- * one to read wins (the fewest cells, removals and candidates on show, a plain 9x9 board preferred; the
- * earliest on a tie). What is written is a snapshot of the board and the hint, so the guide draws it at once
- * and plays nothing (`SG.helpExamples`, see js/ui/help.js); the puzzle and the number of hints are kept in it
- * only so that a test can check the snapshot against the player's own hints. The file is committed; this is
- * only needed when the solver, the hints or the generator change.
+ * Stage 1 (a child process that loads the generator, default ../generator, which is only READ) makes a list
+ * of puzzles of several variants and levels, as the text of the generator's Export box. Stage 2 plays each of
+ * them the way a person who keeps asking for hints would: fill in all the notes, ask for a hint, apply it,
+ * and so on until the game is stuck or solved. The first hint of every technique is a candidate for its
+ * example, and the easiest one to read wins (the fewest cells, removals and candidates on show, a plain 9x9
+ * board preferred; the earliest on a tie). What is written is a snapshot of the board and the hint, so the
+ * guide draws it at once and plays nothing (`SG.helpExamples`, see js/ui/help.js); the puzzle and the number
+ * of hints are kept in it only so that a test can check the snapshot against the player's own hints. The file
+ * is committed; this is only needed when the solver, the hints or the generator change.
  */
 const fs = require('fs');
 const os = require('os');
@@ -100,7 +100,7 @@ function popcount(mask) {
   return n;
 }
 
-/** The cells whose notes the Help page draws: the area to look at, the cells of the hint and the ones it changes. */
+/** The cells whose notes the Help page draws: the region, the cells of the hint and the ones it changes. */
 function shownCells(hint) {
   const set = new Set(hint.region ? hint.region.cells : []);
   hint.cells.forEach(function (c) { set.add(c); });
@@ -109,8 +109,8 @@ function shownCells(hint) {
 }
 
 /**
- * How hard an example is to read: the fewer cells, removals and candidates on show the clearer it is, and a plain
- * 9x9 board is clearer than one with extra regions.
+ * How hard an example is to read: the fewer cells, removals and candidates on show the clearer it is, and a
+ * plain 9x9 board is clearer than one with extra regions.
  */
 function difficulty(SG, game, hint, puzzle) {
   const scope = SG.techniques.get(hint.technique).variantScope;

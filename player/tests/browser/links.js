@@ -1,7 +1,8 @@
 'use strict';
-// The two pages find each other: the generator's Play button opens the player with the puzzle, and the player's
-// link opens the generator, whether the repository is served over http or opened from a disk (file://), where a link
-// to a folder would show a file listing instead of a page. Usage: node tests/browser/links.js
+// The two pages find each other: the generator's Play button opens the player with the puzzle, and the
+// player's link opens the generator, whether the repository is served over http or opened from a disk
+// (file://), where a link to a folder would show a file listing instead of a page.
+// Usage: node tests/browser/links.js
 const path = require('path');
 const { launch, newPage, serve, sleep, ROOT } = require('./lib.js');
 
@@ -50,15 +51,16 @@ async function newTab(browser, known) {
       let tab = await newTab(browser, known);
       check(mode + ': Play online opens a tab', tab !== null);
       if (tab !== null) {
-        // The player takes the puzzle out of the address when it opens it, so the title tells that it arrived.
+        // The player takes the puzzle out of the address when it opens it, so the title tells that it
+        // arrived.
         check(mode + ': the tab is the player page', /\/player\/index\.html(#.*)?$/.test(tab.url), tab.url.slice(0, 100));
         check(mode + ': and it opened the puzzle (a player, not a file listing)',
           /^Classic Sudoku .* Sudoku Player$/.test(tab.title), tab.title);
         await fetch('http://127.0.0.1:' + browser.port + '/json/close/' + tab.id);
       }
       if (mode === 'http') {
-        // The worker loads the shared engine with importScripts, relative to its own address; a failure there would
-        // only show as a slower main-thread fallback, so ask for the worker explicitly.
+        // The worker loads the shared engine with importScripts, relative to its own address; a failure there
+        // would only show as a slower main-thread fallback, so ask for the worker explicitly.
         const worker = await page.eval('(async function () {' +
           'var c = SG.workerClient.create({ forceMode: "worker" });' +
           'try { var r = await c.generate({ variantId: "killer", difficulty: "veryEasy", seed: 3, trace: "summary" }, function () {});' +

@@ -27,8 +27,10 @@ This repository holds two static apps and the code they share (see [docs/archite
 - Do not weaken, skip, delete or rewrite a test to make a run pass, and do not change the heavy suites, the regression
   hashes, the fixtures (`player/tests/fixtures/puzzles`, `exports`) or the generated files (`help-examples.js`) on your
   own initiative. If a quick suite fails and you do not know why, say so instead of editing the test.
-- Tests that read the documents (the READMEs, `help.test.js`) check them against the code: when you change a path, a
-  command or a number that a README states, update the README in the same change.
+- Tests that read the documents (`help.test.js` of each app reads the guides: the user guide `USERGUIDE.md` /
+  `USERGUIDE.vn.md` and the developer guide `DEVELOPERGUIDE.md` / `DEVELOPERGUIDE.vn.md`) check them against the
+  code: when you change a path, a command or a number that a guide states, update that guide (both languages) in
+  the same change.
 
 ## Where things go
 
@@ -40,12 +42,24 @@ This repository holds two static apps and the code they share (see [docs/archite
 - Links between pages are relative paths to the page (`../player/index.html`), never to a folder and never an absolute URL.
   Pages must work from `file://` and from a server started at the **repository root**.
 - Documents are in `docs/` by feature; `design.md` and `task.md` of each app stay next to its source.
+- `README.md` is a short, English-only overview of the repository. The apps have no README of their own; their
+  documentation is four guides at the root:
+  - the **user guide**, `USERGUIDE.md` (English) and `USERGUIDE.vn.md` (Vietnamese): how to use the apps, for
+    players (features, URL parameters, playing, settings, privacy, limitations a user notices) — no code, tests or
+    deployment;
+  - the **developer guide**, `DEVELOPERGUIDE.md` (English) and `DEVELOPERGUIDE.vn.md` (Vietnamese): layout, running
+    locally, how the apps work, the exchange format, adding a variant or a technique, tests, conventions,
+    publishing, how to contribute.
+
+  Keep both guides in both languages, in step with each other (same facts) and with the code: when behaviour
+  changes, update the guide it belongs to (and `design.md`) in the same change.
 
 ## Conventions
 
 2-space indent, single quotes, semicolons, lines of at most 110 characters in the engines, English comments only where
 the code is hard to follow. Colours only in `core/css/tokens*.css`. Every shown string goes through `SG.i18n.t()` and
-exists in English and Vietnamese. The conventions in full: `generator/README.md` ("Conventions") and
+exists in English and Vietnamese. The conventions in full: `DEVELOPERGUIDE.md` ("Conventions", in the Sudoku Generator
+part) and
 `generator/design.md` §12.2.
 
 Keep commits meaningful (one change each, not one per file); do not commit secrets.

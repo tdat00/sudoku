@@ -1,8 +1,8 @@
 /**
  * Explanation card: for the phase of the replay step on show (full solution, extra structure, dig), the fixed
- * parts What / Why / How, the pseudocode of the phase with the current line highlighted, and a status line with
- * the running dig counters. Data comes from `SG.explain` (js/engine/explain-data.js, keys only); texts are in the
- * locale packs. Exports `SG.explainCard` (NOT `SG.explain`).
+ * parts What / Why / How, the pseudocode of the phase with the current line highlighted, and a status line
+ * with the running dig counters. Data comes from `SG.explain` (js/engine/explain-data.js, keys only); texts
+ * are in the locale packs. Exports `SG.explainCard` (NOT `SG.explain`).
  * `viewModel` is pure (runs in Node); `create(rootEl, options)` renders it and re-renders on language change.
  * Host usage: `card.show(step.phase, { lineLabel: step.line, metrics: step.metrics })`; without metrics the
  * status line is hidden. `eventKey` picks a line from an event key (`SG.explain.lineFor`).
@@ -34,9 +34,9 @@
   }
 
   /**
-   * Everything the card shows for a step id in the current language; null for an unknown id.
-   * `ctx.metrics`: numbers for the status line (missing ones read as 0; without metrics `live` is null);
-   * `ctx.lineLabel` (null = none) overrides `ctx.eventKey`, the `i18nKey` of the replayed event, to pick the line.
+   * Everything the card shows for a step id in the current language; null for an unknown id. `ctx.metrics`:
+   * numbers for the status line (missing ones read as 0; without metrics `live` is null); `ctx.lineLabel`
+   * (null = none) overrides `ctx.eventKey`, the `i18nKey` of the replayed event, to pick the line.
    */
   function viewModel(stepId, ctx) {
     const data = SG.explain && typeof SG.explain.get === 'function' ? SG.explain.get(stepId) : null;
@@ -91,9 +91,10 @@
   }
 
   /**
-   * Renders the card into `rootEl` and owns its content; `compact`: no kicker and no title. Re-translates itself on
-   * `SG.i18n.onChange`. Returns { show(stepId, ctx) (ctx as in `viewModel`), setLine(label|null), setMetrics(metrics|null),
-   * clear() (back to the "start a generation" text), getStepId(), refresh(), destroy() }.
+   * Renders the card into `rootEl` and owns its content; `compact`: no kicker and no title. Re-translates
+   * itself on `SG.i18n.onChange`. Returns { show(stepId, ctx) (ctx as in `viewModel`), setLine(label|null),
+   * setMetrics(metrics|null), clear() (back to the "start a generation" text), getStepId(), refresh(),
+   * destroy() }.
    */
   function create(rootEl, options) {
     if (!rootEl || typeof rootEl.appendChild !== 'function') {
@@ -255,7 +256,7 @@
       'explainCard.how': 'Bằng cách nào',
       'explainCard.live': 'Hiện tại',
       'explainCard.code': 'Mã giả',
-      'explainCard.code.label': 'Mã giả của bước "{name}"',
+      'explainCard.code.label': 'Mã giả của bước “{name}”',
       'explainCard.line.active': '(dòng đang chạy)',
       'explainCard.empty': 'Hãy bắt đầu tạo đề để xem từng bước hoạt động thế nào.'
     }

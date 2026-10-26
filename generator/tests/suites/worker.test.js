@@ -1,4 +1,4 @@
-// The resumable pipeline, the generation worker and the generation client (task T-6.1; design.md 9.3):
+// The resumable pipeline, the generation worker and the generation client (design.md 9.3):
 //
 //  - core: `SG.pipeline.runSteps` / `SG.digger.generateSteps` give the same events and the same puzzle as the
 //    synchronous `run` / `generate`, whatever the size of the slices; the active clock; the wire format that
@@ -21,10 +21,6 @@
   var node = SG.test.node;
   var SLOW = 120000;
   var CLIENT = SG.workerClient;
-
-  // ---------------------------------------------------------------------------------------------
-  // Helpers
-  // ---------------------------------------------------------------------------------------------
 
   function tick() {
     return new Promise(function (resolve) { setTimeout(resolve, 0); });
@@ -136,10 +132,6 @@
     return c.variantId + '/' + c.difficulty + ' seed ' + c.seed + ' trace ' + c.trace;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Core: run control
-  // ---------------------------------------------------------------------------------------------
-
   describe('SG.budget: active clock and stepper helpers', function () {
     it('createClock counts only while it runs', function () {
       var raw = 100;
@@ -178,10 +170,6 @@
       expect(SG.budget.isSteps([1, 2])).toBe(false);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Core: stepper against the synchronous API
-  // ---------------------------------------------------------------------------------------------
 
   describe('SG.pipeline.runSteps: the same run as SG.pipeline.run', function () {
     CASES.forEach(function (c) {
@@ -233,7 +221,8 @@
     it('an error comes out of the next() that reaches it, after its error event, as from run()', function () {
       var events = [];
       var budget = SG.budget.create({ nodes: 30 });
-      var steps = P.runSteps(cfg({ difficulty: 'nightmare', seed: 5 }), function (e) { events.push(e); }, budget);
+      var steps = P.runSteps(cfg({ difficulty: 'nightmare', seed: 5 }), function (e) { events.push(e); },
+        budget);
       var thrown = null;
       try {
         for (var i = 0; i < 1e6; i++) if (steps.next().done) break;
@@ -380,10 +369,6 @@
       }, SLOW);
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Variant work that used to be one piece: the Killer cage layout, the Greater-Than sign dig
-  // ---------------------------------------------------------------------------------------------
-
   describe('Resumable variant work: Killer layout and Greater-Than sign dig', function () {
     // Seeds picked for the work they need: the Killer ones repair the layout (split / merge / reveal),
     // the Greater-Than ones run several rounds of the sign dig.
@@ -505,32 +490,28 @@
       expect(stepped.value.model.inequalities).toEqual(plain.model.inequalities);
     }, SLOW);
 
-    it('one slice of the Killer layout never exceeds one search of its check (it was the whole layout)',
+    it('one slice of the Killer layout never exceeds one search of its check',
       function () {
         [SLICED[0], SLICED[1]].forEach(function (c) {
           var work = sliceWork(c);
-          // Before: the whole layout of an attempt, 80 000 to 160 000 nodes, in one slice.
+          // The whole layout of an attempt is 80 000 to 160 000 nodes.
           expect(work.longest.extraStructure).toBeLessThan(ANALYSIS_NODES + 1000);
           expect(work.slices.extraStructure).toBeGreaterThan(20);
         });
       }, SLOW);
 
-    it('one slice of the Greater-Than sign dig is a few thousand nodes at most (it was a whole sample)',
+    it('one slice of the Greater-Than sign dig is a few thousand nodes at most',
       function () {
         [SLICED[2], SLICED[3]].forEach(function (c) {
           var work = sliceWork(c);
-          // Before: the whole dig of a sample, 100 000 to 230 000 nodes, in one slice. Now one sign candidate:
-          // its uniqueness check and its solve with the techniques of the level (since rating v2 the master
-          // set has forcing chains, which makes a solve a few thousand nodes longer).
+          // The whole dig of a sample is 100 000 to 230 000 nodes; a slice is one sign candidate: its
+          // uniqueness check and its solve with the techniques of the level (the forcing chains of the master
+          // set make a solve a few thousand nodes longer).
           expect(work.longest.dig).toBeLessThan(16000);
           expect(work.slices.dig).toBeGreaterThan(100);
         });
       }, SLOW);
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Core: the wire format
-  // ---------------------------------------------------------------------------------------------
 
   describe('SG.pipeline.toWire / fromWire: a result across postMessage', function () {
     var WIRE_CASES = [
@@ -617,10 +598,6 @@
       expectCode((function () { try { P.fromWire(null); } catch (e) { return e; } })(), 'unexpected');
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // The client against a scripted fake worker
-  // ---------------------------------------------------------------------------------------------
 
   /** A Worker stand-in that records what the page posts and lets the test say what the worker answers. */
   function createFakeWorker(options) {
@@ -1091,9 +1068,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
   // The main thread mode (real engine, fake scheduler)
-  // ---------------------------------------------------------------------------------------------
 
   describe('SG.workerClient: main thread mode (cooperative slices)', function () {
     function mainClient(extra) {
@@ -1128,18 +1103,18 @@
 
     it('the slice is as long as chunkMs says: a frozen clock means one slice, a slow one one step',
       function () {
-      var frozen = mainClient({ chunkMs: 12, now: function () { return 5; } });
-      var c = cfg({ variantId: 'classic4', difficulty: 'veryEasy' });
-      return frozen.generate(c).then(function () {
-        expect(frozen.yields.count).toBe(0);
-        var coarse = 0;
-        var slow = mainClient({ chunkMs: 12, now: function () { coarse += 100; return coarse; } });
-        return slow.generate(c).then(function () {
-          var steps = runSliced(c, 1);
-          expect(slow.yields.count).toBe(steps.yields);
+        var frozen = mainClient({ chunkMs: 12, now: function () { return 5; } });
+        var c = cfg({ variantId: 'classic4', difficulty: 'veryEasy' });
+        return frozen.generate(c).then(function () {
+          expect(frozen.yields.count).toBe(0);
+          var coarse = 0;
+          var slow = mainClient({ chunkMs: 12, now: function () { coarse += 100; return coarse; } });
+          return slow.generate(c).then(function () {
+            var steps = runSliced(c, 1);
+            expect(slow.yields.count).toBe(steps.yields);
+          });
         });
       });
-    });
 
     it('cancel() at a slice boundary rejects at once, stops the work, and no event follows', function () {
       var gates = [];
@@ -1251,7 +1226,8 @@
       function () {
         var client = CLIENT.create({ forceMode: 'main', chunkMs: 1 });
         var events = 0;
-        return client.generate(cfg({ variantId: 'classic4', difficulty: 'veryEasy' }), function () { events++; })
+        var config = cfg({ variantId: 'classic4', difficulty: 'veryEasy' });
+        return client.generate(config, function () { events++; })
           .then(function (result) {
             expect(result.givens.length).toBe(16);
             expect(events).toBeGreaterThan(5);
@@ -1260,9 +1236,7 @@
       });
   });
 
-  // ---------------------------------------------------------------------------------------------
   // The real worker script in a vm context behind a fake Worker (Node only)
-  // ---------------------------------------------------------------------------------------------
 
   describe('js/worker/gen.worker.js', function () {
     if (!node) {
@@ -1283,13 +1257,6 @@
 
     function scriptsOf(text) {
       var block = /const SCRIPTS = \[([\s\S]*?)\];/.exec(text)[1];
-      return block.split('\n').map(function (line) { return /'([^']+)'/.exec(line); })
-        .filter(Boolean).map(function (m) { return m[1]; });
-    }
-
-    function sourceFiles() {
-      var runner = node.fs.readFileSync(node.path.join(node.root, 'tests', 'node-runner.js'), 'utf8');
-      var block = /const SOURCE_FILES = \[([\s\S]*?)\];/.exec(runner)[1];
       return block.split('\n').map(function (line) { return /'([^']+)'/.exec(line); })
         .filter(Boolean).map(function (m) { return m[1]; });
     }
@@ -1380,22 +1347,6 @@
       else running = false;
       return client;
     }
-
-    it('imports exactly the core, the variants and the word lists of SOURCE_FILES, in order', function () {
-      var listed = scriptsOf(workerSource).map(function (rel) {
-        return node.path.relative(node.root, node.path.resolve(node.root, 'js', 'worker', rel))
-          .split('\\').join('/');
-      });
-      var all = sourceFiles();
-      var upTo = all.indexOf('js/worker/worker-client.js');
-      expect(upTo).toBeGreaterThan(30);
-      expect(listed).toEqual(all.slice(0, upTo));
-      listed.forEach(function (rel) {
-        expect(rel.indexOf('js/ui/')).toBe(-1);
-        expect(node.fs.existsSync(node.path.join(node.root, rel))).toBe(true);
-      });
-      expect(listed[listed.length - 1]).toBe('assets/wordlists/isograms.vi.js');
-    });
 
     it('loads in a bare global scope, loads exactly that list, and answers the handshake', function () {
       var w = createLoopback();
@@ -1490,18 +1441,18 @@
 
     it('a new generate replaces a run in progress; a cancel for another session changes nothing',
       function () {
-      var w = createLoopback();
-      w.postMessage({ type: 'generate', session: 1, config: cfg({ seed: 1 }), options: { chunkMs: 0 } });
-      w.run(5);
-      w.postMessage({ type: 'cancel', session: 99 });
-      w.run(3);
-      w.postMessage({ type: 'generate', session: 2, config: cfg({ seed: 2 }), options: { chunkMs: 0 } });
-      w.run();
-      expect(w.ofType('done').map(function (m) { return m.session; })).toEqual([2]);
-      var sessions = w.ofType('events').map(function (m) { return m.session; });
-      expect(sessions.every(function (s) { return s === 1 || s === 2; })).toBe(true);
-      expect(w.ofType('cancelled').map(function (m) { return m.session; })).toEqual([99]);
-    }, SLOW);
+        var w = createLoopback();
+        w.postMessage({ type: 'generate', session: 1, config: cfg({ seed: 1 }), options: { chunkMs: 0 } });
+        w.run(5);
+        w.postMessage({ type: 'cancel', session: 99 });
+        w.run(3);
+        w.postMessage({ type: 'generate', session: 2, config: cfg({ seed: 2 }), options: { chunkMs: 0 } });
+        w.run();
+        expect(w.ofType('done').map(function (m) { return m.session; })).toEqual([2]);
+        var sessions = w.ofType('events').map(function (m) { return m.session; });
+        expect(sessions.every(function (s) { return s === 1 || s === 2; })).toBe(true);
+        expect(w.ofType('cancelled').map(function (m) { return m.session; })).toEqual([99]);
+      }, SLOW);
 
     it('reports an error of the pipeline as plain data after its events', function () {
       var w = createLoopback();

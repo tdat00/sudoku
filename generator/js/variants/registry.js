@@ -11,7 +11,10 @@
   // Keep the first registry on repeated loads: the variants registered so far must survive.
   if (SG.variants && typeof SG.variants.register === 'function') return;
 
-  /** Difficulty ids a variant may declare: a copy of SG.difficulty.LEVELS (loaded earlier); keep the two equal. */
+  /**
+   * Difficulty ids a variant may declare: a copy of SG.difficulty.LEVELS (loaded earlier); keep the two
+   * equal.
+   */
   const LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
     'hell2'];
 
@@ -180,7 +183,10 @@
     return Array.from(definitions.values());
   }
 
-  /** Removes a variant (for tests and tooling that register temporary variants); true when something was removed. */
+  /**
+   * Removes a variant (for tests and tooling that register temporary variants); true when something was
+   * removed.
+   */
   function unregister(id) {
     return definitions.delete(id);
   }

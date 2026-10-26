@@ -1,46 +1,33 @@
 /**
- * `SG.cache`: puzzle cache and background pre-generation.
- *  - RESULT CACHE. Every generated puzzle is stored in `localStorage` (key `sg.cache.v1`, at most 20 puzzles, least
- *    recently used first out, schema version checked). The same configuration with the same seed is served from it
- *    at once (no worker), because a generation is deterministic: the cached puzzle is the one a new run would produce.
- *  - REPLAY. The cache stores the puzzle only, never the trace nor the dig log (the replay data). A puzzle served from
- *    the cache is shown first, with the steps panel and the replay controls idle and a note "preparing the replay",
- *    while it is regenerated from the seed in the background (an independent client; the same worker the
- *    pre-generator uses). The regenerated puzzle must equal the cached one (givens, solution, rating); if not, the
- *    cache entry is dropped and the puzzle is generated again. When done, its trace and dig log go to the app
- *    (`SG.app.attachTrace(trace, digLog)`). Generating anything else meanwhile cancels the regeneration; nothing of it
- *    can reach the new run (identity check).
- *  - POOL. After a puzzle is shown and the page has been quiet for 1 s (no generation, no change of the form, no key
- *    or pointer press, tab visible), one or two puzzles with the SAME configuration and random seeds are
- *    pre-generated in a Web Worker. They are marked `pool` in the same store (at most 2 per configuration, 4 in all)
- *    and are what "Generate" with an empty seed field and "Regenerate" hand out instantly (turning them into
- *    ordinary cached puzzles); an explicit seed is never answered from the pool. The pre-generator never runs during
- *    a generation, is cancelled at once when the user generates or changes the configuration, pauses while the tab is
- *    hidden, runs one job at a time and gives up on a job that takes too long (a cost table skips configurations
- *    known to be slow). It does NOT exist in main-thread mode (`file://`, no Worker): slices on the UI thread would
- *    compete with the user. Serving from the cache and regenerating traces still work there.
+ * `SG.cache`: puzzle cache and background pre-generation (design.md 6.8, item 7; storage: 14.3).
+ *  - RESULT CACHE. Generation is deterministic, so a configuration with the same seed is served from
+ *    `localStorage` at once (LRU of 20 puzzles).
+ *  - REPLAY. Only the puzzle is stored, never the trace or the dig log: a served puzzle is regenerated from
+ *    its seed in the background (an independent client) and must come out equal (givens, solution, rating),
+ *    else the entry is dropped and the puzzle generated again. Its trace and dig log then go to
+ *    `SG.app.attachTrace`. Generating anything else cancels the regeneration (identity check).
+ *  - POOL. After 1 s of quiet (no run, no form change, no key or pointer press, tab visible) one or two
+ *    puzzles of the SAME configuration with random seeds are pre-generated (at most 2 per configuration, 4 in
+ *    all); "Generate" with an empty seed and "Regenerate" hand them out. An explicit seed is never answered
+ *    from the pool. Never during a run, cancelled by any user change, paused while the tab is hidden, one job
+ *    at a time, a job that takes too long is abandoned (`COSTS` skips slow configurations). Not in
+ *    main-thread mode: slices on the UI thread would compete with the user.
  *
- * Plug-in: `SG.cache.init(SG.app)` (called by app.js) replaces the generation client of the app with a wrapper
- * (`SG.app.setClient`) of the same interface (`generate(config, onEvent, hints)`, `cancel()`, `mode`, `ready()`) and
- * listens to the app events. A cached result is flagged `result.fromCache = true` (ignored by the wire format,
- * exports and share links). A puzzle that `SG.app.showResult` puts on screen (an import: the 'result' event with
- * `imported: true`, no 'generate:end') is never cached, gets no trace regeneration and disarms the pre-generator
- * until the next generation; it may have no seed or configuration at all.
- *
- * Storage: every access is wrapped in try/catch; a blocked or missing `localStorage` (a getter that throws, Safari
- * private mode) means an in-memory LRU for the session; a `QuotaExceededError` evicts least recently used entries and
- * retries, finally keeping the entries in memory only; a corrupt item or another schema version is purged. Every
- * change re-reads the stored list first, so several tabs can share it. Nothing throws into the application or
- * writes to the console.
+ * `init(SG.app)` wraps the generation client of the app (`SG.app.setClient`, same interface). A cached result
+ * is flagged `result.fromCache = true`. A puzzle `SG.app.showResult` puts on screen (an import) is never
+ * cached, gets no regeneration and disarms the pre-generator until the next generation.
+ * Storage never throws: blocked storage means an in-memory LRU, a full one evicts and retries, a corrupt
+ * item or another schema version is purged; every change re-reads the stored list (several tabs).
  *
  * API: init(app) -> boolean (idempotent; false when `app` has no `setClient`), configKey(config) -> ?string
- * (normalised: `trace` and option order ignored; a missing seed gives `*`, the key of the pool; null for an invalid
- * configuration), get(key, { trace? }) -> ?PuzzleResult (touches the LRU order; `trace` re-applies the verbosity of
- * the request, see `deserialize`; a corrupt entry is dropped, null returned), put(result, { pool? }), remove(key),
- * has(key), clear(), stats(), setEnabled(on) / isEnabled() (the pre-generation preference; the cache itself always
- * works; not persisted), createStore(...) and createController(...) (injectable storage, clocks and timers, for
- * tests), serialize(result) (JSON-safe copy; typed arrays become `{ $t, d }`), deserialize(data, { trace? }) (the
- * inverse), estimateCost(config) (ms; Infinity: unknown), VERSION, STORAGE_KEY, LIMIT.
+ * (normalised: `trace` and option order ignored; a missing seed gives `*`, the key of the pool; null for an
+ * invalid configuration), get(key, { trace? }) -> ?PuzzleResult (touches the LRU order; `trace` re-applies
+ * the verbosity of the request, see `deserialize`; a corrupt entry is dropped, null returned), put(result, {
+ * pool? }), remove(key), has(key), clear(), stats(), setEnabled(on) / isEnabled() (the pre-generation
+ * preference; the cache itself always works; not persisted), createStore(...) and createController(...)
+ * (injectable storage, clocks and timers, for tests), serialize(result) (JSON-safe copy; typed arrays become
+ * `{ $t, d }`), deserialize(data, { trace? }) (the inverse), estimateCost(config) (ms; Infinity: unknown),
+ * VERSION, STORAGE_KEY, LIMIT.
  *
  * Loads in Node without a DOM; the DOM and `localStorage` are touched only inside functions.
  */
@@ -71,9 +58,9 @@
 
   /**
    * Expected generation time in milliseconds per variant and level: the slowest of the 40 requests of the
-   * qualification (`node tests/qualify.js`; Node, `trace: 'off'`), rounded up (to 10 ms below 100 ms, to 50 ms below
-   * 1 s, to 500 ms above) and at least 20 ms. A configuration above `MAX_PREGEN_COST_MS` is not pre-generated; an
-   * unlisted level is unknown (Infinity), not pre-generated either.
+   * qualification (`node tests/qualify.js`; Node, `trace: 'off'`), rounded up (to 10 ms below 100 ms, to 50
+   * ms below 1 s, to 500 ms above) and at least 20 ms. A configuration above `MAX_PREGEN_COST_MS` is not
+   * pre-generated; an unlisted level is unknown (Infinity), not pre-generated either.
    */
   const COSTS = Object.freeze({
     classic4: { veryEasy: 20 },
@@ -148,7 +135,7 @@
       cfg: buildKey(norm, '*') };
   }
 
-  /** The key of a configuration, normalised like the pipeline does (variant, level, seed, symbol set, symmetry, dig order, attempts, variant options); neither the trace verbosity nor the order of the variant options is part of it. Null for an invalid configuration; a missing seed shows as `*`. */
+  /** Normalised like the pipeline does; trace verbosity and option order are ignored. See the file header. */
   function configKey(config) {
     const info = keyInfo(config);
     return info === null ? null : info.key;
@@ -208,7 +195,11 @@
     return h >>> 0;
   }
 
-  /** A PuzzleResult as JSON-safe data (the `SG.pipeline.toWire` format with typed arrays wrapped) plus a checksum. Fields that are not part of a PuzzleResult (e.g. `fromCache`) and the dig log are not stored: like the trace the dig log only serves the replay, which a served puzzle gets back from the background regeneration (see "REPLAY"). */
+  /**
+   * A PuzzleResult as JSON-safe data (`SG.pipeline.toWire` with typed arrays wrapped) plus a checksum. Extra
+   * fields (`fromCache`) and the dig log are not stored: the replay comes back from the regeneration
+   * ("REPLAY").
+   */
   function serialize(result) {
     const wire = encode(SG.pipeline.toWire(result));
     delete wire.digLog;
@@ -254,7 +245,11 @@
     }
   }
 
-  /** Rebuilds a PuzzleResult from `serialize` data (or its JSON text) and checks it: the model is valid and solved by the solution, the givens are part of the solution, the checksum matches; Killer and Greater-Than get their lazy propagation extensions switched on (`SG.pipeline.fromWire`). `options.trace` makes `config.trace` and the 'trace.downgraded' warning match what a run with it would give (see `retrace`). Throws GenerationError 'unexpected' for data that is not a valid puzzle. */
+  /**
+   * Rebuilds a PuzzleResult from `serialize` data (or its JSON text) and checks the model, solution, givens
+   * and checksum. `options.trace`: see `retrace`. Throws GenerationError 'unexpected' for data that is not a
+   * valid puzzle.
+   */
   function deserialize(data, options) {
     let wire;
     try {
@@ -303,7 +298,13 @@
    * @property {Object} data  `serialize(result)`.
    */
 
-  /** An LRU list of puzzles, persisted as `{ version, entries }` under one storage key, newest first. Entries are immutable (a change makes a new one). Every operation re-reads the stored list first (another tab may have changed it); when the storage cannot be used the list lives in memory. Nothing throws. Options: `storage` (`localStorage`-like; null = memory only; a getter that throws also means memory only), `now`, `version` (a stored list of another version is purged), `limit` (20), `key` (default `sg.cache.v1`), `poolPerConfig` (2), `poolTotal` (4). */
+  /**
+   * An LRU list of puzzles, persisted as `{ version, entries }` under one key, newest first. Entries are
+   * immutable. Every operation re-reads the stored list first (another tab may have changed it). Nothing
+   * throws. Options: `storage` (`localStorage`-like; null or a throwing getter = memory only), `now`,
+   * `version` (another stored version is purged), `limit` (20), `key` (`sg.cache.v1`), `poolPerConfig` (2),
+   * `poolTotal` (4).
+   */
   function createStore(options) {
     const o = options || {};
     const version = o.version !== undefined ? o.version : SCHEMA_VERSION;
@@ -499,7 +500,10 @@
         }, null);
       },
 
-      /** Stores an entry as the most recently used one; an entry that exists and is not in the pool stays out of it. */
+      /**
+       * Stores an entry as the most recently used one; an entry that exists and is not in the pool stays out
+       * of it.
+       */
       put: function put(entry) {
         return guarded(function () {
           if (!entry || typeof entry.key !== 'string' || typeof entry.cfg !== 'string' ||
@@ -660,7 +664,17 @@
     };
   }
 
-  /** Builds the wrapper client and the schedulers around it; everything outside is injectable. `options.app`: `SG.app` (or a stand-in) with `on`, `getStore`, `getResult`, `getBoard`, `attachTrace`, `generate`, `toast`, `announce`, `getClient`, `setClient`. Other options: `store` (default the shared LRU), `inner` (the client to wrap; default `app.getClient()`, else `SG.workerClient`), `createClient` (the independent background client, default `SG.workerClient.create()`; without one nothing is served from the cache), `timers` `{ set(fn, ms) -> handle, clear(handle) }`, `now`, `isHidden`, `watchVisibility(fn(hidden)) -> unsubscribe`, `watchActivity(fn()) -> unsubscribe`, `random` (uint32, seeds of the pool), `note` `{ show(key), hide(), refresh(), destroy() }`, `idleMs` (1000, quiet time before a pre-generation), `maxCostMs` (3000, dearer configurations are not pre-generated), `limitMs` (8000, a longer job is abandoned), `poolTarget` (2 per configuration), `pregen` (the preference, true). */
+  /**
+   * Builds the wrapper client and the schedulers around it; everything outside is injectable. `options.app`:
+   * `SG.app` or a stand-in (`on`, `getStore`, `getResult`, `getBoard`, `attachTrace`, `generate`, `toast`,
+   * `announce`, `getClient`, `setClient`). Other options: `store` (the shared LRU), `inner` (the client to
+   * wrap: `app.getClient()`, else `SG.workerClient`), `createClient` (the background client,
+   * `SG.workerClient.create()`; without one nothing is served from the cache), `timers` `{ set, clear }`,
+   * `now`, `isHidden`, `watchVisibility(fn(hidden))`, `watchActivity(fn())` (both return unsubscribe),
+   * `random` (uint32, seeds of the pool), `note` `{ show(key), hide(), refresh(), destroy() }`, `idleMs`
+   * (1000), `maxCostMs` (3000, dearer configurations are not pre-generated), `limitMs` (8000, a longer job is
+   * abandoned), `poolTarget` (2), `pregen` (true).
+   */
   function createController(options) {
     const o = options || {};
     const app = o.app;
@@ -892,7 +906,6 @@
       });
     }
 
-    /** The cached puzzle with this exact key, or null. */
     function lookup(info, trace) {
       const entry = cache.get(info.key);
       if (entry === null) return null;
@@ -1199,7 +1212,7 @@
     if (controller !== null) controller.setEnabled(enabledPreference);
   }
 
-  /** Stops the cache for the application and hands the original client back (for tests and hot reloads). */
+  /** Hands the original client back (tests, hot reloads). */
   function destroy() {
     if (controller !== null) controller.destroy();
     controller = null;
@@ -1217,9 +1230,6 @@
     VERSION: SCHEMA_VERSION,
     STORAGE_KEY: STORAGE_KEY,
     LIMIT: LIMIT,
-    POOL_PER_CONFIG: POOL_PER_CONFIG,
-    POOL_TOTAL: POOL_TOTAL,
-    IDLE_MS: IDLE_MS,
     COSTS: COSTS,
     init: init,
     destroy: destroy,

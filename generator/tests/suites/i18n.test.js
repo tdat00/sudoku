@@ -1,4 +1,4 @@
-// Internationalisation (task T-4.1 / T-4.9, design.md section 11): SG.i18n and the two language packs.
+// Internationalisation (design.md section 11): SG.i18n and the two language packs.
 // Everything runs on Node without a DOM (a tiny fake DOM stands in where the DOM is the subject). The
 // coverage tests are computed from the code (explain data, event vocabulary, variant registry, technique
 // registry, error codes thrown in the engines and js/variants, data-i18n attributes of index.html), so a key
@@ -96,9 +96,7 @@
     return out;
   }
 
-  // ---------------------------------------------------------------------------------------------
   // A tiny fake DOM: elements with attributes, children and textContent
-  // ---------------------------------------------------------------------------------------------
 
   function fakeEl(attrs, children) {
     var el = {
@@ -120,10 +118,6 @@
     };
     return el;
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // The packs themselves
-  // ---------------------------------------------------------------------------------------------
 
   describe('i18n: language packs', function () {
     it('offers English and Vietnamese and starts in English', function () {
@@ -211,10 +205,6 @@
       expect(missingFrom(['technique.xWing.desc', 'difficulty.hard'], vi)).toEqual(['technique.xWing.desc']);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Fragments
-  // ---------------------------------------------------------------------------------------------
 
   describe('i18n: locale fragments', function () {
     it('has no key defined twice (base pack against fragments, or two fragments)', function () {
@@ -309,10 +299,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // t(), has(), plural forms
-  // ---------------------------------------------------------------------------------------------
-
   describe('i18n: t()', function () {
     it('inserts {name} parameters, also when a name repeats', function () {
       packsReady();
@@ -369,12 +355,12 @@
 
     it('falls back to the plain key without plural forms, and ignores a count that is no number',
       function () {
-      packsReady();
-      withKeys({ 'test.t.s': 'plain {count}' }, { 'test.t.s': 'thường {count}' }, function () {
-        expect(I.t('test.t.s', { count: 3 })).toBe('plain 3');
-        expect(I.t('test.t.s', { count: 'many' })).toBe('plain many');
+        packsReady();
+        withKeys({ 'test.t.s': 'plain {count}' }, { 'test.t.s': 'thường {count}' }, function () {
+          expect(I.t('test.t.s', { count: 3 })).toBe('plain 3');
+          expect(I.t('test.t.s', { count: 'many' })).toBe('plain many');
+        });
       });
-    });
 
     it('chooses the text <key>.<rule> when args.rule names one, else the key itself', function () {
       packsReady();
@@ -439,10 +425,6 @@
       expect(I.keys('xx')).toEqual(I.keys('en'));
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Switching the language
-  // ---------------------------------------------------------------------------------------------
 
   describe('i18n: setLocale, onChange and the document', function () {
     it('switches the language without a DOM and tells the listeners (new, old) once', function () {
@@ -537,10 +519,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // applyTo
-  // ---------------------------------------------------------------------------------------------
-
   describe('i18n: applyTo', function () {
     function tree() {
       var title = fakeEl({ 'data-i18n': 'common.close' });
@@ -610,10 +588,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // detect
-  // ---------------------------------------------------------------------------------------------
-
   describe('i18n: detect (the start language, rule L4)', function () {
     it('takes the URL language first, then the stored one, then the browser, then English', function () {
       packsReady();
@@ -660,10 +634,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Numbers and durations
-  // ---------------------------------------------------------------------------------------------
-
   describe('i18n: formatNumber and formatDuration', function () {
     it('formats numbers with the separators of the language', function () {
       packsReady();
@@ -705,10 +675,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Error messages
-  // ---------------------------------------------------------------------------------------------
-
   describe('i18n: tError', function () {
     it('translates a GenerationError with its own arguments', function () {
       packsReady();
@@ -733,7 +699,7 @@
       expect(I.tError(err)).toBe('Classic Sudoku 4\u00d74 cannot be generated at the level "Nightmare". ' +
         'Please choose another level.');
       expect(inLocale('vi', function () { return I.tError(err); }))
-        .toBe('Sudoku cổ điển 4×4 không sinh được ở mức “Ác mộng”. Hãy chọn mức khác.');
+        .toBe('Sudoku Cổ điển 4×4 không tạo được đề ở mức “Ác mộng”. Hãy chọn mức khác.');
     });
 
     it('gives a generic message for an unknown code, and the message of a plain Error', function () {
@@ -754,10 +720,6 @@
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // eventText
-  // ---------------------------------------------------------------------------------------------
 
   describe('i18n: eventText', function () {
     function event(key, args, type) {
@@ -947,10 +909,6 @@
     }
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Coverage, computed from the code
-  // ---------------------------------------------------------------------------------------------
-
   describe('i18n: every key the code needs exists in both languages', function () {
     function checkBoth(title, required) {
       LOCALES.forEach(function (code) {
@@ -1039,7 +997,7 @@
       required.push('app.title');
       checkBoth('words', required);
       expect(SG.locales.en['app.title']).toBe('Sudoku Generator');
-      expect(SG.locales.vi['app.title']).toBe('Trình sinh Sudoku');
+      expect(SG.locales.vi['app.title']).toBe('Trình sinh đề Sudoku');
     });
 
     it('has the reasons and pass names that the dig events carry', function () {
@@ -1079,65 +1037,69 @@
 
     it('has the text of every solving step a technique can produce (read from core/js/engine/tech-*.js)',
       function () {
-      if (!NODE) SG.test.skip('needs the Node runner to read the sources');
-      packsReady();
-      var required = [];
-      var sources = readSources('js/engine', /^tech-.*\.js$/).concat(readSources('../core/js/engine', /^tech-.*\.js$/));
-      expect(sources.length).toBeGreaterThan(5);
-      sources.forEach(function (source) {
-        var kinds = allMatches(source.text, /\bKIND_[A-Z_]+ = '([A-Za-z]+)'/);
-        allMatches(source.text, /'(technique\.[A-Za-z0-9]+(?:\.[A-Za-z0-9]+)*\.?)'/).forEach(function (key) {
-          if (key.charAt(key.length - 1) !== '.') required.push(key);
-          else if (key !== 'technique.') kinds.forEach(function (kind) { required.push(key + kind); });
+        if (!NODE) SG.test.skip('needs the Node runner to read the sources');
+        packsReady();
+        var required = [];
+        var sources = readSources('js/engine', /^tech-.*\.js$/)
+          .concat(readSources('../core/js/engine', /^tech-.*\.js$/));
+        expect(sources.length).toBeGreaterThan(5);
+        sources.forEach(function (source) {
+          var kinds = allMatches(source.text, /\bKIND_[A-Z_]+ = '([A-Za-z]+)'/);
+          var keys = allMatches(source.text, /'(technique\.[A-Za-z0-9]+(?:\.[A-Za-z0-9]+)*\.?)'/);
+          keys.forEach(function (key) {
+            if (key.charAt(key.length - 1) !== '.') required.push(key);
+            else if (key !== 'technique.') kinds.forEach(function (kind) { required.push(key + kind); });
+          });
+          // simpleColouring is one key with two texts, chosen by args.rule
+          allMatches(source.text, /colouringFinding\([^;]*?digit, '([A-Za-z]+)'/).forEach(function (rule) {
+            required.push('technique.simpleColouring.step.' + rule);
+          });
         });
-        // simpleColouring is one key with two texts, chosen by args.rule
-        allMatches(source.text, /colouringFinding\([^;]*?digit, '([A-Za-z]+)'/).forEach(function (rule) {
-          required.push('technique.simpleColouring.step.' + rule);
+        // The techniques that build their step key from their id have a plain `.step` key.
+        SG.techniques.list().forEach(function (tech) {
+          var own = required.filter(function (key) { return key.indexOf(tech.i18nKey + '.') === 0; });
+          var hasStep = own.some(function (key) { return /step/.test(key); });
+          if (!hasStep) required.push(tech.i18nKey + '.step');
         });
+        expect(unique(required).length).toBeGreaterThan(30);
+        checkBoth('technique steps', required);
+        expect(unique(required)).toContain('technique.simpleColouring.step.wrap');
+        expect(unique(required)).toContain('technique.simpleColouring.step.trap');
+        expect(unique(required)).toContain('technique.forcingChain.step.contradiction');
       });
-      // The techniques that build their step key from their id have a plain `.step` key.
-      SG.techniques.list().forEach(function (tech) {
-        var own = required.filter(function (key) { return key.indexOf(tech.i18nKey + '.') === 0; });
-        var hasStep = own.some(function (key) { return /step/.test(key); });
-        if (!hasStep) required.push(tech.i18nKey + '.step');
-      });
-      expect(unique(required).length).toBeGreaterThan(30);
-      checkBoth('technique steps', required);
-      expect(unique(required)).toContain('technique.simpleColouring.step.wrap');
-      expect(unique(required)).toContain('technique.simpleColouring.step.trap');
-      expect(unique(required)).toContain('technique.forcingChain.step.contradiction');
-    });
 
-    it('has a message for every error code thrown in the engines, js/variants and the exchange, and the generic ones',
+    it('has a message for every error code thrown in the engines, js/variants and the exchange, ' +
+      'and the generic ones',
       function () {
-      if (!NODE) SG.test.skip('needs the Node runner to read the sources');
-      packsReady();
-      var codes = [];
-      readSources('js/engine', /\.js$/).concat(readSources('../core/js/engine', /\.js$/)).concat(readSources('js/variants', /\.js$/))
-        .concat(readSources('../core/js/ui', /^exchange\.js$/)).forEach(function (source) {
-        allMatches(source.text, /(?:GenerationError\(|\bfail\(|\berror\()\s*'([A-Za-z]+\.[A-Za-z]+)'/)
-          .forEach(function (code) { codes.push(code); });
-        allMatches(source.text, /_CODE\s*=\s*'([A-Za-z]+\.[A-Za-z]+)'/).forEach(function (code) {
-          codes.push(code);
+        if (!NODE) SG.test.skip('needs the Node runner to read the sources');
+        packsReady();
+        var codes = [];
+        var sources = readSources('js/engine', /\.js$/).concat(readSources('../core/js/engine', /\.js$/))
+          .concat(readSources('js/variants', /\.js$/)).concat(readSources('../core/js/ui', /^exchange\.js$/));
+        sources.forEach(function (source) {
+          allMatches(source.text, /(?:GenerationError\(|\bfail\(|\berror\()\s*'([A-Za-z]+\.[A-Za-z]+)'/)
+            .forEach(function (code) { codes.push(code); });
+          allMatches(source.text, /_CODE\s*=\s*'([A-Za-z]+\.[A-Za-z]+)'/).forEach(function (code) {
+            codes.push(code);
+          });
         });
+        codes = unique(codes).sort();
+        expect(codes.length).toBeGreaterThan(40);
+        expect(codes).toContain('budget.exceeded');
+        expect(codes).toContain('wordoku.noWordList');
+        var exchangeCodes = ['invalidToken', 'tooLarge', 'unsupportedEncoding', 'invalidJson', 'invalidUrl'];
+        exchangeCodes.forEach(function (name) { expect(codes).toContain('exchange.' + name); });
+        var required = codes.map(function (code) { return 'error.' + code; });
+        required.push('error.unknown', 'error.unexpected');
+        checkBoth('error codes', required);
       });
-      codes = unique(codes).sort();
-      expect(codes.length).toBeGreaterThan(40);
-      expect(codes).toContain('budget.exceeded');
-      expect(codes).toContain('wordoku.noWordList');
-      ['invalidToken', 'tooLarge', 'unsupportedEncoding', 'invalidJson', 'invalidUrl'].forEach(function (name) {
-        expect(codes).toContain('exchange.' + name);
-      });
-      var required = codes.map(function (code) { return 'error.' + code; });
-      required.push('error.unknown', 'error.unexpected');
-      checkBoth('error codes', required);
-    });
 
     it('has the warnings that PuzzleResult.warnings can hold, and the notices of the pipeline', function () {
       if (!NODE) SG.test.skip('needs the Node runner to read the sources');
       packsReady();
       var warnings = [];
-      readSources('js/engine', /\.js$/).concat(readSources('../core/js/engine', /\.js$/)).forEach(function (source) {
+      var sources = readSources('js/engine', /\.js$/).concat(readSources('../core/js/engine', /\.js$/));
+      sources.forEach(function (source) {
         allMatches(source.text, /warnings\.push\('([A-Za-z]+\.[A-Za-z]+)'\)/).forEach(function (key) {
           warnings.push(key);
         });
@@ -1149,10 +1111,6 @@
       checkBoth('warnings', warnings.concat(['extraStructure.wordFallback', 'retry.difficulty']));
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // The texts of real solving steps and errors, rendered with the arguments the code provides
-  // ---------------------------------------------------------------------------------------------
 
   describe('i18n: solving steps of the classic ladder', function () {
     var F = SG.fixtures && SG.fixtures.techniques;
@@ -1210,30 +1168,34 @@
       expect(plain).not.toBe(trap);
     });
 
-    it('writes the cage techniques without a sentence about a digit or a region that is not there', function () {
-      packsReady();
-      var combo = { sum: 19, size: 3, cells: ['R1C1', 'R2C1', 'R2C2'], digits: [2, 3, 4, 5, 6, 7, 8, 9], forced: [] };
-      var plain = I.t('technique.cageCombo.step', Object.assign({ rule: 'noForced' }, combo));
-      expect(plain).toContain('2, 3, 4, 5, 6, 7, 8, 9');
-      expect(plain).not.toContain('()');
-      var needed = I.t('technique.cageCombo.step', Object.assign({}, combo, { forced: [4] }));
-      expect(needed).toContain('(4)');
-      var inner = { kind: 'innie', units: ['R1'], sum: 12, cells: ['R1C1', 'R1C2'] };
-      var outer = Object.assign({}, inner, { kind: 'outie', rule: 'outie' });
-      expect(I.t('technique.ruleOf45.step', outer)).not.toBe(I.t('technique.ruleOf45.step', inner));
-      var last = { kind: 'outie', units: ['R1'], sum: 7, cell: 'R2C1', digit: 7 };
-      expect(I.t('technique.ruleOf45.place', Object.assign({ rule: 'outie' }, last)))
-        .not.toBe(I.t('technique.ruleOf45.place', last));
-      LOCALES.forEach(function (code) {
-        inLocale(code, function () {
-          [I.t('technique.cageCombo.step', Object.assign({ rule: 'noForced' }, combo)),
-            I.t('technique.ruleOf45.step', outer),
-            I.t('technique.ruleOf45.place', Object.assign({ rule: 'outie' }, last))].forEach(function (text) {
-            expect(/[{}]|undefined/.test(text)).toBe(false);
+    it('writes the cage techniques without a sentence about a digit or a region that is not there',
+      function () {
+        packsReady();
+        var combo = {
+          sum: 19, size: 3, cells: ['R1C1', 'R2C1', 'R2C2'], digits: [2, 3, 4, 5, 6, 7, 8, 9], forced: []
+        };
+        var plain = I.t('technique.cageCombo.step', Object.assign({ rule: 'noForced' }, combo));
+        expect(plain).toContain('2, 3, 4, 5, 6, 7, 8, 9');
+        expect(plain).not.toContain('()');
+        var needed = I.t('technique.cageCombo.step', Object.assign({}, combo, { forced: [4] }));
+        expect(needed).toContain('(4)');
+        var inner = { kind: 'innie', units: ['R1'], sum: 12, cells: ['R1C1', 'R1C2'] };
+        var outer = Object.assign({}, inner, { kind: 'outie', rule: 'outie' });
+        expect(I.t('technique.ruleOf45.step', outer)).not.toBe(I.t('technique.ruleOf45.step', inner));
+        var last = { kind: 'outie', units: ['R1'], sum: 7, cell: 'R2C1', digit: 7 };
+        expect(I.t('technique.ruleOf45.place', Object.assign({ rule: 'outie' }, last)))
+          .not.toBe(I.t('technique.ruleOf45.place', last));
+        LOCALES.forEach(function (code) {
+          inLocale(code, function () {
+            var texts = [I.t('technique.cageCombo.step', Object.assign({ rule: 'noForced' }, combo)),
+              I.t('technique.ruleOf45.step', outer),
+              I.t('technique.ruleOf45.place', Object.assign({ rule: 'outie' }, last))];
+            texts.forEach(function (text) {
+              expect(/[{}]|undefined/.test(text)).toBe(false);
+            });
           });
         });
       });
-    });
 
     it('writes a forcing chain with the labels of the board', function () {
       packsReady();
@@ -1251,16 +1213,10 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // index.html
-  // ---------------------------------------------------------------------------------------------
-
   describe('i18n: index.html', function () {
     function readIndex() {
       if (!NODE) SG.test.skip('needs the Node runner to read index.html');
-      var file = NODE.path.join(NODE.root, 'index.html');
-      if (!NODE.fs.existsSync(file)) SG.test.skip('index.html does not exist yet');
-      return NODE.fs.readFileSync(file, 'utf8');
+      return NODE.fs.readFileSync(NODE.path.join(NODE.root, 'index.html'), 'utf8');
     }
 
     function usedKeys(html) {

@@ -1,31 +1,24 @@
 /**
- * `SG.a11y`: everything the page needs on top of the markup of the other modules, added through the app events and
- * the DOM, never by changing their code.
- *   - the board as an ARIA grid: the root `<svg>` gets `role="grid"` (the title and description stay its name and
- *     description), the cell rectangles of `layer-cells` move into `<g role="row">` groups and get `role="gridcell"`,
- *     `aria-rowindex` / `aria-colindex` (canvas position: the holes of a multi-grid canvas are simply not there) and
- *     a translated `aria-label`; every other layer is `aria-hidden` (the label carries the value, cage sum and
- *     signs). One cell is in the tab order (roving tabindex); arrow keys, Home, End, Ctrl+Home, Ctrl+End, Page Up and
- *     Page Down move between REAL cells (holes are skipped); Enter and Space send the click of the cell to the board
- *     when it has a click hook (`setInteractive(true)` + `setOnCellClick`). A focus ring is drawn on top of the board
- *     (`.a11y-ring`).
- *   - labels follow the DOM of the board: a MutationObserver on the value and cell layers re-labels only the cells
- *     that changed; a locale change re-labels all of them.
- *   - `aria-live` announcements, de-duplicated and rate limited, via `SG.app.announce`: the start of a generation
- *     ('generate:start') and a language change. Steps are never announced here: the generator runs at full speed,
- *     and during the replay the status line (`#status-line`, polite) reads every step.
- *   - the Settings dialog (`action {id: 'settings'}` -> `SG.app.openModal`): theme, text size, reduced motion and the
- *     colour-blind symbol go through the store (`SG.store`, no new storage key); the board coordinates and the
- *     background pre-generation (`SG.cache.setEnabled`) are session settings (no stored preference).
- *   - the skip link moves the focus to `#main`; toasts and live announcements stay visible and audible while a modal
- *     dialog is open.
+ * `SG.a11y` (design.md 10.7): what the page needs on top of the markup of the other modules, added through
+ * the app events and the DOM, never by changing their code.
+ *   - The board as an ARIA grid: cells get `role="gridcell"` inside `<g role="row">` groups, canvas
+ *     `aria-rowindex` / `aria-colindex` (holes of a multi-grid canvas are left out) and a translated label
+ *     that carries the value, cage sum and signs; every other layer is `aria-hidden`. Roving tabindex; the
+ *     navigation keys move between real cells; Enter and Space click a cell when the board has a click hook.
+ *     A MutationObserver re-labels only the cells that changed; a locale change re-labels all of them.
+ *   - Live announcements (`SG.app.announce`, de-duplicated and rate limited) of the start of a generation and
+ *     of a language change. Replay steps are read by the step panel (`#step-detail`, polite), not here.
+ *   - The Settings dialog: theme, text size, reduced motion and the colour-blind symbol go through the store;
+ *     the board coordinates and the background pre-generation (`SG.cache.setEnabled`) are session settings.
+ *   - The skip link focuses `#main`; toasts and live regions move into an open modal dialog.
  * Pure part (runs in Node): `cellPosition`, `cellExtras`, `valueInfo`, `cellLabel`, `moveTarget`, `pageStep`,
  * `createAnnouncer`.
- * API: init(app) (idempotent, called by app.js; true when running), destroy(), openSettings() (returns the modal; the
- * 'settings' action does the same), closeSettings(), getGrid() (the grid controller or null: `{ labelOf(i),
- * focusCell(i), current(), refresh(), apply(), destroy() }`; 'cellfocus' ({ cell }) is emitted through `SG.app.emit`
- * whenever a cell takes the focus), attachGrid(board, hooks?) (the grid controller for another board view), plus the
- * pure helpers, `NAV_KEYS`, `THEME_CHOICES`, `FONT_CHOICES` and `APPEARANCE_DEFAULTS`.
+ * API: init(app) (idempotent, called by app.js; true when running), destroy(), openSettings() (returns the
+ * modal; the 'settings' action does the same), closeSettings(), getGrid() (the grid controller or null: `{
+ * labelOf(i), focusCell(i), current(), refresh(), apply(), destroy() }`; 'cellfocus' ({ cell }) is emitted
+ * through `SG.app.emit` whenever a cell takes the focus), attachGrid(board, hooks?) (the grid controller for
+ * another board view), plus the pure helpers, `NAV_KEYS`, `THEME_CHOICES`, `FONT_CHOICES` and
+ * `APPEARANCE_DEFAULTS`.
  */
 (function (root) {
   'use strict';
@@ -48,11 +41,10 @@
     return SG.i18n.t(key, args);
   }
 
-  function logError(err) {
-    if (typeof console !== 'undefined' && typeof console.error === 'function') console.error(err);
-  }
-
-  /** Where a cell is: `{ grid: 0, row, col }` (1-based) on single boards; on multi-grid boards the coordinates are those of the first sub-grid that holds the cell (numbering of `SG.model.cellLabel`, 'G2-R4C7') and `shared` lists the other grids that hold it (overlap cells). */
+  /**
+   * `{ grid: 0, row, col }` (1-based) on single boards; on multi-grid boards the position in the first
+   * sub-grid that holds the cell (as `SG.model.cellLabel`) and `shared`, the other grids that hold it.
+   */
   function cellPosition(geo, i) {
     const row = geo.cellRow[i];
     const col = geo.cellCol[i];
@@ -84,7 +76,10 @@
     return null;
   }
 
-  /** What a cell label says besides position and value: the cage sum (Killer) and the inequality signs of its edges (Greater-Than; 'less' = the cell is smaller than that neighbour). `geo.cages` is [{cells, sum}], `geo.signs` [{a, b}] with value[a] < value[b]. */
+  /**
+   * Cage sums (Killer) and the signs of each cell's edges (Greater-Than; 'less' = smaller than that
+   * neighbour). `geo.cages` is [{cells, sum}], `geo.signs` [{a, b}] with value[a] < value[b].
+   */
   function cellExtras(geo) {
     const cage = new Map();
     const relations = new Map();
@@ -103,7 +98,9 @@
     return { cage: cage, relations: relations };
   }
 
-  /** `raw.kind` is 'given' | 'placed' | 'solution'; the result `state` is 'empty' | 'value' | 'given' | 'solution'. */
+  /**
+   * `raw.kind`: 'given' | 'placed' | 'solution'; result `state`: 'empty' | 'value' | 'given' | 'solution'.
+   */
   function valueInfo(raw) {
     const symbols = SG.symbols;
     let value = raw.text;
@@ -117,7 +114,10 @@
     return { state: raw.kind === 'given' || raw.kind === 'solution' ? raw.kind : 'value', value: value };
   }
 
-  /** The accessible name of a cell: 'Row 4, column 7, value 5' ('Hàng 4, cột 7, giá trị 5'); multi-grid boards say 'Grid 2, row 4, column 7'; empty cells say 'empty'; a Killer cell adds 'cage sum 15'; a Greater-Than cell adds 'less than the cell to the right'. */
+  /**
+   * 'Row 4, column 7, value 5'; multi-grid: 'Grid 2, row 4, ...'; Killer adds the cage sum, Greater-Than the
+   * signs.
+   */
   function cellLabel(info, translate) {
     const tr = typeof translate === 'function' ? translate : t;
     const parts = [info.grid > 0
@@ -157,7 +157,10 @@
     return Math.max(2, Math.round(Math.sqrt(digits)));
   }
 
-  /** Where a navigation key moves the focus: a hole of the canvas is skipped (the next real cell in that direction is taken), nothing wraps around. `ctrl`: Home / End go to the first / last cell of the whole board. Returns `from` when the key does not move. */
+  /**
+   * Where a navigation key moves the focus: holes of the canvas are skipped, nothing wraps around. With
+   * `ctrl`, Home / End go to the first / last cell of the board. Returns `from` when the key does not move.
+   */
   function moveTarget(geo, from, key, ctrl) {
     const row = geo.cellRow[from];
     const col = geo.cellCol[from];
@@ -199,11 +202,11 @@
   }
 
   /**
-   * A de-duplicating, rate-limited speaker. A text is said at once when the last one is older than `minGap` (1500 ms);
-   * otherwise it waits (the newest waiting text replaces older ones) and is said when the gap is over. The same text
-   * is not said twice within `repeatWindow` (6000 ms). `hold(ms)` keeps the next text from being said for `ms` (the app
-   * has just said something important). Options: `say(text)`, `now`, `setTimer`, `clearTimer` (defaults: `Date.now`,
-   * `setTimeout`, `clearTimeout`).
+   * A de-duplicating, rate-limited speaker. A text is said at once when the last one is older than `minGap`
+   * (1500 ms); otherwise it waits (the newest waiting text replaces older ones) and is said when the gap is
+   * over. The same text is not said twice within `repeatWindow` (6000 ms). `hold(ms)` keeps the next text
+   * from being said for `ms` (the app has just said something important). Options: `say(text)`, `now`,
+   * `setTimer`, `clearTimer` (defaults: `Date.now`, `setTimeout`, `clearTimeout`).
    */
   function createAnnouncer(options) {
     const o = Object.assign({
@@ -959,10 +962,10 @@
       'a11y.cell.posGrid': 'Lưới {grid}, hàng {row}, cột {col}',
       'a11y.cell.empty': 'trống',
       'a11y.cell.value': 'giá trị {value}',
-      'a11y.cell.given': 'giá trị {value}, số đã cho',
+      'a11y.cell.given': 'giá trị {value}, số cho sẵn',
       'a11y.cell.solution': 'đáp án {value}',
       'a11y.cell.shared': 'cũng thuộc lưới {grids}',
-      'a11y.cell.cage': 'tổng nhóm ô {sum}',
+      'a11y.cell.cage': 'tổng lồng {sum}',
       'a11y.cell.less': 'nhỏ hơn ô {dir}',
       'a11y.cell.greater': 'lớn hơn ô {dir}',
       'a11y.dir.up': 'phía trên',
@@ -993,8 +996,8 @@
       'a11y.settings.pregen.hint': 'Khi trang rảnh, các đề theo thiết lập hiện tại được tạo sẵn, nên đề ' +
         'tiếp theo hiện ra ngay. Sẽ không được nhớ sau khi tải lại trang.',
       'a11y.settings.coords.label': 'Hiện số hàng và cột',
-      'a11y.settings.coords.hint': 'Thêm số và chữ quanh bảng. Sẽ không được nhớ sau khi tải lại trang.',
-      'a11y.settings.keys': 'Bàn phím: phím Tab chuyển giữa các vùng của trang. Trên bảng, các phím mũi ' +
+      'a11y.settings.coords.hint': 'Thêm số và chữ quanh bàn cờ. Sẽ không được nhớ sau khi tải lại trang.',
+      'a11y.settings.keys': 'Bàn phím: phím Tab chuyển giữa các vùng của trang. Trên bàn cờ, các phím mũi ' +
         'tên, Home, End, Page Up và Page Down di chuyển giữa các ô, còn Enter hoặc Space để chọn ô.',
       'a11y.settings.reset': 'Khôi phục mặc định'
     }

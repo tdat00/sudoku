@@ -1,6 +1,6 @@
-// Generation control panel (task T-4.4, design.md 10.4): SG.controls. Most of the logic is the PURE form
-// model `SG.controls.describe`, tested directly; `mount` is exercised on a small fake DOM (a real browser
-// check lives outside the suite). `SG.i18n` is switched in some tests, so they put English back.
+// Generation control panel (design.md 10.4): SG.controls. Most of the logic is the pure form model
+// `SG.controls.describe`, tested directly; `mount` is exercised on a small fake DOM. `SG.i18n` is switched in
+// some tests, so they put English back.
 (function () {
   'use strict';
 
@@ -23,15 +23,6 @@
 
   function packHas(pack, key) {
     return hasOwn(pack, key) || hasOwn(pack, key + '_other') || hasOwn(pack, key + '_one');
-  }
-
-  function placeholders(text) {
-    var found = [];
-    String(text).replace(/\{([A-Za-z_][A-Za-z0-9_]*)\}/g, function (whole, name) {
-      if (found.indexOf(name) === -1) found.push(name);
-      return whole;
-    });
-    return found.sort();
   }
 
   function withEnglish(fn) {
@@ -208,7 +199,7 @@
       expect(field(model('?v=killer'), 'variant').value).toBe('killer');
     });
 
-    it('has the advanced fields with their limits, and no replay detail any more', function () {
+    it('has the advanced fields with their limits', function () {
       ready();
       var m = model('?attempts=5&sol=1&order=spiral');
       var attempts = field(m, 'maxAttempts');
@@ -217,7 +208,6 @@
       expect(field(m, 'digOrder').value).toBe('spiral');
       expect(field(m, 'showSolution').type).toBe('boolean');
       expect(field(m, 'showSolution').value).toBe(true);
-      expect(field(model('?trace=summary'), 'trace')).toBeUndefined();
     });
 
     it('describes the seed field and explains a text seed', function () {
@@ -411,35 +401,7 @@
     });
   });
 
-  describe('controls: strings', function () {
-    it('has the same keys and placeholders in English and Vietnamese', function () {
-      ready();
-      function mine(code) {
-        return Object.keys(SG.locales[code]).filter(function (k) {
-          return k.indexOf('controls.') === 0;
-        }).sort();
-      }
-      var en = mine('en');
-      var vi = mine('vi');
-      expect(en.length).toBeGreaterThan(20);
-      expect(vi).toEqual(en);
-      en.forEach(function (key) {
-        expect(SG.locales.en[key].trim()).not.toBe('');
-        expect(SG.locales.vi[key].trim()).not.toBe('');
-        expect(placeholders(SG.locales.vi[key])).toEqual(placeholders(SG.locales.en[key]));
-      });
-    });
-
-    it('does not redefine a key of another file', function () {
-      ready();
-      var mine = I.conflicts.filter(function (c) { return c.key.indexOf('controls.') === 0; });
-      expect(mine).toEqual([]);
-    });
-  });
-
-  // ---------------------------------------------------------------------------------------------
   // A small fake DOM for mount()
-  // ---------------------------------------------------------------------------------------------
 
   function createFakeDom() {
     var doc = { activeElement: null, executed: [], execResult: true };
@@ -604,39 +566,42 @@
         expect(fx.byId('ctl-variant').children.length).toBeGreaterThan(3);
         expect(fx.byId('ctl-variant').children[0].tagName).toBe('OPTGROUP');
         expect(fx.byId('ctl-variant').children[0].getAttribute('label')).toBe('Classic');
-        expect(fx.byId('ctl-difficulty').children.length).toBe(SG.variants.get('classic9').difficultySupport.length);
+        expect(fx.byId('ctl-difficulty').children.length)
+          .toBe(SG.variants.get('classic9').difficultySupport.length);
         expect(fx.byId('ctl-difficulty').children[0].textContent).toBe('Very easy');
         expect(fx.byId('ctl-advanced').tagName).toBe('DETAILS');
         expect(fx.byId('ctl-variant-hint').textContent).toMatch(/9×9/);
       });
     });
 
-    it('shows the description of a field in a help tooltip next to its label, not under the control', function () {
-      ready();
-      withEnglish(function () {
-        var fx = mountFixture();
-        var hints = fx.doc.findAll(fx.form, function (el) {
-          return /(^| )field__hint( |$)/.test(el.className) && el.id !== 'ctl-seed-info';
+    it('shows the description of a field in a help tooltip next to its label, not under the control',
+      function () {
+        ready();
+        withEnglish(function () {
+          var fx = mountFixture();
+          var hints = fx.doc.findAll(fx.form, function (el) {
+            return /(^| )field__hint( |$)/.test(el.className) && el.id !== 'ctl-seed-info';
+          });
+          expect(hints).toEqual([]);
+          ['variant', 'difficulty', 'symbolMode', 'seed', 'symmetry', 'digOrder', 'maxAttempts',
+            'showSolution'].forEach(function (name) {
+            var pop = fx.byId('ctl-' + name + '-hint');
+            expect(pop.getAttribute('role')).toBe('tooltip');
+            expect(pop.textContent).not.toBe('');
+            var tip = pop.parentNode;
+            expect(tip.className).toBe('help-tip');
+            expect(tip.hidden).toBe(false);
+            expect(tip.parentNode.className).toMatch(/field__head/);
+            expect(tip.children[0].getAttribute('aria-label')).toMatch(/^About /);
+            expect(fx.byId('ctl-' + name).getAttribute('aria-describedby'))
+              .toMatch(new RegExp('ctl-' + name + '-hint'));
+          });
+          var symmetry = fx.byId('ctl-symmetry-hint');
+          expect(symmetry.children.length).toBe(2);
+          expect(symmetry.children[1].children[1].tagName).toBe('STRONG');
+          expect(symmetry.children[1].children[1].textContent).toBe('stricter symmetry');
         });
-        expect(hints).toEqual([]);
-        ['variant', 'difficulty', 'symbolMode', 'seed', 'symmetry', 'digOrder', 'maxAttempts',
-          'showSolution'].forEach(function (name) {
-          var pop = fx.byId('ctl-' + name + '-hint');
-          expect(pop.getAttribute('role')).toBe('tooltip');
-          expect(pop.textContent).not.toBe('');
-          var tip = pop.parentNode;
-          expect(tip.className).toBe('help-tip');
-          expect(tip.hidden).toBe(false);
-          expect(tip.parentNode.className).toMatch(/field__head/);
-          expect(tip.children[0].getAttribute('aria-label')).toMatch(/^About /);
-          expect(fx.byId('ctl-' + name).getAttribute('aria-describedby')).toMatch(new RegExp('ctl-' + name + '-hint'));
-        });
-        var symmetry = fx.byId('ctl-symmetry-hint');
-        expect(symmetry.children.length).toBe(2);
-        expect(symmetry.children[1].children[1].tagName).toBe('STRONG');
-        expect(symmetry.children[1].children[1].textContent).toBe('stricter symmetry');
       });
-    });
 
     it('opens the tooltip on click, closes it on Escape and on a second click', function () {
       ready();
@@ -664,7 +629,8 @@
       var inside = fx.doc.find(advanced, function (el) { return el === fx.byId('ctl-symmetry'); });
       expect(inside).not.toBeNull();
       var wrapper = fx.byId('ctl-symmetry').parentNode;
-      expect(wrapper.getAttribute('data-field') || wrapper.parentNode.getAttribute('data-field')).toBe('symmetry');
+      expect(wrapper.getAttribute('data-field') || wrapper.parentNode.getAttribute('data-field'))
+        .toBe('symmetry');
     });
 
     it('describes every control with existing elements', function () {

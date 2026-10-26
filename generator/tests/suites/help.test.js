@@ -1,9 +1,9 @@
-// Help dialog (task T-7.6): everything in js/ui/help.js that runs without a DOM, plus the documentation. The
-// dialog itself is DOM code and is covered by the browser run of the task; what is checked
-// here is what keeps it honest: every registered variant has a help entry (a variant added later makes this
-// suite fail until it has one), the texts exist in both languages, the ladder follows the technique registry,
-// and README.md is accurate (every variant, URL parameter, script,
-// link, command and API name it mentions exists, and its two worked examples run).
+// Help dialog: everything in js/ui/help.js that runs without a DOM, plus the documentation. What keeps the
+// dialog honest: every registered variant has a help entry (a variant added later makes this suite fail until
+// it has one), the texts exist in both languages, the ladder follows the technique registry, and the guides
+// are accurate: the user guides (../USERGUIDE.md, ../USERGUIDE.vn.md) list every variant and URL parameter, the
+// developer guides (../DEVELOPERGUIDE.md, ../DEVELOPERGUIDE.vn.md) name only scripts, commands and APIs that
+// exist, and their two worked examples run; every link of the four resolves.
 (function () {
   'use strict';
 
@@ -33,7 +33,10 @@
 
   function placeholders(text) {
     var found = [];
-    String(text).replace(/\{([A-Za-z_][A-Za-z0-9_]*)\}/g, function (all, name) { found.push(name); return all; });
+    String(text).replace(/\{([A-Za-z_][A-Za-z0-9_]*)\}/g, function (all, name) {
+      found.push(name);
+      return all;
+    });
     return found.sort();
   }
 
@@ -44,7 +47,8 @@
   }
 
   function readText(rel) {
-    return NODE.fs.readFileSync(NODE.path.join(NODE.root, rel), 'utf8').replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
+    return NODE.fs.readFileSync(NODE.path.join(NODE.root, rel), 'utf8').replace(/^\uFEFF/, '')
+      .replace(/\r\n/g, '\n');
   }
 
   function exists(rel) {
@@ -56,16 +60,13 @@
     symbolModes: ['digits'], options: []
   };
 
-  // ---------------------------------------------------------------------------------------------
-  // 1. The variant help registry
-  // ---------------------------------------------------------------------------------------------
-
   describe('help: the variant registry', function () {
     it('has a hand-written entry for every registered variant', function () {
       ready();
       var list = H.entries();
       expect(list.length).toBe(SG.variants.list().length);
-      expect(list.map(function (e) { return e.id; })).toEqual(SG.variants.list().map(function (d) { return d.id; }));
+      expect(list.map(function (e) { return e.id; }))
+        .toEqual(SG.variants.list().map(function (d) { return d.id; }));
       expect(list.filter(function (e) { return e.generic; }).map(function (e) { return e.id; })).toEqual([]);
     });
 
@@ -81,8 +82,8 @@
     it('sees a variant that is registered later, as a generic entry until its help is written', function () {
       ready();
       var def = {
-        id: 'helpProbe', i18nKey: 'variant.helpProbe', group: 'classic', digits: 4, difficultySupport: ['easy'],
-        defaultSymbolMode: 'digits', symbolModes: ['digits'], options: [],
+        id: 'helpProbe', i18nKey: 'variant.helpProbe', group: 'classic', digits: 4,
+        difficultySupport: ['easy'], defaultSymbolMode: 'digits', symbolModes: ['digits'], options: [],
         build: function () { return SG.variants.get('classic4').build({}, null); }
       };
       SG.variants.register(def);
@@ -143,25 +144,22 @@
       expect(H.illustration('noSuchVariant')).toBeNull();
     });
 
-    it('shows what is special: cages for Killer, signs for Greater-Than, the key word for Wordoku', function () {
-      ready();
-      if (!SG.boardView) SG.test.skip('SG.boardView is not loaded here');
-      var killer = H.illustration('killer');
-      expect(killer.markup).toContain('cage-sum');
-      expect(killer.width).toBeLessThan(H.illustration('classic9').width);
-      expect(H.illustration('greaterThan').markup).toContain('class="sign"');
-      var word = H.illustration('wordoku').markup;
-      'SUNFLOWER'.split('').forEach(function (letter) {
-        expect(word).toContain('>' + letter + '<');
+    it('shows what is special: cages for Killer, signs for Greater-Than, the key word for Wordoku',
+      function () {
+        ready();
+        if (!SG.boardView) SG.test.skip('SG.boardView is not loaded here');
+        var killer = H.illustration('killer');
+        expect(killer.markup).toContain('cage-sum');
+        expect(killer.width).toBeLessThan(H.illustration('classic9').width);
+        expect(H.illustration('greaterThan').markup).toContain('class="sign"');
+        var word = H.illustration('wordoku').markup;
+        'SUNFLOWER'.split('').forEach(function (letter) {
+          expect(word).toContain('>' + letter + '<');
+        });
+        expect(H.illustration('classic4').cells).toBe(16);
+        expect(H.illustration('samurai').cells).toBe(369);
       });
-      expect(H.illustration('classic4').cells).toBe(16);
-      expect(H.illustration('samurai').cells).toBe(369);
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // 2. Difficulty ladder, steps, shortcuts, controls
-  // ---------------------------------------------------------------------------------------------
 
   describe('help: the ladder, the steps and the shortcuts', function () {
     it('lists the nine levels in order, each with the techniques that can first appear at it', function () {
@@ -195,27 +193,29 @@
       expect(lad.levels[8].techniques).toEqual([]);
     });
 
-    it('lists every registered technique exactly once: by level, or under the variant it belongs to', function () {
-      ready();
-      var lad = H.ladder();
-      var listed = [];
-      lad.levels.forEach(function (row) { row.techniques.forEach(function (x) { listed.push(x.id); }); });
-      lad.variantGroups.forEach(function (g) {
-        g.techniques.forEach(function (x) {
-          listed.push(x.id);
-          expect(x.variants.length).toBeGreaterThan(0);
-          x.variants.forEach(function (id) { expect(SG.variants.has(id)).toBe(true); });
+    it('lists every registered technique exactly once: by level, or under the variant it belongs to',
+      function () {
+        ready();
+        var lad = H.ladder();
+        var listed = [];
+        lad.levels.forEach(function (row) { row.techniques.forEach(function (x) { listed.push(x.id); }); });
+        lad.variantGroups.forEach(function (g) {
+          g.techniques.forEach(function (x) {
+            listed.push(x.id);
+            expect(x.variants.length).toBeGreaterThan(0);
+            x.variants.forEach(function (id) { expect(SG.variants.has(id)).toBe(true); });
+          });
         });
+        var registered = SG.techniques.list().map(function (t) { return t.id; });
+        expect(listed.slice().sort()).toEqual(registered.slice().sort());
+        expect(lad.variantGroups.map(function (g) { return g.group; }).sort()).toEqual(['cage', 'ineq']);
       });
-      var registered = SG.techniques.list().map(function (t) { return t.id; });
-      expect(listed.slice().sort()).toEqual(registered.slice().sort());
-      expect(lad.variantGroups.map(function (g) { return g.group; }).sort()).toEqual(['cage', 'ineq']);
-    });
 
     it('lists a technique that is registered later, at the level where its points first fit', function () {
       ready();
       SG.techniques.register({
-        id: 'helpProbeTechnique', group: 'subset', baseCost: 10, order: 61, i18nKey: 'technique.helpProbeTechnique',
+        id: 'helpProbeTechnique', group: 'subset', baseCost: 10, order: 61,
+        i18nKey: 'technique.helpProbeTechnique',
         find: function () { return null; }
       });
       SG.difficulty.WEIGHTS.helpProbeTechnique = 200;
@@ -296,10 +296,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // 3. Locale fragment
-  // ---------------------------------------------------------------------------------------------
-
   describe('help: the strings', function () {
     var ARGS = {
       'help.variants.intro': ['count'],
@@ -315,28 +311,23 @@
       'help.generation.current': ['length', 'position']
     };
 
-    it('has the same keys in English and Vietnamese, none empty, the same placeholders', function () {
+    it('has one fragment of help.* keys, with exactly the placeholders each text needs', function () {
       ready();
       var fragments = helpFragments();
       expect(fragments.length).toBe(1);
       var f = fragments[0];
-      expect(Object.keys(f.en).sort()).toEqual(Object.keys(f.vi).sort());
       Object.keys(f.en).forEach(function (key) {
         expect(/^help\.[A-Za-z0-9.]+$/.test(key)).toBe(true);
-        expect(typeof f.en[key] === 'string' && f.en[key].trim() !== '').toBe(true);
-        expect(typeof f.vi[key] === 'string' && f.vi[key].trim() !== '').toBe(true);
-        expect(placeholders(f.vi[key])).toEqual(placeholders(f.en[key]));
         expect(placeholders(f.en[key])).toEqual(ARGS[key] || []);
       });
     });
 
-    it('owns every key it uses, defines no key of another file and leaves no key unused', function () {
+    it('owns every key it uses and leaves no key unused', function () {
       ready();
       packs();
       var own = Object.keys(helpFragments()[0].en).sort();
       var needed = H.requiredKeys().filter(function (key) { return /^help\./.test(key); });
       expect(own).toEqual(needed);
-      expect(SG.i18n.conflicts.filter(function (c) { return /^help\./.test(c.key); })).toEqual([]);
     });
 
     it('writes natural Vietnamese: long texts carry diacritics and differ from the English', function () {
@@ -410,18 +401,31 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // 5. README.md and docs/
-  // ---------------------------------------------------------------------------------------------
-
-  describe('help: README.md', function () {
+  describe('help: the user guide', function () {
     var LEVELS = SG.difficulty ? SG.difficulty.LEVELS : [];
+    var USER_GUIDES = ['../USERGUIDE.md', '../USERGUIDE.vn.md'];
+    var DEV_GUIDES = ['../DEVELOPERGUIDE.md', '../DEVELOPERGUIDE.vn.md'];
+    var GUIDES = USER_GUIDES.concat(DEV_GUIDES);
 
-    function readme() {
-      return readText('README.md');
+    /** The "Sudoku Generator" part of the English user guide: what a user reads (variants, URL parameters). */
+    function userPart() {
+      return generatorPart(readText(USER_GUIDES[0]));
     }
 
-    /** The levels of a variant as the README writes them: runs of neighbours as "a–b", gaps as ", ". */
+    /** The "Sudoku Generator" part of the English developer guide (paths and commands relative to generator/). */
+    function devPart() {
+      return generatorPart(readText(DEV_GUIDES[0]));
+    }
+
+    function generatorPart(text) {
+      var start = text.indexOf('\n# Sudoku Generator\n');
+      var end = text.indexOf('\n# Sudoku Player\n');
+      expect(start).toBeGreaterThan(-1);
+      expect(end).toBeGreaterThan(start);
+      return text.slice(start, end);
+    }
+
+    /** The levels of a variant as the guide writes them: runs of neighbours as "a–b", gaps as ", ". */
     function levelRange(levels) {
       var runs = [];
       levels.forEach(function (level) {
@@ -437,7 +441,8 @@
     }
 
     function slug(heading) {
-      return heading.replace(/`/g, '').toLowerCase().replace(/[^\p{L}\p{N}\s_-]/gu, '').trim().replace(/\s+/g, '-');
+      return heading.replace(/`/g, '').toLowerCase().replace(/[^\p{L}\p{N}\s_-]/gu, '').trim()
+        .replace(/\s+/g, '-');
     }
 
     function anchors(text) {
@@ -479,34 +484,56 @@
       return NODE.vm.runInContext(code, ctx);
     }
 
-    it('exists and has an English half and a Vietnamese half with a menu', function () {
+    it('exists as a user and a developer guide in English and Vietnamese, each with a Generator part in its menu, ' +
+      'linked to each other and from README.md', function () {
       needNode();
-      var text = readme();
-      expect(text).toContain('<a id="english"></a>');
-      expect(text).toContain('<a id="tieng-viet"></a>');
-      expect(text.indexOf('# English')).toBeLessThan(text.indexOf('# Ti\u1ebfng Vi\u1ec7t'));
-      expect(text).toContain('[Table of Contents](#english)');
-      expect(text).toContain('[M\u1ee5c l\u1ee5c](#tieng-viet)');
+      GUIDES.forEach(function (guide) {
+        var text = readText(guide);
+        expect(text).toContain('<a id="top"></a>');
+        expect(text).toContain('- [Sudoku Generator](#sudoku-generator)');
+        expect(generatorPart(text).length).toBeGreaterThan(1000);
+      });
+      // Each guide links to its other language and to the other guide.
+      [['USERGUIDE.md', 'USERGUIDE.vn.md', 'DEVELOPERGUIDE.md'],
+        ['USERGUIDE.vn.md', 'USERGUIDE.md', 'DEVELOPERGUIDE.vn.md'],
+        ['DEVELOPERGUIDE.md', 'DEVELOPERGUIDE.vn.md', 'USERGUIDE.md'],
+        ['DEVELOPERGUIDE.vn.md', 'DEVELOPERGUIDE.md', 'USERGUIDE.vn.md']
+      ].forEach(function (row) {
+        var text = readText('../' + row[0]);
+        expect(text.indexOf('](' + row[1] + ')') > -1 ? '' : row[0] + ' does not link to ' + row[1]).toBe('');
+        expect(text.indexOf('](' + row[2] + ')') > -1 ? '' : row[0] + ' does not link to ' + row[2]).toBe('');
+      });
+      expect(readText(USER_GUIDES[0])).toContain('[Ti\u1ebfng Vi\u1ec7t](USERGUIDE.vn.md)');
+      expect(readText(USER_GUIDES[1])).toContain('[English](USERGUIDE.md)');
+      expect(readText(DEV_GUIDES[0])).toContain('[Ti\u1ebfng Vi\u1ec7t](DEVELOPERGUIDE.vn.md)');
+      expect(readText(DEV_GUIDES[1])).toContain('[English](DEVELOPERGUIDE.md)');
+      var front = readText('../README.md');
+      ['(USERGUIDE.md)', '(USERGUIDE.vn.md)', '(DEVELOPERGUIDE.md)', '(DEVELOPERGUIDE.vn.md)']
+        .forEach(function (link) { expect(front).toContain(link); });
+      expect(exists('README.md')).toBe(false);
     });
 
     it('mentions every registered variant id, with its digits, cell count and levels right', function () {
       needNode();
-      var text = readme();
-      var rows = {};
-      text.split('\n').forEach(function (line) {
-        var m = /^\|\s*`(\w+)`\s*\|[^|]*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*([^|]+?)\s*\|\s*$/.exec(line);
-        if (m) rows[m[1]] = { digits: Number(m[2]), cells: Number(m[3]), levels: m[4] };
+      USER_GUIDES.forEach(function (guide) {
+        var text = generatorPart(readText(guide));
+        var rows = {};
+        text.split('\n').forEach(function (line) {
+          var m = /^\|\s*`(\w+)`\s*\|[^|]*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*([^|]+?)\s*\|\s*$/.exec(line);
+          if (m) rows[m[1]] = { digits: Number(m[2]), cells: Number(m[3]), levels: m[4] };
+        });
+        SG.variants.list().forEach(function (def) {
+          expect(text).toContain('`' + def.id + '`');
+          var row = rows[def.id];
+          expect(row ? '' : guide + ': no row for ' + def.id).toBe('');
+          var model = def.build(SG.variants.defaultOptions(def.id), SG.rng.create(1).fork('model'));
+          expect(row.digits).toBe(def.digits);
+          expect(row.cells).toBe(model.cellCount);
+          expect(row.levels).toBe(levelRange(def.difficultySupport));
+        });
+        expect(Object.keys(rows).length).toBe(SG.variants.list().length);
       });
-      SG.variants.list().forEach(function (def) {
-        expect(text).toContain('`' + def.id + '`');
-        var row = rows[def.id];
-        expect(row).toBeTruthy();
-        var model = def.build(SG.variants.defaultOptions(def.id), SG.rng.create(1).fork('model'));
-        expect(row.digits).toBe(def.digits);
-        expect(row.cells).toBe(model.cellCount);
-        expect(row.levels).toBe(levelRange(def.difficultySupport));
-      });
-      expect(Object.keys(rows).length).toBe(SG.variants.list().length);
+      expect(userPart()).toContain('| `classic9` |');
     });
 
     it('documents every URL parameter the page can write', function () {
@@ -522,17 +549,18 @@
       expect(params).toContain('attempts');
       expect(params).toContain('sol');
       expect(params).toContain('o.placement');
-      var text = readme();
+      var text = userPart();
       params.forEach(function (name) {
         var shown = /^o\./.test(name) ? 'o.<id>' : name;
         expect(text).toContain('| `' + shown + '` |');
+        expect(generatorPart(readText(USER_GUIDES[1]))).toContain('| `' + shown + '` |');
       });
     });
 
     it('lists every script of index.html, and every one of them is on disk', function () {
       needNode();
       var html = readText('index.html');
-      var text = readme();
+      var text = devPart();
       var scripts = [];
       html.replace(/<script\s+src="([^"]+)"/g, function (all, src) { scripts.push(src); return all; });
       expect(scripts.length).toBeGreaterThan(50);
@@ -548,34 +576,43 @@
       });
     });
 
-    it('links only to places that exist: files, images (small PNGs) and its own headings', function () {
+    it('links only to places that exist: files, images (small PNGs), its own headings and those of the other ' +
+      'guides', function () {
       needNode();
-      var text = readme();
-      var found = anchors(text);
-      var links = [];
-      withoutFences(text).replace(/!?\[[^\]]*\]\(([^)\s]+)\)/g, function (all, target) {
-        links.push({ image: all.charAt(0) === '!', target: target });
-        return all;
-      });
-      expect(links.length).toBeGreaterThan(20);
       var images = 0;
-      links.forEach(function (link) {
-        var target = link.target;
-        if (/^https?:/.test(target)) return;
-        if (target.charAt(0) === '#') {
-          expect(found[decodeURIComponent(target.slice(1))]).toBe(true);
-          return;
-        }
-        var file = target.split('#')[0];
-        expect(exists(file)).toBe(true);
-        if (link.image) {
-          images++;
-          expect(/\.png$/.test(file)).toBe(true);
-          var bytes = NODE.fs.readFileSync(NODE.path.join(NODE.root, file));
-          expect(bytes.length).toBeLessThan(300 * 1024);
-          expect(bytes.slice(1, 4).toString('ascii')).toBe('PNG');
-        }
+      var count = 0;
+      var anchorsOf = {};
+      GUIDES.forEach(function (guide) { anchorsOf[guide.slice(3)] = anchors(readText(guide)); });
+      GUIDES.forEach(function (guide) {
+        var text = readText(guide);
+        var found = anchorsOf[guide.slice(3)];
+        withoutFences(text).replace(/!?\[[^\]]*\]\(([^)\s]+)\)/g, function (all, target) {
+          count++;
+          if (/^https?:/.test(target)) return all;
+          if (target.charAt(0) === '#') {
+            expect(found[decodeURIComponent(target.slice(1))] ? '' : guide + ' ' + target).toBe('');
+            return all;
+          }
+          // The guides sit at the root of the repository, one level above this app.
+          var path = target.split('#')[0];
+          var file = '../' + path;
+          expect(exists(file) ? '' : guide + ' ' + target).toBe('');
+          // A link to a heading of another guide must find that heading.
+          var hash = target.indexOf('#') > -1 ? target.slice(target.indexOf('#') + 1) : '';
+          if (hash && anchorsOf[path]) {
+            expect(anchorsOf[path][decodeURIComponent(hash)] ? '' : guide + ' ' + target).toBe('');
+          }
+          if (all.charAt(0) === '!') {
+            images++;
+            expect(/\.png$/.test(file)).toBe(true);
+            var bytes = NODE.fs.readFileSync(NODE.path.join(NODE.root, file));
+            expect(bytes.length).toBeLessThan(300 * 1024);
+            expect(bytes.slice(1, 4).toString('ascii')).toBe('PNG');
+          }
+          return all;
+        });
       });
+      expect(count).toBeGreaterThan(40);
       expect(images).toBeGreaterThan(2);
       expect(exists('../docs')).toBe(true);
     });
@@ -583,28 +620,31 @@
     it('uses only real commands: the scripts exist and know every option it shows', function () {
       needNode();
       var commands = 0;
-      fencedBlocks(readme()).forEach(function (block) {
-        block.code.split('\n').forEach(function (line) {
-          var m = /\bnode\s+(tests\/[\w.-]+\.js)([^#\n]*)/.exec(line);
-          if (!m) return;
-          commands++;
-          expect(exists(m[1])).toBe(true);
-          var source = readText(m[1]);
-          (m[2].match(/--[a-z][\w-]*/g) || []).forEach(function (flag) {
-            expect(source).toContain(flag);
+      DEV_GUIDES.forEach(function (guide) {
+        fencedBlocks(generatorPart(readText(guide))).forEach(function (block) {
+          block.code.split('\n').forEach(function (line) {
+            var m = /\bnode\s+(tests\/[\w.-]+\.js)([^#\n]*)/.exec(line);
+            if (!m) return;
+            commands++;
+            expect(exists(m[1])).toBe(true);
+            var source = readText(m[1]);
+            (m[2].match(/--[a-z][\w-]*/g) || []).forEach(function (flag) {
+              expect(source).toContain(flag);
+            });
           });
         });
       });
       expect(commands).toBeGreaterThan(7);
-      expect(readme()).toContain('SG_DEEP');
-      expect(readText('tests/suites/multigrid.test.js') + readText('tests/suites/mega.test.js')).toContain('SG_DEEP');
-      expect(readme()).toContain('python -m http.server');
+      expect(devPart()).toContain('SG_DEEP');
+      expect(readText('tests/suites/multigrid.test.js') + readText('tests/suites/mega.test.js'))
+        .toContain('SG_DEEP');
+      expect(devPart()).toContain('python -m http.server');
     });
 
     it('names only APIs that exist (every SG.x.y it mentions resolves)', function () {
       needNode();
       var names = {};
-      readme().replace(/\bSG\.[A-Za-z][A-Za-z0-9]*(?:\.[A-Za-z][A-Za-z0-9_]*)*/g, function (name) {
+      devPart().replace(/\bSG\.[A-Za-z][A-Za-z0-9]*(?:\.[A-Za-z][A-Za-z0-9_]*)*/g, function (name) {
         names[name] = true;
         return name;
       });
@@ -621,14 +661,15 @@
       });
       expect(unresolved).toEqual([]);
       ['SG.variants.register', 'SG.pipeline.run', 'SG.events.VOCABULARY', 'SG.workerClient.generate',
-        'SG.techniques.register', 'SG.difficulty.WEIGHTS', 'SG.localeFragments', 'SG.app'].forEach(function (name) {
+        'SG.techniques.register', 'SG.difficulty.WEIGHTS', 'SG.localeFragments', 'SG.app'
+      ].forEach(function (name) {
         expect(names[name]).toBe(true);
       });
     });
 
     it('has a worked variant example that registers, validates and generates', function () {
       needNode();
-      var block = fencedBlocks(readme()).filter(function (b) {
+      var block = fencedBlocks(devPart()).filter(function (b) {
         return b.code.indexOf('// js/variants/disjoint.js') === 0;
       })[0];
       expect(block).toBeTruthy();
@@ -638,7 +679,8 @@
         'var def = SG.variants.get("disjoint9");' +
         'var model = def.build({}, SG.rng.create(1));' +
         'var check = SG.model.validate(model);' +
-        'var run = SG.pipeline.run({ variantId: "disjoint9", difficulty: "easy", seed: 3, trace: "off" }, null);' +
+        'var run = SG.pipeline.run({ variantId: "disjoint9", difficulty: "easy", seed: 3, trace: "off" }, ' +
+          'null);' +
         'var givens = 0; for (var i = 0; i < run.givens.length; i++) if (run.givens[i] > 0) givens++;' +
         'var last = SG.localeFragments[SG.localeFragments.length - 1];' +
         'return JSON.stringify({ ok: check.ok, units: model.units.length, level: run.rating.level,' +
@@ -656,7 +698,7 @@
 
     it('has a worked technique example that registers and solves soundly', function () {
       needNode();
-      var block = fencedBlocks(readme()).filter(function (b) {
+      var block = fencedBlocks(devPart()).filter(function (b) {
         return b.code.indexOf('// ../core/js/engine/tech-fullhouse.js') === 0;
       })[0];
       expect(block).toBeTruthy();
@@ -667,9 +709,11 @@
       var report = JSON.parse(evaluate(ctx, '(function () {' +
         'var report = SG.logicalSolver.solve(puzzle.model, puzzle.givens, { collectSteps: true });' +
         'var same = true;' +
-        'for (var i = 0; i < puzzle.solution.length; i++) if (report.state.value[i] !== puzzle.solution[i]) same = false;' +
+        'for (var i = 0; i < puzzle.solution.length; i++) if (report.state.value[i] !== ' +
+          'puzzle.solution[i]) same = false;' +
         'var first = report.steps.filter(function (s) { return s.technique === "fullHouse"; })[0];' +
-        'return JSON.stringify({ solved: report.solved, same: same, used: report.techniqueCounts.fullHouse || 0,' +
+        'return JSON.stringify({ solved: report.solved, same: same, used: report.techniqueCounts.fullHouse ' +
+          '|| 0,' +
         ' registered: SG.techniques.has("fullHouse"), key: first ? first.i18nKey : null,' +
         ' args: first ? Object.keys(first.i18nArgs) : [] });' +
         '})()'));

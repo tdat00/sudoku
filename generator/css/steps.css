@@ -45,12 +45,6 @@
   font-weight: 650;
 }
 
-.step-detail__techniques .result-table tfoot th,
-.step-detail__techniques .result-table tfoot td {
-  border-bottom: 0;
-  font-weight: 650;
-}
-
 /* ---- Legend of the board frames ---- */
 .steps-legend {
   display: flex;

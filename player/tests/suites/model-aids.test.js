@@ -1,5 +1,5 @@
-// SG.modelAids (../core/js/engine/model-aids.js): what the screens read from a rebuilt model that the generator's
-// variant code used to provide: the sign edges of Greater-Than, the word line of Wordoku, the symbol sets.
+// SG.modelAids (../core/js/engine/model-aids.js): what the screens read from a rebuilt model without the
+// generator's variant code: the sign edges of Greater-Than, the word line of Wordoku, the symbol sets.
 (function () {
   'use strict';
 

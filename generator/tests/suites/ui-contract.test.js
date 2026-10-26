@@ -1,4 +1,4 @@
-// UI contract (task T-4.9): what every UI module promises to the others and to the page, checked on Node
+// UI contract: what every UI module promises to the others and to the page, checked on Node
 // without a DOM. 1. the function surface of each module, 2. every UI file loads without a DOM, 3. no colour
 // literal outside the token files, 4. index.html: mount points, no hard-coded visible text, script order
 // equal to SOURCE_FILES (node-runner.js, tests.html, js/worker/gen.worker.js), 5. every suite is listed in
@@ -47,10 +47,6 @@
     return quotedList(readText('tests/node-runner.js'), 'const SOURCE_FILES');
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // 1. Function surface
-  // ---------------------------------------------------------------------------------------------
-
   /** Module -> the functions it must export. Extra members are fine, a missing one fails. */
   var SURFACE = {
     i18n: ['t', 'tError', 'eventText', 'has', 'setLocale', 'onChange', 'applyTo', 'detect', 'formatNumber',
@@ -81,7 +77,9 @@
     Object.keys(SURFACE).forEach(function (name) {
       it('SG.' + name + ' exports ' + SURFACE[name].length + ' declared functions', function () {
         expect(typeof SG[name]).toBe('object');
-        var missing = SURFACE[name].filter(function (member) { return typeof SG[name][member] !== 'function'; });
+        var missing = SURFACE[name].filter(function (member) {
+          return typeof SG[name][member] !== 'function';
+        });
         expect(missing).toEqual([]);
       });
     });
@@ -89,7 +87,9 @@
     it('the replay player instance has the declared interface', function () {
       var player = SG.player.create({});
       try {
-        var missing = PLAYER_INSTANCE.filter(function (member) { return typeof player[member] !== 'function'; });
+        var missing = PLAYER_INSTANCE.filter(function (member) {
+          return typeof player[member] !== 'function';
+        });
         expect(missing).toEqual([]);
       } finally {
         player.destroy();
@@ -108,17 +108,15 @@
       SURFACE.app.concat(['regenerate', 'start', 'destroy']).forEach(function (member) {
         expect(header).toContain(member);
       });
-      ['generate:start', 'generate:progress', 'generate:end', 'generate:error', 'result', 'locale', 'position',
-        'theme', 'settings', 'action'].forEach(function (name) { expect(header).toContain("'" + name + "'"); });
+      ['generate:start', 'generate:progress', 'generate:end', 'generate:error', 'result', 'locale',
+        'position', 'theme', 'settings', 'action'].forEach(function (name) {
+        expect(header).toContain("'" + name + "'");
+      });
       ['exportUi', 'a11y', 'theme', 'help', 'cache', 'history'].forEach(function (name) {
         expect(header).toContain('SG.' + name);
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // 2. Every UI file loads without a DOM
-  // ---------------------------------------------------------------------------------------------
 
   describe('ui contract: loads without a DOM', function () {
     it('loads every source file, in the declared order, in a context that has no DOM globals', function () {
@@ -126,7 +124,9 @@
       var files = sourceFilesOfRunner().filter(function (rel) { return exists(rel); });
       var uiFiles = files.filter(function (rel) { return /^js\/(ui|worker)\//.test(rel); });
       expect(uiFiles.length).toBeGreaterThan(8);
-      var context = env.vm.createContext({ console: console, setTimeout: setTimeout, clearTimeout: clearTimeout });
+      var context = env.vm.createContext({
+        console: console, setTimeout: setTimeout, clearTimeout: clearTimeout
+      });
       files.forEach(function (rel) {
         try {
           env.vm.runInContext(readText(rel), context, { filename: rel });
@@ -135,8 +135,8 @@
         }
       });
       var absent = env.vm.runInContext(
-        "['document', 'window', 'localStorage', 'navigator', 'location', 'HTMLElement'].filter(function (n) {" +
-        " return typeof globalThis[n] !== 'undefined'; }).join()", context);
+        "['document', 'window', 'localStorage', 'navigator', 'location', 'HTMLElement']" +
+        ".filter(function (n) { return typeof globalThis[n] !== 'undefined'; }).join()", context);
       expect(absent).toBe('');
       var surface = env.vm.runInContext(
         'JSON.stringify(Object.keys(SG).filter(function (k) { return k === "app" || k === "resultView"; }))',
@@ -144,22 +144,19 @@
       expect(JSON.parse(surface).sort()).toEqual(['app', 'resultView']);
     });
 
-    it('SG.app does nothing without a DOM: no start, no toast, no modal, generate resolves null', function () {
-      expect(SG.app.start()).toBe(false);
-      expect(SG.app.getBoard()).toBeNull();
-      expect(SG.app.getPlayer()).toBeNull();
-      expect(SG.app.getStepView()).toBeNull();
-      expect(SG.app.getExplainContext()).toBeNull();
-      expect(SG.app.getResult()).toBeNull();
-      expect(SG.app.openModal({ titleKey: 'result.title' })).toBeNull();
-      expect(typeof SG.app.toast('info', 'result.title').close).toBe('function');
-      return SG.app.generate().then(function (result) { expect(result).toBeNull(); });
-    });
+    it('SG.app does nothing without a DOM: no start, no toast, no modal, generate resolves null',
+      function () {
+        expect(SG.app.start()).toBe(false);
+        expect(SG.app.getBoard()).toBeNull();
+        expect(SG.app.getPlayer()).toBeNull();
+        expect(SG.app.getStepView()).toBeNull();
+        expect(SG.app.getExplainContext()).toBeNull();
+        expect(SG.app.getResult()).toBeNull();
+        expect(SG.app.openModal({ titleKey: 'result.title' })).toBeNull();
+        expect(typeof SG.app.toast('info', 'result.title').close).toBe('function');
+        return SG.app.generate().then(function (result) { expect(result).toBeNull(); });
+      });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // 3. No colour literals outside the token files
-  // ---------------------------------------------------------------------------------------------
 
   var NAMED_COLORS = ('aliceblue antiquewhite aqua aquamarine azure beige bisque black blanchedalmond blue ' +
     'blueviolet brown burlywood cadetblue chartreuse chocolate coral cornflowerblue cornsilk crimson cyan ' +
@@ -181,14 +178,17 @@
   NAMED_COLORS.forEach(function (name) { NAMED_SET[name] = true; });
 
   /** Values that carry no colour of their own and are always fine. */
-  var NEUTRAL = { transparent: true, currentcolor: true, none: true, inherit: true, initial: true, unset: true };
+  var NEUTRAL = {
+    transparent: true, currentcolor: true, none: true, inherit: true, initial: true, unset: true
+  };
 
   var COLOR_FUNCTION = /\b(?:rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color|color-mix|device-cmyk)\(/;
   var HEX_COLOR = /#[0-9a-fA-F]{3,8}\b/;
 
   /** Properties whose value is (or contains) a colour. Custom properties count: they are colour tokens. */
-  var COLOR_PROPERTY = new RegExp('^(?:color|background(?:-color|-image)?|border(?:-(?:top|right|bottom|left|' +
-    'inline|block)(?:-(?:start|end))?)?(?:-color)?|outline(?:-color)?|fill|stroke|stop-color|flood-color|' +
+  var COLOR_PROPERTY = new RegExp('^(?:color|background(?:-color|-image)?|' +
+    'border(?:-(?:top|right|bottom|left|inline|block)(?:-(?:start|end))?)?(?:-color)?|' +
+    'outline(?:-color)?|fill|stroke|stop-color|flood-color|' +
     'lighting-color|box-shadow|text-shadow|caret-color|accent-color|column-rule(?:-color)?|' +
     'text-decoration(?:-color)?|scrollbar-color|text-emphasis-color|--[\\w-]+)$');
 
@@ -199,7 +199,8 @@
   /** Colour literals in the value of one declaration (a `var(...)` reference is never a literal). */
   function literalsInValue(property, rawValue) {
     var found = [];
-    var value = rawValue.replace(/url\([^)]*\)/g, '').replace(/var\([^)]*\)/g, '').replace(/"[^"]*"|'[^']*'/g, '');
+    var value = rawValue.replace(/url\([^)]*\)/g, '').replace(/var\([^)]*\)/g, '')
+      .replace(/"[^"]*"|'[^']*'/g, '');
     var hex = HEX_COLOR.exec(value);
     if (hex) found.push(hex[0]);
     var fn = COLOR_FUNCTION.exec(value);
@@ -271,35 +272,37 @@
     var fn = new RegExp(COLOR_FUNCTION.source.replace('\\b', '\\b'), 'g');
     while ((m = fn.exec(text)) !== null) out.push(m[0]);
     var names = NAMED_COLORS.join('|');
-    var css = new RegExp('\\b(?:color|fill|stroke|background(?:-color)?|border(?:-[a-z]+)*|outline(?:-color)?|' +
-      'stop-color)\\s*[:=]\\s*[\'"]?\\s*(' + names + ')\\b(?!-)', 'gi');
+    var css = new RegExp('\\b(?:color|fill|stroke|background(?:-color)?|border(?:-[a-z]+)*|' +
+      'outline(?:-color)?|stop-color)\\s*[:=]\\s*[\'"]?\\s*(' + names + ')\\b(?!-)', 'gi');
     while ((m = css.exec(text)) !== null) out.push(m[0]);
-    var attr = new RegExp('[\'"](?:fill|stroke|color|stop-color|flood-color)[\'"]\\s*,\\s*[\'"]\\s*(' + names +
-      ')[\'"]', 'gi');
+    var attr = new RegExp('[\'"](?:fill|stroke|color|stop-color|flood-color)[\'"]\\s*,\\s*[\'"]\\s*(' +
+      names + ')[\'"]', 'gi');
     while ((m = attr.exec(text)) !== null) out.push(m[0]);
     return out;
   }
 
   describe('ui contract: colour literal scanners', function () {
-    it('finds hex colours, colour functions and named colours in CSS, never in var() references', function () {
-      expect(cssColorLiterals('a { color: #fff; }')).toEqual(['color: #fff']);
-      expect(cssColorLiterals('a { background: rgba(0, 0, 0, .5) }')).toEqual(['background: rgba(']);
-      expect(cssColorLiterals('a { border: 1px solid red; }')).toEqual(['border: red']);
-      expect(cssColorLiterals('a { box-shadow: 0 0 2px hsl(0 0% 0%) }')).toEqual(['box-shadow: hsl(']);
-      expect(cssColorLiterals('a { color: var(--sg-color-text); background: transparent; fill: currentColor; ' +
-        'border: 1px solid var(--sg-color-border); }')).toEqual([]);
-      expect(cssColorLiterals('/* color: red */ #a11y-live { color: inherit; font-family: Tan, sans-serif }'))
-        .toEqual([]);
-      expect(cssColorLiterals(':root { --sg-x: navy; }')).toEqual(['--sg-x: navy']);
-    });
+    it('finds hex colours, colour functions and named colours in CSS, never in var() references',
+      function () {
+        expect(cssColorLiterals('a { color: #fff; }')).toEqual(['color: #fff']);
+        expect(cssColorLiterals('a { background: rgba(0, 0, 0, .5) }')).toEqual(['background: rgba(']);
+        expect(cssColorLiterals('a { border: 1px solid red; }')).toEqual(['border: red']);
+        expect(cssColorLiterals('a { box-shadow: 0 0 2px hsl(0 0% 0%) }')).toEqual(['box-shadow: hsl(']);
+        expect(cssColorLiterals('a { color: var(--sg-color-text); background: transparent; fill: ' +
+          'currentColor; ' +
+          'border: 1px solid var(--sg-color-border); }')).toEqual([]);
+        var neutral = '/* color: red */ #a11y-live { color: inherit; font-family: Tan, sans-serif }';
+        expect(cssColorLiterals(neutral)).toEqual([]);
+        expect(cssColorLiterals(':root { --sg-x: navy; }')).toEqual(['--sg-x: navy']);
+      });
 
     it('finds colour literals in JavaScript strings but ignores comments and plain words', function () {
       expect(jsColorLiterals("el.style.cssText = 'color: #ff0000';")).toEqual(['#ff0000']);
       expect(jsColorLiterals("x = 'rgb(1, 2, 3)';")).toEqual(['rgb(']);
       expect(jsColorLiterals("x = 'background: white';").length).toBe(1);
       expect(jsColorLiterals("node.setAttribute('fill', 'red');").length).toBe(1);
-      expect(jsColorLiterals("// color: red\n/* #fff */ var a = 'http://www.w3.org/2000/svg'; id = '#a11y-live';"))
-        .toEqual([]);
+      var commented = "// color: red\n/* #fff */ var a = 'http://www.w3.org/2000/svg'; id = '#a11y-live';";
+      expect(jsColorLiterals(commented)).toEqual([]);
       expect(jsColorLiterals("x = 'var(--sg-color-text)'; y = { color: 'currentColor', fill: 'none' };"))
         .toEqual([]);
     });
@@ -315,7 +318,9 @@
 
     it('has the stylesheets to check', function () {
       var names = sheets.map(function (rel) { return rel.slice(rel.lastIndexOf('/') + 1); });
-      ['base.css', 'layout.css', 'components.css'].forEach(function (name) { expect(names).toContain(name); });
+      ['base.css', 'layout.css', 'components.css'].forEach(function (name) {
+        expect(names).toContain(name);
+      });
     });
 
     sheets.forEach(function (rel) {
@@ -338,39 +343,40 @@
       });
     });
 
-    it('index.html has no colour literal in a style attribute, a <style> block or a colour attribute', function () {
-      var html = readText('index.html').replace(/<!--[\s\S]*?-->/g, '');
-      var found = [];
-      (html.match(/<style[\s\S]*?<\/style>/gi) || []).forEach(function (block) {
-        found = found.concat(cssColorLiterals(block.replace(/<\/?style[^>]*>/gi, '')));
-      });
-      var attr = /\s(style|fill|stroke|color|bgcolor|stop-color|flood-color|lighting-color)\s*=\s*(?:"([^"]*)"|'([^']*)')/gi;
-      var m;
-      while ((m = attr.exec(html)) !== null) {
-        var name = m[1].toLowerCase();
-        var value = m[2] !== undefined ? m[2] : m[3];
-        if (name === 'style') found = found.concat(cssColorLiterals('x{' + value + '}'));
-        else if (NEUTRAL[value.trim().toLowerCase()] !== true && !/^var\(/.test(value.trim())) {
-          found.push(name + '="' + value + '"');
+    it('index.html has no colour literal in a style attribute, a <style> block or a colour attribute',
+      function () {
+        var html = readText('index.html').replace(/<!--[\s\S]*?-->/g, '');
+        var found = [];
+        (html.match(/<style[\s\S]*?<\/style>/gi) || []).forEach(function (block) {
+          found = found.concat(cssColorLiterals(block.replace(/<\/?style[^>]*>/gi, '')));
+        });
+        var attr = new RegExp('\\s(style|fill|stroke|color|bgcolor|stop-color|flood-color|lighting-color)' +
+          '\\s*=\\s*(?:"([^"]*)"|\'([^\']*)\')', 'gi');
+        var m;
+        while ((m = attr.exec(html)) !== null) {
+          var name = m[1].toLowerCase();
+          var value = m[2] !== undefined ? m[2] : m[3];
+          if (name === 'style') found = found.concat(cssColorLiterals('x{' + value + '}'));
+          else if (NEUTRAL[value.trim().toLowerCase()] !== true && !/^var\(/.test(value.trim())) {
+            found.push(name + '="' + value + '"');
+          }
         }
-      }
-      expect(found).toEqual([]);
-    });
+        expect(found).toEqual([]);
+      });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // 4. index.html
-  // ---------------------------------------------------------------------------------------------
-
-  var VOID = { area: 1, base: 1, br: 1, col: 1, embed: 1, hr: 1, img: 1, input: 1, link: 1, meta: 1, source: 1,
-    track: 1, wbr: 1 };
+  var VOID = {
+    area: 1, base: 1, br: 1, col: 1, embed: 1, hr: 1, img: 1, input: 1, link: 1, meta: 1, source: 1, track: 1,
+    wbr: 1
+  };
 
   function parseAttrs(text) {
     var attrs = {};
     var re = /([^\s"'<>\/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>]+)))?/g;
     var m;
     while ((m = re.exec(text)) !== null) {
-      attrs[m[1]] = m[2] !== undefined ? m[2] : (m[3] !== undefined ? m[3] : (m[4] !== undefined ? m[4] : ''));
+      var value = m[2] !== undefined ? m[2] : m[3] !== undefined ? m[3] : m[4];
+      attrs[m[1]] = value !== undefined ? value : '';
     }
     return attrs;
   }
@@ -381,7 +387,8 @@
    */
   function readHtml(html) {
     var src = html.replace(/<!--[\s\S]*?-->/g, '').replace(/<!doctype[^>]*>/i, '');
-    var tagRe = /<(\/?)([a-zA-Z][\w:-]*)((?:\s+[^\s"'>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*(\/?)>/g;
+    var tagRe =
+      /<(\/?)([a-zA-Z][\w:-]*)((?:\s+[^\s"'>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*(\/?)>/g;
     var elements = [];
     var texts = [];
     var scripts = [];
@@ -417,14 +424,14 @@
   }
 
   var MOUNT_IDS = ['skip-link', 'app-title', 'lang-switch', 'theme-switch', 'btn-settings', 'btn-help',
-    'btn-drawer', 'controls-root', 'controls-form', 'btn-generate', 'btn-regenerate', 'btn-cancel', 'btn-export',
-    'btn-export-code', 'btn-play-online',
+    'btn-drawer', 'controls-root', 'controls-form', 'btn-generate', 'btn-regenerate', 'btn-cancel',
+    'btn-export', 'btn-export-code', 'btn-play-online',
     'board-root', 'board-svg', 'board-title', 'board-desc', 'player-root', 'btn-first', 'btn-prev',
-    'btn-next', 'btn-last', 'scrubber',     'player-time', 'steps-root', 'step-detail',
-        'btn-explain', 'result-root', 'modal-root', 'toast-root', 'a11y-live'];
+    'btn-next', 'btn-last', 'scrubber', 'player-time', 'steps-root', 'step-detail',
+    'btn-explain', 'result-root', 'modal-root', 'toast-root', 'a11y-live'];
 
   describe('ui contract: index.html', function () {
-    it('has every mount point of the contract and the language and theme buttons, and no speed buttons',
+    it('has every mount point of the contract and the language and theme buttons',
       function () {
         var page = readHtml(readText('index.html'));
         var ids = {};
@@ -436,9 +443,6 @@
         }
         expect(count('data-lang')).toEqual(['en', 'vi']);
         expect(count('data-theme-value')).toEqual(['dark', 'high-contrast', 'light']);
-        // The replay is manual: no play button, no speed buttons.
-        expect(count('data-speed')).toEqual([]);
-        expect(ids['btn-play']).toBeUndefined();
       });
 
     it('starts with Generate and Generate random both enabled (the random one never waits for a first run)',
@@ -481,7 +485,8 @@
       var page = readHtml('<main><h1>Hello</h1><p data-i18n="a.b"></p><button title="Go" aria-label="Go" ' +
         'data-i18n-attr="aria-label:x.y"></button><script>var a = "<b>";</script></main>');
       expect(page.texts.map(function (t) { return t.text; })).toEqual(['Hello']);
-      expect(page.elements.map(function (el) { return el.tag; })).toEqual(['main', 'h1', 'p', 'button', 'script']);
+      expect(page.elements.map(function (el) { return el.tag; }))
+        .toEqual(['main', 'h1', 'p', 'button', 'script']);
       expect(page.elements[3].attrs.title).toBe('Go');
     });
 
@@ -500,8 +505,8 @@
 
     it('js/worker/gen.worker.js imports the core, the variants and the word lists in the same order, no UI',
       function () {
-        if (!exists('js/worker/gen.worker.js')) SG.test.skip('js/worker/gen.worker.js does not exist yet');
-        var text = readText('js/worker/gen.worker.js').replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+        var text = readText('js/worker/gen.worker.js').replace(/\/\*[\s\S]*?\*\//g, '')
+          .replace(/^\s*\/\/.*$/gm, '');
         // Every script path written in the file, in order (a SCRIPTS array or importScripts arguments), as a
         // path from the project root: paths are relative to js/worker/.
         var paths = (text.match(/['"][^'"\s]+\.js['"]/g) || []).map(function (s) { return s.slice(1, -1); });
@@ -527,17 +532,18 @@
       expect(suites.filter(function (name) { return listed.indexOf(name) === -1; })).toEqual([]);
     });
 
-    it('every suite in tests/manual is listed in the MANUAL_SUITE_FILES of tests.html, and only there', function () {
-      var listed = quotedList(readText('tests.html'), 'var MANUAL_SUITE_FILES');
-      var quick = quotedList(readText('tests.html'), 'var SUITE_FILES');
-      expect(listed).not.toBeNull();
-      var suites = listDir('tests/manual', '.test.js').map(function (name) {
-        return name.slice(0, -'.test.js'.length);
+    it('every suite in tests/manual is listed in the MANUAL_SUITE_FILES of tests.html, and only there',
+      function () {
+        var listed = quotedList(readText('tests.html'), 'var MANUAL_SUITE_FILES');
+        var quick = quotedList(readText('tests.html'), 'var SUITE_FILES');
+        expect(listed).not.toBeNull();
+        var suites = listDir('tests/manual', '.test.js').map(function (name) {
+          return name.slice(0, -'.test.js'.length);
+        });
+        expect(suites.length).toBeGreaterThan(0);
+        expect(suites.filter(function (name) { return listed.indexOf(name) === -1; })).toEqual([]);
+        expect(listed.filter(function (name) { return quick.indexOf(name) !== -1; })).toEqual([]);
       });
-      expect(suites.length).toBeGreaterThan(0);
-      expect(suites.filter(function (name) { return listed.indexOf(name) === -1; })).toEqual([]);
-      expect(listed.filter(function (name) { return quick.indexOf(name) !== -1; })).toEqual([]);
-    });
 
     it('the Pages workflow of the repository publishes this app and the code it shares', function () {
       var workflow = readText('../.github/workflows/pages.yml');
@@ -565,16 +571,13 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // 6. The main-thread generation client
-  // ---------------------------------------------------------------------------------------------
-
   describe('app: main-thread generation client', function () {
     var CONFIG = { variantId: 'classic4', difficulty: 'veryEasy', seed: 7, trace: 'summary' };
 
     it('runs the pipeline and returns the same puzzle as a direct call, events in order', function () {
       var events = [];
-      return SG.app.directClient.generate(CONFIG, function (event) { events.push(event); }).then(function (result) {
+      var running = SG.app.directClient.generate(CONFIG, function (event) { events.push(event); });
+      return running.then(function (result) {
         var direct = SG.pipeline.run(CONFIG, null);
         expect(Array.from(result.givens)).toEqual(Array.from(direct.givens));
         expect(result.seed).toBe(7);
@@ -610,7 +613,8 @@
 
     it('a failing run delivers its error event and rejects with the GenerationError', function () {
       var events = [];
-      return SG.app.directClient.generate({ variantId: 'no-such-variant' }, function (event) { events.push(event); })
+      var collect = function (event) { events.push(event); };
+      return SG.app.directClient.generate({ variantId: 'no-such-variant' }, collect)
         .then(function () {
           throw new Error('an unknown variant must not resolve');
         }, function (err) {

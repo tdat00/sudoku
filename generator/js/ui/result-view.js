@@ -1,11 +1,11 @@
 /**
- * Result panel `SG.resultView`: two cards (level reached with its difficulty score, number of clues) and a table of
- * the techniques used (uses, points per use and share of the score; a help icon next to each score explains how it is calculated).
- * A Wordoku result also gets a card with its key word and
- * meaning while "Show the solution" is on. An approximate result (warning `difficulty.approximate`) gets a yellow
- * alert and a "Retry with a different seed" button; other warnings are listed, translated; no warning, no UI.
- * `viewModel(result)` is pure (displayed values already formatted, plus the warning keys); `create(rootEl, options)`
- * renders it into `#result-root` and follows the language. Strings: `result.*` fragment at the bottom + base packs.
+ * Result panel `SG.resultView`: two cards (level reached with its score, number of clues) and a table of the
+ * techniques used (uses, points per use and share of the score, each with a help icon that explains it). A
+ * Wordoku result also gets a card with its key word and meaning while "Show the solution" is on. An
+ * approximate result (warning `difficulty.approximate`) gets a yellow alert and a "Retry with a different
+ * seed" button; other warnings are listed, translated; no warning, no UI. `viewModel(result)` is pure
+ * (displayed values already formatted, plus the warning keys); `create(rootEl, options)` renders it into
+ * `#result-root` and follows the language. Strings: `result.*` fragment at the bottom + base packs.
  */
 (function (root) {
   'use strict';
@@ -121,9 +121,9 @@
   }
 
   /**
-   * How the score adds up: the technique rows (see `techniqueRows`) and the empty cells (count and 80 x E / (E + 40)
-   * in all). Every part is a whole number and the parts add up to the score (one rounding); `emptyTip` and `totalTip`
-   * explain the empty cells and the total.
+   * How the score adds up: the technique rows (see `techniqueRows`) and the empty cells (count and 80 x E /
+   * (E + 40) in all). Every part is a whole number and the parts add up to the score (one rounding);
+   * `emptyTip` and `totalTip` explain the empty cells and the total.
    */
   function scoreBreakdown(table, score) {
     const empties = table !== null ? table.empties : 0;
@@ -137,7 +137,6 @@
     };
   }
 
-  /** Everything the panel shows for a result in the current language; null for a missing result. */
   function viewModel(result) {
     if (result === null || typeof result !== 'object') return null;
     const config = result.config || {};
@@ -179,7 +178,7 @@
     };
   }
 
-  /** Key word of a Wordoku result and its meaning; null when not a Wordoku. A word missing from the word book (typed by the user) gives its letters and no meaning. */
+  /** Null when not a Wordoku; a word missing from the word book gives its letters and no meaning. */
   function wordInfo(result) {
     if (result === null || typeof result !== 'object' || !result.model || result.model.variantId !== 'wordoku' ||
         !SG.wordoku || typeof SG.wordoku.describe !== 'function') {
@@ -226,10 +225,11 @@
   /**
    * @typedef {Object} ResultViewOptions
    * @property {function(): void} [onRetry]  The "Retry with a different seed" button.
-   * @property {function(): boolean} [showWord]  Whether a Wordoku result gets the key-word card ("Show the solution").
+   * @property {function(): boolean} [showWord]  Whether a Wordoku result gets the key-word card ("Show the
+   *           solution").
    */
 
-  /** Renders the panel into `#result-root` (emptied first). Returns { show(result), clear(), refresh(), destroy(), isShown() }. */
+  /** Returns { show(result), clear(), refresh(), destroy(), isShown() }. */
   function create(rootEl, options) {
     if (!rootEl || typeof rootEl.appendChild !== 'function') {
       throw new TypeError('SG.resultView.create needs the #result-root element');
@@ -273,7 +273,7 @@
       });
     }
 
-    /** The "?" next to a name: opens on hover, focus and click; Esc closes it. `content` is text or an array of nodes. */
+    /** Opens on hover, focus and click; Esc closes it. `content` is text or an array of nodes. */
     function helpTip(popId, content, name, labelKey) {
       const pop = make(doc, 'div', {
         class: 'help-tip__pop', id: popId, role: 'tooltip', text: typeof content === 'string' ? content : null
@@ -314,7 +314,7 @@
       ])]);
     }
 
-    /** A score cell: the whole number (`data-role="score"`) and a help icon whose tooltip shows how it is calculated. */
+    /** The whole number (`data-role="score"`) and a help icon whose tooltip shows how it is calculated. */
     function scoreCell(part, name, value, tip) {
       const children = [make(doc, 'span', { 'data-role': 'score', text: value })];
       if (tip !== null && SG.stepView && typeof SG.stepView.renderScoreTip === 'function') {
@@ -496,7 +496,6 @@
   }
 
   SG.resultView = {
-    WARNING_KINDS: WARNING_KINDS,
     viewModel: viewModel,
     wordInfo: wordInfo,
     create: create
@@ -517,7 +516,7 @@
       'result.score.sub': 'Score: {score}',
       'result.stat.clues': 'Clues',
       'result.clues.of': 'of {cells} cells',
-      'result.techniques.title': 'Difficulty Score',
+      'result.techniques.title': 'Difficulty score',
       'result.techniques.section.technique': 'Technique',
       'result.techniques.section.other': 'Other',
       'result.techniques.none': 'No solving techniques were needed.',
@@ -557,7 +556,7 @@
     vi: {
       'result.title': 'Kết quả',
       'result.word.title': 'Từ khóa',
-      'result.word.unknown': 'Từ này không có trong từ điển của trò chơi nên chưa có giải nghĩa.',
+      'result.word.unknown': 'Từ này không có trong từ điển của ứng dụng nên chưa có giải nghĩa.',
       'result.word.pos.n': 'danh từ',
       'result.word.pos.v': 'động từ',
       'result.word.pos.a': 'tính từ',
@@ -602,7 +601,7 @@
       'result.warning.approximate.badge': 'Đề gần nhất tìm được',
       'result.warning.approximate.levels': 'Mức đã chọn: {requested}. Mức đạt được: {achieved}.',
       'result.warning.retry': 'Thử lại với seed khác',
-      'result.warning.unknown': 'Lưu ý từ bộ tạo đề: {code}'
+      'result.warning.unknown': 'Lưu ý từ trình sinh đề: {code}'
     }
   });
 })(typeof self !== 'undefined' ? self : globalThis);

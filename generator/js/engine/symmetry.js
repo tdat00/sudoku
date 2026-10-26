@@ -1,7 +1,7 @@
 /**
- * Symmetric cell groups for hole digging. Symmetry is defined on the drawing canvas (`layout.cellRow` / `cellCol`),
- * so overlapping multi-grid boards mirror about the canvas centre; a transformed position without a cell is left
- * out (the group shrinks instead of failing).
+ * Symmetric cell groups for hole digging. Symmetry is defined on the drawing canvas (`layout.cellRow` /
+ * `cellCol`), so overlapping multi-grid boards mirror about the canvas centre; a transformed position without
+ * a cell is left out (the group shrinks instead of failing).
  */
 (function (root) {
   'use strict';
@@ -34,10 +34,10 @@
 
   const NEEDS_SQUARE = { rotational90: true, diagonal: true, antiDiagonal: true };
 
-  // Partitions all cells into orbits under the symmetry (dug out and restored together), ordered by lowest cell
-  // index, each sorted ascending; cells on an axis or the centre form smaller groups.
-  // Throws 'symmetry.unknownKind', or 'symmetry.needsSquareCanvas' for rotational90 / diagonal / antiDiagonal on a
-  // non-square canvas.
+  // Partitions all cells into orbits under the symmetry (dug out and restored together), ordered by lowest
+  // cell index, each sorted ascending; cells on an axis or the centre form smaller groups.
+  // Throws 'symmetry.unknownKind', or 'symmetry.needsSquareCanvas' for rotational90 / diagonal / antiDiagonal
+  // on a non-square canvas.
   function groups(model, kind) {
     const transforms = TRANSFORMS[kind];
     if (!Object.prototype.hasOwnProperty.call(TRANSFORMS, kind)) {

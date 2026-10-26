@@ -1,4 +1,4 @@
-// Techniques of the `basic` and `locked` groups (task T-2.2, ../core/js/engine/tech-basic.js):
+// Techniques of the `basic` and `locked` groups (../core/js/engine/tech-basic.js):
 // nakedSingle, hiddenSingleBox, hiddenSingleLine, pointing and boxLine.
 //
 // Three kinds of evidence:
@@ -7,8 +7,10 @@
 //     list of eliminations, taken from a known solution, so the helper can check them against it);
 //   - the same fixtures on units that are not rectangles: a Jigsaw model, hyper windows, diagonals,
 //     digit counts 4, 6, 12 and 16 and the overlapping boards of a Samurai;
-//   - the soundness guard of invariant I7 (H.assertSound) and a differential check against a naive
-//     reference scan that finds the shared lines through the `cellUnits` of the candidate cells.
+//   - the soundness guard of invariant I7 (H.assertSound) on the boards above (classic9 is in the sweep of
+//     techniques.test.js) and a differential check against a naive reference scan that finds the shared
+//     lines through the `cellUnits` of the candidate cells.
+// The empty and the solved board are covered for every technique by techniques.test.js.
 (function () {
   'use strict';
 
@@ -38,10 +40,7 @@
     throw new Error('no fixture puzzle named ' + name);
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Models that are not plain boxes
-  // ---------------------------------------------------------------------------------------------
-
   var cache = {};
 
   function once(key, build) {
@@ -177,10 +176,7 @@
     });
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Fixture builders
-  // ---------------------------------------------------------------------------------------------
-
   function cells(model, refs) {
     return refs.map(function (ref) { return H.cell(model, ref); });
   }
@@ -244,10 +240,6 @@
     return SG.techniques.get(id).find(model, state, ctx || SG.techniques.createContext(model, {}));
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Registration
-  // ---------------------------------------------------------------------------------------------
-
   describe('tech-basic: registration', function () {
     var EXPECTED = {
       nakedSingle: { group: 'basic', baseCost: 1, order: 10 },
@@ -286,10 +278,6 @@
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // nakedSingle
-  // ---------------------------------------------------------------------------------------------
 
   describe('nakedSingle', function () {
     it('places the last candidate of a row (positive 1)', function () {
@@ -339,22 +327,18 @@
       expect(state.value[finding.placements[0][0]]).toBe(0);
     });
 
-    it('finds nothing in an empty grid (negative 1)', function () {
-      H.expectNoFinding(SG.test, 'nakedSingle', rawState(model9, new Array(82).join('0')));
-    });
-
-    it('finds nothing in puzzles that need more than hidden singles (negative 2)', function () {
+    it('finds nothing in puzzles that need more than hidden singles (negative 1)', function () {
       ['hard-nugget', 'worlds-hardest-2012', 'hard-c'].forEach(function (name) {
         H.expectNoFinding(SG.test, 'nakedSingle', rawState(model9, puzzle(name).puzzle));
       });
     });
 
-    it('finds nothing once every naked single has been placed (negative 3)', function () {
+    it('finds nothing once every naked single has been placed (negative 2)', function () {
       H.expectNoFinding(SG.test, 'nakedSingle', H.stateAfter(model9, puzzle('classic-medium').puzzle,
         ['nakedSingle']));
     });
 
-    it('never reports a solved cell, although its only candidate is its own value (negative 4)', function () {
+    it('never reports a solved cell, although its only candidate is its own value (negative 3)', function () {
       var solved = rawState(model9, SOL9);
       expect(solved.unsolvedCount).toBe(0);
       H.expectNoFinding(SG.test, 'nakedSingle', solved);
@@ -366,10 +350,6 @@
       expect(find('nakedSingle', model4, state)).toBeNull();
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // hiddenSingleBox
-  // ---------------------------------------------------------------------------------------------
 
   describe('hiddenSingleBox', function () {
     it('finds the only cell for a digit in a box (positive 1)', function () {
@@ -498,10 +478,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // hiddenSingleLine
-  // ---------------------------------------------------------------------------------------------
-
   describe('hiddenSingleLine', function () {
     it('finds the only cell for a digit in a row (positive 1)', function () {
       var fx = fixture(model9, SOL9, confine(model9, 'R5', ['R5C5'], 5));
@@ -570,17 +546,13 @@
       expect(noBox.steps[0].placements).toEqual([[0, 1]]);
     });
 
-    it('finds nothing in an empty grid (negative 1)', function () {
-      H.expectNoFinding(SG.test, 'hiddenSingleLine', rawState(model9, new Array(82).join('0')));
-    });
-
-    it('finds nothing in puzzles that need more than singles (negative 2)', function () {
+    it('finds nothing in puzzles that need more than singles (negative 1)', function () {
       ['hard-nugget', 'worlds-hardest-2012', 'hard-c'].forEach(function (name) {
         H.expectNoFinding(SG.test, 'hiddenSingleLine', rawState(model9, puzzle(name).puzzle));
       });
     });
 
-    it('finds nothing when the only cell sits in a box unit (negative 3)', function () {
+    it('finds nothing when the only cell sits in a box unit (negative 2)', function () {
       expectNone('hiddenSingleLine', fixture(model9, SOL9, confine(model9, 'B5', ['R5C5'], 5)));
       var m = jigsaw6();
       var sol = solutionOf(m);
@@ -596,10 +568,6 @@
       expect(find('hiddenSingleLine', model9, fx.state, none)).toBeNull();
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // pointing
-  // ---------------------------------------------------------------------------------------------
 
   describe('pointing', function () {
     var ROW1 = ['R1C4', 'R1C5', 'R1C6', 'R1C7', 'R1C8', 'R1C9'];
@@ -739,37 +707,29 @@
       expect(lines).toEqual(['G1-R7', 'G5-R1']);
     });
 
-    it('finds nothing in an empty grid (negative 1)', function () {
-      H.expectNoFinding(SG.test, 'pointing', rawState(model9, new Array(82).join('0')));
-    });
-
-    it('finds nothing when the candidates of the box do not share a line (negative 2)', function () {
+    it('finds nothing when the candidates of the box do not share a line (negative 1)', function () {
       expectNone('pointing', fixture(model9, SOL9, confine(model9, 'B1', ['R1C1', 'R2C2'], 5)));
       expectNone('pointing', fixture(model9, SOL9, confine(model9, 'B1', ['R1C1', 'R2C2', 'R3C3'], 5)));
     });
 
-    it('finds nothing when the rest of the line has no such candidate left (negative 3)', function () {
+    it('finds nothing when the rest of the line has no such candidate left (negative 2)', function () {
       var pairs = confine(model9, 'B1', ['R1C1', 'R1C2'], 5).concat(pairsOf(model9, ROW1, 5));
       expectNone('pointing', fixture(model9, SOL9, pairs));
     });
 
-    it('leaves a digit with a single cell in the box to the hidden single (negative 4)', function () {
+    it('leaves a digit with a single cell in the box to the hidden single (negative 3)', function () {
       var fx = fixture(model9, SOL9, confine(model9, 'B1', ['R1C1'], 5));
       expectNone('pointing', fx);
       expectOne('hiddenSingleBox', fx, { placements: [['R1C1', 5]] });
     });
 
-    it('finds nothing in stuck positions that have no locked candidates (negative 5)', function () {
+    it('finds nothing in stuck positions that have no locked candidates (negative 4)', function () {
       ['hard-platinum', 'hard-nugget', 'hard-c', 'worlds-hardest-2012'].forEach(function (name) {
         H.expectNoFinding(SG.test, 'pointing', afterBasics(name));
       });
     });
 
-    it('finds nothing in a solved grid (negative 6)', function () {
-      H.expectNoFinding(SG.test, 'pointing', rawState(model9, SOL9));
-    });
-
-    it('does not point from a region whose candidates share no line (negative 7, Jigsaw)', function () {
+    it('does not point from a region whose candidates share no line (negative 5, Jigsaw)', function () {
       var m = jigsaw6();
       var sol = solutionOf(m);
       // The position of the Box/Line negative: R2C1 (region J1) and R2C2 (region J3) lie in the same 2x3
@@ -803,10 +763,6 @@
       expect(find('pointing', model9, state)).toBeNull();
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // boxLine
-  // ---------------------------------------------------------------------------------------------
 
   describe('boxLine', function () {
     function rowPairFixture() {
@@ -915,38 +871,30 @@
       expect(finding.eliminations).toHaveLength(12);
     });
 
-    it('finds nothing in an empty grid (negative 1)', function () {
-      H.expectNoFinding(SG.test, 'boxLine', rawState(model9, new Array(82).join('0')));
-    });
-
-    it('finds nothing when the candidates of the line sit in two boxes (negative 2)', function () {
+    it('finds nothing when the candidates of the line sit in two boxes (negative 1)', function () {
       expectNone('boxLine', fixture(model9, SOL9, confine(model9, 'R4', ['R4C1', 'R4C4'], 8)));
       expectNone('boxLine', fixture(model9, SOL9, confine(model9, 'C7', ['R3C7', 'R4C7'], 5)));
     });
 
-    it('finds nothing when the rest of the box has no such candidate left (negative 3)', function () {
+    it('finds nothing when the rest of the box has no such candidate left (negative 2)', function () {
       var rest = ['R5C1', 'R5C2', 'R5C3', 'R6C1', 'R6C2', 'R6C3'];
       var pairs = confine(model9, 'R4', ['R4C1', 'R4C2'], 8).concat(pairsOf(model9, rest, 8));
       expectNone('boxLine', fixture(model9, SOL9, pairs));
     });
 
-    it('leaves a digit with a single cell in the line to the hidden single (negative 4)', function () {
+    it('leaves a digit with a single cell in the line to the hidden single (negative 3)', function () {
       var fx = fixture(model9, SOL9, confine(model9, 'R4', ['R4C1'], 8));
       expectNone('boxLine', fx);
       expectOne('hiddenSingleLine', fx, { placements: [['R4C1', 8]] });
     });
 
-    it('finds nothing in stuck positions that have no locked candidates (negative 5)', function () {
+    it('finds nothing in stuck positions that have no locked candidates (negative 4)', function () {
       ['hard-platinum', 'hard-nugget', 'hard-c', 'worlds-hardest-2012'].forEach(function (name) {
         H.expectNoFinding(SG.test, 'boxLine', afterBasics(name));
       });
     });
 
-    it('finds nothing in a solved grid (negative 6)', function () {
-      H.expectNoFinding(SG.test, 'boxLine', rawState(model9, SOL9));
-    });
-
-    it('does not mistake a rectangle for a region (negative 7, Jigsaw)', function () {
+    it('does not mistake a rectangle for a region (negative 5, Jigsaw)', function () {
       var m = jigsaw6();
       var sol = solutionOf(m);
       // R2C1 (region J1) and R2C2 (region J3) lie in the same 2x3 rectangle but in different regions: the
@@ -965,18 +913,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Soundness (invariant I7)
-  // ---------------------------------------------------------------------------------------------
-
   describe('soundness (I7): no technique removes a digit of the true solution', function () {
-    IDS.forEach(function (id) {
-      it(id + ' on 300 random classic9 states', function () {
-        var stats = H.assertSound(SG.test, id, { count: 300, minFirings: 3 });
-        expect(stats.states).toBe(300);
-      });
-    });
-
     var OTHER_MODELS = [
       ['classic4', function () { return model4; }, 120],
       ['classic6', function () { return model6; }, 120],
@@ -1007,10 +944,6 @@
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Differential check against a naive reference
-  // ---------------------------------------------------------------------------------------------
 
   describe('reference scan: the techniques agree with a naive scan on all unit shapes', function () {
     function isLine(model, u) {
@@ -1169,10 +1102,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Together in the solver
-  // ---------------------------------------------------------------------------------------------
-
   describe('tech-basic in the logical solver', function () {
     it('solves the easy fixtures with the three basic techniques and attributes every step', function () {
       ['wikipedia-example', 'classic-easy', 'classic-easy-2'].forEach(function (name) {
@@ -1238,10 +1167,6 @@
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Performance (design.md section 9.2)
-  // ---------------------------------------------------------------------------------------------
 
   describe('performance', function () {
     var CALLS = 2000;

@@ -77,13 +77,11 @@
       'use strict';
 
       /*
-       * Browser test page. It works from file:// because it only injects classic <script> tags.
-       *
-       * SOURCE_FILES / FIXTURE_FILES / CORE_SUITE_FILES / SUITE_FILES list everything in load order, one file per
-       * line (CORE_SUITE_FILES: the suites of ../core/tests/suites that the generator shares).
-       * A file that does not exist is skipped (it is listed at the bottom of the page). Keep SOURCE_FILES
-       * in sync with tests/node-runner.js and the <script> tags of index.html (ui-contract.test.js checks).
-       * The suites that read tests/fixtures/puzzles/*.json need http:// (they skip themselves on file://).
+       * Browser test page; it works from file:// because it only injects classic <script> tags. The lists are
+       * in load order (CORE_SUITE_FILES: the suites of ../core/tests/suites shared with the generator); a
+       * missing file is skipped and listed at the bottom. SOURCE_FILES must equal the one of
+       * tests/node-runner.js (ui-contract checks it). The suites that read tests/fixtures/puzzles/*.json need
+       * http:// (they skip on file://).
        */
       var SOURCE_FILES = [
         '../core/js/engine/ns.js',

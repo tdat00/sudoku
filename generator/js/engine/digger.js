@@ -1,61 +1,64 @@
 /**
- * Hole digger: starting from a full solution, clues are removed one symmetry group at a time, and a removal is kept
- * only while an oracle says the puzzle is still acceptable.
+ * Hole digger: starting from a full solution, clues are removed one symmetry group at a time, and a removal
+ * is kept only while an oracle says the puzzle is still acceptable.
  *
  * Stage A, `dig` (the engine, also usable on its own):
  *  1. The cells are put into a fixed digging sequence once, so each cell is considered exactly once.
  *  2. Symmetric cells (see SG.symmetry) are dug and restored together as one group.
  *  3. Cheap filters run before any solver call: the `minClues` floor, the `minCluesPerUnit` floor and the
  *     `rejected` map of cells that already failed.
- *  4. The oracle is one of two functions. `oracleKeepsUnique` (the default) is `SG.dfs.stillUnique`, which tests only
- *     the alternative values of the removed cell. `techniqueOracle` keeps a removal only while the logical solver still
- *     finishes the puzzle with the techniques of the requested level (so it stays unique AND inside the level) and
- *     while the score stays below the upper edge of the level's band (`maxScore`), so the easy levels stop in time on
- *     large boards.
+ *  4. The oracle is one of two functions. `oracleKeepsUnique` (the default) is `SG.dfs.stillUnique`, which
+ *     tests only the alternative values of the removed cell. `techniqueOracle` keeps a removal only while the
+ *     logical solver still finishes the puzzle with the techniques of the requested level (so it stays unique
+ *     AND inside the level) and while the score stays below the upper edge of the level's band (`maxScore`),
+ *     so the easy levels stop in time on large boards.
  *
  * Stage B, `digLevel` (one attempt at a level) and `generate` (the restart loop), rating v2:
- *  - `digLevel` runs stage A down to about half the clues, then `digGuided`, which repeatedly takes the removal that
- *    makes the puzzle hardest without its score reaching the upper edge of the band, rates the result once and
- *    re-verifies it with `SG.dfs.countSolutions` (safety net against technique bugs). A sample is exact only with a
- *    complete logical proof whose level is the requested one.
+ *  - `digLevel` runs stage A down to about half the clues, then `digGuided`, which repeatedly takes the
+ *    removal that makes the puzzle hardest without its score reaching the upper edge of the band, rates the
+ *    result once and re-verifies it with `SG.dfs.countSolutions` (safety net against technique bugs). A
+ *    sample is exact only with a complete logical proof whose level is the requested one.
  *  - On the top tiers (nightmare, hell1, hell2) every other sample is the fast proposal dig (stage A with the
- *    uniqueness oracle, then the guided pass towards puzzles the techniques below 'nightmare' cannot finish; every
- *    uniqueness check of a removal is guarded at `UNIQUE_NODES` search nodes); a proposal above the band is refined
- *    downward by showing symmetric clue groups again (`refineDown`).
- *  - `generate` repeats that over fresh grids and several dig samples per grid until a puzzle is rated exactly the
- *    requested level. An attempt without an exact sample ends with a local search from its closest completely rated
- *    candidate (`searchStrategy`). Every attempt has deterministic caps (full ratings, proposed moves); when every
- *    attempt is used it returns the closest completely rated puzzle with the warning 'difficulty.approximate', and
- *    throws 'digger.noRatedPuzzle' only when no sample at all had a complete proof. It never loops without bound.
+ *    uniqueness oracle, then the guided pass towards puzzles the techniques below 'nightmare' cannot finish;
+ *    every uniqueness check of a removal is guarded at `UNIQUE_NODES` search nodes); a proposal above the
+ *    band is refined downward by showing symmetric clue groups again (`refineDown`).
+ *  - `generate` repeats that over fresh grids and several dig samples per grid until a puzzle is rated
+ *    exactly the requested level. An attempt without an exact sample ends with a local search from its
+ *    closest completely rated candidate (`searchStrategy`). Every attempt has deterministic caps (full
+ *    ratings, proposed moves); when every attempt is used it returns the closest completely rated puzzle with
+ *    the warning 'difficulty.approximate', and throws 'digger.noRatedPuzzle' only when no sample at all had a
+ *    complete proof. It never loops without bound.
  *
- * Why stage B is guided and not "dig further with a relaxed oracle": a puzzle that stage A has finished is minimal
- * (every remaining clue is needed for uniqueness itself), so a relaxed oracle finds nothing more to remove. And random
- * minimal puzzles need nothing beyond singles about three times in four, so the hardest levels would be hit far too
- * rarely. See digGuided.
+ * Why stage B is guided and not "dig further with a relaxed oracle": a puzzle that stage A has finished is
+ * minimal (every remaining clue is needed for uniqueness itself), so a relaxed oracle finds nothing more to
+ * remove. And random minimal puzzles need nothing beyond singles about three times in four, so the hardest
+ * levels would be hit far too rarely. See digGuided.
  *
  * Pipeline seams. `digLevel` runs three steps, each a pipeline step of its own:
- *  - 'dig'   a dig strategy (default `digStage`: stage A, then the guided dig), then the safety net: the puzzle is
- *            re-verified with `SG.dfs.countSolutions` and replaced by a plain DFS dig if a technique bug made it
- *            ambiguous. A proposal sample is also rated and refined here.
+ *  - 'dig'   a dig strategy (default `digStage`: stage A, then the guided dig), then the safety net: the
+ *            puzzle is re-verified with `SG.dfs.countSolutions` and replaced by a plain DFS dig if a
+ *            technique bug made it ambiguous. A proposal sample is also rated and refined here.
  *  - 'rate'  one full rating of the finished puzzle.
  *  - 'tune'  the band check: does the rating hit the requested level? (`tune.hit` / `tune.miss`.)
- * `generate` is the restart loop around them: per attempt a full grid ('fullGrid'), the variant's `postGenerate`
- * ('extraStructure'), then up to `digTries` runs of dig, rate, tune (and the local search). Each step goes through
- * `options.stage(stepId, args, fn)`. A caller that owns the step events (the pipeline) passes its own stage runner and
- * the variant hooks; called directly, the digger uses a plain runner. Either way the random streams are forked by the
- * same names, so the puzzle never depends on who calls.
+ * `generate` is the restart loop around them: per attempt a full grid ('fullGrid'), the variant's
+ * `postGenerate` ('extraStructure'), then up to `digTries` runs of dig, rate, tune (and the local search).
+ * Each step goes through `options.stage(stepId, args, fn)`. A caller that owns the step events (the pipeline)
+ * passes its own stage runner and the variant hooks; called directly, the digger uses a plain runner. Either
+ * way the random streams are forked by the same names, so the puzzle never depends on who calls.
  *
- * Resumable form. `dig`, `digStage`, `digLevel` and `generate` each have a generator twin (`digSteps`, `digStageSteps`,
- * `digLevelSteps`, `generateSteps`) that yields at the natural boundaries of the work when `options.cooperative` is set;
- * the synchronous function is its twin driven to the end (`SG.budget.drive`), so events, random draws, budget
- * accounting and results are the same (see `SG.pipeline.runSteps`, `SG.workerClient`). A dig strategy takes part by
- * returning an iterator instead of its result when called with `cooperative: true` (Killer's wraps `digStage`,
- * Greater-Than's `digSigns` has its own twin); one that does not is a single piece of work for the scheduler. A variant
- * hook (`postGenerate`) takes part through a twin `postGenerate.steps` (Killer's cage layout).
+ * Resumable form. `dig`, `digStage`, `digLevel` and `generate` each have a generator twin (`digSteps`,
+ * `digStageSteps`, `digLevelSteps`, `generateSteps`) that yields at the natural boundaries of the work when
+ * `options.cooperative` is set; the synchronous function is its twin driven to the end (`SG.budget.drive`),
+ * so events, random draws, budget accounting and results are the same (see `SG.pipeline.runSteps`,
+ * `SG.workerClient`). A dig strategy takes part by returning an iterator instead of its result when called
+ * with `cooperative: true` (Killer's wraps `digStage`, Greater-Than's `digSigns` has its own twin); one that
+ * does not is a single piece of work for the scheduler. A variant hook (`postGenerate`) takes part through a
+ * twin `postGenerate.steps` (Killer's cage layout).
  *
  * Events: `options.emit` takes an emitter from `SG.events` or a plain function. The dig functions pick their
- * instrumentation once, at entry: with a quiet emitter (no sink, 'off') they use `NO_TRACE`, whose methods do nothing,
- * so the loops carry no event code; 'summary' adds a throttled `metric` per group, 'full' adds the `dig.*` micro events.
+ * instrumentation once, at entry: with a quiet emitter (no sink, 'off') they use `NO_TRACE`, whose methods do
+ * nothing, so the loops carry no event code; 'summary' adds a throttled `metric` per group, 'full' adds the
+ * `dig.*` micro events.
  *
  * Dig log. Independently of the events, every dig records its decisions in a compact log (`options.log`, an
  * array the caller owns): `{ op: 'pass', pass, clues }` when a pass starts, `{ op: 'accept', cells }` for a
@@ -90,12 +93,13 @@
       ? performance.now() : Date.now();
   }
 
-  // Creates the stage runner of a stepper: the generator version of `SG.events.createStageRunner` (same events, budget
-  // check, timings and `current`), used as `yield* stage(stepId, args, body)`. `body(scope)` returns a value or an iterator
-  // (run inside the step); the step's value is returned. With `options.cooperative` it yields after every step, a boundary
-  // where the caller may give the thread away. Pass an active clock (`SG.budget.createClock`) as `options.now` so time given
-  // away between slices is not counted. `.current` is the id of the running (or failed) step, `.timings` the ms per step
-  // id, `.isStepStage` is true.
+  // Creates the stage runner of a stepper: the generator version of `SG.events.createStageRunner` (same
+  // events, budget check, timings and `current`), used as `yield* stage(stepId, args, body)`. `body(scope)`
+  // returns a value or an iterator (run inside the step); the step's value is returned. With
+  // `options.cooperative` it yields after every step, a boundary where the caller may give the thread away.
+  // Pass an active clock (`SG.budget.createClock`) as `options.now` so time given away between slices is not
+  // counted. `.current` is the id of the running (or failed) step, `.timings` the ms per step id,
+  // `.isStepStage` is true.
   function createStageSteps(emitter, options) {
     options = options || {};
     const budget = options.budget || null;
@@ -127,8 +131,9 @@
     return stage;
   }
 
-  // The stage runner of a call: `options.stage` when it is a stepper stage, a plain `SG.events.createStageRunner` wrapped
-  // for `yield*` (its steps run to the end without yielding), or a new stepper stage.
+  // The stage runner of a call: `options.stage` when it is a stepper stage, a plain
+  // `SG.events.createStageRunner` wrapped for `yield*` (its steps run to the end without yielding), or a new
+  // stepper stage.
   function resolveStage(options, em, budget) {
     const given = options.stage;
     if (given === undefined || given === null) {
@@ -235,10 +240,10 @@
     return out;
   }
 
-  // Oracle of stage A for 'nightmare' and plain digging: does the puzzle still have exactly one solution after the cells
-  // of `group` were removed from `givens` (already cleared on entry; `solution` holds their true values)? Checked cell by
-  // cell with the unique-solution check; exact because removing more clues never removes solutions, so if the whole group
-  // can go, every prefix of it can.
+  // Oracle of stage A for 'nightmare' and plain digging: does the puzzle still have exactly one solution
+  // after the cells of `group` were removed from `givens` (already cleared on entry; `solution` holds their
+  // true values)? Checked cell by cell with the unique-solution check; exact because removing more clues
+  // never removes solutions, so if the whole group can go, every prefix of it can.
   function oracleKeepsUnique(model, givens, solution, group, budget, stats) {
     for (let i = 0; i < group.length; i++) {
       const cell = group[i];
@@ -252,10 +257,11 @@
     return true;
   }
 
-  // `oracleKeepsUnique` with a deterministic guard, for the proposal dig of the top tiers: the checks of one removal may use
-  // at most `UNIQUE_NODES` search nodes together, and a removal that needs more is refused (its clues stay, so the puzzle
-  // stays unique); on a Killer board with nearly no clue left one check could otherwise take seconds. Counted in nodes, so
-  // the answer is reproducible; the budget (cancellation, time guard) is still checked at every node.
+  // `oracleKeepsUnique` with a deterministic guard, for the proposal dig of the top tiers: the checks of one
+  // removal may use at most `UNIQUE_NODES` search nodes together, and a removal that needs more is refused
+  // (its clues stay, so the puzzle stays unique); on a Killer board with nearly no clue left one check could
+  // otherwise take seconds. Counted in nodes, so the answer is reproducible; the budget (cancellation, time
+  // guard) is still checked at every node.
   function guardedKeepsUnique(model, givens, solution, group, budget, stats) {
     let used = 0;
     const slice = {
@@ -275,11 +281,12 @@
     }
   }
 
-  // Oracle of stage A: can the puzzle still be solved completely using only the `allowed` techniques and, when the band has
-  // an upper edge (`maxScore`, exclusive), does its score stay below it? One question answers both "still unique" and "still
-  // inside the band": every technique is sound, so a puzzle that a sequence of sound deductions solves entirely has exactly
-  // one solution. Techniques that rely on uniqueness are switched off (`assumeUniqueness: false`), otherwise the reasoning
-  // would be circular. The reason of the last refusal is left in `oracle.reason` ('techniques' or 'tooHard').
+  // Oracle of stage A: can the puzzle still be solved completely using only the `allowed` techniques and,
+  // when the band has an upper edge (`maxScore`, exclusive), does its score stay below it? One question
+  // answers both "still unique" and "still inside the band": every technique is sound, so a puzzle that a
+  // sequence of sound deductions solves entirely has exactly one solution. Techniques that rely on uniqueness
+  // are switched off (`assumeUniqueness: false`), otherwise the reasoning would be circular. The reason of
+  // the last refusal is left in `oracle.reason` ('techniques' or 'tooHard').
   function techniqueOracle(allowed, maxScore) {
     const options = {
       allowedTechniques: allowed,
@@ -306,7 +313,8 @@
     return oracle;
   }
 
-  // Would every unit that a group touches keep at least `minPerUnit` clues after its removal? `unitClues` is left unchanged.
+  // Would every unit that a group touches keep at least `minPerUnit` clues after its removal? `unitClues` is
+  // left unchanged.
   function unitsStayFilled(model, unitClues, group, minPerUnit) {
     let ok = true;
     let i;
@@ -331,14 +339,15 @@
     return ok;
   }
 
-  // Instrumentation of the dig loops. `NO_TRACE` is what a quiet emitter gets: every method does nothing, so the loops
-  // call it unconditionally and pay one empty call per group.
+  // Instrumentation of the dig loops. `NO_TRACE` is what a quiet emitter gets: every method does nothing, so
+  // the loops call it unconditionally and pay one empty call per group.
   const NO_TRACE = {
     skip: noop, tryGroup: noop, accept: noop, reject: noop, keep: noop, pass: noop, tick: noop
   };
 
-  // Picks the instrumentation for one run of a dig loop from what the emitter wants (`NO_TRACE`, a metric-only tracer for
-  // 'summary', the full tracer for 'full'), wrapped by the log recorder when there is a `log` (see the file header).
+  // Picks the instrumentation for one run of a dig loop from what the emitter wants (`NO_TRACE`, a
+  // metric-only tracer for 'summary', the full tracer for 'full'), wrapped by the log recorder when there is
+  // a `log` (see the file header).
   function createTracer(em, metrics, log) {
     const base = emitTracer(em, metrics);
     return Array.isArray(log) ? logTracer(base, log) : base;
@@ -411,30 +420,32 @@
     };
   }
 
-  // DigResult: { givens (solution values on the kept cells, 0 elsewhere), solution (the array passed in), clues, removed,
-  // rejected (Uint8Array: 1 where a removal was tried and refused), removedGroups (in dig order), stats { groups, tried,
-  // accepted, rejected, skipped, oracleCalls } }
+  // DigResult: { givens (solution values on the kept cells, 0 elsewhere), solution (the array passed in),
+  // clues, removed, rejected (Uint8Array: 1 where a removal was tried and refused), removedGroups (in dig
+  // order), stats { groups, tried, accepted, rejected, skipped, oracleCalls } }
 
-  // Digs holes into a full solution while keeping it unique (stage A). Deterministic: the same solution, rng seed and
-  // options give the same givens.
-  // Options: symmetry (default 'rotational180'), order (default 'random'), minClues, minCluesPerUnit (every unit keeps at
-  // least this many givens), allowedTechniques (missing or null: the DFS unique-solution oracle; an array: the
-  // technique-bounded oracle, a removal is kept only when the logical solver still finishes the puzzle with just these
-  // techniques, which proves uniqueness too; uniqueness-assuming techniques are never used there), maxScore (technique
-  // oracle: a removal is also refused ('tooHard') when the score would reach it), uniqueGuard (DFS oracle: a removal may
-  // use at most `UNIQUE_NODES` search nodes of uniqueness checks, `guardedKeepsUnique`), startGivens (continue digging a
-  // puzzle dug before; must be a subset of `solution`), budget, rejected (Uint8Array of cells known not to be removable,
-  // 1 = skip; lets a later pass reuse what an earlier one learned), emit, stepEvents (default true; `digLevel` passes
-  // false because the pipeline's stage runner emits the step), pass (name in the `dig.pass.*` events), verify (default
-  // true: re-check with `SG.dfs.countSolutions`), log.
-  // Throws 'digger.invalidSolution', 'digger.invalidOption', 'digger.notUnique' (a bug guard) or a budget error.
+  // Digs holes into a full solution while keeping it unique (stage A). Deterministic: the same solution, rng
+  // seed and options give the same givens.
+  // Options: symmetry (default 'rotational180'), order (default 'random'), minClues, minCluesPerUnit (every
+  // unit keeps at least this many givens), allowedTechniques (missing or null: the DFS unique-solution
+  // oracle; an array: the technique-bounded oracle, a removal is kept only when the logical solver still
+  // finishes the puzzle with just these techniques, which proves uniqueness too; uniqueness-assuming
+  // techniques are never used there), maxScore (technique oracle: a removal is also refused ('tooHard') when
+  // the score would reach it), uniqueGuard (DFS oracle: a removal may use at most `UNIQUE_NODES` search nodes
+  // of uniqueness checks, `guardedKeepsUnique`), startGivens (continue digging a puzzle dug before; must be a
+  // subset of `solution`), budget, rejected (Uint8Array of cells known not to be removable, 1 = skip; lets a
+  // later pass reuse what an earlier one learned), emit, stepEvents (default true; `digLevel` passes false
+  // because the pipeline's stage runner emits the step), pass (name in the `dig.pass.*` events), verify
+  // (default true: re-check with `SG.dfs.countSolutions`), log.
+  // Throws 'digger.invalidSolution', 'digger.invalidOption', 'digger.notUnique' (a bug guard) or a budget
+  // error.
   function dig(model, solution, rng, options) {
     return drive(digSteps(model, solution, rng, options));
   }
 
-  // The resumable form of `dig`: a generator returning the DigResult. With `options.cooperative` it yields after every
-  // group whose removal was tried (one oracle call) and never otherwise, so `dig` (this driven to its end) costs nothing
-  // extra. Same options, events and random draws as `dig`.
+  // The resumable form of `dig`: a generator returning the DigResult. With `options.cooperative` it yields
+  // after every group whose removal was tried (one oracle call) and never otherwise, so `dig` (this driven to
+  // its end) costs nothing extra. Same options, events and random draws as `dig`.
   function* digSteps(model, solution, rng, options) {
     options = options || {};
     const coop = options.cooperative === true;
@@ -583,8 +594,8 @@
     };
   }
 
-  // Levels from this index on get the guided stage: every level (rating v2); the score band, not the level's index,
-  // decides where the dig stops.
+  // Levels from this index on get the guided stage: every level (rating v2); the score band, not the level's
+  // index, decides where the dig stops.
   const GUIDED_FROM_LEVEL = 0;
 
   /** Share of the cells that are still clues when the guided stage takes over from the random dig. */
@@ -612,9 +623,10 @@
   /** Symmetries with groups of more than two cells dig in coarser steps and miss a level more often. */
   const DEFAULT_DIG_TRIES_COARSE = 30;
 
-  // Deterministic work caps per full-grid attempt: full ratings (all go through `rateCounted`: the sample ratings, the
-  // downward refinement, the local search, a variant's structure search or tuning) and proposed moves of the searches,
-  // rejected ones included. Counts, not milliseconds, so a seed never depends on the speed of the machine.
+  // Deterministic work caps per full-grid attempt: full ratings (all go through `rateCounted`: the sample
+  // ratings, the downward refinement, the local search, a variant's structure search or tuning) and proposed
+  // moves of the searches, rejected ones included. Counts, not milliseconds, so a seed never depends on the
+  // speed of the machine.
   const CAP_RATINGS = 1024;
   const CAP_PROPOSALS = 32768;
   /** Full ratings the downward refinement of one candidate may use (they count toward CAP_RATINGS). */
@@ -622,21 +634,23 @@
   /** Search nodes one uniqueness check of a search candidate may use; beyond it the candidate is dropped. */
   const UNIQUE_NODES = 200000;
   const UNIQUE_GUARD_CODE = 'digger.uniqueGuard';
-  // Solver steps (budget checks) one solve of the score-targeted objective may use; beyond it the removal is refused.
-  // About twice what the costliest 9x9 solve needed in a sample of 780 (44,000); it cuts the rare top-tier solve of a large
-  // board that would take a second or more per candidate (a mega16 hell2 request went from 106 s to 8 s, same puzzle).
+  // Solver steps (budget checks) one solve of the score-targeted objective may use; beyond it the removal is
+  // refused. About twice what the costliest 9x9 solve needed in a sample of 780 (44,000); it cuts the rare
+  // top-tier solve of a large board that would take a second or more per candidate (a mega16 hell2 request
+  // went from 106 s to 8 s, same puzzle).
   const OBJECTIVE_STEPS = 100000;
   const OBJECTIVE_GUARD_CODE = 'digger.objectiveGuard';
 
-  // Stage B objective: how hard is the puzzle after the cells of `group` were removed (cleared in `givens` on entry, as for
-  // the oracles)? Returns a negative `REFUSED_*` value when the removal must be refused, else a number where more is
-  // harder; the guided stage keeps the highest.
-  // Score-targeted dig (every level): the bounded logical solve with the level's techniques is the oracle (stuck = refused)
-  // and the objective at once, namely the score; a score at or above the band's upper bound is refused, so digging never
-  // overshoots the band. Proposal dig (the fast candidates of the top tiers): the removal must keep the solution unique
-  // (DFS); the objective is the score when the techniques below the chain group finish the puzzle, and above everything
-  // when they do not (the more cells they leave open the better). Uniqueness is proven by the DFS here, so the solver may
-  // use the techniques that assume it. The proposal is rated afterwards and refined into the band when it is above.
+  // Stage B objective: how hard is the puzzle after the cells of `group` were removed (cleared in `givens` on
+  // entry, as for the oracles)? Returns a negative `REFUSED_*` value when the removal must be refused, else a
+  // number where more is harder; the guided stage keeps the highest.
+  // Score-targeted dig (every level): the bounded logical solve with the level's techniques is the oracle
+  // (stuck = refused) and the objective at once, namely the score; a score at or above the band's upper bound
+  // is refused, so digging never overshoots the band. Proposal dig (the fast candidates of the top tiers):
+  // the removal must keep the solution unique (DFS); the objective is the score when the techniques below the
+  // chain group finish the puzzle, and above everything when they do not (the more cells they leave open the
+  // better). Uniqueness is proven by the DFS here, so the solver may use the techniques that assume it. The
+  // proposal is rated afterwards and refined into the band when it is above.
   function removalObjective(model, spec, proposal) {
     if (proposal === true) {
       const below = spec.allowedTechniques.filter(function (id) {
@@ -687,19 +701,21 @@
     };
   }
 
-  // Stage B, "dig deeper": continues a dug puzzle by always taking the removal that makes it hardest. Each step rates the
-  // removal of every remaining group with `removalObjective` and applies the best one; a refused removal stays refused for
-  // the rest of the pass, and so do the refusals of stage A. That is a measured heuristic, not a property of the puzzles:
-  // only a lost uniqueness is final, while a removal refused as stuck or too hard can become acceptable after another
-  // removal changes the proof (the score is not monotone under clue removal). Looking at those refusals again after every
-  // accepted removal made the whole qualification 4.6 times slower and hid seven top levels for time, with the same share
-  // of exact hits (94.4 % against 94.5 % of the first 40 requests of every level), so the pruning stays. It stops when
+  // Stage B, "dig deeper": continues a dug puzzle by always taking the removal that makes it hardest. Each
+  // step rates the removal of every remaining group with `removalObjective` and applies the best one; a
+  // refused removal stays refused for the rest of the pass, and so do the refusals of stage A. That is a
+  // measured heuristic, not a property of the puzzles: only a lost uniqueness is final, while a removal
+  // refused as stuck or too hard can become acceptable after another removal changes the proof (the score is
+  // not monotone under clue removal). Looking at those refusals again after every accepted removal made the
+  // whole qualification 4.6 times slower and hid seven top levels for time, with the same share of exact hits
+  // (94.4 % against 94.5 % of the first 40 requests of every level), so the pruning stays. It stops when
   // nothing can be removed any more: the level's own minimal puzzle.
-  // Why not keep digging in random order: random minimal puzzles need nothing beyond singles about three times out of four,
-  // whatever technique set the oracle allows, because the clues left are the ones that uniqueness itself needs. Choosing
-  // the hardest removal each step finds the puzzles that need more.
-  // Events: each rated candidate is `dig.try`, then `dig.reject` (refused) or `dig.keep` (fine, not the best); the removal
-  // that wins the step is `dig.accept`. With `ctx.cooperative` it yields after every rated candidate (one solve).
+  // Why not keep digging in random order: random minimal puzzles need nothing beyond singles about three
+  // times out of four, whatever technique set the oracle allows, because the clues left are the ones that
+  // uniqueness itself needs. Choosing the hardest removal each step finds the puzzles that need more.
+  // Events: each rated candidate is `dig.try`, then `dig.reject` (refused) or `dig.keep` (fine, not the
+  // best); the removal that wins the step is `dig.accept`. With `ctx.cooperative` it yields after every rated
+  // candidate (one solve).
   function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {
     const coop = ctx.cooperative === true;
     const n = model.cellCount;
@@ -777,28 +793,31 @@
     return { givens: givens, clues: clues };
   }
 
-  // DugPuzzle: { givens (solution values on the kept cells, 0 elsewhere), clues, stats, model? (only for a strategy that digs
-  // structure instead of cells, e.g. the signs of Greater-Than: the model with the removed structure left out, which then
-  // replaces the model for the check, the rating and the result), rating? (the full rating of exactly this puzzle, when the
-  // strategy made one: used instead of rating it again) }
+  // DugPuzzle: { givens (solution values on the kept cells, 0 elsewhere), clues, stats, model? (only for a
+  // strategy that digs structure instead of cells, e.g. the signs of Greater-Than: the model with the removed
+  // structure left out, which then replaces the model for the check, the rating and the result), rating? (the
+  // full rating of exactly this puzzle, when the strategy made one: used instead of rating it again) }
 
-  // The default dig strategy ('cells'): stage A (random dig with the technique-bounded oracle), then stage B (guided dig
-  // deeper). Other strategies (a variant's `digStrategy`, see `registerStrategy`) have this signature and return value.
-  // Options: symmetry (default: the spec's `symmetryDefault`), order (default 'random'), minClues / minCluesPerUnit (default:
-  // the spec's), guided (run stage B; default: every level), proposal (default false: dig the fast proposal of the top
-  // tiers instead, stage A with the DFS uniqueness oracle and stage B with the "as stuck as possible" objective, no score
-  // bound; the caller rates it and refines it into the band), rejected (cells the dig never removes, 1 = keep, as in `dig`:
-  // Killer keeps the clues its layout search rated inside the band), spec, budget, emit, log, cooperative (the caller can run
-  // the strategy in slices, see `digStageSteps`: the function then returns the generator instead of the result, and a
-  // strategy that wraps `digStage` (Killer) and forwards its options gets the same treatment without knowing it).
+  // The default dig strategy ('cells'): stage A (random dig with the technique-bounded oracle), then stage B
+  // (guided dig deeper). Other strategies (a variant's `digStrategy`, see `registerStrategy`) have this
+  // signature and return value. Options: symmetry (default: the spec's `symmetryDefault`), order (default
+  // 'random'), minClues / minCluesPerUnit (default: the spec's), guided (run stage B; default: every level),
+  // proposal (default false: dig the fast proposal of the top tiers instead, stage A with the DFS uniqueness
+  // oracle and stage B with the "as stuck as possible" objective, no score bound; the caller rates it and
+  // refines it into the band), rejected (cells the dig never removes, 1 = keep, as in `dig`: Killer keeps the
+  // clues its layout search rated inside the band), spec, budget, emit, log, cooperative (the caller can run
+  // the strategy in slices, see `digStageSteps`: the function then returns the generator instead of the
+  // result, and a strategy that wraps `digStage` (Killer) and forwards its options gets the same treatment
+  // without knowing it).
   function digStage(model, solution, level, rng, options) {
     const steps = digStageSteps(model, solution, level, rng, options);
     return options && options.cooperative === true ? steps : drive(steps);
   }
 
-  // The resumable form of `digStage`: a generator returning the DugPuzzle. With `options.cooperative` it yields after every
-  // oracle call of stage A and every candidate rated by stage B, so a caller can slice the dig (nearly all the time of a
-  // Samurai or Killer sample) at about the cost of one solve. Same events and random draws as `digStage`.
+  // The resumable form of `digStage`: a generator returning the DugPuzzle. With `options.cooperative` it
+  // yields after every oracle call of stage A and every candidate rated by stage B, so a caller can slice the
+  // dig (nearly all the time of a Samurai or Killer sample) at about the cost of one solve. Same events and
+  // random draws as `digStage`.
   function* digStageSteps(model, solution, level, rng, options) {
     options = options || {};
     const coop = options.cooperative === true;
@@ -863,14 +882,15 @@
   /** Dig strategies by id. A variant selects one with `VariantDef.digStrategy`; 'cells' is the default. */
   const strategies = { cells: digStage };
 
-  // Registers a dig strategy, e.g. 'signs' for Greater-Than. It has the signature of `digStage` and receives the resolved
-  // options (`spec`, `symmetry`, `order`, `minClues`, `minCluesPerUnit`, `guided`, `budget`, `emit`, `cooperative`, `log`).
-  // It should emit its events through `emit` (a `SG.events` emitter) with `stepId` 'dig', keep the replay board in step
-  // (patches of at most 8 cells), append its decisions to the dig log `log` (see the file header) and return
-  // `{ givens, clues, stats }`, plus `model` when it removed structure from the model. It may ignore `cooperative` and
-  // return the result at once (the whole dig of a sample is then one piece of work for a scheduler) or, when
-  // `options.cooperative === true`, return an iterator that yields at boundaries it chooses and returns that value
-  // (`digStageSteps` is the example). Throws 'digger.invalidStrategy' for a bad id or function, or a duplicate id.
+  // Registers a dig strategy, e.g. 'signs' for Greater-Than. It has the signature of `digStage` and receives
+  // the resolved options (`spec`, `symmetry`, `order`, `minClues`, `minCluesPerUnit`, `guided`, `budget`,
+  // `emit`, `cooperative`, `log`). It should emit its events through `emit` (a `SG.events` emitter) with
+  // `stepId` 'dig', keep the replay board in step (patches of at most 8 cells), append its decisions to the
+  // dig log `log` (see the file header) and return `{ givens, clues, stats }`, plus `model` when it removed
+  // structure from the model. It may ignore `cooperative` and return the result at once (the whole dig of a
+  // sample is then one piece of work for a scheduler) or, when `options.cooperative === true`, return an
+  // iterator that yields at boundaries it chooses and returns that value (`digStageSteps` is the example).
+  // Throws 'digger.invalidStrategy' for a bad id or function, or a duplicate id.
   function registerStrategy(id, fn) {
     if (typeof id !== 'string' || id === '' || typeof fn !== 'function' ||
         Object.prototype.hasOwnProperty.call(strategies, id)) {
@@ -893,8 +913,9 @@
     return strategies[id];
   }
 
-  // Safety net of the 'dig' step: a technique that deduces something wrong could make a puzzle ambiguous, so the puzzle is
-  // always re-verified with `SG.dfs.countSolutions`, whatever oracle dug it, and replaced by a plain DFS-dug puzzle on failure.
+  // Safety net of the 'dig' step: a technique that deduces something wrong could make a puzzle ambiguous, so
+  // the puzzle is always re-verified with `SG.dfs.countSolutions`, whatever oracle dug it, and replaced by a
+  // plain DFS-dug puzzle on failure.
   function secureUniqueness(model, solution, dug, rng, ctx) {
     const unique = SG.dfs.countSolutions(model, dug.givens, 2, ctx.budget) === 1;
     ctx.emit.step('dig', 'progress', 'dig.verify', { unique: unique });
@@ -938,9 +959,9 @@
     }, ratingMetrics(clues, rating));
   }
 
-  // The number of solutions of the puzzle of these givens, at most 2: the DFS count with at most `UNIQUE_NODES` search nodes
-  // (counted in nodes, so the answer is reproducible); null when the count needs more. The budget (cancellation, time
-  // guard) is still checked at every node.
+  // The number of solutions of the puzzle of these givens, at most 2: the DFS count with at most
+  // `UNIQUE_NODES` search nodes (counted in nodes, so the answer is reproducible); null when the count needs
+  // more. The budget (cancellation, time guard) is still checked at every node.
   function countWithin(model, givens, parent) {
     let used = 0;
     const slice = {
@@ -963,10 +984,10 @@
     return countWithin(model, givens, parent) === 1;
   }
 
-  // The one entry point through which the generator rates a puzzle in full: the digger, its searches and the variant
-  // strategies (Killer's layout search, Greater-Than's tuning) all call it. Every rating it makes counts toward the attempt's
-  // full-rating cap and none starts once the cap is used up (`caps` = `ctx.caps`; null: outside a generation, not counted).
-  // Returns null when the cap is used up: nothing was rated.
+  // The one entry point through which the generator rates a puzzle in full: the digger, its searches and the
+  // variant strategies (Killer's layout search, Greater-Than's tuning) all call it. Every rating it makes
+  // counts toward the attempt's full-rating cap and none starts once the cap is used up (`caps` = `ctx.caps`;
+  // null: outside a generation, not counted). Returns null when the cap is used up: nothing was rated.
   function rateCounted(model, givens, budget, caps) {
     if (caps) {
       if (caps.ratings >= caps.maxRatings) return null;
@@ -975,8 +996,8 @@
     return SG.difficulty.rate(model, givens, { budget: budget });
   }
 
-  // The rating of a sample that could not be rated because the full-rating cap was used up: no proof, no level, never a
-  // candidate.
+  // The rating of a sample that could not be rated because the full-rating cap was used up: no proof, no
+  // level, never a candidate.
   function unratedRating(givens) {
     let empties = 0;
     for (let c = 0; c < givens.length; c++) if (givens[c] === 0) empties++;
@@ -992,7 +1013,8 @@
       (caps.ratings >= caps.maxRatings || caps.proposals >= caps.maxProposals);
   }
 
-  // New caps for one full-grid attempt; `options.maxRatings` / `options.maxProposals` of `generate` lower them (tests).
+  // New caps for one full-grid attempt; `options.maxRatings` / `options.maxProposals` of `generate` lower
+  // them (tests).
   function newCaps(options) {
     const o = options || {};
     return {
@@ -1006,15 +1028,16 @@
     return { groups: 0, tried: 0, accepted: 0, rejected: 0, skipped: 0, oracleCalls: 0 };
   }
 
-  // Keeps the closest completely rated candidate a run meets besides its dig samples: a state of the downward refinement or
-  // of the local search, accepted or not, a position of a variant's tuning, a layout of a variant's structure search. Whoever
-  // offers a candidate guarantees that it is a valid puzzle whose clues follow the symmetry of the run, and that `logOf()`
-  // returns a dig log that replays it from the solution (built only for a candidate that is kept). A kept candidate can be
-  // returned without the dig step's safety net, so the keeper checks uniqueness itself, whatever its proof claims: a
-  // candidate replaces the best only when the DFS count of `countWithin` finds exactly one solution. A complete proof that
-  // needs no technique assuming uniqueness, contradicted by a second solution, marks the run `unsound` (a technique bug,
-  // reported as `digger.unsoundTechnique`). The final choice compares the kept candidate with the samples. `budget` is
-  // checked during the counts.
+  // Keeps the closest completely rated candidate a run meets besides its dig samples: a state of the downward
+  // refinement or of the local search, accepted or not, a position of a variant's tuning, a layout of a
+  // variant's structure search. Whoever offers a candidate guarantees that it is a valid puzzle whose clues
+  // follow the symmetry of the run, and that `logOf()` returns a dig log that replays it from the solution
+  // (built only for a candidate that is kept). A kept candidate can be returned without the dig step's safety
+  // net, so the keeper checks uniqueness itself, whatever its proof claims: a candidate replaces the best
+  // only when the DFS count of `countWithin` finds exactly one solution. A complete proof that needs no
+  // technique assuming uniqueness, contradicted by a second solution, marks the run `unsound` (a technique
+  // bug, reported as `digger.unsoundTechnique`). The final choice compares the kept candidate with the
+  // samples. `budget` is checked during the counts.
   function createKeeper(spec, level, budget) {
     const keeper = {
       best: null,
@@ -1066,18 +1089,19 @@
     };
   }
 
-  // Downward refinement of a candidate above the band: the empty symmetry groups of the solution are re-added one at a time
-  // in a seeded order, each addition fully rated. A completely rated addition is kept when its score is at least the band
-  // minimum; if the score is also below the band maximum it is accepted and the refinement stops, otherwise it continues.
-  // Additions that leave the proof incomplete or the score below the band minimum are undone. Each kept addition goes into
-  // the dig log as `{ op: 'reveal', cells }`. At most `REFINE_RATINGS` ratings, never more than the caps of the attempt
-  // allow. Every completely rated state it meets, the undone ones included, is offered to the keeper of the run
-  // (`ctx.keeper`), so a closer state is never lost.
+  // Downward refinement of a candidate above the band: the empty symmetry groups of the solution are re-added
+  // one at a time in a seeded order, each addition fully rated. A completely rated addition is kept when its
+  // score is at least the band minimum; if the score is also below the band maximum it is accepted and the
+  // refinement stops, otherwise it continues. Additions that leave the proof incomplete or the score below
+  // the band minimum are undone. Each kept addition goes into the dig log as `{ op: 'reveal', cells }`. At
+  // most `REFINE_RATINGS` ratings, never more than the caps of the attempt allow. Every completely rated
+  // state it meets, the undone ones included, is offered to the keeper of the run (`ctx.keeper`), so a closer
+  // state is never lost.
   function refineDown(model, solution, givens, rating, spec, rng, ctx) {
     const result = { givens: givens, clues: 0, rating: rating, ratings: 0 };
     for (let c = 0; c < givens.length; c++) if (givens[c] !== 0) result.clues++;
-    // Not where the structure was dug to a minimal set (Greater-Than's signs, see localSearchSteps): its own dig strategy
-    // shows clues when the puzzle is too hard and keeps the signs minimal.
+    // Not where the structure was dug to a minimal set (Greater-Than's signs, see localSearchSteps): its own
+    // dig strategy shows clues when the puzzle is too hard and keeps the signs minimal.
     if (!rating.solved || rating.score < spec.max || model.inequalities.length > 0) return result;
     const work = Int32Array.from(givens);
     const log = Array.isArray(ctx.log) ? ctx.log : null;
@@ -1122,27 +1146,29 @@
     return result;
   }
 
-  // LevelPuzzle: { model, givens, solution, clues, removed, requested (the level asked for), achieved (`rating.level`),
-  // rating, exact (a complete logical proof and achieved === requested: the score lies in the level's band), unsound (the
-  // technique-bounded dig produced a puzzle that was not unique, so a technique has a bug; the returned puzzle comes from
-  // the DFS fallback and is unique), stats, log (the dig log of this sample) }
+  // LevelPuzzle: { model, givens, solution, clues, removed, requested (the level asked for), achieved
+  // (`rating.level`), rating, exact (a complete logical proof and achieved === requested: the score lies in
+  // the level's band), unsound (the technique-bounded dig produced a puzzle that was not unique, so a
+  // technique has a bug; the returned puzzle comes from the DFS fallback and is unique), stats, log (the dig
+  // log of this sample) }
 
-  // One attempt at a puzzle of the requested level from a given solution, as three pipeline steps: 'dig' (the dig strategy,
-  // default `digStage`, then the safety net `secureUniqueness`), 'rate' (one deferred rating) and 'tune' (does the rating hit
-  // the band of the level?). It never throws for a puzzle that misses the level; look at `exact`.
-  // Options: those of `digStage`, and stage (the step runner: a stepper stage (`createStageSteps`, what the pipeline passes)
-  // or a plain `SG.events.createStageRunner` runner whose steps never yield; default: a stepper stage that emits the step
-  // events), strategy (default `digStage`), strategyId (default 'cells', for the 'dig.start' event), where ({ attempt,
-  // maxAttempts, sample, maxSamples }: the position in the restart loop, goes into the step start events).
-  // Throws 'difficulty.unknownLevel', 'difficulty.unsupportedLevel', 'digger.invalidSolution', 'digger.invalidOption' or a
-  // budget error.
+  // One attempt at a puzzle of the requested level from a given solution, as three pipeline steps: 'dig' (the
+  // dig strategy, default `digStage`, then the safety net `secureUniqueness`), 'rate' (one deferred rating)
+  // and 'tune' (does the rating hit the band of the level?). It never throws for a puzzle that misses the
+  // level; look at `exact`. Options: those of `digStage`, and stage (the step runner: a stepper stage
+  // (`createStageSteps`, what the pipeline passes) or a plain `SG.events.createStageRunner` runner whose
+  // steps never yield; default: a stepper stage that emits the step events), strategy (default `digStage`),
+  // strategyId (default 'cells', for the 'dig.start' event), where ({ attempt, maxAttempts, sample,
+  // maxSamples }: the position in the restart loop, goes into the step start events). Throws
+  // 'difficulty.unknownLevel', 'difficulty.unsupportedLevel', 'digger.invalidSolution',
+  // 'digger.invalidOption' or a budget error.
   function digLevel(model, solution, level, rng, options) {
     return drive(digLevelSteps(model, solution, level, rng, options));
   }
 
-  // The resumable form of `digLevel`: a generator returning the LevelPuzzle. With `options.cooperative` it yields where its
-  // dig strategy does (a strategy that does not know `cooperative` is one piece of work) and after each of its three steps.
-  // Same events and random draws.
+  // The resumable form of `digLevel`: a generator returning the LevelPuzzle. With `options.cooperative` it
+  // yields where its dig strategy does (a strategy that does not know `cooperative` is one piece of work) and
+  // after each of its three steps. Same events and random draws.
   function* digLevelSteps(model, solution, level, rng, options) {
     options = options || {};
     const coop = options.cooperative === true;
@@ -1273,16 +1299,17 @@
     };
   }
 
-  // Local search from the closest completely rated candidate of an attempt, run as the strategy of one more sample. A
-  // candidate above the band is refined downward (`refineDown`). Below the band the search proposes symmetry-preserving moves
-  // on clue groups (removal, swap of a full group for an empty one, addition) and, on Greater-Than, the removal of a sign; a
-  // move is kept iff the puzzle stays unique (`uniqueWithin`) with a complete proof, its score does not decrease and stays
-  // below the band maximum. The clue floor and the unit minimum of the level are kept. Where the signs were dug to a
-  // minimal set (Greater-Than) no clue is added, so the signs stay minimal. A candidate that comes up again is judged from a
-  // memo, not checked or rated twice (it still counts as a proposal). The search stops on entering the band or when the
-  // caps of the attempt are used up. The candidate's dig log comes first in the log of the result, followed by the kept
-  // moves (`accept` for a removed group or sign, `reveal` with `reason: 'search'` for an added group), so the Generation
-  // Steps replay shows what happened. Returns a dig strategy (signature of `digStage`).
+  // Local search from the closest completely rated candidate of an attempt, run as the strategy of one more
+  // sample. A candidate above the band is refined downward (`refineDown`). Below the band the search proposes
+  // symmetry-preserving moves on clue groups (removal, swap of a full group for an empty one, addition) and,
+  // on Greater-Than, the removal of a sign; a move is kept iff the puzzle stays unique (`uniqueWithin`) with
+  // a complete proof, its score does not decrease and stays below the band maximum. The clue floor and the
+  // unit minimum of the level are kept. Where the signs were dug to a minimal set (Greater-Than) no clue is
+  // added, so the signs stay minimal. A candidate that comes up again is judged from a memo, not checked or
+  // rated twice (it still counts as a proposal). The search stops on entering the band or when the caps of
+  // the attempt are used up. The candidate's dig log comes first in the log of the result, followed by the
+  // kept moves (`accept` for a removed group or sign, `reveal` with `reason: 'search'` for an added group),
+  // so the Generation Steps replay shows what happened. Returns a dig strategy (signature of `digStage`).
   function searchStrategy(candidate) {
     return function search(model, solution, level, rng, options) {
       const steps = localSearchSteps(candidate, solution, rng, options);
@@ -1351,8 +1378,8 @@
       return true;
     }
 
-    // Clue additions are left out where the structure was dug to a minimal set (Greater-Than's signs): an added clue can
-    // make a sign redundant, and the sign set of a puzzle stays minimal.
+    // Clue additions are left out where the structure was dug to a minimal set (Greater-Than's signs): an
+    // added clue can make a sign redundant, and the sign set of a puzzle stays minimal.
     const additions = model.inequalities.length === 0;
     // The candidates judged so far (key: the givens; reset when a sign goes, since the model changes then).
     // Near the end of a search, and on a Killer with no clue left, the same candidates come up again and
@@ -1487,56 +1514,61 @@
     return gap * 1000 + off;
   }
 
-  // GeneratedPuzzle: { model (the one passed in, or the one the variant's `postGenerate` returned for the attempt the puzzle
-  // comes from), givens, solution, clues, requested, achieved, rating, exact (achieved === requested), attempts (full grids
-  // generated), samples (dug puzzles rated: at most maxAttempts x digTries; the local search of an attempt is not a dig
-  // sample and is not counted), warnings ('difficulty.approximate' when the level was not reached exactly;
-  // 'digger.unsoundTechnique' when a technique produced an ambiguous puzzle: a bug), stats (of the returned puzzle's dig),
-  // log (its dig log), work (per attempt: { ratings (every full rating), proposals, maxRatings, maxProposals }, counted
-  // against its caps) }
+  // GeneratedPuzzle: { model (the one passed in, or the one the variant's `postGenerate` returned for the
+  // attempt the puzzle comes from), givens, solution, clues, requested, achieved, rating, exact (achieved ===
+  // requested), attempts (full grids generated), samples (dug puzzles rated: at most maxAttempts x digTries;
+  // the local search of an attempt is not a dig sample and is not counted), warnings
+  // ('difficulty.approximate' when the level was not reached exactly; 'digger.unsoundTechnique' when a
+  // technique produced an ambiguous puzzle: a bug), stats (of the returned puzzle's dig), log (its dig log),
+  // work (per attempt: { ratings (every full rating), proposals, maxRatings, maxProposals }, counted against
+  // its caps) }
 
-  // Generates a puzzle of the requested difficulty: the outer restart loop. Each attempt draws a fresh full grid and digs up
-  // to `digTries` puzzles from it (a dig costs about a millisecond, a grid more, and one dig in a few misses the level, so
-  // the grid is reused); the first puzzle rated exactly the requested level is returned. When every attempt is used up, the
-  // closest puzzle seen is returned with 'difficulty.approximate' in `warnings`; it neither throws for that nor loops longer
-  // than maxAttempts x digTries digs. Every returned puzzle has exactly one solution. Deterministic: the same model, level,
-  // rng seed and options give the same puzzle, whatever the emitter and the stage runner do. The random streams are
-  // `rng.fork('grid#A')` for the grid of attempt A, `rng.fork('extra#A')` for the variant hook and `rng.fork('dig#A.T')` for
-  // dig sample T of attempt A.
-  // Each attempt runs the steps 'fullGrid' and 'extraStructure', then per sample 'dig', 'rate' and 'tune' (see `digLevel`),
-  // all through `options.stage`. After a missed attempt it emits `retry.difficulty`.
-  // Rating v2: a sample is exact only with a complete proof whose level is the requested one. On the top tiers
-  // (`spec.proposal`) the odd samples of an attempt are the fast proposal dig (rated at once and refined downward into the
-  // band when above it, see `refineDown`), the even ones the score-targeted dig. When no sample of an attempt is exact, one
-  // more sample runs the local search (`searchStrategy`) from the closest completely rated candidate of the attempt (stream
-  // `rng.fork('search#A')`). Every attempt has deterministic caps (`CAP_RATINGS` full ratings, `CAP_PROPOSALS` proposed
-  // moves), passed to the samples and to the variant hook as `caps`; a used-up cap ends the attempt, and every full rating
-  // goes through `rateCounted`, which never starts one beyond the cap. The fallback is the closest completely rated
-  // candidate of the whole run: a dig sample, or a candidate that the searches, the refinement or a variant's strategy met on
-  // the way (`createKeeper`); when there is none at all, 'digger.noRatedPuzzle' is thrown.
-  // Options: those of `digLevel`, and maxAttempts (default 8), digTries (dig samples per grid; default 12, or 30 when the
-  // symmetry has groups of more than two cells, which miss the level more often), maxRatings / maxProposals (lower the caps
-  // of an attempt; tests), postGenerate (the variant's hook, called once per attempt after the full grid with `{ model,
-  // solution, rng, level, spec, attempt, budget, emit, variantId, caps, symmetry, keeper }`; `keeper` is where to offer the
-  // completely rated candidates the hook meets). Models are immutable, so a hook that adds structure (cages, signs) returns
-  // the new model, which replaces `model` for that attempt; returning nothing keeps it. A long hook can be sliced by giving
-  // the function a resumable twin `hook.steps`, a generator function with the same argument and result, used instead of the
+  // Generates a puzzle of the requested difficulty: the outer restart loop. Each attempt draws a fresh full
+  // grid and digs up to `digTries` puzzles from it (a dig costs about a millisecond, a grid more, and one dig
+  // in a few misses the level, so the grid is reused); the first puzzle rated exactly the requested level is
+  // returned. When every attempt is used up, the closest puzzle seen is returned with
+  // 'difficulty.approximate' in `warnings`; it neither throws for that nor loops longer than maxAttempts x
+  // digTries digs. Every returned puzzle has exactly one solution. Deterministic: the same model, level, rng
+  // seed and options give the same puzzle, whatever the emitter and the stage runner do. The random streams
+  // are `rng.fork('grid#A')` for the grid of attempt A, `rng.fork('extra#A')` for the variant hook and
+  // `rng.fork('dig#A.T')` for dig sample T of attempt A.
+  // Each attempt runs the steps 'fullGrid' and 'extraStructure', then per sample 'dig', 'rate' and 'tune'
+  // (see `digLevel`), all through `options.stage`. After a missed attempt it emits `retry.difficulty`.
+  // Rating v2: a sample is exact only with a complete proof whose level is the requested one. On the top
+  // tiers (`spec.proposal`) the odd samples of an attempt are the fast proposal dig (rated at once and
+  // refined downward into the band when above it, see `refineDown`), the even ones the score-targeted dig.
+  // When no sample of an attempt is exact, one more sample runs the local search (`searchStrategy`) from the
+  // closest completely rated candidate of the attempt (stream `rng.fork('search#A')`). Every attempt has
+  // deterministic caps (`CAP_RATINGS` full ratings, `CAP_PROPOSALS` proposed moves), passed to the samples
+  // and to the variant hook as `caps`; a used-up cap ends the attempt, and every full rating goes through
+  // `rateCounted`, which never starts one beyond the cap. The fallback is the closest completely rated
+  // candidate of the whole run: a dig sample, or a candidate that the searches, the refinement or a variant's
+  // strategy met on the way (`createKeeper`); when there is none at all, 'digger.noRatedPuzzle' is thrown.
+  // Options: those of `digLevel`, and maxAttempts (default 8), digTries (dig samples per grid; default 12, or
+  // 30 when the symmetry has groups of more than two cells, which miss the level more often), maxRatings /
+  // maxProposals (lower the caps of an attempt; tests), postGenerate (the variant's hook, called once per
+  // attempt after the full grid with `{ model, solution, rng, level, spec, attempt, budget, emit, variantId,
+  // caps, symmetry, keeper }`; `keeper` is where to offer the completely rated candidates the hook meets).
+  // Models are immutable, so a hook that adds structure (cages, signs) returns the new model, which replaces
+  // `model` for that attempt; returning nothing keeps it. A long hook can be sliced by giving the function a
+  // resumable twin `hook.steps`, a generator function with the same argument and result, used instead of the
   // hook when `options.cooperative` is set.
-  // Throws 'difficulty.unsupportedLevel', option errors, 'digger.invalidPostGenerate', 'digger.noRatedPuzzle' or a budget
-  // error.
+  // Throws 'difficulty.unsupportedLevel', option errors, 'digger.invalidPostGenerate', 'digger.noRatedPuzzle'
+  // or a budget error.
   function generate(model, level, rng, options) {
     return drive(generateSteps(model, level, rng, options));
   }
 
   // The resumable form of `generate`: the restart loop as a generator returning the GeneratedPuzzle. With
-  // `options.cooperative` it yields at the natural boundaries of the work: after each oracle call of a dig and each
-  // candidate of the guided dig (see `digStageSteps`), and after every pipeline step (see `createStageSteps`). The pieces in
-  // between are NOT resumable: one full grid, the uniqueness check of a dug puzzle, one rating, a single search of the
-  // variant's `postGenerate` twin (one Killer layout search, cut off at 30000 nodes, up to ~90 ms) and a dig strategy or
-  // hook that does not support `cooperative`. That is the granularity limit: a slice is never shorter than the longest of
-  // those pieces (a few ms on 9x9 boards, tens of ms for a Killer layout search or a Samurai uniqueness check).
-  // Events, random draws, budget accounting and result are those of `generate`, which is this generator driven to its end.
-  // It may be abandoned at any yield (`.return()` runs the `finally` blocks and nothing else).
+  // `options.cooperative` it yields at the natural boundaries of the work: after each oracle call of a dig
+  // and each candidate of the guided dig (see `digStageSteps`), and after every pipeline step (see
+  // `createStageSteps`). The pieces in between are NOT resumable: one full grid, the uniqueness check of a
+  // dug puzzle, one rating, a single search of the variant's `postGenerate` twin (one Killer layout search,
+  // cut off at 30000 nodes, up to ~90 ms) and a dig strategy or hook that does not support `cooperative`.
+  // That is the granularity limit: a slice is never shorter than the longest of those pieces (a few ms on 9x9
+  // boards, tens of ms for a Killer layout search or a Samurai uniqueness check). Events, random draws,
+  // budget accounting and result are those of `generate`, which is this generator driven to its end. It may
+  // be abandoned at any yield (`.return()` runs the `finally` blocks and nothing else).
   function* generateSteps(model, level, rng, options) {
     options = options || {};
     const coop = options.cooperative === true;
@@ -1671,8 +1703,8 @@
           bestDistance = distance;
         }
       }
-      // The closest completely rated candidate wins: a dig sample, or a candidate the searches, the refinement, a variant's
-      // tuning or its structure search met on the way.
+      // The closest completely rated candidate wins: a dig sample, or a candidate the searches, the
+      // refinement, a variant's tuning or its structure search met on the way.
       if (keeper.best !== null && keeper.distance < bestDistance) {
         best = keptPuzzle(keeper.best, level);
         bestDistance = keeper.distance;
@@ -1731,7 +1763,6 @@
   SG.digger = {
     ORDERS: ORDERS,
     CAP_RATINGS: CAP_RATINGS,
-    CAP_PROPOSALS: CAP_PROPOSALS,
     dig: dig,
     digSteps: digSteps,
     digStage: digStage,

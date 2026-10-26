@@ -1,35 +1,30 @@
 /**
- * Opening a puzzle (the player's import): `SG.importer`. Input is the text of Sudoku Generator's "Export" box (one
- * or more puzzles, each a header line and its grid: `openMany`), or what its "Play online" button hands over: a
- * link or compressed token holding ALL the puzzles of the generator's list (`openMany` decodes it, `active` names
- * the puzzle to show first) or the document of one puzzle (`open`, used by the page address); a plain text line of
- * a classic board is read too. A document (the stored form of a puzzle) is validated, a REAL `PuzzleModel` is
- * rebuilt from its `model` block (no variant code is involved), givens, solution and uniqueness are checked, and a
- * playable puzzle comes back. Whatever is wrong with the input comes back as translatable issues
- * (`import.error.*`, `error.exchange.*`); nothing here throws. The input is untrusted: every list is bounded.
- * Pure: no DOM, no storage; the one asynchronous step is decoding a token (`SG.exchange.decode`, `decodeText`).
+ * Opening a puzzle: `SG.importer`. Input is the text of Sudoku Generator's Export box (one or more puzzles,
+ * each a header line and its grid), what its "Play" button hands over (a link or token holding all the
+ * puzzles of its list, `active` naming the one to show first, or the document of one puzzle), or a line of a
+ * classic board. A document is validated, a `PuzzleModel` is rebuilt from its `model` block (no variant code
+ * involved), givens, solution and uniqueness are checked, and a playable puzzle comes back. Problems come
+ * back as translatable issues (`import.error.*`, `error.exchange.*`); nothing here throws. The input is
+ * untrusted: every list is bounded. No DOM, no storage; decoding a token (`SG.exchange`) is the only
+ * asynchronous step.
  *
- * API: `open(input, options?)` -> Promise<Outcome>; `input` is a bare token (`z.` / `j.`: one document; `t.` / `s.`:
- * a bundle, the first puzzle is the answer), a player link or fragment (`...#puzzle=<token>`) or a line of 16 / 36 /
- * 81 characters ('.', '0', '-', '_' = empty); `Outcome.kind` is 'token' | 'link' | 'text'. `openMany(input,
- * options?)` -> Promise<{ items, active? }>, `items` = `[{ index, label, outcome }]`, one Outcome per puzzle (a
- * single puzzle gives one item identical to `open`); other input goes to `open`. `exportBlocks(text)` ->
- * [{ header, rows, extras }] | null; `parseExportBlock(block, index)` -> { ok, label, data, errors }.
- * `openDocument(data)` takes an already parsed (stored) document, `openText(text)` a line of classic digits.
- * `detect(input)` says what a string is without decoding it: kind 'empty' | 'link' | 'token' | 'bundle' | 'text' |
- * 'unknown'. `validate(data)` checks the form of a document, no model built. `puzzleId(model, givens)` is the
- * identity of a puzzle: the same puzzle gets the same id whichever way it arrived.
+ * `open(input)` -> Promise<Outcome>: a token (`z.` / `j.`: one document; `t.` / `s.`: a bundle, of which the
+ * first puzzle is taken), a link or fragment (`...#puzzle=<token>`) or a line of 16 / 36 / 81 characters
+ * ('.', '0', '-', '_' = empty). `openMany(input)` -> Promise<{ items, active? }>, `items` holding one
+ * `{ index, label, outcome }` per puzzle. `openDocument(data)` takes a parsed (stored) document,
+ * `openText(text)` a line of classic digits. `validate(data)` checks the form of a document without building
+ * a model. `puzzleId(model, givens)` is the identity of a puzzle, the same whichever way it arrived.
  *
- * Outcome: `{ ok, kind, errors, warnings, puzzle }`; issues are `{ key, args }`; `puzzle` is null unless `ok`:
+ * Outcome: `{ ok, kind, errors, warnings, puzzle }`, issues `{ key, args }`, `puzzle` null unless `ok`:
  *   { id, variantId, model, givens, solution, uniqueness, solutionSource, symbolMode, info, document }
- *   - givens / solution: Int32Array per cell (a puzzle without a solution is refused, so a playable one has one).
+ *   - givens / solution: Int32Array per cell (a puzzle without a solution is refused).
  *   - uniqueness: 'unique' | 'multiple' | 'unknown' (the search ran out of time).
- *   - solutionSource: 'stored' (the document's own) | 'computed' (found with the DFS solver).
- *   - info: { source, seed, generatedAt, locale, difficulty, clues, cellCount, digits, wordoku } for the info card;
+ *   - solutionSource: 'stored' | 'computed' (found with the DFS solver).
+ *   - info: { source, seed, generatedAt, locale, difficulty, clues, cellCount, digits, wordoku };
  *     `difficulty` is { requested, achieved, score, hardestTechnique, ratingVersion? } or null; `wordoku` is
  *     { placement, line } or null (the key word is never part of it).
- *   - document: the plain, size-bounded document the puzzle can be rebuilt from (stored for the "recent puzzles"
- *     list; `openDocument(puzzle.document)` gives the same puzzle).
+ *   - document: the plain, size-bounded document the puzzle is stored as (`openDocument(puzzle.document)`
+ *     gives the same puzzle).
  */
 (function (root) {
   'use strict';
@@ -156,13 +151,19 @@
     return { ok: false, data: null, errors: [issue(key, args)] };
   }
 
-  /** A line of clues: board characters, and either one of the board lengths (a typo is then reported by position) or nothing but digits and empty marks (a wrong length is reported). */
+  /**
+   * Board characters, and either a board length (a typo is then reported by position) or only digits and
+   * empty marks (a wrong length is then reported).
+   */
   function looksLikeText(compact) {
     if (/^[0-9._-]+$/.test(compact)) return true;
     return has(TEXT_CHARS, compact.length) && /^[0-9._\-A-Za-z]+$/.test(compact);
   }
 
-  /** What a string is, without decoding it. A 'bundle' is a text token (several puzzles); for a link, `active` is the puzzle to show first, when the link says one. */
+  /**
+   * Kind 'empty' | 'link' | 'token' | 'bundle' (a text token: several puzzles) | 'text' | 'unknown', without
+   * decoding; a link may also name the puzzle to show first (`active`).
+   */
   function detect(input) {
     const body = typeof input === 'string' ? input.replace(/^\uFEFF/, '').trim() : '';
     if (body === '') return { kind: 'empty', value: '' };
@@ -190,7 +191,7 @@
     return SG.exchange && SG.exchange.isTextToken(token) ? 'bundle' : plainKind;
   }
 
-  /** Parses a classic board written as one line (16, 36 or 81 characters); `data` has the shape of a document, `solution: null`. */
+  /** A classic board on one line (16, 36 or 81 characters) as the data of a document without a solution. */
   function parseText(text) {
     if (typeof text !== 'string') return failed('import.error.empty');
     const line = text.replace(/\s+/g, '');
@@ -345,9 +346,9 @@
   }
 
   /**
-   * The shape of the `model` block (a plain ModelSpec) against what the document says about itself. Only data that
-   * `SG.model.create` can take without a surprise gets through: every list is bounded, every index in range, every
-   * string short. The rules of the board are then checked on the built model.
+   * The shape of the `model` block (a plain ModelSpec) against what the document says about itself. Only data
+   * that `SG.model.create` takes without a surprise gets through: every list bounded, every index in range,
+   * every string short. The rules of the board are checked later on the built model.
    */
   function checkModelSpec(spec, variantId, n, digits, errors) {
     const bad = function (field) {
@@ -434,7 +435,7 @@
     return true;
   }
 
-  /** Checks the form of a document (format and version, variant, types and ranges of the lists, the `model` block); builds no model (see `openDocument`). */
+  /** Format and version, variant, types and ranges of the lists, the `model` block; builds no model. */
   function validate(data) {
     const errors = [];
     const warnings = [];
@@ -603,7 +604,10 @@
     return ('00000000' + n.toString(16)).slice(-8);
   }
 
-  /** The identity of a puzzle: variant, structure (regions, cages, signs, key-word line, symbols) and givens, as `<variantId>-<16 hex digits>`. */
+  /**
+   * `<variantId>-<16 hex digits>`, a hash of the structure (regions, cages, signs, key-word line, symbols)
+   * and the givens. Stored progress is keyed by it: changing it orphans every saved game.
+   */
   function puzzleId(model, givens) {
     const parts = [model.variantId, model.digits, model.cellCount, Array.from(givens).join(','),
       Array.from(model.layout.cellRegion).join(','), Array.from(model.fixedCells).join(','),
@@ -636,7 +640,7 @@
     return text;
   }
 
-  /** The plain document a puzzle is stored as: the fields the player reads, nothing else. */
+  /** The fields the player reads, nothing else. */
   function storedDocument(data, model, givens, solution, info) {
     const doc = {
       format: FORMAT,
@@ -848,9 +852,10 @@
   }
 
   /**
-   * The puzzles of the "Export as text" box: a header line `#number,variant,level,seed`, the grid (one row per line),
-   * then for Jigsaw, Killer, Greater-Than and Wordoku `key: value` structure lines; a blank line between puzzles.
-   * Null when the text is not in that form; `extras` maps the lower-case key of a structure line to its value.
+   * The puzzles of the Export box: a header line `#number,variant,level,seed`, the grid (one row per line),
+   * then for Jigsaw, Killer, Greater-Than and Wordoku `key: value` structure lines; a blank line between
+   * puzzles. Null when the text is not in that form; `extras` maps the lower-case key of a structure line to
+   * its value.
    */
   function exportBlocks(text) {
     const lines = String(text).replace(/^\uFEFF/, '').split(/\r?\n/).map(function (s) { return s.trim(); });
@@ -937,10 +942,10 @@
   }
 
   /**
-   * Reads one block of the exported text into the data of a document. The clues give the cells; the board comes from
-   * the variant (classic, Mega, Diagonal, Hyper, overlapping boards by the `_` of the canvas) or from the structure
-   * lines (Jigsaw regions, Killer cages, Greater-Than signs, Wordoku letters and word line). A structured board is
-   * returned as a `model` block, so the stored puzzle needs no line.
+   * One exported block as the data of a document. The board comes from the variant (classic, Mega, Diagonal,
+   * Hyper, overlapping boards by the `_` of the canvas) or from the structure lines (Jigsaw regions, Killer
+   * cages, Greater-Than signs, Wordoku letters and word line); a structured board is returned as a `model`
+   * block.
    */
   function parseExportBlock(block, index) {
     const parts = block.header.split(',');
@@ -1077,7 +1082,7 @@
     return true;
   }
 
-  /** The puzzles of a text token (the generator's "Play" hand-off): decoded to the text of its Export box and opened like pasted text; `active` is the puzzle to show first. A token inside a token is refused. */
+  /** A text token holds the text of the Export box, opened like pasted text; no token inside a token. */
   function openBundle(seen, o) {
     const unreadable = function (issues) {
       return { items: [{ index: 1, label: '', outcome: failure('bundle', issues) }] };
@@ -1092,7 +1097,7 @@
     });
   }
 
-  /** Opens the puzzles of an Export-box text or a text token (see `openBundle`); any other input goes to `open`. One item per puzzle; `active` is the puzzle a bundle link wants first. Never rejects. */
+  /** Export-box text or a text token; any other input goes to `open`. Never rejects. */
   function openMany(input, options) {
     const o = options || {};
     const body = typeof input === 'string' ? input.replace(/^\uFEFF/, '').trim() : '';
@@ -1123,10 +1128,8 @@
   }
 
   SG.importer = {
-    FORMAT: FORMAT,
     LEVELS: LEVELS,
     VARIANTS: VARIANTS,
-    TEXT_CHARS: TEXT_CHARS,
     ERROR_KEYS: ERROR_KEYS,
     WARNING_KEYS: WARNING_KEYS,
     detect: detect,
@@ -1161,7 +1164,7 @@
       'import.error.badType': 'The field "{field}" must be {expected}.',
       'import.error.unknownVariant': 'This player cannot open the variant "{variant}".',
       'import.error.noModel': 'This {variant} puzzle has no description of its board. Generate it again ' +
-        'with the current Sudoku Generator and use its "Play online" button.',
+        'with the current Sudoku Generator and use its "Play" button.',
       'import.error.badModel': 'The board description of this puzzle is damaged (field "{field}").',
       'import.error.buildFailed': 'The board of this puzzle could not be built.',
       'import.error.badStructure': 'The board of this {variant} puzzle is not valid.',
@@ -1225,7 +1228,7 @@
       'import.error.badType': 'Trường "{field}" phải là {expected}.',
       'import.error.unknownVariant': 'Trình chơi này không mở được biến thể "{variant}".',
       'import.error.noModel': 'Đề {variant} này không kèm mô tả bàn cờ. Hãy tạo lại bằng Trình sinh đề ' +
-        'Sudoku bản mới rồi dùng nút "Chơi trực tuyến".',
+        'Sudoku bản mới rồi dùng nút "Chơi".',
       'import.error.badModel': 'Phần mô tả bàn cờ của đề này bị hỏng (trường "{field}").',
       'import.error.buildFailed': 'Không dựng được bàn cờ của đề này.',
       'import.error.badStructure': 'Bàn cờ của đề {variant} này không hợp lệ.',

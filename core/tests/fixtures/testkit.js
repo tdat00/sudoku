@@ -1,11 +1,12 @@
 /**
- * Test-only toolkit shared by the suites of core/tests (never loaded by a page): what the engine suites need to
- * make boards and puzzles with a KNOWN UNIQUE SOLUTION without depending on the generator. Exposed as
+ * Test-only toolkit shared by the suites of core/tests (never loaded by a page): what the engine suites need
+ * to make boards and puzzles with a KNOWN UNIQUE SOLUTION without depending on the generator. Exposed as
  * SG.testkit; loaded by the node runners (every fixtures/*.js is) and by tests.html.
  *
  *   SG.testkit.rng.create(seed)              seeded stream: next int pick shuffle fork (mulberry32, the same
  *                                            stream as the generator's SG.rng)
- *   SG.testkit.randomSolution(model, rng)    a random complete grid (the DFS solver with a random value order)
+ *   SG.testkit.randomSolution(model, rng)    a random complete grid (the DFS solver with a random value
+ *                                            order)
  *   SG.testkit.dig(model, solution, rng, { minClues })   -> { givens, clues }: clues removed in random order
  *                                            while the puzzle keeps exactly one solution
  *   SG.testkit.model(id)                     the model of a variant id, built once: the classic ids come from

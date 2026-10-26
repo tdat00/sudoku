@@ -2,18 +2,18 @@
  * SVG board view, shared by the generator and the player: draws every variant and updates it from the delta
  * patches of the event stream, touching only the DOM nodes of the cells that changed.
  *
- * Layers of the SVG tree, bottom to top (`setLayerVisible(name, flag)` shows or hides one by its `data-layer` name:
- * regions, overlays, word, cages, ineq, cells, values, grid, coords, overlay):
+ * Layers of the SVG tree, bottom to top (`setLayerVisible(name, flag)` shows or hides one by its `data-layer`
+ * name: regions, overlays, word, cages, ineq, cells, values, grid, coords, overlay):
  *   layer-regions   paper, jigsaw region tints, diagonal / window / overlap / word-line overlays and the pale
  *                   colours of Killer cages
  *   layer-cells     one <rect class="cell" data-cell="i"> per cell: state and colour-mode background
  *   layer-cages     Killer: dashed inset outline of each cage and its sum (top-left cell)
  *   layer-ineq      Greater-Than: the sign on the edge between two cells
  *   layer-values    per cell one <text> (digits, letters, word) and one <use> (geometric symbol)
- *   layer-grid      thin lines inside a region, thick between regions and on the outer border, sub-grid outlines
- *                   of multi-grid boards, optional row / column coordinates
- *   layer-overlay   effects: highlighted (probed, technique, selected) cells and the replay frames (removed, put
- *                   back, revealed in the step on show)
+ *   layer-grid      thin lines inside a region, thick between regions and on the outer border, sub-grid
+ *                   outlines of multi-grid boards, optional row / column coordinates
+ *   layer-overlay   effects: highlighted (probed, technique, selected) cells and the replay frames (removed,
+ *                   put back, revealed in the step on show)
  *
  * Pure part (runs in Node): `geometry(model, opts)` computes all coordinates, line segments and paths,
  * `renderMarkup(model, state, opts)` the inner SVG markup and `exportSvg(...)` a standalone SVG string.
@@ -37,8 +37,8 @@
   const CAGE_FONT = 10.5;
   const SIGN_APEX = 5;
   const SIGN_HALF = 7.5;
-    /** Half-length of the window cut into a thin grid line behind a sign. */
-    const SIGN_GAP = SIGN_HALF + 2;
+  // Half-length of the window cut into a thin grid line behind a sign.
+  const SIGN_GAP = SIGN_HALF + 2;
 
   const NONE = 0;
   const THIN = 1;
@@ -50,9 +50,6 @@
   const TRANS_PLACING = 1;
   const TRANS_BACKTRACK = 2;
   const TRANS_REMOVING = 4;
-
-  const LAYERS = Object.freeze(['regions', 'overlays', 'word', 'cages', 'ineq', 'cells', 'values', 'grid',
-    'coords', 'overlay']);
 
   let viewCounter = 0;
 
@@ -302,14 +299,15 @@
   const geometryCache = new WeakMap();
 
   /**
-   * Pure geometry of a model, cached per model and option set; treat the result as read-only. `opts`: `showCoords`,
-   * `regionTint`. Returns the canvas: `cell`, `width`, `height` (viewBox), `rows`, `cols`, `originX/Y`; per cell
-   * `cellX[i]`, `cellY[i]` (top-left), `cellRow`, `cellCol`, `at` (canvas lookup, -1 = hole); lines: `edges.thin`,
-   * `edges.thick` (every edge as {orientation, row, col, a, b, x1..y2}; b or a is -1 on the outer border) and the
-   * merged `paths.thin`, `paths.thick`, `paths.paper`; `subGrids` [{gridIndex, x, y, size}] (multi-grid only);
-   * `regions` [{id, token, cells, d}] (jigsaw tints); `overlays` [{index, kind, group, cells, d}]; `cages` [{index,
-   * sum, cells, d, labelCell, labelX, labelY, color}]; `signs` [{index, a, b, x, y, direction, glyph, d}]; `coords`
-   * {cols, rows} or null; `value` {font, shiftY}.
+   * Pure geometry of a model, cached per model and option set; treat the result as read-only. `opts`:
+   * `showCoords`, `regionTint`. Returns the canvas: `cell`, `width`, `height` (viewBox), `rows`, `cols`,
+   * `originX/Y`; per cell `cellX[i]`, `cellY[i]` (top-left), `cellRow`, `cellCol`, `at` (canvas lookup, -1 =
+   * hole); lines: `edges.thin`, `edges.thick` (every edge as {orientation, row, col, a, b, x1..y2}; b or a is
+   * -1 on the outer border) and the merged `paths.thin`, `paths.thick`, `paths.paper`; `subGrids`
+   * [{gridIndex, x, y, size}] (multi-grid only); `regions` [{id, token, cells, d}] (jigsaw tints); `overlays`
+   * [{index, kind, group, cells, d}]; `cages` [{index, sum, cells, d, labelCell, labelX, labelY, color}];
+   * `signs` [{index, a, b, x, y, direction, glyph, d}]; `coords` {cols, rows} or null; `value` {font,
+   * shiftY}.
    */
   function geometry(model, opts) {
     const o = opts || {};
@@ -477,7 +475,11 @@
       shape: null, colorIndex: null, label: '' };
   }
 
-  /** What one cell shows, from the board state. `kind` is 'empty' | 'placed' | 'given' | 'solution'; `value` the shown value (the solution value counts); `stateClass` the state of the background; `color` the colour-mode class of the background (' cell--c3' or ''); `aux`: draw the geometric symbol in colour mode. */
+  /**
+   * What one cell shows, from the board state. `kind` is 'empty' | 'placed' | 'given' | 'solution'; `value`
+   * the shown value (the solution value counts); `stateClass` the state of the background; `color` the
+   * colour-mode class of the background (' cell--c3' or ''); `aux`: draw the geometric symbol in colour mode.
+   */
   function cellView(model, st, i, mode, aux) {
     const actual = st.values[i] | 0;
     const state = st.states ? st.states[i] : undefined;
@@ -538,7 +540,8 @@
     };
   }
 
-  /** Inner markup of the board SVG (everything inside the root element), without title and description unless `opts.title` is given. `opts.inline` = export form: no <use>, no data attributes, no empty elements, no <defs>. */
+  // Everything inside the root <svg>. `opts.title` adds title and description; `opts.inline` is the export
+  // form: no <use>, data attributes, empty elements or <defs>.
   function renderMarkup(model, state, opts) {
     const o = opts || {};
     const st = stateOf(model, state);
@@ -720,7 +723,8 @@
     return Object.freeze(found);
   })();
 
-  /** A standalone SVG document of a board state. `tokens`: resolved values of `TOKEN_NAMES` (the caller reads them from the light theme; a missing one becomes `currentColor`); `opts.scale`: width and height attributes = viewBox size * scale (default 1). */
+  // `tokens`: resolved values of `TOKEN_NAMES` (light theme; a missing one becomes `currentColor`);
+  // `opts.scale`: width and height = viewBox size * scale (default 1).
   function exportSvg(model, state, opts, tokens) {
     const o = Object.assign({}, opts || {}, { inline: true });
     const geo = geometry(model, o);
@@ -747,7 +751,6 @@
     return c.indexOf('cell--') === 0 ? c : 'cell--' + c;
   }
 
-  /** Builds the board into an `<svg>` element and returns the live view. The tree is built once; patches only change the class, text and `href` of the nodes of the cells they touch. */
   function create(svgEl, model, opts) {
     const options = Object.assign({ symbolMode: 'digits', showCoords: false, interactive: false,
       animate: true, colorAuxSymbol: true }, opts || {});
@@ -778,7 +781,6 @@
     let trans;
     let lastActual;
     let unsubscribe = null;
-    /** Marks of the Greater-Than signs, by sign index: `{ hidden, removed, kept }` sets, or null. */
     let signMarks = null;
     let destroyed = false;
     const motionQuery = typeof root.matchMedia === 'function' ?
@@ -851,7 +853,10 @@
       }, durationMs(token, fallback) + 60);
     }
 
-    /** Writes only what differs from what is shown. `flash`: the patch wrote the state 'backtracked' to this cell: flash it red even if it was empty before (a conflicting guess never held a value). */
+    /**
+     * Writes only what differs from what is shown. `flash`: the patch wrote the state 'backtracked' to this
+     * cell: flash it red even if it was empty before (a conflicting guess never held a value).
+     */
     function renderCell(i, anim, flash) {
       const actual = st.values[i] | 0;
       const prev = lastActual[i];
@@ -1096,7 +1101,11 @@
     const view = {
       svg: svgEl,
 
-      /** Applies one event patch: cells first, then unhighlight, then highlight. `popts.animate: false` skips the one-shot animation of this patch; `popts.highlightClass` names the highlight style (default `options.highlightClass`, else 'cell--probing'). */
+      /**
+       * Applies one event patch: cells first, then unhighlight, then highlight. `popts.animate: false` skips
+       * the one-shot animation of this patch; `popts.highlightClass` names the highlight style (default
+       * `options.highlightClass`, else 'cell--probing').
+       */
       applyPatch: function applyPatch(patch, popts) {
         const anim = !popts || popts.animate !== false;
         const cells = patch.cells;
@@ -1120,7 +1129,7 @@
         }
       },
 
-      /** Replaces every value at once (no animation); `states` ('empty' | 'placed' | 'given' | 'backtracked' per cell) default by value. */
+      // No animation; `states` ('empty' | 'placed' | 'given' | 'backtracked' per cell) default by value.
       setValues: function setValues(values, states) {
         resetTransient();
         for (let i = 0; i < n; i++) {
@@ -1142,7 +1151,10 @@
         renderAll();
       },
 
-      /** `cls`: 'cell--probing' (default), 'cell--technique', 'cell--restored', 'cell--selected' or any class defined in css/board.css; the 'cell--' prefix is optional. */
+      /**
+       * `cls`: 'cell--probing' (default), 'cell--technique', 'cell--restored', 'cell--selected' or any class
+       * defined in css/board.css; the 'cell--' prefix is optional.
+       */
       highlight: function highlight(cells, cls) {
         const c = normalizeHighlightClass(cls !== undefined ? cls : options.highlightClass);
         for (let k = 0; k < cells.length; k++) addHighlight(cells[k], c);
@@ -1156,7 +1168,12 @@
         Array.from(hl.keys()).forEach(removeHighlight);
       },
 
-      /** Marks Greater-Than signs by their index in `model.inequalities` (the `data-sign` attribute): `hidden` are not drawn, `removed` are drawn faded (signs the step on show takes away), `kept` in the colour of a restored cell (signs that had to stay). The marks survive a rebuild of the tree; `null` clears them. */
+      /**
+       * Marks Greater-Than signs by their index in `model.inequalities` (the `data-sign` attribute): `hidden`
+       * are not drawn, `removed` are drawn faded (signs the step on show takes away), `kept` in the colour of
+       * a restored cell (signs that had to stay). The marks survive a rebuild of the tree; `null` clears
+       * them.
+       */
       setSignMarks: function setSignMarks(marks) {
         signMarks = marks ? {
           hidden: new Set(marks.hidden || []),
@@ -1260,7 +1277,7 @@
         return exportSvg(model, stateOfView(), eo, resolveTokens('light'));
       },
 
-      /** Renders the standalone SVG onto a canvas (browser only); the PNG is viewBox size * `scale` (default 2) pixels. */
+      // Browser only; the PNG is viewBox size * `scale` (default 2) pixels.
       toPngBlob: function toPngBlob(scale) {
         const k = scale > 0 ? scale : 2;
         const text = view.toSvgString({ scale: 1 });
@@ -1282,7 +1299,10 @@
     return view;
   }
 
-  /** Resolved values of the board tokens (and the font family) for a theme, read from a probe element with `data-sg-theme` (see css/tokens-board.css), so `<html data-theme>` is never touched. Browser only. */
+  /**
+   * Resolved values of the board tokens (and the font family) for a theme, read from a probe element with
+   * `data-sg-theme` (see css/tokens-board.css), so `<html data-theme>` is never touched. Browser only.
+   */
   function resolveTokens(theme) {
     const out = {};
     if (typeof document === 'undefined' || !document.body) return out;
@@ -1322,14 +1342,12 @@
   SG.boardView = {
     CELL: CELL,
     MARGIN: MARGIN,
-    LAYERS: LAYERS,
     TOKEN_NAMES: TOKEN_NAMES,
     create: create,
     geometry: geometry,
     renderMarkup: renderMarkup,
     exportSvg: exportSvg,
     cellView: cellView,
-    staticCss: staticCss,
     resolveTokens: resolveTokens
   };
 
@@ -1342,9 +1360,9 @@
       'board.desc.signs': 'It has {count} inequality signs between cells.'
     },
     vi: {
-      'board.title': 'Bảng Sudoku: {variant}',
+      'board.title': 'Bàn cờ Sudoku: {variant}',
       'board.desc': 'Lưới {rows} × {cols}, đã điền {filled} trên {total} ô.',
-      'board.desc.cages': 'Có {count} nhóm ô, mỗi nhóm ghi tổng của nó.',
+      'board.desc.cages': 'Có {count} lồng, mỗi lồng ghi tổng của nó.',
       'board.desc.signs': 'Có {count} dấu so sánh giữa các ô.'
     }
   });

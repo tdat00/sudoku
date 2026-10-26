@@ -298,7 +298,7 @@
       });
     });
 
-    it('no longer opens the JSON text of a document (the import takes the generator\'s exported text)', function () {
+    it('does not open the JSON text of a document (the import takes the generator\'s exported text)', function () {
       need();
       var text = '\uFEFF  ' + JSON.stringify(K.document('samurai'), null, 2) + '\n';
       return I.open(text).then(function (outcome) {

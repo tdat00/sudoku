@@ -1,24 +1,18 @@
 /**
- * Accessibility: `SG.a11y`. Everything the page needs on top of the markup of the other modules, added through
- * the app events and the DOM, never by changing their code:
- *   - the board as an ARIA grid: the root `<svg>` gets `role="grid"`, the cell rectangles of `layer-cells` move into
- *     `<g role="row">` groups and get `role="gridcell"`, `aria-rowindex` / `aria-colindex` (canvas position: the holes
- *     of a multi-grid canvas are simply not there) and a translated `aria-label`; every other layer is
- *     `aria-hidden` (the label carries the value, the cage sum and the signs). One cell is in the tab order
- *     (roving tabindex); arrow keys, Home, End, Ctrl+Home, Ctrl+End, Page Up and Page Down move between REAL cells;
- *     Enter and Space send the cell click to the board when it has a click hook (`setInteractive(true)` +
- *     `setOnCellClick`). A focus ring (`.a11y-ring`) is drawn on top. The grid is editable (`aria-readonly="false"`):
- *     play.js owns the entries.
- *   - labels follow the board DOM: a MutationObserver on the value and cell layers re-labels only changed cells, a
- *     locale change re-labels all. The board view rebuilds its tree per puzzle; the semantics are re-applied.
- *   - the Settings dialog (`action {id: 'settings'}` -> `SG.app.openModal`), all through `SG.store`.
- *   - the skip link moves the focus to `#main`; toasts and live announcements stay visible and audible while a
- *     modal dialog is open.
- *
- * Pure part (runs in Node, see tests/suites/a11y.test.js): `cellPosition`, `cellExtras`, `valueInfo`, `cellLabel`,
- * `moveTarget`, `pageStep`. `init(app)` is idempotent; `getGrid()` returns the grid controller `{ labelOf, focusCell,
- * current, refresh, apply, destroy }`, and 'cellfocus' ({ cell }) is emitted through `SG.app.emit` whenever a cell
- * takes the focus. `attachGrid(board, hooks?)` builds a controller for another board view.
+ * Accessibility: `SG.a11y`, added on top of the other modules through the app events and the DOM:
+ *   - the board as an ARIA grid: the root `<svg>` gets `role="grid"`, the cell rectangles of `layer-cells`
+ *     move into `<g role="row">` groups and get `role="gridcell"`, `aria-rowindex` / `aria-colindex` (canvas
+ *     position: the holes of a multi-grid canvas are skipped) and a translated `aria-label`; every other
+ *     layer is `aria-hidden` (the label carries the value, the cage sum and the signs). One cell is in the
+ *     tab order (roving tabindex); arrows, Home, End, Ctrl+Home, Ctrl+End, Page Up and Page Down move between
+ *     real cells; Enter and Space click the cell when the board is interactive. A focus ring (`.a11y-ring`)
+ *     is drawn on top.
+ *   - labels follow the board DOM: a MutationObserver on the value and cell layers re-labels the changed
+ *     cells, a locale change all of them; the semantics are re-applied when the board view rebuilds its tree.
+ *   - the Settings dialog (`action {id: 'settings'}`), all through `SG.store`.
+ *   - the skip link focuses `#main`; toasts and live announcements stay visible and audible in a modal
+ *     dialog.
+ * `getGrid()` returns the grid controller `{ labelOf, focusCell, refresh, apply, destroy }`.
  */
 (function (root) {
   'use strict';
@@ -39,8 +33,9 @@
   }
 
   /**
-   * Where a cell is, in the words of the puzzle: `{ grid: 0, row, col }` (1-based). On multi-grid boards the
-   * coordinates are those of the first sub-grid holding the cell (as `SG.model.cellLabel`), `shared` lists the others.
+   * `{ grid, row, col, shared }`, 1-based. On a multi-grid board the coordinates are those of the first
+   * sub-grid holding the cell (as `SG.model.cellLabel`) and `shared` lists the other grids; `grid` is 0
+   * otherwise.
    */
   function cellPosition(geo, i) {
     const row = geo.cellRow[i];
@@ -73,7 +68,7 @@
     return null;
   }
 
-  /** The cage sum (Killer) and inequality signs of a cell's edges (Greater-Than; 'less' = smaller than that neighbour) that its label mentions. */
+  /** Cage sums (Killer) and the signs on the edges of each cell ('less': smaller than that neighbour). */
   function cellExtras(geo) {
     const cage = new Map();
     const relations = new Map();
@@ -105,25 +100,21 @@
     return { state: raw.kind === 'given' || raw.kind === 'solution' ? raw.kind : 'value', value: value };
   }
 
-  /**
-   * The accessible name of a cell: 'Row 4, column 7, value 5'; multi-grid boards add 'Grid 2'; empty cells say
-   * 'empty'; a Killer cell adds 'cage sum 15'; a Greater-Than cell 'less than the cell to the right'.
-   */
-  function cellLabel(info, translate) {
-    const tr = typeof translate === 'function' ? translate : t;
+  /** 'Row 4, column 7, value 5', plus the grid, the cage sum and the signs when there are any. */
+  function cellLabel(info) {
     const parts = [info.grid > 0
-      ? tr('a11y.cell.posGrid', { grid: info.grid, row: info.row, col: info.col })
-      : tr('a11y.cell.pos', { row: info.row, col: info.col })];
-    if (info.state === 'empty') parts.push(tr('a11y.cell.empty'));
-    else parts.push(tr('a11y.cell.' + info.state, { value: info.value }));
+      ? t('a11y.cell.posGrid', { grid: info.grid, row: info.row, col: info.col })
+      : t('a11y.cell.pos', { row: info.row, col: info.col })];
+    if (info.state === 'empty') parts.push(t('a11y.cell.empty'));
+    else parts.push(t('a11y.cell.' + info.state, { value: info.value }));
     if (info.shared && info.shared.length > 0) {
-      parts.push(tr('a11y.cell.shared', { grids: info.shared.join(', ') }));
+      parts.push(t('a11y.cell.shared', { grids: info.shared.join(', ') }));
     }
     if (info.cageSum !== null && info.cageSum !== undefined) {
-      parts.push(tr('a11y.cell.cage', { sum: info.cageSum }));
+      parts.push(t('a11y.cell.cage', { sum: info.cageSum }));
     }
     (info.relations || []).forEach(function (r) {
-      parts.push(tr('a11y.cell.' + r.rel, { dir: tr('a11y.dir.' + r.dir) }));
+      parts.push(t('a11y.cell.' + r.rel, { dir: t('a11y.dir.' + r.dir) }));
     });
     return parts.join(', ');
   }
@@ -140,14 +131,14 @@
     return -1;
   }
 
-  /** How many rows Page Up / Page Down move: the box size of the digit count (3 for 9x9, 4 for 16x16). */
+  /** Rows moved by Page Up / Page Down: the box size (3 for 9x9, 4 for 16x16). */
   function pageStep(geo) {
     const digits = geo.subGrids && geo.subGrids.length > 0
       ? Math.round(geo.subGrids[0].size / geo.cell) : Math.max(geo.rows, geo.cols);
     return Math.max(2, Math.round(Math.sqrt(digits)));
   }
 
-  /** Where a navigation key moves the focus: holes of the canvas are skipped (the next real cell in that direction is taken), nothing wraps; `from` when the key does not move. */
+  /** Holes of the canvas are skipped, nothing wraps; returns `from` when the key does not move. */
   function moveTarget(geo, from, key, ctrl) {
     const row = geo.cellRow[from];
     const col = geo.cellCol[from];
@@ -194,10 +185,9 @@
     return node;
   }
 
-  function attachGrid(board, hooks) {
+  function attachGrid(board) {
     const svg = board.svg;
     const doc = svg.ownerDocument;
-    const emit = hooks && typeof hooks.emit === 'function' ? hooks.emit : function () {};
     let geo = null;
     let extras = null;
     let textEls = [];
@@ -221,7 +211,7 @@
       const textClass = textEl ? textEl.getAttribute('class') || '' : '';
       const kind = /\bval--(given|placed|solution)\b/.exec(textClass);
       const color = /\bcell--c(\d+)\b/.exec(rect.getAttribute('class') || '');
-      // An entry of the player (play.js) is on its own layer; the cell carries its text.
+      // An entry of play.js is drawn on its own layer; the cell rectangle carries its text in data-user.
       const user = rect.getAttribute('data-user');
       let shape = null;
       if (useEl && (useEl.getAttribute('class') || '').indexOf('sym--off') === -1) {
@@ -319,7 +309,6 @@
         visible = true;
       }
       showRing(i, visible);
-      emit('cellfocus', { cell: i });
     }
 
     function onFocusOut(event) {
@@ -331,8 +320,7 @@
       const i = cellOf(event.target);
       if (i < 0 || event.defaultPrevented || event.altKey || event.metaKey || event.shiftKey) return;
       if (event.key === 'Enter' || event.key === ' ') {
-        // Only a board with a click hook (setInteractive + setOnCellClick) has something to activate; the
-        // keys stay free for the other modules (play mode erases a cell with Space) otherwise.
+        // Without a click hook the keys stay free for the other modules (play mode erases with Space).
         if (!svg.classList.contains('board--interactive')) return;
         event.preventDefault();
         event.target.dispatchEvent(new root.MouseEvent('click', { bubbles: true, cancelable: true }));
@@ -485,7 +473,6 @@
       refresh: refresh,
       labelOf: labelOf,
       focusCell: focusCell,
-      current: function () { return current; },
       destroy: function destroy() {
         destroyed = true;
         doc.removeEventListener('focusin', onFocusIn);
@@ -553,7 +540,7 @@
       if (choice.sample) text.textContent = choice.sample;
       group.appendChild(el('label', { class: 'choice' }, [input, text]));
     });
-    return el('fieldset', { class: 'field-group', 'data-setting': name }, [
+    return el('fieldset', { class: 'field-group' }, [
       el('legend', { class: 'field-group__legend', i18n: legendKey }),
       group
     ]);
@@ -606,7 +593,7 @@
   }
 
   function note(key) {
-    return el('p', { class: 'field__hint setting__note', i18n: key });
+    return el('p', { class: 'field__hint', i18n: key });
   }
 
   function buildSettingsBody(container) {
@@ -665,10 +652,6 @@
     return modal;
   }
 
-  function closeSettings() {
-    if (ctx.modal !== null) ctx.modal.close();
-  }
-
   function onLocale(payload) {
     if (ctx.grid !== null) ctx.grid.refresh();
     const code = payload && payload.locale ? payload.locale : SG.i18n.current;
@@ -679,7 +662,7 @@
     if (payload && payload.id === 'settings') openSettings();
   }
 
-  /** The skip link focuses `#main` itself (a fragment link would also leave '#main' in the address). */
+  // The skip link focuses `#main` itself: following the fragment would leave '#main' in the address.
   function wireSkipLink() {
     const link = document.getElementById('skip-link');
     if (link === null) return;
@@ -696,8 +679,8 @@
 
   /**
    * Toasts and the live region move into the open modal dialog: a modal makes everything outside it inert,
-   * which hides a toast (it sits under the top layer) and silences `#a11y-live` and `#toast-root`.
-   * They go back to their place when the last dialog is gone.
+   * which hides a toast under the top layer and silences `#a11y-live` and `#toast-root`. They go back when
+   * the last dialog is gone.
    */
   function watchModals() {
     const host = document.getElementById('modal-root');
@@ -748,7 +731,7 @@
     ctx.app = app;
     const board = app.getBoard();
     if (board) {
-      ctx.grid = attachGrid(board, { emit: function (name, payload) { app.emit(name, payload); } });
+      ctx.grid = attachGrid(board);
     }
     ctx.off.push(app.on('locale', onLocale));
     ctx.off.push(app.on('settings', syncSettings));
@@ -774,7 +757,6 @@
     init: init,
     destroy: destroy,
     openSettings: openSettings,
-    closeSettings: closeSettings,
     getGrid: function getGrid() { return ctx.grid; }
   };
 
@@ -831,10 +813,10 @@
       'a11y.cell.posGrid': 'Lưới {grid}, hàng {row}, cột {col}',
       'a11y.cell.empty': 'trống',
       'a11y.cell.value': 'giá trị {value}',
-      'a11y.cell.given': 'giá trị {value}, số đã cho',
+      'a11y.cell.given': 'giá trị {value}, số cho sẵn',
       'a11y.cell.solution': 'đáp án {value}',
       'a11y.cell.shared': 'cũng thuộc lưới {grids}',
-      'a11y.cell.cage': 'tổng nhóm ô {sum}',
+      'a11y.cell.cage': 'tổng lồng {sum}',
       'a11y.cell.less': 'nhỏ hơn ô {dir}',
       'a11y.cell.greater': 'lớn hơn ô {dir}',
       'a11y.dir.up': 'phía trên',
@@ -864,8 +846,8 @@
       'a11y.settings.notes.hint': 'Khi bạn điền một ký hiệu, nó biến mất khỏi ghi chú của các ô nhìn thấy ' +
         'nó. Tắt tùy chọn này để giữ mọi ghi chú cho đến khi bạn xóa.',
       'a11y.settings.coords.label': 'Hiện số hàng và cột',
-      'a11y.settings.coords.hint': 'Thêm số và chữ quanh bảng.',
-      'a11y.settings.keys': 'Bàn phím: phím Tab chuyển giữa các vùng của trang. Trên bảng, các phím mũi ' +
+      'a11y.settings.coords.hint': 'Thêm số và chữ quanh bàn cờ.',
+      'a11y.settings.keys': 'Bàn phím: phím Tab chuyển giữa các vùng của trang. Trên bàn cờ, các phím mũi ' +
         'tên, Home, End, Page Up và Page Down di chuyển giữa các ô, còn gõ một chữ số hoặc chữ cái sẽ điền ' +
         'vào ô đang chọn.',
       'a11y.settings.reset': 'Khôi phục mặc định'

@@ -1,11 +1,11 @@
-// The logical techniques as a whole (task T-2.9, design.md sections 15.2 and 15.3). The suites tech-basic,
-// tech-subset, tech-fish, tech-wing and tech-chain test each group in depth; this one checks what must
-// hold for EVERY technique and is written over SG.techniques.list(), so a technique registered later is
-// covered without editing it:
+// The logical techniques as a whole. The suites tech-basic, tech-subset, tech-fish, tech-wing and tech-chain
+// test each group in depth; this one checks what must hold for EVERY technique and is written over
+// SG.techniques.list(), so a technique registered later is covered without editing it:
 //   - the registry is consistent,
 //   - every technique has fixtures (>= 2 positions where it fires, >= 1 where it does not), taken from
 //     tests/fixtures/techniques.js,
-//   - invariant I7: a technique never eliminates the true solution (soundness sweep),
+//   - invariant I7: a technique never eliminates the true solution (soundness sweep; the group suites only
+//     add other boards and seeds),
 //   - the whole ladder solves labelled puzzles soundly and deterministically.
 (function () {
   'use strict';
@@ -37,10 +37,6 @@
     return list.map(function (p) { return p[0] + ':' + p[1]; }).sort();
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Registry
-  // ---------------------------------------------------------------------------------------------
-
   describe('techniques: registry', function () {
     it('has the 21 techniques of the classic ladder registered', function () {
       expect(classic.map(function (t) { return t.id; })).toEqual(F.ladder);
@@ -70,10 +66,6 @@
       expect(assuming).toEqual(['uniqueRectangle']);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Fixtures: at least two positive and one negative per technique
-  // ---------------------------------------------------------------------------------------------
 
   describe('techniques: fixtures (fixtures/techniques.js)', function () {
     it('has fixtures for exactly the techniques of the classic ladder (add them for a new one)', function () {
@@ -135,10 +127,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Invariant I7, over the registry
-  // ---------------------------------------------------------------------------------------------
-
   describe('techniques: soundness sweep (invariant I7) over every registered technique', function () {
     all.forEach(function (tech) {
       var count = SWEEP_STATES[tech.group] || SWEEP_DEFAULT;
@@ -159,7 +147,7 @@
       }
 
       it(tech.id + ' never eliminates a candidate of the true solution (' + count + ' states)', function () {
-        var stats = H.assertSound(SG.test, tech.id, { count: count });
+        var stats = H.assertSound(SG.test, tech.id, { count: count, minFirings: 3 });
         firings[tech.id] = stats.firings;
         expect(stats.states).toBe(count);
       });
@@ -189,10 +177,6 @@
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // The whole ladder on the labelled puzzles
-  // ---------------------------------------------------------------------------------------------
 
   describe('techniques: the whole ladder on the labelled puzzles', function () {
     var entries = SG.fixtures.rated.entries;

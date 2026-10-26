@@ -1,18 +1,18 @@
 /**
- * Presentation of the board symbols: how a value 1..D is shown. The core only knows the integers 1..D; this file
- * turns a value into what the board draws, per symbol mode, and builds the legend.
- *   digits   the label of the model (`model.symbols.labels`, so mega16 draws '0'..'F'); the plain value for a model
- *            whose labels are word letters (wordoku)
+ * Presentation of the board symbols: how a value 1..D is shown. The core only knows the integers 1..D; this
+ * file turns a value into what the board draws, per symbol mode, and builds the legend.
+ *   digits   the label of the model (`model.symbols.labels`, so mega16 draws '0'..'F'); the plain value for a
+ *            model whose labels are word letters (wordoku)
  *   letters  A, B, C, ...
- *   colors   a palette fill (`--sg-board-sym-1..16`) PLUS a small geometric symbol, so colour is never the only
- *            carrier of the value (`opts.colorAuxSymbol === false` switches the symbol off)
+ *   colors   a palette fill (`--sg-board-sym-1..16`) PLUS a small geometric symbol, so colour is never the
+ *            only carrier of the value (`opts.colorAuxSymbol === false` switches the symbol off)
  *   shapes   one of 16 geometric shapes
  *   word     the letters of the model (`model.symbols.labels`, wordoku)
- * Pure (no DOM): a glyph is plain data, a legend is data or an SVG/HTML string; switching the mode never touches the
- * puzzle. Texts go through `SG.i18n.t` (`symbols.*` keys, fragment at the bottom); without `SG.i18n` (Node) the
- * English fragment is read directly.
- * `colorIndex` is 0-based (token `--sg-board-sym-<colorIndex + 1>`); entry i is always drawn with shape
- * `DEFAULT_AUX_SHAPES[i]`, so colour mode and shapes mode agree on what value v looks like.
+ * Pure (no DOM): a glyph is plain data, a legend is data or an SVG/HTML string; switching the mode never
+ * touches the puzzle. Texts go through `SG.i18n.t` (`symbols.*` keys, fragment at the bottom); without
+ * `SG.i18n` (Node) the English fragment is read directly. `colorIndex` is 0-based (token
+ * `--sg-board-sym-<colorIndex + 1>`); entry i is always drawn with shape `DEFAULT_AUX_SHAPES[i]`, so colour
+ * mode and shapes mode agree on what value v looks like.
  */
 (function (root) {
   'use strict';
@@ -120,7 +120,7 @@
     }
   };
 
-  /** Path data (SVG `d`) of a shape centred on (cx, cy) with nominal radius r. Rings and frames use two sub-paths: draw them with `fill-rule="evenodd"` (`SG.symbols.FILL_RULE`). */
+  // Rings and frames use two sub-paths: draw them with `fill-rule="evenodd"`.
   function shapePath(id, cx, cy, r) {
     const build = SHAPE_BUILDERS[id];
     if (build === undefined) return '';
@@ -133,7 +133,6 @@
     });
   }
 
-  /** `SG.i18n.t` when it exists, else the English text of this file's fragment. */
   function tr(key, args) {
     if (SG.i18n && typeof SG.i18n.t === 'function') return SG.i18n.t(key, args);
     const text = EN_FALLBACK.en[key];
@@ -162,8 +161,8 @@
   }
 
   /**
-   * The symbol modes offered, in the order of `MODES`; at least ['digits']. `source` is the list of modes a board
-   * offers (`SG.modelAids.symbolModes(model)`) or a variant definition (its registry `symbolModes`).
+   * The symbol modes offered, in the order of `MODES`; at least ['digits']. `source` is the list of modes a
+   * board offers (`SG.modelAids.symbolModes(model)`) or a variant definition (its registry `symbolModes`).
    */
   function modesFor(source) {
     const offered = Array.isArray(source) ? source
@@ -176,12 +175,15 @@
    * What the board draws for a value.
    * @typedef {Object} Glyph
    * @property {?string} text        Text to draw (digits, letters, word), else null.
-   * @property {?string} shape       Id of the geometric shape (shapes mode, colour mode with the auxiliary symbol), else null.
+   * @property {?string} shape       Id of the geometric shape (shapes mode, colour mode with the auxiliary
+   *                                 symbol), else null.
    * @property {?number} colorIndex  0-based palette index (colour mode), else null.
-   * @property {string}  label       Accessible text; the translated 'empty' for value 0; '' when `opts.label === false`.
+   * @property {string}  label       Accessible text; the translated 'empty' for value 0; '' when
+   *                                 `opts.label === false`.
    */
 
-  /** Maps a value (0 = empty, 1..D) to its display in a mode. `model` supplies `symbols.labels` (optional for letters, colors and shapes); `opts.label === false` skips the translated label, which the board does not need while drawing. */
+  // `value` 0 is empty. `model` supplies `symbols.labels` (optional for letters, colors and shapes);
+  // `opts.label === false` skips the translated label, which the board does not need while drawing.
   function glyph(mode, value, model, opts) {
     const wantLabel = !(opts && opts.label === false);
     if (!(value >= 1)) {
@@ -249,7 +251,8 @@
       'focusable="false">' + inner + '</svg>';
   }
 
-  /** HTML of a legend list (`<ul class="sgb-legend">`); swatches are inline SVG styled by css/board.css. `opts.showText === false` leaves out the name next to colour and shape swatches (digits and letters never get one; every item keeps an accessible name). */
+  // `opts.showText === false` leaves out the name next to colour and shape swatches (digits and letters
+  // never get one; every item keeps an accessible name).
   function legendMarkup(mode, model, opts) {
     const items = legend(mode, model, opts).map(function (item) {
       const named = item.text === null && !(opts && opts.showText === false);
@@ -269,11 +272,7 @@
   }
 
   SG.symbols = {
-    MODES: MODES,
-    paletteSize: PALETTE_SIZE,
     DEFAULT_AUX_SHAPES: DEFAULT_AUX_SHAPES,
-    SHAPE_RADIUS: SHAPE_RADIUS,
-    FILL_RULE: 'evenodd',
     modesFor: modesFor,
     glyph: glyph,
     legend: legend,
@@ -302,8 +301,8 @@
       'symbols.color.12': 'Teal',
       'symbols.color.13': 'Forest green',
       'symbols.color.14': 'Salmon',
-      'symbols.color.15': 'Dark gray',
-      'symbols.color.16': 'Gray',
+      'symbols.color.15': 'Dark grey',
+      'symbols.color.16': 'Grey',
       'symbols.shape.circle': 'circle',
       'symbols.shape.square': 'square',
       'symbols.shape.triangle': 'triangle',

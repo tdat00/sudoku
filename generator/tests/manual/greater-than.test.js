@@ -1,4 +1,4 @@
-// Greater-Than Sudoku (task T-5.6): the inequality propagation (design.md 6.3 P5), the two techniques of the
+// Greater-Than Sudoku: the inequality propagation (design.md 6.3 P5), the two techniques of the
 // `ineq` group (6.6 I1 / I2), the sign dig of 8.3, and the common variant criteria CV1-CV9 of task.md
 // phase P5. The propagation is compared with an independent fixpoint, the techniques with hand-made
 // positions, and every generated puzzle is checked against its own solution, a brute-force search for the
@@ -179,9 +179,7 @@
     }
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Generated puzzles, shared by the suites below (generated once, on first use)
-  // ---------------------------------------------------------------------------------------------
 
   function generate(level, seed, extra) {
     var events = 0;
@@ -232,10 +230,6 @@
   function signsRemoved(model, keep) {
     return G.withSigns(model, keep);
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // P5: the propagation extension
-  // ---------------------------------------------------------------------------------------------
 
   describe('greaterThan: inequality propagation (design.md 6.3 P5)', function () {
     it('is registered through the extension hook, once, by ensureExtension (and by building a model)',
@@ -399,10 +393,6 @@
       expect(withSign).toBeGreaterThan(50);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // The techniques
-  // ---------------------------------------------------------------------------------------------
 
   describe('greaterThan: techniques of the ineq group (I1 ineqChain, I2 minMaxForcing)', function () {
     var chain = SG.techniques.get('ineqChain');
@@ -776,16 +766,13 @@
             allowedTechniques: spec.allowedTechniques, assumeUniqueness: false, collectSteps: false
           });
           if (p.rating.level === p.config.difficulty) {
-            check(report.solved, 'puzzle ' + i + ' (' + p.config.difficulty + ') is not solved by its techniques');
+            check(report.solved, 'puzzle ' + i + ' (' + p.config.difficulty + ') is not solved by its ' +
+              'techniques');
           }
         });
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // CV1, CV2: the variant and its model
-  // ---------------------------------------------------------------------------------------------
 
   describe('greaterThan: variant definition and model (CV1, CV2)', function () {
     it('is registered with the fields of the contract (design.md 5.3 / 13.8)', function () {
@@ -959,11 +946,7 @@
       });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV3, CV4, T-5.6: puzzles at every level
-  // ---------------------------------------------------------------------------------------------
-
-  describe('greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7; T-5.6)', function () {
+  describe('greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7)', function () {
     LEVELS.forEach(function (level) {
       describe(level + ': ' + countOf(level) + ' puzzles', function () {
         it('I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs',
@@ -987,7 +970,8 @@
                 var lo = Math.min(q.a, q.b);
                 var hi = Math.max(q.a, q.b);
                 check(box(lo) === box(hi), 'puzzle ' + i + ': a sign across boxes');
-                check(hi - lo === 9 || (hi - lo === 1 && row(lo) === row(hi)), 'puzzle ' + i + ': not neighbours');
+                check(hi - lo === 9 || (hi - lo === 1 && row(lo) === row(hi)), 'puzzle ' + i + ': not ' +
+                  'neighbours');
                 check(!seen[lo + ',' + hi], 'puzzle ' + i + ': a duplicate sign');
                 seen[lo + ',' + hi] = true;
               });
@@ -995,7 +979,7 @@
             });
           });
 
-        it('T-5.6: the sign set is minimal: removing any sign that is left gives a second solution',
+        it('the sign set is minimal: removing any sign that is left gives a second solution',
           function () {
             puzzleRun()[level].forEach(function (p, i) {
               var signs = p.model.inequalities;
@@ -1009,8 +993,8 @@
             });
           });
 
-        it('I5: every puzzle has a complete proof, and one that reached the level has its score in the band; ' +
-          'I6: at least minClues givens, every unit its minimum', function () {
+        it('I5: every puzzle has a complete proof, and one that reached the level has its score in the ' +
+          'band; I6: at least minClues givens, every unit its minimum', function () {
           var exact = 0;
           puzzleRun()[level].forEach(function (p, i) {
             var spec = SG.difficulty.spec(level, p.model);
@@ -1037,12 +1021,15 @@
           function () {
             puzzleRun()[level].forEach(function (p, i) {
               for (var c = 0; c < 81; c++) {
-                if ((p.givens[c] !== 0) !== (p.givens[80 - c] !== 0)) throw new Error('puzzle ' + i + ': cell ' + c);
+                if ((p.givens[c] !== 0) !== (p.givens[80 - c] !== 0)) {
+                  throw new Error('puzzle ' + i + ': cell ' + c);
+                }
               }
             });
           });
 
-        it('CV6: p95 of the generation time is within the design.md 9.1 budget of ' + BUDGET_MS[level] + ' ms',
+        it('CV6: p95 of the generation time is within the design.md 9.1 budget of ' + BUDGET_MS[level] +
+          ' ms',
           function () {
             var times = puzzleRun()[level].map(function (p) { return p.elapsedMs; });
             expect(percentile(times, 0.95)).toBeLessThan(SG.test.timeLimit(BUDGET_MS[level]));
@@ -1103,8 +1090,10 @@
         var across = 0;
         futoshikiRun().forEach(function (p, i) {
           expect(p.config.variantOptions).toEqual({ futoshiki: true });
-          if (SG.dfs.countSolutions(p.model, p.givens, 2) !== 1) throw new Error('futoshiki ' + i + ': not unique');
-          if (!SG.model.isSolution(p.model, p.solution)) throw new Error('futoshiki ' + i + ': invalid solution');
+          if (SG.dfs.countSolutions(p.model, p.givens, 2) !== 1) throw new Error('futoshiki ' + i + ': not ' +
+            'unique');
+          if (!SG.model.isSolution(p.model, p.solution)) throw new Error('futoshiki ' + i + ': invalid ' +
+            'solution');
           var signs = p.model.inequalities;
           for (var s = 0; s < signs.length; s++) {
             if (box(signs[s].a) !== box(signs[s].b)) across++;
@@ -1185,7 +1174,9 @@
       var seen = false;
       for (var seed = 1; seed <= 8 && !seen; seed++) {
         var r = digFrom(seed, 'normal', { symmetry: 'none' });
-        for (var c = 0; c < 81; c++) if ((r.dug.givens[c] !== 0) !== (r.dug.givens[80 - c] !== 0)) seen = true;
+        for (var c = 0; c < 81; c++) {
+          if ((r.dug.givens[c] !== 0) !== (r.dug.givens[80 - c] !== 0)) seen = true;
+        }
       }
       expect(seen).toBe(true);
     });
@@ -1211,10 +1202,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Events of the pipeline
-  // ---------------------------------------------------------------------------------------------
-
   describe('greaterThan: the pipeline and its events', function () {
     var STEPS = ['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune'];
 
@@ -1229,10 +1216,14 @@
     function checkEvents(events) {
       events.forEach(function (e, i) {
         var problems = E.eventProblems(e);
-        if (problems.length > 0) throw new Error('event ' + i + ' (' + e.i18nKey + '): ' + problems.join('; '));
+        if (problems.length > 0) {
+          throw new Error('event ' + i + ' (' + e.i18nKey + '): ' + problems.join('; '));
+        }
         if (e.seq !== i) throw new Error('seq ' + e.seq + ' at index ' + i);
         var v = E.lookup(e);
-        if (v === null) throw new Error('not in the vocabulary: ' + [e.type, e.stepId, e.phase, e.i18nKey].join(' '));
+        if (v === null) {
+          throw new Error('not in the vocabulary: ' + [e.type, e.stepId, e.phase, e.i18nKey].join(' '));
+        }
         if (e.i18nArgs && v.key !== 'error.*') {
           Object.keys(e.i18nArgs).forEach(function (a) {
             if (v.args.indexOf(a) === -1 && a !== 'part' && a !== 'parts') {
@@ -1242,7 +1233,9 @@
         }
         if (e.patch) {
           Object.keys(e.patch).forEach(function (f) {
-            if (v.patch.indexOf(f) === -1) throw new Error(e.i18nKey + ' has the undeclared patch field "' + f + '"');
+            if (v.patch.indexOf(f) === -1) {
+              throw new Error(e.i18nKey + ' has the undeclared patch field "' + f + '"');
+            }
           });
         }
       });
@@ -1279,7 +1272,8 @@
         });
       });
 
-    it('the dig events of a sign are about its two cells: neighbours of one box, tried, then accepted or kept',
+    it('the dig events of a sign are about its two cells: neighbours of one box, tried, then accepted ' +
+      'or kept',
       function () {
         var out = trace('hard', 31, 'full');
         var tries = out.events.filter(function (e) { return e.i18nKey === 'dig.try'; });
@@ -1336,10 +1330,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV5: determinism
-  // ---------------------------------------------------------------------------------------------
-
   describe('greaterThan: same seed, same puzzle (CV5 / I4)', function () {
     it('every level: two runs give the same givens, signs and solution', function () {
       LEVELS.forEach(function (level, li) {
@@ -1364,22 +1354,19 @@
       });
     });
 
-    it('another seed gives another puzzle; the same options the same one, other options another', function () {
-      var a = generate('normal', 1000);
-      var b = generate('normal', 1001);
-      expect(Array.from(b.solution)).not.toEqual(Array.from(a.solution));
-      var plain = generate('master', 55);
-      var futo1 = generate('master', 55, { variantOptions: { futoshiki: true } });
-      var futo2 = generate('master', 55, { variantOptions: { futoshiki: true } });
-      expect(Array.from(futo2.givens)).toEqual(Array.from(futo1.givens));
-      expect(futo2.model.inequalities).toEqual(futo1.model.inequalities);
-      expect(futo1.model.inequalities).not.toEqual(plain.model.inequalities);
-    });
+    it('another seed gives another puzzle; the same options the same one, other options another',
+      function () {
+        var a = generate('normal', 1000);
+        var b = generate('normal', 1001);
+        expect(Array.from(b.solution)).not.toEqual(Array.from(a.solution));
+        var plain = generate('master', 55);
+        var futo1 = generate('master', 55, { variantOptions: { futoshiki: true } });
+        var futo2 = generate('master', 55, { variantOptions: { futoshiki: true } });
+        expect(Array.from(futo2.givens)).toEqual(Array.from(futo1.givens));
+        expect(futo2.model.inequalities).toEqual(futo1.model.inequalities);
+        expect(futo1.model.inequalities).not.toEqual(plain.model.inequalities);
+      });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // CV7: strings
-  // ---------------------------------------------------------------------------------------------
 
   describe('greaterThan: strings in both languages (CV7)', function () {
     var KEY = /^(variant\.greaterThan|option\.futoshiki|technique\.(ineqChain|minMaxForcing))/;
@@ -1401,39 +1388,14 @@
       return found.sort();
     }
 
-    it('declares its fragments with en and vi', function () {
-      expect(Array.isArray(SG.localeFragments)).toBe(true);
-      expect(fragments().length).toBeGreaterThan(0);
-      fragments().forEach(function (f) {
-        expect(typeof f.en).toBe('object');
-        expect(typeof f.vi).toBe('object');
-        expect(Object.keys(f.vi).sort()).toEqual(Object.keys(f.en).sort());
-      });
-    });
-
-    it('en and vi have the same keys, no empty value, and the Vietnamese is not a copy of the English',
-      function () {
-        var en = merged('en');
-        var vi = merged('vi');
-        expect(Object.keys(vi).sort()).toEqual(Object.keys(en).sort());
-        Object.keys(en).forEach(function (key) {
-          expect(typeof en[key]).toBe('string');
-          expect(en[key].trim()).not.toBe('');
-          expect(typeof vi[key]).toBe('string');
-          expect(vi[key].trim()).not.toBe('');
-          expect(vi[key]).not.toBe(en[key]);
-          expect(placeholders(vi[key])).toEqual(placeholders(en[key]));
-        });
-      });
-
     it('covers the variant name, its option and both techniques (name, description, both step texts)',
       function () {
         var en = merged('en');
         var vi = merged('vi');
         var keys = [def.i18nKey, def.options[0].i18nKey, def.options[0].hintI18nKey];
         ['ineqChain', 'minMaxForcing'].forEach(function (id) {
-          keys.push(SG.techniques.get(id).i18nKey, 'technique.' + id + '.desc', 'technique.' + id + '.step.min',
-            'technique.' + id + '.step.max');
+          keys.push(SG.techniques.get(id).i18nKey, 'technique.' + id + '.desc',
+            'technique.' + id + '.step.min', 'technique.' + id + '.step.max');
         });
         keys.forEach(function (key) {
           expect(en[key]).toBeDefined();
@@ -1444,7 +1406,8 @@
         expect(Object.keys(en)).toHaveLength(11);
       });
 
-    it('every Finding the techniques return uses a key that exists, and its text only names arguments it gives',
+    it('every Finding the techniques return uses a key that exists, and its text only names arguments it ' +
+      'gives',
       function () {
         var en = merged('en');
         var vi = merged('vi');
@@ -1463,27 +1426,14 @@
           });
         });
         expect(Object.keys(seenKeys).length).toBeGreaterThan(1);
-        // The four step keys are all produced by the fixtures above and by dense positions.
+        // The step keys that the fixtures above and dense positions produce.
         var dense = allSignsModel(1, false);
         var denseReport = SG.logicalSolver.solve(dense.model, new Int32Array(81), { collectSteps: true });
         denseReport.steps.forEach(function (step) { seenKeys[step.i18nKey] = true; });
         ['technique.ineqChain.step.min', 'technique.ineqChain.step.max', 'technique.minMaxForcing.step.min']
           .forEach(function (key) { expect(seenKeys[key]).toBe(true); });
       });
-
-    it('is merged into the language packs when they are loaded (browser run)', function () {
-      var locales = SG.locales;
-      if (!locales || !locales.en || !locales.vi) SG.test.skip('the language packs are not loaded here');
-      Object.keys(merged('en')).forEach(function (key) {
-        expect(locales.en[key]).toBeDefined();
-        expect(locales.vi[key]).toBeDefined();
-      });
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // CV9: what the board view needs
-  // ---------------------------------------------------------------------------------------------
 
   describe('greaterThan: data for the board view (CV9)', function () {
     /**
@@ -1521,14 +1471,18 @@
         var line = lines[2 * r];
         for (var c = 0; c < 8; c++) {
           var g = line.charAt(2 * c + 1);
-          if (g !== ' ') facts.push({ glyph: g, first: +line.charAt(2 * c), second: +line.charAt(2 * c + 2) });
+          if (g !== ' ') {
+            facts.push({ glyph: g, first: +line.charAt(2 * c), second: +line.charAt(2 * c + 2) });
+          }
         }
         if (r < 8) {
           var under = lines[2 * r + 1];
           for (c = 0; c < 9; c++) {
             var v = under.charAt(2 * c);
             if (v !== ' ') {
-              facts.push({ glyph: v, first: +lines[2 * r].charAt(2 * c), second: +lines[2 * r + 2].charAt(2 * c) });
+              facts.push({
+                glyph: v, first: +lines[2 * r].charAt(2 * c), second: +lines[2 * r + 2].charAt(2 * c)
+              });
             }
           }
         }
@@ -1567,7 +1521,8 @@
         allPuzzles().concat(futoshikiRun()).forEach(function (p, i) {
           var facts = readBack(draw(p.model, p.solution));
           if (facts.length !== p.model.inequalities.length) {
-            throw new Error('puzzle ' + i + ': ' + facts.length + ' signs drawn, ' + p.model.inequalities.length);
+            throw new Error('puzzle ' + i + ': ' + facts.length + ' signs drawn, ' +
+              p.model.inequalities.length);
           }
           facts.forEach(function (f) {
             var ok = f.glyph === '<' ? f.first < f.second : f.glyph === '>' ? f.first > f.second

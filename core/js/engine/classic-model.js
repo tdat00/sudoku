@@ -1,9 +1,9 @@
 /**
  * The boards that can be rebuilt without a `model` block: classic 4x4, 6x6 (2x3 boxes) and 9x9, and the
- * overlapping boards (Samurai, Sohei, Butterfly, Flower). The generator's classic variants are built from this
- * (and its overlapping variants follow the same construction: cell (r, c) is
- * index r * D + c; units are rows, columns, boxes, labelled R1.., C1.., B1.. or G1-R1.. when overlapping), so
- * a puzzle has the same cells and hint texts whichever way it arrived. Pure data: no DOM, no randomness.
+ * overlapping boards (Samurai, Sohei, Butterfly, Flower). The generator builds its classic variants from this
+ * and its overlapping ones the same way (cell (r, c) is index r * D + c; units are rows, columns, boxes,
+ * labelled R1.., C1.., B1.. or G1-R1.. when overlapping), so a puzzle has the same cells and hint texts
+ * whichever way it arrived.
  */
 (function (root) {
   'use strict';
@@ -91,7 +91,8 @@
     });
   }
 
-  /** Canvas size and [row, col] of every 9x9 sub-grid; fixed per variant so a clues-only text of the Export box can be rebuilt. */
+  // Canvas size and [row, col] of every 9x9 sub-grid; fixed per variant so a clues-only text of the Export
+  // box can be rebuilt.
   const MULTIGRID = Object.freeze({
     samurai: Object.freeze({ rows: 21, cols: 21, cells: 369,
       origins: Object.freeze([[0, 0], [0, 12], [12, 0], [12, 12], [6, 6]]) }),
@@ -122,13 +123,14 @@
   }
 
   /**
-   * Same construction as the generator: sub-grid 0 owns indices 0..80 in row-major order, each later sub-grid adds only
-   * the canvas positions no earlier grid covers, and cells on one canvas position share one index. A 3x3 box
-   * position shared by two or more sub-grids is an `overlap` overlay.
+   * Same construction as the generator: sub-grid 0 owns indices 0..80 in row-major order, each later sub-grid
+   * adds only the canvas positions no earlier grid covers, and cells on one canvas position share one index.
+   * A 3x3 box position shared by two or more sub-grids is an `overlap` overlay.
    */
   function buildMultigrid(variantId) {
     if (!isMultigrid(variantId)) {
-      throw new SG.errors.GenerationError('model.invalidSpec', { reason: 'no overlapping board ' + variantId });
+      throw new SG.errors.GenerationError('model.invalidSpec',
+        { reason: 'no overlapping board ' + variantId });
     }
     const geo = MULTIGRID[variantId];
     const D = 9;

@@ -1,6 +1,7 @@
 /**
- * Lets the shared suites of core/tests build every board of the generator: the non-classic models come from the
- * variant registry. Extends the SG.testkit of ../core/tests/fixtures/testkit.js (see there for the provider contract).
+ * Lets the shared suites of core/tests build every board of the generator: the non-classic models come from
+ * the variant registry. Extends the SG.testkit of ../core/tests/fixtures/testkit.js (see there for the
+ * provider contract).
  */
 (function () {
   'use strict';

@@ -8,19 +8,20 @@
  *   pointing           locked       7       40   Pointing Pair/Triple (box-like unit -> line)
  *   boxLine            locked       7       50   Box/Line Reduction (line -> box-like unit)
  *
- * Nothing here knows about 3x3 boxes: a "line" is a unit whose `unitMeta.kind` is 'row' or 'col'; every other unit
- * (box, Jigsaw region, diagonal, hyper window, ...) is "box-like". Which units meet is derived from `model.units` and
- * `model.cellUnits` once per model (`geometryOf`), so the techniques work for any digit count and on overlapping
- * multi-grid boards.
+ * Nothing here knows about 3x3 boxes: a "line" is a unit whose `unitMeta.kind` is 'row' or 'col'; every other
+ * unit (box, Jigsaw region, diagonal, hyper window, ...) is "box-like". Which units meet is derived from
+ * `model.units` and `model.cellUnits` once per model (`geometryOf`), so the techniques work for any digit
+ * count and on overlapping multi-grid boards.
  *
  * Soundness rules shared by all five:
- *   - A digit is only forced into a unit when `ctx.completeUnits[u] === 1` (the unit has `digits` cells and is not
- *     `partial`); the unit that receives the eliminations only has to be all-different, which every unit is.
- *   - `state` is only read. It is peer consistent but singles may be pending, so no propagation fixpoint is assumed;
- *     solved cells are skipped and their digits count as already placed.
- *   - One deduction per call, the first in a fixed scan order (unit index, then digit, or pair index). Pointing and
- *     Box/Line need the digit in at least two cells of the intersection; a single possible cell is a hidden single,
- *     which the ladder takes first.
+ *   - A digit is only forced into a unit when `ctx.completeUnits[u] === 1` (the unit has `digits` cells and
+ *     is not `partial`); the unit that receives the eliminations only has to be all-different, which every
+ *     unit is.
+ *   - `state` is only read. It is peer consistent but singles may be pending, so no propagation fixpoint is
+ *     assumed; solved cells are skipped and their digits count as already placed.
+ *   - One deduction per call, the first in a fixed scan order (unit index, then digit, or pair index).
+ *     Pointing and Box/Line need the digit in at least two cells of the intersection; a single possible cell
+ *     is a hidden single, which the ladder takes first.
  *
  * i18nArgs of the Findings (plain data; `unit`, `box` and `line` are the `unitMeta.label` texts):
  *   nakedSingle                     { cell, digit }
@@ -38,11 +39,11 @@
   const POINTING = 1;
   const BOX_LINE = 2;
 
-  // Geometry (static, in typed arrays so scans allocate nothing): boxUnits (box-like units), lineUnits (rows and
-  // columns), pairCount (number of (box-like unit, line) pairs sharing at least 2 cells), pairBox / pairLine (per pair),
-  // segEnd (3 * pairCount + 1 offsets into `cells`; pair p owns three consecutive segments from 3p: the shared cells,
-  // the box-like unit outside the line, the line outside the box-like unit), cells (the segments back to back).
-
+  // Geometry (static, in typed arrays so scans allocate nothing): boxUnits (box-like units), lineUnits (rows
+  // and columns), pairCount (number of (box-like unit, line) pairs sharing at least 2 cells), pairBox /
+  // pairLine (per pair), segEnd (3 * pairCount + 1 offsets into `cells`; pair p owns three consecutive
+  // segments from 3p: the shared cells, the box-like unit outside the line, the line outside the box-like
+  // unit), cells (the segments back to back).
 
   const geometries = new WeakMap();
 
@@ -152,7 +153,8 @@
     return null;
   }
 
-  // Hidden Single over a list of units: in a complete unit a digit that is not placed yet and fits only one open cell goes there.
+  // Hidden Single over a list of units: in a complete unit a digit that is not placed yet and fits only one
+  // open cell goes there.
   function findHiddenSingle(model, state, ctx, unitList, id) {
     const cand = state.candidates;
     const val = state.value;
@@ -213,11 +215,12 @@
     return findHiddenSingle(model, state, ctx, geometryOf(model).lineUnits, 'hiddenSingleLine');
   }
 
-  // Shared scan of Pointing and Box/Line. For a (box-like unit B, line L) pair let X = B and L together, "forced" the
-  // unit whose digit must be placed and "target" the unit that loses candidates:
+  // Shared scan of Pointing and Box/Line. For a (box-like unit B, line L) pair let X = B and L together,
+  // "forced" the unit whose digit must be placed and "target" the unit that loses candidates:
   //   Pointing  forced = B, target = L. All candidates of d in B lie in X, so d sits in X and leaves L \ B.
   //   Box/Line  forced = L, target = B. All candidates of d in L lie in X, so d sits in X and leaves B \ L.
-  // The forced unit must be complete; the target only has to be all-different. `mode` is POINTING or BOX_LINE.
+  // The forced unit must be complete; the target only has to be all-different. `mode` is POINTING or
+  // BOX_LINE.
   function findLocked(model, state, ctx, mode) {
     const g = geometryOf(model);
     const cand = state.candidates;

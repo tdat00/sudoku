@@ -85,7 +85,8 @@
 
     it('finds the core files to scan', function () {
       requireNode();
-      ['../core/js/engine/ns.js', '../core/js/engine/errors.js', '../core/js/engine/bits.js', '../core/js/engine/budget.js', 'js/engine/rng.js']
+      ['../core/js/engine/ns.js', '../core/js/engine/errors.js', '../core/js/engine/bits.js',
+        '../core/js/engine/budget.js', 'js/engine/rng.js']
         .forEach(function (rel) { expect(files).toContain(rel); });
     });
 

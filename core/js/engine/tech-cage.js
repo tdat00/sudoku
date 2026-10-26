@@ -1,8 +1,7 @@
 /**
  * Cage techniques of the Killer variant. They apply to the variant `killer` only (`variantScope`) and work on
  * `model.cages`; everything else is read from the generic unit structure (no board shape beyond "complete
- * units of D
- * cells").
+ * units of D cells").
  *
  *   id          group  baseCost  order
  *   cageCombo   cage      10       55   Cage Sum Combination
@@ -10,50 +9,37 @@
  *   cageSplit   cage      40      135   Cage Splitting
  *
  * cageCombo. A cage of r open cells that must add up to s can only be filled with a digit set from
- * `SG.comboTable`. The
- * sets that still fit the candidates of the cells are the "survivors": a cell loses every digit that occurs
- * in none of
- * them, and a digit that occurs in all of them must be in the cage, so when only one open cell can still hold
- * it, it
- * goes there; if all its possible cells share a unit it is removed from the other cells of that unit
- * ("pointing" out of
- * a cage). Digits already fixed in the cage leave its other cells.
+ * `SG.comboTable`. The sets that still fit the candidates of the cells are the "survivors": a cell loses
+ * every digit that occurs in none of them, and a digit that occurs in all of them must be in the cage, so
+ * when only one open cell can still hold it, it goes there; if all its possible cells share a unit it is
+ * removed from the other cells of that unit ("pointing" out of a cage). Digits already fixed in the cage
+ * leave its other cells.
  *
  * ruleOf45. A set of complete units that do not overlap (k rows, k columns, k boxes) holds every digit k
- * times, so its
- * cells add up to k * 45. The cages lying completely inside the set account for their own sums; what is left
- * are the
- * "innies" (cells of the set in a cage that sticks out), and their sum is known. The same argument on the
- * cages that
- * touch the set gives the sum of the "outies" (cells outside the set in such a cage). A group with one open
- * cell is a
- * placement; a group of two to four open cells is filtered exhaustively against its sum (cells that share a
- * unit or a
- * cage must differ).
+ * times, so its cells add up to k * 45. The cages lying completely inside the set account for their own sums;
+ * what is left are the "innies" (cells of the set in a cage that sticks out), and their sum is known. The
+ * same argument on the cages that touch the set gives the sum of the "outies" (cells outside the set in such
+ * a cage). A group with one open cell is a placement; a group of two to four open cells is filtered
+ * exhaustively against its sum (cells that share a unit or a cage must differ).
  *
  * cageSplit. When exactly one cage K sticks out of such a set, K falls apart into two virtual cages with
- * known sums:
- * the innies (K inside the set) and the outies (K outside it). Each is a distinct-digit cage of its own and
- * the two
- * digit sets must be disjoint, because both are parts of K. Filtered like cageCombo, with disjointness as the
- * extra
- * condition.
+ * known sums: the innies (K inside the set) and the outies (K outside it). Each is a distinct-digit cage of
+ * its own and the two digit sets must be disjoint, because both are parts of K. Filtered like cageCombo, with
+ * disjointness as the extra condition.
  *
  * Every deduction is sound: a digit is removed or a value placed only when no assignment of the cage sums and
- * the
- * all-different units can use it. All three only read the state and return the first deduction in a fixed
- * scan order
- * (cages by index; regions by kind, size and position).
+ * the all-different units can use it. All three only read the state and return the first deduction in a fixed
+ * scan order (cages by index; regions by kind, size and position).
  *
  * i18nArgs of the Findings (plain data; `cells` are cell labels such as 'R4C7', `units` unit labels):
- *   cageCombo   { sum, size, cells, digits, forced, rule? }
- *               digits = digits of the surviving combinations, forced = digits every combination needs;
- *               rule = 'noForced' when there is none (the text without the sentence about forced digits)
- *   ruleOf45    { kind, units, sum, cells, rule? }
- *               kind 'innie' | 'outie'; sum = what the open cells add up to; rule = 'outie' for the outies
+ *   cageCombo   { sum, size, cells, digits, forced, rule? } digits = digits of the surviving combinations,
+ *               forced = digits every combination needs; rule = 'noForced' when there is none (the text
+ *               without the sentence about forced digits)
+ *   ruleOf45    { kind, units, sum, cells, rule? } kind 'innie' | 'outie'; sum = what the open cells add up
+ *               to; rule = 'outie' for the outies
  *   ruleOf45 (placement)   { kind, units, sum, cell, digit, rule? }
- *   cageSplit   { sum, units, part, partSum, partDigits, rest, restSum, restDigits }
- *               part = the open cells of the innies, rest = the open cells of the outies
+ *   cageSplit   { sum, units, part, partSum, partDigits, rest, restSum, restDigits } part = the open cells of
+ *               the innies, rest = the open cells of the outies
  */
 (function (root) {
   'use strict';
@@ -88,10 +74,8 @@
   }
 
   // Digit sets that fit `count` open cells which must add up to `rest`, written into `out`: combination table
-  // sets that
-  // avoid `forbidden`, lie inside the union of the candidates and give every cell at least one of their
-  // digits.
-  // Returns how many were written.
+  // sets that avoid `forbidden`, lie inside the union of the candidates and give every cell at least one of
+  // their digits. Returns how many were written.
   function survivingCombos(cand, cells, count, rest, forbidden, digits, out) {
     const list = comboTable.masks(count, rest, digits);
     let unionMask = 0;
@@ -130,8 +114,7 @@
   }
 
   // Removes `bit`, which the cage must contain somewhere among `positions`, from the other cells of every
-  // unit holding
-  // all of them.
+  // unit holding all of them.
   function pointOutOfCage(model, state, index, k, positions, count, bit, eliminations) {
     const cand = state.candidates;
     const value = state.value;
@@ -242,16 +225,11 @@
   }
 
   // Region: { unitLabels, useIn (ruleOf45 looks at the innies: a short group, not seen before), innies (cells
-  // of the
-  // region in a cage that is not completely inside it, or in no cage), inSum (k * (1 + ... + D) minus the
-  // sums of the
-  // cages inside), inDistinct (innies.length ^ 2 flags: 1 when two innies must differ), useOut / outies
-  // (cells outside
-  // the region in a cage partly inside it) / outSum / outDistinct (the same for the outies), splitCage (the
-  // only cage
-  // sticking out of the region when it is a distinct cage and every cell of the region is in a cage, so
-  // innies and
-  // outies are its two parts; else -1) }
+  // of the region in a cage that is not completely inside it, or in no cage), inSum (k * (1 + ... + D) minus
+  // the sums of the cages inside), inDistinct (innies.length ^ 2 flags: 1 when two innies must differ),
+  // useOut / outies (cells outside the region in a cage partly inside it) / outSum / outDistinct (the same
+  // for the outies), splitCage (the only cage sticking out of the region when it is a distinct cage and every
+  // cell of the region is in a cage, so innies and outies are its two parts; else -1) }
 
   const regionCache = new WeakMap();
 

@@ -1,4 +1,5 @@
-// SG.wordbook (../core/js/ui/wordbook.js) and its data (core/assets/wordbook): what a solved Wordoku tells about its key word.
+// SG.wordbook (../core/js/ui/wordbook.js) and its data (core/assets/wordbook): what a solved Wordoku tells
+// about its key word.
 (function () {
   'use strict';
 

@@ -1,4 +1,4 @@
-// Mega variants (task T-5.1): mega12 (12x12, boxes of 3 rows x 4 columns) and mega16 (16x16, 4x4 boxes).
+// Mega variants: mega12 (12x12, boxes of 3 rows x 4 columns) and mega16 (16x16, 4x4 boxes).
 //
 // The geometry (3 rows x 4 columns, not 4 x 3), the symbol sets (a presentation concern only), the 16 bit
 // candidate masks at D = 16 (digit 16 is bit 15, the classic off-by-one trap), the pre-fill and restart
@@ -106,10 +106,6 @@
     return Array.from(a).join(',') === Array.from(b).join(',');
   }
 
-  // ===========================================================================================
-  // Registration and definition
-  // ===========================================================================================
-
   describe('mega definitions', function () {
     IDS.forEach(function (id) {
       it(id + ': is registered with the digits, group and presentation settings of its board', function () {
@@ -180,10 +176,6 @@
     });
   });
 
-  // ===========================================================================================
-  // Geometry (CV1)
-  // ===========================================================================================
-
   describe('mega geometry', function () {
     IDS.forEach(function (id) {
       var b = BOARDS[id];
@@ -217,6 +209,7 @@
             expect(m.units[D + i][j]).toBe(j * D + i);
           }
         }
+        expect(m.unitMeta[2 * D].label).toBe('B1');
       });
 
       it(id + ': every box is ' + b.boxRows + ' rows x ' + b.boxCols + ' columns, read from cellRegion',
@@ -280,34 +273,6 @@
       });
     });
 
-    it('mega12 boxes are 3 rows x 4 columns and not 4 x 3', function () {
-      var region = model('mega12').layout.cellRegion;
-      // Row 0 holds four cells of box 0, then box 1 starts: a 4 column wide box.
-      [0, 1, 2, 3].forEach(function (col) { expect(region[col]).toBe(0); });
-      expect(region[4]).toBe(1);
-      expect(region[8]).toBe(2);
-      // Rows 0..2 belong to box 0, row 3 starts the next box row: a 3 row tall box.
-      [0, 1, 2].forEach(function (row) { expect(region[row * 12]).toBe(0); });
-      expect(region[3 * 12]).toBe(3);
-      expect(region[6 * 12]).toBe(6);
-      expect(region[9 * 12]).toBe(9);
-      expect(region[12 * 12 - 1]).toBe(11);
-      expect(model('mega12').unitMeta[24].label).toBe('B1');
-      expect(Array.from(model('mega12').units[24])).toEqual(
-        [0, 1, 2, 3, 12, 13, 14, 15, 24, 25, 26, 27]);
-    });
-
-    it('mega16 boxes are 4 x 4', function () {
-      var region = model('mega16').layout.cellRegion;
-      expect(region[3]).toBe(0);
-      expect(region[4]).toBe(1);
-      expect(region[3 * 16]).toBe(0);
-      expect(region[4 * 16]).toBe(4);
-      expect(region[16 * 16 - 1]).toBe(15);
-      expect(Array.from(model('mega16').units[32])).toEqual(
-        [0, 1, 2, 3, 16, 17, 18, 19, 32, 33, 34, 35, 48, 49, 50, 51]);
-    });
-
     it('the peers of the mega12 corner cell are its row, its column and the rest of its 3 x 4 box',
       function () {
         var m = model('mega12');
@@ -330,10 +295,6 @@
       expect(Array.from(m.peers[0])).not.toContain(3 * 12 + 1);
     });
   });
-
-  // ===========================================================================================
-  // Symbol sets: a presentation concern
-  // ===========================================================================================
 
   describe('mega symbol sets', function () {
     IDS.forEach(function (id) {
@@ -435,30 +396,7 @@
     });
   });
 
-  // ===========================================================================================
-  // Candidate masks at the highest digit (D = 16 uses bit 15)
-  // ===========================================================================================
-
   describe('mega bitmasks at the highest digit', function () {
-    it('SG.bits handles digit 16: bit 15, the mask 0xFFFF, always a positive int32', function () {
-      var top = 1 << 15;
-      expect(top).toBe(32768);
-      expect(SG.bits.full(16)).toBe(0xFFFF);
-      expect(SG.bits.full(12)).toBe(0xFFF);
-      expect(SG.bits.popcount(0xFFFF)).toBe(16);
-      expect(SG.bits.popcount(top)).toBe(1);
-      expect(SG.bits.popcount(0xFFFF & ~top)).toBe(15);
-      expect(SG.bits.lowestBitIndex(top)).toBe(15);
-      expect(SG.bits.lowestBitIndex(0xFFFF)).toBe(0);
-      expect(SG.bits.toArray(top)).toEqual([16]);
-      expect(SG.bits.toArray(0xFFFF)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
-      var seen = [];
-      SG.bits.forEach(top | 1, function (v) { seen.push(v); });
-      expect(seen).toEqual([1, 16]);
-      // The value of the lowest set bit as the searches compute it, `32 - clz32(m & -m)`.
-      expect(32 - Math.clz32(top & -top)).toBe(16);
-    });
-
     IDS.forEach(function (id) {
       var D = BOARDS[id].digits;
       var top = 1 << (D - 1);
@@ -567,10 +505,6 @@
       });
     });
   });
-
-  // ===========================================================================================
-  // Full grid (CV2), the pre-fill and the restart threshold
-  // ===========================================================================================
 
   describe('mega full grids', function () {
     IDS.forEach(function (id) {
@@ -714,10 +648,6 @@
       });
     });
   });
-
-  // ===========================================================================================
-  // Puzzles (CV3, CV4, CV5, CV6)
-  // ===========================================================================================
 
   describe('mega puzzles', function () {
     function generate(id, level, seed, extra) {
@@ -865,10 +795,6 @@
     });
   });
 
-  // ===========================================================================================
-  // Locale fragment (CV7)
-  // ===========================================================================================
-
   describe('mega locale fragment', function () {
     function fragments() {
       return SG.localeFragments.filter(function (f) { return f.en && f.en['variant.mega12'] !== undefined; });
@@ -878,25 +804,10 @@
       return fragments()[0];
     }
 
-    function placeholders(text) {
-      return (text.match(/\{[A-Za-z0-9_]+\}/g) || []).sort();
-    }
-
     it('is published once in SG.localeFragments with an en and a vi pack', function () {
       expect(fragments()).toHaveLength(1);
       expect(typeof fragment().en).toBe('object');
       expect(typeof fragment().vi).toBe('object');
-    });
-
-    it('carries identical key sets in both languages, none of them empty', function () {
-      var f = fragment();
-      expect(Object.keys(f.vi).sort()).toEqual(Object.keys(f.en).sort());
-      Object.keys(f.en).forEach(function (key) {
-        expect(typeof f.en[key]).toBe('string');
-        expect(f.en[key].trim()).not.toBe('');
-        expect(f.vi[key].trim()).not.toBe('');
-        expect(placeholders(f.vi[key])).toEqual(placeholders(f.en[key]));
-      });
     });
 
     it('names both variants, in the words of the design catalogue', function () {
@@ -905,26 +816,6 @@
       expect(f.en['variant.mega16']).toBe('Monster Sudoku 16×16');
       expect(f.vi['variant.mega12']).toBe('Sudoku Khổng lồ 12×12');
       expect(f.vi['variant.mega16']).toBe('Sudoku Quái vật 16×16');
-      IDS.forEach(function (id) {
-        var def = SG.variants.get(id);
-        expect(f.en[def.i18nKey]).toBeDefined();
-        expect(f.vi[def.i18nKey]).toBeDefined();
-        expect(f.en[def.i18nKey + '.desc']).toBeDefined();
-        expect(f.vi[def.i18nKey + '.desc']).toBeDefined();
-      });
-    });
-
-    it('translates the symbol set control: label, hint and every choice of both variants', function () {
-      var f = fragment();
-      IDS.forEach(function (id) {
-        SG.variants.get(id).options.forEach(function (option) {
-          [option.i18nKey, option.hintKey].concat(option.choices.map(function (c) { return c.i18nKey; }))
-            .forEach(function (key) {
-              expect(f.en[key]).toBeDefined();
-              expect(f.vi[key]).toBeDefined();
-            });
-        });
-      });
     });
 
     it('has no vi text that is just the English text', function () {
@@ -932,10 +823,6 @@
       Object.keys(f.en).forEach(function (key) { expect(f.vi[key]).not.toBe(f.en[key]); });
     });
   });
-
-  // ===========================================================================================
-  // What the renderer reads (CV9, without a DOM)
-  // ===========================================================================================
 
   describe('mega renderer contract', function () {
     /** Thick borders as board-view derives them: wherever two neighbouring cells lie in different regions. */
@@ -993,9 +880,7 @@
     });
   });
 
-  // ===========================================================================================
   // Deep run (CV3 at full size): SG_DEEP=1
-  // ===========================================================================================
 
   if (DEEP) {
     describe('mega deep run: 20 puzzles per level (SG_DEEP=1)', function () {

@@ -14,8 +14,9 @@
   var SLOW = 120000;
 
   // Cells of the regression table that take well under a second each.
-  var HASHED = ['classic4/veryEasy', 'classic6/veryEasy', 'classic9/veryEasy', 'classic9/easy', 'classic9/normal',
-    'diagonalX/easy', 'jigsaw9/normal', 'killer/easy', 'greaterThan/normal', 'sohei/veryEasy', 'wordoku/normal'];
+  var HASHED = ['classic4/veryEasy', 'classic6/veryEasy', 'classic9/veryEasy', 'classic9/easy',
+    'classic9/normal', 'diagonalX/easy', 'jigsaw9/normal', 'killer/easy', 'greaterThan/normal',
+    'sohei/veryEasy', 'wordoku/normal'];
 
   function generate(id, level, seed) {
     return SG.pipeline.run({ variantId: id, difficulty: level, seed: seed, trace: 'off' }, null,
@@ -24,7 +25,8 @@
 
   describe('smoke: every variant makes a valid puzzle', function () {
     it('registers the 15 variants of the project', function () {
-      expect(SG.variants.list().map(function (def) { return def.id; }).sort()).toEqual(EXPECTED_IDS.slice().sort());
+      var ids = SG.variants.list().map(function (def) { return def.id; });
+      expect(ids.sort()).toEqual(EXPECTED_IDS.slice().sort());
     });
 
     EXPECTED_IDS.forEach(function (id) {
@@ -44,7 +46,9 @@
 
       it(id + ': a level the variant does not offer is refused', function () {
         var def = SG.variants.get(id);
-        var missing = SG.difficulty.LEVELS.filter(function (level) { return def.difficultySupport.indexOf(level) === -1; });
+        var missing = SG.difficulty.LEVELS.filter(function (level) {
+          return def.difficultySupport.indexOf(level) === -1;
+        });
         if (missing.length === 0) return;
         var thrown = null;
         try { generate(id, missing[0], 1); } catch (e) { thrown = e; }

@@ -1,7 +1,7 @@
 /**
  * Vietnamese language pack: the shared strings of the player. Modules that own their strings add them through
- * `SG.localeFragments` instead (see js/ui/i18n.js). Keep the key set identical to locale.en.js.
- * Placeholders are `{name}` (for a technique, the `i18nArgs` of its findings); plural forms use `_one` / `_other`.
+ * `SG.localeFragments` instead (see js/ui/i18n.js). Keep the key set identical to locale.en.js. Placeholders
+ * are `{name}` (for a technique, the `i18nArgs` of its findings); plural forms use `_one` / `_other`.
  */
 (function (root) {
   'use strict';
@@ -57,13 +57,13 @@
   });
 
   add({
-    'variant.classic4': 'Sudoku cổ điển 4×4',
+    'variant.classic4': 'Sudoku Cổ điển 4×4',
     'variant.classic4.desc': 'Lưới 4×4 nhỏ gọn với các khối 2×2. Mỗi hàng, mỗi cột và mỗi khối chứa các ' +
       'chữ số từ 1 đến 4, mỗi số đúng một lần. Rất hợp cho người mới và trẻ em.',
-    'variant.classic6': 'Sudoku cổ điển 6×6',
+    'variant.classic6': 'Sudoku Cổ điển 6×6',
     'variant.classic6.desc': 'Lưới 6×6 với các khối 2 hàng × 3 cột. Mỗi hàng, mỗi cột và mỗi khối chứa ' +
       'các chữ số từ 1 đến 6, mỗi số đúng một lần.',
-    'variant.classic9': 'Sudoku cổ điển 9×9',
+    'variant.classic9': 'Sudoku Cổ điển 9×9',
     'variant.classic9.desc': 'Lưới 9×9 tiêu chuẩn với các khối 3×3. Mỗi hàng, mỗi cột và mỗi khối chứa ' +
       'các chữ số từ 1 đến 9, mỗi số đúng một lần.',
     'variant.diagonalX.desc': 'Luật cổ điển 9×9, đồng thời hai đường chéo chính cũng phải chứa đủ các chữ ' +
@@ -111,13 +111,13 @@
     'variant.killer': 'Sudoku Sát thủ',
     'variant.greaterThan': 'Sudoku So sánh',
     'variant.samurai': 'Sudoku Samurai',
-    'variant.samurai.desc': 'Năm lưới 9×9 chồng lên nhau: lưới giữa dùng chung một hộp 3×3 với mỗi lưới ở ' +
+    'variant.samurai.desc': 'Năm lưới 9×9 chồng lên nhau: lưới giữa dùng chung một khối 3×3 với mỗi lưới ở ' +
       'góc (369 ô).',
     'variant.sohei': 'Sudoku Sohei',
-    'variant.sohei.desc': 'Bốn lưới 9×9 xếp thành vòng: mỗi lưới dùng chung một hộp 3×3 với hai lưới kề ' +
+    'variant.sohei.desc': 'Bốn lưới 9×9 xếp thành vòng: mỗi lưới dùng chung một khối 3×3 với hai lưới kề ' +
       'bên (288 ô).',
     'variant.butterfly': 'Sudoku Cánh bướm',
-    'variant.butterfly.desc': 'Bốn lưới 9×9 lệch nhau một hộp, chồng lên vùng trung tâm 6×6 (144 ô).',
+    'variant.butterfly.desc': 'Bốn lưới 9×9 lệch nhau một khối, chồng lên vùng trung tâm 6×6 (144 ô).',
     'variant.flower': 'Sudoku Bông hoa',
     'variant.flower.desc': 'Năm lưới 9×9: bốn cánh hoa quanh một lưới trung tâm, chồng lên nhau rất dày ' +
       '(189 ô).',
@@ -137,7 +137,7 @@
     'symbolMode.digits': 'Chữ số',
     'symbolMode.letters': 'Chữ cái',
     'symbolMode.colors': 'Màu sắc',
-    'symbolMode.shapes': 'Hình khối',
+    'symbolMode.shapes': 'Hình dạng',
     'symbolMode.word': 'Chữ của từ khóa'
   });
 
@@ -208,14 +208,14 @@
     'technique.wWing.desc': 'Hai ô có cùng hai ứng viên, nối với nhau bằng một liên kết mạnh trên một chữ ' +
       'số: chữ số còn lại bị loại khỏi mọi ô nhìn thấy cả hai ô.',
     'technique.uniqueRectangle': 'Hình chữ nhật duy nhất (Unique Rectangle)',
-    'technique.uniqueRectangle.desc': 'Một bài chỉ có đúng một lời giải, nên bốn ô trong hai hàng, hai ' +
-      'cột và hai khối không thể chỉ còn cùng hai ứng viên. Điều này buộc phải loại thêm một ứng viên.',
+    'technique.uniqueRectangle.desc': 'Một đề chỉ có đúng một lời giải, nên bốn ô trong hai hàng, hai cột ' +
+      'và hai khối không thể chỉ còn cùng hai ứng viên. Điều này buộc phải loại thêm một ứng viên.',
     'technique.forcingChain': 'Chuỗi suy luận (Forcing Chain)',
     'technique.forcingChain.desc': 'Chuỗi các suy luận kiểu “nếu thế này thì thế kia”, chứng minh một ứng ' +
       'viên là sai (hoặc một chữ số là đúng).',
-    'technique.nishio': 'Nishio (thử và loại)',
-    'technique.nishio.desc': 'Thử và loại có giới hạn: giả sử một ứng viên là đúng; nếu các suy luận đơn ' +
-      'giản sau đó dẫn đến mâu thuẫn thì ứng viên ấy là sai.',
+    'technique.nishio': 'Nishio (thử–sai)',
+    'technique.nishio.desc': 'Thử–sai có giới hạn: giả sử một ứng viên là đúng; nếu các suy luận đơn giản ' +
+      'sau đó dẫn đến mâu thuẫn thì ứng viên ấy là sai.',
     'technique.cageCombo.desc': 'Các chữ số trong một lồng đều khác nhau và cộng lại bằng tổng của lồng, ' +
       'nên thường chỉ còn vài tổ hợp khả dĩ.',
     'technique.ruleOf45.desc': 'Mỗi hàng, cột và khối có tổng bằng 45, nhiều nhóm cùng loại gộp lại thì ' +
@@ -273,9 +273,9 @@
     'technique.wWing.step': 'W-Wing: {cell1} và {cell2} đều chỉ chứa {digitX} hoặc {digit} và không nhìn ' +
       'thấy nhau. Một liên kết mạnh trên {digitX} trong {unit} ({link1} và {link2}) nối hai ô này, nên ' +
       'một trong hai ô phải là {digit}. {digit} bị loại khỏi mọi ô nhìn thấy cả hai.',
-    'technique.uniqueRectangle.type1.step': 'Hình chữ nhật duy nhất: ba góc chỉ chứa {digitX} và ' +
-      '{digitY}. Nếu {cell} cũng chỉ chứa hai chữ số đó thì bài sẽ có hai lời giải. Vậy {digitX} và ' +
-      '{digitY} bị loại khỏi {cell}.',
+    'technique.uniqueRectangle.type1.step': 'Hình chữ nhật duy nhất: ba góc chỉ chứa {digitX} và {digitY}. ' +
+      'Nếu {cell} cũng chỉ chứa hai chữ số đó thì đề sẽ có hai lời giải. Vậy {digitX} và {digitY} bị loại ' +
+      'khỏi {cell}.',
     'technique.uniqueRectangle.type2.step': 'Hình chữ nhật duy nhất: hai góc chỉ chứa {digitX} và ' +
       '{digitY}; hai góc còn lại, {roof1} và {roof2}, còn chứa thêm {digit}. Để tránh hai lời giải, một ' +
       'trong hai ô đó phải là {digit}, nên {digit} bị loại khỏi mọi ô nhìn thấy cả hai.',
@@ -288,23 +288,22 @@
     'technique.forcingChain.step.forced': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng viên ' +
       'đầu tiên sai thì sẽ có một ứng viên vừa đúng vừa sai, điều không thể xảy ra. Vậy ứng viên đầu tiên ' +
       'đúng và được điền vào.',
-    'technique.nishio.step': 'Thử và loại (độ sâu {depth}): nếu {label} là {digit} thì các suy luận đơn ' +
-      'giản sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.',
+    'technique.nishio.step': 'Thử–sai (độ sâu {depth}): nếu {label} là {digit} thì các suy luận đơn giản ' +
+      'sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.',
     'technique.cageCombo': 'Tổ hợp tổng lồng',
-    'technique.cageCombo.step': 'Lồng có tổng {sum} gồm {size} ô ({cells}) chỉ có thể viết bằng các chữ ' +
-      'số {digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra. Chữ số mà mọi tổ hợp đều cần ' +
+    'technique.cageCombo.step': 'Lồng có tổng {sum} gồm {size} ô ({cells}) chỉ có thể viết bằng các chữ số ' +
+      '{digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra. Chữ số mà mọi tổ hợp đều cần ' +
       '({forced}) phải nằm đâu đó trong lồng: nếu chỉ còn một ô có thể chứa nó thì điền vào ô đó, nếu ' +
-      'không thì nó bị loại khỏi các ô còn lại của hàng, cột hoặc vùng chứa toàn bộ vị trí khả dĩ của nó.',
+      'không thì nó bị loại khỏi các ô còn lại của hàng, cột hoặc khối chứa toàn bộ vị trí khả dĩ của nó.',
     'technique.cageCombo.step.noForced': 'Lồng có tổng {sum} gồm {size} ô ({cells}) chỉ có thể viết bằng ' +
       'các chữ số {digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra.',
     'technique.ruleOf45': 'Quy tắc 45',
-    'technique.ruleOf45.step': 'Quy tắc 45 trên {units}: mỗi hàng, cột hoặc vùng chứa đủ các chữ số từ 1 ' +
-      'đến 9 (tổng 45), nên sau khi trừ các lồng nằm trọn bên trong, các ô {cells} phải có tổng bằng ' +
-      '{sum}. Những ứng viên không thể đạt được tổng đó bị loại.',
-    'technique.ruleOf45.step.outie': 'Quy tắc 45 trên {units}: mỗi hàng, cột hoặc vùng chứa đủ các chữ số ' +
-      'từ 1 đến 9 (tổng 45), nên các lồng nằm trong hoặc nhô ra khỏi chúng phủ các nhóm cộng thêm một ' +
-      'số ô bên ngoài. Các ô {cells} đó phải có tổng bằng {sum}. Những ứng viên không thể đạt được tổng ' +
-      'đó bị loại.',
+    'technique.ruleOf45.step': 'Quy tắc 45 trên {units}: mỗi nhóm chứa đủ các chữ số từ 1 đến 9 (tổng 45), ' +
+      'nên sau khi trừ các lồng nằm trọn bên trong, các ô {cells} phải có tổng bằng {sum}. Những ứng viên ' +
+      'không thể đạt được tổng đó bị loại.',
+    'technique.ruleOf45.step.outie': 'Quy tắc 45 trên {units}: mỗi nhóm chứa đủ các chữ số từ 1 đến 9 ' +
+      '(tổng 45), nên các lồng nằm trong hoặc nhô ra khỏi chúng phủ các nhóm cộng thêm một số ô bên ngoài. ' +
+      'Các ô {cells} đó phải có tổng bằng {sum}. Những ứng viên không thể đạt được tổng đó bị loại.',
     'technique.ruleOf45.place': 'Quy tắc 45 trên {units}: sau khi trừ các lồng nằm trọn bên trong, ô còn ' +
       'lại {cell} phải bù đúng phần còn thiếu là {sum}, nên ô này là {digit}.',
     'technique.ruleOf45.place.outie': 'Quy tắc 45 trên {units}: các lồng nằm trong hoặc nhô ra khỏi chúng ' +

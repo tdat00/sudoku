@@ -6,7 +6,8 @@
  *
  * Entry: { name, puzzle (81 chars, '.' = empty), label (a legacy level name), basis, note,
  *          solvableWithin?, notSolvableWithin? }
- * Labels and technique certificates retain their pre-v2 meaning; they are not the player's accepted-level list.
+ * Labels and technique certificates retain their pre-v2 meaning; they are not the player's accepted-level
+ * list.
  *
  * Two kinds of labels, kept apart on purpose:
  *
@@ -19,14 +20,14 @@
  *                       a one-level tolerance, since no two raters agree on a name like "hard".
  *                       These historical labels are not recalculated by the player.
  *
- *  basis 'constructed'  Puzzles made by SG.digger.generate for one level and then frozen. The label is
- *                       not the scorer's opinion but a certificate about techniques, which tests check
- *                       independently of every score and cost: `solvableWithin` is a level whose
- *                       technique set solves the puzzle (the solver is run with `assumeUniqueness: false`,
- *                       exactly like the digging oracle) and `notSolvableWithin` is a level whose
- *                       technique set gets stuck. A legacy normal puzzle, for instance, is solved with singles,
- *                       locked candidates and subsets but not without the subsets. These frozen certificates
- *                       test the logical solver, not the current score-defined difficulty bands.
+ *  basis 'constructed'  Puzzles made by SG.digger.generate for one level and then frozen. The label is not
+ *                       the scorer's opinion but a certificate about techniques, which tests check
+ *                       independently of every score and cost: `solvableWithin` is a level whose technique
+ *                       set solves the puzzle (the solver is run with `assumeUniqueness: false`, exactly like
+ *                       the digging oracle) and `notSolvableWithin` is a level whose technique set gets
+ *                       stuck. A legacy normal puzzle, for instance, is solved with singles, locked
+ *                       candidates and subsets but not without the subsets. These frozen certificates test
+ *                       the logical solver, not the current score-defined difficulty bands.
  */
 (function () {
   'use strict';

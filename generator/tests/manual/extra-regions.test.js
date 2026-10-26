@@ -1,8 +1,8 @@
-// Extra-region variants (task T-5.2): `diagonalX` (29 units) and `hyper` (31 units), their hybrid (33 units),
-// and the common variant criteria CV1-CV9 of task.md phase P5. The board geometry is compared with an
-// independent oracle written from coordinates alone (rows, columns, boxes, r == c, r + c == 8, the four
-// windows), every generated puzzle is checked against it, and the claim of the task card is measured: a
-// puzzle of these variants is not a classic puzzle in disguise, its extra units are needed for uniqueness.
+// Extra-region variants: `diagonalX` (29 units) and `hyper` (31 units), their hybrid (33 units), and the
+// common variant criteria CV1-CV9 of task.md phase P5. The board geometry is compared with an independent
+// oracle written from coordinates alone (rows, columns, boxes, r == c, r + c == 8, the four windows), every
+// generated puzzle is checked against it, and a puzzle of these variants is shown not to be a classic puzzle
+// in disguise: its extra units are needed for uniqueness.
 (function () {
   'use strict';
 
@@ -13,13 +13,15 @@
 
   var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'];
   /** design.md 9.1, the diagonalX / hyper rows (the larger of the two), p95 in ms. */
-  var BUDGET_MS = { veryEasy: 80, easy: 200, normal: 200, hard: 500, expert: 500, master: 1200, nightmare: 3000,
-    hell1: 3000, hell2: 5000 };
+  var BUDGET_MS = {
+    veryEasy: 80, easy: 200, normal: 200, hard: 500, expert: 500, master: 1200, nightmare: 3000, hell1: 3000,
+    hell2: 5000
+  };
   var PUZZLES_PER_LEVEL = 20;
   /** Fewer puzzles of the slowest level, so that the suite stays quick. */
   var PER_LEVEL = { hell2: 8 };
   var HYBRID_PER_LEVEL = 8;
-  /** The task card: dropping the extra units must leave several solutions for at least this share. */
+  /** Dropping the extra units must leave several solutions for at least this share of the puzzles. */
   var NEEDED_SHARE = 0.7;
   var WINDOW_CORNERS = [[1, 1], [1, 5], [5, 1], [5, 5]];
 
@@ -65,9 +67,7 @@
     return Array.from(list).sort(function (a, b) { return a - b; });
   }
 
-  // ---------------------------------------------------------------------------------------------
   // The oracle: the rules of the boards, from coordinates only
-  // ---------------------------------------------------------------------------------------------
 
   function row(c) { return Math.floor(c / 9); }
   function col(c) { return c % 9; }
@@ -138,9 +138,7 @@
     });
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Builders and shared puzzles (generated once, on first use)
-  // ---------------------------------------------------------------------------------------------
 
   function build(cfg) {
     return SG.variants.get(cfg.variantId).build(cfg.options, SG.rng.create(1));
@@ -222,10 +220,6 @@
     return needing;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The definitions
-  // ---------------------------------------------------------------------------------------------
-
   describe('extraRegions: variant definitions (design.md 5.3 / 13.8)', function () {
     it('registers diagonalX and hyper with the fields of the contract', function () {
       VARIANT_IDS.forEach(function (id) {
@@ -290,11 +284,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV1: the model
-  // ---------------------------------------------------------------------------------------------
-
-  describe('extraRegions: model structure (CV1, T-5.2)', function () {
+  describe('extraRegions: model structure (CV1)', function () {
     it('diagonalX has exactly 29 units, hyper exactly 31, and the hybrid 33', function () {
       expect(SG.variants.get('diagonalX').build({}, null).units).toHaveLength(29);
       expect(SG.variants.get('hyper').build({}, null).units).toHaveLength(31);
@@ -491,10 +481,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV2: full grids
-  // ---------------------------------------------------------------------------------------------
-
   describe('extraRegions: full grids (CV2)', function () {
     CONFIGS.forEach(function (cfg) {
       it(cfg.name + ': 50 seeds give 50 valid full grids that obey every rule of the board', function () {
@@ -521,11 +507,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV3, CV4, CV6: puzzles
-  // ---------------------------------------------------------------------------------------------
-
-  describe('extraRegions: puzzles at every level (CV3, CV4, CV6; T-5.2)', function () {
+  describe('extraRegions: puzzles at every level (CV3, CV4, CV6)', function () {
     VARIANT_IDS.forEach(function (id) {
       var cfg = VARIANT_CONFIGS[id];
       LEVELS.forEach(function (level) {
@@ -576,8 +558,8 @@
           return puzzles.reduce(function (sum, p) { return sum + clueCount(p.givens); }, 0) / puzzles.length;
         });
         // Rating v2: the score, not the clue count, sets the level. From normal on the means sit on a plateau
-        // (the top tiers refine their proposals by showing clues again), so the trend is checked as veryEasy >
-        // easy > every level from normal on.
+        // (the top tiers refine their proposals by showing clues again), so the trend is checked as
+        // veryEasy > easy > every level from normal on.
         var text = id + ': mean clues ' + means.map(function (m) { return m.toFixed(1); }).join(' / ');
         check(means[0] > means[1], text);
         for (var i = 2; i < means.length; i++) check(means[i] < means[1], text);
@@ -585,11 +567,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // T-5.2: the extra constraints genuinely matter
-  // ---------------------------------------------------------------------------------------------
-
-  describe('extraRegions: the extra units are needed (T-5.2)', function () {
+  describe('extraRegions: the extra units are needed', function () {
     VARIANT_IDS.forEach(function (id) {
       it(id + ': without its extra units at least ' + Math.round(NEEDED_SHARE * 100) + '% of the puzzles ' +
         'have more than one solution', function () {
@@ -645,10 +623,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // The hybrid
-  // ---------------------------------------------------------------------------------------------
-
   describe('extraRegions: the hybrid diagonalX + hyper (33 units; CV3, CV4)', function () {
     it('every level, through both variants: unique solution, givens in the solution, every rule obeyed',
       function () {
@@ -676,10 +650,6 @@
       expect(Array.from(d.givens)).toEqual(Array.from(c.givens));
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // I7: the techniques work on these units
-  // ---------------------------------------------------------------------------------------------
 
   describe('extraRegions: the logical solver and the extra units (I7)', function () {
     var EXTRA_UNIT = /^(D[12]|W[1-4])$/;
@@ -741,10 +711,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // The pipeline and its events
-  // ---------------------------------------------------------------------------------------------
-
   describe('extraRegions: the pipeline and its events', function () {
     var STEPS = ['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune'];
 
@@ -797,10 +763,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV5: determinism
-  // ---------------------------------------------------------------------------------------------
-
   describe('extraRegions: same seed, same puzzle (CV5 / I4)', function () {
     VARIANT_IDS.forEach(function (id, vi) {
       it(id + ': every level, two runs give the same givens, solution and score', function () {
@@ -826,19 +788,15 @@
 
     it('another seed gives another puzzle; the option gives another board than the plain variant',
       function () {
-      var a = generate('hyper', 'normal', 1000);
-      var b = generate('hyper', 'normal', 1001);
-      expect(Array.from(b.solution)).not.toEqual(Array.from(a.solution));
-      var plain = generate('hyper', 'normal', 55);
-      var hybrid = generate('hyper', 'normal', 55, { variantOptions: { withDiagonals: true } });
-      expect(hybrid.model.units.length).not.toBe(plain.model.units.length);
-      expect(Array.from(hybrid.solution)).not.toEqual(Array.from(plain.solution));
-    });
+        var a = generate('hyper', 'normal', 1000);
+        var b = generate('hyper', 'normal', 1001);
+        expect(Array.from(b.solution)).not.toEqual(Array.from(a.solution));
+        var plain = generate('hyper', 'normal', 55);
+        var hybrid = generate('hyper', 'normal', 55, { variantOptions: { withDiagonals: true } });
+        expect(hybrid.model.units.length).not.toBe(plain.model.units.length);
+        expect(Array.from(hybrid.solution)).not.toEqual(Array.from(plain.solution));
+      });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // CV7: strings
-  // ---------------------------------------------------------------------------------------------
 
   describe('extraRegions: strings in both languages (CV7)', function () {
     var KEY = /^variant\.(diagonalX|hyper)(\.|$)/;
@@ -857,33 +815,10 @@
       return out;
     }
 
-    function placeholders(text) {
-      return (text.match(/\{[A-Za-z]+\}/g) || []).sort();
-    }
-
     it('declares one fragment with en and vi', function () {
       expect(Array.isArray(SG.localeFragments)).toBe(true);
       expect(fragments()).toHaveLength(1);
-      var f = fragments()[0];
-      expect(typeof f.en).toBe('object');
-      expect(typeof f.vi).toBe('object');
-      expect(Object.keys(f.vi).sort()).toEqual(Object.keys(f.en).sort());
     });
-
-    it('en and vi have the same keys, no empty value, and the Vietnamese is not a copy of the English',
-      function () {
-        var en = merged('en');
-        var vi = merged('vi');
-        expect(Object.keys(vi).sort()).toEqual(Object.keys(en).sort());
-        Object.keys(en).forEach(function (key) {
-          expect(typeof en[key]).toBe('string');
-          expect(en[key].trim()).not.toBe('');
-          expect(typeof vi[key]).toBe('string');
-          expect(vi[key].trim()).not.toBe('');
-          expect(vi[key]).not.toBe(en[key]);
-          expect(placeholders(vi[key])).toEqual(placeholders(en[key]));
-        });
-      });
 
     it('covers both variant names and both options (label and hint), and nothing else', function () {
       var en = merged('en');
@@ -909,20 +844,7 @@
       expect(en['variant.diagonalX.withHyper.hint']).toContain('windows');
       expect(en['variant.hyper.withDiagonals.hint']).toContain('diagonals');
     });
-
-    it('is merged into the language packs when they are loaded (browser run)', function () {
-      var locales = SG.locales;
-      if (!locales || !locales.en || !locales.vi) SG.test.skip('the language packs are not loaded here');
-      Object.keys(merged('en')).forEach(function (key) {
-        expect(locales.en[key]).toBeDefined();
-        expect(locales.vi[key]).toBeDefined();
-      });
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // CV9: what the board view needs
-  // ---------------------------------------------------------------------------------------------
 
   describe('extraRegions: data for the board view (CV9)', function () {
     /**

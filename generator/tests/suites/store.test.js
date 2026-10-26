@@ -1,4 +1,4 @@
-// Application state (task T-4.4, design.md 10.4 / 14.2 / 14.3): SG.store. The pure part (defaults, sanitize,
+// Application state (design.md 10.4 / 14.2 / 14.3): SG.store. The pure part (defaults, sanitize,
 // URL parse / serialise, toConfig) and the stateful part (create / get / set / subscribe / load / save /
 // syncUrl), all on Node with fake storage, location and history. `SG.i18n` is switched by `lang`, so every
 // test that can change the language puts English back.
@@ -78,17 +78,6 @@
       expect(d.colorAuxSymbol).toBe(true);
     });
 
-    it('has no replay detail (trace) and no replay speed any more', function () {
-      ready();
-      var d = S.defaults();
-      expect('trace' in d).toBe(false);
-      expect('speed' in d).toBe(false);
-      expect('trace' in S.sanitize({ trace: 'full', speed: 'manual' })).toBe(false);
-      expect('speed' in S.sanitize({ trace: 'full', speed: 'manual' })).toBe(false);
-      expect(S.TRACE_LEVELS).toBeUndefined();
-      expect(S.SPEEDS).toBeUndefined();
-    });
-
     it('returns a new object every time and sanitising the defaults changes nothing', function () {
       ready();
       var a = S.defaults();
@@ -109,7 +98,9 @@
 
     it('is idempotent and does not touch its input', function () {
       ready();
-      var input = Object.freeze({ variantId: 'classic4', difficulty: 'nightmare', maxAttempts: 99, seed: ' 12 ' });
+      var input = Object.freeze({
+        variantId: 'classic4', difficulty: 'nightmare', maxAttempts: 99, seed: ' 12 '
+      });
       var once = S.sanitize(input);
       expect(S.sanitize(once)).toEqual(once);
       expect(input.difficulty).toBe('nightmare');
@@ -451,8 +442,8 @@
       expect(first.seed).toBe(42);
       expect(first.config.variantId).toBe('classic4');
       expect(Array.from(first.givens)).toEqual(Array.from(second.givens));
-      var text = SG.pipeline.run(S.toConfig({ variantId: 'classic4', difficulty: 'veryEasy', seed: 'my puzzle' }),
-        function () {}, null);
+      var textConfig = S.toConfig({ variantId: 'classic4', difficulty: 'veryEasy', seed: 'my puzzle' });
+      var text = SG.pipeline.run(textConfig, function () {}, null);
       expect(text.seed).toBe(S.seedInfo('my puzzle').value);
     });
 
@@ -759,6 +750,27 @@
       });
     });
 
+    it('reads the records an older version wrote with a `v` field, and stops writing it', function () {
+      ready();
+      withEnglish(function () {
+        var storage = memoryStorage({
+          'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'hyper', difficulty: 'hard', seed: '5' }),
+          'sg.prefs.v1': JSON.stringify({ v: 1, lang: 'en', theme: 'dark', fontSize: 'small' })
+        });
+        var store = makeStore({ storage: storage });
+        store.load();
+        expect(store.get().variantId).toBe('hyper');
+        expect(store.get().difficulty).toBe('hard');
+        expect(store.get().seed).toBe('5');
+        expect(store.get().theme).toBe('dark');
+        expect(store.get().fontSize).toBe('small');
+        store.set({ symmetry: 'none' });
+        expect('v' in JSON.parse(storage.data['sg.lastConfig.v1'])).toBe(false);
+        expect('v' in JSON.parse(storage.data['sg.prefs.v1'])).toBe(false);
+        expect(JSON.parse(storage.data['sg.lastConfig.v1']).variantId).toBe('hyper');
+      });
+    });
+
     it('does not let the receiver last configuration bend a shared link', function () {
       ready();
       var storage = memoryStorage({
@@ -821,9 +833,11 @@
       expect(S.PREFS_KEY).toBe('sg.prefs.v1');
       expect(S.LAST_CONFIG_KEY).toBe('sg.lastConfig.v1');
       var prefs = JSON.parse(storage.data['sg.prefs.v1']);
-      expect(prefs).toEqual({ v: 1, lang: 'en', theme: 'high-contrast', fontSize: 'large',
+      expect(prefs).toEqual({ lang: 'en', theme: 'high-contrast', fontSize: 'large',
         reducedMotion: true, colorAuxSymbol: false });
       var last = JSON.parse(storage.data['sg.lastConfig.v1']);
+      expect(Object.keys(last).sort()).toEqual(['difficulty', 'digOrder', 'maxAttempts', 'seed',
+        'showSolution', 'symbolMode', 'symmetry', 'variantId', 'variantOptions']);
       expect(last.variantId).toBe('killer');
       expect(last.difficulty).toBe('hard');
       expect(last.seed).toBe('31');

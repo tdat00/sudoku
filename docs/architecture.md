@@ -11,11 +11,14 @@ sudoku/
 ├── docs/          the documents of both apps, by feature (this folder)
 ├── .github/       the workflow that tests and publishes the site
 ├── LICENSE · .gitignore · .gitattributes
+├── README.md      a short overview of the repository
+├── USERGUIDE.md · USERGUIDE.vn.md   the user guide of both apps, in English and Vietnamese
+├── DEVELOPERGUIDE.md · DEVELOPERGUIDE.vn.md   the developer guide of both apps, in English and Vietnamese
 └── AGENTS.md      how AI agents should work here
 ```
 
 `generator/` and `player/` keep what belongs to one app only: its page (`index.html`), `design.md` and `task.md`
-(the design and the plan of that app, written against its own source), `README.md`, its own `js/`, `css/` and
+(the design and the plan of that app, written against its own source), its own `js/`, `css/` and
 `tests/`. Everything the two apps share lives in `core/` and exists once.
 
 ## What is in `core/`
@@ -33,8 +36,8 @@ Node), no variant names, and no URL or storage access outside functions called a
 
 ## How an app uses `core`
 
-Both apps are plain classic scripts with no build step, so *load order is the dependency graph* (see the generator's
-README, "One namespace, no modules, one script order"). An app lists the files it needs, in order, by their path from
+Both apps are plain classic scripts with no build step, so *load order is the dependency graph* (see the developer guide,
+[Sudoku Generator, "One namespace, no modules, one script order"](../DEVELOPERGUIDE.md#one-namespace-no-modules-one-script-order)). An app lists the files it needs, in order, by their path from
 its own folder:
 
 ```html
@@ -109,6 +112,7 @@ Until the merge the apps lived in two repositories, `sudoku-generator` and `sudo
 | `tests/harness.js`, `tests/fixtures/classic.js` `techniques.js` `techniques-helper.js`, and the suites `bits constraints solver logical-solver model techniques tech-* exchange symbols board-view wordbook` | `core/tests/` |
 | the other `tests/…` | `generator/tests/…` or `player/tests/…` |
 | `docs/` of either repository | [`docs/`](README.md), by feature |
+| `README.md` of either repository (later `generator/README.md`, `player/README.md`) | the user guide ([`USERGUIDE.md`](../USERGUIDE.md), [`USERGUIDE.vn.md`](../USERGUIDE.vn.md)) and the developer guide ([`DEVELOPERGUIDE.md`](../DEVELOPERGUIDE.md), [`DEVELOPERGUIDE.vn.md`](../DEVELOPERGUIDE.vn.md)) at the root, one part per app |
 | `LICENSE`, `.gitignore` | the root of the repository |
 | `.github/workflows/pages.yml` | the same path at the root, one workflow for both apps |
 | `https://tdat00.github.io/sudoku-generator/`, `…/sudoku-player/` | `https://tdat00.github.io/sudoku/generator/`, `…/sudoku/player/` |

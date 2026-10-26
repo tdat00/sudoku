@@ -1,62 +1,21 @@
 /**
- * `SG.workerClient`: runs a generation off the main thread in a Web Worker (js/worker/gen.worker.js) when the page
- * can have one, and on the main thread in cooperative slices when it cannot; one interface for both.
+ * `SG.workerClient`: runs a generation off the main thread in a Web Worker (js/worker/gen.worker.js) when the
+ * page can have one, and on the main thread in cooperative slices when it cannot; one interface for both.
+ * API, options, cancellation and the granularity limit of the main-thread mode: design.md 9.3 and 13.10.
  *
- * API
- *   generate(config, onEvent) -> Promise<PuzzleResult>
- *       `onEvent(event)` gets the GenerationEvents in order, in batches (worker: about every 30 ms; main thread:
- *       after every slice). Resolves with the PuzzleResult (the model is rebuilt here, see `SG.pipeline.fromWire`);
- *       rejects with a `SG.errors.GenerationError` (translate with `SG.i18n.tError`). A run that is cancelled or
- *       replaced by the next `generate` rejects with code 'budget.cancelled' and delivers no further events.
- *   cancel() -> boolean
- *       Cancels the running generation (true when there was one). The promise is rejected at once; the work stops
- *       at the next slice boundary.
- *   mode -> 'worker' | 'main'
- *       Final once `ready()` has settled (the first access starts the detection in the background so the worker
- *       is warm for the first `generate`); before that it is a guess.
- *   ready() -> Promise<'worker'|'main'>
- *       Constructs the worker (`new Worker` throws for file:// in Chrome and Edge and under a CSP that forbids it)
- *       and waits for a ping/pong handshake with a timeout, so a worker that never starts cannot hang the page:
- *       the client falls back to the main thread.
- *   create(options) -> client
- *       An independent client with the same interface plus `dispose()` (cancels the run, terminates the worker,
- *       releases timers and listeners; the client can be used again). A background pre-generator uses its own so
- *       that it never disturbs the foreground run. Options (all optional):
- *         forceMode 'auto' | 'worker' | 'main'  'main' never creates a worker; 'worker' does not fall back
- *                                               (`ready()` rejects). Default 'auto'.
- *         workerUrl (default: next to this script), workerFactory(url) -> { postMessage, terminate, onmessage, onerror }
- *         chunkMs (slice length, default 12; 0 = one step per slice), batchMs (worker flush interval, 30),
- *         maxBatch (worker: also flush when this many events wait, 400), now (clock, performance.now),
- *         budgetMs (time limit of a run in ACTIVE milliseconds, 120000), readyTimeoutMs (handshake timeout, 5000),
- *         killAfterMs (a worker that has not answered a cancel after this long is terminated, 150),
- *         yieldFn() -> Promise (main mode; default a MessageChannel round trip),
- *         paintFn() -> Promise resolved once the busy state has been painted (main mode, before the first slice).
+ *   generate(config, onEvent) -> Promise<PuzzleResult>: events arrive in order, in batches. A cancelled or
+ *       replaced run rejects with 'budget.cancelled' and delivers no further events.
+ *   cancel() -> boolean: rejects at once; the work stops at the next slice boundary.
+ *   mode: 'worker' | 'main', final once `ready()` has settled (the first access starts the detection).
+ *   ready(): a ping/pong handshake with a timeout, so a worker that never starts cannot hang the page.
+ *   create(options): an independent client with `dispose()` (the cache's background client). Options:
+ *       forceMode ('auto' | 'worker' | 'main'; 'worker' does not fall back), workerUrl, workerFactory(url),
+ *       chunkMs (12; 0 = one step per slice), batchMs (30), maxBatch (400), now, budgetMs (120000, ACTIVE
+ *       ms), readyTimeoutMs (5000), killAfterMs (150), yieldFn() and paintFn() (main mode).
  *
- * Worker messages: see the header of js/worker/gen.worker.js. Every message after the handshake carries the
- * `session` number of its run; messages of any other run are ignored, so nothing of a cancelled or replaced run
- * can reach the new one.
- *
- * CANCELLATION. `SG.pipeline.run` is synchronous, so both modes run `SG.pipeline.runSteps`, which yields at the
- * natural boundaries of the algorithm (between pipeline steps and between the oracle calls of the dig), and give the
- * thread away between slices of `chunkMs`. `cancel()` takes effect at the next boundary. In worker mode it is a
- * cooperative 'cancel' message first (the worker stays warm); only if the worker has not answered after
- * `killAfterMs` (it is inside work that cannot be interrupted: a full grid, one search of the Killer layout, one
- * rating) is it terminated, and a new one is created when needed. A SharedArrayBuffer flag would need
- * cross-origin isolation headers, which a plain static server does not send.
- *
- * GRANULARITY LIMIT of the main thread mode: a slice is never shorter than the longest piece of work that cannot be
- * split, so the page may stall for that long. Measured in Node the pieces are mostly below 3 ms, even on Samurai.
- * The Greater-Than sign dig yields after every sign candidate (about 10 ms at most) and the Killer layout after
- * every analysis; its longest piece is one search of the layout (a DFS of at most ANALYSIS_NODES nodes), about 70
- * to 90 ms. The worker has this limit only for the latency of a cancel.
- *
- * ACTIVE TIME. Time that a slice gives away is not charged to the run: the time limit, the event times `t` and
- * the step timings count active time only, in both modes.
- *
- * WORKER BOUNDARY. The result goes through `SG.pipeline.toWire` / `fromWire`: the model is reduced to plain data in
- * the worker and rebuilt with `SG.model.create` here, with the lazy propagation extensions of Killer and Greater-Than
- * switched on so that `SG.dfs` works on the model. Per-model side data that variants keep in WeakMaps does not cross.
- *
+ * Every worker message after the handshake carries the `session` of its run; messages of another run are
+ * ignored. A cancel is a 'cancel' message first; a worker that has not answered after `killAfterMs` is
+ * terminated. Time a slice gives away is not charged to the run (active clock, both modes).
  * Loads in Node without a DOM; the DOM and `Worker` are touched only inside functions.
  */
 (function (root) {
@@ -140,8 +99,9 @@
   }
 
   /**
-   * Resolves after the page has had its turn, as a MessageChannel round trip: unlike `setTimeout(0)` it is neither
-   * clamped to 4 ms nor throttled to 1 s in a background tab (falls back to `setTimeout(0)`). `.close()` releases it.
+   * Resolves after the page has had its turn, as a MessageChannel round trip: unlike `setTimeout(0)` it is
+   * neither clamped to 4 ms nor throttled to 1 s in a background tab (falls back to `setTimeout(0)`).
+   * `.close()` releases it.
    */
   function createYield() {
     let channel = null;
@@ -175,8 +135,8 @@
   }
 
   /**
-   * Resolves after two animation frames, so the busy state is on screen before the first slice runs. A timer covers
-   * a hidden tab, which paints nothing; without animation frames (Node, a worker) it resolves at once.
+   * Resolves after two animation frames, so the busy state is on screen before the first slice runs. A timer
+   * covers a hidden tab, which paints nothing; without animation frames (Node, a worker) it resolves at once.
    */
   function waitForPaint() {
     return new Promise(function (resolve) {

@@ -2,8 +2,9 @@
 'use strict';
 
 /*
- * Qualification of the levels each variant offers (rating v2: docs/report-v2/report-detailed.md section 6;
- * the results are published in docs/report-v2/qualification.md and copied into `difficultySupport`).
+ * Qualification of the levels each variant offers (rating v2: docs/difficulty-rating/report-detailed.md
+ * section 6; the results are published in docs/difficulty-rating/qualification.md and copied into
+ * `difficultySupport`).
  *
  *   node tests/qualify.js [--variant=id[,id]] [--level=id[,id]] [--jobs=N] [--json=FILE] [--markdown=FILE]
  *                         [--no-early-stop] [--quiet] [--help]
@@ -34,7 +35,8 @@
  * source files).
  *
  * Output: a progress line per level (unless --quiet), then the table and the support list per variant;
- * `--json` writes every request and the summary, `--markdown` the table of docs/report-v2/qualification.md.
+ * `--json` writes every request and the summary, `--markdown` the table of
+ * docs/difficulty-rating/qualification.md.
  * Every request must have an outcome: a worker that stops unexpectedly (also after the last request of a
  * round), loses its IPC channel or answers for a request it was not given fails the whole run, and nothing
  * is published. An offered verdict needs exactly 40 (first round) or 100 (second round) recorded outcomes.
@@ -66,7 +68,7 @@ const USAGE = [
   '  --level=a,b       only these levels (default: all nine)',
   '  --jobs=N          worker processes (default: half the logical processors)',
   '  --json=FILE       write every request and the summary as JSON',
-  '  --markdown=FILE   write the table (the body of docs/report-v2/qualification.md)',
+  '  --markdown=FILE   write the table (the body of docs/difficulty-rating/qualification.md)',
   '  --no-early-stop   run every seed even when the verdict is already certain',
   '  --probe=N         a quick look, not a qualification: N seeds per level, no second round, no verdict',
   '  --quiet           no progress lines',
@@ -283,7 +285,7 @@ function parent(opts) {
 
   const started = Date.now();
   const header = {
-    protocol: 'docs/report-v2/report-detailed.md section 6', seedBase: SEED_BASE,
+    protocol: 'docs/difficulty-rating/report-detailed.md section 6', seedBase: SEED_BASE,
     machine: machineInfo(opts.jobs), engine: engineInfo(), started: new Date(started).toISOString()
   };
   if (!opts.quiet) {

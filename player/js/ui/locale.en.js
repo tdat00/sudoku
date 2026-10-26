@@ -1,7 +1,7 @@
 /**
  * English language pack: the shared strings of the player. Modules that own their strings add them through
- * `SG.localeFragments` instead (see js/ui/i18n.js). Keep the key set identical to locale.vi.js.
- * Placeholders are `{name}` (for a technique, the `i18nArgs` of its findings); plural forms use `_one` / `_other`.
+ * `SG.localeFragments` instead (see js/ui/i18n.js). Keep the key set identical to locale.vi.js. Placeholders
+ * are `{name}` (for a technique, the `i18nArgs` of its findings); plural forms use `_one` / `_other`.
  */
 (function (root) {
   'use strict';
@@ -148,7 +148,7 @@
     'techniqueGroup.subset': 'Pairs, triples and quads',
     'techniqueGroup.fish': 'Fish and colouring',
     'techniqueGroup.wing': 'Wings',
-    'techniqueGroup.chain': 'Chains and trial',
+    'techniqueGroup.chain': 'Chains and trial and error',
     'techniqueGroup.cage': 'Cage rules',
     'techniqueGroup.ineq': 'Inequality rules',
     'technique.nakedSingle': 'Naked Single',

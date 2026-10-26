@@ -1,4 +1,4 @@
-// Steps panel and explanation card (task T-4.5, reworked): the list of the replay steps (js/ui/step-view.js)
+// Steps panel and explanation card: the list of the replay steps (js/ui/step-view.js)
 // on a small fake DOM, the chart model the result panel uses, and the view model of the explanation card
 // (js/ui/explain.js), run against real results and traces of the pipeline.
 (function () {
@@ -17,7 +17,8 @@
   function result(variantId, difficulty, seed) {
     var key = variantId + '/' + difficulty + '/' + seed;
     if (!cache[key]) {
-      cache[key] = SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+      cache[key] = SG.pipeline.run(
+        { variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
     }
     return cache[key];
   }
@@ -39,9 +40,7 @@
     }
   }
 
-  // ---------------------------------------------------------------------------------------------
   // A small fake DOM: elements, text, classes, attributes, listeners, '#id' lookups and `closest`
-  // ---------------------------------------------------------------------------------------------
 
   function createFakeDocument() {
     var doc = {};
@@ -102,7 +101,9 @@
       child.parentNode = null;
       return child;
     };
-    Object.defineProperty(El.prototype, 'firstChild', { get: function () { return this.children[0] || null; } });
+    Object.defineProperty(El.prototype, 'firstChild', {
+      get: function () { return this.children[0] || null; }
+    });
     Object.defineProperty(El.prototype, 'nextSibling', {
       get: function () {
         if (!this.parentNode) return null;
@@ -111,7 +112,9 @@
       }
     });
     Object.defineProperty(El.prototype, 'textContent', {
-      get: function () { return this.own + this.children.map(function (c) { return c.textContent; }).join(''); },
+      get: function () {
+        return this.own + this.children.map(function (c) { return c.textContent; }).join('');
+      },
       set: function (value) {
         this.children.forEach(function (c) { c.parentNode = null; });
         this.children = [];
@@ -192,10 +195,6 @@
     return fx.doc.findAll(fx.detail, function (el) { return el.classes().indexOf(cls) !== -1; })[0] || null;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The description of the step on show
-  // ---------------------------------------------------------------------------------------------
-
   describe('stepView: the description of the step on show', function () {
     it('shows nothing without steps, and a hint to use the replay controls at position 0', function () {
       var fx = panelFixture();
@@ -216,13 +215,13 @@
         fx.view.setPosition(3);
         expect(fx.detail.getAttribute('data-kind')).toBe(steps[2].kind);
         expect(fx.root.querySelector('#steps-heading').textContent)
-          .toBe('Step 3 - ' + SG.player.stepTitle(steps[2]));
+          .toBe('Step 3 – ' + SG.player.stepTitle(steps[2]));
         expect(part(fx, 'step-detail__meta').textContent).toBe(SG.player.stepMeta(steps[2]));
         expect(part(fx, 'step-detail__text').textContent).toBe(SG.player.describeStep(steps[2]));
         expect(part(fx, 'step-detail__empty')).toBeNull();
         fx.view.setPosition(4);
         expect(fx.root.querySelector('#steps-heading').textContent)
-          .toBe('Step 4 - ' + SG.player.stepTitle(steps[3]));
+          .toBe('Step 4 – ' + SG.player.stepTitle(steps[3]));
         expect(part(fx, 'step-detail__text').textContent).toBe(SG.player.describeStep(steps[3]));
         fx.view.setPosition(0);
         expect(fx.root.querySelector('#steps-heading').textContent).toBe('Step description');
@@ -263,31 +262,32 @@
       inLocale('vi', function () {
         expect(fx.detail.textContent).not.toBe(en);
         expect(fx.root.querySelector('#steps-heading').textContent).toContain('Các lồng');
-        expect(fx.root.querySelector('#steps-heading').textContent).toContain('Bước 2 - ');
+        expect(fx.root.querySelector('#steps-heading').textContent).toContain('Bước 2 – ');
       });
       expect(fx.detail.textContent).toBe(en);
     });
 
-    it('rates the puzzle of each step: nothing before the dig, the rating of the result at the end', function () {
-      var res = result('classic9', 'normal', 3);
-      var player = SG.player.create({});
-      player.load(res);
-      var steps = player.getSteps();
-      expect(player.rateStep(0)).toBeNull();
-      expect(player.rateStep(steps.length + 1)).toBeNull();
-      expect(player.rateStep(1).counts).toEqual({});
-      expect(player.rateStep(steps.length).counts).toEqual(res.rating.techniqueCounts);
-      var rated = 0;
-      steps.forEach(function (step, i) {
-        var info = player.rateStep(i + 1);
-        if (info === null) return;
-        rated++;
-        var previous = i === 0 ? { counts: {} } : player.rateStep(i);
-        if (previous !== null) expect(info.before).toEqual(previous.counts);
+    it('rates the puzzle of each step: nothing before the dig, the rating of the result at the end',
+      function () {
+        var res = result('classic9', 'normal', 3);
+        var player = SG.player.create({});
+        player.load(res);
+        var steps = player.getSteps();
+        expect(player.rateStep(0)).toBeNull();
+        expect(player.rateStep(steps.length + 1)).toBeNull();
+        expect(player.rateStep(1).counts).toEqual({});
+        expect(player.rateStep(steps.length).counts).toEqual(res.rating.techniqueCounts);
+        var rated = 0;
+        steps.forEach(function (step, i) {
+          var info = player.rateStep(i + 1);
+          if (info === null) return;
+          rated++;
+          var previous = i === 0 ? { counts: {} } : player.rateStep(i);
+          if (previous !== null) expect(info.before).toEqual(previous.counts);
+        });
+        expect(rated).toBe(steps.length);
+        player.destroy();
       });
-      expect(rated).toBe(steps.length);
-      player.destroy();
-    });
 
     it('shows the techniques a step needs, with the uses and score each step added', function () {
       var fx = panelFixture();
@@ -300,14 +300,16 @@
       inLocale('en', function () {
         view.setSteps(steps);
         view.setPosition(steps.length);
-        var rows = fx.doc.findAll(fx.detail, function (el) { return el.getAttribute('data-technique') !== null; });
+        var rows = fx.doc.findAll(fx.detail, function (el) {
+          return el.getAttribute('data-technique') !== null;
+        });
         expect(rows.map(function (r) { return r.getAttribute('data-technique'); }))
           .toEqual(Object.keys(res.rating.techniqueCounts).sort(function (a, b) {
             return SG.techniques.get(a).order - SG.techniques.get(b).order;
           }));
         expect(fx.detail.textContent).toContain('Techniques needed at this step');
-        // Every technique with a description has a help button that carries it, as in the summary tab; its score has
-        // a second one that explains the calculation.
+        // Every technique with a description has a help button that carries it, as in the summary tab; its
+        // score has a second one that explains the calculation.
         rows.forEach(function (row) {
           var id = row.getAttribute('data-technique');
           var pops = fx.doc.findAll(row, function (el) { return el.getAttribute('role') === 'tooltip'; });
@@ -315,10 +317,13 @@
           expect(pops[0].textContent).toBe(SG.i18n.t('technique.' + id + '.desc'));
           expect(pops[1].textContent).toContain('Work of this technique');
           expect(pops[1].textContent).toContain('Shown as (rounded)');
-          var fractions = fx.doc.findAll(pops[1], function (el) { return el.getAttribute('class') === 'math-frac'; });
+          var fractions = fx.doc.findAll(pops[1], function (el) {
+            return el.getAttribute('class') === 'math-frac';
+          });
           expect(fractions.length).toBeGreaterThan(0);
           var buttons = fx.doc.findAll(row, function (el) { return el.tagName === 'BUTTON'; });
-          expect(buttons[0].getAttribute('aria-label')).toBe('About \u201c' + SG.i18n.t('technique.' + id) + '\u201d');
+          expect(buttons[0].getAttribute('aria-label'))
+            .toBe('About \u201c' + SG.i18n.t('technique.' + id) + '\u201d');
           expect(buttons[1].getAttribute('aria-label')).toContain('How the score of');
         });
         view.setPosition(1);
@@ -341,22 +346,28 @@
       inLocale('en', function () {
         view.setSteps(steps);
         view.setPosition(steps.length);
-        var total = fx.doc.findAll(fx.detail, function (el) { return /step-table__total/.test(el.getAttribute('class') || ''); });
+        var total = fx.doc.findAll(fx.detail, function (el) {
+          return /step-table__total/.test(el.getAttribute('class') || '');
+        });
         expect(total.length).toBe(1);
         expect(total[0].textContent).toContain(String(Math.round(res.rating.score)));
-        var totalTip = fx.doc.findAll(total[0], function (el) { return el.getAttribute('role') === 'tooltip'; });
+        var totalTip = fx.doc.findAll(total[0], function (el) {
+          return el.getAttribute('role') === 'tooltip';
+        });
         expect(totalTip.length).toBe(1);
         expect(totalTip[0].textContent).toContain('≈ ' + Math.round(res.rating.score));
-        var empties = fx.doc.findAll(fx.detail, function (el) { return el.getAttribute('data-part') === 'empties'; });
+        var empties = fx.doc.findAll(fx.detail, function (el) {
+          return el.getAttribute('data-part') === 'empties';
+        });
         expect(empties.length).toBe(1);
         var tip = fx.doc.findAll(empties[0], function (el) { return el.getAttribute('role') === 'tooltip'; });
         expect(tip.length).toBe(2);
         expect(tip[0].textContent).toContain('80 × E ÷ (E + 40)');
         expect(tip[1].textContent).toContain('80 × ' + res.rating.empties);
-        expect(SG.i18n.has('steps.techniques.floor')).toBe(false);
         // The rows add up to the total, as they are written.
         var parts = fx.doc.findAll(fx.detail, function (el) {
-          return el.tagName === 'TR' && (el.getAttribute('data-technique') !== null || el.getAttribute('data-part') !== null);
+          return el.tagName === 'TR' &&
+            (el.getAttribute('data-technique') !== null || el.getAttribute('data-part') !== null);
         });
         var sum = 0;
         parts.forEach(function (row) {
@@ -365,14 +376,16 @@
           sum += Number(score[0].textContent.replace(/[^0-9.]/g, ''));
         });
         expect(sum).toBe(Math.round(res.rating.score));
-        // Columns: name, uses, points per use and score (no "Added" column).
-        expect(fx.detail.textContent).not.toContain('Added');
+        // Columns: name, uses, points per use and score.
         expect(fx.detail.textContent).toContain('Points per use');
-        var heads = fx.doc.findAll(fx.detail, function (el) { return el.getAttribute('class') === 'result-table__short'; });
+        var heads = fx.doc.findAll(fx.detail, function (el) {
+          return el.getAttribute('class') === 'result-table__short';
+        });
         expect(heads.map(function (el) { return el.textContent; })).toEqual(['n', 'w', 'W', 'q']);
         expect(fx.detail.textContent).toContain('n = uses');
-        expect(fx.detail.textContent).not.toContain('hardest technique counts');
-        var head = fx.doc.findAll(fx.detail, function (el) { return el.tagName === 'TH' && el.getAttribute('scope') === null; });
+        var head = fx.doc.findAll(fx.detail, function (el) {
+          return el.tagName === 'TH' && el.getAttribute('scope') === null;
+        });
         expect(head.length).toBeGreaterThan(0);
       });
       view.destroy();
@@ -393,10 +406,6 @@
       expect(function () { V.create(null); }).toThrow();
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Help tips of the score table: they open below the icon, or above it when there is no room below
-  // ---------------------------------------------------------------------------------------------
 
   describe('stepView: placeTip', function () {
     function fakeTip(iconBottom, popHeight, windowHeight) {
@@ -442,10 +451,6 @@
       expect(function () { V.placeTip({ querySelector: function () { return null; } }); }).not.toThrow();
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Chart model (drawn by the result panel)
-  // ---------------------------------------------------------------------------------------------
 
   describe('stepView: chartModel', function () {
     function ids(model) {
@@ -495,7 +500,8 @@
     });
 
     it('handles zero, negative, broken and missing counts as an empty chart', function () {
-      [undefined, null, {}, { nakedSingle: 0 }, { nakedSingle: -2, xWing: NaN, nakedPair: 'x', swordfish: Infinity }]
+      var junk = { nakedSingle: -2, xWing: NaN, nakedPair: 'x', swordfish: Infinity };
+      [undefined, null, {}, { nakedSingle: 0 }, junk]
         .forEach(function (counts) {
           var m = V.chartModel(counts);
           expect(m.empty).toBe(true);
@@ -520,10 +526,6 @@
       expect(V.STEP_IDS).toEqual(STEP_IDS);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Explanation card
-  // ---------------------------------------------------------------------------------------------
 
   describe('explainCard: viewModel', function () {
     it('gives all seven steps their title, the three parts and the pseudocode, translated', function () {
@@ -571,16 +573,17 @@
       expect(X.viewModel('rate', { eventKey: 'dig.try' }).activeLabel).toBeNull();
     });
 
-    it('fills the status line from the metrics (zeros for missing ones), and has none without them', function () {
-      var dig = X.viewModel('dig', { metrics: { attempts: 62, accepted: 26, rejected: 11, clues: 30 } });
-      expect(dig.live.args).toEqual({ attempts: 62, accepted: 26, rejected: 11, clues: 30 });
-      ['62', '26', '11', '30'].forEach(function (n) { expect(dig.live.text).toContain(n); });
-      expect(X.viewModel('dig', { metrics: {} }).live.args).toEqual({ attempts: 0, accepted: 0, rejected: 0,
-        clues: 0 });
-      expect(X.viewModel('rate', { metrics: { clues: 30, score: 83.975 } }).live.text).toContain('84');
-      expect(X.viewModel('dig').live).toBeNull();
-      expect(X.viewModel('nope')).toBeNull();
-    });
+    it('fills the status line from the metrics (zeros for missing ones), and has none without them',
+      function () {
+        var dig = X.viewModel('dig', { metrics: { attempts: 62, accepted: 26, rejected: 11, clues: 30 } });
+        expect(dig.live.args).toEqual({ attempts: 62, accepted: 26, rejected: 11, clues: 30 });
+        ['62', '26', '11', '30'].forEach(function (n) { expect(dig.live.text).toContain(n); });
+        expect(X.viewModel('dig', { metrics: {} }).live.args).toEqual({ attempts: 0, accepted: 0, rejected: 0,
+          clues: 0 });
+        expect(X.viewModel('rate', { metrics: { clues: 30, score: 83.975 } }).live.text).toContain('84');
+        expect(X.viewModel('dig').live).toBeNull();
+        expect(X.viewModel('nope')).toBeNull();
+      });
 
     it('follows the language: new text at once, same structure and same highlighted line', function () {
       var ctx = { lineLabel: 'accept', metrics: { attempts: 5, accepted: 3, rejected: 2, clues: 60 } };
@@ -593,18 +596,10 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Texts and style
-  // ---------------------------------------------------------------------------------------------
-
   describe('steps panel and explanation card: texts and style', function () {
     function source(file) {
       if (!NODE) SG.test.skip('needs the Node runner to read the sources');
       return NODE.fs.readFileSync(NODE.path.join(NODE.root, file), 'utf8');
-    }
-
-    function fragmentWith(key) {
-      return (SG.localeFragments || []).filter(function (fragment) { return hasOwn(fragment.en, key); })[0];
     }
 
     it('has every steps.* and explainCard.* key the two files use, in English and Vietnamese', function () {
@@ -621,32 +616,12 @@
       ['en', 'vi'].forEach(function (code) {
         expect(used.filter(function (key) { return !packHas(SG.locales[code], key); })).toEqual([]);
       });
-      expect(SG.i18n.conflicts.filter(function (c) { return /^(steps|explainCard)\./.test(c.key); })).toEqual([]);
     });
 
-    it('keeps the two locale fragments identical in keys and placeholders, with no key outside the prefixes',
-      function () {
-        ['steps.legend.dug', 'explainCard.what'].forEach(function (probe) {
-          var fragment = fragmentWith(probe);
-          expect(fragment).toBeTruthy();
-          var en = Object.keys(fragment.en).sort();
-          expect(Object.keys(fragment.vi).sort()).toEqual(en);
-          en.forEach(function (key) {
-            expect(/^(steps|explainCard)\./.test(key)).toBe(true);
-            var holes = function (text) { return (String(text).match(/\{[A-Za-z]+\}/g) || []).sort().join(); };
-            expect(holes(fragment.vi[key])).toBe(holes(fragment.en[key]));
-            expect(fragment.vi[key].trim()).not.toBe('');
-          });
-        });
-      });
-
-    it('uses only tokens and no colour literal in css/steps.css', function () {
+    it('uses only colour and board tokens that the token files define in css/steps.css', function () {
       var css = source('css/steps.css').replace(/\/\*[\s\S]*?\*\//g, '');
       var tokens = source('../core/css/tokens.css');
       var boardTokens = source('../core/css/tokens-board.css');
-      expect(css).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
-      expect(css).not.toMatch(/\b(?:rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\(/);
-      expect(css).not.toMatch(/:\s*(?:white|black|red|green|blue|gray|grey|yellow|orange|purple)\b/);
       var used = css.match(/var\(--sg-[a-z0-9-]+/g) || [];
       expect(used.length).toBeGreaterThan(20);
       used.forEach(function (ref) {

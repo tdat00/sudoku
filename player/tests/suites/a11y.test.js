@@ -1,7 +1,7 @@
 // Accessibility: the pure parts of SG.a11y, checked on Node with the real fixture models: the accessible
 // name of a cell in both languages (values, grids, cage sums, signs), the keyboard navigation over the
 // geometry of every board shape (holes of multi-grid canvases are skipped) and the Settings choices. The DOM
-// part (roles, observers, dialog) is verified in the browser run (docs/qa.md).
+// part (roles, observers, dialog) is checked by the browser scripts of tests/browser.
 (function () {
   'use strict';
 
@@ -85,7 +85,7 @@
       expect(inLocale('vi', function () { return A.cellLabel(states.empty); })).toBe('Hàng 1, cột 1, trống');
       expect(inLocale('en', function () { return A.cellLabel(states.given); })).toBe('Row 1, column 1, value 7, given');
       expect(inLocale('en', function () { return A.cellLabel(states.solution); })).toBe('Row 1, column 1, solution 7');
-      expect(inLocale('vi', function () { return A.cellLabel(states.given); })).toContain('số đã cho');
+      expect(inLocale('vi', function () { return A.cellLabel(states.given); })).toContain('số cho sẵn');
     });
 
     it('names the grid of a multi-grid cell and the grids it shares', function () {
@@ -125,7 +125,7 @@
       expect(label).toBe('Row 2, column 2, empty, cage sum 11');
       expect(inLocale('vi', function () {
         return A.cellLabel(info(geo, 10, { state: 'given', value: '4', cageSum: 11 }));
-      })).toBe('Hàng 2, cột 2, giá trị 4, số đã cho, tổng nhóm ô 11');
+      })).toBe('Hàng 2, cột 2, giá trị 4, số cho sẵn, tổng lồng 11');
     });
 
     it('tells the signs of a Greater-Than cell: smaller or greater than which neighbour', function () {
@@ -322,13 +322,6 @@
           expect(typeof SG.locales.vi[choice.key]).toBe('string');
         });
       });
-    });
-
-    it('uses only keys of the store (no new storage key): the module never touches localStorage itself', function () {
-      ready();
-      if (!NODE || !NODE.fs) SG.test.skip('needs the Node file system');
-      var text = NODE.fs.readFileSync(NODE.path.join(NODE.root, 'js/ui/a11y.js'), 'utf8');
-      expect(/localStorage|sessionStorage|document\.cookie/.test(text.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, ''))).toBe(false);
     });
 
     it('every a11y key used by the code exists in English and Vietnamese with the same placeholders', function () {

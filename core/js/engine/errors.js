@@ -1,4 +1,7 @@
-/** Core error types: errors carry a machine readable `code` (e.g. 'budget.exceeded') that the UI translates via i18n. */
+/**
+ * Core error types: errors carry a machine readable `code` (e.g. 'budget.exceeded') that the UI translates
+ * via i18n.
+ */
 (function (root) {
   'use strict';
 

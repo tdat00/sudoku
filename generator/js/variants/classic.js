@@ -1,6 +1,7 @@
 /**
  * Classic variants: classic4 (2x2 boxes), classic6 (boxes of 2 rows x 3 columns) and classic9 (3x3 boxes).
- * The boards themselves come from `SG.classicModel` (core/js/engine/classic-model.js), which the player shares.
+ * The boards themselves come from `SG.classicModel` (core/js/engine/classic-model.js), which the player
+ * shares.
  */
 (function (root) {
   'use strict';
@@ -46,9 +47,10 @@
   }
 
   /**
-   * The levels each board offers are measured, not assumed (`node tests/qualify.js`, docs/report-v2/qualification.md).
-   * classic4: a 4x4 board never needs more than singles. classic6: puzzles either need singles only or jump
-   * straight to a fish or subset worth a hard score. classic9: everything up to hell1 (hell2 was reached in 7 of 23).
+   * The levels each board offers are measured, not assumed (`node tests/qualify.js`,
+   * docs/difficulty-rating/qualification.md). classic4: a 4x4 board never needs more than singles. classic6:
+   * puzzles either need singles only or jump straight to a fish or subset worth a hard score. classic9:
+   * everything up to hell1 (hell2 was reached in 7 of 23).
    */
   const DEFINITIONS = [
     definition('classic4', 2, 2, ['veryEasy']),

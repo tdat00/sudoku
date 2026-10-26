@@ -1,12 +1,12 @@
 /**
- * Full grid generation: randomised DFS (`SG.dfs.searchFrom`) with MRV branching and propagation, inside a Las Vegas
- * restart: after `restartThreshold` failed guesses the attempt is dropped and a new one starts from a child rng
- * stream (one unlucky early guess can trap plain DFS on large or overlapping boards).
+ * Full grid generation: randomised DFS (`SG.dfs.searchFrom`) with MRV branching and propagation, inside a Las
+ * Vegas restart: after `restartThreshold` failed guesses the attempt is dropped and a new one starts from a
+ * child rng stream (one unlucky early guess can trap plain DFS on large or overlapping boards).
  * A variant may register `fastSeed(model, state, rng)` and `restartThreshold` in `SG.variants`; they are used
  * unless the caller passes the option explicitly.
  * Events: with `options.emit` at verbosity 'full', `searchTraced` runs instead of the plain search. It is a
- * line-for-line copy that draws the same random numbers in the same order (tests assert the same grid) and reports
- * every placement, conflict, backtrack and restart as delta patches of at most 8 cells.
+ * line-for-line copy that draws the same random numbers in the same order (tests assert the same grid) and
+ * reports every placement, conflict, backtrack and restart as delta patches of at most 8 cells.
  */
 (function (root) {
   'use strict';
@@ -72,9 +72,9 @@
     };
   }
 
-  // The search of `SG.dfs.searchFrom` (limit 1) with `tr` called at every move. Must stay in step with it: same
-  // branching cell, candidate order, random draws and backtrack count. `state` is left untouched. Not re-entrant
-  // for one model (one buffer pool per model, like the DFS).
+  // The search of `SG.dfs.searchFrom` (limit 1) with `tr` called at every move. Must stay in step with it:
+  // same branching cell, candidate order, random draws and backtrack count. `state` is left untouched. Not
+  // re-entrant for one model (one buffer pool per model, like the DFS).
   function searchTraced(model, state, options, tr) {
     const n = model.cellCount;
     const digits = model.digits;
@@ -181,12 +181,12 @@
     return { found: solution !== null ? 1 : 0, solution: solution, backtracks: backtracks, aborted: aborted };
   }
 
-  // Generates a complete valid grid (Int32Array, values 1..D). Cells in `fixedCells` (option, else model.fixedCells;
-  // 0 = free) are forced first. Same model, seed and options give the same grid, whatever `emit` does.
-  // Options: fastSeed (use the variant hook, default true), restartThreshold (default: the variant's, else
-  // cellCount * 50), maxRestarts (default 50, then the last attempt runs unlimited), fixedCells, stats
-  // ({ attempts, restarts, backtracks, fastSeed }), emit, stepEvents (false when the pipeline emits the
-  // 'fullGrid' step events itself), where ({ attempt, maxAttempts }).
+  // Generates a complete valid grid (Int32Array, values 1..D). Cells in `fixedCells` (option, else
+  // model.fixedCells; 0 = free) are forced first. Same model, seed and options give the same grid, whatever
+  // `emit` does. Options: fastSeed (use the variant hook, default true), restartThreshold (default: the
+  // variant's, else cellCount * 50), maxRestarts (default 50, then the last attempt runs unlimited),
+  // fixedCells, stats ({ attempts, restarts, backtracks, fastSeed }), emit, stepEvents (false when the
+  // pipeline emits the 'fullGrid' step events itself), where ({ attempt, maxAttempts }).
   // Throws 'fullGrid.invalidFixedCells', 'fullGrid.unsatisfiable' or a budget error.
   function generate(model, rng, budget, options) {
     options = options || {};

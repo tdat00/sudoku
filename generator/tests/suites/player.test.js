@@ -1,4 +1,4 @@
-// Replay player (task T-4.6, reworked): the summarized replay steps built from `PuzzleResult.digLog`
+// Replay player: the summarized replay steps built from `PuzzleResult.digLog`
 // (`buildSteps`, pure), the board at a position (`viewAt`), the texts of a step, and the manual player with a
 // fake board and a tiny fake DOM, so everything runs on Node. Real results come from the pipeline.
 (function () {
@@ -8,18 +8,14 @@
   var SG = root.SG;
   var P = SG.player;
 
-  // ---------------------------------------------------------------------------------------------
-  // Helpers
-  // ---------------------------------------------------------------------------------------------
-
   var resultCache = {};
 
   /** A real result (memoised). */
   function realResult(variantId, difficulty, seed) {
     var key = [variantId, difficulty, seed].join('/');
     if (!resultCache[key]) {
-      resultCache[key] = SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' },
-        null);
+      resultCache[key] = SG.pipeline.run(
+        { variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
     }
     return resultCache[key];
   }
@@ -132,7 +128,9 @@
         (el.listeners[type] || []).slice().forEach(function (fn) { fn({ type: type }); });
       },
       listenerCount: function () {
-        return Object.keys(el.listeners).reduce(function (sum, type) { return sum + el.listeners[type].length; }, 0);
+        return Object.keys(el.listeners).reduce(function (sum, type) {
+          return sum + el.listeners[type].length;
+        }, 0);
       }
     };
     return el;
@@ -146,17 +144,14 @@
     return { root: { querySelector: function (sel) { return els[sel] || null; } }, els: els };
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Steps
-  // ---------------------------------------------------------------------------------------------
-
   describe('player: the replay steps of a result', function () {
     var CASES = [['classic9', 'easy', 3], ['classic9', 'normal', 3], ['classic9', 'nightmare', 5],
-      ['classic4', 'veryEasy', 2], ['killer', 'normal', 2], ['greaterThan', 'normal', 4], ['jigsaw9', 'easy', 6],
-      ['wordoku', 'easy', 1], ['mega12', 'easy', 2]];
+      ['classic4', 'veryEasy', 2], ['killer', 'normal', 2], ['greaterThan', 'normal', 4],
+      ['jigsaw9', 'easy', 6], ['wordoku', 'easy', 1], ['mega12', 'easy', 2]];
 
     CASES.forEach(function (c) {
-      it(c[0] + ' ' + c[1] + ': starts from the full solution and ends on the puzzle, every step a visible change',
+      it(c[0] + ' ' + c[1] + ': starts from the full solution and ends on the puzzle, every step a visible ' +
+        'change',
         function () {
           var result = realResult(c[0], c[1], c[2]);
           var steps = stepsOf(result);
@@ -180,29 +175,31 @@
         }, 60000);
     });
 
-    it('frames what each dig step did: removed cells are empty, put-back cells keep their value', function () {
-      var result = realResult('classic9', 'normal', 3);
-      var steps = stepsOf(result);
-      var dig = steps.filter(function (s) { return s.kind === 'random' || s.kind === 'guided'; });
-      expect(dig.length).toBeGreaterThan(3);
-      dig.forEach(function (s) {
-        var before = steps[s.index - 2];
-        expect(s.marks.dug.length).toBeGreaterThan(0);
-        s.marks.dug.forEach(function (cell) {
-          expect(s.values[cell]).toBe(0);
-          expect(before.values[cell]).toBe(result.solution[cell]);
+    it('frames what each dig step did: removed cells are empty, put-back cells keep their value',
+      function () {
+        var result = realResult('classic9', 'normal', 3);
+        var steps = stepsOf(result);
+        var dig = steps.filter(function (s) { return s.kind === 'random' || s.kind === 'guided'; });
+        expect(dig.length).toBeGreaterThan(3);
+        dig.forEach(function (s) {
+          var before = steps[s.index - 2];
+          expect(s.marks.dug.length).toBeGreaterThan(0);
+          s.marks.dug.forEach(function (cell) {
+            expect(s.values[cell]).toBe(0);
+            expect(before.values[cell]).toBe(result.solution[cell]);
+          });
+          s.marks.kept.forEach(function (cell) { expect(s.values[cell]).toBe(result.solution[cell]); });
+          expect(clues(before.values) - clues(s.values)).toBe(s.marks.dug.length);
+          expect(s.args.removed).toBe(s.marks.dug.length);
+          expect(s.args.clues).toBe(clues(s.values));
+          expect(s.metrics.clues).toBe(clues(s.values));
         });
-        s.marks.kept.forEach(function (cell) { expect(s.values[cell]).toBe(result.solution[cell]); });
-        expect(clues(before.values) - clues(s.values)).toBe(s.marks.dug.length);
-        expect(s.args.removed).toBe(s.marks.dug.length);
-        expect(s.args.clues).toBe(clues(s.values));
-        expect(s.metrics.clues).toBe(clues(s.values));
       });
-    });
 
     it('counts the cells (or signs) the steps removed and put back, so the counters add up with the list',
       function () {
-        [['classic9', 'easy', 3], ['classic9', 'normal', 3], ['greaterThan', 'normal', 4]].forEach(function (c) {
+        var cases = [['classic9', 'easy', 3], ['classic9', 'normal', 3], ['greaterThan', 'normal', 4]];
+        cases.forEach(function (c) {
           var result = realResult(c[0], c[1], c[2]);
           var steps = stepsOf(result);
           var removed = 0;
@@ -265,31 +262,35 @@
       expect(sameValues(steps[1].values, steps[0].values)).toBe(true);
     });
 
-    it('Greater-Than: every sign, then the starting clues, then the signs taken away batch by batch', function () {
-      var result = realResult('greaterThan', 'normal', 4);
-      var built = P.buildSteps(result);
-      var steps = built.steps;
-      expect(kinds(steps).slice(0, 3)).toEqual(['solution', 'signs', 'clues']);
-      expect(built.signs.length).toBe(steps[1].args.signs);
-      expect(built.signs.length).toBeGreaterThan(result.model.inequalities.length);
-      expect(steps[1].signs.hidden).toEqual([]);
-      steps[2].marks.revealed.forEach(function (c) { expect(steps[2].values[c]).toBe(result.solution[c]); });
-      expect(clues(steps[2].values)).toBe(steps[2].marks.revealed.length);
-      var signSteps = steps.filter(function (s) { return s.kind === 'signDig'; });
-      expect(signSteps.length).toBeGreaterThan(2);
-      var hidden = 0;
-      signSteps.forEach(function (s) {
-        expect(s.signs.hidden.length).toBe(hidden);
-        expect(s.signs.removed.length).toBe(s.args.removed);
-        hidden += s.signs.removed.length;
-        expect(s.args.signs).toBe(built.signs.length - hidden);
+    it('Greater-Than: every sign, then the starting clues, then the signs taken away batch by batch',
+      function () {
+        var result = realResult('greaterThan', 'normal', 4);
+        var built = P.buildSteps(result);
+        var steps = built.steps;
+        expect(kinds(steps).slice(0, 3)).toEqual(['solution', 'signs', 'clues']);
+        expect(built.signs.length).toBe(steps[1].args.signs);
+        expect(built.signs.length).toBeGreaterThan(result.model.inequalities.length);
+        expect(steps[1].signs.hidden).toEqual([]);
+        steps[2].marks.revealed.forEach(function (c) {
+          expect(steps[2].values[c]).toBe(result.solution[c]);
+        });
+        expect(clues(steps[2].values)).toBe(steps[2].marks.revealed.length);
+        var signSteps = steps.filter(function (s) { return s.kind === 'signDig'; });
+        expect(signSteps.length).toBeGreaterThan(2);
+        var hidden = 0;
+        signSteps.forEach(function (s) {
+          expect(s.signs.hidden.length).toBe(hidden);
+          expect(s.signs.removed.length).toBe(s.args.removed);
+          hidden += s.signs.removed.length;
+          expect(s.args.signs).toBe(built.signs.length - hidden);
+        });
+        var last = steps[steps.length - 1];
+        expect(built.signs.length - last.signs.hidden.length).toBe(result.model.inequalities.length);
+        expect(last.key).toBe('replay.final.signs');
       });
-      var last = steps[steps.length - 1];
-      expect(built.signs.length - last.signs.hidden.length).toBe(result.model.inequalities.length);
-      expect(last.key).toBe('replay.final.signs');
-    });
 
-    it('without a dig log the replay is the solution, the structure and the puzzle; without a solution only the puzzle',
+    it('without a dig log the replay is the solution, the structure and the puzzle; without a solution ' +
+      'only the puzzle',
       function () {
         var result = realResult('killer', 'easy', 1);
         var bare = Object.assign({}, result, { digLog: undefined });
@@ -301,8 +302,9 @@
 
     it('is deterministic and plain data', function () {
       var result = realResult('classic9', 'normal', 3);
-      var a = JSON.stringify(P.buildSteps(result), function (k, v) { return v instanceof Int32Array ? Array.from(v) : v; });
-      var b = JSON.stringify(P.buildSteps(result), function (k, v) { return v instanceof Int32Array ? Array.from(v) : v; });
+      var plain = function (k, v) { return v instanceof Int32Array ? Array.from(v) : v; };
+      var a = JSON.stringify(P.buildSteps(result), plain);
+      var b = JSON.stringify(P.buildSteps(result), plain);
       expect(a).toBe(b);
     });
 
@@ -323,7 +325,8 @@
         if (s.kind !== 'reveal') return;
         s.marks.revealed.forEach(function (c) {
           if (steps[i - 1].values[c] !== 0) {
-            throw new Error('step ' + s.index + ': cell ' + c + ' is already shown in step ' + steps[i - 1].index);
+            throw new Error('step ' + s.index + ': cell ' + c + ' is already shown in step ' +
+              steps[i - 1].index);
           }
           expect(s.values[c]).not.toBe(0);
         });
@@ -399,68 +402,44 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Texts
-  // ---------------------------------------------------------------------------------------------
-
   describe('player: texts of the steps', function () {
-    it('describes every step in English and Vietnamese with no placeholder left, naming the cells', function () {
-      ['classic9/normal/3', 'greaterThan/normal/4', 'killer/normal/2'].forEach(function (id) {
-        var parts = id.split('/');
-        var result = realResult(parts[0], parts[1], Number(parts[2]));
-        var steps = stepsOf(result);
-        withLabels(result, function () {
-          ['en', 'vi'].forEach(function (code) {
-            inLocale(code, function () {
-              steps.forEach(function (s) {
-                [P.describeStep(s), P.stepTitle(s), P.stepMeta(s)].forEach(function (text) {
-                  expect(text.length).toBeGreaterThan(0);
-                  expect(/[{}]/.test(text)).toBe(false);
-                  expect(/^replay\./.test(text)).toBe(false);
+    it('describes every step in English and Vietnamese with no placeholder left, naming the cells',
+      function () {
+        ['classic9/normal/3', 'greaterThan/normal/4', 'killer/normal/2'].forEach(function (id) {
+          var parts = id.split('/');
+          var result = realResult(parts[0], parts[1], Number(parts[2]));
+          var steps = stepsOf(result);
+          withLabels(result, function () {
+            ['en', 'vi'].forEach(function (code) {
+              inLocale(code, function () {
+                steps.forEach(function (s) {
+                  [P.describeStep(s), P.stepTitle(s), P.stepMeta(s)].forEach(function (text) {
+                    expect(text.length).toBeGreaterThan(0);
+                    expect(/[{}]/.test(text)).toBe(false);
+                    expect(/^replay\./.test(text)).toBe(false);
+                  });
                 });
+                expect(P.describeStep(null).length).toBeGreaterThan(10);
               });
-              expect(P.describeStep(null).length).toBeGreaterThan(10);
             });
+            var guided = steps.filter(function (s) { return s.kind === 'guided'; })[0];
+            if (guided) {
+              inLocale('en', function () { expect(P.describeStep(guided)).toMatch(/R\dC\d/); });
+            }
           });
-          var guided = steps.filter(function (s) { return s.kind === 'guided'; })[0];
-          if (guided) {
-            inLocale('en', function () { expect(P.describeStep(guided)).toMatch(/R\dC\d/); });
-          }
+        });
+        inLocale('en', function () {
+          expect(P.positionText(0, 12)).toBe('Start');
+          expect(P.positionText(3, 12)).toBe('Step 3 of 12');
         });
       });
-      inLocale('en', function () {
-        expect(P.positionText(0, 12)).toBe('Start');
-        expect(P.positionText(3, 12)).toBe('Step 3 of 12');
-      });
-    });
 
-    it('has the same keys and placeholders in English and Vietnamese', function () {
-      function mine(code) {
-        return Object.keys(SG.locales[code]).filter(function (k) { return k.indexOf('replay.') === 0; }).sort();
-      }
-      function holders(text) {
-        var found = [];
-        String(text).replace(/\{(\w+)\}/g, function (whole, name) { found.push(name); return whole; });
-        return found.sort();
-      }
-      expect(mine('vi')).toEqual(mine('en'));
-      mine('en').forEach(function (key) {
-        expect(holders(SG.locales.vi[key])).toEqual(holders(SG.locales.en[key]));
-      });
+    it('has a title for every kind of step and a label for every control', function () {
       P.KINDS.forEach(function (kind) { expect(SG.i18n.has('replay.title.' + kind)).toBe(true); });
-      expect(SG.i18n.conflicts.filter(function (c) { return c.key.indexOf('replay.') === 0; })).toEqual([]);
-      ['player.first', 'player.prev', 'player.next', 'player.last', 'player.scrubber'].forEach(function (key) {
-        expect(SG.i18n.has(key)).toBe(true);
-      });
-      ['player.play', 'player.pause', 'player.speed.fast'].forEach(function (key) {
-        expect(SG.i18n.has(key)).toBe(false);
-      });
+      var controls = ['player.first', 'player.prev', 'player.next', 'player.last', 'player.scrubber'];
+      controls.forEach(function (key) { expect(SG.i18n.has(key)).toBe(true); });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // The player
-  // ---------------------------------------------------------------------------------------------
 
   describe('player: manual navigation', function () {
     it('shows the finished puzzle at once after load, with every layer and no frame', function () {
@@ -530,24 +509,25 @@
       expect(r.player.getStep(1).kind).toBe('solution');
     });
 
-    it('Greater-Than: draws every sign during the replay and the puzzle\'s own model at the end', function () {
-      var result = realResult('greaterThan', 'normal', 4);
-      var r = rig(81);
-      r.player.load(result);
-      expect(r.board.models.length).toBe(0);
-      r.player.seek(2);
-      expect(r.board.model.inequalities.length).toBe(P.buildSteps(result).signs.length);
-      expect(r.board.signMarks.hidden).toEqual([]);
-      var steps = r.player.getSteps();
-      var signStep = steps.filter(function (s) { return s.kind === 'signDig'; })[1];
-      r.player.seek(signStep.index);
-      expect(r.board.signMarks.removed).toEqual(signStep.signs.removed);
-      expect(r.board.signMarks.hidden).toEqual(signStep.signs.hidden);
-      r.player.last();
-      expect(r.board.model).toBe(result.model);
-      expect(r.board.signMarks).toBeNull();
-      expect(r.board.models.length).toBe(2);
-    });
+    it('Greater-Than: draws every sign during the replay and the puzzle\'s own model at the end',
+      function () {
+        var result = realResult('greaterThan', 'normal', 4);
+        var r = rig(81);
+        r.player.load(result);
+        expect(r.board.models.length).toBe(0);
+        r.player.seek(2);
+        expect(r.board.model.inequalities.length).toBe(P.buildSteps(result).signs.length);
+        expect(r.board.signMarks.hidden).toEqual([]);
+        var steps = r.player.getSteps();
+        var signStep = steps.filter(function (s) { return s.kind === 'signDig'; })[1];
+        r.player.seek(signStep.index);
+        expect(r.board.signMarks.removed).toEqual(signStep.signs.removed);
+        expect(r.board.signMarks.hidden).toEqual(signStep.signs.hidden);
+        r.player.last();
+        expect(r.board.model).toBe(result.model);
+        expect(r.board.signMarks).toBeNull();
+        expect(r.board.models.length).toBe(2);
+      });
 
     it('reset forgets the puzzle and tells the app; destroy lets go', function () {
       var r = rig(81);

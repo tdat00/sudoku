@@ -37,10 +37,7 @@
     return env.CI ? 3 : 2;
   })();
 
-  // ---------------------------------------------------------------------------------------------
   // Errors and formatting
-  // ---------------------------------------------------------------------------------------------
-
   class AssertionError extends Error {
     constructor(message, actual, expected) {
       super(message);
@@ -94,10 +91,7 @@
     return '{' + parts.join(', ') + (keys.length > 8 ? ', ...' : '') + '}';
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Deep equality (arrays, typed arrays, Map, Set, Date, RegExp, Error, plain objects, NaN)
-  // ---------------------------------------------------------------------------------------------
-
   function deepEqual(a, b, seen) {
     if (a === b) return true;
     if (typeof a === 'number' && typeof b === 'number') return a !== a && b !== b;
@@ -158,10 +152,7 @@
     return true;
   }
 
-  // ---------------------------------------------------------------------------------------------
   // expect(...)
-  // ---------------------------------------------------------------------------------------------
-
   function result(pass, message, notMessage) {
     return { pass: pass, message: message, notMessage: notMessage };
   }
@@ -301,10 +292,7 @@
     return makeExpectation(actual, false);
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Registry: root -> one node per suite file -> nested describes -> tests
-  // ---------------------------------------------------------------------------------------------
-
   function Suite(name, kind) {
     this.name = name;
     this.kind = kind;
@@ -396,10 +384,6 @@
     setSuite(suiteName);
     addTest('test', '(failed to load)', function () { throw err; });
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Execution
-  // ---------------------------------------------------------------------------------------------
 
   function now() {
     return typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now();

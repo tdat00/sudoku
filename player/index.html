@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="sg-generator-url" content="../generator/index.html">
-  <!-- Address of this player, as the Share button puts it in front of the puzzle (like the generator's Play link). -->
+  <!-- The Share link is this address followed by the puzzle token. -->
   <meta name="sg-player-url" content="./index.html">
   <title data-i18n="app.title">Sudoku Player</title>
   <!-- First paint without a flash (SG.theme): applies the stored theme, motion and text size before the
@@ -35,7 +35,6 @@
   <link rel="stylesheet" href="css/play.css">
 </head>
 <body>
-  <!-- Icon sprite: <svg class="icon" aria-hidden="true" focusable="false"><use href="#ic-NAME"></use></svg> -->
   <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
     <symbol id="ic-logo" viewBox="0 0 24 24">
       <rect x="2.5" y="2.5" width="19" height="19" rx="3"></rect>
@@ -91,14 +90,6 @@
     <symbol id="ic-copy" viewBox="0 0 24 24">
       <rect x="9" y="9" width="11" height="11" rx="2"></rect>
       <path d="M5 15V6a2 2 0 0 1 2-2h8"></path>
-    </symbol>
-    <symbol id="ic-trash" viewBox="0 0 24 24">
-      <path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 12.5h9l1-12.5M10 11v5.5M14 11v5.5"></path>
-    </symbol>
-    <symbol id="ic-alert" viewBox="0 0 24 24">
-      <path d="M12 3.5l9.5 16.5h-19z"></path>
-      <path d="M12 10v4.5"></path>
-      <circle cx="12" cy="17.4" r="0.7" fill="currentColor"></circle>
     </symbol>
     <symbol id="ic-external" viewBox="0 0 24 24">
       <path d="M14 4.5h5.5V10M19.5 4.5L11 13M17.5 14v4a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18V8A1.5 1.5 0 0 1 6 6.5h4"></path>
@@ -199,7 +190,7 @@
     </section>
 
     <div id="player-layout" class="player-layout" hidden>
-      <aside id="recent-panel" class="panel panel--recent" aria-labelledby="recent-heading">
+      <aside class="panel panel--recent" aria-labelledby="recent-heading">
         <div class="panel__header">
           <h2 id="recent-heading" class="panel__title" data-i18n="shell.recent.title"></h2>
           <button id="recent-clear" type="button" class="btn btn--ghost btn--sm" disabled
@@ -242,15 +233,15 @@
 
       <aside id="side-root" class="side" aria-labelledby="side-heading">
         <h2 id="side-heading" class="visually-hidden" data-i18n="shell.side.heading"></h2>
-        <div id="play-status" class="side__status">
+        <div id="play-status">
           <!-- play.js moves this row into its status box, below the timer and the pause button. -->
           <div class="status-row">
             <span class="status-row__label" data-i18n="shell.status.label"></span>
             <p id="status-line" class="status-row__text" role="status" aria-live="off"></p>
           </div>
         </div>
-        <div id="play-root" class="side__play"></div>
-        <div id="options-root" class="side__options"></div>
+        <div id="play-root"></div>
+        <div id="options-root"></div>
       </aside>
     </div>
   </main>

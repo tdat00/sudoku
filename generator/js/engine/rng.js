@@ -1,6 +1,7 @@
 /**
  * Seeded RNG (mulberry32): same seed => same sequence on every platform. `fork(tag)` derives an independent
- * stream from (seed, tag) only, so a stage can change how many numbers it draws without disturbing other stages.
+ * stream from (seed, tag) only, so a stage can change how many numbers it draws without disturbing other
+ * stages.
  */
 (function (root) {
   'use strict';
@@ -9,7 +10,8 @@
 
   var TWO_POW_32 = 4294967296;
 
-  // Rng: seed (normalised uint32), next() in [0, 1), int(n) in [0, n), pick(arr), shuffle(arr) (in place), fork(tag).
+  // Rng: seed (normalised uint32), next() in [0, 1), int(n) in [0, n), pick(arr), shuffle(arr) (in place),
+  // fork(tag).
 
   function hashString(str) {
     var h = 0x811c9dc5;

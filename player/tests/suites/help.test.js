@@ -1,6 +1,8 @@
 // Help: the guide (help.html, js/ui/help.js): its sections and texts in both languages, the examples of the
-// techniques (every one replayed with the player's own hint code), the shortcuts it names, and the claims of the
-// README, all checked against the code they describe.
+// techniques (every one replayed with the player's own hint code), the shortcuts it names, and the claims of
+// the Player part of the user and developer guides (../USERGUIDE.md, ../USERGUIDE.vn.md, ../DEVELOPERGUIDE.md,
+// ../DEVELOPERGUIDE.vn.md), all checked against the code they
+// describe.
 (function () {
   'use strict';
 
@@ -147,7 +149,8 @@
         expect(ex.hint.placements.length + ex.hint.eliminations.length).toBeGreaterThan(0);
         // The move is a real one: the digit to place and the notes to remove are still among the notes shown.
         ex.hint.placements.forEach(function (p) { expect((ex.notes[p[0]] >> (p[1] - 1)) & 1).toBe(1); });
-        // (a hint can name a candidate that an earlier hint already took out of the notes, but not all of them).
+        // (a hint can name a candidate that an earlier hint already took out of the notes, but not all of
+        // them).
         if (ex.hint.eliminations.length > 0) {
           expect(ex.hint.eliminations.some(function (e) { return ((ex.notes[e[0]] >> (e[1] - 1)) & 1) === 1; })).toBe(true);
         }
@@ -244,42 +247,66 @@
     });
   });
 
-  describe('help: what the README claims', function () {
-    it('has an English and a Vietnamese part', function () {
+  describe('help: what the user guide claims', function () {
+    var USER_GUIDES = ['../USERGUIDE.md', '../USERGUIDE.vn.md'];
+    var DEV_GUIDES = ['../DEVELOPERGUIDE.md', '../DEVELOPERGUIDE.vn.md'];
+    var GUIDES = USER_GUIDES.concat(DEV_GUIDES);
+
+    /** The "Sudoku Player" part of a guide: from its heading to the end of the file. */
+    function playerPart(rel) {
+      var text = read(rel);
+      var start = text.indexOf('\n# Sudoku Player');
+      expect(start).toBeGreaterThan(-1);
+      return text.slice(start);
+    }
+
+    it('has a user and a developer guide in English and Vietnamese, each with a Player part, linked to each other',
+      function () {
+        ready();
+        GUIDES.forEach(function (rel) {
+          var text = read(rel);
+          expect(text).toContain('\n# Sudoku Generator');
+          expect(text).toContain('\n# Sudoku Player');
+          expect(text.indexOf('\n# Sudoku Generator')).toBeLessThan(text.indexOf('\n# Sudoku Player'));
+        });
+        expect(read('../USERGUIDE.md')).toContain('[Tiếng Việt](USERGUIDE.vn.md)');
+        expect(read('../USERGUIDE.vn.md')).toContain('[English](USERGUIDE.md)');
+        expect(read('../DEVELOPERGUIDE.md')).toContain('[Tiếng Việt](DEVELOPERGUIDE.vn.md)');
+        expect(read('../DEVELOPERGUIDE.vn.md')).toContain('[English](DEVELOPERGUIDE.md)');
+        expect(read('../USERGUIDE.md')).toContain('](DEVELOPERGUIDE.md)');
+        expect(read('../USERGUIDE.vn.md')).toContain('](DEVELOPERGUIDE.vn.md)');
+        expect(read('../DEVELOPERGUIDE.md')).toContain('](USERGUIDE.md)');
+        expect(read('../DEVELOPERGUIDE.vn.md')).toContain('](USERGUIDE.vn.md)');
+        expect(needNode().fs.existsSync(needNode().path.join(needNode().root, 'README.md'))).toBe(false);
+      });
+
+    it('has a table of contents, the links to the live apps, and every #anchor it uses exists', function () {
       ready();
-      var text = read('README.md');
-      expect(text).toContain('\n# English');
-      expect(text).toContain('\n# Tiếng Việt');
-      expect(text.indexOf('\n# English')).toBeLessThan(text.indexOf('\n# Tiếng Việt'));
+      GUIDES.forEach(function (rel) {
+        var text = read(rel);
+        expect(text).toContain('- [Sudoku Player](#sudoku-player)');
+        expect(text).toContain('https://tdat00.github.io/sudoku/player/');
+        expect(text).toContain('https://tdat00.github.io/sudoku/generator/');
+        // GitHub's slug of a heading: lower case, spaces to hyphens, punctuation dropped.
+        var anchors = { top: true };
+        (text.match(/<a id="([\w-]+)"><\/a>/g) || []).forEach(function (a) { anchors[/id="([\w-]+)"/.exec(a)[1]] = true; });
+        (text.replace(/```[\s\S]*?```/g, '').match(/^#{1,6} .+$/gm) || []).forEach(function (line) {
+          anchors[line.replace(/^#+ /, '').trim().toLowerCase().replace(/[^\p{L}\p{N} _-]/gu, '').replace(/ /g, '-')] = true;
+        });
+        (text.match(/\]\(#([^)]+)\)/g) || []).forEach(function (link) {
+          var id = /\(#([^)]+)\)/.exec(link)[1];
+          expect(anchors[id] ? '' : rel + ': #' + id + ' has no target').toBe('');
+        });
+      });
     });
 
-    it('has a table of contents in both languages, the links to the live apps, and every #anchor it uses exists', function () {
+    it('names the 15 variants in both guides, as the app does', function () {
       ready();
-      var text = read('README.md');
-      expect(text).toContain('- [Table of Contents](#english)');
-      expect(text).toContain('- [Mục lục](#tiếng-việt)');
-      expect(text).toContain('https://tdat00.github.io/sudoku/player/');
-      expect(text).toContain('https://tdat00.github.io/sudoku/generator/');
-      // GitHub's slug of a heading: lower case, spaces to hyphens, punctuation dropped.
-      var anchors = { top: true };
-      (text.match(/<a id="([\w-]+)"><\/a>/g) || []).forEach(function (a) { anchors[/id="([\w-]+)"/.exec(a)[1]] = true; });
-      (text.match(/^#{1,6} .+$/gm) || []).forEach(function (line) {
-        anchors[line.replace(/^#+ /, '').toLowerCase().replace(/[^\p{L}\p{N} -]/gu, '').replace(/ /g, '-')] = true;
-      });
-      (text.match(/\]\(#([^)]+)\)/g) || []).forEach(function (link) {
-        var id = /\(#([^)]+)\)/.exec(link)[1];
-        expect(anchors[id] ? '' : '#' + id + ' has no target').toBe('');
-      });
-    });
-
-    it('names the 15 variants in both parts, as the app does', function () {
-      ready();
-      var text = read('README.md');
-      var en = text.slice(text.indexOf('\n# English'), text.indexOf('\n# Tiếng Việt'));
-      var vi = text.slice(text.indexOf('\n# Tiếng Việt'));
+      var en = playerPart('../USERGUIDE.md');
+      var vi = playerPart('../USERGUIDE.vn.md');
       expect(en).toContain('15 variants');
       expect(vi).toContain('15 biến thể');
-      // The README uses the short names; every variant has one word of its English name in the list.
+      // The guide uses the short names; every variant has one word of its English name in the list.
       ['Classic', 'Mega', 'Monster', 'Diagonal', 'Hyper', 'Windoku', 'Jigsaw', 'Killer', 'Greater-Than',
         'Samurai', 'Sohei', 'Butterfly', 'Flower', 'Wordoku'].forEach(function (name) {
         expect(en).toContain(name);
@@ -294,54 +321,67 @@
 
     it('its numbers are the numbers of the code: 26 techniques, 100 + 100 puzzles, 8 MB files', function () {
       ready();
-      var text = read('README.md');
-      expect(text).toContain('one of 26 techniques');
-      expect(text).toContain('một trong 26 kỹ thuật');
+      var en = playerPart('../USERGUIDE.md');
+      var vi = playerPart('../USERGUIDE.vn.md');
+      expect(en).toContain('one of 26 techniques');
+      expect(vi).toContain('một trong 26 kỹ thuật');
       expect(SG.techniques.list().length).toBe(26);
-      expect(text).toContain('the last 100 puzzles');
-      expect(text).toContain('the last 100 imported puzzles');
-      expect(text).toContain('100 đề gần nhất');
-      expect(text).toContain('100 đề đã nhập gần nhất');
+      expect(en).toContain('the last 100 puzzles');
+      expect(en).toContain('the last 100 imported puzzles');
+      expect(vi).toContain('100 đề gần nhất');
+      expect(vi).toContain('100 đề đã nhập gần nhất');
       expect(read('js/ui/app.js')).toContain('MAX_FILE_BYTES = 8 * 1024 * 1024');
     });
 
-    it('lists the storage keys of the code and the address format of the link', function () {
+    it('lists the storage keys of the code once per language, and the address format of the link', function () {
       ready();
-      var text = read('README.md');
+      var en = playerPart('../USERGUIDE.md');
+      var vi = playerPart('../USERGUIDE.vn.md');
+      // The keys are listed in one place per language, user and developer guide together.
+      var enAll = en + playerPart('../DEVELOPERGUIDE.md');
+      var viAll = vi + playerPart('../DEVELOPERGUIDE.vn.md');
       var K = SG.progress.KEYS;
       [SG.store.KEY, K.progress, K.puzzles, K.last].forEach(function (key) {
-        expect(text.split(key).length - 1).toBe(2);
+        expect(enAll.split(key).length - 1).toBe(1);
+        expect(viAll.split(key).length - 1).toBe(1);
       });
-      expect(text).toContain('#puzzle=<token>');
-      expect(text).toContain('#puzzle=<mã>');
-      expect(text).toContain('sg-generator-url');
-      expect(text).toContain('../generator/index.html');
+      expect(en).toContain('#puzzle=<token>');
+      expect(vi).toContain('#puzzle=<mã>');
+      var dev = playerPart('../DEVELOPERGUIDE.md');
+      expect(dev).toContain('sg-generator-url');
+      expect(dev).toContain('../generator/index.html');
     });
 
     it('says how to run, test and deploy it, and every file it links to exists', function () {
       ready();
       var env = needNode();
-      var text = read('README.md');
+      var dev = playerPart('../DEVELOPERGUIDE.md');
       ['node tests/node-runner.js', 'file://', 'python -m http.server', 'GitHub Pages', 'GitHub Actions']
-        .forEach(function (part) { expect(text).toContain(part); });
-      (text.match(/\]\(\.{1,2}\/([\w./-]+)\)/g) || []).forEach(function (link) {
-        var rel = /\((\.{1,2}\/[\w./-]+)\)/.exec(link)[1];
-        expect(env.fs.existsSync(env.path.join(env.root, rel))).toBe(true);
+        .forEach(function (part) { expect(dev).toContain(part); });
+      // The guides sit at the root of the repository, one level above this app.
+      GUIDES.forEach(function (rel) {
+        (read(rel).replace(/```[\s\S]*?```/g, '').match(/\]\([^)#\s]+(?:#[^)\s]*)?\)/g) || []).forEach(function (link) {
+          var target = /\(([^)#\s]+)/.exec(link)[1];
+          if (/^https?:/.test(target)) return;
+          expect(env.fs.existsSync(env.path.join(env.root, '..', target)) ? '' : rel + ': ' + target).toBe('');
+        });
       });
     });
 
     it('describes the guide: a page in a new tab, with an example for every technique', function () {
       ready();
-      var text = read('README.md');
-      expect(text).toContain('help.html');
-      expect(text).toContain('example');
+      var en = playerPart('../USERGUIDE.md');
+      expect(en).toContain('help.html');
+      expect(en).toContain('example');
     });
 
     it('promises no feature the player does not have: no export, no print, no generation', function () {
       ready();
       // The Import takes the text of the generator's Export box; the player has no export of its own.
-      var text = read('README.md').toLowerCase().replace(/\*\*export\*\* box/g, '').replace(/\*\*xuất\*\*/g, '');
-      expect(/\bexport\b|\bprint\b|generate a puzzle here|in-browser generation/.test(text)).toBe(false);
+      GUIDES.forEach(function (rel) {
+        var text = playerPart(rel).toLowerCase().replace(/\*\*export\*\* box/g, '').replace(/\*\*xuất\*\*/g, '');
+        expect(/\bexport\b|\bprint\b|generate a puzzle here|in-browser generation/.test(text)).toBe(false);
+      });
     });
   });
 })();

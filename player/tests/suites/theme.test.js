@@ -1,9 +1,9 @@
-// Themes and visual polish: the pure parts of SG.theme, and the stylesheets read as text, because a
-// theme is data: every theme defines the same tokens, the dark palette of `prefers-color-scheme` equals the
-// explicit one, text contrast is WCAG AA (4.5:1) and lines / borders / focus rings are >= 3:1 in all three
-// themes (7:1 for the text of the high-contrast theme), colours exist only in the token files and the favicon,
-// every animation is switched off for reduced motion, and the cell and board effects exist with their
-// durations. The ratios are computed from the real token values, nothing is hard-coded here.
+// Themes and visual polish: the pure parts of SG.theme, and the stylesheets read as text, because a theme is
+// data: every theme defines the same tokens, the dark palette of `prefers-color-scheme` equals the explicit
+// one, text contrast is WCAG AA (4.5:1) and lines / borders / focus rings are >= 3:1 in all three themes (7:1
+// for the text of the high-contrast theme), colours exist only in the token files and the favicon, every
+// animation is switched off for reduced motion, and the cell and board effects exist with their durations.
+// The ratios are computed from the real token values, nothing is hard-coded here.
 (function () {
   'use strict';
 
@@ -491,15 +491,6 @@
   }
 
   describe('theme: colours exist only in the token files and the favicon', function () {
-    it('no stylesheet other than the two token files has a colour literal', function () {
-      var offenders = cssFiles().filter(function (file) {
-        return file.name !== 'tokens.css' && file.name !== 'tokens-board.css' && hasCssColor(read(file.rel));
-      }).map(function (file) { return file.rel; });
-      expect(offenders).toEqual([]);
-      expect(hasCssColor(read('../core/css/tokens.css'))).toBe(true);
-      expect(hasCssColor(read('../core/css/tokens-board.css'))).toBe(true);
-    });
-
     it('no script or page has a colour literal in code or style (comments aside)', function () {
       var files = listFiles('js/ui', '.js').map(function (n) { return 'js/ui/' + n; }).concat(['index.html']);
       var offenders = files.filter(function (rel) {

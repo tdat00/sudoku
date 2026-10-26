@@ -1,9 +1,9 @@
-// Themes and visual polish (task T-7.4): the pure parts of SG.theme, and the stylesheets read as text, because a
-// theme is data: every theme defines the same tokens, the dark palette of `prefers-color-scheme` equals the
-// explicit one, text contrast is WCAG AA (4.5:1) and lines / borders / focus rings are >= 3:1 in all three
-// themes (7:1 for the text of the high-contrast theme), colours exist only in the token files and the favicon,
-// every animation is switched off for reduced motion, and the effects of design.md 10.3 exist with their
-// durations. The ratios are computed from the real token values, nothing is hard-coded here.
+// Themes and visual polish: the pure parts of SG.theme, and the stylesheets read as text, because a theme is
+// data: every theme defines the same tokens, the dark palette of `prefers-color-scheme` equals the explicit
+// one, text contrast is WCAG AA (4.5:1) and lines / borders / focus rings are >= 3:1 in all three themes
+// (7:1 for the text of the high-contrast theme), every animation is switched off for reduced motion, and the
+// effects of design.md 10.3 exist with their durations. The ratios are computed from the real token values,
+// nothing is hard-coded here. That colours exist only in the token files is checked by ui-contract.test.js.
 (function () {
   'use strict';
 
@@ -36,13 +36,13 @@
   /** Every stylesheet of the page: the shared ones of core/css and the project's own, as { name, rel }. */
   function cssFiles() {
     return ['../core/css', 'css'].reduce(function (all, dir) {
-      return all.concat(listFiles(dir, '.css').map(function (name) { return { name: name, rel: dir + '/' + name }; }));
+      return all.concat(listFiles(dir, '.css').map(function (name) {
+        return { name: name, rel: dir + '/' + name };
+      }));
     }, []);
   }
 
-  // ---------------------------------------------------------------------------------------------
   // A small CSS reader: rules with their selectors, declarations and media query
-  // ---------------------------------------------------------------------------------------------
 
   function stripComments(css) {
     return css.replace(/\/\*[\s\S]*?\*\//g, '');
@@ -72,8 +72,10 @@
             var k = d.indexOf(':');
             if (k > 0) decl[d.slice(0, k).trim()] = d.slice(k + 1).trim();
           });
-          rules.push({ selectors: head.split(',').map(function (s) { return s.trim(); }), decl: decl, media: media,
-            body: body });
+          rules.push({
+            selectors: head.split(',').map(function (s) { return s.trim(); }),
+            decl: decl, media: media, body: body
+          });
         }
         i = j;
       }
@@ -101,16 +103,15 @@
   function mediaDark(rules) {
     var found = null;
     rules.forEach(function (r) {
-      if (r.media === '(prefers-color-scheme: dark)' && r.selectors.indexOf(':root:not([data-theme])') !== -1) {
+      var auto = r.selectors.indexOf(':root:not([data-theme])') !== -1;
+      if (r.media === '(prefers-color-scheme: dark)' && auto) {
         found = r.decl;
       }
     });
     return found;
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Colour maths (WCAG 2.x relative luminance)
-  // ---------------------------------------------------------------------------------------------
 
   function parseColor(value) {
     var v = String(value).trim();
@@ -149,10 +150,6 @@
     return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The helpers of SG.theme
-  // ---------------------------------------------------------------------------------------------
-
   describe('theme: resolving a preference', function () {
     it('keeps an explicit theme and lets the system decide only for auto', function () {
       ready();
@@ -170,7 +167,9 @@
       ready();
       expect(T.attributeFor('auto')).toBeNull();
       expect(T.attributeFor('whatever')).toBeNull();
-      ['light', 'dark', 'high-contrast'].forEach(function (theme) { expect(T.attributeFor(theme)).toBe(theme); });
+      ['light', 'dark', 'high-contrast'].forEach(function (theme) {
+        expect(T.attributeFor(theme)).toBe(theme);
+      });
     });
 
     it('cycles auto -> light -> dark -> high-contrast -> auto', function () {
@@ -238,22 +237,24 @@
       expect(T.nextRunState('ready', 'toString')).toBe('ready');
     });
 
-    it('has a translated hint for each state in which the result panel is empty, and for the idle steps panel', function () {
-      ready();
-      ['idle', 'busy', 'error', 'cancelled'].forEach(function (state) {
-        var key = T.hintKey('result', state);
-        expect(typeof key).toBe('string');
-        ['en', 'vi'].forEach(function (code) {
-          expect(typeof SG.locales[code][key]).toBe('string');
-          expect(SG.locales[code][key].length).toBeGreaterThan(5);
+    it('has a translated hint for each state in which the result panel is empty, and for the idle steps ' +
+      'panel',
+      function () {
+        ready();
+        ['idle', 'busy', 'error', 'cancelled'].forEach(function (state) {
+          var key = T.hintKey('result', state);
+          expect(typeof key).toBe('string');
+          ['en', 'vi'].forEach(function (code) {
+            expect(typeof SG.locales[code][key]).toBe('string');
+            expect(SG.locales[code][key].length).toBeGreaterThan(5);
+          });
         });
+        expect(T.hintKey('result', 'ready')).toBeNull();
+        expect(T.hintKey('steps', 'idle')).toBe('theme.empty.steps');
+        expect(T.hintKey('steps', 'busy')).toBeNull();
+        expect(T.hintKey('nothing', 'idle')).toBeNull();
+        expect(T.RUN_STATES).toContain('cancelled');
       });
-      expect(T.hintKey('result', 'ready')).toBeNull();
-      expect(T.hintKey('steps', 'idle')).toBe('theme.empty.steps');
-      expect(T.hintKey('steps', 'busy')).toBeNull();
-      expect(T.hintKey('nothing', 'idle')).toBeNull();
-      expect(T.RUN_STATES).toContain('cancelled');
-    });
 
     it('every theme.* key exists in both languages and nothing is unused', function () {
       ready();
@@ -281,10 +282,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // The token files
-  // ---------------------------------------------------------------------------------------------
-
   var THEMES = ['light', 'dark', 'high-contrast'];
   var generalRules = null;
   var boardRules = null;
@@ -299,24 +296,27 @@
   }
 
   function themed(name) {
-    return /^--sg-(?:color|shadow)-/.test(name) || (/^--sg-board-/.test(name) && !/^--sg-board-dur-/.test(name));
+    return /^--sg-(?:color|shadow)-/.test(name) ||
+      (/^--sg-board-/.test(name) && !/^--sg-board-dur-/.test(name));
   }
 
   function tokensOf(theme) {
-    return Object.assign({}, themeTokens(rulesOf('tokens.css'), theme), themeTokens(rulesOf('tokens-board.css'), theme));
+    return Object.assign({}, themeTokens(rulesOf('tokens.css'), theme),
+      themeTokens(rulesOf('tokens-board.css'), theme));
   }
 
   describe('theme: every theme defines every themed token', function () {
     ['tokens.css', 'tokens-board.css'].forEach(function (file) {
-      it(file + ': light, dark and high-contrast define the same colour, shadow and board tokens', function () {
-        var names = {};
-        THEMES.forEach(function (theme) {
-          names[theme] = Object.keys(themeTokens(rulesOf(file), theme)).filter(themed).sort();
+      it(file + ': light, dark and high-contrast define the same colour, shadow and board tokens',
+        function () {
+          var names = {};
+          THEMES.forEach(function (theme) {
+            names[theme] = Object.keys(themeTokens(rulesOf(file), theme)).filter(themed).sort();
+          });
+          expect(names.light.length).toBeGreaterThan(15);
+          expect(names.dark).toEqual(names.light);
+          expect(names['high-contrast']).toEqual(names.light);
         });
-        expect(names.light.length).toBeGreaterThan(15);
-        expect(names.dark).toEqual(names.light);
-        expect(names['high-contrast']).toEqual(names.light);
-      });
 
       it(file + ': the dark block of prefers-color-scheme equals the explicit dark theme', function () {
         var explicit = themeTokens(rulesOf(file), 'dark');
@@ -329,7 +329,8 @@
     it('the tokens are real colours (or transparent / none for shadows)', function () {
       THEMES.forEach(function (theme) {
         var tokens = tokensOf(theme);
-        Object.keys(tokens).filter(function (n) { return /^--sg-(?:color|board)-/.test(n); }).forEach(function (name) {
+        var names = Object.keys(tokens).filter(function (n) { return /^--sg-(?:color|board)-/.test(n); });
+        names.forEach(function (name) {
           if (/-(?:width|weight|dash|dur)-?/.test(name) && !/color/.test(name)) return;
           if (/^--sg-board-(?:width|weight|cage-width|cage-dash|sign-width|dur)/.test(name)) return;
           expect(parseColor(tokens[name]) !== null).toBe(true);
@@ -353,7 +354,10 @@
         pair: function (fg, bg, min, label) {
           var back = color(bg);
           var r = ratio(color(fg, back), back);
-          if (r < min) failures.push(theme + ': ' + (label || '') + ' ' + fg + ' on ' + bg + ' = ' + r.toFixed(2) + ' (< ' + min + ')');
+          if (r < min) {
+            failures.push(theme + ': ' + (label || '') + ' ' + fg + ' on ' + bg + ' = ' + r.toFixed(2) +
+              ' (< ' + min + ')');
+          }
           return r;
         },
         raw: function (fg, bgColor, min, label) {
@@ -366,7 +370,8 @@
     }
 
     var SURFACES = ['--sg-color-bg', '--sg-color-surface', '--sg-color-surface-2', '--sg-color-hover'];
-    var BOARD_INKS = ['--sg-board-ink-given', '--sg-board-ink-placed', '--sg-board-ink-solution', '--sg-board-ink-sum'];
+    var BOARD_INKS = ['--sg-board-ink-given', '--sg-board-ink-placed', '--sg-board-ink-solution',
+      '--sg-board-ink-sum'];
 
     THEMES.forEach(function (theme) {
       it(theme + ': text is >= 4.5:1 on every surface, button, badge, alert and status colour', function () {
@@ -397,47 +402,50 @@
         expect(failures).toEqual([]);
       });
 
-      it(theme + ': disabled text is still >= 4.5:1 (no opacity trick), the placeholder uses muted text', function () {
-        failures = [];
-        var c = checker(theme);
-        ['--sg-color-surface-2', '--sg-color-bg', '--sg-color-surface'].forEach(function (s) {
-          c.pair('--sg-color-disabled-text', s, 4.5, 'disabled');
+      it(theme + ': disabled text is still >= 4.5:1 (no opacity trick), the placeholder uses muted text',
+        function () {
+          failures = [];
+          var c = checker(theme);
+          ['--sg-color-surface-2', '--sg-color-bg', '--sg-color-surface'].forEach(function (s) {
+            c.pair('--sg-color-disabled-text', s, 4.5, 'disabled');
+          });
+          expect(failures).toEqual([]);
+          var components = read('css/components.css');
+          expect(/::placeholder\s*\{[^}]*var\(--sg-color-text-muted\)/.test(components)).toBe(true);
+          // A disabled control with text never fades with opacity (that would drop the text below 4.5:1); the
+          // slider and the switch track hold no text and may.
+          stripComments(components).replace(/([^{}]+)\{([^}]*)\}/g, function (all, selector, body) {
+            if (/slider|range|switch/.test(selector)) return all;
+            if (/:disabled|\[aria-disabled/.test(selector)) expect(/opacity\s*:/.test(body)).toBe(false);
+            return all;
+          });
         });
-        expect(failures).toEqual([]);
-        var components = read('css/components.css');
-        expect(/::placeholder\s*\{[^}]*var\(--sg-color-text-muted\)/.test(components)).toBe(true);
-        // A disabled control with text never fades with opacity (that would drop the text below 4.5:1); the
-        // slider and the switch track hold no text and may.
-        stripComments(components).replace(/([^{}]+)\{([^}]*)\}/g, function (all, selector, body) {
-          if (/slider|range|switch/.test(selector)) return all;
-          if (/:disabled|\[aria-disabled/.test(selector)) expect(/opacity\s*:/.test(body)).toBe(false);
-          return all;
-        });
-      });
 
-      it(theme + ': borders, focus ring, selected and status colours are >= 3:1 against their surfaces', function () {
-        failures = [];
-        var c = checker(theme);
-        var ui = function (fg, bg) { c.pair(fg, bg, 3, 'ui'); };
-        ['--sg-color-bg', '--sg-color-surface', '--sg-color-surface-2'].forEach(function (s) {
-          ui('--sg-color-border', s);
-          ui('--sg-color-focus', s);
+      it(theme + ': borders, focus ring, selected and status colours are >= 3:1 against their surfaces',
+        function () {
+          failures = [];
+          var c = checker(theme);
+          var ui = function (fg, bg) { c.pair(fg, bg, 3, 'ui'); };
+          ['--sg-color-bg', '--sg-color-surface', '--sg-color-surface-2'].forEach(function (s) {
+            ui('--sg-color-border', s);
+            ui('--sg-color-focus', s);
+          });
+          ['--sg-color-accent-soft', '--sg-color-hover', '--sg-color-danger-bg', '--sg-color-warning-bg',
+            '--sg-color-success-bg'].forEach(function (s) { ui('--sg-color-focus', s); });
+          ui('--sg-color-border', '--sg-color-track');
+          ui('--sg-color-accent', '--sg-color-surface');
+          ui('--sg-color-accent', '--sg-color-surface-2');
+          ui('--sg-color-accent', '--sg-color-track');
+          ui('--sg-color-accent', '--sg-color-accent-soft');
+          ['success', 'warning', 'danger'].forEach(function (kind) {
+            ui('--sg-color-' + kind, '--sg-color-surface');
+            ui('--sg-color-' + kind, '--sg-color-' + kind + '-bg');
+          });
+          expect(failures).toEqual([]);
         });
-        ['--sg-color-accent-soft', '--sg-color-hover', '--sg-color-danger-bg', '--sg-color-warning-bg',
-          '--sg-color-success-bg'].forEach(function (s) { ui('--sg-color-focus', s); });
-        ui('--sg-color-border', '--sg-color-track');
-        ui('--sg-color-accent', '--sg-color-surface');
-        ui('--sg-color-accent', '--sg-color-surface-2');
-        ui('--sg-color-accent', '--sg-color-track');
-        ui('--sg-color-accent', '--sg-color-accent-soft');
-        ['success', 'warning', 'danger'].forEach(function (kind) {
-          ui('--sg-color-' + kind, '--sg-color-surface');
-          ui('--sg-color-' + kind, '--sg-color-' + kind + '-bg');
-        });
-        expect(failures).toEqual([]);
-      });
 
-      it(theme + ': grid lines, cage outlines, signs and effects are >= 3:1 on the paper, the tints and the overlays',
+      it(theme + ': grid lines, cage outlines, signs and effects are >= 3:1 on the paper, the tints and ' +
+        'the overlays',
         function () {
           failures = [];
           var c = checker(theme);
@@ -465,7 +473,8 @@
           expect(failures).toEqual([]);
         });
 
-      it(theme + ': the ink of the numbers is >= 4.5:1 on the paper, every region tint, cage colour and overlay',
+      it(theme + ': the ink of the numbers is >= 4.5:1 on the paper, every region tint, cage colour and ' +
+        'overlay',
         function () {
           failures = [];
           var c = checker(theme);
@@ -480,7 +489,8 @@
             BOARD_INKS.forEach(function (ink) { text(ink, tint); });
           });
           ['diag', 'window', 'overlap', 'word'].forEach(function (kind) {
-            var blended = over(parseColor(t['--sg-board-overlay-' + kind]), parseColor(t['--sg-board-paper']));
+            var blended = over(parseColor(t['--sg-board-overlay-' + kind]),
+              parseColor(t['--sg-board-paper']));
             BOARD_INKS.forEach(function (ink) {
               c.raw(parseColor(t[ink]), blended, 4.5, ink + ' on overlay-' + kind);
             });
@@ -488,13 +498,15 @@
           expect(failures).toEqual([]);
         });
 
-      it(theme + ': every symbol of colour mode is visible on its palette colour (white fill or dark outline >= 3:1)',
+      it(theme + ': every symbol of colour mode is visible on its palette colour (white fill or dark ' +
+        'outline >= 3:1)',
         function () {
           failures = [];
           var c = checker(theme);
           for (var k = 1; k <= 16; k++) {
             var fill = c.color('--sg-board-sym-' + k);
-            var best = Math.max(ratio(c.color('--sg-board-sym-ink'), fill), ratio(c.color('--sg-board-sym-edge'), fill));
+            var best = Math.max(ratio(c.color('--sg-board-sym-ink'), fill),
+              ratio(c.color('--sg-board-sym-edge'), fill));
             c.raw(c.color('--sg-board-sym-ink'), c.color('--sg-board-sym-ink'), 1, '');
             if (best < 3) failures.push(theme + ': symbol on sym-' + k + ' = ' + best.toFixed(2));
           }
@@ -522,67 +534,42 @@
       expect(failures).toEqual([]);
     });
 
-    it('the calculator is right (21:1 black on white, 1:1 equal colours, alpha over a backdrop)', function () {
-      expect(ratio(parseColor('#000000'), parseColor('#ffffff'))).toBeCloseTo(21, 5);
-      expect(ratio(parseColor('#777777'), parseColor('#777777'))).toBeCloseTo(1, 5);
-      expect(ratio(parseColor('#767676'), parseColor('#ffffff'))).toBeGreaterThan(4.5);
-      expect(ratio(parseColor('#777777'), parseColor('#ffffff'))).toBeLessThan(4.5);
-      var half = over(parseColor('rgba(0, 0, 0, 0.5)'), parseColor('#ffffff'));
-      expect(Math.round(half.r)).toBe(128);
-      expect(parseColor('transparent').a).toBe(0);
-      expect(parseColor('var(--x)')).toBeNull();
-    });
+    it('the calculator is right (21:1 black on white, 1:1 equal colours, alpha over a backdrop)',
+      function () {
+        expect(ratio(parseColor('#000000'), parseColor('#ffffff'))).toBeCloseTo(21, 5);
+        expect(ratio(parseColor('#777777'), parseColor('#777777'))).toBeCloseTo(1, 5);
+        expect(ratio(parseColor('#767676'), parseColor('#ffffff'))).toBeGreaterThan(4.5);
+        expect(ratio(parseColor('#777777'), parseColor('#ffffff'))).toBeLessThan(4.5);
+        var half = over(parseColor('rgba(0, 0, 0, 0.5)'), parseColor('#ffffff'));
+        expect(Math.round(half.r)).toBe(128);
+        expect(parseColor('transparent').a).toBe(0);
+        expect(parseColor('var(--x)')).toBeNull();
+      });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Colours only in the token files, the favicon, the first paint
-  // ---------------------------------------------------------------------------------------------
-
   var HEX = /#[0-9a-fA-F]{3,8}\b/;
-  var COLOR_FUNCTION = /\b(?:rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color-mix)\(/;
-
-  function hasCssColor(text) {
-    var clean = stripComments(text).replace(/url\([^)]*\)/g, '').replace(/"[^"]*"|'[^']*'/g, '');
-    return HEX.test(clean) || COLOR_FUNCTION.test(clean);
-  }
 
   describe('theme: colours exist only in the token files and the favicon', function () {
-    it('no stylesheet other than the two token files has a colour literal', function () {
-      var offenders = cssFiles().filter(function (file) {
-        return file.name !== 'tokens.css' && file.name !== 'tokens-board.css' && hasCssColor(read(file.rel));
-      }).map(function (file) { return file.rel; });
-      expect(offenders).toEqual([]);
-      expect(hasCssColor(read('../core/css/tokens.css'))).toBe(true);
-      expect(hasCssColor(read('../core/css/tokens-board.css'))).toBe(true);
-    });
-
-    it('no script or page has a colour literal in code or style (comments aside)', function () {
-      var files = listFiles('js/ui', '.js').map(function (n) { return 'js/ui/' + n; }).concat(['index.html']);
-      var offenders = files.filter(function (rel) {
-        var text = read(rel).replace(/<!--[\s\S]*?-->/g, '').replace(/\/\/[^\n]*/g, '');
-        return hasCssColor(text.replace(/&#\d+;/g, ''));
+    it('the favicon is the one asset with colours, follows the colour scheme and is linked from the page',
+      function () {
+        var svg = read('assets/favicon.svg');
+        expect(HEX.test(svg)).toBe(true);
+        expect(svg).toContain('prefers-color-scheme: dark');
+        expect(svg).toContain('<svg');
+        expect(/<script|onload|href=["']http/i.test(svg)).toBe(false);
+        var html = read('index.html');
+        expect(html).toContain('<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">');
+        var others = listFiles('assets', '.svg').filter(function (n) { return n !== 'favicon.svg'; });
+        others.forEach(function (name) { expect(HEX.test(read('assets/' + name))).toBe(false); });
       });
-      expect(offenders).toEqual([]);
-    });
 
-    it('the favicon is the one asset with colours, follows the colour scheme and is linked from the page', function () {
-      var svg = read('assets/favicon.svg');
-      expect(HEX.test(svg)).toBe(true);
-      expect(svg).toContain('prefers-color-scheme: dark');
-      expect(svg).toContain('<svg');
-      expect(/<script|onload|href=["']http/i.test(svg)).toBe(false);
-      var html = read('index.html');
-      expect(html).toContain('<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">');
-      var others = listFiles('assets', '.svg').filter(function (n) { return n !== 'favicon.svg'; });
-      others.forEach(function (name) { expect(HEX.test(read('assets/' + name))).toBe(false); });
-    });
-
-    it('theme.js reads the colour of the theme from the tokens (computed style), it never writes one', function () {
-      var text = read('js/ui/theme.js');
-      expect(text).toContain('--sg-color-surface');
-      expect(text).toContain('theme-color');
-      expect(HEX.test(text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, ''))).toBe(false);
-    });
+    it('theme.js reads the colour of the theme from the tokens (computed style), it never writes one',
+      function () {
+        var text = read('js/ui/theme.js');
+        expect(text).toContain('--sg-color-surface');
+        expect(text).toContain('theme-color');
+        expect(HEX.test(text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, ''))).toBe(false);
+      });
   });
 
   describe('theme: the first paint has no flash', function () {
@@ -599,17 +586,18 @@
       expect(s.at).toBeLessThan(s.head.indexOf('<link rel="stylesheet"'));
     });
 
-    it('applies the stored theme, motion and font size inside try/catch, from the key of the store', function () {
-      ready();
-      var code = firstScript().code;
-      expect(code).toContain("'sg.prefs.v1'");
-      if (SG.store) expect(SG.store.PREFS_KEY).toBe('sg.prefs.v1');
-      expect(code).toContain('try {');
-      expect(code).toContain('catch');
-      expect(code).toContain('data-theme');
-      expect(code).toContain('data-motion');
-      expect(code).toContain('--sg-font-size-base');
-    });
+    it('applies the stored theme, motion and font size inside try/catch, from the key of the store',
+      function () {
+        ready();
+        var code = firstScript().code;
+        expect(code).toContain("'sg.prefs.v1'");
+        if (SG.store) expect(SG.store.PREFS_KEY).toBe('sg.prefs.v1');
+        expect(code).toContain('try {');
+        expect(code).toContain('catch');
+        expect(code).toContain('data-theme');
+        expect(code).toContain('data-motion');
+        expect(code).toContain('--sg-font-size-base');
+      });
 
     function run(stored, throwing) {
       var attrs = { 'data-theme': 'light' };
@@ -644,23 +632,20 @@
       expect(hc.attrs['data-motion']).toBeUndefined();
     });
 
-    it('removes the default data-theme for auto, and survives missing, blocked or corrupt storage', function () {
-      needNode();
-      [JSON.stringify({ theme: 'auto' }), null, 'not json', '42', 'null', JSON.stringify({ theme: 'neon' })]
-        .forEach(function (stored) {
-          var out = run(stored);
-          expect(out.attrs['data-theme']).toBeUndefined();
-          expect(out.attrs['data-motion']).toBeUndefined();
-          expect(out.vars['--sg-font-size-base']).toBeUndefined();
-        });
-      var blocked = run(null, true);
-      expect(blocked.attrs['data-theme']).toBeUndefined();
-    });
+    it('removes the default data-theme for auto, and survives missing, blocked or corrupt storage',
+      function () {
+        needNode();
+        [JSON.stringify({ theme: 'auto' }), null, 'not json', '42', 'null', JSON.stringify({ theme: 'neon' })]
+          .forEach(function (stored) {
+            var out = run(stored);
+            expect(out.attrs['data-theme']).toBeUndefined();
+            expect(out.attrs['data-motion']).toBeUndefined();
+            expect(out.vars['--sg-font-size-base']).toBeUndefined();
+          });
+        var blocked = run(null, true);
+        expect(blocked.attrs['data-theme']).toBeUndefined();
+      });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Motion and effects
-  // ---------------------------------------------------------------------------------------------
 
   describe('theme: every animation and transition is off for reduced motion', function () {
     function motionOff(css, selectorHint) {
@@ -668,23 +653,26 @@
       expect(css).toContain(selectorHint);
     }
 
-    it('base.css switches animations and transitions off for the system preference and for data-motion="off"', function () {
-      var css = read('../core/css/base.css');
-      motionOff(css, ':root[data-motion="off"] *');
-      var reduce = /@media \(prefers-reduced-motion: reduce\)\s*\{([\s\S]*?)\n\}/.exec(css)[1];
-      var off = /:root\[data-motion="off"\] \*,[\s\S]*?\{([\s\S]*?)\}/.exec(css)[1];
-      [reduce, off].forEach(function (block) {
-        expect(block).toContain('animation-duration: 0.01ms !important');
-        expect(block).toContain('animation-iteration-count: 1 !important');
-        expect(block).toContain('transition-duration: 0.01ms !important');
-        expect(block).toContain('scroll-behavior: auto !important');
+    it('base.css switches animations and transitions off for the system preference and for data-motion="off"',
+      function () {
+        var css = read('../core/css/base.css');
+        motionOff(css, ':root[data-motion="off"] *');
+        var reduce = /@media \(prefers-reduced-motion: reduce\)\s*\{([\s\S]*?)\n\}/.exec(css)[1];
+        var off = /:root\[data-motion="off"\] \*,[\s\S]*?\{([\s\S]*?)\}/.exec(css)[1];
+        [reduce, off].forEach(function (block) {
+          expect(block).toContain('animation-duration: 0.01ms !important');
+          expect(block).toContain('animation-iteration-count: 1 !important');
+          expect(block).toContain('transition-duration: 0.01ms !important');
+          expect(block).toContain('scroll-behavior: auto !important');
+        });
       });
-    });
 
     it('the duration tokens go to zero for both switches', function () {
       var rules = rulesOf('tokens.css');
       var reduced = rules.filter(function (r) { return r.media === '(prefers-reduced-motion: reduce)'; })[0];
-      var off = rules.filter(function (r) { return r.selectors.indexOf(':root[data-motion="off"]') !== -1; })[0];
+      var off = rules.filter(function (r) {
+        return r.selectors.indexOf(':root[data-motion="off"]') !== -1;
+      })[0];
       [reduced, off].forEach(function (r) {
         expect(r.decl['--sg-motion-fast']).toBe('0ms');
         expect(r.decl['--sg-motion-base']).toBe('0ms');
@@ -696,7 +684,8 @@
       expect(css).toContain('@media (prefers-reduced-motion: reduce)');
       expect(css).toContain(':root[data-motion="off"] .sgb');
       expect(css).toContain('.sgb[data-animate="off"]');
-      expect(/\.sgb \*\s*\{\s*animation: none !important;\s*transition: none !important;/.test(css)).toBe(true);
+      var reset = /\.sgb \*\s*\{\s*animation: none !important;\s*transition: none !important;/;
+      expect(reset.test(css)).toBe(true);
     });
 
     it('the theme change fades colours only, and only when motion is allowed', function () {
@@ -708,7 +697,8 @@
       var props = /transition:([\s\S]*?)!important/.exec(text)[1].split(',').map(function (s) {
         return s.trim().split(/\s+/)[0];
       });
-      expect(props.sort()).toEqual(['background-color', 'border-color', 'color', 'fill', 'outline-color', 'stroke']);
+      expect(props.sort())
+        .toEqual(['background-color', 'border-color', 'color', 'fill', 'outline-color', 'stroke']);
     });
 
     it('no stylesheet starts an animation or a transition outside the reach of these rules', function () {
@@ -737,13 +727,15 @@
     ];
 
     EFFECTS.forEach(function (effect) {
-      it('.' + effect.cls + ' exists, animates with ' + effect.token + ' = ' + effect.ms + ' ms', function () {
-        var tokens = themeTokens(rulesOf('tokens-board.css'), 'light');
-        expect(tokens[effect.token]).toBe(effect.ms + 'ms');
-        var css = stripComments(read('../core/css/board.css'));
-        var rule = new RegExp('\\.' + effect.cls + '\\s*\\{[^}]*animation:[^;]*var\\(' + effect.token + '\\)');
-        expect(rule.test(css)).toBe(true);
-      });
+      it('.' + effect.cls + ' exists, animates with ' + effect.token + ' = ' + effect.ms + ' ms',
+        function () {
+          var tokens = themeTokens(rulesOf('tokens-board.css'), 'light');
+          expect(tokens[effect.token]).toBe(effect.ms + 'ms');
+          var css = stripComments(read('../core/css/board.css'));
+          var rule = new RegExp('\\.' + effect.cls + '\\s*\\{[^}]*animation:[^;]*var\\(' + effect.token +
+            '\\)');
+          expect(rule.test(css)).toBe(true);
+        });
     });
 
     it('every effect has a keyframes definition', function () {
@@ -754,21 +746,25 @@
   });
 
   describe('theme: forced colours and increased contrast', function () {
-    it('base.css keeps a visible focus ring and the pressed / selected states in forced-colors mode', function () {
-      expect(read('../core/css/base.css')).toContain('@media (forced-colors: active)');
-      var components = read('css/components.css');
-      expect(components).toContain('@media (forced-colors: active)');
-      expect(components).toContain('.choice:has(> input:checked)');
-      expect(read('../core/css/board.css')).toContain('@media (forced-colors: active)');
-      expect(read('css/steps.css')).toContain('@media (forced-colors: active)');
-    });
+    it('base.css keeps a visible focus ring and the pressed / selected states in forced-colors mode',
+      function () {
+        expect(read('../core/css/base.css')).toContain('@media (forced-colors: active)');
+        var components = read('css/components.css');
+        expect(components).toContain('@media (forced-colors: active)');
+        expect(components).toContain('.choice:has(> input:checked)');
+        expect(read('../core/css/board.css')).toContain('@media (forced-colors: active)');
+        expect(read('css/steps.css')).toContain('@media (forced-colors: active)');
+      });
 
-    it('tokens.css answers prefers-contrast: more with text-coloured borders and a thicker focus ring', function () {
-      var rule = rulesOf('tokens.css').filter(function (r) { return r.media === '(prefers-contrast: more)'; })[0];
-      expect(rule).toBeDefined();
-      expect(rule.decl['--sg-color-border']).toBe('var(--sg-color-text)');
-      expect(rule.decl['--sg-color-text-muted']).toBe('var(--sg-color-text)');
-      expect(parseFloat(rule.decl['--sg-focus-width'])).toBeGreaterThan(3);
-    });
+    it('tokens.css answers prefers-contrast: more with text-coloured borders and a thicker focus ring',
+      function () {
+        var rule = rulesOf('tokens.css').filter(function (r) {
+          return r.media === '(prefers-contrast: more)';
+        })[0];
+        expect(rule).toBeDefined();
+        expect(rule.decl['--sg-color-border']).toBe('var(--sg-color-text)');
+        expect(rule.decl['--sg-color-text-muted']).toBe('var(--sg-color-text)');
+        expect(parseFloat(rule.decl['--sg-focus-width'])).toBeGreaterThan(3);
+      });
   });
 })();

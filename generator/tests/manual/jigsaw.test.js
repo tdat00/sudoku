@@ -1,6 +1,6 @@
-// Jigsaw Sudoku (task T-5.3): the region generator of design.md 8.1, the jigsaw9 variant built on it and the
-// common variant criteria CV1-CV9 of task.md phase P5. Layouts are checked independently of the code that makes
-// them (own flood fill, own perimeter count, an exhaustive solve), and the solvability check of the builder is
+// Jigsaw Sudoku: the region generator of design.md 8.1, the jigsaw9 variant built on it and the common
+// variant criteria CV1-CV9 of task.md phase P5. Layouts are checked independently of the code that makes them
+// (own flood fill, own perimeter count, an exhaustive solve), and the solvability check of the builder is
 // exercised with a real unsolvable layout (a 4x4 board) and with a stand-in for the full grid generator.
 (function () {
   'use strict';
@@ -12,8 +12,10 @@
 
   var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'];
   /** design.md 9.1, jigsaw9 row, p95 in ms. */
-  var BUDGET_MS = { veryEasy: 150, easy: 350, normal: 350, hard: 900, expert: 900, master: 2000, nightmare: 5000,
-    hell1: 5000, hell2: 5000 };
+  var BUDGET_MS = {
+    veryEasy: 150, easy: 350, normal: 350, hard: 900, expert: 900, master: 2000, nightmare: 5000, hell1: 5000,
+    hell2: 5000
+  };
 
   var LAYOUT_COUNT = 200;
   var PUZZLES_PER_LEVEL = 20;
@@ -51,9 +53,7 @@
     return sorted[Math.min(sorted.length - 1, Math.floor(p * sorted.length))];
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Independent checks (they share no code with js/variants/jigsaw.js)
-  // ---------------------------------------------------------------------------------------------
 
   /** Every way in which `regions` (row-major, size x size) is not nine connected regions of nine cells. */
   function layoutProblems(regions, size) {
@@ -120,7 +120,7 @@
     return sides / size;
   }
 
-  /** Does `grid` hold every digit once per row, column and region of the layout? Judged from the layout alone. */
+  /** Does `grid` hold every digit once per row, column and region of the layout? Judged from the layout. */
   function gridFitsLayout(grid, regions, size) {
     var groups = [];
     var k;
@@ -158,13 +158,11 @@
     return Int32Array.from(text.replace(/\|/g, '').split('').map(Number));
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Shared data, built on first use
-  // ---------------------------------------------------------------------------------------------
 
   var cache = {};
 
-  /** 200 layouts of the default compactness, as the pipeline would build them, with the generator statistics. */
+  /** 200 layouts of the default compactness, as the pipeline would build them, with the generator stats. */
   function layouts() {
     if (!cache.layouts) {
       cache.layouts = [];
@@ -179,10 +177,12 @@
     return cache.layouts;
   }
 
-  /** Models of the 200 layouts (the layouts are the ones `def.build` makes, see the test that compares them). */
+  /** Models of the 200 layouts (the ones `def.build` makes, see the test that compares them). */
   function layoutModels() {
     if (!cache.models) {
-      cache.models = layouts().map(function (item) { return J.modelFromRegions('jigsaw9', 9, item.regions); });
+      cache.models = layouts().map(function (item) {
+        return J.modelFromRegions('jigsaw9', 9, item.regions);
+      });
     }
     return cache.models;
   }
@@ -193,17 +193,14 @@
     if (cache.perimeters[compactness] === undefined) {
       var values = [];
       for (var seed = 1; seed <= 60; seed++) {
-        var regions = J.generateRegions(SG.rng.create(seed).fork('compactness'), { compactness: compactness });
+        var rng = SG.rng.create(seed).fork('compactness');
+        var regions = J.generateRegions(rng, { compactness: compactness });
         values.push(J.meanPerimeter(regions, 9));
       }
       cache.perimeters[compactness] = mean(values);
     }
     return cache.perimeters[compactness];
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // The variant definition
-  // ---------------------------------------------------------------------------------------------
 
   describe('jigsaw9: variant definition (design.md 5.3 / 13.8)', function () {
     it('is registered with the fields of the contract', function () {
@@ -317,7 +314,8 @@
     it('rejects a compactness outside 0..1 or of the wrong type (pipeline.invalidOption), accepts the ends',
       function () {
         [-0.01, 1.01, NaN, Infinity, '0.5', true, {}, []].forEach(function (bad) {
-          var e = expectCode(function () { def.build({ compactness: bad }, modelRng(1)); }, 'pipeline.invalidOption');
+          var e = expectCode(function () { def.build({ compactness: bad }, modelRng(1)); },
+            'pipeline.invalidOption');
           expect(e.i18nArgs.option).toBe('compactness');
         });
         [0, 1, 0.6].forEach(function (good) {
@@ -339,10 +337,6 @@
       expect(SG.model.validate(a).ok).toBe(true);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Layouts
-  // ---------------------------------------------------------------------------------------------
 
   describe('jigsaw9: region layouts (design.md 8.1)', function () {
     it('all ' + LAYOUT_COUNT + ' layouts have 9 connected regions of exactly 9 cells', function () {
@@ -396,20 +390,24 @@
       expect(Object.keys(distinct).length).toBeGreaterThan(LAYOUT_COUNT - 3);
     });
 
-    it('layouts are not just the classic boxes in disguise: the regions take many different shapes', function () {
-      var shapes = {};
-      layoutModels().forEach(function (m) {
-        var regions = regionList(m);
-        for (var g = 0; g < 9; g++) {
-          var cells = [];
-          for (var c = 0; c < 81; c++) if (regions[c] === g) cells.push(c);
-          var top = Math.floor(cells[0] / 9);
-          var left = Math.min.apply(null, cells.map(function (c) { return c % 9; }));
-          shapes[cells.map(function (c) { return (Math.floor(c / 9) - top) + ',' + ((c % 9) - left); }).join(' ')] = true;
-        }
+    it('layouts are not just the classic boxes in disguise: the regions take many different shapes',
+      function () {
+        var shapes = {};
+        layoutModels().forEach(function (m) {
+          var regions = regionList(m);
+          for (var g = 0; g < 9; g++) {
+            var cells = [];
+            for (var c = 0; c < 81; c++) if (regions[c] === g) cells.push(c);
+            var top = Math.floor(cells[0] / 9);
+            var left = Math.min.apply(null, cells.map(function (c) { return c % 9; }));
+            var shape = cells.map(function (c) {
+              return (Math.floor(c / 9) - top) + ',' + ((c % 9) - left);
+            });
+            shapes[shape.join(' ')] = true;
+          }
+        });
+        expect(Object.keys(shapes).length).toBeGreaterThan(500);
       });
-      expect(Object.keys(shapes).length).toBeGreaterThan(500);
-    });
 
     it('builds a layout in a few milliseconds (mean over ' + LAYOUT_COUNT + ')', function () {
       var times = layouts().map(function (item) { return item.ms; });
@@ -419,17 +417,18 @@
   });
 
   describe('jigsaw9: growth statistics (reseeds and backtracks)', function () {
-    it('reports attempts, reseeds, backtracks and the layouts dropped as unsolvable or too hard', function () {
-      layouts().forEach(function (item) {
-        var s = item.stats;
-        expect(s.attempts).toBeGreaterThanOrEqual(1);
-        expect(s.reseeds).toBe(s.attempts - 1);
-        expect(s.backtracks).toBeGreaterThanOrEqual(0);
-        expect(s.unsolvable).toBeGreaterThanOrEqual(0);
-        expect(s.hard).toBeGreaterThanOrEqual(0);
-        expect(s.unsolvable + s.hard).toBeLessThanOrEqual(s.reseeds);
+    it('reports attempts, reseeds, backtracks and the layouts dropped as unsolvable or too hard',
+      function () {
+        layouts().forEach(function (item) {
+          var s = item.stats;
+          expect(s.attempts).toBeGreaterThanOrEqual(1);
+          expect(s.reseeds).toBe(s.attempts - 1);
+          expect(s.backtracks).toBeGreaterThanOrEqual(0);
+          expect(s.unsolvable).toBeGreaterThanOrEqual(0);
+          expect(s.hard).toBeGreaterThanOrEqual(0);
+          expect(s.unsolvable + s.hard).toBeLessThanOrEqual(s.reseeds);
+        });
       });
-    });
 
     it('the Hall and matching checks keep dead ends rare: about one attempt per layout, never a long streak',
       function () {
@@ -448,16 +447,17 @@
       }
     });
 
-    it('with maxBacktracks 0 it reseeds instead of searching, and still delivers a valid layout', function () {
-      var total = 0;
-      for (var seed = 1; seed <= 20; seed++) {
-        var stats = {};
-        var regions = J.generateRegions(SG.rng.create(seed), { maxBacktracks: 0, stats: stats });
-        expect(layoutProblems(Array.from(regions), 9)).toEqual([]);
-        total += stats.reseeds;
-      }
-      expect(total).toBeGreaterThan(0);
-    });
+    it('with maxBacktracks 0 it reseeds instead of searching, and still delivers a valid layout',
+      function () {
+        var total = 0;
+        for (var seed = 1; seed <= 20; seed++) {
+          var stats = {};
+          var regions = J.generateRegions(SG.rng.create(seed), { maxBacktracks: 0, stats: stats });
+          expect(layoutProblems(Array.from(regions), 9)).toEqual([]);
+          total += stats.reseeds;
+        }
+        expect(total).toBeGreaterThan(0);
+      });
   });
 
   describe('jigsaw9: compactness', function () {
@@ -511,10 +511,10 @@
       var high = [];
       for (var seed = 1; seed <= 12; seed++) {
         var cfg = { variantId: 'jigsaw9', difficulty: 'veryEasy', seed: seed, trace: 'off' };
-        low.push(J.meanPerimeter(SG.pipeline.run(Object.assign({ variantOptions: { compactness: 0 } }, cfg), null)
-          .model.layout.cellRegion, 9));
-        high.push(J.meanPerimeter(SG.pipeline.run(Object.assign({ variantOptions: { compactness: 1 } }, cfg), null)
-          .model.layout.cellRegion, 9));
+        var loose = SG.pipeline.run(Object.assign({ variantOptions: { compactness: 0 } }, cfg), null);
+        var round = SG.pipeline.run(Object.assign({ variantOptions: { compactness: 1 } }, cfg), null);
+        low.push(J.meanPerimeter(loose.model.layout.cellRegion, 9));
+        high.push(J.meanPerimeter(round.model.layout.cellRegion, 9));
       }
       expect(mean(high)).toBeLessThan(mean(low) - 0.8);
     });
@@ -534,29 +534,30 @@
       expect(J.checkRegions(buildModel(1).layout.cellRegion)).toEqual([]);
     });
 
-    it('reports a wrong length, a bad region number, a wrong size, a split region and a bare row', function () {
-      var boxes = Array.from(SG.variants.get('classic9').build({}, null).layout.cellRegion);
-      expect(J.checkRegions(boxes.slice(1), 9)[0]).toMatch('expected 81 cells');
+    it('reports a wrong length, a bad region number, a wrong size, a split region and a bare row',
+      function () {
+        var boxes = Array.from(SG.variants.get('classic9').build({}, null).layout.cellRegion);
+        expect(J.checkRegions(boxes.slice(1), 9)[0]).toMatch('expected 81 cells');
 
-      var bad = boxes.slice();
-      bad[4] = 9;
-      expect(J.checkRegions(bad, 9)[0]).toMatch('invalid region');
+        var bad = boxes.slice();
+        bad[4] = 9;
+        expect(J.checkRegions(bad, 9)[0]).toMatch('invalid region');
 
-      var sizes = boxes.slice();
-      sizes[0] = 1;
-      expect(J.checkRegions(sizes, 9).join(' ')).toMatch('region 0 has 8 cells');
-      expect(J.checkRegions(sizes, 9).join(' ')).toMatch('region 1 has 10 cells');
+        var sizes = boxes.slice();
+        sizes[0] = 1;
+        expect(J.checkRegions(sizes, 9).join(' ')).toMatch('region 0 has 8 cells');
+        expect(J.checkRegions(sizes, 9).join(' ')).toMatch('region 1 has 10 cells');
 
-      // Swap two cells of different boxes so that each box keeps 9 cells but one of them falls apart.
-      var split = boxes.slice();
-      split[0] = 8;
-      split[80] = 0;
-      expect(J.checkRegions(split, 9).join(' ')).toMatch('not connected');
+        // Swap two cells of different boxes so that each box keeps 9 cells but one of them falls apart.
+        var split = boxes.slice();
+        split[0] = 8;
+        split[80] = 0;
+        expect(J.checkRegions(split, 9).join(' ')).toMatch('not connected');
 
-      var rows = [];
-      for (var c = 0; c < 81; c++) rows.push(Math.floor(c / 9));
-      expect(J.checkRegions(rows, 9).join(' ')).toMatch('bare row or column');
-    });
+        var rows = [];
+        for (var c = 0; c < 81; c++) rows.push(Math.floor(c / 9));
+        expect(J.checkRegions(rows, 9).join(' ')).toMatch('bare row or column');
+      });
 
     it('checks other board sizes too', function () {
       expect(J.checkRegions(parseLayout('0011|0011|2233|2233'), 4)).toEqual([]);
@@ -564,19 +565,20 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Solvability: not every layout has a solution
-  // ---------------------------------------------------------------------------------------------
-
   describe('jigsaw9: no unsolvable layout escapes the builder', function () {
     it('every one of the ' + LAYOUT_COUNT + ' layouts has a solution, found by two independent searches',
       function () {
         layoutModels().forEach(function (m, i) {
           var randomised = SG.fullGrid.generate(m, SG.rng.create(5000 + i), SG.budget.create({ nodes: 2e6 }));
-          if (!SG.model.isSolution(m, randomised)) throw new Error('seed ' + (i + 1) + ': the grid is invalid');
-          if (!gridFitsLayout(randomised, regionList(m), 9)) throw new Error('seed ' + (i + 1) + ': grid breaks a rule');
+          if (!SG.model.isSolution(m, randomised)) {
+            throw new Error('seed ' + (i + 1) + ': the grid is invalid');
+          }
+          if (!gridFitsLayout(randomised, regionList(m), 9)) throw new Error('seed ' + (i + 1) + ': grid ' +
+            'breaks a rule');
           var plain = SG.dfs.solve(m, m.fixedCells, null, SG.budget.create({ nodes: 50000 }));
-          if (plain === null || !gridFitsLayout(plain, regionList(m), 9)) throw new Error('seed ' + (i + 1) + ': plain');
+          if (plain === null || !gridFitsLayout(plain, regionList(m), 9)) {
+            throw new Error('seed ' + (i + 1) + ': plain');
+          }
         });
       });
 
@@ -617,7 +619,9 @@
         var regions = J.generateRegions(SG.rng.create(seed), { size: 4, stats: stats });
         expect(layoutProblems(Array.from(regions), 4)).toEqual([]);
         var model = J.modelFromRegions('jigsaw4', 4, regions);
-        if (SG.dfs.countSolutions(model, model.fixedCells, 1) !== 1) throw new Error('seed ' + seed + ' unsolvable');
+        if (SG.dfs.countSolutions(model, model.fixedCells, 1) !== 1) {
+          throw new Error('seed ' + seed + ' unsolvable');
+        }
         dropped += stats.unsolvable;
       }
       expect(dropped).toBeGreaterThan(0);
@@ -625,7 +629,8 @@
 
     it('rejects a board size that makes no sense (pipeline.invalidOption)', function () {
       [0, 1, 17, 4.5, '9', null].forEach(function (bad) {
-        expectCode(function () { J.generateRegions(SG.rng.create(1), { size: bad }); }, 'pipeline.invalidOption');
+        expectCode(function () { J.generateRegions(SG.rng.create(1), { size: bad }); },
+          'pipeline.invalidOption');
       });
     });
 
@@ -742,10 +747,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV2: full grids
-  // ---------------------------------------------------------------------------------------------
-
   describe('jigsaw9: full grids (CV2)', function () {
     it('generates a valid full grid for 50 different seeds, each on its own layout', function () {
       var layoutsSeen = {};
@@ -774,16 +775,14 @@
         var broken = grid.slice();
         // Two cells of the first region that share neither a row nor a column.
         var a = cells[0];
-        var b = cells.filter(function (c) { return c % 9 !== a % 9 && Math.floor(c / 9) !== Math.floor(a / 9); })[0];
+        var b = cells.filter(function (c) {
+          return c % 9 !== a % 9 && Math.floor(c / 9) !== Math.floor(a / 9);
+        })[0];
         broken[a] = grid[b];
         broken[b] = grid[a];
         expect(SG.model.isSolution(m, broken)).toBe(false);
       });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // CV3 - CV6: puzzles at every level, invariants I1-I7, determinism, performance
-  // ---------------------------------------------------------------------------------------------
 
   function generatePuzzle(level, seed, extra) {
     var config = Object.assign({ variantId: 'jigsaw9', difficulty: level, seed: seed, trace: 'off' }, extra);
@@ -798,7 +797,9 @@
       cache.puzzles = {};
       LEVELS.forEach(function (level, li) {
         cache.puzzles[level] = [];
-        for (var i = 0; i < countOf(level); i++) cache.puzzles[level].push(generatePuzzle(level, 700 + li * 100 + i));
+        for (var i = 0; i < countOf(level); i++) {
+          cache.puzzles[level].push(generatePuzzle(level, 700 + li * 100 + i));
+        }
       });
     }
     return cache.puzzles;
@@ -813,21 +814,26 @@
   describe('jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7)', function () {
     LEVELS.forEach(function (level) {
       describe(level + ': ' + countOf(level) + ' puzzles', function () {
-        it('I1: exactly one solution; I2: givens are part of the solution; I3: the solution is valid', function () {
-          puzzleRun()[level].forEach(function (p, i) {
-            var m = p.model;
-            if (SG.dfs.countSolutions(m, p.givens, 2) !== 1) throw new Error('puzzle ' + i + ' is not unique');
-            for (var c = 0; c < 81; c++) {
-              if (p.givens[c] !== 0 && p.givens[c] !== p.solution[c]) throw new Error('puzzle ' + i + ': I2');
-            }
-            if (!SG.model.isSolution(m, p.solution)) throw new Error('puzzle ' + i + ': invalid solution');
-            if (!gridFitsLayout(p.solution, regionList(m), 9)) throw new Error('puzzle ' + i + ': breaks layout');
-            expect(layoutProblems(regionList(m), 9)).toEqual([]);
+        it('I1: exactly one solution; I2: givens are part of the solution; I3: the solution is valid',
+          function () {
+            puzzleRun()[level].forEach(function (p, i) {
+              var m = p.model;
+              if (SG.dfs.countSolutions(m, p.givens, 2) !== 1) throw new Error('puzzle ' + i + ' is not ' +
+                'unique');
+              for (var c = 0; c < 81; c++) {
+                if (p.givens[c] !== 0 && p.givens[c] !== p.solution[c]) {
+                  throw new Error('puzzle ' + i + ': I2');
+                }
+              }
+              if (!SG.model.isSolution(m, p.solution)) throw new Error('puzzle ' + i + ': invalid solution');
+              if (!gridFitsLayout(p.solution, regionList(m), 9)) throw new Error('puzzle ' + i + ': breaks ' +
+                'layout');
+              expect(layoutProblems(regionList(m), 9)).toEqual([]);
+            });
           });
-        });
 
-        it('I5: every puzzle has a complete proof, and one that reached the level has its score in the band; ' +
-          'I6: at least minClues givens', function () {
+        it('I5: every puzzle has a complete proof, and one that reached the level has its score in the ' +
+          'band; I6: at least minClues givens', function () {
           var exact = 0;
           puzzleRun()[level].forEach(function (p, i) {
             var spec = SG.difficulty.spec(level, p.model);
@@ -842,7 +848,7 @@
             }
             expect(SG.difficulty.rate(p.model, p.givens).level).toBe(p.rating.level);
           });
-          // The soak criterion of T-2.10 (90% on classic9) holds for jigsaw9 as well.
+          // The 90% hit rate that tests/soak.js asks of classic9 holds for jigsaw9 as well.
           expect(exact / countOf(level)).toBeGreaterThanOrEqual(0.9);
         });
 
@@ -852,16 +858,21 @@
             var report = SG.logicalSolver.solve(p.model, p.givens, { collectSteps: true });
             report.steps.forEach(function (step) {
               step.placements.forEach(function (pl) {
-                if (p.solution[pl[0]] !== pl[1]) throw new Error('puzzle ' + i + ': ' + step.technique + ' is unsound');
+                if (p.solution[pl[0]] !== pl[1]) {
+                  throw new Error('puzzle ' + i + ': ' + step.technique + ' is unsound');
+                }
               });
               step.eliminations.forEach(function (el) {
-                if (p.solution[el[0]] === el[1]) throw new Error('puzzle ' + i + ': ' + step.technique + ' is unsound');
+                if (p.solution[el[0]] === el[1]) {
+                  throw new Error('puzzle ' + i + ': ' + step.technique + ' is unsound');
+                }
               });
             });
           });
         });
 
-        it('CV6: p95 of the generation time is within the design.md 9.1 budget of ' + BUDGET_MS[level] + ' ms',
+        it('CV6: p95 of the generation time is within the design.md 9.1 budget of ' + BUDGET_MS[level] +
+          ' ms',
           function () {
             var times = puzzleRun()[level].map(function (p) { return p.elapsedMs; });
             expect(percentile(times, 0.95)).toBeLessThan(SG.test.timeLimit(BUDGET_MS[level]));
@@ -934,13 +945,11 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV7: i18n
-  // ---------------------------------------------------------------------------------------------
-
   describe('jigsaw9: strings in both languages (CV7)', function () {
     function fragments() {
-      return SG.localeFragments.filter(function (f) { return f.en && f.en['variant.jigsaw9'] !== undefined; });
+      return SG.localeFragments.filter(function (f) {
+        return f.en && f.en['variant.jigsaw9'] !== undefined;
+      });
     }
 
     it('declares exactly one locale fragment, with en and vi', function () {
@@ -950,28 +959,18 @@
       expect(typeof fragments()[0].vi).toBe('object');
     });
 
-    it('en and vi have the same keys and no empty value', function () {
-      var f = fragments()[0];
-      expect(Object.keys(f.vi).sort()).toEqual(Object.keys(f.en).sort());
-      Object.keys(f.en).forEach(function (key) {
-        expect(typeof f.en[key]).toBe('string');
-        expect(f.en[key].trim()).not.toBe('');
-        expect(typeof f.vi[key]).toBe('string');
-        expect(f.vi[key].trim()).not.toBe('');
+    it('covers the variant name, every key the option schema points at, and the error of the builder',
+      function () {
+        var f = fragments()[0];
+        var o = def.options[0];
+        [def.i18nKey, o.i18nKey, o.hintKey, o.minLabelKey, o.maxLabelKey, 'error.jigsaw.layoutFailed']
+          .forEach(function (key) {
+            expect(f.en[key]).toBeDefined();
+            expect(f.vi[key]).toBeDefined();
+          });
+        expect(f.en['variant.jigsaw9']).toBe('Jigsaw Sudoku');
+        expect(f.vi['variant.jigsaw9']).toBe('Sudoku Ghép hình');
       });
-    });
-
-    it('covers the variant name, every key the option schema points at, and the error of the builder', function () {
-      var f = fragments()[0];
-      var o = def.options[0];
-      [def.i18nKey, o.i18nKey, o.hintKey, o.minLabelKey, o.maxLabelKey, 'error.jigsaw.layoutFailed']
-        .forEach(function (key) {
-          expect(f.en[key]).toBeDefined();
-          expect(f.vi[key]).toBeDefined();
-        });
-      expect(f.en['variant.jigsaw9']).toBe('Jigsaw Sudoku');
-      expect(f.vi['variant.jigsaw9']).toBe('Sudoku Ghép hình');
-    });
 
     it('the Vietnamese text is a translation, not a copy, and keeps the {attempts} placeholder', function () {
       var f = fragments()[0];
@@ -981,20 +980,7 @@
       expect(f.en['error.jigsaw.layoutFailed']).toContain('{attempts}');
       expect(f.vi['error.jigsaw.layoutFailed']).toContain('{attempts}');
     });
-
-    it('is merged into the language packs when they are loaded (browser run)', function () {
-      var locales = SG.locales;
-      if (!locales || !locales.en || !locales.vi) SG.test.skip('the language packs are not loaded here');
-      Object.keys(fragments()[0].en).forEach(function (key) {
-        expect(locales.en[key]).toBeDefined();
-        expect(locales.vi[key]).toBeDefined();
-      });
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // CV9: what the renderer needs
-  // ---------------------------------------------------------------------------------------------
 
   describe('jigsaw9: data for the board view (CV9)', function () {
     /** What a renderer does with cellRegion: a thick border on every edge between two different regions. */

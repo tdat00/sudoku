@@ -1,19 +1,18 @@
 /**
  * Preferences and safe storage: `SG.store`.
- *   - `createStorage(backend?)` wraps `localStorage` so that nothing ever throws into the app (even reading
- *     `window.localStorage` can throw when storage is blocked). An in-memory map backs it: a value that could not
- *     be persisted is still read back for the rest of the session. `setItem` returns 'ok', 'quota' (the caller may
- *     free space and retry) or 'blocked'.
- *   - `createStore(storage)` keeps the player's preferences. The stored value is versioned (`{ v: 1, ... }`);
- *     anything else (corrupt JSON, another version, a wrong type) falls back to the defaults field by field.
- *   - `parseUrl(search)` reads `?lang=`, the only URL parameter of the player (the puzzle travels in the fragment,
- *     see exchange.js).
- * Keys are prefixed `sg.player.` on purpose: GitHub Pages serves the generator and the player from one origin,
- * which shares `localStorage`.
+ *   - `createStorage(backend?)` wraps `localStorage` so that nothing throws into the app (even reading
+ *     `window.localStorage` can throw when storage is blocked). An in-memory map backs it, so a value that
+ *     could not be persisted is still read back during the session. `setItem` returns 'ok', 'quota' or
+ *     'blocked'.
+ *   - `createStore(storage)` keeps the preferences as `{ v: 1, ... }`; anything else (corrupt JSON, another
+ *     version, a wrong type) falls back to the defaults field by field.
+ *   - `parseUrl(search)` reads `?lang=`, the only URL parameter (the puzzle travels in the fragment).
+ * Keys start with `sg.player.` because GitHub Pages serves both apps from one origin, which shares
+ * `localStorage`.
  *
- * store: get() -> state, set(patch, meta?) -> state, subscribe(fn) -> off, load(sources?) -> state, reset() -> state
- * (every preference but the language back to its default). `fn(state, changedKeys, meta)`; `meta.persist === false`
- * keeps a change out of the storage; `meta.source` says who changed it.
+ * store: get(), set(patch, meta?), subscribe(fn) -> off, load(sources?), reset() (all but the language back
+ * to the defaults). Listeners get `(state, changedKeys, meta)`; `meta.persist === false` keeps a change out
+ * of the storage.
  */
 (function (root) {
   'use strict';
@@ -204,7 +203,7 @@
         listeners.push(fn);
         return function off() { listeners = listeners.filter(function (other) { return other !== fn; }); };
       },
-      /** Reads the stored preferences; the language is chosen like every start-up language (URL `lang`, stored, browser, English) and is not stored by this call. */
+      // The language comes from the URL, the storage, the browser or English, and is not stored here.
       load: function load(sources) {
         const s = sources || {};
         const stored = readStored(disk);

@@ -1,8 +1,8 @@
 'use strict';
-// Helpers of the browser run (docs/qa.md): launches headless Edge, talks to it over the DevTools protocol (the
-// global WebSocket of Node 22+) and serves the repository (player and core) over http. Everything stays inside the repository:
-// profiles in .scratch-profile (deleted when the browser closes), screenshots in .scratch-shots; both are
-// ignored by git. Set EDGE_PATH for another Chromium-based browser.
+// Helpers of the browser scripts: launches headless Edge, talks to it over the DevTools protocol (the global
+// WebSocket of Node 22+) and serves the repository (player and core) over http. Everything stays inside the
+// repository: profiles in .scratch-profile (deleted when the browser closes), screenshots in .scratch-shots;
+// both are ignored by git. Set EDGE_PATH for another Chromium-based browser.
 const cp = require('child_process');
 const fs = require('fs');
 const http = require('http');

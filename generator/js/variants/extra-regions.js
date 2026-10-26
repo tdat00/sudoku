@@ -6,8 +6,8 @@
  * windows with top-left corners (1,1), (1,5), (5,1), (5,5) (31 units); both together give the same 33-unit
  * hybrid whichever variant it was asked for. Unit order: rows, columns, boxes, diagonals, windows.
  *
- * `model.layout.overlays[i]` is `{ kind: 'diag' | 'window', cells: Int32Array }` and describes `units[27 + i]`.
- * Overlays overlap each other (the diagonals share the centre cell, a diagonal crosses windows), so the
+ * `model.layout.overlays[i]` is `{ kind: 'diag' | 'window', cells: Int32Array }` and describes `units[27 +
+ * i]`. Overlays overlap each other (the diagonals share the centre cell, a diagonal crosses windows), so the
  * renderer must shade them with translucent fills that blend.
  */
 (function (root) {
@@ -149,7 +149,7 @@
   }
 
   /**
-   * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in js/engine/difficulty.js).
+   * Calibration of the clue floor (`clueFloorScale`, see "Clue floor" in js/engine/difficulty.js).
    * With the classic9 floors (29 / 25 / 22 clues) the digger stopped at the floor before these harder 9x9
    * boards needed a pair technique, so normal was rarely reached. Floors of 24 / 20 / 17 (83 % / 80 % / 80 %)
    * sit just above where the techniques stop the dig by themselves, which keeps the mean clue count falling

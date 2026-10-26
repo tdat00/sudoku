@@ -6,16 +6,16 @@
  * Layout generation: seeded growth with backtracking.
  *   1. One seed per row, in distinct columns and spread evenly (one in each 3x3 box of the classic layout).
  *   2. Repeatedly the smallest region takes one free neighbour cell. A move is legal only when the remaining
- *      free space can still be absorbed by the unfinished regions (`isFeasible`). Among the legal moves one is
- *      drawn with a weight that favours cells with few free neighbours (no isolated pockets) and, through
+ *      free space can still be absorbed by the unfinished regions (`isFeasible`). Among the legal moves one
+ *      is drawn with a weight that favours cells with few free neighbours (no isolated pockets) and, through
  *      the `compactness` option, cells that touch the region on many sides.
  *   3. When the smallest region has no legal move the last move is undone and its next candidate tried; after
  *      `maxBacktracks` undone moves the attempt is dropped and a new one starts from fresh seeds.
  *   4. A finished partition must have nine connected regions of nine cells (none a bare row or column) and
  *      the board must have a solution: `SG.fullGrid.generate` runs with a small node budget. Not every
  *      partition has a solution, so this check is mandatory; failing it (or exhausting the budget) is a dead
- *      end. A partition that the plain search of `SG.model.validate` cannot solve within 5000 nodes is dropped
- *      too (`solvesPlainly`).
+ *      end. A partition that the plain search of `SG.model.validate` cannot solve within 5000 nodes is
+ *      dropped too (`solvesPlainly`).
  *
  * Everything is driven by the rng and by node counts only, never the clock, so a seed gives the same layout
  * on every machine.
@@ -30,7 +30,6 @@
 
   const SIZE = 9;
 
-  /** Default value of the `compactness` option. */
   const DEFAULT_COMPACTNESS = 0.6;
 
   /** Undone moves per growth attempt before the attempt is dropped and the seeds are drawn again. */
@@ -139,7 +138,9 @@
         if (col > 0) top = visit(cell - 1, g, cellRegion, seen, stack, top);
         if (col < size - 1) top = visit(cell + 1, g, cellRegion, seen, stack, top);
       }
-      if (reached !== size) problems.push('region ' + g + ' is not connected (' + reached + ' of ' + size + ')');
+      if (reached !== size) {
+        problems.push('region ' + g + ' is not connected (' + reached + ' of ' + size + ')');
+      }
     }
     return problems;
   }
@@ -171,7 +172,9 @@
     return edges / size;
   }
 
-  /** Builds the growth engine for a size x size grid; buffers are allocated once and reused by every attempt. */
+  /**
+   * Builds the growth engine for a size x size grid; buffers are allocated once and reused by every attempt.
+   */
   function createGrower(size) {
     const n = size * size;
     const steps = n - size;
@@ -656,7 +659,8 @@
       throw fail('pipeline.invalidOption', { option: 'size', value: String(size) });
     }
     const compactness = readCompactness(options);
-    const maxBacktracks = options.maxBacktracks === undefined ? DEFAULT_MAX_BACKTRACKS : options.maxBacktracks;
+    const maxBacktracks = options.maxBacktracks === undefined
+      ? DEFAULT_MAX_BACKTRACKS : options.maxBacktracks;
     const maxAttempts = options.maxAttempts === undefined ? DEFAULT_MAX_ATTEMPTS : options.maxAttempts;
     const stats = options.stats || {};
     stats.attempts = 0;
@@ -695,7 +699,6 @@
     throw fail('jigsaw.layoutFailed', { attempts: maxAttempts });
   }
 
-  /** Reads the `compactness` option; a missing value means the default. */
   function readCompactness(opts) {
     const value = opts ? opts.compactness : undefined;
     if (value === undefined || value === null) return DEFAULT_COMPACTNESS;
@@ -705,7 +708,10 @@
     return value;
   }
 
-  /** Builds a jigsaw9 model with a fresh partition; without an rng a fixed seed gives the same layout every time. */
+  /**
+   * Builds a jigsaw9 model with a fresh partition; without an rng a fixed seed gives the same layout every
+   * time.
+   */
   function buildJigsaw(opts, rng) {
     const compactness = readCompactness(opts);
     const cellRegion = generateRegions(rng || SG.rng.create(FALLBACK_SEED), { compactness: compactness });

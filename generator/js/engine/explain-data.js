@@ -1,15 +1,15 @@
 /**
- * Explanation data for the seven pipeline steps: what a step does, why and how, its pseudocode, and a status line that
- * follows the metrics while it runs. Pure data: translation KEYS only (the texts live in js/ui/locale.*.js, which must
- * define every key `SG.explain.keys()` lists); nothing here touches the DOM.
+ * Explanation data for the seven pipeline steps: what a step does, why and how, its pseudocode, and a status
+ * line that follows the metrics while it runs. Pure data: translation KEYS only (the texts live in
+ * js/ui/locale.*.js, which must define every key `SG.explain.keys()` lists); nothing here touches the DOM.
  *
  * Per step (`SG.explain[stepId]`):
  *  - `stepId`, `index` (1..7), `name`, `what` / `why` / `how` (keys of the fixed parts of the card).
- *  - `pseudocode`  lines `{ label, indent, key }`: `label` lets the UI highlight the line, `indent` is the nesting
- *    depth. The comment beside every line below is the text the locale packs should carry.
+ *  - `pseudocode`  lines `{ label, indent, key }`: `label` lets the UI highlight the line, `indent` is the
+ *    nesting depth. The comment beside every line below is the text the locale packs should carry.
  *  - `highlight`  event `i18nKey` -> line `label`, for the line executing while an event is replayed.
- *  - `liveKey` and `liveArgs`  key of the status line and names of its placeholders; `live(metrics, t)` returns
- *    `{ key, args }`, reading every placeholder from `metrics` (missing or non-numeric values read as 0); `t` is unused.
+ *  - `liveKey` and `liveArgs`  key of the status line and names of its placeholders; `live(metrics)` returns
+ *    `{ key, args }`, reading every placeholder from `metrics` (missing or non-numeric values read as 0).
  */
 (function (root) {
   'use strict';
@@ -153,7 +153,6 @@
     return step.highlight[i18nKey];
   }
 
-  // Every translation key this file uses, sorted, without duplicates.
   function keys() {
     const all = [];
     STEP_IDS.forEach(function (id) {

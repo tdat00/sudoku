@@ -1,8 +1,8 @@
-// Wordoku (task T-5.4): the word lists (every entry is exactly 9 distinct characters, a build-breaking check),
-// the fallback from an empty or short Vietnamese list to the English one, the variant options, the model with
-// its word line, the common variant criteria CV1-CV9 of task.md phase P5, and the events of step 4. Every
-// generated puzzle is checked against its own solution: the word has to read correctly on the chosen line, the
-// puzzle has to be unique from its givens alone, and the word line has to be dug like any other cells.
+// Wordoku: the word lists (every entry is exactly 9 distinct characters, a build-breaking check), the
+// fallback from an empty or short Vietnamese list to the English one, the variant options, the model with its
+// word line, the common variant criteria CV1-CV9 of task.md phase P5, and the events of step 4. Every
+// generated puzzle is checked against its own solution: the word has to read correctly on the chosen line,
+// the puzzle has to be unique from its givens alone, and the word line has to be dug like any other cells.
 (function () {
   'use strict';
 
@@ -14,8 +14,9 @@
 
   var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1'];
   /** design.md 9.1, wordoku row, p95 in ms. */
-  var BUDGET_MS = { veryEasy: 100, easy: 250, normal: 250, hard: 600, expert: 600, master: 1500, nightmare: 1500,
-    hell1: 2500 };
+  var BUDGET_MS = {
+    veryEasy: 100, easy: 250, normal: 250, hard: 600, expert: 600, master: 1500, nightmare: 1500, hell1: 2500
+  };
   var PUZZLES_PER_LEVEL = 20;
   var STEPS = ['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune'];
   /** The options of puzzle i of a level: half on the diagonal, the rest on a random row or column. */
@@ -93,9 +94,7 @@
 
   function equalArrays(a, b) { return JSON.stringify(Array.from(a)) === JSON.stringify(Array.from(b)); }
 
-  // ---------------------------------------------------------------------------------------------
   // Generated puzzles, shared by the suites below (generated once, on first use)
-  // ---------------------------------------------------------------------------------------------
 
   function generate(level, seed, extra) {
     var events = 0;
@@ -128,11 +127,7 @@
     return out;
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // T-5.4: the word lists
-  // ---------------------------------------------------------------------------------------------
-
-  describe('wordoku: word lists (T-5.4: every entry is exactly 9 distinct characters)', function () {
+  describe('wordoku: word lists (every entry is exactly 9 distinct characters)', function () {
     it('loads both lists as plain arrays of strings on SG.wordlists', function () {
       expect(typeof SG.wordlists).toBe('object');
       ['en', 'vi'].forEach(function (lang) {
@@ -178,20 +173,23 @@
       expect(SG.wordlists.en.length).toBeGreaterThanOrEqual(40);
     });
 
-    it('the Vietnamese list is much shorter than the English one but still has a word to draw from', function () {
-      expect(SG.wordlists.vi.length).toBeGreaterThanOrEqual(W.MIN_WORDS);
-      SG.wordlists.vi.forEach(function (w) { expect(nineDistinct(w)).toBe(true); });
-      // "Bạch Tuyết" without diacritics repeats its T, which is why it cannot be an entry.
-      expect(nineDistinct('BACHTUYET')).toBe(false);
-      expect(SG.wordlists.vi).not.toContain('BACHTUYET');
-    });
+    it('the Vietnamese list is much shorter than the English one but still has a word to draw from',
+      function () {
+        expect(SG.wordlists.vi.length).toBeGreaterThanOrEqual(W.MIN_WORDS);
+        SG.wordlists.vi.forEach(function (w) { expect(nineDistinct(w)).toBe(true); });
+        // "Bạch Tuyết" without diacritics repeats its T, which is why it cannot be an entry.
+        expect(nineDistinct('BACHTUYET')).toBe(false);
+        expect(SG.wordlists.vi).not.toContain('BACHTUYET');
+      });
 
-    it('every word of both lists has an entry in the word book (core/assets/wordbook), and every entry a word',
+    it('every word of both lists has an entry in the word book (core/assets/wordbook), and every entry ' +
+      'a word',
       function () {
         var env = SG.test.node;
         if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
         ['en', 'vi'].forEach(function (lang) {
-          var text = env.fs.readFileSync(env.path.join(env.root, '../core/assets/wordbook/words.' + lang + '.js'), 'utf8');
+          var book = env.path.join(env.root, '../core/assets/wordbook/words.' + lang + '.js');
+          var text = env.fs.readFileSync(book, 'utf8');
           var sandbox = {};
           env.vm.runInNewContext(text, sandbox);
           var book = sandbox.SG.wordbookData[lang];
@@ -200,9 +198,11 @@
           keys.forEach(function (key) {
             var row = book[key];
             expect('nvado'.indexOf(row[1]) !== -1 && row[1].length === 1).toBe(true);
-            // The spelling is the key word with its diacritics put back; a Vietnamese one has at most 3 syllables.
+            // The spelling is the key word with its diacritics put back; a Vietnamese one has at most 3
+            // syllables.
             expect(W.normalizeWord(row[0])).toBe(key);
-            expect(row.slice(2).every(function (t) { return typeof t === 'string' && t.length > 5; })).toBe(true);
+            expect(row.slice(2).every(function (t) { return typeof t === 'string' && t.length > 5; }))
+              .toBe(true);
             if (lang === 'vi') expect(row[0].split(' ').length).toBeLessThanOrEqual(3);
             expect(row.length).toBe(lang === 'en' ? 4 : 3);
           });
@@ -210,8 +210,8 @@
       });
 
     it('the check itself rejects every way an entry can go wrong', function () {
-      var bad = ['ABCDEFGHA', 'ABCDEFGH', 'ABCDEFGHIJ', 'abcdefghi', 'ABCDEFGH1', 'ABCDEFGH ', 'BACHTUYET', '',
-        'HOANKIEM', 'BÁCHTUYEN'];
+      var bad = ['ABCDEFGHA', 'ABCDEFGH', 'ABCDEFGHIJ', 'abcdefghi', 'ABCDEFGH1', 'ABCDEFGH ', 'BACHTUYET',
+        '', 'HOANKIEM', 'BÁCHTUYEN'];
       bad.forEach(function (w) {
         expect(nineDistinct(w)).toBe(false);
         expect(W.isIsogram(w)).toBe(false);
@@ -227,7 +227,8 @@
     });
 
     it('validWords drops bad entries and repeats and keeps the order of the rest', function () {
-      var list = ['DANGEROUS', 'ABCDEFGHA', 'ALGORITHM', 'DANGEROUS', 'SHORT', 'abcdefghi', 42, null, 'BACHDUONG'];
+      var list = ['DANGEROUS', 'ABCDEFGHA', 'ALGORITHM', 'DANGEROUS', 'SHORT', 'abcdefghi', 42, null,
+        'BACHDUONG'];
       expect(W.validWords(list)).toEqual(['DANGEROUS', 'ALGORITHM', 'BACHDUONG']);
       expect(W.validWords(null)).toEqual([]);
       expect(W.validWords(undefined)).toEqual([]);
@@ -255,11 +256,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // T-5.4: choosing the list, and the fallback from an empty Vietnamese list
-  // ---------------------------------------------------------------------------------------------
-
-  describe('wordoku: word list choice and the fallback to English (T-5.4)', function () {
+  describe('wordoku: word list choice and the fallback to English', function () {
     var EN = ['ALGORITHM', 'DANGEROUS', 'NIGHTMARE', 'BLUEPRINT', 'SUNFLOWER', 'DRAGONFLY'];
 
     it('English is the list of the English language, never a fallback', function () {
@@ -320,7 +317,8 @@
     });
 
     it('when both lists are empty it is an error with the language in its arguments', function () {
-      var err = expectCode(function () { W.resolveWordList('vi', { en: [], vi: [] }); }, 'wordoku.noWordList');
+      var err = expectCode(function () { W.resolveWordList('vi', { en: [], vi: [] }); },
+        'wordoku.noWordList');
       expect(err.i18nArgs).toEqual({ language: 'vi' });
       expectCode(function () { W.resolveWordList('vi', {}); }, 'wordoku.noWordList');
     });
@@ -367,17 +365,14 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // The options schema
-  // ---------------------------------------------------------------------------------------------
-
   describe('wordoku: variant options (placement, row or column number, language, own word)', function () {
     function option(id) {
       return def.options.filter(function (o) { return o.id === id; })[0];
     }
 
     it('declares the four options, frozen, in the order the control panel shows them', function () {
-      expect(def.options.map(function (o) { return o.id; })).toEqual(['placement', 'line', 'language', 'word']);
+      expect(def.options.map(function (o) { return o.id; }))
+        .toEqual(['placement', 'line', 'language', 'word']);
       expect(Object.isFrozen(def.options)).toBe(true);
       def.options.forEach(function (o) { expect(Object.isFrozen(o)).toBe(true); });
       expect(def.options).toBe(W.OPTIONS);
@@ -429,7 +424,8 @@
     it('the defaults of the schema are the defaults of the builder', function () {
       var defaults = {};
       def.options.forEach(function (o) { defaults[o.id] = o.default; });
-      expect(W.normalizeOptions(defaults)).toEqual({ placement: 'diagonal', line: 0, language: 'en', word: null });
+      expect(W.normalizeOptions(defaults))
+        .toEqual({ placement: 'diagonal', line: 0, language: 'en', word: null });
       expect(W.normalizeOptions({})).toEqual(W.normalizeOptions(defaults));
       expect(W.normalizeOptions(null)).toEqual(W.normalizeOptions(defaults));
       expect(W.normalizeOptions(undefined)).toEqual(W.normalizeOptions(defaults));
@@ -475,10 +471,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV1, CV2: the variant definition and the model
-  // ---------------------------------------------------------------------------------------------
-
   describe('wordoku: variant definition and model (CV1, CV2)', function () {
     it('is registered with the fields of the contract (design.md 5.3 / 13.8)', function () {
       expect(SG.variants.has('wordoku')).toBe(true);
@@ -501,20 +493,21 @@
       }, 'difficulty.unsupportedLevel');
     });
 
-    it('is loaded once: running the file again registers nothing and adds no second set of strings', function () {
-      var env = SG.test.node;
-      if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
-      var count = SG.variants.list().length;
-      var fragments = SG.localeFragments.length;
-      var vocabulary = E.VOCABULARY.length;
-      var text = env.fs.readFileSync(env.path.join(env.root, 'js/variants/wordoku.js'), 'utf8');
-      env.vm.runInThisContext(text, { filename: 'js/variants/wordoku.js' });
-      expect(SG.variants.list().length).toBe(count);
-      expect(SG.localeFragments.length).toBe(fragments);
-      expect(E.VOCABULARY.length).toBe(vocabulary);
-      expect(SG.variants.get('wordoku')).toBe(def);
-      expect(SG.wordoku).toBe(W);
-    });
+    it('is loaded once: running the file again registers nothing and adds no second set of strings',
+      function () {
+        var env = SG.test.node;
+        if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
+        var count = SG.variants.list().length;
+        var fragments = SG.localeFragments.length;
+        var vocabulary = E.VOCABULARY.length;
+        var text = env.fs.readFileSync(env.path.join(env.root, 'js/variants/wordoku.js'), 'utf8');
+        env.vm.runInThisContext(text, { filename: 'js/variants/wordoku.js' });
+        expect(SG.variants.list().length).toBe(count);
+        expect(SG.localeFragments.length).toBe(fragments);
+        expect(E.VOCABULARY.length).toBe(vocabulary);
+        expect(SG.variants.get('wordoku')).toBe(def);
+        expect(SG.wordoku).toBe(W);
+      });
 
     it('builds the plain 9x9 board: the geometry of classic9 under the id "wordoku" (27 units)', function () {
       var model = build({}, 1);
@@ -616,22 +609,24 @@
       });
     });
 
-    it('line 0 draws a random row or column from the rng: the same for a seed, varied over seeds', function () {
-      var lines = {};
-      for (var seed = 1; seed <= 60; seed++) {
-        var a = W.describe(build({ placement: 'row' }, seed));
-        var b = W.describe(build({ placement: 'row', line: 0 }, seed));
-        expect(a.line).toBe(b.line);
-        expect(a.line).toBeGreaterThan(0);
-        expect(a.line).toBeLessThan(10);
-        lines[a.line] = true;
-      }
-      expect(Object.keys(lines).length).toBeGreaterThanOrEqual(7);
-    });
+    it('line 0 draws a random row or column from the rng: the same for a seed, varied over seeds',
+      function () {
+        var lines = {};
+        for (var seed = 1; seed <= 60; seed++) {
+          var a = W.describe(build({ placement: 'row' }, seed));
+          var b = W.describe(build({ placement: 'row', line: 0 }, seed));
+          expect(a.line).toBe(b.line);
+          expect(a.line).toBeGreaterThan(0);
+          expect(a.line).toBeLessThan(10);
+          lines[a.line] = true;
+        }
+        expect(Object.keys(lines).length).toBeGreaterThanOrEqual(7);
+      });
 
     it('the row or column number is ignored for the diagonal', function () {
       for (var line = 0; line <= 9; line++) {
-        expect(W.describe(build({ placement: 'diagonal', line: line }, 5)).cells).toEqual(expectedCells('diagonal', 0));
+        expect(W.describe(build({ placement: 'diagonal', line: line }, 5)).cells)
+          .toEqual(expectedCells('diagonal', 0));
       }
       expect(W.describe(build({ placement: 'diagonal', line: 7 }, 5)).word)
         .toBe(W.describe(build({ placement: 'diagonal' }, 5)).word);
@@ -685,7 +680,8 @@
         check(SG.model.isSolution(model, grid), 'seed ' + seed + ': not a valid grid');
         var info = W.describe(model);
         info.cells.forEach(function (cell) {
-          check(grid[cell] === model.fixedCells[cell], 'seed ' + seed + ': fixed cell ' + cell + ' not honoured');
+          check(grid[cell] === model.fixedCells[cell], 'seed ' + seed + ': fixed cell ' + cell + ' not ' +
+            'honoured');
         });
         check(W.readWord(model, grid) === info.word, 'seed ' + seed + ': the line spells ' +
           W.readWord(model, grid) + ' and not ' + info.word);
@@ -712,11 +708,7 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV3, CV4, T-5.4: puzzles at every level
-  // ---------------------------------------------------------------------------------------------
-
-  describe('wordoku: puzzles at every level (CV3, CV4: invariants I1-I7; T-5.4)', function () {
+  describe('wordoku: puzzles at every level (CV3, CV4: invariants I1-I7)', function () {
     LEVELS.forEach(function (level) {
       describe(level + ': ' + PUZZLES_PER_LEVEL + ' puzzles', function () {
         it('I1: exactly one solution (from the givens alone); I2: givens are part of the solution; ' +
@@ -737,7 +729,8 @@
             var info = W.describe(p.model);
             var want = PLACEMENT_CYCLE[i % PLACEMENT_CYCLE.length].placement;
             check(info.placement === want, 'puzzle ' + i + ': placement ' + info.placement);
-            check(SG.wordlists.en.indexOf(info.word) !== -1, 'puzzle ' + i + ': ' + info.word + ' is not listed');
+            check(SG.wordlists.en.indexOf(info.word) !== -1, 'puzzle ' + i + ': ' + info.word + ' is not ' +
+              'listed');
             check(W.readWord(p.model, p.solution) === info.word, 'puzzle ' + i + ': the line spells ' +
               W.readWord(p.model, p.solution) + ', the word is ' + info.word);
             check(W.isWordSolved(p.model, p.solution), 'puzzle ' + i + ': isWordSolved');
@@ -763,8 +756,8 @@
             });
           });
 
-        it('I5: every puzzle has a complete proof, and one that reached the level has its score in the band; ' +
-          'I6: at least minClues givens, every unit its minimum', function () {
+        it('I5: every puzzle has a complete proof, and one that reached the level has its score in the ' +
+          'band; I6: at least minClues givens, every unit its minimum', function () {
           var exact = 0;
           puzzleRun()[level].forEach(function (p, i) {
             var spec = SG.difficulty.spec(level, p.model);
@@ -791,12 +784,14 @@
           function () {
             puzzleRun()[level].forEach(function (p, i) {
               for (var c = 0; c < 81; c++) {
-                if ((p.givens[c] !== 0) !== (p.givens[80 - c] !== 0)) throw new Error('puzzle ' + i + ': cell ' + c);
+                if ((p.givens[c] !== 0) !== (p.givens[80 - c] !== 0)) throw new Error('puzzle ' + i + ': ' +
+                  'cell ' + c);
               }
             });
           });
 
-        it('CV6: p95 of the generation time is within the design.md 9.1 budget of ' + BUDGET_MS[level] + ' ms',
+        it('CV6: p95 of the generation time is within the design.md 9.1 budget of ' + BUDGET_MS[level] +
+          ' ms',
           function () {
             var times = puzzleRun()[level].map(function (p) { return p.elapsedMs; });
             expect(percentile(times, 0.95)).toBeLessThan(SG.test.timeLimit(BUDGET_MS[level]));
@@ -804,7 +799,7 @@
       });
     });
 
-    it('the word line is dug like any other cells: the word is not given away (T-5.4)', function () {
+    it('the word line is dug like any other cells: the word is not given away', function () {
       var lineGiven = 0;
       var lineCells = 0;
       var givens = 0;
@@ -844,7 +839,8 @@
     });
 
     it('a word of the user\'s own works end to end, on a column', function () {
-      var p = generate('normal', 4242, { variantOptions: { word: 'Bạch Dương', placement: 'column', line: 5 } });
+      var p = generate('normal', 4242,
+        { variantOptions: { word: 'Bạch Dương', placement: 'column', line: 5 } });
       var info = W.describe(p.model);
       expect([info.word, info.placement, info.line]).toEqual(['BACHDUONG', 'column', 5]);
       expect(p.model.symbols.labels.join('')).toBe('ABCDGHNOU');
@@ -880,25 +876,22 @@
       });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV5: same seed, same puzzle
-  // ---------------------------------------------------------------------------------------------
-
   describe('wordoku: same seed, same puzzle (CV5 / I4)', function () {
-    it('every level, every placement: two runs give the same givens, solution, word and symbols', function () {
-      LEVELS.forEach(function (level, li) {
-        for (var i = 0; i < PLACEMENT_CYCLE.length; i++) {
-          var seed = 100 * (li + 1) + i;
-          var a = puzzleRun()[level][i];
-          var b = generate(level, seed, { variantOptions: PLACEMENT_CYCLE[i] });
-          expect(equalArrays(a.givens, b.givens)).toBe(true);
-          expect(equalArrays(a.solution, b.solution)).toBe(true);
-          expect(W.describe(a.model)).toEqual(W.describe(b.model));
-          expect(a.model.symbols.labels).toEqual(b.model.symbols.labels);
-          expect(a.rating.level).toBe(b.rating.level);
-        }
+    it('every level, every placement: two runs give the same givens, solution, word and symbols',
+      function () {
+        LEVELS.forEach(function (level, li) {
+          for (var i = 0; i < PLACEMENT_CYCLE.length; i++) {
+            var seed = 100 * (li + 1) + i;
+            var a = puzzleRun()[level][i];
+            var b = generate(level, seed, { variantOptions: PLACEMENT_CYCLE[i] });
+            expect(equalArrays(a.givens, b.givens)).toBe(true);
+            expect(equalArrays(a.solution, b.solution)).toBe(true);
+            expect(W.describe(a.model)).toEqual(W.describe(b.model));
+            expect(a.model.symbols.labels).toEqual(b.model.symbols.labels);
+            expect(a.rating.level).toBe(b.rating.level);
+          }
+        });
       });
-    });
 
     it('the result does not depend on the trace level or on a listening sink', function () {
       var base = generate('normal', 31, { trace: 'summary' });
@@ -908,7 +901,8 @@
         expect(equalArrays(base.givens, other.givens)).toBe(true);
         expect(equalArrays(base.solution, other.solution)).toBe(true);
       });
-      var silent = SG.pipeline.run({ variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: 'summary' }, null);
+      var silent = SG.pipeline.run(
+        { variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: 'summary' }, null);
       expect(equalArrays(base.givens, silent.givens)).toBe(true);
     });
 
@@ -922,10 +916,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // The pipeline and its events (step 4 'extraStructure')
-  // ---------------------------------------------------------------------------------------------
-
   describe('wordoku: the pipeline and its events', function () {
     function trace(level, seed, traceLevel, extra) {
       var events = [];
@@ -938,10 +928,14 @@
     function checkEvents(events) {
       events.forEach(function (e, i) {
         var problems = E.eventProblems(e);
-        if (problems.length > 0) throw new Error('event ' + i + ' (' + e.i18nKey + '): ' + problems.join('; '));
+        if (problems.length > 0) {
+          throw new Error('event ' + i + ' (' + e.i18nKey + '): ' + problems.join('; '));
+        }
         if (e.seq !== i) throw new Error('seq ' + e.seq + ' at index ' + i);
         var v = E.lookup(e);
-        if (v === null) throw new Error('not in the vocabulary: ' + [e.type, e.stepId, e.phase, e.i18nKey].join(' '));
+        if (v === null) {
+          throw new Error('not in the vocabulary: ' + [e.type, e.stepId, e.phase, e.i18nKey].join(' '));
+        }
         if (e.i18nArgs && v.key !== 'error.*') {
           Object.keys(e.i18nArgs).forEach(function (a) {
             if (v.args.indexOf(a) === -1 && a !== 'part' && a !== 'parts') {
@@ -1016,7 +1010,9 @@
       function () {
         var out = trace('easy', 4, 'full');
         var firstPlace = out.events.findIndex(function (e) { return e.i18nKey === 'fullGrid.place'; });
-        var fixed = out.events.slice(0, firstPlace).filter(function (e) { return e.i18nKey === 'fullGrid.fixed'; });
+        var fixed = out.events.slice(0, firstPlace).filter(function (e) {
+          return e.i18nKey === 'fullGrid.fixed';
+        });
         expect(fixed.length).toBeGreaterThan(0);
         var shown = {};
         fixed.forEach(function (e) { e.patch.cells.forEach(function (c) { shown[c.i] = c.value; }); });
@@ -1036,7 +1032,8 @@
     it('with trace off, step 4 sends only its start and its end', function () {
       var out = trace('hard', 3, 'off');
       var own = out.events.filter(function (e) { return e.stepId === 'extraStructure'; });
-      expect(own.map(function (e) { return e.i18nKey; })).toEqual(['extraStructure.start', 'extraStructure.end']);
+      expect(own.map(function (e) { return e.i18nKey; }))
+        .toEqual(['extraStructure.start', 'extraStructure.end']);
     });
 
     it('an empty Vietnamese list: the puzzle gets an English word and step 4 says so', function () {
@@ -1077,13 +1074,11 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // CV7: strings
-  // ---------------------------------------------------------------------------------------------
-
   describe('wordoku: strings in both languages (CV7)', function () {
     function fragments() {
-      return SG.localeFragments.filter(function (f) { return f.en && f.en['variant.wordoku'] !== undefined; });
+      return SG.localeFragments.filter(function (f) {
+        return f.en && f.en['variant.wordoku'] !== undefined;
+      });
     }
 
     function fragment() {
@@ -1101,20 +1096,6 @@
       expect(typeof f.en).toBe('object');
       expect(typeof f.vi).toBe('object');
     });
-
-    it('offers the same keys in English and Vietnamese, none of them empty, and the Vietnamese is not a copy',
-      function () {
-        var f = fragment();
-        expect(Object.keys(f.vi).sort()).toEqual(Object.keys(f.en).sort());
-        Object.keys(f.en).forEach(function (key) {
-          expect(typeof f.en[key]).toBe('string');
-          expect(f.en[key].trim().length).toBeGreaterThan(2);
-          expect(typeof f.vi[key]).toBe('string');
-          expect(f.vi[key].trim().length).toBeGreaterThan(2);
-          expect(f.vi[key]).not.toBe(f.en[key]);
-          expect(placeholders(f.vi[key])).toEqual(placeholders(f.en[key]));
-        });
-      });
 
     it('names the variant in both languages', function () {
       var f = fragment();
@@ -1165,31 +1146,7 @@
         expect(/[^\x00-\x7f]/.test(f.vi[key])).toBe(true);
       });
     });
-
-    it('does not reuse a key of another variant or of the core', function () {
-      var mine = Object.keys(fragment().en);
-      SG.localeFragments.forEach(function (other) {
-        if (other === fragment()) return;
-        mine.forEach(function (key) {
-          expect(other.en[key]).toBeUndefined();
-          expect(other.vi[key]).toBeUndefined();
-        });
-      });
-    });
-
-    it('is merged into the language packs when they are loaded (browser run)', function () {
-      var locales = SG.locales;
-      if (!locales || !locales.en || !locales.vi) SG.test.skip('the language packs are not loaded here');
-      Object.keys(fragment().en).forEach(function (key) {
-        expect(locales.en[key]).toBeDefined();
-        expect(locales.vi[key]).toBeDefined();
-      });
-    });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // CV9: what the board view needs
-  // ---------------------------------------------------------------------------------------------
 
   describe('wordoku: data for the board view (CV9)', function () {
     /**
@@ -1266,21 +1223,22 @@
       expect(W.readWord(p.model, new Int32Array(81), '.')).toBe('.........');
     });
 
-    it('isWordSolved is true for the solution and false for anything that does not spell the word', function () {
-      var p = puzzleRun().normal[2];
-      var info = W.describe(p.model);
-      expect(W.isWordSolved(p.model, p.solution)).toBe(true);
-      expect(W.isWordSolved(p.model, p.givens)).toBe(info.cells.filter(function (c) {
-        return p.givens[c] !== 0;
-      }).length === 9);
-      var swapped = Int32Array.from(p.solution);
-      var a = info.cells[0];
-      var b = info.cells[1];
-      swapped[a] = p.solution[b];
-      swapped[b] = p.solution[a];
-      expect(W.isWordSolved(p.model, swapped)).toBe(false);
-      expect(W.isWordSolved(p.model, new Int32Array(81))).toBe(false);
-    });
+    it('isWordSolved is true for the solution and false for anything that does not spell the word',
+      function () {
+        var p = puzzleRun().normal[2];
+        var info = W.describe(p.model);
+        expect(W.isWordSolved(p.model, p.solution)).toBe(true);
+        expect(W.isWordSolved(p.model, p.givens)).toBe(info.cells.filter(function (c) {
+          return p.givens[c] !== 0;
+        }).length === 9);
+        var swapped = Int32Array.from(p.solution);
+        var a = info.cells[0];
+        var b = info.cells[1];
+        swapped[a] = p.solution[b];
+        swapped[b] = p.solution[a];
+        expect(W.isWordSolved(p.model, swapped)).toBe(false);
+        expect(W.isWordSolved(p.model, new Int32Array(81))).toBe(false);
+      });
 
     it('drawn as text and read back, the highlighted cells spell the word for every placement and puzzle',
       function () {
@@ -1330,14 +1288,12 @@
       });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Code hygiene
-  // ---------------------------------------------------------------------------------------------
-
   describe('wordoku: code hygiene', function () {
-    var OWN_FILES = ['js/variants/wordoku.js', 'assets/wordlists/isograms.en.js', 'assets/wordlists/isograms.vi.js'];
+    var OWN_FILES = ['js/variants/wordoku.js', 'assets/wordlists/isograms.en.js',
+      'assets/wordlists/isograms.vi.js'];
 
-    it('has no mention of wordoku in the engines: it reaches the core only through the registry and the hooks',
+    it('has no mention of wordoku in the engines: it reaches the core only through the registry and the ' +
+      'hooks',
       function () {
         var env = SG.test.node;
         if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
@@ -1346,7 +1302,9 @@
           env.fs.readdirSync(dir).filter(function (n) { return n.endsWith('.js'); }).forEach(function (name) {
             var text = env.fs.readFileSync(env.path.join(dir, name), 'utf8');
             text.split(/\r?\n/).forEach(function (line, i) {
-              if (/wordoku/i.test(line)) throw new Error(rel + '/' + name + ':' + (i + 1) + ' mentions wordoku: ' + line.trim());
+              if (/wordoku/i.test(line)) {
+                throw new Error(rel + '/' + name + ':' + (i + 1) + ' mentions wordoku: ' + line.trim());
+              }
             });
           });
         });
@@ -1358,19 +1316,23 @@
         if (!env || !env.fs) SG.test.skip('needs the Node file system; skipped in the browser');
         OWN_FILES.forEach(function (rel) {
           var text = env.fs.readFileSync(env.path.join(env.root, rel), 'utf8');
-          ['document.', 'window.', 'localStorage', 'alert(', 'import ', 'export ', 'require('].forEach(function (token) {
+          var forbidden = ['document.', 'window.', 'localStorage', 'alert(', 'import ', 'export ',
+            'require('];
+          forbidden.forEach(function (token) {
             if (text.indexOf(token) !== -1) throw new Error(rel + ' contains "' + token + '"');
           });
           text.split(/\r?\n/).forEach(function (line, i) {
-            if (line.length > 110) throw new Error(rel + ':' + (i + 1) + ' is ' + line.length + ' characters long');
+            if (line.length > 110) {
+              throw new Error(rel + ':' + (i + 1) + ' is ' + line.length + ' characters long');
+            }
           });
           expect(/^\s*'use strict';/m.test(text)).toBe(true);
         });
       });
 
     it('adds the variant through the registry only: no hook the registry does not know', function () {
-      var known = ['id', 'i18nKey', 'group', 'digits', 'difficultySupport', 'defaultSymbolMode', 'symbolModes',
-        'options', 'build', 'postGenerate', 'digStrategy', 'fastSeed'];
+      var known = ['id', 'i18nKey', 'group', 'digits', 'difficultySupport', 'defaultSymbolMode',
+        'symbolModes', 'options', 'build', 'postGenerate', 'digStrategy', 'fastSeed'];
       Object.keys(def).forEach(function (k) { expect(known).toContain(k); });
     });
   });

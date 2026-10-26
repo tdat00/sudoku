@@ -1,17 +1,18 @@
 /**
- * Inequality rules of Greater-Than Sudoku: the propagation extension and the two human techniques of the `ineq`
- * group: `ineqChain` (baseCost 12, order 65: bounds travelling along a chain a < b < c < ...) and `minMaxForcing`
- * (22, 85: signs combined with all-different units; a cell above k cells of one unit is at least k + 1, below k
- * cells at most D - k).
+ * Inequality rules of Greater-Than Sudoku: the propagation extension and the two human techniques of the
+ * `ineq` group: `ineqChain` (baseCost 12, order 65: bounds travelling along a chain a < b < c < ...) and
+ * `minMaxForcing` (22, 85: signs combined with all-different units; a cell above k cells of one unit is at
+ * least k + 1, below k cells at most D - k).
  *
- * A model states its signs as `model.inequalities = [{ a, b }]` (value[a] < value[b]). Nothing here looks at the
- * variant id: any model with inequalities is propagated; the techniques are offered per their `variantScope`.
+ * A model states its signs as `model.inequalities = [{ a, b }]` (value[a] < value[b]). Nothing here looks at
+ * the variant id: any model with inequalities is propagated; the techniques are offered per their
+ * `variantScope`.
  *
- * Extension: for `a < b` both bound rules are applied until nothing changes (cand[a] loses values >= max(cand[b]),
- * cand[b] loses values <= min(cand[a])). Along a chain the bounds are carried in one call (one sweep in topological
- * order for the minima, one backwards for the maxima). Registering is LAZY, by `SG.ineq.ensureExtension()`, which
- * the Greater-Than variant calls when it builds a model: a plain page load must not touch the engine (its own
- * tests assume an empty extension registry).
+ * Extension: for `a < b` both bound rules are applied until nothing changes (cand[a] loses values >=
+ * max(cand[b]), cand[b] loses values <= min(cand[a])). Along a chain the bounds are carried in one call (one
+ * sweep in topological order for the minima, one backwards for the maxima). Registering is LAZY, by
+ * `SG.ineq.ensureExtension()`, which the Greater-Than variant calls when it builds a model: a plain page load
+ * must not touch the engine (its own tests assume an empty extension registry).
  *
  * The techniques are the attributable, "by hand" version of the same rule (the logical solver never runs the
  * extensions), so `ineqChain` finds exactly what the extension would remove, with the justifying chain.
@@ -35,9 +36,10 @@
 
   /**
    * @typedef {Object} SignGraph
-   * `order`: cells touching a sign, smaller first (topological); `asc`: the same by index; `cyclic`: the signs cannot
-   * all hold. predStart/predList and succStart/succList are CSR lists of the smaller / greater neighbours.
-   * need/from/eff (min sweep) and lim/fromHi/effHi (max sweep) are scratch; `rank` is built lazily by `minMaxForcing`.
+   * `order`: cells touching a sign, smaller first (topological); `asc`: the same by index; `cyclic`: the
+   * signs cannot all hold. predStart/predList and succStart/succList are CSR lists of the smaller / greater
+   * neighbours. need/from/eff (min sweep) and lim/fromHi/effHi (max sweep) are scratch; `rank` is built
+   * lazily by `minMaxForcing`.
    */
 
   function graphOf(model) {
@@ -134,9 +136,10 @@
   }
 
   /**
-   * Minimum sweep. For every sign cell, in topological order, `need[c]` is the lowest value it can take because of
-   * the cells below it and `from[c]` the cell that sets it; `eff[c]` is its lowest candidate at or above `need[c]`.
-   * The state is only read. Returns false on a contradiction (no candidate left at or above the bound).
+   * Minimum sweep. For every sign cell, in topological order, `need[c]` is the lowest value it can take
+   * because of the cells below it and `from[c]` the cell that sets it; `eff[c]` is its lowest candidate at or
+   * above `need[c]`. The state is only read. Returns false on a contradiction (no candidate left at or above
+   * the bound).
    */
   function sweepMin(g, cand) {
     const order = g.order;
@@ -219,7 +222,10 @@
     }
   };
 
-  /** Registers the inequality propagation with `SG.constraints` unless it already is (idempotent); true when this call registered it. */
+  /**
+   * Registers the inequality propagation with `SG.constraints` unless it already is (idempotent); true when
+   * this call registered it.
+   */
   function ensureExtension() {
     if (SG.constraints.listExtensions().indexOf(EXTENSION_ID) !== -1) return false;
     SG.constraints.registerExtension(extension);
@@ -235,9 +241,10 @@
   }
 
   /**
-   * I1: a bound travels along a chain of signs (a cell above a chain of k cells is at least k + 1, more when a chain
-   * cell is known larger; likewise from above). One Finding is one chain: the first cell (lowest index) whose
-   * candidates break a bound, the cells of the chain that gives it, and every candidate it rules out.
+   * I1: a bound travels along a chain of signs (a cell above a chain of k cells is at least k + 1, more when
+   * a chain cell is known larger; likewise from above). One Finding is one chain: the first cell (lowest
+   * index) whose candidates break a bound, the cells of the chain that gives it, and every candidate it rules
+   * out.
    */
   function findChain(model, state, ctx) {
     const g = graphOf(model);
@@ -315,9 +322,9 @@
   }
 
   /**
-   * Static data of `minMaxForcing`: for every cell x and unit U, the cells of U (through a chain of signs) below x,
-   * when at least two, and likewise above x. Cells of one unit are pairwise different, so k of them below x push x
-   * past the k-th smallest digit they can still take together.
+   * Static data of `minMaxForcing`: for every cell x and unit U, the cells of U (through a chain of signs)
+   * below x, when at least two, and likewise above x. Cells of one unit are pairwise different, so k of them
+   * below x push x past the k-th smallest digit they can still take together.
    */
   function rankOf(model, g) {
     if (g.rank !== null) return g.rank;
@@ -413,9 +420,9 @@
   }
 
   /**
-   * I2: if k cells of one unit are below x, x is larger than the k-th smallest digit they can take between them; if k
-   * are above x it is smaller than their k-th largest. The first pruned cell gives the Finding. Plain chains are
-   * `ineqChain`'s job, which the ladder asks first.
+   * I2: if k cells of one unit are below x, x is larger than the k-th smallest digit they can take between
+   * them; if k are above x it is smaller than their k-th largest. The first pruned cell gives the Finding.
+   * Plain chains are `ineqChain`'s job, which the ladder asks first.
    */
   function findMinMax(model, state, ctx) {
     const g = graphOf(model);

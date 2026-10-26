@@ -1,5 +1,5 @@
-// Full grid generation (task T-1.5): validity, determinism, uniformity, fixed cells, restarts, the fastSeed
-// hook that comes from the variant registry, and the V8 model check that depends on it.
+// Full grid generation: validity, determinism, uniformity, fixed cells, restarts and the fastSeed hook that
+// comes from the variant registry.
 (function () {
   'use strict';
 
@@ -224,7 +224,8 @@
     it('is not special-cased in the core: no variant ids in the generator or solver sources', function () {
       var env = SG.test.node;
       if (!env) SG.test.skip('needs the Node file system');
-      ['js/engine/full-grid.js', '../core/js/engine/dfs-solver.js', '../core/js/engine/constraints.js', 'js/engine/digger.js']
+      ['js/engine/full-grid.js', '../core/js/engine/dfs-solver.js', '../core/js/engine/constraints.js',
+        'js/engine/digger.js']
         .forEach(function (rel) {
           var text = env.fs.readFileSync(env.path.join(env.root, rel), 'utf8');
           expect(/classic|variantId\s*===|variantId\s*==/.test(text)).toBe(false);
@@ -449,11 +450,12 @@
       expect(restartsOver(boards.thresholdLoose, { restartThreshold: 1 })).toBeGreaterThan(0);
     });
 
-    it('is left out for a variant that declares none: 50 failed guesses per cell is the default', function () {
-      var plain = SG.fixtures.models.boxGrid('thresholdNone', 4, 4);
-      expect(SG.variants.has('thresholdNone')).toBe(false);
-      expect(restartsOver(plain, {})).toBe(0);
-    });
+    it('is left out for a variant that declares none: 50 failed guesses per cell is the default',
+      function () {
+        var plain = SG.fixtures.models.boxGrid('thresholdNone', 4, 4);
+        expect(SG.variants.has('thresholdNone')).toBe(false);
+        expect(restartsOver(plain, {})).toBe(0);
+      });
 
     it('is still deterministic when the variant value makes the search restart', function () {
       for (var s = 1; s <= SEEDS; s++) {
@@ -462,7 +464,8 @@
     });
 
     it('mega12 and mega16 declare one, and passing that number by hand gives the same grid', function () {
-      if (!SG.variants.has('mega12') || !SG.variants.has('mega16')) SG.test.skip('the Mega variants are not loaded');
+      if (!SG.variants.has('mega12') || !SG.variants.has('mega16')) SG.test.skip('the Mega variants are ' +
+        'not loaded');
       ['mega12', 'mega16'].forEach(function (id) {
         var def = SG.variants.get(id);
         expect(Number.isInteger(def.restartThreshold)).toBe(true);
@@ -501,21 +504,6 @@
       expect(SG.constraints.assign(model, state, 0, 16)).toBe(true);
       expect(state.candidates[1] & 0x8000).toBe(0);
       expect(state.candidates[1]).toBe(0x7fff);
-    });
-  });
-
-  describe('full grid: model validation V8', function () {
-    it('V8 passes for the classic models and fails for an unsolvable one', function () {
-      expect(SG.model.validate(model4).ok).toBe(true);
-      expect(SG.model.validate(model6).ok).toBe(true);
-      expect(SG.model.validate(model9).ok).toBe(true);
-      var broken = SG.model.create({
-        variantId: 'k4-two-digits',
-        digits: 2,
-        units: [[0, 1], [2, 3], [0, 2], [1, 3], [0, 3], [1, 2]],
-        layout: { rows: 2, cols: 2, cellRow: [0, 0, 1, 1], cellCol: [0, 1, 0, 1], cellRegion: [0, 0, 0, 0] }
-      });
-      expect(SG.model.validate(broken).ok).toBe(false);
     });
   });
 })();

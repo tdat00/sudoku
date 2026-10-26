@@ -1,11 +1,12 @@
 /**
  * Puzzle history `SG.history`: every generated puzzle is added to a list kept in `localStorage` (key
- * `sg.history.v1`, newest first, at most 100) and shown in the left panel (`#history-root`). An entry holds what
- * the list shows (variant, level, seed, clues, score, time) and the configuration that rebuilds the puzzle; picking
- * one regenerates it (same seed, same puzzle; the result cache serves it at once when it can).
- * `entryOf`, `keyOf` and `createList` are pure data/storage (no DOM; storage access is guarded, memory-only when
- * blocked). `init(app)` fills the panel and follows the app's 'result' and 'locale' events; `destroy()` undoes it.
- * Loads in Node: the DOM and `localStorage` are touched only inside functions.
+ * `sg.history.v1`, newest first, at most 100) and shown in the left panel (`#history-root`). An entry holds
+ * what the list and the export picker show (variant, level, seed, clues, score) and the configuration that
+ * rebuilds the puzzle; its `id` (`keyOf`) is derived from those fields when the list is read, not stored.
+ * Picking one regenerates it (same seed, same puzzle; the result cache serves it at once when it can).
+ * `entryOf`, `keyOf` and `createList` are pure data/storage (no DOM; storage access is guarded, memory-only
+ * when blocked). `init(app)` fills the panel and follows the app's 'result' and 'locale' events; `destroy()`
+ * undoes it. Loads in Node: the DOM and `localStorage` are touched only inside functions.
  */
 (function (root) {
   'use strict';
@@ -17,6 +18,8 @@
   const STORAGE_KEY = 'sg.history.v1';
   const VERSION = 1;
   const LIMIT = 100;
+  const STORED_FIELDS = Object.freeze(['variantId', 'requested', 'level', 'seed', 'clues', 'score',
+    'symbolMode', 'symmetry', 'digOrder', 'maxAttempts', 'variantOptions']);
 
   function isNum(x) {
     return typeof x === 'number' && isFinite(x);
@@ -39,7 +42,10 @@
     return out;
   }
 
-  /** What makes a puzzle the same puzzle: variant and options, level, seed and dig settings (not the symbol set). */
+  /**
+   * What makes a puzzle the same puzzle: variant and options, level, seed and dig settings (not the symbol
+   * set).
+   */
   function keyOf(config, seed) {
     const c = config || {};
     const options = plainOptions(c.variantOptions);
@@ -48,37 +54,52 @@
       optionText.join('&')].join('|');
   }
 
-  /** The list entry of a result; null for one that cannot be rebuilt (no seed or configuration). `at`: ms, default now. */
-  function entryOf(result, at) {
+  /**
+   * Null for a result that cannot be rebuilt (no seed or configuration). `id` is derived when read (`idOf`).
+   */
+  function entryOf(result) {
     if (result === null || typeof result !== 'object' || !result.config) return null;
     const config = result.config;
     if (result.seed === undefined || result.seed === null || typeof config.variantId !== 'string') return null;
     const rating = result.rating || {};
     const requested = typeof config.difficulty === 'string' ? config.difficulty : rating.level;
     if (typeof requested !== 'string') return null;
-    return {
-      id: keyOf(config, result.seed),
-      at: isNum(at) ? at : Date.now(),
+    return withId({
       variantId: config.variantId,
       requested: requested,
       level: typeof rating.level === 'string' ? rating.level : requested,
       seed: String(result.seed),
       clues: countClues(result.givens),
-      cells: result.model && result.model.cellCount > 0 ? result.model.cellCount
-        : (result.givens ? result.givens.length : 0),
       score: isNum(rating.score) ? Math.round(rating.score) : 0,
       symbolMode: typeof config.symbolMode === 'string' ? config.symbolMode : undefined,
       symmetry: config.symmetry,
       digOrder: config.digOrder,
       maxAttempts: config.maxAttempts,
       variantOptions: plainOptions(config.variantOptions)
-    };
+    });
+  }
+
+  function idOf(e) {
+    return keyOf({ variantId: e.variantId, difficulty: e.requested, symmetry: e.symmetry,
+      digOrder: e.digOrder, maxAttempts: e.maxAttempts, variantOptions: e.variantOptions }, e.seed);
+  }
+
+  function withId(e) {
+    return Object.assign({ id: idOf(e) }, e);
+  }
+
+  // What is written: the entry without its `id` (derived when read); older `at` and `cells` fields go too.
+  function storedEntry(e) {
+    const out = {};
+    STORED_FIELDS.forEach(function (name) {
+      if (e[name] !== undefined) out[name] = e[name];
+    });
+    return out;
   }
 
   function validEntry(e) {
-    return e !== null && typeof e === 'object' && typeof e.id === 'string' && isNum(e.at) &&
-      typeof e.variantId === 'string' && typeof e.requested === 'string' && typeof e.level === 'string' &&
-      typeof e.seed === 'string';
+    return e !== null && typeof e === 'object' && typeof e.variantId === 'string' &&
+      typeof e.requested === 'string' && typeof e.level === 'string' && typeof e.seed === 'string';
   }
 
   /** The store state that rebuilds the entry's puzzle (for `SG.app.generate`). */
@@ -96,8 +117,9 @@
   }
 
   /**
-   * Entries newest first, persisted as `{ version, entries }` under one storage key. Every operation re-reads the
-   * stored list first (another tab may have changed it). Nothing throws; an unusable `storage` means memory only.
+   * Entries newest first, persisted as `{ version, entries }` under one storage key. Every operation re-reads
+   * the stored list first (another tab may have changed it). Nothing throws; an unusable `storage` means
+   * memory only.
    */
   function createList(options) {
     const o = options || {};
@@ -133,8 +155,10 @@
           return [];
         }
         const seen = new Set();
-        return value.entries.filter(function (e) {
-          if (!validEntry(e) || seen.has(e.id)) return false;
+        return value.entries.filter(validEntry).map(function (e) {
+          return withId(storedEntry(e));
+        }).filter(function (e) {
+          if (seen.has(e.id)) return false;
           seen.add(e.id);
           return true;
         });
@@ -152,7 +176,7 @@
         return;
       }
       try {
-        st.setItem(key, JSON.stringify({ version: VERSION, entries: entries }));
+        st.setItem(key, JSON.stringify({ version: VERSION, entries: entries.map(storedEntry) }));
         persistent = true;
       } catch (err) {
         persistent = false;
@@ -167,16 +191,20 @@
         return entries;
       },
 
-      /** An entry already in the list is replaced; `touch: false` keeps its place and time (opening one does not move it up). */
+      /**
+       * An entry already in the list is replaced; `touch: false` keeps its place (opening one does not move
+       * it up).
+       */
       add: function add(entry, opts) {
         if (!validEntry(entry)) return read();
+        const item = withId(storedEntry(entry));
         const entries = read();
-        const at = entries.findIndex(function (e) { return e.id === entry.id; });
+        const at = entries.findIndex(function (e) { return e.id === item.id; });
         if (at !== -1 && opts && opts.touch === false) {
-          entries[at] = Object.assign({}, entry, { at: entries[at].at });
+          entries[at] = item;
         } else {
           if (at !== -1) entries.splice(at, 1);
-          entries.unshift(entry);
+          entries.unshift(item);
         }
         const kept = entries.slice(0, limit);
         write(kept);

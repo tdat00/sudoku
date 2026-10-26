@@ -1,4 +1,4 @@
-// Symmetry groups (task T-1.6) and the hole digger, stage A (task T-1.7). The digger tests assert the
+// Symmetry groups and the hole digger, stage A. The digger tests assert the
 // invariants I1 (unique solution), I2 (givens are a subset of the solution), I3 (valid solution), I4 (same
 // seed, same puzzle) and I6 (clue floor) from design.md section 15.3.
 (function () {

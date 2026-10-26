@@ -289,13 +289,13 @@
   };
 
   /**
-   * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in js/engine/difficulty.js).
-   * The derived floor (classic9 numbers x cellCount / 81) stops the digger before the techniques of the
-   * level do: every shared box carries the clues of two grids, so the puzzle stays solvable with singles and
-   * normal was hit by only 2..9 % of the dug puzzles. With 60 % of the floor the dig ends where the
-   * techniques end and 38..49 % of the dug puzzles are normal. The floor of veryEasy stays: its score band
-   * is so low that the puzzle needs the clues. Flower additionally keeps 80 % for easy. expert takes the
-   * factor of hard.
+   * Calibration of the clue floor (`clueFloorScale`, see "Clue floor per variant" in
+   * js/engine/difficulty.js). The derived floor (classic9 numbers x cellCount / 81) stops the digger before
+   * the techniques of the level do: every shared box carries the clues of two grids, so the puzzle stays
+   * solvable with singles and normal was hit by only 2..9 % of the dug puzzles. With 60 % of the floor the
+   * dig ends where the techniques end and 38..49 % of the dug puzzles are normal. The floor of veryEasy
+   * stays: its score band is so low that the puzzle needs the clues. Flower additionally keeps 80 % for easy.
+   * expert takes the factor of hard.
    */
   const CLUE_FLOOR_SCALE = Object.freeze({ normal: 0.6, hard: 0.6, expert: 0.6 });
   const FLOWER_CLUE_FLOOR_SCALE = Object.freeze({ easy: 0.8, normal: 0.6, hard: 0.6, expert: 0.6 });

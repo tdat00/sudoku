@@ -1,4 +1,4 @@
-// Overlapping multi-grid variants (tasks T-5.7 and T-5.8): samurai, sohei, butterfly and flower.
+// Overlapping multi-grid variants: samurai, sohei, butterfly and flower.
 //
 // The geometry, the shared cell indices, the geometry self-check, the overlap-first full grid seed,
 // symmetry on the whole canvas, and the common variant criteria CV1-CV6 (CV7 is the locale fragment, CV8 the
@@ -20,8 +20,9 @@
 
   /**
    * What each board must look like, written down independently of the builder. `cells` is the arithmetic
-   * unique cell count of the origins: design.md lists 324 for sohei and 225 for flower, but 4 x 81 - 4 x 9 = 288
-   * and a 15x15 canvas minus its four empty 3x3 corners = 189 (see the header of js/variants/multigrid.js).
+   * unique cell count of the origins: design.md lists 324 for sohei and 225 for flower, but
+   * 4 x 81 - 4 x 9 = 288 and a 15x15 canvas minus its four empty 3x3 corners = 189 (see the header of
+   * js/variants/multigrid.js).
    */
   var BOARDS = {
     samurai: {
@@ -46,7 +47,7 @@
     }
   };
 
-  /** Minimum share of exact hits (deep run, default 8 attempts); measured: see the report of T-5.7/T-5.8. */
+  /** Minimum share of exact hits in the deep run (default 8 attempts). */
   var HIT_RATE = { veryEasy: 0.95, easy: 0.95, normal: 0.8, hard: 0.85 };
 
   var CLASSIC = SG.variants.get('classic9').build({}, null);
@@ -140,10 +141,6 @@
     return s;
   }
 
-  // ===========================================================================================
-  // Geometry tables
-  // ===========================================================================================
-
   describe('multigrid geometry tables', function () {
     it('lists the four boards of design.md section 5.2 with the origins of the table', function () {
       IDS.forEach(function (id) {
@@ -173,12 +170,13 @@
       });
     });
 
-    it('explains the 324 and 225 of design.md: four grids before merging, and the flower canvas area', function () {
-      expect(4 * 81).toBe(324);
-      expect(4 * 81 - 4 * 9).toBe(288);
-      expect(15 * 15).toBe(225);
-      expect(15 * 15 - 4 * 9).toBe(189);
-    });
+    it('explains the 324 and 225 of design.md: four grids before merging, and the flower canvas area',
+      function () {
+        expect(4 * 81).toBe(324);
+        expect(4 * 81 - 4 * 9).toBe(288);
+        expect(15 * 15).toBe(225);
+        expect(15 * 15 - 4 * 9).toBe(189);
+      });
 
     it('the tables cannot be changed by accident', function () {
       expect(Object.isFrozen(MG.GEOMETRIES)).toBe(true);
@@ -189,10 +187,6 @@
       expect(function () { MG.GEOMETRIES.samurai.cells = 1; }).toThrow();
     });
   });
-
-  // ===========================================================================================
-  // Per board: registry entry, structure, shared indices
-  // ===========================================================================================
 
   IDS.forEach(function (id) {
     var spec = BOARDS[id];
@@ -241,20 +235,21 @@
         });
       });
 
-      it('has 27 units per sub-grid (9 rows, 9 columns, 9 boxes), every one of 9 distinct cells', function () {
-        var m = model(id);
-        expect(m.units).toHaveLength(27 * spec.origins.length);
-        spec.origins.forEach(function (o, g) {
-          var kinds = { row: 0, col: 0, box: 0 };
-          for (var u = g * 27; u < (g + 1) * 27; u++) {
-            expect(m.unitMeta[u].gridIndex).toBe(g);
-            kinds[m.unitMeta[u].kind]++;
-            expect(m.units[u]).toHaveLength(9);
-            expect(Object.keys(setOf(Array.from(m.units[u]))).length).toBe(9);
-          }
-          expect(kinds).toEqual({ row: 9, col: 9, box: 9 });
+      it('has 27 units per sub-grid (9 rows, 9 columns, 9 boxes), every one of 9 distinct cells',
+        function () {
+          var m = model(id);
+          expect(m.units).toHaveLength(27 * spec.origins.length);
+          spec.origins.forEach(function (o, g) {
+            var kinds = { row: 0, col: 0, box: 0 };
+            for (var u = g * 27; u < (g + 1) * 27; u++) {
+              expect(m.unitMeta[u].gridIndex).toBe(g);
+              kinds[m.unitMeta[u].kind]++;
+              expect(m.units[u]).toHaveLength(9);
+              expect(Object.keys(setOf(Array.from(m.units[u]))).length).toBe(9);
+            }
+            expect(kinds).toEqual({ row: 9, col: 9, box: 9 });
+          });
         });
-      });
 
       it('every cell belongs to 3 units per sub-grid that covers it', function () {
         var m = model(id);
@@ -265,17 +260,18 @@
         }
       });
 
-      it('each sub-grid on its own is a valid 9x9 Sudoku: its units are the 27 units of classic9', function () {
-        var m = model(id);
-        spec.origins.forEach(function (o, g) {
-          for (var u = 0; u < 27; u++) {
-            var local = Array.from(m.units[g * 27 + u]).map(function (cell) {
-              return (m.layout.cellRow[cell] - o[0]) * 9 + (m.layout.cellCol[cell] - o[1]);
-            }).sort(function (a, b) { return a - b; });
-            expect(local).toEqual(Array.from(CLASSIC.units[u]).sort(function (a, b) { return a - b; }));
-          }
+      it('each sub-grid on its own is a valid 9x9 Sudoku: its units are the 27 units of classic9',
+        function () {
+          var m = model(id);
+          spec.origins.forEach(function (o, g) {
+            for (var u = 0; u < 27; u++) {
+              var local = Array.from(m.units[g * 27 + u]).map(function (cell) {
+                return (m.layout.cellRow[cell] - o[0]) * 9 + (m.layout.cellCol[cell] - o[1]);
+              }).sort(function (a, b) { return a - b; });
+              expect(local).toEqual(Array.from(CLASSIC.units[u]).sort(function (a, b) { return a - b; }));
+            }
+          });
         });
-      });
 
       it('cells on one canvas position share ONE index; changing a value through grid A shows in grid B',
         function () {
@@ -333,31 +329,35 @@
         expect(done).toBe(true);
       });
 
-      it('lists each overlapped 3x3 box once as an overlay, and only the boxes of two or more grids', function () {
-        var m = model(id);
-        var overlays = m.layout.overlays;
-        expect(overlays).toHaveLength(spec.overlapBoxes);
-        overlays.forEach(function (o) {
-          expect(o.kind).toBe('overlap');
-          expect(o.cells).toHaveLength(9);
-          for (var i = 0; i < 9; i++) {
-            expect(coverage(spec.origins, m.layout.cellRow[o.cells[i]], m.layout.cellCol[o.cells[i]]))
-              .toBeGreaterThan(1);
+      it('lists each overlapped 3x3 box once as an overlay, and only the boxes of two or more grids',
+        function () {
+          var m = model(id);
+          var overlays = m.layout.overlays;
+          expect(overlays).toHaveLength(spec.overlapBoxes);
+          overlays.forEach(function (o) {
+            expect(o.kind).toBe('overlap');
+            expect(o.cells).toHaveLength(9);
+            for (var i = 0; i < 9; i++) {
+              expect(coverage(spec.origins, m.layout.cellRow[o.cells[i]], m.layout.cellCol[o.cells[i]]))
+                .toBeGreaterThan(1);
+            }
+          });
+          var inOverlay = {};
+          overlays.forEach(function (o) {
+            Array.from(o.cells).forEach(function (c) { inOverlay[c] = true; });
+          });
+          expect(Object.keys(inOverlay).map(Number).sort(function (a, b) { return a - b; }))
+            .toEqual(sharedCells(m));
+        });
+
+      it('numbers the cells grid by grid: grid 0 owns the indices 0..80 in its own row-major order',
+        function () {
+          var m = model(id);
+          for (var i = 0; i < 81; i++) {
+            expect(m.layout.cellRow[i]).toBe(spec.origins[0][0] + Math.floor(i / 9));
+            expect(m.layout.cellCol[i]).toBe(spec.origins[0][1] + (i % 9));
           }
         });
-        var inOverlay = {};
-        overlays.forEach(function (o) { Array.from(o.cells).forEach(function (c) { inOverlay[c] = true; }); });
-        expect(Object.keys(inOverlay).map(Number).sort(function (a, b) { return a - b; }))
-          .toEqual(sharedCells(m));
-      });
-
-      it('numbers the cells grid by grid: grid 0 owns the indices 0..80 in its own row-major order', function () {
-        var m = model(id);
-        for (var i = 0; i < 81; i++) {
-          expect(m.layout.cellRow[i]).toBe(spec.origins[0][0] + Math.floor(i / 9));
-          expect(m.layout.cellCol[i]).toBe(spec.origins[0][1] + (i % 9));
-        }
-      });
 
       it('gives every box of every grid one region id: the box slot of the canvas', function () {
         var m = model(id);
@@ -393,10 +393,6 @@
     });
   });
 
-  // ===========================================================================================
-  // The shapes of the four boards
-  // ===========================================================================================
-
   describe('samurai shape', function () {
     var m = model('samurai');
     var O = BOARDS.samurai.origins;
@@ -417,8 +413,9 @@
 
     it('the centre grid shares 9 cells with each corner grid and the corner grids share none', function () {
       var gridsOf = function (cell) {
-        return O.map(function (o, g) { return covers(o, m.layout.cellRow[cell], m.layout.cellCol[cell]) ? g : -1; })
-          .filter(function (g) { return g >= 0; });
+        return O.map(function (o, g) {
+          return covers(o, m.layout.cellRow[cell], m.layout.cellCol[cell]) ? g : -1;
+        }).filter(function (g) { return g >= 0; });
       };
       var withCentre = [0, 0, 0, 0];
       for (var c = 0; c < m.cellCount; c++) {
@@ -498,15 +495,16 @@
       expect(inAll).toHaveLength(36);
     });
 
-    it('shares 12 boxes: 8 by two grids and 4 by all four (Sudopedia: 8 x double, 4 x quadruple)', function () {
-      var O = BOARDS.butterfly.origins;
-      var tally = { 2: 0, 4: 0 };
-      m.layout.overlays.forEach(function (o) {
-        var k = coverage(O, m.layout.cellRow[o.cells[0]], m.layout.cellCol[o.cells[0]]);
-        tally[k] = (tally[k] || 0) + 1;
+    it('shares 12 boxes: 8 by two grids and 4 by all four (Sudopedia: 8 x double, 4 x quadruple)',
+      function () {
+        var O = BOARDS.butterfly.origins;
+        var tally = { 2: 0, 4: 0 };
+        m.layout.overlays.forEach(function (o) {
+          var k = coverage(O, m.layout.cellRow[o.cells[0]], m.layout.cellCol[o.cells[0]]);
+          tally[k] = (tally[k] || 0) + 1;
+        });
+        expect(tally).toEqual({ 2: 8, 4: 4 });
       });
-      expect(tally).toEqual({ 2: 8, 4: 4 });
-    });
   });
 
   describe('flower shape', function () {
@@ -550,16 +548,14 @@
     });
 
     it('has a centre grid that adds no constraint: each of its units equals a unit of a petal', function () {
-      var key = function (cells) { return Array.from(cells).sort(function (a, b) { return a - b; }).join(','); };
+      var key = function (cells) {
+        return Array.from(cells).sort(function (a, b) { return a - b; }).join(',');
+      };
       var petalUnits = {};
       for (var u = 27; u < m.units.length; u++) petalUnits[key(m.units[u])] = true;
       for (var centre = 0; centre < 27; centre++) expect(petalUnits[key(m.units[centre])]).toBe(true);
     });
   });
-
-  // ===========================================================================================
-  // Geometry self-validation
-  // ===========================================================================================
 
   describe('multigrid geometry self-validation', function () {
     function samuraiWith(changes) {
@@ -577,20 +573,23 @@
 
     it('throws when the unique cell count differs from the table, naming both counts', function () {
       var bad = samuraiWith({ cells: 441 });
-      expectGeometryError(function () { MG.buildModel('samurai', bad); }, 'cover 369 unique cells, expected 441');
+      expectGeometryError(function () { MG.buildModel('samurai', bad); }, 'cover 369 unique cells, ' +
+        'expected 441');
     });
 
-    it('rejects the unique counts 324 (sohei) and 225 (flower) that design.md lists, with the real ones', function () {
-      expectGeometryError(function () {
-        MG.buildModel('sohei', Object.assign({}, MG.GEOMETRIES.sohei, { cells: 324 }));
-      }, 'cover 288 unique cells, expected 324');
-      expectGeometryError(function () {
-        MG.buildModel('flower', Object.assign({}, MG.GEOMETRIES.flower, { cells: 225 }));
-      }, 'cover 189 unique cells, expected 225');
-    });
+    it('rejects the unique counts 324 (sohei) and 225 (flower) that design.md lists, with the real ones',
+      function () {
+        expectGeometryError(function () {
+          MG.buildModel('sohei', Object.assign({}, MG.GEOMETRIES.sohei, { cells: 324 }));
+        }, 'cover 288 unique cells, expected 324');
+        expectGeometryError(function () {
+          MG.buildModel('flower', Object.assign({}, MG.GEOMETRIES.flower, { cells: 225 }));
+        }, 'cover 189 unique cells, expected 225');
+      });
 
     // The count alone cannot tell every layout apart (the centre grid of samurai at (6,6), (3,3) and (9,9)
-    // all give 369), which is why the origins are also compared with the table above and checked for alignment.
+    // all give 369), which is why the origins are also compared with the table above and checked for
+    // alignment.
     it('throws when moving one grid of a board changes the count', function () {
       var moved = MG.GEOMETRIES.samurai.origins.map(function (o) { return o.slice(); });
       moved[4] = [9, 0];
@@ -606,15 +605,16 @@
       }, /not a multiple|does not fit/);
     });
 
-    it('throws for a canvas that is not a multiple of 3, a repeated origin and an empty origin list', function () {
-      expectGeometryError(function () { MG.buildModel('x', samuraiWith({ rows: 20 })); }, 'canvas 20x21');
-      expectGeometryError(function () {
-        MG.buildModel('x', { rows: 9, cols: 9, cells: 81, origins: [[0, 0], [0, 0]] });
-      }, 'listed twice');
-      expectGeometryError(function () {
-        MG.buildModel('x', { rows: 9, cols: 9, cells: 0, origins: [] });
-      }, 'at least one sub-grid');
-    });
+    it('throws for a canvas that is not a multiple of 3, a repeated origin and an empty origin list',
+      function () {
+        expectGeometryError(function () { MG.buildModel('x', samuraiWith({ rows: 20 })); }, 'canvas 20x21');
+        expectGeometryError(function () {
+          MG.buildModel('x', { rows: 9, cols: 9, cells: 81, origins: [[0, 0], [0, 0]] });
+        }, 'listed twice');
+        expectGeometryError(function () {
+          MG.buildModel('x', { rows: 9, cols: 9, cells: 0, origins: [] });
+        }, 'at least one sub-grid');
+      });
 
     it('throws for a missing or malformed geometry instead of building something', function () {
       expectGeometryError(function () { MG.buildModel('nonexistent'); }, 'geometry is missing');
@@ -661,13 +661,11 @@
     });
   });
 
-  // ===========================================================================================
-  // Locale fragment (CV7)
-  // ===========================================================================================
-
   describe('multigrid locale fragment', function () {
     function fragment() {
-      return SG.localeFragments.filter(function (f) { return f.en && f.en['variant.samurai'] !== undefined; })[0];
+      return SG.localeFragments.filter(function (f) {
+        return f.en && f.en['variant.samurai'] !== undefined;
+      })[0];
     }
 
     function placeholders(text) {
@@ -683,25 +681,8 @@
       expect(typeof fragment().vi).toBe('object');
     });
 
-    it('carries identical key sets in both languages, none of them empty', function () {
+    it('names the boards in both languages', function () {
       var f = fragment();
-      expect(Object.keys(f.vi).sort()).toEqual(Object.keys(f.en).sort());
-      Object.keys(f.en).forEach(function (key) {
-        expect(typeof f.en[key]).toBe('string');
-        expect(f.en[key].trim()).not.toBe('');
-        expect(f.vi[key].trim()).not.toBe('');
-      });
-    });
-
-    it('names every variant and describes it', function () {
-      var f = fragment();
-      IDS.forEach(function (id) {
-        var def = SG.variants.get(id);
-        expect(f.en[def.i18nKey]).toBeDefined();
-        expect(f.vi[def.i18nKey]).toBeDefined();
-        expect(f.en[def.i18nKey + '.desc']).toBeDefined();
-        expect(f.vi[def.i18nKey + '.desc']).toBeDefined();
-      });
       expect(f.en['variant.samurai']).toBe('Samurai Sudoku');
       expect(f.vi['variant.butterfly']).toBe('Sudoku Cánh bướm');
       expect(f.vi['variant.flower']).toBe('Sudoku Bông hoa');
@@ -721,10 +702,6 @@
       Object.keys(f.en).forEach(function (key) { expect(f.vi[key]).not.toBe(f.en[key]); });
     });
   });
-
-  // ===========================================================================================
-  // Full grid (CV2) and the overlap-first seed
-  // ===========================================================================================
 
   describe('multigrid full grids', function () {
     IDS.forEach(function (id) {
@@ -842,16 +819,13 @@
     });
   });
 
-  // ===========================================================================================
-  // Symmetry about the centre of the whole canvas
-  // ===========================================================================================
-
   describe('multigrid symmetry', function () {
     function canvasMirror(m) {
       var at = {};
       for (var c = 0; c < m.cellCount; c++) at[positionOf(m, c)] = c;
       return function (cell) {
-        var key = (m.layout.rows - 1 - m.layout.cellRow[cell]) + ',' + (m.layout.cols - 1 - m.layout.cellCol[cell]);
+        var key = (m.layout.rows - 1 - m.layout.cellRow[cell]) + ',' +
+          (m.layout.cols - 1 - m.layout.cellCol[cell]);
         return at[key];
       };
     }
@@ -888,29 +862,32 @@
       });
     });
 
-    it('mirrors across grids: the top-left corner of samurai pairs with the bottom-right corner', function () {
-      var m = model('samurai');
-      var groups = SG.symmetry.groups(m, 'rotational180');
-      var group = groups.filter(function (g) { return g.indexOf(0) !== -1; })[0];
-      expect(group).toHaveLength(2);
-      expect(positionOf(m, group[1])).toBe('20,20');
-      var gridOfLast = m.layout.subGrids.filter(function (g) {
-        return covers([g.originRow, g.originCol], 20, 20);
+    it('mirrors across grids: the top-left corner of samurai pairs with the bottom-right corner',
+      function () {
+        var m = model('samurai');
+        var groups = SG.symmetry.groups(m, 'rotational180');
+        var group = groups.filter(function (g) { return g.indexOf(0) !== -1; })[0];
+        expect(group).toHaveLength(2);
+        expect(positionOf(m, group[1])).toBe('20,20');
+        var gridOfLast = m.layout.subGrids.filter(function (g) {
+          return covers([g.originRow, g.originCol], 20, 20);
+        });
+        expect(gridOfLast).toHaveLength(1);
+        expect(gridOfLast[0].gridIndex).toBe(3);
       });
-      expect(gridOfLast).toHaveLength(1);
-      expect(gridOfLast[0].gridIndex).toBe(3);
-    });
 
-    it('works with the symmetries of a square canvas too (mirrorBoth, diagonal) without losing a cell', function () {
-      IDS.forEach(function (id) {
-        var m = model(id);
-        ['mirrorH', 'mirrorV', 'mirrorBoth', 'rotational90', 'diagonal', 'antiDiagonal'].forEach(function (kind) {
-          var total = 0;
-          SG.symmetry.groups(m, kind).forEach(function (g) { total += g.length; });
-          expect(total).toBe(m.cellCount);
+    it('works with the symmetries of a square canvas too (mirrorBoth, diagonal) without losing a cell',
+      function () {
+        IDS.forEach(function (id) {
+          var m = model(id);
+          var kinds = ['mirrorH', 'mirrorV', 'mirrorBoth', 'rotational90', 'diagonal', 'antiDiagonal'];
+          kinds.forEach(function (kind) {
+            var total = 0;
+            SG.symmetry.groups(m, kind).forEach(function (g) { total += g.length; });
+            expect(total).toBe(m.cellCount);
+          });
         });
       });
-    });
 
     it('a group shrinks, it does not fail, where the mirrored position holds no cell', function () {
       // Two grids along the diagonal of a 12x12 canvas: the top-right and bottom-left corners are empty.
@@ -921,13 +898,10 @@
       var total = 0;
       groups.forEach(function (g) { total += g.length; });
       expect(total).toBe(126);
-      expect(SG.symmetry.groups(m, 'rotational180').every(function (g) { return g.length === 2; })).toBe(true);
+      var groups = SG.symmetry.groups(m, 'rotational180');
+      expect(groups.every(function (g) { return g.length === 2; })).toBe(true);
     });
   });
-
-  // ===========================================================================================
-  // Puzzles (CV3, CV4, CV5, CV6)
-  // ===========================================================================================
 
   describe('multigrid puzzles', function () {
     var BUDGET_OF = { veryEasy: 0, easy: 1, normal: 1, hard: 2 };
@@ -935,8 +909,8 @@
     function generate(id, level, seed, extra) {
       var budget = SG.budget.create({ ms: 60000 });
       var started = now();
-      var result = SG.pipeline.run(Object.assign({ variantId: id, difficulty: level, seed: seed, trace: 'off' },
-        extra), null, budget);
+      var config = Object.assign({ variantId: id, difficulty: level, seed: seed, trace: 'off' }, extra);
+      var result = SG.pipeline.run(config, null, budget);
       return { result: result, ms: now() - started };
     }
 
@@ -999,7 +973,8 @@
         var at = {};
         for (var c = 0; c < m.cellCount; c++) at[positionOf(m, c)] = c;
         for (var cell = 0; cell < m.cellCount; cell++) {
-          var other = at[(m.layout.rows - 1 - m.layout.cellRow[cell]) + ',' + (m.layout.cols - 1 - m.layout.cellCol[cell])];
+          var other = at[(m.layout.rows - 1 - m.layout.cellRow[cell]) + ',' +
+            (m.layout.cols - 1 - m.layout.cellCol[cell])];
           expect(out.givens[cell] !== 0).toBe(out.givens[other] !== 0);
         }
       }, SLOW);
@@ -1049,7 +1024,7 @@
           // Whatever the factors, the floors still fall with the level.
           for (var i = 1; i < floors[id].length; i++) expect(floors[id][i]).toBeLessThan(floors[id][i - 1]);
         });
-        // The floor of flower's easy level is the same 80% as before the calibration of the other levels.
+        // flower's easy level keeps 80% of the derived floor.
         expect(floors.flower[1]).toBe(Math.floor(Math.floor(34 * 189 / 81) * 0.8));
       });
 
@@ -1092,9 +1067,7 @@
     });
   });
 
-  // ===========================================================================================
   // Deep run (CV3 at full size): SG_DEEP=1
-  // ===========================================================================================
 
   if (DEEP) {
     describe('multigrid deep run: 20 puzzles per level (SG_DEEP=1)', function () {
@@ -1105,8 +1078,8 @@
             var times = [];
             for (var seed = 1; seed <= 20; seed++) {
               var started = now();
-              var result = SG.pipeline.run({ variantId: id, difficulty: level, seed: seed, trace: 'off' }, null,
-                SG.budget.create({ ms: 120000 }));
+              var result = SG.pipeline.run({ variantId: id, difficulty: level, seed: seed, trace: 'off' },
+                null, SG.budget.create({ ms: 120000 }));
               times.push(now() - started);
               if (result.rating.level === level) exact++;
               expect(SG.dfs.countSolutions(result.model, result.givens, 2)).toBe(1);

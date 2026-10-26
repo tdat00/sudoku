@@ -1,23 +1,24 @@
 /**
  * Logical solver: solves a puzzle the way a person does, one named technique at a time, and reports which
- * techniques were needed. The generator uses it as the difficulty yardstick and as the oracle of the hole digger;
- * the player uses it for the hints (the next step it finds, checked against the solution, is what a hint
- * explains). `score` is the plain design score; nothing is classified here.
+ * techniques were needed. The generator uses it as the difficulty yardstick and as the oracle of the hole
+ * digger; the player uses it for the hints (the next step it finds, checked against the solution, is what a
+ * hint explains). `score` is the plain design score; nothing is classified here.
  *
  * Loop: try the registered techniques (techniques.js) in ascending `order`, apply the first Finding, record a
  * step and restart from the cheapest technique, until the grid is full, nothing applies ("stuck", a normal
  * result, never an error) or the budget runs out.
  *
- * Singles and the propagation engine (decision, please keep): `SG.constraints.propagate` places naked and hidden
- * singles on its own. Running it after every step would consume singles silently (neither attributed nor scored,
- * and `allowedTechniques: ['nakedSingle']` would still solve puzzles that need hidden singles). So the solver
- * never calls `propagate`: it starts from a peer-consistent grid (givens entered with `SG.constraints.assign`)
- * and applies every Finding with `assign` / `eliminate`, which only do peer elimination. Singles are then
- * ordinary techniques (tech-basic.js); rules that are not all-different (cage sums, inequalities) are likewise
- * left to their techniques. No propagate, place or dfs call is open while a technique runs, so the solver can be
- * used from anywhere, including recursively.
+ * Singles and the propagation engine (decision, please keep): `SG.constraints.propagate` places naked and
+ * hidden singles on its own. Running it after every step would consume singles silently (neither attributed
+ * nor scored, and `allowedTechniques: ['nakedSingle']` would still solve puzzles that need hidden singles).
+ * So the solver never calls `propagate`: it starts from a peer-consistent grid (givens entered with
+ * `SG.constraints.assign`) and applies every Finding with `assign` / `eliminate`, which only do peer
+ * elimination. Singles are then ordinary techniques (tech-basic.js); rules that are not all-different (cage
+ * sums, inequalities) are likewise left to their techniques. No propagate, place or dfs call is open while a
+ * technique runs, so the solver can be used from anywhere, including recursively.
  *
- * `budget.check()` runs once per applied step and once before a puzzle is declared stuck; its errors propagate.
+ * `budget.check()` runs once per applied step and once before a puzzle is declared stuck; its errors
+ * propagate.
  */
 (function (root) {
   'use strict';
@@ -62,10 +63,11 @@
 
   /**
    * @typedef {Object} SolveReport
-   * `status` is 'solved' | 'stuck' | 'contradiction' (the givens or a technique lead to an impossible grid; reported,
-   * not thrown). `state` is the final state (for a stuck puzzle, where it got stuck). `steps` is empty unless
-   * `collectSteps`. `hardestTechnique` is the used technique with the highest baseCost (ties: later in the ladder).
-   * `solution` is a DFS solution when `stopOnStuck` is false and the loop got stuck, else null.
+   * `status` is 'solved' | 'stuck' | 'contradiction' (the givens or a technique lead to an impossible grid;
+   * reported, not thrown). `state` is the final state (for a stuck puzzle, where it got stuck). `steps` is
+   * empty unless `collectSteps`. `hardestTechnique` is the used technique with the highest baseCost (ties:
+   * later in the ladder). `solution` is a DFS solution when `stopOnStuck` is false and the loop got stuck,
+   * else null.
    */
 
   function normalizeOptions(options) {
@@ -180,8 +182,8 @@
   }
 
   /**
-   * Applies a validated Finding with `assign` / `eliminate`, ignoring placements and eliminations already in effect.
-   * Returns the number of changes made, or -1 when the Finding leads to a contradiction.
+   * Applies a validated Finding with `assign` / `eliminate`, ignoring placements and eliminations already in
+   * effect. Returns the number of changes made, or -1 when the Finding leads to a contradiction.
    */
   function applyFinding(model, state, tech, finding, collect, effect) {
     const n = model.cellCount;
@@ -229,7 +231,9 @@
     return true;
   }
 
-  /** Runs the ladder until the grid is full or no technique applies; returns STUCK, SOLVED or CONTRADICTION. */
+  /**
+   * Runs the ladder until the grid is full or no technique applies; returns STUCK, SOLVED or CONTRADICTION.
+   */
   function iterate(model, state, ladder, ctx, run) {
     const budget = ctx.budget;
     const collect = run.steps !== null;
@@ -304,10 +308,10 @@
   }
 
   /**
-   * Solves a puzzle with the registered human techniques. Throws 'solver.invalidGivens', 'solver.invalidOption',
-   * 'solver.unknownTechnique', the bug guards 'solver.emptyFinding', 'solver.noEffect', 'solver.invalidFinding'
-   * (and 'solver.stateMutated' with SG.DEBUG) naming the technique, and the budget's errors; never for a merely
-   * stuck puzzle.
+   * Solves a puzzle with the registered human techniques. Throws 'solver.invalidGivens',
+   * 'solver.invalidOption', 'solver.unknownTechnique', the bug guards 'solver.emptyFinding',
+   * 'solver.noEffect', 'solver.invalidFinding' (and 'solver.stateMutated' with SG.DEBUG) naming the
+   * technique, and the budget's errors; never for a merely stuck puzzle.
    */
   function solve(model, givens, options) {
     const opts = normalizeOptions(options);

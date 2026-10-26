@@ -1,7 +1,8 @@
 /**
- * Readers of a `PuzzleModel` that the screens of both projects need: `signEdges` (where to draw each Greater-Than
- * sign), `describeWord` / `readWord` / `isWordSolved` (the key-word line of a word board) and `symbolModes`.
- * Everything is derived from the model itself, so it works without any variant code. Pure data, no DOM.
+ * Readers of a `PuzzleModel` that the screens of both projects need: `signEdges` (where to draw each
+ * Greater-Than sign), `describeWord` / `readWord` / `isWordSolved` (the key-word line of a word board) and
+ * `symbolModes`. Everything is derived from the model itself, so it works without any variant code. Pure
+ * data, no DOM.
  */
 (function (root) {
   'use strict';
@@ -14,8 +15,8 @@
 
   /**
    * Where and how to draw each sign. `(midRow, midCol)` is the midpoint of the two cell centres in cell units
-   * (a centre has integer coordinates). `direction` runs from the smaller cell a to the greater cell b; the glyph
-   * reads in that direction: '<' / '>' horizontally, and vertically the apex points at the smaller cell
+   * (a centre has integer coordinates). `direction` runs from the smaller cell a to the greater cell b; the
+   * glyph reads in that direction: '<' / '>' horizontally, and vertically the apex points at the smaller cell
    * ('\u2227' when a is above b, '\u2228' when below).
    */
   function signEdges(model) {
@@ -50,8 +51,9 @@
 
   /**
    * @typedef {Object} WordLine
-   * `placement` is 'diagonal' | 'row' | 'column'; `line` the 1-based row/column (null for the diagonal); `cells`
-   * the nine cells in reading order. `word` is the letters joined: keep it hidden until the puzzle is solved.
+   * `placement` is 'diagonal' | 'row' | 'column'; `line` the 1-based row/column (null for the diagonal);
+   * `cells` the nine cells in reading order. `word` is the letters joined: keep it hidden until the puzzle is
+   * solved.
    */
 
   function describeWord(model) {
@@ -98,8 +100,8 @@
 
   /**
    * The symbol sets a board can be shown in (the first is the default): a word board its key-word letters or
-   * plain digits, a board with more than nine values (Mega) its own digits only, any other board digits, letters,
-   * colours and shapes.
+   * plain digits, a board with more than nine values (Mega) its own digits only, any other board digits,
+   * letters, colours and shapes.
    */
   function symbolModes(model) {
     if (model.symbols && model.symbols.mode === 'word') return ['word', 'digits'];
@@ -108,7 +110,6 @@
   }
 
   SG.modelAids = {
-    WORD_LENGTH: WORD_LENGTH,
     signEdges: signEdges,
     describeWord: describeWord,
     readWord: readWord,

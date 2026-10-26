@@ -1,19 +1,20 @@
 /**
- * `SG.i18n`. Language packs are flat objects `SG.locales.en|vi` (dotted key -> text) from js/ui/locale.*.js. Modules
- * that own their strings push `{ en: {...}, vi: {...} }` fragments into `SG.localeFragments`; `mergeFragments()` adds
- * them to the packs. The base packs win: a fragment that redefines an existing key is reported in `conflicts`.
+ * `SG.i18n`. Language packs are flat objects `SG.locales.en|vi` (dotted key -> text) from js/ui/locale.*.js.
+ * Modules that own their strings push `{ en: {...}, vi: {...} }` fragments into `SG.localeFragments`;
+ * `mergeFragments()` adds them to the packs. The base packs win: a fragment that redefines an existing key is
+ * reported in `conflicts`.
  *
- * Texts use `{name}` placeholders. Plural forms are keys with the suffix `_one` / `_other` (the category comes from
- * `Intl.PluralRules` and `args.count`; a missing form falls back to `_other`, then to the plain key). `args.rule`
- * makes the key `<key>.<rule>` win when it exists. A missing key returns the key itself (and warns when `SG.DEBUG`
- * is on), after trying the English pack.
+ * Texts use `{name}` placeholders. Plural forms are keys with the suffix `_one` / `_other` (the category
+ * comes from `Intl.PluralRules` and `args.count`; a missing form falls back to `_other`, then to the plain
+ * key). `args.rule` makes the key `<key>.<rule>` win when it exists. A missing key returns the key itself
+ * (and warns when `SG.DEBUG` is on), after trying the English pack.
  *
  * DOM: `data-i18n="key"` sets the text, `data-i18n-attr="title:key,aria-label:key2"` sets attributes,
- * `data-i18n-args='{"n":3}'` gives both arguments. DOM access is inside guarded functions, so the file loads (and
- * works, except for the DOM part) in Node.
+ * `data-i18n-args='{"n":3}'` gives both arguments. DOM access is inside guarded functions, so the file loads
+ * (and works, except for the DOM part) in Node.
  *
- * Cells: events carry cell indexes; `setCellLabeler(fn)` says how to label an index for the current puzzle (e.g.
- * 'R4C7'); `eventText` also accepts a label function or a model per call.
+ * Cells: events carry cell indexes; `setCellLabeler(fn)` says how to label an index for the current puzzle
+ * (e.g. 'R4C7'); `eventText` also accepts a label function or a model per call.
  */
 (function (root) {
   'use strict';
@@ -59,9 +60,9 @@
   }
 
   /**
-   * Picks the start language: the `lang` URL parameter, then the stored preference, then the browser languages
-   * (`sources.navigator`: `navigator`, a tag or a list of tags), then English. Pure: the caller reads the URL, the
-   * storage and `navigator`.
+   * Picks the start language: the `lang` URL parameter, then the stored preference, then the browser
+   * languages (`sources.navigator`: `navigator`, a tag or a list of tags), then English. Pure: the caller
+   * reads the URL, the storage and `navigator`.
    */
   function detect(sources) {
     const s = sources || {};
@@ -77,7 +78,7 @@
     return DEFAULT_LOCALE;
   }
 
-  /** Adds `fragments[from ..]` to `locales` key by key; a key that already exists (in the pack or an earlier fragment) is never replaced but returned as a conflict. */
+  /** Adds `fragments[from ..]` key by key; an existing key is never replaced but returned as a conflict. */
   function mergeInto(locales, fragments, from) {
     const conflicts = [];
     let count = 0;
@@ -96,7 +97,9 @@
     return { count: count, conflicts: conflicts };
   }
 
-  /** Merges the fragments added to `SG.localeFragments` since the last call. Cheap when nothing is new, so safe before every lookup; a pack that is not loaded yet is left alone and merged later. */
+  /**
+   * Merges the fragments added since the last call. Cheap when nothing is new, so safe before every lookup.
+   */
   function mergeFragments() {
     if (Array.isArray(SG.localeFragments) && watched !== SG.localeFragments) watchFragments();
     const fragments = SG.localeFragments;
@@ -118,7 +121,7 @@
     return merged;
   }
 
-  /** Merges every fragment pushed from now on straight away (when the packs are loaded), so direct reads of `SG.locales.en[key]` see it too. */
+  /** Merges fragments as they are pushed, so direct reads of `SG.locales.en[key]` see them too. */
   function watchFragments() {
     if (!Array.isArray(SG.localeFragments)) SG.localeFragments = [];
     const list = SG.localeFragments;
@@ -200,7 +203,7 @@
     return interpolate(template, args);
   }
 
-  /** Milliseconds below one second ('412 ms'), then seconds with at most one decimal ('2.5 s'), then '1 min 5 s', '1 h 2 min'. Numbers follow the language. */
+  /** '412 ms', '2.5 s', '1 min 5 s', '1 h 2 min'; numbers follow the language. */
   function formatDuration(ms) {
     const value = Number(ms);
     if (!isFinite(value) || value < 0) return '\u2013';
@@ -242,7 +245,10 @@
     return '#' + (cell + 1);
   }
 
-  /** Chains as text: `R1C1\u22605 \u21d2 R1C4=5 | ...` (`=` the candidate is true, `\u2260` false, `|` separates the two chains of a contradiction). */
+  /**
+   * `R1C1\u22605 \u21d2 R1C4=5 | ...` (`=` true, `\u2260` false, `|` separates the chains of a
+   * contradiction).
+   */
   function formatChains(chains, labeler) {
     return chains.map(function (chain) {
       return chain.map(function (lit) {
@@ -292,7 +298,11 @@
     });
   }
 
-  /** Args: numbers stay plain, arrays are joined with ', ', booleans become yes / no; `count` picks the plural form, `rule` a `<key>.<rule>` variant; `unitKind` and `orientation` are translated ('row' -> 'hàng'). Returns the key itself when no language has it. */
+  /**
+   * Arrays are joined with ', ', booleans become yes / no, `unitKind` and `orientation` are translated;
+   * `count` picks the plural form, `rule` a `<key>.<rule>` variant. Returns the key itself when no language
+   * has it.
+   */
   function t(key, args) {
     if (typeof key !== 'string') return '';
     let template = templateFor(current, key, args);
@@ -323,7 +333,10 @@
     return { code: code, args: Object.assign(args, extra || {}) };
   }
 
-  /** `errOrCode`: a `SG.errors.GenerationError`, its plain copy `{ code, i18nArgs }` (what crosses `postMessage`), or a code such as 'budget.exceeded'. An unknown code gets a generic text. */
+  /**
+   * `errOrCode`: a `SG.errors.GenerationError`, its plain copy `{ code, i18nArgs }` (what crosses
+   * `postMessage`) or a code such as 'budget.exceeded'. An unknown code gets a generic text.
+   */
   function tError(errOrCode, args) {
     const parts = errorParts(errOrCode, args);
     const code = parts.code;
@@ -397,7 +410,10 @@
     return args;
   }
 
-  /** One line for an event of the trace, from `event.i18nKey` / `i18nArgs`: cells as labels (`options.cellLabel`, or `options.model` via `SG.model.cellLabel`), ids as translated names. Empty string for an event without a key (a `metric`). */
+  /**
+   * Cells as labels (`options.cellLabel`, or `options.model` via `SG.model.cellLabel`), ids as translated
+   * names. '' for an event without a key (a `metric`).
+   */
   function eventText(event, options) {
     if (!event || typeof event.i18nKey !== 'string' || event.i18nKey === '') return '';
     const key = event.i18nKey;
@@ -466,7 +482,10 @@
     }
   }
 
-  /** Updates `<html lang>`, translates the document and calls the listeners, only when the language really changed. Nothing is reloaded; without a DOM only the current language changes; an unsupported code is ignored. */
+  /**
+   * Only when the language really changes: updates `<html lang>`, translates the document, calls the
+   * listeners.
+   */
   function setLocale(code) {
     const next = normalize(code);
     if (next === null) {

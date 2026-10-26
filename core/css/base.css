@@ -232,7 +232,7 @@ summary {
 }
 
 /* ---- Smooth theme switching: colours only, and never under reduced motion ----
-   the theme.js of each project (js/ui/theme.js) adds .is-theming to <html> for a moment around a change of theme. */
+   js/ui/theme.js of each app adds .is-theming to <html> for a moment around a change of theme. */
 @media (prefers-reduced-motion: no-preference) {
   :root.is-theming:not([data-motion="off"]),
   :root.is-theming:not([data-motion="off"]) *,
@@ -253,7 +253,7 @@ summary {
   :focus-visible {
     outline: var(--sg-focus-width) solid Highlight;
   }
-/* ---- Animations ---- */
+
   .skip-link {
     border-color: CanvasText;
   }

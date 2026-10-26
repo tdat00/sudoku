@@ -1,4 +1,4 @@
-// Fish techniques (task T-2.4): X-Wing, Simple Colouring, Swordfish, Jellyfish (../core/js/engine/tech-fish.js).
+// Fish techniques: X-Wing, Simple Colouring, Swordfish, Jellyfish (../core/js/engine/tech-fish.js).
 //
 // Fixtures: the published positions are the example boards of the SudokuWiki strategy pages (X-Wing,
 // Swordfish, Jellyfish, Simple Colouring). Each one is the puzzle plus the candidate grid the page shows when
@@ -19,10 +19,7 @@
   const FISH_IDS = ['xWing', 'swordfish', 'jellyfish'];
   const FISH_SIZE = { xWing: 2, swordfish: 3, jellyfish: 4 };
 
-  // ---------------------------------------------------------------------------------------------
   // Published positions
-  // ---------------------------------------------------------------------------------------------
-
   const PUBLISHED = {
     xWing1: {
       puzzle: '100000569402000008050009040000640801000010000208035000040500010900000402621000005',
@@ -303,10 +300,7 @@
     return expected;
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Transposition: a published board turned on its diagonal is a valid board that swaps rows and columns
-  // ---------------------------------------------------------------------------------------------
-
   function transposeRef(ref) {
     const m = /^R(\d+)C(\d+)$/.exec(ref);
     return 'R' + m[2] + 'C' + m[1];
@@ -346,10 +340,7 @@
     return out;
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Models for the generic tests
-  // ---------------------------------------------------------------------------------------------
-
   /**
    * A classic style grid: rows, columns and boxes of boxRows x boxCols cells (digits = boxRows * boxCols).
    * `extraRows` adds more units of kind 'row' (lists of cells) to imitate overlapping sub-grids.
@@ -421,10 +412,7 @@
     return '.'.repeat(model.cellCount);
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Helpers that read units from the model
-  // ---------------------------------------------------------------------------------------------
-
   function unitsOfKind(model, kind) {
     const out = [];
     model.unitMeta.forEach(function (meta, u) {
@@ -472,10 +460,7 @@
     });
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Fish built from a solved grid: the digit is removed from base-line cells that the pattern does not use
-  // ---------------------------------------------------------------------------------------------
-
   /**
    * A state with every candidate of the solved grid except for one digit, which is cut down in `size`
    * base lines to a fish pattern that contains the true cells. Base lines are spread over the board.
@@ -532,10 +517,7 @@
     };
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Synthetic digit maps (Simple Colouring): the digit stays only on the listed cells
-  // ---------------------------------------------------------------------------------------------
-
   function digitMap(model, digit, labels) {
     const keep = new Set(labels.map(function (label) { return H.cell(model, label); }));
     const eliminate = [];
@@ -545,10 +527,7 @@
     return H.makeState(model, blankPuzzle(model), { eliminate: eliminate, propagate: false });
   }
 
-  // ---------------------------------------------------------------------------------------------
   // Brute-force references
-  // ---------------------------------------------------------------------------------------------
-
   function combinations(list, k) {
     const out = [];
     (function pick(start, chosen) {
@@ -692,10 +671,6 @@
     return 'state #' + index + ' (' + item.kind + ')\n  puzzle: ' + H.puzzleString(model, item.givens);
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // Registration
-  // ---------------------------------------------------------------------------------------------
-
   describe('fish techniques: registration', function () {
     const EXPECTED = {
       xWing: { baseCost: 32, order: 110 },
@@ -723,10 +698,6 @@
       expect(at.slice().sort(function (a, b) { return a - b; })).toEqual(at);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // X-Wing
-  // ---------------------------------------------------------------------------------------------
 
   describe('xWing', function () {
     it('finds the published X-Wing with rows as base lines (SudokuWiki example 1, digit 7)', function () {
@@ -774,10 +745,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Swordfish
-  // ---------------------------------------------------------------------------------------------
-
   describe('swordfish', function () {
     it('finds the published perfect 3-3-3 Swordfish (columns as base lines, digit 8)', function () {
       H.expectFinding(SG.test, 'swordfish', publishedState('swordfish333'), expectedOf(SPECS.swordfish333));
@@ -808,10 +775,6 @@
       H.expectNoFinding(SG.test, 'swordfish', f.state);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Jellyfish
-  // ---------------------------------------------------------------------------------------------
 
   describe('jellyfish', function () {
     it('finds the published Jellyfish (candidate 7, rows B D E H on columns 1 5 7 9)', function () {
@@ -862,10 +825,6 @@
       H.expectNoFinding(SG.test, 'jellyfish', f.state);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // The generic routine: sizes 2, 3, 4, both orientations, every digit count
-  // ---------------------------------------------------------------------------------------------
 
   describe('generic fish: sizes 2-4, rows and columns as base lines', function () {
     FISH_IDS.forEach(function (id) {
@@ -1015,10 +974,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Simple Colouring
-  // ---------------------------------------------------------------------------------------------
-
   describe('simpleColouring', function () {
     it('finds the published colour wrap: two cells of one colour in row J (digit 8)', function () {
       const finding = H.expectFinding(SG.test, 'simpleColouring', publishedState('colourWrap'),
@@ -1149,10 +1104,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Differential tests: the technique against the brute-force references above
-  // ---------------------------------------------------------------------------------------------
-
   describe('fish: agreement with brute-force references', function () {
     const SETUPS = [['classic9', 400, 10], ['classic6', 400, 0], ['classic4', 300, 0]];
     const cache = {};
@@ -1216,17 +1167,8 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Soundness (invariant I7)
-  // ---------------------------------------------------------------------------------------------
-
+  // The 300 classic9 states of the default seed are in the sweep of techniques.test.js.
   describe('soundness (invariant I7)', function () {
-    ALL_IDS.forEach(function (id) {
-      it(id + ' never removes a candidate of the true solution (300 random states)', function () {
-        H.assertSound(SG.test, id, { count: 300, minFirings: 3 });
-      });
-    });
-
     ALL_IDS.forEach(function (id) {
       it(id + ' stays sound on 1200 more states of another seed', function () {
         H.assertSound(SG.test, id, { count: 1200, seed: 99, minFirings: 3 });

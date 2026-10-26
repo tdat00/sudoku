@@ -1,6 +1,7 @@
 /**
  * Strings of the static page frame (index.html): header, welcome screen, landmarks and live regions; keys are
- * prefixed `shell.`. `app.title` is owned by the base packs. Strings of the dynamic parts live in js/ui/app.js.
+ * prefixed `shell.`. `app.title` is owned by the base packs. Strings of the dynamic parts live in
+ * js/ui/app.js.
  */
 (function (root) {
   'use strict';
@@ -36,7 +37,7 @@
       'shell.welcome.title': 'Import a Sudoku puzzle to play it',
       'shell.welcome.lead': 'This is a player for puzzles made by Sudoku Generator: all 15 variants, ' +
         'notes, hints that name the technique, and progress that is saved for you.',
-      'shell.welcome.step1': 'Make a puzzle in Sudoku Generator and press “Play online”.',
+      'shell.welcome.step1': 'Make a puzzle in Sudoku Generator and press “Play”.',
       'shell.welcome.step2': 'Or import puzzles: a puzzle file, a link, the text of Sudoku Generator’s ' +
         '“Export” box (one or many puzzles), or a line of 81 digits (a classic board).',
       'shell.welcome.step3': 'Come back any time: your progress is kept on this device.',
@@ -86,9 +87,9 @@
       'shell.welcome.title': 'Nhập một đề Sudoku để chơi',
       'shell.welcome.lead': 'Đây là trình chơi cho các đề do Trình sinh đề Sudoku tạo ra: đủ 15 biến thể, ' +
         'có ghi chú, gợi ý nêu tên kỹ thuật và tự động lưu tiến độ cho bạn.',
-      'shell.welcome.step1': 'Tạo một đề trong Trình sinh đề Sudoku rồi bấm “Chơi trực tuyến”.',
-      'shell.welcome.step2': 'Hoặc nhập đề: tệp đề, liên kết, văn bản trong ô “Xuất” của Trình sinh đề ' +
-        'Sudoku (một hay nhiều đề), hay một dòng 81 chữ số (bàn cờ cổ điển).',
+      'shell.welcome.step1': 'Tạo một đề trong Trình sinh đề Sudoku rồi bấm “Chơi”.',
+      'shell.welcome.step2': 'Hoặc nhập đề: tệp đề, liên kết, văn bản trong hộp “Xuất văn bản” của Trình ' +
+        'sinh đề Sudoku (một hay nhiều đề), hay một dòng 81 chữ số (bàn cờ cổ điển).',
       'shell.welcome.step3': 'Bạn có thể quay lại bất cứ lúc nào: tiến độ được giữ trên thiết bị này.',
       'shell.welcome.open': 'Nhập đề',
       'shell.welcome.generator': 'Lấy đề từ Trình sinh đề Sudoku',

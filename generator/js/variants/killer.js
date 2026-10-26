@@ -29,7 +29,6 @@
 
   const SG = root.SG = root.SG || {};
 
-  // Keep the first instance on repeated loads.
   if (SG.killer && typeof SG.killer.describeCages === 'function') return;
 
   const ID = 'killer';
@@ -63,7 +62,7 @@
   const TILT_MIN = -2;
   const TILT_MAX = 2;
 
-  /** Pale background colours: at most this many classes ('cageColor0' ... 'cageColor4'). */
+  /** Prefix of the overlay kinds of the pale cage backgrounds ('cageColor0', 'cageColor1', ...). */
   const COLOR_KIND = 'cageColor';
 
   /** Options stored per base model, so that `postGenerate` can read what `build` was given. */
@@ -1073,13 +1072,10 @@
   SG.killer = {
     ID: ID,
     OPTIONS: OPTIONS,
-    COLOR_KIND: COLOR_KIND,
     sizeDistribution: sizeDistribution,
-    tiltFor: tiltFor,
     buildBoard: buildBoard,
     growCages: growCages,
     repairLayout: repairLayout,
-    repairLayoutSteps: repairLayoutSteps,
     colorCages: colorCages,
     modelWithCages: modelWithCages,
     modelFromCages: modelFromCages,
@@ -1116,7 +1112,7 @@
     en: {
       'variant.killer': 'Killer Sudoku',
       'variant.killer.cageSize': 'Cage size',
-      'variant.killer.cageSize.hint': 'Small cages are easier to read, large cages call for more ' +
+      'variant.killer.cageSize.hint': 'Small cages are easier to read; large cages call for more ' +
         'reasoning.\n\n**By difficulty**: keeps the cage size of the chosen level.',
       'variant.killer.cageSize.small': 'Smaller',
       'variant.killer.cageSize.large': 'Larger',
@@ -1196,13 +1192,14 @@
         'phần thuộc cùng một lồng nên không có chữ số chung. Các ứng viên khác bị loại.',
       'extraStructure.cages': 'Đã dựng {cages} lồng, mỗi lồng từ {minSize} đến {maxSize} ô, tô ' +
         '{colors} màu nhạt sao cho các lồng kề nhau khác màu.',
-      'extraStructure.repairSplit': 'Sửa lần {attempt}: tách một lồng lớn thành hai ở vùng còn nhiều ' +
-        'đáp án ({cages} lồng).',
-      'extraStructure.repairMerge': 'Sửa lần {attempt}: gộp lại hai lồng nhỏ kề nhau ({cages} lồng).',
-      'extraStructure.repairReveal': 'Sửa lần {attempt}: lộ một chữ số ở ô còn nhiều khả năng nhất.',
+      'extraStructure.repairSplit': 'Sửa lần {attempt}: tách một lồng lớn thành hai ở vùng còn nhiều đáp ' +
+        'án (hiện có {cages} lồng).',
+      'extraStructure.repairMerge': 'Sửa lần {attempt}: gộp lại hai lồng nhỏ kề nhau (hiện có {cages} ' +
+        'lồng).',
+      'extraStructure.repairReveal': 'Sửa lần {attempt}: mở một chữ số ở ô còn nhiều khả năng nhất.',
       'extraStructure.unique': 'Chỉ riêng các lồng đã cho đúng một lời giải (sau {repairs} lần sửa).',
-      'extraStructure.ambiguous': 'Chỉ riêng các lồng vẫn còn nhiều lời giải; cần lộ {revealed} chữ ' +
-        'số để chốt đáp án (sau {repairs} lần sửa).'
+      'extraStructure.ambiguous': 'Chỉ riêng các lồng vẫn còn nhiều lời giải; cần mở {revealed} chữ số để ' +
+        'chốt đáp án (sau {repairs} lần sửa).'
     }
   });
 

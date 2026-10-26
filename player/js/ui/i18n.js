@@ -1,17 +1,17 @@
 /**
- * Internationalisation: `SG.i18n`. Language packs are flat objects `SG.locales.en` / `SG.locales.vi` (dotted key ->
- * text) from js/ui/locale.*.js. Modules that own their strings push `{ en: {...}, vi: {...} }` fragments into
- * `SG.localeFragments`; `mergeFragments()` adds them to the packs. The base packs win: a fragment that redefines an
- * existing key is reported in `conflicts` and does not override it.
+ * Internationalisation: `SG.i18n`. Language packs are flat objects `SG.locales.en` / `SG.locales.vi` (dotted
+ * key -> text) from js/ui/locale.*.js. Modules that own their strings push `{ en: {...}, vi: {...} }`
+ * fragments into `SG.localeFragments`, merged into the packs as they arrive. The base packs win: a fragment
+ * that redefines an existing key is reported in `conflicts` and does not override it.
  *
  * Texts use `{name}` placeholders. Plural forms are keys with the suffix `_one` / `_other` (category from
- * `Intl.PluralRules` and `args.count`; a missing form falls back to `_other`, then the plain key). `args.rule`
- * selects `<key>.<rule>` when it exists. A missing key returns the key itself (and warns with `SG.DEBUG`), after
- * trying the English pack.
+ * `Intl.PluralRules` and `args.count`; a missing form falls back to `_other`, then the plain key).
+ * `args.rule` selects `<key>.<rule>` when it exists. A missing key falls back to English, then to the key
+ * itself (with a warning under `SG.DEBUG`).
  *
- * DOM: `data-i18n="key"` sets the text of an element, `data-i18n-attr="title:key,aria-label:key2"` attributes,
- * `data-i18n-args='{"n":3}'` gives both arguments. DOM access is guarded, so this file works in Node (minus the DOM).
- * Technique step texts name cells by index; `setCellLabeler(fn)` says how to turn an index into 'R4C7'.
+ * DOM: `data-i18n="key"` sets the text of an element, `data-i18n-attr="title:key,aria-label:key2"`
+ * attributes, `data-i18n-args='{"n":3}'` the arguments of both. DOM access is guarded, so this file loads in
+ * Node. Technique texts name cells by index; `setCellLabeler(fn)` turns an index into a label such as 'R4C7'.
  */
 (function (root) {
   'use strict';
@@ -54,7 +54,7 @@
     return list;
   }
 
-  /** Picks the start language: `?lang=`, then the stored preference, then the browser languages, then English. Pure: the caller reads the URL, storage and `navigator`. */
+  /** `?lang=`, then the stored preference, then the browser languages, then English. */
   function detect(sources) {
     const s = sources || {};
     const fromUrl = normalize(s.urlLang);
@@ -69,7 +69,7 @@
     return DEFAULT_LOCALE;
   }
 
-  /** Adds `fragments[from ..]` to `locales` key by key; a key that already exists (in the pack or an earlier fragment) is never replaced but returned as a conflict. */
+  /** Adds `fragments[from ..]` to `locales`; an existing key is never replaced but returned as a conflict. */
   function mergeInto(locales, fragments, from) {
     const conflicts = [];
     let count = 0;
@@ -88,7 +88,7 @@
     return { count: count, conflicts: conflicts };
   }
 
-  /** Merges the fragments pushed since the last call (cheap when there is nothing new). A language whose pack is not loaded yet is left alone and merged later. */
+  /** Merges the fragments pushed since the last call; a pack that is not loaded yet is merged later. */
   function mergeFragments() {
     if (Array.isArray(SG.localeFragments) && watched !== SG.localeFragments) watchFragments();
     const fragments = SG.localeFragments;
@@ -110,7 +110,7 @@
     return merged;
   }
 
-  /** Merges every later fragment straight away (when the packs are loaded), so code reading `SG.locales.en[key]` directly sees the key too. */
+  // Merges each pushed fragment at once, so code reading `SG.locales.en[key]` directly sees it too.
   function watchFragments() {
     if (!Array.isArray(SG.localeFragments)) SG.localeFragments = [];
     const list = SG.localeFragments;
@@ -192,7 +192,7 @@
     return interpolate(template, args);
   }
 
-  /** Formats a duration for people: '412 ms', '2.5 s', '1 min 5 s', '1 h 2 min'; numbers follow the language. */
+  /** '412 ms', '2.5 s', '1 min 5 s', '1 h 2 min'; numbers follow the language. */
   function formatDuration(ms) {
     const value = Number(ms);
     if (!isFinite(value) || value < 0) return '\u2013';
@@ -233,7 +233,10 @@
     return '#' + (cell + 1);
   }
 
-  /** Writes the chains of a forcing chain as text: `R1C1\u22605 \u21d2 R1C4=5 | ...` (`=` the candidate is true, `\u2260` false, `|` separates the two chains of a contradiction). */
+  /**
+   * The chains of a forcing chain as text: `R1C1\u22605 \u21d2 R1C4=5 | ...` (`=` the candidate is true,
+   * `\u2260` false, `|` separates the two chains of a contradiction).
+   */
   function formatChains(chains, labeler) {
     return chains.map(function (chain) {
       return chain.map(function (lit) {
@@ -283,7 +286,10 @@
     });
   }
 
-  /** Translates a key. Arrays in `args` are joined with ', ', booleans become yes / no, `count` picks the plural form, `rule` a `<key>.<rule>` variant; `unitKind` and `orientation` are themselves translated. */
+  /**
+   * Arrays in `args` are joined with ', ', booleans become yes / no, `count` picks the plural form, `rule` a
+   * `<key>.<rule>` variant; `unitKind` and `orientation` are themselves translated.
+   */
   function t(key, args) {
     if (typeof key !== 'string') return '';
     let template = templateFor(current, key, args);
@@ -313,7 +319,7 @@
     return { code: code, args: Object.assign(args, extra || {}) };
   }
 
-  /** Translated message of an error: a `GenerationError`, its plain-data copy `{ code, i18nArgs }` (what crosses `postMessage`) or a code; generic text for an unknown code. */
+  /** The message of an error, its plain copy `{ code, i18nArgs }` or a code; generic text when unknown. */
   function tError(errOrCode, args) {
     const parts = errorParts(errOrCode, args);
     const code = parts.code;
@@ -331,7 +337,6 @@
     if (code === 'unexpected' && shown.message === undefined) shown.message = code;
     return has('error.' + code) ? t('error.' + code, shown) : t('error.unknown', shown);
   }
-
 
   function parseArgs(text) {
     if (typeof text !== 'string' || text === '') return undefined;
@@ -384,7 +389,7 @@
     }
   }
 
-  /** Switches the language without reloading: updates `<html lang>`, translates the document and calls the listeners (only when it really changed). An unsupported code is ignored. */
+  /** Updates `<html lang>`, translates the document and, on a real change, calls the listeners. */
   function setLocale(code) {
     const next = normalize(code);
     if (next === null) {
@@ -430,7 +435,6 @@
     normalize: normalize,
     formatNumber: formatNumber,
     formatDuration: formatDuration,
-    formatChains: formatChains,
     setCellLabeler: setCellLabeler,
     cellLabel: cellLabel,
     mergeFragments: mergeFragments,

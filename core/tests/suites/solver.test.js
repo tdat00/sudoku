@@ -1,4 +1,4 @@
-// DFS solver (task T-1.4): solve, countSolutions, and the unique-solution check stillUnique, including the
+// DFS solver: solve, countSolutions, and the unique-solution check stillUnique, including the
 // equivalence of stillUnique with a plain solution count and its speed advantage.
 (function () {
   'use strict';
@@ -419,7 +419,7 @@
     });
   });
 
-  describe('dfs.stillUnique: speed (T-1.4 performance milestone)', function () {
+  describe('dfs.stillUnique: speed', function () {
     // The calls a dig makes: remove the next cell of a random order, ask whether the puzzle is still unique,
     // keep or restore the clue. Recorded once so that both approaches see exactly the same questions.
     var workload = [];

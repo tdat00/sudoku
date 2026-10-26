@@ -1,8 +1,8 @@
 /**
  * Vietnamese language pack: the same keys as locale.en.js, in natural Vietnamese. Established terms (X-Wing,
- * Swordfish, Jigsaw, Killer, seed, ...) stay as they are, with a short explanation where it helps. Placeholders
- * `{name}` must match the English text of the key; plural keys (`_one` / `_other`) exist in both languages
- * (Vietnamese has no plural, so both forms read the same).
+ * Swordfish, Jigsaw, Killer, seed, ...) stay as they are, with a short explanation where it helps.
+ * Placeholders `{name}` must match the English text of the key; plural keys (`_one` / `_other`) exist in both
+ * languages (Vietnamese has no plural, so both forms read the same).
  */
 (function (root) {
   'use strict';
@@ -18,7 +18,7 @@
   // General words, units and durations
 
   add({
-    'app.title': 'Trình sinh Sudoku',
+    'app.title': 'Trình sinh đề Sudoku',
 
     'common.apply': 'Áp dụng',
     'common.auto': 'Tự động',
@@ -77,13 +77,13 @@
   // Variants, difficulty, symmetry, symbol sets, dig orders, technique groups, trace levels
 
   add({
-    'variant.classic4': 'Sudoku cổ điển 4×4',
+    'variant.classic4': 'Sudoku Cổ điển 4×4',
     'variant.classic4.desc': 'Lưới 4×4 nhỏ gọn với các khối 2×2. Mỗi hàng, mỗi cột và mỗi khối chứa các ' +
       'chữ số từ 1 đến 4, mỗi số đúng một lần. Rất hợp cho người mới và trẻ em.',
-    'variant.classic6': 'Sudoku cổ điển 6×6',
+    'variant.classic6': 'Sudoku Cổ điển 6×6',
     'variant.classic6.desc': 'Lưới 6×6 với các khối 2 hàng × 3 cột. Mỗi hàng, mỗi cột và mỗi khối chứa ' +
       'các chữ số từ 1 đến 6, mỗi số đúng một lần.',
-    'variant.classic9': 'Sudoku cổ điển 9×9',
+    'variant.classic9': 'Sudoku Cổ điển 9×9',
     'variant.classic9.desc': 'Lưới 9×9 tiêu chuẩn với các khối 3×3. Mỗi hàng, mỗi cột và mỗi khối chứa ' +
       'các chữ số từ 1 đến 9, mỗi số đúng một lần.',
     'variant.diagonalX.desc': 'Luật cổ điển 9×9, đồng thời hai đường chéo chính cũng phải chứa đủ các chữ ' +
@@ -106,7 +106,7 @@
     'group.mega': 'Lưới lớn',
     'group.multigrid': 'Nhiều lưới chồng nhau',
     'group.regions': 'Vùng không đều',
-    'group.wordoku': 'Sudoku chữ',
+    'group.wordoku': 'Sudoku Chữ',
 
     'difficulty.veryEasy': 'Rất dễ',
     'difficulty.veryEasy.desc': 'Nhiều số cho sẵn. Chỉ cần các nước đi đơn giản: ô một ứng viên và số đơn ' +
@@ -144,7 +144,7 @@
     'symbolMode.digits': 'Chữ số',
     'symbolMode.letters': 'Chữ cái',
     'symbolMode.colors': 'Màu sắc',
-    'symbolMode.shapes': 'Hình khối',
+    'symbolMode.shapes': 'Hình dạng',
     'symbolMode.word': 'Chữ của từ khóa',
 
     'digOrder.random': 'Ngẫu nhiên',
@@ -172,9 +172,9 @@
   add({
     'step.configure.name': 'Chuẩn bị cấu hình',
     'step.buildModel.name': 'Dựng mô hình lưới',
-    'step.fullGrid.name': 'Sinh lưới đầy đủ',
+    'step.fullGrid.name': 'Tạo một lời giải đầy đủ',
     'step.extraStructure.name': 'Dựng cấu trúc phụ',
-    'step.dig.name': 'Đào lỗ có kiểm chứng',
+    'step.dig.name': 'Đào lỗ và kiểm tra từng lỗ',
     'step.rate.name': 'Chấm độ khó',
     'step.tune.name': 'Hiệu chỉnh và hoàn tất',
 
@@ -191,7 +191,7 @@
     'explain.buildModel.what': 'Tạo bàn cờ trống: các ô, các hàng, cột, vùng và những ô nhìn thấy nhau.',
     'explain.buildModel.why': 'Luật của mỗi biến thể chỉ là các nhóm ô mà mọi giá trị phải khác nhau. Khi ' +
       'bàn cờ được mô tả bằng dữ liệu, một bộ giải duy nhất dùng được cho mọi biến thể.',
-    'explain.buildModel.how': 'Biến thể dựng các ô và bố cục (Jigsaw trước tiên tạo các vùng, bàn cờ ' +
+    'explain.buildModel.how': 'Biến thể dựng các ô và bố cục (Ghép hình trước tiên tạo các vùng, bàn cờ ' +
       'nhiều lưới thì đặt từng lưới con). Sau đó liệt kê các nhóm (hàng, cột, vùng) và các ô cùng nhóm với ' +
       'mỗi ô, rồi co giãn số cho sẵn tối thiểu của mức độ theo kích thước bàn cờ.',
     'explain.buildModel.live': 'Lưới có {cells} ô và {units} nhóm',
@@ -218,10 +218,10 @@
 
     'explain.extraStructure.what': 'Dựng phần mà biến thể cần thêm trên lưới đầy đủ: lồng, dấu so sánh ' +
       'hoặc từ khóa.',
-    'explain.extraStructure.why': 'Lồng của Killer, dấu của Greater-Than và từ của Wordoku đều suy ra từ ' +
-      'lời giải, nên luôn khớp với nó. Biến thể cổ điển không cần gì ở bước này.',
-    'explain.extraStructure.how': 'Biến thể đọc lời giải rồi dựng cấu trúc (Killer: các lồng và tổng; ' +
-      'Greater-Than: các dấu so sánh; Wordoku: từ khóa). Nếu không có gì để dựng thì bước này được bỏ qua.',
+    'explain.extraStructure.why': 'Lồng của Sudoku Sát thủ, dấu của Sudoku So sánh và từ khóa của Sudoku ' +
+      'Chữ đều suy ra từ lời giải, nên luôn khớp với nó. Biến thể cổ điển không cần gì ở bước này.',
+    'explain.extraStructure.how': 'Biến thể đọc lời giải rồi dựng cấu trúc (Sát thủ: các lồng và tổng; So ' +
+      'sánh: các dấu so sánh; Sudoku Chữ: từ khóa). Nếu không có gì để dựng thì bước này được bỏ qua.',
     'explain.extraStructure.live': 'Đang dựng cấu trúc phụ…',
     'explain.extraStructure.code.hook': 'nếu biến thể có hàm postGenerate:',
     'explain.extraStructure.code.build': 'dựng cấu trúc phụ (lồng, dấu, từ khóa) từ lời giải',
@@ -273,7 +273,8 @@
     'explain.tune.code.package': 'đóng gói kết quả'
   });
 
-  // Techniques: names and descriptions (cageCombo, ruleOf45, cageSplit, ineqChain, minMaxForcing are named in tech-ineq.js and killer.js)
+  // Techniques (cageCombo, ruleOf45, cageSplit, ineqChain, minMaxForcing are named in tech-ineq.js and
+  // killer.js)
 
   add({
     'technique.nakedSingle': 'Ô một ứng viên (Naked Single)',
@@ -337,9 +338,9 @@
     'technique.forcingChain': 'Chuỗi suy luận (Forcing Chain)',
     'technique.forcingChain.desc': 'Chuỗi các suy luận kiểu “nếu thế này thì thế kia”, chứng minh một ứng ' +
       'viên là sai (hoặc một chữ số là đúng).',
-    'technique.nishio': 'Nishio (thử và loại)',
-    'technique.nishio.desc': 'Thử và loại có giới hạn: giả sử một ứng viên là đúng; nếu các suy luận đơn ' +
-      'giản sau đó dẫn đến mâu thuẫn thì ứng viên ấy là sai.',
+    'technique.nishio': 'Nishio (thử–sai)',
+    'technique.nishio.desc': 'Thử–sai có giới hạn: giả sử một ứng viên là đúng; nếu các suy luận đơn giản ' +
+      'sau đó dẫn đến mâu thuẫn thì ứng viên ấy là sai.',
     'technique.cageCombo.desc': 'Các chữ số trong một lồng đều khác nhau và cộng lại bằng tổng của lồng, ' +
       'nên thường chỉ còn vài tổ hợp khả dĩ.',
     'technique.ruleOf45.desc': 'Mỗi hàng, cột và khối có tổng bằng 45, nhiều nhóm cùng loại gộp lại thì ' +
@@ -417,8 +418,8 @@
     'technique.forcingChain.step.forced': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng viên ' +
       'đầu tiên sai thì sẽ có một ứng viên vừa đúng vừa sai, điều không thể xảy ra. Vậy ứng viên đầu ' +
       'tiên đúng và được điền vào.',
-    'technique.nishio.step': 'Thử và loại (độ sâu {depth}): nếu {label} là {digit} thì các suy luận đơn ' +
-      'giản sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.'
+    'technique.nishio.step': 'Thử–sai (độ sâu {depth}): nếu {label} là {digit} thì các suy luận đơn giản ' +
+      'sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.'
   });
 
   // Event log lines
@@ -507,7 +508,7 @@
       'lượt thử.',
     'retry.reason.difficulty': 'độ khó chưa khớp',
 
-    'done': 'Đã sinh xong.',
+    'done': 'Đã tạo xong đề.',
     'done.yes': 'Xong: đề mức “{achieved}” với {clues} số cho sẵn (seed {seed}).',
     'done.no': 'Xong: đề gần nhất là “{achieved}” (yêu cầu “{requested}”) với {clues} số cho sẵn ' +
       '(seed {seed}).',
@@ -519,25 +520,25 @@
   // Warnings of a finished puzzle (PuzzleResult.warnings) and error messages (error.<code>)
 
   add({
-    'difficulty.approximate': 'Bộ sinh không đạt chính xác mức độ yêu cầu, nên đây là đề gần nhất mà nó ' +
-      'tìm được.',
+    'difficulty.approximate': 'Trình sinh đề không đạt chính xác mức độ yêu cầu, nên đây là đề gần nhất mà ' +
+      'nó tìm được.',
     'digger.unsoundTechnique': 'Một kỹ thuật giải đã cho ra đề không có lời giải duy nhất. Cách đào đơn ' +
       'giản và an toàn đã được dùng thay thế, nên độ khó có thể khác với điểm đánh giá.',
     'trace.downgraded': 'Bàn cờ quá lớn để phát lại từng bước đầy đủ, nên mức chi tiết đã được giảm xuống ' +
       'thành tóm tắt.',
 
     'error.unknown': 'Đã xảy ra lỗi ({code}).',
-    'error.unexpected': 'Một lỗi không mong muốn đã làm bộ sinh dừng lại: {message}',
-    'error.budget.exceeded': 'Việc sinh đề mất nhiều thời gian hơn mức cho phép nên đã bị dừng. Hãy thử ' +
+    'error.unexpected': 'Một lỗi không mong muốn đã làm trình sinh đề dừng lại: {message}',
+    'error.budget.exceeded': 'Việc tạo đề mất nhiều thời gian hơn mức cho phép nên đã bị dừng. Hãy thử ' +
       'lại, đổi seed hoặc chọn mức dễ hơn.',
-    'error.budget.cancelled': 'Đã hủy việc sinh đề.',
+    'error.budget.cancelled': 'Đã hủy việc tạo đề.',
     'error.constraints.invalidExtension': 'Một phần mở rộng ràng buộc không hợp lệ (id: {id}).',
     'error.constraints.duplicateExtension': 'Phần mở rộng ràng buộc “{id}” bị đăng ký hai lần.',
     'error.dfs.invalidGivens': 'Các chữ số cho sẵn không phù hợp với bàn cờ này.',
     'error.dfs.invalidLimit': 'Giới hạn số lời giải “{limit}” không hợp lệ.',
     'error.difficulty.unknownLevel': 'Không có mức độ khó “{level}”.',
     'error.difficulty.unknownTechnique': 'Kỹ thuật giải “{technique}” chưa có điểm độ khó.',
-    'error.difficulty.unsupportedLevel': '{variantId} không sinh được ở mức “{level}”. Hãy chọn mức khác.',
+    'error.difficulty.unsupportedLevel': '{variantId} không tạo được đề ở mức “{level}”. Hãy chọn mức khác.',
     'error.digger.invalidOption': 'Giá trị “{value}” không hợp lệ cho tùy chọn “{option}”.',
     'error.digger.noRatedPuzzle': 'Không có đề {variantId} nào được chấm điểm trọn vẹn bằng suy luận. Hãy ' +
       'thử lại với seed khác.',

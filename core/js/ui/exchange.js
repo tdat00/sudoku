@@ -4,19 +4,20 @@
  * (`#puzzle=<token>`, never sent to a server) and back. No DOM; runs in browsers and Node >= 18
  * (needs `CompressionStream`, `Blob`, `TextEncoder`, `btoa`/`atob`).
  *
- * Token      = `z.` + base64url(deflate-raw(utf8(JSON)))  | `j.` + base64url(utf8(JSON))  (plain, when smaller)
- * Text token = `t.` + base64url(deflate-raw(utf8(text)))  | `s.` + base64url(utf8(text))  (the Export box text of
- *              several puzzles; far smaller than their documents)
+ * Token      = `z.` + base64url(deflate-raw(utf8(JSON)))  | `j.` + base64url(utf8(JSON)) when smaller
+ * Text token = `t.` + base64url(deflate-raw(utf8(text)))  | `s.` + base64url(utf8(text))
+ *              (the Export box text of several puzzles; far smaller than their documents)
  * Bundle link: `<player>#puzzle=<text token>&active=<n>`, `n` = 1-based puzzle to show first.
  *
- * The document is the JSON written by `SG.exportUi.toJson` plus the additive block `model`, which lets the player
- * rebuild the board without any variant code: the plain-data ModelSpec of `SG.model.create(spec)` (typed arrays as
- * plain arrays) { variantId, digits, units, unitMeta, cages, inequalities, layout: { rows, cols, cellRow, cellCol,
- * cellRegion, overlays, subGrids }, symbols: { mode, labels }, fixedCells }; see `plain`.
+ * The document is the JSON written by `SG.exportUi.toJson` plus the additive block `model`, which lets the
+ * player rebuild the board without any variant code: the plain-data ModelSpec of `SG.model.create(spec)`
+ * (typed arrays as plain arrays) { variantId, digits, units, unitMeta, cages, inequalities, layout: { rows,
+ * cols, cellRow, cellCol, cellRegion, overlays, subGrids }, symbols: { mode, labels }, fixedCells }; see
+ * `plain`.
  *
- * Errors are `SG.errors.GenerationError`s (a plain `Error` with `.code` when `SG.errors` is absent) with codes
- * `exchange.invalidToken|tooLarge|unsupportedEncoding|invalidJson|invalidUrl`, translated by the locale packs as
- * `error.<code>`.
+ * Errors are `SG.errors.GenerationError`s (a plain `Error` with `.code` when `SG.errors` is absent) with
+ * codes `exchange.invalidToken|tooLarge|unsupportedEncoding|invalidJson|invalidUrl`, translated by the locale
+ * packs as `error.<code>`.
  */
 (function (root) {
   'use strict';
@@ -122,34 +123,36 @@
     return out;
   }
 
-  async function encodeText(text, options) {
-    const bytes = utf8Encode(String(text));
+  async function bytesToToken(bytes, deflatedPrefix, plainPrefix, options) {
     if (bytes.length > MAX_JSON_BYTES) throw fail('exchange.tooLarge');
     if ((!options || options.compress !== false) && canCompress()) {
       const packed = await pump(bytes, new CompressionStream('deflate-raw'), 0);
-      if (packed.length < bytes.length) return PREFIX_TEXT_DEFLATE + bytesToBase64Url(packed);
+      if (packed.length < bytes.length) return deflatedPrefix + bytesToBase64Url(packed);
     }
-    return PREFIX_TEXT_PLAIN + bytesToBase64Url(bytes);
+    return plainPrefix + bytesToBase64Url(bytes);
   }
 
-  async function decodeText(token) {
+  async function tokenToBytes(token, deflatedPrefix, plainPrefix) {
     if (typeof token !== 'string') throw fail('exchange.invalidToken');
     const text = token.trim();
     if (text.length > MAX_TOKEN_CHARS) throw fail('exchange.tooLarge');
     const prefix = text.slice(0, 2);
-    if (prefix !== PREFIX_TEXT_DEFLATE && prefix !== PREFIX_TEXT_PLAIN) throw fail('exchange.invalidToken');
-    let bytes = base64UrlToBytes(text.slice(2));
-    if (prefix === PREFIX_TEXT_DEFLATE) {
-      if (!canCompress()) throw fail('exchange.unsupportedEncoding');
-      try {
-        bytes = await pump(bytes, new DecompressionStream('deflate-raw'), MAX_JSON_BYTES);
-      } catch (e) {
-        if (e && e.code === 'exchange.tooLarge') throw e;
-        throw fail('exchange.invalidToken');
-      }
-    } else if (bytes.length > MAX_JSON_BYTES) {
-      throw fail('exchange.tooLarge');
+    if (prefix !== deflatedPrefix && prefix !== plainPrefix) throw fail('exchange.invalidToken');
+    const bytes = base64UrlToBytes(text.slice(2));
+    if (prefix === plainPrefix) {
+      if (bytes.length > MAX_JSON_BYTES) throw fail('exchange.tooLarge');
+      return bytes;
     }
+    if (!canCompress()) throw fail('exchange.unsupportedEncoding');
+    try {
+      return await pump(bytes, new DecompressionStream('deflate-raw'), MAX_JSON_BYTES);
+    } catch (e) {
+      if (e && e.code === 'exchange.tooLarge') throw e;
+      throw fail('exchange.invalidToken');
+    }
+  }
+
+  function decodeUtf8(bytes) {
     try {
       return utf8Decode(bytes);
     } catch (e) {
@@ -157,45 +160,25 @@
     }
   }
 
+  async function encodeText(text, options) {
+    return bytesToToken(utf8Encode(String(text)), PREFIX_TEXT_DEFLATE, PREFIX_TEXT_PLAIN, options);
+  }
+
+  async function decodeText(token) {
+    return decodeUtf8(await tokenToBytes(token, PREFIX_TEXT_DEFLATE, PREFIX_TEXT_PLAIN));
+  }
+
   function isTextToken(token) {
     return typeof token === 'string' && /^[ts]\.[A-Za-z0-9_-]+$/.test(token.trim());
   }
 
   async function encode(data, options) {
-    const bytes = utf8Encode(JSON.stringify(data));
-    if (bytes.length > MAX_JSON_BYTES) throw fail('exchange.tooLarge');
-    if ((!options || options.compress !== false) && canCompress()) {
-      const packed = await pump(bytes, new CompressionStream('deflate-raw'), 0);
-      if (packed.length < bytes.length) return PREFIX_DEFLATE + bytesToBase64Url(packed);
-    }
-    return PREFIX_PLAIN + bytesToBase64Url(bytes);
+    return bytesToToken(utf8Encode(JSON.stringify(data)), PREFIX_DEFLATE, PREFIX_PLAIN, options);
   }
 
   /** The parsed document is NOT validated: see `isDocument` and the player's import validation. */
   async function decode(token) {
-    if (typeof token !== 'string') throw fail('exchange.invalidToken');
-    const text = token.trim();
-    if (text.length > MAX_TOKEN_CHARS) throw fail('exchange.tooLarge');
-    const prefix = text.slice(0, 2);
-    if (prefix !== PREFIX_DEFLATE && prefix !== PREFIX_PLAIN) throw fail('exchange.invalidToken');
-    let bytes = base64UrlToBytes(text.slice(2));
-    if (prefix === PREFIX_DEFLATE) {
-      if (!canCompress()) throw fail('exchange.unsupportedEncoding');
-      try {
-        bytes = await pump(bytes, new DecompressionStream('deflate-raw'), MAX_JSON_BYTES);
-      } catch (e) {
-        if (e && e.code === 'exchange.tooLarge') throw e;
-        throw fail('exchange.invalidToken');
-      }
-    } else if (bytes.length > MAX_JSON_BYTES) {
-      throw fail('exchange.tooLarge');
-    }
-    let json;
-    try {
-      json = utf8Decode(bytes);
-    } catch (e) {
-      throw fail('exchange.invalidJson');
-    }
+    const json = decodeUtf8(await tokenToBytes(token, PREFIX_DEFLATE, PREFIX_PLAIN));
     try {
       return JSON.parse(json);
     } catch (e) {
@@ -203,14 +186,18 @@
     }
   }
 
-  function tokenFromHash(hash) {
+  function hashParam(hash, name) {
     if (typeof hash !== 'string') return null;
     const parts = (hash.charAt(0) === '#' ? hash.slice(1) : hash).split('&');
     for (let i = 0; i < parts.length; i++) {
       const eq = parts[i].indexOf('=');
-      if (eq > 0 && parts[i].slice(0, eq) === PARAM) return parts[i].slice(eq + 1) || null;
+      if (eq > 0 && parts[i].slice(0, eq) === name) return parts[i].slice(eq + 1);
     }
     return null;
+  }
+
+  function tokenFromHash(hash) {
+    return hashParam(hash, PARAM) || null;
   }
 
   /** Only http(s) URLs and relative paths are allowed (`javascript:`, `data:`, … are rejected). */
@@ -224,22 +211,19 @@
 
   /** The 1-based `active` parameter, or null when absent or not a positive whole number. */
   function activeFromHash(hash) {
-    if (typeof hash !== 'string') return null;
-    const parts = (hash.charAt(0) === '#' ? hash.slice(1) : hash).split('&');
-    for (let i = 0; i < parts.length; i++) {
-      const eq = parts[i].indexOf('=');
-      if (eq > 0 && parts[i].slice(0, eq) === ACTIVE_PARAM) {
-        const value = parts[i].slice(eq + 1);
-        return /^[0-9]{1,6}$/.test(value) && Number(value) > 0 ? Number(value) : null;
-      }
-    }
-    return null;
+    const value = hashParam(hash, ACTIVE_PARAM);
+    return value !== null && /^[0-9]{1,6}$/.test(value) && Number(value) > 0 ? Number(value) : null;
   }
 
-  /** An existing fragment of `base` is replaced; `active` (1-based) picks the puzzle of a text token shown first. */
+  /**
+   * An existing fragment of `base` is replaced; `active` (1-based) picks the puzzle of a text token shown
+   * first.
+   */
   function playerUrl(base, token, options) {
     if (!isAllowedBase(base)) throw fail('exchange.invalidUrl');
-    if (typeof token !== 'string' || !/^[jzts]\.[A-Za-z0-9_-]+$/.test(token)) throw fail('exchange.invalidToken');
+    if (typeof token !== 'string' || !/^[jzts]\.[A-Za-z0-9_-]+$/.test(token)) {
+      throw fail('exchange.invalidToken');
+    }
     const text = base.trim();
     const hashAt = text.indexOf('#');
     const active = options && Number.isInteger(options.active) && options.active > 0 ? options.active : null;

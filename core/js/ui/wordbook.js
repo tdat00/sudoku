@@ -1,6 +1,6 @@
 /**
- * Word book of the Wordoku key words: what a word means, shown when the puzzle is solved.
- * Tables live in assets/wordbook (`SG.wordbookData.en|vi`), keyed by the board word (upper-case A-Z, no diacritics):
+ * Word book of the Wordoku key words: what a word means, shown when the puzzle is solved. Tables live in
+ * assets/wordbook (`SG.wordbookData.en|vi`), keyed by the board word (upper-case A-Z, no diacritics):
  *   en  KEY -> [spelling, pos, English definition, Vietnamese explanation]
  *   vi  KEY -> [spelling with diacritics, pos, Vietnamese definition]
  * `pos` is 'n', 'v', 'a', 'd' (adverb) or 'o'. Tables are read lazily, so files may load in any order.
@@ -26,7 +26,9 @@
     return SG.wordbookData || {};
   }
 
-  /** Every entry with this key (usually one, none for a word of the player's own); `locale` is 'en' or 'vi'. */
+  /**
+   * Every entry with this key (usually one, none for a word of the player's own); `locale` is 'en' or 'vi'.
+   */
   function lookup(word, locale) {
     const out = [];
     if (typeof word !== 'string' || word === '') return out;

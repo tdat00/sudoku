@@ -100,7 +100,9 @@
     });
   }
 
-  /** A copy of `model` with another set of signs (`{a, b}`: value[a] < value[b]); everything else is shared. */
+  /**
+   * A copy of `model` with another set of signs (`{a, b}`: value[a] < value[b]); everything else is shared.
+   */
   function withSigns(model, signs) {
     SG.ineq.ensureExtension();
     const next = SG.model.create({
@@ -464,9 +466,6 @@
 
   /** Greater-Than tools, exposed for tests and tooling. */
   SG.greaterThan = {
-    VARIANT_ID: VARIANT_ID,
-    STRATEGY_ID: STRATEGY_ID,
-    SCOPES: [SCOPE_BOX, SCOPE_GRID],
     buildBoard: buildBoard,
     withSigns: withSigns,
     placeSigns: placeSigns,

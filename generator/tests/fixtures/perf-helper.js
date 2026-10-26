@@ -1,5 +1,5 @@
 /**
- * Helpers of the performance and regression checks (design.md sections 9.1 and 15, task T-6.2), shared by
+ * Helpers of the performance and regression checks (design.md sections 9.1 and 15), shared by
  * tests/perf.js (a Node script), tests/manual/perf.test.js and the browser test page. Exposed as
  * SG.fixtures.perfTools.
  *
@@ -11,8 +11,8 @@
  * of any part shows: the givens and the solution, the cages and signs of Killer / Greater-Than (the model
  * of the returned puzzle), the region of every cell (jigsaw boards differ per seed) and the symbols of
  * Wordoku. Not hashed: the rating, the timings and the trace, which a change of the cost table or of the
- * event wording may move without changing the puzzle. The performance work of task T-6.2 may only change how
- * fast a puzzle is made, never which puzzle a (configuration, seed) pair gives; `node tests/perf.js
+ * event wording may move without changing the puzzle. Performance work may only change how fast a puzzle
+ * is made, never which puzzle a (configuration, seed) pair gives; `node tests/perf.js
  * --update-hashes` (or `SG_UPDATE_HASHES=1 node tests/node-runner.js --suite=perf`) records the hashes of the
  * current code on purpose, after a change that is meant to alter puzzles (a calibration, a new dig rule).
  */
@@ -212,7 +212,8 @@
     var lines = [];
     lines.push('/**');
     lines.push(' * Regression hashes of generated puzzles: for each (variant, level) combination the hash');
-    lines.push(' * of the puzzle that the pipeline gives for each of the 20 fixed seeds (see perf-helper.js).');
+    lines.push(' * of the puzzle that the pipeline gives for each of the 20 fixed seeds ' +
+      '(see perf-helper.js).');
     lines.push(' * GENERATED FILE - never edit by hand. Record the hashes of the current code on purpose');
     lines.push(' * with');
     lines.push(' *   node tests/perf.js --update-hashes');

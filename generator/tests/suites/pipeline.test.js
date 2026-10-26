@@ -1,4 +1,4 @@
-// The instrumented generators (task T-3.2) and the pipeline (T-3.4): the seven steps and their events,
+// The instrumented generators and the pipeline: the seven steps and their events,
 // replaying the patches, the cost of the instrumentation, determinism, hooks, retries and cancellation.
 // The event system itself is tested in events.test.js.
 (function () {
@@ -207,10 +207,6 @@
     throw new Error('no single-sample seed found');
   }
 
-  // ---------------------------------------------------------------------------------------------
-  // The seven steps
-  // ---------------------------------------------------------------------------------------------
-
   describe('pipeline: the seven steps and their events', function () {
     var seed9 = singleSampleSeed('classic9', 'veryEasy');
     var seed4 = singleSampleSeed('classic4', 'veryEasy');
@@ -372,10 +368,6 @@
       });
     }, 60000);
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Replaying the patches (T-3.2)
-  // ---------------------------------------------------------------------------------------------
 
   describe('instrumented generators: applying every patch in order rebuilds the board exactly', function () {
     function gridWithEvents(model, seed, options) {
@@ -606,10 +598,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // The cost of the instrumentation (T-3.2)
-  // ---------------------------------------------------------------------------------------------
-
   describe('instrumented generators: what the events cost', function () {
     /** The workload of one measurement: `work(emit)` runs it, `emit` is undefined, or an emitter. */
     function emitFor(mode, log) {
@@ -797,10 +785,6 @@
     })(), 30);
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // PuzzleResult, configuration and timings (design.md 13.9)
-  // ---------------------------------------------------------------------------------------------
-
   describe('pipeline: configuration', function () {
     it('fills in the defaults and fixes the seed', function () {
       var cfg = P.normalizeConfig({ variantId: 'classic9', seed: 5 });
@@ -959,10 +943,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // The dig log of the result (what the replay of the UI is built from)
-  // ---------------------------------------------------------------------------------------------
-
   var DIG_OPS = ['pass', 'accept', 'reject', 'keep', 'restart', 'signs', 'clear', 'reveal'];
 
   /** Applies a dig log to the solution: the board and, for Greater-Than, the signs it ends with. */
@@ -1030,7 +1010,8 @@
     it('records the guided pass from normal on: candidates kept or refused, then the hardest removed',
       function () {
         var log = run({ difficulty: 'hard', seed: 8 }, 'off').result.digLog;
-        var passes = log.filter(function (e) { return e.op === 'pass'; }).map(function (e) { return e.pass; });
+        var passes = log.filter(function (e) { return e.op === 'pass'; })
+          .map(function (e) { return e.pass; });
         expect(passes).toEqual(['random', 'guided']);
         var guided = log.slice(log.map(function (e) { return e.pass; }).indexOf('guided'));
         expect(guided.some(function (e) { return e.op === 'keep'; })).toBe(true);
@@ -1046,10 +1027,6 @@
       expect(P.fromWire(Object.assign({}, P.toWire(off), { digLog: undefined })).digLog).toBeUndefined();
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // The pipeline gives the puzzle that the functions give directly (T-3.4)
-  // ---------------------------------------------------------------------------------------------
 
   describe('pipeline: identical to calling the functions directly with the same seed', function () {
     it('classic9, every level, several seeds', function () {
@@ -1113,8 +1090,8 @@
       withUnreachable(function () {
         var model = SG.variants.get(UNREACHABLE).build({}, null);
         var byHand = direct(model, 'nightmare', 9000, { maxAttempts: 3 });
-        var viaPipeline = P.run(config({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9000, maxAttempts: 3 }),
-          null);
+        var viaPipeline = P.run(
+          config({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9000, maxAttempts: 3 }), null);
         expect(Array.from(viaPipeline.givens)).toEqual(Array.from(byHand.givens));
         expect(viaPipeline.warnings).toEqual(byHand.warnings);
         expect(viaPipeline.warnings).toContain('difficulty.approximate');
@@ -1123,14 +1100,11 @@
     }, 60000);
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // The retry loop
-  // ---------------------------------------------------------------------------------------------
-
   describe('pipeline: the retry loop', function () {
     it('after each missed attempt it emits retry.difficulty with the reason, then a new grid', function () {
       withUnreachable(function () {
-        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9000, maxAttempts: 3 }, 'summary');
+        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9000, maxAttempts: 3 },
+          'summary');
         var retries = out.events.filter(function (e) { return e.type === 'retry'; });
         expect(retries).toHaveLength(3);
         expect(retries.map(function (e) { return e.i18nArgs.attempt; })).toEqual([1, 2, 3]);
@@ -1155,7 +1129,8 @@
 
     it('gives up with the closest puzzle, the warning difficulty.approximate and no exception', function () {
       withUnreachable(function () {
-        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9001, maxAttempts: 2 }, 'summary');
+        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9001, maxAttempts: 2 },
+          'summary');
         expect(out.result.warnings).toEqual(['difficulty.approximate']);
         expect(out.result.rating.level).not.toBe('nightmare');
         expect(out.result.rating.solved).toBe(true);
@@ -1173,7 +1148,8 @@
 
     it('a missed dig sample is tune.miss; a reached level is tune.hit and ends the loop', function () {
       withUnreachable(function () {
-        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9002, maxAttempts: 1 }, 'summary');
+        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9002, maxAttempts: 1 },
+          'summary');
         var miss = out.events.filter(function (e) { return e.i18nKey === 'tune.miss'; });
         // Twelve dig samples, and the local search of the attempt (section 5.7 (6)) at the end.
         expect(miss).toHaveLength(13);
@@ -1195,10 +1171,6 @@
       });
     }, 60000);
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Hooks: postGenerate (step 4) and digStrategy (step 5)
-  // ---------------------------------------------------------------------------------------------
 
   describe('pipeline: variant hooks', function () {
     it('a variant without postGenerate still passes step 4 and says there is nothing to do', function () {
@@ -1228,8 +1200,8 @@
           function (e) { events.push(e); });
         expect(calls).toHaveLength(1);
         var ctx = calls[0].ctx;
-        expect(Object.keys(ctx).sort()).toEqual(['attempt', 'budget', 'caps', 'emit', 'keeper', 'level', 'model',
-          'rng', 'solution', 'spec', 'symmetry', 'variantId']);
+        expect(Object.keys(ctx).sort()).toEqual(['attempt', 'budget', 'caps', 'emit', 'keeper', 'level',
+          'model', 'rng', 'solution', 'spec', 'symmetry', 'variantId']);
         expect(ctx.symmetry).toBe('rotational180');
         expect(typeof ctx.keeper.offer).toBe('function');
         expect(typeof ctx.keeper.closer).toBe('function');
@@ -1473,10 +1445,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Safety net (risk R3)
-  // ---------------------------------------------------------------------------------------------
-
   describe('pipeline: the safety net against a technique bug', function () {
     /** A technique that guesses, so the technique-bounded dig produces ambiguous puzzles. */
     function withGuesser(fn) {
@@ -1548,10 +1516,6 @@
       expect(out.result.warnings).toEqual([]);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Budget and cancellation
-  // ---------------------------------------------------------------------------------------------
 
   describe('pipeline: budget and cancellation', function () {
     it('cancelling mid-dig stops the run in under 100 ms with budget.cancelled', function () {
@@ -1629,7 +1593,8 @@
       var started = now();
       var thrown = null;
       try {
-        P.run(config({ difficulty: 'nightmare', seed: 5, maxAttempts: 8 }), null, SG.budget.create({ ms: 1 }));
+        P.run(config({ difficulty: 'nightmare', seed: 5, maxAttempts: 8 }), null,
+          SG.budget.create({ ms: 1 }));
       } catch (e) {
         thrown = e;
       }

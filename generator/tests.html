@@ -5,13 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sudoku Generator - tests</title>
   <style>
-    :root { color-scheme: light dark; --ok: #1a7f37; --bad: #cf222e; --skip: #9a6700; --muted: #6e7781; --line: #8c959f55; }
-    body { font: 14px/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif; margin: 0 auto; padding: 0 16px 48px; max-width: 1000px; }
+    :root {
+      color-scheme: light dark;
+      --ok: #1a7f37; --bad: #cf222e; --skip: #9a6700; --muted: #6e7781; --line: #8c959f55;
+    }
+    body {
+      font: 14px/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif;
+      margin: 0 auto; padding: 0 16px 48px; max-width: 1000px;
+    }
     h1 { font-size: 20px; margin: 16px 0 8px; }
     h2 { font-size: 15px; margin: 20px 0 6px; }
     form { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 8px 0; }
     input[type=search] { width: 16em; }
-    .summary { margin: 8px 0; padding: 8px 12px; border-left: 4px solid var(--muted); background: var(--line); font-weight: 600; }
+    .summary {
+      margin: 8px 0; padding: 8px 12px; border-left: 4px solid var(--muted);
+      background: var(--line); font-weight: 600;
+    }
     .summary.pass { border-color: var(--ok); }
     .summary.fail { border-color: var(--bad); }
     .notice { margin: 8px 0; padding: 8px 12px; border-left: 4px solid var(--skip); background: var(--line); }
@@ -27,7 +36,10 @@
     summary.fail { color: var(--bad); }
     ol.failure-list { padding-left: 22px; }
     ol.failure-list li { margin-bottom: 10px; }
-    pre { margin: 4px 0 0; padding: 8px; overflow: auto; background: var(--line); font-size: 12px; white-space: pre-wrap; }
+    pre {
+      margin: 4px 0 0; padding: 8px; overflow: auto;
+      background: var(--line); font-size: 12px; white-space: pre-wrap;
+    }
     table { border-collapse: collapse; }
     td, th { padding: 2px 10px; text-align: right; border-bottom: 1px solid var(--line); }
     td:first-child, th:first-child { text-align: left; }
@@ -77,21 +89,22 @@
       'use strict';
 
       /*
-       * Browser test page. It works from file:// because it only injects classic <script> tags.
-       *
-       * SOURCE_FILES / FIXTURE_FILES / CORE_SUITE_FILES / SUITE_FILES list everything that is planned, in load order.
-       * A file that does not exist yet is skipped (it is listed at the bottom of the page).
-       * Keep SOURCE_FILES in sync with tests/node-runner.js. CORE_SUITE_FILES are the suites of ../core/tests/suites
-       * that the player shares; SUITE_FILES are the quick suites of tests/suites (both always loaded); MANUAL_SUITE_FILES are the heavy ones of tests/manual, loaded
-       * only with ?all=1 (both sets), ?manual=1 (only the heavy ones) or ?suite=<name>.
+       * Works from file:// because it only injects classic <script> tags. SOURCE_FILES is the order of
+       * tests/node-runner.js (the ui-contract suite checks it, and that every suite is listed below).
+       * The core suites and the quick suites always load; MANUAL_SUITE_FILES, the heavy suites of
+       * tests/manual, only with ?all=1 (both sets), ?manual=1 (only the heavy ones) or ?suite=<name>.
+       * A file that cannot be loaded is listed at the bottom of the page.
        */
       var SOURCE_FILES = [
-        '../core/js/engine/ns.js', '../core/js/engine/errors.js', '../core/js/engine/bits.js', '../core/js/engine/budget.js', 'js/engine/rng.js',
+        '../core/js/engine/ns.js', '../core/js/engine/errors.js', '../core/js/engine/bits.js',
+        '../core/js/engine/budget.js', 'js/engine/rng.js',
         '../core/js/engine/model.js', '../core/js/engine/constraints.js', '../core/js/engine/combo-table.js',
-        '../core/js/engine/dfs-solver.js', '../core/js/engine/techniques.js', '../core/js/engine/logical-solver.js',
-        '../core/js/engine/tech-basic.js', '../core/js/engine/tech-subset.js', '../core/js/engine/tech-fish.js',
-        '../core/js/engine/tech-wing.js', '../core/js/engine/tech-chain.js', '../core/js/engine/tech-cage.js', '../core/js/engine/tech-ineq.js',
-                '../core/js/engine/classic-model.js', '../core/js/engine/model-aids.js',
+        '../core/js/engine/dfs-solver.js', '../core/js/engine/techniques.js',
+        '../core/js/engine/logical-solver.js',
+        '../core/js/engine/tech-basic.js', '../core/js/engine/tech-subset.js',
+        '../core/js/engine/tech-fish.js', '../core/js/engine/tech-wing.js', '../core/js/engine/tech-chain.js',
+        '../core/js/engine/tech-cage.js', '../core/js/engine/tech-ineq.js',
+        '../core/js/engine/classic-model.js', '../core/js/engine/model-aids.js',
         'js/engine/difficulty.js', 'js/engine/full-grid.js', 'js/engine/symmetry.js', 'js/engine/digger.js',
         'js/engine/events.js', 'js/engine/explain-data.js', 'js/engine/pipeline.js',
         'js/variants/registry.js', 'js/variants/classic.js', 'js/variants/mega.js',
@@ -103,7 +116,8 @@
         'js/ui/i18n.js', 'js/ui/locale.en.js', 'js/ui/locale.vi.js', 'js/ui/locale.shell.js',
         '../core/js/ui/symbols.js', '../core/js/ui/board-view.js', 'js/ui/store.js', 'js/ui/controls.js',
         'js/ui/step-view.js', 'js/ui/explain.js', 'js/ui/player.js',
-        '../core/assets/wordbook/words.vi.js', '../core/assets/wordbook/words.en.js', '../core/js/ui/wordbook.js', 'js/ui/result-view.js',
+        '../core/assets/wordbook/words.vi.js', '../core/assets/wordbook/words.en.js',
+        '../core/js/ui/wordbook.js', 'js/ui/result-view.js',
         'js/ui/cache.js', 'js/ui/history.js', 'js/ui/export.js', 'js/ui/a11y.js', 'js/ui/theme.js',
         'js/ui/help.js', 'js/ui/app.js'
       ];
@@ -113,7 +127,8 @@
         .map(function (n) { return 'tests/fixtures/' + n + '.js'; }));
       var CORE_SUITE_FILES = [
         'bits', 'board-view', 'constraints', 'exchange', 'harness', 'logical-solver', 'model', 'solver',
-        'symbols', 'tech-basic', 'tech-chain', 'tech-fish', 'tech-subset', 'tech-wing', 'techniques', 'wordbook'
+        'symbols', 'tech-basic', 'tech-chain', 'tech-fish', 'tech-subset', 'tech-wing', 'techniques',
+        'wordbook'
       ];
       var SUITE_FILES = [
         'a11y', 'cache', 'controls', 'digger', 'events', 'export', 'format', 'full-grid', 'help',
@@ -128,7 +143,8 @@
       var $ = function (id) { return document.getElementById(id); };
       var params = new URLSearchParams(window.location.search);
       var onlyManual = params.get('manual') === '1';
-      var withManual = onlyManual || params.get('all') === '1' || MANUAL_SUITE_FILES.indexOf(params.get('suite')) !== -1;
+      var withManual = onlyManual || params.get('all') === '1' ||
+        MANUAL_SUITE_FILES.indexOf(params.get('suite')) !== -1;
       var currentError = null;
       var running = false;
 
@@ -196,7 +212,7 @@
         }
         if (report.missing.length > 0) {
           $('missing-box').hidden = false;
-          $('missing-summary').textContent = report.missing.length + ' planned files not found (skipped)';
+          $('missing-summary').textContent = report.missing.length + ' files not found (skipped)';
           report.missing.forEach(function (file) { $('missing-list').appendChild(make('li', '', file)); });
         }
       }
@@ -238,7 +254,9 @@
           },
           onTestEnd: function (record) {
             var item = make('li', record.status, record.name + ' ');
-            if (record.status === 'skip' && record.reason) item.appendChild(make('span', 'reason', '- ' + record.reason + ' '));
+            if (record.status === 'skip' && record.reason) {
+              item.appendChild(make('span', 'reason', '- ' + record.reason + ' '));
+            }
             item.appendChild(make('span', 'ms', '(' + formatMs(record.ms) + ')'));
             if (record.status === 'fail') {
               item.appendChild(make('div', '', record.error.name + ': ' + record.error.message));
@@ -250,7 +268,8 @@
             var head = group.firstChild;
             head.textContent = summary.name + ' \u2014 ' + summary.passed + ' passed' +
               (summary.failed ? ', ' + summary.failed + ' failed' : '') +
-              (summary.skipped ? ', ' + summary.skipped + ' skipped' : '') + ' (' + formatMs(summary.ms) + ')';
+              (summary.skipped ? ', ' + summary.skipped + ' skipped' : '') +
+              ' (' + formatMs(summary.ms) + ')';
             head.className = summary.failed ? 'fail' : '';
             group.open = summary.failed > 0;
           }
@@ -258,9 +277,10 @@
 
         var ok = results.failed === 0 && results.total > 0;
         $('summary').className = 'summary ' + (ok ? 'pass' : 'fail');
-        $('summary').textContent = results.total + ' tests: ' + results.passed + ' passed, ' + results.failed +
-          ' failed, ' + results.skipped + ' skipped \u2014 ' + formatMs(results.ms) +
-          (results.bailed ? ' (stopped at first failure)' : '') + (results.total === 0 ? ' (no tests matched)' : '');
+        $('summary').textContent = results.total + ' tests: ' + results.passed + ' passed, ' +
+          results.failed + ' failed, ' + results.skipped + ' skipped \u2014 ' + formatMs(results.ms) +
+          (results.bailed ? ' (stopped at first failure)' : '') +
+          (results.total === 0 ? ' (no tests matched)' : '');
         document.title = (ok ? '\u2713 ' : '\u2717 ') + 'Sudoku Generator - tests';
         showBenches(results.benches);
         running = false;
@@ -272,7 +292,9 @@
         var table = $('bench-table');
         table.textContent = '';
         var head = make('tr');
-        ['benchmark', 'iterations', 'ms/op', 'ops/s'].forEach(function (h) { head.appendChild(make('th', '', h)); });
+        ['benchmark', 'iterations', 'ms/op', 'ops/s'].forEach(function (h) {
+          head.appendChild(make('th', '', h));
+        });
         table.appendChild(head);
         benches.forEach(function (b) {
           var row = make('tr');
@@ -303,8 +325,9 @@
         if (!withManual) {
           var notice = $('notice');
           notice.hidden = false;
-          notice.textContent = 'Quick suites only (' + SUITE_FILES.length + '). Add ?all=1 to the address to also run the ' +
-            MANUAL_SUITE_FILES.length + ' manual (heavy) suites of tests/manual, or ?manual=1 for those alone.';
+          notice.textContent = 'Quick suites only (' + SUITE_FILES.length + '). Add ?all=1 to the ' +
+            'address to also run the ' + MANUAL_SUITE_FILES.length + ' manual (heavy) suites of ' +
+            'tests/manual, or ?manual=1 for those alone.';
         }
         $('run').disabled = false;
         if (params.get('autorun') !== '0') return runTests();

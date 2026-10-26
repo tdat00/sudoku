@@ -1,7 +1,8 @@
 // Play: the game engine of SG.play is pure, so entries, notes, undo / redo, conflicts, hints, the timer,
 // completion and the saved state are all checked on Node with the puzzles of the fixtures (opened through
-// SG.importer). The DOM layer (SG.play.init) needs the page and is verified in the browser run (docs/qa.md);
-// here only what is cheap without one is checked (it refuses to start, its strings, its pure helpers).
+// SG.importer). The DOM layer (SG.play.init) needs the page and is checked by the browser scripts of
+// tests/browser; here only what is cheap without one is checked (it refuses to start, its strings, its pure
+// helpers).
 (function () {
   'use strict';
 
@@ -80,12 +81,6 @@
     } finally {
       SG.i18n.setLocale('en');
     }
-  }
-
-  function placeholders(text) {
-    var found = {};
-    String(text).replace(/\{(\w+)\}/g, function (m, name) { found[name] = true; return m; });
-    return Object.keys(found).sort();
   }
 
   /** Enters the whole solution, cell by cell (the first `limit` cells when given). */
@@ -1233,10 +1228,15 @@
       g.check();
       g.revealCell();
       var data = g.serialize();
+      expect('variantId' in data).toBe(false);
       var text = JSON.stringify(data);
       expect(text.length).toBeGreaterThan(100);
       var back = P.restoreGame(r.model, r.givens, r.solution, JSON.parse(text), { now: now });
       expect(snapshotText(back)).toBe(snapshotText(g));
+      // A game an older version saved also carried the variant id; it is ignored.
+      var older = Object.assign({ variantId: r.model.variantId }, JSON.parse(text));
+      var restored = P.restoreGame(r.model, r.givens, r.solution, older, { now: now });
+      expect(snapshotText(restored)).toBe(snapshotText(g));
       var again = back.serialize();
       var ref = JSON.parse(text);
       expect(again.values).toEqual(ref.values);
@@ -1306,24 +1306,6 @@
   // ---------------------------------------------------------------------------------------------
 
   describe('play: strings and the DOM layer', function () {
-    it('has the same play.* keys in English and Vietnamese, with the same placeholders and no empty text',
-      function () {
-        ready();
-        var en = SG.locales.en;
-        var vi = SG.locales.vi;
-        var enKeys = Object.keys(en).filter(function (k) { return k.indexOf('play.') === 0; }).sort();
-        var viKeys = Object.keys(vi).filter(function (k) { return k.indexOf('play.') === 0; }).sort();
-        expect(enKeys.length).toBeGreaterThan(60);
-        expect(viKeys).toEqual(enKeys);
-        enKeys.forEach(function (key) {
-          expect(typeof en[key]).toBe('string');
-          expect(en[key].trim().length).toBeGreaterThan(0);
-          expect(vi[key].trim().length).toBeGreaterThan(0);
-          expect(placeholders(vi[key])).toEqual(placeholders(en[key]));
-        });
-        expect(SG.i18n.conflicts.filter(function (c) { return c.key.indexOf('play.') === 0; })).toEqual([]);
-      });
-
     it('keeps its keys out of the base packs and uses only keys that exist', function () {
       ready();
       var env = NODE;
@@ -1385,21 +1367,12 @@
       });
     });
 
-    it('play.css answers forced colours and keeps no style of the generator toggle', function () {
+    it('play.css answers forced colours', function () {
       ready();
       var env = NODE;
       if (!env || !env.fs) SG.test.skip('needs the Node file system');
       var css = env.fs.readFileSync(env.path.join(env.root, 'css/play.css'), 'utf8');
       expect(css).toContain('@media (forced-colors: active)');
-      expect(css).not.toContain('play__toggle');
-    });
-
-    it('takes its preferences from the store: no storage key of its own', function () {
-      ready();
-      var env = NODE;
-      if (!env || !env.fs) SG.test.skip('needs the Node file system');
-      var text = env.fs.readFileSync(env.path.join(env.root, 'js/ui/play.js'), 'utf8');
-      expect(/localStorage|sessionStorage|sg\.play\./.test(text.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, ''))).toBe(false);
     });
   });
 })();

@@ -484,9 +484,9 @@
           '**Một cột**.',
         'variant.wordoku.line.random': 'Ngẫu nhiên',
         'variant.wordoku.language': 'Kho từ',
-        'variant.wordoku.language.hint':
-          'Ngôn ngữ của các từ khóa được rút ra.\n\n**Tiếng Anh**: các từ tiếng Anh.\n\n**Tiếng Việt**: ' +
-          'các từ tiếng Việt, viết không dấu. Nếu kho từ này còn quá ít từ, trò chơi sẽ dùng từ tiếng Anh.',
+        'variant.wordoku.language.hint': 'Ngôn ngữ của các từ khóa được rút ra.\n\n**Tiếng Anh**: các từ ' +
+          'tiếng Anh.\n\n**Tiếng Việt**: các từ tiếng Việt, viết không dấu. Nếu kho từ này còn quá ít từ, ' +
+          'từ tiếng Anh sẽ được dùng thay thế.',
         'variant.wordoku.language.en': 'Tiếng Anh',
         'variant.wordoku.language.vi': 'Tiếng Việt',
         'variant.wordoku.word': 'Từ của riêng bạn',

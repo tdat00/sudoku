@@ -1,6 +1,7 @@
-// The boards rebuilt from the generator's text export (js/engine/text-boards.js): each one must equal the model the
-// generator itself built for the fixture documents of tests/fixtures/puzzles/ (units in the same order, labels,
-// layout, overlays, cages, signs, symbols, fixed cells), so that an imported puzzle plays like a linked one.
+// The boards rebuilt from the generator's text export (js/engine/text-boards.js): each one must equal the
+// model the generator itself built for the fixture documents of tests/fixtures/puzzles/ (units in the same
+// order, labels, layout, overlays, cages, signs, symbols, fixed cells), so that an imported puzzle plays like
+// a linked one.
 (function () {
   'use strict';
 

@@ -1,5 +1,5 @@
-// Generation event system (task T-3.1), the per-step explanation data (T-3.3) and the trace limit of
-// design.md section 9.4. The pipeline and the instrumented generators are tested in pipeline.test.js.
+// Generation event system, the per-step explanation data and the trace limit of design.md section 9.4.
+// The pipeline and the instrumented generators are tested in pipeline.test.js.
 (function () {
   'use strict';
 
@@ -57,10 +57,6 @@
     expect(a.state).toEqual(b.state);
     expect(Array.from(a.highlight)).toEqual(Array.from(b.highlight));
   }
-
-  // ---------------------------------------------------------------------------------------------
-  // Plain data, event factory
-  // ---------------------------------------------------------------------------------------------
 
   describe('events: plain data and the event factory', function () {
     it('isPlainData accepts JSON-like data and refuses everything else', function () {
@@ -123,10 +119,6 @@
       expect(E.DEFAULT_MAX_TRACE_EVENTS).toBe(20000);
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Emitter
-  // ---------------------------------------------------------------------------------------------
 
   describe('events: emitter and verbosity', function () {
     it("verbosity 'off' emits only step start/end, done and error", function () {
@@ -373,10 +365,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Patches
-  // ---------------------------------------------------------------------------------------------
-
   describe('events: patches', function () {
     it('makePatch builds a validated delta and defaults the cell state from the value', function () {
       var p = E.makePatch({
@@ -603,10 +591,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Trace limit
-  // ---------------------------------------------------------------------------------------------
-
   describe('events: trace size limit (design.md 9.4)', function () {
     /** A synthetic trace: steps, many micro events with cell patches and highlights, metrics, a retry. */
     function syntheticTrace(microCount, cells, seed) {
@@ -767,10 +751,6 @@
     });
   });
 
-  // ---------------------------------------------------------------------------------------------
-  // Vocabulary
-  // ---------------------------------------------------------------------------------------------
-
   describe('events: the vocabulary', function () {
     var V = E.VOCABULARY;
 
@@ -815,7 +795,7 @@
       });
     });
 
-    it('the only events at level off are step start / end, done and error (T-3.1)', function () {
+    it('the only events at level off are step start / end, done and error', function () {
       V.filter(function (v) { return v.level === 'off'; }).forEach(function (v) {
         var ok = (v.type === 'step' && v.phase !== 'progress') || v.type === 'done' || v.type === 'error';
         expect(ok).toBe(true);
@@ -843,10 +823,6 @@
       });
     });
   });
-
-  // ---------------------------------------------------------------------------------------------
-  // Explanation data (T-3.3)
-  // ---------------------------------------------------------------------------------------------
 
   describe('explain-data: one explanation per pipeline step', function () {
     var X = SG.explain;

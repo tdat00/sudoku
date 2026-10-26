@@ -1,17 +1,17 @@
 /**
  * `SG.controls`: the generation form, generated from data, never from hand-written HTML per variant.
- *  - `describe(state, ctx)` is PURE (no DOM): a store state -> the form model (fields with choices, visibility,
- *    disabled flag and warnings). Everything that depends on the variant or on another option is decided here: the
- *    levels offered (`difficultySupport`), the symbol sets (`symbolModes`), the variant options
- *    (`SG.variants.optionsOf`, `visibleWhen`), the strict symmetry warning. The tests exercise it.
- *  - `mount(rootEl, store, opts)` renders the model into the `<form>` and wires the events to the store. It renders
- *    once, then updates controls in place (a focused control keeps its focus); only a language change rebuilds the
- *    labels, and only a variant change rebuilds the variant options.
- * The form never starts a generation (app.js owns Generate / Cancel / Export). Strings: `controls.*` fragment at the
- * bottom of this file plus the base packs.
+ *  - `describe(state, ctx)` is PURE (no DOM): a store state -> the form model (fields with choices,
+ *    visibility, disabled flag and warnings). Everything that depends on the variant or on another option is
+ *    decided here: the levels offered (`difficultySupport`), the symbol sets (`symbolModes`), the variant
+ *    options (`SG.variants.optionsOf`, `visibleWhen`), the strict symmetry warning. The tests exercise it.
+ *  - `mount(rootEl, store, opts)` renders the model into the `<form>` and wires the events to the store. It
+ *    renders once, then updates controls in place (a focused control keeps its focus); only a language change
+ *    rebuilds the labels, and only a variant change rebuilds the variant options.
+ * The form never starts a generation (app.js owns Generate / Cancel / Export). Strings: `controls.*` fragment
+ * at the bottom of this file plus the base packs.
  * Field ids: 'variant', 'difficulty', 'symbolMode', 'seed', 'symmetry' (advanced), 'digOrder', 'maxAttempts',
- * 'showSolution' and 'opt.<optionId>' for variant options. The description of a field (`hintKey`) is shown in a
- * help tooltip next to the label, not under the control.
+ * 'showSolution' and 'opt.<optionId>' for variant options. The description of a field (`hintKey`) is shown in
+ * a help tooltip next to the label, not under the control.
  */
 (function (root) {
   'use strict';
@@ -26,11 +26,9 @@
   const TOAST_MS = 2600;
 
   /**
-   * Strict symmetry rule (data, easy to tune): symmetry kind -> first difficulty level at which combining it with that
-   * kind deserves a warning. Four-way symmetries dig four cells at a time; the digger ("coarse" groups in
-   * js/engine/digger.js) then needs more samples and attempts and misses the requested level more often (a classic9
-   * run takes 1.3-1.8 full grids on average from 'hard' on, against 1.0-1.2 with rotational180). Two-way symmetries
-   * and 'none' never warn.
+   * Symmetry kind -> first level from which it gets a warning. Four-way symmetries dig four cells at a time,
+   * so the digger misses the requested level more often (classic9 from 'hard' on: 1.3-1.8 full grids per
+   * puzzle against 1.0-1.2 with rotational180). Two-way symmetries and 'none' never warn.
    */
   const STRICT_SYMMETRY = Object.freeze({ rotational90: 'master', mirrorBoth: 'master' });
 
@@ -81,7 +79,7 @@
   });
   const PREVIEW_CENTRE = Object.freeze({ rotational180: true, rotational90: true });
 
-  /** Miniature of a symmetry on a 9x9 board: the cells removed together with one sample cell, the mirror axes (lines in board units) and whether the centre is marked. */
+  /** 9x9 miniature of a symmetry: the cells dug with one sample cell, the mirror axes and the centre mark. */
   function symmetryPreview(kind) {
     const n = PREVIEW_SIZE;
     const cellRow = new Int32Array(n * n);
@@ -273,21 +271,25 @@
    * @property {string} id           'variant' | 'difficulty' | ... | 'opt.<optionId>'
    * @property {?string} stateKey    Key of the store state (null for variant options).
    * @property {?string} optionId    Option id for variant options, else null.
-   * @property {('basic'|'options'|'advanced')} section  'options': variant options shown under the basic fields;
-   *           'advanced': inside the "Advanced" disclosure.
+   * @property {('basic'|'options'|'advanced')} section  'options': variant options shown under the basic
+   *           fields; 'advanced': inside the "Advanced" disclosure.
    * @property {('select'|'slider'|'number'|'boolean'|'text'|'seed')} type
    * @property {?string} hintKey     Help text (a description for the variant and the difficulty).
-   * @property {Array<{value: *, labelKey: ?string, label: string}>} choices  Selects only; `label` is the fallback
-   *           text when `labelKey` is null.
-   * @property {boolean} visible     False for an option hidden by its `visibleWhen`, and for a symbol set with a
-   *           single choice (nothing to choose).
+   * @property {Array<{value: *, labelKey: ?string, label: string}>} choices  Selects only; `label` is the
+   *           fallback text when `labelKey` is null.
+   * @property {boolean} visible     False for an option hidden by its `visibleWhen`, and for a symbol set
+   *           with a single choice (nothing to choose).
    * @property {boolean} disabled    A select with a single choice.
    * @property {Array<Object>} warnings  Non-blocking `{ id, messageKey, argKeys }`.
-   * Plus, by type: min / max / step / defaultValue / minLabelKey / maxLabelKey / defaultLabelKey (slider, number),
-   * maxLength / placeholderKey (text, seed), `groups` (variant), `preview` (symmetry), `seed` and `info` (seed).
+   * Plus, by type: min / max / step / defaultValue / minLabelKey / maxLabelKey / defaultLabelKey (slider,
+   * number), maxLength / placeholderKey (text, seed), `groups` (variant), `preview` (symmetry), `seed` and
+   * `info` (seed).
    */
 
-  /** The form model for a state (sanitised first). Pure. `ctx.adjustments`: the corrections the store reported for the last change; they become `notes`. Returns { variantId, fields, notes, warnings }. */
+  /**
+   * The form model for a state (sanitised first). `ctx.adjustments`, the corrections the store reported for
+   * the last change, become `notes`. Returns { variantId, fields, notes, warnings }.
+   */
   function describe(state, ctx) {
     const s = SG.store.sanitize(state);
     const def = SG.variants.get(s.variantId);
@@ -388,8 +390,8 @@
     else control.removeAttribute('aria-describedby');
   }
 
-  // Field widgets: each returns { node, control, update(field) }; `commit(field, value, resync)` writes to the store,
-  // `extras()` lists more elements that describe the control (the variant's notes).
+  // Field widgets: each returns { node, control, update(field) }; `commit(field, value, resync)` writes to
+  // the store, `extras()` lists more elements that describe the control (the variant's notes).
 
   function renderChoices(doc, select, f) {
     const signature = f.choices.map(function (c) { return String(c.value); }).join('|');
@@ -408,11 +410,12 @@
     }
   }
 
-  // Help tooltip next to a field label (the description of a field lives here, not under the control): opens on
-  // hover, keyboard focus and click / tap (so it works on a phone), Esc closes it; styled text, not a native `title`
-  // (see `richText`).
+  // Help tooltip next to a field label: opens on hover, keyboard focus and click / tap (phones), Esc closes
+  // it.
 
-  /** Tooltip text built with DOM nodes (never innerHTML): a blank line starts a paragraph, `**text**` is bold. */
+  /**
+   * Tooltip text built with DOM nodes (never innerHTML): a blank line starts a paragraph, `**text**` is bold.
+   */
   function richText(doc, text) {
     return String(text).split(/\n{2,}/).map(function (paragraph) {
       const p = make(doc, 'p', {});
@@ -738,7 +741,9 @@
     return ok;
   }
 
-  /** `navigator.clipboard` when it exists, else a hidden textarea and `document.execCommand('copy')`. Resolves to whether the text was copied. */
+  /**
+   * `navigator.clipboard`, else a hidden textarea and `execCommand('copy')`. Resolves to whether it worked.
+   */
   function copyText(text, doc) {
     const d = doc || (typeof document !== 'undefined' ? document : null);
     const nav = typeof navigator !== 'undefined' ? navigator : null;
@@ -750,7 +755,11 @@
     return Promise.resolve(d ? fallbackCopy(d, text) : false);
   }
 
-  /** Builds the form into `rootEl` (the `<form id="controls-form">`) and keeps it in step with the store (get / set / subscribe / newSeed). `options.notify(messageKey, args, kind)` ('success' | 'warning' | 'danger') serves the seed buttons (default: a toast in `#toast-root`); `options.onSubmit` runs on Enter in the seed field. Returns { refresh, destroy, focusFirst }. */
+  /**
+   * Builds the form into `rootEl` and keeps it in step with the store. `options.notify(messageKey, args,
+   * kind)` serves the seed buttons (default: a toast); `options.onSubmit` runs on Enter in the seed field.
+   * Returns { refresh, destroy, focusFirst }.
+   */
   function mount(rootEl, store, options) {
     if (!rootEl || !store) throw new TypeError('SG.controls.mount needs a root element and a store');
     const opts = options || {};
@@ -993,9 +1002,9 @@
       'controls.variant.label': 'Biến thể',
       'controls.difficulty.label': 'Độ khó',
       'controls.symbolMode.label': 'Bộ ký hiệu',
-      'controls.symbolMode.hint': 'Chỉ đổi cách vẽ các giá trị. Đề không thay đổi.\n\n' +
-        '**Chữ số**: các con số.\n\n**Chữ cái**: các chữ cái.\n\n**Màu sắc**: các màu, mỗi màu kèm một ' +
-        'hình riêng.\n\n**Hình khối**: chỉ dùng hình khối.',
+      'controls.symbolMode.hint': 'Chỉ đổi cách vẽ các giá trị. Đề không thay đổi.\n\n**Chữ số**: các con ' +
+        'số.\n\n**Chữ cái**: các chữ cái.\n\n**Màu sắc**: các màu, mỗi màu kèm một hình riêng.\n\n**Hình ' +
+        'dạng**: chỉ dùng hình.',
       'controls.symmetry.label': 'Đối xứng',
       'controls.symmetry.hint': 'Các số cho sẵn được bỏ theo từng nhóm tương ứng, nên hình dạng các ô cho ' +
         'sẵn đối xứng.\n\n**Đối xứng càng chặt** thì các mức cao nhất càng khó đạt.',
@@ -1012,13 +1021,13 @@
       'controls.options.legend': 'Tùy chọn của biến thể',
       'controls.advanced.summary': 'Tùy chọn nâng cao',
       'controls.digOrder.label': 'Thứ tự đào lỗ',
-      'controls.digOrder.hint': 'Thứ tự bộ sinh thử bỏ các số cho sẵn khỏi lưới đã điền đầy.',
+      'controls.digOrder.hint': 'Thứ tự trình sinh đề thử bỏ các số cho sẵn khỏi lưới đã điền đầy.',
       'controls.maxAttempts.label': 'Số lần thử tối đa',
       'controls.maxAttempts.hint': 'Số lưới đầy đủ được thử trước khi chọn đề gần nhất (1–20).',
       'controls.showSolution.label': 'Hiện lời giải',
       'controls.showSolution.hint': 'Hiển thị cả lưới đã giải cùng với đề bài.',
       'controls.warn.strictSymmetry': 'Đối xứng “{symmetry}” kết hợp với mức “{difficulty}” khá khắt khe: ' +
-        'bộ sinh có thể phải thử nhiều lần và kết quả có thể lệch một mức. Kiểu đối xứng nhẹ hơn như ' +
+        'trình sinh đề có thể phải thử nhiều lần và kết quả có thể lệch một mức. Kiểu đối xứng nhẹ hơn như ' +
         '“{alternative}” sẽ ổn định hơn.',
       'controls.note.difficultyChanged': '{variant} không có mức “{from}”, nên độ khó đã chuyển sang “{to}”.',
       'controls.note.symbolModeChanged': '{variant} không dùng được bộ ký hiệu “{from}”, nên đã chọn “{to}”.'

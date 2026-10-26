@@ -7,9 +7,9 @@
  *   wWing                60     170   false
  *   uniqueRectangle      66     180   true
  *
- * Everything here is generic: "sees" means "shares at least one unit" (`model.peers`), so any digit count and unit
- * shape works. Eliminations are only taken from unsolved cells. `state` is read, never written; one call returns at
- * most one deduction (the first in a fixed scan order: cells and peers ascending).
+ * Everything here is generic: "sees" means "shares at least one unit" (`model.peers`), so any digit count and
+ * unit shape works. Eliminations are only taken from unsolved cells. `state` is read, never written; one call
+ * returns at most one deduction (the first in a fixed scan order: cells and peers ascending).
  *
  * Translation keys (i18nKey -> i18nArgs; values are numbers or strings, cells are 'R4C7' labels):
  *   technique.xyWing.step               { pivot, pincer1, pincer2, digitX, digitY, digit }
@@ -25,21 +25,21 @@
  * Either way one of the wing cells is Y, so Y goes from every cell that sees both. A partial unit is no
  * strong link: X does not have to occur in it.
  *
- * Unique Rectangle (assumesUniqueness: true) is valid only because a puzzle has ONE solution, so the logical solver
- * skips it with `assumeUniqueness: false` (how uniqueness is verified without circular reasoning); find() also returns
- * null on its own then.
- *   The "deadly pattern": four cells that all hold only {X, Y}. If every unit touching the four cells holds exactly two
- *   of them, swapping X and Y in them turns one solution into another, which a unique puzzle cannot have. So detection
- *   needs, for a model without cages and inequalities (their sums and signs are not invariant under the swap, so UR is
- *   never used there):
- *     - exactly two row units, two column units and two box-like units (kind 'box' or 'region') touch the four cells,
- *       each holding exactly two of them, and every cell lies in some box-like unit;
+ * Unique Rectangle (assumesUniqueness: true) is valid only because a puzzle has ONE solution, so the logical
+ * solver skips it with `assumeUniqueness: false` (how uniqueness is verified without circular reasoning);
+ * find() also returns null on its own then.
+ *   The "deadly pattern": four cells that all hold only {X, Y}. If every unit touching the four cells holds
+ *   exactly two of them, swapping X and Y in them turns one solution into another, which a unique puzzle
+ *   cannot have. So detection needs, for a model without cages and inequalities (their sums and signs are not
+ *   invariant under the swap, so UR is never used there):
+ *     - exactly two row units, two column units and two box-like units (kind 'box' or 'region') touch the
+ *       four cells, each holding exactly two of them, and every cell lies in some box-like unit;
  *     - every other unit touching them (diagonal, window, ...) holds exactly two of them as well.
- *   On a classic grid this is the textbook "2 rows, 2 columns, 2 boxes"; on a Jigsaw board the "boxes" are the irregular
- *   regions, so a rectangle over three or four regions, or with three corners in one region, never fires.
- *   Type 1: three cells hold exactly {X, Y}, the fourth holds more: X and Y leave the fourth cell.
- *   Type 2: two cells hold exactly {X, Y}, the other two (sharing a side) hold {X, Y, Z}: Z is in one of them, so Z
- *   leaves every cell that sees both.
+ *   On a classic grid this is the textbook "2 rows, 2 columns, 2 boxes"; on a Jigsaw board the "boxes" are
+ *   the irregular regions, so a rectangle over three or four regions, or with three corners in one region,
+ *   never fires. Type 1: three cells hold exactly {X, Y}, the fourth holds more: X and Y leave the fourth
+ *   cell. Type 2: two cells hold exactly {X, Y}, the other two (sharing a side) hold {X, Y, Z}: Z is in one
+ *   of them, so Z leaves every cell that sees both.
  */
 (function (root) {
   'use strict';
@@ -182,7 +182,8 @@
     return null;
   }
 
-  // Pivot {X, Y, Z} seeing pincers {X, Z} and {Y, Z}: Z leaves every cell that sees the pivot and both pincers.
+  // Pivot {X, Y, Z} seeing pincers {X, Z} and {Y, Z}: Z leaves every cell that sees the pivot and both
+  // pincers.
   function findXyzWing(model, state, ctx) {
     const info = infoFor(model);
     const cand = state.candidates;
@@ -233,8 +234,8 @@
     return null;
   }
 
-  // The other X cell of a strong link (`unit` is complete and holds `bit` in exactly two unsolved cells, one of them
-  // `cell`), or -1.
+  // The other X cell of a strong link (`unit` is complete and holds `bit` in exactly two unsolved cells, one
+  // of them `cell`), or -1.
   function strongLinkMate(model, state, unit, cell, bit) {
     const cells = model.units[unit];
     const cand = state.candidates;
@@ -250,8 +251,8 @@
     return count === 2 ? mate : -1;
   }
 
-  // Looks for a strong link on `bit` whose cells P and Q are seen by wing cells `a` and `b`; writes P, Q and the unit
-  // into `info.link`.
+  // Looks for a strong link on `bit` whose cells P and Q are seen by wing cells `a` and `b`; writes P, Q and
+  // the unit into `info.link`.
   function findStrongLink(model, state, ctx, info, a, b, bit) {
     const n = info.n;
     const adj = info.adj;
@@ -277,7 +278,8 @@
     return false;
   }
 
-  // Two {X, Y} cells that do not see each other, joined by a strong link on X: Y leaves every cell that sees both.
+  // Two {X, Y} cells that do not see each other, joined by a strong link on X: Y leaves every cell that sees
+  // both.
   function findWWing(model, state, ctx) {
     const info = infoFor(model);
     const n = info.n;
@@ -376,8 +378,8 @@
     return ok && rows === 2 && cols === 2 && boxes === 2;
   }
 
-  // All candidate rectangles as [a, b, c, d]: a, b share a row, c, d another row, a, c share a column, b, d another one.
-  // Empty for a model with cages or inequalities. Computed once per model.
+  // All candidate rectangles as [a, b, c, d]: a, b share a row, c, d another row, a, c share a column, b, d
+  // another one. Empty for a model with cages or inequalities. Computed once per model.
   function buildRectangles(model) {
     if (model.cages.length > 0 || model.inequalities.length > 0) return new Int32Array(0);
     const kinds = unitKinds(model);

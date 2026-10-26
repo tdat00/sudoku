@@ -1,15 +1,13 @@
 /**
  * Themes and the look of the page: `SG.theme`.
- *   - index.html runs a tiny inline script before the stylesheets paint: it reads the stored preferences
- *     (`sg.player.prefs.v1`, the key of js/ui/store.js) and sets `data-theme`, `data-motion` and the font size, so
- *     the first paint already has the right look (no flash). Nothing but that script runs without this file.
- *   - this module applies the preferences whenever the store changes: `data-theme` (removed for 'auto', so
- *     `prefers-color-scheme` rules), `data-motion`, `--sg-font-size-base`, the `aria-pressed` of the header theme
- *     buttons (which it also wires to the store), `<meta name="theme-color">`, a colours-only transition on a
- *     theme change (class `is-theming`, never under reduced motion), and the operating-system colour scheme
- *     while the preference is 'auto'.
- * Pure part (runs in Node, see tests/suites/theme.test.js): `resolveTheme`, `attributeFor`, `nextTheme`,
- * `fontSizeValue`. `init(app)` is idempotent; `cycle()` goes auto -> light -> dark -> high-contrast -> auto.
+ *   - The inline script of index.html and help.html applies the stored preferences (`sg.player.prefs.v1`)
+ *     before the stylesheets paint, so the first paint has the right look.
+ *   - This module then follows the store: `data-theme` (removed for 'auto', so `prefers-color-scheme` rules),
+ *     `data-motion`, `--sg-font-size-base`, the `aria-pressed` of the theme buttons (which it wires to the
+ *     store), `<meta name="theme-color">`, and a colours-only transition on a theme change (class
+ *     `is-theming`, never under reduced motion), also when the system scheme changes while the preference is
+ *     'auto'.
+ * `init(app)` is idempotent; `cycle()` goes auto -> light -> dark -> high-contrast -> auto.
  */
 (function (root) {
   'use strict';
@@ -20,7 +18,7 @@
 
   const THEMES = Object.freeze(['auto', 'light', 'dark', 'high-contrast']);
 
-  /** The font-size setting as the value of `--sg-font-size-base` (also written by the inline script). */
+  // The same values are written by the inline script of the pages.
   const FONT_SIZES = Object.freeze({ small: '87.5%', normal: '100%', large: '125%' });
 
   const TRANSITION_MS = 400;
@@ -75,7 +73,6 @@
     return resolveTheme(state ? state.theme : 'auto', prefersDark());
   }
 
-  /** Lets the colours of the whole page fade for a moment (class `is-theming`, see css/base.css). */
   function markTransition() {
     if (!motionAllowed()) return;
     const html = document.documentElement;
@@ -87,7 +84,6 @@
     }, TRANSITION_MS);
   }
 
-  /** `<meta name="theme-color">` follows the surface colour of the header. */
   function updateThemeColor() {
     const head = document.head;
     if (!head || typeof root.getComputedStyle !== 'function') return;
@@ -200,7 +196,6 @@
 
   SG.theme = {
     THEMES: THEMES,
-    FONT_SIZES: FONT_SIZES,
     resolveTheme: resolveTheme,
     attributeFor: attributeFor,
     nextTheme: nextTheme,

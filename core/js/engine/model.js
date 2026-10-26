@@ -1,9 +1,9 @@
 /**
- * Unified puzzle model: every variant is a constraint satisfaction problem made of cells, all-different units,
- * optional cages / inequalities and a drawing layout. The model is immutable once built (`create`); everything
- * that changes while solving lives in a separate `SolveState`, so cloning a search position is one typed-array
- * copy. `create` only builds data and never rejects a malformed unit list, so that `validate` can report every
- * problem of a hand-made model.
+ * Unified puzzle model: every variant is a constraint satisfaction problem made of cells, all-different
+ * units, optional cages / inequalities and a drawing layout. The model is immutable once built (`create`);
+ * everything that changes while solving lives in a separate `SolveState`, so cloning a search position is one
+ * typed-array copy. `create` only builds data and never rejects a malformed unit list, so that `validate` can
+ * report every problem of a hand-made model.
  */
 (function (root) {
   'use strict';
@@ -24,17 +24,17 @@
 
   /**
    * @typedef {Object} ModelSpec  Input of `create`.
-   * `cellCount` defaults to `layout.cellRow.length`; `unitMeta` has one entry per unit (missing ones get defaults);
-   * `inequalities` mean value[a] < value[b]; `symbols.labels[v - 1]` is the symbol of value v; `fixedCells` is
-   * either one entry per cell (0 = free, v > 0 = forced to v) or a list of [cell, value] pairs.
-   * `layout` is { rows, cols, cellRow, cellCol, cellRegion?, overlays?, subGrids? }.
+   * `cellCount` defaults to `layout.cellRow.length`; `unitMeta` has one entry per unit (missing ones get
+   * defaults); `inequalities` mean value[a] < value[b]; `symbols.labels[v - 1]` is the symbol of value v;
+   * `fixedCells` is either one entry per cell (0 = free, v > 0 = forced to v) or a list of [cell, value]
+   * pairs. `layout` is { rows, cols, cellRow, cellCol, cellRegion?, overlays?, subGrids? }.
    */
 
   /**
    * @typedef {Object} PuzzleModel  Immutable. Same fields as the spec, normalised to typed arrays, plus:
    * `cellUnits` (units containing each cell) and `peers` (cells sharing a unit with each cell, ascending).
-   * `fixedCells` has one entry per cell (0 = free, v > 0 = forced to v); it marks the key word line of a board with
-   * one (the solvers work from `givens` alone).
+   * `fixedCells` has one entry per cell (0 = free, v > 0 = forced to v); it marks the key word line of a
+   * board with one (the solvers work from `givens` alone).
    */
 
   /**
@@ -424,8 +424,9 @@
   }
 
   /**
-   * Checks the model invariants V1-V8. V8 (a trial solve with a small budget) only runs when V1-V7 pass and `SG.dfs`
-   * is loaded; a trial solve that runs out of budget is inconclusive and reported in `warnings`, never as an error.
+   * Checks the model invariants V1-V8. V8 (a trial solve with a small budget) only runs when V1-V7 pass and
+   * `SG.dfs` is loaded; a trial solve that runs out of budget is inconclusive and reported in `warnings`,
+   * never as an error.
    */
   function validate(model, options) {
     options = options || {};
@@ -450,7 +451,10 @@
     };
   }
 
-  /** Copies a state; with `into` (built for the same model) the copy is written into its buffers without allocating. */
+  /**
+   * Copies a state; with `into` (built for the same model) the copy is written into its buffers without
+   * allocating.
+   */
   function cloneState(state, into) {
     if (into) {
       into.candidates.set(state.candidates);
@@ -465,7 +469,10 @@
     };
   }
 
-  /** Human label of a cell: 'R4C7' (1-based), prefixed 'G2-' on multi-grid layouts; an overlap cell is labelled by the first sub-grid containing it. */
+  /**
+   * Human label of a cell: 'R4C7' (1-based), prefixed 'G2-' on multi-grid layouts; an overlap cell is
+   * labelled by the first sub-grid containing it.
+   */
   function cellLabel(model, cellIndex) {
     const layout = model.layout;
     const row = layout.cellRow[cellIndex];
@@ -482,7 +489,10 @@
     return 'R' + (row + 1) + 'C' + (col + 1);
   }
 
-  /** Independent check of a complete assignment against every unit, cage and inequality; shares no code with the solver, so it is the oracle for "solution is valid". */
+  /**
+   * Independent check of a complete assignment against every unit, cage and inequality; shares no code with
+   * the solver, so it is the oracle for "solution is valid".
+   */
   function isSolution(model, values) {
     const n = model.cellCount;
     const D = model.digits;

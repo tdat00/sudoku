@@ -1,8 +1,7 @@
-// Internationalisation (task T-4.1 / T-4.9, design.md section 11): SG.i18n and the two language packs.
-// Everything runs on Node without a DOM (a tiny fake DOM stands in where the DOM is the subject). The
-// coverage tests are computed from the code (explain data, event vocabulary, variant registry, technique
-// registry, error codes thrown in the engines and js/variants, data-i18n attributes of index.html), so a key
-// that a later change needs but does not define makes a test fail here.
+// Internationalisation: SG.i18n and the two language packs. Everything runs on Node without a DOM (a tiny
+// fake DOM stands in where the DOM is the subject). The coverage tests are computed from the code (variants,
+// levels, technique registry, error codes thrown in the engines and js/ui, data-i18n attributes of
+// index.html), so a key that a change needs but does not define makes a test fail here.
 (function () {
   'use strict';
 
@@ -614,7 +613,7 @@
   // detect
   // ---------------------------------------------------------------------------------------------
 
-  describe('i18n: detect (the start language, rule L4)', function () {
+  describe('i18n: detect (the start language)', function () {
     it('takes the URL language first, then the stored one, then the browser, then English', function () {
       packsReady();
       expect(I.detect({ urlLang: 'vi', stored: 'en', navigator: 'en-US' })).toBe('vi');
@@ -926,7 +925,8 @@
           allMatches(source.text, /\btoast\(\s*'[a-z]+',\s*'([a-z][A-Za-z0-9]*\.[A-Za-z0-9_.]+)'/)
             .forEach(function (key) { used.push(key); });
         });
-        // Keys written as prefixes that a loop completes ('play.hint.' + reason) are not literals: skipped here.
+        // Keys written as prefixes that a loop completes ('play.hint.' + reason) are not literals: skipped
+        // here.
         used = unique(used).filter(function (key) { return key.charAt(key.length - 1) !== '.'; });
         expect(used.length).toBeGreaterThan(0);
         checkBoth('keys used by js/ui', used);

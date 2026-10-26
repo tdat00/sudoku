@@ -1,8 +1,8 @@
 'use strict';
 // Browser run: the guide (help.html). Usage: node tests/browser/help.js
-// The page opens without a dialog, shows the basics, the hints and the techniques in groups with a tab for each
-// technique, draws the fixed example of a technique when its tab is shown, lists the groups and the techniques in
-// the contents, follows the language and the theme of the player, and fits a phone.
+// The page opens without a dialog, shows the basics, the hints and the techniques in groups with a tab for
+// each technique, draws the fixed example of a technique when its tab is shown, lists the groups and the
+// techniques in the contents, follows the language and the theme of the player, and fits a phone.
 const { launch, newPage, serve, sleep } = require('./lib.js');
 
 const base = 'http://127.0.0.1:8772/player/help.html';

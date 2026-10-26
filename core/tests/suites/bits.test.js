@@ -44,7 +44,6 @@
     return thrown;
   }
 
-  // -------------------------------------------------------------------------------------------
   describe('SG namespace (ns.js)', function () {
     var savedDebug;
 
@@ -143,7 +142,6 @@
     });
   });
 
-  // -------------------------------------------------------------------------------------------
   describe('SG.errors.GenerationError', function () {
     it('is an Error carrying code and i18nArgs', function () {
       var err = new SG.errors.GenerationError('x.y', { a: 1 });
@@ -173,7 +171,6 @@
     });
   });
 
-  // -------------------------------------------------------------------------------------------
   describe('SG.bits', function () {
     var bits = SG.bits;
 
@@ -291,7 +288,6 @@
     });
   });
 
-  // -------------------------------------------------------------------------------------------
   describe('SG.budget', function () {
     var budget = SG.budget;
 

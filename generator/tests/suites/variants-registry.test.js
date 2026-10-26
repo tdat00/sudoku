@@ -1,5 +1,5 @@
-// The variant registry (SG.variants) and the classic variants (tasks T-1.1 and T-1.2). The model itself, and the
-// classic boards that the variants build, are tested by core/tests/suites/model.test.js.
+// The variant registry (SG.variants) and the classic variants. The model itself, and the classic boards that
+// the variants build (SG.classicModel), are tested by core/tests/suites/model.test.js.
 (function () {
   'use strict';
 
@@ -17,6 +17,7 @@
     expect(thrown instanceof SG.errors.GenerationError).toBe(true);
     expect(thrown.code).toBe(code);
   }
+
   describe('variants: registry', function () {
     function fakeDef(overrides) {
       return Object.assign({
@@ -98,64 +99,17 @@
   });
 
   describe('variants: classic4, classic6, classic9', function () {
-    it('all build a model that passes validate (V1-V8)', function () {
-      ['classic4', 'classic6', 'classic9'].forEach(function (id) {
-        var model = build(id);
-        expect(model.variantId).toBe(id);
-        expect(SG.model.validate(model).ok).toBe(true);
-      });
-    });
-
-    it('have the expected sizes and the declared digit count', function () {
+    it('build the classic board of their declared digit count, which validates (V1-V8)', function () {
       var expected = { classic4: [4, 16, 12], classic6: [6, 36, 18], classic9: [9, 81, 27] };
       Object.keys(expected).forEach(function (id) {
         var model = build(id);
+        expect(model.variantId).toBe(id);
+        expect(SG.model.validate(model).ok).toBe(true);
         expect(model.digits).toBe(expected[id][0]);
         expect(SG.variants.get(id).digits).toBe(expected[id][0]);
         expect(model.cellCount).toBe(expected[id][1]);
         expect(model.units).toHaveLength(expected[id][2]);
       });
-    });
-
-    it('classic4 has 2x2 boxes', function () {
-      var model = build('classic4');
-      expect(Array.from(model.layout.cellRegion)).toEqual([0, 0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3, 3]);
-    });
-
-    it('classic6 has boxes of 2 rows x 3 columns, not 3 rows x 2 columns', function () {
-      var model = build('classic6');
-      var region = model.layout.cellRegion;
-      function at(r, c) { return region[r * 6 + c]; }
-      expect(at(0, 0)).toBe(at(0, 2));
-      expect(at(0, 0)).toBe(at(1, 2));
-      expect(at(0, 0)).not.toBe(at(2, 0));
-      expect(at(0, 0)).not.toBe(at(0, 3));
-      expect(at(2, 0)).toBe(2);
-      expect(at(0, 3)).toBe(1);
-      var boxes = model.units.filter(function (u, i) { return model.unitMeta[i].kind === 'box'; });
-      expect(boxes).toHaveLength(6);
-      expect(Array.from(boxes[0])).toEqual([0, 1, 2, 6, 7, 8]);
-      expect(Array.from(boxes[1])).toEqual([3, 4, 5, 9, 10, 11]);
-      // Every box spans exactly 2 distinct rows and 3 distinct columns.
-      boxes.forEach(function (box) {
-        var rows = new Set(Array.from(box).map(function (c) { return Math.floor(c / 6); }));
-        var cols = new Set(Array.from(box).map(function (c) { return c % 6; }));
-        expect(rows.size).toBe(2);
-        expect(cols.size).toBe(3);
-      });
-    });
-
-    it('classic9 has 3x3 boxes numbered row by row', function () {
-      var model = build('classic9');
-      expect(model.layout.cellRegion[0]).toBe(0);
-      expect(model.layout.cellRegion[3]).toBe(1);
-      expect(model.layout.cellRegion[27]).toBe(3);
-      expect(model.layout.cellRegion[80]).toBe(8);
-    });
-
-    it('build returns an independent model on every call', function () {
-      var def = SG.variants.get('classic9');
-      expect(def.build({}, null)).not.toBe(def.build({}, null));
     });
 
     it('declare the difficulty levels they support and a symbol mode', function () {
