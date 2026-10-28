@@ -6,7 +6,7 @@
 | Compiled by | drafted by claude-opus-5.5 for the orchestrating agent (GitHub Copilot CLI), checked by gpt-6-astra |
 | Date | 2026-10-28 |
 | Code examined | `8d9510a` (Node v24.22.1, Windows) |
-| Status | **Part I** (§1–§11): the joint report and implementation spec, corrected after gpt-6-astra's check (§11, "Corrections applied at sign-off"); signed by both researchers on 2026-10-28. **Part II** (the implementation, its review and the verification) will be added after the implementation. |
+| Status | **Part I** (§1–§11): the joint report and implementation spec, corrected after gpt-6-astra's check (§11, "Corrections applied at sign-off"); signed by both researchers on 2026-10-28. **Part II** (§12–§18): the implementation (GS01–GS08 of [`tasks/generation-steps/`](../../tasks/generation-steps/check-list.md)), its problems and their resolutions, the final verification and the effort; complete on 2026-10-29, branch `generation-steps`, not pushed. |
 
 The short version, with the timeline of the session, is [`report-brief.md`](report-brief.md).
 
@@ -1528,4 +1528,128 @@ four slow goldens (§9.3 case 2; claude-opus-5.5 recommends their `toWire` resul
 - Restart's second-solution reason holds for solution-consistent givens; budget exhaustion throws.
 - Use new replay-suite `toWire` test data for G09–G12; leave existing fixtures unchanged.
 
-Part II (the implementation, its review and the verification) will follow.
+---
+
+# Part II — The implementation, its review and the verification
+
+Part II records how Part I was built: the task pack, the eight tasks and their commits, the problems met and how they
+were solved, the final verification of Q9 c, and the effort. The evidence of each task is its execution log in
+[`tasks/generation-steps/`](../../tasks/generation-steps/check-list.md); the final gates are in
+[`docs/qa/browser-run.md`](../qa/browser-run.md) ("Generation Steps (2026-10-29)").
+
+## 12. How it was built
+
+- **The task pack** ([`tasks/generation-steps/check-list.md`](../../tasks/generation-steps/check-list.md) and
+  GS01–GS08) was written by claude-opus-5.5 from Part I. Each task names its files, its implementation steps, its
+  business and technical acceptance criteria, its test plan and an execution log. The check-list fixes the order (one
+  task per wave), the shared conventions, the decisions D1–D22 taken while writing it, the files each task owns and
+  the final gates. gpt-6-astra reviewed the pack
+  ([`gpt-6-astra/6-review-of-task-pack.md`](gpt-6-astra/6-review-of-task-pack.md): 45 groups of fixes, all applied)
+  and declared it ready.
+- **Branch** `generation-steps`, from `main` at `8d9510a`; first commit `0a91e3b` (the reports, the task pack and the
+  row of `docs/README.md`), then one commit per task; nothing pushed (Q8 b).
+- **Each task** was implemented by a fresh claude-sonnet-5.5 sub-agent that received the task file, the check-list
+  and the handoffs of the earlier tasks, ran only the quick suites its task names, and did not commit. The
+  orchestrator then re-ran the app's quick set (both apps when `core/` changed), checked line endings, BOM, absolute
+  paths and file ownership, read the diff, filled the execution log (times, model, tokens, AI credits, verification,
+  acceptance, issues, handoff) and committed. A defect found in another task's files went back to the orchestrator;
+  each such fix was a line or two and was made by the orchestrator and recorded in the log of the task that found it.
+- **The heavy and browser gates** ran once, at the end (GS08, Q9 c), on a frozen copy of the final candidate compared
+  with a copy of `8d9510a`.
+
+## 13. The tasks
+
+| Task | What it built | Commit | Duration | AI credits | Generator quick set after |
+|---|---|---|--:|--:|--:|
+| GS01 | `SG.replay` (`generator/js/engine/replay.js`): complete moves from the dig log (an exchange is one move), one rating per board with honest statuses, the guards; the 14 goldens and the wire data (`generator/tests/fixtures/replay-goldens.js`, `replay-wire.js`, `generator/tests/replay-fixtures.js`); the `replay` suite | `924181d` | 21 min 36 s | 377.56 | 43 suites, 2,589 |
+| GS02 | The two views: the compact selection (ratio R, minimum gain, never decreasing, phase ends cut, restarts folded), the avoidability audit, the transitions and their tiers (first rated, jump ×3 and +100, new hardest) | `2aff62c` | 16 min 37 s | 285.99 | 2,643 |
+| GS03 | The jump explanations: the cause (`single-culprit`, `together`, `mixed`, `single-sign`, `single-cell`, `multi-move`, `unavailable`) and its frame, the generator's choice, the first use of the technique, the restricted check | `128ed08` | 16 min 02 s | 253.72 | 2,702 |
+| GS04 | The worker job `replay` (`replayProgress`, `replayDone`, `replayError`, `cancel`), `SG.workerClient.replay` / `cancelReplay`, the main-mode consent (`replayConsentRequired`) | `d07c97c` | 14 min 53 s | 268.31 | 2,743 |
+| GS05 | The replay in the page: `SG.player.buildViews` from the analysis, the "Show every move" toggle that keeps the place, the step texts in English and Vietnamese, the preparation flow and its status, the **Prepare score tables** button without a Worker (Q19 a), the cache path | `6b8d4ff` | 33 min 57 s | 833.94 | 2,785 |
+| GS06 | The steps panel: a score table on every step (zero and status tables included), the badge "Score jump ×12.5", the callout and "Why?", the "New hardest technique" label, the culprit frame of a clue (`.cell--cause`) or a sign (`rect.sign--cause`, a small change in `core/`) | `482b6f8` | 25 min 18 s | 665.64 | 2,818 (player 1,609) |
+| GS07 | The documents in both languages: user guides, developer guides, `generator/design.md`, `generator/task.md`, `README.md` | `02b1599` | 20 min 30 s | 534.78 | 2,818 (player 1,609) |
+| GS08 | The final verification (Q9 c), the QA record and the release record | `71ec6cd` | 32 min 42 s | 129.88 | — |
+| **Total** | | | **3 h 01 min 35 s** | **3,349.82** | |
+
+The baseline had 42 quick suites and about 2,550 tests in the generator. The change added the `replay` suite and about
+270 tests (in the `replay`, `player`, `steps`, `worker`, `cache` and `ui-contract` suites). No test was skipped,
+deleted or weakened: the tests tied to the old fixed batches were rewritten around the invariants of §9.3, and every
+such contract change is listed in its task's log.
+
+## 14. Problems met and how they were solved
+
+| # | Task | Problem | Resolution |
+|---|---|---|---|
+| 1 | GS01 | The rating field `checks` (a diagnostic count of solver checks) differs between two analyses of the same board in one Node process: `core/js/engine/tech-subset.js` keeps a module-level node counter, so the budget checks depend on the process history (G11: 728 or 729). Scores, statuses, counts and selections never change. | Accepted as a diagnostic-only field (the engine is out of scope, N1); documented in `replay.js` and `generator/design.md` §7.5; every determinism and round-trip test, and the GS08 sweep, compares analyses with `checks` zeroed. |
+| 2 | GS02, GS03 | Assertions of the previous task encoded its intermediate state (no compact view yet; no causes yet). | Updated to the new contract in the task that changed it, as intended contract changes; no golden or fixture touched. |
+| 3 | GS05 | The heavy suite `generator/tests/manual/killer.test.js` (outside the quick set and the task's files) still called the removed `SG.player.buildSteps`, so `--all` would have failed in GS08. | One line migrated by the orchestrator to `SG.player.buildViews(result, SG.replay.analyse(result)).details.steps`, keeping its assertion; that test run alone (1/1); GS08's identity check allows exactly this one line. |
+| 4 | GS05, GS06 | Stale comments in `generator/js/ui/step-view.js` (`buildSteps`, `rateStep`, a "hardest removal" round). | Fixed in GS06 and GS07. |
+| 5 | GS07 | A puzzle served from the cache announced "The step-by-step replay is ready." once its generation record was rebuilt, while the score tables were still being prepared. | The announcement now says "The generation record is rebuilt." / "Đã dựng lại bản ghi quá trình tạo đề."; the preparation status is read from `#replay-status`; `generator/design.md` §10.7 says so. |
+| 6 | GS01–GS07 | The guides' quick-set counts went stale with every task. | Corrected once, in GS07 (43 suites, 2,818 tests; player 29 suites, 1,609 tests); GS08 measured `--all` at 3,835 tests, matching the guides' "about 3,840". |
+| 7 | GS08 | The GS08 identity script allowed only the new `replay.js` in the engine-side diff. | The script (not the product) now also allows the migrated `killer` test line of item 3 and asserts that the diff is exactly that line. |
+| 8 | GS08 | `--all` took 999 s on this machine, against "about nine minutes" in the guides. | Left as it is: times depend on the machine, and the counts match. |
+| 9 | GS08 | The orchestrator's English / Vietnamese review of the 112 new or changed strings: the singular `steps.jump.choice.nulls_one` says "các phương án đó" (a plural) in Vietnamese. | A wording nit, left for a later change so as not to invalidate the tested candidate; recorded in the release record. |
+
+Decisions taken by the developers where the task left a choice, and accepted by the orchestrator, are in the logs:
+for example a replay with `forceMode: 'worker'` rejects even with `allowMain` (GS04); the compact restart step has no
+`change` (GS05); the status table of a capped move shows no attempted rows (GS06).
+
+## 15. Verification (Q9 c)
+
+All once, on the final candidate `02b1599`, from a frozen copy of the tree compared with a copy of `8d9510a`
+(Microsoft Edge 156.0.4314.50, Node v24.22.1, Windows). The pages were served over http from the root of each copy
+(`generator/index.html?v=classic9&d=expert&seed=3275974478`, `?v=greaterThan&d=expert&seed=42`, and
+`generator/tests.html` without `?all=1`), and the example was also opened from a file without a worker; every run
+completed:
+
+| Gate | Result |
+|---|---|
+| `cd generator && node tests/node-runner.js --all` | 51 suites, 3,835 tests, 0 failed, 3 skipped (`perf`), 999 s; the regression hashes included |
+| Quick sets | generator 43 suites, 2,818 tests; player 29 suites, 1,609 tests; `node tests/replay-fixtures.js --check` up to date |
+| `player/tests/browser/run-all.js` | `fragment.js` file and http, `open.js` 86/86, `play.js` 51/51, `ui.js` 45/45, `visual.js` 42/42, `help.js` 23/23, `links.js` 11/11 |
+| `generator/tests.html` (headless, over http) | the branch 2,724 tests, 4 failed; `8d9510a` 2,464 tests, the same 4 failed (carried limitations: the "without a DOM" tests of `board-view`, `a11y`, `theme`, and one timing test of `pipeline`); no missing file, no console error; the `replay` suite ran in full (152 tests), the 14 golden details checks among them |
+| The real page | 40/40 checks. With a worker the example prepares its tables by itself and shows 7 steps (0, 23, 44, 551, 568, 992, 992), the badge "Score jump ×12.5", the callout, a closed "Why?" and R1C2 framed on step 4, and 33 steps with "Show every move" (compact 4 ↔ details 24); in Vietnamese "Điểm tăng vọt ×12,5". From a file without a worker, the puzzle and its Summary work at once and the replay waits for "Prepare score tables" with browsing disabled, then shows both views. Greater-Than Expert seed 42 frames one sign on its jump (×4.0). No console error. The screenshots were looked at, also with forced colours emulated. |
+| Identity (N1) | the payload digest of the example `d350758d…`, the cache version and key, the cache entry, the history entry and the export are byte-identical to `8d9510a`; the engine-side diff is the new `replay.js` and the one migrated `killer` test line; no existing fixture, regression hash, player file or shared test changed |
+| Golden sweep | 14 / 14 equal (13 compact and 16 every-move jumps, 19 distinct transitions); preparing the score tables took a median of 29.2 ms per puzzle in Node, at most 592.0 ms (G14, Mega 16×16 Hell 2 seed 12, against 594.34 ms for the ratings alone in the prototype); all 14 together 948 ms, of which the explanations of both views 79 ms |
+| Strings | 112 keys (98 new, 14 changed, 0 removed), all in English and Vietnamese; no Vietnamese copies English; one wording nit (§14, item 9) |
+
+**Release verdict:** every gate passed and no defect is open; the branch is ready to merge. Merging is the user's
+decision.
+
+## 16. The requirements, met
+
+| Requirement | Evidence |
+|---|---|
+| N1: the generator, its puzzles and the stored data unchanged | §15 identity; `--all` with the regression hashes; the only new engine-side file is `replay.js` |
+| N2: a score table on every step, even when the score does not change | GS06 (zero tables, status tables, "992 (unchanged)"); the real page (7 of 7 steps with a table) |
+| N3: scores that rise steadily | GS02 compact view (never decreasing, about ×2 apart); the example becomes 0, 23, 44, 551, 568, 992, 992, instead of steps 11–18 without a table and 1849 at step 19 |
+| N4: a jump that cannot be removed is explained | GS02 audit (no recorded board could split a jump); GS03 cause, choice and first use; GS06 badge, callout, "Why?" and frame; the real page (step 4: "Score jump ×12.5", R1C2 framed) |
+| Q1–Q19 | Part I §2; each decision is tested in the task that implemented it ([check-list §5](../../tasks/generation-steps/check-list.md)) |
+
+## 17. Effort
+
+| Who | Model | Work | AI credits | Tokens in / out |
+|---|---|---|--:|--:|
+| claude-opus-5.5 | Claude Opus 5.5 | research, review, response, check of the golden data, joint report, task pack | 12,630.90 | 308,228,253 / 2,071,380 |
+| gpt-6-astra | GPT-6 Astra | research, review, response, golden data, checks of the joint report and of the task pack | 20,031.23 | 63,460,711 / 823,640 |
+| GS01–GS08 developers (8) | Claude Sonnet 5.5 | implementation and final verification | 3,349.82 | 171,772,037 / 1,055,703 |
+| look-up helpers (4) | GPT-5.6 Luna | short read-only look-ups | 7.67 | 535,202 / 27,438 |
+| orchestrator | Claude Opus 5.5 | coordination, verification of each task, commits, reports, progress messages | 7,164.86 | 73,021,327 / 219,189 |
+| **Total** | | | **43,184.48** | **617,017,530 / 4,197,350** |
+
+Measured from the local usage records of the session at 02:12 on 2026-10-29 (the orchestrator's last few minutes of
+work on this report are not counted); input tokens include cached reads. Wall-clock time: research and joint report
+13:13–19:05 on 2026-10-28; task pack and its review 19:05–22:49; implementation and verification 22:50 on 2026-10-28
+to 02:11 on 2026-10-29 (3 h 21 min, of which 3 h 02 min of developer time).
+
+## 18. What is left
+
+- **Merging** `generation-steps` into `main` is the user's decision; nothing was pushed.
+- Not checked (also in [`docs/qa/browser-run.md`](../qa/browser-run.md)): a real screen reader on the callout and
+  "Why?"; touch devices; Firefox and Safari; the main-mode press on a slow device; the screenshots of
+  `docs/screenshots/` were not retaken.
+- A wording nit in Vietnamese (§14, item 9).
+- Deferred by the user's decisions (Part I §10): marks on the slider and a proof on the board (Q16 a); a retry for a
+  capped position (Q18 b); splitting a symmetric group (Q2 a); a preview of the details view before "Prepare score
+  tables" (Q19 a).
+- A known quirk outside the scope: `checks` depends on the process history (§14, item 1).

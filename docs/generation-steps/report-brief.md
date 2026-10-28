@@ -2,11 +2,11 @@
 
 | | |
 |---|---|
-| Date | 2026-10-28, from 13:13 (local time, +07:00) |
+| Date | 2026-10-28, 13:13 to 2026-10-29, 02:11 (local time, +07:00) |
 | Who | orchestrator: GitHub Copilot CLI (Claude Opus 5.5) · researchers: **claude-opus-5.5** (Claude Opus 5.5, 1M context, max reasoning) and **gpt-6-astra** (GPT-6 Astra, long context, max reasoning) · implementers: claude-sonnet-5.5 sub-agents |
 | Code examined | `8d9510a` (branch `main`) |
-| State | research done; joint report and implementation spec written and checked by both researchers (§11 of the detailed report); implementation in the task pack [`tasks/generation-steps/`](../../tasks/generation-steps/check-list.md), branch `generation-steps`, not pushed |
-| Details | [`report-detailed.md`](report-detailed.md) (Part I: the joint report and the implementation spec; Part II, the implementation and its verification, follows) |
+| State | **done**: research, joint report and spec (signed by both researchers), task pack [`tasks/generation-steps/`](../../tasks/generation-steps/check-list.md), implementation GS01–GS08 on branch `generation-steps` (9 commits from `0a91e3b` to `71ec6cd`, plus this report), all final gates passed; **not pushed: merging is the user's decision** |
+| Details | [`report-detailed.md`](report-detailed.md) (Part I: the joint report and the implementation spec; Part II: the implementation, its problems, the verification and the effort) |
 
 ## What was asked
 
@@ -62,9 +62,14 @@ sub-agents, one commit per task on a new branch, no push.
 | 18:28 | gpt-6-astra's check of the joint report | 13 must-fix corrections (contracts, wording, Vietnamese copy) | |
 | 18:39 – 18:40 | | | Q19: without a Worker the replay waits for "Prepare score tables"; the user lets the orchestrator decide the rest by recommendation |
 | 19:04 | corrections applied | | |
-| 19:05 → | sign-off; task pack | | slow golden cases checked from saved generation results (orchestrator) |
+| 19:05 – 20:56 | sign-off; task pack written (claude-opus-5.5): check-list and GS01–GS08 | | slow golden cases checked from saved generation results (orchestrator) |
+| 20:56 – 22:49 | gpt-6-astra's review of the task pack | 45 groups of fixes, all applied; "ready" | |
+| 22:49 | branch `generation-steps`, commit `0a91e3b` (reports and task pack) | | |
+| 22:50 – 01:37 | GS01–GS07 implemented one at a time (claude-sonnet-5.5), each checked and committed by the orchestrator | `checks` is not reproducible within one process (accepted as diagnostic only); a heavy `killer` test still used the removed API (one line migrated); the cache announced the replay as ready too early (wording fixed) | defects in another task's files fixed by the orchestrator and logged |
+| 01:38 – 02:11 | GS08: final gates once (`--all`, both quick sets, player browser scripts, `tests.html`, real page, identity, golden sweep) | all pass; puzzle, cache entry, history entry and export byte-identical to `8d9510a`; no defect | |
+| 02:12 | Part II of the detailed report; this update | | merging left to the user |
 
-## What you will see (UI/UX), once implemented
+## What you see now (UI/UX)
 
 - **Generation Steps tab**: about 7 steps instead of 9–106; a score table on **every** step (0 on the solution, cages
   and signs steps); the Total shows its change ("551 (+507)", "992 (unchanged)").
@@ -75,28 +80,53 @@ sub-agents, one commit per task on a new branch, no push.
   one line.
 - **"Show every move"** toggle: one step per move, with real decreases; a move that cannot be scored shows a status
   table (no total) instead of a number.
-- A short "Preparing the score tables… k of N" while the worker rates the boards (milliseconds on 9×9; under a second
-  on the largest boards). Opened from `file://` (no Worker): a notice and a **Prepare score tables** button, with a
-  warning that the page may pause; nothing runs before it is pressed.
-- About 70 new or changed strings in English and Vietnamese; updated user and developer guides (both languages),
+- A short "Preparing the score tables… k of N" while the worker rates the boards (a median of 29 ms per puzzle in
+  Node; 592 ms on the largest golden, a Mega 16×16). Opened from `file://` (no Worker): a notice and a **Prepare score
+  tables** button, with a warning that the page may pause; nothing runs before it is pressed.
+- 112 new or changed strings in English and Vietnamese; updated user and developer guides (both languages),
   `generator/design.md` and the Help text of the replay.
 
-## Effort (research and report)
+## Implementation and verification
+
+| task | what | commit | duration | AI credits |
+|---|---|---|--:|--:|
+| GS01 | replay analysis: moves, ratings, statuses, golden test data | `924181d` | 21 min 36 s | 377.56 |
+| GS02 | two views, compact selection, audit, tiers | `2aff62c` | 16 min 37 s | 285.99 |
+| GS03 | jump explanations: cause, culprit, choice, first use | `128ed08` | 16 min 02 s | 253.72 |
+| GS04 | worker replay job and client, both modes | `d07c97c` | 14 min 53 s | 268.31 |
+| GS05 | views, step texts, preparation flow, "Prepare score tables" | `6b8d4ff` | 33 min 57 s | 833.94 |
+| GS06 | tables on every step, badge, callout, "Why?", frames | `482b6f8` | 25 min 18 s | 665.64 |
+| GS07 | documents in both languages | `02b1599` | 20 min 30 s | 534.78 |
+| GS08 | final gates and release record | `71ec6cd` | 32 min 42 s | 129.88 |
+| **total** | | | **3 h 01 min 35 s** | **3,349.82** |
+
+Final gates, once on `02b1599`: generator `--all` 51 suites, 3,835 tests, 0 failed; quick sets 2,818 (generator) and
+1,609 (player); the player's browser scripts all pass; `generator/tests.html` has the same 4 old failures as `8d9510a`
+and no new one; the real page passes 40/40 checks (worker mode, `file://` without a worker, Vietnamese, Greater-Than);
+the example's puzzle, cache entry, history entry and export are byte-identical to `8d9510a`; the 14 goldens are equal.
+Not checked: screen readers, touch devices, Firefox and Safari, a slow device in the main mode. One Vietnamese wording
+nit is left for later (detailed report §14).
+
+## Effort
 
 | agent | model | AI credits | tokens in / out |
 |---|---|--:|--:|
-| claude-opus-5.5 (researcher) | Claude Opus 5.5 | 8,368.65 | 193,663,132 / 1,436,059 |
-| gpt-6-astra (researcher) | GPT-6 Astra | 12,344.85 | 41,591,454 / 564,696 |
-| orchestrator | Claude Opus 5.5 | 2,442.51 | 17,392,480 / 103,672 |
+| claude-opus-5.5 (researcher, joint report, task pack) | Claude Opus 5.5 | 12,630.90 | 308,228,253 / 2,071,380 |
+| gpt-6-astra (researcher, golden data, checks and reviews) | GPT-6 Astra | 20,031.23 | 63,460,711 / 823,640 |
+| GS01–GS08 developers (8) | Claude Sonnet 5.5 | 3,349.82 | 171,772,037 / 1,055,703 |
+| look-up helpers (4) | GPT-5.6 Luna | 7.67 | 535,202 / 27,438 |
+| orchestrator | Claude Opus 5.5 | 7,164.86 | 73,021,327 / 219,189 |
+| **total** | | **43,184.48** | **617,017,530 / 4,197,350** |
 
-Measured at 19:05 from the local usage records; the implementation's costs are in each task's execution log.
+Measured at 02:12 on 2026-10-29 from the local usage records (input tokens include cached reads); each task's own
+figures are in its execution log.
 
 ## Documents
 
 | file | content |
 |---|---|
 | `report-brief.md` | this file |
-| [`report-detailed.md`](report-detailed.md) | Part I: the joint report and implementation spec (diagnosis, the user's 19 decisions, the design R1–R19, the example, results, strings, files, tests, sign-off); Part II: implementation and verification (to come) |
+| [`report-detailed.md`](report-detailed.md) | Part I: the joint report and implementation spec (diagnosis, the user's 19 decisions, the design R1–R19, the example, results, strings, files, tests, sign-off); Part II: the implementation, its problems and resolutions, the final verification and the effort |
 | [`claude-opus-5.5/`](claude-opus-5.5/) `1-report.md` … `4-check-of-acceptance-data.md` | research report → review of the other report → response → independent check of the golden data |
 | [`gpt-6-astra/`](gpt-6-astra/) `1-report.md` … `6-review-of-task-pack.md` | research report (with the addendum after 13:54) → review → response → golden acceptance data → check of the joint report → review of the task pack (45 fixes applied to it) |
 | [`../../tasks/generation-steps/`](../../tasks/generation-steps/check-list.md) | the implementation task pack and its execution logs |
