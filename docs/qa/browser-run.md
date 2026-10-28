@@ -17,6 +17,49 @@ sends; the mouse and touch events are real too (`Input.dispatchMouseEvent` / `di
 uses synthetic `DragEvent`s with a `DataTransfer` that holds a real `File`; the file picker uses
 `DOM.setFileInputFiles`.
 
+## Generation Steps (2026-10-29)
+The branch `generation-steps` (GS01–GS07 of `tasks/generation-steps/`), checked once against a copy of `8d9510a`.
+Microsoft Edge 156.0.4314.50, Node v24.22.1. The scripts, the two tracked-tree copies and the raw logs are in an
+experiment folder E outside the repository; the browser scripts ran from the copy of the branch in E, so their
+profiles and screenshots stayed there too.
+
+```
+cd generator && node tests/node-runner.js --all   # 51 suites, 3,835 tests, 0 failed, 3 skipped, 999 s
+cd generator && node tests/node-runner.js         # 43 suites, 2,818 tests
+cd generator && node tests/replay-fixtures.js --check   # up to date
+cd player && node tests/node-runner.js            # 29 suites, 1,609 tests
+node tests/browser/run-all.js                     # from the copy of the branch in E, in player/
+```
+
+`run-all.js`: `fragment.js` file and http without a failure, `open.js` 86/86, `play.js` 51/51, `ui.js` 45/45,
+`visual.js` 42/42, `help.js` 23/23, `links.js` 11/11.
+
+`generator/tests.html` over http, headless: the branch 2,724 tests, 2,616 passed, 4 failed, 104 skipped; the copy of
+`8d9510a` 2,464 tests, 2,356 passed, 4 failed, 104 skipped. The same four tests fail on both, carried baseline
+limitations that this change neither adds nor fixes: the "without a DOM" tests of `board-view`, `a11y` and `theme`
+(a browser has a DOM) and "dig is where the time goes on classic9, and every step was timed" of `pipeline`
+(`expected 0 to be > 0`). No new failure, no missing file and no console error on either copy; the
+`replay` suite ran in full (152 tests, none skipped), the 14 golden details checks among them.
+
+The real page (scripted, headless Edge, 40 checks, all passed): with a worker, Classic 9×9 Expert seed 3275974478
+prepares its score tables by itself and shows 7 steps (Totals 0, 23, 44, 551, 568, 992, 992), the "Score jump ×12.5"
+badge, the callout, a closed "Why?" and R1C2 framed on step 4, and 33 steps with "Show every move" (compact step 4
+is every-move step 24, every-move step 26 is compact step 5); in Vietnamese "Điểm tăng vọt ×12,5" and
+"Hiện từng thay đổi". Opened from a file without a worker, the puzzle and its Summary work at once, the replay
+waits for "Prepare score tables" with browsing disabled and no table, nothing is prepared before the press, then
+both views are there. Greater-Than Expert seed 42 has 9 steps and frames one sign on its jump (×4.0). No console
+error. The screenshots were also looked at: the callout, badge and legend, the clue frame and the sign frame
+draw as designed; with `forced-colors: active` emulated the frames, badge and callout stay visible (the legend
+swatches turn black, like the other legend swatches); the live regions announce "Preparing the score tables… 0 of
+32" and "32 of 32" and then hide the status, and the "Why?" disclosure closes again when the language changes.
+
+The puzzle is unchanged: the payload digest of the example is still `d350758d…` and its cache entry, history
+entry and export are byte-identical to those of `8d9510a`. No engine, variant, regression or qualification file
+changed (the only new engine file is `replay.js`; one heavy `killer` test line was migrated to the new player
+API). The 14 golden requests give their golden sequences (13 compact and 16 every-move jumps, 19 distinct
+transitions); preparing their score tables took a median of 29 ms per puzzle in Node (maximum 592 ms, Mega 16×16
+Hell 2 seed 12; all 14 together 948 ms), of which the explanations of both views took 79 ms in all.
+
 ## One repository (2026-10-20)
 After the generator and the player were merged into this repository (the shared code now loads from `core/`):
 
@@ -98,3 +141,6 @@ removed later; its checks are gone from the scripts and the counts above are fro
   token tests only.
 - No long-session or memory profile; no test of a full `localStorage` in the browser (the quota path is covered
   by `progress.test.js` with a fake storage).
+- Generation Steps: **screen readers** on the new callout and "Why?" (only the live-region texts were read from the
+  DOM); **touch devices**; Firefox and Safari; the main-mode press on a slow device (the page may pause while it
+  prepares the score tables); the screenshots of `docs/screenshots/` were not retaken.

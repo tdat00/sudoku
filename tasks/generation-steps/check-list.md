@@ -29,7 +29,7 @@ Checkboxes below mean "implementation accepted and committed", not "task documen
 | [x] | GS05 | [GS05](GS05-replay-views-texts-and-preparation.md) | Replay views, step texts, preparation flow and main-mode gate | GS02, GS03, GS04 | Large | Generator UI | M5 a table on every step | 5 |
 | [x] | GS06 | [GS06](GS06-steps-panel-callout-and-frames.md) | Steps panel: table states, tiers, jump callout, "Why?", culprit frames | GS05 | Large | Generator UI + core board | M6 jumps explained (UI) | 6 |
 | [x] | GS07 | [GS07](GS07-documentation-consistency.md) | Documentation consistency in both languages | GS06 | Small | Documentation | M7 documents in step | 7 |
-| [ ] | GS08 | [GS08](GS08-final-verification.md) | Final verification (Q9 c) and release evidence | GS07 | Medium | QA/release | M8 verified | 8 |
+| [x] | GS08 | [GS08](GS08-final-verification.md) | Final verification (Q9 c) and release evidence | GS07 | Medium | QA/release | M8 verified | 8 |
 
 Sizes: Small about 100–300 changed lines; Medium about 300–800; Large about 800–1,600 (tests included, generated
 test data excluded).
@@ -272,17 +272,17 @@ finding for the orchestrator to resolve under the delegated decision authority.
 
 | Gate | Status | Evidence / remaining action |
 |---|---|---|
-| GS01–GS07 accepted and committed | | |
-| Generator `--all` (once) | | |
-| Quick sets of both apps | | |
-| Player browser scripts (`run-all.js`) | | |
-| Generator `tests.html` headless, failures ⊆ baseline | | |
-| Real-page smoke: worker mode and `file://` main mode | | |
-| Golden sweep (G01–G14) | | |
-| Identity: payload digest, cache key and entry, history entry, export; regression hashes | | |
-| EN / VI review of the new strings | | |
-| Documents in step (both languages) | | |
-| Release verdict (merging `generation-steps` is the user's decision; nothing is pushed) | | |
+| GS01–GS07 accepted and committed | done | `924181d`, `2aff62c`, `128ed08`, `d07c97c`, `6b8d4ff`, `482b6f8`, `02b1599`; each log filled |
+| Generator `--all` (once) | pass | 51 suites, 3,835 tests, 0 failed, 3 skipped (`perf`), 999 s, on `02b1599` |
+| Quick sets of both apps | pass | generator 43 suites, 2,818; player 29 suites, 1,609; `replay-fixtures.js --check` up to date |
+| Player browser scripts (`run-all.js`) | pass | from the candidate copy: `fragment.js` file and http, `open.js` 86/86, `play.js` 51/51, `ui.js` 45/45, `visual.js` 42/42, `help.js` 23/23, `links.js` 11/11 (Edge 156.0.4314.50) |
+| Generator `tests.html` headless, failures ⊆ baseline | pass | branch 2,724 tests, 4 failed; `8d9510a` 2,464 tests, the same 4 failed (carried limitations); no missing file, no console error; `replay` 152 tests run |
+| Real-page smoke: worker mode and `file://` main mode | pass | 40/40 checks (worker, main mode without a worker, Vietnamese, Greater-Than seed 42); screenshots reviewed |
+| Golden sweep (G01–G14) | pass | 14/14 equal; median 29.2 ms, max 592.0 ms (G14) |
+| Identity: payload digest, cache key and entry, history entry, export; regression hashes | pass | six digest lines identical to `8d9510a`; regression hashes in `--all`; engine diff = new `replay.js` + the one migrated `killer` test line |
+| EN / VI review of the new strings | done | 112 keys (98 new, 14 changed, 0 removed), all in both languages; no Vietnamese copies English (the only identical value is the format `{score} ({change})`); reviewed by the orchestrator: approved, one follow-up nit (the Vietnamese of `steps.jump.choice.nulls_one`, the singular case, says "các phương án đó", a plural; "phương án đó" would read better) left for a later change so as not to invalidate the tested candidate |
+| Documents in step (both languages) | done | GS07 (`02b1599`); `--all` count matches "about 3,840"; `docs/qa/browser-run.md` section added |
+| Release verdict (merging `generation-steps` is the user's decision; nothing is pushed) | ready to merge | every gate passed, no open defect; not checked: screen readers, touch, Firefox/Safari, slow-device main mode, `docs/screenshots/` |
 
 The orchestrator owns this record.
 
@@ -296,6 +296,6 @@ The orchestrator owns this record.
 | GS04 | done | 14m53s | 268.31 | d07c97c |
 | GS05 | done (+ orchestrator fix of one heavy `killer` test to the new API) | 33m57s | 833.94 | 6b8d4ff |
 | GS06 | done | 25m18s | 665.64 | 482b6f8 |
-| GS07 | done (+ orchestrator wording fix of `cache.ready` and a `step-view.js` comment) | 20m30s | 534.78 | (this commit) |
-| GS08 | | | | |
-| **Totals** | | | | |
+| GS07 | done (+ orchestrator wording fix of `cache.ready` and a `step-view.js` comment) | 20m30s | 534.78 | 02b1599 |
+| GS08 | done (all gates pass; no product defect) | 32m42s | 129.88 | (this commit) |
+| **Totals** | 8 of 8 done | 3h01m35s | 3,349.82 | 8 task commits |

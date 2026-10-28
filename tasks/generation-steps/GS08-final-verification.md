@@ -1060,14 +1060,14 @@ four, `tests.html` two runs of a few minutes each, the rest a few minutes).
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Done: every gate passed on candidate `02b1599`; no product defect |
+| Start | 2026-10-29 01:38:31 (+07:00) |
+| End | 2026-10-29 02:11:13 (+07:00) |
+| Duration | 32 min 42 s |
+| Model | claude-sonnet-5.5 (sub-agent `GS08-final-verification`, general-purpose); wave 8, alone |
+| Token usage | 54 model calls; 5,199,075 input (5,067,304 cache read), 46,271 output |
+| AI credits | 129.88 AIU (local usage store, keyed by sub-agent id) |
+| Verification | Developer, once on `02b1599` (Edge 156.0.4314.50, Node v24.22.1): `generator --all` 51 suites, 3,835 tests, 0 failed, 3 skipped (`perf`), 999 s; generator quick set 43 suites 2,818; `replay-fixtures.js --check` up to date; player quick set 29 suites 1,609; `run-all.js` from the candidate copy: `fragment.js` file and http, `open.js` 86/86, `play.js` 51/51, `ui.js` 45/45, `visual.js` 42/42, `help.js` 23/23, `links.js` 11/11; `tests.html` branch 2,724 / 2,616 passed / 4 failed / 104 skipped, baseline 2,464 / 2,356 / 4 / 104, the same four failures on both, no missing file, no console error, `replay` 152 run (none skipped); smoke 40/40; identity: the six digest lines identical on both trees; golden sweep 14/14 equal (median 29.2 ms, max 592.0 ms G14, all 14 948 ms, explanations of both views 79 ms); strings 112 keys (98 new, 14 changed, 0 removed). Orchestrator: read the logs and the smoke output, looked at the screenshots (step 4 normal, the main-mode notice), re-ran generator `--suite=help` 30/30; `docs/qa/browser-run.md` CRLF, no BOM, no absolute path; `git status` lists only that file; HEAD still `02b1599`. |
+| Acceptance | GS08-B01–B05 and GS08-T01–T09 met. |
+| Issues & resolutions | (1) The engine-diff assertion of step 4 allowed only the new `replay.js`; it now also allows `M generator/tests/manual/killer.test.js` and asserts that its diff is exactly the one line migrated in GS05 (the accepted deviation; script change only). (2) No other script change; `sweep.js` records `checks` but never compares it. (3) `--all` took 999 s on this machine, against "about nine minutes" in the guides; its 3,835 tests match "about 3,840", so no document changed (times depend on the machine). (4) The four `tests.html` failures (`board-view`, `a11y`, `theme` "without a DOM"; `pipeline` "dig is where the time goes on classic9") are carried baseline limitations, identical on `8d9510a`. (5) An extra script (`extra.js`, evidence only) looked at the GS06/GS07 risks: the frames, callout, badge and legend draw as designed, also with forced colours emulated (the legend swatches turn black like the other swatches); `#replay-status` announces "0 of 32", "32 of 32" and hides; "Why?" closes again on a language change, as designed. |
+| Handoff | The release record of check-list §9 filled from this evidence; the QA section "Generation Steps (2026-10-29)" of `docs/qa/browser-run.md`; the evidence (scripts, logs, JSON, `strings.md`, screenshots) kept in the experiment folder E outside the repository. Not checked: screen readers, touch devices, Firefox and Safari, the main-mode press on a slow device, the screenshots of `docs/screenshots/`. Merging `generation-steps` is the user's decision; nothing is pushed. |
