@@ -550,7 +550,7 @@
       expect(rated.score).toBe(2879);
     });
 
-    slow('reports the progress of prepare once per position, then returns the analysis', function () {
+    slow('reports the progress of prepare once per position, then after every probe and optional solve', function () {
       var result = entry('G01').result;
       var steps = R.prepare(result);
       var seen = [];
@@ -559,9 +559,19 @@
         seen.push(next.value);
         next = steps.next();
       }
-      expect(seen).toHaveLength(32);
-      seen.forEach(function (p, i) { expect(p).toEqual({ done: i + 1, total: 32 }); });
+      // 32 positions, then the two probes of the jump, its first use and its restricted check
+      expect(seen).toHaveLength(32 + 4);
+      seen.forEach(function (p, i) { expect(p).toEqual({ done: Math.min(i + 1, 32), total: 32 }); });
       expect(stable(next.value)).toEqual(stable(analysisOf('G01')));
+      var plainSteps = R.prepare(result, { explain: false });
+      var plainSeen = [];
+      var plainNext = plainSteps.next();
+      while (!plainNext.done) {
+        plainSeen.push(plainNext.value);
+        plainNext = plainSteps.next();
+      }
+      expect(plainSeen).toHaveLength(32);
+      plainSeen.forEach(function (p, i) { expect(p).toEqual({ done: i + 1, total: 32 }); });
     });
 
     slow('is deterministic (apart from the work counts), plain data, and survives a structured clone', function () {
@@ -1130,8 +1140,11 @@
       expect(into(analysis, 'compact', 1).auditScope).toBeNull();
       var folded = into(analysis, 'compact', 5).folded;
       expect([folded.peak, folded.revealed, folded.unscored]).toEqual([null, 0, 0]);
+      // buildViews does not explain: `prepare` fills the cause and the choice of the jumps afterwards
       expect(R.buildViews(analysis)).toEqual({
-        chapter: analysis.chapter, views: analysis.views, transitions: analysis.transitions
+        chapter: analysis.chapter,
+        views: analysis.views,
+        transitions: analysis.transitions.map(function (t) { return Object.assign({}, t, { cause: null, choice: null }); })
       });
     });
 
@@ -1185,6 +1198,505 @@
         expect([t.role, t.before.total, t.after.total, t.change, t.tier]).toEqual(['final', 992, 992, 0, null]);
         expect([t.from, t.to, t.newHardest, t.ratio, t.auditScope]).toEqual([31, 31, false, null, null]);
       });
+    });
+  });
+
+  describe('replay: explaining the jumps', function () {
+    var NONE = '\u2014';
+    // The goldens whose jump has no candidates recorded by the generator, with the kind that says so.
+    var UNRECORDED = { 'G05:5': 'checked', 'G06:6': 'combined', 'G10:8': 'combined', 'G11:7': 'checked',
+      'G12:4': 'combined' };
+
+    function labeller(id) {
+      return function (cell) { return SG.model.cellLabel(entry(id).result.model, cell); };
+    }
+
+    function frameLabel(id, frame) {
+      var label = labeller(id);
+      if (frame === null) return NONE;
+      if (frame.kind === 'cell') return label(frame.cell);
+      var pair = analysisOf(id).signs[frame.sign];
+      return 's' + frame.sign + '(' + label(pair[0]) + '<' + label(pair[1]) + ')';
+    }
+
+    function effectsOf(id, use) {
+      var label = labeller(id);
+      return 'remove candidate ' + use.eliminations.map(function (p) { return p[1] + '@' + label(p[0]); }).join(', ');
+    }
+
+    // The model of the board after a move (with the signs still on it).
+    function modelAt(id, position) {
+      var analysis = analysisOf(id);
+      var alive = analysis.moves[position].alive;
+      if (alive === null) return entry(id).result.model;
+      return SG.greaterThan.withSigns(entry(id).result.model, alive.map(function (k) {
+        return { a: analysis.signs[k][0], b: analysis.signs[k][1] };
+      }));
+    }
+
+    // Runs prepare to its end, recording the solver calls of the explanations (not those of the ratings);
+    // `count` replaces the independent count of the probes.
+    function explaining(id, options, count) {
+      var steps = R.prepare(entry(id).result, options);
+      var positions = analysisOf(id).moves.length;
+      for (var i = 0; i < positions; i++) steps.next();
+      var calls = { solve: [], count: [] };
+      var solve = SG.logicalSolver.solve;
+      var counter = SG.dfs.countSolutions;
+      SG.logicalSolver.solve = function (model, values) {
+        calls.solve.push(Array.from(values));
+        return solve.apply(this, arguments);
+      };
+      SG.dfs.countSolutions = function (model, values) {
+        calls.count.push(Array.from(values));
+        return (count || counter).apply(this, arguments);
+      };
+      var next;
+      try {
+        do { next = steps.next(); } while (!next.done);
+      } finally {
+        SG.logicalSolver.solve = solve;
+        SG.dfs.countSolutions = counter;
+      }
+      return { analysis: next.value, calls: calls };
+    }
+
+    function jumpsOf(analysis, name) {
+      return analysis.transitions.filter(function (t) { return t.view === name && t.tier === 'jump'; });
+    }
+
+    GOLDENS.forEach(function (g) {
+      slow('golden ' + g.id + ': cause class, frame and single scores of its compact jumps', function () {
+        var analysis = analysisOf(g.id);
+        var label = labeller(g.id);
+        g.jumps.forEach(function (j) {
+          var t = into(analysis, 'compact', j.step - 1);
+          expect(t.tier).toBe('jump');
+          expect(t.cause.class).toBe(j.cause);
+          expect(frameLabel(g.id, t.cause.frame)).toBe(j.frame === null ? NONE : j.frame);
+          expect(t.cause.singles.map(function (s) {
+            return { op: s.action, cell: label(s.cell), score: s.score };
+          })).toEqual(j.singles);
+          expect(t.cause.changes.map(function (c) { return c.action + ':' + label(c.cell); })).toEqual(
+            j.singles.length === 0 ? [] : j.singles.map(function (s) { return s.op + ':' + s.cell; }));
+        });
+        g.rows.forEach(function (row, k) {
+          var t = k === 0 ? null : into(analysis, 'compact', k);
+          expect(t !== null && t.cause !== null ? frameLabel(g.id, t.cause.frame) : NONE).toBe(row[8]);
+        });
+      });
+
+      slow('golden ' + g.id + ': the generator\'s choice, the first use and the restricted check', function () {
+        var analysis = analysisOf(g.id);
+        g.jumps.forEach(function (j) {
+          var t = into(analysis, 'compact', j.step - 1);
+          var c = t.choice;
+          if (j.choice === null) {
+            expect(c.kind).toBe(UNRECORDED[g.id + ':' + j.step]);
+            expect(c.chosen).toBeNull();
+          } else {
+            expect(c.kind).toBe('guided');
+            expect({
+              chosen: c.chosen, others: c.others, nulls: c.nulls, max: c.max, at: c.at, rated: c.rated,
+              refused: c.refused
+            }).toEqual(j.choice);
+          }
+          var use = analysis.proofs[t.to].firstUse;
+          expect({ k: use.k, n: use.n, technique: use.technique }).toEqual(j.firstUse);
+          expect(use.technique).toBe(t.after.hardest);
+          expect(use.i18nKey).toBe(j.key);
+          expect(effectsOf(g.id, use)).toBe(j.effects);
+          expect(analysis.proofs[t.to].restricted).toBe('stuck');
+        });
+      });
+
+      slow('golden ' + g.id + ': the restricted check stops on the end board and completes the one before', function () {
+        var analysis = analysisOf(g.id);
+        g.jumps.forEach(function (j) {
+          var t = into(analysis, 'compact', j.step - 1);
+          var w = t.after.P;
+          var after = analysis.moves[t.to];
+          var before = analysis.moves[t.from];
+          expect(R.restrictedCheck(modelAt(g.id, t.to), after.values, w)).toBe('stuck');
+          expect(R.restrictedCheck(modelAt(g.id, t.from), before.values, w)).toBe('complete');
+          expect(R.restrictedCheck(modelAt(g.id, t.to), after.values, w, { rateNodes: 1 })).toBe('unavailable');
+        });
+      });
+    });
+
+    slow('gives the example its numbers: R1C2 is the culprit (550, the rest 44) and 32 of 47 is the first use', function () {
+      var analysis = analysisOf('G01');
+      var t = into(analysis, 'compact', 3);
+      var r1c2 = t.cause.changes[0].cell;
+      expect(labeller('G01')(r1c2)).toBe('R1C2');
+      expect(t.cause.class).toBe('single-culprit');
+      expect(t.cause.culprit).toEqual({ cell: r1c2, action: 'remove', score: 550, otherScore: 44 });
+      expect(t.cause.frame).toEqual({ kind: 'cell', cell: r1c2, action: 'remove' });
+      expect(t.cause.largest).toBeNull();
+      expect([t.cause.sign, t.cause.k, t.cause.n, t.cause.kMove, t.cause.verifiedOnly]).toEqual(
+        [null, null, null, null, false]);
+      expect(t.choice).toEqual({
+        kind: 'guided', count: null, chosen: 551, at: 42, rated: 15, refused: 5, others: 9, nulls: 0, max: 45
+      });
+      var proof = analysis.proofs[t.to];
+      expect(proof.restricted).toBe('stuck');
+      expect([proof.firstUse.k, proof.firstUse.n, proof.firstUse.technique, proof.firstUse.i18nKey]).toEqual(
+        [32, 47, 'simpleColouring', 'technique.simpleColouring.step']);
+      expect(proof.firstUse.placements).toEqual([]);
+      expect(proof.firstUse.i18nArgs).toEqual({
+        digit: 3, rule: 'trap', colour1: ['R2C4', 'R6C6', 'R8C5', 'R9C2'], colour2: ['R2C6', 'R5C5', 'R6C3', 'R9C4']
+      });
+      expect(t.before.total).toBe(44);
+      expect(t.after.total).toBe(551);
+      expect(t.before.level).toBe('veryEasy');
+      expect(t.after.level).toBe('hard');
+    });
+
+    slow('keeps the witness of the unfinished checks: move 76 of G14 has 16 candidates, 13 rejected, 2 unscored', function () {
+      var m = analysisOf('G14').moves[76];
+      expect(m.at).toBe(167);
+      expect([m.span.rated, m.span.refused, m.span.others, m.span.nulls]).toEqual([16, 13, 0, 2]);
+      var chosen = analysisOf('G13');
+      expect(chosen.moves[into(chosen, 'compact', 5).to].span.chosen).toBeNull();
+    });
+
+    it('classifies the shares of a move: one culprit, together, or mixed (two shares of 0.9 or more)', function () {
+      expect(R.classifyShares(44, 551, [{ cell: 1, score: 550 }, { cell: 79, score: 549 }])).toEqual(
+        { class: 'mixed', index: 0 });
+      expect(R.classifyShares(44, 551, [{ cell: 1, score: 550 }, { cell: 79, score: 44 }])).toEqual(
+        { class: 'single-culprit', index: 0 });
+      expect(R.classifyShares(44, 551, [{ cell: 79, score: 44 }, { cell: 1, score: 550 }])).toEqual(
+        { class: 'single-culprit', index: 1 });
+      expect(R.classifyShares(168, 529, [{ cell: 24, score: 168 }, { cell: 56, score: 168 }]).class).toBe(
+        'together');
+      expect(R.classifyShares(44, 870, [{ cell: 20, score: 45 }, { cell: 60, score: 44 }]).class).toBe('together');
+      expect(R.classifyShares(46, 252, [{ cell: 3, score: 136 }, { cell: 77, score: 47 }])).toEqual(
+        { class: 'mixed', index: 0 });
+      var tie = R.classifyShares(44, 551, [{ cell: 5, score: 549 }, { cell: 3, score: 549 }]);
+      expect(tie).toEqual({ class: 'mixed', index: 1 });
+      expect(R.classifyShares(100, 100, [{ cell: 1, score: 100 }]).class).toBe('together');
+      expect(R.classifyShares(0, 100, [{ cell: 1, score: 50 }]).class).toBe('together');
+    });
+
+    slow('probes the parts of a move in a fixed order, the single changes first (G05)', function () {
+      var analysis = analysisOf('G05');
+      var move = analysis.moves[29];
+      var start = analysis.moves[28].values;
+      var solution = analysis.moves[0].values;
+      var changes = move.removed.map(function (c) { return { cell: c, action: 'remove' }; }).concat(
+        move.restored.map(function (c) { return { cell: c, action: 'restore' }; }));
+      expect(move.removed).toEqual(move.removed.slice().sort(function (a, b) { return a - b; }));
+      expect(changes.map(function (c) { return c.action + ':' + labeller('G05')(c.cell); })).toEqual(
+        ['remove:R2C1', 'remove:R8C9', 'restore:R4C6', 'restore:R6C4']);
+      var masks = [1, 2, 4, 8, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14];
+      var boards = masks.map(function (mask) {
+        var board = Array.from(start);
+        changes.forEach(function (c, i) {
+          if (mask & (1 << i)) board[c.cell] = c.action === 'remove' ? 0 : solution[c.cell];
+        });
+        return board;
+      });
+      var run = explaining('G05');
+      expect(run.calls.solve).toHaveLength(16);
+      expect(run.calls.solve.slice(0, 14)).toEqual(boards);
+      var removal = boards.filter(function (b, i) { return masks[i] & 3; });
+      expect(removal).toHaveLength(11);
+      var counted = run.calls.count.map(function (board) { return board.join(','); });
+      removal.forEach(function (board) { expect(counted).toContain(board.join(',')); });
+      var t = into(run.analysis, 'compact', 4);
+      expect(t.cause.singles.map(function (s) { return s.score; })).toEqual([50, 50, 49, 49]);
+      expect(t.cause.class).toBe('together');
+    });
+
+    slow('computes a jump shared by both views once, and rates its parts without touching the analysis', function () {
+      var run = explaining('G01');
+      expect(run.calls.solve).toHaveLength(4);
+      expect(run.calls.count).toHaveLength(2);
+      var full = run.analysis;
+      expect(full.transitions[full.views.compact.steps[3].transition].cause).toEqual(
+        full.transitions[full.views.details.steps[23].transition].cause);
+      var plain = R.analyse(entry('G01').result, { explain: false });
+      function stripped(analysis) {
+        return Object.assign(stable(analysis), {
+          transitions: analysis.transitions.map(function (t) {
+            return Object.assign({}, t, { cause: null, choice: null });
+          }),
+          proofs: {}
+        });
+      }
+      expect(stripped(full)).toEqual(stable(plain));
+      expect(full.moves).toHaveLength(32);
+      expect(full.ratings).toHaveLength(32);
+      expect(full.stats.fresh).toBe(30);
+      expect(full.stats.memo).toBe(1);
+    });
+
+    slow('gives explain: false the same moves, ratings, views and tiers, no cause or choice, and no proofs', function () {
+      var plain = R.analyse(entry('G01').result, { explain: false });
+      var full = analysisOf('G01');
+      expect(stable(plain).moves).toEqual(stable(full).moves);
+      expect(stable(plain).ratings).toEqual(stable(full).ratings);
+      expect(plain.views).toEqual(full.views);
+      expect(plain.transitions.map(function (t) { return t.tier; })).toEqual(
+        full.transitions.map(function (t) { return t.tier; }));
+      plain.transitions.forEach(function (t) {
+        expect(t.cause).toBeNull();
+        expect(t.choice).toBeNull();
+      });
+      expect(plain.proofs).toEqual({});
+      expect(R.buildViews(plain).transitions).toEqual(plain.transitions);
+    });
+
+    slow('keeps every rating, view and tier when the optional work is guarded to 1 check (G01)', function () {
+      var result = entry('G01').result;
+      var guarded = R.analyse(result, { probeNodes: 1 });
+      var full = analysisOf('G01');
+      expect(stable(guarded).ratings).toEqual(stable(full).ratings);
+      expect(guarded.views).toEqual(full.views);
+      expect(guarded.transitions.map(function (t) { return t.tier; })).toEqual(
+        full.transitions.map(function (t) { return t.tier; }));
+      var jumps = jumpsOf(guarded, 'compact').concat(jumpsOf(guarded, 'details'));
+      expect(jumps).toHaveLength(2);
+      jumps.forEach(function (t) {
+        expect(t.cause.class).toBe('unavailable');
+        expect(t.cause.frame).toBeNull();
+        expect(t.cause.culprit).toBeNull();
+        expect(t.cause.singles).toEqual([]);
+        expect(t.cause.changes).toHaveLength(2);
+        expect(t.choice.kind).toBe('guided');
+        expect(guarded.proofs[t.to]).toEqual({ firstUse: null, restricted: 'unavailable' });
+      });
+      expect(guarded.ratings.every(function (r) { return r.status !== 'capped'; })).toBe(true);
+    });
+
+    slow('has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details', function () {
+      var count = { compact: 0, details: 0 };
+      GOLDENS.forEach(function (g) {
+        var analysis = analysisOf(g.id);
+        var ends = {};
+        analysis.transitions.forEach(function (t) {
+          if (t.tier !== 'jump') {
+            expect(t.cause).toBeNull();
+            expect(t.choice).toBeNull();
+            return;
+          }
+          count[t.view]++;
+          ends[t.to] = true;
+          expect(t.cause).not.toBeNull();
+          expect(t.choice).not.toBeNull();
+          expect(['single-culprit', 'together', 'mixed', 'single-sign', 'multi-move']).toContain(t.cause.class);
+          expect(['guided', 'checked', 'combined']).toContain(t.choice.kind);
+          expect(analysis.proofs[t.to].firstUse).not.toBeNull();
+          expect(analysis.proofs[t.to].restricted).toBe('stuck');
+          expect((t.cause.frame !== null)).toBe(t.cause.class === 'single-culprit' || t.cause.class === 'single-sign');
+        });
+        expect(Object.keys(analysis.proofs).map(Number)).toEqual(Object.keys(ends).map(Number));
+      });
+      expect(count).toEqual({ compact: 13, details: 16 });
+    });
+
+    slow('frames the details jumps too: G06 R4C6 and the four sign jumps of G11', function () {
+      var g06 = analysisOf('G06');
+      var t = toPosition(g06, 'details', 29);
+      expect([t.before.total, t.after.total, t.cause.class]).toEqual([138, 1778, 'single-culprit']);
+      expect(frameLabel('G06', t.cause.frame)).toBe('R4C6');
+      expect(t.cause.culprit.otherScore).toBe(138);
+      var g11 = jumpsOf(analysisOf('G11'), 'details');
+      expect(g11.map(function (x) { return x.cause.frame; })).toEqual([
+        { kind: 'sign', sign: 7 }, { kind: 'sign', sign: 43 }, { kind: 'sign', sign: 75 }, { kind: 'sign', sign: 6 }]);
+      expect(g11.every(function (x) { return x.cause.changes.length === 0 && x.cause.sign !== null; })).toBe(true);
+    });
+
+    slow('describes a jump over several moves by its first move with the new technique (G06, G10, G12)', function () {
+      [['G06', 5], ['G10', 7], ['G12', 3]].forEach(function (c) {
+        var analysis = analysisOf(c[0]);
+        var t = into(analysis, 'compact', c[1]);
+        var step = analysis.views.compact.steps[c[1]];
+        var cause = t.cause;
+        var technique = t.after.hardest;
+        expect(cause.class).toBe('multi-move');
+        expect(cause.n).toBe(step.last - step.first + 1);
+        expect(cause.n).toBeGreaterThan(1);
+        expect(cause.k).toBeGreaterThanOrEqual(1);
+        expect(cause.k).toBeLessThanOrEqual(cause.n);
+        expect(cause.kMove).toBe(step.first + cause.k - 1);
+        expect(cause.verifiedOnly).toBe(false);
+        expect([cause.frame, cause.culprit, cause.largest, cause.sign, cause.changes, cause.singles]).toEqual(
+          [null, null, null, null, [], []]);
+        expect(analysis.ratings[cause.kMove].counts[technique]).toBeGreaterThan(0);
+        expect(t.before.counts[technique] > 0).toBe(false);
+        for (var p = step.first; p < cause.kMove; p++) {
+          expect(typeof analysis.ratings[p].score === 'number' && analysis.ratings[p].counts[technique] > 0).toBe(
+            false);
+        }
+        expect(t.choice).toEqual({
+          kind: 'combined', count: cause.n, chosen: null, at: null, rated: null, refused: null, others: null,
+          nulls: null, max: null
+        });
+      });
+    });
+
+    slow('counts every probe that removes a clue independently, whatever the logical proof says', function () {
+      var normal = explaining('G01');
+      var start = analysisOf('G01').moves[22].values;
+      var move = analysisOf('G01').moves[23];
+      expect(normal.calls.count).toEqual(move.removed.map(function (cell) {
+        var board = Array.from(start);
+        board[cell] = 0;
+        return board;
+      }));
+      var ambiguous = explaining('G01', undefined, function () { return 2; });
+      var guarded = explaining('G01', undefined, function () {
+        var err = new Error('budget.exceeded');
+        err.code = 'budget.exceeded';
+        throw err;
+      });
+      [ambiguous, guarded].forEach(function (run) {
+        jumpsOf(run.analysis, 'compact').concat(jumpsOf(run.analysis, 'details')).forEach(function (t) {
+          expect(t.cause.class).toBe('unavailable');
+          expect(t.cause.frame).toBeNull();
+          expect(t.cause.culprit).toBeNull();
+          expect(t.cause.singles).toEqual([]);
+        });
+      });
+      expect(ambiguous.calls.count).toHaveLength(1);
+    });
+
+    it('finds nothing on a board it cannot solve, nor for a technique it does not use', function () {
+      var model = entry('G01').result.model;
+      var stuck = Int32Array.from('004600000721000000900004070070061005400807002600520080060700009000000728000005600'
+        .split('').map(Number));
+      expect(R.firstUse(model, stuck, 'simpleColouring')).toBeNull();
+      var givens = entry('G01').result.givens;
+      expect(R.firstUse(model, givens, 'noSuchTechnique')).toBeNull();
+      expect(R.firstUse(model, givens, 'nishio')).toBeNull();
+      expect(R.firstUse(model, givens, 'xyzWing').technique).toBe('xyzWing');
+      expect(R.firstUse(model, givens, 'xyzWing', { rateNodes: 1 })).toBeNull();
+      expect(R.restrictedCheck(model, givens, 10, { rateNodes: 1 })).toBe('unavailable');
+      expect(R.restrictedCheck(model, givens, null)).toBe('unavailable');
+    });
+
+    // The solver, the classifier and the solutions of a board are replaced by a script keyed by the number of
+    // its empty cells; `capped` throws the guard error. Other boards go to the real ones.
+    function scripted(script, fn) {
+      var solve = SG.logicalSolver.solve;
+      var classify = SG.difficulty.classify;
+      function empties(values) {
+        return values.filter(function (v) { return v === 0; }).length;
+      }
+      SG.logicalSolver.solve = function (model, values) {
+        var spec = script[empties(values)];
+        if (!spec) return solve.apply(this, arguments);
+        if (spec.capped) {
+          var err = new Error('budget.exceeded');
+          err.code = 'budget.exceeded';
+          throw err;
+        }
+        return { status: 'solved', solved: true, techniqueCounts: spec.counts, score: 0, steps: [], spec: spec };
+      };
+      SG.difficulty.classify = function (report) {
+        if (!report.spec) return classify.apply(this, arguments);
+        return {
+          level: null, score: report.spec.score, hardestTechnique: report.spec.hardest, solved: true, empties: 0,
+          techniqueCounts: report.spec.counts, ratingVersion: 2
+        };
+      };
+      try {
+        return fn();
+      } finally {
+        SG.logicalSolver.solve = solve;
+        SG.difficulty.classify = classify;
+      }
+    }
+
+    // Four positions of a 4 x 4 board with 0, 2, 4 and 6 empty cells; the one with 4 has no score.
+    function threeMoves(first, last) {
+      var log = [{ op: 'pass', pass: 'random', clues: 16 }, { op: 'accept', cells: [0, 15] },
+        { op: 'accept', cells: [1, 14] }, { op: 'accept', cells: [2, 13] }];
+      var result = synthetic(classic4(), log, blank([0, 15, 1, 14, 2, 13]));
+      result.rating = {
+        score: 400, level: 'hard', techniqueCounts: last, hardestTechnique: 'xWing', empties: 6
+      };
+      return scripted({ 2: { score: 50, counts: first, hardest: Object.keys(first)[0] }, 4: { capped: true } },
+        function () { return R.analyse(result); });
+    }
+
+    it('says nothing about a first use when the technique was already used before the step', function () {
+      var analysis = threeMoves({ xWing: 1 }, { xWing: 5 });
+      expect(analysis.views.compact.steps.map(function (s) { return [s.first, s.last]; })).toEqual(
+        [[0, 0], [1, 1], [2, 3], [3, 3]]);
+      var t = into(analysis, 'compact', 2);
+      expect([t.tier, t.before.total, t.after.total]).toEqual(['jump', 50, 400]);
+      expect(t.cause.class).toBe('multi-move');
+      expect([t.cause.n, t.cause.k, t.cause.kMove, t.cause.verifiedOnly]).toEqual([2, null, null, false]);
+      expect(t.choice.kind).toBe('combined');
+      expect(t.choice.count).toBe(2);
+    });
+
+    it('marks a first use that follows a position without a score as verified only', function () {
+      var analysis = threeMoves({ nakedSingle: 3 }, { nakedSingle: 3, xWing: 1 });
+      var t = into(analysis, 'compact', 2);
+      expect(t.tier).toBe('jump');
+      expect(t.cause.class).toBe('multi-move');
+      expect([t.cause.n, t.cause.k, t.cause.kMove, t.cause.verifiedOnly]).toEqual([2, 2, 3, true]);
+      expect(analysis.ratings[2].score).toBeNull();
+    });
+
+    // A 4 x 4 board dug by the moves of `log`; scripted scores by number of empty cells (2 and 3: 50, 4: 55, 6: 60),
+    // and 400 for the finished puzzle (from the rating of the result).
+    function chosenBy(log, givens, config, empties) {
+      var result = synthetic(classic4(), log, givens);
+      result.config = config;
+      result.rating = {
+        score: 400, level: 'hard', techniqueCounts: { nakedSingle: 3, xWing: 1 }, hardestTechnique: 'xWing',
+        empties: empties
+      };
+      var plain = { score: 50, counts: { nakedSingle: 3 }, hardest: 'nakedSingle' };
+      return scripted({ 2: plain, 3: plain, 4: { score: 55, counts: { nakedSingle: 3 }, hardest: 'nakedSingle' },
+        6: { score: 60, counts: { nakedSingle: 3 }, hardest: 'nakedSingle' } },
+      function () { return R.analyse(result); });
+    }
+
+    it('names the choice of a random move by the dig order, probing its two clues', function () {
+      var log = [{ op: 'pass', pass: 'random', clues: 16 }, { op: 'accept', cells: [0, 15] },
+        { op: 'accept', cells: [1, 14] }];
+      var givens = blank([0, 15, 1, 14]);
+      var random = chosenBy(log, givens, CONFIG, 4);
+      var t = into(random, 'compact', 2);
+      expect([t.tier, t.before.total, t.after.total]).toEqual(['jump', 50, 400]);
+      expect(t.cause.class).toBe('together');
+      expect(t.cause.singles).toEqual([{ cell: 1, action: 'remove', score: 50 }, { cell: 14, action: 'remove', score: 50 }]);
+      expect(t.choice.kind).toBe('random');
+      var snake = chosenBy(log, givens, Object.assign({}, CONFIG, { digOrder: 'snake' }), 4);
+      expect(into(snake, 'compact', 2).choice.kind).toBe('checked');
+      expect(into(snake, 'compact', 2).cause.class).toBe('together');
+    });
+
+    it('frames a single restored clue, and records no choice for a move that shows a clue again', function () {
+      var log = [{ op: 'pass', pass: 'random', clues: 16 }, { op: 'accept', cells: [0, 15] },
+        { op: 'accept', cells: [1, 14] }, { op: 'accept', cells: [2, 13] }, { op: 'reveal', cells: [2] }];
+      var analysis = chosenBy(log, blank([0, 15, 1, 14, 13]), CONFIG, 5);
+      expect(analysis.moves[4].kind).toBe('reveal');
+      var t = into(analysis, 'compact', 3);
+      expect([t.tier, t.before.total, t.after.total]).toEqual(['jump', 60, 400]);
+      expect(t.cause.class).toBe('single-cell');
+      expect(t.cause.frame).toEqual({ kind: 'cell', cell: 2, action: 'restore' });
+      expect(t.cause.changes).toEqual([{ cell: 2, action: 'restore' }]);
+      expect(t.choice).toEqual({
+        kind: 'none', count: null, chosen: null, at: null, rated: null, refused: null, others: null, nulls: null,
+        max: null
+      });
+    });
+
+    slow('is deterministic and language-neutral: the explanations are plain data without text, same twice', function () {
+      var again = R.analyse(entry('G01').result);
+      var first = analysisOf('G01');
+      expect(stable(again)).toEqual(stable(first));
+      expect(hasFunction(again)).toBe(false);
+      var jump = into(again, 'compact', 3);
+      expect(JSON.parse(JSON.stringify({ cause: jump.cause, choice: jump.choice, proof: again.proofs[jump.to] })))
+        .toEqual({ cause: jump.cause, choice: jump.choice, proof: again.proofs[jump.to] });
+      if (typeof structuredClone === 'function') expect(structuredClone(again)).toEqual(again);
     });
   });
 })();

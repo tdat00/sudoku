@@ -260,7 +260,11 @@ assumes uniqueness), keeping an honest status when a board cannot be rated; neit
 `analysis.views` holds the **compact** view (a few steps chosen by score that never go down, `SG.replay.select`,
 checked by `SG.replay.audit`) and the **details** view (one step per move), and `analysis.transitions` the change of
 the Total, the values P, W, E, V, R before and after, and the tier (`SG.replay.isJump`) of each step, all built by
-the pure `SG.replay.buildViews`.
+the pure `SG.replay.buildViews`. For every jump, `analysis.transitions` also holds its cause (probes of the parts of the
+move on partial boards, never shown as steps, `SG.replay.classifyShares`) and the generator's recorded choice, and
+`analysis.proofs` holds the first use of the new hardest technique (`SG.replay.firstUse`) and the restricted check
+(`SG.replay.restrictedCheck`) on its end board; they are optional, so a failure leaves them `unavailable` and never
+changes a rating.
 Random choices use forked streams of one seeded generator (`SG.rng`), which is why a seed reproduces a
 puzzle.
 

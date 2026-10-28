@@ -246,8 +246,13 @@ lần đếm nghiệm khi lời giải dựa vào tính duy nhất), và giữ m
 được; cả hai đều không thay đổi kết quả. `analysis.views` gồm chế độ xem **gọn** (vài bước chọn theo điểm, điểm
 không bao giờ giảm, `SG.replay.select`, được `SG.replay.audit` kiểm tra) và chế độ xem **chi tiết** (mỗi nước đi một
 bước), còn `analysis.transitions` gồm mức thay đổi của Tổng, các giá trị P, W, E, V, R trước và sau, và hạng
-(`SG.replay.isJump`) của từng bước; tất cả do hàm thuần `SG.replay.buildViews` dựng nên. Mọi lựa chọn ngẫu nhiên
-dùng các luồng được tách ra từ một bộ sinh số có seed (`SG.rng`), vì thế seed tạo lại được đề.
+(`SG.replay.isJump`) của từng bước; tất cả do hàm thuần `SG.replay.buildViews` dựng nên. Với mỗi bước nhảy điểm,
+`analysis.transitions` còn có nguyên nhân (chấm thử các phần của nước đi trên những bàn cờ một phần, không bao giờ hiện
+như một bước, `SG.replay.classifyShares`) và lựa chọn mà bộ sinh đề đã ghi lại, còn `analysis.proofs` có lần dùng đầu
+tiên của kỹ thuật khó nhất mới (`SG.replay.firstUse`) và phép kiểm tra hạn chế (`SG.replay.restrictedCheck`) trên bàn
+cờ cuối của bước; các phần này là tùy chọn, nên khi thất bại chúng chỉ ở trạng thái `unavailable` và không bao giờ làm
+đổi điểm đã chấm. Mọi lựa chọn ngẫu nhiên dùng các luồng được tách ra từ một bộ sinh số có seed (`SG.rng`), vì thế
+seed tạo lại được đề.
 
 ### Worker và phương án dự phòng
 

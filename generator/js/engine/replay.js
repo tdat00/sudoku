@@ -26,8 +26,16 @@
  * (`isJump`, `badgeRatio`). The transition belongs to the view: the same end board can be a jump in one view
  * and not in the other.
  *
- * Data shapes (Move, Span, Rating, Analysis, View, ViewStep, Transition) are plain data that survive a
- * structured clone: ids, numbers, cell indexes and typed arrays, no text and no functions.
+ * Explanations. After the ratings, every transition of tier `jump` gets its `cause` (which part of the move
+ * carries the jump: the parts are rated on partial boards that are probes only, never moves, steps or
+ * ratings; `classifyShares`), its `choice` (what the log records about the candidates compared before the
+ * move) and, in `analysis.proofs`, the proof of its end position (`firstUse` of the new hardest technique
+ * and the `restrictedCheck` with the lighter techniques only). They describe this generator's own solution
+ * and its limited check, never a mathematical necessity. Optional work never undoes a rating: every probe
+ * and every optional solve is guarded, and a failure leaves its piece `unavailable` / null.
+ *
+ * Data shapes (Move, Span, Rating, Analysis, View, ViewStep, Transition, Cause, Choice, Proof) are plain data
+ * that survive a structured clone: ids, numbers, cell indexes and typed arrays, no text and no functions.
  */
 (function (root) {
   'use strict';
@@ -38,7 +46,7 @@
 
   // RATE_NODES / COUNT_NODES: the guards of a rating and of a uniqueness count; MIN_GAIN .. R_EXP drive the
   // compact selection, JUMP_RATIO and JUMP_GAIN the jump rule; CULPRIT_SHARE .. PROBE_MAX_CELLS belong to the
-  // explanation of jumps (a later task).
+  // explanation of jumps (the shares of a move, and the largest move whose parts are rated).
   const CONSTANTS = Object.freeze({
     RATE_NODES: 1000000,
     COUNT_NODES: 200000,
@@ -1032,6 +1040,306 @@
     return assemble(result, mm, list, ratings, reason, stats);
   }
 
+  // The share of a jump that a board of score `score` reaches, on a log scale: 0 at `before`, 1 at `after`.
+  function shareOf(before, after, score) {
+    const share = Math.log(score / before) / Math.log(after / before);
+    return isFinite(share) ? Math.max(0, share) : 0;
+  }
+
+  /**
+   * Which part of a move carries a jump from `before` to `after` (R14). `singles[i] = { cell, score }` is the
+   * score with the change i alone, in change order; the share of a change is
+   * `max(0, ln(score / before) / ln(after / before))`. Exactly one share of CULPRIT_SHARE or more is a
+   * 'single-culprit' (`index` is that change); every share at most TOGETHER_SHARE is 'together' (`index` is
+   * -1); anything else, two shares of CULPRIT_SHARE or more included, is 'mixed' (`index` is the largest
+   * share; ties: the lower cell).
+   */
+  function classifyShares(before, after, singles) {
+    if (!(before > 0 && after > before) || singles.length === 0) return { class: 'together', index: -1 };
+    const shares = singles.map(function (s) { return shareOf(before, after, s.score); });
+    const high = [];
+    let largest = 0;
+    shares.forEach(function (share, i) {
+      if (share >= CONSTANTS.CULPRIT_SHARE) high.push(i);
+      const ahead = share > shares[largest];
+      if (ahead || (share === shares[largest] && singles[i].cell < singles[largest].cell)) largest = i;
+    });
+    if (high.length === 1) return { class: 'single-culprit', index: high[0] };
+    const small = shares.every(function (share) { return share <= CONSTANTS.TOGETHER_SHARE; });
+    return small ? { class: 'together', index: -1 } : { class: 'mixed', index: largest };
+  }
+
+  function pairs(list) {
+    return list.map(function (pair) { return [pair[0], pair[1]]; });
+  }
+
+  /**
+   * The first deduction of the solution of `values` that uses `technique`: `{ k, n, technique, i18nKey,
+   * i18nArgs, eliminations, placements }` (`k` is 1-based among the `n` deductions; the effects are plain
+   * copies of every candidate removed and every digit placed). Null when the board is not solved within
+   * `options.rateNodes` checks (an unfinished proof is not the generator's solution), when the technique is
+   * not used, and on any error.
+   */
+  function firstUse(model, values, technique, options) {
+    const opts = options || {};
+    try {
+      const budget = SG.budget.create({ nodes: numberOption(opts.rateNodes, CONSTANTS.RATE_NODES) });
+      const rating = SG.difficulty.rate(model, values, { collectSteps: true, budget: budget });
+      if (rating.solved !== true || !Array.isArray(rating.steps)) return null;
+      const at = rating.steps.findIndex(function (s) { return s.technique === technique; });
+      if (at < 0) return null;
+      const step = rating.steps[at];
+      return {
+        k: at + 1,
+        n: rating.steps.length,
+        technique: technique,
+        i18nKey: step.i18nKey,
+        i18nArgs: plain(step.i18nArgs || {}),
+        eliminations: pairs(step.eliminations || []),
+        placements: pairs(step.placements || [])
+      };
+    } catch (err) {
+      return null;
+    }
+  }
+
+  /**
+   * Does this solver stop on `values` when it uses only the techniques that weigh less than `w`? 'stuck' or
+   * 'complete'; 'unavailable' when the guard (`options.rateNodes`) runs out, on a contradiction and on any
+   * error. It tells how this solver fares, never that no easier proof exists.
+   */
+  function restrictedCheck(model, values, w, options) {
+    const opts = options || {};
+    try {
+      if (!isScore(w)) return 'unavailable';
+      const weights = SG.difficulty.WEIGHTS;
+      const ids = SG.techniques.list().map(function (tech) { return tech.id; }).filter(function (id) {
+        return Object.prototype.hasOwnProperty.call(weights, id) && weights[id] < w;
+      });
+      const budget = SG.budget.create({ nodes: numberOption(opts.rateNodes, CONSTANTS.RATE_NODES) });
+      const report = SG.logicalSolver.solve(model, values, {
+        allowedTechniques: ids, collectSteps: false, assumeUniqueness: true, budget: budget
+      });
+      if (report.status === 'stuck') return 'stuck';
+      return report.status === 'solved' ? 'complete' : 'unavailable';
+    } catch (err) {
+      return 'unavailable';
+    }
+  }
+
+  // The changes of one move: the removed clues ascending, then the restored ones ascending.
+  function changesOf(move) {
+    return move.removed.map(function (cell) { return { cell: cell, action: 'remove' }; }).concat(
+      move.restored.map(function (cell) { return { cell: cell, action: 'restore' }; }));
+  }
+
+  function newCause(kind, changes) {
+    return {
+      class: kind,
+      changes: changes,
+      singles: [],
+      culprit: null,
+      largest: null,
+      sign: null,
+      k: null,
+      n: null,
+      kMove: null,
+      verifiedOnly: false,
+      frame: null
+    };
+  }
+
+  // A jump over several moves: which move first brings the new hardest technique. Nothing is claimed when the
+  // technique was used before the step, and a position without a score only qualifies the claim.
+  function multiMoveCause(analysis, t, step) {
+    const cause = newCause('multi-move', []);
+    const technique = t.after.hardest;
+    cause.n = step.last - step.first + 1;
+    if (typeof technique !== 'string' || t.before.counts[technique] > 0) return cause;
+    let unscored = false;
+    for (let p = step.first; p <= step.last && cause.k === null; p++) {
+      const rating = analysis.ratings[p];
+      if (!isScore(rating.score)) {
+        unscored = true;
+      } else if (rating.counts[technique] > 0) {
+        cause.k = p - step.first + 1;
+        cause.kMove = p;
+      }
+    }
+    cause.verifiedOnly = cause.k !== null && unscored;
+    return cause;
+  }
+
+  // What the log records about how the move of a jump was chosen (the candidates compared before it).
+  function choiceOf(analysis, step) {
+    const choice = {
+      kind: 'none', count: null, chosen: null, at: null, rated: null, refused: null, others: null,
+      nulls: null, max: null
+    };
+    if (step.last > step.first) {
+      return Object.assign(choice, { kind: 'combined', count: step.last - step.first + 1 });
+    }
+    if (analysis.rebuilt) return choice;
+    const move = analysis.moves[step.last];
+    if (move.kind === 'guided' && move.span !== null) {
+      const span = move.span;
+      return Object.assign(choice, {
+        kind: 'guided',
+        chosen: span.chosen,
+        at: move.at,
+        rated: span.rated,
+        refused: span.refused,
+        others: span.others,
+        nulls: span.nulls,
+        max: span.max
+      });
+    }
+    if (move.kind === 'random') choice.kind = analysis.randomOrder ? 'random' : 'checked';
+    else if (['exchange', 'searchRemove', 'sign'].indexOf(move.kind) >= 0) choice.kind = 'checked';
+    return choice;
+  }
+
+  /**
+   * The explanations of the jumps of an analysis, filled in place: `cause` and `choice` of every transition
+   * of tier `jump` (once per pair of positions, shared by the views) and `proofs[position]` of its end
+   * position. Each probe and each optional solve is one unit of work followed by a progress report; every
+   * one is guarded, so a failure leaves its piece `unavailable` / null and never touches a rating.
+   */
+  function* explain(analysis, modelFor, probeNodes) {
+    const list = analysis.moves;
+    const total = list.length;
+    const solution = list[0].values;
+    function tick() {
+      return { done: total, total: total };
+    }
+
+    // The score of the start board with the changes of `mask` applied (a partial board: a probe, never a
+    // move); null unless it is rated, and a removal must also pass the independent count (R14).
+    function* probe(model, start, changes, mask) {
+      const board = Int32Array.from(start);
+      let removes = false;
+      changes.forEach(function (c, i) {
+        if ((mask & (1 << i)) === 0) return;
+        board[c.cell] = c.action === 'remove' ? 0 : solution[c.cell];
+        if (c.action === 'remove') removes = true;
+      });
+      let score = null;
+      try {
+        const rating = rateBoard(model, board, {
+          rateNodes: probeNodes, countNodes: CONSTANTS.COUNT_NODES, forceCount: removes
+        });
+        if (rating.status === 'rated' && isScore(rating.score)) score = rating.score;
+      } catch (err) {
+        score = null;
+      }
+      yield tick();
+      return score;
+    }
+
+    function* causeOf(t, step) {
+      if (step.last > step.first) return multiMoveCause(analysis, t, step);
+      const move = list[step.last];
+      if (typeof move.sign === 'number') {
+        return Object.assign(newCause('single-sign', []), {
+          sign: move.sign, frame: { kind: 'sign', sign: move.sign }
+        });
+      }
+      const changes = changesOf(move);
+      const cause = newCause('unavailable', changes);
+      if (changes.length === 0 || changes.length > CONSTANTS.PROBE_MAX_CELLS) return cause;
+      const start = list[step.last - 1].values;
+      const whole = Int32Array.from(start);
+      changes.forEach(function (c) { whole[c.cell] = c.action === 'remove' ? 0 : solution[c.cell]; });
+      if (!sameList(whole, move.values)) return cause;
+      if (changes.length === 1) {
+        const only = changes[0];
+        cause.class = 'single-cell';
+        cause.singles = [{ cell: only.cell, action: only.action, score: t.after.total }];
+        cause.frame = { kind: 'cell', cell: only.cell, action: only.action };
+        return cause;
+      }
+
+      let model;
+      try {
+        model = modelFor(move.alive);
+      } catch (err) {
+        return cause;
+      }
+      const full = (1 << changes.length) - 1;
+      const order = [];
+      for (let i = 0; i < changes.length; i++) order.push(1 << i);
+      for (let mask = 3; mask < full; mask++) if ((mask & (mask - 1)) !== 0) order.push(mask);
+      const scores = new Map();
+      for (let i = 0; i < order.length; i++) {
+        const score = yield* probe(model, start, changes, order[i]);
+        if (score === null) return cause;
+        scores.set(order[i], score);
+      }
+
+      const singles = changes.map(function (c, i) {
+        return { cell: c.cell, action: c.action, score: scores.get(1 << i) };
+      });
+      const verdict = classifyShares(t.before.total, t.after.total, singles);
+      cause.class = verdict.class;
+      cause.singles = singles;
+      const part = singles[verdict.index];
+      if (verdict.class === 'single-culprit') {
+        cause.culprit = {
+          cell: part.cell,
+          action: part.action,
+          score: part.score,
+          otherScore: scores.get(full ^ (1 << verdict.index))
+        };
+        cause.frame = { kind: 'cell', cell: part.cell, action: part.action };
+      } else if (verdict.class === 'mixed') {
+        cause.largest = { cell: part.cell, action: part.action, score: part.score };
+      }
+      return cause;
+    }
+
+    // The first use and the restricted check on the end board of a jump (the generator's own solution).
+    function* proofOf(t) {
+      const move = list[t.to];
+      let model = null;
+      try {
+        model = modelFor(move.alive);
+      } catch (err) {
+        model = null;
+      }
+      const options = { rateNodes: probeNodes };
+      const use = model === null ? null : firstUse(model, move.values, t.after.hardest, options);
+      yield tick();
+      const restricted = model === null ? 'unavailable'
+        : restrictedCheck(model, move.values, t.after.P, options);
+      yield tick();
+      return { firstUse: use, restricted: restricted };
+    }
+
+    const shared = new Map();
+    for (let i = 0; i < analysis.transitions.length; i++) {
+      const t = analysis.transitions[i];
+      if (t.tier !== 'jump') continue;
+      const id = t.from + '>' + t.to;
+      if (!shared.has(id)) {
+        const step = analysis.views[t.view].steps[t.step];
+        const cause = yield* causeOf(t, step);
+        shared.set(id, { cause: cause, choice: choiceOf(analysis, step) });
+      }
+      t.cause = shared.get(id).cause;
+      t.choice = shared.get(id).choice;
+      if (!Object.prototype.hasOwnProperty.call(analysis.proofs, t.to)) {
+        analysis.proofs[t.to] = yield* proofOf(t);
+      }
+    }
+  }
+
+  /**
+   * An iterator that rates the board after every move (yielding `{ done, total }` after each position) and
+   * then explains the jumps (one more `{ done: total, total }` after each probe and each optional solve); it
+   * returns the Analysis. Options: `rateNodes`, `countNodes` (the guards of a rating), `explain: false` (no
+   * explanation: `cause` and `choice` stay null and `proofs` empty), `probeNodes` (the guard of every
+   * optional solve, default RATE_NODES).
+   */
   function* prepare(result, options) {
     const opts = options || {};
     const mm = moves(result);
@@ -1082,7 +1390,11 @@
       yield { done: i + 1, total: total };
     }
 
-    return assemble(result, mm, list, ratings, null, stats);
+    const analysis = assemble(result, mm, list, ratings, null, stats);
+    if (opts.explain !== false) {
+      yield* explain(analysis, modelFor, numberOption(opts.probeNodes, CONSTANTS.RATE_NODES));
+    }
+    return analysis;
   }
 
   /** Runs `prepare` to its end and returns the Analysis. */
@@ -1133,6 +1445,9 @@
     phaseCode: phaseCode,
     select: select,
     audit: audit,
-    buildViews: buildViews
+    buildViews: buildViews,
+    classifyShares: classifyShares,
+    firstUse: firstUse,
+    restrictedCheck: restrictedCheck
   };
 })(typeof self !== 'undefined' ? self : globalThis);

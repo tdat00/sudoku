@@ -285,14 +285,14 @@ eliminations.map(([c, d]) => d + '@' + label(c)).join(', ')` in the order of `el
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Done |
+| Start | 2026-10-28 23:33:15 (+07:00) |
+| End | 2026-10-28 23:49:17 (+07:00) |
+| Duration | 16 min 2 s |
+| Model | claude-sonnet-5.5 (sub-agent `GS03-jump-explanations`, general-purpose); wave 3, alone |
+| Token usage | 67 model calls; 10,409,611 input (10,188,477 cache read), 96,557 output |
+| AI credits | 253.72 AIU (local usage store, keyed by sub-agent id) |
+| Verification | Developer: `--suite=replay` 152/152 (3.2 s); `--suite=help` 30/30; generator quick set 43 suites 2,702/2,702 (78.3 s); player `--suite=help` 22/22; scratch checks outside the repository (golden causes, frames, first uses, effects, the 16 details jumps), deleted afterwards. Orchestrator re-run: generator quick set 43 suites, 2,702 passed / 0 failed (78.6 s); player `--suite=help` 22/22; the five edited files CRLF, no BOM; `replay.js` has no line over 110 characters; nothing outside the GS03 list changed. |
+| Acceptance | GS03-B01–B04 and GS03-T01–T06 met: all 14 goldens' causes, culprit frames, choices, first uses and effects; G01 (R1C2 alone 550, R9C8 alone 44, framed; choice; first use deduction 32 of 47; restricted check `stuck`); the G14 witness; the `classifyShares` fixtures; the G05 probe order; guard 1 and `explain: false`; 13 compact and 16 details jumps each with a cause, a choice and a proof; the multi-move invariants and the independent-count certification; the choice kinds `random`, `checked` and `none` on scripted 4×4 boards. |
+| Issues & resolutions | (1) Two GS02-state assertions updated to the GS03 contract, an intended contract change: the prepare-progress test now expects 36 yields for G01 (32 positions + 4 explanation units), with an `explain: false` case keeping 32; the G01 `buildViews(analysis)` equality compares with `cause` / `choice` nulled. No golden, fixture or heavy suite touched. (2) A doc comment merged onto the `analyse` line by an edit was caught and fixed by the developer's own review. (3) The guides' "about 2,590" quick-set counts are stale (2,702 now): left to GS07. (4) Risk noted: `checks` still varies with process history, so a `probeNodes` value close to a board's real cost could flip between capped and rated; the default 1,000,000 is far from any measured cost. |
+| Handoff | New exports `classifyShares(before, after, singles) → { class, index }` (`index` −1 for `together`), `firstUse(model, values, technique, { rateNodes })`, `restrictedCheck(model, values, w, { rateNodes })`. `prepare` yields `{ done, total }` after each probe and optional solve (G01: 32 + 4 yields; the 14 goldens: 72 explanation units); options `explain: false` (skip explanations) and `probeNodes` (default `RATE_NODES`). Each jump transition has `cause` and `choice` in the task's shapes, shared by both views per `(from, to)` (never mutate them); `singles` is one-to-one with `changes` (a `single-cell` move has one entry scored with the end total); `analysis.proofs[to] = { firstUse, restricted }`; `buildViews` alone still returns `cause` / `choice` null. Cause classes: removal-only moves `culprit` / `culpritGroup` / `together` / `parts`; a move that restores a clue the `…Exchange` / `…Restore` variants; `unavailable` also when the start board does not match the move. Explanation time over the 14 goldens about 58 ms (0.07–0.7 ms for light cases, 19.5 ms for G10). GS06 must honour `verifiedOnly`, null `k` / `kMove`, and show the restricted sentence only after `'stuck'`. |
