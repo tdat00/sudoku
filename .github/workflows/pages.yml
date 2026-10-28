@@ -95,7 +95,8 @@ jobs:
       - name: Prepare site
         run: |
           mkdir -p _site/generator _site/player _site/core
-          cp index.html LICENSE _site/
+          cp index.html LICENSE sitemap.xml _site/
+          cp -R assets _site/
           cp -R generator/index.html generator/css generator/js generator/assets _site/generator/
           cp -R player/index.html player/help.html player/css player/js player/assets _site/player/
           cp -R core/js core/css core/assets _site/core/

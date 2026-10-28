@@ -47,8 +47,10 @@ core/        what both apps load: the solver engine, the SVG board, the exchange
              word book, and the tests of all of that
 generator/   Sudoku Generator
 player/      Sudoku Player
+assets/      the images of the link previews (og-generator.png, og-player.png, 1200×630) and apple-touch-icon.png
 docs/        the documents of both apps, by feature
 .github/     the workflow that tests and publishes the site
+index.html   the site root: forwards to the generator · sitemap.xml: the pages for the search engines
 AGENTS.md    how AI agents should work here
 ```
 
@@ -163,6 +165,16 @@ Choose *Settings → Pages → Build and deployment → Source → GitHub Action
 generator, the player and the code they share after every push to `main`; you can also run it manually from the
 **Actions** tab. Only the app files and licence are published, not the tests or working notes. The live app is at
 **[tdat00.github.io/sudoku/generator](https://tdat00.github.io/sudoku/generator/)**.
+
+**Search engines and link previews** — the `<head>` of `generator/index.html`, `player/index.html`, `player/help.html`
+and the root `index.html` carries a description, a canonical address, Open Graph and Twitter Card tags (what Facebook,
+Zalo, X and Slack show when a link is shared) and, for the two apps, JSON-LD. Crawlers run no script, so these tags are
+static English text, and their addresses are absolute (`https://tdat00.github.io/sudoku/…`, the one exception to the
+rule of relative links): change them when the site moves. Facebook cannot show an SVG, so the preview image is a PNG of
+1200×630 pixels in `assets/` (`og-generator.png`, `og-player.png`); the workflow publishes `assets/` and
+`sitemap.xml` with the site. After a change of the tags or the images, refresh the cache of Facebook with its
+[Sharing Debugger](https://developers.facebook.com/tools/debug/); to be listed in Google, submit
+`https://tdat00.github.io/sudoku/sitemap.xml` in Search Console (a project site cannot serve its own `robots.txt`).
 
 ## How it works
 

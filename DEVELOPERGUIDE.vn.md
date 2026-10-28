@@ -47,8 +47,10 @@ core/        phần mã cả hai ứng dụng cùng nạp: bộ máy giải, bà
              cùng các kiểm thử của chúng
 generator/   Sudoku Generator
 player/      Sudoku Player
+assets/      ảnh xem trước liên kết (og-generator.png, og-player.png, 1200×630) và apple-touch-icon.png
 docs/        tài liệu của cả hai ứng dụng, theo tính năng
 .github/     workflow kiểm thử và xuất bản trang
+index.html   gốc của trang: chuyển sang trình sinh đề · sitemap.xml: các trang cho công cụ tìm kiếm
 AGENTS.md    hướng dẫn cho các tác tử AI
 ```
 
@@ -164,6 +166,17 @@ hình. Chọn *Settings → Pages → Build and deployment → Source → GitHub
 sinh đề, trình chơi và phần mã dùng chung sau mỗi lần đẩy lên `main`; bạn cũng có thể chạy thủ công từ thẻ
 **Actions**. Chỉ các tệp ứng dụng và giấy phép được xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng
 trực tuyến tại **[tdat00.github.io/sudoku/generator](https://tdat00.github.io/sudoku/generator/)**.
+
+**Công cụ tìm kiếm và xem trước liên kết** — phần `<head>` của `generator/index.html`, `player/index.html`,
+`player/help.html` và `index.html` ở gốc có mô tả, địa chỉ chuẩn (canonical), các thẻ Open Graph và Twitter Card (thứ
+Facebook, Zalo, X, Slack hiển thị khi chia sẻ liên kết) và, với hai ứng dụng, JSON-LD. Trình thu thập không chạy
+script nên các thẻ này là văn bản tiếng Anh tĩnh, và địa chỉ trong đó là địa chỉ tuyệt đối
+(`https://tdat00.github.io/sudoku/…`, ngoại lệ duy nhất của quy tắc dùng liên kết tương đối): hãy đổi chúng khi trang
+chuyển địa chỉ. Facebook không hiển thị được SVG nên ảnh xem trước là tệp PNG 1200×630 điểm ảnh trong `assets/`
+(`og-generator.png`, `og-player.png`); workflow xuất bản `assets/` và `sitemap.xml` cùng trang. Sau khi đổi thẻ hoặc
+ảnh, làm mới bộ nhớ đệm của Facebook bằng [Sharing Debugger](https://developers.facebook.com/tools/debug/); để được
+Google lập chỉ mục, gửi `https://tdat00.github.io/sudoku/sitemap.xml` trong Search Console (trang dự án không tự phục
+vụ được `robots.txt`).
 
 ## Cách hoạt động
 
