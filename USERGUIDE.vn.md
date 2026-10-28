@@ -85,7 +85,8 @@ tạo ra như thế nào*:
    này trước hết chuẩn bị bảng điểm cho từng bước (ở nền, ít lâu sau khi đề hiện ra), rồi hiện một số bước được
    chọn để điểm tăng đều và không bao giờ giảm (lời giải đầy đủ, các lồng hay dấu so sánh, các lần bỏ số, đề
    hoàn chỉnh); đánh dấu **Hiện từng thay đổi** để xem mọi thay đổi đã ghi lại, kể cả những thay đổi làm điểm
-   giảm. Thẻ này mô tả bước đang xem, kèm các kỹ thuật mà đề cần ở thời điểm đó và điểm của chúng; biểu
+   giảm. Thẻ này mô tả bước đang xem, kèm các kỹ thuật mà đề cần ở thời điểm đó và điểm của chúng (bước nào cũng
+   có bảng này, kể cả khi điểm không đổi); biểu
    tượng **Giải thích** mở Trợ giúp ở đúng bước đó (làm gì, vì sao, làm thế nào, và đoạn mã giả đang chạy). Thẻ
    **Tóm tắt** bên cạnh cho biết độ khó của đề hoàn chỉnh và điểm của nó được cộng lên như thế nào.
 4. Mọi đề bạn tạo đều được giữ trong một danh sách ở bên trái, để mở lại, hoặc in và xuất nhiều đề cùng lúc.
@@ -110,19 +111,28 @@ thay đổi trong dữ liệu đã lưu nằm trong [hướng dẫn cho lập tr
   tính điểm từ 21 kỹ thuật giải của con người (số đơn, ứng viên bị khóa, tập con, cá, cánh, chuỗi) cùng 3 kỹ
   thuật về lồng và 2 kỹ thuật về dấu so sánh; mỗi biến thể chỉ có các mức mà nó đạt được một cách ổn định.
 - **Phát lại từng bước** quá trình tạo đề, do bạn tự điều khiển (bước đầu tiên, bước trước, bước tiếp theo,
-  bước cuối cùng, hoặc thanh trượt có một vạch cho mỗi bước): một số bước được chọn để điểm tăng đều và không
-  bao giờ giảm, hoặc, với **Hiện từng thay đổi**, mọi thay đổi đã ghi lại; các bảng điểm được chuẩn bị sau khi đề
-  hiện ra, và phần Trợ giúp ("Cách hoạt động") giải thích bước đó kèm mã giả.
-- **Giải thích các bước tăng vọt điểm** — khi điểm của một bước tăng ít nhất gấp ba và thêm ít nhất 100 điểm,
-  bước đó hiện nhãn "Điểm tăng vọt" và giải thích vì sao: lời giải mà trình sinh đề tìm được giờ dùng kỹ thuật
-  nào, trọng số của nó, và số cho sẵn (hoặc dấu) gây ra bước nhảy, được đánh khung trên bàn cờ khi chỉ có đúng
-  một. Mục **Vì sao?** mở các con số phía sau điểm (P, W, E, V, R, mức độ, lựa chọn mà trình sinh đề đã ghi lại
-  và bước suy luận đầu tiên dùng kỹ thuật đó). Một kỹ thuật khó nhất mới mà không có bước nhảy thì được một dòng
-  riêng, bước đầu tiên có điểm được đánh dấu "Đề đầu tiên được chấm điểm", và với **Hiện từng thay đổi**, một bàn
-  cờ không chấm được điểm sẽ cho biết lý do thay vì hiện điểm.
+  bước cuối cùng, hoặc thanh trượt có một vạch cho mỗi bước), với hai chế độ xem của cùng những thay đổi đó: mặc
+  định là một số bước được chọn để điểm tăng đều và không bao giờ giảm, hoặc, với **Hiện từng thay đổi**, mọi thay
+  đổi đã ghi lại, kể cả những thay đổi làm điểm giảm (một lần đào lại từ đầu cho thấy điểm tụt về 0). Đổi chế độ
+  xem vẫn giữ bạn ở cùng thời điểm của quá trình tạo đề. Các bảng điểm được chuẩn bị sau khi đề hiện ra, và phần
+  Trợ giúp ("Cách hoạt động") giải thích bước đó kèm mã giả.
+- **Bảng điểm ở mọi bước** — các kỹ thuật mà đề cần ở bước đó cùng số lần dùng, điểm và phần điểm được phân bổ cho
+  nó, rồi các ô trống và dòng Tổng, kể cả ở bước mà điểm không đổi; dòng Tổng cho biết mức thay đổi so với bước
+  trước ("551 (+507)", "992 (không đổi)"). Bước chưa có gì để giải (lời giải đầy đủ, các lồng hay dấu so sánh, một
+  lần đào lại) ghi rõ điều đó. Với **Hiện từng thay đổi**, một bàn cờ mà bộ giải của trình sinh đề không chấm được
+  trong giới hạn của nó sẽ cho biết lý do (kèm các kỹ thuật bộ giải đã áp dụng, nếu có) thay vì hiện điểm.
+- **Giải thích các bước tăng vọt điểm** — một bước có điểm gấp ít nhất ba lần điểm của bước trước **và** cao hơn ít
+  nhất 100 điểm sẽ có nhãn "Điểm tăng vọt ×12,5" (tỉ số, làm tròn xuống một chữ số thập phân) và giải thích vì
+  sao: lời giải mà trình sinh đề tìm được giờ dùng kỹ thuật nào, trọng số của nó, và số cho sẵn (hoặc dấu) gây ra
+  bước nhảy, được đánh khung trên bàn cờ khi chỉ có đúng một. Mục **Vì sao?** mở các con số phía sau điểm (P, W, E,
+  V, R, mức độ, lựa chọn mà nhật ký của trình sinh đề đã ghi lại và bước suy luận đầu tiên dùng kỹ thuật đó). Hai
+  nhãn nữa giúp đọc các bước: **Đề đầu tiên được chấm điểm** đánh dấu bước đầu tiên mà bàn cờ có điểm, còn
+  **Kỹ thuật khó nhất mới** đánh dấu bước có kỹ thuật khó nhất mà bước trước chưa dùng (cũng ở dòng của kỹ thuật
+  đó trong bảng). Các lời giải thích này nói về lời giải riêng của trình sinh đề và phép kiểm tra giới hạn của nó,
+  không phải mọi cách giải đề.
 - **Điểm độ khó đọc được** — thẻ Tóm tắt liệt kê từng kỹ thuật mà đề cần cùng số lần dùng, điểm và phần điểm
   được phân bổ cho nó, rồi các ô trống, và dòng Tổng bằng đúng điểm của đề; thẻ Các bước tạo đề cho bảng tương tự
-  ở mọi bước, kèm mức thay đổi của dòng Tổng so với bước trước ("551 (+507)").
+  ở mọi bước, nên ở bước cuối dòng Tổng của nó là điểm của thẻ Tóm tắt.
 - **Danh sách các đề đã tạo** — mỗi đề bạn tạo được lưu trong trình duyệt (tối đa 100, mới nhất ở trên) và hiện
   ở bên trái dưới dạng "biến thể" và "mức: điểm, seed"; bấm vào một đề để mở lại (cùng seed cho cùng đề trong
   cùng một phiên bản trình sinh đề), xóa từng đề, hoặc xóa cả danh sách.
@@ -245,8 +255,8 @@ thông báo cảnh báo rằng một số ứng dụng và máy chủ cắt bớ
   nền. Trang trực tuyến, hay một bản sao được phục vụ bằng máy chủ web
   ([hướng dẫn cho lập trình viên](DEVELOPERGUIDE.vn.md#chạy-trình-sinh-đề-trên-máy)), không gặp vấn đề này.
   Các bảng điểm của thẻ **Các bước tạo đề** cũng được tính ngay trên trang tại đó: thẻ chờ bạn nhấn **Chuẩn bị
-  bảng điểm**, và trang có thể ngừng phản hồi trong chốc lát khi nó làm việc; đề hoàn chỉnh và thẻ Tóm tắt dùng
-  được trước đó.
+  bảng điểm** (trước đó không tính gì, và các nút phát lại vẫn tắt cho đến khi các bảng điểm sẵn sàng), và trang có
+  thể ngừng phản hồi trong chốc lát khi nó làm việc; đề hoàn chỉnh và thẻ Tóm tắt dùng được trước đó.
 - **Chưa chạy thử với trình đọc màn hình thật.** Thao tác bằng bàn phím, vai trò ARIA và thông báo trực tiếp đã
   được cài đặt và kiểm tra trong trình duyệt không giao diện, nhưng chưa ai nghe thử bằng trình đọc màn hình.
 - **Độ khó là một ước lượng**: trọng số của các kỹ thuật và khoảng điểm của các mức được chọn từ các phép đo trên

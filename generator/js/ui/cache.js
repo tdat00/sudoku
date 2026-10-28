@@ -1359,14 +1359,14 @@
   SG.localeFragments.push({
     en: {
       'cache.preparing': 'Loaded from the cache. Preparing the step-by-step replay\u2026',
-      'cache.ready': 'The step-by-step replay is ready.',
+      'cache.ready': 'The generation record is rebuilt.',
       'cache.failed': 'The replay could not be prepared. Press Generate to create the puzzle again with ' +
         'its steps.',
       'cache.stale': 'The saved copy of this puzzle was out of date, so it was generated again.'
     },
     vi: {
       'cache.preparing': 'Đề được lấy từ bộ nhớ đệm. Đang chuẩn bị phần phát lại từng bước\u2026',
-      'cache.ready': 'Phần phát lại từng bước đã sẵn sàng.',
+      'cache.ready': 'Đã dựng lại bản ghi quá trình tạo đề.',
       'cache.failed': 'Không chuẩn bị được phần phát lại. Bấm Tạo đề để tạo lại đề cùng các bước của nó.',
       'cache.stale': 'Bản đã lưu của đề này đã cũ nên đề được tạo lại.'
     }

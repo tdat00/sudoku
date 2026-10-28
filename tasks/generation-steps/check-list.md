@@ -28,7 +28,7 @@ Checkboxes below mean "implementation accepted and committed", not "task documen
 | [x] | GS04 | [GS04](GS04-worker-job-and-clients.md) | Worker job, client `replay` in both modes, cache forwarding | GS03 (and its prerequisites) | Medium | Worker/browser integration | M4 preparation off the page | 4 |
 | [x] | GS05 | [GS05](GS05-replay-views-texts-and-preparation.md) | Replay views, step texts, preparation flow and main-mode gate | GS02, GS03, GS04 | Large | Generator UI | M5 a table on every step | 5 |
 | [x] | GS06 | [GS06](GS06-steps-panel-callout-and-frames.md) | Steps panel: table states, tiers, jump callout, "Why?", culprit frames | GS05 | Large | Generator UI + core board | M6 jumps explained (UI) | 6 |
-| [ ] | GS07 | [GS07](GS07-documentation-consistency.md) | Documentation consistency in both languages | GS06 | Small | Documentation | M7 documents in step | 7 |
+| [x] | GS07 | [GS07](GS07-documentation-consistency.md) | Documentation consistency in both languages | GS06 | Small | Documentation | M7 documents in step | 7 |
 | [ ] | GS08 | [GS08](GS08-final-verification.md) | Final verification (Q9 c) and release evidence | GS07 | Medium | QA/release | M8 verified | 8 |
 
 Sizes: Small about 100–300 changed lines; Medium about 300–800; Large about 800–1,600 (tests included, generated
@@ -295,7 +295,7 @@ The orchestrator owns this record.
 | GS03 | done | 16m02s | 253.72 | 128ed08 |
 | GS04 | done | 14m53s | 268.31 | d07c97c |
 | GS05 | done (+ orchestrator fix of one heavy `killer` test to the new API) | 33m57s | 833.94 | 6b8d4ff |
-| GS06 | done | 25m18s | 665.64 | (this commit) |
-| GS07 | | | | |
+| GS06 | done | 25m18s | 665.64 | 482b6f8 |
+| GS07 | done (+ orchestrator wording fix of `cache.ready` and a `step-view.js` comment) | 20m30s | 534.78 | (this commit) |
 | GS08 | | | | |
 | **Totals** | | | | |

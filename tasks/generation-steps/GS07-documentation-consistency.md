@@ -172,14 +172,14 @@ if ($changed) {
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Done (screenshots of `docs/screenshots/` not retaken; real-browser checks left to GS08) |
+| Start | 2026-10-29 01:13:37 (+07:00) |
+| End | 2026-10-29 01:34:07 (+07:00) |
+| Duration | 20 min 30 s |
+| Model | claude-sonnet-5.5 (sub-agent `GS07-docs-consistency`, general-purpose); wave 7, alone |
+| Token usage | 154 model calls; 34,870,316 input (34,541,420 cache read), 107,155 output |
+| AI credits | 534.78 AIU (local usage store, keyed by sub-agent id) |
+| Verification | Developer: generator `--suite=help,i18n,ui-contract` 178/178; generator quick set 43 suites 2,818/2,818 (88 s); player quick set 29 suites 1,609/1,609 (23 s); player `--suite=help` 22/22; the T03 path search over the changed files: 0 hits; the three examples of the guides re-derived with a throw-away script (deleted): Classic easy seed 3 → 7 compact / 26 details steps; Expert seed 3275974478 → 7 compact (0, 23, 44, 551, 568, 992, 992) / 33 details, jump 44 → 551 ×12.5 from R1C2; Killer hell seed 11 → 9 / 38. Orchestrator re-run: generator quick set 43 suites, 2,818 passed / 0 failed (88.8 s); player quick set 29 suites, 1,609 passed / 0 failed (23.4 s); after the orchestrator's wording fix `--suite=cache,i18n,help,ui-contract,steps,player` 400/400; every changed file CRLF, no BOM, no absolute path. |
+| Acceptance | GS07-B01, B02 and GS07-T01–T04 met. EN and VI state the same numbers (guards 1,000,000 / 200,000; ×3 and +100; ×12.5 / ×12,5; 43 / 51 / 27 suites; about 2,820 and 3,840 tests; 14 goldens). |
+| Issues & resolutions | (1) `--all` was not run (not allowed in GS07): its total "about 3,840 tests" is derived (quick 2,818 + the unchanged heavy suites ≈ 1,020); GS08 measures it. (2) The player's "about 15 seconds" stays in the guides (23 s measured here, a slower machine). (3) Two code defects reported by the developer, fixed by the orchestrator in this commit (wording only, no logic): `cache.ready`, announced once the cached puzzle's record is rebuilt, said "The step-by-step replay is ready." while the score tables were still being prepared — now "The generation record is rebuilt." / "Đã dựng lại bản ghi quá trình tạo đề." (and `design.md` §10.7 says so); the header comment of `generator/js/ui/step-view.js` still spoke of a "hardest removal" round — now the groups and swaps of the two views. `generator/js/ui/help.js` needed no change. |
+| Handoff | Documents in step with the code: both user guides, both developer guides (new subsection "The replay of the generation" / "Phát lại quá trình tạo đề", worker messages, layers, counts, `replay` suite and fixture commands, link to the reports), `generator/design.md` (G5, §3.2, §3.3, §7.1, §9.3, §9.4, §10.1, §10.4, §10.7, §15, deviations, known limitations), `generator/task.md`, `README.md`. For GS08: measure the `--all` total and correct "about 3,840" if it differs; confirm in a real browser the frames, the callout, the badge and legend (also forced-colors), the file:// button flow and the live announcements (`#a11y-live`, `#replay-status`, `#step-detail`). |

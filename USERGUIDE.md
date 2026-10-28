@@ -85,9 +85,9 @@ Most Sudoku generators hand you a puzzle and nothing else. This one is also a wa
    shows a few steps chosen so that the score rises steadily and never goes down (the full solution, the cages
    or signs, the removals, the finished puzzle); tick **Show every move** to see every recorded change, including
    those that lowered the score. The tab describes the step that is on show, with the techniques the puzzle needs
-   at that point and their score; its **Explain** icon opens the Help at that step (what, why, how, and the
-   pseudocode that runs). The **Summary** tab next to it shows the difficulty of the finished puzzle and how its
-   score adds up.
+   at that point and their score (a table on every step, also when the score did not change); its **Explain**
+   icon opens the Help at that step (what, why, how, and the pseudocode that runs). The **Summary** tab next to it
+   shows the difficulty of the finished puzzle and how its score adds up.
 4. Every puzzle you generate is kept in a list on the left, so you can open it again, or print and export
    several of them together.
 
@@ -111,18 +111,29 @@ changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-a
   hell 2 — scored from 21 human solving techniques (singles, locked candidates, subsets, fish, wings,
   chains) plus 3 cage and 2 inequality techniques; every variant offers the levels it reaches reliably.
 - **Step-by-step replay** of the generation, moved by hand (first, previous, next and last step, or a slider
-  with a notch for every step): a few steps chosen so that the score rises steadily and never goes down, or, with
-  **Show every move**, every recorded change; the score tables are prepared after the puzzle appears, and the
-  Help ("How it works") explains the step with pseudocode.
-- **Score jumps explained** — when a step's score at least triples and rises by at least 100 points, the step
-  shows a "Score jump" badge and says why: which technique the generator's solution now uses, its weight, and the
-  clue (or sign) that causes the jump, framed on the board when there is exactly one. **Why?** opens the numbers
-  behind the score (P, W, E, V, R, the level, the generator's recorded choice and the first deduction that uses
-  the technique). A new hardest technique without a jump gets one line, the first scored step is marked "First
-  rated puzzle", and in **Show every move** a board that cannot be rated says why instead of a score.
+  with a notch for every step), in two views of the same changes: by default a few steps chosen so that the score
+  rises steadily and never goes down, or, with **Show every move**, every recorded change, including the ones
+  that lowered the score (a restart of the generation shows its drop to 0). Switching view keeps you at the same
+  point of the generation. The score tables are prepared after the puzzle appears, and the Help ("How it works")
+  explains the step with pseudocode.
+- **A score table on every step** — the techniques the puzzle needs at that step with their uses, points and
+  share of the score, then the empty cells and a Total, also on a step where the score did not change; the Total
+  shows its change from the step before ("551 (+507)", "992 (unchanged)"). A step with nothing to solve yet (the
+  full solution, the cages or signs, a restart) says so. In **Show every move**, a board that the generator's
+  solver could not rate within its limits shows why (and the techniques the solver applied, when there are some)
+  instead of a score.
+- **Score jumps explained** — a step whose score is at least three times the score before it **and** at least
+  100 points higher gets a "Score jump ×12.5" badge (the ratio, rounded down to one decimal) and says why: which
+  technique the generator's solution now uses, its weight, and the clue (or sign) that causes the jump, framed on
+  the board when exactly one does. **Why?** opens the numbers behind the score (P, W, E, V, R, the level, what the
+  generator's log records about the choice, and the first deduction that uses the technique). Two more labels
+  help to read the steps: **First rated puzzle** marks the first step whose board has a score, and
+  **New hardest technique** marks a step whose hardest technique the step before did not use (also on that
+  technique's row of the table). These explanations describe the generator's own solution and its limited check,
+  not every way to solve the puzzle.
 - **Difficulty score you can read** — the Summary tab lists every technique the puzzle needs with its uses,
   points and its share of the score, then the empty cells, and a Total equal to the score; the Generation steps
-  tab shows the same table for every step, with the change in the Total from the step before ("551 (+507)").
+  tab shows the same table for every step, so at the last step its Total is the score of the Summary.
 - **Generated puzzles list** — every puzzle you make is saved in the browser (up to 100, newest first) and shown
   on the left as "variant" and "level: score, seed"; click one to open it again (the same seed gives the same
   puzzle within one generator version), remove one, or clear the list.
@@ -246,8 +257,9 @@ The format of the link, and how to point the button at another copy of the playe
   slice, and the next puzzle is not pre-generated in the background. The live site, or a copy served by a web
   server ([developer guide](DEVELOPERGUIDE.md#running-the-generator-locally)), does not have this problem.
   The score tables of the **Generation steps** tab are also calculated on the page there: the tab waits for you
-  to press **Prepare score tables**, and the page may stop responding briefly while it works; the finished puzzle
-  and the Summary tab are usable before that.
+  to press **Prepare score tables** (nothing is calculated before, and the replay controls stay off until the
+  tables are ready), and the page may stop responding briefly while it works; the finished puzzle and the Summary
+  tab are usable before that.
 - **No real screen-reader run.** Keyboard operation, ARIA roles and live announcements are implemented and
   checked in a headless browser, but no one has listened to them with a screen reader yet.
 - **The difficulty is an estimate**: the weights of the techniques and the score bands of the levels were chosen

@@ -1,7 +1,7 @@
 /**
  * Steps panel: the description of the replay step on show. Each step is a change the board shows (full
- * solution, cages or signs, a batch of removals, a "hardest removal" round, the finished puzzle; see
- * `SG.player.buildViews`); technical work is not listed. The replay controls under the board move through the
+ * solution, cages or signs, a group of removals or a swap of the compact or details view, a restart, the
+ * finished puzzle; see `SG.player.buildViews`); technical work is not listed. The replay controls under the board move through the
  * steps; the panel shows the number, title, summary and sentence of the current step, its score table, the
  * explanation of a score jump and a legend of the board frames. Pure: `chartModel(counts, options)`
  * (technique order, labels and bar geometry), `explain(table, step)` (the texts of a table model: the Total

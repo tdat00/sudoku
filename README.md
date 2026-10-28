@@ -16,7 +16,8 @@ build step, no server, no external library.
 
 - **[Sudoku Generator](generator/)**: generates puzzles of 15 variants (classic, Mega, Monster, Diagonal, Hyper,
   Jigsaw, Killer, Greater-Than, Samurai, Sohei, Butterfly, Flower, Wordoku) at nine difficulty levels, guarantees
-  the level you ask for, replays step by step how each puzzle was made, and prints and exports them.
+  the level you ask for, replays step by step how each puzzle was made (with a score table on every step and the
+  jumps in score explained), and prints and exports them.
 - **[Sudoku Player](player/)**: plays a puzzle from the generator's **Play** button, a link or pasted text: notes,
   undo / redo, error checking, hints that name the technique, a timer and saved progress.
 - **Both**: English and Vietnamese, light, dark and high-contrast themes, keyboard and touch. Nothing is uploaded:

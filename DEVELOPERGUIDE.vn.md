@@ -109,7 +109,8 @@ trình chơi (`player/tests/browser/`) chạy chậm; chúng được chạy có
 ## Tài liệu
 
 [docs/README.md](docs/README.md) lập mục lục theo tính năng: [kiến trúc](docs/architecture.md), các báo cáo về
-[chấm điểm độ khó](docs/difficulty-rating/report-brief.md), các tệp mẫu của [trao đổi đề](docs/puzzle-exchange/fixtures.md) và
+[chấm điểm độ khó](docs/difficulty-rating/report-brief.md), các báo cáo [Các bước tạo đề](docs/generation-steps/report-brief.md)
+(thiết kế của phần phát lại), các tệp mẫu của [trao đổi đề](docs/puzzle-exchange/fixtures.md) và
 [hồ sơ kiểm định](docs/qa/browser-run.md). Thiết kế và kế hoạch của từng ứng dụng nằm cạnh mã nguồn của nó:
 `generator/design.md`, `generator/task.md`, `player/design.md`, `player/task.md`. Ở thư mục gốc, hướng dẫn sử dụng
 ([tiếng Anh](USERGUIDE.md), [tiếng Việt](USERGUIDE.vn.md)) dành cho người dùng ứng dụng, còn hướng dẫn cho lập trình
@@ -184,7 +185,7 @@ vụ được `robots.txt`).
 
 Sơ đồ các tầng ở [bản tiếng Anh](DEVELOPERGUIDE.md#layers). Tóm tắt: **giao diện** (`js/ui/` và `../core/js/ui/`) → **điều phối**
 (`js/worker/`: Web Worker hoặc phương án dự phòng trên luồng chính) → **sinh đề** (`js/engine/`: pipeline, full-grid,
-digger, difficulty, events) → **bộ giải** (`../core/js/engine/`: `dfs-solver`, `logical-solver`, `techniques` và các
+digger, difficulty, events, replay) → **bộ giải** (`../core/js/engine/`: `dfs-solver`, `logical-solver`, `techniques` và các
 `tech-*.js`, dùng chung với trình chơi) → **mô hình** (`model`, `constraints`, `bits`, `classic-model` ở `../core`;
 `rng` và 15 biến thể trong `js/variants/`). Tầng dưới không bao giờ biết tầng trên. Các bộ máy (`../core/js/engine/`,
 `js/engine/`) và `js/variants/` không chạm vào DOM, nhờ đó toàn bộ bộ máy chạy được trong Node để kiểm thử.
@@ -223,48 +224,79 @@ Song song với các sự kiện, bộ đào ghi một **nhật ký đào** (dig
 (`result.digLog`: các mục `pass`, `accept`, `reject`, `keep` và `restart`, cộng thêm `signs`, `clear`,
 `reveal` và kết quả thử từng dấu ở biến thể So sánh; phần đầu của `js/engine/digger.js` mô tả chúng). Nhật ký
 này như nhau bất kể mức ghi trace, luồng chạy hay kích thước bàn cờ, và được `toWire` / `fromWire` mang theo.
-Tạo xong, bàn cờ hiện ngay đề hoàn chỉnh; không có gì tự chạy. `SG.player.buildViews(result, analysis)` (hàm thuần)
-dựng các bước của cả hai chế độ xem từ bản phân tích của `SG.replay` (ở dưới), mỗi bước là một thay đổi hiện trên
-bàn cờ: lời giải đầy đủ; các lồng (Sát thủ) hoặc các dấu (So sánh); từng đoạn xóa ô ngẫu nhiên; từng đoạn đào có
-định hướng, mỗi đoạn chọn cách xóa làm đề khó nhất; các bước đào của biến thể So sánh (các dấu bị bỏ, các số cho
-sẵn được hiện thêm khi đề khó quá mức); một lần đào lại hay một lần điều chỉnh khi nhật ký có; cuối cùng là đề
-hoàn chỉnh. Chế độ xem **gọn** là các bước được chọn theo điểm (điểm không bao giờ giảm, có một bước ở cuối mỗi
-giai đoạn), chế độ xem **chi tiết** mỗi nước đi một bước. Một bước là dữ liệu thuần (`role`, các nước đi nó gộp,
-bàn cờ nó hiện, tiêu đề và câu mô tả cho mỗi đoạn nước đi dưới dạng khóa `SG.i18n.t()`, các khung của thay đổi
-**ròng** — ô bị bỏ số, ô được trả lại, số cho sẵn được hiện lại —, các dấu, các số đo cộng dồn và một mô hình
-`table` của bảng điểm); phương thức `tableAt(position)` của bộ phát lại đưa bảng của bước đang xem cho phần mô tả bước. `SG.stepView.create(rootEl, { table })` vẽ bảng đó theo trạng thái (`start`, `zero`, `scored`, `final`, và `status` cho một bàn cờ không chấm được điểm, không có dòng Tổng và không có nút thử lại) kèm mức thay đổi của dòng Tổng, và hạng của bước: đề đầu tiên được chấm điểm, bước tăng vọt điểm (nhãn ở tiêu đề, một khung giải thích với mục "Vì sao?" đóng sẵn; tăng ít nhất gấp 3 lần và ít nhất 100 điểm từ một điểm dương) hoặc kỹ thuật khó nhất mới; `SG.stepView.explain(table, step)` là mô hình văn bản thuần mà các bài kiểm thử đọc. Một bước nhảy mà đúng một số cho sẵn hoặc một dấu gây ra sẽ được đánh khung trên bàn cờ (`marks.cause`, `marks.causeRestore`, `signs.cause`; `board.setSignMarks` nhận thêm danh sách `cause`). Phần việc
-kỹ thuật (cấu hình, mô hình bàn cờ, chấm điểm, hiệu chỉnh, các lần đào trượt mức) không được hiện. Ví dụ, một đề
-Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ,
-bốn bước xóa ngẫu nhiên (điểm 14, 24, 34 và 44), một bước đào có định hướng (46) và đề hoàn chỉnh với 34 số cho
-sẵn. `SG.player.create()` là bộ phát lại điều khiển bằng tay (về đầu, lùi, tiến, đến cuối, nhảy đến một vị trí,
-đổi chế độ xem bằng `setView`; vị trí 0 là lưới trống), `SG.stepView.create()` là phần mô tả bước đang xem (kèm
-chú giải các khung trên bàn cờ và bảng điểm của các kỹ thuật mà đề cần ở bước đó). Lời giải thích của
-bảy bước nằm trong hộp thoại Trợ giúp (thẻ "Cách hoạt động"): mỗi bước một mục thu gọn / mở rộng được, với
-làm gì / vì sao / làm thế nào và mã giả, `SG.explainCard.create(el, { compact: true })`; mục của bước phát lại
-đang xem được đánh dấu, mở sẵn, kèm dòng đang chạy và bộ đếm của giai đoạn đào (`SG.app.getExplainContext()`).
-Biểu tượng **Giải thích** của phần mô tả bước mở Trợ giúp ở thẻ đó.
-Các lớp phủ (lồng, dấu, vùng siêu) được vẽ từ mô hình của kết quả, không từ nhật ký.
-`SG.replay.moves(result)` (`js/engine/replay.js`, hàm thuần) biến nhật ký đào thành các nước đi trọn vẹn (một nhóm
-đối xứng, một lần đổi chỗ hoặc một dấu; không bao giờ chỉ một nửa), còn `SG.replay.analyse(result)` chấm điểm bàn
-cờ sau mỗi nước đúng một lần (`SG.logicalSolver.solve` với mọi kỹ thuật, ngưỡng 1.000.000 lần kiểm tra, thêm một
-lần đếm nghiệm khi lời giải dựa vào tính duy nhất), và giữ một trạng thái trung thực khi một bàn cờ không chấm
-được; cả hai đều không thay đổi kết quả. `analysis.views` gồm chế độ xem **gọn** (vài bước chọn theo điểm, điểm
-không bao giờ giảm, `SG.replay.select`, được `SG.replay.audit` kiểm tra) và chế độ xem **chi tiết** (mỗi nước đi một
-bước), còn `analysis.transitions` gồm mức thay đổi của Tổng, các giá trị P, W, E, V, R trước và sau, và hạng
-(`SG.replay.isJump`) của từng bước; tất cả do hàm thuần `SG.replay.buildViews` dựng nên. Với mỗi bước nhảy điểm,
-`analysis.transitions` còn có nguyên nhân (chấm thử các phần của nước đi trên những bàn cờ một phần, không bao giờ hiện
-như một bước, `SG.replay.classifyShares`) và lựa chọn mà bộ sinh đề đã ghi lại, còn `analysis.proofs` có lần dùng đầu
-tiên của kỹ thuật khó nhất mới (`SG.replay.firstUse`) và phép kiểm tra hạn chế (`SG.replay.restrictedCheck`) trên bàn
-cờ cuối của bước; các phần này là tùy chọn, nên khi thất bại chúng chỉ ở trạng thái `unavailable` và không bao giờ làm
-đổi điểm đã chấm. Trang yêu cầu bản phân tích đó sau khi đề đã hiện trên màn hình, qua `SG.player.createPreparation()`
-(một bộ điều khiển nhỏ không có DOM: `start(result)`, `press()`, `unavailable(result)`, `cancel()`, `state()`). Ở
-chế độ worker nó tự bắt đầu và khối trạng thái của phần phát lại (`#replay-status`) hiện tiến độ; ở chế độ luồng
-chính (`file://`) trước hết nó hiện một thông báo cùng nút **Chuẩn bị bảng điểm**, các nút điều khiển phát lại
-vẫn tắt cho đến khi bấm, rồi bản phân tích chạy trên trang (`replay(result, { allowMain: true })`). Cho đến khi
-có bản phân tích, bàn cờ giữ đề hoàn chỉnh; khi không lấy được bản phân tích (một lỗi, hoặc một đề lấy từ bộ nhớ
-đệm mà không dựng lại được bản ghi), phần phát lại quay về lời giải đầy đủ và đề hoàn chỉnh
-(`SG.replay.fallback`). Mọi lựa chọn ngẫu nhiên dùng các luồng được tách ra từ một bộ sinh số có seed (`SG.rng`), vì thế
-seed tạo lại được đề.
+Tạo xong, bàn cờ hiện ngay đề hoàn chỉnh; không có gì tự chạy (phần phát lại được mô tả ở mục kế tiếp).
+Mọi lựa chọn ngẫu nhiên dùng các luồng được tách ra từ một bộ sinh số có seed (`SG.rng`), vì thế seed tạo lại được
+đề.
+
+### Phát lại quá trình tạo đề
+
+Thẻ **Các bước tạo đề** cho thấy một đề được đào ra từ lời giải của nó như thế nào, với một bảng điểm ở mỗi bước.
+Bốn phần dựng nên nó, theo thứ tự này (ba phần đầu là hàm thuần); không phần nào làm thay đổi đề, bộ nhớ đệm, lịch
+sử, bản xuất hay URL.
+Phần việc kỹ thuật (cấu hình, mô hình bàn cờ, các lần đào trượt mức) không bao giờ được hiện.
+
+1. **Bản phân tích, `SG.replay`** (`js/engine/replay.js`; không DOM, không đồng hồ, không số ngẫu nhiên).
+   `SG.replay.moves(result)` biến nhật ký đào thành các nước đi trọn vẹn (một nhóm đối xứng, một lần đổi chỗ các số
+   cho sẵn, một dấu, một lần đào lại; không bao giờ chỉ một nửa), mỗi nước kèm bàn cờ sau nó.
+   `SG.replay.analyse(result)` chấm điểm bàn cờ sau mỗi nước đúng một lần và trả về **bản phân tích**, là dữ liệu thuần
+   sống sót qua structured clone (`SG.replay.toPlainWire` / `fromPlainWire` mang nó dưới dạng dữ liệu an toàn với
+   JSON); `SG.replay.prepare(result)` là cùng công việc đó dưới dạng iterator trả về `{ done, total }`, là cái worker
+   và chế độ luồng chính chạy theo từng lát, còn `SG.replay.fallback(result, reason)` là bản phân tích của một kết
+   quả không có nhật ký dùng được (lời giải đầy đủ, phần cấu trúc và đề hoàn chỉnh). Một lần chấm điểm
+   (`SG.replay.rateBoard`) là một lần `SG.logicalSolver.solve` với mọi kỹ thuật dưới ngưỡng 1.000.000 lần kiểm tra, cộng
+   một lần đếm nghiệm dưới ngưỡng 200.000 nút khi lời giải dựa vào tính duy nhất; đề hoàn chỉnh giữ nguyên
+   `result.rating`. Một bàn cờ không chấm được thì nhận một trạng thái trung thực, không bao giờ đoán hay thử lại:
+   `capped`, `stuck`, `ambiguous` hoặc `unverified` (các trạng thái còn lại là `rated`, `zero` và `final`). Số đếm
+   công việc `checks` chỉ để chẩn đoán và có thể lệch vài đơn vị giữa hai lần chạy, nên các phép so sánh bỏ qua nó.
+2. **Các chế độ xem, `SG.replay.buildViews(analysis)`.** Chế độ xem **gọn** là vài bước được chọn theo điểm để điểm
+   không bao giờ giảm (`SG.replay.select`, có một bước ở cuối mỗi giai đoạn, được `SG.replay.audit` kiểm tra); chế độ
+   xem **chi tiết** mỗi nước đi một bước. `analysis.transitions` gồm, cho mỗi bước, mức thay đổi của Tổng, các thành
+   phần P, W, E, V và R trước và sau, và hạng của bước (`SG.replay.isJump`, `SG.replay.badgeRatio`): một **bước tăng
+   vọt** là mức tăng ít nhất ×3 **và** ít nhất +100 từ một điểm dương, và nhãn của nó hiện tỉ số làm tròn xuống một
+   chữ số thập phân. Với mỗi bước tăng vọt, bản phân tích còn có nguyên nhân của nó (các phần của nước đi được chấm
+   trên những bàn cờ một phần, chỉ để thăm dò và không bao giờ là một bước, `SG.replay.classifyShares`), lựa chọn mà
+   bộ sinh đề đã ghi lại, và trong `analysis.proofs`, lần dùng đầu tiên của kỹ thuật khó nhất mới
+   (`SG.replay.firstUse`) cùng một phép kiểm tra hạn chế (`SG.replay.restrictedCheck`). Đây là phần việc tùy chọn:
+   khi thất bại, một phần chỉ ở trạng thái `unavailable` và không bao giờ làm đổi điểm đã chấm. Các ngưỡng và giới
+   hạn nằm trong `SG.replay.CONSTANTS`.
+3. **Các bước, `SG.player.buildViews(result, analysis)`** (`js/ui/player.js`) → `{ compact, details, signs,
+   cellCount }`. Một bước là dữ liệu thuần: `role`, các nước đi nó gộp, bàn cờ nó hiện, tiêu đề và một câu mô tả cho
+   mỗi đoạn nước đi (dưới dạng khóa `SG.i18n.t()`), các khung của thay đổi **ròng** (ô bị bỏ số, ô được trả lại, số
+   cho sẵn được hiện lại, và số cho sẵn hay dấu duy nhất gây ra một bước tăng vọt), các dấu, các số đo cộng dồn và
+   một mô hình `table` của bảng điểm, có `state` là `start` (vị trí 0), `zero` (chưa có gì để giải), `scored`,
+   `final` hoặc `status` (một bàn cờ không chấm được). `SG.player.create()` là bộ phát lại điều khiển bằng tay (về
+   đầu, lùi, tiến, đến cuối, nhảy đến một vị trí, `setAnalysis`, đổi chế độ xem bằng `setView('compact' | 'details')`;
+   vị trí 0 là lưới trống), và phương thức `tableAt(position)` của nó đưa bảng của bước đang xem cho phần mô tả
+   bước.
+4. **Phần mô tả bước, `SG.stepView.create(rootEl, { table })`** (`js/ui/step-view.js`) vẽ bảng đó theo trạng thái,
+   kèm mức thay đổi của dòng Tổng, chú giải các khung trên bàn cờ và hạng của bước: **đề đầu tiên được chấm điểm**,
+   một **bước tăng vọt điểm** (nhãn ở tiêu đề, một khung giải thích với mục "Vì sao?" đóng sẵn) hoặc **kỹ thuật khó
+   nhất mới**. `SG.stepView.explain(table, step)` là mô hình văn bản thuần mà các bài kiểm thử đọc. Một bước nhảy mà
+   đúng một số cho sẵn hoặc một dấu gây ra sẽ được đánh khung trên bàn cờ (`marks.cause`, `marks.causeRestore`,
+   `signs.cause`; `board.setSignMarks` nhận thêm danh sách `cause`).
+
+Các con số của ví dụ là những con số của các bài kiểm thử. Sudoku Cổ điển 9×9 mức *chuyên gia* với seed 3275974478
+có 32 vị trí và 33 bước khi hiện từng thay đổi; chế độ xem gọn của nó có 7 bước với điểm 0, 23, 44, 551, 568, 992 và
+992, và bước 44 → 551 (×12,5) là một bước tăng vọt do số cho sẵn ở R1C2 gây ra (bỏ riêng nó cho 550 điểm; lần bỏ còn
+lại của nước đi, R9C8, bỏ riêng cho 44), được đánh khung. Một đề Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại
+trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ, bốn bước xóa ngẫu nhiên (điểm 14, 24, 34 và 44), một
+bước đào có định hướng (46) và đề hoàn chỉnh với 34 số cho sẵn.
+
+**Chuẩn bị.** Trang yêu cầu bản phân tích sau khi đề đã hiện trên màn hình, qua `SG.player.createPreparation()` (một
+bộ điều khiển không có DOM: `start(result)`, `press()`, `unavailable(result)`, `cancel()`, `state()`; các trạng thái
+của nó là `idle`, `waiting`, `consent`, `trace`, `preparing`, `ready`, `unavailable` và `error`). Ở chế độ worker nó
+tự bắt đầu và khối trạng thái của phần phát lại (`#replay-status`) hiện tiến độ, tính bằng số vị trí đã chấm. Ở chế
+độ luồng chính (`file://`) nó hiện một thông báo cùng nút **Chuẩn bị bảng điểm** (`#btn-prepare-replay`); không có gì
+chạy trước khi bấm, kể cả việc tạo lại bản ghi của một đề lấy từ bộ nhớ đệm, các nút điều khiển phát lại vẫn tắt cho
+đến khi các bảng điểm sẵn sàng, rồi bản phân tích chạy trên trang (`replay(result, { allowMain: true })`). Cho đến khi
+có bản phân tích, bàn cờ giữ đề hoàn chỉnh; khi không lấy được bản phân tích (một lỗi, hoặc một đề lấy từ bộ nhớ đệm
+mà không dựng lại được bản ghi), phần phát lại quay về lời giải đầy đủ và đề hoàn chỉnh (`SG.replay.fallback`).
+
+Lời giải thích của bảy bước nằm trong hộp thoại Trợ giúp (thẻ "Cách hoạt động"): mỗi bước một mục thu gọn / mở rộng
+được, với làm gì / vì sao / làm thế nào và mã giả, `SG.explainCard.create(el, { compact: true })`; mục của bước phát
+lại đang xem được đánh dấu, mở sẵn, kèm dòng đang chạy và bộ đếm của giai đoạn đào (`SG.app.getExplainContext()`).
+Biểu tượng **Giải thích** của phần mô tả bước mở Trợ giúp ở thẻ đó. Các lớp phủ (lồng, dấu, vùng siêu) được vẽ từ mô
+hình của kết quả, không từ nhật ký.
 
 ### Worker và phương án dự phòng
 
@@ -275,10 +307,19 @@ tạo một client độc lập (có `dispose()`) cho bộ nhớ đệm. Qua `ht
 `SG.pipeline.runSteps` theo từng lát khoảng 12 ms, nên thông điệp `cancel` được đọc giữa các lát: promise bị từ
 chối ngay, việc đang làm dừng ở ranh giới kế tiếp, và worker nào không phản hồi trong 150 ms thì bị tắt (và được
 tạo lại khi cần). Ở nơi Worker không khởi động được (`file://`, chính sách hạn chế) client chuyển sang chạy trên luồng chính,
-chạy cùng các lát đó ở đó. Với cùng một seed, đề ở hai chế độ là như nhau. `SG.workerClient.replay(result,
-{ onProgress })` trả về một promise của bản phân tích phát lại (`SG.replay.prepare`, chạy trong worker theo từng lát,
-hoặc trên trang ở chế độ main, và chỉ khi trang yêu cầu: trên trang còn cần `allowMain: true`, tức là sự đồng ý của
-người dùng); `.cancelReplay()` dừng nó, và một lần tạo đề mới sẽ chen ngang nó.
+chạy cùng các lát đó ở đó. Với cùng một seed, đề ở hai chế độ là như nhau.
+
+Cũng client đó chạy bản phân tích phát lại: `SG.workerClient.replay(result, { onProgress({ done, total }),
+allowMain: false })` trả về một promise của bản phân tích và `.cancelReplay()` dừng nó (client nào cũng có cả hai: các
+client của `create()`, lớp bọc của bộ nhớ đệm và client trực tiếp của chính trang). Ở chế độ worker, công việc là một
+thông điệp `replay` mang `SG.replay.toPlainWire(result)`; worker chạy `SG.replay.prepare` theo từng lát và trả lời
+`replayProgress` (số vị trí đã chấm, khi con số đổi), rồi `replayDone` (bản phân tích) hoặc `replayError`. Worker chỉ
+làm một việc một lúc: `generate`, `replay` và `cancel` chen ngang việc đang làm ở lát kế tiếp, nên một lần tạo đề mới
+hủy một lần phát lại, còn gọi `replay()` trong lúc đang tạo đề bị từ chối (`unexpected`, thông điệp `busy`). Ở chế độ
+luồng chính, bản phân tích chạy trên trang theo từng lát, chỉ bên trong `replay()` và chỉ với `allowMain: true`, tức là
+sự đồng ý của người dùng (nút **Chuẩn bị bảng điểm**); không có nó, promise bị từ chối với `budget.cancelled` và
+`i18nArgs.reason === 'replayConsentRequired'`, và cũng vậy khi một worker đang chạy không thay thế được. Các thông
+điệp nằm ở phần đầu của `js/worker/gen.worker.js`, thiết kế ở [design.md](generator/design.md) §9.3.
 
 ### Bộ nhớ đệm và tạo sẵn đề
 
@@ -508,15 +549,15 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (43 suite, khoảng 2.590 bài), khoảng một phút
+node tests/node-runner.js                          # bộ nhanh (43 suite, khoảng 2.820 bài), khoảng một phút
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
-node tests/node-runner.js --all                    # nhanh + thủ công (51 suite, khoảng 3.610 bài), khoảng chín phút
+node tests/node-runner.js --all                    # nhanh + thủ công (51 suite, khoảng 3.840 bài), khoảng chín phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 43 suite, khoảng 2.590 bài,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 43 suite, khoảng 2.820 bài,
 khoảng một phút — 27 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -535,16 +576,18 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm khoảng 3.610 bài trong 51 suite (khoảng 2.590 bài trong 43 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm khoảng 3.840 bài trong 51 suite (khoảng 2.820 bài trong 43 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text
-node tests/replay-fixtures.js            # tạo lại tests/fixtures/replay-wire.js (bốn đề chuẩn chạy chậm, ~25 giây)
+node tests/replay-fixtures.js            # tạo lại tests/fixtures/replay-wire.js (bốn đề chuẩn chạy chậm, ~23 giây)
 node tests/replay-fixtures.js --check    # tạo lại trong bộ nhớ rồi so sánh; thoát với mã 1 nếu khác
 ```
 
-Suite `replay` đọc các kết quả đã lưu đó (`tests/fixtures/replay-wire.js`) vì việc tạo chúng mất khoảng 23 giây; chỉ
-tạo lại khi đầu ra của trình sinh đề thay đổi có chủ ý (khi đó các mã băm hồi quy cũng đổi theo).
+Suite `replay` kiểm thử bản phân tích (các nước đi, các lần chấm điểm và trạng thái của chúng, các chế độ xem, các bước
+tăng vọt được giải thích) theo các con số chuẩn của 14 yêu cầu (`tests/fixtures/replay-goldens.js`). Nó tạo ngay các đề
+chạy nhanh và đọc bốn đề chạy chậm từ các kết quả đã lưu (`tests/fixtures/replay-wire.js`), vì việc tạo chúng mất khoảng
+23 giây; chỉ tạo lại khi đầu ra của trình sinh đề thay đổi có chủ ý (khi đó các mã băm hồi quy cũng đổi theo).
 
 Các suite so thời gian tạo đề của mọi biến thể với ngân sách ở [design.md](generator/design.md) §9.1 kèm một hệ số dung
 sai, để một máy đang bận hoặc chậm hơn không làm chúng thất bại: gấp đôi ngân sách theo mặc định, gấp ba khi có
@@ -603,8 +646,16 @@ Các hạn chế mà người dùng nhận thấy được liệt kê trong hư�
 - **Chế độ `file://`** kém mượt hơn: trình sinh đề chạy trên luồng chính theo từng lát khoảng 12 ms, nên trang vẫn
   phản hồi và nút **Hủy** có tác dụng ở lát kế tiếp, nhưng có những đoạn việc không chia nhỏ được — ở Sát thủ một
   lát tìm kiếm mất 70–86 ms, một lần đào dấu ở So sánh 50–70 ms, bố cục lồng của một đề Sát thủ khó đến khoảng
-  300 ms — và trang có thể khựng chừng đó thời gian. Việc tạo sẵn đề ở nền cũng bị tắt. Hãy phục vụ kho mã bằng
-  máy chủ để có Web Worker.
+  300 ms — và trang có thể khựng chừng đó thời gian. Việc tạo sẵn đề ở nền cũng bị tắt. Các bảng điểm của phần phát lại
+  cũng được tính ngay trên trang tại đó, và chỉ sau khi người dùng bấm **Chuẩn bị bảng điểm**: bản phân tích nhường
+  quyền sau mỗi vị trí, nhưng một lần chấm điểm của một bàn cờ (đến ngưỡng 1.000.000 lần kiểm tra) không chia nhỏ
+  được. Hãy phục vụ kho mã bằng máy chủ để có Web Worker.
+- **Các lần chấm điểm của phần phát lại** là một lần giải chuẩn cho mỗi bàn cờ dưới ngưỡng 1.000.000 lần kiểm tra (và
+  200.000 nút cho phép đếm nghiệm): một bàn cờ vượt ngưỡng sẽ hiện một trạng thái thay cho điểm, không thử lại. Lời
+  giải thích của một bước tăng vọt mô tả lời giải riêng của trình sinh đề và phép kiểm tra giới hạn của nó, không bao
+  giờ là điều mọi người giải đều cần, và số đếm công việc `checks` của một lần chấm điểm chỉ để chẩn đoán: nó có thể
+  lệch vài đơn vị giữa hai lần chạy (các kỹ thuật tập con cách quãng các lần kiểm tra ngân sách bằng một bộ đếm sống
+  qua nhiều lần giải), nên các bài kiểm thử bỏ qua nó.
 - **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 26 kỹ thuật
   và chín khoảng điểm được chọn từ các phép đo trên đề do máy tạo
   ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); trọng số Sát thủ của `ruleOf45` và
