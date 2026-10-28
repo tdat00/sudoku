@@ -114,9 +114,15 @@ changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-a
   with a notch for every step): a few steps chosen so that the score rises steadily and never goes down, or, with
   **Show every move**, every recorded change; the score tables are prepared after the puzzle appears, and the
   Help ("How it works") explains the step with pseudocode.
+- **Score jumps explained** — when a step's score at least triples and rises by at least 100 points, the step
+  shows a "Score jump" badge and says why: which technique the generator's solution now uses, its weight, and the
+  clue (or sign) that causes the jump, framed on the board when there is exactly one. **Why?** opens the numbers
+  behind the score (P, W, E, V, R, the level, the generator's recorded choice and the first deduction that uses
+  the technique). A new hardest technique without a jump gets one line, the first scored step is marked "First
+  rated puzzle", and in **Show every move** a board that cannot be rated says why instead of a score.
 - **Difficulty score you can read** — the Summary tab lists every technique the puzzle needs with its uses,
   points and its share of the score, then the empty cells, and a Total equal to the score; the Generation steps
-  tab shows the same table for the scored construction steps.
+  tab shows the same table for every step, with the change in the Total from the step before ("551 (+507)").
 - **Generated puzzles list** — every puzzle you make is saved in the browser (up to 100, newest first) and shown
   on the left as "variant" and "level: score, seed"; click one to open it again (the same seed gives the same
   puzzle within one generator version), remove one, or clear the list.

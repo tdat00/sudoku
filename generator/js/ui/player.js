@@ -9,7 +9,8 @@
  * view has one step per complete move. A step is plain data: `{ index, view, role, first, last, position,
  * kind, phase, line, parts, key, args, meta, values, structure, marks, signs, metrics, context, table }`.
  * `kind` is the title kind (see `KINDS`), `parts` the sentences (a run of moves of one kind per sentence),
- * `marks` and `signs` the frames of the NET change of the step, `metrics` counters over the moves up to the
+ * `marks` and `signs` the frames of the NET change of the step (and, on a score jump with exactly one culprit
+ * clue or sign, its `cause` / `causeRestore` frame), `metrics` counters over the moves up to the
  * step, and `table` the model of the score table (`state`: 'start', 'zero', 'scored', 'final' or 'status').
  *
  * `createPreparation(options)` (pure, no DOM): the controller that decides when the analysis is asked for.
@@ -40,7 +41,10 @@
   const KINDS = Object.freeze(['solution', 'cages', 'signs', 'clues', 'random', 'dig', 'guided', 'search',
     'signDig', 'reveal', 'mixed', 'restart', 'final']);
 
-  const MARK_CLASSES = Object.freeze({ dug: 'cell--dug', kept: 'cell--kept', revealed: 'cell--revealed' });
+  const MARK_CLASSES = Object.freeze({
+    dug: 'cell--dug', kept: 'cell--kept', revealed: 'cell--revealed', cause: 'cell--cause',
+    causeRestore: 'cell--cause'
+  });
 
   const VIEW_NAMES = Object.freeze(['compact', 'details']);
 
@@ -353,20 +357,26 @@
     }
     const shown = new Set(revealed);
     const kept = ascending(asked).filter(function (c) { return values[c] !== 0 && !shown.has(c); });
-    return { dug: dug, kept: kept, revealed: revealed };
+    return { dug: dug, kept: kept, revealed: revealed, cause: [], causeRestore: [] };
+  }
+
+  function noMarks() {
+    return { dug: [], kept: [], revealed: [], cause: [], causeRestore: [] };
   }
 
   /** The sign marks of a step by index into the sign list of the analysis (null: no signs). */
   function signMarks(vs, ctx) {
     if (ctx.signs === null) return null;
     const moves = ctx.moves;
-    if (vs.role === 'solution' || vs.role === 'structure') return { hidden: [], removed: [], kept: [] };
+    if (vs.role === 'solution' || vs.role === 'structure') {
+      return { hidden: [], removed: [], kept: [], cause: [] };
+    }
     const aliveEnd = moves[vs.last].alive || [];
     const endSet = new Set(aliveEnd);
     if (vs.role === 'final') {
       const hiddenAtEnd = [];
       ctx.signs.forEach(function (pair, i) { if (!endSet.has(i)) hiddenAtEnd.push(i); });
-      return { hidden: hiddenAtEnd, removed: [], kept: [] };
+      return { hidden: hiddenAtEnd, removed: [], kept: [], cause: [] };
     }
     const aliveStart = moves[vs.first - 1].alive || [];
     const startSet = new Set(aliveStart);
@@ -380,7 +390,8 @@
     return {
       hidden: hidden,
       removed: removed.slice().sort(function (a, b) { return a - b; }),
-      kept: ascending(asked).filter(function (s) { return endSet.has(s); })
+      kept: ascending(asked).filter(function (s) { return endSet.has(s); }),
+      cause: []
     };
   }
 
@@ -419,6 +430,26 @@
       change: null, transition: null, proof: null, position: null };
   }
 
+  /**
+   * The frame of the culprit of a jump (Q10 b): only when exactly one clue or sign causes it. A removed cell
+   * leaves `dug` and a restored one leaves `revealed`; a sign stays in `removed` (it is still a removed
+   * constraint) and gets a separate frame.
+   */
+  function addCauseFrame(step, transition) {
+    if (step.role !== 'moves' || transition === null || transition.tier !== 'jump') return;
+    const frame = transition.cause ? transition.cause.frame : null;
+    if (!frame) return;
+    if (frame.kind === 'cell' && frame.action === 'remove') {
+      step.marks.cause = [frame.cell];
+      step.marks.dug = step.marks.dug.filter(function (c) { return c !== frame.cell; });
+    } else if (frame.kind === 'cell' && frame.action === 'restore') {
+      step.marks.causeRestore = [frame.cell];
+      step.marks.revealed = step.marks.revealed.filter(function (c) { return c !== frame.cell; });
+    } else if (frame.kind === 'sign' && step.signs !== null) {
+      step.signs.cause = [frame.sign];
+    }
+  }
+
   function buildStep(ctx, viewName, vs, k) {
     const analysis = ctx.analysis;
     const role = vs.role;
@@ -429,7 +460,7 @@
     const moving = role === 'moves';
     const metrics = metricsOf(vs, ctx);
     if (metrics !== null) metrics.clues = countClues(values);
-    return {
+    const step = {
       index: k + 1,
       view: viewName,
       role: role,
@@ -445,12 +476,14 @@
       meta: text.meta,
       values: values,
       structure: role !== 'solution' && analysis.structure !== null,
-      marks: moving ? cellMarks(vs, ctx, values) : { dug: [], kept: [], revealed: [] },
+      marks: moving ? cellMarks(vs, ctx, values) : noMarks(),
       signs: signMarks(vs, ctx),
       metrics: metrics,
       context: ctx.context,
       table: tableOf(vs, viewName, transition, ctx)
     };
+    addCauseFrame(step, transition);
+    return step;
   }
 
   /**
@@ -487,7 +520,7 @@
     const step = p === 0 ? null : built.steps[p - 1];
     if (step === null) {
       return { position: 0, step: null, values: new Int32Array(built.cellCount), final: false,
-        structure: false, marks: { dug: [], kept: [], revealed: [] }, signs: null };
+        structure: false, marks: noMarks(), signs: null };
     }
     return { position: p, step: step, values: step.values, final: step.kind === 'final',
       structure: step.structure, marks: step.marks, signs: step.signs };
@@ -649,7 +682,8 @@
       callBoard('setGivens', view.final ? result.givens : null);
       callBoard('clearHighlights');
       Object.keys(MARK_CLASSES).forEach(function (name) {
-        if (view.marks[name].length > 0) callBoard('highlight', view.marks[name], MARK_CLASSES[name]);
+        const cells = view.marks[name] || [];
+        if (cells.length > 0) callBoard('highlight', cells, MARK_CLASSES[name]);
       });
       if (typeof board.setLayerVisible === 'function') {
         LAYER_NAMES.forEach(function (name) {
@@ -1202,6 +1236,11 @@
       'replay.position': 'Step {step} of {total}',
       'replay.position.start': 'Start',
       'replay.start': 'The empty grid. Press Next step to see how the puzzle was made.',
+      'replay.start.noScore': 'No score yet: this is not a puzzle yet.',
+      'replay.legend.cause.cell': 'Removing this clue causes the score jump',
+      'replay.legend.cause.sign': 'Removing this sign causes the score jump',
+      'replay.legend.cause.restore': 'Restoring this clue causes the score jump',
+      'replay.sign': 'the sign between {a} and {b}',
       'replay.unit.sign_one': '{count} sign',
       'replay.unit.sign_other': '{count} signs',
       'replay.unit.removal_one': '{count} possible removal',
@@ -1295,6 +1334,11 @@
       'replay.position': 'Bước {step}/{total}',
       'replay.position.start': 'Bắt đầu',
       'replay.start': 'Lưới trống. Bấm Bước tiếp theo để xem đề được tạo ra như thế nào.',
+      'replay.start.noScore': 'Chưa có điểm: chưa có đề để chấm.',
+      'replay.legend.cause.cell': 'Bỏ số cho sẵn này làm điểm tăng vọt',
+      'replay.legend.cause.sign': 'Bỏ dấu này làm điểm tăng vọt',
+      'replay.legend.cause.restore': 'Khôi phục số cho sẵn này làm điểm tăng vọt',
+      'replay.sign': 'dấu giữa {a} và {b}',
       'replay.unit.sign_one': '{count} dấu',
       'replay.unit.sign_other': '{count} dấu',
       'replay.unit.removal_one': '{count} cách bỏ số',

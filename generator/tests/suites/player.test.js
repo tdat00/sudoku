@@ -258,14 +258,16 @@
         expect(dig.length).toBeGreaterThan(3);
         dig.forEach(function (s) {
           var before = steps[s.index - 2];
-          expect(s.marks.dug.length).toBeGreaterThan(0);
-          s.marks.dug.forEach(function (cell) {
+          // The one clue that causes a score jump is framed as the cause, not as a plain removal.
+          var cleared = s.marks.dug.concat(s.marks.cause);
+          expect(cleared.length).toBeGreaterThan(0);
+          cleared.forEach(function (cell) {
             expect(s.values[cell]).toBe(0);
             expect(before.values[cell]).toBe(result.solution[cell]);
           });
           s.marks.kept.forEach(function (cell) { expect(s.values[cell]).toBe(result.solution[cell]); });
-          expect(clues(before.values) - clues(s.values)).toBe(s.marks.dug.length);
-          if (s.kind === 'random') expect(s.args.removed).toBe(s.marks.dug.length);
+          expect(clues(before.values) - clues(s.values)).toBe(cleared.length);
+          if (s.kind === 'random') expect(s.args.removed).toBe(cleared.length);
           expect(s.metrics.clues).toBe(clues(s.values));
         });
       });
@@ -873,6 +875,144 @@
         s.parts.forEach(function (p) { expect(p.key).not.toBe('replay.folded.unscored'); });
       });
     }, 60000);
+  });
+
+  describe('player: the frame of the one clue or sign that causes a score jump', function () {
+    function cellNamed(result, name) {
+      for (var c = 0; c < result.model.cellCount; c++) if (SG.model.cellLabel(result.model, c) === name) return c;
+      return -1;
+    }
+
+    /** The analysis of `result` with the cause of the transition `table.transition` replaced. */
+    function withCause(result, transition, cause) {
+      var analysis = analysisOf(result);
+      return Object.assign({}, analysis, { transitions: analysis.transitions.map(function (t) {
+        return t === transition ? Object.assign({}, t, { cause: cause }) : t;
+      }) });
+    }
+
+    it('example: compact step 4 frames R1C2 as the cause, keeps R9C8 as removed, and the board gets the frame',
+      function () {
+        var result = goldenResult('G01');
+        var r = loadedRig(result);
+        var steps = r.player.getSteps();
+        var r1c2 = cellNamed(result, 'R1C2');
+        var r9c8 = cellNamed(result, 'R9C8');
+        expect([steps[3].marks.cause, steps[3].marks.dug, steps[3].marks.causeRestore]).toEqual(
+          [[r1c2], [r9c8], []]);
+        steps.forEach(function (s, i) {
+          if (i === 3) return;
+          expect(s.marks.cause).toEqual([]);
+          expect(s.marks.causeRestore).toEqual([]);
+        });
+        r.player.seek(4);
+        expect(r.board.frames['cell--cause']).toEqual([r1c2]);
+        expect(r.board.frames['cell--dug']).toEqual([r9c8]);
+        r.player.seek(3);
+        expect(r.board.frames['cell--cause']).toBeUndefined();
+        r.player.seek(0);
+        expect(r.board.frames).toEqual({});
+        var start = P.viewAt(viewsOf(result).compact, 0);
+        expect([start.marks.cause, start.marks.causeRestore]).toEqual([[], []]);
+        expect(P.viewAt(viewsOf(result).compact, 4).marks.cause).toEqual([r1c2]);
+      }, 60000);
+
+    it('Greater-Than: the sign that causes the jump keeps its removed mark and also gets the frame', function () {
+      var result = goldenResult('G11');
+      var r = loadedRig(result);
+      var steps = r.player.getSteps();
+      var step = steps[6];
+      expect(step.table.transition.cause.class).toBe('single-sign');
+      expect(step.signs.cause).toEqual([6]);
+      expect(step.signs.removed).toContain(6);
+      expect(step.marks.cause).toEqual([]);
+      expect(step.marks.causeRestore).toEqual([]);
+      steps.forEach(function (s, i) {
+        if (i !== 6) expect(s.signs.cause).toEqual([]);
+      });
+      r.player.seek(7);
+      expect(r.board.signMarks.cause).toEqual([6]);
+      expect(r.board.signMarks.removed).toContain(6);
+      expect(r.board.signMarks.removed).toEqual(step.signs.removed);
+      expect(r.board.frames['cell--cause']).toBeUndefined();
+      r.player.seek(6);
+      expect(r.board.signMarks.cause).toEqual([]);
+      r.player.last();
+      expect(r.board.signMarks).toBeNull();
+    }, 60000);
+
+    it('frames exactly the jumps that one clue or one sign causes (the 14 goldens, both views)', function () {
+      var jumps = 0;
+      var framed = 0;
+      GOLDENS.forEach(function (g) {
+        var views = viewsOf(goldenResult(g.id));
+        ['compact', 'details'].forEach(function (name) {
+          views[name].steps.forEach(function (s) {
+            var t = s.table.transition;
+            expect(Array.isArray(s.marks.cause) && Array.isArray(s.marks.causeRestore)).toBe(true);
+            if (s.signs !== null) expect(Array.isArray(s.signs.cause)).toBe(true);
+            var count = s.marks.cause.length + s.marks.causeRestore.length + (s.signs !== null ? s.signs.cause.length : 0);
+            var frame = t !== null && t.tier === 'jump' && t.cause ? t.cause.frame : null;
+            expect(count).toBe(frame ? 1 : 0);
+            if (t === null || t.tier !== 'jump') return;
+            jumps++;
+            if (['together', 'mixed', 'multi-move', 'unavailable'].indexOf(t.cause.class) !== -1) {
+              expect(frame).toBeNull();
+            }
+            if (frame === null) return;
+            framed++;
+            if (frame.kind === 'cell' && frame.action === 'remove') {
+              expect(s.marks.cause).toEqual([frame.cell]);
+              expect(s.marks.dug).not.toContain(frame.cell);
+              expect(s.values[frame.cell]).toBe(0);
+            } else if (frame.kind === 'cell') {
+              expect(s.marks.causeRestore).toEqual([frame.cell]);
+              expect(s.marks.revealed).not.toContain(frame.cell);
+              expect(s.values[frame.cell]).not.toBe(0);
+            } else {
+              expect(s.signs.cause).toEqual([frame.sign]);
+              expect(s.signs.removed).toContain(frame.sign);
+            }
+          });
+        });
+      });
+      expect(jumps).toBe(29);
+      expect(framed).toBeGreaterThan(8);
+      expect(framed).toBeLessThan(jumps);
+    }, 120000);
+
+    it('a restored culprit is framed as causeRestore and leaves the revealed clues; an unavailable cause has no ' +
+      'frame, and the removed cells stay as they were',
+      function () {
+        var result = goldenResult('G05');
+        var base = viewsOf(result).compact.steps[4];
+        var transition = base.table.transition;
+        expect(transition.tier).toBe('jump');
+        var cell = base.marks.revealed[0];
+        var frame = { kind: 'cell', cell: cell, action: 'restore' };
+        var cause = Object.assign({}, transition.cause, { class: 'single-culprit', frame: frame,
+          culprit: { cell: cell, action: 'restore', score: 49, otherScore: 50 } });
+        var r = rig(81);
+        r.player.load(result);
+        r.player.setAnalysis(withCause(result, transition, cause));
+        var step = r.player.getSteps()[4];
+        expect([step.marks.causeRestore, step.marks.cause]).toEqual([[cell], []]);
+        expect(step.marks.revealed).toEqual(base.marks.revealed.filter(function (c) { return c !== cell; }));
+        expect(step.marks.dug).toEqual(base.marks.dug);
+        r.player.seek(5);
+        expect(r.board.frames['cell--cause']).toEqual([cell]);
+        expect(r.board.frames['cell--revealed'] || []).not.toContain(cell);
+
+        var one = goldenResult('G01');
+        var jump = viewsOf(one).compact.steps[3].table.transition;
+        var none = rig(81);
+        none.player.load(one);
+        none.player.setAnalysis(withCause(one, jump, Object.assign({}, jump.cause, { class: 'unavailable',
+          frame: null })));
+        var plain = none.player.getSteps()[3];
+        expect([plain.marks.cause, plain.marks.causeRestore]).toEqual([[], []]);
+        expect(plain.marks.dug.length).toBe(2);
+      }, 60000);
   });
 
   describe('player: manual navigation', function () {

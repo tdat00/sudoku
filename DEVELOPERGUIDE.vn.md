@@ -232,7 +232,7 @@ hoàn chỉnh. Chế độ xem **gọn** là các bước được chọn theo �
 giai đoạn), chế độ xem **chi tiết** mỗi nước đi một bước. Một bước là dữ liệu thuần (`role`, các nước đi nó gộp,
 bàn cờ nó hiện, tiêu đề và câu mô tả cho mỗi đoạn nước đi dưới dạng khóa `SG.i18n.t()`, các khung của thay đổi
 **ròng** — ô bị bỏ số, ô được trả lại, số cho sẵn được hiện lại —, các dấu, các số đo cộng dồn và một mô hình
-`table` của bảng điểm); phương thức `tableAt(position)` của bộ phát lại đưa bảng của bước đang xem cho phần mô tả bước. Phần việc
+`table` của bảng điểm); phương thức `tableAt(position)` của bộ phát lại đưa bảng của bước đang xem cho phần mô tả bước. `SG.stepView.create(rootEl, { table })` vẽ bảng đó theo trạng thái (`start`, `zero`, `scored`, `final`, và `status` cho một bàn cờ không chấm được điểm, không có dòng Tổng và không có nút thử lại) kèm mức thay đổi của dòng Tổng, và hạng của bước: đề đầu tiên được chấm điểm, bước tăng vọt điểm (nhãn ở tiêu đề, một khung giải thích với mục "Vì sao?" đóng sẵn; tăng ít nhất gấp 3 lần và ít nhất 100 điểm từ một điểm dương) hoặc kỹ thuật khó nhất mới; `SG.stepView.explain(table, step)` là mô hình văn bản thuần mà các bài kiểm thử đọc. Một bước nhảy mà đúng một số cho sẵn hoặc một dấu gây ra sẽ được đánh khung trên bàn cờ (`marks.cause`, `marks.causeRestore`, `signs.cause`; `board.setSignMarks` nhận thêm danh sách `cause`). Phần việc
 kỹ thuật (cấu hình, mô hình bàn cờ, chấm điểm, hiệu chỉnh, các lần đào trượt mức) không được hiện. Ví dụ, một đề
 Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ,
 bốn bước xóa ngẫu nhiên (điểm 14, 24, 34 và 44), một bước đào có định hướng (46) và đề hoàn chỉnh với 34 số cho

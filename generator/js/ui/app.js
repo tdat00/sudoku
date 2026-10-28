@@ -1204,12 +1204,7 @@
     renderLegend();
 
     stepView = SG.stepView.create(els.stepsRoot, {
-      // The tables of the steps panel come from the model of the player; a status table has none yet.
-      stats: function (position) {
-        const m = player !== null ? player.tableAt(position) : null;
-        return m && (m.state === 'scored' || m.state === 'final' || m.state === 'zero')
-          ? { counts: m.counts, before: m.before || {}, empties: m.empties, score: m.score } : null;
-      }
+      table: function (position) { return player !== null ? player.tableAt(position) : null; }
     });
     resultView = SG.resultView.create(els.resultRoot, {
       onRetry: function () { regenerate(); },

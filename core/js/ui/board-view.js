@@ -39,6 +39,8 @@
   const SIGN_HALF = 7.5;
   // Half-length of the window cut into a thin grid line behind a sign.
   const SIGN_GAP = SIGN_HALF + 2;
+  // Padding of the frame that marks the sign that causes a score jump (replay).
+  const CAUSE_PAD = 4;
 
   const NONE = 0;
   const THIN = 1;
@@ -980,15 +982,44 @@
       trans.fill(0);
     }
 
+    // A frame around the gap of a sign: a separate rect in the sign layer, never a change of the sign itself.
+    function addCauseFrame(path, index) {
+      const parent = path.parentNode;
+      if (!parent || typeof path.getBBox !== 'function') return;
+      let box = null;
+      try {
+        box = path.getBBox();
+      } catch (err) {
+        box = null;
+      }
+      if (!box || !(box.width > 0 || box.height > 0)) return;
+      const frame = doc.createElementNS(SVG_NS, 'rect');
+      frame.setAttribute('class', 'sign--cause');
+      frame.setAttribute('data-cause-sign', String(index));
+      frame.setAttribute('aria-hidden', 'true');
+      frame.setAttribute('pointer-events', 'none');
+      frame.setAttribute('x', num(box.x - CAUSE_PAD));
+      frame.setAttribute('y', num(box.y - CAUSE_PAD));
+      frame.setAttribute('width', num(box.width + 2 * CAUSE_PAD));
+      frame.setAttribute('height', num(box.height + 2 * CAUSE_PAD));
+      parent.appendChild(frame);
+    }
+
     function applySignMarks() {
+      const old = svgEl.querySelectorAll('[data-cause-sign]');
+      for (let k = 0; k < old.length; k++) {
+        if (old[k].parentNode) old[k].parentNode.removeChild(old[k]);
+      }
       const list = svgEl.querySelectorAll('[data-sign]');
       for (let k = 0; k < list.length; k++) {
         const el = list[k];
         const i = Number(el.getAttribute('data-sign'));
         const m = signMarks;
-        el.classList.toggle('sign--hidden', m !== null && m.hidden.has(i));
+        const hiddenSign = m !== null && m.hidden.has(i);
+        el.classList.toggle('sign--hidden', hiddenSign);
         el.classList.toggle('sign--removed', m !== null && m.removed.has(i));
         el.classList.toggle('sign--kept', m !== null && m.kept.has(i));
+        if (m !== null && !hiddenSign && m.cause.has(i)) addCauseFrame(el, i);
       }
     }
 
@@ -1171,14 +1202,16 @@
       /**
        * Marks Greater-Than signs by their index in `model.inequalities` (the `data-sign` attribute): `hidden`
        * are not drawn, `removed` are drawn faded (signs the step on show takes away), `kept` in the colour of
-       * a restored cell (signs that had to stay). The marks survive a rebuild of the tree; `null` clears
-       * them.
+       * a restored cell (signs that had to stay), `cause` get a separate frame around them (a `rect` of the
+       * sign layer with the class `sign--cause`; the sign itself keeps its other marks). The marks survive a
+       * rebuild of the tree; `null` clears them.
        */
       setSignMarks: function setSignMarks(marks) {
         signMarks = marks ? {
           hidden: new Set(marks.hidden || []),
           removed: new Set(marks.removed || []),
-          kept: new Set(marks.kept || [])
+          kept: new Set(marks.kept || []),
+          cause: new Set(marks.cause || [])
         } : null;
         applySignMarks();
       },

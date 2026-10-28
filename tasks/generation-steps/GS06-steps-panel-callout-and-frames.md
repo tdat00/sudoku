@@ -513,14 +513,14 @@ has one separate frame and that the original sign remains removed. Synthetic cal
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Done (real-browser look of the frames and callout left to GS08) |
+| Start | 2026-10-29 00:45:39 (+07:00) |
+| End | 2026-10-29 01:10:57 (+07:00) |
+| Duration | 25 min 18 s |
+| Model | claude-sonnet-5.5 (sub-agent `GS06-steps-panel`, general-purpose); wave 6, alone |
+| Token usage | 151 model calls; 38,257,201 input (37,835,528 cache read), 181,884 output |
+| AI credits | 665.64 AIU (local usage store, keyed by sub-agent id) |
+| Verification | Developer: generator quick set 43 suites 2,818/2,818 (89.8 s); player quick set 29 suites 1,609/1,609 (23.8 s); `--suite=steps,player` 124; `--suite=i18n,ui-contract,theme,help` in both apps 235; a sweep of the 14 goldens × 2 views × EN/VI (wording, placeholders; 29 jumps framed exactly when `cause.frame` is set, never for together, mixed, multi-move or unavailable causes); spies confirm the zero and status tables call no `scoreTable` and no solve; the badge rounds down (×3.0 / ×3,0, ×3.3, ×12.5); a throw-away fake-DOM check of the SVG sign frame, deleted. Orchestrator re-run: generator quick set 43 suites, 2,818 passed / 0 failed (89.9 s); player quick set 29 suites, 1,609 passed / 0 failed (23.6 s); the 14 edited files CRLF, no BOM; nothing outside the GS06 list changed; `core/css/board.css` uses only existing tokens (`--sg-color-accent`, `--sg-color-accent-soft`). |
+| Acceptance | GS06-B01–B07 and GS06-T01–T11 met; G01 step 4 matches the task's English and Vietnamese text. B02 and B05 (board frames, callout look) rest on fake-DOM tests and a CSS review: GS08 confirms them on a real page. |
+| Issues & resolutions | (1) Intended contract-test changes: `steps.test.js` reads tables through the `table` option (`tableOf` instead of `statsOf`) and its legend test also expects `cause`, `causeRestore` and `signCause`; `player.test.js` "frames what each dig step did" counts `dug + cause` as cleared cells, because the culprit cell leaves `marks.dug`. No golden, fixture or hash touched; nothing weakened or skipped. (2) The developer's own bug (reading the proof from the transition instead of `table.proof`) was found and fixed before hand-off. (3) Readings accepted: the status block omits the "Techniques needed" heading (misleading there) and shows no attempted rows for `capped`; Vietnamese never uses `_one`; `signed()` never prints "−0"; the badge falls back to `SG.replay.badgeRatio` only when `transition.ratio` is missing; the jump sentence is appended to `help.generation.replay`. (4) The stale comments of `step-view.js` (old lines 4 and 276) fixed. (5) The guides' quick-set counts left to GS07. |
+| Handoff | `SG.stepView.create(rootEl, { table })` (replaces the `stats` adapter; `table(position)` is `player.tableAt`, wired in `app.js`); `SG.stepView.explain(table, step)` pure → `{ total, badge, line, rowLabel, totalHighlight, callout, status }`; a view carries `marks.cause`, `marks.causeRestore` (cell arrays) and `signs.cause`; `board-view.setSignMarks({ hidden, removed, kept, cause })` (a cause sign is a separate `rect.sign--cause`, `aria-hidden`, no `data-sign`, no pointer events; a cause cell gets `.hl.cell--cause`). Selectors for GS08: `.step-badge--jump`, `.step-badge--first`, `.step-callout[data-role=jump]`, `details.step-why`, `.step-tier`, `.step-status`, `.step-status__attempted`, `.step-table__label[data-role=new-hardest]`, `.step-table__total--jump`. Risks for GS08: the SVG sign frame, the callout / badge / legend look (also in forced-colors mode) were never seen in a real browser; `#step-detail` is `aria-live="polite"`, so a re-rendered callout is announced; the "Why?" disclosure closes again on re-render or a language change. |

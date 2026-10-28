@@ -1188,10 +1188,13 @@
         'and Greater-Than only), the removals chosen at random, the removals the generator chose with ' +
         'its own check, any adjustments, and the finished puzzle. The steps are chosen so that the score ' +
         'rises steadily and never goes down; tick Show every move to see each recorded change on its own, ' +
-        'including changes that lowered the score. Rated construction steps show the techniques used and ' +
-        'the empty cells. The Explain button opens this page at the step on show. On the board, an amber ' +
-        'frame marks the cells whose clues were cleared in the step, a dashed red frame the cells put ' +
-        'back, and a dotted frame the clues shown again.',
+        'including changes that lowered the score. Every step has a score table; a position that cannot be ' +
+        'rated shows its status and attempted techniques instead of a total. The Explain button opens this ' +
+        'page at the step on show. On the board, an amber frame marks the cells whose clues were cleared in ' +
+        'the step, a dashed red frame the cells put back, and a dotted frame the clues shown again. When the ' +
+        'score jumps (at least three times as high and at least 100 points more), the step shows a ' +
+        '\u201cScore jump\u201d badge and explains why; Why? opens the numbers behind it, and a frame marks ' +
+        'the clue or sign that causes the jump when there is exactly one.',
       'help.generation.seed': 'The seed is the number that starts every random choice. With the same ' +
         'version of the generator, the same seed with the same options always gives the same puzzle, so ' +
         'any puzzle can be shared and reproduced; a link or a history entry made by an older version may ' +
@@ -1454,10 +1457,13 @@
         'và Sudoku So sánh), các lần bỏ số được chọn ngẫu nhiên, các lần bỏ số do trình sinh đề chọn theo ' +
         'phép kiểm tra của nó, các lần điều chỉnh nếu có, và đề hoàn chỉnh. Các bước được chọn để điểm ' +
         'tăng đều và không bao giờ giảm; đánh dấu Hiện từng thay đổi để xem riêng từng thay đổi đã ghi ' +
-        'lại, kể cả những thay đổi làm điểm giảm. Các bước tạo đề đã được chấm điểm có bảng ghi kỹ thuật ' +
-        'đã dùng và số ô trống. Nút Giải thích mở trang này ở đúng bước đang xem. Trên bàn cờ, khung màu ' +
-        'hổ phách đánh dấu các ô bị bỏ số ở bước này, khung đỏ nét đứt đánh dấu các ô được trả lại, và ' +
-        'khung chấm đánh dấu các số cho sẵn được hiện lại.',
+        'lại, kể cả những thay đổi làm điểm giảm. Bước nào cũng có bảng điểm; trạng thái chưa chấm được ' +
+        'điểm sẽ hiện lý do và các kỹ thuật đã thử thay cho dòng Tổng. Nút Giải thích mở trang này ở đúng ' +
+        'bước đang xem. Trên bàn cờ, khung màu hổ phách đánh dấu các ô bị bỏ số ở bước này, khung đỏ nét ' +
+        'đứt đánh dấu các ô được trả lại, và khung chấm đánh dấu các số cho sẵn được hiện lại. Khi điểm ' +
+        'tăng vọt (gấp ba lần trở lên và tăng ít nhất 100 điểm), bước đó có nhãn \u201cĐiểm tăng vọt\u201d ' +
+        'kèm lời giải thích; mục Vì sao? mở các con số phía sau, và một khung đánh dấu số cho sẵn hoặc dấu ' +
+        'gây ra bước nhảy khi chỉ có đúng một.',
       'help.generation.seed': 'Seed là con số khởi động mọi lựa chọn ngẫu nhiên. Với cùng một phiên bản ' +
         'trình sinh đề, cùng seed và cùng tùy chọn sẽ luôn cho ra cùng một đề, nên đề nào cũng có thể chia ' +
         'sẻ và tạo lại; một liên kết hay một mục lịch sử do phiên bản cũ tạo ra có thể cho ra một đề khác. ' +

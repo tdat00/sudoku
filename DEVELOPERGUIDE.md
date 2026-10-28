@@ -246,7 +246,7 @@ by score (never decreasing, a step at the end of every phase), the **details** v
 A step is plain data (`role`, the moves it covers, the board it shows, a title and a sentence per run of moves as
 `SG.i18n.t()` keys, the frames of the **net** change — cells cleared, cells put back, clues shown again — the
 signs, the cumulative metrics and a `table` model of its score table); the `tableAt(position)` method of the player
-instance hands the table of the step on show to the step description. The technical work (settings, board model,
+instance hands the table of the step on show to the step description. `SG.stepView.create(rootEl, { table })` draws it by state (`start`, `zero`, `scored`, `final`, and `status` for a board that cannot be rated, with no total and no retry) with the change of the Total, and the tier of the step: the first rated puzzle, a score jump (a badge in the heading, a callout with a closed "Why?"; at least ×3 and at least +100 from a positive score) or a new hardest technique; `SG.stepView.explain(table, step)` is the pure text model that the tests read. A jump that exactly one clue or sign causes gets a frame on the board (`marks.cause`, `marks.causeRestore`, `signs.cause`; `board.setSignMarks` takes a `cause` list). The technical work (settings, board model,
 samples that missed the level) is not shown. A Classic 9×9 *easy* puzzle with seed 3, for example, replays in 7
 steps (26 with every move shown): the full solution, four steps of random removals (scores 14, 24, 34 and 44), one
 step of the guided dig (46) and the finished puzzle with 34 clues. `SG.player.create()` is the manual player

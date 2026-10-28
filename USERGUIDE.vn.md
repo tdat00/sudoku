@@ -113,9 +113,16 @@ thay đổi trong dữ liệu đã lưu nằm trong [hướng dẫn cho lập tr
   bước cuối cùng, hoặc thanh trượt có một vạch cho mỗi bước): một số bước được chọn để điểm tăng đều và không
   bao giờ giảm, hoặc, với **Hiện từng thay đổi**, mọi thay đổi đã ghi lại; các bảng điểm được chuẩn bị sau khi đề
   hiện ra, và phần Trợ giúp ("Cách hoạt động") giải thích bước đó kèm mã giả.
+- **Giải thích các bước tăng vọt điểm** — khi điểm của một bước tăng ít nhất gấp ba và thêm ít nhất 100 điểm,
+  bước đó hiện nhãn "Điểm tăng vọt" và giải thích vì sao: lời giải mà trình sinh đề tìm được giờ dùng kỹ thuật
+  nào, trọng số của nó, và số cho sẵn (hoặc dấu) gây ra bước nhảy, được đánh khung trên bàn cờ khi chỉ có đúng
+  một. Mục **Vì sao?** mở các con số phía sau điểm (P, W, E, V, R, mức độ, lựa chọn mà trình sinh đề đã ghi lại
+  và bước suy luận đầu tiên dùng kỹ thuật đó). Một kỹ thuật khó nhất mới mà không có bước nhảy thì được một dòng
+  riêng, bước đầu tiên có điểm được đánh dấu "Đề đầu tiên được chấm điểm", và với **Hiện từng thay đổi**, một bàn
+  cờ không chấm được điểm sẽ cho biết lý do thay vì hiện điểm.
 - **Điểm độ khó đọc được** — thẻ Tóm tắt liệt kê từng kỹ thuật mà đề cần cùng số lần dùng, điểm và phần điểm
   được phân bổ cho nó, rồi các ô trống, và dòng Tổng bằng đúng điểm của đề; thẻ Các bước tạo đề cho bảng tương tự
-  ở các bước tạo đề đã được chấm điểm.
+  ở mọi bước, kèm mức thay đổi của dòng Tổng so với bước trước ("551 (+507)").
 - **Danh sách các đề đã tạo** — mỗi đề bạn tạo được lưu trong trình duyệt (tối đa 100, mới nhất ở trên) và hiện
   ở bên trái dưới dạng "biến thể" và "mức: điểm, seed"; bấm vào một đề để mở lại (cùng seed cho cùng đề trong
   cùng một phiên bản trình sinh đề), xóa từng đề, hoặc xóa cả danh sách.
