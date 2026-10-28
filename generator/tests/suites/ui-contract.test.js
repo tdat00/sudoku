@@ -71,7 +71,7 @@
   var PLAYER_INSTANCE = ['load', 'reset', 'next', 'prev', 'first', 'last', 'seek', 'state', 'describe',
     'getSteps', 'getStep', 'bindControls', 'destroy'];
 
-  var CLIENT_SURFACE = ['generate', 'cancel'];
+  var CLIENT_SURFACE = ['generate', 'cancel', 'replay', 'cancelReplay'];
 
   describe('ui contract: function surface', function () {
     Object.keys(SURFACE).forEach(function (name) {

@@ -6,16 +6,29 @@
  *   generate(config, onEvent) -> Promise<PuzzleResult>: events arrive in order, in batches. A cancelled or
  *       replaced run rejects with 'budget.cancelled' and delivers no further events.
  *   cancel() -> boolean: rejects at once; the work stops at the next slice boundary.
+ *   replay(result, { onProgress({ done, total }), allowMain: false }) -> Promise<Analysis>: the replay
+ *       analysis of a finished puzzle (`SG.replay.prepare`), run in the worker in slices, or, in main mode,
+ *       on the page in slices and ONLY inside this call (nothing ever starts by itself). Main-thread work
+ *       needs `allowMain: true` (the user's explicit consent): without it, and whenever the worker cannot run
+ *       the job, it rejects with 'budget.cancelled' and `i18nArgs.reason === 'replayConsentRequired'`. Also
+ *       rejects with 'budget.cancelled' when cancelled or replaced, with 'unexpected' (`message: 'busy'`)
+ *       while a generation of this client runs, and with the error of the analysis otherwise. The progress
+ *       counts positions.
+ *   cancelReplay() -> boolean: true when a replay was running; rejects it at once, the work stops at the next
+ *       slice boundary. A new `generate` cancels a running replay.
  *   mode: 'worker' | 'main', final once `ready()` has settled (the first access starts the detection).
  *   ready(): a ping/pong handshake with a timeout, so a worker that never starts cannot hang the page.
  *   create(options): an independent client with `dispose()` (the cache's background client). Options:
- *       forceMode ('auto' | 'worker' | 'main'; 'worker' does not fall back), workerUrl, workerFactory(url),
+ *       forceMode ('auto' | 'worker' | 'main'; 'worker' does not fall back, not even when a worker that was
+ *       running cannot be replaced), workerUrl, workerFactory(url),
  *       chunkMs (12; 0 = one step per slice), batchMs (30), maxBatch (400), now, budgetMs (120000, ACTIVE
  *       ms), readyTimeoutMs (5000), killAfterMs (150), yieldFn() and paintFn() (main mode).
  *
- * Every worker message after the handshake carries the `session` of its run; messages of another run are
- * ignored. A cancel is a 'cancel' message first; a worker that has not answered after `killAfterMs` is
- * terminated. Time a slice gives away is not charged to the run (active clock, both modes).
+ * Every worker message after the handshake carries the `session` of its run (generation or replay: one
+ * counter); messages of another run are ignored. A cancel is a 'cancel' message first; a worker that has not
+ * answered after `killAfterMs` is terminated. Time a slice gives away is not charged to the run (active
+ * clock, both modes). The worker has one job at a time: a generation or a replay waits for the answer to a
+ * cancel.
  * Loads in Node without a DOM; the DOM and `Worker` are touched only inside functions.
  */
 (function (root) {
@@ -52,6 +65,22 @@
       return unexpectedError(data);
     }
     return new SG.errors.GenerationError(data.code, data.i18nArgs || {});
+  }
+
+  // A replay that would have to run on the page, which only an explicit consent of the user allows.
+  function consentRequiredError() {
+    return new SG.errors.GenerationError('budget.cancelled', { reason: 'replayConsentRequired' });
+  }
+
+  function busyError() {
+    return new SG.errors.GenerationError('unexpected', { message: 'busy' });
+  }
+
+  // The count of positions of an analysis (its last progress), null when it has none.
+  function positionsOf(analysis) {
+    const stats = analysis !== null && typeof analysis === 'object' ? analysis.stats : null;
+    return stats !== null && typeof stats === 'object' && typeof stats.positions === 'number'
+      ? stats.positions : null;
   }
 
   function reportError(err) {
@@ -183,6 +212,7 @@
     let workerBusy = 0;
     let killTimer = null;
     let current = null;
+    let currentReplay = null;
     let lifecycle = 0;
     let lastSession = 0;
     let lastPing = 0;
@@ -196,6 +226,29 @@
       if (ok) s.resolve(value);
       else s.reject(value);
       return true;
+    }
+
+    /** Like `settle`, for the replay of this client. */
+    function settleReplay(r, ok, value) {
+      if (r.state !== 'running') return false;
+      r.state = ok ? 'done' : 'failed';
+      if (currentReplay === r) currentReplay = null;
+      if (!ok && r.abort !== null) r.abort();
+      if (ok) r.resolve(value);
+      else r.reject(value);
+      return true;
+    }
+
+    /** Hands the progress of a replay to its consumer, once per count of positions. */
+    function progress(r, done, total) {
+      if (r.state !== 'running' || typeof done !== 'number' || done === r.lastDone) return;
+      r.lastDone = done;
+      if (typeof r.onProgress !== 'function') return;
+      try {
+        r.onProgress({ done: done, total: total });
+      } catch (err) {
+        reportError(err);
+      }
     }
 
     /** Hands events to the consumer; a consumer that cancels (or replaces) the run ends the batch. */
@@ -233,7 +286,14 @@
     function workerFree() {
       workerBusy = 0;
       clearKill();
-      if (current !== null && !current.sent && decided === 'worker') runInWorker(current);
+      startWaiting();
+    }
+
+    /** Sends the generation or the replay that waits for the worker (a generation first), if any. */
+    function startWaiting() {
+      if (decided !== 'worker') return;
+      if (current !== null && !current.sent) runInWorker(current);
+      else if (currentReplay !== null && !currentReplay.sent) replayInWorker(currentReplay);
     }
 
     /** The worker did not answer a cancel in time (or died): replace it, lazily. */
@@ -252,7 +312,7 @@
         killTimer = null;
         if (workerBusy === 0 || worker === null) return;
         dropWorker();
-        if (current !== null && !current.sent && decided === 'worker') runInWorker(current);
+        startWaiting();
       }, opt.killAfterMs);
     }
 
@@ -260,11 +320,17 @@
       const m = event && event.data;
       if (m === null || typeof m !== 'object') return;
       const mine = current !== null && m.session === current.id;
+      const mineReplay = currentReplay !== null && m.session === currentReplay.id;
       if (m.type === 'events') {
         if (mine && Array.isArray(m.events)) deliver(current, m.events);
         return;
       }
-      if (m.type !== 'done' && m.type !== 'error' && m.type !== 'cancelled') return;
+      if (m.type === 'replayProgress') {
+        if (mineReplay) progress(currentReplay, m.done, m.total);
+        return;
+      }
+      if (m.type !== 'done' && m.type !== 'error' && m.type !== 'cancelled' &&
+          m.type !== 'replayDone' && m.type !== 'replayError') return;
       const own = m.session === workerBusy;
       if (mine && m.type === 'done') {
         let result;
@@ -277,6 +343,12 @@
         if (result !== null) settle(current, true, result);
       } else if (mine && m.type === 'error') {
         settle(current, false, errorFromWire(m.error));
+      } else if (mineReplay && m.type === 'replayDone') {
+        const analysis = m.analysis;
+        if (analysis !== null && typeof analysis === 'object') settleReplay(currentReplay, true, analysis);
+        else settleReplay(currentReplay, false, unexpectedError('replay'));
+      } else if (mineReplay && m.type === 'replayError') {
+        settleReplay(currentReplay, false, errorFromWire(m.error));
       }
       if (own) workerFree();
     }
@@ -285,9 +357,14 @@
       if (event && typeof event.preventDefault === 'function') event.preventDefault();
       const reason = event && event.message ? event.message : 'The generator worker stopped';
       dropWorker();
-      if (current === null) return;
-      if (current.sent) settle(current, false, unexpectedError(reason));
-      else runInWorker(current);
+      if (current !== null) {
+        if (current.sent) settle(current, false, unexpectedError(reason));
+        else runInWorker(current);
+      }
+      if (currentReplay !== null) {
+        if (currentReplay.sent) settleReplay(currentReplay, false, unexpectedError(reason));
+        else replayInWorker(currentReplay);
+      }
     }
 
     function spawn() {
@@ -371,6 +448,9 @@
           if (current !== s) return;
           if (ok) {
             runInWorker(s);
+          } else if (opt.forceMode === 'worker') {
+            // `ready()` already refused to fall back: a worker that cannot be replaced must not either.
+            settle(s, false, unexpectedError('The generator worker could not be started'));
           } else {
             decided = 'main';
             runInMain(s);
@@ -440,6 +520,102 @@
       Promise.resolve(opt.paintFn()).then(guarded);
     }
 
+    function dispatchReplay(r) {
+      r.sent = true;
+      workerBusy = r.id;
+      try {
+        worker.postMessage({
+          type: 'replay',
+          session: r.id,
+          result: SG.replay.toPlainWire(r.result),
+          options: { chunkMs: opt.chunkMs }
+        });
+      } catch (err) {
+        workerBusy = 0;
+        r.sent = false;
+        settleReplay(r, false, unexpectedError(err));
+      }
+    }
+
+    function replayInWorker(r) {
+      if (currentReplay !== r) return;
+      if (worker === null) {
+        ensureWorker().then(function (ok) {
+          if (currentReplay !== r) return;
+          if (ok) {
+            replayInWorker(r);
+          } else if (opt.forceMode === 'worker') {
+            settleReplay(r, false, unexpectedError('The generator worker could not be started'));
+          } else {
+            decided = 'main';
+            replayInMain(r);
+          }
+        });
+        return;
+      }
+      // The worker is still finishing a cancelled run: this one is sent when it answers (or is replaced).
+      if (workerBusy !== 0) return;
+      dispatchReplay(r);
+    }
+
+    /** The only way a replay runs on the page: the user said so (`allowMain`), and `replay()` was called. */
+    function replayInMain(r) {
+      if (currentReplay !== r) return;
+      if (r.allowMain !== true) {
+        settleReplay(r, false, consentRequiredError());
+        return;
+      }
+      let iterator;
+      try {
+        iterator = SG.replay.prepare(r.result);
+      } catch (err) {
+        settleReplay(r, false, err);
+        return;
+      }
+      r.abort = function abort() {
+        try {
+          iterator.return();
+        } catch (err) {
+          // The generator is abandoned either way.
+        }
+      };
+
+      function slice() {
+        if (r.state !== 'running') return;
+        const began = opt.now();
+        let step;
+        let latest = null;
+        try {
+          do {
+            step = iterator.next();
+            if (!step.done) latest = step.value;
+          } while (!step.done && opt.now() - began < opt.chunkMs);
+        } catch (err) {
+          settleReplay(r, false, err);
+          return;
+        }
+        if (latest !== null) progress(r, latest.done, latest.total);
+        if (step.done) {
+          const positions = positionsOf(step.value);
+          if (positions !== null) progress(r, positions, positions);
+          if (r.state === 'running') settleReplay(r, true, step.value);
+          return;
+        }
+        if (r.state !== 'running') return;
+        yieldFn().then(guarded);
+      }
+
+      function guarded() {
+        try {
+          slice();
+        } catch (err) {
+          settleReplay(r, false, err);
+        }
+      }
+
+      Promise.resolve(opt.paintFn()).then(guarded);
+    }
+
     function ready() {
       if (readyPromise === null) {
         if (opt.forceMode === 'main') {
@@ -488,7 +664,56 @@
       return true;
     }
 
+    function cancelReplay() {
+      const r = currentReplay;
+      if (r === null) return false;
+      settleReplay(r, false, cancelledError());
+      if (r.sent && worker !== null) {
+        try {
+          worker.postMessage({ type: 'cancel', session: r.id });
+        } catch (err) {
+          dropWorker();
+        }
+        if (workerBusy === r.id) armKill();
+      }
+      return true;
+    }
+
+    function replay(result, options) {
+      if (current !== null) return Promise.reject(busyError());
+      if (currentReplay !== null) cancelReplay();
+      const o = options !== null && typeof options === 'object' ? options : {};
+      let resolve;
+      let reject;
+      const promise = new Promise(function (res, rej) {
+        resolve = res;
+        reject = rej;
+      });
+      const r = {
+        id: ++lastSession,
+        result: result,
+        onProgress: o.onProgress,
+        allowMain: o.allowMain === true,
+        lastDone: -1,
+        state: 'running',
+        sent: false,
+        abort: null,
+        resolve: resolve,
+        reject: reject
+      };
+      currentReplay = r;
+      ready().then(function (mode) {
+        if (currentReplay !== r) return;
+        if (mode === 'worker') replayInWorker(r);
+        else replayInMain(r);
+      }).catch(function (err) {
+        settleReplay(r, false, unexpectedError(err));
+      });
+      return promise;
+    }
+
     function generate(config, onEvent) {
+      if (currentReplay !== null) cancelReplay();
       if (current !== null) cancel();
       let resolve;
       let reject;
@@ -514,6 +739,7 @@
     function dispose() {
       lifecycle++;
       if (current !== null) cancel();
+      if (currentReplay !== null) cancelReplay();
       clearKill();
       if (worker !== null) {
         terminate(worker);
@@ -529,6 +755,8 @@
     return {
       generate: generate,
       cancel: cancel,
+      replay: replay,
+      cancelReplay: cancelReplay,
       ready: ready,
       dispose: dispose,
       get mode() { return decided !== null ? decided : guessMode(opt.workerFactory); }
@@ -546,6 +774,8 @@
     create: create,
     generate: function generate(config, onEvent) { return sharedClient().generate(config, onEvent); },
     cancel: function cancel() { return sharedClient().cancel(); },
+    replay: function replay(result, options) { return sharedClient().replay(result, options); },
+    cancelReplay: function cancelReplay() { return sharedClient().cancelReplay(); },
     ready: function ready() { return sharedClient().ready(); },
     dispose: function dispose() { if (shared !== null) shared.dispose(); },
     get mode() {

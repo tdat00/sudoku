@@ -1236,6 +1236,873 @@
       });
   });
 
+  // The replay job: the worker and the page run `SG.replay.prepare` for the client's `replay(result)`
+
+  var replayData = null;
+  function replayResult() {
+    if (replayData === null) {
+      var config = SG.store.toConfig({ variantId: 'classic9', difficulty: 'expert', seed: '3275974478' });
+      replayData = { result: P.run(config, null) };
+      replayData.analysis = SG.replay.analyse(replayData.result);
+    }
+    return replayData.result;
+  }
+
+  function replayAnalysis() {
+    replayResult();
+    return replayData.analysis;
+  }
+
+  function plain(value) {
+    return JSON.parse(JSON.stringify(value, function (key, v) {
+      return ArrayBuffer.isView(v) ? Array.from(v) : v;
+    }));
+  }
+
+  // The analysis as data, without its work counts: `checks` differs between two analyses (see replay.js).
+  function stable(analysis) {
+    return plain(Object.assign({}, analysis, {
+      ratings: analysis.ratings.map(function (r) { return Object.assign({}, r, { checks: 0 }); }),
+      stats: Object.assign({}, analysis.stats, { checks: 0 })
+    }));
+  }
+
+  function expectSameAnalysis(actual, expected) {
+    expect(stable(actual)).toEqual(stable(expected));
+  }
+
+  function isInt32(value) {
+    return Object.prototype.toString.call(value) === '[object Int32Array]';
+  }
+
+  function positionsOfReplay() {
+    return replayAnalysis().stats.positions;
+  }
+
+  /** Runs `body(counter)` with `SG.replay.prepare` replaced by `replacement` (or counting the real one). */
+  function withPrepare(replacement, body) {
+    var original = SG.replay.prepare;
+    var counter = { calls: 0, args: [] };
+    SG.replay.prepare = function () {
+      counter.calls++;
+      counter.args.push(Array.prototype.slice.call(arguments));
+      return (replacement || original).apply(this, arguments);
+    };
+    function restore() { SG.replay.prepare = original; }
+    var outcome;
+    try {
+      outcome = body(counter);
+    } catch (err) {
+      restore();
+      throw err;
+    }
+    return Promise.resolve(outcome).then(function (value) {
+      restore();
+      return value;
+    }, function (err) {
+      restore();
+      throw err;
+    });
+  }
+
+  /** Counts the calls of the generation pipeline while `body` runs (a run on the page makes at least one). */
+  function withPipelineCount(body) {
+    var run = P.run;
+    var steps = P.runSteps;
+    var counter = { calls: 0 };
+    P.run = function () { counter.calls++; return run.apply(this, arguments); };
+    P.runSteps = function () { counter.calls++; return steps.apply(this, arguments); };
+    function restore() {
+      P.run = run;
+      P.runSteps = steps;
+    }
+    return Promise.resolve().then(function () { return body(counter); }).then(function (value) {
+      restore();
+      return value;
+    }, function (err) {
+      restore();
+      throw err;
+    });
+  }
+
+  /** An iterator that yields `yields`, then returns `analysis`: what `SG.replay.prepare` gives its users. */
+  function stubPrepare(yields, analysis) {
+    return function () {
+      var i = 0;
+      return {
+        next: function () {
+          if (i < yields.length) return { done: false, value: yields[i++] };
+          return { done: true, value: analysis };
+        },
+        return: function () { return { done: true, value: undefined }; }
+      };
+    };
+  }
+
+  describe('SG.workerClient: replay (fake worker)', function () {
+    function sentReplays(client) {
+      return client.factory.made.length === 0 ? [] : client.factory.made[0].ofType('replay');
+    }
+
+    function begin(client, options) {
+      var progress = [];
+      var promise = client.replay(replayResult(), Object.assign({
+        onProgress: function (p) { progress.push(p); }
+      }, options));
+      var settled = promise.then(function (value) { return { ok: true, value: value }; },
+        function (err) { return { ok: false, value: err }; });
+      return { progress: progress, promise: promise, settled: settled };
+    }
+
+    function posted(client) {
+      return client.factory.made[0].ofType('replay');
+    }
+
+    function waitSent(client, count) {
+      return until(function () { return client.factory.made.length > 0 && posted(client).length === count; });
+    }
+
+    it('posts replay with the session, the plain wire data and the slice length; progress and the answer ' +
+      'reach the page; other sessions are ignored', function () {
+      var client = makeClient({ chunkMs: 7 });
+      var run = begin(client);
+      return waitSent(client, 1).then(function () {
+        var message = posted(client)[0];
+        expect(Object.keys(message).sort()).toEqual(['options', 'result', 'session', 'type']);
+        expect(message.options).toEqual({ chunkMs: 7 });
+        expect(message.result).toEqual(SG.replay.toPlainWire(replayResult()));
+        expect(JSON.parse(JSON.stringify(message.result))).toEqual(message.result);
+        var w = client.factory.made[0];
+        w.say({ type: 'replayProgress', session: message.session + 50, done: 9, total: 32 });
+        w.say({ type: 'replayProgress', session: message.session, done: 3, total: 32 });
+        w.say({ type: 'replayProgress', session: message.session, done: 3, total: 32 });
+        w.say({ type: 'replayProgress', session: message.session, done: 5, total: 32 });
+        w.say({ type: 'replayDone', session: message.session + 50, analysis: { marker: 'other' } });
+        expect(run.progress).toEqual([{ done: 3, total: 32 }, { done: 5, total: 32 }]);
+        w.say({ type: 'replayDone', session: message.session,
+          analysis: { marker: 'mine', moves: [{ values: Int32Array.of(1, 2) }] } });
+        return run.promise;
+      }).then(function (analysis) {
+        expect(analysis.marker).toBe('mine');
+        expect(isInt32(analysis.moves[0].values)).toBe(true);
+        expect(client.cancelReplay()).toBe(false);
+        client.dispose();
+      });
+    });
+
+    it('a consumer of the progress that throws is logged and does not stop the replay', function () {
+      var client = makeClient();
+      var logged = [];
+      var realError = console.error;
+      console.error = function (err) { logged.push(err); };
+      var run = begin(client, { onProgress: function () { throw new Error('consumer bug'); } });
+      return waitSent(client, 1).then(function () {
+        var session = posted(client)[0].session;
+        client.factory.made[0].say({ type: 'replayProgress', session: session, done: 1, total: 2 });
+        client.factory.made[0].say({ type: 'replayDone', session: session, analysis: { marker: 1 } });
+        return run.settled;
+      }).then(function (outcome) {
+        console.error = realError;
+        expect(outcome.ok).toBe(true);
+        expect(logged).toHaveLength(1);
+        client.dispose();
+      }, function (err) {
+        console.error = realError;
+        throw err;
+      });
+    });
+
+    it('a replayError rejects with a GenerationError that carries the code and the arguments; an answer ' +
+      'that is no analysis rejects too', function () {
+      var client = makeClient();
+      var run = begin(client);
+      return waitSent(client, 1).then(function () {
+        client.factory.made[0].say({ type: 'replayError', session: posted(client)[0].session,
+          error: { code: 'unexpected', i18nArgs: { message: 'no log' }, name: 'Error', message: 'no log' } });
+        return run.settled;
+      }).then(function (outcome) {
+        expect(outcome.ok).toBe(false);
+        expectCode(outcome.value, 'unexpected');
+        expect(outcome.value.i18nArgs).toEqual({ message: 'no log' });
+        var next = begin(client);
+        return waitSent(client, 2).then(function () {
+          client.factory.made[0].say({ type: 'replayDone', session: posted(client)[1].session, analysis: 7 });
+          return next.settled;
+        });
+      }).then(function (outcome) {
+        expect(outcome.ok).toBe(false);
+        expectCode(outcome.value, 'unexpected');
+        client.dispose();
+      });
+    });
+
+    it('cancelReplay() rejects at once with budget.cancelled, tells the worker, drops what follows, and ' +
+      'answers false when idle', function () {
+      var client = makeClient({ factory: { ack: false } });
+      expect(client.cancelReplay()).toBe(false);
+      var run = begin(client);
+      return waitSent(client, 1).then(function () {
+        var w = client.factory.made[0];
+        var session = posted(client)[0].session;
+        w.say({ type: 'replayProgress', session: session, done: 1, total: 32 });
+        var began = performance.now();
+        expect(client.cancelReplay()).toBe(true);
+        return run.settled.then(function (outcome) {
+          expect(performance.now() - began).toBeLessThan(200);
+          expectCode(outcome.value, 'budget.cancelled');
+          expect(w.ofType('cancel')).toEqual([{ type: 'cancel', session: session }]);
+          w.say({ type: 'replayProgress', session: session, done: 2, total: 32 });
+          w.say({ type: 'replayDone', session: session, analysis: { marker: 'late' } });
+          expect(run.progress).toEqual([{ done: 1, total: 32 }]);
+          expect(client.cancelReplay()).toBe(false);
+          client.dispose();
+        });
+      });
+    });
+
+    it('a replay while a generation runs is refused as busy; the generation is not disturbed', function () {
+      var client = makeClient();
+      var events = [];
+      var generation = client.generate(cfg(), function (e) { events.push(e); });
+      return failure(client.replay(replayResult())).then(function (err) {
+        expectCode(err, 'unexpected');
+        expect(err.i18nArgs.message).toBe('busy');
+        return until(function () { return client.factory.made.length > 0 &&
+          client.factory.made[0].ofType('generate').length === 1; });
+      }).then(function () {
+        var w = client.factory.made[0];
+        expect(w.ofType('replay')).toHaveLength(0);
+        w.say({ type: 'done', session: w.ofType('generate')[0].session, result: classic4Wire() });
+        return generation;
+      }).then(function (result) {
+        expect(result.givens).toEqual(classic4Wire().givens);
+        client.dispose();
+      });
+    });
+
+    it('a generation cancels the running replay and is sent only when the worker has answered', function () {
+      var client = makeClient({ factory: { ack: false } });
+      var run = begin(client);
+      var generation;
+      var w;
+      var replaySession;
+      return waitSent(client, 1).then(function () {
+        w = client.factory.made[0];
+        replaySession = posted(client)[0].session;
+        generation = client.generate(cfg({ seed: 2 }), null);
+        return run.settled;
+      }).then(function (outcome) {
+        expectCode(outcome.value, 'budget.cancelled');
+        return tick();
+      }).then(function () {
+        expect(w.ofType('cancel')).toEqual([{ type: 'cancel', session: replaySession }]);
+        expect(w.ofType('generate')).toHaveLength(0);
+        w.say({ type: 'replayProgress', session: replaySession, done: 4, total: 32 });
+        w.say({ type: 'cancelled', session: replaySession });
+        return until(function () { return w.ofType('generate').length === 1; });
+      }).then(function () {
+        expect(w.ofType('generate')[0].config.seed).toBe(2);
+        expect(run.progress).toEqual([]);
+        w.say({ type: 'done', session: w.ofType('generate')[0].session, result: classic4Wire() });
+        return generation;
+      }).then(function () {
+        client.dispose();
+      });
+    });
+
+    it('a generation sent after the worker answered the cancel works the same with an acknowledging worker',
+      function () {
+        var client = makeClient({ factory: { ack: true } });
+        var run = begin(client);
+        var generation;
+        return waitSent(client, 1).then(function () {
+          generation = client.generate(cfg({ seed: 3 }), null);
+          return run.settled;
+        }).then(function (outcome) {
+          expectCode(outcome.value, 'budget.cancelled');
+          return until(function () { return client.factory.made[0].ofType('generate').length === 1; });
+        }).then(function () {
+          var w = client.factory.made[0];
+          expect(w.posted.map(function (m) { return m.type; })).toEqual(
+            ['ping', 'replay', 'cancel', 'generate']);
+          w.say({ type: 'done', session: w.ofType('generate')[0].session, result: classic4Wire() });
+          return generation;
+        }).then(function () {
+          client.dispose();
+        });
+      });
+
+    it('a new replay replaces the running one; a replay after a cancelled generation waits for the worker',
+      function () {
+        var client = makeClient({ factory: { ack: false } });
+        var first = begin(client);
+        var second;
+        var w;
+        return waitSent(client, 1).then(function () {
+          w = client.factory.made[0];
+          second = begin(client);
+          return first.settled;
+        }).then(function (outcome) {
+          expectCode(outcome.value, 'budget.cancelled');
+          return tick();
+        }).then(function () {
+          expect(posted(client)).toHaveLength(1);
+          w.say({ type: 'cancelled', session: posted(client)[0].session });
+          return waitSent(client, 2);
+        }).then(function () {
+          var session = posted(client)[1].session;
+          expect(session).not.toBe(posted(client)[0].session);
+          w.say({ type: 'replayDone', session: posted(client)[0].session, analysis: { marker: 'old' } });
+          w.say({ type: 'replayDone', session: session, analysis: { marker: 'new' } });
+          return second.promise;
+        }).then(function (analysis) {
+          expect(analysis.marker).toBe('new');
+          // Now a generation that is cancelled, and a replay that has to wait behind it.
+          var generation = failure(client.generate(cfg({ seed: 4 }), null));
+          return until(function () { return w.ofType('generate').length === 1; }).then(function () {
+            expect(client.cancel()).toBe(true);
+            return generation;
+          });
+        }).then(function () {
+          var third = begin(client);
+          return tick().then(function () {
+            expect(posted(client)).toHaveLength(2);
+            w.say({ type: 'cancelled', session: w.ofType('generate')[0].session });
+            return waitSent(client, 3);
+          }).then(function () {
+            w.say({ type: 'replayDone', session: posted(client)[2].session, analysis: { marker: 'third' } });
+            return third.promise;
+          });
+        }).then(function (analysis) {
+          expect(analysis.marker).toBe('third');
+          client.dispose();
+        });
+      });
+
+    it('a worker that does not answer the cancel of a replay is terminated, and the next replay goes to a ' +
+      'new worker', function () {
+      var client = makeClient({ factory: { ack: false }, killAfterMs: 15 });
+      var first = begin(client);
+      var second;
+      return waitSent(client, 1).then(function () {
+        expect(client.cancelReplay()).toBe(true);
+        second = begin(client);
+        return first.settled;
+      }).then(function () {
+        return until(function () { return client.factory.made.length === 2; });
+      }).then(function () {
+        expect(client.factory.made[0].terminated).toBe(true);
+        return until(function () { return client.factory.made[1].ofType('replay').length === 1; });
+      }).then(function () {
+        var fresh = client.factory.made[1];
+        fresh.say({ type: 'replayDone', session: fresh.ofType('replay')[0].session,
+          analysis: { marker: 'b' } });
+        return second.promise;
+      }).then(function (analysis) {
+        expect(analysis.marker).toBe('b');
+        client.dispose();
+      });
+    });
+
+    it('the worker dying mid-replay rejects it; a replay that was waiting goes to a new worker', function () {
+      var client = makeClient();
+      var first = begin(client);
+      return waitSent(client, 1).then(function () {
+        client.factory.made[0].onerror({ message: 'out of memory', preventDefault: function () {} });
+        return first.settled;
+      }).then(function (outcome) {
+        expectCode(outcome.value, 'unexpected');
+        expect(outcome.value.i18nArgs.message).toBe('out of memory');
+        expect(client.factory.made[0].terminated).toBe(true);
+        var second = begin(client);
+        return until(function () { return client.factory.made.length === 2; }).then(function () {
+          return until(function () { return client.factory.made[1].ofType('replay').length === 1; });
+        }).then(function () {
+          var fresh = client.factory.made[1];
+          fresh.say({ type: 'replayDone', session: fresh.ofType('replay')[0].session,
+            analysis: { marker: 'c' } });
+          return second.promise;
+        });
+      }).then(function () {
+        client.dispose();
+      });
+    });
+
+    it('a result that cannot be sent rejects the replay and leaves the worker usable', function () {
+      var client = makeClient();
+      return failure(client.replay({})).then(function (err) {
+        expectCode(err, 'unexpected');
+        var run = begin(client);
+        return waitSent(client, 1).then(function () {
+          client.factory.made[0].say({ type: 'replayDone', session: posted(client)[0].session,
+            analysis: { marker: 'ok' } });
+          return run.promise;
+        });
+      }).then(function (analysis) {
+        expect(analysis.marker).toBe('ok');
+        client.dispose();
+      });
+    });
+
+    it('dispose() rejects the replay and terminates the worker', function () {
+      var client = makeClient({ factory: { ack: false } });
+      var run = begin(client);
+      return waitSent(client, 1).then(function () {
+        client.dispose();
+        return run.settled;
+      }).then(function (outcome) {
+        expectCode(outcome.value, 'budget.cancelled');
+        expect(client.factory.made[0].terminated).toBe(true);
+      });
+    });
+
+    it('the shared client and the created clients expose replay and cancelReplay', function () {
+      ['replay', 'cancelReplay'].forEach(function (name) {
+        expect(typeof CLIENT[name]).toBe('function');
+        expect(typeof makeClient()[name]).toBe('function');
+      });
+      expect(CLIENT.cancelReplay()).toBe(false);
+      CLIENT.dispose();
+    });
+  });
+
+  describe('SG.workerClient: replay when the worker is gone (nothing runs on the page alone)', function () {
+    /** A client whose first worker starts and whose replacements cannot be built. */
+    function brittleClient(extra) {
+      var made = [];
+      var client = CLIENT.create(Object.assign({
+        readyTimeoutMs: 40,
+        killAfterMs: 30,
+        yieldFn: function () { return Promise.resolve(); },
+        paintFn: function () { return null; },
+        chunkMs: 0,
+        workerFactory: function () {
+          if (made.length > 0) throw new Error('SecurityError');
+          var w = createFakeWorker();
+          made.push(w);
+          return w;
+        }
+      }, extra));
+      client.made = made;
+      client.kill = function () { made[0].onerror({ message: 'died', preventDefault: function () {} }); };
+      return client;
+    }
+
+    it('a worker that fails after ready() without consent: budget.cancelled / replayConsentRequired, ' +
+      'nothing runs on the page', function () {
+      return withPrepare(null, function (counter) {
+        var client = brittleClient();
+        return client.ready().then(function (mode) {
+          expect(mode).toBe('worker');
+          client.kill();
+          return failure(client.replay(replayResult()));
+        }).then(function (err) {
+          expectCode(err, 'budget.cancelled');
+          expect(err.i18nArgs.reason).toBe('replayConsentRequired');
+          return failure(client.replay(replayResult(), { allowMain: false }));
+        }).then(function (err) {
+          expect(err.i18nArgs.reason).toBe('replayConsentRequired');
+          expect(counter.calls).toBe(0);
+          client.dispose();
+        });
+      });
+    });
+
+    it('with the explicit consent the same failure runs the replay on the page, once', function () {
+      return withPrepare(null, function (counter) {
+        var client = brittleClient();
+        return client.ready().then(function () {
+          client.kill();
+          return client.replay(replayResult(), { allowMain: true });
+        }).then(function (analysis) {
+          expectSameAnalysis(analysis, replayAnalysis());
+          expect(counter.calls).toBe(1);
+          client.dispose();
+        });
+      });
+    });
+
+    it('forceMode worker: a generation that needs a replacement worker is rejected, no run on the page; ' +
+      'the default mode still falls back', function () {
+      return withPipelineCount(function (counter) {
+        var forced = brittleClient({ forceMode: 'worker' });
+        return forced.ready().then(function () {
+          forced.kill();
+          return failure(forced.generate(cfg({ variantId: 'classic4', difficulty: 'veryEasy' })));
+        }).then(function (err) {
+          expectCode(err, 'unexpected');
+          expect(counter.calls).toBe(0);
+          forced.dispose();
+          var auto = brittleClient();
+          return auto.ready().then(function () {
+            auto.kill();
+            return auto.generate(cfg({ variantId: 'classic4', difficulty: 'veryEasy' }));
+          }).then(function (result) {
+            expect(result.givens.length).toBe(16);
+            expect(counter.calls).toBeGreaterThan(0);
+            expect(auto.mode).toBe('main');
+            auto.dispose();
+          });
+        });
+      });
+    });
+
+    it('forceMode worker: a replay is rejected too, even with the consent', function () {
+      return withPrepare(null, function (counter) {
+        var client = brittleClient({ forceMode: 'worker' });
+        return client.ready().then(function () {
+          client.kill();
+          return failure(client.replay(replayResult(), { allowMain: true }));
+        }).then(function (err) {
+          expectCode(err, 'unexpected');
+          expect(counter.calls).toBe(0);
+          client.dispose();
+        });
+      });
+    });
+  });
+
+  describe('SG.workerClient: replay on the page (main mode, only when asked)', function () {
+    function mainReplayClient(extra) {
+      var yields = { count: 0 };
+      var made = { count: 0 };
+      var client = CLIENT.create(Object.assign({
+        forceMode: 'main',
+        chunkMs: 0,
+        workerFactory: function () { made.count++; throw new Error('no worker expected'); },
+        paintFn: function () { return null; },
+        yieldFn: function () {
+          yields.count++;
+          return Promise.resolve();
+        }
+      }, extra));
+      client.yields = yields;
+      client.workersMade = made;
+      return client;
+    }
+
+    it('runs in slices, reports every count of positions once, and resolves with the analysis of ' +
+      'SG.replay.analyse', function () {
+      var client = mainReplayClient();
+      var progress = [];
+      return client.replay(replayResult(), {
+        allowMain: true, onProgress: function (p) { progress.push(p); }
+      }).then(function (analysis) {
+        var n = positionsOfReplay();
+        expectSameAnalysis(analysis, replayAnalysis());
+        expect(isInt32(analysis.moves[1].values)).toBe(true);
+        expect(progress.map(function (p) { return p.done; })).toEqual(
+          Array.apply(null, Array(n)).map(function (x, i) { return i + 1; }));
+        expect(progress.every(function (p) { return p.total === n; })).toBe(true);
+        expect(client.yields.count).toBeGreaterThan(n);
+        expect(client.workersMade.count).toBe(0);
+        expect(client.cancelReplay()).toBe(false);
+        client.dispose();
+      });
+    });
+
+    it('cancelReplay() between two slices rejects at once, stops the work, and no progress follows',
+      function () {
+        var gates = [];
+        var client = mainReplayClient({
+          yieldFn: function () { return new Promise(function (resolve) { gates.push(resolve); }); }
+        });
+        var progress = [];
+        var run = failure(client.replay(replayResult(), {
+          allowMain: true, onProgress: function (p) { progress.push(p); }
+        }));
+        return until(function () { return gates.length === 1; }).then(function () {
+          expect(progress).toEqual([{ done: 1, total: positionsOfReplay() }]);
+          var began = performance.now();
+          expect(client.cancelReplay()).toBe(true);
+          return run.then(function (err) {
+            expect(performance.now() - began).toBeLessThan(200);
+            expectCode(err, 'budget.cancelled');
+            gates[0]();
+            return tick();
+          });
+        }).then(function () {
+          expect(gates).toHaveLength(1);
+          expect(progress).toHaveLength(1);
+          expect(client.cancelReplay()).toBe(false);
+          client.dispose();
+        });
+      });
+
+    it('a consumer that cancels inside its progress callback ends the replay without resolving it',
+      function () {
+        var client = mainReplayClient();
+        var calls = 0;
+        return failure(client.replay(replayResult(), {
+          allowMain: true,
+          onProgress: function () {
+            calls++;
+            if (calls === 2) client.cancelReplay();
+          }
+        })).then(function (err) {
+          expectCode(err, 'budget.cancelled');
+          return tick();
+        }).then(function () {
+          expect(calls).toBe(2);
+          client.dispose();
+        });
+      });
+
+    it('without allowMain: true nothing runs: budget.cancelled with the reason replayConsentRequired',
+      function () {
+        return withPrepare(null, function (counter) {
+          var client = mainReplayClient();
+          return failure(client.replay(replayResult())).then(function (err) {
+            expectCode(err, 'budget.cancelled');
+            expect(err.i18nArgs.reason).toBe('replayConsentRequired');
+            return failure(client.replay(replayResult(), { allowMain: false, onProgress: function () {} }));
+          }).then(function (err) {
+            expect(err.i18nArgs.reason).toBe('replayConsentRequired');
+            return failure(client.replay(replayResult(), { allowMain: 'yes' }));
+          }).then(function (err) {
+            expect(err.i18nArgs.reason).toBe('replayConsentRequired');
+            expect(counter.calls).toBe(0);
+            expect(client.yields.count).toBe(0);
+            client.dispose();
+          });
+        });
+      });
+
+    it('a replay during a generation is refused as busy', function () {
+      var gates = [];
+      var client = mainReplayClient({
+        yieldFn: function () { return new Promise(function (resolve) { gates.push(resolve); }); }
+      });
+      var generation = failure(client.generate(cfg({ variantId: 'classic4', difficulty: 'veryEasy' }), null));
+      return until(function () { return gates.length === 1; }).then(function () {
+        return failure(client.replay(replayResult(), { allowMain: true }));
+      }).then(function (err) {
+        expectCode(err, 'unexpected');
+        expect(err.i18nArgs.message).toBe('busy');
+        expect(client.cancel()).toBe(true);
+        return generation;
+      }).then(function (err) {
+        expectCode(err, 'budget.cancelled');
+        client.dispose();
+      });
+    });
+
+    it('a generation cancels a running replay, whose work stops', function () {
+      var gates = [];
+      var client = mainReplayClient({
+        yieldFn: function () { return new Promise(function (resolve) { gates.push(resolve); }); }
+      });
+      var progress = [];
+      var replay = failure(client.replay(replayResult(), {
+        allowMain: true, onProgress: function (p) { progress.push(p); }
+      }));
+      var generation;
+      return until(function () { return gates.length === 1; }).then(function () {
+        generation = failure(client.generate(cfg({ variantId: 'classic4', difficulty: 'veryEasy' }), null));
+        return replay;
+      }).then(function (err) {
+        expectCode(err, 'budget.cancelled');
+        gates[0]();
+        return tick();
+      }).then(function () {
+        expect(progress).toHaveLength(1);
+        expect(client.cancel()).toBe(true);
+        return generation;
+      }).then(function (err) {
+        expectCode(err, 'budget.cancelled');
+        client.dispose();
+      });
+    });
+
+    it('nothing starts by itself: creating a client, ready(), mode and generations never call ' +
+      'SG.replay.prepare; one replay with the consent calls it once', function () {
+      return withPrepare(null, function (counter) {
+        var mainClient = mainReplayClient();
+        var workerClient = makeClient();
+        expect(mainClient.mode).toBe('main');
+        var generation = workerClient.generate(cfg(), null);
+        return mainClient.ready().then(function () {
+          return mainClient.generate(cfg({ variantId: 'classic4', difficulty: 'veryEasy' }), null);
+        }).then(function () {
+          return until(function () { return workerClient.factory.made.length > 0 &&
+            workerClient.factory.made[0].ofType('generate').length === 1; });
+        }).then(function () {
+          var w = workerClient.factory.made[0];
+          w.say({ type: 'done', session: w.ofType('generate')[0].session, result: classic4Wire() });
+          return generation;
+        }).then(function () {
+          expect(workerClient.mode).toBe('worker');
+          expect(counter.calls).toBe(0);
+          expect(workerClient.factory.made[0].ofType('replay')).toHaveLength(0);
+          return mainClient.replay(replayResult(), { allowMain: true });
+        }).then(function () {
+          expect(counter.calls).toBe(1);
+          mainClient.dispose();
+          workerClient.dispose();
+        });
+      });
+    });
+
+    it('an analysis that throws rejects with that error; a result that is no puzzle too', function () {
+      var boom = new Error('boom');
+      return withPrepare(function () { throw boom; }, function () {
+        var client = mainReplayClient();
+        return failure(client.replay(replayResult(), { allowMain: true })).then(function (err) {
+          expect(err).toBe(boom);
+          client.dispose();
+        });
+      }).then(function () {
+        var client = mainReplayClient();
+        return failure(client.replay({ givens: null }, { allowMain: true })).then(function (err) {
+          expect(err instanceof Error).toBe(true);
+          client.dispose();
+        });
+      });
+    });
+
+    it('reports the last count before it completes: a one-slice iterator, repeated counts of the ' +
+      'explanations, and a fallback that yields nothing', function () {
+      var order = [];
+      function watch(name) {
+        return {
+          allowMain: true,
+          onProgress: function (p) { order.push(name + ':' + p.done + '/' + p.total); }
+        };
+      }
+      function finish(name) { return function () { order.push(name + ':resolved'); }; }
+      var oneSlice = stubPrepare([{ done: 1, total: 1 }], { stats: { positions: 1 } });
+      var repeated = stubPrepare([{ done: 1, total: 2 }, { done: 2, total: 2 }, { done: 2, total: 2 },
+        { done: 2, total: 2 }], { stats: { positions: 2 } });
+      var nothing = stubPrepare([], { stats: { positions: 3 } });
+      return withPrepare(oneSlice, function () {
+        return mainReplayClient({ chunkMs: 1e9, now: function () { return 0; } })
+          .replay(replayResult(), watch('one')).then(finish('one'));
+      }).then(function () {
+        return withPrepare(repeated, function () {
+          return mainReplayClient().replay(replayResult(), watch('rep')).then(finish('rep'));
+        });
+      }).then(function () {
+        return withPrepare(nothing, function () {
+          return mainReplayClient().replay(replayResult(), watch('none')).then(finish('none'));
+        });
+      }).then(function () {
+        expect(order).toEqual(['one:1/1', 'one:resolved', 'rep:1/2', 'rep:2/2', 'rep:resolved',
+          'none:3/3', 'none:resolved']);
+      });
+    });
+  });
+
+  describe('SG.app.directClient: replay (the client of a page without SG.workerClient)', function () {
+    var direct = SG.app && SG.app.directClient;
+
+    it('resolves with the analysis of SG.replay.analyse, in slices, reporting each count once', function () {
+      var progress = [];
+      return direct.replay(replayResult(), {
+        allowMain: true, onProgress: function (p) { progress.push(p); }
+      }).then(function (analysis) {
+        var n = positionsOfReplay();
+        expectSameAnalysis(analysis, replayAnalysis());
+        expect(isInt32(analysis.moves[1].values)).toBe(true);
+        expect(progress.length).toBeGreaterThan(0);
+        expect(progress[progress.length - 1]).toEqual({ done: n, total: n });
+        for (var i = 1; i < progress.length; i++) {
+          expect(progress[i].done).toBeGreaterThan(progress[i - 1].done);
+        }
+        expect(direct.cancelReplay()).toBe(false);
+      });
+    });
+
+    it('cancelReplay() rejects with budget.cancelled: before the first slice, and from its own progress ' +
+      'callback', function () {
+      var pending = failure(direct.replay(replayResult(), { allowMain: true }));
+      expect(direct.cancelReplay()).toBe(true);
+      expect(direct.cancelReplay()).toBe(false);
+      return pending.then(function (err) {
+        expectCode(err, 'budget.cancelled');
+        var calls = 0;
+        return failure(direct.replay(replayResult(), {
+          allowMain: true,
+          onProgress: function () {
+            calls++;
+            direct.cancelReplay();
+          }
+        })).then(function (second) {
+          expectCode(second, 'budget.cancelled');
+          return sleep(30).then(function () { expect(calls).toBe(1); });
+        });
+      });
+    });
+
+    it('needs allowMain: true, and a newer replay replaces the running one', function () {
+      return withPrepare(null, function (counter) {
+        return failure(direct.replay(replayResult())).then(function (err) {
+          expectCode(err, 'budget.cancelled');
+          expect(err.i18nArgs.reason).toBe('replayConsentRequired');
+          expect(counter.calls).toBe(0);
+          var first = failure(direct.replay(replayResult(), { allowMain: true }));
+          var second = direct.replay(replayResult(), { allowMain: true });
+          return first.then(function (replaced) {
+            expectCode(replaced, 'budget.cancelled');
+            return second;
+          });
+        }).then(function (analysis) {
+          expectSameAnalysis(analysis, replayAnalysis());
+        });
+      });
+    });
+
+    it('a generation cancels the running replay; a replay while a generation waits to paint is busy',
+      function () {
+        var config = cfg({ variantId: 'classic4', difficulty: 'veryEasy' });
+        var running = failure(direct.replay(replayResult(), { allowMain: true }));
+        var generation = direct.generate(config, null);
+        return running.then(function (err) {
+          expectCode(err, 'budget.cancelled');
+          return failure(direct.replay(replayResult(), { allowMain: true }));
+        }).then(function (err) {
+          expectCode(err, 'unexpected');
+          expect(err.i18nArgs.message).toBe('busy');
+          return generation;
+        }).then(function (result) {
+          expect(result.givens.length).toBe(16);
+        });
+      });
+
+    it('rejects with the error of an analysis that throws, and reports the last count first', function () {
+      var boom = new Error('boom');
+      var order = [];
+      return withPrepare(function () { throw boom; }, function () {
+        return failure(direct.replay(replayResult(), { allowMain: true }));
+      }).then(function (err) {
+        expect(err).toBe(boom);
+        var oneSlice = stubPrepare([{ done: 1, total: 1 }], { stats: { positions: 1 } });
+        return withPrepare(oneSlice, function () {
+          return direct.replay(replayResult(), {
+            allowMain: true, onProgress: function (p) { order.push('progress:' + p.done); }
+          }).then(function () { order.push('resolved'); });
+        });
+      }).then(function () {
+        var nothing = stubPrepare([], { stats: { positions: 3 } });
+        return withPrepare(nothing, function () {
+          return direct.replay(replayResult(), {
+            allowMain: true, onProgress: function (p) { order.push('progress:' + p.done); }
+          }).then(function () { order.push('resolved'); });
+        });
+      }).then(function () {
+        // The latest yield of a slice is kept even when the same slice then returns the analysis.
+        var late = stubPrepare([{ done: 1, total: 3 }, { done: 2, total: 3 }], { stats: { positions: 3 } });
+        return withPrepare(late, function () {
+          return direct.replay(replayResult(), {
+            allowMain: true, onProgress: function (p) { order.push('progress:' + p.done); }
+          }).then(function () { order.push('resolved'); });
+        });
+      }).then(function () {
+        expect(order).toEqual(['progress:1', 'resolved', 'progress:3', 'resolved', 'progress:2', 'progress:3',
+          'resolved']);
+      });
+    });
+  });
+
   // The real worker script in a vm context behind a fake Worker (Node only)
 
   describe('js/worker/gen.worker.js', function () {
@@ -1588,5 +2455,254 @@
           });
         });
       }, SLOW);
+
+    function replayMessage(session, options, mutate) {
+      var wire = SG.replay.toPlainWire(replayResult());
+      if (mutate) mutate(wire);
+      return { type: 'replay', session: session, result: wire, options: options };
+    }
+
+    function range(n) {
+      return Array.apply(null, Array(n)).map(function (x, i) { return i + 1; });
+    }
+
+    function doneValues(messages) {
+      return messages.map(function (m) { return m.done; });
+    }
+
+    it('replays in slices: progress 1…N with total N, then the analysis of SG.replay.analyse, ' +
+      'its boards still Int32Arrays', function () {
+      var n = positionsOfReplay();
+      var w = createLoopback();
+      w.postMessage(replayMessage(5, { chunkMs: 0 }));
+      expect(w.run()).toBeGreaterThan(n);
+      expect(w.fromWorker.every(function (m) { return m.session === 5; })).toBe(true);
+      var progress = w.ofType('replayProgress');
+      expect(doneValues(progress)).toEqual(range(n));
+      expect(progress.every(function (m) { return m.total === n; })).toBe(true);
+      expect(w.fromWorker[w.fromWorker.length - 1].type).toBe('replayDone');
+      expect(w.fromWorker.filter(function (m) { return m.type !== 'replayProgress'; })).toHaveLength(1);
+      var analysis = w.ofType('replayDone')[0].analysis;
+      expectSameAnalysis(analysis, replayAnalysis());
+      expect(isInt32(analysis.moves[1].values)).toBe(true);
+      expect(analysis.views.details.steps.length).toBeGreaterThan(5);
+    });
+
+    it('with the default slice it answers at least the last progress, then done; options guards are ' +
+      'passed only when positive numbers', function () {
+      var w = createLoopback();
+      w.postMessage(replayMessage(6, undefined));
+      w.run();
+      var n = positionsOfReplay();
+      var answers = w.fromWorker.filter(function (m) { return m.session === 6; });
+      expect(answers.length).toBeGreaterThan(1);
+      expect(answers[answers.length - 1].type).toBe('replayDone');
+      expect(answers[answers.length - 2]).toEqual({ type: 'replayProgress', session: 6, done: n, total: n });
+      expect(w.ofType('replayDone')).toHaveLength(1);
+      var seen = [];
+      w = createLoopback();
+      w.context.SG.replay.prepare = function (result, options) {
+        seen.push(options);
+        return stubPrepare([], { stats: { positions: 1 } })();
+      };
+      w.postMessage(replayMessage(8, { rateNodes: 123, countNodes: -4, probeNodes: 'many', chunkMs: 0 }));
+      w.postMessage(replayMessage(9, { countNodes: 5, probeNodes: 7 }));
+      w.postMessage(replayMessage(10));
+      w.run();
+      expect(JSON.parse(JSON.stringify(seen))).toEqual(
+        [{ rateNodes: 123 }, { countNodes: 5, probeNodes: 7 }, {}]);
+    });
+
+    it('a cancel between slices stops the replay at the next boundary, is answered, and frees the worker',
+      function () {
+        var w = createLoopback();
+        w.postMessage(replayMessage(5, { chunkMs: 0 }));
+        w.run(3);
+        expect(w.ofType('replayDone')).toHaveLength(0);
+        w.postMessage({ type: 'cancel', session: 5 });
+        expect(w.run()).toBeLessThan(4);
+        expect(w.ofType('cancelled')).toEqual([{ type: 'cancelled', session: 5 }]);
+        expect(w.ofType('replayDone')).toHaveLength(0);
+        expect(w.ofType('replayError')).toHaveLength(0);
+        expect(doneValues(w.ofType('replayProgress'))).toEqual(range(w.ofType('replayProgress').length));
+        expect(w.ofType('replayProgress').length).toBeLessThan(6);
+        w.postMessage(replayMessage(6, { chunkMs: 0 }));
+        w.run();
+        expect(w.ofType('replayDone').map(function (m) { return m.session; })).toEqual([6]);
+        // A cancel for another session changes nothing.
+        w.postMessage(replayMessage(7, { chunkMs: 0 }));
+        w.run(3);
+        w.postMessage({ type: 'cancel', session: 99 });
+        w.run();
+        expect(w.ofType('replayDone').map(function (m) { return m.session; })).toEqual([6, 7]);
+      });
+
+    it('a generation, a replay and a cancel pre-empt a replay; nothing of a dropped job is sent after',
+      function () {
+        var w = createLoopback();
+        var quick = cfg({ variantId: 'classic4', difficulty: 'veryEasy' });
+        w.postMessage(replayMessage(5, { chunkMs: 0 }));
+        w.run(2);
+        w.postMessage({ type: 'generate', session: 6, config: quick, options: { chunkMs: 0 } });
+        w.run();
+        expect(w.ofType('replayDone')).toHaveLength(0);
+        expect(w.ofType('done').map(function (m) { return m.session; })).toEqual([6]);
+        expect(w.ofType('replayProgress').every(function (m) { return m.session === 5; })).toBe(true);
+        expect(w.ofType('replayProgress').length).toBeLessThan(4);
+
+        w = createLoopback();
+        w.postMessage({ type: 'generate', session: 7, config: cfg({ seed: 12 }), options: { chunkMs: 0 } });
+        w.run(2);
+        w.postMessage(replayMessage(8, { chunkMs: 0 }));
+        w.run();
+        expect(w.ofType('done')).toHaveLength(0);
+        expect(w.ofType('error')).toHaveLength(0);
+        expect(w.ofType('replayDone').map(function (m) { return m.session; })).toEqual([8]);
+
+        w = createLoopback();
+        w.postMessage(replayMessage(9, { chunkMs: 0 }));
+        w.run(2);
+        w.postMessage(replayMessage(10, { chunkMs: 0 }));
+        w.run();
+        expect(w.ofType('replayDone').map(function (m) { return m.session; })).toEqual([10]);
+        expect(w.ofType('cancelled')).toEqual([]);
+        var older = w.ofType('replayProgress').filter(function (m) { return m.session === 9; });
+        expect(older.length).toBeLessThan(4);
+      }, SLOW);
+
+    it('answers a replayError for a failed load, data that is not a puzzle, an iterator that throws and an ' +
+      'analysis that cannot be sent', function () {
+      var w = createLoopback({ failLoad: 'blocked' });
+      w.postMessage(replayMessage(3, {}));
+      w.run();
+      expect(w.fromWorker).toHaveLength(1);
+      expect(w.fromWorker[0].type).toBe('replayError');
+      expect(w.fromWorker[0].session).toBe(3);
+      expect(w.fromWorker[0].error.code).toBe('unexpected');
+
+      w = createLoopback();
+      w.postMessage({ type: 'replay', session: 4, result: { v: 999 }, options: {} });
+      w.postMessage({ type: 'replay', session: 5, options: {} });
+      w.postMessage({ type: 'replay', session: 6, result: null });
+      w.run();
+      expect(w.fromWorker.map(function (m) { return m.type + ':' + m.session; })).toEqual(
+        ['replayError:4', 'replayError:5', 'replayError:6']);
+      w.fromWorker.forEach(function (m) {
+        expect(typeof m.error.code).toBe('string');
+        expect(m.error.i18nArgs).toBeTruthy();
+      });
+      // The worker is free: the next job runs to its end.
+      w.postMessage(replayMessage(7, { chunkMs: 0 }));
+      w.run();
+      expect(w.ofType('replayDone').map(function (m) { return m.session; })).toEqual([7]);
+
+      w = createLoopback();
+      w.context.SG.replay.prepare = function* () { throw new Error('rating failed'); };
+      w.postMessage(replayMessage(8, {}));
+      w.run();
+      expect(w.fromWorker).toHaveLength(1);
+      expect(w.fromWorker[0].type).toBe('replayError');
+      expect(w.fromWorker[0].error.i18nArgs.message).toBe('rating failed');
+
+      w = createLoopback();
+      w.context.SG.replay.prepare = stubPrepare([{ done: 1, total: 1 }],
+        { stats: { positions: 1 }, broken: function () {} });
+      w.postMessage(replayMessage(9, {}));
+      w.run();
+      expect(w.fromWorker.map(function (m) { return m.type; })).toEqual(['replayProgress', 'replayError']);
+      expect(w.ofType('replayError')[0].session).toBe(9);
+      expect(w.ofType('error')).toHaveLength(0);
+    });
+
+    it('reports the final count before replayDone, once: a one-slice job, repeated counts of the ' +
+      'explanations, a conservative analysis that yields nothing (real data without a log)', function () {
+      var w = createLoopback();
+      w.context.SG.replay.prepare = stubPrepare([{ done: 1, total: 1 }], { stats: { positions: 1 } });
+      w.postMessage(replayMessage(1, { chunkMs: 1e9 }));
+      w.run();
+      expect(w.fromWorker.map(function (m) { return m.type + ':' + m.done; })).toEqual(
+        ['replayProgress:1', 'replayDone:undefined']);
+
+      w = createLoopback();
+      w.context.SG.replay.prepare = stubPrepare([{ done: 1, total: 2 }, { done: 2, total: 2 },
+        { done: 2, total: 2 }, { done: 2, total: 2 }], { stats: { positions: 2 } });
+      w.postMessage(replayMessage(2, { chunkMs: 0 }));
+      w.run();
+      expect(w.fromWorker.map(function (m) { return m.type + ':' + m.done; })).toEqual(
+        ['replayProgress:1', 'replayProgress:2', 'replayDone:undefined']);
+
+      w = createLoopback();
+      w.context.SG.replay.prepare = stubPrepare([{ done: 1, total: 3 }, { done: 2, total: 3 }],
+        { stats: { positions: 3 } });
+      w.postMessage(replayMessage(4, { chunkMs: 1e9 }));
+      w.run();
+      expect(w.fromWorker.map(function (m) { return m.type + ':' + m.done; })).toEqual(
+        ['replayProgress:2', 'replayProgress:3', 'replayDone:undefined']);
+
+      w = createLoopback();
+      w.postMessage(replayMessage(3, {}, function (wire) { delete wire.digLog; }));
+      w.run();
+      var analysis = w.ofType('replayDone')[0].analysis;
+      expect(analysis.fallback).toBe('noLog');
+      var positions = analysis.stats.positions;
+      expect(w.fromWorker.map(function (m) { return m.type; })).toEqual(['replayProgress', 'replayDone']);
+      expect(w.ofType('replayProgress')[0]).toEqual({ type: 'replayProgress', session: 3, done: positions,
+        total: positions });
+    });
+
+    it('through the client in worker mode: progress, then the analysis of SG.replay.analyse', function () {
+      var client = loopClient({ chunkMs: 0 });
+      var progress = [];
+      return client.replay(replayResult(), {
+        onProgress: function (p) { progress.push(p); }
+      }).then(function (analysis) {
+        var n = positionsOfReplay();
+        expect(client.mode).toBe('worker');
+        expectSameAnalysis(analysis, replayAnalysis());
+        expect(isInt32(analysis.moves[1].values)).toBe(true);
+        expect(progress.map(function (p) { return p.done; })).toEqual(range(n));
+        expect(progress.every(function (p) { return p.total === n; })).toBe(true);
+        client.dispose();
+      });
+    });
+
+    it('through the client in worker mode: a generation pre-empts the replay, a replay waits behind a ' +
+      'cancelled generation, a cancelReplay frees the worker', function () {
+      var client = loopClient({ chunkMs: 0, batchMs: 0 });
+      var seen = [];
+      var replay = failure(client.replay(replayResult(), { onProgress: function (p) { seen.push(p); } }));
+      return until(function () { return seen.length > 0; }).then(function () {
+        var generation = client.generate(cfg({ variantId: 'classic4', difficulty: 'veryEasy' }), null);
+        return replay.then(function (err) {
+          expectCode(err, 'budget.cancelled');
+          var heard = seen.length;
+          return generation.then(function (result) {
+            expect(result.givens.length).toBe(16);
+            expect(seen.length).toBe(heard);
+          });
+        });
+      }).then(function () {
+        var generation = failure(client.generate(cfg({ variantId: 'samurai', difficulty: 'normal', seed: 4 }),
+          null));
+        return tick().then(function () {
+          expect(client.cancel()).toBe(true);
+          return generation;
+        });
+      }).then(function () {
+        return client.replay(replayResult());
+      }).then(function (analysis) {
+        expectSameAnalysis(analysis, replayAnalysis());
+        var again = failure(client.replay(replayResult()));
+        expect(client.cancelReplay()).toBe(true);
+        return again;
+      }).then(function (err) {
+        expectCode(err, 'budget.cancelled');
+        return client.replay(replayResult());
+      }).then(function (analysis) {
+        expectSameAnalysis(analysis, replayAnalysis());
+        expect(client.loop.terminated).toBe(false);
+        client.dispose();
+      });
+    }, SLOW);
   });
 })();

@@ -1142,6 +1142,8 @@ A `—` entry = the variant does not offer that level (`difficultySupport`, [doc
 SG.workerClient = {
   generate(config, onEvent) → Promise<PuzzleResult>,   // events arrive in batches; rejects with a GenerationError
   cancel() → boolean,
+  replay(result, { onProgress, allowMain: false }) → Promise<Analysis>,   // GS05 grants main-mode consent
+  cancelReplay() → boolean,
   get mode() { return 'worker' | 'main'; },            // final once ready() has settled
   ready() → Promise<'worker'|'main'>,                  // detects Worker support (ping/pong handshake, 5 s timeout)
   create(options) → client,                            // an independent client (+ dispose()): used by the cache
@@ -1157,6 +1159,8 @@ SG.workerClient = {
 **`main` mode (fallback, `file://`, CSP, no Worker):** the client drives the same generator itself. The page stays responsive between slices, but a slice is never shorter than the longest piece of work that cannot be split — one DFS slice in Killer takes 70–86 ms, a Greater-Than sign dig 50–70 ms per sample, the cage layout of a hard Killer up to ~300 ms — so the page may stall for that long; the total time is somewhat longer too. The UI shows a badge indicating which mode is active (`Main thread` / `Background thread`).
 
 **Cancellation is cooperative first.** `cancel()` rejects the promise at once (code `budget.cancelled`, no further events delivered) and takes effect at the next slice boundary in both modes. In worker mode it is a `cancel` message first (the worker stays warm and is reused); only if the worker has not answered after **150 ms** (it is inside a piece of work that cannot be interrupted) is it terminated, and a new one is created the next time. A `SharedArrayBuffer` flag was **not** used: it needs cross-origin-isolation headers that a plain static server does not send. `dispose()` cancels the run, terminates the worker and releases every timer and listener.
+
+**The replay job.** The page asks the same client for `replay(result)` once the puzzle is shown; the promise gives the replay analysis (`SG.replay.prepare`, the score tables of the Generation Steps) and `onProgress({ done, total })` counts the positions rated (every count once, the last one before the promise settles). In worker mode a `replay` message carries `SG.replay.toPlainWire(result)` (plain arrays, so the message survives a JSON copy and carries the dig log); the worker runs `SG.replay.prepare` in slices of `chunkMs`, answers `replayProgress { done, total }` after a slice whose count changed, then `replayDone { analysis }` (the board values stay `Int32Array`s) or `replayError { error }` when the data cannot be read or the analysis throws. The worker has one job at a time, a generation or a replay: `generate`, `replay` and `cancel` pre-empt it at the next slice, and nothing of a dropped job is sent afterwards. In main mode the client runs the same iterator on the page in slices, and only inside `replay()` — nothing starts by itself (Q17 b), and a page without a Worker does the work only when the user presses "Prepare score tables": main-thread execution needs `allowMain: true`, otherwise (and when a worker that was running cannot be replaced) the promise rejects with `budget.cancelled` and `i18nArgs.reason === 'replayConsentRequired'`, and nothing runs. A generation of the same client cancels its replay, and `replay()` during a generation is refused (`unexpected`, `i18nArgs.message === 'busy'`); `cancelReplay()` rejects at once with `budget.cancelled` and stops the work at the next slice, the worker being handled like for a generation (a `cancel` message, then the 150 ms terminate fallback). `forceMode: 'worker'` never falls back to the page, for a replacement worker either. The cache's wrapper client forwards `replay` and `cancelReplay` to its inner client, and the page-less `directClient` of `js/ui/app.js` implements the same two methods.
 
 ### 9.4 Leak prevention & memory pressure
 
@@ -1643,12 +1647,14 @@ PuzzleResult  = { model, givens, solution, rating, seed, config, timings, attemp
 ```js
 SG.workerClient.generate(config, onEvent, hints?): Promise<PuzzleResult>   // hints: { random } lets the cache serve a pre-generated puzzle
 SG.workerClient.cancel(): boolean
+SG.workerClient.replay(result, { onProgress, allowMain: false }?): Promise<Analysis>   // the replay analysis; main-thread execution requires allowMain: true
+SG.workerClient.cancelReplay(): boolean
 SG.workerClient.mode: 'worker' | 'main'
 SG.workerClient.ready(): Promise<'worker'|'main'>
 SG.workerClient.create(options?): client            // independent instance, same interface + dispose()
 ```
 
-Details — sessions, batching, the cooperative cancel protocol with the 150 ms terminate fallback, and the main-thread slices with their granularity limit — are in [§9.3](#93-web-worker--fallback-mechanism); the message protocol is the header of `js/worker/gen.worker.js`.
+Details — sessions, batching, the cooperative cancel protocol with the 150 ms terminate fallback, the main-thread slices with their granularity limit and the replay job — are in [§9.3](#93-web-worker--fallback-mechanism); the message protocol is the header of `js/worker/gen.worker.js`. `replay` without `allowMain: true` never runs the analysis on the page: it rejects with `budget.cancelled` and `i18nArgs.reason === 'replayConsentRequired'`; in worker mode it needs no consent.
 
 ### 13.11 `SG.i18n`
 

@@ -1,6 +1,7 @@
 /**
- * Web Worker of the generator: runs `SG.pipeline.runSteps` off the main thread and reports through
- * `postMessage`. Only `SG.workerClient` (js/worker/worker-client.js) should talk to it.
+ * Web Worker of the generator: runs `SG.pipeline.runSteps` (a generation) and `SG.replay.prepare` (the
+ * replay analysis of a finished puzzle) off the main thread and reports through `postMessage`. Only
+ * `SG.workerClient` (js/worker/worker-client.js) should talk to it.
  * It loads the core, the variants and the word lists with `importScripts`, in exactly the order of
  * `SOURCE_FILES` in tests/node-runner.js up to the word lists (a test compares the two lists); never the UI
  * or the client.
@@ -13,7 +14,14 @@
  *         optional): chunkMs (slice length, default 12), batchMs (events are sent at most this often, default
  *         30), maxBatch (...or when this many are waiting, default 400), budgetMs (time limit of the run in
  *         active milliseconds, default 120000).
- *     { type: 'cancel', session }           Drops that run (or any run when `session` is missing).
+ *     { type: 'replay', session, result, options }
+ *         Analyses a finished puzzle (a generation or a replay in progress is dropped). `result` is
+ *         `SG.replay.toPlainWire` data, with its `digLog`. `options` (all optional): chunkMs (slice length,
+ *         default 12), rateNodes, countNodes, probeNodes (the guards of `SG.replay.prepare`, used when
+ *         they are positive numbers).
+ *     { type: 'cancel', session }           Drops that run (a generation or a replay; any run when `session`
+ *         is missing). The worker has one job at a time: 'generate', 'replay' and 'cancel' stop the job in
+ *         progress at its next slice boundary, before anything else.
  *   worker -> page
  *     { type: 'pong', id, ok, error? }      `ok` is false when the scripts failed to load; `error` as below.
  *     { type: 'events', session, events }   A batch of GenerationEvents, in order, never empty.
@@ -23,11 +31,19 @@
  *         as plain data ('unexpected' with `i18nArgs.message` for any other error). The events (including the
  *         'error' event) were sent before it.
  *     { type: 'cancelled', session }        Answer to 'cancel': the worker is free again.
+ *     { type: 'replayProgress', session, done, total }   After a slice of a replay, when `done` (positions
+ *         rated, then `total` while the jumps are explained) changed since the last one of this job; the
+ *         final count is always reported before 'replayDone'.
+ *     { type: 'replayDone', session, analysis }   The analysis of `SG.replay.prepare` (plain data; the board
+ *         values stay `Int32Array`s).
+ *     { type: 'replayError', session, error }   `error` as for 'error': the scripts failed to load, the data
+ *         could not be read, or the move model or a rating threw.
  *
  * CANCELLATION (design.md 9.3): the worker runs the resumable `runSteps` in slices of `chunkMs` and hands
  * the thread back to its own message loop after each slice (a MessageChannel message, not throttled like a
  * timer), so a queued 'cancel' or 'generate' is handled at the next boundary of the algorithm. Time given
- * back to the loop is not charged to the run (active clock, `SG.budget.createClock`).
+ * back to the loop is not charged to the run (active clock, `SG.budget.createClock`). A replay is sliced the
+ * same way (`SG.replay.prepare` yields after every position and every probe of an explanation).
  */
 (function (scope) {
   'use strict';
@@ -232,6 +248,7 @@
     const options = msg.options !== null && typeof msg.options === 'object' ? msg.options : {};
     const clock = SG.budget.createClock(clockNow);
     const run = {
+      kind: 'generate',
       id: msg.session,
       clock: clock,
       steps: null,
@@ -261,6 +278,85 @@
     post({ type: 'cancelled', session: msg.session });
   }
 
+  function failReplay(run, err) {
+    if (active !== run) return;
+    active = null;
+    post({ type: 'replayError', session: run.id, error: errorData(err) });
+  }
+
+  // Posts a progress message when `progress.done` is a count this job has not reported yet.
+  function reportProgress(run, progress) {
+    if (progress === null || progress.done === run.lastDone) return;
+    run.lastDone = progress.done;
+    post({ type: 'replayProgress', session: run.id, done: progress.done, total: progress.total });
+  }
+
+  function finishReplay(run, analysis, latest) {
+    if (active !== run) return;
+    try {
+      reportProgress(run, latest);
+      const positions = analysis.stats.positions;
+      reportProgress(run, { done: positions, total: positions });
+      post({ type: 'replayDone', session: run.id, analysis: analysis });
+      active = null;
+    } catch (err) {
+      failReplay(run, err);
+    }
+  }
+
+  function replaySlice(run) {
+    if (active !== run) return;
+    const began = clockNow();
+    let step;
+    let latest = null;
+    try {
+      do {
+        step = run.steps.next();
+        if (!step.done) latest = step.value;
+      } while (!step.done && clockNow() - began < run.chunkMs);
+      if (!step.done) reportProgress(run, latest);
+    } catch (err) {
+      failReplay(run, err);
+      return;
+    }
+    if (step.done) {
+      finishReplay(run, step.value, latest);
+      return;
+    }
+    later(function () { replaySlice(run); });
+  }
+
+  function onReplay(msg) {
+    if (active !== null) stop(active);
+    if (loadError !== null) {
+      post({ type: 'replayError', session: msg.session, error: errorData(loadError) });
+      return;
+    }
+    const SG = scope.SG;
+    const options = msg.options !== null && typeof msg.options === 'object' ? msg.options : {};
+    const prepareOptions = {};
+    ['rateNodes', 'countNodes', 'probeNodes'].forEach(function (name) {
+      if (number(options[name], 0) > 0) prepareOptions[name] = options[name];
+    });
+    const run = {
+      kind: 'replay',
+      id: msg.session,
+      steps: null,
+      chunkMs: nonNegative(options.chunkMs, DEFAULT_CHUNK_MS),
+      lastDone: -1,
+      pending: []
+    };
+    active = run;
+    try {
+      const result = SG.replay.fromPlainWire(msg.result);
+      run.steps = SG.replay.prepare(result, prepareOptions);
+    } catch (err) {
+      failReplay(run, err);
+      return;
+    }
+    replaySlice(run);
+  }
+
   scope.onmessage = function onMessage(event) {
     const msg = event.data;
     if (msg === null || typeof msg !== 'object') return;
@@ -271,11 +367,14 @@
         post(reply);
       } else if (msg.type === 'generate') {
         onGenerate(msg);
+      } else if (msg.type === 'replay') {
+        onReplay(msg);
       } else if (msg.type === 'cancel') {
         onCancel(msg);
       }
     } catch (err) {
-      post({ type: 'error', session: msg.session, error: errorData(err) });
+      const type = msg.type === 'replay' ? 'replayError' : 'error';
+      post({ type: type, session: msg.session, error: errorData(err) });
     }
   };
 })(self);

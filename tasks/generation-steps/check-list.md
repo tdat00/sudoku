@@ -25,7 +25,7 @@ Checkboxes below mean "implementation accepted and committed", not "task documen
 | [x] | GS01 | [GS01](GS01-replay-moves-and-ratings.md) | Replay analysis core: moves, ratings, statuses, test data | none | Large | Engine | M1 every position rated | 1 |
 | [x] | GS02 | [GS02](GS02-views-selection-and-tiers.md) | Two views, compact selection, audit, transitions and tiers | GS01 | Medium–Large | Engine | M2 steady compact steps | 2 |
 | [x] | GS03 | [GS03](GS03-jump-explanations.md) | Jump explanations: cause, culprit, choice, first use, restricted check | GS02 | Large | Engine | M3 jumps explained (data) | 3 |
-| [ ] | GS04 | [GS04](GS04-worker-job-and-clients.md) | Worker job, client `replay` in both modes, cache forwarding | GS03 (and its prerequisites) | Medium | Worker/browser integration | M4 preparation off the page | 4 |
+| [x] | GS04 | [GS04](GS04-worker-job-and-clients.md) | Worker job, client `replay` in both modes, cache forwarding | GS03 (and its prerequisites) | Medium | Worker/browser integration | M4 preparation off the page | 4 |
 | [ ] | GS05 | [GS05](GS05-replay-views-texts-and-preparation.md) | Replay views, step texts, preparation flow and main-mode gate | GS02, GS03, GS04 | Large | Generator UI | M5 a table on every step | 5 |
 | [ ] | GS06 | [GS06](GS06-steps-panel-callout-and-frames.md) | Steps panel: table states, tiers, jump callout, "Why?", culprit frames | GS05 | Large | Generator UI + core board | M6 jumps explained (UI) | 6 |
 | [ ] | GS07 | [GS07](GS07-documentation-consistency.md) | Documentation consistency in both languages | GS06 | Small | Documentation | M7 documents in step | 7 |
@@ -292,8 +292,8 @@ The orchestrator owns this record.
 |---|---|---|---|---|
 | GS01 | done (T02 `checks` diagnostic-only deviation accepted) | 21m36s | 377.56 | 924181d |
 | GS02 | done | 16m37s | 285.99 | 2aff62c |
-| GS03 | done | 16m02s | 253.72 | (this commit) |
-| GS04 | | | | |
+| GS03 | done | 16m02s | 253.72 | 128ed08 |
+| GS04 | done | 14m53s | 268.31 | (this commit) |
 | GS05 | | | | |
 | GS06 | | | | |
 | GS07 | | | | |

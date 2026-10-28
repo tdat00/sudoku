@@ -1153,6 +1153,15 @@
     const client = {
       generate: generate,
       cancel: cancel,
+      replay: function replay(result, options) {
+        if (typeof inner.replay !== 'function') {
+          return Promise.reject(new SG.errors.GenerationError('unexpected', { message: 'replay' }));
+        }
+        return inner.replay(result, options);
+      },
+      cancelReplay: function cancelReplay() {
+        return typeof inner.cancelReplay === 'function' ? inner.cancelReplay() : false;
+      },
       ready: function ready() {
         return typeof inner.ready === 'function' ? inner.ready() : Promise.resolve(innerMode());
       },

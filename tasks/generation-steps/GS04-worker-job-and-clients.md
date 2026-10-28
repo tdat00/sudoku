@@ -375,14 +375,14 @@ An iterator returning a fallback immediately still reports its final position co
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Done |
+| Start | 2026-10-28 23:51:20 (+07:00) |
+| End | 2026-10-29 00:06:13 (+07:00) |
+| Duration | 14 min 53 s |
+| Model | claude-sonnet-5.5 (sub-agent `GS04-worker-job`, general-purpose); wave 4, alone |
+| Token usage | 82 model calls; 11,541,974 input (11,339,374 cache read), 104,271 output |
+| AI credits | 268.31 AIU (local usage store, keyed by sub-agent id) |
+| Verification | Developer: `--suite=worker` 138/138 (12.5 s); `--suite=cache,ui-contract,help` 187/187; generator quick set 43 suites 2,743/2,743 (79.3 s); player `--suite=help` 22/22; three mutation checks, reverted (removing the `forceMode: 'worker'` guard, the `allowMain` check or the final progress flush makes the matching tests fail). Orchestrator re-run: generator quick set 43 suites, 2,743 passed / 0 failed (80.0 s); player `--suite=help` 22/22; the ten edited files CRLF, no BOM; nothing outside the GS04 list changed; the `forceMode: 'worker'` no-fallback change matches the task's "worker-only trace prerequisite for GS05". |
+| Acceptance | GS04-B01–B04 and GS04-T01–T08 met; B03's spy on `SG.replay.prepare` is in `worker.test.js`; the real worker runs in the loopback and the `Int32Array` boards are asserted after the JSON copy; analyses compared with `checks` zeroed. |
+| Issues & resolutions | (1) Unspecified cases decided by the developer: a replay with `forceMode: 'worker'` rejects with `unexpected` even with `allowMain: true`; a `replayDone` whose analysis is not an object rejects with `unexpected`. Accepted. (2) The direct-client tests live in `worker.test.js`, because `ui-contract` may only change `CLIENT_SURFACE` (an intended contract change, D13). (3) The `generator/design.md` line anchors of the task (§9.3 at 1032, §13.10 at 1531) had moved; the headings were used. (4) No generation test changed; a `replay` / `cancelReplay` surface test was added. |
+| Handoff | Every client (`SG.workerClient`, `create()` clients, `SG.app.directClient`, the cache wrapper) has `replay(result, { onProgress({ done, total }), allowMain = false }) → Promise<Analysis>` and `cancelReplay() → boolean`. Rejections: `budget.cancelled` when cancelled or replaced; `budget.cancelled` with `i18nArgs.reason === 'replayConsentRequired'` when page work is needed without `allowMain: true` (also for a worker that fails after `ready()`); `unexpected` with `i18nArgs.message === 'busy'` while a generation of that client runs; otherwise the analysis error (worker errors through `errorFromWire`; main-mode throws as they are, possibly without `.code`: GS05 treats any other rejection as a generic failure). `generate()` cancels a running replay. Worker protocol D6: `replay`, `replayProgress` (only when `done` changed), `replayDone`, `replayError`; `cancel` answered by `cancelled`; every scheduler flushes the final position count. `forceMode: 'worker'` never falls back, even when a worker must be replaced; `'auto'` still falls back, and after a worker failure `mode` stays `'main'` (existing behaviour). New fake-worker, main-mode and direct-client tests are browser-safe; the loopback tests are Node-only. |

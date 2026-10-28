@@ -66,11 +66,14 @@
  * enabled once a puzzle is shown AND somebody listens to 'action'.
  *
  * Generation client: `SG.workerClient || directClient`; a client is `{ generate(config, onEvent) ->
- * Promise<PuzzleResult>, cancel(), mode: 'worker' | 'main', ready()? }`. The internal `directClient` runs
- * `SG.pipeline.run` on the main thread. LIMIT: that pipeline is synchronous and cannot yield, so the page
- * cannot respond while it runs and `cancel()` (or a newer `generate`) only takes effect while the client is
- * still waiting to paint the busy state; a run that has started always finishes (or hits its time budget) and
- * its result is then dropped by the session token of the app. `SG.workerClient` removes the limit.
+ * Promise<PuzzleResult>, cancel(), replay(result, { onProgress }) -> Promise<Analysis>, cancelReplay(),
+ * mode: 'worker' | 'main', ready()? }`. The internal `directClient` runs `SG.pipeline.run` on the main
+ * thread. LIMIT: that pipeline is synchronous and cannot yield, so the page cannot respond while it runs and
+ * `cancel()` (or a newer `generate`) only takes effect while the client is still waiting to paint the busy
+ * state; a run that has started always finishes (or hits its time budget) and its result is then dropped by
+ * the session token of the app. `SG.workerClient` removes the limit.
+ * `replay` (the analysis behind the replay's score tables, `SG.replay.prepare`) never starts by itself: the
+ * page asks for it, and on the main thread only with `allowMain: true`, the user's explicit consent.
  *
  * Replay contract: the board is built from the FINAL model of the result and shows the finished puzzle at
  * once; nothing plays by itself. The player builds the replay steps from `result.digLog` (not from the trace)
@@ -95,6 +98,9 @@
 
   /** Time limit of a run on the main thread (the page cannot respond while it runs). */
   const MAIN_THREAD_LIMIT_MS = 120000;
+
+  /** Length of a slice of the replay analysis on the page; the page gets its turn between two slices. */
+  const REPLAY_SLICE_MS = 12;
 
   /** The busy state is painted after two animation frames; this timer covers a tab that paints no frames. */
   const PAINT_FALLBACK_MS = 150;
@@ -214,10 +220,14 @@
   /**
    * The main-thread client (interface of `SG.workerClient`): waits for the busy state to paint, runs
    * `SG.pipeline.run` synchronously and hands the buffered events to `onEvent` at the end. See LIMIT above.
+   * `replay` runs `SG.replay.prepare` on the page in slices of about REPLAY_SLICE_MS, only inside that call
+   * and only with the explicit consent `allowMain: true` (the same contract as the worker client).
    */
   const directClient = (function () {
     let token = 0;
     let abort = null;
+    let replayToken = 0;
+    let replayStop = null;
 
     function deliver(events, onEvent) {
       if (typeof onEvent !== 'function') return;
@@ -233,7 +243,90 @@
       }
     }
 
+    function cancelReplay() {
+      if (replayStop === null) return false;
+      const stop = replayStop;
+      replayStop = null;
+      stop();
+      return true;
+    }
+
+    function clockMs() {
+      return typeof root.performance !== 'undefined' && typeof root.performance.now === 'function'
+        ? root.performance.now() : Date.now();
+    }
+
+    function replay(result, options) {
+      const o = options !== null && typeof options === 'object' ? options : {};
+      if (o.allowMain !== true) {
+        return Promise.reject(
+          new SG.errors.GenerationError('budget.cancelled', { reason: 'replayConsentRequired' })
+        );
+      }
+      cancelReplay();
+      if (abort !== null) {
+        return Promise.reject(new SG.errors.GenerationError('unexpected', { message: 'busy' }));
+      }
+      return new Promise(function (resolve, reject) {
+        let iterator;
+        try {
+          iterator = SG.replay.prepare(result);
+        } catch (err) {
+          reject(err);
+          return;
+        }
+        const mine = ++replayToken;
+        let lastDone = -1;
+
+        function report(done, total) {
+          if (typeof done !== 'number' || done === lastDone) return;
+          lastDone = done;
+          if (typeof o.onProgress === 'function') safely(o.onProgress, { done: done, total: total });
+        }
+
+        function slice() {
+          if (mine !== replayToken) return;
+          const began = clockMs();
+          let step;
+          let latest = null;
+          try {
+            do {
+              step = iterator.next();
+              if (!step.done) latest = step.value;
+            } while (!step.done && clockMs() - began < REPLAY_SLICE_MS);
+          } catch (err) {
+            replayStop = null;
+            reject(err);
+            return;
+          }
+          if (latest !== null) report(latest.done, latest.total);
+          if (step.done) {
+            const stats = step.value !== null && typeof step.value === 'object' ? step.value.stats : null;
+            if (stats && typeof stats.positions === 'number') report(stats.positions, stats.positions);
+            if (mine !== replayToken) return;
+            replayStop = null;
+            resolve(step.value);
+            return;
+          }
+          if (mine !== replayToken) return;
+          root.setTimeout(slice, 0);
+        }
+
+        replayStop = function stop() {
+          replayToken++;
+          try {
+            iterator.return();
+          } catch (err) {
+            // The generator is abandoned either way.
+          }
+          reject(cancelledError());
+        };
+        root.setTimeout(slice, 0);
+      });
+    }
+
     function generate(config, onEvent) {
+      cancelReplay();
       cancel();
       const mine = token;
       return new Promise(function (resolve, reject) {
@@ -261,7 +354,7 @@
       });
     }
 
-    return { generate: generate, cancel: cancel, mode: 'main' };
+    return { generate: generate, cancel: cancel, replay: replay, cancelReplay: cancelReplay, mode: 'main' };
   })();
 
   const listeners = {};

@@ -143,6 +143,8 @@
       mode: mode || 'worker',
       calls: [],
       cancels: 0,
+      replays: [],
+      replayCancels: 0,
       results: [],
       generate: function (config, onEvent, hints) {
         inner.calls.push({ config: config, hints: hints });
@@ -158,6 +160,14 @@
       cancel: function () {
         inner.cancels++;
         return true;
+      },
+      replay: function (result, options) {
+        inner.replays.push({ result: result, options: options });
+        return Promise.resolve({ analysis: true });
+      },
+      cancelReplay: function () {
+        inner.replayCancels++;
+        return 'inner';
       },
       ready: function () { return Promise.resolve(inner.mode); }
     };
@@ -785,6 +795,37 @@
       expect(env.client.inner).toBe(env.inner);
       return env.client.ready().then(function (mode) { expect(mode).toBe('main'); });
     });
+
+    it('forwards replay and cancelReplay to the inner client, so the page reaches it through the cache',
+      async function () {
+        const env = makeEnv();
+        const result = { marker: 'result' };
+        const options = { onProgress: function () {}, allowMain: true };
+        const promise = env.client.replay(result, options);
+        expect(env.inner.replays).toHaveLength(1);
+        expect(env.inner.replays[0].result).toBe(result);
+        expect(env.inner.replays[0].options).toBe(options);
+        expect(await promise).toEqual({ analysis: true });
+        expect(env.client.cancelReplay()).toBe('inner');
+        expect(env.inner.replayCancels).toBe(1);
+        expect(env.inner.cancels).toBe(0);
+      });
+
+    it('an inner client without replay rejects with unexpected and answers false to cancelReplay',
+      async function () {
+        const env = makeEnv();
+        delete env.inner.replay;
+        delete env.inner.cancelReplay;
+        let error = null;
+        try {
+          await env.client.replay({}, {});
+        } catch (err) {
+          error = err;
+        }
+        expect(error instanceof SG.errors.GenerationError).toBe(true);
+        expect(error.code).toBe('unexpected');
+        expect(env.client.cancelReplay()).toBe(false);
+      });
 
     it('delegates a miss, stores it, and serves the same configuration next time', async function () {
       const env = makeEnv();

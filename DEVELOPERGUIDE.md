@@ -278,7 +278,10 @@ and runs `SG.pipeline.runSteps` in slices of about 12 ms, so a `cancel` message 
 promise is rejected at once, the work stops at the next boundary, and a worker that does not answer within
 150 ms is terminated (and created again when it is needed). Where a Worker cannot start (`file://`, a restrictive policy) the client
 falls back to the main thread and runs the same slices there. The puzzle for a given
-seed is identical in both modes.
+seed is identical in both modes. `SG.workerClient.replay(result, { onProgress })` returns a promise of the replay
+analysis (`SG.replay.prepare`, run in the worker in slices, or on the page in main mode, and only when the page asks
+for it: on the page it also needs `allowMain: true`, the user's consent); `.cancelReplay()` stops it, and a new
+generation pre-empts it.
 
 ### Cache and pre-generation
 

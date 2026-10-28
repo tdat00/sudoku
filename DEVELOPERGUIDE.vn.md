@@ -263,7 +263,10 @@ tạo một client độc lập (có `dispose()`) cho bộ nhớ đệm. Qua `ht
 `SG.pipeline.runSteps` theo từng lát khoảng 12 ms, nên thông điệp `cancel` được đọc giữa các lát: promise bị từ
 chối ngay, việc đang làm dừng ở ranh giới kế tiếp, và worker nào không phản hồi trong 150 ms thì bị tắt (và được
 tạo lại khi cần). Ở nơi Worker không khởi động được (`file://`, chính sách hạn chế) client chuyển sang chạy trên luồng chính,
-chạy cùng các lát đó ở đó. Với cùng một seed, đề ở hai chế độ là như nhau.
+chạy cùng các lát đó ở đó. Với cùng một seed, đề ở hai chế độ là như nhau. `SG.workerClient.replay(result,
+{ onProgress })` trả về một promise của bản phân tích phát lại (`SG.replay.prepare`, chạy trong worker theo từng lát,
+hoặc trên trang ở chế độ main, và chỉ khi trang yêu cầu: trên trang còn cần `allowMain: true`, tức là sự đồng ý của
+người dùng); `.cancelReplay()` dừng nó, và một lần tạo đề mới sẽ chen ngang nó.
 
 ### Bộ nhớ đệm và tạo sẵn đề
 
