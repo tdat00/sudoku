@@ -1728,7 +1728,7 @@
           expect(sum).toBe(cage.sum);
         });
         for (var c = 0; c < 81; c++) expect(covered[c]).toBe(1);
-        var steps = SG.player.buildSteps(result).steps;
+        var steps = SG.player.buildViews(result, SG.replay.analyse(result)).details.steps;
         var lastDig = steps[steps.length - 2];
         expect(Array.from(lastDig.values)).toEqual(Array.from(result.givens));
         expect(result.warnings).toContain('difficulty.approximate');

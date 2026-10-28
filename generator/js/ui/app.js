@@ -29,13 +29,18 @@
  *                interface; null restores the default). Call it between runs.
  *   attachTrace(trace, digLog?) -> boolean. Gives the puzzle on screen what arrived after it was shown (a
  *                result served from the cache has no dig log and `getResult().trace === []`): the trace, and
- *                the dig log when the result had none. The player then loads the replay at its END. False
- *                when nothing is shown, a run is in progress or there is still no dig log. Fires 'trace'.
+ *                the dig log when the result had none (or an empty one). The replay is then prepared again
+ *                (see the replay contract below). False when nothing is shown, a run is in progress or
+ *                there is still no usable dig log. Fires 'trace'.
+ *   markTraceUnavailable() -> boolean. The generation record of the puzzle on show cannot be had (the cache
+ *                could not regenerate it): the replay shows only the solution, the structure and the finished
+ *                puzzle. False when nothing is shown. In main-thread mode it waits for the "Prepare score
+ *                tables" press.
  *   cancel() -> boolean. Stops the running generation (see the limit of the main-thread client below).
  *   showResult(result, { trace }) -> boolean. Shows a `PuzzleResult` that this page did not generate: the
- *                board shows its clues, the result panel what it can, the replay is built when the result has
- *                a `digLog`; `trace` (default none) is kept as its events. A running generation is replaced.
- *                Fires 'result' with `{ result, trace, imported: true }` (and not 'generate:end').
+ *                board shows its clues, the result panel what it can, the replay is prepared when the result
+ *                has a `digLog`; `trace` (default none) is kept as its events. A running generation is
+ *                replaced. Fires 'result' with `{ result, trace, imported: true }` (and not 'generate:end').
  *   toast(kind, key, args?) -> { close() }. `kind`: 'success' | 'warning' | 'danger' | 'info'.
  *   openModal({ titleKey, titleArgs, body, footer, wide, onClose }) -> { el, panel, body, footer, close(),
  *                setTitle(key, args) }. A `<dialog class="modal">` in `#modal-root`; `body` / `footer` are a
@@ -52,7 +57,9 @@
  *       'result'             `{ result, trace }`, after the board shows the new puzzle
  *       'trace'              `{ result, trace }`, after `attachTrace` gave the puzzle its replay
  *       'position'           `{ position, length, step, direction }` after every move of the replay
- *                            (`step` is a step of `SG.player.buildSteps`, null at position 0)
+ *                            (`step` is a step of `SG.player.buildViews`, null at position 0)
+ *       'replay:consent'     { result }: the user pressed "Prepare score tables" for a puzzle whose record
+ *                            must be rebuilt first (main-thread mode); the cache listens
  *       'locale' { locale } | 'theme' { theme } | 'settings' { state, keys, meta }   every store change
  *       'action'             { id }: a click on `#btn-export` ('export': Print), `#btn-export-code`
  *                            ('exportCode'), `#btn-play-online` ('play'), `#btn-settings` ('settings'),
@@ -76,8 +83,11 @@
  * page asks for it, and on the main thread only with `allowMain: true`, the user's explicit consent.
  *
  * Replay contract: the board is built from the FINAL model of the result and shows the finished puzzle at
- * once; nothing plays by itself. The player builds the replay steps from `result.digLog` (not from the trace)
- * and its `onPosition` is the one place that drives the steps panel.
+ * once; nothing plays by itself. The score tables are prepared after the result is shown: with a Web Worker
+ * automatically, in the background; on the main thread (no worker, for example `file://`) only after the user
+ * presses "Prepare score tables" (`SG.player.createPreparation` decides). The steps of the two views come
+ * from the analysis of `SG.replay` (`SG.player.buildViews`, not from the trace), and the `onPosition` of the
+ * player is the one place that drives the steps panel.
  */
 (function (root) {
   'use strict';
@@ -367,6 +377,7 @@
   let store = null;
   let board = null;
   let player = null;
+  let preparation = null;
   let stepView = null;
   let resultView = null;
   let controls = null;
@@ -724,13 +735,21 @@
     board.showSolution(want ? current.result.solution : null);
   }
 
+  /** Shows the finished puzzle at once and starts preparing the replay (the preparation decides when). */
   function loadReplay(result) {
     player.load(result);
-    stepView.setSteps(player.getSteps());
-    stepView.setPosition(player.state().position);
+    stepView.clear();
+    preparation.start(result);
+    syncSolution();
+    board.refreshText();
+  }
+
+  function stopPreparation() {
+    if (preparation !== null) safely(function () { preparation.cancel(); });
   }
 
   function showFinished(result) {
+    stopPreparation();
     player.reset();
     stepView.clear();
     showAllLayers();
@@ -784,6 +803,7 @@
     live = { token: token };
     showTab('result');
     SG.i18n.setCellLabeler(null);
+    stopPreparation();
     player.reset();
     stepView.clear();
     resultView.clear();
@@ -812,9 +832,8 @@
       setBusy(false);
       resultView.show(result);
       showTab('result');
-      // The finished puzzle is shown at once; the replay steps come from the dig log of the result.
-      if (Array.isArray(result.digLog)) loadReplay(result);
-      else showFinished(result);
+      // The finished puzzle is shown at once; the score tables are prepared after it (see the header).
+      loadReplay(result);
     } catch (err) {
       return fail(err, buffer);
     }
@@ -831,6 +850,7 @@
     live = null;
     current = null;
     setBusy(false);
+    stopPreparation();
     safely(function () { player.reset(); });
     stepView.clear();
     if (SG.DEBUG) logError(err);
@@ -892,6 +912,7 @@
     focusInControls = false;
     current = null;
     live = null;
+    stopPreparation();
     player.reset();
     stepView.clear();
     resultView.clear();
@@ -907,6 +928,7 @@
     live = null;
     current = null;
     setBusy(false);
+    stopPreparation();
     player.reset();
     stepView.clear();
     showPreview();
@@ -927,6 +949,7 @@
     current = null;
     live = null;
     SG.i18n.setCellLabeler(null);
+    stopPreparation();
     player.reset();
     stepView.clear();
     resultView.clear();
@@ -951,8 +974,9 @@
   function attachTrace(trace, digLog) {
     if (!started || busy || current === null || !Array.isArray(trace)) return false;
     const result = current.result;
-    if (!Array.isArray(result.digLog) && Array.isArray(digLog)) result.digLog = digLog;
-    if (!Array.isArray(result.digLog)) return false;
+    const usable = function (log) { return Array.isArray(log) && log.length > 0; };
+    if (!usable(result.digLog) && usable(digLog)) result.digLog = digLog;
+    if (!usable(result.digLog)) return false;
     current.trace = trace;
     try {
       loadReplay(result);
@@ -963,6 +987,12 @@
     }
     emit('trace', current);
     return true;
+  }
+
+  /** The generation record of the puzzle on show cannot be had: the preparation shows the fallback replay. */
+  function markTraceUnavailable() {
+    if (!started || current === null || preparation === null) return false;
+    return preparation.unavailable(current.result);
   }
 
   /** Moves the focus into the opened drawer; a closed drawer is not focusable for a few frames. */
@@ -1174,13 +1204,35 @@
     renderLegend();
 
     stepView = SG.stepView.create(els.stepsRoot, {
-      stats: function (position) { return player !== null ? player.rateStep(position) : null; }
+      // The tables of the steps panel come from the model of the player; a status table has none yet.
+      stats: function (position) {
+        const m = player !== null ? player.tableAt(position) : null;
+        return m && (m.state === 'scored' || m.state === 'final' || m.state === 'zero')
+          ? { counts: m.counts, before: m.before || {}, empties: m.empties, score: m.score } : null;
+      }
     });
     resultView = SG.resultView.create(els.resultRoot, {
       onRetry: function () { regenerate(); },
       showWord: function () { return store.get().showSolution === true; }
     });
-    player = SG.player.create({ board: board, onPosition: handlePosition, onStateChange: handlePlayerState });
+    player = SG.player.create({
+      board: board,
+      onPosition: handlePosition,
+      onStateChange: handlePlayerState,
+      onSteps: function (info) {
+        stepView.setSteps(info.steps);
+        stepView.setPosition(info.position);
+      },
+      onPrepare: function () { preparation.press(); }
+    });
+    preparation = SG.player.createPreparation({
+      getClient: getClient,
+      onState: function (s) { player.setPreparation(s); },
+      onAnalysis: function (analysis, result) {
+        if (current !== null && current.result === result) player.setAnalysis(analysis);
+      },
+      emit: emit
+    });
     player.bindControls(els.playerRoot);
     controls = SG.controls.mount(els.form, store, {
       notify: function (key, args, kind) { toast(kind, key, args); },
@@ -1207,6 +1259,7 @@
     if (!started) return;
     session++;
     if (busy && client) safely(function () { client.cancel(); });
+    stopPreparation();
     started = false;
     busy = false;
     current = null;
@@ -1223,6 +1276,7 @@
       if (part && typeof part.destroy === 'function') safely(function () { part.destroy(); });
     });
     controls = resultView = stepView = player = board = null;
+    preparation = null;
     boardModel = null;
     els = null;
     solutionOn = false;
@@ -1245,6 +1299,7 @@
     getClient: getClient,
     setClient: setClient,
     attachTrace: attachTrace,
+    markTraceUnavailable: markTraceUnavailable,
     generate: generate,
     regenerate: regenerate,
     showResult: showResult,

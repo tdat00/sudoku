@@ -774,14 +774,14 @@ For all synthetic logs that change the final givens, recompute the supplied fina
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Done (plus one orchestrator fix in a heavy suite, see issues) |
+| Start | 2026-10-29 00:08:28 (+07:00) |
+| End | 2026-10-29 00:42:25 (+07:00) |
+| Duration | 33 min 57 s |
+| Model | claude-sonnet-5.5 (sub-agent `GS05-replay-views-texts`, general-purpose); wave 5, alone |
+| Token usage | 195 model calls; 44,385,905 input (43,829,909 cache read), 256,658 output |
+| AI credits | 833.94 AIU (local usage store, keyed by sub-agent id) |
+| Verification | Developer: `--suite=player,steps` 64 + 27; `--suite=cache,ui-contract,i18n,help` 98 + 67 + 81 + 30 (after fixing one guide reference); generator quick set 43 suites 2,785/2,785 (85.7 s); re-runs after the last edits (`smoke,purity,result-view,controls,a11y,theme` 233; `player,steps,cache,ui-contract,i18n,help` 367); player `--suite=help` 22/22; a throw-away script checked the guide examples (Classic 9×9 Easy seed 3: 7 compact steps 0, 14, 24, 34, 44, 46, 46 and 26 details steps; Killer Hell 2 seed 11: 9 compact 0, 0, 27, 98, 162, 517, 579, 3723, 3723 and 38 details). Orchestrator re-run: generator quick set 43 suites, 2,785 passed / 0 failed (85.7 s); player `--suite=help` 22/22; the 15 edited files CRLF, no BOM; after the orchestrator's fix, `node tests/node-runner.js --suite=killer --filter="seed 61843"` 1/1 (8.0 s). |
+| Acceptance | GS05-B01–B06 and GS05-T01–T12 met. |
+| Issues & resolutions | (1) Contract tests rewritten around the new invariants, none weakened: in `player.test.js` the five batch-bound tests (batch sizes, rounds per step, batch signs, the rating budget, `rateStep`) now assert the new invariants and the other tests use `buildViews` and the details view (the guide-example test asserts 7 compact and 26 details steps); `steps.test.js` migrated (`rateStep` → a `tableAt` adapter, `buildSteps` → `buildViews` compact, the legend test compares the frames actually used); `cache.test.js` 11 tests gained `await flush()` and 8 gate tests were added; `ui-contract.test.js` surface lists. (2) `generator/tests/manual/killer.test.js:1731`, a heavy suite outside the task's files, still called the removed `SG.player.buildSteps` and would have failed under `--all` (GS08). Resolution (orchestrator, delegated authority, tightly coupled to this change): one line migrated to `SG.player.buildViews(result, SG.replay.analyse(result)).details.steps`, keeping the assertion (the last dig step's values equal `result.givens`); only that test was run (1/1). (3) Developer's readings, accepted: the compact restart step has `table.change = null` (only a details restart carries `transition.change`); a `busy` rejection is a generic failure and shows the fallback replay; `showFinished` kept only as the fallback when `attachTrace` fails. (4) Left for later tasks: the comments of `generator/js/ui/step-view.js` lines 4 and 276 still name `buildSteps` / `rateStep` (GS06 owns the file); the guides' quick-set counts (GS07). |
+| Handoff | `SG.player.buildViews(result, analysis)` → `{ compact, details, signs, cellCount }`, each view `{ name, steps, audit, signs, cellCount }`; a step `{ index, view, role, first, last, position, kind, phase, line, parts, key, args, meta, values, structure, marks, signs, metrics, context, table }` (`marks` / `signs` the step's net change; `metrics` null for the solution, the structure and fallback steps); `table` = `{ state: start \| zero \| scored \| final \| status, status, reasons, counts, before, empties, score, change, transition, proof, position }` — the `zero` and `status` states are data only until GS06 draws them. Player instance: `setAnalysis`, `setView` / `getView`, `tableAt(position)`, `setPreparation`, callbacks `onSteps`, `onPrepare`; the `stats` adapter in `app.js` `start()` reads `tableAt` (GS06 replaces it). `SG.player.createPreparation` → `{ start, press, unavailable, cancel, state }`; `SG.app.markTraceUnavailable()`; the app emits `replay:consent`. New mount ids `#replay-view-details`, `#replay-status`, `#replay-status-text`, `#btn-prepare-replay`. Risks: the cache regeneration gate (worker-only background client; main mode waits for `replay:consent`) is covered by fake-client tests only, not a real browser or `file://` run (GS08). |

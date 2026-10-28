@@ -320,6 +320,19 @@
             </div>
           </div>
 
+          <div class="replay-bar">
+            <label class="replay-view" for="replay-view-details">
+              <input id="replay-view-details" class="replay-view__input" type="checkbox" disabled>
+              <span data-i18n="replay.view.details"></span>
+            </label>
+          </div>
+          <div id="replay-status" class="replay-status" role="status" aria-live="polite" hidden>
+            <p id="replay-status-text" class="replay-status__text"></p>
+            <button id="btn-prepare-replay" type="button" class="btn btn--primary btn--sm" hidden>
+              <span data-i18n="replay.prepare.button"></span>
+            </button>
+          </div>
+
           <div class="panel__header panel__header--start">
             <h2 id="steps-heading" class="panel__title"></h2>
             <button id="btn-explain" type="button" class="btn btn--ghost btn--icon btn--sm" aria-haspopup="dialog"

@@ -237,22 +237,26 @@ the digger keeps a compact **dig log** of the sample that became the puzzle (`re
 `accept`, `reject`, `keep` and `restart`, plus `signs`, `clear`, `reveal` and sign verdicts for Greater-Than;
 the header of `js/engine/digger.js` describes them). It is the same whatever the trace verbosity, the thread or
 the board size, and `toWire` / `fromWire` carry it. After a run the board shows the finished puzzle at once;
-nothing plays by itself. `SG.player.buildSteps(result)` (pure) turns the log into the steps of the replay,
-each one a change the board shows: the full solution; the cages (Killer) or the signs (Greater-Than); batches
-of random removals, about a ninth of the board tried per step, with the removed cells framed and the cells
-that had to go back framed dashed red; rounds of the guided dig, each taking the removal that makes the
-puzzle hardest; for Greater-Than the batches of signs taken away and the clues shown when the puzzle came out
-too hard; and the finished puzzle. The technical work (settings, board model, rating, tuning, samples that
-missed the level) is not shown. A Classic 9×9 *easy* puzzle with seed 3, for example, replays in 9 steps: the
-full solution, five batches of random removals (9, 10, 10, 10 and 4 cells), two rounds of the guided dig (2
-cells each) and the finished puzzle with 34 clues. `SG.player.create()` is the manual player (first, previous,
-next, last, seek; position 0 is the empty grid), `SG.stepView.create()` the description of the step on show
-(with a legend of the board frames and the techniques the puzzle needs at that step). The explanation
-of the seven steps lives in the Help dialog (tab "How it works"): one collapsible entry per step with its
-what / why / how and pseudocode, `SG.explainCard.create(el, { compact: true })`; the entry of the replay step on
-show is marked, open, and its running line and dig counters are shown (`SG.app.getExplainContext()`). The
-**Explain** (help) icon of the step description opens the Help on that tab. Overlays (cages, signs, windows) are drawn from
-the model of the result, not from the log.
+nothing plays by itself. `SG.player.buildViews(result, analysis)` (pure) builds the steps of both views from the
+analysis of `SG.replay` (below), each step a change the board shows: the full solution; the cages (Killer) or
+the signs (Greater-Than); runs of random removals; runs of the guided dig, each taking the removal that makes the
+puzzle hardest; the dig steps of Greater-Than (signs taken away, clues shown when the puzzle came out too hard);
+a restart or an adjustment when the log has one; and the finished puzzle. The **compact** view is the steps chosen
+by score (never decreasing, a step at the end of every phase), the **details** view one step per complete move.
+A step is plain data (`role`, the moves it covers, the board it shows, a title and a sentence per run of moves as
+`SG.i18n.t()` keys, the frames of the **net** change — cells cleared, cells put back, clues shown again — the
+signs, the cumulative metrics and a `table` model of its score table); the `tableAt(position)` method of the player
+instance hands the table of the step on show to the step description. The technical work (settings, board model,
+samples that missed the level) is not shown. A Classic 9×9 *easy* puzzle with seed 3, for example, replays in 7
+steps (26 with every move shown): the full solution, four steps of random removals (scores 14, 24, 34 and 44), one
+step of the guided dig (46) and the finished puzzle with 34 clues. `SG.player.create()` is the manual player
+(first, previous, next, last, seek, the view toggle `setView`; position 0 is the empty grid), `SG.stepView.create()`
+the description of the step on show (with a legend of the board frames and the techniques the puzzle needs at that
+step). The explanation of the seven steps lives in the Help dialog (tab "How it works"): one collapsible entry per
+step with its what / why / how and pseudocode, `SG.explainCard.create(el, { compact: true })`; the entry of the
+replay step on show is marked, open, and its running line and dig counters are shown
+(`SG.app.getExplainContext()`). The **Explain** (help) icon of the step description opens the Help on that tab.
+Overlays (cages, signs, windows) are drawn from the model of the result, not from the log.
 `SG.replay.moves(result)` (`js/engine/replay.js`, pure) turns the dig log into complete moves (a symmetric group,
 an exchange or a sign; never half of one), and `SG.replay.analyse(result)` rates the board after every move once
 (`SG.logicalSolver.solve` with every technique, a guard of 1,000,000 checks, a uniqueness count when the proof
@@ -265,6 +269,14 @@ move on partial boards, never shown as steps, `SG.replay.classifyShares`) and th
 `analysis.proofs` holds the first use of the new hardest technique (`SG.replay.firstUse`) and the restricted check
 (`SG.replay.restrictedCheck`) on its end board; they are optional, so a failure leaves them `unavailable` and never
 changes a rating.
+The page asks for that analysis after the puzzle is on screen, through `SG.player.createPreparation()` (a small
+controller without DOM: `start(result)`, `press()`, `unavailable(result)`, `cancel()`, `state()`). In worker mode
+it starts by itself and the status block of the replay (`#replay-status`) shows the progress; in main-thread mode
+(`file://`) it first shows a notice and the **Prepare score tables** button, the replay controls stay off until
+the press, and the analysis then runs on the page (`replay(result, { allowMain: true })`). Until the analysis is
+there the board keeps the finished puzzle; when the analysis cannot be had (a failure, or a cached puzzle whose
+record cannot be rebuilt), the replay falls back to the full solution and the finished puzzle
+(`SG.replay.fallback`).
 Random choices use forked streams of one seeded generator (`SG.rng`), which is why a seed reproduces a
 puzzle.
 
@@ -288,9 +300,12 @@ generation pre-empts it.
 `SG.cache` (`js/ui/cache.js`) stores every generated puzzle in `localStorage` (`sg.cache.v1`, 20 puzzles,
 least recently used out first, schema version checked), so the same configuration with the same seed is served
 at once. It stores the puzzle only, never the trace nor the dig log: a cached puzzle is shown immediately (the
-replay waits, with a "preparing the replay" note) and is **generated again from its seed in the background**;
-its dig log then gives it its replay (`SG.app.attachTrace(trace, digLog)`), which opens on the finished
-puzzle — the regenerated puzzle must equal the cached one, otherwise the entry is dropped. When the page has
+replay waits, with the note "Preparing the score tables: rebuilding the generation record…") and is **generated
+again from its seed in the background**; its dig log then gives it its replay (`SG.app.attachTrace(trace,
+digLog)`), which opens on the finished puzzle — the regenerated puzzle must equal the cached one, otherwise the
+entry is dropped. In main-thread mode the regeneration waits for the **Prepare score tables** press (the
+`replay:consent` event of the app), and `SG.app.markTraceUnavailable()` shows the fallback replay when the
+record cannot be had (no worker for the background run, a failure, a different puzzle). When the page has
 been idle for a second, the cache also pre-generates one or two puzzles with the same options in a worker,
 which "Generate" (with an empty seed) and "Generate random" then hand out instantly. It never runs while a
 generation is in progress, pauses in a hidden tab, skips configurations that are slow, and does not exist in
@@ -370,11 +385,12 @@ the runner and `tests.html`. The files of `core` are listed by their path from t
 `js/ui/app.js` owns the page and exposes `SG.app`: `getStore()`, `getBoard()`, `getPlayer()`, `getStepView()`,
 `getResult()` (the last `{ result, trace }`), `generate()`, `regenerate()`, `cancel()`, `showResult()` (show a
 puzzle that was not generated on this page), `toast()`, `announce()`, `openModal()`,
-`setClient()` and `attachTrace()` (what the cache uses), and an event bus `on()` / `emit()` with the events
-`generate:start`, `generate:progress`, `generate:end`, `generate:error`, `generate:cancel`, `result`, `trace`
-(`{ result, trace }`, once `attachTrace()` gave a cached puzzle its replay), `position` (`{ position, length,
-step, direction }` after every move of the replay; `step` is a step of `SG.player.buildSteps`, null at
-position 0), `locale`, `theme`, `settings` and `action`. The header of `app.js` is the full contract.
+`setClient()`, `attachTrace()` and `markTraceUnavailable()` (what the cache uses), and an event bus `on()` /
+`emit()` with the events `generate:start`, `generate:progress`, `generate:end`, `generate:error`,
+`generate:cancel`, `result`, `trace` (`{ result, trace }`, once `attachTrace()` gave a cached puzzle its replay),
+`replay:consent` (the user pressed **Prepare score tables**), `position` (`{ position, length, step, direction }`
+after every move of the replay; `step` is a step of `SG.player.buildViews`, null at position 0), `locale`,
+`theme`, `settings` and `action`. The header of `app.js` is the full contract.
 
 **Adding a UI module without editing `app.js`.** At the end of start-up `app.js` calls `init(SG.app)` — which
 must be idempotent — on each of these optional modules that exists, in this order, every call in its own

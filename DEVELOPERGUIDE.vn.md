@@ -223,17 +223,22 @@ Song song với các sự kiện, bộ đào ghi một **nhật ký đào** (dig
 (`result.digLog`: các mục `pass`, `accept`, `reject`, `keep` và `restart`, cộng thêm `signs`, `clear`,
 `reveal` và kết quả thử từng dấu ở biến thể So sánh; phần đầu của `js/engine/digger.js` mô tả chúng). Nhật ký
 này như nhau bất kể mức ghi trace, luồng chạy hay kích thước bàn cờ, và được `toWire` / `fromWire` mang theo.
-Tạo xong, bàn cờ hiện ngay đề hoàn chỉnh; không có gì tự chạy. `SG.player.buildSteps(result)` (hàm thuần) biến
-nhật ký thành các bước phát lại, mỗi bước là một thay đổi hiện trên bàn cờ: lời giải đầy đủ; các lồng (Sát thủ)
-hoặc các dấu (So sánh); từng đợt xóa ô ngẫu nhiên, mỗi bước thử khoảng một phần chín số ô của bàn cờ, ô bị xóa
-được đóng khung, ô phải trả lại được đóng khung nét đứt màu đỏ; các vòng đào có định hướng, mỗi vòng chọn cách
-xóa làm đề khó nhất; ở biến thể So sánh còn có các đợt bỏ dấu và các số cho sẵn được hiện thêm khi đề khó quá
-mức; cuối cùng là đề hoàn chỉnh. Phần việc kỹ thuật (cấu hình, mô hình bàn cờ, chấm điểm, hiệu chỉnh, các lần
-đào trượt mức) không được hiện. Ví dụ, một đề Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại trong 9 bước: lời giải
-đầy đủ, năm đợt xóa ngẫu nhiên (9, 10, 10, 10 rồi 4 ô), hai vòng đào có định hướng (mỗi vòng xóa 2 ô) và đề
-hoàn chỉnh với 34 số cho sẵn. `SG.player.create()` là bộ phát lại điều khiển bằng tay (về đầu, lùi, tiến, đến cuối, nhảy đến một
-vị trí; vị trí 0 là lưới trống), `SG.stepView.create()` là phần mô tả bước đang xem (kèm chú giải các khung trên
-bàn cờ và bảng điểm của các kỹ thuật mà đề cần ở bước đó). Lời giải thích của
+Tạo xong, bàn cờ hiện ngay đề hoàn chỉnh; không có gì tự chạy. `SG.player.buildViews(result, analysis)` (hàm thuần)
+dựng các bước của cả hai chế độ xem từ bản phân tích của `SG.replay` (ở dưới), mỗi bước là một thay đổi hiện trên
+bàn cờ: lời giải đầy đủ; các lồng (Sát thủ) hoặc các dấu (So sánh); từng đoạn xóa ô ngẫu nhiên; từng đoạn đào có
+định hướng, mỗi đoạn chọn cách xóa làm đề khó nhất; các bước đào của biến thể So sánh (các dấu bị bỏ, các số cho
+sẵn được hiện thêm khi đề khó quá mức); một lần đào lại hay một lần điều chỉnh khi nhật ký có; cuối cùng là đề
+hoàn chỉnh. Chế độ xem **gọn** là các bước được chọn theo điểm (điểm không bao giờ giảm, có một bước ở cuối mỗi
+giai đoạn), chế độ xem **chi tiết** mỗi nước đi một bước. Một bước là dữ liệu thuần (`role`, các nước đi nó gộp,
+bàn cờ nó hiện, tiêu đề và câu mô tả cho mỗi đoạn nước đi dưới dạng khóa `SG.i18n.t()`, các khung của thay đổi
+**ròng** — ô bị bỏ số, ô được trả lại, số cho sẵn được hiện lại —, các dấu, các số đo cộng dồn và một mô hình
+`table` của bảng điểm); phương thức `tableAt(position)` của bộ phát lại đưa bảng của bước đang xem cho phần mô tả bước. Phần việc
+kỹ thuật (cấu hình, mô hình bàn cờ, chấm điểm, hiệu chỉnh, các lần đào trượt mức) không được hiện. Ví dụ, một đề
+Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ,
+bốn bước xóa ngẫu nhiên (điểm 14, 24, 34 và 44), một bước đào có định hướng (46) và đề hoàn chỉnh với 34 số cho
+sẵn. `SG.player.create()` là bộ phát lại điều khiển bằng tay (về đầu, lùi, tiến, đến cuối, nhảy đến một vị trí,
+đổi chế độ xem bằng `setView`; vị trí 0 là lưới trống), `SG.stepView.create()` là phần mô tả bước đang xem (kèm
+chú giải các khung trên bàn cờ và bảng điểm của các kỹ thuật mà đề cần ở bước đó). Lời giải thích của
 bảy bước nằm trong hộp thoại Trợ giúp (thẻ "Cách hoạt động"): mỗi bước một mục thu gọn / mở rộng được, với
 làm gì / vì sao / làm thế nào và mã giả, `SG.explainCard.create(el, { compact: true })`; mục của bước phát lại
 đang xem được đánh dấu, mở sẵn, kèm dòng đang chạy và bộ đếm của giai đoạn đào (`SG.app.getExplainContext()`).
@@ -251,7 +256,14 @@ bước), còn `analysis.transitions` gồm mức thay đổi của Tổng, các
 như một bước, `SG.replay.classifyShares`) và lựa chọn mà bộ sinh đề đã ghi lại, còn `analysis.proofs` có lần dùng đầu
 tiên của kỹ thuật khó nhất mới (`SG.replay.firstUse`) và phép kiểm tra hạn chế (`SG.replay.restrictedCheck`) trên bàn
 cờ cuối của bước; các phần này là tùy chọn, nên khi thất bại chúng chỉ ở trạng thái `unavailable` và không bao giờ làm
-đổi điểm đã chấm. Mọi lựa chọn ngẫu nhiên dùng các luồng được tách ra từ một bộ sinh số có seed (`SG.rng`), vì thế
+đổi điểm đã chấm. Trang yêu cầu bản phân tích đó sau khi đề đã hiện trên màn hình, qua `SG.player.createPreparation()`
+(một bộ điều khiển nhỏ không có DOM: `start(result)`, `press()`, `unavailable(result)`, `cancel()`, `state()`). Ở
+chế độ worker nó tự bắt đầu và khối trạng thái của phần phát lại (`#replay-status`) hiện tiến độ; ở chế độ luồng
+chính (`file://`) trước hết nó hiện một thông báo cùng nút **Chuẩn bị bảng điểm**, các nút điều khiển phát lại
+vẫn tắt cho đến khi bấm, rồi bản phân tích chạy trên trang (`replay(result, { allowMain: true })`). Cho đến khi
+có bản phân tích, bàn cờ giữ đề hoàn chỉnh; khi không lấy được bản phân tích (một lỗi, hoặc một đề lấy từ bộ nhớ
+đệm mà không dựng lại được bản ghi), phần phát lại quay về lời giải đầy đủ và đề hoàn chỉnh
+(`SG.replay.fallback`). Mọi lựa chọn ngẫu nhiên dùng các luồng được tách ra từ một bộ sinh số có seed (`SG.rng`), vì thế
 seed tạo lại được đề.
 
 ### Worker và phương án dự phòng
@@ -273,9 +285,12 @@ người dùng); `.cancelReplay()` dừng nó, và một lần tạo đề mới
 `SG.cache` (`js/ui/cache.js`) lưu mọi đề đã tạo vào `localStorage` (`sg.cache.v1`, 20 đề, đề lâu chưa dùng nhất
 bị bỏ trước, có kiểm tra phiên bản lược đồ), nên cùng cấu hình và cùng seed được trả về ngay lập tức. Nó chỉ lưu
 đề, không bao giờ lưu trace hay nhật ký đào: đề lấy từ bộ nhớ đệm hiện ra ngay (phần phát lại tạm thời chưa
-dùng được, kèm dòng ghi chú "đang chuẩn bị phần phát lại") và được **tạo lại từ seed ở nền**; nhật ký đào của
-lần tạo lại đó mang phần phát lại đến cho đề (`SG.app.attachTrace(trace, digLog)`), mở ra ở đề hoàn chỉnh — đề
-tạo lại phải trùng với đề đã lưu, nếu không mục đó bị bỏ. Khi trang đã rảnh một giây, bộ nhớ đệm còn tạo sẵn
+dùng được, kèm dòng ghi chú "Đang chuẩn bị bảng điểm: đang dựng lại bản ghi quá trình tạo đề…") và được **tạo lại từ seed ở nền**;
+nhật ký đào của lần tạo lại đó mang phần phát lại đến cho đề (`SG.app.attachTrace(trace, digLog)`), mở ra ở đề
+hoàn chỉnh — đề tạo lại phải trùng với đề đã lưu, nếu không mục đó bị bỏ. Ở chế độ luồng chính, việc tạo lại chờ
+đến khi bấm **Chuẩn bị bảng điểm** (sự kiện `replay:consent` của app), và `SG.app.markTraceUnavailable()` hiện
+phần phát lại dự phòng khi không lấy được bản ghi (không có worker cho lần chạy nền, một lỗi, một đề khác). Khi
+trang đã rảnh một giây, bộ nhớ đệm còn tạo sẵn
 một hai đề với cùng tùy chọn trong một worker, để nút "Tạo đề" (khi ô seed trống) và "Tạo ngẫu nhiên" đưa ra
 ngay. Nó không bao giờ chạy khi đang có một lần tạo, tạm dừng khi tab bị ẩn, bỏ qua các cấu hình chậm, và
 không tồn tại ở chế độ luồng chính. Một công tắc trong Cài đặt tắt việc tạo sẵn (lựa chọn này không được nhớ).
@@ -337,12 +352,13 @@ bỏ qua. Các tệp của `core` được liệt kê bằng đường dẫn t�
 
 `js/ui/app.js` sở hữu trang và cung cấp `SG.app`: `getStore()`, `getBoard()`, `getPlayer()`, `getStepView()`,
 `getResult()` (kết quả gần nhất `{ result, trace }`), `generate()`, `regenerate()`, `cancel()`, `showResult()`
-(hiện một đề không do trang này tạo), `toast()`, `announce()`, `openModal()`, `setClient()` và
-`attachTrace()` (bộ nhớ đệm dùng hai hàm này), cùng một kênh sự kiện `on()` / `emit()` với các sự kiện
+(hiện một đề không do trang này tạo), `toast()`, `announce()`, `openModal()`, `setClient()`, `attachTrace()` và
+`markTraceUnavailable()` (bộ nhớ đệm dùng ba hàm này), cùng một kênh sự kiện `on()` / `emit()` với các sự kiện
 `generate:start`, `generate:progress`, `generate:end`, `generate:error`, `generate:cancel`, `result`, `trace`
-(`{ result, trace }`, khi `attachTrace()` vừa mang phần phát lại đến cho một đề lấy từ bộ nhớ đệm), `position`
+(`{ result, trace }`, khi `attachTrace()` vừa mang phần phát lại đến cho một đề lấy từ bộ nhớ đệm),
+`replay:consent` (người dùng đã bấm **Chuẩn bị bảng điểm**), `position`
 (`{ position, length, step, direction }` sau mỗi lần di chuyển trong phần phát lại; `step` là một bước của
-`SG.player.buildSteps`, bằng null ở vị trí 0), `locale`, `theme`, `settings` và `action`. Phần đầu của
+`SG.player.buildViews`, bằng null ở vị trí 0), `locale`, `theme`, `settings` và `action`. Phần đầu của
 `app.js` là hợp đồng đầy đủ.
 
 **Thêm một module giao diện mà không sửa `app.js`.** Cuối quá trình khởi động, `app.js` gọi `init(SG.app)` — hàm

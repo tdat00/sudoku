@@ -23,6 +23,38 @@
     return cache[key];
   }
 
+  var analyses = [];
+
+  /** The analysis of a result (memoised), as the app gets it from the client. */
+  function analysisOf(res) {
+    for (var i = 0; i < analyses.length; i++) if (analyses[i].result === res) return analyses[i].analysis;
+    var analysis = SG.replay.analyse(res);
+    analyses.push({ result: res, analysis: analysis });
+    return analysis;
+  }
+
+  /** The steps of the compact view, which the panel shows by default. */
+  function compactSteps(res) {
+    return SG.player.buildViews(res, analysisOf(res)).compact.steps;
+  }
+
+  /** A player with the analysis of the result loaded (no board needed). */
+  function loadedPlayer(res) {
+    var player = SG.player.create({});
+    player.load(res);
+    player.setAnalysis(analysisOf(res));
+    return player;
+  }
+
+  /** The `stats` option of the panel, as `SG.app` builds it from the table models of the player. */
+  function statsOf(player) {
+    return function (p) {
+      var m = player.tableAt(p);
+      return m && (m.state === 'scored' || m.state === 'final' || m.state === 'zero')
+        ? { counts: m.counts, before: m.before || {}, empties: m.empties, score: m.score } : null;
+    };
+  }
+
   function hasOwn(obj, key) {
     return Object.prototype.hasOwnProperty.call(obj, key);
   }
@@ -200,7 +232,7 @@
       var fx = panelFixture();
       inLocale('en', function () {
         expect(fx.detail.textContent).toBe('');
-        fx.view.setSteps(SG.player.buildSteps(result('classic9', 'normal', 3)).steps);
+        fx.view.setSteps(compactSteps(result('classic9', 'normal', 3)));
         expect(part(fx, 'step-detail__empty')).not.toBeNull();
         expect(fx.detail.textContent).toContain('replay controls');
         expect(fx.view.getPosition()).toBe(0);
@@ -209,7 +241,7 @@
 
     it('shows the number, title, summary and sentence of the current step only', function () {
       var fx = panelFixture();
-      var steps = SG.player.buildSteps(result('classic9', 'normal', 3)).steps;
+      var steps = compactSteps(result('classic9', 'normal', 3));
       inLocale('en', function () {
         fx.view.setSteps(steps);
         fx.view.setPosition(3);
@@ -236,17 +268,28 @@
       var fx = panelFixture();
       var legend = fx.detail.nextSibling;
       expect(legend.hidden).toBe(true);
+      function used(steps) {
+        return ['dug', 'kept', 'revealed'].filter(function (name) {
+          return steps.some(function (s) { return s.marks[name].length > 0; });
+        });
+      }
       inLocale('en', function () {
-        fx.view.setSteps(SG.player.buildSteps(result('classic9', 'normal', 3)).steps);
+        var classic = compactSteps(result('classic9', 'normal', 3));
+        fx.view.setSteps(classic);
         var marks = legend.children.map(function (li) { return li.getAttribute('data-mark'); });
-        expect(marks).toEqual(['dug', 'kept']);
+        expect(marks).toEqual(used(classic));
+        expect(marks).toContain('dug');
+        expect(marks).toContain('kept');
         expect(legend.hidden).toBe(false);
         expect(legend.textContent).toContain('Removed in this step');
-        fx.view.setSteps(SG.player.buildSteps(result('greaterThan', 'normal', 4)).steps);
+        var gtSteps = compactSteps(result('greaterThan', 'normal', 4));
+        fx.view.setSteps(gtSteps);
         var gtMarks = legend.children.map(function (li) { return li.getAttribute('data-mark'); });
         expect(gtMarks).toContain('revealed');
         expect(gtMarks).toContain('signRemoved');
         expect(gtMarks).not.toContain('dug');
+        expect(gtMarks.filter(function (name) { return name !== 'signRemoved' && name !== 'signKept'; }))
+          .toEqual(used(gtSteps));
         fx.view.clear();
         expect(legend.hidden).toBe(true);
         expect(fx.detail.textContent).toBe('');
@@ -255,7 +298,7 @@
 
     it('follows the language and keeps the current step', function () {
       var fx = panelFixture();
-      var steps = SG.player.buildSteps(result('killer', 'normal', 2)).steps;
+      var steps = compactSteps(result('killer', 'normal', 2));
       fx.view.setSteps(steps);
       fx.view.setPosition(2);
       var en = fx.detail.textContent;
@@ -267,35 +310,40 @@
       expect(fx.detail.textContent).toBe(en);
     });
 
-    it('rates the puzzle of each step: nothing before the dig, the rating of the result at the end',
+    it('has a table model for every step: start at 0, zero for the solution, the rating of the result at ' +
+      'the end, "before" the counts of the step shown before',
       function () {
         var res = result('classic9', 'normal', 3);
-        var player = SG.player.create({});
-        player.load(res);
+        var player = loadedPlayer(res);
         var steps = player.getSteps();
-        expect(player.rateStep(0)).toBeNull();
-        expect(player.rateStep(steps.length + 1)).toBeNull();
-        expect(player.rateStep(1).counts).toEqual({});
-        expect(player.rateStep(steps.length).counts).toEqual(res.rating.techniqueCounts);
-        var rated = 0;
+        expect(player.tableAt(0).state).toBe('start');
+        expect(player.tableAt(steps.length + 1)).toBeNull();
+        expect(player.tableAt(1).state).toBe('zero');
+        expect(player.tableAt(1).counts).toEqual({});
+        var last = player.tableAt(steps.length);
+        expect(last.state).toBe('final');
+        expect(last.counts).toEqual(res.rating.techniqueCounts);
+        expect(last.score).toBe(res.rating.score);
         steps.forEach(function (step, i) {
-          var info = player.rateStep(i + 1);
-          if (info === null) return;
-          rated++;
-          var previous = i === 0 ? { counts: {} } : player.rateStep(i);
-          if (previous !== null) expect(info.before).toEqual(previous.counts);
+          var info = player.tableAt(i + 1);
+          expect(info).toBe(step.table);
+          expect(['zero', 'scored', 'final']).toContain(info.state);
+          if (i > 0 && info.state !== 'zero') expect(info.before).toEqual(player.tableAt(i).counts);
         });
-        expect(rated).toBe(steps.length);
+        // The adapter the app gives the panel: the same numbers, nothing for the start or a status table.
+        var stats = statsOf(player);
+        expect(stats(0)).toBeNull();
+        expect(stats(steps.length).counts).toEqual(res.rating.techniqueCounts);
+        expect(stats(steps.length).score).toBe(res.rating.score);
         player.destroy();
       });
 
     it('shows the techniques a step needs, with the uses and score each step added', function () {
       var fx = panelFixture();
       var res = result('classic9', 'normal', 3);
-      var player = SG.player.create({});
-      player.load(res);
+      var player = loadedPlayer(res);
       var rootEl = fx.root;
-      var view = V.create(rootEl, { stats: function (p) { return player.rateStep(p); } });
+      var view = V.create(rootEl, { stats: statsOf(player) });
       var steps = player.getSteps();
       inLocale('en', function () {
         view.setSteps(steps);
@@ -336,11 +384,10 @@
     it('shows the same total at the last step as the score of the summary, whatever its parts', function () {
       var fx = panelFixture();
       var res = result('classic9', 'normal', 3);
-      var player = SG.player.create({});
-      player.load(res);
-      var view = V.create(fx.root, { stats: function (p) { return player.rateStep(p); } });
+      var player = loadedPlayer(res);
+      var view = V.create(fx.root, { stats: statsOf(player) });
       var steps = player.getSteps();
-      var info = player.rateStep(steps.length);
+      var info = statsOf(player)(steps.length);
       expect(info.score).toBe(res.rating.score);
       expect(info.empties).toBe(res.rating.empties);
       inLocale('en', function () {
@@ -398,7 +445,7 @@
       var view = V.create(rootEl);
       var detail = rootEl.querySelector('#step-detail');
       expect(detail).not.toBeNull();
-      view.setSteps(SG.player.buildSteps(result('classic4', 'veryEasy', 2)).steps);
+      view.setSteps(compactSteps(result('classic4', 'veryEasy', 2)));
       view.setPosition(2);
       expect(detail.children.length).toBeGreaterThan(1);
       view.destroy();
@@ -547,7 +594,8 @@
     });
 
     it('highlights the line a replay step names, or the line of an event key', function () {
-      var steps = SG.player.buildSteps(result('killer', 'normal', 2)).steps;
+      var killer = result('killer', 'normal', 2);
+      var steps = SG.player.buildViews(killer, analysisOf(killer)).details.steps;
       steps.forEach(function (s) {
         var vm = X.viewModel(s.phase, { lineLabel: s.line, metrics: s.metrics });
         expect(vm).not.toBeNull();

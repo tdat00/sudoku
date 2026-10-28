@@ -81,9 +81,11 @@ tạo ra như thế nào*:
 2. Trình sinh đề chạy hết tốc độ và **ghi lại một nhật ký ngắn** về cách nó đào ra đề từ một lời giải đầy đủ: mọi số
    đã xóa và mọi số phải trả lại.
 3. Bàn cờ hiện ngay đề hoàn chỉnh. Sau đó bạn **tự xem lại đề được tạo ra như thế nào**, bằng các nút Bước đầu
-   tiên / Bước trước / Bước tiếp theo / Bước cuối cùng hoặc thanh trượt ở thẻ **Các bước tạo đề** dưới bàn cờ:
-   mỗi bước là một thay đổi bạn nhìn thấy trên bàn cờ (lời giải đầy đủ, các lồng hay dấu so sánh, một đợt xóa ô, đề
-   hoàn chỉnh). Thẻ này mô tả bước đang xem, kèm các kỹ thuật mà đề cần ở thời điểm đó và điểm của chúng; biểu
+   tiên / Bước trước / Bước tiếp theo / Bước cuối cùng hoặc thanh trượt ở thẻ **Các bước tạo đề** dưới bàn cờ. Thẻ
+   này trước hết chuẩn bị bảng điểm cho từng bước (ở nền, ít lâu sau khi đề hiện ra), rồi hiện một số bước được
+   chọn để điểm tăng đều và không bao giờ giảm (lời giải đầy đủ, các lồng hay dấu so sánh, các lần bỏ số, đề
+   hoàn chỉnh); đánh dấu **Hiện từng thay đổi** để xem mọi thay đổi đã ghi lại, kể cả những thay đổi làm điểm
+   giảm. Thẻ này mô tả bước đang xem, kèm các kỹ thuật mà đề cần ở thời điểm đó và điểm của chúng; biểu
    tượng **Giải thích** mở Trợ giúp ở đúng bước đó (làm gì, vì sao, làm thế nào, và đoạn mã giả đang chạy). Thẻ
    **Tóm tắt** bên cạnh cho biết độ khó của đề hoàn chỉnh và điểm của nó được cộng lên như thế nào.
 4. Mọi đề bạn tạo đều được giữ trong một danh sách ở bên trái, để mở lại, hoặc in và xuất nhiều đề cùng lúc.
@@ -108,12 +110,12 @@ thay đổi trong dữ liệu đã lưu nằm trong [hướng dẫn cho lập tr
   tính điểm từ 21 kỹ thuật giải của con người (số đơn, ứng viên bị khóa, tập con, cá, cánh, chuỗi) cùng 3 kỹ
   thuật về lồng và 2 kỹ thuật về dấu so sánh; mỗi biến thể chỉ có các mức mà nó đạt được một cách ổn định.
 - **Phát lại từng bước** quá trình tạo đề, do bạn tự điều khiển (bước đầu tiên, bước trước, bước tiếp theo,
-  bước cuối cùng, hoặc thanh trượt có một vạch cho mỗi bước): mỗi bước là một thay đổi nhìn thấy được trên
-  bàn cờ, những lần xóa dễ ở đầu được gộp thành từng đợt, và phần Trợ giúp ("Cách hoạt động") giải thích bước
-  đó kèm mã giả.
+  bước cuối cùng, hoặc thanh trượt có một vạch cho mỗi bước): một số bước được chọn để điểm tăng đều và không
+  bao giờ giảm, hoặc, với **Hiện từng thay đổi**, mọi thay đổi đã ghi lại; các bảng điểm được chuẩn bị sau khi đề
+  hiện ra, và phần Trợ giúp ("Cách hoạt động") giải thích bước đó kèm mã giả.
 - **Điểm độ khó đọc được** — thẻ Tóm tắt liệt kê từng kỹ thuật mà đề cần cùng số lần dùng, điểm và phần điểm
   được phân bổ cho nó, rồi các ô trống, và dòng Tổng bằng đúng điểm của đề; thẻ Các bước tạo đề cho bảng tương tự
-  ở từng bước.
+  ở các bước tạo đề đã được chấm điểm.
 - **Danh sách các đề đã tạo** — mỗi đề bạn tạo được lưu trong trình duyệt (tối đa 100, mới nhất ở trên) và hiện
   ở bên trái dưới dạng "biến thể" và "mức: điểm, seed"; bấm vào một đề để mở lại (cùng seed cho cùng đề trong
   cùng một phiên bản trình sinh đề), xóa từng đề, hoặc xóa cả danh sách.
@@ -235,6 +237,9 @@ thông báo cảnh báo rằng một số ứng dụng và máy chủ cắt bớ
   một lúc (lâu nhất vài trăm mili giây), nút **Hủy** có tác dụng ở lát kế tiếp, và đề kế tiếp không được tạo sẵn ở
   nền. Trang trực tuyến, hay một bản sao được phục vụ bằng máy chủ web
   ([hướng dẫn cho lập trình viên](DEVELOPERGUIDE.vn.md#chạy-trình-sinh-đề-trên-máy)), không gặp vấn đề này.
+  Các bảng điểm của thẻ **Các bước tạo đề** cũng được tính ngay trên trang tại đó: thẻ chờ bạn nhấn **Chuẩn bị
+  bảng điểm**, và trang có thể ngừng phản hồi trong chốc lát khi nó làm việc; đề hoàn chỉnh và thẻ Tóm tắt dùng
+  được trước đó.
 - **Chưa chạy thử với trình đọc màn hình thật.** Thao tác bằng bàn phím, vai trò ARIA và thông báo trực tiếp đã
   được cài đặt và kiểm tra trong trình duyệt không giao diện, nhưng chưa ai nghe thử bằng trình đọc màn hình.
 - **Độ khó là một ước lượng**: trọng số của các kỹ thuật và khoảng điểm của các mức được chọn từ các phép đo trên

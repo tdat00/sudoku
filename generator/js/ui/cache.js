@@ -3,9 +3,14 @@
  *  - RESULT CACHE. Generation is deterministic, so a configuration with the same seed is served from
  *    `localStorage` at once (LRU of 20 puzzles).
  *  - REPLAY. Only the puzzle is stored, never the trace or the dig log: a served puzzle is regenerated from
- *    its seed in the background (an independent client) and must come out equal (givens, solution, rating),
- *    else the entry is dropped and the puzzle generated again. Its trace and dig log then go to
- *    `SG.app.attachTrace`. Generating anything else cancels the regeneration (identity check).
+ *    its seed in the background (an independent, worker-only client) and must come out equal (givens,
+ *    solution, rating), else the entry is dropped and the puzzle generated again. Its trace and dig log then
+ *    go to `SG.app.attachTrace`. Generating anything else cancels the regeneration (identity check). The
+ *    regeneration is gated like the score tables (design.md 7.3): with a Web Worker it starts once the
+ *    background client is confirmed to be one; on the main thread it waits for the user's press of "Prepare
+ *    score tables" (the app event `'replay:consent'`) and then runs directly on the page's own client; a
+ *    background client that is no worker, or a regeneration that fails, means
+ *    `SG.app.markTraceUnavailable()`.
  *  - POOL. After 1 s of quiet (no run, no form change, no key or pointer press, tab visible) one or two
  *    puzzles of the SAME configuration with random seeds are pre-generated (at most 2 per configuration, 4 in
  *    all); "Generate" with an empty seed and "Regenerate" hand them out. An explicit seed is never answered
@@ -668,8 +673,9 @@
    * Builds the wrapper client and the schedulers around it; everything outside is injectable. `options.app`:
    * `SG.app` or a stand-in (`on`, `getStore`, `getResult`, `getBoard`, `attachTrace`, `generate`, `toast`,
    * `announce`, `getClient`, `setClient`). Other options: `store` (the shared LRU), `inner` (the client to
-   * wrap: `app.getClient()`, else `SG.workerClient`), `createClient` (the background client,
-   * `SG.workerClient.create()`; without one nothing is served from the cache), `timers` `{ set, clear }`,
+   * wrap: `app.getClient()`, else `SG.workerClient`), `createClient` (the background client, a worker-only
+   * `SG.workerClient.create({ forceMode: 'worker' })`; without one nothing is served from the cache),
+   * `timers` `{ set, clear }`,
    * `now`, `isHidden`, `watchVisibility(fn(hidden))`, `watchActivity(fn())` (both return unsubscribe),
    * `random` (uint32, seeds of the pool), `note` `{ show(key), hide(), refresh(), destroy() }`, `idleMs`
    * (1000), `maxCostMs` (3000, dearer configurations are not pre-generated), `limitMs` (8000, a longer job is
@@ -685,7 +691,7 @@
     if (!inner || typeof inner.generate !== 'function') throw new TypeError('SG.cache: no generation client');
     const makeBackground = typeof o.createClient === 'function' ? o.createClient
       : (SG.workerClient && typeof SG.workerClient.create === 'function'
-        ? function () { return SG.workerClient.create({}); } : null);
+        ? function () { return SG.workerClient.create({ forceMode: 'worker' }); } : null);
     const timers = o.timers || {
       set: function (fn, ms) { return root.setTimeout(fn, ms); },
       clear: function (handle) { root.clearTimeout(handle); }
@@ -1001,12 +1007,20 @@
         attempt(function () { app.announce(SG.i18n.t('cache.ready')); });
       } else {
         note.show('cache.failed');
+        markUnavailable();
       }
     }
 
-    function startTrace(s) {
-      const client = backgroundClient();
-      if (client === null) return;
+    /** The replay of the puzzle on show cannot have its record: it shows the fallback (nothing else changes) */
+    function markUnavailable() {
+      return attempt(function () {
+        return typeof app.markTraceUnavailable === 'function' && app.markTraceUnavailable();
+      });
+    }
+
+    function startTrace(s, traceClient) {
+      const client = traceClient;
+      if (client === null || client === undefined) return;
       cancelJob();
       clearIdle();
       const mine = { kind: 'trace', cfg: null, client: client, timer: null };
@@ -1031,9 +1045,79 @@
         if (job !== mine) return;
         job = null;
         armWorkerTimer();
-        if (served === s) note.show('cache.failed');
+        if (served === s) {
+          note.show('cache.failed');
+          markUnavailable();
+        }
         scheduleIdle();
       });
+    }
+
+    /**
+     * What the page's own client says about itself once it is ready: 'worker' or 'main'. A client that cannot
+     * tell, or fails to, counts as 'main' (the safe answer: nothing starts without the user).
+     */
+    function modeOf(client) {
+      if (client === null || client === undefined) return Promise.resolve('main');
+      let ready;
+      try {
+        ready = typeof client.ready === 'function' ? client.ready() : client.mode;
+      } catch (err) {
+        return Promise.resolve('main');
+      }
+      return Promise.resolve(ready).then(function (mode) { return mode === 'worker' ? 'worker' : 'main'; },
+        function () { return 'main'; });
+    }
+
+    /**
+     * The regeneration of the record of a served puzzle starts only when it may: in worker mode as soon as
+     * the background client is confirmed to run in a worker (an automatic trace can never become a
+     * main-thread generation), in main mode only after the user pressed "Prepare score tables"
+     * (`'replay:consent'`). A
+     * background client that is not a worker means the record cannot be had: the app shows the fallback.
+     */
+    function gateTrace(s) {
+      if (s.gateStarted === true) {
+        maybeStartTrace(s);
+        return;
+      }
+      s.gateStarted = true;
+      s.traceStarted = false;
+      s.traceReady = false;
+      modeOf(inner).then(function (pageMode) {
+        if (served !== s || destroyed) return undefined;
+        s.pageMode = pageMode;
+        if (pageMode === 'main') {
+          s.traceClient = inner;
+          s.traceReady = true;
+          maybeStartTrace(s);
+          return undefined;
+        }
+        const background = backgroundClient();
+        return modeOf(background).then(function (mode) {
+          if (served !== s || destroyed) return;
+          if (background === null || mode !== 'worker') {
+            armWorkerTimer();
+            markUnavailable();
+            return;
+          }
+          s.traceClient = background;
+          s.traceReady = true;
+          maybeStartTrace(s);
+        });
+      }).catch(noop);
+    }
+
+    function maybeStartTrace(s) {
+      if (destroyed || served !== s || s.traceStarted === true || s.traceReady !== true) return;
+      // A page whose worker is gone since the answer of `ready()` is a main-thread page now.
+      if (innerMode() === 'main') {
+        s.pageMode = 'main';
+        s.traceClient = inner;
+      }
+      if (s.pageMode === 'main' && s.consented !== true) return;
+      s.traceStarted = true;
+      startTrace(s, s.traceClient);
     }
 
     function drawServed() {
@@ -1076,7 +1160,15 @@
         return;
       }
       drawServed();
-      startTrace(served);
+      gateTrace(served);
+    }
+
+    /** The user pressed "Prepare score tables" for the puzzle on show: its record may now be rebuilt. */
+    function onConsent(payload) {
+      const result = payload && payload.result;
+      if (!result || served === null || served.result !== result) return;
+      served.consented = true;
+      maybeStartTrace(served);
     }
 
     function touch() {
@@ -1111,6 +1203,7 @@
       touch();
       subscriptions.push(
         app.on('result', onResult),
+        app.on('replay:consent', onConsent),
         app.on('settings', onSettings),
         app.on('generate:end', function () {
           armed = true;

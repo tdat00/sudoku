@@ -1181,15 +1181,17 @@
         'pseudocode. Generate a puzzle and step through its replay to see which step is current.',
       'help.generation.current': 'Now: replay step {position} of {length}',
       'help.generation.replay': 'As soon as a puzzle is ready, the board shows it; nothing plays by ' +
-        'itself. To see how it was made, use First step, Previous step, Next step and Last step under the ' +
-        'board, or drag the slider to any step; the label beside them tells which step is shown. The ' +
-        'replay starts with the full solution, then shows the cages or the signs (Killer and ' +
-        'Greater-Than only), the batches of random removals and, from Normal up, the rounds in which the ' +
-        'generator rates several candidate removals and keeps the one that makes the puzzle hardest; it ' +
-        'ends on the finished puzzle. Click a step in the Generation steps list to jump to it: the current ' +
-        'step is highlighted with its full sentence, and the Explain button above the list opens this ' +
-        'page at the step it belongs to. On the board, an amber frame marks the cells removed in the ' +
-        'current step, and a red frame the cells put back.',
+        'itself. The Generation steps tab then prepares a score table for every step (in the background; ' +
+        'when the page has no background worker, for example opened from a file, press Prepare score ' +
+        'tables first). Use First step, Previous step, Next step and Last step under the board, or drag ' +
+        'the slider, to see how the puzzle was made: the full solution, the cages or the signs (Killer ' +
+        'and Greater-Than only), the removals chosen at random, the removals the generator chose with ' +
+        'its own check, any adjustments, and the finished puzzle. The steps are chosen so that the score ' +
+        'rises steadily and never goes down; tick Show every move to see each recorded change on its own, ' +
+        'including changes that lowered the score. Rated construction steps show the techniques used and ' +
+        'the empty cells. The Explain button opens this page at the step on show. On the board, an amber ' +
+        'frame marks the cells whose clues were cleared in the step, a dashed red frame the cells put ' +
+        'back, and a dotted frame the clues shown again.',
       'help.generation.seed': 'The seed is the number that starts every random choice. With the same ' +
         'version of the generator, the same seed with the same options always gives the same puzzle, so ' +
         'any puzzle can be shared and reproduced; a link or a history entry made by an older version may ' +
@@ -1227,7 +1229,10 @@
         'shapes, or shapes). The puzzle does not change.',
       'help.controls.replay': 'Under the board, First step and Last step jump to the beginning or the end ' +
         'of the replay, Previous step and Next step move one step at a time, and the slider goes straight ' +
-        'to any step. The label beside them tells which step is shown.',
+        'to any step. The label beside them tells which step is shown. Show every move switches between ' +
+        'the steps chosen for a steady score and every recorded change, and keeps the replay at the same ' +
+        'point of the generation. When the page has no background worker, these controls wait until ' +
+        'Prepare score tables has been pressed and preparation has finished.',
 
       'help.about.privacy.title': 'Privacy',
       'help.about.privacy.text': 'Everything runs inside your browser. Puzzles are generated on your own ' +
@@ -1442,15 +1447,17 @@
         'giả. Hãy tạo một đề và xem lại từng bước để biết bước nào đang là hiện tại.',
       'help.generation.current': 'Hiện tại: bước phát lại {position}/{length}',
       'help.generation.replay': 'Khi đề đã sẵn sàng, bàn cờ hiện ngay đề hoàn chỉnh; không có gì tự chạy. ' +
-        'Muốn xem đề được làm ra thế nào, hãy dùng các nút Bước đầu tiên, Bước trước, Bước tiếp theo và ' +
-        'Bước cuối cùng bên dưới bàn cờ, hoặc kéo thanh trượt đến bước bất kỳ; nhãn bên cạnh cho biết bước ' +
-        'nào đang được hiển thị. Phần phát lại bắt đầu từ lời giải đầy đủ, rồi đến các lồng hoặc các dấu ' +
-        'so sánh (chỉ có ở Sudoku Sát thủ và Sudoku So sánh), các đợt xóa ô ngẫu nhiên và, từ mức Trung ' +
-        'bình trở lên, các vòng mà trình sinh đề đánh giá nhiều cách xóa ô rồi chọn cách làm đề khó nhất; ' +
-        'cuối cùng là đề hoàn chỉnh. Bấm vào một bước trong danh sách Các bước tạo đề để nhảy đến bước đó: ' +
-        'bước hiện tại được tô sáng kèm câu mô tả đầy đủ, còn nút Giải thích phía trên danh sách mở trang ' +
-        'này ở đúng bước tương ứng. Trên bàn cờ, khung màu hổ phách đánh dấu các ô bị xóa ở bước hiện tại, ' +
-        'còn khung màu đỏ đánh dấu các ô được trả lại.',
+        'Thẻ Các bước tạo đề sau đó chuẩn bị bảng điểm cho từng bước (chạy ở nền; nếu trang không có tiến ' +
+        'trình nền, chẳng hạn khi mở từ tệp, hãy nhấn Chuẩn bị bảng điểm trước). Dùng các nút Bước đầu ' +
+        'tiên, Bước trước, Bước tiếp theo và Bước cuối cùng bên dưới bàn cờ, hoặc kéo thanh trượt, để xem ' +
+        'đề được làm ra thế nào: lời giải đầy đủ, các lồng hoặc các dấu so sánh (chỉ có ở Sudoku Sát thủ ' +
+        'và Sudoku So sánh), các lần bỏ số được chọn ngẫu nhiên, các lần bỏ số do trình sinh đề chọn theo ' +
+        'phép kiểm tra của nó, các lần điều chỉnh nếu có, và đề hoàn chỉnh. Các bước được chọn để điểm ' +
+        'tăng đều và không bao giờ giảm; đánh dấu Hiện từng thay đổi để xem riêng từng thay đổi đã ghi ' +
+        'lại, kể cả những thay đổi làm điểm giảm. Các bước tạo đề đã được chấm điểm có bảng ghi kỹ thuật ' +
+        'đã dùng và số ô trống. Nút Giải thích mở trang này ở đúng bước đang xem. Trên bàn cờ, khung màu ' +
+        'hổ phách đánh dấu các ô bị bỏ số ở bước này, khung đỏ nét đứt đánh dấu các ô được trả lại, và ' +
+        'khung chấm đánh dấu các số cho sẵn được hiện lại.',
       'help.generation.seed': 'Seed là con số khởi động mọi lựa chọn ngẫu nhiên. Với cùng một phiên bản ' +
         'trình sinh đề, cùng seed và cùng tùy chọn sẽ luôn cho ra cùng một đề, nên đề nào cũng có thể chia ' +
         'sẻ và tạo lại; một liên kết hay một mục lịch sử do phiên bản cũ tạo ra có thể cho ra một đề khác. ' +
@@ -1488,7 +1495,10 @@
         'dạng). Đề không thay đổi.',
       'help.controls.replay': 'Bên dưới bàn cờ, Bước đầu tiên và Bước cuối cùng nhảy về đầu hoặc đến cuối ' +
         'phần phát lại, Bước trước và Bước tiếp theo chuyển từng bước một, còn thanh trượt đưa thẳng đến ' +
-        'bước bất kỳ. Nhãn bên cạnh cho biết bước nào đang được hiển thị.',
+        'bước bất kỳ. Nhãn bên cạnh cho biết bước nào đang được hiển thị. Hiện từng thay đổi chuyển giữa ' +
+        'các bước được chọn để điểm tăng đều và toàn bộ các thay đổi đã ghi lại, và giữ phần phát lại ở ' +
+        'cùng thời điểm của quá trình tạo đề. Khi trang không có tiến trình nền, các nút này chờ đến khi ' +
+        'bạn nhấn Chuẩn bị bảng điểm và việc chuẩn bị đã hoàn tất.',
 
       'help.about.privacy.title': 'Quyền riêng tư',
       'help.about.privacy.text': 'Mọi thứ chạy ngay trong trình duyệt của bạn. Đề được tạo trên chính ' +

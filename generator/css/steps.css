@@ -3,6 +3,37 @@
  * --sg-color-* tokens (and the --sg-board-* frame colours for the legend swatches).
  */
 
+/* ---- The view toggle and the preparation of the score tables ---- */
+.replay-bar {
+  display: flex;
+  gap: var(--sg-space-2);
+  margin-top: var(--sg-space-2);
+}
+
+.replay-view {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sg-space-1);
+  font-size: var(--sg-font-size-sm);
+  cursor: pointer;
+}
+
+.replay-status {
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-2);
+  padding: var(--sg-space-2) var(--sg-space-3);
+  margin: var(--sg-space-2) 0;
+  background: var(--sg-color-surface);
+}
+
+.replay-status[hidden] {
+  display: none;
+}
+
+.replay-status__text {
+  margin: 0 0 var(--sg-space-2);
+}
+
 /* ---- The step on show ---- */
 .step-detail {
   display: flex;
