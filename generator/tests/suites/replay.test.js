@@ -359,7 +359,7 @@
         expect(analysis.fallback).toBe(c.name);
         expect(rolesOf(analysis)).toEqual(c.roles);
         expect(analysis.stats.fresh).toBe(0);
-        expect(analysis.views.compact).toBeNull();
+        expect(analysis.views.compact.steps.map(function (s) { return s.role; })).toEqual(c.roles);
         expect(analysis.moves[analysis.moves.length - 1].kind).toBe('final');
       });
     });
@@ -459,8 +459,8 @@
       expect(analysis.level).toBe('expert');
       expect(analysis.band).toEqual(SG.difficulty.bandOf('expert'));
       expect(analysis.chapter).toBe(0);
-      expect(analysis.views.compact).toBeNull();
-      expect(analysis.transitions).toEqual([]);
+      expect(analysis.views.compact.steps).toHaveLength(7);
+      expect(analysis.transitions).toHaveLength(6 + 32);
       expect(analysis.stats.positions).toBe(32);
       expect(analysis.stats.fresh).toBe(30);
       expect(analysis.stats.memo).toBe(1);
@@ -622,6 +622,568 @@
           expect(rating.empties).toBe(row[3]);
           if (g.alive) expect(analysis.moves[row[1]].alive).toHaveLength(g.alive[i]);
         });
+      });
+    });
+  });
+
+  // Synthetic analyses for the view builder: rows of [kind, phase, score, hardest, counts, restored].
+  function rate(score, hardest, counts) {
+    var rated = typeof score === 'number';
+    var own = {};
+    if (hardest) own[hardest] = 1;
+    return {
+      status: rated ? (score === 0 ? 'zero' : 'rated') : 'capped', reasons: [], score: score,
+      counts: counts || own, empties: rated && score > 0 ? 10 : 0, hardest: hardest || null,
+      P: rated ? score / 4 : null, W: rated ? score / 2 : null, R: rated ? score / 8 : null,
+      V: rated ? score / 8 : null, level: null, checks: 0, memo: false
+    };
+  }
+
+  function plan(rows, extra) {
+    return Object.assign({
+      fallback: null, structure: null, signs: null, band: { min: 0, max: 1000 },
+      moves: rows.map(function (row, i) {
+        return { index: i, kind: row[0], phase: row[1], restored: row[5] || [], removed: [] };
+      }),
+      ratings: rows.map(function (row) { return rate(row[2], row[3], row[4]); })
+    }, extra);
+  }
+
+  // The synthetic analysis of the rows with the views of `buildViews` filled in.
+  function build(rows, extra) {
+    var analysis = plan(rows, extra);
+    return Object.assign(analysis, R.buildViews(analysis));
+  }
+
+  function entriesOf(scores, phases, kinds) {
+    return scores.map(function (score, i) {
+      return { score: score, phase: phases[i], kind: kinds ? kinds[i] : (i === 0 ? 'solution' : 'random') };
+    });
+  }
+
+  function repeat(value, count) {
+    return new Array(count).fill(value);
+  }
+
+  function scoresIn(analysis, name) {
+    return analysis.views[name].steps.map(function (s) { return analysis.ratings[s.position].score; });
+  }
+
+  // The transition into step k of a view.
+  function into(analysis, name, k) {
+    return analysis.transitions[analysis.views[name].steps[k].transition];
+  }
+
+  // The transition of a view that leads to a position (not the finished-puzzle duplicate).
+  function toPosition(analysis, name, position) {
+    return analysis.transitions.filter(function (t) {
+      return t.view === name && t.to === position && t.role === 'step';
+    })[0];
+  }
+
+  function positionsOf(cuts) {
+    return cuts.map(function (cut) { return cut.position; });
+  }
+
+  describe('replay: the jump rule, the badge ratio and the phase codes', function () {
+    it('decides a jump on exact totals: at least +100 and at least x3 from a total above 0', function () {
+      expect(R.isJump(100, 300)).toBe(true);
+      expect(R.isJump(100, 299)).toBe(false);
+      expect(R.isJump(50, 150)).toBe(true);
+      expect(R.isJump(49, 148)).toBe(false);
+      expect(R.isJump(0, 900)).toBe(false);
+      expect(R.isJump(44, 551)).toBe(true);
+      expect(R.isJump(568, 992)).toBe(false);
+      expect(R.isJump(null, 900)).toBe(false);
+      expect(R.isJump(100, null)).toBe(false);
+    });
+
+    it('rounds the badge ratio down to one decimal, so it never overstates', function () {
+      expect(R.badgeRatio(44, 551)).toBe(12.5);
+      expect(R.badgeRatio(100, 300)).toBe(3);
+      expect(R.badgeRatio(300, 1000)).toBe(3.3);
+      expect(R.badgeRatio(50, 150)).toBe(3);
+      expect(R.badgeRatio(7, 22)).toBe(3.1);
+    });
+
+    it('names the phase of a step by the table of the goldens', function () {
+      function code(role, phases, structure) { return R.phaseCode({ role: role, phases: phases }, structure); }
+      expect(code('solution', [], null)).toBe('S/Sol');
+      expect(code('structure', [], 'cages')).toBe('S/Cag');
+      expect(code('structure', [], 'signs')).toBe('S/Sig');
+      expect(code('restart', ['random', 'start'], null)).toBe('S/Restart');
+      expect(code('final', [], null)).toBe('F/Final');
+      expect(code('moves', ['random'], null)).toBe('D/Dig');
+      expect(code('moves', ['guided'], null)).toBe('G/Choose');
+      expect(code('moves', ['search'], null)).toBe('X/Adjust');
+      expect(code('moves', ['reveal'], null)).toBe('A/Restore');
+      expect(code('moves', ['clues'], 'signs')).toBe('C/Clues');
+      expect(code('moves', ['signs'], 'signs')).toBe('I/Signs');
+      expect(code('moves', ['signsMinimal'], 'signs')).toBe('IM/Signs');
+      expect(code('moves', ['guided', 'reveal'], null)).toBe('G+A/Mixed');
+      expect(code('moves', ['clues', 'signs'], 'signs')).toBe('C+I/Mixed');
+      expect(code('moves', ['signs', 'reveal', 'signsMinimal'], 'signs')).toBe('I+A+IM/Mixed');
+    });
+  });
+
+  describe('replay: the compact selection and its audit (synthetic)', function () {
+    it('cuts the overshoot 0, 23, 44, 100, 200, 400, 800, 992 and the audit inserts the bridge 200', function () {
+      var scores = [0, 23, 44, 100, 200, 400, 800, 992];
+      var entries = entriesOf(scores, ['start'].concat(repeat('random', 7)));
+      var sel = R.select(entries);
+      expect(sel.s).toBe(0);
+      expect(sel.e).toBe(7);
+      expect(sel.ratio).toBeCloseTo(2.15, 2);
+      expect(positionsOf(sel.cuts)).toEqual([0, 1, 2, 3, 5, 7]);
+      expect(sel.cuts.map(function (c) { return c.rank; })).toEqual([4, 3, 3, 3, 1, 3]);
+      var out = R.audit(entries, positionsOf(sel.cuts));
+      expect(out.positions).toEqual([0, 1, 2, 3, 4, 5, 7]);
+      expect(out.edges).toEqual([{ from: 3, to: 5, scope: 'complete', inserted: [4], remaining: false }]);
+      var analysis = build(scores.map(function (score, i) {
+        return [i === 0 ? 'solution' : 'random', i === 0 ? 'start' : 'random', score, 'nakedSingle'];
+      }));
+      expect(scoresIn(analysis, 'compact')).toEqual([0, 23, 44, 100, 200, 400, 992, 992]);
+      expect(analysis.views.compact.audit).toEqual(out.edges);
+      expect(into(analysis, 'compact', 5).auditScope).toBe('complete');
+      expect(into(analysis, 'compact', 5).tier).toBeNull();
+    });
+
+    it('keeps the end of a phase as a step although it adds only 5 (0, 30, 33, 35, 36, 1000)', function () {
+      var entries = entriesOf([0, 30, 33, 35, 36, 1000],
+        ['start', 'random', 'random', 'random', 'guided', 'guided']);
+      var sel = R.select(entries);
+      expect(positionsOf(sel.cuts)).toEqual([0, 1, 3, 4, 5]);
+      expect(sel.cuts.map(function (c) { return c.rank; })).toEqual([4, 3, 2, 3, 3]);
+    });
+
+    it('never cuts at a score above a later one: the excursion is folded into the step', function () {
+      var entries = entriesOf([0, 20, 400, 300, 320, 340], ['start', 'random', 'guided', 'guided', 'guided',
+        'guided']);
+      var sel = R.select(entries);
+      expect(positionsOf(sel.cuts).indexOf(2)).toBe(-1);
+      expect(positionsOf(sel.cuts)[sel.cuts.length - 1]).toBe(5);
+    });
+
+    it('audits an edge over an unscored position with the scope ratedOnly, and never bridges over it', function () {
+      var rows = [['solution', 'start', 0], ['random', 'random', 50, 'nakedSingle'],
+        ['random', 'random', null], ['random', 'random', 400, 'xWing']];
+      var entries = entriesOf([0, 50, null, 400], ['start', 'random', 'random', 'random']);
+      var sel = R.select(entries);
+      expect(positionsOf(sel.cuts)).toEqual([0, 1, 3]);
+      var out = R.audit(entries, positionsOf(sel.cuts));
+      expect(out.positions).toEqual([0, 1, 3]);
+      expect(out.edges).toEqual([{ from: 1, to: 3, scope: 'ratedOnly', inserted: [], remaining: true }]);
+      var analysis = build(rows);
+      var t = into(analysis, 'compact', 2);
+      expect(analysis.views.compact.steps[2].position).toBe(3);
+      expect(t.folded.unscored).toBe(1);
+      expect(t.auditScope).toBe('ratedOnly');
+      expect(t.tier).toBe('jump');
+      expect(into(analysis, 'compact', 1).auditScope).toBeNull();
+    });
+
+    it('reduces a jump that has no bridge: inserts the chain with the smallest largest ratio', function () {
+      var entries = entriesOf([0, 100, 350, 1200], ['start', 'random', 'random', 'guided']);
+      var out = R.audit(entries, [0, 1, 3]);
+      expect(out.positions).toEqual([0, 1, 2, 3]);
+      expect(out.edges).toEqual([{ from: 1, to: 3, scope: 'complete', inserted: [2], remaining: true }]);
+      var same = R.audit(entries, [0, 1, 2, 3]);
+      expect(same.edges).toEqual([]);
+    });
+
+    it('lets the options override the constants and leaves the entries alone', function () {
+      var entries = entriesOf([0, 23, 44, 100, 200, 400, 800, 992], ['start'].concat(repeat('random', 7)));
+      var before = JSON.stringify(entries);
+      expect(R.select(entries, { rMin: 5, rMax: 5 }).ratio).toBe(5);
+      expect(R.select(entries, { minGain: 1000 }).cuts.map(function (c) { return c.position; })).toEqual(
+        [0, 1, 2, 3, 7]);
+      expect(R.select(entries).ratio).toBeCloseTo(Math.pow(99.2, 1 / 6), 10);
+      expect(JSON.stringify(entries)).toBe(before);
+    });
+
+    it('has no cut without a rated position, and never attaches an unscored tail to an earlier board', function () {
+      expect(R.select([])).toEqual({ s: 0, e: -1, ratio: R.CONSTANTS.R_MIN, cuts: [] });
+      var none = R.select(entriesOf([null, null], ['start', 'random']));
+      expect(none.e).toBe(-1);
+      expect(none.cuts).toEqual([]);
+      var tail = R.select(entriesOf([0, 40, null], ['start', 'random', 'random']));
+      expect(tail.e).toBe(1);
+      expect(positionsOf(tail.cuts)).toEqual([0, 1]);
+    });
+  });
+
+  describe('replay: views and transitions (synthetic)', function () {
+    var RESTART = [
+      ['solution', 'start', 0], ['random', 'random', 23, 'nakedSingle'], ['random', 'random', 44, 'nakedSingle'],
+      ['guided', 'guided', 551, 'simpleColouring'], ['restart', 'start', 0],
+      ['random', 'random', 23, 'nakedSingle'], ['random', 'random', 44, 'nakedSingle'],
+      ['guided', 'guided', 600, 'simpleColouring'], ['guided', 'guided', 992, 'xyzWing']
+    ];
+
+    function tiers(analysis, name) {
+      return analysis.views[name].steps.map(function (s) {
+        return s.transition === null ? null : analysis.transitions[s.transition].tier;
+      });
+    }
+
+    it('folds a restart into "Starting again" in the compact view; the details view shows both digs', function () {
+      var entries = entriesOf(RESTART.map(function (r) { return r[2]; }), RESTART.map(function (r) { return r[1]; }),
+        RESTART.map(function (r) { return r[0]; }));
+      var sel = R.select(entries);
+      expect(sel.s).toBe(4);
+      expect(positionsOf(sel.cuts)).toEqual([4, 5, 6, 7, 8]);
+      var analysis = build(RESTART);
+      expect(analysis.chapter).toBe(4);
+      expect(scoresIn(analysis, 'compact')).toEqual([0, 0, 23, 44, 600, 992, 992]);
+      expect(analysis.views.compact.steps.map(function (s) { return s.role; })).toEqual(
+        ['solution', 'restart', 'moves', 'moves', 'moves', 'moves', 'final']);
+      var restart = analysis.views.compact.steps[1];
+      expect([restart.first, restart.last, restart.position]).toEqual([1, 4, 4]);
+      var folded = into(analysis, 'compact', 1).folded;
+      expect(folded.restart).toEqual({ peak: 551, moves: 3 });
+      expect(folded.peak).toBe(551);
+      expect(into(analysis, 'compact', 1).change).toBe(0);
+      expect(tiers(analysis, 'compact')).toEqual([null, null, 'first', null, 'jump', 'newPeak', null]);
+      expect(into(analysis, 'compact', 4).ratio).toBe(13.6);
+      expect(scoresIn(analysis, 'details')).toEqual([0, 23, 44, 551, 0, 23, 44, 600, 992, 992]);
+      expect(analysis.views.details.steps[4].role).toBe('restart');
+      expect(into(analysis, 'details', 4).change).toBe(-551);
+      expect(into(analysis, 'details', 4).folded.restart).toBeNull();
+      expect(tiers(analysis, 'details')).toEqual(
+        [null, 'first', null, 'jump', null, null, null, 'jump', 'newPeak', null]);
+      expect(into(analysis, 'details', 3).ratio).toBe(12.5);
+    });
+
+    it('orders the transitions compact first, then details, and links each step to its own', function () {
+      var analysis = build(RESTART);
+      var compact = analysis.views.compact.steps.length - 1;
+      expect(analysis.transitions).toHaveLength(compact + analysis.views.details.steps.length - 1);
+      analysis.transitions.forEach(function (t, i) {
+        expect(t.view).toBe(i < compact ? 'compact' : 'details');
+        var step = analysis.views[t.view].steps[t.step];
+        expect(step.transition).toBe(i);
+        expect(t.to).toBe(step.position);
+        expect(t.from).toBe(analysis.views[t.view].steps[t.step - 1].position);
+        expect(t.role).toBe(step.role === 'final' ? 'final' : 'step');
+        expect(t.cause).toBeNull();
+        expect(t.choice).toBeNull();
+      });
+      expect(analysis.views.compact.steps[0].transition).toBeNull();
+      expect(analysis.views.details.steps[0].transition).toBeNull();
+    });
+
+    it('is pure: the input is not changed, the output is the same twice, no solver is called', function () {
+      var input = plan(RESTART);
+      var snapshot = JSON.stringify(input);
+      var first;
+      var calls = solverCalls(function () { first = R.buildViews(input); });
+      expect(calls).toBe(0);
+      expect(JSON.stringify(input)).toBe(snapshot);
+      expect(R.buildViews(input)).toEqual(first);
+      expect(hasFunction(first)).toBe(false);
+      first.transitions[0].before.counts.invented = 1;
+      expect(input.ratings[0].counts).toEqual({});
+    });
+
+    it('labels a jump that keeps its hardest technique as a jump without a new hardest technique', function () {
+      var analysis = build([['solution', 'start', 0], ['random', 'random', 100, 'nakedSingle', { nakedSingle: 5 }],
+        ['guided', 'guided', 400, 'nakedSingle', { nakedSingle: 20 }]]);
+      var t = into(analysis, 'compact', 2);
+      expect(t.tier).toBe('jump');
+      expect(t.ratio).toBe(4);
+      expect(t.newHardest).toBe(false);
+      expect(into(analysis, 'details', 2).tier).toBe('jump');
+    });
+
+    it('does not count a technique with a count of 0 as used', function () {
+      var analysis = build([['solution', 'start', 0],
+        ['random', 'random', 100, 'nakedSingle', { nakedSingle: 5, xWing: 0 }],
+        ['guided', 'guided', 400, 'xWing', { nakedSingle: 5, xWing: 1 }],
+        ['guided', 'guided', 405, 'xWing', { nakedSingle: 5, xWing: 1 }]]);
+      var t = into(analysis, 'details', 2);
+      expect(t.tier).toBe('jump');
+      expect(t.newHardest).toBe(true);
+      expect(into(analysis, 'details', 3).newHardest).toBe(false);
+    });
+
+    it('gives a new hardest technique at a flat or lower score the tier newPeak, never at a zero baseline', function () {
+      var analysis = build([['solution', 'start', 0], ['random', 'random', 70, 'nakedSingle'],
+        ['guided', 'guided', 70, 'hiddenSingleBox'], ['guided', 'guided', 60, 'pointing']]);
+      var t = into(analysis, 'details', 2);
+      expect([t.tier, t.change, t.newHardest, t.ratio]).toEqual(['newPeak', 0, true, null]);
+      expect(into(analysis, 'details', 3).tier).toBe('newPeak');
+      expect(into(analysis, 'details', 3).change).toBe(-10);
+      expect(into(analysis, 'details', 1).tier).toBe('first');
+      expect(into(analysis, 'details', 1).newHardest).toBe(false);
+    });
+
+    it('gives a status step no change and no tier, and the step after it neither', function () {
+      var analysis = build([['solution', 'start', 0], ['random', 'random', 50, 'nakedSingle'],
+        ['random', 'random', null], ['random', 'random', 400, 'xWing']]);
+      var into2 = into(analysis, 'details', 2);
+      expect([into2.change, into2.tier, into2.newHardest, into2.after.total]).toEqual([null, null, false, null]);
+      var into3 = into(analysis, 'details', 3);
+      expect([into3.change, into3.tier, into3.newHardest, into3.before.total]).toEqual([null, null, false, null]);
+    });
+
+    it('copies the terms of the rating: P, W, E, V, R, the total, the level, the hardest and the counts', function () {
+      var analysis = build(RESTART);
+      var t = into(analysis, 'details', 3);
+      expect(t.before).toEqual({
+        P: 11, W: 22, E: 10, V: 5.5, R: 5.5, total: 44, level: null, hardest: 'nakedSingle',
+        counts: { nakedSingle: 1 }
+      });
+      expect(t.after.total).toBe(551);
+      var zero = into(analysis, 'details', 1).before;
+      expect(zero).toEqual({ P: 0, W: 0, E: 0, V: 0, R: 0, total: 0, level: null, hardest: null, counts: {} });
+    });
+
+    it('counts the clues restored by the refinement moves of a step, and flags a peak above the band', function () {
+      var analysis = build([['solution', 'start', 0], ['random', 'random', 30, 'nakedSingle'],
+        ['guided', 'guided', 1500, 'nishio'], ['reveal', 'reveal', 800, 'nishio', null, [3, 9]],
+        ['reveal', 'reveal', 700, 'nishio', null, [4]], ['guided', 'guided', 700, 'nishio']],
+      { band: { min: 100, max: 1000 } });
+      var steps = analysis.views.compact.steps;
+      expect(steps.map(function (s) { return s.position; })).toEqual([0, 1, 4, 5, 5]);
+      var folded = into(analysis, 'compact', 2).folded;
+      expect(steps[2].phases).toEqual(['guided', 'reveal']);
+      expect(folded.peak).toBe(1500);
+      expect(folded.aboveBand).toBe(true);
+      expect(folded.revealed).toBe(3);
+      expect(folded.unscored).toBe(0);
+      expect(R.phaseCode(steps[2], null)).toBe('G+A/Mixed');
+      var plain = into(analysis, 'compact', 1).folded;
+      expect([plain.peak, plain.aboveBand, plain.revealed, plain.unscored, plain.restart]).toEqual(
+        [null, false, 0, 0, null]);
+    });
+
+    it('gives a conservative fallback the same steps in both views, from the solution to the final board', function () {
+      var base = synthetic(classic4(), null, blank([0, 15]));
+      var rated = Object.assign({}, base, {
+        digLog: undefined,
+        rating: { score: 120, techniqueCounts: { nakedSingle: 3 }, hardestTechnique: 'nakedSingle', empties: 2 }
+      });
+      var analysis = R.analyse(rated);
+      expect(analysis.fallback).toBe('noLog');
+      expect(analysis.chapter).toBe(0);
+      expect(rolesOf(analysis)).toEqual(['solution', 'final']);
+      function bare(view) {
+        return view.steps.map(function (s) { return Object.assign({}, s, { transition: null }); });
+      }
+      expect(bare(analysis.views.compact)).toEqual(bare(analysis.views.details));
+      expect(analysis.views.compact.audit).toEqual([]);
+      expect(analysis.transitions.map(function (t) { return t.view; })).toEqual(['compact', 'details']);
+      analysis.transitions.forEach(function (t) {
+        expect([t.role, t.tier, t.change, t.ratio, t.from, t.to]).toEqual(['final', 'first', 120, null, 0, 1]);
+        expect([t.before.total, t.after.total, t.after.hardest]).toEqual([0, 120, 'nakedSingle']);
+      });
+      var missing = R.analyse(Object.assign({}, base, { digLog: undefined }));
+      expect(missing.fallback).toBe('noLog');
+      missing.transitions.forEach(function (t) {
+        expect([t.role, t.tier, t.change, t.newHardest, t.after.total]).toEqual(['final', null, null, false, null]);
+      });
+    });
+
+    slow('keeps the structure step of a Killer fallback: no change for it, "first" at the final board', function () {
+      var killer = Object.assign({}, entry('G09').result, { digLog: undefined });
+      var analysis = R.analyse(killer);
+      expect(rolesOf(analysis)).toEqual(['solution', 'structure', 'final']);
+      expect(analysis.views.compact.steps.map(function (s) { return s.role; })).toEqual(rolesOf(analysis));
+      ['compact', 'details'].forEach(function (name) {
+        var structure = into(analysis, name, 1);
+        expect([structure.role, structure.change, structure.tier]).toEqual(['step', null, null]);
+        var final = into(analysis, name, 2);
+        expect([final.role, final.change, final.tier, final.before.total, final.after.total]).toEqual(
+          ['final', 968, 'first', 0, 968]);
+      });
+      expect(R.phaseCode(analysis.views.compact.steps[1], analysis.structure)).toBe('S/Cag');
+    });
+  });
+
+  // The position where the first rise by the ratio begins (where it ends when it begins at the chapter start).
+  function firstRise(analysis) {
+    var scores = analysis.ratings.map(function (r) { return r.score; });
+    var sel = R.select(entriesOf(scores, analysis.moves.map(function (m) { return m.phase; })));
+    var eligible = [sel.s];
+    var low = scores[sel.e];
+    for (var i = sel.e - 1; i > sel.s; i--) {
+      if (scores[i] !== null && scores[i] <= low) {
+        eligible.splice(1, 0, i);
+        low = scores[i];
+      }
+    }
+    eligible.push(sel.e);
+    for (var k = 0; k + 1 < eligible.length; k++) {
+      var a = eligible[k];
+      var b = eligible[k + 1];
+      if (Math.max(scores[b], 10) >= sel.ratio * Math.max(scores[a], 10)) return a > sel.s ? a : b;
+    }
+    return null;
+  }
+
+  describe('replay: golden compact view and transitions', function () {
+    var NONE = '\u2014';
+    var TERMS = ['P', 'W', 'R', 'V', 'E'];
+
+    GOLDENS.forEach(function (g) {
+      slow('golden ' + g.id + ' compact rows, counts and invariants', function () {
+        var analysis = analysisOf(g.id);
+        var result = entry(g.id).result;
+        var steps = analysis.views.compact.steps;
+        expect(analysis.chapter).toBe(0);
+        expect(steps).toHaveLength(g.counts.compact);
+        expect(analysis.views.details.steps).toHaveLength(g.counts.details);
+        expect(g.rows).toHaveLength(steps.length);
+        expect(analysis.views.compact.audit.every(function (edge) {
+          return edge.scope === 'complete' && edge.inserted.length === 0 && edge.remaining;
+        })).toBe(true);
+        g.rows.forEach(function (row, i) {
+          var step = steps[i];
+          var rating = analysis.ratings[step.position];
+          var tier = i === 0 ? null : into(analysis, 'compact', i).tier;
+          expect(R.phaseCode(step, analysis.structure)).toBe(row[2]);
+          expect(step.position).toBe(row[1]);
+          expect(rating.empties).toBe(row[3]);
+          expect(rating.score).toBe(row[4]);
+          expect(i === 0 ? 0 : rating.score - analysis.ratings[steps[i - 1].position].score).toBe(row[5]);
+          expect(rating.hardest || NONE).toBe(row[6]);
+          expect(tier === 'jump' ? 'Y' : NONE).toBe(row[7]);
+          expect(tier === 'first' ? 'F' : tier === 'newPeak' ? 'N' : NONE).toBe(row[9]);
+        });
+        var scores = scoresIn(analysis, 'compact');
+        scores.forEach(function (score, i) {
+          expect(typeof score).toBe('number');
+          if (i > 0) expect(score).toBeGreaterThanOrEqual(scores[i - 1]);
+        });
+        var last = steps[steps.length - 1];
+        expect(last.role).toBe('final');
+        expect(last.position).toBe(analysis.moves.length - 1);
+        expect(scores[scores.length - 1]).toBe(result.rating.score);
+        if (g.alive) {
+          expect(steps.map(function (s) { return analysis.moves[s.position].alive.length; })).toEqual(g.alive);
+        }
+      });
+
+      slow('golden ' + g.id + ' folds, jump terms and first rated step', function () {
+        var analysis = analysisOf(g.id);
+        var steps = analysis.views.compact.steps;
+        var folds = {};
+        g.folds.forEach(function (f) { folds[f.step - 1] = f; });
+        steps.forEach(function (step, k) {
+          if (k === 0) return;
+          var folded = into(analysis, 'compact', k).folded;
+          var f = folds[k];
+          if (!f) {
+            expect(folded.peak).toBeNull();
+            expect(folded.aboveBand).toBe(false);
+            return;
+          }
+          var letters = R.phaseCode(step, analysis.structure).split('/')[0].split('+');
+          expect(folded.peak).toBe(f.peak);
+          expect(analysis.ratings[step.position].score).toBe(f.end);
+          expect(folded.aboveBand).toBe(f.peak >= analysis.band.max);
+          if (letters.indexOf('A') >= 0 && f.restored > 0) expect(folded.revealed).toBe(f.restored);
+          expect(folded.unscored).toBe(0);
+        });
+        g.jumps.forEach(function (j) {
+          var t = into(analysis, 'compact', j.step - 1);
+          expect(t.tier).toBe('jump');
+          expect(t.before.total).toBe(j.from);
+          expect(t.after.total).toBe(j.to);
+          expect(t.ratio).toBe(Math.floor(10 * j.to / j.from) / 10);
+          TERMS.forEach(function (key) {
+            expect(Math.abs(t.before[key] - j.before[key])).toBeLessThanOrEqual(0.000001);
+            expect(Math.abs(t.after[key] - j.after[key])).toBeLessThanOrEqual(0.000001);
+          });
+          expect(t.before.level).toBe(j.before.level);
+          expect(t.after.level).toBe(j.after.level);
+        });
+        var first = analysis.transitions.filter(function (t) { return t.view === 'compact' && t.tier === 'first'; });
+        expect(first).toHaveLength(1);
+        var rise = firstRise(analysis);
+        if (rise !== null) expect(first[0].to).toBeLessThanOrEqual(rise);
+      });
+    });
+
+    slow('gives the example 7 compact and 33 details steps, and its cuts, ratio and tiers', function () {
+      var analysis = analysisOf('G01');
+      expect(scoresIn(analysis, 'compact')).toEqual([0, 23, 44, 551, 568, 992, 992]);
+      expect(analysis.views.compact.steps.map(function (s) { return s.position; })).toEqual(
+        [0, 7, 22, 23, 26, 31, 31]);
+      expect(analysis.views.compact.steps.map(function (s) { return s.role; })).toEqual(
+        ['solution', 'moves', 'moves', 'moves', 'moves', 'moves', 'final']);
+      expect(analysis.views.details.steps).toHaveLength(33);
+      var entries = analysis.ratings.map(function (r, i) {
+        return { score: r.score, phase: analysis.moves[i].phase, kind: analysis.moves[i].kind };
+      });
+      var sel = R.select(entries);
+      expect(positionsOf(sel.cuts)).toEqual([0, 7, 22, 23, 26, 31]);
+      expect(sel.cuts.map(function (c) { return c.rank; })).toEqual([4, 1, 3, 3, 2, 3]);
+      expect(sel.ratio).toBeCloseTo(2.15, 2);
+      var tiers = analysis.views.compact.steps.map(function (s) {
+        return s.transition === null ? null : analysis.transitions[s.transition].tier;
+      });
+      expect(tiers).toEqual([null, 'first', null, 'jump', null, 'newPeak', null]);
+      var jump = into(analysis, 'compact', 3);
+      expect([jump.ratio, jump.newHardest, jump.change, jump.auditScope]).toEqual([12.5, true, 507, null]);
+      expect(analysis.views.compact.audit).toEqual([]);
+      expect(into(analysis, 'compact', 1).auditScope).toBeNull();
+      var folded = into(analysis, 'compact', 5).folded;
+      expect([folded.peak, folded.revealed, folded.unscored]).toEqual([null, 0, 0]);
+      expect(R.buildViews(analysis)).toEqual({
+        chapter: analysis.chapter, views: analysis.views, transitions: analysis.transitions
+      });
+    });
+
+    slow('has the same end position as a jump in one view and not in the other (G06, G10, G12, G01)', function () {
+      [['G06', 31, [138, 1678], [2967, 1678]], ['G10', 42, [607, 1940], [2788, 1940]],
+        ['G12', 103, [130, 638], [642, 638]]].forEach(function (c) {
+        var analysis = analysisOf(c[0]);
+        var compact = toPosition(analysis, 'compact', c[1]);
+        var details = toPosition(analysis, 'details', c[1]);
+        expect([compact.before.total, compact.after.total, compact.tier]).toEqual([c[2][0], c[2][1], 'jump']);
+        expect([details.before.total, details.after.total]).toEqual(c[3]);
+        expect(details.tier).not.toBe('jump');
+        expect(details.ratio).toBeNull();
+      });
+      expect(toPosition(analysisOf('G06'), 'details', 31).change).toBe(-1289);
+      var g01 = analysisOf('G01');
+      expect(toPosition(g01, 'compact', 31).before.W).toBeCloseTo(906.5, 6);
+      expect(toPosition(g01, 'details', 31).before.W).toBeCloseTo(906.75, 6);
+    });
+
+    slow('has 13 compact, 16 details and 19 distinct jump transitions in the 14 goldens', function () {
+      var count = { compact: 0, details: 0 };
+      var distinctJumps = {};
+      GOLDENS.forEach(function (g) {
+        analysisOf(g.id).transitions.forEach(function (t) {
+          if (t.tier !== 'jump') return;
+          count[t.view]++;
+          distinctJumps[g.id + ':' + t.from + '>' + t.to + ':' + t.before.total + '>' + t.after.total] = true;
+        });
+      });
+      expect(count).toEqual({ compact: 13, details: 16 });
+      expect(Object.keys(distinctJumps)).toHaveLength(19);
+    });
+
+    slow('labels a new hardest technique also at a flat or lower score (details: G13, G10, G11, G07)', function () {
+      [['G13', 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'], ['G10', 42, 2788, 1940, 'forcingChain', 'nishio'],
+        ['G11', 104, 1967, 1264, 'wWing', 'forcingChain'], ['G07', 31, 2515, 1938, 'forcingChain', 'nishio']
+      ].forEach(function (c) {
+        var t = toPosition(analysisOf(c[0]), 'details', c[1]);
+        expect([t.before.total, t.after.total, t.change]).toEqual([c[2], c[3], c[3] - c[2]]);
+        expect([t.after.hardest, t.before.hardest]).toEqual([c[4], c[5]]);
+        expect([t.tier, t.newHardest, t.ratio]).toEqual(['newPeak', true, null]);
+      });
+    });
+
+    slow('ends the example with the transition 992 to 992, role final, change 0, no tier', function () {
+      var analysis = analysisOf('G01');
+      ['compact', 'details'].forEach(function (name) {
+        var steps = analysis.views[name].steps;
+        var t = analysis.transitions[steps[steps.length - 1].transition];
+        expect([t.role, t.before.total, t.after.total, t.change, t.tier]).toEqual(['final', 992, 992, 0, null]);
+        expect([t.from, t.to, t.newHardest, t.ratio, t.auditScope]).toEqual([31, 31, false, null, null]);
       });
     });
   });

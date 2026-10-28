@@ -360,14 +360,14 @@ solver monkey-patch is needed. Add a zero-count-key case: a technique with count
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Done |
+| Start | 2026-10-28 23:14:27 (+07:00) |
+| End | 2026-10-28 23:31:04 (+07:00) |
+| Duration | 16 min 37 s |
+| Model | claude-sonnet-5.5 (sub-agent `GS02-views-selection`, general-purpose); wave 2, alone |
+| Token usage | 72 model calls; 11,307,089 input (11,086,960 cache read), 120,100 output |
+| AI credits | 285.99 AIU (local usage store, keyed by sub-agent id) |
+| Verification | Developer: `--suite=replay` 93/93 (3.0 s); `--suite=help,ui-contract` 97/97; generator quick set 43 suites 2,643/2,643 (78 s); player `--suite=help` 22/22; two throw-away fuzz checks (30,000 random score/restart sequences: compact never decreasing, ends on the final board, no avoidable jump by brute force; 20,000 geometric sequences for the partial reduction), no files created. Orchestrator re-run: generator quick set 43 suites, 2,643 passed / 0 failed (79.2 s); player `--suite=help` 22/22; the five edited files CRLF, no BOM; nothing outside the GS02 list changed. |
+| Acceptance | GS02-B01–B07 and GS02-T01–T08 met: the 14 goldens row by row (phase codes, E, scores, deltas, hardest, jump flag, first/new-hardest line, counts, alive, folds); jump terms within 0.000001; jump totals 13 / 16 / 19; the view-dependent transitions of G06, G10, G12 and G01 (W 906.5 / 906.75); the flat and falling new-hardest cases of G13, G10, G11, G07; the final `992 → 992`; every synthetic vector. |
+| Issues & resolutions | (1) Two GS01 assertions encoded the GS01-only state (`views.compact` null, `transitions` `[]`): updated to the GS02 contract (7 compact steps, 38 transitions for G01), an intended contract change; no other test, golden or fixture touched. (2) Choices recorded by the developer: `folded.restart` only on the compact "Starting again" step (the details restart shows its drop through `change`); `folded.revealed` counts `moves` steps only; `auditScope` is the narrowest audit record containing the transition, only when `from < to` (null for the final duplicate and one-move jumps); audit tie-break earliest predecessor; partial reduction minimises the largest ratio, then the node count; an analysis with no rated position (impossible in production) clones details into compact. (3) The quick-set counts in the guides still say "about 2,590" (now 2,643): left to GS07. (4) `replay.test.js` has lines up to 121 characters; the 110 limit applies to engine files only. |
+| Handoff | `SG.replay` adds `isJump`, `badgeRatio`, `phaseCode`, `select`, `audit`, `buildViews`; `buildViews(analysis)` → `{ chapter, views, transitions }`, pure, no solver call, works on synthetic analyses; `prepare` and `fallback` assign it. `views.compact` / `views.details` = `{ name, steps, audit }`; `analysis.transitions` = compact transitions first, then details; `steps[k].transition` indexes it (null at k = 0); `Transition`, `Terms`, `Folded`, `ViewStep` as in the task; `cause` and `choice` null (GS03). `audit` returns `{ positions, edges }` (edges for G06, G10, G12, all `complete`, no insertion). `phaseCode` returns the raw phase for an unknown phase and `''` for none: GS05 handles step roles itself. |

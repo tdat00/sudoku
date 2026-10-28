@@ -257,6 +257,10 @@ the model of the result, not from the log.
 an exchange or a sign; never half of one), and `SG.replay.analyse(result)` rates the board after every move once
 (`SG.logicalSolver.solve` with every technique, a guard of 1,000,000 checks, a uniqueness count when the proof
 assumes uniqueness), keeping an honest status when a board cannot be rated; neither changes the result.
+`analysis.views` holds the **compact** view (a few steps chosen by score that never go down, `SG.replay.select`,
+checked by `SG.replay.audit`) and the **details** view (one step per move), and `analysis.transitions` the change of
+the Total, the values P, W, E, V, R before and after, and the tier (`SG.replay.isJump`) of each step, all built by
+the pure `SG.replay.buildViews`.
 Random choices use forked streams of one seeded generator (`SG.rng`), which is why a seed reproduces a
 puzzle.
 
@@ -417,7 +421,7 @@ sudoku/                     the repository (see "Layout" in the overview for the
     │   ├── engine/         the generation engine, no DOM
     │   │   ├── rng.js · difficulty.js · full-grid.js · symmetry.js · digger.js
     │   │   ├── events.js · explain-data.js · pipeline.js      the seven steps and their events
-    │   │   └── replay.js       the analysis of the Generation Steps replay: moves, ratings (SG.replay)
+    │   │   └── replay.js       the analysis of the Generation Steps replay: moves, ratings, views (SG.replay)
     │   ├── variants/       registry.js · classic.js · mega.js · extra-regions.js · jigsaw.js · killer.js
     │   │                   · greater-than.js · multigrid.js · wordoku.js
     │   ├── worker/         gen.worker.js · worker-client.js

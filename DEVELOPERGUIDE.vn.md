@@ -243,7 +243,10 @@ Các lớp phủ (lồng, dấu, vùng siêu) được vẽ từ mô hình của
 đối xứng, một lần đổi chỗ hoặc một dấu; không bao giờ chỉ một nửa), còn `SG.replay.analyse(result)` chấm điểm bàn
 cờ sau mỗi nước đúng một lần (`SG.logicalSolver.solve` với mọi kỹ thuật, ngưỡng 1.000.000 lần kiểm tra, thêm một
 lần đếm nghiệm khi lời giải dựa vào tính duy nhất), và giữ một trạng thái trung thực khi một bàn cờ không chấm
-được; cả hai đều không thay đổi kết quả. Mọi lựa chọn ngẫu nhiên
+được; cả hai đều không thay đổi kết quả. `analysis.views` gồm chế độ xem **gọn** (vài bước chọn theo điểm, điểm
+không bao giờ giảm, `SG.replay.select`, được `SG.replay.audit` kiểm tra) và chế độ xem **chi tiết** (mỗi nước đi một
+bước), còn `analysis.transitions` gồm mức thay đổi của Tổng, các giá trị P, W, E, V, R trước và sau, và hạng
+(`SG.replay.isJump`) của từng bước; tất cả do hàm thuần `SG.replay.buildViews` dựng nên. Mọi lựa chọn ngẫu nhiên
 dùng các luồng được tách ra từ một bộ sinh số có seed (`SG.rng`), vì thế seed tạo lại được đề.
 
 ### Worker và phương án dự phòng
@@ -358,7 +361,7 @@ các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, ki
 ### Cây thư mục
 
 Xem [cây thư mục ở bản tiếng Anh](DEVELOPERGUIDE.md#directory-tree): `generator/` gồm `index.html`, `tests.html`, `css/`, `js/engine/`
-(bộ máy sinh đề, không DOM; `js/engine/replay.js` là phần phân tích việc phát lại ở thẻ Các bước tạo đề: nước đi và điểm số), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
+(bộ máy sinh đề, không DOM; `js/engine/replay.js` là phần phân tích việc phát lại ở thẻ Các bước tạo đề: nước đi, điểm số và các chế độ xem), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
 thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/replay-fixtures.js`: tạo lại dữ liệu của suite `replay`); phần dùng chung với trình chơi nằm
 ở `core/` (bộ máy giải, `exchange`, `wordbook`, `symbols`, `board-view`, css nền và từ điển), tài liệu ở `docs/`.
 
