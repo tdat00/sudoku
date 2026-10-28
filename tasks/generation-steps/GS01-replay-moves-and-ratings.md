@@ -1028,14 +1028,14 @@ key, the measured `stats` of G01, the time of the `replay` suite.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Done (accepted with one documented deviation, T02 `checks`) |
+| Start | 2026-10-28 22:50:17 (+07:00) |
+| End | 2026-10-28 23:11:53 (+07:00) |
+| Duration | 21 min 36 s |
+| Model | claude-sonnet-5.5 (sub-agent `GS01-replay-core`, general-purpose); wave 1, alone |
+| Token usage | 81 model calls; 15,800,866 input (15,481,061 cache read), 142,807 output |
+| AI credits | 377.56 AIU (local usage store, keyed by sub-agent id) |
+| Verification | Developer: `replay-fixtures.js` wrote `replay-wire.js` (23.1 s), `--check` up to date twice; `--suite=replay` 39/39; `--suite=replay,ui-contract,help,i18n,purity` 258/258; generator quick set 43 suites 2,589/2,589 (78 s); player `--suite=help` 22/22. Orchestrator re-run: generator quick set 43 suites, 2,589 passed / 0 failed (79.2 s); `node tests/replay-fixtures.js --check` up to date, exit 0 (23.3 s); player `--suite=help` 22/22; every created or edited file CRLF, no BOM; no file outside the GS01 list changed. |
+| Acceptance | GS01-B01–B06 and GS01-T01, T03–T09 met; the 14 golden details sequences, the golden end positions (E, score) and the Greater-Than alive counts match. GS01-T02 met for every field except the diagnostic `checks` (see issues). |
+| Issues & resolutions | (1) `checks` is not reproducible across analyses in one process: `core/js/engine/tech-subset.js` keeps a module-level node counter that paces budget checks by process history (G11: 728 or 729 checks for one board). Scores, statuses, counts and selections are unaffected; the engine is out of scope. Resolution (orchestrator): accepted as a diagnostic-only field; `replay.js` and `generator/design.md` §7.5 document it; the determinism, progress and round-trip tests compare analyses with `checks` zeroed; GS04 and GS08 must ignore `checks` when comparing analyses. (2) The quick set failed once on `help` before the guide named `replay.js`; fixed by the documentation of the same change. (3) The developer also corrected the stale suite/test counts in `generator/design.md` §15.1, §17 and both developer guides (43 quick suites, about 2,590 tests; 51 / 3,610 with `--all`). (4) Generated JSON sizes are about 200 characters below the task's figures (the script empties `timings`). |
+| Handoff | `SG.replay` = `{ VERSION, CONSTANTS, moves, rateBoard, prepare, analyse, fallback, toPlainWire, fromPlainWire }` with the task's shapes (`MoveModel`, `Move`, `Span`, `Rating`, `Analysis`, `View`); `prepare(result, options)` is a generator yielding `{ done, total }` and returning the Analysis; memo key `values.join(',') + '|' + (alive \|\| []).join(',')`; G01 stats `{ positions: 32, fresh: 30, memo: 1, zero: 1, checks: 3910 }`; `views.compact` null, `transitions` `[]`, `proofs` `{}` (for GS02/GS03). `analyse` can throw on a malformed result (missing `givens`, Greater-Than not loaded) and `fallback` does not catch it: the job layer (GS04) must turn a throw into the `'error'` fallback. Test data: `generator/tests/fixtures/replay-goldens.js`, `replay-wire.js` (regenerate with `node tests/replay-fixtures.js`). |

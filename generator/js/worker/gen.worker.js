@@ -61,6 +61,7 @@
     '../engine/events.js',
     '../engine/explain-data.js',
     '../engine/pipeline.js',
+    '../engine/replay.js',
     '../variants/registry.js',
     '../variants/classic.js',
     '../variants/mega.js',

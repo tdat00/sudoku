@@ -253,6 +253,10 @@ what / why / how and pseudocode, `SG.explainCard.create(el, { compact: true })`;
 show is marked, open, and its running line and dig counters are shown (`SG.app.getExplainContext()`). The
 **Explain** (help) icon of the step description opens the Help on that tab. Overlays (cages, signs, windows) are drawn from
 the model of the result, not from the log.
+`SG.replay.moves(result)` (`js/engine/replay.js`, pure) turns the dig log into complete moves (a symmetric group,
+an exchange or a sign; never half of one), and `SG.replay.analyse(result)` rates the board after every move once
+(`SG.logicalSolver.solve` with every technique, a guard of 1,000,000 checks, a uniqueness count when the proof
+assumes uniqueness), keeping an honest status when a board cannot be rated; neither changes the result.
 Random choices use forked streams of one seeded generator (`SG.rng`), which is why a seed reproduces a
 puzzle.
 
@@ -412,7 +416,8 @@ sudoku/                     the repository (see "Layout" in the overview for the
     ├── js/
     │   ├── engine/         the generation engine, no DOM
     │   │   ├── rng.js · difficulty.js · full-grid.js · symmetry.js · digger.js
-    │   │   └── events.js · explain-data.js · pipeline.js      the seven steps and their events
+    │   │   ├── events.js · explain-data.js · pipeline.js      the seven steps and their events
+    │   │   └── replay.js       the analysis of the Generation Steps replay: moves, ratings (SG.replay)
     │   ├── variants/       registry.js · classic.js · mega.js · extra-regions.js · jigsaw.js · killer.js
     │   │                   · greater-than.js · multigrid.js · wordoku.js
     │   ├── worker/         gen.worker.js · worker-client.js
@@ -421,11 +426,12 @@ sudoku/                     the repository (see "Layout" in the overview for the
     │                       · result-view.js · cache.js · history.js · export.js · a11y.js · theme.js
     │                       · help.js · app.js
     └── tests/
-        ├── node-runner.js · soak.js · perf.js · qualify.js
+        ├── node-runner.js · soak.js · perf.js · qualify.js · replay-fixtures.js
         ├── fixtures/       the fixtures of the generator (rated puzzles, the performance helper, the
-        │                   regression hashes in regression.js, generated, and the testkit provider)
+        │                   regression hashes in regression.js, generated, the testkit provider, and the
+        │                   data of the replay suite: replay-goldens.js, replay-wire.js, generated)
         ├── suites/         the quick set, run by default together with ../core/tests/suites: one *.test.js per
-        │                   area, 26 of the generator's own (found automatically), smoke.test.js among them
+        │                   area, 27 of the generator's own (found automatically), smoke.test.js among them
         └── manual/         the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
                             extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
@@ -712,16 +718,16 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (42 suites, about 2,550 tests), about a minute
+node tests/node-runner.js                          # the quick set (43 suites, about 2,590 tests), about a minute
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8, about eight minutes)
-node tests/node-runner.js --all                    # quick + manual (50 suites, about 3,570 tests), about nine minutes
+node tests/node-runner.js --all                    # quick + manual (51 suites, about 3,610 tests), about nine minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 42 suites, about
-2,550 tests, about one minute — the 26 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 43 suites, about
+2,590 tests, about one minute — the 27 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -740,9 +746,18 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts about 3,570 tests in 50 suites
-(about 2,550 in the 42 quick ones), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts about 3,610 tests in 51 suites
+(about 2,590 in the 43 quick ones), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
+
+```text
+node tests/replay-fixtures.js            # regenerates tests/fixtures/replay-wire.js (four slow goldens, ~25 s)
+node tests/replay-fixtures.js --check    # regenerates in memory and compares; exit 1 on a difference
+```
+
+The `replay` suite reads those saved results (`tests/fixtures/replay-wire.js`) because generating them takes about 23
+seconds; regenerate them only when the generator's output changes on purpose (the regression hashes change
+then too).
 
 The suites check the generation time of every variant against the budgets of [design.md](generator/design.md) §9.1 with
 a tolerance, so that a busy or slower machine does not fail them: twice the budget by default, three times when

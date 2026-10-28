@@ -107,6 +107,7 @@
         '../core/js/engine/classic-model.js', '../core/js/engine/model-aids.js',
         'js/engine/difficulty.js', 'js/engine/full-grid.js', 'js/engine/symmetry.js', 'js/engine/digger.js',
         'js/engine/events.js', 'js/engine/explain-data.js', 'js/engine/pipeline.js',
+        'js/engine/replay.js',
         'js/variants/registry.js', 'js/variants/classic.js', 'js/variants/mega.js',
         'js/variants/extra-regions.js', 'js/variants/jigsaw.js', 'js/variants/killer.js',
         'js/variants/greater-than.js', 'js/variants/multigrid.js', 'js/variants/wordoku.js',
@@ -123,7 +124,7 @@
       ];
       var CORE_FIXTURE_FILES = ['classic', 'techniques-helper', 'techniques', 'testkit']
         .map(function (n) { return '../core/tests/fixtures/' + n + '.js'; });
-      var FIXTURE_FILES = CORE_FIXTURE_FILES.concat(['testkit-provider', 'rated', 'perf-helper', 'regression']
+      var FIXTURE_FILES = CORE_FIXTURE_FILES.concat(['testkit-provider', 'rated', 'perf-helper', 'regression', 'replay-goldens', 'replay-wire']
         .map(function (n) { return 'tests/fixtures/' + n + '.js'; }));
       var CORE_SUITE_FILES = [
         'bits', 'board-view', 'constraints', 'exchange', 'harness', 'logical-solver', 'model', 'solver',
@@ -132,7 +133,8 @@
       ];
       var SUITE_FILES = [
         'a11y', 'cache', 'controls', 'digger', 'events', 'export', 'format', 'full-grid', 'help',
-        'history', 'i18n', 'mega', 'multigrid', 'pipeline', 'player', 'purity', 'result-view', 'rng', 'smoke',
+        'history', 'i18n', 'mega', 'multigrid', 'pipeline', 'player', 'purity', 'replay', 'result-view', 'rng',
+        'smoke',
         'steps', 'store', 'technique-weights', 'theme', 'ui-contract', 'variants-registry', 'worker'
       ];
       var MANUAL_SUITE_FILES = [

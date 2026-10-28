@@ -238,7 +238,12 @@ bảy bước nằm trong hộp thoại Trợ giúp (thẻ "Cách hoạt động
 làm gì / vì sao / làm thế nào và mã giả, `SG.explainCard.create(el, { compact: true })`; mục của bước phát lại
 đang xem được đánh dấu, mở sẵn, kèm dòng đang chạy và bộ đếm của giai đoạn đào (`SG.app.getExplainContext()`).
 Biểu tượng **Giải thích** của phần mô tả bước mở Trợ giúp ở thẻ đó.
-Các lớp phủ (lồng, dấu, vùng siêu) được vẽ từ mô hình của kết quả, không từ nhật ký. Mọi lựa chọn ngẫu nhiên
+Các lớp phủ (lồng, dấu, vùng siêu) được vẽ từ mô hình của kết quả, không từ nhật ký.
+`SG.replay.moves(result)` (`js/engine/replay.js`, hàm thuần) biến nhật ký đào thành các nước đi trọn vẹn (một nhóm
+đối xứng, một lần đổi chỗ hoặc một dấu; không bao giờ chỉ một nửa), còn `SG.replay.analyse(result)` chấm điểm bàn
+cờ sau mỗi nước đúng một lần (`SG.logicalSolver.solve` với mọi kỹ thuật, ngưỡng 1.000.000 lần kiểm tra, thêm một
+lần đếm nghiệm khi lời giải dựa vào tính duy nhất), và giữ một trạng thái trung thực khi một bàn cờ không chấm
+được; cả hai đều không thay đổi kết quả. Mọi lựa chọn ngẫu nhiên
 dùng các luồng được tách ra từ một bộ sinh số có seed (`SG.rng`), vì thế seed tạo lại được đề.
 
 ### Worker và phương án dự phòng
@@ -353,8 +358,8 @@ các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, ki
 ### Cây thư mục
 
 Xem [cây thư mục ở bản tiếng Anh](DEVELOPERGUIDE.md#directory-tree): `generator/` gồm `index.html`, `tests.html`, `css/`, `js/engine/`
-(bộ máy sinh đề, không DOM), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
-thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng); phần dùng chung với trình chơi nằm
+(bộ máy sinh đề, không DOM; `js/engine/replay.js` là phần phân tích việc phát lại ở thẻ Các bước tạo đề: nước đi và điểm số), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
+thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/replay-fixtures.js`: tạo lại dữ liệu của suite `replay`); phần dùng chung với trình chơi nằm
 ở `core/` (bộ máy giải, `exchange`, `wordbook`, `symbols`, `board-view`, css nền và từ điển), tài liệu ở `docs/`.
 
 ## Định dạng trao đổi
@@ -476,16 +481,16 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (42 suite, khoảng 2.550 bài), khoảng một phút
+node tests/node-runner.js                          # bộ nhanh (43 suite, khoảng 2.590 bài), khoảng một phút
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
-node tests/node-runner.js --all                    # nhanh + thủ công (50 suite, khoảng 3.570 bài), khoảng chín phút
+node tests/node-runner.js --all                    # nhanh + thủ công (51 suite, khoảng 3.610 bài), khoảng chín phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 42 suite, khoảng 2.550 bài,
-khoảng một phút — 26 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 43 suite, khoảng 2.590 bài,
+khoảng một phút — 27 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw`, tổng cộng khoảng
@@ -503,8 +508,16 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm khoảng 3.570 bài trong 50 suite (khoảng 2.550 bài trong 42 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm khoảng 3.610 bài trong 51 suite (khoảng 2.590 bài trong 43 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
+
+```text
+node tests/replay-fixtures.js            # tạo lại tests/fixtures/replay-wire.js (bốn đề chuẩn chạy chậm, ~25 giây)
+node tests/replay-fixtures.js --check    # tạo lại trong bộ nhớ rồi so sánh; thoát với mã 1 nếu khác
+```
+
+Suite `replay` đọc các kết quả đã lưu đó (`tests/fixtures/replay-wire.js`) vì việc tạo chúng mất khoảng 23 giây; chỉ
+tạo lại khi đầu ra của trình sinh đề thay đổi có chủ ý (khi đó các mã băm hồi quy cũng đổi theo).
 
 Các suite so thời gian tạo đề của mọi biến thể với ngân sách ở [design.md](generator/design.md) §9.1 kèm một hệ số dung
 sai, để một máy đang bận hoặc chậm hơn không làm chúng thất bại: gấp đôi ngân sách theo mặc định, gấp ba khi có
