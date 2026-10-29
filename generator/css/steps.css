@@ -3,6 +3,38 @@
  * --sg-color-* tokens (and the --sg-board-* frame colours for the legend swatches).
  */
 
+/* ---- The view toggle and the preparation of the score tables ---- */
+.replay-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sg-space-2);
+  margin-top: var(--sg-space-2);
+}
+
+.replay-view {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sg-space-1);
+  font-size: var(--sg-font-size-sm);
+  cursor: pointer;
+}
+
+.replay-status {
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-2);
+  padding: var(--sg-space-2) var(--sg-space-3);
+  margin: var(--sg-space-2) 0;
+  background: var(--sg-color-surface);
+}
+
+.replay-status[hidden] {
+  display: none;
+}
+
+.replay-status__text {
+  margin: 0 0 var(--sg-space-2);
+}
+
 /* ---- The step on show ---- */
 .step-detail {
   display: flex;
@@ -45,6 +77,159 @@
   font-weight: 650;
 }
 
+/* ---- Heading badge, tier line, jump callout, status of a board that cannot be rated ---- */
+.step-badge {
+  display: inline-block;
+  margin-inline-start: var(--sg-space-2);
+  padding: 0 var(--sg-space-2);
+  border: 1px solid var(--sg-color-accent);
+  border-radius: var(--sg-radius-pill);
+  background: var(--sg-color-accent-soft);
+  font-size: var(--sg-font-size-sm);
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+/* A dashed border tells the first rated puzzle from a jump without colour. */
+.step-badge--first {
+  border-style: dashed;
+}
+
+.step-tier {
+  margin: 0;
+  padding-inline-start: var(--sg-space-2);
+  border-inline-start: 4px solid var(--sg-color-accent);
+  font-size: var(--sg-font-size-sm);
+  overflow-wrap: anywhere;
+}
+
+.step-callout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-2);
+  min-width: 0;
+  padding: var(--sg-space-3);
+  border: 1px solid var(--sg-color-accent);
+  border-inline-start-width: 4px;
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface);
+  font-size: var(--sg-font-size-sm);
+}
+
+.step-callout__heading {
+  margin: 0;
+  font-weight: 700;
+}
+
+.step-callout__text {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.step-why > summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.step-why__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-space-1);
+  margin: var(--sg-space-2) 0 0;
+  padding-inline-start: 1.25rem;
+}
+
+.step-why__list li {
+  overflow-wrap: anywhere;
+}
+
+.step-detail .result-table__name {
+  flex-wrap: wrap;
+}
+
+/* The row of the new hardest technique: a label in the name cell, a border so colour is not the only signal. */
+.step-table__label {
+  padding: 0 var(--sg-space-1);
+  border: 1px solid var(--sg-color-accent);
+  border-radius: var(--sg-radius-1);
+  background: var(--sg-color-accent-soft);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.result-table .step-table__total--jump th,
+.result-table .step-table__total--jump td {
+  border-top: 2px solid var(--sg-color-accent);
+  background: var(--sg-color-accent-soft);
+}
+
+/* Fixed column widths, wide enough for the longest value ("992 (unchanged)" and the help icon), so the columns
+   stay put and nothing wraps when the numbers change from one step to the next. */
+.result-table.step-table--scores {
+  table-layout: fixed;
+}
+
+.step-table--scores thead th:nth-child(2) {
+  width: 5rem;
+}
+
+.step-table--scores thead th:nth-child(3) {
+  width: 6.75rem;
+}
+
+.step-table--scores thead th:nth-child(4) {
+  width: 6rem;
+}
+
+.step-table--scores thead th:nth-child(5) {
+  width: 9.5rem;
+}
+
+.step-table--scores .result-table__score {
+  justify-content: flex-end;
+}
+
+/* On a phone there is no room for that: the narrow columns use short names and the score may wrap. */
+@media (max-width: 767.98px) {
+  .step-table--scores thead th:nth-child(2),
+  .step-table--scores thead th:nth-child(3),
+  .step-table--scores thead th:nth-child(4) {
+    width: 3.25rem;
+  }
+
+  .step-table--scores thead th:nth-child(5) {
+    width: 4.5rem;
+  }
+
+  .step-table--scores td:last-child {
+    white-space: normal;
+  }
+
+  .step-table--scores .result-table__score {
+    max-width: 100%;
+  }
+
+  .step-table--scores [data-role="score"] {
+    min-width: 0;
+    text-align: end;
+  }
+}
+
+.step-status {
+  margin: 0;
+  padding: var(--sg-space-2) var(--sg-space-3);
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius-2);
+  background: var(--sg-color-surface);
+  font-size: var(--sg-font-size-sm);
+  overflow-wrap: anywhere;
+}
+
+.step-status__attempted {
+  margin: var(--sg-space-2) 0;
+  font-size: var(--sg-font-size-sm);
+}
+
 /* ---- Legend of the board frames ---- */
 .steps-legend {
   display: flex;
@@ -85,6 +270,17 @@
 .steps-legend__swatch--revealed {
   border-color: var(--sg-board-technique);
   border-style: dotted;
+}
+
+/* The one clue (a filled frame) or sign (an outline) that causes a score jump. */
+.steps-legend__swatch--cause,
+.steps-legend__swatch--causeRestore {
+  border-color: var(--sg-color-accent);
+  background: var(--sg-color-accent-soft);
+}
+
+.steps-legend__swatch--signCause {
+  border-color: var(--sg-color-accent);
 }
 
 /* A sign: a chevron drawn with two borders, dashed and faded like a sign taken away, or red like one kept. */
@@ -236,5 +432,18 @@
 
   .steps-legend__swatch {
     border-color: currentColor;
+  }
+
+  .step-badge,
+  .step-callout,
+  .step-status,
+  .step-tier,
+  .step-table__label {
+    border-color: currentColor;
+  }
+
+  .result-table .step-table__total--jump th,
+  .result-table .step-table__total--jump td {
+    border-top-color: currentColor;
   }
 }

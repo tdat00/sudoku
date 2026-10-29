@@ -56,6 +56,7 @@ const SOURCE_FILES = [
   'js/engine/events.js',
   'js/engine/explain-data.js',
   'js/engine/pipeline.js',
+  'js/engine/replay.js',
   'js/variants/registry.js',
   'js/variants/classic.js',
   'js/variants/mega.js',

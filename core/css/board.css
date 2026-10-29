@@ -7,7 +7,9 @@
  *   .cell--placing .cell--backtrack .cell--removed   one-shot animations of a changed cell
  *   .hl.cell--probing .cell--technique .cell--restored .cell--selected   highlight frames (layer-overlay)
  *   .hl.cell--dug .cell--kept .cell--revealed   replay frames: removed / put back / revealed in the step
+ *   .hl.cell--cause                                   replay frame: the clue that causes a score jump
  *   .sign--hidden .sign--removed .sign--kept   Greater-Than signs during the replay
+ *   rect.sign--cause                                  replay frame around the sign that causes a score jump
  *   .board--done                                      the "bounce" of a finished board
  * Keep the static rules in step with `staticCss()` of board-view.js (the standalone SVG export).
  */
@@ -239,6 +241,14 @@
   fill: var(--sg-board-technique-fill);
 }
 
+/* The one clue that causes a score jump: a solid, thicker frame in the accent colour. */
+.sgb .hl.cell--cause {
+  stroke: var(--sg-color-accent);
+  stroke-width: 5;
+  fill: var(--sg-color-accent-soft);
+  fill-opacity: 0.35;
+}
+
 /* Greater-Than signs during the replay: not there yet / taken away in this step / had to stay. */
 .sgb .sign.sign--hidden {
   display: none;
@@ -251,6 +261,14 @@
 
 .sgb .sign.sign--kept {
   stroke: var(--sg-board-restore);
+}
+
+/* The frame around the gap of the sign that causes a score jump (a separate rect of the sign layer). */
+.sgb rect.sign--cause {
+  stroke: var(--sg-color-accent);
+  stroke-width: 3;
+  fill: none;
+  pointer-events: none;
 }
 
 /* ---- Animations ---- */

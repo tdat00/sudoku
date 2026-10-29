@@ -143,6 +143,8 @@
       mode: mode || 'worker',
       calls: [],
       cancels: 0,
+      replays: [],
+      replayCancels: 0,
       results: [],
       generate: function (config, onEvent, hints) {
         inner.calls.push({ config: config, hints: hints });
@@ -158,6 +160,14 @@
       cancel: function () {
         inner.cancels++;
         return true;
+      },
+      replay: function (result, options) {
+        inner.replays.push({ result: result, options: options });
+        return Promise.resolve({ analysis: true });
+      },
+      cancelReplay: function () {
+        inner.replayCancels++;
+        return 'inner';
       },
       ready: function () { return Promise.resolve(inner.mode); }
     };
@@ -786,6 +796,37 @@
       return env.client.ready().then(function (mode) { expect(mode).toBe('main'); });
     });
 
+    it('forwards replay and cancelReplay to the inner client, so the page reaches it through the cache',
+      async function () {
+        const env = makeEnv();
+        const result = { marker: 'result' };
+        const options = { onProgress: function () {}, allowMain: true };
+        const promise = env.client.replay(result, options);
+        expect(env.inner.replays).toHaveLength(1);
+        expect(env.inner.replays[0].result).toBe(result);
+        expect(env.inner.replays[0].options).toBe(options);
+        expect(await promise).toEqual({ analysis: true });
+        expect(env.client.cancelReplay()).toBe('inner');
+        expect(env.inner.replayCancels).toBe(1);
+        expect(env.inner.cancels).toBe(0);
+      });
+
+    it('an inner client without replay rejects with unexpected and answers false to cancelReplay',
+      async function () {
+        const env = makeEnv();
+        delete env.inner.replay;
+        delete env.inner.cancelReplay;
+        let error = null;
+        try {
+          await env.client.replay({}, {});
+        } catch (err) {
+          error = err;
+        }
+        expect(error instanceof SG.errors.GenerationError).toBe(true);
+        expect(error.code).toBe('unexpected');
+        expect(env.client.cancelReplay()).toBe(false);
+      });
+
     it('delegates a miss, stores it, and serves the same configuration next time', async function () {
       const env = makeEnv();
       const events = [];
@@ -962,6 +1003,7 @@
       const env = makeEnv();
       const hit = await served(env, 31);
       env.app.display(hit);
+      await flush();
       expect(env.bg.calls.length).toBe(1);
       expect(env.bg.calls[0].config.seed).toBe(31);
       expect(env.bg.calls[0].config.trace).toBe('full');
@@ -986,6 +1028,7 @@
       const env = makeEnv();
       const hit = await served(env, 32, { trace: 'summary' });
       env.app.display(hit);
+      await flush();
       expect(env.bg.calls[0].config.trace).toBe('summary');
       env.bg.complete();
       await flush();
@@ -997,6 +1040,7 @@
       const env = makeEnv();
       const hit = await served(env, 33);
       env.app.display(hit);
+      await flush();
       env.bg.complete(P.run(seeded(34), null));
       await flush();
       expect(env.app.attached.length).toBe(0);
@@ -1013,6 +1057,7 @@
       const env = makeEnv();
       const hit = await served(env, 35);
       env.app.display(hit);
+      await flush();
       env.app.shown = { result: P.run(seeded(36), null), trace: [] };
       env.bg.complete();
       await flush();
@@ -1025,6 +1070,7 @@
       env.bg.ignoreCancel = true;
       const hit = await served(env, 37);
       env.app.display(hit);
+      await flush();
       expect(env.controller.state().job).toBe('trace');
       await env.client.generate(seeded(38), null);
       expect(env.bg.cancelCount).toBe(1);
@@ -1043,9 +1089,11 @@
       env.bg.ignoreCancel = true;
       const first = await served(env, 41);
       env.app.display(first);
+      await flush();
       const firstJob = env.bg.calls[0];
       const second = await served(env, 42);
       env.app.display(second);
+      await flush();
       expect(env.bg.calls.length).toBe(2);
       firstJob.resolve(P.run(firstJob.config, null));
       await flush();
@@ -1059,6 +1107,7 @@
       const env = makeEnv();
       const hit = await served(env, 43);
       env.app.display(hit);
+      await flush();
       env.bg.fail(new Error('worker died'));
       await flush();
       expect(env.note.log[env.note.log.length - 1]).toBe('show:cache.failed');
@@ -1072,6 +1121,7 @@
       env.app.attachTrace = function () { return false; };
       const hit = await served(env, 44);
       env.app.display(hit);
+      await flush();
       env.bg.complete();
       await flush();
       expect(env.note.log[env.note.log.length - 1]).toBe('show:cache.failed');
@@ -1090,6 +1140,7 @@
       env.bg.ignoreCancel = true;
       const hit = await served(env, 46);
       env.app.display(hit);
+      await flush();
       expect(env.controller.state().job).toBe('trace');
       const imported = P.run(seeded(47), null);
       env.app.shown = { result: imported, trace: [], imported: true };
@@ -1107,6 +1158,204 @@
       env.app.emit('locale', { locale: 'vi' });
       expect(env.note.log).toContain('refresh');
     });
+  });
+
+  describe('cache: the gate of the trace of a served puzzle', function () {
+    beforeEach(ready);
+
+    async function served(env, seed) {
+      await env.client.generate(seeded(seed), null);
+      env.clock.advance(0);
+      const hit = await env.client.generate(seeded(seed), null);
+      expect(hit.fromCache).toBe(true);
+      return hit;
+    }
+
+    /** A stand-in for the `markTraceUnavailable` of the app that counts its calls. */
+    function spyUnavailable(env) {
+      env.unavailable = 0;
+      env.app.markTraceUnavailable = function () {
+        env.unavailable++;
+        return true;
+      };
+    }
+
+    it('on a main-thread page regenerates the record only after the press, on the page\'s own client',
+      async function () {
+        const env = makeEnv({ mode: 'main' });
+        spyUnavailable(env);
+        const hit = await served(env, 61);
+        const calls = env.inner.calls.length;
+        env.app.display(hit);
+        await flush();
+        expect(env.bg.calls.length).toBe(0);
+        expect(env.inner.calls.length).toBe(calls);
+        expect(env.controller.state().job).toBeNull();
+        expect(env.note.log).not.toContain('show:cache.preparing');
+        expect(env.unavailable).toBe(0);
+        env.app.emit('replay:consent', { result: P.run(seeded(62), null) });
+        env.app.emit('replay:consent', null);
+        await flush();
+        expect(env.inner.calls.length).toBe(calls);
+        env.app.emit('replay:consent', { result: hit });
+        await flush();
+        expect(env.bg.calls.length).toBe(0);
+        expect(env.inner.calls.length).toBe(calls + 1);
+        expect(env.inner.calls[calls].config.seed).toBe(61);
+        expect(env.inner.calls[calls].config.trace).toBe('full');
+        expect(env.app.attached.length).toBe(1);
+        expect(env.app.attached[0].length).toBeGreaterThan(10);
+        expect(env.unavailable).toBe(0);
+        expect(env.store.list().length).toBe(1);
+        env.app.emit('replay:consent', { result: hit });
+        await flush();
+        expect(env.inner.calls.length).toBe(calls + 1);
+      });
+
+    it('a press that arrives before the page client has said what it is starts exactly one regeneration',
+      async function () {
+        const env = makeEnv({ mode: 'main' });
+        const hit = await served(env, 63);
+        const calls = env.inner.calls.length;
+        env.app.display(hit);
+        env.app.emit('replay:consent', { result: hit });
+        await flush();
+        expect(env.inner.calls.length).toBe(calls + 1);
+        expect(env.bg.calls.length).toBe(0);
+        env.app.emit('replay:consent', { result: hit });
+        await flush();
+        expect(env.inner.calls.length).toBe(calls + 1);
+      });
+
+    it('on a worker page starts by itself once the background client is confirmed to be a worker, and ' +
+      'ignores a press',
+      async function () {
+        const env = makeEnv();
+        spyUnavailable(env);
+        const hit = await served(env, 64);
+        env.app.display(hit);
+        env.app.emit('replay:consent', { result: hit });
+        await flush();
+        expect(env.bg.calls.length).toBe(1);
+        expect(env.controller.state().job).toBe('trace');
+        env.app.emit('replay:consent', { result: hit });
+        await flush();
+        expect(env.bg.calls.length).toBe(1);
+        env.bg.complete();
+        await flush();
+        expect(env.app.attached.length).toBe(1);
+        expect(env.unavailable).toBe(0);
+      });
+
+    it('on a worker page whose background client runs on the main thread, or cannot tell, marks the record ' +
+      'unavailable and starts nothing',
+      async function () {
+        const main = makeEnv({ bgMode: 'main' });
+        spyUnavailable(main);
+        main.app.display(await served(main, 65));
+        await flush();
+        expect(main.bg.calls.length).toBe(0);
+        expect(main.unavailable).toBe(1);
+        expect(main.controller.state().job).toBeNull();
+        expect(main.note.log).not.toContain('show:cache.preparing');
+        const broken = makeEnv();
+        spyUnavailable(broken);
+        broken.bg.ready = function () { return Promise.reject(new Error('no worker')); };
+        broken.app.display(await served(broken, 66));
+        await flush();
+        expect(broken.bg.calls.length).toBe(0);
+        expect(broken.unavailable).toBe(1);
+        const none = makeEnv();
+        spyUnavailable(none);
+        none.bg.ready = function () { throw new Error('boom'); };
+        none.app.display(await served(none, 67));
+        await flush();
+        expect(none.unavailable).toBe(1);
+        expect(none.bg.calls.length).toBe(0);
+      });
+
+    it('marks the record unavailable when the regeneration fails or the app refuses its trace', async function () {
+      const failing = makeEnv();
+      spyUnavailable(failing);
+      failing.app.display(await served(failing, 68));
+      await flush();
+      failing.bg.fail(new Error('worker died'));
+      await flush();
+      expect(failing.unavailable).toBe(1);
+      expect(failing.note.log[failing.note.log.length - 1]).toBe('show:cache.failed');
+      const refusing = makeEnv();
+      spyUnavailable(refusing);
+      refusing.app.attachTrace = function () { return false; };
+      refusing.app.display(await served(refusing, 69));
+      await flush();
+      refusing.bg.complete();
+      await flush();
+      expect(refusing.unavailable).toBe(1);
+      expect(refusing.note.log[refusing.note.log.length - 1]).toBe('show:cache.failed');
+      const plain = makeEnv();
+      plain.app.display(await served(plain, 70));
+      await flush();
+      plain.bg.fail(new Error('worker died'));
+      await flush();
+      expect(plain.note.log[plain.note.log.length - 1]).toBe('show:cache.failed');
+    });
+
+    it('a page whose worker turned out to be the main thread waits for the press instead of using the ' +
+      'background client',
+      async function () {
+        const env = makeEnv();
+        spyUnavailable(env);
+        const hit = await served(env, 71);
+        const calls = env.inner.calls.length;
+        env.bg.ready = function () {
+          env.inner.mode = 'main';
+          return Promise.resolve('worker');
+        };
+        env.app.display(hit);
+        await flush();
+        expect(env.bg.calls.length).toBe(0);
+        expect(env.inner.calls.length).toBe(calls);
+        expect(env.unavailable).toBe(0);
+        env.app.emit('replay:consent', { result: hit });
+        await flush();
+        expect(env.bg.calls.length).toBe(0);
+        expect(env.inner.calls.length).toBe(calls + 1);
+        expect(env.app.attached.length).toBe(1);
+      });
+
+    it('forgets a gate that something else replaced: a late answer or press starts nothing', async function () {
+      const env = makeEnv({ mode: 'main' });
+      const hit = await served(env, 72);
+      const calls = env.inner.calls.length;
+      env.app.display(hit);
+      env.app.shown = { result: P.run(seeded(73), null), trace: [], imported: true };
+      env.app.emit('result', env.app.shown);
+      env.app.emit('replay:consent', { result: hit });
+      await flush();
+      expect(env.inner.calls.length).toBe(calls);
+      expect(env.controller.state().job).toBeNull();
+    });
+
+    it('makes its default background client worker-only, so an automatic trace never runs on the page',
+      async function () {
+        const create = SG.workerClient.create;
+        const options = [];
+        const bg = fakeBackground('worker');
+        SG.workerClient.create = function (opts) {
+          options.push(opts);
+          return bg;
+        };
+        try {
+          const env = makeEnv({ controller: { createClient: undefined } });
+          const hit = await served(env, 74);
+          env.app.display(hit);
+          await flush();
+          expect(options).toEqual([{ forceMode: 'worker' }]);
+          expect(bg.calls.length).toBe(1);
+        } finally {
+          SG.workerClient.create = create;
+        }
+      });
   });
 
   describe('cache: pre-generation', function () {
@@ -1397,6 +1646,7 @@
       env.clock.advance(0);
       const hit = await env.client.generate(seeded(51), null);
       env.app.display(hit);
+      await flush();
       env.clock.advance(60000);
       expect(env.bg.calls.length).toBe(1);
       expect(env.bg.calls[0].config.seed).toBe(51);
@@ -1482,6 +1732,7 @@
       await env.client.generate(seeded(63), null);
       env.clock.advance(0);
       env.app.display(await env.client.generate(seeded(63), null));
+      await flush();
       expect(env.controller.state().job).toBe('trace');
       showImported(env, seedless());
       expect(env.bg.cancelCount).toBe(1);

@@ -109,7 +109,9 @@ The heavy suites of the generator (`--all`, `--manual`, `soak`, `perf`, `qualify
 ## Documents
 
 [docs/README.md](docs/README.md) indexes them by feature: [the architecture](docs/architecture.md), the
-[difficulty rating](docs/difficulty-rating/report-brief.md) reports, the [puzzle exchange](docs/puzzle-exchange/fixtures.md)
+[difficulty rating](docs/difficulty-rating/report-brief.md) reports, the
+[Generation Steps](docs/generation-steps/report-brief.md) reports (the design of the replay), the
+[puzzle exchange](docs/puzzle-exchange/fixtures.md)
 fixtures and the [QA records](docs/qa/browser-run.md). The design and the plan of each app are next to its source:
 `generator/design.md`, `generator/task.md`, `player/design.md`, `player/task.md`. At the root, the user guide
 ([English](USERGUIDE.md), [Vietnamese](USERGUIDE.vn.md)) is for the people who use the apps, and this developer
@@ -187,9 +189,10 @@ rule of relative links): change them when the site moves. Facebook cannot show a
 │               ../core/js/ui/   board-view (SVG) · symbols · exchange · wordbook  (shared)      │
 ├──────────────────────────────────────────────────────────────────────────────────────────────┤
 │ ORCHESTRATION js/worker/    worker-client (Web Worker, or the main-thread fallback)           │
-│                             gen.worker.js (runs the pipeline off the main thread)             │
+│                             gen.worker.js (runs the pipeline and replay off the main thread)  │
 ├──────────────────────────────────────────────────────────────────────────────────────────────┤
 │ GENERATION    js/engine/    pipeline · full-grid · digger · symmetry · difficulty · events    │
+│                             replay (the analysis of the Generation steps tab)                 │
 ├──────────────────────────────────────────────────────────────────────────────────────────────┤
 │ SOLVER        ../core/js/engine/   dfs-solver · logical-solver · techniques + tech-*.js       │
 │                                    (shared with the player)                                  │
@@ -237,24 +240,80 @@ the digger keeps a compact **dig log** of the sample that became the puzzle (`re
 `accept`, `reject`, `keep` and `restart`, plus `signs`, `clear`, `reveal` and sign verdicts for Greater-Than;
 the header of `js/engine/digger.js` describes them). It is the same whatever the trace verbosity, the thread or
 the board size, and `toWire` / `fromWire` carry it. After a run the board shows the finished puzzle at once;
-nothing plays by itself. `SG.player.buildSteps(result)` (pure) turns the log into the steps of the replay,
-each one a change the board shows: the full solution; the cages (Killer) or the signs (Greater-Than); batches
-of random removals, about a ninth of the board tried per step, with the removed cells framed and the cells
-that had to go back framed dashed red; rounds of the guided dig, each taking the removal that makes the
-puzzle hardest; for Greater-Than the batches of signs taken away and the clues shown when the puzzle came out
-too hard; and the finished puzzle. The technical work (settings, board model, rating, tuning, samples that
-missed the level) is not shown. A Classic 9×9 *easy* puzzle with seed 3, for example, replays in 9 steps: the
-full solution, five batches of random removals (9, 10, 10, 10 and 4 cells), two rounds of the guided dig (2
-cells each) and the finished puzzle with 34 clues. `SG.player.create()` is the manual player (first, previous,
-next, last, seek; position 0 is the empty grid), `SG.stepView.create()` the description of the step on show
-(with a legend of the board frames and the techniques the puzzle needs at that step). The explanation
-of the seven steps lives in the Help dialog (tab "How it works"): one collapsible entry per step with its
-what / why / how and pseudocode, `SG.explainCard.create(el, { compact: true })`; the entry of the replay step on
-show is marked, open, and its running line and dig counters are shown (`SG.app.getExplainContext()`). The
-**Explain** (help) icon of the step description opens the Help on that tab. Overlays (cages, signs, windows) are drawn from
-the model of the result, not from the log.
+nothing plays by itself (the replay is described in the next section).
 Random choices use forked streams of one seeded generator (`SG.rng`), which is why a seed reproduces a
 puzzle.
+
+### The replay of the generation
+
+The **Generation steps** tab shows how a puzzle was dug out of its solution, with a score table on every step.
+Four pieces build it, in this order (the first three are pure); none of them changes the puzzle, the cache, the
+history, the export or the URL. The technical work (settings, board model, samples that missed the level) is
+never shown.
+
+1. **The analysis, `SG.replay`** (`js/engine/replay.js`; no DOM, no clock, no random numbers).
+   `SG.replay.moves(result)` turns the dig log into complete moves (a symmetric group, an exchange of clues, one
+   sign, a restart; never half of one), each with the board after it. `SG.replay.analyse(result)` rates the board
+   after every move once and returns the **analysis**, plain data that survives a structured clone
+   (`SG.replay.toPlainWire` / `fromPlainWire` carry it as JSON-safe data); `SG.replay.prepare(result)` is the same
+   work as an iterator that yields `{ done, total }`, which is what the worker and the main-thread mode drive in
+   slices, and `SG.replay.fallback(result, reason)` is the analysis of a result without a usable log (the full
+   solution, the structure and the finished puzzle). A rating (`SG.replay.rateBoard`) is one
+   `SG.logicalSolver.solve` with every technique under a guard of 1,000,000 checks, plus a count of the solutions
+   under a guard of 200,000 nodes when the proof assumes uniqueness; the finished puzzle keeps `result.rating`.
+   A board that cannot be rated gets an honest status, never a guess or a retry: `capped`, `stuck`, `ambiguous`
+   or `unverified` (the other statuses are `rated`, `zero` and `final`). The work count `checks` is diagnostic
+   only and can differ by a few between two runs, so comparisons ignore it.
+2. **The views, `SG.replay.buildViews(analysis)`.** The **compact** view is a few steps chosen by score so that
+   it never goes down (`SG.replay.select`, a step at the end of every phase, checked by `SG.replay.audit`); the
+   **details** view has one step per move. `analysis.transitions` holds, for every step, the change of the
+   Total, the terms P, W, E, V and R before and after, and the tier (`SG.replay.isJump`,
+   `SG.replay.badgeRatio`): a **jump** is a rise of at least ×3 **and** at least +100 from a positive score, and
+   its badge shows the ratio rounded down to one decimal. For every jump the analysis also holds its cause (the
+   parts of the move rated on partial boards, which are probes and never steps, `SG.replay.classifyShares`), the
+   generator's recorded choice and, in `analysis.proofs`, the first use of the new hardest technique
+   (`SG.replay.firstUse`) and a restricted check (`SG.replay.restrictedCheck`). This is optional work: a
+   failure leaves a piece `unavailable` and never changes a rating. The thresholds and guards are in
+   `SG.replay.CONSTANTS`.
+3. **The steps, `SG.player.buildViews(result, analysis)`** (`js/ui/player.js`) → `{ compact, details, signs,
+   cellCount }`. A step is plain data: its `role`, the moves it covers, the board it shows, a title and a
+   sentence per run of moves (as `SG.i18n.t()` keys), the frames of the **net** change (cells cleared, cells put
+   back, clues shown again, and the one clue or sign that causes a jump), the signs, the cumulative metrics and a
+   `table` model of its score table, whose `state` is `start` (position 0), `zero` (nothing to solve yet),
+   `scored`, `final` or `status` (a board that could not be rated). `SG.player.create()` is the manual player
+   (first, previous, next, last, seek, `setAnalysis`, the view toggle `setView('compact' | 'details')`;
+   position 0 is the empty grid), and its `tableAt(position)` method hands the table of the step on show to the
+   step description.
+4. **The step description, `SG.stepView.create(rootEl, { table })`** (`js/ui/step-view.js`) draws that table by
+   state, with the change of the Total, the legend of the board frames and the tier of the step: the **first
+   rated puzzle**, a **score jump** (a badge in the heading, a callout with a closed "Why?") or a **new hardest
+   technique**. `SG.stepView.explain(table, step)` is the pure text model that the tests read. A jump that
+   exactly one clue or sign causes gets a frame on the board (`marks.cause`, `marks.causeRestore`,
+   `signs.cause`; `board.setSignMarks` takes a `cause` list).
+
+The numbers of the examples are the ones of the tests. Classic 9×9 *expert* with seed 3275974478 has 32 positions
+and 33 steps with every move shown; its compact view has 7 steps with the scores 0, 23, 44, 551, 568, 992 and
+992, and the step 44 → 551 (×12.5) is a jump caused by the clue at R1C2 (alone it gives 550; the other removal
+of the move, R9C8, alone gives 44), which is framed. A Classic 9×9 *easy* puzzle with seed 3 replays in 7 steps
+(26 with every move shown): the full solution, four steps of random removals (scores 14, 24, 34 and 44), one
+step of the guided dig (46) and the finished puzzle with 34 clues.
+
+**Preparation.** The page asks for the analysis after the puzzle is on screen, through
+`SG.player.createPreparation()` (a controller without DOM: `start(result)`, `press()`, `unavailable(result)`,
+`cancel()`, `state()`; its states are `idle`, `waiting`, `consent`, `trace`, `preparing`, `ready`, `unavailable`
+and `error`). In worker mode it starts by itself and the status block of the replay (`#replay-status`) shows the
+progress, in positions rated. In main-thread mode (`file://`) it shows a notice and the **Prepare score tables**
+button (`#btn-prepare-replay`); nothing runs before the press, not even the regeneration of the record of a cached
+puzzle, the replay controls stay off until the tables are ready, and the analysis then runs on the page
+(`replay(result, { allowMain: true })`). Until the analysis is there the board keeps the finished puzzle; when it
+cannot be had (a failure, or a cached puzzle whose record cannot be rebuilt), the replay falls back to the full
+solution and the finished puzzle (`SG.replay.fallback`).
+
+The explanation of the seven steps lives in the Help dialog (tab "How it works"): one collapsible entry per step
+with its what / why / how and pseudocode, `SG.explainCard.create(el, { compact: true })`; the entry of the replay
+step on show is marked, open, and its running line and dig counters are shown (`SG.app.getExplainContext()`). The
+**Explain** (help) icon of the step description opens the Help on that tab. Overlays (cages, signs, windows) are
+drawn from the model of the result, not from the log.
 
 ### Worker and fallback
 
@@ -268,14 +327,30 @@ promise is rejected at once, the work stops at the next boundary, and a worker t
 falls back to the main thread and runs the same slices there. The puzzle for a given
 seed is identical in both modes.
 
+The same client runs the replay analysis: `SG.workerClient.replay(result, { onProgress({ done, total }),
+allowMain: false })` returns a promise of the analysis and `.cancelReplay()` stops it (every client has both: the
+`create()` clients, the cache's wrapper and the page's own direct client). In worker mode the job is a `replay`
+message that carries `SG.replay.toPlainWire(result)`; the worker runs `SG.replay.prepare` in slices and answers
+`replayProgress` (the positions rated, when the count changed), then `replayDone` (the analysis) or
+`replayError`. The worker has one job at a time: `generate`, `replay` and `cancel` pre-empt it at the next slice,
+so a new generation cancels a replay, and `replay()` during a generation is refused (`unexpected`, message
+`busy`). In main mode the analysis runs on the page in slices, only inside `replay()` and only with
+`allowMain: true`, the user's consent (the **Prepare score tables** button); without it the promise rejects with
+`budget.cancelled` and `i18nArgs.reason === 'replayConsentRequired'`, and so it does when a worker that was
+running cannot be replaced. The messages are the header of `js/worker/gen.worker.js`, the design is
+[design.md](generator/design.md) §9.3.
+
 ### Cache and pre-generation
 
 `SG.cache` (`js/ui/cache.js`) stores every generated puzzle in `localStorage` (`sg.cache.v1`, 20 puzzles,
 least recently used out first, schema version checked), so the same configuration with the same seed is served
 at once. It stores the puzzle only, never the trace nor the dig log: a cached puzzle is shown immediately (the
-replay waits, with a "preparing the replay" note) and is **generated again from its seed in the background**;
-its dig log then gives it its replay (`SG.app.attachTrace(trace, digLog)`), which opens on the finished
-puzzle — the regenerated puzzle must equal the cached one, otherwise the entry is dropped. When the page has
+replay waits, with the note "Preparing the score tables: rebuilding the generation record…") and is **generated
+again from its seed in the background**; its dig log then gives it its replay (`SG.app.attachTrace(trace,
+digLog)`), which opens on the finished puzzle — the regenerated puzzle must equal the cached one, otherwise the
+entry is dropped. In main-thread mode the regeneration waits for the **Prepare score tables** press (the
+`replay:consent` event of the app), and `SG.app.markTraceUnavailable()` shows the fallback replay when the
+record cannot be had (no worker for the background run, a failure, a different puzzle). When the page has
 been idle for a second, the cache also pre-generates one or two puzzles with the same options in a worker,
 which "Generate" (with an empty seed) and "Generate random" then hand out instantly. It never runs while a
 generation is in progress, pauses in a hidden tab, skips configurations that are slow, and does not exist in
@@ -355,11 +430,12 @@ the runner and `tests.html`. The files of `core` are listed by their path from t
 `js/ui/app.js` owns the page and exposes `SG.app`: `getStore()`, `getBoard()`, `getPlayer()`, `getStepView()`,
 `getResult()` (the last `{ result, trace }`), `generate()`, `regenerate()`, `cancel()`, `showResult()` (show a
 puzzle that was not generated on this page), `toast()`, `announce()`, `openModal()`,
-`setClient()` and `attachTrace()` (what the cache uses), and an event bus `on()` / `emit()` with the events
-`generate:start`, `generate:progress`, `generate:end`, `generate:error`, `generate:cancel`, `result`, `trace`
-(`{ result, trace }`, once `attachTrace()` gave a cached puzzle its replay), `position` (`{ position, length,
-step, direction }` after every move of the replay; `step` is a step of `SG.player.buildSteps`, null at
-position 0), `locale`, `theme`, `settings` and `action`. The header of `app.js` is the full contract.
+`setClient()`, `attachTrace()` and `markTraceUnavailable()` (what the cache uses), and an event bus `on()` /
+`emit()` with the events `generate:start`, `generate:progress`, `generate:end`, `generate:error`,
+`generate:cancel`, `result`, `trace` (`{ result, trace }`, once `attachTrace()` gave a cached puzzle its replay),
+`replay:consent` (the user pressed **Prepare score tables**), `position` (`{ position, length, step, direction }`
+after every move of the replay; `step` is a step of `SG.player.buildViews`, null at position 0), `locale`,
+`theme`, `settings` and `action`. The header of `app.js` is the full contract.
 
 **Adding a UI module without editing `app.js`.** At the end of start-up `app.js` calls `init(SG.app)` — which
 must be idempotent — on each of these optional modules that exists, in this order, every call in its own
@@ -387,7 +463,7 @@ and that the player loads too.
 
 ```
 sudoku/                     the repository (see "Layout" in the overview for the whole layout)
-├── .github/workflows/      pages.yml: tests, then publishes generator/, player/ and core/
+├── .github/workflows/      pages.yml: tests, then publishes generator/, player/ and core/ · pull-request.yml: every test of a pull request to main
 ├── LICENSE · .gitignore    the MIT licence · files ignored by git
 ├── docs/                   documents of both apps, by feature (the screenshots of the user guide are in
 │                           docs/screenshots/)
@@ -412,7 +488,8 @@ sudoku/                     the repository (see "Layout" in the overview for the
     ├── js/
     │   ├── engine/         the generation engine, no DOM
     │   │   ├── rng.js · difficulty.js · full-grid.js · symmetry.js · digger.js
-    │   │   └── events.js · explain-data.js · pipeline.js      the seven steps and their events
+    │   │   ├── events.js · explain-data.js · pipeline.js      the seven steps and their events
+    │   │   └── replay.js       the analysis of the Generation Steps replay: moves, ratings, views (SG.replay)
     │   ├── variants/       registry.js · classic.js · mega.js · extra-regions.js · jigsaw.js · killer.js
     │   │                   · greater-than.js · multigrid.js · wordoku.js
     │   ├── worker/         gen.worker.js · worker-client.js
@@ -421,11 +498,12 @@ sudoku/                     the repository (see "Layout" in the overview for the
     │                       · result-view.js · cache.js · history.js · export.js · a11y.js · theme.js
     │                       · help.js · app.js
     └── tests/
-        ├── node-runner.js · soak.js · perf.js · qualify.js
+        ├── node-runner.js · soak.js · perf.js · qualify.js · replay-fixtures.js
         ├── fixtures/       the fixtures of the generator (rated puzzles, the performance helper, the
-        │                   regression hashes in regression.js, generated, and the testkit provider)
+        │                   regression hashes in regression.js, generated, the testkit provider, and the
+        │                   data of the replay suite: replay-goldens.js, replay-wire.js, generated)
         ├── suites/         the quick set, run by default together with ../core/tests/suites: one *.test.js per
-        │                   area, 26 of the generator's own (found automatically), smoke.test.js among them
+        │                   area, 27 of the generator's own (found automatically), smoke.test.js among them
         └── manual/         the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
                             extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
@@ -712,16 +790,16 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (42 suites, about 2,550 tests), about a minute
+node tests/node-runner.js                          # the quick set (43 suites, about 2,820 tests), about a minute
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8, about eight minutes)
-node tests/node-runner.js --all                    # quick + manual (50 suites, about 3,570 tests), about nine minutes
+node tests/node-runner.js --all                    # quick + manual (51 suites, about 3,840 tests), about nine minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 42 suites, about
-2,550 tests, about one minute — the 26 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 43 suites, about
+2,820 tests, about one minute — the 27 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -729,7 +807,7 @@ per variant and checks its uniqueness, level and determinism and a sample of the
 run them with `--manual` (only these) or `--all` (quick and manual, about nine minutes), or by name with
 `--suite=killer`, which works for any suite. While developing, run the quick set, and a heavy suite by name when you
 touch its area; run `--all` before a release and whenever you touch generation, scoring or a variant. The CI
-workflow runs `node tests/node-runner.js --all` before every deploy.
+workflow runs `node tests/node-runner.js --all` before every deploy, and .github/workflows/pull-request.yml runs it (in parallel groups) for every pull request to `main`, together with the player suites and the browser scripts.
 
 The runner loads `SOURCE_FILES` with `vm.runInThisContext`, discovers `../core/tests/fixtures/*.js`,
 `tests/fixtures/*.js`, `../core/tests/suites/*.test.js` and `tests/suites/*.test.js` (and `tests/manual/*.test.js` with
@@ -740,9 +818,20 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts about 3,570 tests in 50 suites
-(about 2,550 in the 42 quick ones), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts about 3,840 tests in 51 suites
+(about 2,820 in the 43 quick ones), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
+
+```text
+node tests/replay-fixtures.js            # regenerates tests/fixtures/replay-wire.js (four slow goldens, ~23 s)
+node tests/replay-fixtures.js --check    # regenerates in memory and compares; exit 1 on a difference
+```
+
+The `replay` suite tests the analysis (the moves, the ratings and their statuses, the views, the explained jumps)
+against the golden numbers of 14 requests (`tests/fixtures/replay-goldens.js`). It generates the fast ones live
+and reads the four slow ones from the saved results (`tests/fixtures/replay-wire.js`), because generating them
+takes about 23 seconds; regenerate them only when the generator's output changes on purpose (the regression
+hashes change then too).
 
 The suites check the generation time of every variant against the budgets of [design.md](generator/design.md) §9.1 with
 a tolerance, so that a busy or slower machine does not fail them: twice the budget by default, three times when
@@ -806,7 +895,14 @@ these are the technical details behind some of them.
   page stays responsive and **Cancel** works at the next slice, but one piece of work cannot be split — in
   Killer a single search slice takes 70–86 ms, a Greater-Than sign dig 50–70 ms, the cage layout of a hard
   Killer up to about 300 ms — and the page may pause for that long. Background pre-generation is off there
-  too. Serve the repository to get the Web Worker.
+  too. The score tables of the replay are computed on the page there as well, and only after the user presses
+  **Prepare score tables**: the analysis yields after every position, but the rating of one board (up to the guard
+  of 1,000,000 checks) cannot be split. Serve the repository to get the Web Worker.
+- **The ratings of the replay** are one canonical solve per board under a guard of 1,000,000 checks (and 200,000
+  nodes for the count of the solutions): a board that exceeds it shows a status instead of a score, with no retry.
+  The explanation of a jump describes the generator's own solution and its limited check, never what every solver
+  needs, and the work count `checks` of a rating is diagnostic only: it can differ by a few between two runs (the
+  subset techniques space their budget checks with a counter that lives across solves), so the tests ignore it.
 - **Difficulty weights are engineering priors**, not measurements of human solvers: the weights of the 26
   techniques and the nine score bands were chosen from measurements of generated puzzles
   ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); the Killer weights of `ruleOf45` and
@@ -870,8 +966,8 @@ fixtures need `http://`). The fixtures in `tests/fixtures/puzzles/` are real doc
 ([fixtures](docs/puzzle-exchange/fixtures.md)).
 
 The slow checks are the **browser scripts** in `tests/browser/` (`node tests/browser/run-all.js`: headless Edge
-over the DevTools protocol, several minutes). They are **manual**, not part of the workflow, and are run only
-when a change touches the UI; the run is recorded in [browser run](docs/qa/browser-run.md).
+over the DevTools protocol, several minutes). They are **manual** while developing and run only
+when a change touches the UI; the pull-request workflow runs them (Edge or Chrome of the runner image) for every pull request to `main`; the run is recorded in [browser run](docs/qa/browser-run.md).
 
 [Back to top](#top)
 

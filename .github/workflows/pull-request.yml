@@ -1,0 +1,116 @@
+name: Test pull request
+
+# Every test that has a pass/fail result, for each pull request that targets main: the shared suites, the quick and
+# the heavy suites of the generator (--all, in the groups of .github/scripts/generator-suites.sh), the player suites
+# and the browser scripts of the player. soak.js, perf.js and qualify.js are measuring tools and are not run.
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pull-request-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  test-core:
+    name: Test core
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Run the core tests
+        working-directory: player
+        run: |
+          suites=$(ls ../core/tests/suites | sed 's/\.test\.js$//' | paste -sd, -)
+          node tests/node-runner.js --suite="$suites"
+
+  test-generator:
+    name: Test generator (${{ matrix.name }})
+    needs: test-core
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { group: sweep, name: variant sweep }
+          - { group: engine, name: techniques and killer }
+          - { group: rules, name: rule variants }
+          - { group: rating, name: rating, speed and pipeline }
+          - { group: rest, name: other suites }
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Run the generator tests
+        working-directory: generator
+        run: node tests/node-runner.js --suite="$(bash ../.github/scripts/generator-suites.sh ${{ matrix.group }})"
+
+  test-player:
+    name: Test player
+    needs: test-core
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Run the player tests
+        working-directory: player
+        run: node tests/node-runner.js
+
+  # Headless Edge (or Chrome) from the runner image, driven over the DevTools protocol by player/tests/browser.
+  test-browser:
+    name: Test player in a browser
+    needs: test-core
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      # The runner has no user namespaces for the browser sandbox, so the browser starts with --no-sandbox.
+      - name: Choose the browser
+        run: |
+          browser=$(command -v microsoft-edge || command -v google-chrome)
+          printf '#!/usr/bin/env bash\nexec "%s" --no-sandbox "$@"\n' "$browser" > "$RUNNER_TEMP/browser"
+          chmod +x "$RUNNER_TEMP/browser"
+          echo "EDGE_PATH=$RUNNER_TEMP/browser" >> "$GITHUB_ENV"
+          "$browser" --version
+
+      - name: Run the browser scripts
+        working-directory: player
+        run: node tests/browser/run-all.js
+
+      - name: Upload the screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-screenshots
+          path: player/.scratch-shots
+          if-no-files-found: ignore

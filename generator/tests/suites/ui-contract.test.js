@@ -60,18 +60,20 @@
     boardView: ['create', 'geometry', 'renderMarkup', 'exportSvg', 'cellView', 'resolveTokens'],
     stepView: ['create', 'chartModel', 'placeTip'],
     explainCard: ['create', 'viewModel'],
-    player: ['create', 'buildSteps', 'viewAt', 'describeStep', 'stepTitle', 'stepMeta', 'positionText'],
+    player: ['create', 'buildViews', 'createPreparation', 'viewAt', 'describeStep', 'stepTitle', 'stepMeta',
+      'positionText'],
     resultView: ['create', 'viewModel'],
     app: ['getStore', 'getBoard', 'getPlayer', 'getStepView', 'getExplainContext', 'getResult', 'generate',
       'cancel', 'toast',
-      'openModal', 'announce', 'on', 'emit']
+      'openModal', 'announce', 'on', 'emit', 'markTraceUnavailable']
   };
 
   /** The instance interfaces that can be created without a DOM. */
   var PLAYER_INSTANCE = ['load', 'reset', 'next', 'prev', 'first', 'last', 'seek', 'state', 'describe',
-    'getSteps', 'getStep', 'bindControls', 'destroy'];
+    'getSteps', 'getStep', 'bindControls', 'destroy', 'setPreparation', 'setAnalysis', 'setView', 'getView',
+    'tableAt'];
 
-  var CLIENT_SURFACE = ['generate', 'cancel'];
+  var CLIENT_SURFACE = ['generate', 'cancel', 'replay', 'cancelReplay'];
 
   describe('ui contract: function surface', function () {
     Object.keys(SURFACE).forEach(function (name) {
@@ -427,7 +429,8 @@
     'btn-drawer', 'controls-root', 'controls-form', 'btn-generate', 'btn-regenerate', 'btn-cancel',
     'btn-export', 'btn-export-code', 'btn-play-online',
     'board-root', 'board-svg', 'board-title', 'board-desc', 'player-root', 'btn-first', 'btn-prev',
-    'btn-next', 'btn-last', 'scrubber', 'player-time', 'steps-root', 'step-detail',
+    'btn-next', 'btn-last', 'scrubber', 'player-time', 'replay-view-details', 'replay-status',
+    'replay-status-text', 'btn-prepare-replay', 'steps-root', 'step-detail',
     'btn-explain', 'result-root', 'modal-root', 'toast-root', 'a11y-live'];
 
   describe('ui contract: index.html', function () {
