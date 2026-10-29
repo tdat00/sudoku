@@ -169,14 +169,20 @@
   table-layout: fixed;
 }
 
-.step-table--scores thead th:nth-child(2),
-.step-table--scores thead th:nth-child(3),
+.step-table--scores thead th:nth-child(2) {
+  width: 5rem;
+}
+
+.step-table--scores thead th:nth-child(3) {
+  width: 6.75rem;
+}
+
 .step-table--scores thead th:nth-child(4) {
   width: 6rem;
 }
 
 .step-table--scores thead th:nth-child(5) {
-  width: 11rem;
+  width: 9.5rem;
 }
 
 .step-table--scores .result-table__score {
