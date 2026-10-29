@@ -6,6 +6,7 @@
 /* ---- The view toggle and the preparation of the score tables ---- */
 .replay-bar {
   display: flex;
+  justify-content: flex-end;
   gap: var(--sg-space-2);
   margin-top: var(--sg-space-2);
 }
@@ -160,6 +161,52 @@
 .result-table .step-table__total--jump td {
   border-top: 2px solid var(--sg-color-accent);
   background: var(--sg-color-accent-soft);
+}
+
+/* Fixed column widths, wide enough for the longest value ("992 (unchanged)" and the help icon), so the columns
+   stay put and nothing wraps when the numbers change from one step to the next. */
+.result-table.step-table--scores {
+  table-layout: fixed;
+}
+
+.step-table--scores thead th:nth-child(2),
+.step-table--scores thead th:nth-child(3),
+.step-table--scores thead th:nth-child(4) {
+  width: 6rem;
+}
+
+.step-table--scores thead th:nth-child(5) {
+  width: 11rem;
+}
+
+.step-table--scores .result-table__score {
+  justify-content: flex-end;
+}
+
+/* On a phone there is no room for that: the narrow columns use short names and the score may wrap. */
+@media (max-width: 767.98px) {
+  .step-table--scores thead th:nth-child(2),
+  .step-table--scores thead th:nth-child(3),
+  .step-table--scores thead th:nth-child(4) {
+    width: 3.25rem;
+  }
+
+  .step-table--scores thead th:nth-child(5) {
+    width: 4.5rem;
+  }
+
+  .step-table--scores td:last-child {
+    white-space: normal;
+  }
+
+  .step-table--scores .result-table__score {
+    max-width: 100%;
+  }
+
+  .step-table--scores [data-role="score"] {
+    min-width: 0;
+    text-align: end;
+  }
 }
 
 .step-status {

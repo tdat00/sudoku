@@ -1301,7 +1301,7 @@
       r.player.destroy();
     });
 
-    it('the toggle "Show every move" follows the view, switches it, and is disabled without views', function () {
+    it('the toggle "Show all moves" follows the view, switches it, and is disabled without views', function () {
       var result = goldenResult('G01');
       var c = fakeControls();
       var r = rig(81);

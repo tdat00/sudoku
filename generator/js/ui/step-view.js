@@ -882,7 +882,7 @@
       if (other.length > 0) {
         groups.push(html(doc, 'tbody', { 'data-group': 'other' }, [section('other')].concat(other)));
       }
-      box.appendChild(html(doc, 'table', { class: 'result-table' },
+      box.appendChild(html(doc, 'table', { class: 'result-table step-table--scores' },
         [html(doc, 'thead', {}, [head])].concat(groups, [html(doc, 'tfoot', {}, [foot])])));
       box.appendChild(html(doc, 'p', { class: 'text-muted result__note result-table__legend', 'data-role': 'legend' }, [
         html(doc, 'span', {}, [doc.createTextNode(translate('steps.techniques.legend.1'))]),
@@ -931,9 +931,9 @@
         detailEl.appendChild(textBlock('p', 'step-detail__meta', p ? p.stepMeta(step) : ''));
         detailEl.appendChild(textBlock('p', 'step-detail__text', p ? p.describeStep(step) : ''));
         if (text.line !== null) detailEl.appendChild(textBlock('p', 'step-tier', text.line));
-        if (text.callout !== null) detailEl.appendChild(calloutNode(text.callout));
         const techniques = techniquesBlock(model, text);
         if (techniques !== null) detailEl.appendChild(techniques);
+        if (text.callout !== null) detailEl.appendChild(calloutNode(text.callout));
       }
       renderHeading(text);
       renderLegend();
@@ -1011,7 +1011,7 @@
       'steps.techniques.col.name': 'Item',
       'steps.techniques.col.count': 'Uses',
       'steps.techniques.col.unit': 'Points per use',
-      'steps.techniques.col.work': 'Work',
+      'steps.techniques.col.work': 'Total Points',
       'steps.techniques.col.score': 'Score',
       'steps.techniques.col.count.short': 'n',
       'steps.techniques.col.unit.short': 'w',
@@ -1026,8 +1026,8 @@
       'steps.techniques.total': 'Total',
       'steps.techniques.help': 'About \u201c{name}\u201d',
       'steps.techniques.help.score': 'How the score of \u201c{name}\u201d is calculated',
-      'steps.techniques.tip.work': 'Work of this technique',
-      'steps.techniques.tip.all': 'All the work of the puzzle',
+      'steps.techniques.tip.work': 'Total points of this technique',
+      'steps.techniques.tip.all': 'Total points of the puzzle',
       'steps.techniques.tip.term': 'Work term of the score',
       'steps.techniques.tip.share': 'Its share of the work term',
       'steps.techniques.tip.hardest': 'Hardest technique: its points in full + its share of the work term',
@@ -1151,7 +1151,7 @@
       'steps.techniques.col.name': 'Mục',
       'steps.techniques.col.count': 'Lần dùng',
       'steps.techniques.col.unit': 'Điểm mỗi lần',
-      'steps.techniques.col.work': 'Khối lượng',
+      'steps.techniques.col.work': 'Tổng điểm',
       'steps.techniques.col.score': 'Điểm',
       'steps.techniques.col.count.short': 'n',
       'steps.techniques.col.unit.short': 'w',
@@ -1166,8 +1166,8 @@
       'steps.techniques.total': 'Tổng',
       'steps.techniques.help': 'Giải thích về \u201c{name}\u201d',
       'steps.techniques.help.score': 'Cách tính điểm của \u201c{name}\u201d',
-      'steps.techniques.tip.work': 'Khối lượng của kỹ thuật này',
-      'steps.techniques.tip.all': 'Toàn bộ khối lượng của đề',
+      'steps.techniques.tip.work': 'Tổng điểm của kỹ thuật này',
+      'steps.techniques.tip.all': 'Tổng điểm của cả đề',
       'steps.techniques.tip.term': 'Phần khối lượng của điểm số',
       'steps.techniques.tip.share': 'Phần của nó trong phần khối lượng',
       'steps.techniques.tip.hardest': 'Kỹ thuật khó nhất: đủ điểm của nó + phần của nó trong phần khối lượng',

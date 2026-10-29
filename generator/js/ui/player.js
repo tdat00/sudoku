@@ -1249,7 +1249,7 @@
       'replay.unit.move_other': '{count} moves',
       'replay.list.last': '{list} and {last}',
 
-      'replay.view.details': 'Show every move',
+      'replay.view.details': 'Show all moves',
       'replay.preparing': 'Preparing the score tables\u2026 {done} of {total}',
       'replay.preparing.trace': 'Preparing the score tables: rebuilding the generation record\u2026',
       'replay.prepare.button': 'Prepare score tables',

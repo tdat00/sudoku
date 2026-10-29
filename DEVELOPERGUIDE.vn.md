@@ -566,7 +566,7 @@ tám phút — không thuộc lần chạy mặc định: chạy bằng `--manua
 khoảng chín phút), hay theo tên bằng `--suite=killer` (dùng được cho mọi suite). Khi đang phát triển, hãy chạy bộ
 nhanh, và chạy theo tên một suite nặng khi bạn đụng đến vùng của nó; chạy `--all` trước khi phát hành và mỗi khi
 đụng đến việc sinh đề, tính điểm hay một biến thể. Workflow CI chạy `node tests/node-runner.js --all` trước mỗi
-lần triển khai.
+lần triển khai, và `.github/workflows/pull-request.yml` chạy nó (theo các nhóm song song) cho mọi pull request vào `main`, cùng với các suite của player và các script trình duyệt.
 
 Bộ chạy nạp `SOURCE_FILES` bằng `vm.runInThisContext`, tự tìm `../core/tests/fixtures/*.js`, `tests/fixtures/*.js`,
 `../core/tests/suites/*.test.js` và `tests/suites/*.test.js` (cùng `tests/manual/*.test.js` khi có `--manual` hoặc
@@ -718,8 +718,8 @@ dạng trao đổi, hiển thị bàn cờ). `tests.html` chạy cùng các bộ
 ([tệp mẫu](docs/puzzle-exchange/fixtures.md)).
 
 Phần chạy chậm là các **script trình duyệt** trong `tests/browser/` (`node tests/browser/run-all.js`: Edge không giao
-diện qua giao thức DevTools, vài phút). Chúng chạy **thủ công**, không nằm trong workflow, và chỉ cần chạy khi thay
-đổi đụng tới giao diện; lần chạy được ghi lại trong [lần chạy trình duyệt](docs/qa/browser-run.md).
+diện qua giao thức DevTools, vài phút). Khi phát triển chúng chạy **thủ công** và chỉ cần chạy khi thay
+đổi đụng tới giao diện; workflow của pull request chạy chúng (Edge hoặc Chrome của máy chạy) cho mọi pull request vào `main`; lần chạy được ghi lại trong [lần chạy trình duyệt](docs/qa/browser-run.md).
 
 [Lên đầu trang](#top)
 

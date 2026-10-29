@@ -463,7 +463,7 @@ and that the player loads too.
 
 ```
 sudoku/                     the repository (see "Layout" in the overview for the whole layout)
-├── .github/workflows/      pages.yml: tests, then publishes generator/, player/ and core/
+├── .github/workflows/      pages.yml: tests, then publishes generator/, player/ and core/ · pull-request.yml: every test of a pull request to main
 ├── LICENSE · .gitignore    the MIT licence · files ignored by git
 ├── docs/                   documents of both apps, by feature (the screenshots of the user guide are in
 │                           docs/screenshots/)
@@ -807,7 +807,7 @@ per variant and checks its uniqueness, level and determinism and a sample of the
 run them with `--manual` (only these) or `--all` (quick and manual, about nine minutes), or by name with
 `--suite=killer`, which works for any suite. While developing, run the quick set, and a heavy suite by name when you
 touch its area; run `--all` before a release and whenever you touch generation, scoring or a variant. The CI
-workflow runs `node tests/node-runner.js --all` before every deploy.
+workflow runs `node tests/node-runner.js --all` before every deploy, and .github/workflows/pull-request.yml runs it (in parallel groups) for every pull request to `main`, together with the player suites and the browser scripts.
 
 The runner loads `SOURCE_FILES` with `vm.runInThisContext`, discovers `../core/tests/fixtures/*.js`,
 `tests/fixtures/*.js`, `../core/tests/suites/*.test.js` and `tests/suites/*.test.js` (and `tests/manual/*.test.js` with
@@ -966,8 +966,8 @@ fixtures need `http://`). The fixtures in `tests/fixtures/puzzles/` are real doc
 ([fixtures](docs/puzzle-exchange/fixtures.md)).
 
 The slow checks are the **browser scripts** in `tests/browser/` (`node tests/browser/run-all.js`: headless Edge
-over the DevTools protocol, several minutes). They are **manual**, not part of the workflow, and are run only
-when a change touches the UI; the run is recorded in [browser run](docs/qa/browser-run.md).
+over the DevTools protocol, several minutes). They are **manual** while developing and run only
+when a change touches the UI; the pull-request workflow runs them (Edge or Chrome of the runner image) for every pull request to `main`; the run is recorded in [browser run](docs/qa/browser-run.md).
 
 [Back to top](#top)
 

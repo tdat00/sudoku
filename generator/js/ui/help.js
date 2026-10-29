@@ -1187,7 +1187,7 @@
         'the slider, to see how the puzzle was made: the full solution, the cages or the signs (Killer ' +
         'and Greater-Than only), the removals chosen at random, the removals the generator chose with ' +
         'its own check, any adjustments, and the finished puzzle. The steps are chosen so that the score ' +
-        'rises steadily and never goes down; tick Show every move to see each recorded change on its own, ' +
+        'rises steadily and never goes down; tick Show all moves to see each recorded change on its own, ' +
         'including changes that lowered the score. Every step has a score table; a position that cannot be ' +
         'rated shows its status and attempted techniques instead of a total. The Explain button opens this ' +
         'page at the step on show. On the board, an amber frame marks the cells whose clues were cleared in ' +
@@ -1232,7 +1232,7 @@
         'shapes, or shapes). The puzzle does not change.',
       'help.controls.replay': 'Under the board, First step and Last step jump to the beginning or the end ' +
         'of the replay, Previous step and Next step move one step at a time, and the slider goes straight ' +
-        'to any step. The label beside them tells which step is shown. Show every move switches between ' +
+        'to any step. The label beside them tells which step is shown. Show all moves switches between ' +
         'the steps chosen for a steady score and every recorded change, and keeps the replay at the same ' +
         'point of the generation. When the page has no background worker, these controls wait until ' +
         'Prepare score tables has been pressed and preparation has finished.',

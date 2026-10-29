@@ -401,7 +401,7 @@
           var pops = fx.doc.findAll(row, function (el) { return el.getAttribute('role') === 'tooltip'; });
           expect(pops.length).toBe(2);
           expect(pops[0].textContent).toBe(SG.i18n.t('technique.' + id + '.desc'));
-          expect(pops[1].textContent).toContain('Work of this technique');
+          expect(pops[1].textContent).toContain('Total points of this technique');
           expect(pops[1].textContent).toContain('Shown as (rounded)');
           var fractions = fx.doc.findAll(pops[1], function (el) {
             return el.getAttribute('class') === 'math-frac';
@@ -1361,7 +1361,7 @@
   });
 
   describe('stepView: the callout, the badge and the legend on the page', function () {
-    it('puts the callout between the sentence and the table; "Why?" is a closed details with a summary',
+    it('puts the callout after the table; "Why?" is a closed details with a summary',
       function () {
         var res = golden('G01');
         var player = loadedPlayer(res);
@@ -1372,8 +1372,8 @@
           inLocale('en', function () {
             fx.view.setPosition(4);
             expect(fx.detail.children.map(function (el) { return el.getAttribute('class'); })).toEqual(
-              ['step-detail__meta', 'step-detail__text', 'step-callout', 'step-detail__techniques']);
-            var callout = fx.detail.children[2];
+              ['step-detail__meta', 'step-detail__text', 'step-detail__techniques', 'step-callout']);
+            var callout = fx.detail.children[3];
             expect(callout.tagName).toBe('DIV');
             expect(callout.getAttribute('data-role')).toBe('jump');
             expect(callout.children.map(function (el) { return el.getAttribute('class'); })).toEqual(
