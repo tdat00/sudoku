@@ -79,6 +79,24 @@
       expect(function () { T.jigsawSpec([0, 1]); }).toThrow();
     });
 
+    it('checks the length of a region map itself, and leaves the regions to the model validation', function () {
+      need();
+      var map = Array.from(K.document('jigsaw9').model.layout.cellRegion);
+      var built = function (list) { return SG.model.validate(T.create(T.jigsawSpec(list)), { solve: false }); };
+      expect(built(map).ok).toBe(true);
+      [undefined, null, [], map.slice(1), map.concat(0)].forEach(function (list) {
+        expect(function () { T.jigsawSpec(list); }).toThrow();
+      });
+      var uneven = map.slice();
+      uneven[uneven.indexOf(0)] = 1;
+      var outside = map.slice();
+      outside[0] = 9;
+      [uneven, outside].forEach(function (list) {
+        expect(built(list).ok).toBe(false);
+        expect(built(list).errors[0]).toContain('V1:');
+      });
+    });
+
     it('builds the killer board from its cages, with the colouring of the generator', function () {
       need();
       var spec = K.document('killer').model;

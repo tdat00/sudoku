@@ -361,6 +361,127 @@
   });
 
   // ---------------------------------------------------------------------------------------------
+  // The snapshot of a Jigsaw puzzle: its region map
+  // ---------------------------------------------------------------------------------------------
+
+  describe('help example tools: the snapshot of a Jigsaw puzzle', function () {
+    var JIGSAW = SG.fixtures.jigsawHelpSource;
+
+    function ready() {
+      if (!SG.importer || !SG.play || !EXAMPLES) SG.test.skip('the Player is not loaded here');
+    }
+
+    function item() {
+      return { variantId: JIGSAW.variantId, level: JIGSAW.level, seed: JIGSAW.seed, text: JIGSAW.text };
+    }
+
+    /** The first hint of the real source, with every note filled in, and its snapshot. */
+    function firstHint() {
+      var puzzle = T.openSource(SG, item()).puzzle;
+      var game = SG.play.createGame(puzzle.model, puzzle.givens, puzzle.solution,
+        { now: function () { return 0; } });
+      game.fillNotes();
+      game.clearHint();
+      var hint = game.hint();
+      return { puzzle: puzzle, hint: hint, data: T.snapshot(SG, game, puzzle, hint, item(), 0) };
+    }
+
+    function boxes() {
+      var map = [];
+      for (var cell = 0; cell < 81; cell++) map.push(Math.floor(cell / 27) * 3 + Math.floor((cell % 9) / 3));
+      return map;
+    }
+
+    it('keeps the real source of an irregular Jigsaw board, exactly as the generator wrote it', function () {
+      ready();
+      expect(JIGSAW.variantId).toBe('jigsaw9');
+      expect(JIGSAW.text.indexOf('#1,Jigsaw Sudoku,')).toBe(0);
+      expect(JIGSAW.text).toContain('\nregions: ');
+      expect(JIGSAW.text).not.toContain('\r');
+      expect(T.openSource(SG, item()).ok).toBe(true);
+      expect(T.openSource(SG, { variantId: 'killer', text: JIGSAW.text }).error).toBe(
+        'it declares the variant killer but the puzzle is jigsaw9');
+    });
+
+    it('gives the snapshot an owned, plain copy of the 81 regions, in front of the hint', function () {
+      ready();
+      var run = firstHint();
+      var map = run.puzzle.model.layout.cellRegion;
+      expect(Object.keys(run.data)).toEqual(['variant', 'givens', 'values', 'notes', 'cellRegion', 'hint',
+        'source']);
+      expect(run.data.variant).toBe('jigsaw9');
+      expect(Array.isArray(run.data.cellRegion)).toBe(true);
+      expect(run.data.cellRegion.length).toBe(81);
+      expect(run.data.cellRegion.every(function (region) { return typeof region === 'number'; })).toBe(true);
+      expect(run.data.cellRegion).toEqual(Array.from(map));
+      expect(run.data.cellRegion).not.toEqual(boxes());
+      expect(run.data.source).toEqual({ puzzle: JIGSAW.text, step: 0 });
+      expect(JSON.parse(JSON.stringify(run.data)).cellRegion).toEqual(run.data.cellRegion);
+    });
+
+    it('does not share the map with the model: a later change of either one leaves the other as it was', function () {
+      ready();
+      var run = firstHint();
+      var map = run.puzzle.model.layout.cellRegion;
+      var kept = run.data.cellRegion.slice();
+      map[0] = map[0] + 1;
+      map[80] = map[80] + 1;
+      expect(run.data.cellRegion).toEqual(kept);
+      run.data.cellRegion[40] = 99;
+      expect(map[40]).toBe(kept[40]);
+    });
+
+    it('adds no cellRegion to any other variant, and its examples are the same data as the saved ones', function () {
+      ready();
+      registry().forEach(function (id) { expect('cellRegion' in EXAMPLES[id]).toBe(false); });
+      ['nakedSingle', 'cageCombo', 'ineqChain'].forEach(function (id) {
+        var run = T.replayPuzzle(SG, sourceOf(id), [id], { maxHints: EXAMPLES[id].source.step + 1 });
+        expect(JSON.stringify(run.best[id].data)).toBe(JSON.stringify(EXAMPLES[id]));
+        expect('cellRegion' in run.best[id].data).toBe(false);
+      });
+      expect(['classic9', 'killer', 'greaterThan'].map(function (variant) {
+        return registry().filter(function (id) { return EXAMPLES[id].variant === variant; }).length > 0;
+      })).toEqual([true, true, true]);
+    });
+
+    it('replays the real source into a Jigsaw example that the writer accepts and the header documents', function () {
+      ready();
+      var id = firstHint().hint.technique;
+      var run = T.replayPuzzle(SG, item(), [id], { maxHints: 3 });
+      expect(run.ok).toBe(true);
+      var fresh = run.best[id].data;
+      expect(fresh.variant).toBe('jigsaw9');
+      expect(T.validateSnapshot(id, fresh)).toEqual([]);
+      var byId = {};
+      byId[id] = fresh;
+      var merged = T.mergeCatalogue(registry(), EXAMPLES, [id], byId);
+      expect(merged.ok).toBe(true);
+      var text = T.render(registry(), merged.catalogue);
+      expect(text).toContain('cellRegion');
+      expect(clone(T.catalogueOf(text)[id])).toEqual(clone(fresh));
+      expect(T.render(registry(), EXAMPLES)).not.toContain('cellRegion');
+    });
+
+    it('does not accept a Jigsaw example without its map, or a map in an example of another variant', function () {
+      ready();
+      var ex = firstHint().data;
+      var problems = function (change) {
+        var copy = clone(ex);
+        copy.hint.technique = 'nakedSingle';
+        change(copy);
+        return T.validateSnapshot('nakedSingle', copy);
+      };
+      expect(problems(function () {})).toEqual([]);
+      expect(problems(function (copy) { delete copy.cellRegion; })[0]).toContain('needs cellRegion');
+      expect(problems(function (copy) { copy.cellRegion.pop(); })[0]).toContain('plain array of 81 whole numbers');
+      expect(problems(function (copy) { copy.cellRegion[3] = 1.5; })[0]).toContain('81 whole numbers');
+      expect(problems(function (copy) { copy.cellRegion = 'x'.repeat(81); })[0]).toContain('needs cellRegion');
+      expect(problems(function (copy) { copy.variant = 'classic9'; })).toEqual(
+        ['nakedSingle: only a jigsaw9 example has a cellRegion']);
+    });
+  });
+
+  // ---------------------------------------------------------------------------------------------
   // The catalogue: text, merge, comparison
   // ---------------------------------------------------------------------------------------------
 
@@ -807,6 +928,39 @@
         expect(read(host, 'js/ui/help-examples.js')).toBe(canonical);
         expect(host.fs.readdirSync(host.path.join(host.root, SANDBOX))).toEqual(['alt.js']);
         expect(tool(['--ids=nakedSingle', '--max-hints=1', '--out=' + alt]).code).toBe(0);
+      });
+    });
+
+    it('writes a real Jigsaw source as the example of an ID with its region map, and checks it again', function () {
+      inSandbox(function (host) {
+        var alt = SANDBOX + '/alt.js';
+        var jigsaw = SG.fixtures.jigsawHelpSource;
+        put(host, SANDBOX + '/jigsaw.json', T.sourcesText(fileOf({ nakedSingle: [{ variantId: jigsaw.variantId,
+          level: jigsaw.level, seed: jigsaw.seed, text: jigsaw.text }] })));
+        var canonical = read(host, 'js/ui/help-examples.js');
+        var args = ['--ids=nakedSingle', '--max-puzzles=1', '--max-hints=400',
+          '--sources=' + SANDBOX + '/jigsaw.json'];
+        var run = tool(args.concat(['--write', '--out=' + alt, '--work-dir=' + SANDBOX + '/work']));
+        expect(run.code).toBe(0);
+        expect(run.out).toContain('jigsaw9 hard 1 -> ');
+        var written = T.catalogueOf(read(host, alt));
+        expect(Object.keys(written)).toEqual(registry());
+        expect(written.nakedSingle.variant).toBe('jigsaw9');
+        expect(Array.isArray(written.nakedSingle.cellRegion)).toBe(true);
+        expect(written.nakedSingle.cellRegion.length).toBe(81);
+        expect(written.nakedSingle.source.puzzle).toBe(jigsaw.text);
+        expect(read(host, alt)).toContain('cellRegion   of a \'jigsaw9\' example');
+        registry().filter(function (id) { return id !== 'nakedSingle'; }).forEach(function (id) {
+          expect(JSON.stringify(written[id])).toBe(JSON.stringify(EXAMPLES[id]));
+        });
+        var again = tool(args.concat(['--out=' + alt]));
+        expect(again.code).toBe(0);
+        expect(again.out).toContain('nakedSingle: matches alt.js');
+        var against = tool(['--ids=nakedSingle', '--max-hints=1']);
+        expect(against.code).toBe(0);
+        expect(read(host, 'js/ui/help-examples.js')).toBe(canonical);
+        expect(host.fs.readdirSync(host.path.join(host.root, SANDBOX)).sort())
+          .toEqual(['alt.js', 'jigsaw.json']);
       });
     });
 

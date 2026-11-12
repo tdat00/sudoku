@@ -139,14 +139,14 @@ evidence. Report malformed-map behavior and unchanged canonical examples. No com
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted and committed (`difficulty-v3 MS03c: Region-aware Jigsaw snapshots`) |
+| Start | 2026-11-12 15:03 (+07:00) |
+| End | 2026-11-12 15:19 developer; 15:25 orchestrator review and commit |
+| Duration | 16 min developer (986 s); about 6 min review |
+| Model | claude-sonnet-5.5 (developer); orchestrator review claude-opus-5.5 |
+| Token usage | 103 model calls; 20,015,202 input tokens (19,739,529 cache reads); 96,118 output tokens |
+| AI credits | about 362 (developer) |
+| Verification | Developer: player `--suite=help-example-tools,help,text-boards,ui-contract` 154 passed (6.7 s); player quick 30 suites, 1,666 passed (29.8 s); generator quick 46 suites, 2,933 passed (103.8 s); bounded GH: one `--discover --variants=jigsaw9 --levels=hard --max-puzzles=1` write to the MS03c artifact (1 request, 70 hints, solved, 0.39 s), its `--check` (match, 0.17 s), default `--check` of all 26 (1.11 s); a mutation without `SG.model.validate` failed the bad-map test. Orchestrator re-run: default `--check` exit 0 (26 IDs up to date), targeted exit 0, player quick 1,666/1,666 (30 s), generator quick 2,933/2,933 (104 s); no absolute path in the new fixture, artifacts or evidence |
+| Acceptance | MS03c-B01, MS03c-B02 and MS03c-T01..T05 met. Canonical `player/js/ui/help-examples.js` unchanged (no saved example has `cellRegion`). Diff reviewed: `snapshot()` adds an owned plain 81-number `cellRegion` copy for `jigsaw9` only; `validateSnapshot` refuses a Jigsaw example without a valid map and a map in any other variant; `help.js` `jigsawModelOf` builds the board with the importer's Jigsaw builder and `SG.model.validate(model, {solve:false})`, returning null (shown as unavailable) on any bad map, never the 3x3 boxes |
+| Issues & resolutions | None blocking. Decisions accepted: the generated header documents `cellRegion` only when the catalogue holds a Jigsaw example (the existing test requires the render to equal the read-only canonical file); a second test scene at the first hint that looks into a Jigsaw region (`pointing` in J2); `sources-jigsaw.json` written from the fixture text rather than by a second discovery (to stay within the one announced discovery); the tool test reuses MS03b's sandbox path; `drawExample` not exercised (no browser gate in this task). No living document made inaccurate (`docs/qa/browser-run.md` counts are a dated record) |
+| Handoff | A Jigsaw example needs no new format: record a source with `--discover --variants=jigsaw9 --levels=hard` (or a Jigsaw block in a `--sources` file), then `--write`. The first canonical write of a Jigsaw example also changes the generated header of `help-examples.js` (the `variant` line and one added `cellRegion` line). Real Jigsaw source text: `player/tests/fixtures/jigsaw-help-source.js` (command and seed in its header) |

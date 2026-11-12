@@ -62,8 +62,9 @@ js/ui/     modules that talk to the page; every file also loads in Node (pure he
 css/       tokens + tokens-board (3 themes) · base · layout · components · board · play · help
 assets/    favicon.svg · wordbook/ (words.en.js, words.vi.js: the meanings of the Wordoku key words)
 tests/     harness.js · node-runner.js · suites/ (30) · fixtures/ (puzzle documents, text exports, test kit,
-           the help-example helper) · browser/ (CDP scripts, run by hand) · tools/ (make-fixtures.js,
-           make-exports.js, make-technique-examples.js, which checks or writes js/ui/help-examples.js)
+           the help-example helper, one real Jigsaw source) · browser/ (CDP scripts, run by hand) ·
+           tools/ (make-fixtures.js, make-exports.js, make-technique-examples.js, which checks or writes
+           js/ui/help-examples.js)
 tests.html the same suites in a browser
 docs/      fixtures.md (how the documents were made) · qa.md (the manual browser run)
 .github/   workflows/pages.yml (the Node tests, then the deployment to GitHub Pages)
@@ -374,7 +375,13 @@ assertion is never removed and no synthetic example takes its place. The pure pa
 renderer, bounded discovery), tested by the `help-example-tools` suite with fake generators, clocks and child processes.
 The snapshot holds the board (`variant`, `givens`, `values`, the cages or signs), the notes of the
 cells shown and the hint (`technique`, cells, targets, placements, eliminations, region), plus `source` (the
-puzzle and the step it came from, for the tests only). `SG.help.buildExample` rebuilds a model from it and
+puzzle and the step it came from, for the tests only). A Jigsaw example (`variant: 'jigsaw9'`) also holds
+`cellRegion`, an owned plain array of exactly 81 region numbers copied from the `model.layout.cellRegion` of the
+replayed puzzle, because the variant does not fix the regions; no other variant has the field, and the generated
+header documents it only when the catalogue holds a Jigsaw example. `SG.help.buildExample` rebuilds a model from the
+snapshot (a Jigsaw one with `SG.textBoards.create(SG.textBoards.jigsawSpec(cellRegion))`, checked with
+`SG.model.validate` like an imported board; a missing or malformed map, such as a wrong length or a region that does
+not hold nine cells, gives no board, so the page says the example is unavailable, and never the regular 3×3 boxes) and
 `SG.play.renderSnapshot` draws it. `help.test.js` checks that every technique has one, that each rebuilds, that
 replaying `source` with the hint code of the player gives the same hint (so a change of the solver shows up as a
 test failure to regenerate the file), and that the texts exist in both languages. The committed snapshot was made
@@ -430,7 +437,7 @@ they are **manual**, not part of CI, and are run only when a change touches the 
 | `importer` | all 18 fixtures rebuild valid models with exactly one solution; tokens, links, bundles (`t.` / `s.`, `active`); text lines (4 / 6 / 9); the nine level names in both languages and rating metadata; wrong version, damaged and hostile input, fuzzed damage |
 | `model-aids` | sign edges, word line, symbol modes |
 | `fixtures` | the committed documents themselves: all 15 variants and the three Vietnamese ones, each with a model that builds and has one solution |
-| `text-boards` | the boards rebuilt from the text export equal the generator's models |
+| `text-boards` | the boards rebuilt from the text export equal the generator's models; the Jigsaw builder checks the length of a region map and the model validation the regions |
 | `wordbook` | the data of both languages and the lookup (meaning in the language of the page) |
 | `i18n` | key parity, placeholders, no empty values, coverage computed from the code |
 | `store`, `progress` | prefs, safe storage, LRU, version purge, quota, blocked storage, same-puzzle id, recent list |
@@ -438,8 +445,8 @@ they are **manual**, not part of CI, and are run only when a change touches the 
 | `symbols`, `board-view` | glyphs per mode, the legend, the 16 shapes; geometry and markup of all 15 fixtures (cells, layers, cages, signs, no colour literal) |
 | `a11y`, `theme` | cell labels, keyboard moves, the Settings data; token parity and contrast |
 | `app` | the surface and events of `SG.app`, the elements it needs from `index.html`, no HTML built from data, storage only through `store` / `progress` |
-| `help` | the sections, texts in both languages, an example for each of the 26 techniques (rebuilt from the snapshot, replayed with the hint code, readable in EN and VI), shortcuts against the keys `play.js` handles, the claims of the Player part of the user and developer guides |
-| `help-example-tools` | the help-example tool (§8.3): options and their conflicts, the source schema, the cap on puzzles and hints, replaying a saved source with the hint code of the player, the choice and tie rule, the merge and the CRLF text of the catalogue, bounded discovery and the child process with fakes; in Node real runs of the tool on saved sources and sandbox catalogues (never generating, never writing the committed file) |
+| `help` | the sections, texts in both languages, an example for each of the 26 techniques (rebuilt from the snapshot, replayed with the hint code, readable in EN and VI), a real Jigsaw puzzle whose hint is snapshotted by the helper, rebuilt with its own regions, notes and move, and refused when its `cellRegion` is missing or malformed, shortcuts against the keys `play.js` handles, the claims of the Player part of the user and developer guides |
+| `help-example-tools` | the help-example tool (§8.3): options and their conflicts, the source schema, the cap on puzzles and hints, replaying a saved source with the hint code of the player, the choice and tie rule, the owned `cellRegion` copy of a Jigsaw snapshot (and none in any other), the merge and the CRLF text of the catalogue, bounded discovery and the child process with fakes; in Node real runs of the tool on saved sources and sandbox catalogues (never generating, never writing the committed file) |
 | `ui-contract` | module surface, no colour literals outside the token files, script order of `index.html` = runner = `tests.html` (and `help.html` = runner minus its exceptions), no hard-coded text in either page, forbidden globals absent, no DOM in `js/core` |
 | browser run (manual) | `tests/browser/*.js`: headless Edge over CDP (fragment, paste, file, drop, play with real key events, hints, reload, keyboard-only walk, Settings, the guide page with its tabs and floating contents, themes, 1440 / 900 / 375 px with touch, blocked storage); recorded in `docs/qa/browser-run.md` |
 

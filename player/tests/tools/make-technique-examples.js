@@ -15,8 +15,10 @@
  * is stuck, solved or --max-hints hints were used. The first hint of a technique is a candidate for its
  * example, and the easiest one to read wins (the fewest cells, removals and candidates on show, a plain 9x9
  * board preferred; the earliest on a tie). What is saved is a snapshot of the board and the hint, so the guide
- * draws it at once and plays nothing (`SG.helpExamples`, see js/ui/help.js); the puzzle and the number of
- * hints are kept in it only so that a test can check the snapshot against the player's own hints.
+ * draws it at once and plays nothing (`SG.helpExamples`, see js/ui/help.js); a Jigsaw snapshot also holds the
+ * `cellRegion` of its board (the 81 region numbers of the puzzle), because the variant does not fix them; the
+ * puzzle and the number of hints are kept in it only so that a test can check the snapshot against the
+ * player's own hints.
  *
  * Sources are real puzzles of the generator, named by an explicit file (--sources) or the saved example of the
  * ID. Only with --discover (and --write or --record-sources) does a child process load the generator (default

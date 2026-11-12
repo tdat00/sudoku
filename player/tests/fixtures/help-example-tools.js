@@ -17,7 +17,8 @@
  *  - catalogueOf(text), render(ids, byId), mergeCatalogue(...), validateSnapshot(id, ex), compare(...)
  *  - recordedSources(ids, found), sourcesText(data), combineSources(list)   the source files
  *  - makeDeadline(now, startedAt, limitMs)         the tool-level deadline
- * MS03c extends `snapshot` (Jigsaw regions); nothing else in the Player's data changes here.
+ * `snapshot` adds the region map of a Jigsaw board (`cellRegion`, MS03c); the data of every other variant is
+ * the same as before.
  */
 (function () {
   'use strict';
@@ -309,6 +310,8 @@
     if (model.inequalities.length > 0) {
       out.signs = model.inequalities.map(function (sign) { return { a: sign.a, b: sign.b }; });
     }
+    // The regions of a Jigsaw board are not in its variant: an owned plain copy of the map of the model.
+    if (puzzle.variantId === 'jigsaw9') out.cellRegion = Array.from(model.layout.cellRegion);
     out.hint = {
       technique: hint.technique, nameKey: hint.nameKey, descKey: hint.descKey, stepKey: hint.stepKey,
       stepArgs: hint.stepArgs, kind: hint.kind, cells: hint.cells, targets: hint.targets,
@@ -626,10 +629,21 @@
     ''
   ];
 
+  // A catalogue that holds a Jigsaw example documents its region map; any other keeps the header as it was.
+  var HEADER_VARIANT_JIGSAW = [
+    ' *   variant   \'classic9\', \'diagonalX\', \'hyper\', \'jigsaw9\' (with `cellRegion`), \'killer\' (with `cages`) or \'greaterThan\' (with `signs`): the board to build;',
+    ' *   cellRegion   of a \'jigsaw9\' example: the region (0 to 8) of each of the 81 cells, a plain array copied from the puzzle;'
+  ];
+
+  function headerOf(byId, ids) {
+    var jigsaw = ids.some(function (id) { return isObject(byId[id]) && byId[id].variant === 'jigsaw9'; });
+    return jigsaw ? HEADER.slice(0, 3).concat(HEADER_VARIANT_JIGSAW, HEADER.slice(4)) : HEADER;
+  }
+
   /** The text of the catalogue: the registry's IDs in registry order, CRLF, no BOM, a final line end. */
   function render(ids, byId) {
     var body = ids.map(function (id) { return '    ' + id + ': ' + JSON.stringify(byId[id]); }).join(',\r\n');
-    return HEADER.concat(body, FOOTER).join('\r\n');
+    return headerOf(byId, ids).concat(body, FOOTER).join('\r\n');
   }
 
   /** The `SG.helpExamples` a catalogue text defines (evaluated against a private root). @throws Error */
@@ -657,6 +671,13 @@
       ex.givens.length === ex.values.length;
     if (!same) say('givens and values are not strings of the same length');
     if (!isObject(ex.notes)) say('notes is not an object');
+    var regions = ex.variant === 'jigsaw9';
+    if (regions && !(Array.isArray(ex.cellRegion) && ex.cellRegion.length === 81 &&
+        ex.cellRegion.every(Number.isInteger))) {
+      say('a jigsaw9 example needs cellRegion, a plain array of 81 whole numbers');
+    } else if (!regions && hasOwn(ex, 'cellRegion')) {
+      say('only a jigsaw9 example has a cellRegion');
+    }
     if (!isObject(ex.hint) || ex.hint.technique !== id) say('its hint is not a hint of ' + id);
     var puzzle = isObject(ex.source) ? ex.source.puzzle : undefined;
     if (typeof puzzle !== 'string' || puzzle.indexOf('#1,') !== 0) {

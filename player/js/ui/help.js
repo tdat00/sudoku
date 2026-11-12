@@ -5,10 +5,10 @@
  *
  * The examples are fixed data: `SG.helpExamples[id]` (js/ui/help-examples.js, made by
  * tests/tools/make-technique-examples.js) is a snapshot of a puzzle partway through, with the notes that
- * matter and the hint the player gave at that moment. `buildExample` (no DOM) turns it into a board and a
- * hint; `drawExample` draws it with `SG.play.renderSnapshot` and the words of `SG.play.describeHint`, so the
- * text is the hint's, in either language. `start()` runs the page; it returns false on a page without
- * `#help-root`.
+ * matter and the hint the player gave at that moment; a Jigsaw example also carries the `cellRegion` of its
+ * board. `buildExample` (no DOM) turns it into a board and a hint; `drawExample` draws it with
+ * `SG.play.renderSnapshot` and the words of `SG.play.describeHint`, so the text is the hint's, in either
+ * language. `start()` runs the page; it returns false on a page without `#help-root`.
  */
 (function (root) {
   'use strict';
@@ -67,6 +67,21 @@
     return Array.from(text).map(function (ch) { return ch === '.' ? 0 : Number(ch); });
   }
 
+  /**
+   * The board of a Jigsaw example is its own region map (`cellRegion`: 81 numbers of the puzzle), built by
+   * the Jigsaw builder of the importer and checked like an imported board; without a valid map there is no
+   * board (null), never the regular 3x3 boxes.
+   */
+  function jigsawModelOf(ex) {
+    if (!Array.isArray(ex.cellRegion)) return null;
+    try {
+      const model = SG.textBoards.create(SG.textBoards.jigsawSpec(ex.cellRegion));
+      return SG.model.validate(model, { solve: false }).ok ? model : null;
+    } catch (err) {
+      return null;
+    }
+  }
+
   function modelOf(ex) {
     if (ex.variant === 'killer' && Array.isArray(ex.cages)) {
       return SG.textBoards.create(SG.textBoards.killerSpec(ex.cages));
@@ -74,6 +89,7 @@
     if (ex.variant === 'greaterThan' && Array.isArray(ex.signs)) {
       return SG.textBoards.create(SG.textBoards.greaterThanSpec(ex.signs));
     }
+    if (ex.variant === 'jigsaw9') return jigsawModelOf(ex);
     if (ex.variant === 'classic9') return SG.classicModel.build(9);
     return SG.textBoards.DERIVED.indexOf(ex.variant) !== -1 ? SG.textBoards.buildVariant(ex.variant) : null;
   }

@@ -1050,6 +1050,16 @@ node tests/tools/make-technique-examples.js ../generator --ids=<id>,<other> --so
 node tests/tools/make-technique-examples.js ../generator --ids=<id>,<other> --sources=tests/artifacts/<task>/sources.json --max-puzzles=16 --check
 ```
 
+A snapshot names its board by the variant, and the variant does not fix the regions of a **Jigsaw** puzzle. So a Jigsaw
+snapshot (`variant: "jigsaw9"`) also holds `cellRegion`, an owned plain array of exactly 81 region numbers copied from
+the `model.layout.cellRegion` of the replayed puzzle (no other variant has the field, and a region is never guessed
+from the givens). `SG.help.buildExample` rebuilds the board from that map with the Jigsaw builder of the importer
+(`SG.textBoards.jigsawSpec`) and validates it like an imported board; a missing or malformed map (a wrong length, a region
+that does not hold nine cells) gives no board, so the guide says the example is unavailable, and never the regular 3×3
+boxes. The quick tests replay one real Jigsaw puzzle, kept unchanged in `tests/fixtures/jigsaw-help-source.js`, with the
+current hint code, so they pin no hint step. A Jigsaw example for a technique is found like any other, with
+`--discover --variants=jigsaw9 --levels=hard` (the plan has hard, expert and master for Jigsaw).
+
 The slow checks are the **browser scripts** in `tests/browser/` (`node tests/browser/run-all.js`: headless Edge
 over the DevTools protocol, several minutes). They are **manual** while developing and run only
 when a change touches the UI; the pull-request workflow runs them (Edge or Chrome of the runner image) for every pull request to `main`; the run is recorded in [browser run](docs/qa/browser-run.md).

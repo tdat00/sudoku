@@ -230,6 +230,211 @@
     });
   });
 
+  describe('help: an example on a Jigsaw board', function () {
+    var T = SG.fixtures && SG.fixtures.helpExampleTools;
+    var JIGSAW = SG.fixtures && SG.fixtures.jigsawHelpSource;
+
+    function jigsawReady() {
+      ready();
+      if (!T || !JIGSAW) SG.test.skip('the Jigsaw source fixture is not loaded here');
+    }
+
+    function item() {
+      return { variantId: JIGSAW.variantId, level: JIGSAW.level, seed: JIGSAW.seed, text: JIGSAW.text };
+    }
+
+    function plain(value) {
+      return JSON.parse(JSON.stringify(value, function (key, v) {
+        return ArrayBuffer.isView(v) ? Array.from(v) : v;
+      }));
+    }
+
+    function clone(value) {
+      return JSON.parse(JSON.stringify(value));
+    }
+
+    /** The parts of a model that must agree, as plain data. */
+    function shape(model) {
+      var layout = plain(model.layout);
+      return {
+        variantId: model.variantId, digits: model.digits, cellCount: model.cellCount, units: plain(model.units),
+        unitMeta: plain(model.unitMeta), cages: plain(model.cages), inequalities: plain(model.inequalities),
+        symbols: plain(model.symbols), fixedCells: plain(model.fixedCells),
+        layout: { rows: layout.rows, cols: layout.cols, cellRow: layout.cellRow, cellCol: layout.cellCol,
+          cellRegion: layout.cellRegion, overlays: layout.overlays, subGrids: layout.subGrids }
+      };
+    }
+
+    /** The real source played the way the player does, up to the first hint that `wanted` accepts. */
+    function reach(wanted) {
+      var opened = T.openSource(SG, item());
+      expect(opened.ok).toBe(true);
+      var puzzle = opened.puzzle;
+      var game = SG.play.createGame(puzzle.model, puzzle.givens, puzzle.solution,
+        { now: function () { return 0; } });
+      game.fillNotes();
+      for (var k = 0; k < 400 && !game.isSolved(); k++) {
+        game.clearHint();
+        var hint = game.hint();
+        expect(hint !== null && hint.ok === true).toBe(true);
+        if (wanted(hint)) return { puzzle: puzzle, game: game, hint: hint, step: k };
+        game.applyHint();
+      }
+      throw new Error('the Jigsaw source has no such hint within 400 hints');
+    }
+
+    /** Supplies the snapshot as the example of its technique for the call, and puts the catalogue back. */
+    function using(entry, fn) {
+      var saved = SG.helpExamples;
+      var id = entry.hint.technique;
+      var next = Object.assign({}, saved);
+      next[id] = entry;
+      SG.helpExamples = next;
+      try {
+        return fn(id);
+      } finally {
+        SG.helpExamples = saved;
+      }
+    }
+
+    /** The snapshot as the catalogue stores it: plain data that shares nothing with the game. */
+    function snapshotOf(run) {
+      return clone(T.snapshot(SG, run.game, run.puzzle, run.hint, item(), run.step));
+    }
+
+    var SCENES = [
+      ['the first hint', function () { return true; }],
+      ['the first hint that looks into a region', function (hint) {
+        return hint.region !== null && hint.region.kind === 'region';
+      }]
+    ];
+
+    SCENES.forEach(function (scene) {
+      it('rebuilds the regions, the notes shown and the move of ' + scene[0] + ' of a real puzzle', function () {
+        jigsawReady();
+        var run = reach(scene[1]);
+        var game = run.game;
+        var model = run.puzzle.model;
+        var before = {};
+        for (var c = 0; c < model.cellCount; c++) before[c] = game.getNotes(c);
+        using(snapshotOf(run), function (id) {
+          var built = H.buildExample(id);
+          expect(built === null ? 'no example' : '').toBe('');
+          expect(built.variantId).toBe('jigsaw9');
+
+          var want = shape(model);
+          var got = shape(built.model);
+          Object.keys(want).forEach(function (key) {
+            expect(JSON.stringify(got[key])).toBe(JSON.stringify(want[key]));
+          });
+          expect(got.layout.cellRegion).not.toEqual(shape(SG.classicModel.build(9)).layout.cellRegion);
+          expect(got.units.length).toBe(27);
+          expect(got.unitMeta.slice(18).map(function (m) { return m.kind; })).toEqual(
+            ['region', 'region', 'region', 'region', 'region', 'region', 'region', 'region', 'region']);
+
+          expect(built.givens).toEqual(Array.from(run.puzzle.givens));
+          for (var cell = 0; cell < model.cellCount; cell++) {
+            expect(built.values[cell]).toBe(game.userValue(cell));
+          }
+
+          // Only the cells the page draws keep their notes; the others are empty, not the full fill of the game.
+          var shown = T.shownCells(run.hint);
+          var kept = 0;
+          for (var i = 0; i < model.cellCount; i++) {
+            var show = shown.indexOf(i) !== -1 && game.userValue(i) === 0;
+            expect(built.notes[i]).toBe(show ? before[i] : 0);
+            if (!show && before[i] !== 0) kept++;
+          }
+          expect(kept).toBeGreaterThan(0);
+
+          ['cells', 'targets', 'placements', 'eliminations', 'region'].forEach(function (field) {
+            expect(JSON.stringify(built.hint[field])).toBe(JSON.stringify(run.hint[field]));
+          });
+          game.applyHint();
+          built.hint.placements.forEach(function (p) {
+            expect(built.values[p[0]]).toBe(0);
+            expect(game.userValue(p[0])).toBe(p[1]);
+          });
+          built.hint.eliminations.forEach(function (e) {
+            expect((before[e[0]] >> (e[1] - 1)) & 1).toBe(1);
+            expect((game.getNotes(e[0]) >> (e[1] - 1)) & 1).toBe(0);
+          });
+          expect(built.hint.placements.length + built.hint.eliminations.length).toBeGreaterThan(0);
+        });
+      });
+    });
+
+    it('draws the region a hint looks into with its own cells, and names it in both languages', function () {
+      jigsawReady();
+      var run = reach(SCENES[1][1]);
+      using(snapshotOf(run), function (id) {
+        var built = H.buildExample(id);
+        var region = built.hint.region;
+        var unit = built.model.unitMeta.findIndex(function (m) {
+          return m.kind === 'region' && m.label === region.label;
+        });
+        expect(unit).toBeGreaterThan(17);
+        var cells = region.cells.slice().sort(function (a, b) { return a - b; });
+        expect(Array.from(built.model.units[unit])).toEqual(cells);
+        var map = built.model.layout.cellRegion;
+        expect(new Set(cells.map(function (cell) { return map[cell]; })).size).toBe(1);
+        ['en', 'vi'].forEach(function (code) {
+          inLocale(code, function () {
+            var said = SG.play.describeHint(built.model, built.hint, { mode: 'digits' });
+            expect(said.ok).toBe(true);
+            expect(said.region).toContain(region.label);
+          });
+        });
+      });
+    });
+
+    it('builds a board of its own: a later change of the example or of the board leaves the other as it was',
+      function () {
+        jigsawReady();
+        var snap = snapshotOf(reach(SCENES[0][1]));
+        using(snap, function (id) {
+          var built = H.buildExample(id);
+          var kept = Array.from(built.model.layout.cellRegion);
+          var units = plain(built.model.units);
+          snap.cellRegion[0] = 8;
+          snap.cellRegion[80] = 8;
+          expect(Array.from(built.model.layout.cellRegion)).toEqual(kept);
+          expect(plain(built.model.units)).toEqual(units);
+          built.model.layout.cellRegion[1] = 7;
+          expect(snap.cellRegion[1]).toBe(kept[1]);
+        });
+      });
+
+    it('gives no board, and never the regular boxes, for a missing or malformed map', function () {
+      jigsawReady();
+      var good = snapshotOf(reach(SCENES[0][1]));
+      var cases = [
+        ['no map', function (ex) { delete ex.cellRegion; }],
+        ['a null map', function (ex) { ex.cellRegion = null; }],
+        ['an empty map', function (ex) { ex.cellRegion = []; }],
+        ['80 entries', function (ex) { ex.cellRegion.pop(); }],
+        ['82 entries', function (ex) { ex.cellRegion.push(0); }],
+        ['a string', function (ex) { ex.cellRegion = ex.cellRegion.join(''); }],
+        ['a typed array', function (ex) { ex.cellRegion = Int32Array.from(ex.cellRegion); }],
+        ['a region number above the last region', function (ex) { ex.cellRegion[0] = 9; }],
+        ['a negative region number', function (ex) { ex.cellRegion[0] = -1; }],
+        ['a fractional region number', function (ex) { ex.cellRegion[0] = 0.5; }],
+        ['a region number as text', function (ex) { ex.cellRegion[0] = String(ex.cellRegion[0]); }],
+        ['regions of 8 and 10 cells', function (ex) { ex.cellRegion[ex.cellRegion.indexOf(0)] = 1; }]
+      ];
+      var saved = SG.helpExamples;
+      cases.forEach(function (one) {
+        var ex = clone(good);
+        one[1](ex);
+        using(ex, function (id) {
+          expect(H.buildExample(id) === null ? '' : one[0] + ' gave a board').toBe('');
+        });
+      });
+      expect(SG.helpExamples).toBe(saved);
+      using(good, function (id) { expect(H.buildExample(id)).not.toBe(null); });
+    });
+  });
+
   describe('help: the page and the Help button', function () {
     it('the page markup has the mount points, and the player links to it in a new tab', function () {
       ready();

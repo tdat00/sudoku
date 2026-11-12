@@ -800,6 +800,17 @@ node tests/tools/make-technique-examples.js ../generator --ids=<id>,<other> --so
 node tests/tools/make-technique-examples.js ../generator --ids=<id>,<other> --sources=tests/artifacts/<task>/sources.json --max-puzzles=16 --check
 ```
 
+Một ảnh chụp gọi tên bàn cờ bằng biến thể, mà biến thể không quy định các vùng của đề **Ghép hình**. Vì vậy ảnh chụp
+Ghép hình (`variant: "jigsaw9"`) còn giữ `cellRegion`, một mảng thuần của riêng nó gồm đúng 81 số hiệu vùng, sao chép từ
+`model.layout.cellRegion` của đề được chơi lại (biến thể khác không có trường này, và một vùng không bao giờ bị đoán từ
+các số cho sẵn). `SG.help.buildExample` dựng lại bàn cờ từ bản đồ đó bằng bộ dựng Ghép hình của trình nhập
+(`SG.textBoards.jigsawSpec`) và kiểm tra nó như kiểm tra một bàn cờ được nhập; bản đồ thiếu hoặc sai (độ dài sai, một vùng
+không có đủ chín ô) cho ra không có bàn cờ, nên trang hướng dẫn báo ví dụ không có sẵn, và không bao giờ là các ô 3×3
+thông thường. Các kiểm thử nhanh chơi lại một đề Ghép hình thật, được giữ nguyên trong
+`tests/fixtures/jigsaw-help-source.js`, bằng mã gợi ý hiện hành, nên chúng không ghim bước gợi ý nào. Ví dụ Ghép hình cho
+một kỹ thuật được tìm như mọi ví dụ khác, bằng `--discover --variants=jigsaw9 --levels=hard` (kế hoạch có hard, expert và
+master cho Ghép hình).
+
 Phần chạy chậm là các **script trình duyệt** trong `tests/browser/` (`node tests/browser/run-all.js`: Edge không giao
 diện qua giao thức DevTools, vài phút). Khi phát triển chúng chạy **thủ công** và chỉ cần chạy khi thay
 đổi đụng tới giao diện; workflow của pull request chạy chúng (Edge hoặc Chrome của máy chạy) cho mọi pull request vào `main`; lần chạy được ghi lại trong [lần chạy trình duyệt](docs/qa/browser-run.md).
