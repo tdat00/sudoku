@@ -563,16 +563,16 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (46 suite, khoảng 2.900 bài), khoảng một phút
+node tests/node-runner.js                          # bộ nhanh (47 suite, khoảng 2.900 bài), khoảng một phút
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
-node tests/node-runner.js --all                    # nhanh + thủ công (54 suite, khoảng 3.910 bài), khoảng chín phút
+node tests/node-runner.js --all                    # nhanh + thủ công (55 suite, khoảng 3.910 bài), khoảng chín phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 46 suite, khoảng 2.900 bài,
-khoảng một phút — 30 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 47 suite, khoảng 2.900 bài,
+khoảng một phút — 31 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw`, tổng cộng khoảng
@@ -590,7 +590,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm khoảng 3.910 bài trong 54 suite (khoảng 2.900 bài trong 46 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm khoảng 3.910 bài trong 55 suite (khoảng 2.900 bài trong 47 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text
@@ -661,7 +661,34 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   đảm một lần tối ưu không làm đổi đề (suite nhanh `smoke` kiểm tra một mẫu của chúng, suite thủ công `perf` kiểm
   tra tất cả): `--check-hashes` so sánh, còn `--update-hashes` ghi mã băm mới sau một thay
   đổi chủ ý làm đổi đề (hiệu chỉnh, quy tắc đào mới). `--alloc` dò các vòng lặp nóng xem có cấp phát bộ nhớ
-  không.
+  không. Cả hai chế độ mã băm xử lý đủ 520 bản ghi (26 tổ hợp × 20 seed), và `--variant` cùng `--level` không chia
+  nhỏ chúng; để làm mới có giới hạn, các chế độ mã băm có bộ chọn riêng. Hãy ghi một tổ hợp và tối đa năm chỉ số
+  seed cho mỗi lệnh, mỗi lần một lệnh:
+
+  ```text
+  node tests/perf.js --hash-list --hash-key=classic9/hard                       # các khóa và seed, không tạo gì cả
+  node tests/perf.js --check-hashes --hash-key=classic9/hard --hash-from=0 --hash-count=5   # một lần kiểm chưa đủ
+  node tests/perf.js --hash-key=classic9/hard --hash-from=0 --hash-count=5 --hash-record=<file.json>   # một mảnh
+  node tests/perf.js --hash-merge=<directory> --check-hashes     # đủ 520 bản ghi của các sổ ghi, không tạo gì cả
+  node tests/perf.js --hash-merge=<directory> --update-hashes    # ghi trọn fixture từ chúng
+  ```
+
+  `--hash-key` là đúng một khóa của `SG.fixtures.perfTools.COMBOS`, `--hash-from` là chỉ số tính từ 0 trong 20 seed
+  (0–19, mặc định 0) và `--hash-count` là số chỉ số seed liên tiếp. Lần kiểm có bộ chọn nói rõ nó đã kiểm bao nhiêu
+  trong 520 bản ghi và không phải là một lần đạt của toàn bộ tập; `--hash-record` chỉ ghi một **sổ ghi**, không bao
+  giờ ghi fixture; `--hash-merge` đòi đủ 520 bản ghi, mỗi bản đúng một lần, từ mã nguồn hiện tại, rồi kiểm tra (mặc
+  định) hoặc, với `--update-hashes`, ghi `regression.js` theo CRLF (`--hash-out=<file.js>` ghi ra một tệp khác). Một
+  lần cập nhật chính thức cần toàn bộ tập (mọi bản ghi được tạo hoặc một lần gộp đầy đủ): một lựa chọn chưa đủ, các
+  tùy chọn xung đột và một khoảng ngoài 0–19 bị từ chối trước khi tạo bất cứ thứ gì, còn một bản ghi thiếu, trùng,
+  sai dạng hoặc từ mã nguồn khác làm lần gộp bị từ chối; trong mọi trường hợp không có gì được ghi và fixture giữ
+  nguyên. Một sổ ghi là `{ schema: 1, kind: 'regression-hashes', sourceHash, manifestHash, node, commit, dirty,
+  records: [{ key: 'variant/level#seed', variant, level, seed, hash, ms, overrides }] }`; `sourceHash` của nó bao gồm
+  các tệp bộ máy mà script nạp cùng `perf-helper.js`, `tool-records.js` và `perf.js` (nên sửa bất kỳ tệp nào trong
+  đó làm các sổ ghi cũ đi), còn `manifestHash` bao gồm các tổ hợp và các seed, không bao giờ gồm các mã băm kỳ vọng.
+  Một tổ hợp mà việc kiểm định đã ẩn mức của nó vẫn nằm trong tập: phần trợ giúp cung cấp mức đó cho đúng một lần
+  sinh (ghi trong `overrides`) và trả lại đúng mảng hỗ trợ ban đầu; nó không bao giờ đổi những gì người chơi được
+  cung cấp. Các hàm thuần nằm ở `SG.fixtures.perfTools` và `SG.fixtures.toolRecords`, và suite `perf-tooling` kiểm
+  thử chúng.
 - **Các lần chạy thống kê sâu** trong các suite mega, multigrid và variants mặc định tắt; bật bằng biến môi
   trường `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; trong PowerShell dùng
   `$env:SG_DEEP = 1`).

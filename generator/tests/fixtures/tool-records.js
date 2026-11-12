@@ -12,14 +12,19 @@
  *
  *  - canonicalJson(value), manifestText(manifest)   deterministic text (sorted object keys) to hash
  *  - selectKeys(manifest, text)   the keys of an `--ids=` list in manifest order; unknown or duplicate throw
- *  - ledgerOf(meta, records), ledgerText(ledger)    build a ledger, and its text (UTF-8, CRLF, a line each)
+ *  - ledgerOf(meta, records, shape), ledgerText(ledger)   build a ledger, and its text (UTF-8, CRLF, a line
+ *                                   each)
  *  - checkLedger(ledger, expect)    the problems of one ledger (kind, source, manifest, shape of the records)
  *  - merge(files, expect)           { ok, problems, records }: every ledger valid, every manifest key exactly
  *                                   once; the records come in manifest order, never in file order
  *  - diffValues(saved, fresh)       the field differences { path, saved, fresh } between two plain values
  *  - withRequestedLevel(variantId, level, fn)   runs fn with the level offered by the variant, then restores
  *                                   the exact original support array
- * `expect` is { kind, sourceHash, manifestHash, manifest }.
+ * `expect` is { kind, sourceHash, manifestHash, manifest } and optionally `shape` and `checkValue`. A `shape`
+ * { request: [field, ...], value: [field, ...] } is for ledgers whose records keep the identity and the data
+ * as fields of the record itself ({ key, variant, level, seed, hash }, the hash recorder of MS03d) instead of
+ * as a `request` and a `value` object; `merge` returns such records in the { key, request, value } form too.
+ * `checkValue(value)` returns a problem text for a malformed value, or null.
  */
 (function () {
   'use strict';
@@ -80,8 +85,11 @@
     return known.filter(function (key) { return seen[key] === true; });
   }
 
-  /** A ledger (fixed field order); `meta` has kind, sourceHash, manifestHash, node, commit and dirty. */
-  function ledgerOf(meta, records) {
+  /**
+   * A ledger (fixed field order); `meta` has kind, sourceHash, manifestHash, node, commit and dirty. The
+   * records are { key, request, value }; with a `shape` they are written as flat fields (see the header).
+   */
+  function ledgerOf(meta, records, shape) {
     var ledger = {
       schema: SCHEMA, kind: meta.kind, sourceHash: meta.sourceHash, manifestHash: meta.manifestHash,
       node: meta.node, commit: meta.commit, dirty: meta.dirty
@@ -89,7 +97,14 @@
     if (meta.generatedAt !== undefined) ledger.generatedAt = meta.generatedAt;
     if (meta.argv !== undefined) ledger.argv = meta.argv;
     ledger.records = records.map(function (record) {
-      var out = { key: record.key, request: record.request, value: record.value };
+      var out = { key: record.key };
+      if (shape) {
+        shape.request.forEach(function (name) { out[name] = record.request[name]; });
+        shape.value.forEach(function (name) { out[name] = record.value[name]; });
+      } else {
+        out.request = record.request;
+        out.value = record.value;
+      }
       if (record.ms !== undefined) out.ms = record.ms;
       if (record.overrides !== undefined) out.overrides = record.overrides;
       return out;
@@ -115,6 +130,17 @@
 
   function sameJson(a, b) {
     return canonicalJson(a) === canonicalJson(b);
+  }
+
+  /** The request and the value of a record: its two members, or the named fields of a flat record. */
+  function partsOf(record, shape) {
+    if (!shape) return { request: record.request, value: record.value };
+    var pick = function (names) {
+      var out = {};
+      names.forEach(function (name) { if (record[name] !== undefined) out[name] = record[name]; });
+      return out;
+    };
+    return { request: pick(shape.request), value: pick(shape.value) };
   }
 
   /**
@@ -166,14 +192,22 @@
       }
       if (seen[record.key]) problems.push(label + ' appears twice');
       seen[record.key] = true;
+      var parts = partsOf(record, expect.shape);
       var requestOk = false;
       try {
-        requestOk = sameJson(record.request, entry.request);
+        requestOk = sameJson(parts.request, entry.request);
       } catch (err) {
         requestOk = false;
       }
       if (!requestOk) problems.push(label + ' has a request that is not the manifest\'s');
-      if (!isObject(record.value)) problems.push(label + ' has no value object');
+      var complete = !expect.shape || expect.shape.value.every(function (name) {
+        return parts.value[name] !== undefined;
+      });
+      if (!isObject(parts.value) || !complete) problems.push(label + ' has no value object');
+      else if (expect.checkValue) {
+        var why = expect.checkValue(parts.value);
+        if (why) problems.push(label + ' ' + why);
+      }
     });
     return problems;
   }
@@ -210,7 +244,10 @@
       else if (list.length > 1) {
         problems.push(entry.key + ': duplicate, recorded by ' +
           list.map(function (x) { return x.name; }).join(' and '));
-      } else records.push({ key: entry.key, request: entry.request, value: list[0].record.value });
+      } else {
+        records.push({ key: entry.key, request: entry.request,
+          value: partsOf(list[0].record, expect.shape).value });
+      }
     });
     return { ok: problems.length === 0, problems: problems, records: problems.length === 0 ? records : null };
   }

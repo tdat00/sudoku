@@ -176,14 +176,14 @@ the bounded GG commands; MS03 completes only when all four subpacks are accepted
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted and committed (`difficulty-v3 MS03d: Selected hash records and complete merge`) |
+| Start | 2026-11-12 15:23 (+07:00) |
+| End | 2026-11-12 15:48 developer; 15:55 orchestrator review and commit |
+| Duration | 25 min developer (1,503 s); about 7 min review |
+| Model | claude-sonnet-5.5 (developer); orchestrator review claude-opus-5.5 |
+| Token usage | 98 model calls; 24,799,907 input tokens (24,417,421 cache reads); 173,358 output tokens |
+| AI credits | about 513 (developer) |
+| Verification | Developer: `--suite=perf-tooling,smoke,help,ui-contract` 172 tests (13.9 s); generator quick 47 suites, 2,964 passed (118 s); player quick 30 suites, 1,666 passed (31 s); bounded GG: `--check-hashes --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5` (5 of 520 unchanged, 0.19 s), the same with `--hash-record` (5 records equal to the fixture, 0.56 s), one-shard `--hash-merge` with `--check-hashes` and `--update-hashes` both refused as incomplete (exit 1, nothing written). Orchestrator re-run: the bounded GG check exit 0 (5 of 520 unchanged, "not a pass of the complete corpus"), targeted exit 0, generator quick 47 suites (120 s) exit 0, player quick 1,666/1,666; `generator/tests/fixtures/regression.js` SHA-256 still `8213ef9a...`; no absolute path in evidence or artifacts |
+| Acceptance | MS03d-B01..B03 and MS03d-T01..T05 met. No hash, corpus, generation or fixture change. Diff reviewed: hash selectors `--hash-key/--hash-from/--hash-count/--hash-list/--hash-record/--hash-merge/--hash-out` separate from the timing selectors (timing route untouched); the 520-record manifest, ledger (schema 1, kind `regression-hashes`) and complete merge reuse `SG.fixtures.toolRecords` (optional flat-record `shape` and `checkValue`); incomplete, duplicate, malformed or other-source merges write nothing; hidden-level guard restores the original support array |
+| Issues & resolutions | (1) The ledger source hash of this tool covers the engine files `perf.js` loads plus `perf-helper.js`, `tool-records.js` and `perf.js` (no UI/worker files), unlike MS02/MS03a which hash all 63 sources; accepted. (2) Editing `tool-records.js` changes the source hash of MS03a's recorder ledgers, so the MS03a baseline ledgers in `generator/tests/artifacts/difficulty-v3/MS03a/` are now stale for `--merge`; expected, MS04 records fresh ledgers. (3) Legacy behaviour changes accepted: `--check-hashes` with `--update-hashes` now conflicts (update used to win silently); `--alloc` refused with any hash mode; timing flags refused with any `--hash-*` option; unfiltered `--update-hashes` writes atomically and in CRLF (was LF); generation failures exit 1. The manual `perf` suite's `SG_UPDATE_HASHES=1` path still writes LF (out of scope). (4) Spec gaps decided by the developer: `--hash-merge` defaults to check; a selector without `--hash-key` applies to all 26 combinations; `--hash-count` defaults to the remaining seeds; a selection of all 520 is allowed for `--update-hashes`. (5) The guides keep "about 2,900 / 3,910 tests" while the quick set is now 2,964; suite counts updated. (6) The `perf-tooling` suite adds about 12 s to the generator quick run (process spawns) |
+| Handoff | From `generator/`: `node tests\perf.js --hash-key=<v>/<l> --hash-from=0/5/10/15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\<task>\hashes\<v>-<l>-<from>.json` per shard (26 combinations x 4 shards = 520 keys); `--hash-merge=<dir> --check-hashes` to inspect CHANGED lines; `--hash-merge=<dir> --update-hashes` (complete, valid merge only; `--hash-out=<file.js>` for an alternate file); then `--check-hashes` again. Ledger records `{key:'variant/level#seed', variant, level, seed, hash, ms, overrides}`; `ms` and `overrides` never compared. Pre-MS04 caveat: a selected-check disagreement on another combination may come from the subset finder's counter (MS04 fixes it); do not rewrite hashes before MS04 |

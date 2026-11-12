@@ -499,13 +499,14 @@ sudoku/                     the repository (see "Layout" in the overview for the
     │                       · help.js · app.js
     └── tests/
         ├── node-runner.js · soak.js · perf.js · qualify.js · replay-fixtures.js · replay-goldens.js
-        ├── fixtures/       the fixtures of the generator (rated puzzles, the performance helper, the
-        │                   regression hashes in regression.js, generated, the testkit provider, the pure
+        ├── fixtures/       the fixtures of the generator (rated puzzles, the performance helper with the hash
+        │                   corpus and its merge, the regression hashes in regression.js, generated, the
+        │                   testkit provider, the pure
         │                   helpers of the soak diagnostics, and the data of the replay suite:
         │                   replay-goldens.js, replay-wire.js, generated, with the helpers of their
         │                   recorders, tool-records.js and replay-recording.js)
         ├── suites/         the quick set, run by default together with ../core/tests/suites: one *.test.js per
-        │                   area, 30 of the generator's own (found automatically), smoke.test.js among them
+        │                   area, 31 of the generator's own (found automatically), smoke.test.js among them
         └── manual/         the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
                             extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
@@ -806,16 +807,16 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (46 suites, about 2,900 tests), about a minute
+node tests/node-runner.js                          # the quick set (47 suites, about 2,900 tests), about a minute
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8, about eight minutes)
-node tests/node-runner.js --all                    # quick + manual (54 suites, about 3,910 tests), about nine minutes
+node tests/node-runner.js --all                    # quick + manual (55 suites, about 3,910 tests), about nine minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 46 suites, about
-2,900 tests, about one minute — the 30 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 47 suites, about
+2,900 tests, about one minute — the 31 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -834,8 +835,8 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts about 3,910 tests in 54 suites
-(about 2,900 in the 46 quick ones), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts about 3,910 tests in 55 suites
+(about 2,900 in the 47 quick ones), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text
@@ -908,7 +909,35 @@ on the reference machine and measured by `node tests/perf.js`.
   guard against an optimisation changing a puzzle (the quick `smoke` suite checks a sample of them, the manual
   `perf` suite all of them): `--check-hashes` compares, and `--update-hashes` records new
   ones after a change that is meant to alter puzzles (a calibration, a new digging rule). `--alloc` probes the
-  hot loops for allocation.
+  hot loops for allocation. Both hash modes process all 520 records (26 combinations × 20 seeds), and `--variant`
+  and `--level` do not shard them; for a bounded refresh the hash modes have their own selectors. Record one
+  combination and at most five seed indexes per command, one command at a time:
+
+  ```text
+  node tests/perf.js --hash-list --hash-key=classic9/hard                       # the keys and seeds, nothing is generated
+  node tests/perf.js --check-hashes --hash-key=classic9/hard --hash-from=0 --hash-count=5   # a partial check
+  node tests/perf.js --hash-key=classic9/hard --hash-from=0 --hash-count=5 --hash-record=<file.json>   # one shard
+  node tests/perf.js --hash-merge=<directory> --check-hashes     # all 520 records of the ledgers, nothing generated
+  node tests/perf.js --hash-merge=<directory> --update-hashes    # write the complete fixture from them
+  ```
+
+  `--hash-key` is one exact key of `SG.fixtures.perfTools.COMBOS`, `--hash-from` a zero-based index in the 20 seeds
+  (0–19, default 0) and `--hash-count` the number of consecutive seed indexes. A check with a selector says how many
+  of the 520 it checked and is no pass of the complete corpus; `--hash-record` writes only a **ledger**, never a
+  fixture; `--hash-merge` requires every one of the 520 records exactly once, from the current sources, and then
+  checks (the default) or, with `--update-hashes`, writes `regression.js` in CRLF (`--hash-out=<file.js>` writes
+  another file instead). A canonical update needs the complete corpus (all records generated or a complete merge):
+  a partial selection, conflicting options and a range outside 0–19 are refused before anything is generated, and
+  a missing, duplicate, malformed or differently sourced record refuses the merge; in every case nothing is written
+  and the fixture stays as it was. A ledger is
+  `{ schema: 1, kind: 'regression-hashes', sourceHash, manifestHash, node, commit, dirty, records: [{ key:
+  'variant/level#seed', variant, level, seed, hash, ms, overrides }] }`; its `sourceHash` covers the engine files
+  the script loads plus `perf-helper.js`, `tool-records.js` and `perf.js` (so any edit of them makes the ledgers
+  stale), its `manifestHash` the combinations and the seeds, never the expected hashes. A combination whose level
+  the qualification has hidden stays in the corpus: the helper offers that level to that one generation (recorded
+  in `overrides`) and puts the exact original support array back; it never changes what a player is offered. The
+  pure helpers are in `SG.fixtures.perfTools` and `SG.fixtures.toolRecords`, and the `perf-tooling` suite tests
+  them.
 - **Deep statistical runs** in the mega, multigrid and variants suites are off by default; enable them with the
   environment variable `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; in
   PowerShell `$env:SG_DEEP = 1`).

@@ -6,6 +6,11 @@
  *  - PERF_TARGETS    the p95 budgets of design.md section 9.1 in milliseconds, by variant and level.
  *  - measure()       p50 / p95 / max of the generation time of one (variant, level) cell.
  *  - SEEDS, COMBOS, hashOf(), recordAll(), render()   the regression hashes of tests/fixtures/regression.js.
+ *  - hashManifest(), planHashSelection(), planHashRun(), hashRecord(), hashLedger(), mergeHashLedgers(),
+ *    tableOf(), compareHashes(), toCrlf()   the bounded modes of `node tests/perf.js` (--hash-key,
+ *    --hash-record, --hash-merge, ...): the fixed list of the 520 (combination, seed) records, the validation
+ *    of a selection and of a command line, ledgers of selected records and their complete merge. Pure, no
+ *    file system.
  *
  * Regression hashes. What is hashed is everything that makes up the puzzle a person gets, so that a change
  * of any part shows: the givens and the solution, the cages and signs of Killer / Greater-Than (the model
@@ -186,10 +191,25 @@
     return parts.join('|');
   }
 
+  /**
+   * Generates the puzzle of one (variant, level, seed) through the pipeline and returns its hash and whether
+   * the level had to be offered for it. The hash corpus is fixed even where the qualification hides a level:
+   * `SG.fixtures.toolRecords.withRequestedLevel` offers the missing level to this one call and puts the exact
+   * original support array back in `finally`. A diagnostic of the test tools only: no production support list
+   * changes, and it does not mean that the level is offered.
+   */
+  function hashRecord(variant, level, seed) {
+    var records = SG.fixtures.toolRecords;
+    if (!records) throw new Error('hashOf needs tests/fixtures/tool-records.js (the hidden-level guard)');
+    var run = records.withRequestedLevel(variant, level, function () {
+      return SG.pipeline.run({ variantId: variant, difficulty: level, seed: seed, trace: 'off' }, null);
+    });
+    return { hash: hash64(serialize(run.value)), overridden: run.overridden };
+  }
+
   /** Generates the puzzle of one (variant, level, seed) through the pipeline and returns its hash. */
   function hashOf(variant, level, seed) {
-    var result = SG.pipeline.run({ variantId: variant, difficulty: level, seed: seed, trace: 'off' }, null);
-    return hash64(serialize(result));
+    return hashRecord(variant, level, seed).hash;
   }
 
   /** Hashes of every seed of one combination. */
@@ -249,6 +269,234 @@
     return lines.join('\n') + '\n';
   }
 
+  // ---------------------------------------------------------------------------------------------
+  // Bounded hash records (difficulty v3, MS03d): selection, command-line plan, ledgers, complete merge
+  // ---------------------------------------------------------------------------------------------
+
+  var HASH_KIND = 'regression-hashes';
+  /** Where a hash record keeps its identity and its data (see SG.fixtures.toolRecords). */
+  var HASH_SHAPE = { request: ['variant', 'level', 'seed'], value: ['hash'] };
+
+  /**
+   * The 520 records of the corpus in table order, combination by combination and seed by seed:
+   * { key: 'variant/level#seed', request: { variant, level, seed } }. It follows COMBOS and SEEDS, never the
+   * expected hashes of the fixture.
+   */
+  function hashManifest() {
+    var out = [];
+    COMBOS.forEach(function (combo) {
+      SEEDS.forEach(function (seed) {
+        out.push({ key: combo.key + '#' + seed,
+          request: { variant: combo.variant, level: combo.level, seed: seed } });
+      });
+    });
+    return out;
+  }
+
+  function given(value) {
+    return value !== null && value !== undefined;
+  }
+
+  function wholeNumber(flag, text) {
+    if (!/^\d+$/.test(String(text))) throw new Error(flag + '=' + text + ' is not a whole number');
+    return parseInt(text, 10);
+  }
+
+  /**
+   * The records picked by --hash-key, --hash-from and --hash-count (their raw texts, or null/undefined when
+   * not given): one exact combination of COMBOS, or all of them, and `count` consecutive seed indexes from
+   * `from` (default 0; default count: up to the last seed). A selection keeps the manifest order.
+   * @returns {{ entries: Array, complete: boolean, total: number, label: string }}
+   * @throws {Error} for an unknown key, a non-numeric value or a range outside the 20 seed indexes
+   */
+  function planHashSelection(sel) {
+    var key = given(sel.key) ? String(sel.key) : null;
+    var last = SEEDS.length - 1;
+    var combos = COMBOS;
+    if (key !== null) {
+      combos = COMBOS.filter(function (combo) { return combo.key === key; });
+      if (combos.length === 0) {
+        throw new Error('--hash-key=' + key + ' is not a combination of the corpus (known: ' +
+          COMBOS.map(function (combo) { return combo.key; }).join(', ') + ')');
+      }
+    }
+    var from = given(sel.from) ? wholeNumber('--hash-from', sel.from) : 0;
+    if (from > last) throw new Error('--hash-from=' + from + ' is outside the seed indexes 0..' + last);
+    var count = given(sel.count) ? wholeNumber('--hash-count', sel.count) : SEEDS.length - from;
+    if (count < 1) throw new Error('--hash-count=' + count + ' is not a positive number');
+    if (from + count > SEEDS.length) {
+      throw new Error('--hash-count=' + count + ' from index ' + from + ' goes past the last seed index ' +
+        last + ' (at most ' + (SEEDS.length - from) + ')');
+    }
+    var entries = hashManifest().filter(function (entry) {
+      var index = SEEDS.indexOf(entry.request.seed);
+      return index >= from && index < from + count &&
+        combos.some(function (combo) { return combo.variant === entry.request.variant &&
+          combo.level === entry.request.level; });
+    });
+    var seeds = from === 0 && count === SEEDS.length ? 'all ' + SEEDS.length + ' seeds' :
+      'seed indexes ' + from + (count > 1 ? '-' + (from + count - 1) : '') + ' (seeds ' +
+      SEEDS.slice(from, from + count).join(', ') + ')';
+    return {
+      entries: entries,
+      complete: entries.length === COMBOS.length * SEEDS.length,
+      total: COMBOS.length * SEEDS.length,
+      label: (key !== null ? key : 'all ' + COMBOS.length + ' combinations') + ', ' + seeds
+    };
+  }
+
+  /**
+   * The mode of a perf.js command line, decided before anything is generated or written. `o` has the options
+   * as given: check, update, list (booleans), key, from, count, record, merge, out (texts or null), alloc
+   * (boolean) and `timing`, the names of the timing options present (--variant, --runs, ...).
+   *   { mode: 'timing' }                         no hash option: the measurement as before
+   *   { mode: 'check' | 'update', from: 'generate' | 'merge', selection, directory, out }
+   *   { mode: 'record', selection, file }        the selected records into a ledger, nothing else
+   *   { mode: 'list', selection }                the selected identities, without generation
+   * Without a hash selector, --check-hashes and --update-hashes mean what they always meant (every record,
+   * generated), and the timing options are ignored as before.
+   * @throws {Error} for options that conflict, a selection outside the corpus or a partial canonical update
+   */
+  function planHashRun(o) {
+    var selecting = given(o.key) || given(o.from) || given(o.count);
+    var on = { check: o.check === true, update: o.update === true, record: given(o.record),
+      merge: given(o.merge), out: given(o.out), list: o.list === true };
+    var named = { check: '--check-hashes', update: '--update-hashes', record: '--hash-record',
+      merge: '--hash-merge', out: '--hash-out', list: '--hash-list' };
+    var explicit = selecting || on.record || on.merge || on.out || on.list;
+    if (!explicit && !on.check && !on.update) return { mode: 'timing' };
+    if (o.alloc) throw new Error('--alloc cannot be combined with the hash modes (--check-hashes, ' +
+      '--update-hashes, --hash-*)');
+    var timing = o.timing || [];
+    if (explicit && timing.length > 0) {
+      throw new Error('the timing options (' + timing.join(', ') + ') do not pick hash records; the hash ' +
+        'modes take --hash-key, --hash-from and --hash-count');
+    }
+    if (on.check && on.update) throw new Error('--check-hashes and --update-hashes conflict: choose one');
+    var refuse = function (flag, names) {
+      var other = names.filter(function (name) { return on[name]; })[0];
+      if (other) throw new Error(flag + ' cannot be combined with ' + named[other]);
+    };
+    var path = given(o.out) ? o.out : null;
+    if (on.list) {
+      refuse('--hash-list', ['check', 'update', 'record', 'merge', 'out']);
+      return { mode: 'list', selection: planHashSelection(o) };
+    }
+    if (on.record) {
+      refuse('--hash-record', ['check', 'update', 'merge', 'out']);
+      return { mode: 'record', selection: planHashSelection(o), file: o.record };
+    }
+    if (on.out && !on.update) throw new Error('--hash-out only goes with --update-hashes');
+    if (on.merge) {
+      if (selecting) {
+        throw new Error('--hash-merge needs the complete corpus and cannot be combined with --hash-key, ' +
+          '--hash-from or --hash-count');
+      }
+      return { mode: on.update ? 'update' : 'check', from: 'merge', selection: planHashSelection({}),
+        directory: o.merge, out: path };
+    }
+    if (!on.check && !on.update) {
+      throw new Error('--hash-key, --hash-from and --hash-count need --check-hashes, --hash-record or ' +
+        '--hash-list');
+    }
+    var selection = planHashSelection(o);
+    if (on.update && !selection.complete) {
+      throw new Error('a canonical update needs the complete corpus of ' + selection.total + ' records, ' +
+        'not the partial selection ' + selection.label + '; record shards with --hash-record and merge ' +
+        'them with --hash-merge');
+    }
+    return { mode: on.update ? 'update' : 'check', from: 'generate', selection: selection, out: path };
+  }
+
+  /**
+   * A ledger of generated records: `meta` has sourceHash, manifestHash, node, commit, dirty (and generatedAt,
+   * argv); `results` is [{ variant, level, seed, hash, ms, overrides }] in any order. The record of the
+   * ledger is { key: 'variant/level#seed', variant, level, seed, hash, ms, overrides }.
+   */
+  function hashLedger(meta, results) {
+    var info = { kind: HASH_KIND, sourceHash: meta.sourceHash, manifestHash: meta.manifestHash,
+      node: meta.node, commit: meta.commit, dirty: meta.dirty, generatedAt: meta.generatedAt,
+      argv: meta.argv };
+    return SG.fixtures.toolRecords.ledgerOf(info, results.map(function (r) {
+      return { key: r.variant + '/' + r.level + '#' + r.seed,
+        request: { variant: r.variant, level: r.level, seed: r.seed }, value: { hash: r.hash },
+        ms: r.ms, overrides: r.overrides };
+    }), HASH_SHAPE);
+  }
+
+  /** The table { 'variant/level': [hash per seed] } of complete merged records, in COMBOS and SEEDS order. */
+  function tableOf(records) {
+    var byKey = {};
+    records.forEach(function (record) { byKey[record.key] = record.value.hash; });
+    var table = {};
+    COMBOS.forEach(function (combo) {
+      table[combo.key] = SEEDS.map(function (seed) {
+        var hash = byKey[combo.key + '#' + seed];
+        if (hash === undefined) {
+          throw new Error(combo.key + '#' + seed + ' has no record: the merge is not complete');
+        }
+        return hash;
+      });
+    });
+    return table;
+  }
+
+  /**
+   * Merges hash ledgers ([{ name, ledger }] or { name, error }) against the current identity ({ sourceHash,
+   * manifestHash }). Valid only when every ledger is of kind 'regression-hashes' from the current sources and
+   * the current manifest and every one of the 520 keys has exactly one well-formed record.
+   * @returns {{ ok: boolean, problems: string[], records: Array|null, table: Object|null }}
+   */
+  function mergeHashLedgers(files, identity) {
+    var merged = SG.fixtures.toolRecords.merge(files, {
+      kind: HASH_KIND, sourceHash: identity.sourceHash, manifestHash: identity.manifestHash,
+      manifest: hashManifest(), shape: HASH_SHAPE,
+      checkValue: function (value) {
+        return typeof value.hash === 'string' && /^[0-9a-f]{16}$/.test(value.hash) ? null :
+          'has a hash that is not 16 hexadecimal digits';
+      }
+    });
+    return { ok: merged.ok, problems: merged.problems, records: merged.records,
+      table: merged.ok ? tableOf(merged.records) : null };
+  }
+
+  /**
+   * Compares generated or merged records ([{ variant, level, seed, hash }]) with a recorded table
+   * ({ hashes: { 'variant/level': [hash per seed] } } or null): how many were checked, how many differ, the
+   * seeds that changed per combination and the combinations the table does not have at all.
+   */
+  function compareHashes(recorded, results) {
+    var groups = {};
+    var order = [];
+    results.forEach(function (r) {
+      var key = r.variant + '/' + r.level;
+      var group = groups[key];
+      if (!group) {
+        group = groups[key] = { key: key, seeds: [], total: 0, saved: recorded && recorded.hashes ?
+          recorded.hashes[key] : undefined };
+        order.push(group);
+      }
+      group.total++;
+      if (group.saved && group.saved[SEEDS.indexOf(r.seed)] !== r.hash) group.seeds.push(r.seed);
+    });
+    var out = { checked: results.length, bad: 0, changed: [], missing: [] };
+    order.forEach(function (group) {
+      if (!group.saved) {
+        out.missing.push(group.key);
+        out.bad += group.total;
+      } else if (group.seeds.length > 0) {
+        out.changed.push({ key: group.key, seeds: group.seeds });
+        out.bad += group.seeds.length;
+      }
+    });
+    return out;
+  }
+
+  /** The text with CRLF line ends (the form of every file of the repository), whatever it had. */
+  function toCrlf(text) {
+    return text.replace(/\r?\n/g, '\r\n');
+  }
+
   SG.fixtures.perfTools = {
     PERF_TARGETS: PERF_TARGETS,
     TARGET_LEVELS: TARGET_LEVELS,
@@ -262,6 +510,17 @@
     hashOf: hashOf,
     hashesOf: hashesOf,
     recordAll: recordAll,
-    render: render
+    render: render,
+    HASH_KIND: HASH_KIND,
+    HASH_SHAPE: HASH_SHAPE,
+    hashManifest: hashManifest,
+    planHashSelection: planHashSelection,
+    planHashRun: planHashRun,
+    hashRecord: hashRecord,
+    hashLedger: hashLedger,
+    mergeHashLedgers: mergeHashLedgers,
+    tableOf: tableOf,
+    compareHashes: compareHashes,
+    toCrlf: toCrlf
   };
 })();
