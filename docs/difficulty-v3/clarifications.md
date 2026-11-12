@@ -501,3 +501,30 @@ All sixteen corrections are accepted; none is disputed. Notes:
 
 No PENDING item of `docs/difficulty-v3/report-detailed.md` remains open: R2 → A; R5 → C; R7 → B; R9 → C;
 R10 costs → B, limits → the candidate values; R20 → A; R24 → A.
+
+---
+
+## Part F: remaining concerns after the answers were applied (for acceptance)
+
+Raised by the lead analyst while applying the answers to `docs/difficulty-v3/report-detailed.md` (section 9). It is a
+qualification of wording and reporting, not a change to any decision.
+
+### AC01: the "attainable range" is a diagnostic lower bound, not a reachability guarantee
+
+Context: `docs/difficulty-v3/report-detailed.md` section 9 (AC01), R7 and R23; answer to SA2-Q-S03.
+
+1. `1.25 · w_min(tier) + V` bounds the **unrounded** score of a puzzle that needs a non-vacuous tier; it is not a
+   proved minimum this generator can reach. `breakdown` returns an unrounded sum and `Math.round` of it
+   (`generator/js/engine/difficulty.js:239-268`), the tier can be empty, and veryEasy is vacuous (SA2-Q-S01), so a
+   finite adjusted position does not exist for every puzzle, and rounded or shallow scores can fall outside it.
+2. "A target below the attainable range simply selects the lowest attainable puzzle" cannot mean a guaranteed
+   global minimum while the approved first-exact stop, the 64-rating refinement cap and the other attempt caps stay
+   (`generator/js/engine/digger.js:630-641, 1100-1147, 1667-1739`); a bounded search can only prefer a nearer score
+   among the candidates it reaches.
+
+Proposed acceptance: keep the approved interval where it is defined and call it an analytic lower bound of the
+attainable range; report `null` with a reason where the adjusted position is undefined, and leave defined values
+unclamped; describe a below-bound target as steering toward the lowest scores reached, not a guaranteed minimum. No
+change to target sampling, the first-exact stop, weights or budgets.
+
+**Answer:**

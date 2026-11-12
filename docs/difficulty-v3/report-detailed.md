@@ -3,10 +3,10 @@
 | | |
 |---|---|
 | Purpose | Corrected specification and task boundaries from which the developer task pack is derived. |
-| Authors | SA2, gpt-6-astra; SA1, claude-opus-5.5. Compiled by SA2, checked by SA1; check C1-C11 applied and both technical co-signatures recorded below. |
+| Authors | SA2, gpt-6-astra; SA1, claude-opus-5.5. Compiled by SA2; SA1 checked the preceding joint draft. SA1 verified this answers-applied revision (`docs/difficulty-v3/claude-opus-5.5/5-check-of-final-report.md`). |
 | Code examined | Branch `rating-v3`, HEAD `6abcb9f`; Windows, Node v26.13.0 locally; Node 24 in CI. |
 | Date | 2026-11-12 |
-| Status | **JOINT DRAFT — co-signed by SA2 and SA1, pending clarifications (for review by the plan author)** |
+| Status | **FINAL — answers applied (`clarifications.md` at `1398dde`); for acceptance by the owner and the plan author** |
 
 Inputs, all paths relative to this repository:
 
@@ -18,22 +18,33 @@ Inputs, all paths relative to this repository:
 - `docs/difficulty-v3/claude-opus-5.5/2-review-of-gpt-6-astra.md`;
 - `docs/difficulty-v3/claude-opus-5.5/3-response-to-review.md`;
 - `docs/difficulty-v3/claude-opus-5.5/4-check-of-joint-report.md`;
-- `docs/difficulty-v3/clarifications.md`, particularly its "Status after the responses" table and parts A-D.
+- `docs/difficulty-v3/claude-opus-5.5/5-check-of-final-report.md`;
+- `docs/difficulty-v3/clarifications.md` at `1398dde`: every answer in parts A-C, "Part D: author's
+  response", and the consolidated decisions in part E. These answers supersede the historical positions table.
 
 The resolution format follows Part I of `docs/generation-steps/report-detailed.md`. This is a new feature
 report, not an amendment to that historical implementation record. No application code or generated
 test data was changed for this draft. No additional suite or heavy gate was run.
 
-**Change log — 2026-11-12:** applied SA1 check C1-C11 without rejection, including ordered certificate
+**Change log — 2026-11-12, joint-draft revision:** applied SA1 check C1-C11 without rejection, including ordered certificate
 cases, exactness consumers, executable measurement manifests, final-recheck escalation, reference-weight
 selection, cage-suite ownership, history compatibility, four-worker qualification and AUTH-S2 (a).
-Technical co-signatures do not select a PENDING branch. Task-pack work remains paused.
+**Change log — 2026-11-12, answers-applied revision:** applied all answers at `1398dde`, including the
+owner's full target propagation and measured chain cutoff. Removed unselected contracts; fixed the
+cost/limit/reference/publication policies, measurement obligations, task dependencies and traceability.
+The preceding protected-label weight-selection proposal is not adopted. SA1's subsequent verification is recorded below.
+**Change log — 2026-11-12, SA1 verification (10:50):** SA1 checked this revision against every answer, Part E and
+Part F (AC01): signed subject to the editorial corrections V1-V2 of `claude-opus-5.5/5-check-of-final-report.md`;
+no resolution changed; AC01 agreed.
+**Change log — 2026-11-12, final editorial revision (11:10):** applied SA1's V1-V2, updated both
+signatures/statuses and the R7 anchor, and applied N1's timing clarification and N2's combined credit
+snapshot. Both analysts signed; AC01 remains open for acceptance in `clarifications.md` part F.
 
-**Reading this draft.** FINAL means an agreed technical resolution or an already fixed requirement.
-PENDING identifies a branch requiring the clarification process, even where the analysts recommend
-the same answer. The owner confirms the plan author's answers. The latest status table takes precedence
-over older positions quoted in parts A/B of the clarification document. Parameter selections not yet
-measured are not silently presented as established constants.
+**Reading this report.** FINAL identifies the corrected specification with the recorded answers applied,
+not a completed implementation or permission to start it. The owner and plan author must accept this
+revision before task-pack work resumes. The existing MS01-MS18 outline below is updated for consistency,
+not expanded into executable task packs. Selected measurement rules are final; their not-yet-measured
+winning values are not invented. Section 9 records the remaining acceptance concern.
 
 # Part I — Findings and resolutions
 
@@ -46,12 +57,12 @@ The following are not reopened:
    One required tier step suffices; there is no "two expensive steps" requirement.
 3. Generate toward points inside finite score bands, not systematically toward their upper edges.
 4. Keep the existing scoring formula, existing weights and band edges. New-technique weights are the
-   plan's priors, subject only to the explicit reference-label question R20. A general recalibration of
-   existing weights is a separate project.
+   listed priors. R20 preserves historical labels and records v3 reclassification without fitting weights
+   to those labels. Any weight calibration is a separate, owner-approved rating version.
 5. Qualification determines the final offered levels. A shallower puzzle may be an honest approximate
    fallback, never an exact result.
 6. All plan-named APPROVAL GATE runs are pre-approved for their owning developer task. Permission to
-   run a gate is not permission to change an unresolved behaviour or weaken a test.
+   run a gate is not permission to change an answered behaviour or weaken a test.
 7. One developer owns this checkout at a time. Pentomino is a separate repository and can be developed
    concurrently; timing-sensitive measurements on the shared machine are serialized.
 
@@ -121,8 +132,8 @@ It is not a fresh-generation qualification result; S3 will change available proo
 
 The score-only exactness tests, keeper ranking, local-search stopping condition, proposal objective,
 fixture preprocessing, help examples, replay goldens, history schema and grouped-chain representation
-all need coordinated changes. The canonical-rating prefix proof removes an otherwise expensive second
-solve if R2's recommended branch is confirmed. SA1 measured 96/96 sample agreements at HEAD; SA2
+all need coordinated changes. The confirmed canonical-rating prefix proof removes an otherwise expensive
+second solve in generation. SA1 measured 96/96 sample agreements at HEAD; SA2
 measured 39/39 after in-memory S2.1 moves. The proof and invariant, not those sample sizes, establish
 the optimization.
 
@@ -169,18 +180,21 @@ not a second hard-coded policy table:
 | Hell 2 | empty, vacuous |
 
 Scoped additions are cageCombo/ineqChain at Easy, ruleOf45/minMaxForcing/lawOfLeftovers at Normal,
-and cageSplit at Hard, only on the applicable variants. Re-derive this table if R20 selects adjusted
-new priors; never keep a documentation table by changing the algorithm to match it.
+and cageSplit at Hard, only on the applicable variants. The priors are fixed by SA2-Q-S10 (a);
+derive the table from the registry/weights rather than changing the algorithm to fit documentation.
+
+**Alternatives not chosen — SA2-Q-S01 / SA1-Q-S2:** an empty displayed VeryEasy tier, a self-floor,
+or an Easy exemption from requiredness.
 
 **Tests/docs:** New `generator/tests/suites/difficulty-floor.test.js`, listed in `generator/tests.html`;
 global `describe/it/expect`, not the nonexistent `SG.test.describe/it/assert`. Test set difference,
 disjoint union, variant scope, offered-level gaps, VeryEasy and empty tiers. Use variant ID `killer`.
 Update `generator/design.md` sections 6.7/13.7 and both developer guides.
 
-### R2. Requiredness APIs and their proof boundary — PENDING SA1-Q-S7
+### R2. Requiredness APIs and their proof boundary — FINAL
 
 **Plan:** S0.1/S1.1. **Tasks:** MS01 reference API; MS03 prefix activation; MS05 consumers.
-Both analysts recommend branch A. The author confirmation is still pending.
+**Decision:** SA1-Q-S7 (a), confirmed by the author; SA2-Q-S02 production-cap question withdrawn.
 
 **Common contracts, FINAL:**
 
@@ -189,14 +203,15 @@ FloorResult = { required:boolean, vacuous:boolean, floorLevel:string|null }
 ReferenceFloorResult = FloorResult + { unsolvedCount:nonnegative integer }
 ```
 
-`certifyFloor(model,givens,level,budget)` is the reference implementation. The caller must establish
+`certifyFloor(model,givens,level,budget)` is the reference implementation for tests, soak and other tools.
+It uses only the inherited budget: no new local floor cap and no larger-cap retry. The caller must establish
 uniqueness for these exact givens and this exact model, including its cages/signs. It uses
 `assumeUniqueness:true`, current default finder options, `collectSteps:false` and R1's floor.
 Vacuous returns true/null/0 without a solve. Ordinary SOLVED returns false/0; ordinary STUCK returns
 true and the actual remaining count. CONTRADICTION is an invalid-input/technique error, not required.
 Cancellation and inherited budget failures propagate; they are not STUCK.
 
-**A — derived production certificate, recommended by both analysts.**
+**Derived production certificate.**
 
 Export `requiredOf(rating,level,model)`, pure and without a solve, with cases in this order:
 
@@ -230,56 +245,43 @@ floor finder just returned nothing, so the floor solve is stuck. If no such find
 Sources: `core/js/engine/logical-solver.js:238-269`;
 `generator/js/engine/difficulty.js:389-451`.
 
-Keep `certifyFloor` for independent checks and noncanonical inputs. Do not persist a redundant floor
-certificate in puzzle exports. The guided oracle uses `assumeUniqueness:false`; its `tierUsed` remains
-a steering proxy, never this certificate.
+Keep `certifyFloor` for independent checks and noncanonical inputs. Generation runs no second solve,
+has no production floor-cap/unverified state, and does not implement `ensureFloor` or the
+`rating.floor === undefined` fallback. An absent/unsolved rating still has no certificate. Do not persist
+a redundant floor certificate in puzzle exports. The guided oracle uses `assumeUniqueness:false`;
+its `tierUsed` remains a steering proxy, never this certificate.
 
-**B — separate production floor solve, the original mechanism.**
+**Alternatives not chosen — SA1-Q-S7 / SA2-Q-S02:** a separate production floor solve, local floor cap
+or retry; the reference alone retains the inherited budget.
 
-Retain an idempotent `ensureFloor` keyed by exact model/givens/requested level/current version, after
-the existing uniqueness guarantee. Attach a certificate identifying that level/version; no
-`rating.floor === undefined` success fallback. Keep `requiredOf` out of production acceptance.
-The added work is measured separately from full ratings.
-
-**Conditional PENDING SA2-Q-S02, only if B is selected:** choose inherited budget only; a deterministic
-local floor cap; or one deterministic larger-cap retry. A local-cap result is
-`{status:'unverified',required:null}`, never exact. A selected local-cap/retry branch must supply its
-check limit(s) in the answer; no guessed constant is authorized by this draft.
-
-**Tests:** Equality of A and the reference after R8 over solved constructed/published fixtures and
+**Tests:** Equality of the derived helper and the reference after R8 over solved constructed/published fixtures and
 small fixed generated variant samples; test the five old shallow certificates, real Normal seed 1,
 invalid/unsolved inputs, cancellation, changed cages/signs, and unsupported previous levels.
-S0 baseline uses the reference before the prefix invariant exists. Do not assert A's equivalence at
+S0 baseline uses the reference before the prefix invariant exists. Do not assert derived equivalence at
 HEAD's known ladder inversion. Update `generator/design.md` 6.7/13.7 and API documentation.
 
-### R3. Exactness, keeper and acceptance ordering — FINAL, mechanism selected by R2
+### R3. Exactness, keeper and acceptance ordering — FINAL
 
 **Plan:** S1.1. **Task:** MS05.
 
 ```text
 isExact(rating,L,model) =
   rating exists AND rating.solved === true AND rating.level === L
-  AND selectedFloorEvidence(rating,L,model).required === true
+  AND requiredOf(rating,L,model)?.required === true
 ```
 
-Vacuity is explicit; missing, stale or failed evidence never passes. The existing mathematical
+Vacuity is explicit; callers enforce R2's canonical-origin contract, so an imported/stale summary is
+not accepted as evidence. Missing or unsolved ratings never pass. The existing mathematical
 uniqueness guarantee is still required before publication. Update `digLevelSteps`, `keptPuzzle`,
 local search, refinement and outer generation exits, not just the first sample.
 
 Keep the current level-gap distance for off-band solved results; unsolved is Infinity.
-In-band certified-required is 0; in-band proved-shallow is 0.5. For the conditional R2-B local-cap
-branch, the proposed conservative unknown policy under **PENDING SA2-Q-S02** is to skip an
-unverified candidate: distance Infinity and ineligible for keeper/final selection, while measurement
-records retain its unavailable status. If every candidate is ineligible, return the existing no-rated-
-puzzle error rather than publishing an invented certificate. An answer choosing an unverified
-approximate fallback instead must supply its rank and warning contract; this draft does not hide that
-choice inside a score-only fallback.
-
-For R2-A, compute this final distance from canonical counts before keeper prefiltering; the keeper
-still executes `countWithin(...) === 1` before storing. For R2-B, a cheap optimistic prefilter may
-use a lower bound, but `offer` must recompute the final distance after the count and certification.
-Never store the optimistic value. A shallow keeper at 0.5 must admit a new uncertified in-band
-candidate with optimistic distance 0. Strict `<` ties retain the existing encounter order.
+In-band certified-required is 0; in-band proved-shallow is 0.5. Compute this final distance from
+canonical counts before every keeper prefilter, including `closer`; the keeper still executes
+`countWithin(...) === 1` before storing. There is no separate solve or optimistic certificate rank.
+A shallow keeper at 0.5 must admit a required in-band candidate at 0. Strict `<` ties retain the
+existing encounter order. If nothing completely rated can be kept, retain the existing no-rated-puzzle
+error rather than publishing an invented certificate.
 
 Audit these sites:
 
@@ -298,8 +300,8 @@ score decrease. A required in-band result must beat a higher-scoring shallow one
 candidate refined into a shallow band state must not bypass the intended continued-search route.
 
 **Tests:** Scripted keeper strategy: shallow first, then required; required first, then shallow;
-equal-distance stable ties; count cutoff/ambiguity; a changed variant model; unverified/missing
-evidence. Add real small-seed integration and sync/cooperative parity. Do not make this regression
+equal-distance stable ties; count cutoff/ambiguity; a changed variant model; missing/unsolved ratings
+and prevention of stale-rating reuse. Add real small-seed integration and sync/cooperative parity. Do not make this regression
 optional or rely on six seeds accidentally reaching it. Files: digger/floor suites and affected
 Killer tests. Docs: `generator/design.md` 6.8/13.13.
 
@@ -352,7 +354,10 @@ once with `node tests\node-runner.js --suite=difficulty`: I5 and the `digLevel` 
 hit-rate failures at levels where required puzzles are rare are recorded as intermediate availability
 evidence under R24, not fixed by weakening the assertions.
 
-### R5. Continued shallow search and its budget — FINAL policy; PENDING SA2-Q-S12 value
+**Alternatives not chosen — SA1-Q-S3 / SA2-Q-S06:** replacing `approximate`, an approximate-only
+shallow result, or a new external warning API.
+
+### R5. Continued shallow search and its budget — FINAL measured-selection rule
 
 **Plan:** S1.1. **Task:** MS05, verified again MS18.
 
@@ -361,34 +366,34 @@ Existing bounds remain `CAP_RATINGS=1024`, `CAP_PROPOSALS=32768`, `REFINE_RATING
 The ordinary local-search loop continues while not exact and within its existing caps. A null result
 from `rateCounted` remains unrated and never exact.
 
-Both analysts withdrew an unmeasured hard-coded 128 cap. Measure full ratings spent after first
+**Decision:** SA2-Q-S12 (c), the R5 protocol approved as written. Both analysts withdrew an unmeasured
+hard-coded 128 cap. Until the measurement, use the existing attempt caps only. Measure full ratings spent after first
 reaching in-band shallow, further exact-hit frequency, full attempt counts and time on classic9
 Normal/Master/Nightmare, Killer Hard/Expert and a Jigsaw sample. Use the same fixed manifests before
 and after; memo hits still consume proposal work but not another full rating.
 
-Selectable branches:
+Compare `64,128,256,no additional cap`, one common setting for every level/variant. The extra allowance
+counts full ratings inside one local-search invocation after its first valid in-band shallow candidate
+(including an initially shallow state); earlier layout/dig ratings do not consume it. Start counting
+once and do not reset when the path leaves the band. All work still consumes the enclosing attempt caps.
 
-- A: no additional shallow cap; existing attempt limits only.
-- B: exactly 128 additional full ratings inside one local-search invocation after its first valid
-  in-band shallow candidate (including its initial state). Earlier layout/dig ratings do not consume
-  this additional allowance; all work still consumes the enclosing attempt caps.
-- C: measured common cap, recommended by both. Compare `64,128,256,no additional cap` using B's
-  counting scope, start counting once, and do not reset when the path leaves the band. Proposed
-  selection protocol: classic9 Normal/Master/Nightmare, Killer Hard/Expert and Jigsaw Expert,
-  the twelve soak requests per cell defined below; select the smallest finite cap with no exact-hit loss in any cell against A and
-  a strict reduction in median full ratings in at least one cell. Otherwise select A. Record timings
-  and fallback quality too. The author
-  must approve or replace this sample criterion; until then A is the implemented baseline.
+Selection cells are classic9 Normal/Master/Nightmare, Killer Hard/Expert and Jigsaw Expert: twelve soak
+requests per cell per setting, using the route below. Every request counts; timeout/error is a miss.
+Choose the smallest finite cap with no exact-hit loss in any cell against no extra cap and a strict
+reduction in median full ratings in at least one cell. Otherwise choose no extra cap. Record timings,
+work on failed requests and fallback quality too. The rule is decided; its winning number is measured
+in MS05, not guessed in this report.
 
 Return the existing best verified candidate at exhaustion. Memo hits consume proposal work but no
 additional full-rating allowance. There is one local-search invocation per full-grid attempt today;
 the cap is not a hidden new restriction on Killer's earlier layout search.
 
-This pending parameter does not license swallowing parent cancellation, changing caps by variant,
-or labelling a shallow fallback exact. A choice changing exact-hit rates must be included in the
-owner-confirmed answer. Record the selected number or "none" with the final model constants.
+This measurement does not license swallowing parent cancellation, changing caps by variant, or
+labelling a shallow fallback exact. Record the selected number or "none" with the final constants.
+**Alternatives not chosen — SA2-Q-S12:** an unmeasured fixed 128 cap or a permanently unmeasured
+no-cap policy; no extra cap remains the baseline and a valid measured winner.
 
-**Measurement route shared by R5-C, R7-C and R9-C.** Use `generator/tests/soak.js`, one shard per
+**Measurement route shared by R5, R7 and R9.** Use `generator/tests/soak.js`, one shard per
 cell, with `--variant=<id> --level=<id> --count=12 --seed=20260101 --no-gate`. The comparison
 manifest is the twelve requests derived from soak's default base seed, not literal puzzle seeds 1..12.
 A value under comparison is exposed on its owning module and read at run time: R5's additional
@@ -421,7 +426,7 @@ target = null if spec.max == Infinity
 ```
 
 The fork must not consume the random/guided parent streams. Carry this scalar through the sample
-context; direct `digStage` calls may initialize it when absent. R7-B also carries the originating
+context; direct `digStage` calls may initialize it when absent. R7 also carries the originating
 sample's target into `attemptBest`/search contexts, never redraws from the later search RNG.
 Target is not a new puzzle-exchange field.
 
@@ -470,46 +475,51 @@ passes at HEAD and is not the new-behaviour regression.
 Files: `generator/js/engine/digger.js`, digger/floor suites. Update Generator locales
 `explain.dig.code.deeper`, relevant `dig.*`, help, design 6.8 and both guides; GG/GR in MS06.
 
-### R7. Target in refinement and local search — PENDING SA1-Q-S4 / SA2-Q-S03
+### R7. One target through refinement and local search — FINAL
 
-**Plan:** S1.2 optional refinement. **Task:** MS06; final comparison MS18.
+**Plan:** S1.2, including refinement. **Task:** MS06; final comparison MS18.
+**Decision:** the owner selected the former branch B in SA1-Q-S4 / SA2-Q-S03.
 
-All branches preserve requiredness, existing uniqueness checks, symmetry, clue floors, caps and the
-Greater-Than prohibition on adding clues that make its sign structure redundant.
+Carry the originating sample's target through guided dig, `refineDown`, `localSearchSteps`,
+`searchStrategy` and `attemptBest`; do not redraw it from the later search RNG. Preserve requiredness,
+existing uniqueness checks, symmetry, clue floors, caps and the Greater-Than prohibition on adding
+clues that make its sign structure redundant.
 
-- **A, guided only:** R6 changes guided digging. Keep refinement's first in-band stop and local
-  score-nondecrease objective, but apply R3's exactness/keeper corrections. This does not claim that
-  fallback trajectories follow the target.
-- **B, same target through existing stages, SA2 recommendation:** pass the originating target into
-  `refineDown` and `localSearchSteps`. While above band, refinement first seeks a valid in-band result.
-  Once in-band required, it may continue while above target, accepting only a solved, in-band,
-  required reveal with strictly smaller target distance, within the same 64-rating refinement cap.
-  Reject and undo tier-losing, below-minimum or non-improving reveals. Local moves rank first by R3's
-  verified band/exactness quality, then by target distance for equal quality; an exact candidate beats
-  a shallow one even at a lower score. Preserve the existing first-exact outer stop: this branch does
-  not introduce an unconditional post-exact polishing search. Each sample has its own target; do not
-  compare unrelated samples against a newly drawn common target.
-- **C, conditional extension, SA1 recommendation:** implement A first and evaluate classic9 Expert
-  with R5's twelve-request soak manifest and measurement route. Report exact hits, misses, shallow cases and
-  timings separately; compute the upper median normalized position among exact hits. If fewer than
-  10 of the 12 requests are exact, the result is inconclusive: branch A stays, the record says so,
-  and the owner may still select B. With a
-  sufficient sample, extend to B in the same task if the median is strictly greater than 0.75.
-  MS18 repeats the measurement under R5's final recheck rule: a newly selected change is escalated
-  before GQ-final, not applied automatically inside MS18.
-- **D, attainable-subrange target:** requires explicit per-level subrange endpoints and the same RNG
-  draw scaled to that subrange. No endpoints are supplied by the plan; this branch cannot be selected
-  without them. Neither analyst recommends it over reporting unattainable score regions.
+- While above band, refinement first seeks a valid in-band result. Once in-band required, it may
+  continue while above target, accepting only a solved, in-band, required reveal with strictly
+  smaller target distance, within the **same 64-rating cap**. Reject and undo tier-losing,
+  below-minimum or non-improving reveals.
+- Local moves rank first by R3's verified band/exactness quality, then by target distance for equal
+  quality. A required in-band candidate beats a shallow one even at a lower score.
+- Preserve the existing first-exact outer stop. Target propagation applies to already-entered
+  stages; it introduces no unconditional post-exact polishing search. Each sample has its own
+  target, and unrelated samples are not compared against a newly drawn common target.
+- The target stays uniform on the **raw** finite band. Do not truncate it to an estimated reachable
+  interval or change weights to accommodate a low target. A target below the analytic attainable
+  lower bound steers toward lower scores, subject to the same finite search and stop conditions.
 
-Branch C's sample/threshold protocol is a proposed precise form of SA1's trigger, not an adopted
-measurement policy. The answer must approve or replace it. Branch B means target propagation through
-already-entered stages, not an unbounded optimization of every already-exact puzzle.
+Report both raw-band position and the position in the author's interval
+`[max(min, 1.25 * w_min(tier) + V), max)` as defined in R23. Judge "hugs the top" on the latter, not
+on the discarded raw-Expert-median >0.75 trigger. The interval's interpretation and edge cases are
+recorded explicitly in the acceptance concern AC01; it is not a new sampling interval.
+
+MS06 compares exact hits and time before/after this target change on **all 17 R23 cells**, using
+R5's commands and fixed requests; preserve the pre-change record before editing the objective.
+MS18 repeats the final comparison against GS-before and retains the isolated MS06 comparison.
+Report a loss of exact hits in any cell to the owner, with counts and timings. Do not silently drop
+target propagation or broaden a budget to repair it. Record the comparison in
+`docs/difficulty-v3/target-scope-<date>.md`; the owner decides any subsequent change.
+
+**Alternatives not chosen — SA1-Q-S4 / SA2-Q-S03:** guided-only targeting, a conditional 0.75 trigger,
+or sampling only an attainable subrange. Full propagation is not conditional on those experiments.
 
 `refineDown`, `localSearchSteps`, `searchStrategy`, sample contexts and `attemptBest` need coordinated
 edits; local search has `spec.level`, not a free `level` local. A shallow refinement must not escape
-further search merely through the current early return at `generator/js/engine/digger.js:1344-1352`.
-Tests must distinguish A/B/C, retain the original target through a later search, and show that a
-closer-but-shallow reveal cannot replace an exact result. Compare hit rates and costs, not just medians.
+further search merely through the current early return at `generator/js/engine/digger.js:1342-1347`.
+Tests must retain the original target through a later search, distinguish same-quality target
+improvement from raw score-nondecrease, and show that a closer-but-shallow reveal cannot replace an
+exact result. Cover the 64-rating cap, first-exact outer stop and Greater-Than guard. Compare hit rates
+and costs, not just medians.
 
 ### R8. Monotone orders and deterministic finder work — FINAL
 
@@ -538,11 +548,10 @@ second-floor-solve issue.
 Both apps' hints share the ladder. Own necessary GG/GR/GH/GD; update source headers, design 6.6/6.7
 and both developer guides.
 
-### R9. Short/long chains and shallow/deep Nishio — PENDING SA1-Q-S1 / SA2-Q-S04 cutoff
+### R9. Short/long chains and shallow/deep Nishio — FINAL measured cutoff
 
 **Plan:** S2.2. **Task:** MS07; final verification MS18.
-
-The following are FINAL:
+**Decisions:** SA1-Q-S1 (c), approved by the owner; SA2-Q-S04 (b), confirmed by the author.
 
 | ID | Weight | Order | Window |
 |---|---:|---:|---|
@@ -554,20 +563,19 @@ The following are FINAL:
 Use final order **198 from MS07**. Leaving long at 192 until MS16 makes the first ALS-XZ registration
 at 194/1250 violate monotone weights in MS15. Moving it now changes no relative order at S2.2.
 
-Selectable cutoff branches:
+On the MS07 code compare **C=4 and C=6**, each on twelve fresh Nightmare requests of classic9,
+diagonalX and jigsaw9: 36 requests per cutoff. Use R5's soak manifest, diagnostic overrides and record,
+with identical budgets and configuration. Every request counts; timeout/error is a miss. Select the
+cutoff with **more exact hits in total; C=6 on a tie**. Report each variant, timings and shallow
+outcomes separately. Run GQ-first only after the selected default is in force without an override.
 
-- A: fixed C=6, the plan's original split.
-- B: fixed C=4.
-- C: measured choice, recommended jointly in principle. On the MS07 code, compare both cutoffs on
-  fresh classic9, diagonalX and jigsaw9 Nightmare requests using R5's twelve-request soak manifest,
-  diagnostic overrides and measurement record, with identical budgets and
-  configuration. Every request counts; timeout/error is a miss. Select the higher total exact-hit
-  count, C=6 on a tie; report each variant separately, time and shallow outcomes. Re-run the matched
-  comparison after S3 under R5's final recheck rule. If it selects another value, stop before
-  GQ-final for the owner's keep/change decision and an explicitly inserted implementation task.
+Re-run the same comparison after all S3 work in MS18, under R5's final recheck rule. If it selects the
+other cutoff, stop before GQ-final for the owner's keep/change decision and an explicitly inserted
+implementation task with GG/GR/GH/GD. Fixed-board re-scoring remains additional evidence, not the
+selection denominator or qualification. No winning cutoff is claimed before measurement.
 
-Branch C is the proposed concrete selection rule; its matrix and tie rule require owner approval.
-Fixed-board re-scoring is additional evidence, not the selection denominator or qualification.
+**Alternatives not chosen — SA1-Q-S1 / SA2-Q-S04:** fixing 4 or 6 without the experiment, enabling
+depth 3 by default, or introducing a separate depth-3 ID.
 
 **Wrapper contract:** search the shortest represented proof, enforce the inclusive window inside each
 ID, and intersect its maximum with a caller's explicit valid maximum. A larger override never enlarges
@@ -586,7 +594,7 @@ invalid/off/oversized overrides, cancellation, exact ID/key and generic/partial-
 Update `core/tests/suites/tech-chain.test.js:124-185,818-920`, R10's fixture/help bundle and design
 6.6/13.6. Own GG/GR/GH and the first GQ/GD checkpoint.
 
-### R10. Common technique, registration and integration contract — FINAL; constants pending below
+### R10. Common technique, registration and integration contract — FINAL
 
 **Plan:** Every S3 group and S2.2. **Tasks:** MS07-MS16.
 
@@ -616,35 +624,34 @@ Franken/mutant fish, aligned pair exclusion, death blossom and ALS-XY-Wing remai
 catalogue; Medusa/X-cycles/AIC are not separate IDs. The limitations documentation must not promise
 that bounded chains or depth-limited Nishio find every elimination of an omitted technique.
 
-**PENDING SA2-Q-S08 — raw base costs.** Keep all existing costs. ALS uses existing group `chain`.
-The following complete candidate tables let the author select a convention without a second design pass:
+**Raw base costs — SA2-Q-S08, table B selected by the author.** Keep every existing cost; use the
+following positive costs for new IDs. ALS uses the existing group `chain`.
 
-| New ID | Weight | A: weight/10 | B: preserve nearby existing raw-cost ranges where possible |
-|---|---:|---:|---:|
-| lawOfLeftovers | 200 | 20 | 20 |
-| skyscraper | 330 | 33 | 33 |
-| twoStringKite | 340 | 34 | 34 |
-| emptyRectangle | 380 | 38 | 38 |
-| finnedXWing | 400 | 40 | 40 |
-| remotePairs | 440 | 44 | 44 |
-| finnedSwordfish | 480 | 48 | 48 |
-| wxyzWing | 800 | 80 | 57 |
-| bugPlusOne | 920 | 92 | 72 |
-| xyChain | 1000 | 100 | 82 |
-| alsXz | 1250 | 125 | 106 |
-| sueDeCoq | 1300 | 130 | 112 |
-| forcingChainLong | 1400 | 140 | 118 |
-| nishioDeep | 2600 | 260 | 210 |
+| New ID | Weight | baseCost |
+|---|---:|---:|
+| lawOfLeftovers | 200 | 20 |
+| skyscraper | 330 | 33 |
+| twoStringKite | 340 | 34 |
+| emptyRectangle | 380 | 38 |
+| finnedXWing | 400 | 40 |
+| remotePairs | 440 | 44 |
+| finnedSwordfish | 480 | 48 |
+| wxyzWing | 800 | 57 |
+| bugPlusOne | 920 | 72 |
+| xyChain | 1000 | 82 |
+| alsXz | 1250 | 106 |
+| sueDeCoq | 1300 | 112 |
+| forcingChainLong | 1400 | 118 |
+| nishioDeep | 2600 | 210 |
 
-A is SA2's original simple convention; B makes the "positive increasing costs" recommendation concrete
-without changing old costs. Either leaves calibrated scoring based on WEIGHTS; raw solver
-hardestTechnique may differ. Global raw-cost monotonicity is impossible while retaining current
-jellyfish=56 and xyWing=48, so do not mistakenly add that assertion. A new `als` help group would
-require explicit additional approval; it is not the agreed grouping.
+These are solver raw costs, not v3 rating weights. They preserve nearby existing raw-cost ranges;
+calibrated scoring still uses `WEIGHTS`. Raw solver hardestTechnique may differ. Do not add a global
+raw-cost monotonicity assertion: existing jellyfish=56 and xyWing=48 already violate one.
+**Alternatives not chosen — SA2-Q-S08:** uniform weight/10 for all new IDs or a new `als` group.
 
-**FINAL bounded-search policy; PENDING SA2-Q-S05 numerical limits.** Use documented, common,
-deterministic per-call bounds, not exhaustive unbounded scans or board-dependent hidden cutoffs.
-Candidate starting values for author confirmation/measurement are:
+**Bounded-search policy — SA2-Q-S05 (a), starting values approved by the author.** Use documented,
+common, deterministic per-call bounds, the same on every board, not unbounded scans or hidden
+board-dependent cutoffs. The approved starting values are:
 
 ```text
 max ALS cells = 4
@@ -659,8 +666,15 @@ A work unit is a tested combination extension, ALS pair, assignment extension or
 document the relevant counter in each module and reset it per call. Check the parent budget at least
 every 256 units and at entry. Return null if a complete support/minimum-proof test cannot finish;
 never interpret a truncated support table as absence. Retained ALS records are individually complete
-valid sets; a bounded prefix may be used for constructive ALS proofs. Measure cap hits and latency
-before freezing these numbers; changing them later is a solver-semantic change requiring evidence.
+valid sets; a bounded prefix may be used for constructive ALS proofs.
+
+The task introducing a finder measures cap hits and latency and may change its own new limit **once**,
+with before/after evidence and the chosen value recorded in that task's record and the v3 notes.
+This permission does not change weights, bands, existing digger caps or another task's bounds.
+After MS17 the resulting pattern limits are part of rating version 3; changing them requires a new
+rating version. "Full scope" means every named technique, not exhaustive logical coverage.
+**Alternatives not chosen — SA2-Q-S05:** exhaustive or board-dependent searches; unrecorded or
+post-freeze limit tuning is not authorized.
 
 **Mandatory integration for each ID:**
 
@@ -861,6 +875,8 @@ discover the core suites automatically (`generator/tests/node-runner.js:105`,
 Generator-only code, use a new `generator/tests/suites/killer-cage.test.js` listed in
 `generator/tests.html`'s `SUITE_FILES` instead. MS14 owns the chosen suite and list changes.
 Stronger assignment-derived interaction is not silently added.
+**Alternatives not chosen — SA2-Q-S09:** a duplicate `cageLocked` ID or stronger cage pruning beyond
+the two already implemented cases.
 
 ### R18. ALS enumerator and ALS-XZ — FINAL
 
@@ -903,37 +919,27 @@ Tests: two-cell I, three-cell I with Z, overlapping digit sets, wrong cardinalit
 and variant geometry. Reuse ALS enumeration/limits rather than an unbounded ALS-pair scan.
 Add all R10 integration. Verify final order 190/194/196/198/200/202; no late order fix is deferred here.
 
-### R20. Historical certificates and v3 reference labels — PENDING SA2-Q-S10
+### R20. Historical certificates and v3 reference labels — FINAL
 
 **Plan:** S0.1 tests; S3 certificate/weight instruction. **Tasks:** MS01, all introducing tasks, MS17.
+**Decision:** SA2-Q-S10 (a), selected by the author; the plan's label-preservation weight-fitting
+instruction is withdrawn.
 
-FINAL: preserve old puzzles, external labels, v2 family certificates and their explicit preprocessing
+Preserve old puzzles, external labels, v2 family certificates and their explicit preprocessing
 sets as historical evidence. Never pretend those old certificates were weight-derived floors.
-Add separate v3 expectations instead of rewriting their provenance.
+Keep all listed priors. Add separate v3 expectations next to the historical records, for example
+`v3Expected: { level, required }`, where `required` is evaluated at that v3 level using R2, not at an
+unstated historical level. An unrated expectation has `level:null, required:null`; it is never exact.
+Keep current v3 catalogue/family expectations separate from the historical certificate sets.
 
-Selectable classification policy:
+The three constructed score-46 Easy fixtures are explicitly shallow under v3. A cheaper new named
+proof may legitimately lower a former Master/Nightmare label. Record every reclassification, the old
+and v3 labels/requiredness, and the causing technique in `docs/difficulty-v3/notes.md`, in the task
+that introduces the change. Do not defer quick-breaking expectations to MS17 or change a weight to
+preserve a fixture label. MS17 consolidates the final catalogue and reference expectations.
 
-- A, SA2 recommendation: keep the listed new weights, record new v3 levels/requiredness, explain
-  legitimate reclassification by cheaper named proofs.
-- B, SA1 recommendation: adjust **new** weights only within their intended tier and monotone-order
-  windows to preserve selected constructed labels where feasible; if no legal value works, record
-  reclassification. The same value applies globally, not per fixture. For each new ID t, derive its
-  interval from `bandMin(tier) <= 1.25*w(t) < bandMax(tier)` and adjacent weights, then publish the
-  chosen value and before/after corpus. Existing weights and bands stay unchanged.
-- C: hold release for a separately approved calibration rather than silently changing the priors.
-
-Branch B has the following complete default for the answer to accept or amend. The protected set is
-the constructed reference puzzles of `generator/tests/fixtures/rated.js`; published external puzzles
-keep their external labels and are not protected. In the task introducing t, if a protected puzzle
-changes level because its rating now uses t, choose the weight closest to the plan's prior in
-`[bandMin(tier(t))/1.25, bandMax(tier(t))/1.25)` intersected with
-`[weight(previous ID), weight(next ID)]` that keeps the most protected puzzles at their labels.
-If no value keeps any, keep the prior and record reclassification. Use one value per ID for every
-variant; existing weights and bands are unchanged.
-
-This is not arbitrary fitting until every old label passes. Keep published external labels distinct
-from constructed score labels. Any selected new-weight change invalidates affected tier, prefix,
-replay/help and qualification expectations and must be recorded before final version evidence.
+**Alternatives not chosen — SA2-Q-S10:** constrained new-weight fitting to preserve old labels, or
+holding this release for a separate calibration. Any later calibration remains a separate decision.
 
 ### R21. Golden/example tooling and integration ownership — FINAL; AUTH-S2 agreed (a)
 
@@ -949,7 +955,9 @@ review. Check-mode compares without writing and explains changed fields.
 Adapt `player/tests/tools/make-technique-examples.js` to explicit source/ID selection and bounded
 stage-1 generation; `--puzzles` currently truncates only stage 2. Use project-relative artifacts and
 line-ending-correct output, not `os.tmpdir()`. Curated real puzzles remain the agreed help format.
-If an ID cannot obtain a real hint-replay example, escalate rather than remove its assertion.
+If an ID cannot obtain a real hint-replay example within the chosen bound, the task stops and reports;
+do not remove its assertion or substitute a synthetic candidate-state example.
+**Alternatives not chosen — SA2-Q-S11:** unbounded random discovery or a synthetic example format.
 
 Jigsaw is already an input variant. Add `cellRegion` to snapshots and a reconstruction branch in
 `player/js/ui/help.js`, reusing `SG.textBoards.jigsawSpec`
@@ -960,12 +968,8 @@ corpus before applying measurement filters (`:122-126,195-218,246-247`). Do not 
 variant/level flags shard those modes. If bounded recording is needed, preserve all keys/seeds,
 support selected complete chunks and checked merge, and fail on missing/duplicate outcomes.
 
-**AUTH-S2 is agreed (a); the plan author confirms the agreed schedule:**
-
-- A, the agreed schedule: MS04 before MS03.
-- B is retained only as an alternative the plan author may propose: MS03 before MS04 as one combined
-  delivery/validation milestone. It is not the current schedule; do not leave a standalone quick-red
-  order commit waiting for its recorder. The same developer would own both overlapping changes.
+**AUTH-S2 (a), confirmed:** MS04 tooling precedes MS03/S2.1, the first output-changing task.
+**Alternatives not chosen — AUTH-S2:** tooling after the order change, even as a combined milestone.
 
 Both quick suites remain green at completed task boundaries. Every introducing task refreshes
 affected help examples and goldens. Hashes are also quick-breaking:
@@ -980,7 +984,7 @@ owning task; full hash comparison is additionally mandatory at checkpoints. No b
   `generator/js/ui/cache.js`; purge schema 2. All changed acceptance/catalogue behaviour deploys
   atomically with this release, not with old cached puzzles treated as current.
 - Cache comparison must include acceptance-relevant current classification, not just same grids,
-  score and level (`generator/js/ui/cache.js:277-284`). Under R2-A derive floor from current canonical counts; do not
+  score and level (`generator/js/ui/cache.js:277-284`). Use R2's canonical-origin contract; do not
   treat an old imported summary as a new proof.
 - New history entries store ratingVersion. Entries lacking it say "made by an earlier version;
   selecting it generates a new puzzle." They are not provably v2 and do not contain the old puzzle.
@@ -995,26 +999,63 @@ owning task; full hash comparison is additionally mandatory at checkpoints. No b
   inspect `generator/tests/suites/replay.test.js:1601` and other literal 2s for historical/stub intent
   rather than replacing them blindly.
 
-Add `docs/difficulty-v3/notes.md`, before/after findings and `docs/README.md` link.
+Freeze and record the selected pattern limits as part of rating version 3 in MS17; later changes to
+those limits require a new rating version. Exactness is carried in the worker result and the v3 cache,
+not the external Player exchange format. Add the two history-note strings in each language.
+**Alternatives not chosen — SA1-Q-S6 / SA2-Q-S07:** no history marker, falsely identifying every old
+entry as v2, or exporting a floor certificate.
+
+Consolidate `docs/difficulty-v3/notes.md`, before/after findings and `docs/README.md` link.
 Update Generator design 6.6/6.7/6.8/13.7/14.3 and the unnumbered "Known limitations and ideas";
 14.1 is JSON format, not limitations. Update Player design 6.2/8.3/9/10 for new hint/proof behaviour,
 and both language guides. Record the final 40/34 catalogue counts and bounded coverage honestly.
 
 ### R23. Baseline/after instrumentation and measurement denominators — FINAL
 
-**Plan:** S0.2. **Tasks:** MS02 baseline; MS05 consumer correction; MS18 matched after-run.
+**Plan:** S0.2. **Tasks:** MS02 baseline; MS05/MS06/MS07 measurements; MS18 matched after-run.
 
 Extend `generator/tests/soak.js` without changing S0's gate/exit policy:
 
-- requested/achieved, solved in-band, exact, shallow and unverified counts with denominators;
-- peak-technique histogram and finite-band position deciles/upper median;
+- requested/achieved, solved in-band, exact, shallow, unrated and reference-failure counts with denominators;
+- peak-technique histogram and raw/attainable finite-band position deciles/upper median;
 - chain-length and Nishio-depth histograms, explicitly counting puzzles versus steps;
 - full ratings/proposals, local work after the first shallow band state, cap hits and timings;
 - selected targets and target deviations when available; Hell 2 has no finite band position.
 
 Shallow share is over **solved in-band** puzzles, not exact puzzles (which would make it zero after S1).
-Before S1, use the reference floor after I1 has established uniqueness. Afterwards use production
-exactness and a bounded independent-reference sample to detect disagreement.
+Before S1, use the reference floor after I1 has established uniqueness. Record old score-only hits
+and requiredness-qualified hits separately; compare the latter against the full request denominator.
+Afterwards use production exactness and a bounded independent-reference sample to detect disagreement.
+Reference work and its failures are recorded separately from generation time; a failed check is not
+a stuck-floor proof. Retain every request in hit/miss denominators.
+
+After S2.1, validate R8's prefix invariant before using derived certificates, including after a
+diagnostic `--weights`/`--bands` override (`generator/tests/soak.js:147-154`). Reject an override that
+breaks the invariant or use the independent reference explicitly; never report unchecked derived
+exactness. Approved v3 gates use the fixed weights/bands, not calibration overrides.
+
+**Band positions — owner decision SA2-Q-S03.** For a complete in-band rating of a finite requested
+level, record both positions, plus their inputs, using the current variant-filtered tier:
+
+```text
+V = SG.difficulty.breakdown(rating.techniqueCounts, rating.empties).empty
+wMin = minimum WEIGHTS[id] over tierTechniques(requested, model.variantId)
+attainableMin = max(spec.min, 1.25 * wMin + V)
+rawPosition = (rating.score - spec.min) / (spec.max - spec.min)
+attainablePosition = (rating.score - attainableMin) / (spec.max - attainableMin)
+```
+
+The author's formula is retained as written for nonvacuous tiers and positive finite widths.
+Give exact and all-in-band cohorts separate counts and distributions; judge "hugs the top" on the
+exact cohort's attainable position. Report shallow/out-of-band outcomes and misses separately, never
+remove them from the request denominator to improve a hit rate.
+
+This is an analytic lower-bound interval, not a proof that every score in it can be generated.
+The score is rounded but V and the lower bound are not (`generator/js/engine/difficulty.js:239-268`);
+do not clamp diagnostic positions or alter scores to hide that difference. For vacuous/empty tiers,
+unrated/off-band outcomes, nonfinite bands or nonpositive interval widths, emit a null adjusted
+position with an explicit reason rather than divide by zero or invent a minimum. Retain the raw
+position where it is meaningful. This reporting edge qualification is raised for acceptance as AC01.
 
 The baseline precedes any output/order/counter change. For each selected single variant/level use an
 explicit `--count` (for example 12); `--quick` is roughly 700 requests, not a tiny probe, and
@@ -1033,7 +1074,8 @@ The fixed GS-before manifest is **17 cells, twelve requests each**: one shard pe
 | greaterThan | normal, hard, expert |
 | diagonalX | nightmare |
 
-These cells include every R5, R7 and R9 comparison. GS-after repeats exactly these cells on final
+These cells include every R5 and R9 comparison; R7 uses all 17 cells. MS06 records the isolated
+target-change before/after comparison, and GS-after repeats exactly these cells on final
 code. If a final support list already hides a listed cell, use the tool's diagnostic
 `--include-unsupported` option for that cell rather than silently omit it from the matched manifest.
 
@@ -1041,10 +1083,10 @@ Matched after-measurements must distinguish target/distribution change from a ch
 Unattainable lower bands are expected: an XY-Wing already contributes at least 812.5 before V,
 and nishioDeep at least 3250 inside Hell 1. Do not change weights just to make histograms uniform.
 
-### R24. Qualification, performance, records and release checkpoints — PENDING AUTH-S1 path
+### R24. Qualification, performance, records and release checkpoints — FINAL
 
 **Plan:** S1/S2/S3 gates and S2.3. **Tasks:** MS07 checkpoint; MS18 final.
-**Clarifications:** PROC-S1; SA1-Q-S5.
+**Clarifications:** PROC-S1 (a), AUTH-S1 (a), SA1-Q-S5 (a), confirmed by the author.
 
 FINAL ordering: baseline/tooling -> S2.1 -> S1 -> S2.2 -> all S3 -> version/final evidence.
 First qualification is after MS07/S2.2. Earlier probes are diagnostics. The first checkpoint records
@@ -1067,14 +1109,18 @@ Preserve the 40/100-seed protocol: >=36/40 plus p95 passes; 30-35/40 expands to 
 <30/40 hides. Protocol-proved early hidden stops are valid; arbitrary truncation is not.
 Timeouts/errors/misses remain in the recorded denominators. Only final evidence updates support lists.
 
-**PENDING AUTH-S1 publication branches:**
+**Final publication — AUTH-S1 (a).** MS18 first copies the existing v2 live table to
+`docs/difficulty-v3/qualification-v2.md`, preserving that historical record. It then updates
+`docs/difficulty-rating/qualification.md` in place with the final v3 table and updates the variant
+`difficultySupport` lists together. This live table is the explicit exception to the instruction not
+to edit dated reports under `docs/difficulty-rating/`. All reader paths stay unchanged.
 
-- A, SA1 preference: update the live table `docs/difficulty-rating/qualification.md`; keep new raw
-  evidence/notes under v3. Clarify that this table, unlike dated design reports, is an allowed live file.
-- B, SA2 preference: create `docs/difficulty-v3/qualification.md`, preserve the v2 table, update the
-  manual suite's read path/title, the qualifier's documentation/default command references and all
-  living links. `--markdown` already accepts a chosen path; no fake hard-coded output dependency is
-  assumed.
+Accept the offered levels determined by final qualification. Record every level no longer offered in
+`docs/difficulty-v3/notes.md`, with hits, request counts and timing evidence, and report it to the owner.
+Do not prune from the checkpoint or tune weights to avoid a removal; a later calibration is separate.
+**Alternatives not chosen — AUTH-S1 / SA1-Q-S5:** relocating the live table/readers, intermediate
+pruning, or performing weight calibration inside this plan.
+**Alternatives not chosen — PROC-S1:** S1 before S2.1 or qualification before the S2.2 checkpoint.
 
 Final GP measures 50 runs per offered performance-table cell, records p50/p95/max and the aggregate
 published success criterion. Hash mode is not a timing gate. Do not change timing targets merely to
@@ -1088,15 +1134,16 @@ files. No concurrent timing runs with Pentomino.
 
 ## 4. Plan errata, including clarification part D
 
-These are folded into the resolutions above; they are not a second selectable design.
+The author accepted all sixteen corrections in "Part D: author's response" at `1398dde`.
+They are folded into the resolutions above, not a second selectable design.
 
 | Clarification correction | Corrected implementation |
 |---|---|
 | D1 | R1/R2/R20: `label`, five shallow old family certificates, actual tier algebra. |
-| D2 | R3: final keeper distance, safe optimistic precheck only for the solve-based branch. |
+| D2 | R2/R3: canonical requiredness and final keeper distance before every prefilter; independent uniqueness count before storing. |
 | D3 | R2/R3: no missing-certificate exactness fallback. |
 | D4 | R6: same tier-first stopping policy; proposal priorities are not scores. |
-| D5 | R7/R23: attainable score range differs from uniform raw targets. |
+| D5 | R7/R23: raw targets remain uniform; report both raw and analytic attainable-range positions. |
 | D6 | R8/R9: all pinned orders; final long order 198 before ALS appears. |
 | D7 | R16: grouped nodes need graph/buffer/proof/formatter changes and cannot place an arbitrary group member. |
 | D8 | R21/R22 and gate ledger: actual help path; wire versus analysis goldens; manual suites; correct docs section; all source/suite lists. |
@@ -1108,6 +1155,11 @@ These are folded into the resolutions above; they are not a second selectable de
 | D14 | R8/R21/R24: orders before acceptance; qualification checkpoints consolidated, quick-breaking hashes/goldens/examples are not deferred. |
 | D15 | R2: the UR comment concerns Nightmare's floor, not Master's. |
 | D16 | Section 2/R23: retain the measured shallow rates; Hard's old sample was already required. |
+
+The author also withdrew S3's instruction to fit new weights to historical labels (R20), selected
+full target propagation without the optional trigger (R7), and clarified the live qualification-table
+exception to plan rule 8 (R24). The original plan remains an input record; this report is the corrected
+specification for acceptance.
 
 Additional concrete corrections:
 
@@ -1122,9 +1174,13 @@ Additional concrete corrections:
 - Final qualification must include the complete 135-cell table, and manual hit counting must use exactness.
 - AUTH-S2 is agreed (a): tooling precedes S2.1. Task-owned hash updates also remain agreed.
 
-# Part II — Execution plan
+# Part II — Planned execution, not yet authorized to start
 
 ## 5. Task breakdown and exclusive ownership
+
+This is the existing outline reconciled with the answers, not a task pack. Task-pack creation,
+further subdivision and implementation remain paused until the owner and plan author accept the
+reports. No task execution, staging or commit is authorized by this analysis revision.
 
 ### 5.1 Shared bundles
 
@@ -1154,6 +1210,7 @@ player/js/ui/help.js
 generator/tests/suites/help.test.js
 player/tests/suites/help.test.js
 player/js/ui/help-examples.js
+docs/difficulty-v3/notes.md
 ```
 
 New core module source-list bundle L:
@@ -1182,24 +1239,24 @@ Gates in the next section are pre-approved, not new permission requests.
 
 | ID | Title / resolutions | Depends on | Exclusive implementation/test files beyond live docs and applicable B/L | Gates | Size / acceptance focus |
 |---|---|---|---|---|---|
-| MS01 | Tier/reference API; R1/R2 | Base-case contract; R2 branch for final API | `generator/js/engine/difficulty.js`, new `generator/tests/suites/difficulty-floor.test.js`, `generator/tests.html` | quick | M; no output change, algebra, proof failures, old shallow fixtures |
-| MS02 | Baseline instrumentation; R23 | MS01 | `generator/tests/soak.js`, new `docs/difficulty-v3/baseline.md` | GS-before | M; unchanged S0 gate, correct denominators and R23's fixed 17-cell manifest |
-| MS04 | Bounded golden/example/hash tooling; R21 | MS02; AUTH-S2 (a) agreed | `generator/tests/replay-fixtures.js` or new analysis recorder, `generator/tests/perf.js`/`generator/tests/fixtures/perf-helper.js` if bounded hash support needed, `player/tests/tools/make-technique-examples.js`, `player/js/ui/help.js`, help/text-board tests | recorder check modes; targeted quick | M-L; deterministic baseline parity, Jigsaw reconstruction, no temporary-directory writes |
+| MS01 | Tier/reference API; R1/R2/R20 | Accepted specification | `generator/js/engine/difficulty.js`, new `generator/tests/suites/difficulty-floor.test.js`, `generator/tests/fixtures/rated.js`, `generator/tests.html`, applicable B | quick | M; no output change, inherited-budget reference, algebra, proof failures, historical/v3 separation |
+| MS02 | Baseline instrumentation; R23 | MS01 | `generator/tests/soak.js`, new `docs/difficulty-v3/baseline.md` | GS-before | M; unchanged S0 gate, both position metrics, comparable exactness and fixed 17-cell manifest |
+| MS04 | Bounded golden/example/hash tooling; R21 | MS02 | `generator/tests/replay-fixtures.js` or new analysis recorder, `generator/tests/perf.js`/`generator/tests/fixtures/perf-helper.js` if bounded hash support needed, `player/tests/tools/make-technique-examples.js`, `player/js/ui/help.js`, help/text-board tests | recorder check modes; targeted quick | M-L; deterministic baseline parity, Jigsaw reconstruction, no temporary-directory writes |
 | MS03 | Monotone orders/counter reset, derived helper activation; R2/R8 | MS04 | `core/js/engine/tech-cage.js`, `core/js/engine/tech-ineq.js`, `core/js/engine/tech-fish.js`, `core/js/engine/tech-subset.js`, pinned core/manual order tests, B | affected GG/GR/GH/GD | M; actual prefix invariant, canonical/reference equality, interleaved-call determinism |
-| MS05 | Exactness/keeper/consumers/shallow policy; R3-R5 | MS03; selected R2 mechanism | `generator/js/engine/digger.js`, `generator/js/engine/events.js`, `generator/js/engine/pipeline.js`, `generator/js/variants/killer.js` call site, `generator/js/ui/result-view.js`, `generator/js/ui/app.js`, `generator/tests/soak.js` (exactness and diagnostic cap override), `generator/tests/qualify.js`, `generator/tests/suites/result-view.test.js`, `generator/tests/suites/pipeline.test.js`, `generator/tests/manual/difficulty.test.js` (R4's intended assertions), new `docs/difficulty-v3/shallow-cap-<date>.md`, relevant suites/B | affected GG/GR; shallow-work GS shard; GD once | L; required beats shallow, exact wire/view/tool parity, I5 and digLevel pass; intermediate availability failures recorded |
-| MS06 | Target/objective/stop and selected refinement; R6/R7 | MS05; SA1-Q-S4/SA2-Q-S03 | `generator/js/engine/digger.js`, digger/floor suites, Generator help/locales, new `docs/difficulty-v3/target-scope-<date>.md`, affected B | GG/GR; matched GS target sample | L; tier-safe comparator, proposal separation, target lineage, chosen extension |
-| MS07 | Enforced chain/depth IDs; R9 | MS06; cutoff rule and raw-cost answer | `core/js/engine/tech-chain.js`, `core/tests/suites/tech-chain.test.js`, `generator/tests/soak.js` (diagnostic window override), new `docs/difficulty-v3/chain-window-<date>.md`, B, new checkpoint evidence | GG/GR/GH; full hash check, GQ-first/GD | L; ID-alone minimums, correct Finding keys, fresh-window comparison, no intermediate pruning |
-| MS08 | Skyscraper/kite/empty rectangle; R11 | MS07 | `core/js/engine/tech-fish.js`, `core/tests/suites/tech-fish.test.js`, B | affected GG/GR/GH | L; three proved patterns and near-misses; split rectangle subpack if needed |
-| MS09 | Finned fish/sashimi; R12 | MS08 | Same fish module/suite, B | affected GG/GR/GH | L; fin visibility, complete/disjoint units, ordinary-fish compatibility |
-| MS10 | Remote pairs/WXYZ; R13 | MS09; pattern bounds | `core/js/engine/tech-wing.js`, `core/tests/suites/tech-wing.test.js`, B | affected GG/GR/GH | L; edge parity and restricted-digit proof |
-| MS11 | UR extensions/BUG; R14 | MS10 | Same wing module/suite, uniqueness registry tests, B | affected GG/GR/GH | L; unique-proof/geometry guards and every subtype |
-| MS12 | XY-chain; R15 | MS11 | `core/js/engine/tech-chain.js`, chain suite, B | affected GG/GR/GH | M-L; restricted edges, endpoint digit, bounded shortest proof |
-| MS13 | Grouped graph/proofs/consumers; R16 | MS12; pattern bounds | `core/js/engine/tech-chain.js`, proof checker/chain suite, `generator/js/ui/i18n.js`, `player/js/ui/i18n.js`, `player/js/ui/play.js`, both format/i18n/play tests, B | affected GG/GR/GH; GP shard | L, split inactive graph/enablement if needed; complete proof validation and legacy rendering |
-| MS14 | Leftovers/Killer regression; R17 | MS13; pattern bounds | `core/js/engine/tech-subset.js`, subset suite, new `core/tests/suites/tech-cage.test.js` and both HTML `CORE_SUITE_FILES`; R17's Generator-only alternative if genuinely needed, B | affected GG/GR/GH; GD variant selector | L; multiset support, incomplete-enumeration safety, scoped help, explicit new cage coverage |
-| MS15 | ALS enumerator/ALS-XZ; R18 | MS14; bounds/costs | New `core/js/engine/tech-als.js`, new core ALS suite, B/L | affected GG/GR/GH; GP shard | L; complete valid ALS records, restricted common candidate, all lists |
-| MS16 | Sue de Coq; R19 | MS15 | `core/js/engine/tech-als.js`, ALS suite, B | affected GG/GR/GH | L; capacity/count proof, final order already valid |
-| MS17 | v3/cache/history/reference integration; R20/R22 | MS16; SA2-Q-S10; selected persistence contracts | `generator/js/engine/difficulty.js`, `generator/js/ui/cache.js`, `generator/js/ui/history.js`, export only if necessary, cache/history/export/manual version tests, new notes, `docs/README.md`, B | justified GG/GR/GH/GD | M-L; atomic release, old imports retained, no stale exactness |
-| MS18 | Final evidence/support publication; R5/R7/R9/R23/R24 | MS17; AUTH-S1 and all selected constants | qualification record branch, new v3 evidence, `generator/js/variants/*.js` support lists, manual offered-table reader, timing/report metadata, affected B/live docs; no generation/solver logic or tuning constants | GS-after, GQ-final, GP, GD, full GG check; final quick | M plus runs; repeat measurements, escalate a changed selection before GQ-final, complete final corpus and reproducible support list |
+| MS05 | Exactness/keeper/consumers/measured shallow cap; R3-R5 | MS03 | `generator/js/engine/digger.js`, `generator/js/engine/events.js`, `generator/js/engine/pipeline.js`, `generator/js/variants/killer.js` call site, `generator/js/ui/result-view.js`, `generator/js/ui/app.js`, `generator/tests/soak.js` (exactness and diagnostic cap override), `generator/tests/qualify.js`, `generator/tests/suites/result-view.test.js`, `generator/tests/suites/pipeline.test.js`, `generator/tests/manual/difficulty.test.js` (R4's intended assertions), new `docs/difficulty-v3/shallow-cap-<date>.md`, relevant suites/B | affected GG/GR; GS cap comparison; GD once | L; derived required beats shallow, exact wire/view/tool parity, measured common cap, I5/digLevel pass; intermediate availability failures recorded |
+| MS06 | One target through dig/refine/local search; R6/R7 | MS05 | `generator/js/engine/digger.js`, `generator/js/engine/pipeline.js` for internal target diagnostics, `generator/tests/soak.js`, digger/floor/pipeline suites, Generator help/locales, new `docs/difficulty-v3/target-scope-<date>.md`, affected B | GG/GR; matched 17-cell GS before/after | L; tier-safe comparator, proposal separation, original target retained, no post-exact polishing; report every cell's hit loss |
+| MS07 | Enforced chain/depth IDs and measured cutoff; R9/R10 | MS06 | `core/js/engine/tech-chain.js`, `core/tests/suites/tech-chain.test.js`, `generator/tests/soak.js` (diagnostic window override), new `docs/difficulty-v3/chain-window-<date>.md`, B, new checkpoint evidence | GG/GR/GH; GS window comparison; full hash check, GQ-first/GD | L; ID-alone minimums, default deep depth 2, costs from table B, 36 fresh requests per cutoff, no intermediate pruning |
+| MS08 | Skyscraper/kite/empty rectangle; R11 | MS07 | `core/js/engine/tech-fish.js`, `core/tests/suites/tech-fish.test.js`, B | affected GG/GR/GH; bounded limit evidence | L; three proved patterns and near-misses, measured caps; later subdivision only after acceptance |
+| MS09 | Finned fish/sashimi; R12 | MS08 | Same fish module/suite, B | affected GG/GR/GH; bounded limit evidence | L; fin visibility, complete/disjoint units, ordinary-fish compatibility |
+| MS10 | Remote pairs/WXYZ; R13 | MS09 | `core/js/engine/tech-wing.js`, `core/tests/suites/tech-wing.test.js`, B | affected GG/GR/GH; bounded limit evidence | L; edge parity and restricted-digit proof |
+| MS11 | UR extensions/BUG; R14 | MS10 | Same wing module/suite, uniqueness registry tests, B | affected GG/GR/GH; bounded limit evidence | L; unique-proof/geometry guards and every subtype |
+| MS12 | XY-chain; R15 | MS11 | `core/js/engine/tech-chain.js`, chain suite, B | affected GG/GR/GH; bounded limit evidence | M-L; restricted edges, endpoint digit, bounded shortest proof |
+| MS13 | Grouped graph/proofs/consumers; R16 | MS12 | `core/js/engine/tech-chain.js`, proof checker/chain suite, `generator/js/ui/i18n.js`, `player/js/ui/i18n.js`, `player/js/ui/play.js`, both format/i18n/play tests, B | affected GG/GR/GH; bounded limit evidence; GP shard | L; complete proof validation, measured node/work caps and legacy rendering |
+| MS14 | Leftovers/Killer regression; R17 | MS13 | `core/js/engine/tech-subset.js`, subset suite, new `core/tests/suites/tech-cage.test.js`, `generator/tests.html`, `player/tests.html`; R17's Generator-only alternative if genuinely needed, B | affected GG/GR/GH; bounded limit evidence; GD variant selector | L; multiset support, incomplete-enumeration safety, scoped help, explicit new cage coverage |
+| MS15 | ALS enumerator/ALS-XZ; R18 | MS14 | New `core/js/engine/tech-als.js`, new core ALS suite, B/L | affected GG/GR/GH; bounded limit evidence; GP shard | L; complete valid ALS records, restricted common candidate, all lists |
+| MS16 | Sue de Coq; R19 | MS15 | `core/js/engine/tech-als.js`, ALS suite, B | affected GG/GR/GH; bounded limit evidence | L; capacity/count proof, final order already valid; no unapproved retuning of earlier limits |
+| MS17 | v3/cache/history/reference integration; R20/R22 | MS16 | `generator/js/engine/difficulty.js`, `generator/js/ui/cache.js`, `generator/js/ui/history.js`, export only if necessary, cache/history/export/manual version tests, consolidated notes, `docs/README.md`, B | justified GG/GR/GH/GD | M-L; atomic rating/cache 3, history store 1, fixed priors, frozen pattern limits, old imports retained |
+| MS18 | Final evidence/support publication; R5/R7/R9/R23/R24 | MS17; chosen MS05/MS07 defaults recorded | `docs/difficulty-rating/qualification.md`, new `docs/difficulty-v3/qualification-v2.md`, new v3 evidence, `generator/tests/qualify.js` timing/report support if needed, `generator/js/variants/*.js` support lists, manual offered-table assertions with unchanged read path, affected B/live docs; no production generation/solver logic or tuning changes | GS-after plus cap/window rechecks, GQ-final, GP, GD, full GG check; final quick | M plus runs; escalate changed selection before GQ-final, report hit losses/removed levels, archive v2 and publish complete v3 evidence |
 
 Recommended order:
 
@@ -1208,8 +1265,7 @@ MS01 -> MS02 -> MS04 -> MS03 -> MS05 -> MS06 -> MS07
   -> MS08 -> MS09 -> MS10 -> MS11 -> MS12 -> MS13 -> MS14 -> MS15 -> MS16 -> MS17 -> MS18
 ```
 
-AUTH-S2 (a) is agreed. Only if the plan author proposes and the owner selects alternative B would
-MS03/MS04 form a combined delivery milestone in the opposite internal order.
+AUTH-S2 (a) and PROC-S1 (a) are confirmed; there is no alternate MS03/MS04 order.
 The dependencies include deliberate file-ownership serialization; independent algorithms still share
 weights, locales and generated data. The equivalent Pentomino chain runs separately.
 
@@ -1223,19 +1279,25 @@ changed expectations and the reason. No heavy gate was run by the analysts.
 |---|---|---|
 | Quick | Every completed task | `node tests\node-runner.js` in both apps; narrow `--suite=` checks while developing. Do not start simultaneous runs on one checkout. |
 | GS-before | MS02 | `node tests\soak.js --variant=<one-id> --level=<one-level> --count=12 --seed=20260101 --no-gate` once per cell of R23's fixed 17-cell manifest; record all invariant failures despite exit suppression. |
+| GS selection/comparison | MS05 / MS06 / MS07 | Same one-cell soak command: MS05 runs six cells for each `--shallow-cap=64`, `128`, `256`, `none`; MS06 repeats all 17 cells before and after the target change; MS07 runs three Nightmare cells for each `--chain-window=4` and `6`. Diagnostic overrides never supply a qualification verdict. Record full manifests, ratings, exact/shallow/miss counts and times. |
 | GG | Each task whose generated puzzle output changes | `node tests\perf.js --update-hashes`; inspect intentional differences. Full `--check-hashes` at MS07/MS18, plus bounded affected checks where supported. Current measurement selectors do not shard hash mode. |
 | GR | Every affected output/solver task | `node tests\replay-fixtures.js`, then `--check`, plus MS04's analysis recorder/checker for all 14 requests and justified step-score expectations. |
 | GH | MS03 if order invalidates examples; every new-ID/enhanced-proof task MS07-MS16 | From Player, adapted `node tests\tools\make-technique-examples.js ..\generator` with bounded chosen sources/IDs; then Player help/quick checks. Do not run its old unbounded stage-1 plan blindly. |
 | GQ-first | MS07 | `node tests\qualify.js --variant=<ids> --level=<ids> --jobs=4 --json=<checkpoint-json> --markdown=<checkpoint-md>` across all 135 cells in complete shards. Merge into `docs/difficulty-v3/qualification-checkpoint-<date>.json` and `.md`; never write the live table or prune support at this checkpoint. |
 | GD | MS03 affected pins; MS05 exactness contracts; MS07 checkpoint; MS14 variant work; MS17/MS18 final | `node tests\node-runner.js --suite=difficulty`; MS05 runs it once, with I5/digLevel required to pass and intermediate hit-rate failures recorded. Affected `--suite=killer,greater-than` are manual suites. Soundness/API failures block; no unrelated blanket `--all` run is inferred. |
 | GP | MS13/MS15 cost shards; MS18 final | `node tests\perf.js --variant=<id> --level=<ids> --runs=50 --gate`. Aggregate the full intended matrix; do not confuse a hash-only exit with a p95 gate. |
-| GS-after | MS18 | Repeat exactly R23's 17-cell manifest with the same base seed/count per shard, then bounded final-variant samples; use v3 exactness and report targets, shallow/cap rates and before/after distributions. Apply R5's escalation rule if a final recheck selects a change. |
-| GQ-final | MS18 | Same qualifier command/protocol with `--jobs=4` for the full 135-cell matrix, merged with completeness checks; selected AUTH-S1 publication path and support lists updated together. Record job count; do not compare timing runs with different counts. |
+| GS-after | MS18 | Repeat R23's 17-cell manifest, R5's six-cell/four-setting cap experiment and R9's three-cell/two-cutoff experiment with the same seeds/counts. Report raw and attainable positions, hit losses, targets and shallow/cap rates. Apply R5's escalation rule if a final recheck selects a change; never drop the selected target policy silently. |
+| GQ-final | MS18 | Same qualifier command/protocol with `--jobs=4` for all 135 cells, merged with completeness checks. Archive v2 first; publish `docs/difficulty-rating/qualification.md` and the support lists together. Record job count; do not compare timing runs with different counts. |
 
 All test/probe invocations stay bounded; stop and investigate a run exceeding ten minutes rather than
 silently discarding it. Total gate work may be much longer across complete shards. If current tooling
 cannot split a slow cell safely, that is an explicit tooling blocker, not permission to weaken the
 protocol. Preserve every required outcome and cold/warm timing semantics when resuming.
+
+R10's introducing tasks also record deterministic work/cap counts and latency on their bounded
+positive/negative fixtures and affected sample inputs. These are measurements, not timing assertions
+added to quick tests. A once-only own-limit adjustment is recorded with its resulting GG/GR/GH changes;
+MS17 freezes the final values. Do not start a second heavy/timing run while either repository has one.
 
 Tool-written working-tree files follow `.gitattributes`: CRLF generally; the explicit Player export-text
 and shell-script LF exceptions remain LF. Do not normalize historical files gratuitously.
@@ -1249,8 +1311,11 @@ and shell-script LF exceptions remain LF. Do not normalize historical files grat
 | Unsound new geometric/uniqueness deduction | R10-R19 constructive proofs, complete-unit/peer guards and independently checked fixtures. |
 | Expensive searches on large/multigrid boards | R10 deterministic limits, per-task cost probes, final GP; bound support enumeration without inferring absence. |
 | Nightmare/Hell 1 scarcity and shallow-search cost | Fresh window comparison, R5 work measurements and final qualification; no score-only success. |
+| Full target propagation reduces exact hits in a cell | R7's isolated 17-cell comparison and final GS; report losses to the owner, never silently revert to guided-only targeting. |
+| "Attainable" overstates reachability or hides rounding/vacuous cases | R23 keeps the owner's formula, explicit diagnostic statuses and both cohorts; AC01 identifies the acceptance qualification. |
+| Final S3 measurements prefer another cap/cutoff | R5/R9 stop before GQ-final; owner keeps the value or inserts a separately validated change. Extra work is not hidden in MS18. |
 | New cheaper techniques legitimately move old labels | R20 explicit policy, immutable historical records, documented v3 expectations. |
-| Hidden integration failures | R21 recorder/example work, all lists/locales, complete bundle ownership and task-owned golden/hash updates. |
+| Hidden integration failures or no bounded real example for an ID | R21 recorder/example work, all lists/locales and task-owned expectations; stop/report a missing real example, do not waive it. |
 | Process-history-dependent guards | R8 counter reset and warm/interleaved-worker regression. |
 | Cache/history misrepresents changed puzzles | R22 schema/version purge, truthful old-history text, unchanged external legacy claims. |
 | Timing conclusions distorted by concurrent work | Separate measurement slots and complete request manifests; record actual conditions. |
@@ -1261,33 +1326,75 @@ Planning allowance for a claude-sonnet-5.5 developer, **agent-hours excluding lo
 |---|---:|
 | MS01 / MS02 | 2-3 / 1-2 |
 | MS04 / MS03 | 3-5 / 1-2 |
-| MS05 / MS06 / MS07 | 4-6 / 3-5 / 4-6 |
+| MS05 / MS06 / MS07 | 4-6 / 4-7 / 4-6 |
 | MS08 / MS09 / MS10 / MS11 | 4-6 each |
 | MS12 / MS13 / MS14 | 3-4 / 6-9 / 3-5 |
 | MS15 / MS16 / MS17 / MS18 | 5-7 / 3-5 / 2-3 / 2-4 |
-| Total | **58-90** |
+| Total | **59-92** |
 
 These are planning estimates, not measured productivity or a promised elapsed delivery. They reconcile
-SA1's final 55-85 agent-hour estimate with the explicit tooling/proof work; SA2's earlier 118-187 hours
-was engineering effort and is not averaged into this number. Difficult real-example acquisition,
-unanticipated bounded-tooling support or a rejected pending branch may increase the range.
+the earlier joint 58-90 agent-hour estimate with the now-required full target propagation and its
+17-cell comparison. SA2's earlier 118-187 hours was engineering effort and is not averaged into this
+number. Difficult real-example acquisition, bounded-tooling support, a once-only evidenced pattern-limit
+adjustment or an owner-requested final re-selection may increase the range.
 
-Measured quick-suite totals are approximately two minutes and 25-30 seconds at HEAD. SA1's planning
-estimate for a full qualification pass is about 25 minutes, **not an analyst-run v3 measurement**;
-two checkpoints are roughly 50 minutes total by that prior estimate, potentially much more after
-requiredness. Full hash recording checks 520 generated puzzles, twice for update/check; new v3 cost is
-not measured. GH, GS, GR and GP durations remain unmeasured. GP alone requests 50 puzzles per selected
-performance cell. Schedule these as attached, monitored, complete shards; report their actual duration
-instead of pretending they fit inside coding estimates.
+Measured quick-suite totals are about 111-112 s (Generator) and 25-30 s (Player) at HEAD.
+The v2 record reports 1,531 s "in total" for the first 40 requests of every level
+(`docs/difficulty-rating/qualification.md:72`); it does not establish wall time with four workers or
+include every possible second round. V3 qualification wall time is unmeasured and may be much higher.
+Full hash recording checks 520 generated puzzles, twice for update/check; new v3 cost is
+not measured. GH, GS, GR and GP durations remain unmeasured. The fixed GS baseline/final manifest is
+204 requests per pass; the isolated target comparison adds 204 before and 204 after, the cap experiment
+288 per pass, and the window experiment 72 per pass. The latter two repeat after S3. Reuse an existing
+measurement only when source, configuration, seeds and timing conditions are identical and recorded.
+GP alone requests 50 puzzles per selected performance cell. These runs are serialized with Pentomino,
+not parallel wall-time savings. Schedule attached, monitored, complete shards and report actual durations.
+No tests or generation probes were run while applying the answers or editorial corrections.
+The brief records the orchestrator's approximate combined analysis credits for both repositories;
+these are not Sudoku-only costs and are not inferred from the implementation allowances.
 
 ## 8. Traceability
+
+### 8.1 Clarification answer to resolution and task
+
+Every answer in `docs/difficulty-v3/clarifications.md` at `1398dde` is represented below.
+The owner's two selections and the author's other answers are applied; acceptance is a separate step.
+
+| Clarification ID / confirmed row | Answer applied | Resolutions | Tasks |
+|---|---|---|---|
+| SA2-Q-S01 | (a): VeryEasy has the singles tier and a vacuous true/null-floor certificate | R1/R2 | MS01/MS03 |
+| SA1-Q-S2 | (a): singles-only Easy is shallow, including the three score-46 references | R1/R3/R20 | MS01/MS05/MS17 |
+| SA1-Q-S7 | (a): derive requiredness only from complete canonical ratings after the prefix invariant | R2/R3/R8 | MS01/MS03/MS05 |
+| SA2-Q-S02 | Production question withdrawn; reference uses inherited budget only, errors propagate | R2 | MS01/MS02/MS03 |
+| SA2-Q-S03 / SA1-Q-S4 | Owner: full target propagation, raw-band draw, both position metrics; report cell hit losses | R6/R7/R23, AC01 | MS02/MS06/MS18 |
+| SA1-Q-S1 | Owner: compare 4/6 on 36 fresh requests each, more exact hits wins, 6 on tie; final recheck/escalation | R9/R24 | MS07/MS18 |
+| SA2-Q-S04 | (b): Nishio depth 1; deep minimum/default maximum 2, explicit maximum 3; overrides cannot enlarge windows | R9 | MS07 |
+| SA2-Q-S05 | (a): approved starting bounds, one evidenced own-limit change in introducing task, freeze at MS17 | R10-R19/R22 | MS07-MS17 |
+| SA2-Q-S06 / SA1-Q-S3 | (a): both approximate/shallow warnings plus tune.shallow | R4 | MS05 |
+| SA2-Q-S07 / SA1-Q-S6 | History entry ratingVersion, truthful earlier-version note, history store stays 1; no exported floor | R22 | MS17 |
+| SA2-Q-S08 | R10 cost table B; ALS in existing chain group; no global raw-cost monotonicity assertion | R8/R10/R18/R19 | MS07-MS16 |
+| SA2-Q-S09 | (a): existing cageCombo retained, quick tests for both interactions, no cageLocked | R17 | MS14 |
+| SA2-Q-S10 | (a): keep priors and historical v2 records, add v3 expectations and explain reclassification | R1/R20/R22 | MS01/MS03/MS07-MS17 |
+| SA2-Q-S11 | (a): bounded curated real help examples; stop/report if one cannot be obtained | R10/R21 | MS04/MS07-MS16 |
+| SA2-Q-S12 | (c): R5's six-cell measured common cap; existing caps until measured; no unconditional 128 | R5/R23 | MS05/MS18 |
+| SA1-Q-S5 | (a): accept final offered levels, no intermediate pruning or weight calibration | R24 | MS07/MS18 |
+| AUTH-S1 | (a): archive v2 under v3, update live table in place; no reader-path change | R24 | MS18 |
+| AUTH-S2 | (a): tooling MS04 before orders MS03 | R21 | MS04/MS03 |
+| PROC-S1 | (a): baseline/tooling, S2.1, S1, S2.2, S3, S2.3; qualification at MS07/MS18 | R8/R21/R24 | all |
+| Guided-oracle tierUsed row | Steering proxy only; uniqueness assumptions differ from canonical rating | R2/R6 | MS05/MS06 |
+| Nightmare factual row | Agreed 0/12 versus 2/12 exact; 6/12 floor-stuck is a different predicate | Section 2.3/R9 | MS02/MS07 |
+| Hash/golden/help ownership row | Refresh in each output-changing task; complete checkpoint evidence additionally | R21, section 6 | MS03/MS05-MS18 as affected |
+| Subset counter row | Reset per call before certificate activation; test call-history independence | R8 | MS03 |
+| Clarifications part D, items 1-16 | All accepted; item 13 replaced by the measured-cap answer | Section 4 and its R mapping | all affected tasks |
+
+### 8.2 Plan coverage
 
 | Plan section | Resolutions | Tasks | Clarification IDs |
 |---|---|---|---|
 | 1.3 fixed decisions / vocabulary | R1-R3, R7, R22-R24 | all | SA1-Q-S2, SA1-Q-S5 |
-| S0.1 tier/certificate | R1/R2/R8/R20 | MS01, MS03, MS05 | SA2-Q-S01, SA2-Q-S02 conditional, SA1-Q-S7, SA2-Q-S10 |
+| S0.1 tier/certificate | R1/R2/R8/R20 | MS01, MS03, MS05 | SA2-Q-S01, SA2-Q-S02, SA1-Q-S7, SA2-Q-S10 |
 | S0.2 columns/baseline | R23 | MS02, MS05, MS18 | PROC-S1 |
-| S1.1 exactness/keeper/search | R2-R5 | MS05 | SA1-Q-S7, SA2-Q-S02 conditional, SA2-Q-S12 |
+| S1.1 exactness/keeper/search | R2-R5 | MS05 | SA1-Q-S7, SA2-Q-S02, SA2-Q-S12 |
 | S1.1 warnings/consumers | R4/R22 | MS05, MS17 | SA1-Q-S3, SA2-Q-S06, SA1-Q-S6, SA2-Q-S07 |
 | S1.2 target/comparator/refine | R6/R7 | MS06, MS18 | SA1-Q-S4, SA2-Q-S03 |
 | S2.1 order | R8/R21 | MS03/MS04 | PROC-S1, AUTH-S2 |
@@ -1303,26 +1410,44 @@ instead of pretending they fit inside coding estimates.
 | All APPROVAL GATE runs | R21/R23/R24; section 6 | owning task, MS07/MS18 checkpoints | PROC-S1, AUTH-S1, AUTH-S2 |
 | Plan orientation/rules/checklist errata | section 4 and corresponding resolutions | all affected tasks | Clarifications part D |
 
-## 9. Pending answers and sign-off record
+## 9. Remaining concerns for acceptance
 
-| Pending item | Required answer / selection |
-|---|---|
-| SA1-Q-S7 | Confirm canonical derived production certificate A or separate solve B. |
-| SA2-Q-S02, conditional | Only if R2-B: budget policy and any deterministic cap/retry values. |
-| SA1-Q-S4 / SA2-Q-S03 | R7 target scope; approve/replace the conditional sample/0.75 trigger if chosen. |
-| SA1-Q-S1 / SA2-Q-S04 | Fixed cutoff or R9 measured selection matrix/tie/recheck rule; default deep depth 2 is agreed. |
-| SA2-Q-S08 | Exact positive new baseCost table; existing `chain` group is agreed. |
-| SA2-Q-S10 | Fixed new priors plus v3 expectations, protected-label constrained fitting, or separate calibration. |
-| AUTH-S1 | Live old qualification path or new v3 record plus reader/link migration. |
-| SA2-Q-S05, parameters only | Confirm/replace the numerical bounds under the already agreed bounded-search policy. |
-| SA2-Q-S12, parameter only | Additional measured cap or none; 128 is not an adopted default. |
+### AC01 — "attainable range" is a diagnostic lower bound, not a reachability guarantee
 
-No new owner-policy question is invented here. R7/R9/R10/R5 make existing questions' parameter
-requirements explicit. The early long-chain order and complete qualification matrix are technical
-corrections, not new product choices. AUTH-S2 is resolved as agreed (a), tooling before orders;
-it is not an outstanding branch selection. This revision does not edit the clarification file.
+The owner's target scope and the author's interval formula are both applied. Two literal implications
+of SA2-Q-S03's wording need acceptance of the qualification stated in R7/R23:
+
+1. `1.25*w_min(tier)+V` is a lower bound on the **unrounded** score of a nonvacuously required puzzle,
+   not a proved minimum reachable by this generator. `breakdown` returns both an unrounded sum and
+   `Math.round(unrounded)` (`generator/js/engine/difficulty.js:239-268`). The tier may be empty, and
+   VeryEasy is explicitly vacuous under SA2-Q-S01. Thus a universally finite adjusted position, or
+   guaranteed confinement of every rounded/shallow score to that interval, does not follow.
+2. The sentence "a target below the attainable range simply selects the lowest attainable puzzle"
+   cannot mean a guaranteed global optimum while also preserving the approved first-exact stop,
+   the 64-rating refinement cap and the other attempt caps
+   (`generator/js/engine/digger.js:630-641,1100-1147,1667-1739`). Bounded search can only prefer a
+   nearer score among the candidates it reaches.
+
+**Acceptance requested:** retain the exact approved interval where defined, label it an analytic
+attainable lower bound, report null/reason for undefined adjusted positions and leave defined values
+unclamped. Describe a below-bound target as steering toward the lowest reachable/encountered scores,
+not guaranteeing a global minimum. These are explicit reporting/wording qualifications, not a change
+to target sampling, first-exact stopping, weights or budgets. R23 records them rather than silently
+altering the author's formula.
+
+No other infeasible or contradictory answer was found in the code read for this revision. The cap
+and cutoff values remain future measurement outcomes under fully selected rules, not unanswered
+design choices. No test run or generation probe was used to claim new v3 performance.
+
+## 10. Acceptance and sign-off record
+
+Acceptance covers the selected model and bounded solver capabilities, changed labels/hints and
+possible removed levels, the evidence/gate obligations and expected effort, and AC01's explicit
+measurement qualification. It does not assert that the future implementation or heavy gates have
+passed. The task pack remains paused until the owner and plan author accept these reports.
 
 | Sign-off | Status |
 |---|---|
-| SA2, gpt-6-astra | **signed**, 2026-11-12; joint draft pending clarification answers. |
-| SA1, claude-opus-5.5 | **signed subject to C1-C11 — applied in this revision**, 2026-11-12. |
+| SA2, gpt-6-astra | **signed**, 2026-11-12; answers at `1398dde` applied, with AC01 disclosed for acceptance. |
+| SA1, claude-opus-5.5 | **signed (V1-V2 applied in this revision)**, 2026-11-12; editorial only, no resolution changed; AC01 agreed (`claude-opus-5.5/5-check-of-final-report.md`). |
+| Owner and plan author | Awaiting acceptance; no task-pack or implementation work has resumed. |
