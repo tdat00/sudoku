@@ -6,7 +6,7 @@
 | Authors | SA2, gpt-6-astra; SA1, claude-opus-5.5. Compiled by SA2; SA1 checked the preceding joint draft. SA1 verified this answers-applied revision (`docs/difficulty-v3/claude-opus-5.5/5-check-of-final-report.md`). |
 | Code examined | Branch `rating-v3`, HEAD `6abcb9f`; Windows, Node v26.13.0 locally; Node 24 in CI. |
 | Date | 2026-11-12 |
-| Status | **FINAL — answers applied (`clarifications.md` at `1398dde`); for acceptance by the owner and the plan author** |
+| Status | **ACCEPTED — by the plan author (`clarifications.md` Part G, `2c665bb`) and the owner (2026-11-12 11:50); basis of the task pack `tasks/difficulty-v3/`** |
 
 Inputs, all paths relative to this repository:
 
@@ -21,6 +21,8 @@ Inputs, all paths relative to this repository:
 - `docs/difficulty-v3/claude-opus-5.5/5-check-of-final-report.md`;
 - `docs/difficulty-v3/clarifications.md` at `1398dde`: every answer in parts A-C, "Part D: author's
   response", and the consolidated decisions in part E. These answers supersede the historical positions table.
+- `docs/difficulty-v3/clarifications.md` at `2c665bb`: AC01 accepted in Part F and the plan author's
+  acceptance in Part G; the owner accepted at 11:50 on 2026-11-12.
 
 The resolution format follows Part I of `docs/generation-steps/report-detailed.md`. This is a new feature
 report, not an amendment to that historical implementation record. No application code or generated
@@ -39,12 +41,18 @@ no resolution changed; AC01 agreed.
 **Change log — 2026-11-12, final editorial revision (11:10):** applied SA1's V1-V2, updated both
 signatures/statuses and the R7 anchor, and applied N1's timing clarification and N2's combined credit
 snapshot. Both analysts signed; AC01 remains open for acceptance in `clarifications.md` part F.
+**Change log — 2026-11-12, acceptance:** applied the AC01 answer and Part G at `2c665bb`, and the
+owner's 11:50 acceptance. No open question remains. Task-pack preparation resumes. For the numbered
+pack, tooling is MS03 (formerly MS04) and order changes are MS04 (formerly MS03): the approved
+execution order is unchanged. MS03 is split into sequential tooling subpacks, MS03a-MS03d.
+The pack makes the helpers' model argument explicit and isolates or defers new pre-order diagnostic
+solves so tooling and tests cannot perturb the existing generation stream.
 
-**Reading this report.** FINAL identifies the corrected specification with the recorded answers applied,
-not a completed implementation or permission to start it. The owner and plan author must accept this
-revision before task-pack work resumes. The existing MS01-MS18 outline below is updated for consistency,
-not expanded into executable task packs. Selected measurement rules are final; their not-yet-measured
-winning values are not invented. Section 9 records the remaining acceptance concern.
+**Reading this report.** ACCEPTED identifies the specification authorized as the basis of the task pack
+and implementation, not a completed implementation or a claim that gates have passed. All current task
+references use execution-order pack IDs; the historical analyst files and clarification answers retain
+their original MS03/MS04 labels. Selected measurement rules are final; their not-yet-measured winning
+values are not invented. Section 9 records the accepted AC01 qualification.
 
 # Part I — Findings and resolutions
 
@@ -157,6 +165,8 @@ vacuous(L)   = index(L) == 0 OR tier(L).length == 0
 ```
 
 Return `allowedTechniques`, `floorTechniques`, `tierTechniques` from `spec`; preserve its other fields.
+The public `floorTechniques(level, model)` and `tierTechniques(level, model)` helpers take a model,
+like `spec`; only the internal `allowedFor(index, variantId)` takes a variant ID.
 Use the previous **global** level even when not offered by the variant. Do not call `spec(previous)`,
 which may throw. Do not cache against only the level when tests can change weights/registrations.
 
@@ -193,7 +203,7 @@ Update `generator/design.md` sections 6.7/13.7 and both developer guides.
 
 ### R2. Requiredness APIs and their proof boundary — FINAL
 
-**Plan:** S0.1/S1.1. **Tasks:** MS01 reference API; MS03 prefix activation; MS05 consumers.
+**Plan:** S0.1/S1.1. **Tasks:** MS01 reference API; MS04 prefix activation; MS05 consumers.
 **Decision:** SA1-Q-S7 (a), confirmed by the author; SA2-Q-S02 production-cap question withdrawn.
 
 **Common contracts, FINAL:**
@@ -220,11 +230,11 @@ requiredOf(rating, level, model)
   1. rating is null, or rating.solved !== true
        -> null
           // no certificate; never exact; events report required: null
-  2. levelIndex(level) === 0, or tierTechniques(level, model.variantId) is empty
+  2. levelIndex(level) === 0, or tierTechniques(level, model) is empty
        -> { required: true, vacuous: true, floorLevel: null }
   3. otherwise
        -> { required: some id with rating.techniqueCounts[id] > 0
-                      is not in floorTechniques(level, model.variantId),
+                      is not in floorTechniques(level, model),
             vacuous: false,
             floorLevel: LEVELS[levelIndex(level) - 1] }
 ```
@@ -501,7 +511,7 @@ clues that make its sign structure redundant.
 Report both raw-band position and the position in the author's interval
 `[max(min, 1.25 * w_min(tier) + V), max)` as defined in R23. Judge "hugs the top" on the latter, not
 on the discarded raw-Expert-median >0.75 trigger. The interval's interpretation and edge cases are
-recorded explicitly in the acceptance concern AC01; it is not a new sampling interval.
+confirmed by the accepted AC01 answer in `clarifications.md` Part F; it is not a new sampling interval.
 
 MS06 compares exact hits and time before/after this target change on **all 17 R23 cells**, using
 R5's commands and fixed requests; preserve the pre-change record before editing the objective.
@@ -523,7 +533,7 @@ and costs, not just medians.
 
 ### R8. Monotone orders and deterministic finder work — FINAL
 
-**Plan:** S2.1. **Task:** MS03, before S1 acceptance. **Clarification:** PROC-S1.
+**Plan:** S2.1. **Task:** MS04, before S1 acceptance. **Clarification:** PROC-S1.
 
 Change orders, not weights: `cageCombo 55->44`, `ineqChain 65->46`, `jellyfish 160->137`.
 Assert adjacent nondecreasing weights over the registry's actual sorted sequence, including ties.
@@ -943,7 +953,7 @@ holding this release for a separate calibration. Any later calibration remains a
 
 ### R21. Golden/example tooling and integration ownership — FINAL; AUTH-S2 agreed (a)
 
-**Plan:** S2.1/S2.2/S3 gates. **Task:** MS04, with affected refreshes owned by each behaviour task.
+**Plan:** S2.1/S2.2/S3 gates. **Task:** MS03 (MS03a-MS03d), with affected refreshes owned by each behaviour task.
 
 Build a bounded recorder/checker for the 14 analysis requests in
 `generator/tests/fixtures/replay-goldens.js`, using the actual analysis outputs asserted at
@@ -968,7 +978,8 @@ corpus before applying measurement filters (`:122-126,195-218,246-247`). Do not 
 variant/level flags shard those modes. If bounded recording is needed, preserve all keys/seeds,
 support selected complete chunks and checked merge, and fail on missing/duplicate outcomes.
 
-**AUTH-S2 (a), confirmed:** MS04 tooling precedes MS03/S2.1, the first output-changing task.
+**AUTH-S2 (a), confirmed:** MS03 tooling precedes MS04/S2.1, the first output-changing task.
+The clarification's original labels were MS04 tooling and MS03 orders; only the pack IDs are normalized.
 **Alternatives not chosen — AUTH-S2:** tooling after the order change, even as a combined milestone.
 
 Both quick suites remain green at completed task boundaries. Every introducing task refreshes
@@ -1028,6 +1039,9 @@ and requiredness-qualified hits separately; compare the latter against the full 
 Afterwards use production exactness and a bounded independent-reference sample to detect disagreement.
 Reference work and its failures are recorded separately from generation time; a failed check is not
 a stuck-floor proof. Retain every request in hit/miss denominators.
+Before R8 resets the persistent subset counter, additional solves must not shift later baseline
+requests' guard boundaries. MS02 defers its new reference/diagnostic solves until all original
+generation and I1-I7 work for that invocation has finished.
 
 After S2.1, validate R8's prefix invariant before using derived certificates, including after a
 diagnostic `--weights`/`--bands` override (`generator/tests/soak.js:147-154`). Reject an override that
@@ -1039,7 +1053,7 @@ level, record both positions, plus their inputs, using the current variant-filte
 
 ```text
 V = SG.difficulty.breakdown(rating.techniqueCounts, rating.empties).empty
-wMin = minimum WEIGHTS[id] over tierTechniques(requested, model.variantId)
+wMin = minimum WEIGHTS[id] over tierTechniques(requested, model)
 attainableMin = max(spec.min, 1.25 * wMin + V)
 rawPosition = (rating.score - spec.min) / (spec.max - spec.min)
 attainablePosition = (rating.score - attainableMin) / (spec.max - attainableMin)
@@ -1055,7 +1069,8 @@ The score is rounded but V and the lower bound are not (`generator/js/engine/dif
 do not clamp diagnostic positions or alter scores to hide that difference. For vacuous/empty tiers,
 unrated/off-band outcomes, nonfinite bands or nonpositive interval widths, emit a null adjusted
 position with an explicit reason rather than divide by zero or invent a minimum. Retain the raw
-position where it is meaningful. This reporting edge qualification is raised for acceptance as AC01.
+position where it is meaningful. These null reasons and unclamped values are confirmed by the accepted
+AC01 answer: vacuous or empty tier, unrated or off-band result, non-finite band, or non-positive width.
 
 The baseline precedes any output/order/counter change. For each selected single variant/level use an
 explicit `--count` (for example 12); `--quick` is roughly 700 requests, not a tiny probe, and
@@ -1174,13 +1189,18 @@ Additional concrete corrections:
 - Final qualification must include the complete 135-cell table, and manual hit counting must use exactness.
 - AUTH-S2 is agreed (a): tooling precedes S2.1. Task-owned hash updates also remain agreed.
 
-# Part II — Planned execution, not yet authorized to start
+# Part II — Accepted execution plan
 
 ## 5. Task breakdown and exclusive ownership
 
-This is the existing outline reconciled with the answers, not a task pack. Task-pack creation,
-further subdivision and implementation remain paused until the owner and plan author accept the
-reports. No task execution, staging or commit is authorized by this analysis revision.
+The owner authorized task-pack preparation and implementation at 11:50. The executable files are in
+`tasks/difficulty-v3/`; only reviewed, explicitly dispatched tasks run. In this authoring tranche the
+checklist and MS01-MS03 are prepared; implementation has not started. The developer never edits the
+pack or performs Git write operations; the orchestrator owns review, logs and commits.
+
+Pack ID mapping: old MS04 (tooling) becomes MS03; old MS03 (order changes) becomes MS04. No scope or
+dependency is reversed. Tooling is split as MS03a (replay analysis recorder), MS03b (bounded help-example
+tool), MS03c (Jigsaw snapshots/reconstruction), MS03d (bounded hash recording/checking).
 
 ### 5.1 Shared bundles
 
@@ -1239,11 +1259,11 @@ Gates in the next section are pre-approved, not new permission requests.
 
 | ID | Title / resolutions | Depends on | Exclusive implementation/test files beyond live docs and applicable B/L | Gates | Size / acceptance focus |
 |---|---|---|---|---|---|
-| MS01 | Tier/reference API; R1/R2/R20 | Accepted specification | `generator/js/engine/difficulty.js`, new `generator/tests/suites/difficulty-floor.test.js`, `generator/tests/fixtures/rated.js`, `generator/tests.html`, applicable B | quick | M; no output change, inherited-budget reference, algebra, proof failures, historical/v3 separation |
-| MS02 | Baseline instrumentation; R23 | MS01 | `generator/tests/soak.js`, new `docs/difficulty-v3/baseline.md` | GS-before | M; unchanged S0 gate, both position metrics, comparable exactness and fixed 17-cell manifest |
-| MS04 | Bounded golden/example/hash tooling; R21 | MS02 | `generator/tests/replay-fixtures.js` or new analysis recorder, `generator/tests/perf.js`/`generator/tests/fixtures/perf-helper.js` if bounded hash support needed, `player/tests/tools/make-technique-examples.js`, `player/js/ui/help.js`, help/text-board tests | recorder check modes; targeted quick | M-L; deterministic baseline parity, Jigsaw reconstruction, no temporary-directory writes |
-| MS03 | Monotone orders/counter reset, derived helper activation; R2/R8 | MS04 | `core/js/engine/tech-cage.js`, `core/js/engine/tech-ineq.js`, `core/js/engine/tech-fish.js`, `core/js/engine/tech-subset.js`, pinned core/manual order tests, B | affected GG/GR/GH/GD | M; actual prefix invariant, canonical/reference equality, interleaved-call determinism |
-| MS05 | Exactness/keeper/consumers/measured shallow cap; R3-R5 | MS03 | `generator/js/engine/digger.js`, `generator/js/engine/events.js`, `generator/js/engine/pipeline.js`, `generator/js/variants/killer.js` call site, `generator/js/ui/result-view.js`, `generator/js/ui/app.js`, `generator/tests/soak.js` (exactness and diagnostic cap override), `generator/tests/qualify.js`, `generator/tests/suites/result-view.test.js`, `generator/tests/suites/pipeline.test.js`, `generator/tests/manual/difficulty.test.js` (R4's intended assertions), new `docs/difficulty-v3/shallow-cap-<date>.md`, relevant suites/B | affected GG/GR; GS cap comparison; GD once | L; derived required beats shallow, exact wire/view/tool parity, measured common cap, I5/digLevel pass; intermediate availability failures recorded |
+| MS01 | Tier/reference API; R1/R2/R20 | Accepted specification | `generator/js/engine/difficulty.js`, new `generator/tests/suites/difficulty-floor.test.js`, `generator/tests.html`; rated fixtures read-only | quick | M; no output change, inherited-budget reference, algebra, proof failures, historical/v3 separation |
+| MS02 | Baseline instrumentation; R23 | MS01 | `generator/tests/soak.js`, new diagnostic fixture/suite and HTML entries, new `docs/difficulty-v3/baseline.md` and evidence | GS-before | M; unchanged S0 gate, deferred reference work, both position metrics, comparable exactness and fixed 17-cell manifest |
+| MS03 | Bounded golden/example/hash tooling; R21; split MS03a-MS03d | MS02; suffixes sequential | `generator/tests/replay-fixtures.js`, new `generator/tests/replay-goldens.js`, recorder/ledger helpers and suites, `generator/tests/perf.js`/`generator/tests/fixtures/perf-helper.js`, `player/tests/tools/make-technique-examples.js` and helper/suite, `player/js/ui/help.js`, Jigsaw source fixture, help/text-board tests and HTML entries | recorder check modes; targeted quick | Four bounded subpacks; deterministic baseline parity, Jigsaw reconstruction, no temporary-directory writes |
+| MS04 | Monotone orders/counter reset, derived helper activation; R2/R8 | MS03d | `core/js/engine/tech-cage.js`, `core/js/engine/tech-ineq.js`, `core/js/engine/tech-fish.js`, `core/js/engine/tech-subset.js`, pinned core/manual order tests, B | affected GG/GR/GH/GD | M; actual prefix invariant, canonical/reference equality, interleaved-call determinism |
+| MS05 | Exactness/keeper/consumers/measured shallow cap; R3-R5 | MS04 | `generator/js/engine/digger.js`, `generator/js/engine/events.js`, `generator/js/engine/pipeline.js`, `generator/js/variants/killer.js` call site, `generator/js/ui/result-view.js`, `generator/js/ui/app.js`, `generator/tests/soak.js` (exactness and diagnostic cap override), `generator/tests/qualify.js`, `generator/tests/suites/result-view.test.js`, `generator/tests/suites/pipeline.test.js`, `generator/tests/manual/difficulty.test.js` (R4's intended assertions), new `docs/difficulty-v3/shallow-cap-<date>.md`, relevant suites/B | affected GG/GR; GS cap comparison; GD once | L; derived required beats shallow, exact wire/view/tool parity, measured common cap, I5/digLevel pass; intermediate availability failures recorded |
 | MS06 | One target through dig/refine/local search; R6/R7 | MS05 | `generator/js/engine/digger.js`, `generator/js/engine/pipeline.js` for internal target diagnostics, `generator/tests/soak.js`, digger/floor/pipeline suites, Generator help/locales, new `docs/difficulty-v3/target-scope-<date>.md`, affected B | GG/GR; matched 17-cell GS before/after | L; tier-safe comparator, proposal separation, original target retained, no post-exact polishing; report every cell's hit loss |
 | MS07 | Enforced chain/depth IDs and measured cutoff; R9/R10 | MS06 | `core/js/engine/tech-chain.js`, `core/tests/suites/tech-chain.test.js`, `generator/tests/soak.js` (diagnostic window override), new `docs/difficulty-v3/chain-window-<date>.md`, B, new checkpoint evidence | GG/GR/GH; GS window comparison; full hash check, GQ-first/GD | L; ID-alone minimums, default deep depth 2, costs from table B, 36 fresh requests per cutoff, no intermediate pruning |
 | MS08 | Skyscraper/kite/empty rectangle; R11 | MS07 | `core/js/engine/tech-fish.js`, `core/tests/suites/tech-fish.test.js`, B | affected GG/GR/GH; bounded limit evidence | L; three proved patterns and near-misses, measured caps; later subdivision only after acceptance |
@@ -1261,11 +1281,11 @@ Gates in the next section are pre-approved, not new permission requests.
 Recommended order:
 
 ```text
-MS01 -> MS02 -> MS04 -> MS03 -> MS05 -> MS06 -> MS07
+MS01 -> MS02 -> MS03a -> MS03b -> MS03c -> MS03d -> MS04 -> MS05 -> MS06 -> MS07
   -> MS08 -> MS09 -> MS10 -> MS11 -> MS12 -> MS13 -> MS14 -> MS15 -> MS16 -> MS17 -> MS18
 ```
 
-AUTH-S2 (a) and PROC-S1 (a) are confirmed; there is no alternate MS03/MS04 order.
+AUTH-S2 (a) and PROC-S1 (a) are confirmed: tooling before orders, now numbered MS03 before MS04.
 The dependencies include deliberate file-ownership serialization; independent algorithms still share
 weights, locales and generated data. The equivalent Pentomino chain runs separately.
 
@@ -1281,10 +1301,10 @@ changed expectations and the reason. No heavy gate was run by the analysts.
 | GS-before | MS02 | `node tests\soak.js --variant=<one-id> --level=<one-level> --count=12 --seed=20260101 --no-gate` once per cell of R23's fixed 17-cell manifest; record all invariant failures despite exit suppression. |
 | GS selection/comparison | MS05 / MS06 / MS07 | Same one-cell soak command: MS05 runs six cells for each `--shallow-cap=64`, `128`, `256`, `none`; MS06 repeats all 17 cells before and after the target change; MS07 runs three Nightmare cells for each `--chain-window=4` and `6`. Diagnostic overrides never supply a qualification verdict. Record full manifests, ratings, exact/shallow/miss counts and times. |
 | GG | Each task whose generated puzzle output changes | `node tests\perf.js --update-hashes`; inspect intentional differences. Full `--check-hashes` at MS07/MS18, plus bounded affected checks where supported. Current measurement selectors do not shard hash mode. |
-| GR | Every affected output/solver task | `node tests\replay-fixtures.js`, then `--check`, plus MS04's analysis recorder/checker for all 14 requests and justified step-score expectations. |
-| GH | MS03 if order invalidates examples; every new-ID/enhanced-proof task MS07-MS16 | From Player, adapted `node tests\tools\make-technique-examples.js ..\generator` with bounded chosen sources/IDs; then Player help/quick checks. Do not run its old unbounded stage-1 plan blindly. |
+| GR | Every affected output/solver task | `node tests\replay-fixtures.js`, then `--check`, plus MS03a's analysis recorder/checker for all 14 requests and justified step-score expectations. |
+| GH | MS04 if order invalidates examples; every new-ID/enhanced-proof task MS07-MS16 | From Player, adapted `node tests\tools\make-technique-examples.js ..\generator` with bounded chosen sources/IDs; then Player help/quick checks. Do not run its old unbounded stage-1 plan blindly. |
 | GQ-first | MS07 | `node tests\qualify.js --variant=<ids> --level=<ids> --jobs=4 --json=<checkpoint-json> --markdown=<checkpoint-md>` across all 135 cells in complete shards. Merge into `docs/difficulty-v3/qualification-checkpoint-<date>.json` and `.md`; never write the live table or prune support at this checkpoint. |
-| GD | MS03 affected pins; MS05 exactness contracts; MS07 checkpoint; MS14 variant work; MS17/MS18 final | `node tests\node-runner.js --suite=difficulty`; MS05 runs it once, with I5/digLevel required to pass and intermediate hit-rate failures recorded. Affected `--suite=killer,greater-than` are manual suites. Soundness/API failures block; no unrelated blanket `--all` run is inferred. |
+| GD | MS04 affected pins; MS05 exactness contracts; MS07 checkpoint; MS14 variant work; MS17/MS18 final | `node tests\node-runner.js --suite=difficulty`; MS05 runs it once, with I5/digLevel required to pass and intermediate hit-rate failures recorded. Affected `--suite=killer,greater-than` are manual suites. Soundness/API failures block; no unrelated blanket `--all` run is inferred. |
 | GP | MS13/MS15 cost shards; MS18 final | `node tests\perf.js --variant=<id> --level=<ids> --runs=50 --gate`. Aggregate the full intended matrix; do not confuse a hash-only exit with a p95 gate. |
 | GS-after | MS18 | Repeat R23's 17-cell manifest, R5's six-cell/four-setting cap experiment and R9's three-cell/two-cutoff experiment with the same seeds/counts. Report raw and attainable positions, hit losses, targets and shallow/cap rates. Apply R5's escalation rule if a final recheck selects a change; never drop the selected target policy silently. |
 | GQ-final | MS18 | Same qualifier command/protocol with `--jobs=4` for all 135 cells, merged with completeness checks. Archive v2 first; publish `docs/difficulty-rating/qualification.md` and the support lists together. Record job count; do not compare timing runs with different counts. |
@@ -1325,7 +1345,7 @@ Planning allowance for a claude-sonnet-5.5 developer, **agent-hours excluding lo
 | Tasks | Agent-hours |
 |---|---:|
 | MS01 / MS02 | 2-3 / 1-2 |
-| MS04 / MS03 | 3-5 / 1-2 |
+| MS03 / MS04 | 3-5 / 1-2 |
 | MS05 / MS06 / MS07 | 4-6 / 4-7 / 4-6 |
 | MS08 / MS09 / MS10 / MS11 | 4-6 each |
 | MS12 / MS13 / MS14 | 3-4 / 6-9 / 3-5 |
@@ -1362,10 +1382,10 @@ The owner's two selections and the author's other answers are applied; acceptanc
 
 | Clarification ID / confirmed row | Answer applied | Resolutions | Tasks |
 |---|---|---|---|
-| SA2-Q-S01 | (a): VeryEasy has the singles tier and a vacuous true/null-floor certificate | R1/R2 | MS01/MS03 |
+| SA2-Q-S01 | (a): VeryEasy has the singles tier and a vacuous true/null-floor certificate | R1/R2 | MS01/MS04 |
 | SA1-Q-S2 | (a): singles-only Easy is shallow, including the three score-46 references | R1/R3/R20 | MS01/MS05/MS17 |
-| SA1-Q-S7 | (a): derive requiredness only from complete canonical ratings after the prefix invariant | R2/R3/R8 | MS01/MS03/MS05 |
-| SA2-Q-S02 | Production question withdrawn; reference uses inherited budget only, errors propagate | R2 | MS01/MS02/MS03 |
+| SA1-Q-S7 | (a): derive requiredness only from complete canonical ratings after the prefix invariant | R2/R3/R8 | MS01/MS04/MS05 |
+| SA2-Q-S02 | Production question withdrawn; reference uses inherited budget only, errors propagate | R2 | MS01/MS02/MS04 |
 | SA2-Q-S03 / SA1-Q-S4 | Owner: full target propagation, raw-band draw, both position metrics; report cell hit losses | R6/R7/R23, AC01 | MS02/MS06/MS18 |
 | SA1-Q-S1 | Owner: compare 4/6 on 36 fresh requests each, more exact hits wins, 6 on tie; final recheck/escalation | R9/R24 | MS07/MS18 |
 | SA2-Q-S04 | (b): Nishio depth 1; deep minimum/default maximum 2, explicit maximum 3; overrides cannot enlarge windows | R9 | MS07 |
@@ -1374,17 +1394,18 @@ The owner's two selections and the author's other answers are applied; acceptanc
 | SA2-Q-S07 / SA1-Q-S6 | History entry ratingVersion, truthful earlier-version note, history store stays 1; no exported floor | R22 | MS17 |
 | SA2-Q-S08 | R10 cost table B; ALS in existing chain group; no global raw-cost monotonicity assertion | R8/R10/R18/R19 | MS07-MS16 |
 | SA2-Q-S09 | (a): existing cageCombo retained, quick tests for both interactions, no cageLocked | R17 | MS14 |
-| SA2-Q-S10 | (a): keep priors and historical v2 records, add v3 expectations and explain reclassification | R1/R20/R22 | MS01/MS03/MS07-MS17 |
-| SA2-Q-S11 | (a): bounded curated real help examples; stop/report if one cannot be obtained | R10/R21 | MS04/MS07-MS16 |
+| SA2-Q-S10 | (a): keep priors and historical v2 records, add v3 expectations and explain reclassification | R1/R20/R22 | MS01/MS04/MS07-MS17 |
+| SA2-Q-S11 | (a): bounded curated real help examples; stop/report if one cannot be obtained | R10/R21 | MS03/MS07-MS16 |
 | SA2-Q-S12 | (c): R5's six-cell measured common cap; existing caps until measured; no unconditional 128 | R5/R23 | MS05/MS18 |
 | SA1-Q-S5 | (a): accept final offered levels, no intermediate pruning or weight calibration | R24 | MS07/MS18 |
 | AUTH-S1 | (a): archive v2 under v3, update live table in place; no reader-path change | R24 | MS18 |
-| AUTH-S2 | (a): tooling MS04 before orders MS03 | R21 | MS04/MS03 |
+| AUTH-S2 | (a): tooling before orders; pack IDs MS03 before MS04 (historical IDs reversed) | R21 | MS03/MS04 |
 | PROC-S1 | (a): baseline/tooling, S2.1, S1, S2.2, S3, S2.3; qualification at MS07/MS18 | R8/R21/R24 | all |
 | Guided-oracle tierUsed row | Steering proxy only; uniqueness assumptions differ from canonical rating | R2/R6 | MS05/MS06 |
 | Nightmare factual row | Agreed 0/12 versus 2/12 exact; 6/12 floor-stuck is a different predicate | Section 2.3/R9 | MS02/MS07 |
-| Hash/golden/help ownership row | Refresh in each output-changing task; complete checkpoint evidence additionally | R21, section 6 | MS03/MS05-MS18 as affected |
-| Subset counter row | Reset per call before certificate activation; test call-history independence | R8 | MS03 |
+| Hash/golden/help ownership row | Refresh in each output-changing task; complete checkpoint evidence additionally | R21, section 6 | MS04/MS05-MS18 as affected |
+| Subset counter row | Reset per call before certificate activation; test call-history independence | R8 | MS04 |
+| AC01, Part F; Part G | Analytic lower bound, null/reason when undefined, unclamped defined values, raw position retained; report accepted | R7/R23, section 9 | MS02/MS06/MS18 |
 | Clarifications part D, items 1-16 | All accepted; item 13 replaced by the measured-cap answer | Section 4 and its R mapping | all affected tasks |
 
 ### 8.2 Plan coverage
@@ -1392,7 +1413,7 @@ The owner's two selections and the author's other answers are applied; acceptanc
 | Plan section | Resolutions | Tasks | Clarification IDs |
 |---|---|---|---|
 | 1.3 fixed decisions / vocabulary | R1-R3, R7, R22-R24 | all | SA1-Q-S2, SA1-Q-S5 |
-| S0.1 tier/certificate | R1/R2/R8/R20 | MS01, MS03, MS05 | SA2-Q-S01, SA2-Q-S02, SA1-Q-S7, SA2-Q-S10 |
+| S0.1 tier/certificate | R1/R2/R8/R20 | MS01, MS04, MS05 | SA2-Q-S01, SA2-Q-S02, SA1-Q-S7, SA2-Q-S10 |
 | S0.2 columns/baseline | R23 | MS02, MS05, MS18 | PROC-S1 |
 | S1.1 exactness/keeper/search | R2-R5 | MS05 | SA1-Q-S7, SA2-Q-S02, SA2-Q-S12 |
 | S1.1 warnings/consumers | R4/R22 | MS05, MS17 | SA1-Q-S3, SA2-Q-S06, SA1-Q-S6, SA2-Q-S07 |
@@ -1410,12 +1431,12 @@ The owner's two selections and the author's other answers are applied; acceptanc
 | All APPROVAL GATE runs | R21/R23/R24; section 6 | owning task, MS07/MS18 checkpoints | PROC-S1, AUTH-S1, AUTH-S2 |
 | Plan orientation/rules/checklist errata | section 4 and corresponding resolutions | all affected tasks | Clarifications part D |
 
-## 9. Remaining concerns for acceptance
+## 9. Accepted AC01 interpretation
 
 ### AC01 — "attainable range" is a diagnostic lower bound, not a reachability guarantee
 
-The owner's target scope and the author's interval formula are both applied. Two literal implications
-of SA2-Q-S03's wording need acceptance of the qualification stated in R7/R23:
+The owner's target scope and the author's interval formula are both applied. The author accepted the
+following qualification in Part F at `2c665bb`, confirmed R7/R23, and accepted the report in Part G:
 
 1. `1.25*w_min(tier)+V` is a lower bound on the **unrounded** score of a nonvacuously required puzzle,
    not a proved minimum reachable by this generator. `breakdown` returns both an unrounded sum and
@@ -1428,26 +1449,27 @@ of SA2-Q-S03's wording need acceptance of the qualification stated in R7/R23:
    (`generator/js/engine/digger.js:630-641,1100-1147,1667-1739`). Bounded search can only prefer a
    nearer score among the candidates it reaches.
 
-**Acceptance requested:** retain the exact approved interval where defined, label it an analytic
-attainable lower bound, report null/reason for undefined adjusted positions and leave defined values
-unclamped. Describe a below-bound target as steering toward the lowest reachable/encountered scores,
-not guaranteeing a global minimum. These are explicit reporting/wording qualifications, not a change
-to target sampling, first-exact stopping, weights or budgets. R23 records them rather than silently
-altering the author's formula.
+**Accepted:** `1.25 * w_min(tier) + V` is an analytic lower bound of the attainable range, not a
+reachability guarantee. A below-bound target "steers toward the lowest scores the bounded search
+reaches". Report null with a reason where the adjusted position is undefined: vacuous or empty tier,
+unrated or off-band result, non-finite band, or non-positive width. Leave defined values unclamped and
+keep the raw position next to the adjusted position. There is no change to target sampling, the
+first-exact stop, weights or budgets.
 
 No other infeasible or contradictory answer was found in the code read for this revision. The cap
 and cutoff values remain future measurement outcomes under fully selected rules, not unanswered
-design choices. No test run or generation probe was used to claim new v3 performance.
+design choices. No open question remains. No test run or generation probe was used to claim new v3 performance.
 
 ## 10. Acceptance and sign-off record
 
 Acceptance covers the selected model and bounded solver capabilities, changed labels/hints and
 possible removed levels, the evidence/gate obligations and expected effort, and AC01's explicit
 measurement qualification. It does not assert that the future implementation or heavy gates have
-passed. The task pack remains paused until the owner and plan author accept these reports.
+passed. The plan author accepted at `2c665bb` Part G and the owner accepted at 11:50 on 2026-11-12.
+Task-pack preparation and implementation are authorized; implementation starts only through reviewed task dispatch.
 
 | Sign-off | Status |
 |---|---|
 | SA2, gpt-6-astra | **signed**, 2026-11-12; answers at `1398dde` applied, with AC01 disclosed for acceptance. |
 | SA1, claude-opus-5.5 | **signed (V1-V2 applied in this revision)**, 2026-11-12; editorial only, no resolution changed; AC01 agreed (`claude-opus-5.5/5-check-of-final-report.md`). |
-| Owner and plan author | Awaiting acceptance; no task-pack or implementation work has resumed. |
+| Owner and plan author | **accepted**: Part G at `2c665bb` and owner 2026-11-12 11:50; task-pack preparation resumed, no implementation yet. |

@@ -2,11 +2,11 @@
 
 | | |
 |---|---|
-| Date | 2026-11-12, 06:47–11:10 (local time, +07:00) |
+| Date | 2026-11-12, 06:47–11:50 acceptance (local time, +07:00); task-pack preparation resumed |
 | Who | orchestrator: GitHub Copilot CLI / Claude Opus 5.5 · analysts: **claude-opus-5.5** and **gpt-6-astra** (both max reasoning, long context) · plan author: **claude-fable-5-2** · later implementers: **claude-sonnet-5.5** sub-agents |
 | Code examined | `6abcb9f`, branch `rating-v3`; clarification answers committed as `1398dde` |
-| State | **analysis done, awaiting acceptance; no code changed**. Signed by both analysts (SA1's check: `claude-opus-5.5/5-check-of-final-report.md`). Awaiting acceptance by the owner and the plan author; AC01 remains open in `clarifications.md` Part F. Task-pack work and implementation remain paused. |
-| Details | [`report-detailed.md`](report-detailed.md): verified findings, corrected specification R1–R24, planned tasks, gates, evidence and acceptance concern |
+| State | **ACCEPTED** by the plan author (`clarifications.md` Part G, `2c665bb`) and the owner (2026-11-12 11:50). Both analysts signed; AC01 is accepted in Part F and no question remains open. Task-pack preparation resumed; implementation has not started and no application code changed. |
+| Details | [`report-detailed.md`](report-detailed.md): verified findings, corrected specification R1–R24, planned tasks, gates, evidence and accepted AC01 qualification |
 
 ## What was asked
 
@@ -80,6 +80,8 @@ Intermediate phase boundaries were not all timestamped; the ranges below do not 
 | 10:29 | Answers and document checks complete; reports ready for SA1's verification and owner/author acceptance. |
 | 10:42–10:50 | SA1 verified the final report and brief: signed, two editorial corrections (V1-V2); AC01 agreed. |
 | 11:10 | V1-V2 and the timing/credit notes applied; both analysts signed, awaiting owner/author acceptance. |
+| 11:49–11:50 | AC01 accepted and plan-author acceptance committed as `2c665bb`; owner accepts and authorizes the task pack and implementation. |
+| After 11:50 | Task index and MS01–MS03, with four bounded tooling subpacks, prepared for review. No implementation started. |
 
 ## Planned implementation and verification
 
@@ -90,8 +92,8 @@ at a time; the independent Pentomino work may proceed separately, but heavy timi
 |---|---|---|---|
 | MS01 | Tier and reference APIs | M | Quick |
 | MS02 | Baseline and both position metrics | M | GS |
-| MS04 | Bounded golden/example/hash tooling | M–L | Recorder checks, quick |
-| MS03 | Monotone orders and deterministic counters | M | GG, GR, GH, GD |
+| MS03a–MS03d | Bounded golden/example/hash tooling (parent MS03) | Four bounded subpacks | Recorder checks, quick |
+| MS04 | Monotone orders and deterministic counters | M | GG, GR, GH, GD |
 | MS05 | Required exactness, keeper, warnings and measured shallow cap | L | GG, GR, GS, GD |
 | MS06 | One target through all three stages | L | GG, GR, GS |
 | MS07 | Chain/depth IDs, measured cutoff and first qualification | L | GG, GR, GH, GS, GQ, GD |
@@ -108,6 +110,7 @@ at a time; the independent Pentomino work may proceed separately, but heavy timi
 | MS18 | Final evidence, v2 archive and offered levels | M + runs | GS, GQ, GP, GD, GG check, quick |
 
 Sizes estimate changed code/tests: M about 300–800 lines, L about 800–1,600; generated evidence is additional.
+Pack IDs follow execution order: old MS04/tooling is MS03; old MS03/orders is MS04. No work was reordered.
 Output-changing tasks own regression hashes (GG), replay goldens (GR) and help examples (GH). Soak (GS),
 qualification (GQ), performance (GP) and the manual difficulty suite (GD) supply the other evidence.
 Introducing tasks also measure bounded finder work and latency. Each completed task must pass its quick checks.
@@ -129,21 +132,22 @@ No heavy gate ran during analysis, and no new suite or generation probe ran whil
   Full targeting or bounded searches may reduce hits; report losses and timings rather than weakening exactness.
 - Rare real help examples, grouped-proof correctness, deterministic caps and repeated evidence runs are the
   main implementation/time risks. A changed final cap/cutoff selection goes back to the owner before qualification.
-- **AC01 for acceptance:** the “attainable range” is an analytic lower bound, not a guarantee of every reachable
+- **AC01 accepted:** the “attainable range” is an analytic lower bound, not a guarantee of every reachable
   score or a global minimum. R23 specifies rounding, vacuous-tier and undefined-position handling explicitly.
-  Both analysts agree; the author's confirmation remains open in [`clarifications.md`, Part F](clarifications.md#part-f-remaining-concerns-after-the-answers-were-applied-for-acceptance).
+  Both analysts agree; the author accepted it in [`clarifications.md`, Part F](clarifications.md#part-f-remaining-concerns-after-the-answers-were-applied-for-acceptance).
 - Acceptance covers the answered specification, these consequences, the evidence obligations, effort and AC01.
-  It is not approval of unperformed tests. Then, and only then, may task-pack work resume.
+  Acceptance has been given; it is not a claim that unperformed implementation tests have passed.
 
 ## Documents
 
 | File | Content |
 |---|---|
 | [`report-detailed.md`](report-detailed.md) | R1–R24, code evidence, ownership, gates, traceability and acceptance/signatures |
-| [`clarifications.md`](clarifications.md) | Answers at `1398dde`; part E is the decision summary; part F contains open AC01 |
+| [`clarifications.md`](clarifications.md) | Original answers at `1398dde`; accepted AC01 and Part G acceptance at `2c665bb` |
+| [`tasks/difficulty-v3/check-list.md`](../../tasks/difficulty-v3/check-list.md) | Accepted execution order; MS01–MS03 prepared for review, MS04–MS18 indexed for the next tranche |
 | [`plan.md`](plan.md) | Original plan; corrections and chosen answers are applied in the detailed report |
 | [`claude-opus-5.5/`](claude-opus-5.5/) | SA1's independent report, cross-review, response, joint-draft check and final-report check |
 | [`claude-opus-5.5/5-check-of-final-report.md`](claude-opus-5.5/5-check-of-final-report.md) | SA1's final verification; V1-V2 applied, no further check needed |
 | [`gpt-6-astra/`](gpt-6-astra/) | SA2's independent report, cross-review and response |
 
-**Analysis done, awaiting acceptance; no code changed. No task-pack or implementation work has resumed.**
+**Analysis accepted; task-pack preparation resumed. Implementation has not started; no application code changed.**
