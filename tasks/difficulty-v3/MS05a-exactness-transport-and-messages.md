@@ -120,14 +120,14 @@ the prior acceptance predicate. Report exact changed contracts, B/T evidence and
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted and committed (`difficulty-v3 MS05a: Exactness transport and prepared shallow messages`) |
+| Start | 2026-11-12 17:59 (+07:00) |
+| End | 2026-11-12 18:22 developer; 18:45 orchestrator review and commit |
+| Duration | 22 min developer (1,314 s); about 8 min review |
+| Model | claude-sonnet-5.5 (developer); orchestrator review claude-opus-5.5 |
+| Token usage | 118 model calls; 25,998,994 input tokens (25,668,074 cache reads); 98,538 output tokens |
+| AI credits | about 438 (developer) |
+| Verification | Developer: targeted `--suite=pipeline,events,result-view,i18n,steps,help,worker,cache` 591 passed (30 s; the first run failed only the contract-field list of `pipeline`, which now includes `exact`); `--filter=MS05a` 12 tests; generator quick 47 suites, 2,998 passed (118 s, twice); player quick 1,670 passed; GR wire G09-G12 and analysis G01-G14 recorded, wire `--check` showed only the added `exact` flag, written, both merges then up to date. Orchestrator re-run: generator quick 2,998/2,998 (121 s), wire and analysis merges up to date, bounded GG `greaterThan/normal` 5 of 520 unchanged, player quick 1,670/1,670 |
+| Acceptance | MS05a-B01, B02 and T01-T04 met. Diff reviewed: `PuzzleResult.exact` copied from the digger and used for the `done` event; `toWire`/`fromWire` carry a strict boolean (`WIRE_VERSION` stays 1; absent or other is false); the result view reads `result.exact === true` and never compares level names; `tune.hit`/`tune.miss`/`tune.shallow` accept `required` true/false/null and `target` finite/null, with strict schema checks; `difficulty.shallow` is kind `approximate`, one Retry for both warnings, `{level}` localized before translation; EN and VI texts with matching placeholders; digger and acceptance untouched |
+| Issues & resolutions | (1) Cross-review FS01 (SA1) applied at dispatch: `worker,cache` added to the targeted suites and the round trips tested in `worker.test.js` and `cache.test.js`; an entry cached before MS05a decodes as not exact (development-only window until MS17b). (2) FS05 applied at dispatch: `tune.miss` will carry `required: null`; the schema allows it. (3) Output difference: only the four wire records gain `"exact":true`; removing those insertions reproduces the old file; no hash, rating, warning or dig log changed. (4) The warning text "does not need a {level} technique" reads "a Easy technique" in English; recorded in `notes.md` for the activation task |
+| Handoff | MS05b: `requiredOf` is still unactivated; the digger emits `tune.hit`/`tune.miss` without `required`/`target` (`tune.miss` must carry `required: null`); `tune.shallow` is prepared, not emitted. Open for named owners (SA2 assigns): `explain-data.js` has no `tune.shallow` highlight and still says "level equals requested level"; `soak.js:281` and `qualify.js` still compare level names instead of the exactness flag. Wire fixtures carry `exact` |

@@ -496,6 +496,9 @@
     'tune.hit': 'Đạt mức độ: “{achieved}” (điểm {score}, dải từ {scoreMin} đến {scoreMax}).',
     'tune.miss': 'Chưa đúng mức độ: cần “{requested}”, ra “{achieved}” (điểm {score}). Thử lại (mẫu ' +
       '{sample}/{maxSamples}).',
+    'tune.shallow': 'Điểm {score} nằm trong dải của mức “{requested}” ({scoreMin} đến {scoreMax}), nhưng ' +
+      'đề không cần kỹ thuật nào của mức “{requested}”, nên chưa tính là đạt mức. Thử lại (mẫu ' +
+      '{sample}/{maxSamples}).',
     'tune.best': 'Hết lượt thử. Đề gần nhất là “{achieved}” (cần “{requested}”, điểm {score}).',
     'tune.final_one': 'Đề hoàn chỉnh được hiển thị trên lưới (đổi {count} ô).',
     'tune.final_other': 'Đề hoàn chỉnh được hiển thị trên lưới (đổi {count} ô).',
@@ -522,6 +525,7 @@
   add({
     'difficulty.approximate': 'Trình sinh đề không đạt chính xác mức độ yêu cầu, nên đây là đề gần nhất mà ' +
       'nó tìm được.',
+    'difficulty.shallow': 'Đề nằm trong dải điểm của mức đã chọn nhưng không cần kỹ thuật của mức {level}.',
     'digger.unsoundTechnique': 'Một kỹ thuật giải đã cho ra đề không có lời giải duy nhất. Cách đào đơn ' +
       'giản và an toàn đã được dùng thay thế, nên độ khó có thể khác với điểm đánh giá.',
     'trace.downgraded': 'Bàn cờ quá lớn để phát lại từng bước đầy đủ, nên mức chi tiết đã được giảm xuống ' +

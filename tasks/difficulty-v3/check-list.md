@@ -35,7 +35,7 @@ An accepted prerequisite means its implementation and log are committed, not jus
 | [x] | MS03d | [MS03d](MS03d-bounded-regression-hashes.md) | Selected hash records and complete merge | MS03c | M, 45-60 min + GG check | Generator tooling | M3d bounded hashes | 6 |
 | [x] | MS04 | [MS04](MS04-orders-and-requiredness.md) | Orders, counter and derived certificate | MS03d | M, 45-60 min | Shared solver | M4 prefix invariant | 7 |
 | [ ] | MS05 | MS05a-MS05d | Required exactness (parent) | MS04 | split | Generator | M5 | 8-11 |
-| [ ] | MS05a | [MS05a](MS05a-exactness-transport-and-messages.md) | Exactness transport/messages | MS04 | M, 40-55 min | Generator UI | M5a | 8 |
+| [x] | MS05a | [MS05a](MS05a-exactness-transport-and-messages.md) | Exactness transport/messages | MS04 | M, 40-55 min | Generator UI | M5a | 8 |
 | [ ] | MS05b | [MS05b](MS05b-required-keeper-and-search.md) | Required keeper/search activation | MS05a | M, 55-60 min | Generator engine | M5b | 9 |
 | [ ] | MS05c | [MS05c](MS05c-shallow-budget-instrumentation.md) | Shallow allowance/work instrumentation | MS05b | M, 45-60 min | Generator/tools | M5c | 10 |
 | [ ] | MS05d | [MS05d](MS05d-select-shallow-budget.md) | Measure/select common allowance | MS05c | S, 25-40 min | Evidence | M5 | 11 |
@@ -544,3 +544,4 @@ empty until that review. The analyst reports are traceability, not additional de
 | MS03c | Accepted | 16 min developer + 6 min review | about 362 | `difficulty-v3 MS03c` |
 | MS03d | Accepted | 25 min developer + 7 min review | about 513 | `difficulty-v3 MS03d` |
 | MS04 | Accepted with open CV6 finding | 66 min developer (E bundle, GD 338 s) + 12 min review | about 1,046 | `difficulty-v3 MS04` |
+| MS05a | Accepted | 22 min developer + 8 min review | about 438 | `difficulty-v3 MS05a` |

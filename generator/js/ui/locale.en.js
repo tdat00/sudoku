@@ -512,6 +512,9 @@
     'tune.hit': 'Level reached: "{achieved}" (score {score}, band {scoreMin} to {scoreMax}).',
     'tune.miss': 'Missed the level: wanted "{requested}", got "{achieved}" (score {score}). Trying again ' +
       '(sample {sample} of {maxSamples}).',
+    'tune.shallow': 'The score {score} is inside the "{requested}" band ({scoreMin} to {scoreMax}), but ' +
+      'the puzzle does not need a "{requested}" technique, so it does not count as reached. Trying again ' +
+      '(sample {sample} of {maxSamples}).',
     'tune.best': 'Out of attempts. The closest puzzle is "{achieved}" (wanted "{requested}", score {score}).',
     'tune.final_one': 'The final puzzle is shown on the board ({count} cell changed).',
     'tune.final_other': 'The final puzzle is shown on the board ({count} cells changed).',
@@ -538,6 +541,7 @@
   add({
     'difficulty.approximate': 'The generator could not hit the requested level exactly, so this is the ' +
       'closest puzzle it found.',
+    'difficulty.shallow': 'The puzzle is in the requested score band but does not need a {level} technique.',
     'digger.unsoundTechnique': 'A solving technique produced an ambiguous puzzle. A safe plain dig was ' +
       'used instead, so the difficulty may differ from the rating.',
     'trace.downgraded': 'The board is too large for a full step-by-step replay, so the detail level was ' +

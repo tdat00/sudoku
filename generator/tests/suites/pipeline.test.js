@@ -307,6 +307,7 @@
       expect(byKey['extraStructure.end'].i18nArgs).toEqual({ skipped: true });
       var last = out.events[out.events.length - 1];
       expect(last.i18nArgs.exact).toBe(true);
+      expect(out.result.exact).toBe(true);
       expect(last.i18nArgs.seed).toBe(seed9);
       expect(last.metrics.clues).toBe(clueCount(out.result.givens));
     });
@@ -868,8 +869,8 @@
   describe('pipeline: the PuzzleResult (design.md 13.9)', function () {
     it('has exactly the fields of the contract', function () {
       var out = run({ difficulty: 'easy', seed: 4 });
-      expect(Object.keys(out.result).sort()).toEqual(['attempts', 'config', 'digLog', 'givens', 'model',
-        'rating', 'seed', 'solution', 'timings', 'warnings']);
+      expect(Object.keys(out.result).sort()).toEqual(['attempts', 'config', 'digLog', 'exact', 'givens',
+        'model', 'rating', 'seed', 'solution', 'timings', 'warnings']);
     });
 
     it('holds a valid puzzle: invariants I1, I2, I3 and I6, and the model and rating', function () {
@@ -1035,6 +1036,7 @@
         [3, 77 + i].forEach(function (seed) {
           var viaPipeline = run({ difficulty: level, seed: seed }).result;
           var byHand = direct(model9, level, seed);
+          expect(viaPipeline.exact).toBe(byHand.exact);
           expect(Array.from(viaPipeline.givens)).toEqual(Array.from(byHand.givens));
           expect(Array.from(viaPipeline.solution)).toEqual(Array.from(byHand.solution));
           expect(viaPipeline.rating.score).toBe(byHand.rating.score);
@@ -1142,6 +1144,7 @@
         expect(finalize).toHaveLength(1);
         var done = out.events[out.events.length - 1];
         expect(done.i18nArgs.exact).toBe(false);
+        expect(out.result.exact).toBe(false);
         expect(done.i18nArgs.warnings).toEqual(['difficulty.approximate']);
       });
     }, 60000);
@@ -1168,6 +1171,35 @@
         var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9000, maxAttempts: 2 }, 'off');
         expect(out.events.filter(function (e) { return e.type === 'retry'; })).toHaveLength(0);
         expect(out.result.warnings).toContain('difficulty.approximate');
+      });
+    }, 60000);
+  });
+
+  describe('pipeline: the exact flag of the result (MS05a-T01)', function () {
+    /** The result, its done event, its wire, the result rebuilt from the wire and the result view agree. */
+    function expectAgreement(out, exact) {
+      var done = out.events[out.events.length - 1];
+      expect(out.result.exact).toBe(exact);
+      expect(done.i18nArgs.exact).toBe(exact);
+      var wire = P.toWire(out.result);
+      expect(wire.exact).toBe(exact);
+      expect(wire.v).toBe(1);
+      var back = P.fromWire(wire);
+      expect(back.exact).toBe(exact);
+      if (SG.resultView) expect(SG.resultView.viewModel(back).exact).toBe(exact);
+    }
+
+    it('is true for a puzzle that reached its level, in the result, the done event, the wire and the view',
+      function () {
+        expectAgreement(run({ difficulty: 'easy', seed: 9003 }, 'summary'), true);
+      });
+
+    it('is false for the closest puzzle returned after the attempts ran out, everywhere', function () {
+      withUnreachable(function () {
+        var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9001, maxAttempts: 2 },
+          'summary');
+        expect(out.result.rating.level).not.toBe('nightmare');
+        expectAgreement(out, false);
       });
     }, 60000);
   });

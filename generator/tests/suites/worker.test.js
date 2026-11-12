@@ -105,6 +105,8 @@
     expect(a.givens).toEqual(b.givens);
     expect(a.solution).toEqual(b.solution);
     expect(a.rating).toEqual(b.rating);
+    expect(typeof a.exact).toBe('boolean');
+    expect(a.exact).toBe(b.exact);
     expect(a.seed).toBe(b.seed);
     expect(a.config).toEqual(b.config);
     expect(a.attempts).toBe(b.attempts);
@@ -592,6 +594,32 @@
       expect(typeof wire.v).toBe('number');
       expect(structuredClone(wire)).toEqual(wire);
     });
+
+    it('MS05a-T01: exact crosses the wire as true, false or absent (absent is false, never inferred)',
+      function () {
+        var made = P.run({ variantId: 'classic4', difficulty: 'veryEasy', seed: 5, trace: 'off' }, null);
+        function wireOf(result) { return structuredClone(P.toWire(result)); }
+        [true, false].forEach(function (flag) {
+          var wire = wireOf(Object.assign({}, made, { exact: flag }));
+          expect(wire.v).toBe(1);
+          expect(wire.exact).toBe(flag);
+          expect(P.fromWire(wire).exact).toBe(flag);
+        });
+        // A result without the field is not exact, and its wire says so.
+        var bare = Object.assign({}, made);
+        delete bare.exact;
+        expect(wireOf(bare).exact).toBe(false);
+        expect(P.fromWire(wireOf(bare)).exact).toBe(false);
+        // A wire written before the flag (a cached entry) decodes as false, even when the level names match.
+        var old = wireOf(Object.assign({}, made, { exact: true }));
+        delete old.exact;
+        var rebuilt = P.fromWire(old);
+        expect(rebuilt.rating.level).toBe(rebuilt.config.difficulty);
+        expect(rebuilt.exact).toBe(false);
+        [1, 'true', {}, null].forEach(function (odd) {
+          expect(P.fromWire(Object.assign({}, old, { exact: odd })).exact).toBe(false);
+        });
+      });
 
     it('refuses data that is not of its version', function () {
       expectCode((function () { try { P.fromWire({ v: 99 }); } catch (e) { return e; } })(), 'unexpected');

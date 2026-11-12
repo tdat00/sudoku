@@ -201,7 +201,7 @@ một bộ giải và một bộ máy sinh đề phục vụ cả 15 biến th�
 
 `SG.pipeline.run(config, emit, budget)` chạy đồng bộ và luôn đi qua bảy bước:
 `configure → buildModel → fullGrid → extraStructure → dig → rate → tune`. Nó trả về một `PuzzleResult`
-(`model, givens, solution, rating, seed, config, timings, attempts, warnings, digLog`) và báo mọi việc qua
+(`model, givens, solution, rating, exact, seed, config, timings, attempts, warnings, digLog`) và báo mọi việc qua
 `emit` dưới dạng `GenerationEvent`: `{ type, stepId, phase, t, seq, i18nKey?, i18nArgs?, patch?, metrics? }`.
 Một `patch` là *phần thay đổi* của tối đa tám ô, không bao giờ là ảnh chụp cả bàn cờ. `SG.events.VOCABULARY` là
 hợp đồng cho mọi khóa sự kiện.
@@ -215,7 +215,15 @@ và chỉ khi đó `retry.difficulty` mới bắt đầu một lưới mới (t�
 đếm chứ không đo giờ), nên một seed cho cùng một đề trên mọi máy. Nếu dùng hết mọi lần thử, đề gần nhất được trả
 về kèm thông báo thay vì báo lỗi (chỉ đề có lời giải logic trọn vẹn mới được trả về). `SG.pipeline.runSteps` là
 cùng thuật toán đó dưới dạng generator, nhường quyền ở những ranh giới tự nhiên (là cái worker và chế độ luồng
-chính chạy), còn `SG.pipeline.toWire` / `fromWire` chuyển kết quả qua `postMessage`. Độ khó của một đề là
+chính chạy), còn `SG.pipeline.toWire` / `fromWire` chuyển kết quả qua `postMessage`. `result.exact` là một giá trị
+boolean, kết luận của bộ đào cho đề được trả về và cũng là `exact` của sự kiện `done`: nó đi qua wire như một cờ
+chặt chẽ (phiên bản wire vẫn là 1; wire không có cờ này, chẳng hạn một mục cũ trong cache, được đọc là `false`)
+và không bao giờ được dựng lại từ việc hai tên mức độ trùng nhau, nên bảng kết quả hiển thị đúng điều cờ nói. Ba
+kết luận về dải điểm của bước `tune` (`tune.hit`, `tune.miss` và `tune.shallow` mới) còn có thể mang `required`
+(`true`, `false` hoặc `null`) và `target` (một số hữu hạn hoặc `null`), và `difficulty.shallow` được thêm vào
+cạnh `difficulty.approximate` như một cảnh báo cùng loại, có nút “Thử lại”; tất cả những điều đó *đã được chuẩn
+bị nhưng chưa được tạo ra*: bộ sinh vẫn phát `tune.hit` và `tune.miss` với tham số cũ và nhận một đề chỉ dựa vào
+mức độ của nó. Độ khó của một đề là
 `SG.difficulty.rate(...)`, tính từ trọng số kỹ thuật `SG.difficulty.WEIGHTS`; hãy dùng `rating.score`, không
 dùng điểm thô của bộ giải.
 

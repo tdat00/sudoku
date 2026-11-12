@@ -818,8 +818,79 @@
       expect(keys).toEqual(keys.slice().sort());
       expect(new Set(keys).size).toBe(keys.length);
       ['dig.try', 'dig.accept', 'dig.reject', 'fullGrid.place', 'fullGrid.backtrack', 'retry.difficulty',
-        'extraStructure.none', 'trace.coalesced', 'done', 'error.*'].forEach(function (k) {
+        'extraStructure.none', 'trace.coalesced', 'done', 'error.*', 'tune.shallow'].forEach(function (k) {
         expect(keys).toContain(k);
+      });
+    });
+
+    describe('the band verdicts hit, miss and shallow (MS05a-T02)', function () {
+      var BAND = { requested: 'hard', achieved: 'hard', score: 700, scoreMin: 600, scoreMax: 900 };
+      var OWN = {
+        'tune.hit': { hardestTechnique: 'xWing' },
+        'tune.miss': { sample: 2, maxSamples: 12 },
+        'tune.shallow': { sample: 2, maxSamples: 12 }
+      };
+
+      function entryOf(key) {
+        return V.filter(function (v) { return v.key === key; })[0];
+      }
+
+      function verdict(key, extra) {
+        var c = collector('summary');
+        c.emitter.step('tune', 'progress', key, Object.assign({}, BAND, OWN[key], extra));
+        return c.log[0];
+      }
+
+      it('add required and target to the old argument lists, which stay as they were', function () {
+        expect(entryOf('tune.hit').args).toEqual(['requested', 'achieved', 'score', 'scoreMin', 'scoreMax',
+          'hardestTechnique', 'required', 'target']);
+        expect(entryOf('tune.miss').args).toEqual(['requested', 'achieved', 'score', 'scoreMin', 'scoreMax',
+          'sample', 'maxSamples', 'required', 'target']);
+        expect(entryOf('tune.shallow').args).toEqual(['requested', 'achieved', 'score', 'scoreMin',
+          'scoreMax', 'sample', 'maxSamples', 'required', 'target']);
+        Object.keys(OWN).forEach(function (key) {
+          var v = entryOf(key);
+          expect([v.type, v.stepId, v.phase, v.level]).toEqual(['step', 'tune', 'progress', 'summary']);
+        });
+      });
+
+      it('accept required true, false or null and a target that is finite, null or absent', function () {
+        Object.keys(OWN).forEach(function (key) {
+          [true, false, null].forEach(function (required) {
+            [undefined, null, 0, -3, 725.5].forEach(function (target) {
+              var extra = { required: required };
+              if (target !== undefined) extra.target = target;
+              var e = verdict(key, extra);
+              expect(E.eventProblems(e)).toEqual([]);
+              expect(E.lookup(e)).toBe(entryOf(key));
+              expect(Object.keys(e.i18nArgs).every(function (name) {
+                return entryOf(key).args.indexOf(name) !== -1;
+              })).toBe(true);
+              expect(e.i18nArgs.required).toBe(required);
+              expect(JSON.parse(JSON.stringify(e))).toEqual(e);
+            });
+          });
+          expect(E.eventProblems(verdict(key, {}))).toEqual([]);
+        });
+      });
+
+      it('refuse a required that is not a boolean or null and a target that is not finite', function () {
+        function problemsOf(key, extra) {
+          return E.eventProblems({ type: 'step', stepId: 'tune', phase: 'progress', t: 1, seq: 0,
+            i18nKey: key, i18nArgs: Object.assign({}, BAND, OWN[key], extra) });
+        }
+        Object.keys(OWN).forEach(function (key) {
+          [0, 1, 'true', 'yes', {}, []].forEach(function (required) {
+            expect(problemsOf(key, { required: required })).toEqual(['required must be true, false or null']);
+          });
+          ['700', true, {}, []].forEach(function (target) {
+            expect(problemsOf(key, { target: target })).toEqual(['target must be a finite number or null']);
+          });
+          [NaN, Infinity, -Infinity, undefined].forEach(function (value) {
+            expect(problemsOf(key, { required: value }).length).toBeGreaterThan(0);
+            expect(problemsOf(key, { target: value }).length).toBeGreaterThan(0);
+          });
+        });
       });
     });
   });

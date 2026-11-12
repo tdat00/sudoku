@@ -68,3 +68,37 @@ subset techniques, so it rates lower, and the digger needs more attempts to reac
 consequence of the contracted order, not of a defect in the change; band, weights, digger and acceptance are not
 this task's to change. It is recorded for the digger and target tasks (MS05 onward) and for the performance gate
 (MS18d). The `killer` manual suite, where `cageCombo` moved, passes all its timing assertions.
+
+## MS05a: exactness transport and prepared shallow messages
+
+### What changed
+
+- `PuzzleResult.exact` is the digger's verdict for the returned puzzle (`puzzle.exact === true`: today a complete
+  proof whose level is the requested one) and is the `exact` of the `done` event. `toWire` always writes it as a
+  strict boolean (a result without the field is written as `false`), `fromWire` reads `wire.exact === true`, and the
+  wire version stays 1. An entry cached before this change decodes as not exact, and the result panel shows it so
+  until the puzzle is generated again. No level-name inference remains: the result view's `exact` is the flag.
+- The vocabulary entries `tune.hit`, `tune.miss` and the new `tune.shallow` may carry `required` (true, false or
+  null) and `target` (a finite number or null; left out when there is none); the old lists are unchanged.
+  `eventProblems` refuses any other value of those two names for the three keys. Nothing emits `tune.shallow`,
+  `required` or `target` yet, and the explain card has no line for `tune.shallow` yet (the highlight map of
+  `explain-data.js` is not in this task's files).
+- `difficulty.shallow` is a warning of kind `approximate`; the result view translates it with the requested level
+  already localized (`{level}`), and the one Retry button (with the Requested / Reached line) goes to the first
+  warning of that kind, so a result with both warnings has one button. The announcement of a ready puzzle uses the
+  "closest puzzle" text for either warning.
+- English and Vietnamese texts of `difficulty.shallow` and `tune.shallow` with matching placeholders.
+
+### Output differences and what caused each
+
+| Output | Changed | Cause |
+|---|---|---|
+| Replay wire (G09 to G12) | the four records, one field each: `exact`, saved absent, now `true`, written after `rating` | The new wire field. Removing the four insertions gives the old file byte for byte, so the four puzzles, ratings, configs, warnings and dig logs are unchanged |
+| Replay analysis goldens (G01 to G14) | none | The analysis does not read the flag; all 14 records match |
+| Regression hashes | not re-recorded (no GG in this task) | No generation code changed: the digger, rating and acceptance are untouched, and the 18 recorded requests above show no generation change |
+
+### Wording kept from the task
+
+The English warning is the contract text with a final period; the level names are capitalised ("a Hard technique"),
+so for "Easy" or "Expert" the article reads "a Easy technique". The sentence is the specified one, the Vietnamese
+text has no article, and the owner of the shallow activation may reword both together.

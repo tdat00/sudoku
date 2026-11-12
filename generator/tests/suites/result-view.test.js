@@ -34,8 +34,12 @@
     return cache[key];
   }
 
-  function withWarnings(result, warnings, rating, difficulty) {
-    var copy = Object.assign({}, result, { warnings: warnings });
+  /**
+   * A copy of a result with other warnings, rating fields, requested level and exactness. `exact` is stated:
+   * the copy is exact only when `exact === true` is passed (never inherited from the real result).
+   */
+  function withWarnings(result, warnings, rating, difficulty, exact) {
+    var copy = Object.assign({}, result, { warnings: warnings, exact: exact === true });
     if (rating) copy.rating = Object.assign({}, result.rating, rating);
     if (difficulty) copy.config = Object.assign({}, result.config, { difficulty: difficulty });
     return copy;
@@ -45,6 +49,63 @@
     var n = 0;
     for (var i = 0; i < givens.length; i++) if (givens[i] > 0) n++;
     return n;
+  }
+
+  /** A small DOM stand-in (Node has none): enough for `create` to render a result with no technique rows. */
+  function createFakeDocument() {
+    var doc = {};
+
+    function El(tag) {
+      this.tagName = String(tag).toUpperCase();
+      this.attrs = {};
+      this.children = [];
+      this.parentNode = null;
+      this.listeners = {};
+      this.own = '';
+      this.ownerDocument = doc;
+    }
+    El.prototype.setAttribute = function (name, value) { this.attrs[name] = String(value); };
+    El.prototype.getAttribute = function (name) {
+      return Object.prototype.hasOwnProperty.call(this.attrs, name) ? this.attrs[name] : null;
+    };
+    El.prototype.appendChild = function (child) {
+      child.parentNode = this;
+      this.children.push(child);
+      return child;
+    };
+    El.prototype.addEventListener = function (type, fn) {
+      (this.listeners[type] = this.listeners[type] || []).push(fn);
+    };
+    El.prototype.contains = function (node) {
+      for (var n = node; n; n = n.parentNode) if (n === this) return true;
+      return false;
+    };
+    El.prototype.click = function () {
+      (this.listeners.click || []).forEach(function (fn) { fn({ type: 'click' }); });
+    };
+    El.prototype.findAll = function (test, out) {
+      out = out || [];
+      this.children.forEach(function (child) {
+        if (test(child)) out.push(child);
+        child.findAll(test, out);
+      });
+      return out;
+    };
+    Object.defineProperty(El.prototype, 'className', {
+      set: function (value) { this.attrs['class'] = value; }
+    });
+    Object.defineProperty(El.prototype, 'textContent', {
+      get: function () {
+        return this.own + this.children.map(function (child) { return child.textContent; }).join('');
+      },
+      set: function (value) {
+        this.children = [];
+        this.own = String(value);
+      }
+    });
+    doc.createElement = function (tag) { return new El(tag); };
+    doc.createElementNS = function (ns, tag) { return new El(tag); };
+    return doc;
   }
 
   describe('result view: values of a result', function () {
@@ -63,7 +124,9 @@
       expect(vm.achieved).toBe(r.rating.level);
       expect(vm.achievedName).toBe(SG.i18n.t('difficulty.' + r.rating.level));
       expect(vm.requestedName).toBe('Easy');
-      expect(vm.exact).toBe(r.rating.level === 'easy');
+      // The flag of the result, not a comparison of the two level names.
+      expect(typeof r.exact).toBe('boolean');
+      expect(vm.exact).toBe(r.exact);
     });
 
     it('lists the techniques used with their uses and share of the score, simplest first', function () {
@@ -250,6 +313,97 @@
       expect(vm.warnings[0].kind).toBe('approximate');
       expect(vm.warnings[0].text).toBe(SG.i18n.t('difficulty.approximate'));
     });
+
+    it('MS05a-B01: exactness is the flag of the result, not the match of the two level names', function () {
+      ready();
+      var real = realResult('classic9', 'easy', 3);
+      // Hard asked, Hard reached, and the result says it is not exact (a same-level fallback).
+      function sameLevel(exact) {
+        return withWarnings(real, ['difficulty.approximate'], { level: 'hard' }, 'hard', exact);
+      }
+      var fallback = R.viewModel(sameLevel(false));
+      expect([fallback.requested, fallback.achieved]).toEqual(['hard', 'hard']);
+      expect(fallback.exact).toBe(false);
+      expect(R.viewModel(sameLevel(true)).exact).toBe(true);
+      var missing = sameLevel(true);
+      delete missing.exact;
+      expect(R.viewModel(missing).exact).toBe(false);
+      ['true', 1, 'yes', {}, null].forEach(function (odd) {
+        expect(R.viewModel(Object.assign(sameLevel(true), { exact: odd })).exact).toBe(false);
+      });
+    });
+
+    it('MS05a-T03: difficulty.shallow is an approximate warning, its {level} localized', function () {
+      ready();
+      var real = realResult('classic9', 'easy', 3);
+      var shallow = withWarnings(real, ['difficulty.shallow'], { level: 'hard' }, 'hard');
+      var en = inLocale('en', function () { return R.viewModel(shallow); });
+      expect(en.warnings[0].text)
+        .toBe('The puzzle is in the requested score band but does not need a Hard technique.');
+      ['en', 'vi'].forEach(function (code) {
+        inLocale(code, function () {
+          var vm = R.viewModel(shallow);
+          var level = SG.i18n.t('difficulty.hard');
+          expect(vm.warningKeys).toEqual(['difficulty.shallow']);
+          expect(vm.warnings[0].kind).toBe('approximate');
+          expect(vm.warnings[0].text).toBe(SG.i18n.t('difficulty.shallow', { level: level }));
+          expect(vm.warnings[0].text).toContain(level);
+          expect(vm.warnings[0].text).not.toMatch(/[{}]|hard/);
+          expect(vm.approximate).toBe(true);
+          expect(vm.retryAvailable).toBe(true);
+          expect(vm.exact).toBe(false);
+        });
+      });
+      var vi = inLocale('vi', function () { return R.viewModel(shallow); });
+      expect(vi.warnings[0].text).not.toBe(en.warnings[0].text);
+      expect(vi.warnings[0].text).toContain('Khó');
+    });
+
+    it('MS05a-T03: a result with both warnings, or only the shallow one, offers one Retry', function () {
+      ready();
+      var real = realResult('classic9', 'easy', 3);
+      function retries(warnings) {
+        return R.viewModel(withWarnings(real, warnings, { level: 'hard' }, 'hard')).warnings
+          .map(function (w) { return w.retry; });
+      }
+      expect(retries(['difficulty.approximate', 'difficulty.shallow'])).toEqual([true, false]);
+      expect(retries(['difficulty.shallow', 'difficulty.approximate'])).toEqual([true, false]);
+      expect(retries(['trace.downgraded', 'difficulty.shallow'])).toEqual([false, true]);
+      expect(retries(['digger.unsoundTechnique', 'trace.downgraded'])).toEqual([false, false]);
+      expect(retries([])).toEqual([]);
+    });
+
+    it('MS05a-T03: the panel draws one Retry button, which calls onRetry, for each approximate result',
+      function () {
+        ready();
+        var doc = createFakeDocument();
+        var host = doc.createElement('div');
+        var clicks = 0;
+        var view = R.create(host, { onRetry: function () { clicks++; } });
+        var real = realResult('classic9', 'easy', 3);
+        function show(warnings) {
+          view.show(withWarnings(real, warnings, { level: 'hard', techniqueCounts: {} }, 'hard'));
+        }
+        function find(role) {
+          return host.findAll(function (node) { return node.getAttribute('data-role') === role; });
+        }
+        show(['difficulty.approximate', 'difficulty.shallow']);
+        expect(host.findAll(function (n) { return n.getAttribute('data-warning') !== null; })
+          .map(function (n) { return n.getAttribute('data-warning'); }))
+          .toEqual(['difficulty.approximate', 'difficulty.shallow']);
+        expect(find('retry')).toHaveLength(1);
+        find('retry')[0].click();
+        expect(clicks).toBe(1);
+        show(['difficulty.shallow']);
+        expect(find('retry')).toHaveLength(1);
+        expect(host.textContent).toContain('does not need a Hard technique.');
+        expect(host.textContent).toContain('Requested: Hard. Reached: Hard.');
+        show(['trace.downgraded']);
+        expect(find('retry')).toHaveLength(0);
+        show([]);
+        expect(find('retry')).toHaveLength(0);
+        view.destroy();
+      });
 
     it('lists the other warnings translated, each once, without a retry for them', function () {
       ready();

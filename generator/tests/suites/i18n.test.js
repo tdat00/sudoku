@@ -791,6 +791,27 @@
       expect(finished(false)).toContain('closest');
     });
 
+    it('MS05a-B02: tune.shallow explains the need of a technique, not "wanted X, got X", in both languages',
+      function () {
+        packsReady();
+        var args = { requested: 'hard', achieved: 'hard', score: 700, scoreMin: 600, scoreMax: 900,
+          sample: 2, maxSamples: 12, required: false, target: null };
+        var en = I.eventText(event('tune.shallow', args));
+        expect(en).toContain('does not need a "Hard" technique');
+        expect(en).toContain('700');
+        expect(en).toContain('sample 2 of 12');
+        expect(en).not.toMatch(/wanted|got/);
+        var vi = inLocale('vi', function () { return I.eventText(event('tune.shallow', args)); });
+        expect(vi).toContain('không cần kỹ thuật nào của mức “Khó”');
+        expect(vi).not.toContain('ra “');
+        [en, vi].forEach(function (text) { expect(text).not.toMatch(/[{}]|undefined|NaN|\[object/); });
+        LOCALES.forEach(function (code) {
+          expect(placeholders(SG.locales[code]['tune.shallow'])).toEqual(
+            ['maxSamples', 'requested', 'sample', 'score', 'scoreMax', 'scoreMin']);
+          expect(placeholders(SG.locales[code]['difficulty.shallow'])).toEqual(['level']);
+        });
+      });
+
     it('shows a dash for a missing value and the infinity sign for an open score band', function () {
       packsReady();
       var spec = I.eventText(event('buildModel.spec',
@@ -902,7 +923,8 @@
       if (name === 'reason') {
         return key === 'retry.difficulty' ? 'difficulty' : (key === 'dig.skip' ? 'minClues' : 'ambiguous');
       }
-      if (['unique', 'exact', 'willRetry', 'solved', 'forced', 'finalize', 'skipped'].indexOf(name) !== -1) {
+      if (['unique', 'exact', 'willRetry', 'solved', 'forced', 'finalize', 'skipped', 'required']
+        .indexOf(name) !== -1) {
         return true;
       }
       return 7;

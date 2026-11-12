@@ -104,7 +104,9 @@
 
   // PuzzleResult: model (with the structure `postGenerate` added), givens (0 = empty; a subset of solution),
   // solution, rating (SG.difficulty.rate; rating.level is the achieved level, config.difficulty the requested
-  // one), seed, config (normalised; `trace` as applied), timings (ms per step id, all seven keys, summed over
+  // one), exact (boolean: the digger's verdict for the returned puzzle, the same as the `exact` of the `done`
+  // event; never inferred from the level names, and false when absent from a wire), seed, config
+  // (normalised; `trace` as applied), timings (ms per step id, all seven keys, summed over
   // attempts and samples), attempts (full grids generated), warnings (i18n keys: 'difficulty.approximate' =
   // closest puzzle returned, 'digger.unsoundTechnique', 'trace.downgraded'), digLog (dig log of
   // SG.digger.generate for the sample that became the puzzle; the UI builds its replay from it, whatever
@@ -236,6 +238,7 @@
       givens: puzzle.givens,
       solution: puzzle.solution,
       rating: puzzle.rating,
+      exact: puzzle.exact === true,
       seed: cfg.seed,
       config: cfg,
       timings: Object.assign({}, stage.timings),
@@ -246,7 +249,7 @@
     em.done({
       requested: cfg.difficulty,
       achieved: puzzle.achieved,
-      exact: puzzle.exact,
+      exact: result.exact,
       attempts: puzzle.attempts,
       clues: puzzle.clues,
       seed: cfg.seed,
@@ -287,7 +290,8 @@
 
   // The PuzzleResult as data that survives postMessage and nothing else: the model is reduced to what
   // `SG.model.create` needs (`cellUnits` and `peers` are derived and stay behind). Typed arrays are shared,
-  // not copied; the clone `postMessage` makes is the copy.
+  // not copied; the clone `postMessage` makes is the copy. `exact` is a strict boolean (a result without it
+  // is not exact); the wire version stays 1, because `fromWire` reads an absent flag as false.
   function toWire(result) {
     return {
       v: WIRE_VERSION,
@@ -295,6 +299,7 @@
       givens: result.givens,
       solution: result.solution,
       rating: result.rating,
+      exact: result.exact === true,
       seed: result.seed,
       config: result.config,
       timings: result.timings,
@@ -309,7 +314,8 @@
   // for cages, `SG.ineq.ensureExtension` for signs): without them `SG.dfs` would ignore cage sums and signs
   // and count solutions of a different puzzle. Per-model side data the variants keep in WeakMaps (layout
   // report, sign scope, build notes) does not cross; the UI does not read it. Throws 'unexpected' for data of
-  // another wire version.
+  // another wire version. `exact` is true only for a wire that says `exact === true`: an absent or other
+  // value (a result cached before the flag existed) is false, never rebuilt from matching level names.
   function fromWire(wire) {
     if (wire === null || typeof wire !== 'object' || wire.v !== WIRE_VERSION || !wire.model) {
       throw fail('unexpected', { message: 'unsupported result format' });
@@ -322,6 +328,7 @@
       givens: wire.givens,
       solution: wire.solution,
       rating: wire.rating,
+      exact: wire.exact === true,
       seed: wire.seed,
       config: wire.config,
       timings: wire.timings,

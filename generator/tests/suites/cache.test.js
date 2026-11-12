@@ -501,6 +501,18 @@
       expect(JSON.stringify(C.serialize(made))).not.toMatch(/fromCache/);
     });
 
+    it('MS05a-T01: keeps the exactness flag; an entry stored before it decodes as not exact', function () {
+      const made = P.run(CASES[0], null);
+      [true, false].forEach(function (flag) {
+        const data = C.serialize(Object.assign({}, made, { exact: flag }));
+        expect(data.exact).toBe(flag);
+        expect(C.deserialize(JSON.stringify(data)).exact).toBe(flag);
+      });
+      const before = JSON.parse(JSON.stringify(C.serialize(made)));
+      delete before.exact;
+      expect(C.deserialize(before).exact).toBe(false);
+    });
+
     it('refuses data that is not a valid puzzle', function () {
       const made = P.run(CASES[0], null);
       function broken(mutate) {

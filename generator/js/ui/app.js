@@ -814,8 +814,9 @@
   }
 
   function announceReady(result) {
-    const key = result.warnings.indexOf('difficulty.approximate') !== -1 ? 'app.announce.approximate'
-      : 'app.announce.ready';
+    const closest = result.warnings.indexOf('difficulty.approximate') !== -1 ||
+      result.warnings.indexOf('difficulty.shallow') !== -1;
+    const key = closest ? 'app.announce.approximate' : 'app.announce.ready';
     let clues = 0;
     for (let i = 0; i < result.givens.length; i++) if (result.givens[i] > 0) clues++;
     announce(t(key, { level: levelName(result.rating.level), clues: t('unit.clue', { count: clues }) }));

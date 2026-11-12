@@ -216,7 +216,7 @@ differences go through the registry (`SG.variants`).
 
 `SG.pipeline.run(config, emit, budget)` is synchronous and always goes through seven steps:
 `configure → buildModel → fullGrid → extraStructure → dig → rate → tune`. It returns a `PuzzleResult`
-(`model, givens, solution, rating, seed, config, timings, attempts, warnings, digLog`) and reports
+(`model, givens, solution, rating, exact, seed, config, timings, attempts, warnings, digLog`) and reports
 everything through `emit` as `GenerationEvent`s:
 `{ type, stepId, phase, t, seq, i18nKey?, i18nArgs?, patch?, metrics? }`. A `patch` is a *delta* of at most
 eight cells (`{ cells: [{ i, value, state }], highlight, unhighlight }`), never a snapshot.
@@ -231,7 +231,14 @@ has fixed work caps (full ratings and proposed moves, counted, never timed), so 
 every machine. If every attempt is used, the closest puzzle is returned with a notice instead of an error (only
 a puzzle with a complete logical proof is ever returned). `SG.pipeline.runSteps` is the same algorithm as a
 generator that yields at natural boundaries (what the worker and the main-thread mode run), and
-`SG.pipeline.toWire` / `fromWire` carry a result across `postMessage`. The difficulty of a puzzle is
+`SG.pipeline.toWire` / `fromWire` carry a result across `postMessage`. `result.exact` is a boolean, the digger's
+verdict for the returned puzzle and the `exact` of the `done` event: it crosses the wire as a strict flag (the wire
+version stays 1; a wire without it, such as an older cache entry, reads as `false`) and is never rebuilt from
+matching level names, so the result panel shows exactly what it says. The three band verdicts of the `tune` step
+(`tune.hit`, `tune.miss` and the new `tune.shallow`) may also carry `required` (`true`, `false` or `null`) and
+`target` (a finite number or `null`), and `difficulty.shallow` joins `difficulty.approximate` as a warning of the
+kind that offers "Retry"; all of that is *prepared, not produced yet*: the generator still emits `tune.hit` and
+`tune.miss` with their old arguments and accepts a puzzle by its level alone. The difficulty of a puzzle is
 `SG.difficulty.rate(...)`, from the technique weights `SG.difficulty.WEIGHTS`; use `rating.score`, never the
 solver's raw score.
 
