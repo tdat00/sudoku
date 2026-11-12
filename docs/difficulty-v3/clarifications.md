@@ -536,3 +536,145 @@ I reviewed `docs/difficulty-v3/report-detailed.md` (R1-R24, errata, MS01-MS18, g
 R7 one target through all three stages, R9 measured cutoff, R10 cost table B and starting limits, R20 priors kept,
 R24 live table updated in place). With AC01 answered above, **the plan author accepts the report as the basis of
 the task pack.** No open question remains on the author's side; the owner's acceptance is separate.
+
+## Part H: post-acceptance performance finding — CV6-01
+
+Raised by SA2 (gpt-6-astra), 2026-11-12, after the MS04 implementation and its isolated measurements.
+This is a new empirical finding, not a withdrawal of the acceptance in Part G. **Answer requested from the
+plan author and the owner.** The contracted order and the failing assertion remain unchanged meanwhile.
+
+### CV6-01: who owns restoring Greater-Than Normal generation performance?
+
+**Evidence.** See [MS04 notes](notes.md#ms04-monotone-orders-and-the-derived-certificate) and
+[MS04 evidence](evidence/MS04/evidence.md). Both quick sets pass. The three contracted order changes explain all
+27 changed regression hashes, G09-G11 wire changes and G09-G12 analysis changes. The subset-counter reset does
+not explain the performance regression.
+
+| Observation | Old orders / diagnostic control | Contracted orders |
+|---|---|---|
+| Manual Greater-Than Normal CV6 | design budget 700 ms; this run's assertion limit 1,400 ms | p95 2,035 ms: fails |
+| Seeds 300-319, two runs | p95 92 / 94 ms; total about 1.0 s | p95 2,088 / 2,216 ms; total 12.9 / 13.4 s |
+| Seeds 7000-7039 | p95 125 ms; total 2.2 s | p95 5,043 ms; total 62.9 s |
+| Only `ineqChain` restored to order 65, other two new orders retained | p95 97 ms on seeds 300-319 | isolates the cause to `ineqChain` 65 -> 46 |
+| Seed 308 | 1 attempt, 27 steps | 4 attempts, 604 steps; three attempts reach 24 clues but still rate Easy, score 145 |
+
+These are the recorded developer measurements; SA2 did not run another timing sample while Pentomino timing
+runs were active.
+
+**Code facts.**
+
+- `generator/js/variants/greater-than.js:378-411` digs signs to a unique minimal set, rates the result, and ends
+  tuning when it is not too hard. A below-band Easy result therefore leaves this stage; it is not repaired upward
+  by another pass of that loop.
+- The Normal base floor is 29 (`generator/js/engine/difficulty.js:117`); Greater-Than's `clueFloorScale.normal`
+  is 0.83 (`generator/js/variants/greater-than.js:445-450`), giving the observed 24-clue floor.
+- `generator/js/engine/digger.js:1381-1422` forbids clue additions on a model with inequalities and preserves the
+  clue floor. The existing local moves remove a sign or a clue group; they do not supply a compensating clue
+  relocation followed by re-minimisation of the signs.
+- `generator/tests/manual/greater-than.test.js:18,1031-1035` has its own Normal `BUDGET_MS = 700` and compares
+  against `SG.test.timeLimit(...)`. Updating the separate `PERF_TARGETS` table alone cannot make CV6 pass.
+
+**Disposition: no existing later task restores this budget by design.**
+
+| Task | What it owns | Why it does not own this repair |
+|---|---|---|
+| MS05a | Exactness transport, prepared messages | No generation/search change. It may proceed unchanged |
+| MS05b | Requiredness, keeper prefilters, shallow continuation, model-safe ratings | Makes acceptance stricter; keeps existing caps and movement constraints. It does not repair the Greater-Than minimal-sign/24-clue trap |
+| MS05c/MS05d | Select a common extra allowance after an in-band shallow result | Seed 308's failed attempts are below band, not in-band shallow. The fixed six-cell selection experiment does not include Greater-Than |
+| MS06b/MS06c | One target through guided dig, refinement and local search | Keeps clue floors, sign guard and caps; refinement is not entered for models with inequalities. Ranking may alter outcomes but guarantees neither escape nor a 700 ms p95 |
+| MS06d | Measure target-policy hit/time changes | Evidence only; explicitly forbids repairing a regression by changing source, scope or budgets |
+| MS13c / MS15b GP | Measure the introducing grouped-chain / ALS work | Their named cells are classic9 nightmare, mega16 easy, and jigsaw9 nightmare, not Greater-Than Normal; no variant-generation optimisation is in scope |
+| MS18d | Final performance evidence and qualification-authorised `PERF_TARGETS` updates | Explicitly excludes algorithm tuning. A permitted target update is a changed performance contract, not restored runtime, and its ownership does not include CV6's hard-coded budget |
+
+Final qualification might change availability or permit a different GP target, but neither result establishes
+that Greater-Than Normal meets the currently accepted CV6 contract. The failure must stay open until a named,
+evidenced resolution is accepted; it must not be assigned vaguely to "MS05 onward" or the final GP run.
+
+**Question. Which resolution is authorised?**
+
+| Option | Resolution | Consequence |
+|---|---|---|
+| (a) | Keep the contracted order 46, requiredness/prefix invariant, weights, bands and current performance contract. Authorise a separate bounded Greater-Than strategy investigation and repair, with a precise task contract before implementation | Additional implementation/evidence work. Success is measured, not promised. A failure to recover the budget returns here; it does not authorise a hidden cap/floor/budget change |
+| (b) | Keep order 46 and the rating semantics, but explicitly accept a slower Greater-Than Normal contract after qualification, or decide not to offer the cell if it fails the existing qualification policy | No runtime recovery is claimed. Any new target must be documented and consistently applied to GP and the manual CV6 contract before the final timing runs; availability loss is visible. The 700 ms assertion cannot be relaxed as an unexplained MS04 fix |
+| (c) | Revisit the technique ordering / requiredness design for this variant, using order 65 as a diagnostic starting point | The 97 ms control is promising for speed, but simply reverting the order breaks the accepted non-decreasing-weight invariant behind the derived certificate. A new sound prefix/certificate design, attribution, hashes and reference evidence are required; this is not a one-line performance fix |
+
+**Recommendation: (a).** Do not undo the semantic correction or increase a budget merely to hide this measured
+regression. Reserve a new task, provisionally **MS05e**, after MS05d and before MS06a captures the pre-target
+baseline. That ordering lets the repair see final requiredness and the selected common allowance, while keeping
+the target comparison isolated. This is a proposed additional task, **not an authorised change to MS05a or a
+claim that the existing MS05b contract already contains it**.
+
+The plan author should specify the bounded escape/restart strategy and its work accounting before dispatch.
+Candidates to investigate include avoiding repeated impossible removals at the clue floor, or a compensating
+clue/sign move that re-establishes the minimal-sign property. Any such move must preserve uniqueness, symmetry,
+the accepted clue floor and required exactness; changing those constraints or budgets needs a further explicit
+answer. No strategy is asserted to meet the budget without measurement.
+
+Required closure evidence for (a): the unchanged CV6 assertion; matched repeats of seeds 300-319 and 7000-7039;
+raw p50/p95/max against the 700 ms design target as well as the actual test limit; attempts, work and exact-hit
+counts under current requiredness; no invalid or ambiguous output; explained deterministic output changes.
+Keep the old MS04 evidence. Run timing-sensitive work only in the orchestrator's exclusive cross-repository
+timing slot and follow the current lock protocol. MS18d/MS18e then verify the accepted resolution rather than
+discovering or inventing it.
+
+**Answer (plan author, claude-fable-5-2, 2026-11-12): (a), with the strategy and its bounds specified below, and
+(b) named in advance as the only fallback. (c) is rejected.** The owner's confirmation is needed for the extra task
+and for the fallback rule; nothing below changes order 46, the prefix invariant, weights, bands, floors or caps.
+
+**Why the regression is real and (c) is wrong.** The old speed was an artefact of the inversion this plan removes.
+With `ineqChain` (weight 40) tried after `nakedPair` (120), the solver used a pair where a 40-point inequality step
+was enough, so many Greater-Than puzzles rated Normal that are Easy by the cheapest proof (seed 308: three attempts
+end at the 24-clue floor with score 145). Restoring order 65 would restore the wrong ratings, and it breaks the
+non-decreasing-weight prefix behind the derived certificate (SA1-Q-S7). Honest Normal puzzles are simply rarer on
+this variant, and the sign dig has no way to look for them: `digPass` (`generator/js/variants/greater-than.js:303-334`)
+removes the first sign of a shuffled order that the oracle allows, the minimal pass then removes every redundant
+sign, and a result below the band at the clue floor leaves the loop (`:394-411`) with nothing left to remove. The
+cells dig got its guided stage for exactly this reason (`generator/js/engine/digger.js:704-715`: random minimal
+puzzles need nothing beyond singles about three times out of four); the sign dig never got one.
+
+**MS05e: guided sign dig (bounded).** Position as SA2 proposes: after MS05d, before MS06a.
+
+1. *Diagnosis first, recorded.* For seeds 300-319: per attempt and sample, the final clue count, sign count, score,
+   level, `required`, and whether the sample ended below the band at the clue floor with a minimal sign set. This
+   confirms the trap is the dominant path before any code changes; if it is not, stop and report.
+2. *The change, in the technique-oracle pass only* (`digPass(order, techniqueOracle, 'signs')`): instead of taking
+   the first allowed sign, evaluate a pool of the next `SIGN_POOL = 8` live signs in the existing shuffled order
+   (fewer when fewer remain). Each evaluation is the solve the oracle already runs (`solveWithin` with the level's
+   set, after the uniqueness count); classify its report to `{ score, tierUsed }` and refuse it as today when it is
+   ambiguous, stuck, or scores at or above `spec.max`. Apply the pool winner by the R6 comparator: `tierUsed` first,
+   then the smaller distance to the sample's target when the context carries one (after MS06), otherwise the
+   higher score. Ties keep the shuffled order. A refused sign stays refused for the rest of the pass, as in the
+   cells dig. The `signs.minimal` pass, the clue reveals, `MAX_TUNE_ROUNDS`, the keeper offer and the final
+   rating are unchanged.
+3. *Work accounting.* Every pool evaluation counts in `stats.oracleCalls` and ticks the inherited budget; no new
+   cap, no clock. The pass still ends: each step removes one sign or refuses the whole pool. The dig log keeps its
+   operations (`accept` / `reject` per sign, in evaluation order), so the replay needs no new kind; an allowed pool
+   member that is not the winner is logged as `keep`, as the cells dig does.
+4. *Not allowed in this task:* changing the clue floor or `clueFloorScale`, `CAP_RATINGS`, `CAP_PROPOSALS`,
+   `MAX_TUNE_ROUNDS`, any weight, order or band, the exactness rule, or the CV6 assertion; adding clues back on a
+   model with inequalities; a second strategy (for example a compensating clue relocation) without a new answer.
+   `SIGN_POOL` may be tried at 4, 8 and 16 once, with the numbers recorded; the chosen value is then fixed.
+5. *Scope.* `generator/js/variants/greater-than.js`, its tests (`generator/tests/suites/` quick cases for the pool
+   comparator and determinism; `generator/tests/manual/greater-than.test.js` unchanged in its assertions),
+   `generator/design.md` (the Greater-Than dig), both developer guides if they describe the sign dig, and the
+   task-owned hashes, goldens and help examples (GG, GR, GH) for Greater-Than only. Size M; if it grows beyond that,
+   stop and report.
+6. *Closure evidence:* as SA2 lists (the unchanged CV6 assertion; matched repeats of seeds 300-319 and 7000-7039;
+   p50 / p95 / max against 700 ms and against the test limit; attempts, work and exact hits under current
+   requiredness; no invalid or ambiguous output; explained output changes), plus the same table for Greater-Than
+   Easy, Hard and Expert on seeds 300-319, to show the guided pass does not slow the neighbouring levels.
+
+**Fallback, fixed now so that it is not improvised later.** If MS05e's closure evidence does not bring CV6 under
+its assertion, the task stops and reports; the owner is then asked to choose (b) with the measured numbers: either
+a documented slower Greater-Than Normal contract, applied consistently to CV6's `BUDGET_MS` and to GP before the
+final timing runs, or not offering the cell if final qualification fails it. For scale: the v2 table already
+offers Greater-Than Hard at p95 2.00 s and Expert at 9.50 s against the 10 s qualification budget
+(`docs/difficulty-rating/qualification.md:183-184`), so a Normal p95 of 2-5 s would keep the cell offered but
+would be slower than its 700 ms design budget. No budget, floor or assertion is relaxed without that answer.
+
+**MS05a-MS05d proceed unchanged**; CV6 stays red and recorded as open until MS05e closes it or the owner answers
+the fallback. MS06b passes the sample's target into the sign-dig context so the comparator of step 2 uses it; this
+is the only edit MS06 makes to the sign dig, and R7's statement that refinement is not entered for models with
+inequalities stays true.
+
+**Owner (2026-11-12 18:20):** confirmed both points of the plan author's answer: (1) the new task MS05e, guided sign dig, as specified above (after MS05d, before MS06a); (2) the fallback rule (b) as fixed above. Decision S-OD1; the orchestrator asks SA2 to write MS05e, its check-list rows and the MS06b note.
