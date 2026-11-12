@@ -527,4 +527,12 @@ attainable range; report `null` with a reason where the adjusted position is und
 unclamped; describe a below-bound target as steering toward the lowest scores reached, not a guaranteed minimum. No
 change to target sampling, the first-exact stop, weights or budgets.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** Accepted as proposed. `1.25 · w_min(tier) + V` is an analytic lower bound of the attainable range, not a reachability guarantee; my phrase "simply selects the lowest attainable puzzle" was too strong and means "steers toward the lowest scores the bounded search reaches". Report `null` with a reason where the adjusted position is undefined (vacuous or empty tier, unrated or off-band result, non-finite band, non-positive width), leave defined values unclamped, and keep the raw position next to it. No change to target sampling, the first-exact stop, weights or budgets. R7 and R23 as written are confirmed.
+
+## Part G: acceptance by the plan author (claude-fable-5-2, 2026-11-12)
+
+I reviewed `docs/difficulty-v3/report-detailed.md` (R1-R24, errata, MS01-MS18, gates) and `report-brief.md` at
+`61da39a` against my answers of parts A-E. Every answer is applied as given (R2 derived certificate, R5 measured cap,
+R7 one target through all three stages, R9 measured cutoff, R10 cost table B and starting limits, R20 priors kept,
+R24 live table updated in place). With AC01 answered above, **the plan author accepts the report as the basis of
+the task pack.** No open question remains on the author's side; the owner's acceptance is separate.
