@@ -776,7 +776,17 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    used and `W` the sum of weight × uses, and the weight alone decides where the technique is allowed: the oracle
    of a level allows every technique whose 1.25 × weight is below the level's band maximum, so a weight of 400
    makes it available from *hard* on (500 is below hard's maximum, 700, not below normal's, 400). The `group`
-   only names its family (`cage` and `ineq` belong to Killer and Greater-Than). Then re-run the qualification,
+   only names its family (`cage` and `ineq` belong to Killer and Greater-Than). The same rule gives each level a
+   **floor** (the techniques of the previous global level, even when a variant does not offer that level) and a
+   **tier** (what the level allows beyond its floor): `SG.difficulty.floorTechniques(level, model)`,
+   `SG.difficulty.tierTechniques(level, model)` and the same two fields of `spec`. A new technique joins the tier
+   of the level its weight puts it in, and `tests/suites/difficulty-floor.test.js` derives these sets from the
+   registry and the weights. To check that a puzzle really needs the tier of its level,
+   `SG.difficulty.certifyFloor(model, givens, level, budget)` solves with the floor techniques alone: it trusts the
+   caller that the givens have exactly one solution for this model (it counts none), has no limit but the `budget`
+   passed in, answers `{ required, vacuous, floorLevel, unsolvedCount }` (vacuous, without a solve, for `veryEasy`
+   and for a level with an empty tier) and throws on a contradiction, on invalid input and on a failed budget
+   instead of answering. Then re-run the qualification,
    `node tests/qualify.js`, and check the hit rates with `node tests/soak.js --quick`.
 5. **Tests**: add an entry for the technique to `../core/tests/fixtures/techniques.js` (two positions where it
    fires, one where it finds nothing; `../core/tests/suites/techniques.test.js` fails until it has them) and more
@@ -790,16 +800,16 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (43 suites, about 2,820 tests), about a minute
+node tests/node-runner.js                          # the quick set (44 suites, about 2,850 tests), about a minute
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8, about eight minutes)
-node tests/node-runner.js --all                    # quick + manual (51 suites, about 3,840 tests), about nine minutes
+node tests/node-runner.js --all                    # quick + manual (52 suites, about 3,870 tests), about nine minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 43 suites, about
-2,820 tests, about one minute — the 27 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 44 suites, about
+2,850 tests, about one minute — the 28 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -818,8 +828,8 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts about 3,840 tests in 51 suites
-(about 2,820 in the 43 quick ones), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts about 3,870 tests in 52 suites
+(about 2,850 in the 44 quick ones), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text

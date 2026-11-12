@@ -535,7 +535,17 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    `W` là tổng trọng số × số lần dùng; chỉ trọng số quyết định kỹ thuật được phép từ mức nào: oracle của một mức
    cho phép mọi kỹ thuật có 1.25 × trọng số nhỏ hơn cận trên khoảng điểm của mức đó, nên trọng số 400 cho kỹ
    thuật có từ mức *khó* (500 nhỏ hơn cận trên 700 của mức khó, nhưng không nhỏ hơn 400 của mức trung bình).
-   `group` chỉ là tên họ kỹ thuật (`cage` và `ineq` thuộc về Sát thủ và So sánh). Sau đó chạy lại bước kiểm
+   `group` chỉ là tên họ kỹ thuật (`cage` và `ineq` thuộc về Sát thủ và So sánh). Cùng quy tắc đó cho mỗi mức một
+   **nền** (floor: các kỹ thuật của mức đứng ngay trước, tính trên mọi mức kể cả khi biến thể không cung cấp mức đó)
+   và một **tầng** (tier: những gì mức đó cho phép thêm ngoài nền): `SG.difficulty.floorTechniques(level, model)`,
+   `SG.difficulty.tierTechniques(level, model)` và hai trường tương ứng của `spec`. Kỹ thuật mới vào tầng của mức
+   mà trọng số của nó xếp vào, và `tests/suites/difficulty-floor.test.js` tự suy các tập này từ bộ đăng ký và các
+   trọng số. Để kiểm tra một đề có thật sự cần tầng của mức mình hay không,
+   `SG.difficulty.certifyFloor(model, givens, level, budget)` chỉ giải bằng các kỹ thuật của nền: nó tin người gọi
+   rằng các số cho sẵn có đúng một lời giải với bàn cờ này (nó không đếm lời giải), không có giới hạn nào ngoài
+   `budget` được truyền vào, trả về `{ required, vacuous, floorLevel, unsolvedCount }` (đúng hiển nhiên, không cần
+   giải, với `veryEasy` và với mức có tầng rỗng) và ném lỗi khi có mâu thuẫn, khi đầu vào sai hay khi ngân sách bị
+   hỏng thay vì trả lời. Sau đó chạy lại bước kiểm
    định `node tests/qualify.js` và kiểm tra tỷ lệ đạt mức bằng `node tests/soak.js --quick`.
 5. **Kiểm thử**: thêm một mục cho kỹ thuật vào `../core/tests/fixtures/techniques.js` (hai thế cờ mà nó tìm ra
    một phép suy luận, một thế cờ mà nó không tìm ra gì; `../core/tests/suites/techniques.test.js` báo lỗi cho
@@ -549,16 +559,16 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (43 suite, khoảng 2.820 bài), khoảng một phút
+node tests/node-runner.js                          # bộ nhanh (44 suite, khoảng 2.850 bài), khoảng một phút
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
-node tests/node-runner.js --all                    # nhanh + thủ công (51 suite, khoảng 3.840 bài), khoảng chín phút
+node tests/node-runner.js --all                    # nhanh + thủ công (52 suite, khoảng 3.870 bài), khoảng chín phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 43 suite, khoảng 2.820 bài,
-khoảng một phút — 27 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 44 suite, khoảng 2.850 bài,
+khoảng một phút — 28 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw`, tổng cộng khoảng
@@ -576,7 +586,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm khoảng 3.840 bài trong 51 suite (khoảng 2.820 bài trong 43 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm khoảng 3.870 bài trong 52 suite (khoảng 2.850 bài trong 44 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text

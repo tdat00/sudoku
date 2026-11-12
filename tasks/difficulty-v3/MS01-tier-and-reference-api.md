@@ -192,14 +192,14 @@ Do not stage/commit or fill the following table.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted and committed (`difficulty-v3 MS01: Tier algebra and reference floor API`) |
+| Start | 2026-11-12 12:41 (+07:00) |
+| End | 2026-11-12 12:59 developer; 13:06 orchestrator review and commit |
+| Duration | 18 min developer (1,072 s); about 7 min review |
+| Model | claude-sonnet-5.5 (developer); orchestrator review claude-opus-5.5 |
+| Token usage | 87 model calls; 16,212,046 input tokens (15,907,374 cache reads); 110,380 output tokens |
+| AI credits | about 346 (developer) |
+| Verification | Developer: `--suite=difficulty-floor,technique-weights,ui-contract,help` 4 suites, 133 passed (0.9 s); generator quick 44 suites, 2,852 passed (93.3 s); player quick 29 suites, 1,609 passed (24.7 s); two temporary mutations (stuck decided by `!report.solved`, no entry budget check) failed 2 and 3 tests and were reverted. Orchestrator re-run: generator quick 2,852/2,852 (93.8 s), player quick 1,609/1,609 (31.2 s); CRLF/BOM/trailing-whitespace clean; `git diff --check` clean |
+| Acceptance | MS01-B01..B03 and MS01-T01..T06 met. Diff reviewed: `allowedFor`/`floorFor`/`bandSets` share one filter with `spec` (old fields unchanged, 144 variant x level combinations plus no-model compared); `certifyFloor` follows the status contract and reuses `fail('unexpected', {reason:'floorContradiction', level})`; real solves isolated in a fresh VM registry |
+| Issues & resolutions | (1) The developer also updated the suite counts (43 to 44 quick, 51 to 52 total, 27 to 28) in `generator/design.md` section 15 and both developer guides: accepted as directly affected living facts. (2) Finding: at this baseline Hell 1's tier is empty too (Nishio sits in Nightmare's tier), so Hell 1 is vacuous; the suite asserts emptiness only for Hell 2, as specified; MS04 owns the order changes. (3) A budget object without `check` throws a TypeError at entry (not `solver.invalidOption`); accepted, callers pass a real budget or null. (4) The vacuous path does not validate givens or model, by contract (no solve) |
+| Handoff | API: `floorTechniques(level, model)` and `tierTechniques(level, model)` return fresh id arrays for any valid global level (null model: unfiltered); `certifyFloor(model, givens, level, budget)`: `levelIndex` (throws `difficulty.unknownLevel`), `budget.check()`, vacuous `{true, true, null, 0}` without a solve, else one `SG.logicalSolver.solve` with `{allowedTechniques, collectSteps:false, assumeUniqueness:true, stopOnStuck:true, budget}`; solved gives `{false, false, previous level, 0}`, stuck gives `{true, false, previous level, report.state.unsolvedCount}`, anything else throws `unexpected`/`floorContradiction`. `spec` adds `floorTechniques`/`tierTechniques`. No cache; sets re-read from the registry and `WEIGHTS` on every call |

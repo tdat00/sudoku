@@ -35,6 +35,13 @@
  *                   (level, model, derivedFloor) => clues; `derivedFloor` already includes `clueFloorScale`.
  * Killer: { veryEasy: 40 } (the other levels dig down to a handful of clues). Only `spec` reads these fields.
  *
+ * Floor and tier: the techniques of a band, `allowed(i)`, are the registered, weighted ids that apply to the
+ * variant with 1.25 * weight below the band maximum (every one in the top band), in registry order. The floor
+ * of a level is `allowed` of the previous global level (empty for veryEasy), even when the variant does not
+ * offer that level; its tier is `allowed` minus the floor. A puzzle needs the tier of its level when the
+ * floor techniques alone do not solve it; `certifyFloor` is the independent check. veryEasy (its tier is the
+ * three singles) and a level whose tier is empty are vacuous: no solve is needed to certify them.
+ *
  * Calibration: the weights and band edges come from docs/difficulty-rating/report-detailed.md; the edges keep
  * the reference puzzles of tests/fixtures/rated.js in their levels. The weights are engineering priors, not
  * human measurements. Which levels a variant offers is measured by `tests/qualify.js`, not assumed.
@@ -318,15 +325,101 @@
     };
   }
 
+  // Techniques of the band of level `i` (registry order): registered, weighted, applicable to the variant
+  // (all of them when `variantId` is null) and with 1.25 * weight below the band maximum (every one when
+  // it is infinite). Read on each call, so a changed weight or registration is seen at once.
+  function allowedFor(i, variantId) {
+    const max = bandMax(i);
+    return SG.techniques.list().filter(function (tech) {
+      return hasOwn.call(WEIGHTS, tech.id) &&
+        (variantId === null || SG.techniques.appliesTo(tech, variantId)) &&
+        (max === Infinity || SCORING.peakBound * WEIGHTS[tech.id] < max);
+    });
+  }
+
+  // The floor of level `i`: the techniques of the previous global level, whether or not the variant offers
+  // it (none for the first level).
+  function floorFor(i, variantId) {
+    return i === 0 ? [] : allowedFor(i - 1, variantId);
+  }
+
+  // The techniques of level `i`, its floor and its tier (what the level allows that its floor does not).
+  function bandSets(i, variantId) {
+    const allowed = allowedFor(i, variantId);
+    const floor = floorFor(i, variantId);
+    const inFloor = new Set(floor.map(function (tech) { return tech.id; }));
+    return {
+      allowed: allowed,
+      floor: floor,
+      tier: allowed.filter(function (tech) { return !inFloor.has(tech.id); })
+    };
+  }
+
+  function variantIdOf(model) {
+    return model ? model.variantId : null;
+  }
+
+  function idsOf(techs) {
+    return techs.map(function (tech) { return tech.id; });
+  }
+
+  // The ids of the floor of a level: what the previous global level allows (empty for veryEasy). Any valid
+  // level works, offered by the variant or not. A fresh array. Throws 'difficulty.unknownLevel'.
+  function floorTechniques(level, model) {
+    return idsOf(floorFor(levelIndex(level), variantIdOf(model)));
+  }
+
+  // The ids of the tier of a level: what it allows beyond its floor. A fresh array.
+  function tierTechniques(level, model) {
+    return idsOf(bandSets(levelIndex(level), variantIdOf(model)).tier);
+  }
+
+  // FloorResult: { required, vacuous, floorLevel (the previous level; null when vacuous) }
+  // ReferenceFloorResult: FloorResult plus unsolvedCount (cells left when the floor techniques get stuck)
+
+  // Reference check that a puzzle needs the tier of `level`, for tests, soak and other tools (generation
+  // derives it from the rating instead). A solve with the floor techniques alone, with the givens assumed to
+  // have exactly one solution for this model (it counts no solutions) and no limit of its own: only the
+  // caller's `budget` (or null), checked first and handed to the solver. veryEasy and a level with an empty
+  // tier are vacuous: { required: true, vacuous: true, floorLevel: null, unsolvedCount: 0 }, no solve. A
+  // solved floor means the tier is not needed, a stuck one that it is. A contradiction, invalid givens,
+  // cancellation and a budget failure are errors, never "required".
+  function certifyFloor(model, givens, level, budget) {
+    const i = levelIndex(level);
+    const inherited = budget === undefined ? null : budget;
+    if (inherited !== null) inherited.check();
+    const sets = bandSets(i, variantIdOf(model));
+    if (i === 0 || sets.tier.length === 0) {
+      return { required: true, vacuous: true, floorLevel: null, unsolvedCount: 0 };
+    }
+    const report = SG.logicalSolver.solve(model, givens, {
+      allowedTechniques: idsOf(sets.floor),
+      collectSteps: false,
+      assumeUniqueness: true,
+      stopOnStuck: true,
+      budget: inherited
+    });
+    if (report.status === 'solved') {
+      return { required: false, vacuous: false, floorLevel: LEVELS[i - 1], unsolvedCount: 0 };
+    }
+    if (report.status === 'stuck') {
+      const left = report.state.unsolvedCount;
+      return { required: true, vacuous: false, floorLevel: LEVELS[i - 1], unsolvedCount: left };
+    }
+    throw fail('unexpected', { reason: 'floorContradiction', level: level },
+      'floor solve returned contradiction');
+  }
+
   // DifficultySpec: { level, min (inclusive, not scaled), max (exclusive; Infinity for hell2), minClues (the
   // digger never goes below it, invariant I6: classic9 floor scaled by cellCount / 81 unless the variant
   // declares `clueFloor`; may be 0), maxClues (informative), minCluesPerUnit (every unit keeps at least this
   // many givens while digging), allowedGroups, allowedTechniques (registered ids that apply to the variant
   // and can occur in the band: 1.25 * w_t < max, all for hell2, in loop order; the oracle runs them with
-  // assumeUniqueness: false, so uniqueRectangle is listed but never used there), symmetryDefault, extraPasses
-  // (unused), oracle ('techniques': a complete proof at every level), proposal (top tier: the digger may also
-  // start from the fast uniqueness-based proposal dig), scale (cellCount / 81, the scale of the clue floors)
-  // }
+  // assumeUniqueness: false, so uniqueRectangle is listed but never used there), floorTechniques and
+  // tierTechniques (the floor and the tier of the level, see "Floor and tier" in the file header),
+  // symmetryDefault, extraPasses (unused), oracle ('techniques': a complete proof at every level), proposal
+  // (top tier: the digger may also start from the fast uniqueness-based proposal dig), scale (cellCount / 81,
+  // the scale of the clue floors) }
 
   // The specification the hole digger works to for one level on one board: score band, clue range and
   // technique set. Throws 'difficulty.unknownLevel', or 'difficulty.unsupportedLevel' when the variant's
@@ -339,13 +432,8 @@
     }
     const row = TABLE[i];
     const scale = scaleOf(model);
-    const max = bandMax(i);
-    const variantId = model ? model.variantId : null;
-    const techniques = SG.techniques.list().filter(function (tech) {
-      return hasOwn.call(WEIGHTS, tech.id) &&
-        (variantId === null || SG.techniques.appliesTo(tech, variantId)) &&
-        (max === Infinity || SCORING.peakBound * WEIGHTS[tech.id] < max);
-    });
+    const sets = bandSets(i, variantIdOf(model));
+    const techniques = sets.allowed;
     const groups = [];
     BASE_GROUPS.concat(VARIANT_GROUPS).forEach(function (g) {
       if (techniques.some(function (tech) { return tech.group === g; })) groups.push(g);
@@ -355,12 +443,14 @@
     return {
       level: level,
       min: bandMin(i),
-      max: max,
+      max: bandMax(i),
       minClues: clues.minClues,
       maxClues: clues.maxClues,
       minCluesPerUnit: Math.floor(row.minCluesPerUnit * digits / 9),
       allowedGroups: groups,
-      allowedTechniques: techniques.map(function (tech) { return tech.id; }),
+      allowedTechniques: idsOf(techniques),
+      floorTechniques: idsOf(sets.floor),
+      tierTechniques: idsOf(sets.tier),
       symmetryDefault: DEFAULT_SYMMETRY,
       extraPasses: row.extraPasses,
       oracle: 'techniques',
@@ -460,6 +550,9 @@
     WEIGHTS: WEIGHTS,
     TABLE: TABLE,
     spec: spec,
+    floorTechniques: floorTechniques,
+    tierTechniques: tierTechniques,
+    certifyFloor: certifyFloor,
     isSupported: isSupported,
     classify: classify,
     rate: rate,
