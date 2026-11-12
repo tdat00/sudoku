@@ -2,249 +2,432 @@
 'use strict';
 
 /*
- * Finds a concrete example for every technique of the Help page and writes js/ui/help-examples.js.
+ * Finds a real, reproducible example for the techniques of the Help page and checks or writes
+ * js/ui/help-examples.js. Every decision lives in tests/fixtures/help-example-tools.js
+ * (SG.fixtures.helpExampleTools); this file reads and writes the files, loads the sources and starts the
+ * generator child.
  *
- *   node tests/tools/make-technique-examples.js [path-to-generator] [--puzzles=<n>] [--out=<file>]
+ *   node tests/tools/make-technique-examples.js [path-to-generator] [options]      (--help lists them)
  *
- * Stage 1 (a child process that loads the generator, default ../generator, which is only READ) makes a list
- * of puzzles of several variants and levels, as the text of the generator's Export box. Stage 2 plays each of
- * them the way a person who keeps asking for hints would: fill in all the notes, ask for a hint, apply it,
- * and so on until the game is stuck or solved. The first hint of every technique is a candidate for its
+ * The default is a read-only check of the selected IDs against the saved catalogue, replaying the puzzle of
+ * each saved example: nothing is generated, nothing is written. The Player plays each source the way a person
+ * who keeps asking for hints would: fill in all the notes, ask for a hint, apply it, and so on until the game
+ * is stuck, solved or --max-hints hints were used. The first hint of a technique is a candidate for its
  * example, and the easiest one to read wins (the fewest cells, removals and candidates on show, a plain 9x9
- * board preferred; the earliest on a tie). What is written is a snapshot of the board and the hint, so the
- * guide draws it at once and plays nothing (`SG.helpExamples`, see js/ui/help.js); the puzzle and the number
- * of hints are kept in it only so that a test can check the snapshot against the player's own hints. The file
- * is committed; this is only needed when the solver, the hints or the generator change.
+ * board preferred; the earliest on a tie). What is saved is a snapshot of the board and the hint, so the guide
+ * draws it at once and plays nothing (`SG.helpExamples`, see js/ui/help.js); the puzzle and the number of
+ * hints are kept in it only so that a test can check the snapshot against the player's own hints.
+ *
+ * Sources are real puzzles of the generator, named by an explicit file (--sources) or the saved example of the
+ * ID. Only with --discover (and --write or --record-sources) does a child process load the generator (default
+ * ../generator, which is only READ) and make at most --max-puzzles puzzles of the plan, as the text of the
+ * generator's Export box. The intermediate of that child lives in --work-dir (inside the repository), the
+ * tool stops at an eight-minute deadline (exit 2, nothing written), and every file is written through a
+ * partial file that replaces the old one only when the whole result is valid. The file is committed; this is
+ * only needed when the solver, the hints or the generator change.
+ *
+ * Exit code: 0 done or up to date; 1 a difference, a missing example, a wrong command line or an error;
+ * 2 incomplete (the deadline or the generator child's time ran out).
  */
+const childProcess = require('child_process');
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
 const vm = require('vm');
-const { execFileSync } = require('child_process');
 
 const PLAYER_ROOT = path.resolve(__dirname, '..', '..');
+const REPO = path.resolve(PLAYER_ROOT, '..');
 /** The generator sits next to the player in the repository. */
-const DEFAULT_GENERATOR = path.resolve(PLAYER_ROOT, '..', 'generator');
-const OUT_DEFAULT = path.join(PLAYER_ROOT, 'js', 'ui', 'help-examples.js');
+const DEFAULT_GENERATOR = path.resolve(REPO, 'generator');
+const CANONICAL = path.join(PLAYER_ROOT, 'js', 'ui', 'help-examples.js');
+const FIXTURE = path.join(PLAYER_ROOT, 'tests', 'fixtures', 'help-example-tools.js');
+const EXIT_INCOMPLETE = 2;
+const EXIT_CHILD_INCOMPLETE = 3;
+const CHILD_MARGIN_MS = 5000;
 
-/** [variantId, preferred levels, number of seeds, optional 'highest' supported level only]. */
-const PLAN = [
-  ['classic9', ['easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'], 120],
-  ['killer', ['easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'], 60],
-  ['greaterThan', ['easy', 'normal', 'hard'], 12],
-  ['jigsaw9', ['hard', 'expert', 'master'], 40],
-  ['diagonalX', ['hard', 'expert', 'master', 'nightmare'], 40],
-  ['hyper', ['hard', 'expert', 'master', 'nightmare'], 40],
-  // The rarest techniques (Jellyfish) need many hard puzzles to turn up.
-  ['classic9', ['nightmare', 'hell1', 'hell2'], 1500, 'highest'],
-  ['diagonalX', ['nightmare', 'hell1', 'hell2'], 600, 'highest'],
-  ['hyper', ['nightmare', 'hell1', 'hell2'], 600, 'highest']
-];
+const USAGE = [
+  'Usage: node tests/tools/make-technique-examples.js [path-to-generator] [options]',
+  '',
+  '  --ids=id[,id]             exact technique IDs (default: every registered ID)',
+  '  --sources=<file.json>     real puzzle sources per ID:',
+  '                            {schema:1, sources:{id:[{variantId, level, seed, text}]}}',
+  '                            (default: the puzzle of the saved example of each ID)',
+  '  --max-puzzles=N           at most N puzzles in all, before generating and before replaying',
+  '                            (default 64); --puzzles=N is the same cap',
+  '  --max-hints=N             at most N hints per puzzle (default 400)',
+  '  --check                   compare the selected examples with the catalogue, write nothing (default)',
+  '  --write                   merge the selected examples into the complete catalogue and write it',
+  '  --record-sources=<f.json> save the real source of each selected ID; no catalogue is written',
+  '  --discover                make at most --max-puzzles puzzles of the plan (needs --write or',
+  '                            --record-sources; not with --sources or --check)',
+  '  --variants=id[,id]        only these variants of the plan (with --discover)',
+  '  --levels=id[,id]          only these levels of the plan (with --discover)',
+  '  --out=<file.js>           the catalogue to compare with or write (default js/ui/help-examples.js)',
+  '  --work-dir=<directory>    project-relative folder of the intermediates',
+  '                            (default tests/artifacts/difficulty-v3/help)',
+  '  --help                    this text; nothing is loaded or generated',
+  '',
+  'Paths are relative to the current folder and stay inside the repository. Exit code 0: done or up to',
+  'date; 1: a difference, a missing example, a wrong command line or an error; 2: incomplete (the',
+  'eight-minute deadline of the tool or the time of the generator child ran out; nothing was written).'
+].join('\n');
 
-function parseArgs(argv) {
-  const opts = { generator: null, puzzles: 0, out: OUT_DEFAULT, stage1: null };
-  argv.forEach(function (arg) {
-    let m;
-    if ((m = /^--puzzles=(\d+)$/.exec(arg))) opts.puzzles = Number(m[1]);
-    else if ((m = /^--out=(.*)$/.exec(arg))) opts.out = path.resolve(m[1]);
-    else if ((m = /^--stage1=(.*)$/.exec(arg))) opts.stage1 = path.resolve(m[1]);
-    else if (!arg.startsWith('--') && opts.generator === null) opts.generator = path.resolve(arg);
-    else throw new Error('Unknown argument: ' + arg);
-  });
-  if (opts.generator === null) opts.generator = DEFAULT_GENERATOR;
-  return opts;
+/** A path as the repository shows it: relative to the repository root, with forward slashes. */
+function show(abs) {
+  return path.relative(REPO, abs).split(path.sep).join('/');
 }
 
+function inside(abs, folder) {
+  const rel = path.relative(folder, abs);
+  return rel !== '' && !rel.startsWith('..') && !path.isAbsolute(rel);
+}
+
+/** A path of the command line as an absolute one; it must stay inside the repository. */
+function projectFile(T, value, flag) {
+  const abs = path.resolve(value);
+  if (!inside(abs, REPO)) {
+    throw T.usageError(flag + ': the path must stay inside the repository (' + value + ')');
+  }
+  return abs;
+}
+
+function readText(abs) {
+  return fs.readFileSync(abs, 'utf8').replace(/^\uFEFF/, '');
+}
+
+function runScript(abs) {
+  vm.runInThisContext(readText(abs), { filename: abs });
+}
+
+/** Runs the sources of an app in this context, in the order of the SOURCE_FILES of its node-runner.js. */
 function loadSources(dir) {
-  const runner = fs.readFileSync(path.join(dir, 'tests', 'node-runner.js'), 'utf8');
-  const block = /const SOURCE_FILES = \[([\s\S]*?)\];/.exec(runner);
-  if (block === null) throw new Error('SOURCE_FILES not found in ' + dir);
+  const runner = path.join(dir, 'tests', 'node-runner.js');
+  if (!fs.existsSync(runner)) {
+    throw new Error(show(dir) + ': not an app folder (tests/node-runner.js is missing)');
+  }
+  const block = /const SOURCE_FILES = \[([\s\S]*?)\];/.exec(readText(runner));
+  if (block === null) throw new Error('SOURCE_FILES not found in ' + show(runner));
   block[1].match(/'([^']+)'/g).map(function (s) { return s.slice(1, -1); }).forEach(function (rel) {
     const abs = path.join(dir, rel);
-    if (fs.existsSync(abs)) vm.runInThisContext(fs.readFileSync(abs, 'utf8').replace(/^\uFEFF/, ''), { filename: abs });
+    if (fs.existsSync(abs)) runScript(abs);
   });
   return globalThis.SG;
 }
 
+/** Creates the folder if it is missing and returns the first folder this call created (null: it existed). */
+function ensureDir(dir) {
+  if (fs.existsSync(dir)) return null;
+  return fs.mkdirSync(dir, { recursive: true }) || null;
+}
+
+/** Removes the folders `ensureDir` created, from the innermost one, only while they are empty. */
+function releaseDir(dir, created) {
+  if (created === null) return;
+  for (let d = dir; ; d = path.dirname(d)) {
+    try {
+      fs.rmdirSync(d);
+    } catch (err) {
+      return;
+    }
+    if (d === created) return;
+  }
+}
+
+/** Writes a file through a partial file of the work directory: the old file stays until the new is whole. */
+function writeAtomic(target, text, workDir) {
+  const made = ensureDir(workDir);
+  const partial = path.join(workDir, 'write-' + process.pid + '.partial');
+  try {
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(partial, text, 'utf8');
+    fs.renameSync(partial, target);
+  } finally {
+    fs.rmSync(partial, { force: true });
+    releaseDir(workDir, made);
+  }
+}
+
 // ---------------------------------------------------------------------------------------------
-// Stage 1: the generator makes the puzzles
+// Stage 1: the generator child makes the puzzles (only with --discover)
 // ---------------------------------------------------------------------------------------------
 
-function stage1(opts) {
-  const SG = loadSources(opts.generator);
+function childMain(argv) {
+  runScript(FIXTURE);
+  const T = globalThis.SG.fixtures.helpExampleTools;
+  const opts = T.parseChildOptions(argv);
+  const generator = path.resolve(opts.generator);
+  const SG = loadSources(generator);
   SG.i18n.setLocale('en');
-  const list = [];
-  PLAN.forEach(function (row) {
-    const supported = SG.variants.get(row[0]).difficultySupport;
-    let levels = row[1].filter(function (level) { return supported.indexOf(level) !== -1; });
-    if (row[3] === 'highest') levels = levels.slice(-1);
-    levels.forEach(function (level) {
-      for (let seed = 1; seed <= row[2]; seed++) {
-        const result = SG.pipeline.run({ variantId: row[0], difficulty: level, seed: seed, trace: 'off',
-          variantOptions: {} }, null);
-        list.push({ variantId: row[0], level: level, seed: seed,
-          text: SG.exportUi.buildExportText([{ result: result }]) });
+  const deadline = T.makeDeadline(Date.now, Date.now(), opts.deadlineAt - Date.now());
+  const combos = T.planDiscovery(function (id) { return SG.variants.get(id).difficultySupport; },
+    { variants: opts.variants, levels: opts.levels });
+  if (combos.length === 0) {
+    throw new Error('the plan has no request for these --variants and --levels; nothing was generated');
+  }
+  const generate = function (variantId, level, seed) {
+    const ms = Math.max(1000, Math.min(T.REQUEST_BUDGET_MS, deadline.remaining()));
+    const result = SG.pipeline.run({ variantId: variantId, difficulty: level, seed: seed, trace: 'off',
+      variantOptions: {} }, null, SG.budget.create({ ms: ms }));
+    return { variantId: variantId, level: level, seed: String(seed),
+      text: SG.exportUi.buildExportText([{ result: result }]).trim() };
+  };
+  const done = T.runDiscovery(combos, opts.maxPuzzles, generate, deadline, console.log);
+  if (!done.complete) {
+    console.error('incomplete: the deadline came after ' + done.attempted + ' request(s)');
+    return EXIT_CHILD_INCOMPLETE;
+  }
+  fs.writeFileSync(opts.stage1, JSON.stringify({ schema: T.SOURCE_SCHEMA, complete: true,
+    attempted: done.attempted, items: done.items, failures: done.failures }), 'utf8');
+  return 0;
+}
+
+function discover(T, opts, generator, workDir, deadline) {
+  if (!fs.existsSync(path.join(generator, 'tests', 'node-runner.js'))) {
+    throw new Error(show(generator) + ': not a generator folder (tests/node-runner.js is missing)');
+  }
+  const file = path.join(workDir, 'stage1-' + process.pid + '.json');
+  const env = {
+    file: file,
+    args: [__filename, generator].concat(T.childArguments(opts, file, deadline.at - CHILD_MARGIN_MS)),
+    ensureDir: function () { return ensureDir(workDir); },
+    release: function (made) { releaseDir(workDir, made); },
+    spawn: function (args, timeout) {
+      return childProcess.spawnSync(process.execPath, args, { stdio: 'inherit', timeout: timeout,
+        killSignal: 'SIGKILL', windowsHide: true });
+    },
+    readText: function (abs) { return fs.existsSync(abs) ? fs.readFileSync(abs, 'utf8') : null; },
+    remove: function (abs) { fs.rmSync(abs, { force: true }); }
+  };
+  return T.runStage1(env, opts, deadline);
+}
+
+// ---------------------------------------------------------------------------------------------
+// Stage 2: the Player replays the sources
+// ---------------------------------------------------------------------------------------------
+
+function label(item) {
+  return item.variantId + ' ' + (item.level === null ? '-' : item.level) + ' ' +
+    (item.seed === null ? '-' : item.seed);
+}
+
+/** The sources of the selected IDs: discovered, from a file, or the saved examples. */
+function sourcesOf(SG, T, opts, ids, files, deadline) {
+  if (opts.discover) {
+    const found = discover(T, opts, files.generator, files.workDir, deadline);
+    console.log('discovery: ' + found.attempted + ' request(s), ' + found.items.length + ' puzzle(s), ' +
+      found.failures.length + ' failed');
+    found.failures.forEach(function (f) {
+      console.log('  failed ' + f.variantId + ' ' + f.level + ' ' + f.seed + ': ' + f.error);
+    });
+    if (found.items.length === 0) throw new Error('discovery made no puzzle: nothing to replay');
+    const items = found.items.map(function (item) {
+      return Object.assign({}, item, { text: item.text.trim() });
+    });
+    const assigned = {};
+    ids.forEach(function (id) { assigned[id] = items; });
+    return assigned;
+  }
+  if (files.sources !== null) {
+    if (!fs.existsSync(files.sources)) throw new Error(show(files.sources) + ': no such sources file');
+    let data;
+    try {
+      data = T.parseSources(readText(files.sources));
+    } catch (err) {
+      throw new Error(show(files.sources) + ': ' + err.message);
+    }
+    const registry = SG.techniques.list().map(function (tech) { return tech.id; });
+    const checked = T.validateSources(data, registry);
+    if (checked.problems.length > 0) {
+      throw new Error(show(files.sources) + ' is not a valid sources file:\n  ' +
+        checked.problems.join('\n  '));
+    }
+    return T.assignSources(ids, checked.sources);
+  }
+  return T.defaultSources(SG.helpExamples, ids);
+}
+
+function replay(SG, T, opts, ids, assigned, deadline) {
+  const plan = T.admit(ids, assigned, opts.maxPuzzles);
+  if (plan.skipped > 0) {
+    console.log('note: ' + plan.skipped + ' source(s) beyond --max-puzzles=' + opts.maxPuzzles +
+      ' are not replayed');
+  }
+  if (plan.missing.length > 0) {
+    throw new Error('no source within --max-puzzles=' + opts.maxPuzzles + ' for ' + plan.missing.join(', ') +
+      ' (raise the cap or select fewer IDs)');
+  }
+  if (!opts.discover) {
+    const problems = [];
+    plan.puzzles.forEach(function (p, i) {
+      const opened = T.openSource(SG, p.item);
+      if (!opened.ok) {
+        problems.push('  source ' + (i + 1) + ' (' + p.ids.join(', ') + '; ' + label(p.item) + '): ' +
+          opened.error);
       }
     });
+    if (problems.length > 0) throw new Error('a source cannot be replayed:\n' + problems.join('\n'));
+  }
+  console.log('replaying ' + plan.puzzles.length + ' puzzle(s) for ' + ids.length + ' ID(s) (--max-puzzles=' +
+    opts.maxPuzzles + ', --max-hints=' + opts.maxHints + ')');
+  const results = [];
+  plan.puzzles.forEach(function (p, i) {
+    deadline.check('before puzzle ' + (i + 1));
+    const limits = { maxHints: opts.maxHints,
+      check: function () { deadline.check('during puzzle ' + (i + 1)); } };
+    const r = T.replayPuzzle(SG, p.item, p.ids, limits);
+    results.push(r);
+    console.log('puzzle ' + (i + 1) + '/' + plan.puzzles.length + ' ' + label(p.item) + ' -> ' +
+      (r.ok ? r.hints + ' hint(s), ' + r.stop + '; wanted found: ' +
+        (p.ids.filter(function (id) { return r.best[id] !== undefined; }).join(', ') || '-') : r.error));
   });
-  fs.writeFileSync(opts.stage1, JSON.stringify(list));
+  return { plan: plan, results: results };
+}
+
+function describeMissing(opts, run, id) {
+  const replays = run.plan.byId[id].map(function (at) { return run.results[at]; });
+  const limited = replays.filter(function (r) { return r.ok && r.stop === 'limit'; }).length;
+  return id + ': no example found in ' + replays.length + ' puzzle(s) within ' + opts.maxHints +
+    ' hint(s)' + (limited > 0 ? ' (' + limited + ' stopped at the hint limit)' : '');
 }
 
 // ---------------------------------------------------------------------------------------------
-// Stage 2: play the puzzles with hints
+// The modes
 // ---------------------------------------------------------------------------------------------
 
-function popcount(mask) {
-  let n = 0;
-  for (let m = mask; m !== 0; m &= m - 1) n++;
-  return n;
-}
-
-/** The cells whose notes the Help page draws: the region, the cells of the hint and the ones it changes. */
-function shownCells(hint) {
-  const set = new Set(hint.region ? hint.region.cells : []);
-  hint.cells.forEach(function (c) { set.add(c); });
-  hint.targets.forEach(function (c) { set.add(c); });
-  return Array.from(set).sort(function (a, b) { return a - b; });
-}
-
-/**
- * How hard an example is to read: the fewer cells, removals and candidates on show the clearer it is, and a
- * plain 9x9 board is clearer than one with extra regions.
- */
-function difficulty(SG, game, hint, puzzle) {
-  const scope = SG.techniques.get(hint.technique).variantScope;
-  const extra = scope === null && puzzle.variantId !== 'classic9' ? 8 : 0;
-  let clutter = 0;
-  shownCells(hint).forEach(function (c) { if (game.userValue(c) === 0) clutter += popcount(game.getNotes(c)); });
-  return hint.cells.length + hint.eliminations.length + hint.placements.length + clutter / 4 + extra;
-}
-
-/** Everything the page needs to draw an example without playing anything: the board, the notes, the hint. */
-function snapshot(SG, game, puzzle, hint, item, step) {
-  const model = puzzle.model;
-  const n = model.cellCount;
-  const notes = {};
-  shownCells(hint).forEach(function (c) {
-    if (game.userValue(c) === 0 && game.getNotes(c) !== 0) notes[c] = game.getNotes(c);
-  });
-  const digitsOf = function (list) {
-    return Array.from(list).map(function (v) { return v > 0 ? String(v) : '.'; }).join('');
-  };
-  const values = [];
-  for (let i = 0; i < n; i++) values.push(game.userValue(i));
-  const out = {
-    variant: puzzle.variantId,
-    givens: digitsOf(puzzle.givens),
-    values: digitsOf(values),
-    notes: notes
-  };
-  if (model.cages.length > 0) {
-    out.cages = model.cages.map(function (cage) { return { cells: Array.from(cage.cells), sum: cage.sum }; });
-  }
-  if (model.inequalities.length > 0) {
-    out.signs = model.inequalities.map(function (sign) { return { a: sign.a, b: sign.b }; });
-  }
-  out.hint = {
-    technique: hint.technique, nameKey: hint.nameKey, descKey: hint.descKey, stepKey: hint.stepKey,
-    stepArgs: hint.stepArgs, kind: hint.kind, cells: hint.cells, targets: hint.targets,
-    placements: hint.placements, eliminations: hint.eliminations, region: hint.region
-  };
-  out.source = { puzzle: item.text.trim(), step: step };
-  return out;
-}
-
-async function stage2(opts, puzzles) {
-  const SG = loadSources(PLAYER_ROOT);
-  SG.i18n.setLocale('en');
-  const best = new Map();
-  let seen = 0;
-  for (const item of puzzles) {
-    seen++;
-    const block = SG.importer.exportBlocks(item.text);
-    const parsed = SG.importer.parseExportBlock(block[0], 1);
-    if (!parsed.ok) continue;
-    const outcome = SG.importer.openDocument(parsed.data, { kind: 'export' });
-    if (!outcome.ok) continue;
-    const puzzle = outcome.puzzle;
-    const game = SG.play.createGame(puzzle.model, puzzle.givens, puzzle.solution, { now: function () { return 0; } });
-    game.fillNotes();
-    const found = [];
-    for (let k = 0; k < 400 && !game.isSolved(); k++) {
-      game.clearHint();
-      const hint = game.hint();
-      if (!hint || hint.ok !== true) break;
-      found.push(hint.technique);
-      // A cage of one cell is no example of a combination of digits: wait for a cage with at least two.
-      const eligible = !(hint.technique === 'cageCombo' && hint.stepArgs && hint.stepArgs.size < 2);
-      if (eligible) {
-        const score = difficulty(SG, game, hint, puzzle);
-        const old = best.get(hint.technique);
-        if (old === undefined || score < old.score) {
-          best.set(hint.technique, { score: score, data: snapshot(SG, game, puzzle, hint, item, k) });
-        }
-      }
-      game.applyHint();
+function check(T, saved, out, ids, outcome, describe) {
+  let differ = 0;
+  outcome.missing.forEach(function (id) { console.log(describe(id)); });
+  const have = ids.filter(function (id) { return outcome.found[id] !== undefined; });
+  const fresh = {};
+  have.forEach(function (id) { fresh[id] = outcome.found[id].data; });
+  const name = path.basename(out);
+  T.compare(have, saved, fresh).forEach(function (r) {
+    if (r.status === 'match') {
+      console.log(r.id + ': matches ' + name);
+      return;
     }
-    process.stdout.write('puzzle ' + seen + '/' + puzzles.length + ' ' + item.variantId + ' ' + item.level + ' ' +
-      item.seed + ' -> ' + Array.from(new Set(found)).join(',') + '\n');
+    differ++;
+    if (r.status === 'new') {
+      console.log(r.id + ': has no example in ' + name + ' (a new one)');
+      return;
+    }
+    console.log(r.id + ': ' + r.diffs.length + ' field(s) differ from ' + name);
+    r.diffs.slice(0, 8).forEach(function (d) { console.log('  ' + T.diffLine(d)); });
+    if (r.diffs.length > 8) console.log('  ... and ' + (r.diffs.length - 8) + ' more');
+  });
+  const bad = differ + outcome.missing.length;
+  console.log(bad === 0 ? name + ' is up to date for the ' + ids.length + ' selected ID(s)' :
+    name + ' differs or lacks an example for ' + bad + ' of the ' + ids.length + ' selected ID(s)');
+  return bad === 0 ? 0 : 1;
+}
+
+function write(SG, T, out, workDir, registry, ids, found) {
+  const saved = fs.existsSync(out) ? T.catalogueOf(readText(out)) : SG.helpExamples;
+  const fresh = {};
+  ids.forEach(function (id) { fresh[id] = found[id].data; });
+  const merged = T.mergeCatalogue(registry, saved, ids, fresh);
+  if (!merged.ok) {
+    console.log('the resulting catalogue is not complete and valid; ' + show(out) + ' is untouched:');
+    merged.problems.forEach(function (p) { console.log('  ' + p); });
+    return 1;
   }
-  return best;
-}
-
-function write(opts, SG, best) {
-  const ids = SG.techniques.list().map(function (tech) { return tech.id; });
-  const missing = ids.filter(function (id) { return !best.has(id); });
-  if (missing.length > 0) throw new Error('No example for: ' + missing.join(', '));
-  const body = ids.map(function (id) {
-    return '    ' + id + ': ' + JSON.stringify(best.get(id).data);
-  }).join(',\n');
-  const text = [
-    '/**',
-    ' * A concrete example for every technique of the guide (help.html): `SG.helpExamples[id]`. The data is a',
-    ' * snapshot, so the page draws it at once and plays nothing:',
-    ' *   variant   \'classic9\', \'diagonalX\', \'hyper\', \'killer\' (with `cages`) or \'greaterThan\' (with `signs`): the board to build;',
-    ' *   givens, values   81 characters each, \'.\' for an empty cell: the clues, and what the hints entered so far;',
-    ' *   notes     { cell: bit mask } of the cells that are drawn with their candidates;',
-    ' *   hint      what `game.hint()` said at that moment (technique, text key and arguments, cells, the cells and',
-    ' *             candidates it changes, the area to look at);',
-    ' *   source    the puzzle (the text of the generator\'s Export box) and the number of hints applied (with all the',
-    ' *             notes filled in first) before this one: only the tests use it, to check that the snapshot is still',
-    ' *             what the player\'s own hint says.',
-    ' *',
-    ' * GENERATED by tests/tools/make-technique-examples.js: do not edit by hand.',
-    ' */',
-    '(function (root) {',
-    '  \'use strict\';',
-    '',
-    '  const SG = root.SG = root.SG || {};',
-    '',
-    '  SG.helpExamples = Object.freeze({',
-    body,
-    '  });',
-    '})(typeof self !== \'undefined\' ? self : globalThis);',
-    ''
-  ].join('\n');
-  fs.writeFileSync(opts.out, text);
-  console.log('wrote ' + path.relative(PLAYER_ROOT, opts.out) + ' (' + ids.length + ' examples)');
-}
-
-async function main() {
-  const opts = parseArgs(process.argv.slice(2));
-  if (opts.stage1 !== null) {
-    stage1(opts);
-    return;
+  const text = T.render(registry, merged.catalogue);
+  const back = T.catalogueOf(text);
+  const flawed = registry.filter(function (id) {
+    return JSON.stringify(back[id]) !== JSON.stringify(merged.catalogue[id]);
+  });
+  if (flawed.length > 0) {
+    throw new Error('the rendered catalogue does not read back the same for ' + flawed.join(', '));
   }
-  const tmp = path.join(os.tmpdir(), 'sg-technique-puzzles-' + process.pid + '.json');
-  execFileSync(process.execPath, [__filename, opts.generator, '--stage1=' + tmp], { stdio: 'inherit',
-    maxBuffer: 1 << 28 });
-  const puzzles = JSON.parse(fs.readFileSync(tmp, 'utf8'));
-  fs.unlinkSync(tmp);
-  const best = await stage2(opts, opts.puzzles > 0 ? puzzles.slice(0, opts.puzzles) : puzzles);
-  write(opts, globalThis.SG, best);
+  writeAtomic(out, text, workDir);
+  if (readText(out) !== text) throw new Error(show(out) + ' does not hold what was written');
+  if (merged.dropped.length > 0) {
+    console.log('dropped from the catalogue (not registered): ' + merged.dropped.join(', '));
+  }
+  console.log('wrote ' + show(out) + ' (' + registry.length + ' examples; ' + ids.length + ' selected: ' +
+    ids.join(', ') + '; the others kept)');
+  return 0;
 }
 
-main().catch(function (err) {
-  console.error(err);
-  process.exit(1);
-});
+function main(argv) {
+  const started = Date.now();
+  if (argv.length === 1 && (argv[0] === '--help' || argv[0] === '-h')) {
+    console.log(USAGE);
+    return 0;
+  }
+  if (argv.some(function (arg) { return /^--stage1(=|$)/.test(arg); })) return childMain(argv);
+
+  const SG = loadSources(PLAYER_ROOT);
+  runScript(FIXTURE);
+  const T = SG.fixtures.helpExampleTools;
+  SG.i18n.setLocale('en');
+  const opts = T.parseOptions(argv);
+  const files = {
+    generator: path.resolve(opts.generator === null ? DEFAULT_GENERATOR : opts.generator),
+    out: opts.out === null ? CANONICAL : projectFile(T, opts.out, '--out'),
+    sources: opts.sources === null ? null : projectFile(T, opts.sources, '--sources'),
+    record: opts.recordSources === null ? null : projectFile(T, opts.recordSources, '--record-sources'),
+    workDir: opts.workDir === null ? path.join(PLAYER_ROOT, T.DEFAULT_WORK_DIR) :
+      projectFile(T, opts.workDir, '--work-dir')
+  };
+  const registry = SG.techniques.list().map(function (tech) { return tech.id; });
+  const ids = T.selectIds(registry, opts.ids);
+  const deadline = T.makeDeadline(Date.now, started, T.DEADLINE_MS);
+  console.log('selected ' + ids.length + ' technique ID(s); mode ' + (opts.discover ? 'discover + ' : '') +
+    opts.mode);
+
+  let saved = null;
+  if (opts.mode === 'check') {
+    if (!fs.existsSync(files.out)) {
+      throw new Error(show(files.out) + ': there is no catalogue to compare with');
+    }
+    saved = T.catalogueOf(readText(files.out));
+  }
+  const assigned = sourcesOf(SG, T, opts, ids, files, deadline);
+  const run = replay(SG, T, opts, ids, assigned, deadline);
+  const outcome = T.winners(ids, run.plan, run.results);
+  const describe = function (id) { return describeMissing(opts, run, id); };
+
+  if (opts.mode === 'check') {
+    return check(T, saved, files.out, ids, outcome, describe);
+  }
+  if (outcome.missing.length > 0) {
+    outcome.missing.forEach(function (id) { console.log(describe(id)); });
+    console.log('no example for ' + outcome.missing.length + ' selected ID(s); nothing was written');
+    return 1;
+  }
+  deadline.check('before writing');
+  if (opts.mode === 'record') {
+    writeAtomic(files.record, T.sourcesText(T.recordedSources(ids, outcome.found)), files.workDir);
+    console.log('recorded ' + ids.length + ' source(s) into ' + show(files.record));
+    return 0;
+  }
+  return write(SG, T, files.out, files.workDir, registry, ids, outcome.found);
+}
+
+/** An error text without the machine path of the repository (a log shows relative paths only). */
+function scrub(text) {
+  return String(text).split(REPO).join('.').split(REPO.split(path.sep).join('/')).join('.');
+}
+
+function report(err) {
+  if (err && err.usage) {
+    console.error(scrub(err.message) + '\n\n' + USAGE);
+    return 1;
+  }
+  if (err && err.incomplete) {
+    console.error(scrub(err.message));
+    return EXIT_INCOMPLETE;
+  }
+  console.error(scrub(err && err.name === 'Error' ? err.message : err && err.stack ? err.stack : err));
+  return 1;
+}
+
+module.exports = { main: main, USAGE: USAGE };
+
+if (require.main === module) {
+  try {
+    process.exitCode = main(process.argv.slice(2));
+  } catch (err) {
+    process.exitCode = report(err);
+  }
+}

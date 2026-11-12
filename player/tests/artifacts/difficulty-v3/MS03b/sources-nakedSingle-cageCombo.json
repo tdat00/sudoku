@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "sources": {
+    "nakedSingle": [
+      {"variantId":"classic9","level":null,"seed":null,"text":"#1,Classic Sudoku 9x9,Easy,1\n....84..3\n6.973...8\n.4..2....\n.5..18934\n.8.....6.\n29164..8.\n....5..2.\n4...673.1\n1..49...."}
+    ],
+    "cageCombo": [
+      {"variantId":"killer","level":null,"seed":null,"text":"#1,Killer Sudoku,Easy,11\n.....21..\n..9...5..\n.6754.392\n.1..83...\n..8...2..\n...27..3.\n874.6592.\n..1...6..\n..68.....\ncages: 9=r1c1,r2c1; 10=r1c2,r2c2; 12=r1c3,r2c3; 19=r1c4,r1c5,r2c4; 12=r1c6,r1c7,r1c8,r2c7; 16=r1c9,r2c9,r3c9; 19=r2c5,r2c6,r3c5,r4c5; 19=r2c8,r3c7,r3c8; 10=r3c1,r4c1; 18=r3c2,r3c3,r3c4; 18=r3c6,r4c6,r4c7; 11=r4c2,r5c1,r5c2; 16=r4c3,r4c4,r5c3; 9=r4c8,r4c9; 6=r5c4,r6c4; 21=r5c5,r6c5,r6c6; 3=r5c6,r5c7; 16=r5c8,r5c9,r6c9; 14=r6c1,r7c1; 9=r6c2,r6c3; 20=r6c7,r6c8,r7c7; 18=r7c2,r7c3,r8c1,r8c2; 12=r7c4,r7c5,r7c6; 13=r7c8,r7c9,r8c8; 7=r8c3,r9c3; 22=r8c4,r8c5,r9c4,r9c5; 11=r8c6,r9c6; 10=r8c7,r9c7; 13=r8c9,r9c8,r9c9; 12=r9c1,r9c2"}
+    ]
+  }
+}

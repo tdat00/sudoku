@@ -193,14 +193,14 @@ Report examples checked, evidence paths and any baseline discrepancy. No commit/
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted and committed (`difficulty-v3 MS03b: Curated, bounded help-example tooling`) |
+| Start | 2026-11-12 14:25 (+07:00) |
+| End | 2026-11-12 14:58 developer; 15:04 orchestrator review, fix and commit |
+| Duration | 33 min developer (1,975 s); about 6 min review |
+| Model | claude-sonnet-5.5 (developer); orchestrator review claude-opus-5.5 |
+| Token usage | 131 model calls; 35,935,273 input tokens (35,434,375 cache reads); 248,296 output tokens |
+| AI credits | about 728 (developer) |
+| Verification | Developer: player `--suite=help-example-tools,help,ui-contract` 128 passed (5.5 s); player quick 30 suites, 1,653 passed (32.6 s); generator quick 46 suites, 2,933 passed (115.2 s); bounded GH preparation from `player/`: `--ids=nakedSingle --max-puzzles=1 --max-hints=400 --check` (47 hints, match, 0.18 s), `--ids=cageCombo ... --check` (51 hints, match, 0.17 s), `--record-sources` for both (0.22 s), `--sources=... --write --out=<MS03b artifact>` (26 examples, 0.22 s) byte-identical to the canonical catalogue (SHA-256 `80ab36e5...46cf`, 27,035 bytes), `--check --out=<artifact>` match; extra bounded runs: default `--check` of all 26 sources (1.28 s), one-request discovery (0.41 s). Orchestrator re-run: default `--check` exit 0 (26 IDs up to date), targeted 128 passed, player quick 1,653/1,653 (40 s), generator quick 2,933/2,933 (121 s); no absolute path in artifacts or evidence |
+| Acceptance | MS03b-B01..B03 and MS03b-T01..T05 met. `player/js/ui/help-examples.js` unchanged. Diff reviewed: pure `SG.fixtures.helpExampleTools`, rewritten bounded CLI (default `--check`, `--write` only with a complete valid catalogue, `--record-sources`, `--discover` capped by `--max-puzzles` before any generation, 8-minute child deadline, exit 0/1/2), 44 tests |
+| Issues & resolutions | (1) `docs/puzzle-exchange/fixtures.md` still said the tool searches supported v2 levels by default; outside the task's file list. Orchestrator fix: the paragraph now describes the bounded tool (default check, `--write` from given `--sources`, only `--discover` generates, at most `--max-puzzles`). (2) The Player fixture keeps its own `diffValues`/`diffLine` (same line format as the generator's `SG.fixtures.toolRecords`), because the MS03a helper lives under `generator/tests/fixtures` and cannot be loaded by the Player without moving a file outside this task; accepted. (3) `docs/qa/browser-run.md` still says "29 suites, 1,609 tests": a dated QA record, left as written. (4) Decisions accepted: the cap counts distinct puzzle texts; a source's `variantId` must match its puzzle; `--puzzles` conflicting with `--max-puzzles` is a usage error; absolute `--out`, `--sources`, `--record-sources`, `--work-dir` are rejected; exit 2 only for incomplete runs; the renderer always writes CRLF and tests normalise line endings for LF checkouts |
+| Handoff | From `player/`: discover `node tests\tools\make-technique-examples.js ..\generator --ids=<id> --discover --variants=<v> --levels=<l> --max-puzzles=12 --record-sources=tests\artifacts\difficulty-v3\<task>\<id>.json`; write `... --ids=<ids> --sources=<file.json> --max-puzzles=16 --write`; check `... --sources=<file.json> --max-puzzles=16 --check`. Sources file `{schema:1, sources:{id:[{variantId, level, seed, text}]}}`; defaults 64 puzzles, 400 hints; `--check` and `--record-sources` never write a catalogue; `combineSources` helper merges per-ID source files (no CLI flag). MS03c extends `snapshot()` in the fixture for Jigsaw |

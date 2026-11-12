@@ -553,6 +553,10 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    cụ trong `../core/tests/fixtures/techniques-helper.js`). Phép kiểm tra tính chắc chắn — một kỹ thuật không bao
    giờ được loại một giá trị thuộc về lời giải thật — không cần bạn viết gì: `techniques.test.js` tự chạy nó cho
    mọi kỹ thuật đã đăng ký.
+6. **Ví dụ thật cho trang Trợ giúp**: trang hướng dẫn của trình chơi (`player/help.html`) cho mỗi kỹ thuật một ví dụ
+   thật, và `player/tests/suites/help.test.js` báo lỗi cho đến khi danh mục có đúng các kỹ thuật đã đăng ký. Hãy ghi
+   các nguồn đề thật cho kỹ thuật mới rồi ghi danh mục bằng công cụ ví dụ trợ giúp có giới hạn của trình chơi, không bao
+   giờ sửa tay và không bao giờ dùng ví dụ tổng hợp: xem [các ví dụ của trang Trợ giúp](#help-examples).
 
 ## Chạy kiểm thử
 
@@ -750,16 +754,51 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (29 bộ, khoảng 15 giây); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, khoảng 15 giây); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 
 Các kiểm thử Node này chạy nhanh và là bộ mặc định: lập trình viên và các tác tử lập trình chạy
-`node tests/node-runner.js` (hoặc vài bộ với `--suite=`) trong lúc phát triển, còn workflow triển khai chạy tất cả. Đó là 13
+`node tests/node-runner.js` (hoặc vài bộ với `--suite=`) trong lúc phát triển, còn workflow triển khai chạy tất cả. Đó là 14
 bộ ở `tests/suites/` và 16 bộ ở `../core/tests/suites/` mà trình sinh đề cũng chạy (bộ máy giải, bậc thang kỹ thuật, định
 dạng trao đổi, hiển thị bàn cờ). `tests.html` chạy cùng các bộ kiểm thử trong trình duyệt (những bộ đọc tệp mẫu cần
 `http://`). Các tệp mẫu trong `tests/fixtures/puzzles/` là tài liệu thật do Trình sinh đề Sudoku tạo ra
 ([tệp mẫu](docs/puzzle-exchange/fixtures.md)).
+
+<a id="help-examples"></a>
+**Các ví dụ của trang Trợ giúp.** `player/js/ui/help-examples.js` giữ một ví dụ thật cho mọi kỹ thuật của trang hướng
+dẫn (`help.html`): ảnh chụp một đề đang giải dở, do chính các gợi ý của trình chơi tạo ra, nên trang vẽ ngay mà không
+chạy gì. Tệp này do `tests/tools/make-technique-examples.js` sinh ra (chạy từ `player/`; không bao giờ sửa tay) và được
+`tests/suites/help.test.js` kiểm tra; phần thuần của công cụ là tệp `tests/fixtures/help-example-tools.js`
+(`SG.fixtures.helpExampleTools`), do suite `help-example-tools` kiểm thử. Công cụ có giới hạn và không bao giờ sinh đề
+trừ khi bạn yêu cầu: không chọn chế độ nào thì nó chỉ **kiểm tra** (không ghi gì) các ID đã chọn so với danh mục đã lưu,
+bằng cách chơi lại đề đã lưu của từng ID với các gợi ý của trình chơi.
+
+```
+node tests/tools/make-technique-examples.js ../generator --ids=nakedSingle,cageCombo --max-puzzles=2 --max-hints=400 --check
+```
+
+`--ids` nhận đúng các ID kỹ thuật (mặc định: tất cả), `--max-puzzles` là số đề tối đa được chơi lại (mặc định 64;
+`--puzzles` là cùng một giới hạn), `--max-hints` là số gợi ý tối đa chơi trong một đề (400) và `--out=<tệp.js>` là danh
+mục để so sánh hoặc ghi (mặc định `js/ui/help-examples.js`); mọi đường dẫn đều tính từ thư mục hiện tại và nằm trong kho
+mã. Kỹ thuật mới chưa có đề đã lưu: hãy đưa cho nó các đề thật trong một tệp nguồn,
+`{"schema":1,"sources":{"<id>":[{"variantId":"classic9","level":null,"seed":null,"text":"<khối đề như trình sinh đề hiển
+thị>"}]}}`, bằng `--sources=<tệp.json>`, hoặc tìm chúng bằng một lần khám phá có giới hạn và nêu rõ: `--discover` cùng
+`--variants`, `--levels` và một `--max-puzzles` nhỏ (tối đa chừng ấy yêu cầu được thực hiện, lần lượt từng cái, kể cả yêu
+cầu lỗi, và lần chạy dừng ở hạn chót tám phút). Lần khám phá phải kết thúc bằng `--record-sources=<tệp.json>` (lưu nguồn
+thật của từng ID đã chọn; không ghi danh mục) hoặc `--write` (gộp các ví dụ đã chọn vào danh mục đầy đủ: mọi ID đã chọn
+phải có ví dụ và cả danh mục phải hợp lệ, nếu không tệp cũ được giữ nguyên). Với mỗi ID, ví dụ dễ đọc nhất thắng (ví dụ
+đứng trước khi hòa), và một kỹ thuật không có được ví dụ thật trong giới hạn thì công việc dừng lại: không có gì tổng hợp
+được thay vào. Các tệp trung gian nằm ở `--work-dir` (mặc định `tests/artifacts/difficulty-v3/help`), không bao giờ ở thư
+mục tạm của hệ thống. Mã thoát là 0 khi xong hoặc đã khớp, 1 khi có khác biệt, thiếu ví dụ hoặc sai lệnh, và 2 khi lần
+chạy chưa hoàn tất. Một việc thêm hai kỹ thuật ghi nguồn của từng kỹ thuật riêng, gộp hai tệp nguồn (không đổi chữ nào của
+đề; một ID có trong cả hai bị từ chối) rồi ghi chúng cùng lúc:
+
+```
+node tests/tools/make-technique-examples.js ../generator --ids=<id> --discover --variants=classic9 --levels=hard --max-puzzles=12 --max-hints=400 --record-sources=tests/artifacts/<task>/<id>.json
+node tests/tools/make-technique-examples.js ../generator --ids=<id>,<other> --sources=tests/artifacts/<task>/sources.json --max-puzzles=16 --write
+node tests/tools/make-technique-examples.js ../generator --ids=<id>,<other> --sources=tests/artifacts/<task>/sources.json --max-puzzles=16 --check
+```
 
 Phần chạy chậm là các **script trình duyệt** trong `tests/browser/` (`node tests/browser/run-all.js`: Edge không giao
 diện qua giao thức DevTools, vài phút). Khi phát triển chúng chạy **thủ công** và chỉ cần chạy khi thay
