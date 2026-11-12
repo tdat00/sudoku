@@ -46,6 +46,10 @@ review. Check-mode compares without writing and explains changed fields.
   from level names. IDs are G01-G14. The wire manifest is exactly G09-G12.
 - Generate through the same `SG.store.toConfig` / `SG.pipeline.run` route as the wire recorder,
   with the existing 120,000 ms caller budget and required trace. No new generation defaults.
+- Preserve these fixed diagnostic requests after qualification hides a level: temporarily add a
+  missing requested level to that variant's support array around both `toConfig` and `pipeline.run`,
+  then restore the exact original array in `finally`. Record the override; never change a production
+  offer. MS18c applies the equivalent guard to the quick replay fixture loader when offers change.
 - Wire records use `SG.replay.toPlainWire(result)` and set `timings={}`, as today.
 - Analysis records use `SG.replay.analyse(result)` on the freshly generated result, not a stale wire
   fixture after a production change. Preserve the existing golden schema:
@@ -167,6 +171,10 @@ Check every `$LASTEXITCODE`.
 
 Announced GR preparation, from `generator/`, one request per command:
 
+Jobs: 1; neither recorder accepts --jobs. Allow about 1-120 seconds per request and 5-35 minutes
+for the complete preparation corpus, subject to the ten-minute command ceiling. **Announce to the
+orchestrator before starting (pentomino runs in parallel on the same machine).**
+
 ```powershell
 node tests\replay-fixtures.js --ids=G09 --record=tests\artifacts\difficulty-v3\MS03a\wire\G09.json
 node tests\replay-goldens.js --ids=G01 --record=tests\artifacts\difficulty-v3\MS03a\analysis\G01.json
@@ -191,14 +199,14 @@ durations. Hand the helper to MS03d and the GR route to MS04 onward. No commit/l
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted and committed (`difficulty-v3 MS03a: Bounded wire/analysis golden recorders`) |
+| Start | 2026-11-12 13:39 (+07:00) |
+| End | 2026-11-12 14:20 developer; 14:27 orchestrator review and commit |
+| Duration | 41 min developer (2,438 s), recorder corpus under 1 min of it; about 7 min review |
+| Model | claude-sonnet-5.5 (developer); orchestrator review claude-opus-5.5 |
+| Token usage | 177 model calls; 41,992,736 input tokens (41,499,971 cache reads); 240,419 output tokens |
+| AI credits | about 779 (developer) |
+| Verification | Developer: `--suite=replay-recorders,replay,steps,help,ui-contract` 344 passed (14.4 s); generator quick 46 suites, 2,933 passed (114.5 s); player quick 1,609 passed (24.8 s); 18 recorder requests one per command (wire G09-G12 2.8-8.6 s, analysis G01-G14 0.5-9.0 s); wire `--merge --check` 4/4 and analysis `--merge --check` 14/14 match; alternate `--merge --write --out` byte-identical (wire) and data-equal (analysis) to the canonical fixtures, then deleted; a real stale-source refusal observed ("14 problems; nothing was written"). Orchestrator re-run: both `--merge --check` exit 0 (4 and 14 IDs up to date), generator quick 2,933/2,933 (111.1 s), player quick 1,609/1,609 (24.3 s); no absolute path in the code, evidence or ledgers; ledgers 86 KB |
+| Acceptance | MS03a-B01..B03 and MS03a-T01..T05 met. Canonical `replay-wire.js` and `replay-goldens.js` unchanged (empty diff). Diff reviewed: shared `SG.fixtures.toolRecords` (ledger, merge, diff, level guard) and `SG.fixtures.replayRecording` (projection, canonical renderer, CLI engine); merges refuse partial, stale, duplicate, unknown, wrong-kind, wrong-source and wrong-manifest sets before any write; writes go through `.partial` then rename; the new analysis tool defaults to check, never write |
+| Issues & resolutions | (1) A first recording set was discarded after a trailing-blank-line edit changed the source hash; in that set wire G10 and G11 had overlapped in one tool call. All 18 were re-recorded sequentially; the committed ledgers come from the second set only. (2) The developer used PowerShell `WriteAllText` for the evidence table edits (format verified clean). (3) About 56 lines of the new test file exceed 110 columns; AGENTS.md limits engine lines only, as in the existing `replay.test.js`. (4) Decisions accepted: the old `REQUESTS` literal is replaced by `SG.fixtures.replayGoldens` ids G09-G12; the wire tool still defaults to write; fold fields `removed`, `restored`, `signs` projected but not asserted (stated in the renderer header); the level override is recorded in `overrides` (empty today, all 14 requests offered); generator quick suite counts updated to 46 in `design.md` and both guides |
+| Handoff | From `generator/`: `node tests\replay-fixtures.js --ids=G09 --record=tests\artifacts\difficulty-v3\<task>\wire\G09.json`; `node tests\replay-goldens.js --ids=G01 --record=tests\artifacts\difficulty-v3\<task>\analysis\G01.json`; `--merge=<dir> --check` (default of `--merge`), `--merge=<dir> --write` only after the deliberate comparison; `--list`, `--help`; no `--jobs`. Manifests: wire 4 keys (`4ecb6f12...1c40a`), analysis 14 keys (`46c7ebd9...2204`); source hash `47b2f0e1...de813` covers the 63 source files plus the four recorder files (editing any of them invalidates every ledger). Ledger schema 1 `{schema, kind, sourceHash, manifestHash, node, commit, dirty, generatedAt, argv, records:[{key, request, value, ms, overrides}]}`. `SG.fixtures.toolRecords`: `canonicalJson`, `manifestText`, `keysOf`, `selectKeys`, `ledgerOf`, `ledgerText`, `checkLedger`, `merge`, `diffValues`, `diffLine`, `withRequestedLevel`, `SCHEMA`. The first analysis refresh will re-wrap about 13 long `details`/`alive` lists and use the new header (data unchanged) |

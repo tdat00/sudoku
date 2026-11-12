@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "47b2f0e1c980d9d318dc5b445b6bc63b7f2efe123e2c941fd87e7648c60de813",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "ce0f25980c4f3bbc7e8a73099c8db0faf3417704",
+  "dirty": true,
+  "generatedAt": "2026-11-12T07:15:55.131Z",
+  "argv": ["--ids=G10","--record=tests\\artifacts\\difficulty-v3\\MS03a\\analysis\\G10.json"],
+  "records": [
+    {"key":"G10","request":{"variantId":"killer","difficulty":"nightmare","seed":"42"},"value":{"id":"G10","request":{"variantId":"killer","difficulty":"nightmare","seed":"42"},"today":{"steps":28,"missing":5},"counts":{"compact":9,"details":45},"board":{"cells":81,"cages":19,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Cag",0,0,0,"—","—","—","—"],[3,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[4,22,"D/Dig",43,98,73,"cageCombo","—","—","N"],[5,35,"G/Choose",69,168,70,"boxLine","—","—","N"],[6,36,"G/Choose",71,529,361,"ruleOf45","Y","—","—"],[7,38,"G/Choose",75,607,78,"ruleOf45","—","—","—"],[8,42,"G+A/Mixed",71,1940,1333,"forcingChain","Y","—","—"],[9,42,"F/Final",71,1940,0,"forcingChain","—","—","—"]],"details":[0,0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,96,97,98,116,132,137,144,148,151,154,160,162,164,165,165,168,529,568,607,2997,2780,2788,1940,1940],"alive":null,"folds":[{"step":8,"peak":2997,"end":1940,"removed":2,"restored":6,"signs":0,"opening":false}],"jumps":[{"step":6,"from":168,"to":529,"before":{"P":50,"W":1998.75,"R":66.958401,"V":50.642202,"E":69,"level":"easy"},"after":{"P":260,"W":2392.75,"R":217.808837,"V":51.171171,"E":71,"level":"hard"},"choice":{"chosen":529,"others":3,"nulls":0,"max":170,"at":208,"rated":4,"refused":0},"singles":[{"op":"remove","cell":"R3C7","score":168},{"op":"remove","cell":"R7C3","score":168}],"cause":"together","frame":null,"firstUse":{"k":28,"n":113,"technique":"ruleOf45"},"key":"technique.ruleOf45.step","effects":"remove candidate 1@R7C1, 6@R7C1, 7@R7C1, 9@R7C1"},{"step":8,"from":607,"to":1940,"before":{"P":260,"W":5783.5,"R":295.022051,"V":52.173913,"E":75,"level":"hard"},"after":{"P":1100,"W":6942.25,"R":789.276307,"V":51.171171,"E":71,"level":"nightmare"},"choice":null,"singles":[],"cause":"multi-move","frame":null,"firstUse":{"k":39,"n":127,"technique":"forcingChain"},"key":"technique.forcingChain.step.contradiction","effects":"remove candidate 5@R1C2"}]},"ms":2517,"overrides":[]}
+  ]
+}

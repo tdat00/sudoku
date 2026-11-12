@@ -427,7 +427,7 @@ các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, ki
 
 Xem [cây thư mục ở bản tiếng Anh](DEVELOPERGUIDE.md#directory-tree): `generator/` gồm `index.html`, `tests.html`, `css/`, `js/engine/`
 (bộ máy sinh đề, không DOM; `js/engine/replay.js` là phần phân tích việc phát lại ở thẻ Các bước tạo đề: nước đi, điểm số và các chế độ xem), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
-thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/replay-fixtures.js`: tạo lại dữ liệu của suite `replay`); phần dùng chung với trình chơi nằm
+thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/replay-fixtures.js` và `tests/replay-goldens.js`: tạo lại và kiểm tra dữ liệu của suite `replay`); phần dùng chung với trình chơi nằm
 ở `core/` (bộ máy giải, `exchange`, `wordbook`, `symbols`, `board-view`, css nền và từ điển), tài liệu ở `docs/`.
 
 ## Định dạng trao đổi
@@ -559,16 +559,16 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (45 suite, khoảng 2.900 bài), khoảng một phút
+node tests/node-runner.js                          # bộ nhanh (46 suite, khoảng 2.900 bài), khoảng một phút
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
-node tests/node-runner.js --all                    # nhanh + thủ công (53 suite, khoảng 3.910 bài), khoảng chín phút
+node tests/node-runner.js --all                    # nhanh + thủ công (54 suite, khoảng 3.910 bài), khoảng chín phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 45 suite, khoảng 2.900 bài,
-khoảng một phút — 29 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 46 suite, khoảng 2.900 bài,
+khoảng một phút — 30 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw`, tổng cộng khoảng
@@ -586,18 +586,42 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm khoảng 3.910 bài trong 53 suite (khoảng 2.900 bài trong 45 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm khoảng 3.910 bài trong 54 suite (khoảng 2.900 bài trong 46 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text
 node tests/replay-fixtures.js            # tạo lại tests/fixtures/replay-wire.js (bốn đề chuẩn chạy chậm, ~23 giây)
 node tests/replay-fixtures.js --check    # tạo lại trong bộ nhớ rồi so sánh; thoát với mã 1 nếu khác
+node tests/replay-goldens.js             # kiểm tra dữ liệu chuẩn của 14 yêu cầu (như --check; không bao giờ tự ghi)
+node tests/replay-goldens.js --write     # tạo lại tests/fixtures/replay-goldens.js từ các bản phân tích mới (đủ 14 yêu cầu)
+node tests/replay-goldens.js --ids=G01 --record=<file.json>   # một mảnh có giới hạn vào một sổ ghi, không đụng đến fixture
+node tests/replay-goldens.js --merge=<directory> --check      # trọn bộ các sổ ghi, không tạo gì cả
 ```
 
 Suite `replay` kiểm thử bản phân tích (các nước đi, các lần chấm điểm và trạng thái của chúng, các chế độ xem, các bước
 tăng vọt được giải thích) theo các con số chuẩn của 14 yêu cầu (`tests/fixtures/replay-goldens.js`). Nó tạo ngay các đề
 chạy nhanh và đọc bốn đề chạy chậm từ các kết quả đã lưu (`tests/fixtures/replay-wire.js`), vì việc tạo chúng mất khoảng
-23 giây; chỉ tạo lại khi đầu ra của trình sinh đề thay đổi có chủ ý (khi đó các mã băm hồi quy cũng đổi theo).
+23 giây; chỉ tạo lại khi đầu ra của trình sinh đề thay đổi có chủ ý (khi đó các mã băm hồi quy cũng đổi theo). Cả hai
+công cụ ghi có cùng các chế độ có giới hạn, để một thay đổi đầu ra làm mới được toàn bộ bằng chứng này một cách an
+toàn: `--check` so sánh mà không ghi và nêu yêu cầu cùng các trường khác nhau (chỉ kiểm các yêu cầu được chọn và nói rõ
+điều đó); `--write` ghi trọn fixture và từ chối một lựa chọn `--ids` chưa đủ; `--ids=G01,G02` chọn một phần của danh
+mục (ID lạ hoặc trùng là lỗi); `--record=<file.json>` tạo các yêu cầu đã chọn vào một **sổ ghi** và không bao giờ đụng
+đến fixture; `--merge=<directory>` đọc các sổ ghi của một thư mục, đòi mỗi yêu cầu của danh mục đúng một lần, từ mã
+nguồn hiện tại, rồi kiểm tra (mặc định) hoặc ghi mà không tạo lại; `--out=<file.js>` ghi ra một tệp khác thay cho
+fixture; `--list` cho xem danh mục và dấu nhận diện của mã nguồn; các tùy chọn mâu thuẫn bị từ chối trước khi tạo bất cứ
+thứ gì. Cả hai không có `--jobs`: một yêu cầu mất từ khoảng một giây đến khoảng hai phút, và một lệnh chạy đến mười phút
+là chuyện phải điều tra, nên hãy ghi từng yêu cầu bằng một lệnh riêng. Một sổ ghi là `{ schema: 1, kind, sourceHash,
+manifestHash, node, commit, dirty, records: [{ key, request, value }] }`, thông tin của lần chạy (`generatedAt`, `argv`,
+`ms`, `overrides`) nằm bên cạnh các giá trị chứ không ở trong chúng; `sourceHash` của nó bao gồm mã nguồn bộ máy và mã
+của các công cụ ghi, `manifestHash` bao gồm danh sách yêu cầu, và việc gộp từ chối một bản ghi thiếu, trùng, lạ, sai
+dạng hoặc đến từ mã nguồn khác, nên một bộ thiếu hay cũ không bao giờ thay được fixture. Các hàm trợ giúp là
+`SG.fixtures.toolRecords` (sổ ghi, gộp, sai khác, ràng buộc mức độ) và `SG.fixtures.replayRecording` (phép chiếu một
+bản phân tích thành bản ghi chuẩn và văn bản chuẩn của `replay-goldens.js`; suite `replay-recorders` kiểm thử chúng).
+Mọi trường của dữ liệu chuẩn đều được chiếu từ bản phân tích của một kết quả mới tạo, trừ `today`, chú thích lịch sử
+của các nhà nghiên cứu được giữ nguyên, còn thời gian và số lần kiểm tra `checks` không thuộc về nó. Một yêu cầu mà
+biến thể không còn cung cấp mức độ của nó được tạo với mức đó được mở riêng cho yêu cầu ấy (ghi trong sổ ghi); không
+có mức nào được cung cấp thay đổi. `tests/suites/steps.test.js` ghim tay vài điểm của các bước: hãy rà chúng cùng các
+dữ liệu chuẩn.
 
 Các suite so thời gian tạo đề của mọi biến thể với ngân sách ở [design.md](generator/design.md) §9.1 kèm một hệ số dung
 sai, để một máy đang bận hoặc chậm hơn không làm chúng thất bại: gấp đôi ngân sách theo mặc định, gấp ba khi có

@@ -7,33 +7,34 @@
  * 3115968914) that take about 23 seconds to generate, too slow for a quick suite. The replay suite reads
  * these saved results instead of generating them.
  *
- *   node tests/replay-fixtures.js            write tests/fixtures/replay-wire.js
+ * The requests are read from SG.fixtures.replayGoldens (tests/fixtures/replay-goldens.js).
+ *
+ *   node tests/replay-fixtures.js            write tests/fixtures/replay-wire.js (the same as --write)
  *   node tests/replay-fixtures.js --check    generate again in memory and compare; exit 1 on a difference
+ *   node tests/replay-fixtures.js --ids=G09 --record=<file.json>   one bounded shard, into a ledger only
+ *   node tests/replay-fixtures.js --merge=<directory> --check      the complete ledgers, no generation
+ *
+ * The bounded modes (--ids, --record, --merge, --out, --list) are described by --help; the helpers are
+ * SG.fixtures.toolRecords and SG.fixtures.replayRecording (tests/fixtures). The module also serves
+ * tests/replay-goldens.js (`nodeEnv`, `loadFixtures`, `RECORDER_FILES`).
  *
  * Regenerate them only when the generator's output changes on purpose (the regression hashes change then too).
  */
+const childProcess = require('child_process');
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
 const ROOT = path.resolve(__dirname, '..');
-const OUTPUT = path.join(ROOT, 'tests', 'fixtures', 'replay-wire.js');
+const REPO = path.resolve(ROOT, '..');
 const RUNNER = path.join(ROOT, 'tests', 'node-runner.js');
-
-const REQUESTS = [
-  { id: 'G09', variantId: 'killer', difficulty: 'expert', seed: '3514204290' },
-  { id: 'G10', variantId: 'killer', difficulty: 'nightmare', seed: '42' },
-  { id: 'G11', variantId: 'greaterThan', difficulty: 'expert', seed: '42' },
-  { id: 'G12', variantId: 'greaterThan', difficulty: 'hard', seed: '3115968914' }
+// The helper and recorder code that the sourceHash of a ledger covers besides the engine sources.
+const RECORDER_FILES = [
+  'tests/fixtures/tool-records.js', 'tests/fixtures/replay-recording.js', 'tests/replay-fixtures.js',
+  'tests/replay-goldens.js'
 ];
-
-const USAGE = [
-  'Usage: node tests/replay-fixtures.js [--check]',
-  '',
-  '  (no option)  generate the four golden requests and write tests/fixtures/replay-wire.js',
-  '  --check      generate them in memory and compare with the file; exit 1 on a difference',
-  '  --help       show this help'
-].join('\n');
+const BUDGET_MS = 120000;
 
 const HEADER = [
   '/**',
@@ -58,72 +59,162 @@ const FOOTER = [
   ''
 ];
 
-function loadSources() {
-  const runner = fs.readFileSync(RUNNER, 'utf8');
-  const match = /const SOURCE_FILES = \[([\s\S]*?)\];/.exec(runner);
+function readSource(abs) {
+  return fs.readFileSync(abs, 'utf8').replace(/^\uFEFF/, '');
+}
+
+function sourceList() {
+  const match = /const SOURCE_FILES = \[([\s\S]*?)\];/.exec(readSource(RUNNER));
   if (!match) throw new Error('cannot find SOURCE_FILES in tests/node-runner.js');
-  const files = (match[1].match(/'[^']+'/g) || []).map((s) => s.slice(1, -1));
+  return (match[1].match(/'[^']+'/g) || []).map((s) => s.slice(1, -1));
+}
+
+/** Runs classic scripts (paths relative to the generator folder) in this context, in order; missing: skipped. */
+function loadFixtures(files) {
   for (const rel of files) {
     const abs = path.join(ROOT, rel);
-    if (!fs.existsSync(abs)) continue;
-    vm.runInThisContext(fs.readFileSync(abs, 'utf8').replace(/^\uFEFF/, ''), { filename: abs });
+    if (fs.existsSync(abs)) vm.runInThisContext(readSource(abs), { filename: abs });
   }
   return globalThis.SG;
 }
 
-/** The lines of replay-wire.js: one `Gnn: <json>,` line per request. */
-function build(SG) {
-  const lines = HEADER.slice();
-  REQUESTS.forEach((req, i) => {
-    const started = process.hrtime.bigint();
-    const config = SG.store.toConfig({ variantId: req.variantId, difficulty: req.difficulty, seed: req.seed });
-    const result = SG.pipeline.run(config, null, SG.budget.create({ ms: 120000 }));
-    const data = SG.replay.toPlainWire(result);
-    data.timings = {};
-    const json = JSON.stringify(data);
-    const seconds = Number(process.hrtime.bigint() - started) / 1e9;
-    console.log(req.id + ' ' + req.variantId + ' ' + req.difficulty + ' ' + req.seed + ': ' + json.length +
-      ' characters, ' + data.digLog.length + ' log entries, ' + seconds.toFixed(1) + ' s');
-    lines.push('    ' + req.id + ': ' + json + (i < REQUESTS.length - 1 ? ',' : ''));
-  });
-  return lines.concat(FOOTER);
+function inside(abs, folder) {
+  const rel = path.relative(folder, abs);
+  return rel !== '' && !rel.startsWith('..') && !path.isAbsolute(rel);
 }
 
-function check(lines) {
-  if (!fs.existsSync(OUTPUT)) {
-    console.log('tests/fixtures/replay-wire.js does not exist; run node tests/replay-fixtures.js');
-    return 1;
+/** Commit and working-tree state of the repository (evidence and artifact folders excluded); null: no git. */
+function gitState() {
+  const git = (args) => childProcess.execFileSync('git', args, {
+    cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], windowsHide: true
+  });
+  try {
+    const commit = git(['rev-parse', 'HEAD']).trim();
+    const changed = git(['status', '--porcelain', '--', '.', ':(exclude)docs/difficulty-v3/evidence',
+      ':(exclude)generator/tests/artifacts']).split(/\r?\n/).filter((line) => line !== '');
+    return { commit: commit, dirty: changed.length > 0 };
+  } catch (err) {
+    return { commit: null, dirty: null };
   }
-  const saved = fs.readFileSync(OUTPUT, 'utf8').split('\r\n');
-  const fresh = lines;
-  for (let i = 0; i < Math.max(saved.length, fresh.length); i++) {
-    if (saved[i] === fresh[i]) continue;
-    const text = fresh[i] !== undefined ? fresh[i] : saved[i];
-    const id = /^ {4}(G\d+):/.exec(text);
-    console.log('replay-wire.js differs at line ' + (i + 1) + (id ? ' (request ' + id[1] + ')' : '') +
-      '; regenerate it with node tests/replay-fixtures.js if the generator changed on purpose');
-    return 1;
-  }
-  console.log('replay-wire.js is up to date');
-  return 0;
+}
+
+/** The file system, clock, hashes and git that `SG.fixtures.replayRecording.runCli` needs, for Node. */
+function nodeEnv() {
+  let engineLoaded = false;
+  const absOf = (p, base) => path.resolve(base === 'root' ? ROOT : process.cwd(), p);
+  const writeAtomic = (abs, text) => {
+    fs.mkdirSync(path.dirname(abs), { recursive: true });
+    const partial = abs + '.partial';
+    fs.writeFileSync(partial, text, 'utf8');
+    fs.renameSync(partial, abs);
+  };
+  const projectPath = (p) => {
+    if (path.isAbsolute(p)) throw new Error(p + ': give a project-relative path, not an absolute one');
+    if (!inside(absOf(p, 'cwd'), REPO)) throw new Error(p + ': the path must stay inside the repository');
+    return absOf(p, 'cwd');
+  };
+  return {
+    out: (text) => console.log(text),
+    err: (text) => console.error(text),
+    now: () => new Date().toISOString(),
+    clock: () => Number(process.hrtime.bigint()) / 1e6,
+    sha256: (text) => crypto.createHash('sha256').update(text).digest('hex'),
+    /** SHA-256 over the engine sources and the recorder files as `<path>\0<text with LF line ends>`. */
+    identity: (extraFiles) => {
+      const hash = crypto.createHash('sha256');
+      const add = (rel) => hash.update(rel + '\0' + readSource(path.join(ROOT, rel)).replace(/\r\n/g, '\n'));
+      sourceList().filter((rel) => fs.existsSync(path.join(ROOT, rel))).forEach(add);
+      extraFiles.forEach(add);
+      return Object.assign({ sourceHash: hash.digest('hex'), node: process.version }, gitState());
+    },
+    checkPath: (p, rules) => {
+      const abs = projectPath(p);
+      if (rules.extension && path.extname(abs) !== rules.extension) {
+        throw new Error(p + ': the file needs the extension ' + rules.extension);
+      }
+      if (rules.notIn && inside(abs, path.join(ROOT, rules.notIn))) {
+        throw new Error(p + ': a ledger is never written into ' + rules.notIn + ' (the fixtures are there)');
+      }
+    },
+    checkDirectory: (p) => {
+      const abs = projectPath(p);
+      if (!fs.existsSync(abs) || !fs.statSync(abs).isDirectory()) throw new Error(p + ': not a directory');
+    },
+    readText: (p, base) => {
+      const abs = absOf(p, base);
+      return fs.existsSync(abs) ? fs.readFileSync(abs, 'utf8') : null;
+    },
+    writeText: (p, text, base) => writeAtomic(absOf(p, base), text),
+    readLedgers: (dir) => {
+      const abs = absOf(dir, 'cwd');
+      return fs.readdirSync(abs).filter((name) => name.endsWith('.json')).sort().map((name) => {
+        try {
+          return { name: name, text: fs.readFileSync(path.join(abs, name), 'utf8') };
+        } catch (err) {
+          return { name: name, error: 'cannot be read (' + err.code + ')' };
+        }
+      });
+    },
+    /** A path as the repository shows it: relative to the repository root, with forward slashes. */
+    show: (p, base) => path.relative(REPO, absOf(p, base)).split(path.sep).join('/'),
+    engine: () => {
+      if (engineLoaded) return;
+      engineLoaded = true;
+      loadFixtures(sourceList());
+    }
+  };
+}
+
+function wireSpec(SG) {
+  const RR = SG.fixtures.replayRecording;
+  const manifest = RR.WIRE_IDS.map((id) => {
+    const golden = SG.fixtures.replayGoldens.filter((g) => g.id === id)[0];
+    if (!golden) throw new Error('SG.fixtures.replayGoldens has no ' + id);
+    return { key: id, request: golden.request };
+  });
+  return {
+    tool: 'tests/replay-fixtures.js',
+    kind: 'replay-wire',
+    fixture: 'tests/fixtures/replay-wire.js',
+    defaultMode: 'write',
+    compareText: true,
+    manifest: manifest,
+    extraFiles: RECORDER_FILES,
+    describe: (entry) => entry.request.variantId + ' ' + entry.request.difficulty + ' ' + entry.request.seed,
+    saved: (key) => (SG.fixtures.replayWire ? SG.fixtures.replayWire[key] : undefined),
+    generate: (entry) => {
+      const req = entry.request;
+      const run = SG.fixtures.toolRecords.withRequestedLevel(req.variantId, req.difficulty, () => {
+        const config = SG.store.toConfig(req);
+        return SG.pipeline.run(config, null, SG.budget.create({ ms: BUDGET_MS }));
+      });
+      const data = SG.replay.toPlainWire(run.value);
+      data.timings = {};
+      return {
+        value: JSON.parse(JSON.stringify(data)),
+        overrides: run.overridden ? [req.variantId + ':' + req.difficulty] : []
+      };
+    },
+    /** The text of replay-wire.js: one `Gnn: <json>,` line per request. */
+    render: (records) => {
+      const lines = HEADER.slice();
+      records.forEach((record, i) => {
+        const comma = i < records.length - 1 ? ',' : '';
+        lines.push('    ' + record.key + ': ' + JSON.stringify(record.value) + comma);
+      });
+      return lines.concat(FOOTER).join('\r\n');
+    }
+  };
 }
 
 function main(argv) {
-  const known = ['--check', '--help', '-h'];
-  const unknown = argv.filter((arg) => known.indexOf(arg) === -1);
-  if (unknown.length > 0) {
-    console.error('Unknown argument: ' + unknown.join(' ') + '\n\n' + USAGE);
-    return 1;
-  }
-  if (argv.indexOf('--help') !== -1 || argv.indexOf('-h') !== -1) {
-    console.log(USAGE);
-    return 0;
-  }
-  const lines = build(loadSources());
-  if (argv.indexOf('--check') !== -1) return check(lines);
-  fs.writeFileSync(OUTPUT, lines.join('\r\n'));
-  console.log('wrote ' + path.relative(ROOT, OUTPUT) + ' (' + lines.length + ' lines)');
-  return 0;
+  const SG = loadFixtures(['tests/fixtures/tool-records.js', 'tests/fixtures/replay-recording.js',
+    'tests/fixtures/replay-goldens.js', 'tests/fixtures/replay-wire.js']);
+  return SG.fixtures.replayRecording.runCli(nodeEnv(), wireSpec(SG), argv);
 }
 
-process.exitCode = main(process.argv.slice(2));
+module.exports = {
+  nodeEnv: nodeEnv, loadFixtures: loadFixtures, RECORDER_FILES: RECORDER_FILES, BUDGET_MS: BUDGET_MS
+};
+
+if (require.main === module) process.exitCode = main(process.argv.slice(2));

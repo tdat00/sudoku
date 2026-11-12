@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "47b2f0e1c980d9d318dc5b445b6bc63b7f2efe123e2c941fd87e7648c60de813",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "ce0f25980c4f3bbc7e8a73099c8db0faf3417704",
+  "dirty": true,
+  "generatedAt": "2026-11-12T07:16:08.365Z",
+  "argv": ["--ids=G12","--record=tests\\artifacts\\difficulty-v3\\MS03a\\analysis\\G12.json"],
+  "records": [
+    {"key":"G12","request":{"variantId":"greaterThan","difficulty":"hard","seed":"3115968914"},"value":{"id":"G12","request":{"variantId":"greaterThan","difficulty":"hard","seed":"3115968914"},"today":{"steps":12,"missing":11},"counts":{"compact":5,"details":106},"board":{"cells":81,"cages":0,"signsFrom":108,"signsTo":6,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Sig",0,0,0,"—","—","—","—"],[3,92,"C+I/Mixed",57,130,130,"ineqChain","—","—","F"],[4,103,"I/Signs",57,638,508,"simpleColouring","Y","—","—"],[5,103,"F/Final",57,638,0,"simpleColouring","—","—","—"]],"details":[0,0,149,149,150,150,150,150,150,150,150,150,150,150,150,149,149,149,148,148,148,148,148,147,147,147,147,147,147,147,147,147,147,147,148,148,148,148,148,148,148,146,146,146,146,146,146,146,146,146,146,146,146,148,148,148,148,148,148,148,154,154,154,154,154,134,134,134,134,152,152,152,152,152,152,152,152,152,152,156,154,154,153,153,152,152,152,152,152,152,152,151,151,130,649,649,647,647,647,647,647,647,647,642,638,638],"alive":[108,108,17,6,6],"folds":[{"step":3,"peak":156,"end":130,"removed":null,"restored":null,"signs":91,"opening":true},{"step":4,"peak":649,"end":638,"removed":0,"restored":0,"signs":11,"opening":false}],"jumps":[{"step":4,"from":130,"to":638,"before":{"P":40,"W":741,"R":42.872506,"V":47.010309,"E":57,"level":"easy"},"after":{"P":360,"W":1765.5,"R":230.55601,"V":47.010309,"E":57,"level":"hard"},"choice":null,"singles":[],"cause":"multi-move","frame":null,"firstUse":{"k":47,"n":75,"technique":"simpleColouring"},"key":"technique.simpleColouring.step","effects":"remove candidate 4@R7C4, 4@R8C3"}]},"ms":3955,"overrides":[]}
+  ]
+}

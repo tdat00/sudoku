@@ -498,13 +498,14 @@ sudoku/                     the repository (see "Layout" in the overview for the
     │                       · result-view.js · cache.js · history.js · export.js · a11y.js · theme.js
     │                       · help.js · app.js
     └── tests/
-        ├── node-runner.js · soak.js · perf.js · qualify.js · replay-fixtures.js
+        ├── node-runner.js · soak.js · perf.js · qualify.js · replay-fixtures.js · replay-goldens.js
         ├── fixtures/       the fixtures of the generator (rated puzzles, the performance helper, the
         │                   regression hashes in regression.js, generated, the testkit provider, the pure
         │                   helpers of the soak diagnostics, and the data of the replay suite:
-        │                   replay-goldens.js, replay-wire.js, generated)
+        │                   replay-goldens.js, replay-wire.js, generated, with the helpers of their
+        │                   recorders, tool-records.js and replay-recording.js)
         ├── suites/         the quick set, run by default together with ../core/tests/suites: one *.test.js per
-        │                   area, 29 of the generator's own (found automatically), smoke.test.js among them
+        │                   area, 30 of the generator's own (found automatically), smoke.test.js among them
         └── manual/         the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
                             extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
@@ -801,16 +802,16 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (45 suites, about 2,900 tests), about a minute
+node tests/node-runner.js                          # the quick set (46 suites, about 2,900 tests), about a minute
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8, about eight minutes)
-node tests/node-runner.js --all                    # quick + manual (53 suites, about 3,910 tests), about nine minutes
+node tests/node-runner.js --all                    # quick + manual (54 suites, about 3,910 tests), about nine minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 45 suites, about
-2,900 tests, about one minute — the 29 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 46 suites, about
+2,900 tests, about one minute — the 30 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -829,20 +830,44 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts about 3,910 tests in 53 suites
-(about 2,900 in the 45 quick ones), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts about 3,910 tests in 54 suites
+(about 2,900 in the 46 quick ones), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text
 node tests/replay-fixtures.js            # regenerates tests/fixtures/replay-wire.js (four slow goldens, ~23 s)
 node tests/replay-fixtures.js --check    # regenerates in memory and compares; exit 1 on a difference
+node tests/replay-goldens.js             # checks the golden data of the 14 requests (the same as --check; it never writes unasked)
+node tests/replay-goldens.js --write     # regenerates tests/fixtures/replay-goldens.js from fresh analyses (all 14 requests)
+node tests/replay-goldens.js --ids=G01 --record=<file.json>   # one bounded shard into a ledger, no fixture touched
+node tests/replay-goldens.js --merge=<directory> --check      # the complete set of ledgers, nothing is generated
 ```
 
 The `replay` suite tests the analysis (the moves, the ratings and their statuses, the views, the explained jumps)
 against the golden numbers of 14 requests (`tests/fixtures/replay-goldens.js`). It generates the fast ones live
 and reads the four slow ones from the saved results (`tests/fixtures/replay-wire.js`), because generating them
 takes about 23 seconds; regenerate them only when the generator's output changes on purpose (the regression
-hashes change then too).
+hashes change then too). Both recorders have the same bounded modes, so that a change of output can refresh all of
+this evidence safely: `--check` compares without writing and names the request and the fields that differ (it
+checks the selected requests only, and says so); `--write` writes the complete fixture and refuses a partial
+`--ids` selection; `--ids=G01,G02` selects part of the manifest (an unknown or duplicate ID is an error);
+`--record=<file.json>` generates the selected requests into a **ledger** and never touches a fixture;
+`--merge=<directory>` reads the ledgers of a directory, requires every request of the manifest exactly once, from
+the current sources, and then checks (the default) or writes without generating; `--out=<file.js>` writes an
+alternate file instead of the fixture; `--list` shows the manifest and the identity of the sources; options that
+conflict are refused before anything is generated. Neither takes `--jobs`: a request takes from about a second to
+about two minutes, and a command that reaches ten minutes is a problem to investigate, so record the requests one
+command at a time. A ledger is `{ schema: 1, kind, sourceHash, manifestHash, node, commit, dirty, records: [{ key,
+request, value }] }`, with the run information (`generatedAt`, `argv`, `ms`, `overrides`) beside the values, never
+in them; its `sourceHash` covers the engine sources and the code of the recorders, its `manifestHash` the list of
+requests, and a merge refuses a missing, duplicate, unknown, malformed or differently sourced record, so a partial or
+stale set never replaces a fixture. The helpers are `SG.fixtures.toolRecords` (ledgers, merge, differences, the level
+guard) and `SG.fixtures.replayRecording` (the projection of an analysis to a golden record and the canonical text
+of `replay-goldens.js`; the `replay-recorders` suite tests them). Every field of the golden data is projected from
+the analysis of a freshly generated result except `today`, a historical annotation of the researchers that is
+kept as it is, and the timings and the work counts `checks` are not part of it. A request whose level the
+variant no longer offers is generated with that level offered for the request only (recorded in the ledger); no
+offer ever changes. `tests/suites/steps.test.js` pins a few step scores by hand: review them with the goldens.
 
 The suites check the generation time of every variant against the budgets of [design.md](generator/design.md) §9.1 with
 a tolerance, so that a busy or slower machine does not fail them: twice the budget by default, three times when
