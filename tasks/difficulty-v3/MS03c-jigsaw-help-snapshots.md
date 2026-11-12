@@ -115,6 +115,10 @@ not a competing test-only validator.
 
 Announced GH preparation, from `player/`:
 
+Jobs: 1, no --jobs flag; estimated 10-120 seconds for this one-puzzle discovery, never more than
+the tool's eight-minute deadline. **Announce to the orchestrator before starting (pentomino runs
+in parallel on the same machine).**
+
 ```powershell
 node tests\tools\make-technique-examples.js ..\generator --ids=nakedSingle --discover --variants=jigsaw9 --levels=hard --max-puzzles=1 --max-hints=400 --write --out=tests\artifacts\difficulty-v3\MS03c\help-examples.js
 ```

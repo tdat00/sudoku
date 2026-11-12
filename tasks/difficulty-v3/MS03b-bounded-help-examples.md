@@ -49,6 +49,7 @@ Retain the optional generator-directory argument and `--out`. Add:
 --max-hints=N                 positive cap per puzzle, default 400 (existing bound)
 --check                      compare selected snapshots, no writes (default mode)
 --write                      merge selected snapshots into the existing complete catalogue
+--record-sources=<file.json>  save selected successful real sources, not a help catalogue
 --discover                   explicitly allow bounded stage-1 PLAN generation
 --variants=id[,id]            filter discovery variants before any generation
 --levels=id[,id]              filter discovery levels before any generation
@@ -61,7 +62,8 @@ values are a usage error. Without `--discover`, **never generate**. Default sour
 selected existing `SG.helpExamples[id].source.puzzle`; a new ID without a source fails with its name.
 Explicit discovery uses only the newly generated bounded source list for selected IDs; it does not
 silently fall back to their old snapshots. Reject --sources together with --discover. Discovery
-variant/level filters are valid only with discovery. `--discover` requires explicit `--write`;
+variant/level filters are valid only with discovery. `--discover` requires explicit `--write` or
+`--record-sources`;
 reject it with `--check`, so check mode never generates or writes intermediates.
 Default puzzle cap is 64; bounded invocations should choose smaller explicit counts. Keep a tool-level
 eight-minute deadline and child timeout so cleanup/reporting fits the ten-minute invocation ceiling;
@@ -81,6 +83,13 @@ unchanged example. Replay fill-notes/hint/apply exactly as the Player does; the 
 be a real hint for that ID. Preserve the existing clarity score/tie rule and the cageCombo size>=2 rule.
 Within an assigned source choose the clearest eligible occurrence, earliest on ties, as today.
 No clue/candidate-state invention and no weakening of the registry's one-example-per-ID assertion.
+
+`--record-sources` is mutually exclusive with --check/--write. It writes the source schema above,
+one selected real source per requested ID, after each requested ID has a valid hint occurrence.
+It does not require examples for unrequested IDs. This is how a task introducing two IDs collects
+their sources separately before one complete canonical merge; it must not write a partial catalogue.
+Combine per-ID source maps without changing puzzle text or accepting duplicate IDs, then run
+--sources/--write for all new IDs together. Missing requested IDs fail without replacing the source file.
 
 Check mode compares selected snapshots semantically and reports ID/field differences. Write mode
 preserves unselected IDs, requires every requested ID found, and validates the resulting complete
@@ -154,12 +163,18 @@ Cases: one assigned source/ID; unknown ID; missing source; malformed source; cap
 generation; legacy --puzzles cap; no generation in check/default mode; child timeout; per-puzzle hint
 limit; missing requested ID leaves output untouched; selected update preserves another ID; stable tie;
 invalid discovery/check/source/filter combinations; CRLF/no BOM; cleanup only owned intermediates.
+Include the two-new-ID case: recording one requested source succeeds even though the other new ID
+has no example yet; a canonical catalogue write still fails until both are supplied.
 
 From `player/`: `node tests\node-runner.js --suite=help-example-tools,help,ui-contract`, then
 `node tests\node-runner.js`. From `generator/`: `node tests\node-runner.js`.
 Check `$LASTEXITCODE` after every command.
 
 Announced bounded GH preparation from `player/` (defaults to that ID's existing real source):
+
+Jobs: 1; there is no --jobs flag. Allow 1-60 seconds per curated check, up to eight minutes for an
+explicit discovery child; the full invocation must stay below ten minutes. **Announce to the
+orchestrator before starting (pentomino runs in parallel on the same machine).**
 
 ```powershell
 node tests\tools\make-technique-examples.js ..\generator --ids=nakedSingle --max-puzzles=1 --max-hints=400 --check

@@ -155,6 +155,9 @@ Check every `$LASTEXITCODE`.
 
 Announced GG preparation, from `generator/`:
 
+Jobs: 1, no --jobs flag; estimated 1-30 seconds for each five-seed classic4 command. **Announce to
+the orchestrator before starting (pentomino runs in parallel on the same machine).**
+
 ```powershell
 node tests\perf.js --check-hashes --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5
 node tests\perf.js --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5 --hash-record=tests\artifacts\difficulty-v3\MS03d\classic4-00.json
