@@ -559,16 +559,16 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (44 suite, khoảng 2.850 bài), khoảng một phút
+node tests/node-runner.js                          # bộ nhanh (45 suite, khoảng 2.900 bài), khoảng một phút
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
-node tests/node-runner.js --all                    # nhanh + thủ công (52 suite, khoảng 3.870 bài), khoảng chín phút
+node tests/node-runner.js --all                    # nhanh + thủ công (53 suite, khoảng 3.910 bài), khoảng chín phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 44 suite, khoảng 2.850 bài,
-khoảng một phút — 28 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 45 suite, khoảng 2.900 bài,
+khoảng một phút — 29 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw`, tổng cộng khoảng
@@ -586,7 +586,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm khoảng 3.870 bài trong 52 suite (khoảng 2.850 bài trong 44 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm khoảng 3.910 bài trong 53 suite (khoảng 2.900 bài trong 45 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text
@@ -614,6 +614,16 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   25 đề cho mỗi tổ hợp được cung cấp và 100 đề cho mỗi mức của classic9, khoảng 3.550 đề),
   `node tests/soak.js --variant=jigsaw9 --count=180`, `node tests/soak.js --level=hard` (`--help` liệt kê phần
   còn lại); `--weights` và `--bands` thử trọng số kỹ thuật hoặc khoảng điểm khác mà không phải sửa mã.
+  `--json=<tệp>` (một đường dẫn nằm trong kho mã) thêm các chẩn đoán đường cơ sở của độ khó v3 mà không đổi những đề
+  được sinh ra: một sổ ghi từng yêu cầu (schema 1: đề hoặc lỗi của nó, các lần đạt, vị trí thô và vị trí khả dĩ của
+  điểm, các bộ đếm của lần sinh) và một bản tóm tắt chẩn đoán sau phần chữ. Các lần giải mới của nó — sàn tham chiếu
+  `SG.difficulty.certifyFloor` của mức yêu cầu, chỉ chạy sau khi I1 đã chứng minh tính duy nhất, và đường giải cuối
+  được đánh giá lại có ghi các bước (độ dài chuỗi cưỡng bức, độ sâu Nishio) — chỉ chạy sau khi mọi lần sinh và mọi
+  kiểm tra I1–I7 của lần gọi đã xong, vì bộ tìm tập con giữ một bộ đếm khoảng cách kiểm tra qua các lần giải. Một
+  yêu cầu thất bại vẫn nằm trong các mẫu số dưới dạng một dòng lỗi, và lỗi cùng vi phạm bất biến làm hỏng phần chẩn
+  đoán ngay cả khi có `--no-gate`. Các hàm trợ giúp là `SG.fixtures.difficultyDiagnostics`
+  (`tests/fixtures/difficulty-diagnostics.js`); đường cơ sở đo bằng chúng được ghi ở
+  [docs/difficulty-v3/baseline.md](docs/difficulty-v3/baseline.md).
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
   cho phân vị 95) rồi in bảng và danh sách mức; `--variant`, `--level`, `--jobs`, `--json` và `--markdown` thu

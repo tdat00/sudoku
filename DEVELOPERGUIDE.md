@@ -500,10 +500,11 @@ sudoku/                     the repository (see "Layout" in the overview for the
     └── tests/
         ├── node-runner.js · soak.js · perf.js · qualify.js · replay-fixtures.js
         ├── fixtures/       the fixtures of the generator (rated puzzles, the performance helper, the
-        │                   regression hashes in regression.js, generated, the testkit provider, and the
-        │                   data of the replay suite: replay-goldens.js, replay-wire.js, generated)
+        │                   regression hashes in regression.js, generated, the testkit provider, the pure
+        │                   helpers of the soak diagnostics, and the data of the replay suite:
+        │                   replay-goldens.js, replay-wire.js, generated)
         ├── suites/         the quick set, run by default together with ../core/tests/suites: one *.test.js per
-        │                   area, 27 of the generator's own (found automatically), smoke.test.js among them
+        │                   area, 29 of the generator's own (found automatically), smoke.test.js among them
         └── manual/         the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
                             extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
@@ -800,16 +801,16 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (44 suites, about 2,850 tests), about a minute
+node tests/node-runner.js                          # the quick set (45 suites, about 2,900 tests), about a minute
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8, about eight minutes)
-node tests/node-runner.js --all                    # quick + manual (52 suites, about 3,870 tests), about nine minutes
+node tests/node-runner.js --all                    # quick + manual (53 suites, about 3,910 tests), about nine minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 44 suites, about
-2,850 tests, about one minute — the 28 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 45 suites, about
+2,900 tests, about one minute — the 29 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -828,8 +829,8 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts about 3,870 tests in 52 suites
-(about 2,850 in the 44 quick ones), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts about 3,910 tests in 53 suites
+(about 2,900 in the 45 quick ones), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text
@@ -858,7 +859,16 @@ on the reference machine and measured by `node tests/perf.js`.
   (the final QA preset: 25 puzzles per offered combination and 100 per classic9 level, about 3,550 puzzles),
   `node tests/soak.js --variant=jigsaw9 --count=180`, `node tests/soak.js --level=hard`
   (`--help` lists the rest); `--weights` and `--bands` try other technique weights or score bands without
-  editing the code.
+  editing the code. `--json=<file>` (a path inside the repository) adds the baseline diagnostics of difficulty v3
+  without changing which puzzles are generated: a ledger of every request (schema 1: the puzzle or its error, the
+  hits, the raw and the attainable position of the score, the generation counters) and a diagnostic summary after
+  the text. Its new solves — the reference floor `SG.difficulty.certifyFloor` of the requested level, run only
+  after I1 proved uniqueness, and the final path rated again with steps (forcing-chain lengths, Nishio depths) —
+  run only after every generation and every I1–I7 check of the invocation has finished, because the subset finder
+  keeps a check-spacing counter across solves. A failed request stays in the denominators as an error row, and
+  errors and invariant violations fail the diagnostics even with `--no-gate`. The helpers are
+  `SG.fixtures.difficultyDiagnostics` (`tests/fixtures/difficulty-diagnostics.js`); the baseline taken with
+  them is recorded in [docs/difficulty-v3/baseline.md](docs/difficulty-v3/baseline.md).
 - **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
   variant offers (40 fixed seeds per variant and level through the real pipeline, 60 more for a borderline level,
   a time budget on the 95th percentile) and prints the table and the support lists; `--variant`, `--level`,

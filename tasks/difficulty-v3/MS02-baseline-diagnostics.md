@@ -194,6 +194,11 @@ Check `$LASTEXITCODE` after every command and stop on a quick-check failure.
 
 GS-before command, from `generator/`, once for each row/cell:
 
+Jobs: 1 (this tool has no --jobs option). Planning allowance: 10-120 seconds per baseline cell,
+roughly 5-35 minutes for 17 cells; these are estimates, not measured promises. The ten-minute
+per-command ceiling still applies. **Announce to the orchestrator before starting (pentomino runs
+in parallel on the same machine).**
+
 ```powershell
 node tests\soak.js --variant=<id> --level=<level> --count=12 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\MS02\<id>-<level>.json
 ```
@@ -220,14 +225,14 @@ Do not fill the log or commit.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted and committed (`difficulty-v3 MS02: Baseline diagnostics and matched manifest`) |
+| Start | 2026-11-12 13:02 (+07:00) |
+| End | 2026-11-12 13:36 developer; 13:45 orchestrator review, fix and commit |
+| Duration | 33 min developer (1,989 s), GS-before 176.2 s wall of it; about 9 min review |
+| Model | claude-sonnet-5.5 (developer); orchestrator review claude-opus-5.5 |
+| Token usage | 131 model calls; 35,659,140 input tokens (35,219,374 cache reads); 214,272 output tokens |
+| AI credits | about 676 (developer) |
+| Verification | Developer: `--suite=difficulty-diagnostics,difficulty-floor,help,ui-contract` 4 suites, 173 passed (3.5 s); generator quick 45 suites, 2,894 passed (108.2 s); player quick 29 suites, 1,609 passed (24.7 s); with/without `--json` identical old text and puzzles on classic9, killer and jigsaw9; an inline-diagnostics mutation failed 3 tests and was reverted. GS-before: 17 cells one at a time, all exit 0, 176.2 s total (longest greaterThan expert 92.9 s). Orchestrator re-run: generator quick 2,894/2,894 (96.0 s), player quick 1,609/1,609 (24.3 s), targeted 173/173 after the fix below; a one-request `--json` soak prints the repository-relative path; format of 8 changed files and 34 evidence files clean |
+| Acceptance | MS02-B01..B03 and MS02-T01..T05 met. 17 cells and 204 requests accounted for: 0 errors, 0 I1-I7 violations, 0 reference or final-path errors; old hits 202/204 (99.0%), requiredness-qualified hits 91/204 (44.6%), shallow 111 of 202 solved in band (55%); Hell 1 vacuous (empty tier). Diff reviewed: diagnostics deferred until all generation and I1-I7 checks are done, generation route/seed/timing preserved, ledger written atomically (`.part` then rename) with `complete: true` only at the end |
+| Issues & resolutions | (1) The console summary printed the absolute path of the ledger, so the 17 `.txt` evidence files contained a machine path. Orchestrator fix: `soak.js` prints the path relative to the repository with `/` separators; the 17 `.txt` files rewritten the same way (no other content changed). (2) SA2 added a planning-allowance paragraph to this task file while it was in progress; informational only, the slot had been granted beforehand. (3) Developer decisions accepted: `lower` computed whenever its inputs are finite and the tier is not vacuous (also for off-band/unrated rows); deciles are 11 values (min, p10..p90, max) at index `min(n - 1, floor(k * n / 10))`; `--json` must point inside the repository (else exit 2); the reference runs for every unique OK request, the final-path rating only for solved results; error rows and per-check error capture exist only in `--json` mode (a plain run still crashes on error as before); suite and doc counts moved to 45 / 29 / 53 and about 2,900 / 3,910 tests |
+| Handoff | Manifest: the 17 cells, count 12, seed 20260101, `--no-gate`; command from `generator/`: `node tests\soak.js --variant=<id> --level=<level> --count=12 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\<task>\<id>-<level>.json`. Source identity: commit `50eeec5`, dirty with tooling/docs only, `sourceHash` `43848f9c...3d3b83` (SHA-256 over the 63 `SOURCE_FILES` as `<path>\0<LF text>`). Ledger schema 1 `{schema, complete, meta, rows, summary:{all, cells, checks}}`; additive row fields `puzzleHash`, `pathCheck` (`not-run`/`ok`/`mismatch`/`error`), `position.inputs`; `referenceStatus` `not-run`/`ok`/`vacuous`/`error`/`skipped-not-unique`. `proposals`, `shallowRatings`, `capHits`, `target` are `null` = not exposed (MS05 telemetry, MS06 target, MS07 windows). GS-after compares `puzzleHash` first. Record: `docs/difficulty-v3/baseline.md` |
