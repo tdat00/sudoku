@@ -6,7 +6,7 @@
  *   xWing                32     110     basic fish of size 2
  *   simpleColouring      36     120     chains of strong links, two colours
  *   swordfish            42     130     basic fish of size 3
- *   jellyfish            56     160     basic fish of size 4
+ *   jellyfish            56     137     basic fish of size 4 (before the wings: weight 520 < xyWing 650)
  *
  * Basic fish (ONE routine, `findFish`, size n = 2, 3, 4): for a digit d pick n "base" lines of one
  * orientation such that d's candidate cells of every base line all lie in the same n "cover" lines of the
@@ -515,7 +515,7 @@
   define('swordfish', 42, 130, function (model, state, ctx) {
     return findFish(model, state, ctx, 3, 'swordfish');
   });
-  define('jellyfish', 56, 160, function (model, state, ctx) {
+  define('jellyfish', 56, 137, function (model, state, ctx) {
     return findFish(model, state, ctx, 4, 'jellyfish');
   });
 })(typeof self !== 'undefined' ? self : globalThis);

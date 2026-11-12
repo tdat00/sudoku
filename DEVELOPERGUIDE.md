@@ -789,10 +789,16 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    caller that the givens have exactly one solution for this model (it counts none), has no limit but the `budget`
    passed in, answers `{ required, vacuous, floorLevel, unsolvedCount }` (vacuous, without a solve, for `veryEasy`
    and for a level with an empty tier) and throws on a contradiction, on invalid input and on a failed budget
-   instead of answering. Then re-run the qualification,
-   `node tests/qualify.js`, and check the hit rates with `node tests/soak.js --quick`.
+   instead of answering. `SG.difficulty.requiredOf(rating, level, model)` gives the same verdict from the technique
+   counts of a complete canonical rating (`SG.difficulty.rate`), without a second solve; the caller guarantees the
+   uniqueness and that the rating was made for the same model and givens, and the answer is only right while the
+   `order` of the registry follows the weights, so give the new technique an `order` that keeps the weights
+   nondecreasing along the registry (`tests/suites/technique-weights.test.js` fails otherwise). Then re-run the
+   qualification, `node tests/qualify.js`, and check the hit rates with `node tests/soak.js --quick`.
 5. **Tests**: add an entry for the technique to `../core/tests/fixtures/techniques.js` (two positions where it
-   fires, one where it finds nothing; `../core/tests/suites/techniques.test.js` fails until it has them) and more
+   fires, one where it finds nothing; `../core/tests/suites/techniques.test.js` fails until it has them; put the
+   entry into `CURRENT`, since `historyV2` keeps the positions of rating v2 as they were, and list a new classic
+   technique in `registryOrder`, the current order that the registry test compares with the real registry) and more
    positive and negative fixtures to the matching `../core/tests/suites/tech-<group>.test.js` (helpers in
    `../core/tests/fixtures/techniques-helper.js`). The soundness check — a technique must never eliminate a value
    that belongs to the true solution — needs no code of yours: `techniques.test.js` runs it for every registered

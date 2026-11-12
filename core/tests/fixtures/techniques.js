@@ -19,7 +19,15 @@
  *
  * Adding a technique to the ladder: add an entry for it here (2 positions where it fires, 1 where it finds
  * nothing), or the registry test of techniques.test.js says so. The LADDER list below is frozen on purpose:
- * a technique registered later must not silently change these positions.
+ * a technique registered later must not silently change these positions, and a position must never be built
+ * with `before` / `through` for an ID that is not in LADDER.
+ *
+ * Rating v3 history. The positions below are rating v2's: `historyV2.byId` keeps them as they were, with the
+ * v2 `ladder` (jellyfish after the wings). The registry of rating v3 runs jellyfish before xyWing, so the
+ * current order is its own list, `registryOrder`, which the registry test compares with the real registry.
+ * `byId` (and `ids`) is the ACTIVE map: the historical one plus the explicit `CURRENT` entries, which replace
+ * an ID's fixtures from now on without touching a v2 position. A later technique adds its entry to CURRENT,
+ * built from explicit `after` lists or an initial real puzzle state.
  */
 (function () {
   'use strict';
@@ -35,6 +43,16 @@
     'xyWing', 'xyzWing', 'jellyfish', 'wWing', 'uniqueRectangle', 'forcingChain', 'nishio'
   ];
 
+  /**
+   * The 21 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER only in the place of jellyfish.
+   */
+  var REGISTRY_ORDER = [
+    'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
+    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'simpleColouring', 'swordfish',
+    'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle', 'forcingChain', 'nishio'
+  ];
+
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
   function before(id) {
     return LADDER.slice(0, LADDER.indexOf(id));
@@ -45,7 +63,7 @@
     return LADDER.slice(0, LADDER.indexOf(id) + 1);
   }
 
-  var BY_ID = {
+  var HISTORY_BY_ID = {
     nakedSingle: {
       positive: [
         {
@@ -725,9 +743,16 @@
     { name: 'the empty board', puzzle: new Array(82).join('.'), after: null, propagate: false }
   ];
 
+  /** Current fixtures that replace a historical entry (none yet), in the shape of the entries of the map. */
+  var CURRENT = {};
+
+  var BY_ID = Object.assign({}, HISTORY_BY_ID, CURRENT);
+
   SG.fixtures.techniques = {
     ids: Object.keys(BY_ID),
     byId: BY_ID,
+    historyV2: { ladder: LADDER, byId: HISTORY_BY_ID },
+    registryOrder: REGISTRY_ORDER,
     nothingToFind: NOTHING_TO_FIND,
     ladder: LADDER
   };

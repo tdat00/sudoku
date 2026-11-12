@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "181e1932ed6017eea3cf01fe4d8ca3db3671cfcc923af838fff68f9090b7ee0d",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "6685d8f4c705e1244ef6487e05400d72f157e8d0",
+  "dirty": true,
+  "generatedAt": "2026-11-12T09:18:38.840Z",
+  "argv": ["--hash-key=hyper/hard","--hash-from=5","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS04\\hashes\\hyper-hard-05.json"],
+  "records": [
+    {"key":"hyper/hard#13","variant":"hyper","level":"hard","seed":13,"hash":"731324bc439c8ec0","ms":32,"overrides":[]},
+    {"key":"hyper/hard#21","variant":"hyper","level":"hard","seed":21,"hash":"ad0e45226c19df8e","ms":11,"overrides":[]},
+    {"key":"hyper/hard#34","variant":"hyper","level":"hard","seed":34,"hash":"37dde883ba486aa7","ms":21,"overrides":[]},
+    {"key":"hyper/hard#55","variant":"hyper","level":"hard","seed":55,"hash":"80b5ed097bc24345","ms":6,"overrides":[]},
+    {"key":"hyper/hard#89","variant":"hyper","level":"hard","seed":89,"hash":"4c0e5a9a9d05a2d6","ms":8,"overrides":[]}
+  ]
+}

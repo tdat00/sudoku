@@ -791,7 +791,7 @@
       });
     });
 
-    it('marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view',
+    it('marks 12 compact and 15 details jumps over the 14 goldens, and one first rated puzzle per view',
       function () {
         var jumps = { compact: 0, details: 0 };
         inLocale('en', function () {
@@ -826,7 +826,7 @@
             });
           });
         });
-        expect(jumps).toEqual({ compact: 13, details: 16 });
+        expect(jumps).toEqual({ compact: 12, details: 15 });
       }, 120000);
 
     it('the example: the first rated puzzle, the new hardest technique without a badge, an unchanged total',
@@ -866,7 +866,7 @@
 
     it('also tells a new hardest technique when the score is flat or falls (details view)', function () {
       var flat = viewsOf(golden('G13')).details.steps;
-      var fall = viewsOf(golden('G10')).details.steps;
+      var fall = viewsOf(golden('G11')).details.steps;
       inLocale('en', function () {
         var a = stepAt(flat, 101);
         var text = textOfStep(a);
@@ -877,15 +877,15 @@
         expect(text.total).toBe('70 (unchanged)');
         expect(text.line).toMatch(/^The generator's solution now uses .* \(weight [\d.,]+\) as its hardest technique, instead of /);
         expect(text.rowLabel.technique).toBe(a.table.transition.after.hardest);
-        var b = stepAt(fall, 42);
+        var b = stepAt(fall, 104);
         var drop = textOfStep(b);
-        expect(b.table.transition.before.total).toBe(2788);
-        expect(b.table.transition.after.total).toBe(1940);
+        expect(b.table.transition.before.total).toBe(1967);
+        expect(b.table.transition.after.total).toBe(1264);
         expect(drop.badge).toBeNull();
-        expect(drop.total).toBe(SG.i18n.formatNumber(1940) + ' (\u2212848)');
-        expect(drop.total).toBe('1,940 (\u2212848)');
-        expect(drop.line).toContain('now uses Forcing Chain (weight 1,100)');
-        expect(drop.rowLabel.technique).toBe('forcingChain');
+        expect(drop.total).toBe(SG.i18n.formatNumber(1264) + ' (\u2212703)');
+        expect(drop.total).toBe('1,264 (\u2212703)');
+        expect(drop.line).toContain('now uses W-Wing (weight 850)');
+        expect(drop.rowLabel.technique).toBe('wWing');
         expect(drop.totalHighlight).toBe(false);
       });
     }, 120000);
@@ -1033,7 +1033,7 @@
         .toBe('The separate changes give 50, 50, 49 and 49; the combined change gives 2,010.');
       expect(third('G07', 24).sentences[2]).toBe('Removing the clue at R1C4 alone gives 136, versus 252 for the ' +
         'whole symmetric group, which is always displayed as one complete change.');
-      var sign = third('G11', 110);
+      var sign = third('G11', 110, 'details');
       expect(sign.sentences[0]).toContain('After the sign between R2C4 and R1C4 is removed, ');
       expect(sign.sentences[2]).toBe('This step removes one sign; there is no smaller sign-removal move to show.');
       expect(third('G13', 114).sentences[2])
@@ -1055,7 +1055,7 @@
     }
 
     it('a jump over several moves says in which complete change the new technique first appears', function () {
-      [['G06', 31, 'compact'], ['G10', 42, 'compact'], ['G12', 103, 'compact']].forEach(function (c) {
+      [['G06', 31, 'compact'], ['G11', 111, 'compact'], ['G12', 103, 'compact']].forEach(function (c) {
         var res = golden(c[0]);
         var analysis = analysisOf(res);
         var step = stepAt(viewsOf(res)[c[2]].steps, c[1]);
@@ -1302,20 +1302,20 @@
       }
     });
 
-    it('the first deductions of the goldens: Killer candidates 2 and 5 in one cell, 1, 6, 7 and 9 in another',
+    it('the first deductions of the goldens: Killer candidates 5, 6 and 8 in one cell, candidate 9 in another',
       function () {
         var nine = golden('G09');
         var ten = golden('G10');
         withLabels(nine, function () {
           inLocale('en', function () {
             var why = textOfStep(stepAt(viewsOf(nine).compact.steps, 37)).callout.why;
-            expect(why).toContain('In that deduction, candidates 2 and 5 are removed from R7C5.');
+            expect(why).toContain('In that deduction, candidates 5, 6 and 8 are removed from R6C5.');
           });
         });
         withLabels(ten, function () {
           inLocale('en', function () {
-            var why = textOfStep(stepAt(viewsOf(ten).compact.steps, 36)).callout.why;
-            expect(why).toContain('In that deduction, candidates 1, 6, 7 and 9 are removed from R7C1.');
+            var why = textOfStep(stepAt(viewsOf(ten).compact.steps, 37)).callout.why;
+            expect(why).toContain('In that deduction, candidate 9 is removed from R8C2.');
           });
         });
       }, 120000);
@@ -1459,8 +1459,14 @@
       var gtFx = panelFixture({ table: tableOf(gtPlayer) });
       var gtLegend = gtFx.detail.nextSibling;
       inLocale('en', function () {
+        function legendMarks() {
+          return gtLegend.children.map(function (li) { return li.getAttribute('data-mark'); });
+        }
         gtFx.view.setSteps(gtPlayer.getSteps());
-        var marks = gtLegend.children.map(function (li) { return li.getAttribute('data-mark'); });
+        expect(legendMarks()).not.toContain('signCause');
+        gtPlayer.setView('details');
+        gtFx.view.setSteps(gtPlayer.getSteps());
+        var marks = legendMarks();
         expect(marks).toContain('signCause');
         expect(marks).not.toContain('cause');
         expect(gtLegend.textContent).toContain('Removing this sign causes the score jump');

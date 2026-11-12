@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "181e1932ed6017eea3cf01fe4d8ca3db3671cfcc923af838fff68f9090b7ee0d",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "6685d8f4c705e1244ef6487e05400d72f157e8d0",
+  "dirty": true,
+  "generatedAt": "2026-11-12T09:20:20.634Z",
+  "argv": ["--hash-key=samurai/easy","--hash-from=5","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS04\\hashes\\samurai-easy-05.json"],
+  "records": [
+    {"key":"samurai/easy#13","variant":"samurai","level":"easy","seed":13,"hash":"a51135bd5ae679c1","ms":50,"overrides":[]},
+    {"key":"samurai/easy#21","variant":"samurai","level":"easy","seed":21,"hash":"6884c5e08ca17884","ms":24,"overrides":[]},
+    {"key":"samurai/easy#34","variant":"samurai","level":"easy","seed":34,"hash":"b1368629a79b39a5","ms":21,"overrides":[]},
+    {"key":"samurai/easy#55","variant":"samurai","level":"easy","seed":55,"hash":"523df76d67685d01","ms":21,"overrides":[]},
+    {"key":"samurai/easy#89","variant":"samurai","level":"easy","seed":89,"hash":"b0c0d49b868f03c7","ms":23,"overrides":[]}
+  ]
+}

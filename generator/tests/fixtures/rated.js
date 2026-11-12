@@ -3,7 +3,16 @@
  * SG.fixtures.rated = { entries, constructed, techniqueSets }. Every puzzle has exactly one solution.
  *
  * Entry: { name, puzzle (81 chars, '.' = empty), label (a level of SG.difficulty.LEVELS), basis, note,
- *          solvableWith?, notSolvableWith? (technique ids) }
+ *          solvableWith?, notSolvableWith? (technique ids), v3Expected: { level, required } }
+ *
+ * `label`, `solvableWith` and `notSolvableWith` are the history of rating v2 and stay as data: a published
+ * label is outside knowledge, not a weight-fitting target, and a family certificate is no floor of rating v3.
+ * `v3Expected` is the CURRENT reference expectation (rating v3, technique order of MS04): `level` is the
+ * level of the canonical rating (`SG.difficulty.rate`) and `required` the verdict `requiredOf` and
+ * `certifyFloor` give AT THAT LEVEL (true also when vacuous), not at the label. A puzzle without a complete
+ * proof would be `{ level: null, required: null }`; every puzzle here has one. A test that asks for the old
+ * label says so, with its own expected verdict. Where `v3Expected.level` differs from the label the change
+ * is recorded in docs/difficulty-v3/notes.md.
  *
  * Two kinds of labels, kept apart on purpose:
  *
@@ -171,8 +180,49 @@
     };
   });
 
+  /**
+   * The current expectation of every entry, [level of its canonical rating, required at that level]: see the
+   * header. veryEasy and hell2 are vacuous (true); the other `required` values were derived from the
+   * technique counts and checked with the reference floor on the same puzzle.
+   */
+  var V3_EXPECTED = {
+    'wikipedia-example': ['easy', false],
+    'classic-easy': ['easy', false],
+    'classic-easy-2': ['easy', false],
+    'classic-medium': ['easy', false],
+    'escargot': ['hell2', true],
+    'worlds-hardest-2012': ['hell2', true],
+    'platinum-blonde': ['hell2', true],
+    'golden-nugget': ['hell2', true],
+    'constructed-veryEasy-1': ['veryEasy', true],
+    'constructed-veryEasy-2': ['veryEasy', true],
+    'constructed-veryEasy-3': ['veryEasy', true],
+    'constructed-easy-1': ['easy', false],
+    'constructed-easy-2': ['easy', false],
+    'constructed-easy-3': ['easy', false],
+    'constructed-normal-1': ['normal', false],
+    'constructed-normal-2': ['normal', true],
+    'constructed-normal-3': ['normal', false],
+    'constructed-hard-1': ['hard', true],
+    'constructed-hard-2': ['hard', true],
+    'constructed-hard-3': ['hard', true],
+    'constructed-expert-1': ['expert', true],
+    'constructed-expert-2': ['expert', true],
+    'constructed-expert-3': ['expert', true],
+    'constructed-nightmare-1': ['nightmare', false],
+    'constructed-nightmare-2': ['nightmare', false],
+    'constructed-nightmare-3': ['nightmare', false]
+  };
+
+  var ENTRIES = PUBLISHED.concat(CONSTRUCTED);
+  ENTRIES.forEach(function (entry) {
+    var v3 = V3_EXPECTED[entry.name];
+    if (!v3) throw new Error('rated fixtures: no v3Expected for ' + entry.name);
+    entry.v3Expected = { level: v3[0], required: v3[1] };
+  });
+
   SG.fixtures.rated = {
-    entries: PUBLISHED.concat(CONSTRUCTED),
+    entries: ENTRIES,
     constructed: CONSTRUCTED,
     techniqueSets: TECHNIQUE_SETS
   };

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "181e1932ed6017eea3cf01fe4d8ca3db3671cfcc923af838fff68f9090b7ee0d",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "6685d8f4c705e1244ef6487e05400d72f157e8d0",
+  "dirty": true,
+  "generatedAt": "2026-11-12T09:18:36.194Z",
+  "argv": ["--hash-key=diagonalX/nightmare","--hash-from=5","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS04\\hashes\\diagonalX-nightmare-05.json"],
+  "records": [
+    {"key":"diagonalX/nightmare#13","variant":"diagonalX","level":"nightmare","seed":13,"hash":"863dc6f9375bbf65","ms":57,"overrides":[]},
+    {"key":"diagonalX/nightmare#21","variant":"diagonalX","level":"nightmare","seed":21,"hash":"1d28c004e14b95d8","ms":23,"overrides":[]},
+    {"key":"diagonalX/nightmare#34","variant":"diagonalX","level":"nightmare","seed":34,"hash":"d3b88366b7c46bea","ms":33,"overrides":[]},
+    {"key":"diagonalX/nightmare#55","variant":"diagonalX","level":"nightmare","seed":55,"hash":"63a1c2db8206c8cf","ms":20,"overrides":[]},
+    {"key":"diagonalX/nightmare#89","variant":"diagonalX","level":"nightmare","seed":89,"hash":"ff322e5397ad25a7","ms":22,"overrides":[]}
+  ]
+}

@@ -414,11 +414,11 @@
       return { model: model, state: state };
     }
 
-    it('are registered as the ladder says: group ineq, costs 12 and 22, orders 65 and 85, greaterThan only',
+    it('are registered as the ladder says: group ineq, costs 12 and 22, orders 46 and 85, greaterThan only',
       function () {
         expect(chain.group).toBe('ineq');
         expect(chain.baseCost).toBe(12);
-        expect(chain.order).toBe(65);
+        expect(chain.order).toBe(46);
         expect(forcing.group).toBe('ineq');
         expect(forcing.baseCost).toBe(22);
         expect(forcing.order).toBe(85);

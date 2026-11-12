@@ -1242,6 +1242,35 @@
       });
     });
 
+    it('counts its search nodes per call: the same Finding and the same budget checks after other calls',
+      function () {
+        function run(id, state) {
+          var budget = { calls: 0, check: function () { budget.calls++; } };
+          var finding = find(id, model9, state, { budget: budget });
+          return { finding: finding, checks: budget.calls };
+        }
+        // The checks are spaced by search nodes (every 256th): a counter that outlives a call would check the
+        // same state at another point of its scan after other calls. Forty rounds of every subset technique
+        // in between walk the counter through many positions.
+        var states = candidateStates(model9, 8642, 6, [0.1, 0.3]).map(function (item) { return item.state; });
+        var found = 0;
+        IDS.forEach(function (id) {
+          states.forEach(function (state, i) {
+            var snapshot = SG.model.cloneState(state);
+            var base = run(id, state);
+            if (base.finding !== null) found++;
+            for (var round = 0; round < 40; round++) {
+              IDS.forEach(function (other) { run(other, states[(i + 1 + round) % states.length]); });
+              var again = run(id, state);
+              expect([id, i, round, again.checks]).toEqual([id, i, round, base.checks]);
+              expect(again.finding).toEqual(base.finding);
+            }
+            expect(state.candidates).toEqual(snapshot.candidates);
+            expect(state.value).toEqual(snapshot.value);
+          });
+        });
+        expect(found).toBeGreaterThan(0);
+      });
     it('does not change a state and answers the same twice (also with SG.DEBUG on)', function () {
       var debugBefore = SG.DEBUG;
       SG.setDebug(true);

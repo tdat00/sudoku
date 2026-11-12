@@ -4,7 +4,7 @@
  * units of D cells").
  *
  *   id          group  baseCost  order
- *   cageCombo   cage      10       55   Cage Sum Combination
+ *   cageCombo   cage      10       44   Cage Sum Combination
  *   ruleOf45    cage      28       95   Rule of 45 (innies / outies)
  *   cageSplit   cage      40      135   Cage Splitting
  *
@@ -612,7 +612,7 @@
   }
 
   [
-    ['cageCombo', 10, 55, findCageCombo],
+    ['cageCombo', 10, 44, findCageCombo],
     ['ruleOf45', 28, 95, findRuleOf45],
     ['cageSplit', 40, 135, findCageSplit]
   ].forEach(function (row) {

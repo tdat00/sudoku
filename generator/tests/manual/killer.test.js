@@ -508,7 +508,7 @@
     it('registers cageCombo, ruleOf45 and cageSplit in the cage group with the costs and orders of the ' +
       'ladder',
       function () {
-        var rows = { cageCombo: [10, 55], ruleOf45: [28, 95], cageSplit: [40, 135] };
+        var rows = { cageCombo: [10, 44], ruleOf45: [28, 95], cageSplit: [40, 135] };
         IDS.forEach(function (id) {
           var tech = SG.techniques.get(id);
           expect(tech.group).toBe('cage');
@@ -520,9 +520,11 @@
         });
       });
 
-    it('puts them into the ladder between the classic techniques of similar cost', function () {
+    it('puts them into the ladder between the classic techniques of similar cost and weight', function () {
       var ids = SG.techniques.list().map(function (t) { return t.id; });
-      expect(ids.indexOf('cageCombo')).toBeGreaterThan(ids.indexOf('boxLine'));
+      // rating v3: cageCombo (weight 40) now runs before boxLine (50), right after pointing (40)
+      expect(ids.indexOf('cageCombo')).toBeGreaterThan(ids.indexOf('pointing'));
+      expect(ids.indexOf('cageCombo')).toBeLessThan(ids.indexOf('boxLine'));
       expect(ids.indexOf('cageCombo')).toBeLessThan(ids.indexOf('nakedPair'));
       expect(ids.indexOf('ruleOf45')).toBeGreaterThan(ids.indexOf('hiddenPair'));
       expect(ids.indexOf('ruleOf45')).toBeLessThan(ids.indexOf('hiddenQuad') + 2);

@@ -422,7 +422,7 @@
     slow('recognises a rebuilt Killer log only by its exact shape and the level asked', function () {
       var result = entry('G09').result;
       var before = JSON.stringify(R.toPlainWire(result).digLog);
-      expect(result.digLog).toHaveLength(208);
+      expect(result.digLog).toHaveLength(190);
       expect(R.moves(result).rebuilt).toBe(false);
       var groups = SG.symmetry.groups(result.model, result.config.symmetry).filter(function (group) {
         return Array.from(group).every(function (c) { return result.givens[c] === 0; });
@@ -1148,8 +1148,8 @@
       });
     });
 
-    slow('has the same end position as a jump in one view and not in the other (G06, G10, G12, G01)', function () {
-      [['G06', 31, [138, 1678], [2967, 1678]], ['G10', 42, [607, 1940], [2788, 1940]],
+    slow('has the same end position as a jump in one view and not in the other (G06, G11, G12, G01)', function () {
+      [['G06', 31, [138, 1678], [2967, 1678]], ['G11', 111, [119, 957], [962, 957]],
         ['G12', 103, [130, 638], [642, 638]]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var compact = toPosition(analysis, 'compact', c[1]);
@@ -1165,7 +1165,7 @@
       expect(toPosition(g01, 'details', 31).before.W).toBeCloseTo(906.75, 6);
     });
 
-    slow('has 13 compact, 16 details and 19 distinct jump transitions in the 14 goldens', function () {
+    slow('has 12 compact, 15 details and 18 distinct jump transitions in the 14 goldens', function () {
       var count = { compact: 0, details: 0 };
       var distinctJumps = {};
       GOLDENS.forEach(function (g) {
@@ -1175,12 +1175,12 @@
           distinctJumps[g.id + ':' + t.from + '>' + t.to + ':' + t.before.total + '>' + t.after.total] = true;
         });
       });
-      expect(count).toEqual({ compact: 13, details: 16 });
-      expect(Object.keys(distinctJumps)).toHaveLength(19);
+      expect(count).toEqual({ compact: 12, details: 15 });
+      expect(Object.keys(distinctJumps)).toHaveLength(18);
     });
 
-    slow('labels a new hardest technique also at a flat or lower score (details: G13, G10, G11, G07)', function () {
-      [['G13', 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'], ['G10', 42, 2788, 1940, 'forcingChain', 'nishio'],
+    slow('labels a new hardest technique also at a flat or lower score (details: G13, G11, G07)', function () {
+      [['G13', 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'],
         ['G11', 104, 1967, 1264, 'wWing', 'forcingChain'], ['G07', 31, 2515, 1938, 'forcingChain', 'nishio']
       ].forEach(function (c) {
         var t = toPosition(analysisOf(c[0]), 'details', c[1]);
@@ -1204,8 +1204,7 @@
   describe('replay: explaining the jumps', function () {
     var NONE = '\u2014';
     // The goldens whose jump has no candidates recorded by the generator, with the kind that says so.
-    var UNRECORDED = { 'G05:5': 'checked', 'G06:6': 'combined', 'G10:8': 'combined', 'G11:7': 'checked',
-      'G12:4': 'combined' };
+    var UNRECORDED = { 'G05:5': 'checked', 'G06:6': 'combined', 'G11:5': 'combined', 'G12:5': 'combined' };
 
     function labeller(id) {
       return function (cell) { return SG.model.cellLabel(entry(id).result.model, cell); };
@@ -1469,7 +1468,7 @@
       expect(guarded.ratings.every(function (r) { return r.status !== 'capped'; })).toBe(true);
     });
 
-    slow('has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details', function () {
+    slow('has a cause, a choice and a proof for every jump of the goldens: 12 compact and 15 details', function () {
       var count = { compact: 0, details: 0 };
       GOLDENS.forEach(function (g) {
         var analysis = analysisOf(g.id);
@@ -1492,7 +1491,7 @@
         });
         expect(Object.keys(analysis.proofs).map(Number)).toEqual(Object.keys(ends).map(Number));
       });
-      expect(count).toEqual({ compact: 13, details: 16 });
+      expect(count).toEqual({ compact: 12, details: 15 });
     });
 
     slow('frames the details jumps too: G06 R4C6 and the four sign jumps of G11', function () {
@@ -1507,8 +1506,8 @@
       expect(g11.every(function (x) { return x.cause.changes.length === 0 && x.cause.sign !== null; })).toBe(true);
     });
 
-    slow('describes a jump over several moves by its first move with the new technique (G06, G10, G12)', function () {
-      [['G06', 5], ['G10', 7], ['G12', 3]].forEach(function (c) {
+    slow('describes a jump over several moves by its first move with the new technique (G06, G11, G12)', function () {
+      [['G06', 5], ['G11', 4], ['G12', 4]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var t = into(analysis, 'compact', c[1]);
         var step = analysis.views.compact.steps[c[1]];

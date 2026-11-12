@@ -45,7 +45,7 @@
   const picked = new Int32Array(MAX_SIZE);   // indices into the item list: the combination being tried
   const unionOf = new Int32Array(1 << MAX_SIZE); // unionOf[s] = OR of the masks of the picked items in s
   let level = 0;       // index in `picked` of the item being advanced
-  let nodes = 0;       // search nodes, only used to space the budget checks
+  let nodes = 0;       // search nodes of the current find(), only used to space the budget checks
   let openMask = 0;    // positions of the unsolved cells of the unit being scanned
 
   // Naked mode: collects the open cells with 2..size candidates. Returns the number of items, or 0 when the
@@ -199,6 +199,7 @@
     const complete = ctx.completeUnits;
     const cand = state.candidates;
     const value = state.value;
+    nodes = 0;
     for (let u = 0; u < units.length; u++) {
       ctx.check();
       const cells = units[u];

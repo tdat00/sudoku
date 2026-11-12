@@ -676,7 +676,7 @@
       xWing: { baseCost: 32, order: 110 },
       simpleColouring: { baseCost: 36, order: 120 },
       swordfish: { baseCost: 42, order: 130 },
-      jellyfish: { baseCost: 56, order: 160 }
+      jellyfish: { baseCost: 56, order: 137 }
     };
 
     ALL_IDS.forEach(function (id) {
@@ -697,6 +697,16 @@
       at.forEach(function (index) { expect(index).toBeGreaterThanOrEqual(0); });
       expect(at.slice().sort(function (a, b) { return a - b; })).toEqual(at);
     });
+
+    it('puts jellyfish after swordfish and cageSplit and before the wings, as its weight says (rating v3)',
+      function () {
+        const order = SG.techniques.list().map(function (def) { return def.id; });
+        const at = function (id) { return order.indexOf(id); };
+        expect(at('jellyfish')).toBeGreaterThan(at('swordfish'));
+        expect(at('jellyfish')).toBeGreaterThan(at('cageSplit'));
+        expect(at('jellyfish')).toBeLessThan(at('xyWing'));
+        expect(at('jellyfish')).toBeLessThan(at('xyzWing'));
+      });
   });
 
   describe('xWing', function () {

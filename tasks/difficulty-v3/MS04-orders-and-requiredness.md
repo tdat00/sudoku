@@ -149,14 +149,14 @@ the current fixture schema. Report gates, differences and B/T IDs. No commit or 
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted and committed with one open finding (`difficulty-v3 MS04: Orders, counter and derived certificate`) |
+| Start | 2026-11-12 15:52 (+07:00) |
+| End | 2026-11-12 16:57 developer; 17:45 orchestrator review and commit |
+| Duration | 66 min developer (3,942 s); about 12 min review |
+| Model | claude-sonnet-5.5 (developer); orchestrator review claude-opus-5.5 |
+| Token usage | 292 model calls; 66,715,147 input tokens (66,108,567 cache reads); 233,427 output tokens |
+| AI credits | about 1,046 (developer) |
+| Verification | Developer: targeted `--suite=difficulty-floor,technique-weights,techniques,tech-fish,tech-subset,replay,steps,player,replay-recorders` 740 passed (32.6 s); generator quick 47 suites, 2,986 passed (116 s); player quick 30 suites, 1,670 passed (29 s); help examples `--check` 26 IDs match; GG 104 shards, `--check-hashes` 27 of 520 changed, `--update-hashes`, then all 520 unchanged; GR wire 4 shards (G09, G10, G11 differ, written, up to date) and analysis 14 shards (G09-G12 differ, written, up to date); GD `--suite=difficulty,killer,greater-than` 377 of 378 passed (338 s). Orchestrator re-run: generator quick 2,986/2,986 (117 s), player quick 1,670/1,670, hash merge `--check-hashes` all 520 unchanged from the current sources, wire and analysis merges `--check` up to date, help examples up to date |
+| Acceptance | MS04-B01..B03 and MS04-T01..T03 met. MS04-T04 met except the GD timing assertion CV6 (see Issues). Diff reviewed: orders `cageCombo` 44, `ineqChain` 46, `jellyfish` 137 with headers; `nodes = 0` per `findSubset` call (mutation-verified test); `requiredOf(rating, level, model)` returns null for a missing or unsolved rating, vacuous for veryEasy or an empty tier, otherwise "some used technique outside the floor"; equals `certifyFloor` on all 26 rated puzzles at all nine levels and on generated classic9, Killer, Jigsaw9 and Greater-Than samples |
+| Issues & resolutions | (1) OPEN: the manual `greater-than` suite fails `normal: CV6 p95 within the 700 ms budget` (2,035 ms against the limit of 1,400 ms). The cause is the contracted `ineqChain` order alone (65 gives p95 97 ms on seeds 300-319). Seeds 7000-7039 give p95 5,043 ms against 125 ms. Seed 308 needs 4 attempts and 604 steps instead of 1 and 27, because digs to 24 clues still rate Easy. Not repaired here: the order is contracted and the assertion is not relaxed. SA2 (the pack author) is asked to name the owning task or raise a question in `docs/difficulty-v3/clarifications.md`; details in `docs/difficulty-v3/notes.md`. (2) 27 of 520 hashes, wire G09-G11 and analysis G09-G12 changed; each class was attributed to the orders by the four old/new order and counter combinations; the counter reset changes no output. (3) `classic-medium` (published `normal`) has always rated Easy (score 48); `v3Expected` records `easy` and the label stays. (4) Pinned replay, steps and player assertions re-derived from the refreshed goldens. (5) `difficulty-floor.test.js` keeps its pre-existing final blank line |
+| Handoff | MS05: `SG.difficulty.requiredOf(rating, level, model)` returns `{required, vacuous, floorLevel}` or null; the null check precedes level validation (unknown level throws `difficulty.unknownLevel` only for a solved rating); the caller guarantees uniqueness and the same model and givens. Fixtures: `core/tests/fixtures/techniques.js` exposes `historyV2`, `registryOrder`, `CURRENT = {}` and `byId`; `rated.js` entries carry `v3Expected: {level, required}`. The classic9 Normal seed-1 puzzle is shallow (not required, floor Easy, rated Normal 209); constructed Normal 1/2/3 give false/true/false; constructed Nightmare is shallow |

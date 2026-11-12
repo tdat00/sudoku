@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "181e1932ed6017eea3cf01fe4d8ca3db3671cfcc923af838fff68f9090b7ee0d",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "6685d8f4c705e1244ef6487e05400d72f157e8d0",
+  "dirty": true,
+  "generatedAt": "2026-11-12T09:20:30.487Z",
+  "argv": ["--hash-key=flower/normal","--hash-from=10","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS04\\hashes\\flower-normal-10.json"],
+  "records": [
+    {"key":"flower/normal#144","variant":"flower","level":"normal","seed":144,"hash":"1852a5b4f107ab90","ms":115,"overrides":[]},
+    {"key":"flower/normal#233","variant":"flower","level":"normal","seed":233,"hash":"50cccfec506e1678","ms":162,"overrides":[]},
+    {"key":"flower/normal#377","variant":"flower","level":"normal","seed":377,"hash":"08a95f9347524857","ms":69,"overrides":[]},
+    {"key":"flower/normal#610","variant":"flower","level":"normal","seed":610,"hash":"e9cfaba77d3d95c3","ms":183,"overrides":[]},
+    {"key":"flower/normal#987","variant":"flower","level":"normal","seed":987,"hash":"039353de203380e2","ms":190,"overrides":[]}
+  ]
+}

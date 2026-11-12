@@ -38,8 +38,20 @@
   }
 
   describe('techniques: registry', function () {
-    it('has the 21 techniques of the classic ladder registered', function () {
-      expect(classic.map(function (t) { return t.id; })).toEqual(F.ladder);
+    it('has the 21 techniques of the classic ladder registered, in the current registry order', function () {
+      expect(classic.map(function (t) { return t.id; })).toEqual(F.registryOrder);
+    });
+
+    it('keeps the v2 ladder as history, apart from the current order: only jellyfish moved', function () {
+      function without(list) {
+        return list.filter(function (id) { return id !== 'jellyfish'; });
+      }
+      expect(F.historyV2.ladder).toEqual(F.ladder);
+      expect(F.ladder.slice().sort()).toEqual(F.registryOrder.slice().sort());
+      expect(F.ladder.indexOf('jellyfish')).toBeGreaterThan(F.ladder.indexOf('xyzWing'));
+      expect(F.registryOrder.indexOf('jellyfish')).toBeGreaterThan(F.registryOrder.indexOf('swordfish'));
+      expect(F.registryOrder.indexOf('jellyfish')).toBeLessThan(F.registryOrder.indexOf('xyWing'));
+      expect(without(F.registryOrder)).toEqual(without(F.ladder));
     });
 
     it('lists techniques cheapest first: orders ascend and ids are unique', function () {
@@ -68,6 +80,14 @@
   });
 
   describe('techniques: fixtures (fixtures/techniques.js)', function () {
+    it('has the active map (byId, ids) on top of the untouched rating v2 positions', function () {
+      expect(F.ids).toEqual(Object.keys(F.byId));
+      Object.keys(F.historyV2.byId).forEach(function (id) {
+        expect(F.byId[id]).toBeTruthy();
+        expect(F.ids).toContain(id);
+      });
+    });
+
     it('has fixtures for exactly the techniques of the classic ladder (add them for a new one)', function () {
       var ids = classic.map(function (t) { return t.id; });
       var missing = ids.filter(function (id) { return F.ids.indexOf(id) === -1; });

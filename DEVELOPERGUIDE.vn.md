@@ -545,11 +545,17 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    rằng các số cho sẵn có đúng một lời giải với bàn cờ này (nó không đếm lời giải), không có giới hạn nào ngoài
    `budget` được truyền vào, trả về `{ required, vacuous, floorLevel, unsolvedCount }` (đúng hiển nhiên, không cần
    giải, với `veryEasy` và với mức có tầng rỗng) và ném lỗi khi có mâu thuẫn, khi đầu vào sai hay khi ngân sách bị
-   hỏng thay vì trả lời. Sau đó chạy lại bước kiểm
-   định `node tests/qualify.js` và kiểm tra tỷ lệ đạt mức bằng `node tests/soak.js --quick`.
+   hỏng thay vì trả lời. `SG.difficulty.requiredOf(rating, level, model)` cho cùng kết luận đó từ số lần dùng từng kỹ
+   thuật của một xếp hạng chuẩn đầy đủ (`SG.difficulty.rate`), không cần giải lần nữa; người gọi bảo đảm tính duy nhất
+   và rằng xếp hạng được làm cho đúng bàn cờ và các số cho sẵn đó, và câu trả lời chỉ đúng khi `order` của bộ đăng
+   ký đi theo các trọng số, nên hãy cho kỹ thuật mới một `order` giữ các trọng số không giảm dọc theo bộ đăng ký
+   (`tests/suites/technique-weights.test.js` báo lỗi nếu không). Sau đó chạy lại bước kiểm định
+   `node tests/qualify.js` và kiểm tra tỷ lệ đạt mức bằng `node tests/soak.js --quick`.
 5. **Kiểm thử**: thêm một mục cho kỹ thuật vào `../core/tests/fixtures/techniques.js` (hai thế cờ mà nó tìm ra
    một phép suy luận, một thế cờ mà nó không tìm ra gì; `../core/tests/suites/techniques.test.js` báo lỗi cho
-   đến khi có đủ) và thêm các mẫu đúng, mẫu sai vào `../core/tests/suites/tech-<nhóm>.test.js` tương ứng (công
+   đến khi có đủ; đặt mục đó vào `CURRENT`, vì `historyV2` giữ nguyên các thế cờ của rating v2, và ghi kỹ thuật
+   cổ điển mới vào `registryOrder`, thứ tự hiện hành mà bài kiểm tra bộ đăng ký so với bộ đăng ký thật) và thêm các
+   mẫu đúng, mẫu sai vào `../core/tests/suites/tech-<nhóm>.test.js` tương ứng (công
    cụ trong `../core/tests/fixtures/techniques-helper.js`). Phép kiểm tra tính chắc chắn — một kỹ thuật không bao
    giờ được loại một giá trị thuộc về lời giải thật — không cần bạn viết gì: `techniques.test.js` tự chạy nó cho
    mọi kỹ thuật đã đăng ký.

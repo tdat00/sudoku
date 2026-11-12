@@ -736,6 +736,12 @@
       function () {
         var report = fakeReport({ nakedSingle: 5, xWing: 1, nakedQuad: 6 }, 20);
         expect(D.classify(report, model9).hardestTechnique).toBe('xWing');
+        // the three calibrated ties: equal weights, so the larger order wins (rating v3 orders 46 and 137)
+        var ties = [['nakedQuad', 'ruleOf45'], ['jellyfish', 'cageSplit'], ['ineqChain', 'pointing']];
+        ties.forEach(function (p) {
+          expect(D.WEIGHTS[p[0]]).toBe(D.WEIGHTS[p[1]]);
+          expect(SG.techniques.get(p[0]).order).toBeGreaterThan(SG.techniques.get(p[1]).order);
+        });
         expect(D.breakdown({ nakedQuad: 1, ruleOf45: 1 }, 10).hardest).toBe('nakedQuad');
         expect(D.breakdown({ jellyfish: 1, cageSplit: 1 }, 10).hardest).toBe('jellyfish');
         expect(D.breakdown({ ineqChain: 1, pointing: 1 }, 10).hardest).toBe('ineqChain');
@@ -915,14 +921,56 @@
       });
     });
 
-    it('classify reproduces the level of every constructed puzzle exactly', function () {
-      SG.fixtures.rated.constructed.forEach(function (entry) {
-        var rating = D.rate(model9, parse(entry.puzzle));
-        expect(rating.level).toBe(entry.label);
+    it('v3 reference: every entry carries its current expectation, and classify gives its level exactly',
+      function () {
+        entries.forEach(function (entry) {
+          expect([entry.name, Object.keys(entry.v3Expected).sort()])
+            .toEqual([entry.name, ['level', 'required']]);
+          var rating = D.rate(model9, parse(entry.puzzle));
+          expect([entry.name, rating.solved ? rating.level : null])
+            .toEqual([entry.name, entry.v3Expected.level]);
+        });
+        // a constructed puzzle keeps the level of its label; the one published label that moved is on record
+        SG.fixtures.rated.constructed.forEach(function (entry) {
+          expect([entry.name, entry.v3Expected.level]).toEqual([entry.name, entry.label]);
+        });
+        var moved = entries.filter(function (entry) { return entry.v3Expected.level !== entry.label; })
+          .map(function (entry) {
+            return entry.name + ': ' + entry.label + ' -> ' + entry.v3Expected.level;
+          });
+        expect(moved).toEqual(['classic-medium: normal -> easy']);
       });
-    });
 
-    it('the certificate of a constructed puzzle is about techniques, not a score', function () {
+    it('v3 reference: the level is required (or vacuous) as expected, derived and by the current floor',
+      function () {
+        entries.forEach(function (entry) {
+          var level = entry.v3Expected.level;
+          var givens = parse(entry.puzzle);
+          var rating = D.rate(model9, givens);
+          var derived = D.requiredOf(rating, level, model9);
+          var reference = D.certifyFloor(model9, givens, level, null);
+          var i = idx(level);
+          expect([entry.name, derived.required]).toEqual([entry.name, entry.v3Expected.required]);
+          expect([entry.name, reference.required]).toEqual([entry.name, entry.v3Expected.required]);
+          expect([entry.name, derived.vacuous]).toEqual([entry.name, reference.vacuous]);
+          expect([entry.name, derived.floorLevel]).toEqual([entry.name, reference.floorLevel]);
+          // the current floor of that level: what the previous global level allows, nothing for veryEasy
+          var floor = D.floorTechniques(level, model9);
+          expect([entry.name, floor]).toEqual([entry.name,
+            i === 0 ? [] : D.spec(LEVELS[i - 1], model9).allowedTechniques]);
+          expect([entry.name, derived.vacuous]).toEqual([entry.name,
+            i === 0 || D.tierTechniques(level, model9).length === 0]);
+          if (!derived.vacuous) {
+            expect([entry.name, derived.floorLevel]).toEqual([entry.name, LEVELS[i - 1]]);
+            var outside = Object.keys(rating.techniqueCounts).some(function (id) {
+              return rating.techniqueCounts[id] > 0 && floor.indexOf(id) === -1;
+            });
+            expect([entry.name, derived.required]).toEqual([entry.name, outside]);
+          }
+        });
+      });
+
+    it('the v2 certificate of a constructed puzzle is about techniques, not a v3 floor', function () {
       function solvesWith(givens, ids) {
         return SG.logicalSolver.solve(board9, givens, {
           allowedTechniques: ids, collectSteps: false, assumeUniqueness: false
@@ -948,15 +996,17 @@
       expect(stuck('nightmare', sets.wings)).toBe(true);
     });
 
-    it('rates the famous hardest puzzles hell2, with a Nishio step and a complete proof', function () {
-      ['escargot', 'worlds-hardest-2012', 'platinum-blonde', 'golden-nugget'].forEach(function (name) {
-        var entry = entries.filter(function (e) { return e.name === name; })[0];
-        var rating = D.rate(model9, parse(entry.puzzle));
-        expect(rating.level).toBe('hell2');
-        expect(rating.hardestTechnique).toBe('nishio');
-        expect(rating.solved).toBe(true);
+    it('v3 reference: rates the famous hardest puzzles hell2, with a Nishio step and a complete proof',
+      function () {
+        ['escargot', 'worlds-hardest-2012', 'platinum-blonde', 'golden-nugget'].forEach(function (name) {
+          var entry = entries.filter(function (e) { return e.name === name; })[0];
+          var rating = D.rate(model9, parse(entry.puzzle));
+          expect(rating.level).toBe('hell2');
+          expect(rating.hardestTechnique).toBe('nishio');
+          expect(rating.solved).toBe(true);
+          expect(entry.v3Expected).toEqual({ level: 'hell2', required: true });
+        });
       });
-    });
 
     it('puts every label in order: harder labels never rate lower on average', function () {
       var sum = {};

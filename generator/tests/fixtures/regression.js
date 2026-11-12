@@ -140,25 +140,25 @@
         'a81a3bd08ade790c', '76fb50bf5b151f0b', '366eda4729af6993', '5a9fe1f53f18b719'
       ],
       'killer/easy': [
-        'd6d24658ac43741c', 'ca11e89738530113', 'fc5987d3359e322f', '12136217e152a1c3',
-        '25e74325e6e0ea81', 'cea6bef9a027c705', 'd27180698b69529d', '68f779bbcaf4402f',
-        '55f62248505d05bc', '9e9192547b6657b0', '51237117bbf41cf3', 'ecd20b3c95e6d868',
-        '6fff0e587b50e82c', 'ce2cd917ee6a7103', 'c865478d26ce52e9', 'cf860f56b3fbfba2',
-        '880e715401c53dc0', '3a911c65016453e1', '3cf6be83fa01d427', '160f6c20731add2c'
+        'e2aa3bbe9014f762', '5d6a301b871aed0f', 'fd58fb9220b3fe36', '12136217e152a1c3',
+        '283309b858dffe8c', 'ffb3b28f1d93696b', 'd27180698b69529d', '68f779bbcaf4402f',
+        '97d3eec05a895da4', '9e9192547b6657b0', 'c3f688c7ec48b203', '17593cca9ea75ace',
+        '6fff0e587b50e82c', 'eedbb386f2816002', 'c865478d26ce52e9', '9dd6e54afe3b90ce',
+        '880e715401c53dc0', 'f4f52246b18b6faa', '3cf6be83fa01d427', '160f6c20731add2c'
       ],
       'killer/hard': [
         '3ebeef31b34a35cd', '6ba5d6665fa90f42', 'c48225dfed2eccdb', 'f29839e4029eb9c8',
         '45e0878d343f0811', '25197193440b59df', '910dd7a96f77fe35', '79aeeefba7f3d077',
-        'f14aa3dd1d534b01', '6acbbdd97936928d', '3f4c9bcd90045409', '8125d02969965045',
-        '794786d964786925', '9fab0bacd7a2fee8', '4a4d846cb5e91dd0', 'e4a84af6314fd34a',
-        'bfefdca26b175dd6', 'd8b8902d49afc401', '744737bca394c788', '47d25178effcb3a4'
+        '21431cabef0f6d27', '6acbbdd97936928d', '3f4c9bcd90045409', '8125d02969965045',
+        '4f362eebaba1dc77', '9fab0bacd7a2fee8', 'f2c0b285751c3541', 'e4a84af6314fd34a',
+        'bfefdca26b175dd6', '30fde1e1bc69becd', '744737bca394c788', '47d25178effcb3a4'
       ],
       'greaterThan/normal': [
-        '0b9e0a0967037cd5', 'fe5ad79967319c8d', '6f6fe3b6940cba62', 'bb4f2fb157042f5d',
-        'd868bdfcb80befd0', 'd75d790e66c3706a', 'bb06ca80cd4622cc', '691d7154cd3269c8',
-        'b1a7d96720db4533', '5f337e221220ad06', '0e1dca57df81892b', '88d8fb14597a40b0',
-        'cf2cd98ae04a6066', '6ec071e025ab0534', '0ca6210c0d2f5ba8', '035b921574918611',
-        'ba70cb4ba7597237', 'bed41ef541cfc591', '6ad3b7bfb2fbd6c3', '4da5352455492bb0'
+        '0b9e0a0967037cd5', '12aecfa6283f88c2', 'fdf616f1a201e4c5', 'bb4f2fb157042f5d',
+        'd868bdfcb80befd0', 'd996b960b15b06d4', '97a65280d58265a4', '691d7154cd3269c8',
+        'acd99944b1398b68', '9d2dfcc72897d34b', '0e1dca57df81892b', '505b2a4e5b1e9a72',
+        'cf2cd98ae04a6066', '6ec071e025ab0534', '0ca6210c0d2f5ba8', 'd8b616e21d09f89e',
+        'ddf6064748fd3e63', '6b17f75973826cf5', '5dddb768e0d111d4', 'f4ec96f5f0d71eb1'
       ],
       'greaterThan/hard': [
         '9824f413eed441d7', 'bd35f3a2985656c6', 'ee05692893689fb4', 'a2d0a30eed29bfaa',

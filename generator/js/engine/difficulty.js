@@ -39,8 +39,11 @@
  * variant with 1.25 * weight below the band maximum (every one in the top band), in registry order. The floor
  * of a level is `allowed` of the previous global level (empty for veryEasy), even when the variant does not
  * offer that level; its tier is `allowed` minus the floor. A puzzle needs the tier of its level when the
- * floor techniques alone do not solve it; `certifyFloor` is the independent check. veryEasy (its tier is the
- * three singles) and a level whose tier is empty are vacuous: no solve is needed to certify them.
+ * floor techniques alone do not solve it. The technique order follows the weights (tests assert it), so the
+ * floor ids are a prefix of the variant's ladder and the canonical solve is the floor solve until it first
+ * needs a tier technique: `requiredOf` derives the verdict from the counts of a complete canonical rating,
+ * and `certifyFloor` is the independent check. veryEasy (its tier is the three singles) and a level whose
+ * tier is empty are vacuous: no solve is needed to certify them.
  *
  * Calibration: the weights and band edges come from docs/difficulty-rating/report-detailed.md; the edges keep
  * the reference puzzles of tests/fixtures/rated.js in their levels. The weights are engineering priors, not
@@ -377,6 +380,25 @@
   // FloorResult: { required, vacuous, floorLevel (the previous level; null when vacuous) }
   // ReferenceFloorResult: FloorResult plus unsolvedCount (cells left when the floor techniques get stuck)
 
+  // The FloorResult derived from the technique counts of a complete canonical rating (`rate`, or the digger's
+  // `rateCounted`: every technique, uniqueness assumed, the model's own initialisation and finder defaults),
+  // with no solve, no solution count and no claim check. The caller guarantees what a rating cannot show:
+  // that uniqueness may be assumed (the puzzle is proved to have one solution) and that the rating was made
+  // for this very model and givens (stale cages or signs are not recognised). While the floor ids are a
+  // prefix of the variant's technique order, the canonical solve is the floor solve until it first needs a
+  // technique outside the floor, so "some used technique is not in the floor" is the reference verdict. No
+  // rating, or one that is not solved: null, never a verdict. veryEasy and an empty tier are vacuous.
+  function requiredOf(rating, level, model) {
+    if (!rating || rating.solved !== true) return null;
+    const i = levelIndex(level);
+    const sets = bandSets(i, variantIdOf(model));
+    if (i === 0 || sets.tier.length === 0) return { required: true, vacuous: true, floorLevel: null };
+    const inFloor = new Set(idsOf(sets.floor));
+    const counts = rating.techniqueCounts || {};
+    const needed = Object.keys(counts).some(function (id) { return counts[id] > 0 && !inFloor.has(id); });
+    return { required: needed, vacuous: false, floorLevel: LEVELS[i - 1] };
+  }
+
   // Reference check that a puzzle needs the tier of `level`, for tests, soak and other tools (generation
   // derives it from the rating instead). A solve with the floor techniques alone, with the givens assumed to
   // have exactly one solution for this model (it counts no solutions) and no limit of its own: only the
@@ -553,6 +575,7 @@
     floorTechniques: floorTechniques,
     tierTechniques: tierTechniques,
     certifyFloor: certifyFloor,
+    requiredOf: requiredOf,
     isSupported: isSupported,
     classify: classify,
     rate: rate,
