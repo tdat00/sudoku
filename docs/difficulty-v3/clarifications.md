@@ -1,6 +1,6 @@
 # Rating v3: clarifications for the plan author
 
-Status: open, 2026-11-12. Questions raised by the two analysts who reviewed `docs/difficulty-v3/plan.md`
+Status: **answered, 2026-11-12** by the plan author (claude-fable-5-2); the two disputed rows were decided by the owner on the command line. Summary of the decisions: part E at the end of this file. Questions raised by the two analysts who reviewed `docs/difficulty-v3/plan.md`
 against the code (branch `rating-v3`, commit `6abcb9f`), for the plan's author (claude-fable-5-2) to check and
 answer. The owner confirms the answers before they become decisions.
 
@@ -73,7 +73,7 @@ report an undefined floor level.
 SA2 recommends (a): it keeps the algebra and the `floor ∪ tier = allowed` invariant; (b) gives "tier" two
 meanings; (c) changes the empty-floor definition.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a). The tier of veryEasy is the three singles and its certificate is explicitly vacuous (`required: true, vacuous: true, floorLevel: null`). Plan section 2 ("veryEasy: ∅") was loose wording; the algebra `floor ∪ tier = allowed` holds without an exception. Joint report R1 is confirmed.
 
 ### SA2-Q-S02: how is the floor solve bounded, and what does an unknown result mean?
 
@@ -89,7 +89,7 @@ SA2 recommends (a), with the cap calibrated from bounded samples: predictable wo
 hit rate; (b) can be slow without a caller budget and depends on timing; (c) costs more and needs a fixed
 two-stage policy.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** Withdrawn with SA1-Q-S7 (a): generation runs no second solve, so there is no production floor cap and no "unverified" state. For the reference `certifyFloor` (tests, soak, tools): option (b), the inherited budget only; cancellation and budget failures propagate and are never read as "stuck"; a contradiction is an error. Joint report R2 "common contracts" is confirmed.
 
 ### SA2-Q-S03: does the band target reach beyond the guided dig (S1.2)?
 
@@ -106,7 +106,7 @@ top-edge bias in the fallbacks; (b) is one coherent objective per sample but cha
 the target distribution and needs data-defined bounds. Note SA2's measurement: in the plan's own sample Hard
 does not hug the top (median band position 0.56, 3 of 24 in the top quarter); Expert does (9 of 12).
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** Owner decision (asked on the command line, 2026-11-12): **(b), joint report R7 branch B.** One target per sample, carried through the guided dig, `refineDown` and the local search, inside the existing caps and without a post-exact polishing search. Author's reasons: it is the only branch consistent with the fixed decision "scores spread across the band"; branch C's trigger (Expert median above 0.75 of the raw band) cannot work, because a certified Expert puzzle scores at least 812.5 from its XY-Wing alone (about 860 with the empty-cell term), so 0.75 is close to the middle of what Expert can reach. Consequences: (1) branch D is not adopted, the target stays uniform on the raw band and a target below the attainable range simply selects the lowest attainable puzzle; (2) every report of band positions (R23, MS18) gives the position in the raw band **and** in the attainable range `[max(min, 1.25 · w_min(tier) + V), max)`, and "hugs the top" is judged on the latter; (3) exact hit rate and time are compared before and after on the 17-cell manifest of R23; a loss of exact hits in a cell is reported to the owner, not fixed by dropping the target silently.
 
 ### SA2-Q-S04: chain windows and Nishio depth defaults for the new ids (S2.2)?
 
@@ -121,7 +121,7 @@ SA2 recommends (b) at first, for bounded cost, and to measure before enabling de
 draft's window but may multiply generation time; (b) keeps today's default maximum but must be documented;
 (c) goes beyond the plan. Please also confirm how public overrides (options passed by callers) behave.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (b) for Nishio: `nishio` is depth 1, `nishioDeep` has minimum depth 2, default maximum 2, and depth 3 only when a caller asks for it explicitly. Public overrides: a caller's valid maximum is intersected with the id's window and never enlarges it; an id called alone never relabels a proof that belongs to the other id (joint report R9 wrapper contract, confirmed). The chain cutoff is answered under SA1-Q-S1.
 
 ### SA2-Q-S05: how far do the expensive new pattern searches go (S3)?
 
@@ -137,7 +137,7 @@ named pattern; (b) risks unusable dig and hint latency; (c) makes technique capa
 then belongs in the model and version docs. "Full scope" is read as implementing every named technique, not
 unbounded searches.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a). Documented, common, deterministic limits, the same on every board. The candidate values of joint report R10 (ALS of at most 4 cells, 4,096 retained ALS records, 50,000 work units per new finder, at most 2 leftover units and 4 difference cells per side, 4,096 extra grouped nodes) are approved as starting values. The task that introduces a finder measures cap hits and latency, may change its own limit once with the evidence recorded in its task record, and after MS17 a limit is part of rating version 3 (changing it needs a new version). "Full scope" means every named technique, not unbounded searches: confirmed.
 
 ### SA2-Q-S06: keep both "approximate" and "shallow" warnings (S1.1)?
 
@@ -150,7 +150,7 @@ Context: plan S1.1 step 5 ("Decide: keep both or make `shallow` replace `approxi
 SA2 recommends (a) (as the plan does): existing qualification and retry consumers keep working; (b) needs every
 `approximate` consumer updated; (c) is a larger serialisation and UI change.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a). Keep `difficulty.approximate` for every non-exact result and add `difficulty.shallow` for a complete in-band result proved shallow, plus the `tune.shallow` event (joint report R4). This settles the "Decide" of plan S1.1 step 5.
 
 ### SA2-Q-S07: where are the floor certificate and the rating version kept (S2.3)?
 
@@ -164,7 +164,7 @@ Context: report section 4 "S2.3"; plan S2.3 "Decide whether to show a small 'rat
 SA2 recommends (a): the Player exchange format stays stable and the note explains why a regenerated old entry
 changes level; (b) adds another claim to validate; (c) is smallest but hides the reason.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a). No floor certificate in exports or in the Player exchange format; exactness travels only in the worker result and the v3 cache. New history entries store `ratingVersion`; entries without it are shown as "made by an earlier version; selecting it generates a new puzzle" (joint report R22, including keeping the history store `VERSION = 1`).
 
 ### SA2-Q-S08: base costs of the new ids and the group of the ALS techniques (S3)?
 
@@ -177,7 +177,7 @@ weights and orders only.
 
 SA2 recommends (a): predictable and keeps the calibrated weights separate. Base costs are not the v3 weights.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** Group: ALS techniques go in the existing group `chain` (no new `als` group). Base costs: **table B of joint report R10** (lawOfLeftovers 20, skyscraper 33, twoStringKite 34, emptyRectangle 38, finnedXWing 40, remotePairs 44, finnedSwordfish 48, wxyzWing 57, bugPlusOne 72, xyChain 82, alsXz 106, sueDeCoq 112, forcingChainLong 118, nishioDeep 210). Reason: `baseCost` feeds only the solver's own design score, and table B keeps each new id between its neighbours in the existing raw scale (wxyzWing 57 between xyzWing 54 and wWing 60; forcingChainLong 118 between forcingChain 90 and nishio 140), which weight / 10 does not. Existing costs stay; no global raw-cost monotonicity assertion (jellyfish 56 / xyWing 48 already break it). The v3 score uses `WEIGHTS` only.
 
 ### SA2-Q-S09: what does S3 group 5 "Killer cage / unit interaction" mean?
 
@@ -191,7 +191,7 @@ every remaining combination needs, locked in one unit; the killer pair).
 SA2 recommends (a): no duplicate id; (b) needs a precise matching algorithm and fixtures; (c) changes
 attribution and weights of behaviour that already exists.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a). I had not verified `cageCombo` when I wrote the plan (it said "check first"). Since it already does both cases, no new id: add the quick regression test for the two cases. `cageLocked` is dropped from the catalogue (40 ids in total, as the joint report counts).
 
 ### SA2-Q-S10: what happens to the reference puzzles' labels when cheaper new techniques solve them?
 
@@ -207,7 +207,7 @@ SA2 recommends (a): it accepts the plan's intended downward reclassification (a 
 because only a forcing chain found it may correctly become Hard); (b) can conflict with naming the easier proof;
 (c) delays delivery. Weights and bands do not change without that separate decision.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** **(a), joint report R20 branch A.** I withdraw the plan's sentence "the reference puzzles must stay in their levels, otherwise adjust the new weight" (plan S3, last paragraph): it conflicts with the fixed decision that weights stay unless a later calibration changes them, and it would fit weights to twelve hand-made puzzles. Keep the listed priors; keep the v2 labels and family certificates as history; add v3 expectations (level and `required`) next to them; record every reclassification with the technique that caused it in `docs/difficulty-v3/notes.md`. A puzzle that drops a level because a cheaper named technique now solves it is the intended effect of S3.
 
 ### SA2-Q-S11: how are the help examples for the new techniques obtained?
 
@@ -221,7 +221,7 @@ whose hint replay shows the technique).
 SA2 recommends (a): it keeps real hint-replay examples but needs fixture discovery work; (b) is unbounded in
 practice and may never find rare ids; (c) changes a user-visible help contract and needs a new verifier.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a). Curated real puzzles with bounded, deterministic tooling per new id (joint report R21). If an id cannot get a real hint-replay example within the bound, the task stops and reports; the assertion is not removed and no synthetic example format is introduced.
 
 ---
 
@@ -254,7 +254,7 @@ Nightmare would need a 7+ link chain or Nishio, Hell 1 a depth-2 Nishio. See als
 
 SA1 recommends (b), confirmed by (c).
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** Owner decision (asked on the command line, 2026-11-12): **(c) measured choice, joint report R9 branch C, with the proposed rule approved.** On the MS07 code compare the cutoffs C = 4 and C = 6 on fresh Nightmare requests of classic9, diagonalX and jigsaw9 (the twelve-request soak manifest, identical budgets, every request counts, a timeout or error is a miss); take the cutoff with more exact hits in total, C = 6 on a tie; report each variant, the time and the shallow outcomes. Repeat after S3 (MS18); if the rule then selects the other value, stop before the final qualification and ask the owner. Fixed-board re-scoring (0 of 12 and 2 of 12) is evidence, not the selection denominator. Both window bounds are enforced inside each id.
 
 ### SA1-Q-S2: must Easy puzzles need pointing, box/line reduction or a naked pair?
 
@@ -268,7 +268,7 @@ only) are shallow.
 
 SA1 recommends (a).
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a). A fixed decision applied to Easy: a singles-only puzzle that scores 45 or more is shallow, not an exact Easy result. The three constructed Easy fixtures (score 46, singles only) get the v3 expectation "shallow" under SA2-Q-S10 (a).
 
 ### SA1-Q-S3: how is a shallow result shown (S1.1 step 5)?
 
@@ -282,7 +282,7 @@ Context: report section 4 "S1.1". Same question as SA2-Q-S06.
 
 SA1 recommends (a).
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a). Same answer as SA2-Q-S06: both warnings and the `tune.shallow` event.
 
 ### SA1-Q-S4: `refineDown` toward the target (S1.2 step 3, optional in the plan)?
 
@@ -293,7 +293,7 @@ Context: report section 4 "S1.2". See also SA2-Q-S03 (opposite recommendation).
 
 SA1 recommends (b).
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** Owner decision (asked on the command line, 2026-11-12): **implement it (a), as part of joint report R7 branch B** (see SA2-Q-S03). `refineDown` continues toward the target only through solved, in-band, required reveals with a strictly smaller target distance, inside the existing 64-rating cap.
 
 ### SA1-Q-S5: levels that may stop being offered?
 
@@ -307,7 +307,7 @@ Context: report sections 0 and 2.2. With "required", Killer Hard and Expert (6 o
 
 SA1 recommends (a), with the outcome recorded in `docs/difficulty-v3/notes.md`.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a). Accept what the final qualification (after S3) decides; no weight calibration inside this plan and no pruning from intermediate runs. A level that stops being offered is reported to the owner in `docs/difficulty-v3/notes.md` with its hit counts, so the section 6 calibration can be decided on data.
 
 ### SA1-Q-S6: a marker for history entries rated with v2 (S2.3, optional)?
 
@@ -319,7 +319,7 @@ Context: report section 4 "S2.3". See also SA2-Q-S07.
 
 SA1 recommends (a).
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a), in the form both analysts agreed: new entries carry `ratingVersion`; an entry without it shows the "made by an earlier version" note (it is not provably v2). Two strings per language.
 
 ---
 
@@ -351,7 +351,7 @@ SA1 recommends (a). SA2 accepts it in its response for complete canonical `rate(
 identical finder options and the uniqueness proof kept; other ratings use `certifyFloor` (verified independently,
 39 of 39).
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** **(a), confirmed.** The prefix argument is right: with orders monotone in the weights (S2.1) the floor of a level is a prefix of the ladder, so the floor solve is stuck exactly when the canonical rating uses a non-floor technique. Conditions as in joint report R2: only complete canonical `rate()` / `rateCounted` results on the same model and givens, uniqueness proved as today; anything else uses `certifyFloor`. Keep the equivalence test (after S2.1 only) and a bounded independent-reference sample in soak. This replaces `ensureFloor` and the `rating.floor === undefined` fallback of plan S1.1.
 
 ### SA2-Q-S12: an additional shallow-search budget?
 
@@ -365,7 +365,7 @@ condition, the local search can run on through the attempt caps at levels where 
 
 SA2 recommends (c), with (a) as the baseline until a cap is chosen. SA1 withdrew its 128 and agrees.
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (c), with the selection protocol of joint report R5 approved as written: compare 64, 128, 256 and no extra cap on the six listed cells; take the smallest finite cap with no exact-hit loss in any cell and a strict reduction of the median full ratings in at least one cell, otherwise no extra cap. Until the measurement, the existing attempt caps only.
 
 ### AUTH-S1: where is the v3 qualification recorded? (for the plan author)
 
@@ -379,7 +379,7 @@ the reports under `docs/difficulty-rating/` are dated records not to be edited.
 - (b) Write a new `docs/difficulty-v3/qualification.md`, keep the old file as the v2 record, and move the readers
   (`qualify.js`, the manual `difficulty` suite, links) to the new file (SA2).
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** **(a).** `docs/difficulty-rating/qualification.md` is the live offered table that `qualify.js --markdown` writes and the manual `difficulty` suite asserts; it is not one of the dated reports, and plan rule 8 should have said so (my omission). MS18 updates it in place and first copies the v2 table to `docs/difficulty-v3/qualification-v2.md` as the record. Checkpoint runs write only under `docs/difficulty-v3/` and never touch the live table. No reader paths change.
 
 ### AUTH-S2: position of the tooling task (for the plan author)
 
@@ -392,7 +392,7 @@ Context: SA1's response, position table row 20. The tooling task builds the gold
 Both analysts' latest schedules (the joint report draft, `docs/difficulty-v3/report-detailed.md`) now put the
 tooling task before the order change: agreed (a).
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a), confirmed: the tooling task (MS04) comes before the order change (MS03 / S2.1).
 
 ### PROC-S1: step order and qualification timing
 
@@ -406,7 +406,7 @@ Context: SA1's review section 2.2.2; SA2's breakdown (`docs/difficulty-v3/gpt-6-
 
 Both analysts now agree on (a).
 
-**Answer:**
+**Answer (claude-fable-5-2, 2026-11-12):** (a), confirmed: baseline and tooling, S2.1, S1.1, S1.2, S2.2, S3, S2.3; first qualification after S2.2 as a checkpoint, the final one after S3. My original order (S1 before S2.1) was wrong for the reason SA1 gives: the tier steering and the derived certificate are exact only once the orders are monotone.
 
 ---
 
@@ -466,3 +466,38 @@ From SA1 (report sections 0 and 5.1):
 16. SA1's measurements differ from the plan's picture of where "required" bites: classic9 Hard 0 of 24 shallow,
     Expert 0 of 12, but Normal 5 of 12, Master 4 of 12, Nightmare 12 of 12, Killer Hard and Expert 6 of 6, jigsaw9
     Expert 4 of 6, Greater-Than Hard 2 of 6. For classic9 Hard, what changes the puzzles is S1.2 and S3, not S1.1.
+
+---
+
+## Part D: author's response (claude-fable-5-2, 2026-11-12)
+
+All sixteen corrections are accepted; none is disputed. Notes:
+
+- Items 1, 3 and 15 are my errors (the fixture field is `label`; the `floor === undefined` fallback must go; the
+  Unique Rectangle remark belongs to Nightmare's floor).
+- Item 4: accepted as the joint report's R6 table (tier-first; proposal priorities are never compared with a score).
+- Items 5 and 16: accepted, and they correct the plan's section 1.1. "Scores hug the top of the band" is measured
+  for Expert only, and part of that is structural (see SA2-Q-S03). For classic9 Hard the level-below set already
+  gets stuck in 24 of 24 puzzles; what changes Hard is the target (S1.2) and the wider tier (S3). The requirement
+  bites at Normal, Master, Nightmare and on Killer, Jigsaw and Greater-Than.
+- Item 7: accepted; grouped links need the extended node representation of joint report R16.
+- Item 13: superseded by SA2-Q-S12 (c).
+
+## Part E: decisions in one place
+
+| Topic | Decision | By |
+|---|---|---|
+| Target scope (SA1-Q-S4 / SA2-Q-S03) | one target per sample through guided dig, refinement and local search (R7 branch B); positions also reported against the attainable range | owner |
+| Chain cutoff (SA1-Q-S1 / SA2-Q-S04) | measured choice between 4 and 6 by exact-hit count, 6 on a tie, re-checked after S3 (R9 branch C) | owner |
+| Nishio depth | `nishioDeep` default maximum 2, depth 3 only on request | author |
+| Requiredness (SA1-Q-S7, SA2-Q-S02) | derived from the canonical rating; `certifyFloor` is the reference with the inherited budget | author |
+| Shallow-search budget (SA2-Q-S12) | measured cap by the R5 protocol; existing caps until then | author |
+| Base costs, ALS group (SA2-Q-S08) | table B of R10; group `chain` | author |
+| Pattern limits (SA2-Q-S05) | R10 candidate values as starting values, frozen with version 3 | author |
+| Reference labels (SA2-Q-S10) | keep the priors and the v2 labels, add v3 expectations, record reclassifications (R20 branch A) | author |
+| Qualification record (AUTH-S1) | update the live table in place, v2 copy under `docs/difficulty-v3/` | author |
+| Order of work (PROC-S1, AUTH-S2) | baseline and tooling, S2.1, S1, S2.2, S3, S2.3 | author |
+| Everything marked "agreed" in the status table | confirmed as agreed | author |
+
+No PENDING item of `docs/difficulty-v3/report-detailed.md` remains open: R2 → A; R5 → C; R7 → B; R9 → C;
+R10 costs → B, limits → the candidate values; R20 → A; R24 → A.
