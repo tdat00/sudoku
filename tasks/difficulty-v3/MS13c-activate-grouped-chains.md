@@ -94,12 +94,21 @@ node tests\tools\make-technique-examples.js ..\generator --ids=forcingChain,forc
 Curated chain sources first, then bounded classic9 master/nightmare/hell1 under B.
 Jobs 1/no --jobs. E 10-90 minutes, cost 1-60 seconds, GP 30-540 seconds/cell, curated GH 1-120 seconds.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
-Record GP misses, never relax targets; ten-minute command ceiling.
+Record GP misses, never relax targets; 540-second process ceiling.
 
 ## Definition of done & handoff
 
 Return proof/limit records, real grouped example, reference changes and cost misses. No hidden
 group activation remains for later tasks.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Stop for correctness/evidence corruption or changing a recorded
+decision; performance/availability is a named numerical item for MS18c/MS18d and work continues.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s; project GP before launch
+and retain an unsafe/unmeasured cell as an item, not an automatic new tooling task or dropped case.
+Both quick sets use the current bounded manifest; any added suite owns its r6c CI group.
+Return the inherited/new item list, complete applicable B/E and truthful cost verdicts.
 
 ## Execution log
 

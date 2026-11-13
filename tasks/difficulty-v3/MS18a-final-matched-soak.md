@@ -39,9 +39,9 @@ stored position inputs/limits, not today's weights applied retrospectively.
 Retain MS06a/d's isolated target comparison so later solver/cutoff effects are not attributed to targeting.
 Null adjusted reasons/unclamped values remain AC01; no global-minimum or uniformity guarantee.
 
-Anchors at `f788e02`: `generator/tests/soak.js:260` (`function seedFor(tag)`),
-`:267-283` (`function generateOne(combo, tag)`), `:353` (`const t0 = process.hrtime.bigint()`).
-Current reporting is MS02/MS05c/MS06c1; find quotes after later changes.
+Resume anchors at `c9935cd`: `generator/tests/soak.js:378` (`seedFor`), `:388-403` (`generateOne`),
+`:484` (generation timer). Reporting is MS02/r3/MS06c1; find these symbols after later changes.
+Default attempts use r5p, not a literal eight; these 17 fixed boards all have 81 cells.
 Read the actual baseline/evidence, not analyst sample estimates.
 
 ## Files to create/modify
@@ -82,7 +82,7 @@ node tests\soak.js --variant=classic9 --level=normal --count=12 --seed=20260101 
 ```
 
 Jobs 1/no --jobs. MS02 actually took about 176 seconds across its 17 commands; v3 is unmeasured.
-Allow 10-540 seconds/cell, 0.5-3 hours for planning; stop/investigate at ten minutes.
+Allow 10-540 seconds/cell, 0.5-3 hours for planning; enforce the 540-second process ceiling.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Evidence-only; orchestrator verifies the unchanged quick baseline.
 
@@ -90,6 +90,14 @@ Evidence-only; orchestrator verifies the unchanged quick baseline.
 
 Hand MS18b/e complete before/after tables, loss report, true cohorts and actual timings. Never
 change the policy to make this evidence prettier.
+
+## Resume rules — S-OD4
+
+Review: orchestrator only. Correctness/evidence corruption or changing a recorded decision stops;
+time/availability is a named numerical MS18c/MS18d item and independent work continues.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s, with existing absolute-index
+shards; do not invent another slow-cell evidence/tooling class or report incomplete data as complete.
+Return the inherited/new item list; verify the unchanged quick baseline, with no suite/CI changes.
 
 ## Execution log
 

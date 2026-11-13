@@ -2,7 +2,7 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS05e accepted after MS05r6b's combined recovery commit (CV6 closed or explicit owner fallback disposition) |
+| Depends on | MS05e accepted after r6b/r6c combined commit, with its actual CV6 verdict and S-OD4 item handoff |
 | Size / active time | Small; 20-30 minutes plus GS |
 | Owner / milestone | Evidence; M6a before-data preserved |
 | Authority | R7/R23; SA2-Q-S03, SA1-Q-S4, AC01 |
@@ -11,8 +11,8 @@
 ## Goal & business context
 
 Separate the target policy's effect from requiredness and later new techniques. Record the selected
-MS05 allowance and the accepted MS05e sign-dig disposition in force, before any target implementation
-changes generation. No unresolved CV6 repair is hidden inside this before/after comparison.
+MS05 allowance, size-default attempts and MS05e sign implementation in force, before any target
+change. A remaining CV6 timing item is identified, not hidden or made an owner-stop prerequisite.
 
 ## Scope
 
@@ -41,9 +41,9 @@ AC01: adjusted positions use `[max(min,1.25*wMin+V),max)`, only where defined; r
 Undefined adjusted values are null with a reason (unrated/off-band, non-finite/non-positive width,
 vacuous/empty tier). Defined values remain unclamped. No reachability/global-minimum claim.
 
-Anchors at `f788e02` after MS02: `generator/tests/soak.js:260` (`function seedFor(tag)`),
-`:267-283` (`function generateOne(combo, tag)`), `:353` (`const t0 = process.hrtime.bigint()`).
-MS05b2/MS05c move these further; find the quoted text and use their accepted JSON/shard API.
+Anchors at `c9935cd`: `generator/tests/soak.js:378` (`seedFor`), `:388-403` (`generateOne`,
+both routes already use strict exact flags and omit maxAttempts), `:484` (generation timer).
+Use r3's accepted JSON/absolute-index shard API; all 17 boards have 81 cells, default eight attempts.
 
 ## Files to create/modify
 
@@ -85,7 +85,7 @@ Repeat for every cell above. Use MS05c's `--from/--total-count` shards if a whol
 fit 540 seconds, preserving absolute request tags and merging raw rows exactly once.
 All possibly >10-second commands use the checklist lock wrapper. Jobs=1; soak has no --jobs.
 Estimate 10-540 seconds/cell, 0.5-3 hours
-total; stop/investigate a command at ten minutes. **Announce to the orchestrator before starting
+total; enforce the 540-second process ceiling. **Announce to the orchestrator before starting
 (pentomino runs in parallel on the same machine).** Incomplete evidence blocks MS06b.
 No application test rerun is needed for evidence-only content; the orchestrator's task acceptance
 still verifies the unchanged quick baseline.
@@ -94,6 +94,15 @@ still verifies the unchanged quick baseline.
 
 Return complete paths/counts/times and invariant failures, not only exit codes. Do not edit the
 before-record after source changes; create a separately labelled replacement if genuinely needed.
+
+## Resume rules — S-OD4
+
+Review: orchestrator only. Correctness/evidence corruption or changing a recorded decision stops
+for the owner; performance/availability becomes a named item with numbers, routed to MS07e then
+MS18c/MS18d, and the task continues. No new evidence class/tooling task for a slow cell.
+Use `Invoke-Dv3Node` for every possibly >10-second command, <=540 s; use existing absolute-index
+shards and report any uncompleted population honestly. Return the inherited/new item list.
+This evidence-only task verifies the unchanged quick baseline; it adds no suite or CI change.
 
 ## Execution log
 

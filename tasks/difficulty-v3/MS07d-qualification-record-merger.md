@@ -43,6 +43,8 @@ Add `qualifierHash` (qualify.js and merger helper bytes) and explicit probe/earl
 metadata when writing new shards, including `acceptance:'canonical-required-tier'` and the actual
 ratingVersion. The intermediate checkpoint still has the development rating version until MS17b;
 do not label it a released v3 result. `--merge=<directory> --jobs=4 --json=<file> --markdown=<file>`
+also retains the effective size-default attempts for each board and the attempt-policy source identity;
+neither worker nor merger inserts an explicit eight-attempt override. The merge
 does no generation. Require the exact 15x9 matrix from checklist Q, jobs 4, Node/machine/protocol/
 source/tool identity consistency. Reject duplicate cells/requests, unknown indexes/seeds, probes,
 nonfinite/negative ms, missing outcomes and unexplained stopped/incomplete rows.
@@ -63,15 +65,16 @@ Keep metadata for each shard and record cumulative shard wall time separately fr
 across collection. Preserve original table columns/order and support lists derived from verdicts.
 Canonical output is written only after complete validation. No live table path is a default output.
 
-### Anchors at `2c665bb`
+### Anchors at c9935cd
 
 | File:line / quote | Use |
 |---|---|
-| `generator/tests/qualify.js:52-59`, `const FIRST_SEEDS` | Fixed protocol constants |
-| `generator/tests/qualify.js:199-222`, `function decide` | Reuse decision semantics |
-| `generator/tests/qualify.js:230-247`, `function markdownOf` | Existing table schema |
-| `generator/tests/qualify.js:306-365`, `function certain` | Early-stop proof |
-| `generator/tests/qualify.js:443-466`, `const summary = Object.assign` | Actual record shape |
+| `generator/tests/qualify.js:58-64`, `FIRST_SEEDS`, `GUARD_MS` | Fixed protocol constants |
+| `generator/tests/qualify.js:143,186`, `child`, `hitOf` | Strict producer flag and no explicit attempt override already implemented |
+| `generator/tests/qualify.js:223`, `decide` | Reuse decision semantics |
+| `generator/tests/qualify.js:250`, `markdownOf` | Existing table schema |
+| `generator/tests/qualify.js:320`, `certain` | Early-stop proof |
+| `generator/tests/qualify.js`, `const summary = Object.assign(header, ...)` | Actual record shape; add metadata without changing scheduler |
 
 ## Files to create/modify
 
@@ -125,6 +128,15 @@ No real GQ or other heavy tool invocation.
 
 Give MS07e/MS18c exact merge validation and metadata semantics. No publication/availability claim.
 All Execution log fields remain for the orchestrator.
+
+## Resume rules — S-OD4
+
+Review: orchestrator only. Correctness/evidence corruption or changing a recorded decision stops;
+performance/availability becomes a named numerical item for MS07e then MS18c/MS18d and work continues.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, with the current bounded quick
+manifest. No new slow-cell evidence class/tooling task; the assigned merger itself remains in scope.
+Own `qualification-records` and any added suite's r6c CI group/manifest entry.
+Return the inherited/new item list, metadata/default contract and coverage/CI handoff.
 
 ## Execution log
 

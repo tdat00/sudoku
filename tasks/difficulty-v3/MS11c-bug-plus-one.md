@@ -45,7 +45,7 @@ constraints/cages/signs reject the form. Limit 50000 tested occurrence/extension
 Do not treat a contradictory artificial remainder as a fabricated uniqueness fixture.
 
 Baseline `core/js/engine/tech-wing.js:477-528` (`function findUniqueRectangle`);
-`core/tests/suites/techniques.test.js:75-79` at `f788e02` (`expect(assuming)`).
+`core/tests/suites/techniques.test.js:75-79` at `c9935cd` (`expect(assuming)`).
 
 ## Files to create/modify
 
@@ -97,11 +97,20 @@ node tests\tools\make-technique-examples.js ..\generator --ids=bugPlusOne --sour
 B sources: uniqueness/chain examples, then bounded classic9 master/nightmare. Jobs 1/no --jobs;
 E 10-90 minutes, cost 1-30 seconds, curated GH 1-120 seconds/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
-One evidenced own-limit adjustment; no command beyond ten minutes.
+One evidenced own-limit adjustment; no process beyond 540 seconds.
 
 ## Definition of done & handoff
 
 Report global proof/uniqueness evidence and every guard. M11 ends with exactly two uniqueness IDs.
+
+## Resume rules — S-OD4
+
+Review: orchestrator against MS08a's template and generic soundness/order-invariant suites,
+not routine analyst cross-review. Correctness/evidence corruption or changing a decision stops;
+time/availability is a named numerical item for MS18c/MS18d and work continues within the bounds.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Any added suite owns its r6c CI group. No new slow-cell evidence/tooling class.
+Return the inherited/new item list, actual gates and CI membership.
 
 ## Execution log
 

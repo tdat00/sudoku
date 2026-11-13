@@ -113,9 +113,11 @@ rating, statistics and old log operations. Use a fresh `SG.rng.create(seed)` eac
 Default cells generation is not yet a caller of the target policy; the `signs` pool's explicit
 target handling is already owned/tested by MS05e.
 
-Baseline anchors: `generator/js/engine/digger.js:652-703` (`function removalObjective`),
-`:1507-1518` (`function distanceToLevel`), `:1763-1781` (`SG.digger = {`) at `2c665bb`;
-`const resolved =` is at `:1192-1206` at `f788e02`. Find quotes after MS05 changes.
+Resume anchors at `c9935cd`: `generator/js/engine/digger.js:671` (`removalObjective`),
+`:1681` (`distanceToLevel`), `:1717` (`qualityOf`), `:1999` (`SG.digger`),
+and `digLevelSteps`/`const resolved` at 1304/1324. Find these symbols after r5p.
+Preserve r3's `enterLocal`/`leaveLocal` and `rateCounted` accounting; no helper changes the 256 allowance
+or the size-default attempts.
 
 ## Files to create/modify
 
@@ -159,6 +161,16 @@ vector above, not just comparator tests. No heavy gate. Use the checklist lock f
 MS06c1 receives the exact helper/forwarding contracts for inactive transport. MS06c2 draws and
 activates targets in all stages, including the sign strategy. No guided-only or sign-only
 intermediate production policy is permitted.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Stop for correctness (including wrong flags/warnings or corrupt evidence)
+or a recorded-decision change; time/availability is a named numerical item for MS07e then MS18c/MS18d.
+Continue within existing bounds; no new slow-cell evidence/tooling class and no false green result.
+Every possibly >10-second payload uses `Invoke-Dv3Node`, <=540 s; preflight suite combinations
+and use r5's complete bounded quick manifest, not an unmeasured replay/steps compound run.
+Own the new `digger-target` suite's CI group/manifest entry after r6c, in addition to the file list.
+Return the inherited/new item list, actual quick coverage and CI membership.
 
 ## Execution log
 

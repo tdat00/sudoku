@@ -43,7 +43,7 @@ Geometry vector: digit 5 row R2 pair C1/C8, column C2 pair R1/R7. R2C1/R1C2 shar
 remove 5 at R7C8. Negative: shared endpoint, missing box link, incomplete row/column, target seeing
 only one free end. Include transpose and ambiguous multigrid ownership.
 Baseline: `core/js/engine/tech-fish.js:56-125` (owner tables), `:309-335`
-(`function findStrongLinks`); `core/tests/suites/techniques.test.js:71-87`.
+(`function findStrongLinks`); current fixture contracts at `core/tests/suites/techniques.test.js:91-107`.
 
 ## Files to create/modify
 
@@ -76,7 +76,7 @@ Baseline: `core/js/engine/tech-fish.js:56-125` (owner tables), `:309-335`
 ## Test plan and gates
 
 Generator `--suite=tech-fish,techniques,technique-weights,difficulty-floor`; Player
-`--suite=help,play,i18n`, then both full quick commands `node tests\node-runner.js`.
+`--suite=help,play,i18n`, then both complete bounded quick manifests (whole runs only if projected <=450 s).
 Complete E with MS08b:
 
 ```powershell
@@ -100,6 +100,15 @@ Own limit can change once with evidence; no other task's limit is tuned.
 ## Definition of done & handoff
 
 Supply source/proof/limit records and any reference changes; nothing is left to a later cleanup task.
+
+## Resume rules — S-OD4
+
+Review: orchestrator against MS08a's template and the generic soundness/order-invariant suites,
+not routine analyst cross-review. Stop for correctness/evidence corruption or changing a recorded
+decision; performance/availability is a named numerical item for MS18c/MS18d and work continues.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Any added suite owns its r6c CI group. No new slow-cell evidence/tooling class.
+Return the inherited/new item list and actual B/T, coverage and CI outcomes.
 
 ## Execution log
 

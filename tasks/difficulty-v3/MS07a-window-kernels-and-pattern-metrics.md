@@ -83,12 +83,12 @@ Keep the existing count (120 or 300), `maxSteps` and seed; do not lower minFirin
 or replace random inputs. Test the actual random prefix as well as the total count.
 Use explicit fixture `after` arrays; historical LADDER is never extended.
 
-### Anchors at `2c665bb`
+### Anchors verified at c9935cd
 
 | File:line / quote | Use |
 |---|---|
-| `core/js/engine/tech-chain.js:353-385`, `function buildChainFinding` | Parameterize ID/key |
-| `core/js/engine/tech-chain.js:387-429`, `function findForcingChain` | Existing global minimum scan |
+| `core/js/engine/tech-chain.js:356-385`, `function buildChainFinding` | Parameterize ID/key |
+| `core/js/engine/tech-chain.js:389-429`, `function findForcingChain` | Existing global minimum scan |
 | `core/js/engine/tech-chain.js:472-513`, `function findNishio` | Iterative depths |
 | `core/tests/fixtures/techniques-helper.js:577-625`, `function assertSound` | Existing supplied-states route |
 | `generator/tests/node-runner.js:102-105`, `const HARNESS_FILE` | Reuse loader contract |
@@ -137,6 +137,15 @@ then both quick sets. Cost tool parser/render tests use fake results, not claime
 
 Hand MS07b the inactive kernels and all later tasks the cost CLI/callback/fixture recipe. No registry
 change, new ID or default cutoff is in force yet. No commit/log editing.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Correctness/evidence corruption or changing a recorded decision stops;
+performance/availability is a named numerical item for MS07e then MS18c/MS18d, not an owner stop.
+Continue under existing bounds; no additional evidence class/tooling task for a slow cell.
+All possibly >10-second payloads use `Invoke-Dv3Node`, <=540 s; quick sets use the current r5
+bounded manifest. Own `pattern-cost-tools` and any other added suite's r6c CI group/manifest entry.
+Return the inherited/new item list, quick coverage and CI ownership.
 
 ## Execution log
 

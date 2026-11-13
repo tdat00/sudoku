@@ -33,7 +33,7 @@ For each C, 12 fresh Nightmare requests of classic9, diagonalX and jigsaw9, usin
 20260101. Total 36/C, 72 overall; every timeout/error is a miss. Keep all other defaults fixed.
 The old fixed-board observation (C6: 0/12 exact; C4: 2/12, not 6) is not this experiment's denominator.
 Unchanged low-depth default 2 and long ceiling 12; order remains 198.
-Baseline anchor: `core/js/engine/tech-chain.js:387-429` (`function findForcingChain`);
+Resume anchor: `core/js/engine/tech-chain.js:389-429` (`function findForcingChain`);
 the mutable SHORT_MAX is delivered by MS07b; this task supplies the diagnostic override.
 
 ### Measurement tooling transferred from MS07b (FS18)
@@ -44,12 +44,15 @@ the registry, set `SG.chainSearch.SHORT_MAX` once, before prefix/reference check
 no weight, order, band or other limit changes. Do not add a production/user setting.
 Record the effective cutoff and explicit override/null in diagnostic configuration so shard
 merges cannot mix C=4 with C=6. Existing `--from/--total-count` and absolute tags remain unchanged.
-Quick tests use scripted requests to prove default 6, overrides 4/6, invalid-input rejection
-before any request and setting/merge identity; restore the runtime value in `finally`.
+Quick tests use scripted requests to prove the initial default 6, overrides 4/6, invalid-input rejection
+before any request and setting/merge identity; explicitly reject otherwise-compatible C=4/C=6
+shards in the same merge. Restore the runtime value in `finally`.
+Once selection changes the default to 4, update only the preparatory default premise accordingly;
+retain both override tests. Do not leave a universal "default is 6" assertion to fail final checks.
 
-The parser lives near `opts.weights`/`opts.bands` (`soak.js:104-105` at `f788e02`); runtime
-override setup is near `Object.assign(D.WEIGHTS, opts.weights)` (`:188`). Find those quotes
-after MS05/MS06 changes. Do not regress the MS05b2 prefix validation.
+At c9935cd the parser is `parseArgs` (`soak.js:127`), runtime overrides follow source loading
+at 273-295, and `prefixViolationOf` immediately follows. Find those symbols after MS06.
+Do not regress r2's prefix validation or r5p's default-attempt behavior.
 
 Use MS07a's cost CLI on the newly registered real positive/negative fixtures after choosing the
 default. Its fixed 20 runs/case measure work/cap/latency, never alter the C selection rule.
@@ -105,7 +108,7 @@ node tests\perf.js --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5 --h
 node tests\replay-goldens.js --ids=G01 --record=..\docs\difficulty-v3\evidence\MS07c\analysis\G01.json
 Invoke-Dv3Node -Task MS07c -NodeArgs @('tests\pattern-cost.js','--ids=forcingChainLong,nishioDeep','--runs=20','--json=..\docs\difficulty-v3\evidence\MS07c\pattern-cost.json')
 # Only if the selected default changed from 6; the two pilot requests do not enter the 72-request selection.
-Invoke-Dv3Node -Task MS07c -NodeArgs @('tests\soak.js','--variant=classic9','--level=hell1','--count=2','--seed=20260101','--no-gate','--json=..\docs\difficulty-v3\evidence\MS07c\hell1-pilot.json')
+Invoke-Dv3Node -Task MS07c -NodeArgs @('tests\soak.js','--variant=classic9','--level=hell1','--from=0','--count=2','--total-count=2','--seed=20260101','--no-gate','--json=..\docs\difficulty-v3\evidence\MS07c\hell1-pilot.json')
 ```
 
 Player refresh/check affected chain IDs with the MS07b curated source map and --ids/--sources/
@@ -122,6 +125,15 @@ ceiling. Use MS05c's absolute-index shards if a whole soak cell cannot fit; neve
 Report selected C, tested override/identity, per-variant counts/times, split-ID cost, latest Hell 1
 pilot/projections, complete paths and refreshes. MS18 repeats the rule;
 a different final choice goes to the owner, not an automatic retune.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Correctness/evidence corruption or changing a recorded decision stops;
+performance/availability becomes a named numerical item for MS07e then MS18c/MS18d and work continues.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s; preserve exact absolute-index
+shards and the current bounded quick manifest. No new slow-cell evidence class/tooling task.
+Any authorized new suite owns its CI group/manifest entry after r6c.
+Return the inherited/new item list, selected default and exact coverage/source identities.
 
 ## Execution log
 

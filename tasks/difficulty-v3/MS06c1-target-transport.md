@@ -100,18 +100,18 @@ Do not call `preferObjective`, `applyBounded` or `targetFor` from production yet
 
 ### Anchors
 
-Engine anchors at `f788e02`/unchanged `2c665bb` portions; use quotes after MS05 changes:
+Engine anchors at `c9935cd`; use symbols after r5p/MS06b:
 
 | File:line / quote | Change |
 |---|---|
-| `generator/js/engine/digger.js:652-703`, `function removalObjective` | Wrap results without changing solves/guards |
-| `:719-797`, `function* digGuidedSteps`, `trace.keep(group, value)` | Read numeric legacy ordering/trace from objects |
-| `:1041-1097`, `function createKeeper`, `function keptPuzzle` | Copy captured target; preserve MS05b1 model-aware quality |
-| `:1192-1206`, `const resolved =` | Attach captured keeper/context metadata, preserve MS06b forwarding |
-| `:1313`, `function searchStrategy`; `:1661`, `let attemptBest = null` | Carry selected target, no draw |
-| `generator/js/engine/pipeline.js:291-333`, `function toWire` | Internal nullable field and result transport |
+| `generator/js/engine/digger.js:671`, `removalObjective` | Wrap results without changing solves/guards |
+| `:736`, `digGuidedSteps`, `trace.keep(group, value)` | Read numeric legacy ordering/trace from objects |
+| `:1173,1207`, `createKeeper`, `keptPuzzle` | Copy captured target; preserve model-aware quality |
+| `:1324`, `const resolved =` | Attach captured keeper/context metadata, preserve MS06b forwarding |
+| `:1459`, `searchStrategy`; `:1890`, `let attemptBest = null` | Carry selected target, no draw |
+| `generator/js/engine/pipeline.js:307,335`, `toWire`, `fromWire` | Internal nullable field; preserve r3's owned work/localSearches copy |
 | `generator/js/engine/events.js`, `TUNE_VERDICT_KEYS` | Prepared optional target schema; no new event kind |
-| `generator/tests/soak.js:267-283`, `function generateOne(combo, tag)` | Read target from the result |
+| `generator/tests/soak.js:388-403`, `generateOne` | Read target from both result routes; no attempt override |
 
 ## Files to create/modify (exclusive ownership)
 
@@ -171,7 +171,7 @@ Invoke-Dv3Node -Task MS06c1 -NodeArgs @('tests\node-runner.js','--suite=digger-t
 # Complete all E GG shards, then check only. Do not use --update-hashes in this task.
 Invoke-Dv3Node -Task MS06c1 -NodeArgs @('tests\perf.js','--hash-key=classic4/veryEasy','--hash-from=0','--hash-count=5','--hash-record=..\docs\difficulty-v3\evidence\MS06c1\hashes\classic4-veryEasy-00.json')
 Invoke-Dv3Node -Task MS06c1 -NodeArgs @('tests\perf.js','--hash-merge=..\docs\difficulty-v3\evidence\MS06c1\hashes','--check-hashes')
-# GR complete E: all four wire IDs; publish/check wire before recording all fourteen analysis IDs.
+# GR complete E: all five wire IDs G09-G13; publish/check wire before all fourteen analyses.
 Invoke-Dv3Node -Task MS06c1 -NodeArgs @('tests\replay-fixtures.js','--ids=G09','--record=..\docs\difficulty-v3\evidence\MS06c1\wire\G09.json')
 Invoke-Dv3Node -Task MS06c1 -NodeArgs @('tests\replay-goldens.js','--ids=G01','--record=..\docs\difficulty-v3\evidence\MS06c1\analysis\G01.json')
 ```
@@ -186,6 +186,16 @@ No GS, GH, GD, GQ or GP.
 Give MS06c2 the typed objective contract, keeper view/transport APIs, unchanged GG result and
 explained nullable GR differences. State explicitly: normal target is still absent/null; no
 policy is active and no production target is drawn. No task/log/Git edit.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Stop for correctness/evidence corruption or a recorded-decision change;
+time/availability becomes a named numerical item for MS07e then MS18c/MS18d, and work continues.
+No new evidence class/tooling task for a slow cell; failed/incomplete checks are never called green.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s, and r5's complete bounded
+quick manifest. A long suite list is a coverage selector, not permission to run it unprojected.
+If an authorized new suite is needed, own its r6c CI group/manifest entry too.
+Return the inherited/new item list and current source/coverage identities.
 
 ## Execution log
 

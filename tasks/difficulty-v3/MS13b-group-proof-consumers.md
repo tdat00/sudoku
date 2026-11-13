@@ -88,6 +88,14 @@ No heavy gate or synthetic canonical help entry.
 
 MS13c may activate only after both consumers accept the new proof. Report exact display vectors.
 
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Stop for correctness/evidence corruption or changing a recorded
+decision; performance/availability is a named numerical item for MS18c/MS18d and work continues.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Any authorized new suite owns its r6c CI group/manifest entry too.
+No new slow-cell evidence/tooling class. Return the inherited/new item list and legacy/group display proof.
+
 ## Execution log
 
 | Field | Value |

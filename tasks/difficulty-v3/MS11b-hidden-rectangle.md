@@ -85,11 +85,20 @@ node tests\tools\make-technique-examples.js ..\generator --ids=uniqueRectangle -
 B acquisition: existing UR source, then bounded classic9 master/nightmare. Jobs 1/no --jobs;
 E 10-90 minutes, cost 1-60 seconds, curated GH 1-120 seconds/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
-Only this new pass's limit may adjust once; ten-minute command ceiling.
+Only this new pass's limit may adjust once; 540-second process ceiling.
 
 ## Definition of done & handoff
 
 Report hidden-form proof and real fixture, with no deferred locale/help or reference update.
+
+## Resume rules — S-OD4
+
+Review: orchestrator against MS08a's template and generic soundness/order-invariant suites,
+not routine analyst cross-review. Correctness/evidence corruption or changing a decision stops;
+time/availability is a named numerical item for MS18c/MS18d and work continues within the bounds.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Any added suite owns its r6c CI group. No new slow-cell evidence/tooling class.
+Return the inherited/new item list, actual gates and CI membership.
 
 ## Execution log
 

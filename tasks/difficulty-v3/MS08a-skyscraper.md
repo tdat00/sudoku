@@ -13,6 +13,33 @@
 Name a small single-digit proof instead of charging it as a generic chain. Keep every generated
 rating, hint, fixture and explanation consistent with the new cheaper finder.
 
+### Cross-reviewed technique-task template (S-OD4)
+
+MS08a is the analyst-reviewed template for MS08b-MS12, MS14a-MS14c, MS15b and MS16.
+The orchestrator checks each later task against this list rather than commissioning another
+routine analyst review. Inactive kernels/test-only tasks apply the relevant parts and prove
+no premature registration/output change; their later activation owns the remaining B/E/GH work.
+
+1. State the constructive proof and all scope/geometry/uniqueness preconditions; test near misses
+   and transposes independently, not only the emitted fixture's expected value.
+2. Keep the assigned ID/group/order/weight/base cost/window and the monotone floor/tier prefix.
+   Never fit priors to old labels or silently broaden the represented proof.
+3. Findings own exact nonempty placements/eliminations and cloned proof data; inputs stay unchanged.
+   Counters are per call, cancellation propagates, truncation cannot prove absence and limits follow R10.
+4. Preserve every generic seeded soundness state and minFirings; add real deterministic supplements,
+   not substitute them. Two real positive exact Findings plus a negative, independent completion
+   checks and actual uniqueness where required. Keep v2 labels/LADDER/after arrays historical.
+5. Complete both apps' EN/VI names/descriptions/actual subtype keys and a real Player example;
+   bounded source acquisition, source provenance and actual hint replay, no fabricated snapshot.
+6. Refresh affected current references with reasons. Owned E means **520 hashes, five G09-G13 wires,
+   fourteen analyses**, wire before analysis; GH refreshes all affected old IDs too. Record bounded
+   pattern cost, never add a flaky wall-time assertion to prove the new finder.
+7. Verify script/fixture/HTML lists, both app quick environments, current r5 bounded membership and
+   the suite's r6c CI group. Keep deep mega generation outside CI; only its named owner runs it.
+8. Apply S-OD4: correctness or changing a decision stops; performance/availability becomes a
+   named numerical item, continues through the existing bounds, and reaches MS18c/MS18d.
+   Full integration and all six S3 groups still remain; no missing proof/example is silently deferred.
+
 ## Scope and repository rules
 
 In: skyscraper and full B integration. Out: other fish/chain patterns, weight fitting or offers.
@@ -45,7 +72,7 @@ R1{C2,C8}, R4{C2,C7}; target R2C7 sees the two non-aligned ends, so remove 5.
 Transpose it. Adding a third candidate to either base, partial bases, overlapping endpoints or a
 target missing one end must not authorize that elimination.
 Baseline anchors: `core/js/engine/tech-fish.js:56-125` (line ownership),
-`:281-305` (`function findFish`); fixture anchors after MS04 at `f788e02`:
+`:281-305` (`function findFish`); fixture anchors verified at `c9935cd`:
 `core/tests/suites/techniques.test.js:91-107`, `has fixtures for exactly the techniques` and
 `has at least 2 positive and 1 negative fixture`.
 
@@ -100,12 +127,20 @@ node tests\tools\make-technique-examples.js ..\generator --ids=skyscraper --sour
 Prefer the existing simpleColouring source, then B's classic9 hard/expert bound. Jobs=1/no --jobs;
 E 10-90 minutes, cost 1-30 seconds, GH 1-120 seconds/curated run (discovery<=8 minutes).
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
-No command exceeds ten minutes; own work-limit adjustment at most once with before/after evidence.
+No process exceeds 540 seconds; own work-limit adjustment at most once with before/after evidence.
 
 ## Definition of done & handoff
 
 Report exact proof/fields, fixtures, source/limit records, reclassifications and B/T evidence. No
 unfinished integration is deferred to MS08b; no commit/log edit.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review of this task and the template above. Correctness/evidence corruption or
+changing a recorded decision stops; performance/availability is a named numerical item for MS18c/MS18d.
+Continue within the existing bounds; no new slow-cell evidence class/tooling task or false pass.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s, and the current bounded quick
+manifest. Any added suite owns its r6c CI group/manifest entry. Return the inherited/new item list.
 
 ## Execution log
 

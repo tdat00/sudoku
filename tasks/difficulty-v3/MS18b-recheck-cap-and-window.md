@@ -34,9 +34,10 @@ Window: classic9/diagonalX/jigsaw9 nightmare, 12 requests each for C4 and C6 => 
 More total exact hits wins; tie 6. Total 360 requests. Same base 20260101/routes/budgets/configuration
 as original experiments, changing only the dimension being measured. All failures are misses.
 Use the other default currently in force; never run both overrides in one comparison request.
-Anchors at `f788e02`: `generator/tests/soak.js:260` (`function seedFor(tag)`),
-`:267-283` (`function generateOne(combo, tag)`), `:353` (`const t0 = process.hrtime.bigint()`).
-Find quotes after later changes; runtime overrides come from MS05c/MS07c, not MS07b.
+Resume anchors at `c9935cd`: `generator/tests/soak.js:378` (`seedFor`), `:388-403` (`generateOne`),
+`:484` (generation timer). Find symbols after later changes; overrides come from r3/MS07c.
+The R5 default in force is 256 unless a later recorded decision changed it; r5p did not reselect it.
+Keep size-dependent attempt defaults and the unchanged six-cell/three-cell populations.
 
 ## Files to create/modify
 
@@ -51,6 +52,8 @@ Find quotes after later changes; runtime overrides come from MS05c/MS07c, not MS
 4. If changed, report and stop this milestone before GQ-final. Only the orchestrator obtains the
    owner's keep/change decision and inserts implementation/refresh work.
 5. After reconfirmation/recorded decision, hand qualification the final candidate identity.
+6. If final ordinary-sample cost suggests a sample-level bound, report data as its own proposed
+   decision. S-OD4 does not authorize implementing that bound here or silently changing what R5 measures.
 
 ## Acceptance criteria — Business
 
@@ -77,7 +80,7 @@ node tests\soak.js --variant=classic9 --level=nightmare --count=12 --seed=202601
 ```
 
 Repeat all cap cells/settings and window cells/settings. Jobs 1/no --jobs. Estimate 10-540
-seconds/cell, approximately 1-5 hours total; ten-minute command ceiling.
+seconds/cell, approximately 1-5 hours total; 540-second process ceiling.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Evidence-only; no new application test or blanket hash rewrite. Incomplete evidence blocks the milestone.
 
@@ -86,6 +89,14 @@ Evidence-only; no new application test or blanket hash rewrite. Incomplete evide
 Return winner/default pairs, raw records, per-cell losses/costs and any owner decision needed.
 If an inserted implementation task changes the candidate, replace stale affected final evidence
 before qualification rather than mixing source identities.
+
+## Resume rules — S-OD4
+
+Review: orchestrator only. A changed selected cap/window needs the recorded owner decision before
+GQ-final; correctness/evidence corruption also stops. Mere time/availability findings are named
+numerical MS18c/MS18d items and other bounded work continues, not an automatic tooling task.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, with existing exact-index shards.
+Return the inherited/new item list and explicit keep/change decision status; no suite/CI edits here.
 
 ## Execution log
 

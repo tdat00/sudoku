@@ -87,6 +87,15 @@ No heavy gate or synthetic help example.
 MS14b receives a complete-support, inactive scoped kernel and model-building helper, not a
 best-effort absence heuristic.
 
+## Resume rules — S-OD4
+
+Review: orchestrator against the applicable inactive-kernel parts of MS08a's template and generic
+soundness/order suites, not routine analyst cross-review. Correctness/evidence corruption or a
+recorded-decision change stops; time/availability is a named numerical MS18c/MS18d item and work continues.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s, and the current bounded quick
+manifest. Own any authorized new suite's r6c CI group; no new slow-cell evidence/tooling class.
+Return the inherited/new item list and proof that registration/output remain inactive.
+
 ## Execution log
 
 | Field | Value |

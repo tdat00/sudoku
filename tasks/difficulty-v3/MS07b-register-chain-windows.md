@@ -15,7 +15,8 @@ ID is invoked alone. C=6 is only the initial measurement configuration, not the 
 
 ## Scope
 
-In: wrappers, two new IDs, costs/weights, fixtures/locales/help and the bounded Hell 1 pilot.
+In: wrappers, two new IDs, costs/weights, fixtures/locales/help, bounded Hell 1 pilot and the
+pre-authorized mega hell1 quick/deep contract.
 Out: selecting C, soak cutoff tooling or GP-cost records (both MS07c), grouped nodes,
 qualification/offers, default depth 3.
 
@@ -66,7 +67,7 @@ lower term `1.25 * 2600 = 3250`, below Hell 1's maximum 3600 but not Nightmare's
 Hell 1 is no longer a vacuous exactness case; each miss can consume every attempt.
 
 Inspect/replay the existing real `SG.helpExamples.nishio.source.puzzle` before discovery.
-At reviewed `f788e02`, `player/js/ui/help-examples.js:46` has
+At resume HEAD `c9935cd`, `player/js/ui/help-examples.js:46` still has
 `hint.stepArgs.depth: 1`, source `Classic Sudoku 9x9,Hell 1,8`, step 17.
 Its old requested label is **not** evidence of depth 2. Prefer it for shallow `nishio` if it
 still replays under the new registry; do not relabel its Finding as `nishioDeep`.
@@ -87,14 +88,44 @@ before its owner starts. Never raise the 540-second process ceiling.
 MS07c repeats this pilot only if selecting C=4 changes the default/source; MS07e uses the latest
 applicable measurement, not an old vacuous-tier timing. Pilot requests are not selection hits.
 
-### Anchors at `2c665bb`
+### Mega hell1 contract decided in advance (S-OD4 / CV6-03 (1))
+
+Do not rediscover the Nightmare stop when `nishioDeep` makes Hell 1 non-vacuous.
+Apply r5m's approved rule to **mega12 and mega16 hell1 now**, preserving the current fixed population:
+invariants seeds 1/2/3/4 and independent CV5 calls 3/3/4 per board, fourteen additional occurrences.
+Extend the existing deep tool/manifest, not a new suite/tooling class or blanket `SG_DEEP` run.
+Use board-default attempts 4/2, one request per locked process, 500 s diagnostic ceiling.
+Keep every correctness/relationship check; a shallow result needs both warnings and is a miss.
+Keep existing Nightmare occurrence IDs stable; give hell1 distinct level-qualified IDs. Allow an
+explicit level-selected record/reconciliation manifest for this fourteen-call addition, never
+label that partial population the complete final 28-call manifest.
+
+Quick keeps a real one-attempt mega12 hell1 smoke with its measured/margined bound and a scripted
+mega16 hell1 stop/fallback control, as for Nightmare. Retain the existing other levels/tests.
+No raised browser/manual guard or `SG_TIME_FACTOR`. A >240 s request or any latency/projection
+exceedance becomes a named item for MS07e/MS18c (cost also MS18d), not an owner stop; wrong puzzles,
+deductions, exact flags, warnings or corrupted evidence still block. Match current default/proof
+identities before reusing a deep puzzle for CV3's own checks.
+
+Record the fourteen hell1 occurrences once on this task's final C=6 source; reconcile original
+relations. r5m's Nightmare records remain historical recovery evidence, not fresh measurements.
+MS18e owns the final-source rerun/reconciliation of the complete retained Nightmare/hell1 deep
+population after all engine changes; other technique tasks do not acquire a blanket deep gate.
+Update the bounded quick manifest and CI group in this task, with no silent lost request.
+
+The first new registrations also supersede `core/tests/suites/techniques.test.js:45-56`'s
+"only jellyfish moved" equality between historical and current IDs. Preserve the frozen v2 ladder
+and old-ID relative-order assertions; compare its old-ID projection to the expanded current
+registry rather than asserting both full catalogues still contain exactly the same IDs.
+
+### Anchors verified at c9935cd
 
 | File:line / quote | Change |
 |---|---|
 | `core/js/engine/tech-chain.js:114-128`, `function chainLimit` | Wrapper override semantics |
 | `core/js/engine/tech-chain.js:516-538`, `id: 'forcingChain'` | Registrations |
 | `core/tests/suites/tech-chain.test.js:818-920` | Generic long-proof tests use unregistered seam |
-| `player/js/ui/help-examples.js:46` at `f788e02`, `nishio:` / `"depth":1` | Inspect the old real source; not an assumed deep example |
+| `player/js/ui/help-examples.js`, `nishio:` / `"depth":1` at resume | Inspect the old real source; not an assumed deep example |
 
 ## Files to create/modify
 
@@ -102,6 +133,8 @@ applicable measurement, not an old vacuous-tier timing. Pilot requests are not s
 - Full B for four affected IDs: weights, active/current fixtures, current registry order, both apps'
   locales/help/tests, real help catalogue, v3 notes; E generated fixtures.
 - Generator design 6.6/13.6 and Player hint design; both user/developer guides.
+- `generator/tests/suites/mega.test.js`, existing `mega-contract.js`/helper/tests: hell1 mapping above;
+  bounded quick/CI manifest membership and tier documentation, no new evidence class.
 
 ## Implementation steps
 
@@ -109,7 +142,8 @@ applicable measurement, not an old vacuous-tier timing. Pilot requests are not s
 2. Add fixture/window regressions and full locale/help integration, preserving historical records.
 3. Check/replay the existing shallow source and acquire the genuinely deep source within B's bound.
 4. Capture real sources separately with --record-sources, combine maps, publish a complete catalogue.
-5. Run E, quick sets and the two-request Hell 1 pilot; hand provisional C=6, source maps and
+5. Apply the mega hell1 contract, run its new deep occurrences, E, quick sets and the exact
+   two-request classic9 Hell 1 pilot; hand provisional C=6, source maps and
    observed/projection timings to MS07c/MS07e. Cost recording and override tooling belong to MS07c.
 
 ## Acceptance criteria — Business
@@ -127,6 +161,7 @@ applicable measurement, not an old vacuous-tier timing. Pilot requests are not s
 | MS07b-T02 | Catalogue is 28/23 unscoped; monotone weights, cost table and full B pass |
 | MS07b-T03 | Cancellation/exhaustion cannot publish an unproved minimum |
 | MS07b-T04 | Both quick sets, E and real GH pass; two-request Hell 1 outcomes/projections are retained without a vacuous-tier assumption |
+| MS07b-T05 | Mega hell1's original requests/relations, quick replacements and CI membership survive; time-only findings continue as named items |
 
 ## Test plan and gates
 
@@ -136,7 +171,7 @@ Both quick sets. Full E with MS07b (GG/GR); first commands:
 ```powershell
 node tests\perf.js --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07b\hashes\classic4-veryEasy-00.json
 node tests\replay-goldens.js --ids=G01 --record=..\docs\difficulty-v3\evidence\MS07b\analysis\G01.json
-Invoke-Dv3Node -Task MS07b -NodeArgs @('tests\soak.js','--variant=classic9','--level=hell1','--count=2','--seed=20260101','--no-gate','--json=..\docs\difficulty-v3\evidence\MS07b\hell1-pilot.json')
+Invoke-Dv3Node -Task MS07b -NodeArgs @('tests\soak.js','--variant=classic9','--level=hell1','--from=0','--count=2','--total-count=2','--seed=20260101','--no-gate','--json=..\docs\difficulty-v3\evidence\MS07b\hell1-pilot.json')
 ```
 
 Player GH discovery source command (repeat separately for deep with `--ids=nishioDeep --levels=hell1`):
@@ -152,7 +187,10 @@ discovery limit; missing real examples block, never synthesize them. Jobs=1, no 
 10-90 minutes E, 10-480 seconds per discovery and initially 1-300 seconds for the Hell 1 pilot
 (record actuals, hard stop 540 seconds). If even two requests project too long, use MS05c's
 `--from=0 --count=1 --total-count=2` and `--from=1 --count=1 --total-count=2` without changing
-the two seeds/reference endpoints. **Announce to the orchestrator before starting (pentomino
+the two seeds/reference endpoints. Bare `--count=2` is wrong at HEAD: the non-shard route has a
+minimum of five. Run the new mega hell1 deep IDs with r5m's one-request tool/record route, not
+the old seven-request callbacks. Add roughly 10-35 minutes for those fourteen unmeasured calls,
+subject to actual projections and S-OD4 item handling. **Announce to the orchestrator before starting (pentomino
 runs in parallel on the same machine).** Every possibly >10-second command uses the lock helper.
 
 ## Definition of done & handoff
@@ -160,6 +198,15 @@ runs in parallel on the same machine).** Every possibly >10-second command uses 
 Report provisional cutoff, exact windows, current-reference changes, real source manifests and
 the Hell 1 pilot with GD/GQ projections. MS07c adds its override/cost tooling and selects C;
 this task makes no qualification claim or offer change.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Correctness/evidence corruption or changing a recorded decision stops;
+time/availability becomes a named numerical item for MS07e then MS18c/MS18d and work continues.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s; no new evidence/tooling class
+for another slow cell. Keep mandatory real proof/examples and the approved acquisition bound.
+Both quick sets use the current bounded manifest; own changed mega membership and every added
+suite's r6c CI group. Return the complete inherited/new item list and actual gate verdicts.
 
 ## Execution log
 

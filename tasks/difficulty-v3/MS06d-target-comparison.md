@@ -33,9 +33,9 @@ Use the exact MS06a manifest and commands, changing only output directory to MS0
 MS05 cap, base seed 20260101, 12 requests/cell and routes. Compare exact and all-in-band cohorts
 separately. Judge upper bias on the adjusted exact cohort; raw positions remain visible.
 MS02's null reasons/unclamped values apply. Every request remains in the hit denominator.
-Anchors at `f788e02` after MS02: `generator/tests/soak.js:260` (`function seedFor(tag)`),
-`:267-283` (`function generateOne(combo, tag)`), `:353` (`const t0 = process.hrtime.bigint()`).
-MS05b2/MS05c move these further. Target transport is MS06c1's; all-stage activation is MS06c2's.
+Anchors at `c9935cd`: `generator/tests/soak.js:378` (`seedFor`), `:388-403` (`generateOne`),
+`:484` (generation timer). Use r3's absolute-index shards, MS06c1 transport and MS06c2 activation;
+keep r5p's default policy. These fixed 81-cell comparison boards still default to eight attempts.
 
 ## Files to create/modify
 
@@ -48,7 +48,8 @@ MS05b2/MS05c move these further. Target transport is MS06c1's; all-stage activat
 1. Verify the before-record and current source/default identities.
 2. Run all cells; validate request counts, invariant failures and reference outcomes.
 3. Compare per-cell integer hits, work, time, both position cohorts and target deviation.
-4. Report every hit loss to the orchestrator/owner. Do not revert the accepted scope on your own.
+4. Report every hit loss as a named numerical item to MS07e and MS18c/MS18d. Continue under S-OD4;
+   do not revert the accepted target scope or stop for the owner solely for availability.
 
 ## Acceptance criteria — Business
 
@@ -76,7 +77,7 @@ node tests\soak.js --variant=classic9 --level=normal --count=12 --seed=20260101 
 Repeat all MS06a cells, using the same absolute-index MS05c shards if needed and merging raw
 rows once. Run possibly >10-second commands through the checklist lock wrapper.
 Jobs=1, no --jobs. Estimate 10-540 seconds/cell, 0.5-3 hours total; stop
-at ten minutes. **Announce to the orchestrator before starting (pentomino runs in parallel on
+at the 540-second process ceiling. **Announce to the orchestrator before starting (pentomino runs in parallel on
 the same machine).** Evidence-only: no new application test/golden run; acceptance quick verification
 belongs to the orchestrator.
 
@@ -84,6 +85,14 @@ belongs to the orchestrator.
 
 Hand MS07/MS18 the immutable isolated comparison, actual times, loss report and source identities.
 Availability loss is evidence for the owner, not a fabricated green rate or automatic policy rollback.
+
+## Resume rules — S-OD4
+
+Review: orchestrator only. Correctness/evidence corruption or changing a recorded decision stops;
+performance/availability is a named numerical item for MS07e then MS18c/MS18d, not an owner stop.
+Continue within existing bounds; no new evidence class/tooling task to work around a slow cell.
+All possibly >10-second payloads use `Invoke-Dv3Node`, <=540 s, with existing absolute-index shards.
+Return the inherited/new item list; verify the unchanged quick baseline, with no suite/CI changes.
 
 ## Execution log
 

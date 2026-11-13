@@ -86,6 +86,15 @@ No GG/GR/GH, qualification, whole Killer generation or production rewrite.
 Report both exact behaviors and that cageCombo remains the sole corresponding ID. If an actual
 engine defect is found, report it for assignment rather than adding stronger pruning here.
 
+## Resume rules — S-OD4
+
+Review: orchestrator against MS08a's applicable test-only template and generic soundness/order
+suites, not routine analyst cross-review. Correctness/evidence corruption or changing a decision
+stops; time/availability is a named numerical MS18c/MS18d item and work continues.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s; use the bounded quick manifest.
+Own the new shared `tech-cage` suite's CI group in addition to both HTML lists.
+No new slow-cell evidence/tooling class. Return the inherited/new item list and corpus-free outcomes.
+
 ## Execution log
 
 | Field | Value |

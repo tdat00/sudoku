@@ -3,16 +3,18 @@
 | Header | Value |
 |---|---|
 | Depends on | MS05a accepted and committed (`f788e02`); MS04's `requiredOf` |
-| Size / active time | Implemented scope retained; remaining closure belongs to MS05r1-r6 |
+| Size / active time | Implemented scope retained; no redispatch; closure at r6b/r6c |
 | Owner / milestone | Generator engine and activation UI; M5b1 |
 | Authority | R2-R5; SA1-Q-S7/S3, SA2-Q-S06; FS02-FS05; S-OD2 acceptance amendment |
-| Status | Open, uncommitted implementation preserved; not an independent redispatch |
+| Status | Retained in non-green pause commit a7f6660; not accepted or an independent redispatch |
 
-**S-OD2, 2026-11-13:** keep the existing working tree and failed/interim evidence. The first
-recovery task is [MS05r1](MS05r1-profile-active-recovery.md), not a fresh implementation of b1.
-All B/T requirements below remain; their sole acceptance is
-[MS05r6](MS05r6-combined-recovery-acceptance.md), after r1-r5 and post-selection MS05b3.
-No checkpoint commit, dark switch, provisional allowance or changed request/guard is authorized.
+**Resume, S-OD2-S-OD4:** keep the implementation and failed/interim evidence saved by the owner at
+the pause. r1-r4 already have step evidence; the next dispatch is
+[MS05r5p](MS05r5p-size-dependent-default-attempts.md), not b1 or r1 again.
+All B/T duties below remain in the combined r6b audit, with r6c CI before the one combined commit.
+S-OD3/S-OD4 allow the size default, G13 persistence and mega tier replacement in their named tasks;
+the old performance-only stops are superseded. No dark switch, provisional allowance or new checkpoint.
+The implementation anchors below describe the original b1 assignment, not a current redispatch.
 
 ## Goal & business context
 
@@ -197,7 +199,7 @@ Use controlled canonical-rating reports through existing seams, not a histogram 
 Do not rerun the previous whole/combined long selectors or renew the incomplete interim E.
 MS05r3 covers focused allowance/counter regressions while preserving these semantics. MS05r6
 owns fresh complete E, wire before analysis, the genuine G06/G07 pins and both full quick
-sets via the checked bounded manifest. Its original-contract G13/mega preflight comes first.
+sets via the checked bounded manifest. The resumed G13/mega checks use S-OD3/S-OD4 contracts.
 All fixed requests/assertions remain. The original MS05b1 artifact directory is historical,
 not the final-source acceptance directory. Every possibly >10-second command uses the shared
 lock, jobs 1/no `--jobs`, <=540 s. No separate b1 GQ/GP/GD or commit.
@@ -206,7 +208,8 @@ lock, jobs 1/no `--jobs`, <=540 s. No separate b1 GQ/GP/GD or commit.
 
 Keep the developer's predicate/caller/keeper/model-safety/warning handoff and all interim
 failures. MS05r1 starts with the preserved implementation; r2/r3/r4 complete the consumers,
-measurement and selection. MS05r6 audits these B/T duties and alone closes the recovery.
+measurement and selection (already retained). r6b audits these B/T duties and r6c closes CI;
+the historical pause commit was not green and must be identified as such in the combined commit.
 CV6 remains separately owned by MS05e, which cannot start before the combined commit.
 
 ## Execution log

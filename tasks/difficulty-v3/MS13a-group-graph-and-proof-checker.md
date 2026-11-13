@@ -92,6 +92,14 @@ No heavy gate or new generated expectation in this inactive task.
 
 Give MS13b/c the canonical graph/checker schema and incomplete-graph rule. Do not activate it early.
 
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Stop for correctness/evidence corruption or changing a recorded
+decision; performance/availability is a named numerical item for MS18c/MS18d and work continues.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Any authorized new suite owns its r6c CI group/manifest entry too.
+No new slow-cell evidence/tooling class. Return the inherited/new item list and inactive-graph proof.
+
 ## Execution log
 
 | Field | Value |

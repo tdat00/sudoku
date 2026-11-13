@@ -92,11 +92,20 @@ node tests\tools\make-technique-examples.js ..\generator --ids=lawOfLeftovers --
 B permits bounded batches from Jigsaw's actual PLAN levels hard/expert/master if needed. Jobs 1/no --jobs; E 10-90
 minutes, cost 1-60 seconds, GH 1-120 seconds curated/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
-Only this introducing rule's limits may adjust once with evidence; ten-minute command ceiling.
+Only this introducing rule's limits may adjust once with evidence; 540-second process ceiling.
 
 ## Definition of done & handoff
 
 Report real region/proof/source data and final scoped limits. No duplicate cageLocked ID appears.
+
+## Resume rules — S-OD4
+
+Review: orchestrator against MS08a's template and generic soundness/order-invariant suites,
+not routine analyst cross-review. Correctness/evidence corruption or changing a decision stops;
+time/availability is a named numerical item for MS18c/MS18d and work continues within the bounds.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Any added suite owns its r6c CI group. No new slow-cell evidence/tooling class.
+Return the inherited/new item list, actual gates and CI membership.
 
 ## Execution log
 

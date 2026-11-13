@@ -3,9 +3,9 @@
 | Header | Value |
 |---|---|
 | Depends on | MS18d accepted; all required owner actions resolved |
-| Size / active time | Small; 25-40 minutes plus GD/quick |
-| Owner / milestone | Release evidence; M18 complete |
-| Authority | R20-R24 and every implemented resolution |
+| Size / active time | Evidence/CI audit; 40-60 minutes plus GD/quick/final deep evidence |
+| Owner / milestone | Release evidence and owner of the v3 PR's CI; M18 complete |
+| Authority / review | R20-R24, S-OD3/S-OD4; orchestrator review, not routine analyst cross-review |
 | Status | Not started |
 
 ## Goal & business context
@@ -15,8 +15,9 @@ This task does not deploy, push, commit or edit the orchestrator's task logs.
 
 ## Scope and repository rules
 
-In: final GD/quick checks, evidence completeness review, living documentation/release record.
-Out: code/tuning/fixture repairs, blanket all/manual/browser runs, editing analysis reports or pack.
+In: final GD/quick/deep checks, complete item/evidence audit, final-tree workflow/PR-CI ownership,
+living documentation/release record and tightly coupled CI manifest/group corrections.
+Out: application/tuning/fixture repairs, blanket all/manual/browser runs, historical report or pack edits.
 AGENTS/checklist; CRLF, both guide languages; no Git writes.
 
 ## Inputs & context
@@ -25,6 +26,8 @@ Final invariants: rating/cache 3, history/wire 1, 40 IDs/34 unscoped, two unique
 bands, selected cap/C and frozen pattern limits. Exact means canonical solved/in-band/required;
 legacy history/imports remain honest. Complete final 135-cell qualification and >=90% performance
 matrix use the accepted source/configuration. Fixed 520 hashes remain present.
+The attempt policy is 8/4/2 by size, not a global eight; complete GR now has five G09-G13 wires
+and fourteen analyses. Final offers apply (c1) without exceptions; bounded fallbacks are misses.
 
 R20, verbatim:
 
@@ -36,9 +39,9 @@ retention, shallow warning/Retry and proof coverage are all documented in both l
 S0 baseline old 202/204 versus qualified 91/204 is not a v3 result. Include isolated target and final
 matched comparisons, per-cell losses, omitted levels and all performance misses.
 No new floor certificate or target leaks into the external Player exchange.
-Anchors at `f788e02`: `generator/tests/manual/difficulty.test.js:1232`
-(`hits the requested level in at least 90 %`), `:1262` (`I5: every puzzle has a complete proof`),
-`:1413` (`expect(puzzle.exact)` in `digLevel makes one attempt`);
+Resume anchors at c9935cd: `generator/tests/manual/difficulty.test.js:1231`
+(`hits the requested level in at least 90 %`), `:1259` (`I5: every puzzle has a complete proof`),
+and the `digLevel makes one attempt` guarantee;
 `generator/js/ui/cache.js:47` (`const SCHEMA_VERSION = 2` before MS17b),
 `generator/js/ui/history.js:19` (`const VERSION = 1`). Find the quoted tests after later changes.
 
@@ -46,15 +49,57 @@ Anchors at `f788e02`: `generator/tests/manual/difficulty.test.js:1232`
 
 - New `docs/difficulty-v3/release-v3.md`, notes/evidence links, docs/README.md.
 - Applicable living Generator/Player designs and both user/developer guides, correcting actual final facts.
-- No application, expected fixture, historical analysis report or task-pack file.
+- `.github/scripts/generator-suites.sh`, its r6c portable manifest/helper, both
+  `.github/workflows/pull-request.yml` and `pages.yml`, only for final bounded-tier correctness.
+- No application, expected fixture, historical analysis report or task-pack file. The existing
+  mega deep tool is run, not redesigned to bypass a slow final cell.
 
 ## Implementation steps
 
-1. Check every task's output/evidence handoff against the final source identity and intended manifests.
-2. Run final named GD and both quick sets; every correctness failure blocks completion.
-3. Consolidate actual counts, settings, versions, compatibility, availability and costs.
-4. Write release evidence with unresolved failures explicitly blocking release, never a fabricated pass.
-5. Give the orchestrator data to fill its release record/logs/summary and make the accepted commit.
+1. Reconcile all task handoffs and every inherited/new S-OD4 item against final sources/decisions.
+2. Finish living guide/design/workflow/group corrections and create the release-report skeleton
+   before the final quick fingerprint. Audit the workflows once on that final tree as below.
+3. Run final GD and the complete bounded quick manifest; collect/reconcile final deep records.
+   Every correctness failure blocks; time-only outcomes retain their real status and item owners.
+4. Fill the data-only release report with actual counts, settings, versions, compatibility, availability,
+   costs and PR-CI status. Do not edit hashed quick inputs after verification without replacing affected checks.
+5. Give the orchestrator the sign-off/remaining items and CI responsibilities; no developer commit/deploy.
+
+### Complete item and final-tree CI audit
+
+Inventory the stable S-AV IDs from every task, not only the most recent report. For each retain
+origin, old/new numbers, source/config/request, evidence, checkpoint/final owner and disposition.
+Account explicitly for CV6, Killer Hard/Expert and its conditional owner question, large-board
+Nightmare/hell1, classic9 Nightmare, quick-set cost/proposal and every guard/projection finding.
+No item vanishes because a test moved tiers or a level became hidden: link its final qualification
+or cost verdict. A proposal not approved is not an implemented change. No weights changed before
+an answer; no missing S3 group, new unapproved evidence class or silent performance waiver.
+
+Audit `.github/scripts/generator-suites.sh`, its portable manifest and both workflows against
+the **final** suite inventory. Check every newly added suite's group, disjoint current quick
+membership, no manual/deep catch-all, source/result completeness, realistic per-job cost <=30
+minutes, unchanged time factor and no raised timeout. Preserve the PR's smaller existing limits,
+core/Player/browser jobs and Pages dependency/trigger rules. Workflow comments must point to the
+actual final offline deep/GD/E/GQ/GP evidence, not claim r5m's old source validates new techniques.
+
+The orchestrator supplies the v3 PR/check-run identity and performs any required Git/PR actions.
+This task owns reading/checking the final-head results and investigating bounded CI grouping
+failures, forwarding application/correctness defects to their owner. Local success is not a
+remote CI pass; if no matching final-head run exists, leave PR-CI sign-off explicitly pending.
+No merge, push, workflow dispatch or new browser run is authorized by this task file.
+
+### Final-source deep mega evidence
+
+Use the existing r5m tool, as extended by MS07b, for the retained Nightmare and hell1 populations:
+two boards x two levels x (invariants 1/2/3/4 plus independent CV5 3/3/4) = **28 occurrences**.
+One request per locked process, board-default attempts, same 500 s diagnostic ceiling, current
+source/config/guard identities and original relations. Fixed hidden requests are diagnostic only;
+use the established temporary support guard and restore the original array, never normalize to
+another level. Retain every outcome and all per-puzzle checks, not just a hit histogram.
+Run once after the final engine change; reuse compatible current-source records if they already
+exist, never stale recovery records or two aliases of one CV5 call. Reconcile without regeneration.
+If a current final CV3 mega cell matches, apply its own checks to those records and identify the reuse.
+Record >240 s/timeouts as named availability/cost outcomes; wrong puzzles/flags/warnings still block.
 
 ## Acceptance criteria — Business
 
@@ -67,9 +112,11 @@ Anchors at `f788e02`: `generator/tests/manual/difficulty.test.js:1232`
 
 | ID | Criterion |
 |---|---|
-| MS18e-T01 | Final GD and both quick sets pass; source/version/default identities are reconciled |
-| MS18e-T02 | GS/GQ/GP/GG/GR/GH coverage and reclassification/compatibility records are complete |
-| MS18e-T03 | Living EN+VI docs match the code; no code or pack edits in this closure task |
+| MS18e-T01 | Final GD/quick correctness and actual performance verdicts are reconciled; no failed/incomplete gate is called green |
+| MS18e-T02 | GS/GQ/GP/GG/GR/GH and 28 deep occurrences/relations have current compatible evidence or explicitly unsatisfied release status |
+| MS18e-T03 | Living EN/VI docs match the final code; no application/tuning/fixture/pack edit |
+| MS18e-T04 | Every S-OD4 item has an evidenced disposition or named outstanding owner; all six S3 groups remain |
+| MS18e-T05 | Final workflow/group audit and matching-head PR-CI status are recorded; no time-factor/timeout raise or deep CI run |
 
 ## Test plan and gates
 
@@ -91,10 +138,11 @@ Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--sui
 Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=wordoku','--filter=> normal: 20 puzzles > I5:','--verbose')
 Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=variants','--filter=> variants: classic9 > CV3 normal:','--verbose')
 Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=variants','--filter=> variants: classic9 > CV3 unsupported:','--verbose')
-Invoke-Dv3Node -Task MS18e -NodeArgs @('tests\node-runner.js')
+# Complete both app quick sets through the refreshed bounded manifest, not an unconditional whole run.
 ```
 
-Player, under the same lock: `Invoke-Dv3Node -Task MS18e -NodeArgs @('tests\node-runner.js')`.
+Player likewise uses `Invoke-Dv3Node`; a no-options run is allowed only with a current <=450 s
+projection. Otherwise use the complete disjoint manifest and result reconciliation.
 These consumers were corrected in MS05b2 and first executed with MS05b3's lazy corpora;
 no blanket manual suite is inferred. Rebuild the current MS05b3 manifest: **one I5 per actual
 level** of Killer/Jigsaw/Greater-Than/Wordoku, one per `(diagonalX|hyper,level)` in extra-regions,
@@ -119,25 +167,36 @@ their separate diagnostic guards and remain complete.
 Complete the difficulty suite through checklist section 7's disjoint offered-level/non-batch
 manifest after the first selected shard; never repeat it in a whole-suite command. Record a
 qualified-hidden Nightmare as absent from the offered manifest, not as a zero-test pass.
-GD jobs 1/no --jobs; prefer latest matching-source/post-allowance per-level measurements,
-including MS05d's deferred-CV3 outcomes and current Hell 1 evidence. Label older MS05b3
+GD jobs 1/no --jobs; prefer latest matching-source per-level measurements,
+including r6b's CV3/reuse outcomes and current Hell 1 evidence. Label older MS05b3
 measurements with their actual source/allowance; they are not proved upper bounds.
 Preflight every final CV3 cell before launching. A >450-second projection or missing credible
-bound stops that command for assigned bounded completion; no MS05b3 deferral is inherited as a
+bound stops that command and creates a named final item; no automatic new tooling task and no MS05b3 deferral as a
 final pass or silently omitted. Preserve counts and record current-source actuals; each command
-under 540 seconds. A selector with no tests is not a pass. Quick baseline was about one minute
-Generator and fifteen seconds Player, but record actual expanded-suite counts/times.
+under 540 seconds. A selector with no tests is not a pass. Use r6b's measured per-app standing
+cost and current projections, not the obsolete one-minute/fifteen-second comments.
 Use the shared lock for all commands expected over 10 seconds. **Announce to the orchestrator
-before starting (pentomino runs in parallel on the same machine).** Ten-minute command ceiling.
-Final offered-level hit or timing failures are not waived by the earlier intermediate rule:
-record the failed gate and obtain an explicit owner disposition before release. S-OD1 controls CV6.
+before starting (pentomino runs in parallel on the same machine).** 540-second process ceiling (check-list section 7).
+S-OD4 lets the task continue after a time/availability finding, not claim release gates passed.
+Record unsatisfied final gates and pending PR CI explicitly. A change to a recorded gate needs
+the owner; correctness/evidence corruption stops immediately. CV6's target remains S-OD1,
+its performance-only stop is superseded. No new evidence class to hide a slow cell.
 No new --all/--manual/browser/SG_DEEP permission is inferred.
 
 ## Definition of done & handoff
 
 Return final B/T and gate verdicts, exact source/default/version identifiers, documents, counts,
-durations, remaining risks and actual usage if available. The orchestrator owns logs/commit/release;
+durations, complete item audit, final-tree workflow audit, matching-head PR-CI status and usage if available.
+The orchestrator owns logs/commit/release;
 leave this Execution log empty.
+
+## Resume rules — S-OD4
+
+Review: orchestrator only. Correctness/evidence corruption or a proposed recorded-decision change
+stops for the owner. Time/availability lets independent work continue but never turns an unsatisfied
+release gate or pending PR check green. Use `Invoke-Dv3Node`, <=540 s, for all possibly >10-second
+payloads, and keep the final bounded quick/deep manifests distinct. No new slow-cell evidence class.
+The complete item audit and final-tree CI ownership above are mandatory parts of the final reply.
 
 ## Execution log
 

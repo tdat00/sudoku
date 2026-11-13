@@ -92,12 +92,21 @@ node tests\tools\make-technique-examples.js ..\generator --ids=emptyRectangle --
 Prefer existing forcingChain/colour sources, then bounded classic9 hard/expert. Jobs 1/no --jobs;
 E 10-90 minutes, cost 1-30 seconds, curated GH 1-120 seconds; discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
-At most one evidenced own-limit change; stop any command at ten minutes.
+At most one evidenced own-limit change; enforce the 540-second process ceiling.
 
 ## Definition of done & handoff
 
 Report the restricted coverage, source and all-member proof cases. M8 is complete only with all
 three IDs integrated and current references truthful.
+
+## Resume rules — S-OD4
+
+Review: orchestrator against MS08a's template and generic soundness/order-invariant suites,
+not routine analyst cross-review. Correctness/evidence corruption or changing a decision stops;
+time/availability is a named numerical item for MS18c/MS18d and work continues within the bounds.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Any added suite owns its r6c CI group. No new slow-cell evidence/tooling class.
+Return the inherited/new item list, actual gates and CI membership.
 
 ## Execution log
 

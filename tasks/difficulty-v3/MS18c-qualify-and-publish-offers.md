@@ -5,7 +5,7 @@
 | Depends on | MS18b accepted, including any owner-directed replacement task/evidence |
 | Size / active time | Medium; 35-50 minutes plus GQ |
 | Owner / milestone | Qualification/publication; M18c |
-| Authority | R24/R21; AUTH-S1, SA1-Q-S5 |
+| Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1); analyst cross-review |
 | Status | Not started |
 
 ## Goal & business context
@@ -15,7 +15,8 @@ at the path its readers already use.
 
 ## Scope
 
-In: full 135-cell GQ-final, v2 archive, live table/support arrays, diagnostic fixed-corpus compatibility.
+In: full 135-cell GQ-final, v2 archive, live table/support arrays, stored-request notification and
+diagnostic/publication compatibility of the final offers.
 Out: solver/generator tuning, weight changes, intermediate table publication or dropped cells.
 
 ## Repository rules
@@ -35,6 +36,20 @@ Use Q's 15 variants x 9 levels, jobs 4, base 20260601, 40/100 seeds, exact+valid
 hits and original p95 budgets. No diagnostic overrides or --probe. MS07d merge rejects incomplete/
 mixed records. Captured request errors/timeouts remain misses; worker/IPC loss is a failed run.
 Only after complete validation derive offered arrays, preserving global level order.
+Use r5p's **board-default attempts**, never an explicit eight-attempt qualifier override.
+
+**S-OD4 (c1), without exception:** at least 36 exact hits of 40 or 90 of 100 and p95 within
+2/10/30 seconds for <=36/<=81/>81 cells. A bounded fallback, shallow result or timeout is a miss;
+none keeps mega Nightmare/Hell or any other cell offered. A protocol-valid hidden verdict is
+an accepted product outcome. Do not ask for a waiver before applying it, even for large grids.
+Any proposal to retain an unqualified cell or raise a budget would change a recorded decision.
+An invalid/non-unique puzzle, unsound proof or wrong exact flag/warning is a correctness stop,
+not an availability miss that can be excused by hiding its cell.
+
+Reconcile all inherited availability items (including Killer Hard/Expert and large-grid Nightmare/
+hell1) with final verdicts. If a Killer calibration decision was requested at MS07e, apply only its
+recorded disposition; no weight change here. A hidden verdict needs no calibration to be legitimate.
+Route remaining cost findings to MS18d; include the complete item list for MS18e.
 
 The qualifier's --markdown writes a table BODY. Render to an evidence file, then compose the live
 report with protocol, machine/Node/jobs/source, complete table and removals; do not erase its
@@ -48,22 +63,34 @@ enables hidden requested levels. Apply the same diagnostic-only guard around the
 loader's toConfig/pipeline call, restoring the original array in finally. Do not change requests,
 silently normalize them to another offered level or advertise hidden levels again.
 
-Baseline `generator/tests/qualify.js:141-171` (`function child`), `:443-466` (summary);
-`generator/tests/suites/replay.test.js:22-31` (`function entry`);
-`generator/tests/manual/difficulty.test.js:297-317` (full live table/offer assertions).
+Resume anchors at c9935cd: `qualify.js:143,186,223,320` (`child`, `hitOf`, `decide`, `certain`);
+the later MS07d merge owns current output. Quick loaders are `replay.entry` at 22, `steps.golden`
+at 41 and Generator `player.goldenResult` at 29; all prefer saved wires. `store.closestSupportedLevel`
+at 170, `normalize` at 193 and `load` at 652 govern fallback; pipeline refusal is at 58-59.
+
+At HEAD `store.load` normalizes with no adjustments and announces `adjustments:[]`; app startup
+loads before constructing controls. Do not assume the existing nearest-level calculation already
+shows a **stored-request** correction note. Own the focused end-to-end correction if r5p has not
+supplied it: a stored hidden level becomes the nearest offered one (easier on ties), with the
+existing EN/VI note visible on initial render. Preserve explicit/default attempt intent and URL
+priority. Hidden explicit pipeline requests must still throw; existing Player puzzles still open.
 
 ## Files to create/modify
 
 - Evidence/MS18c and final qualification JSON under docs/difficulty-v3.
 - New `docs/difficulty-v3/qualification-v2.md`; live qualification.md; notes with every removed level.
 - Only `difficultySupport` arrays in `generator/js/variants/*.js`.
-- Quick replay diagnostic loader/helper and focused regression; manual offered-table expectations
-  only if directly affected. Existing reader path remains.
+- `generator/js/ui/store.js`, `controls.js` and app startup only as needed for the stored-request
+  correction note; existing EN/VI keys or both languages if a new message is necessary. No generation policy.
+- All three fixed golden quick loaders/helpers and focused restoration tests, not only replay.
+  Enumerate directly affected quick/manual offer assertions/populations before editing; preserve original
+  diagnostic requests and public refusal coverage. Existing reader path remains.
 - Generator design 5.1/15.4 and both guides' actual availability facts.
 
 ## Implementation steps
 
-1. Freeze candidate/defaults and archive v2 before any live-table change.
+1. Finish the narrowly coupled compatibility logic/tests on controlled hidden-level fixtures, without
+   pruning live offers. Then freeze candidate/defaults and archive v2 before any live-table change.
 2. Collect all 135 complete cells, merge/check, distinguish hidden verdicts from failures.
 3. Update live report and exact matching support arrays together; record every addition/removal.
    Audit MS05b3's manual level/selector population against those offers now. Some variant suites
@@ -75,6 +102,10 @@ Baseline `generator/tests/qualify.js:141-171` (`function child`), `:443-466` (su
    authorize weakening an I5/hit threshold; record the explicit qualification-driven population
    disposition and keep the independent fixed GG/GR diagnostic populations unchanged.
 4. Preserve fixed diagnostic recipes after hiding levels and restore arrays even on failure.
+   Verify all three golden consumers, mega deep requests and every affected fixed quick request.
+   Keep diagnostic generation separate from public unsupported-level refusal; no lost request
+   or reindexed manual seed is disguised as a qualification-driven test update.
+   Verify stored hidden-request nearest-level selection and its visible initial note in both languages.
 5. Verify publication-only engine diff; hand MS18d the offered/performance manifest.
 
 ## Acceptance criteria — Business
@@ -91,6 +122,7 @@ Baseline `generator/tests/qualify.js:141-171` (`function child`), `:443-466` (su
 | MS18c-T01 | Complete 135-cell/jobs 4 protocol, exact source/defaults and checked merge |
 | MS18c-T02 | Live table equals support lists; archive unchanged; no algorithm tuning |
 | MS18c-T03 | Hidden-level diagnostics restore arrays, recipes unchanged, both quick sets pass |
+| MS18c-T04 | (c1) covers every board/level, fallbacks miss, stored hidden requests show the note, Player imports remain compatible, all items reconcile |
 
 ## Test plan and gates
 
@@ -103,16 +135,31 @@ node tests\qualify.js --merge=..\docs\difficulty-v3\evidence\MS18c\qualification
 
 GQ jobs 4; estimate 10-540 seconds/cell, 1-12 hours total planning allowance.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
-Stop/investigate at ten minutes; a slow unsplittable cell blocks, never disappears.
-Generator `node tests\node-runner.js --suite=variants-registry,smoke,replay,help,ui-contract`;
+Stop an invocation at 540 seconds. A slow cell without an existing bounded route is a named
+availability item; continue safe cells and independent audit work, never invent a hidden verdict
+or a new tooling class. **Do not publish an incomplete matrix.** The final record must say if
+publication remains unready; changing the qualification/publication rule requires the owner.
+Generator candidate selectors: `--suite=variants-registry,store,controls,smoke,replay,steps,player,help,ui-contract`;
 both quick sets. Test restoration after diagnostic failure and unchanged request identity for a
 temporarily hidden G04 request. Final full GD is MS18e; no hash rewrite just to hide a support error.
+Run the stored-load notification through actual startup/control initialization, not only
+`sanitizeWithNotes`. Preserve r5p's explicit 8 and default-mode migration behavior.
 
 ## Definition of done & handoff
 
-Give MS18d/e full qualification/provenance, offered lists, v2 archive and reported removals.
+Give MS18d/e full qualification/provenance, offered lists, v2 archive, compatibility evidence and
+the cumulative numerical item list. A correctly hidden large-board cell is a valid result, not a blocker.
 If any variant has no offered level and current UI/registry cannot represent that, report a blocker
 for an assigned compatibility fix; never invent a qualified level.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Correctness/evidence corruption or changing a recorded decision
+stops; time/availability is a named numerical item, not an owner stop or offer waiver.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s; preserve GQ jobs 4 and the
+current bounded quick manifest. Any authorized new suite owns its r6c CI group/manifest entry.
+No new slow-cell evidence/tooling class. Return all item dispositions to MS18d/MS18e and never
+publish an incomplete or unqualified offer as though (c1) passed.
 
 ## Execution log
 

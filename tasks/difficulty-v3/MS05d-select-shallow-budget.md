@@ -2,24 +2,24 @@
 
 | Header | Value |
 |---|---|
-| Depends on | No independent dispatch; selection/early guards r4 after r3, closure r6a/r6b after r5/b3 |
+| Depends on | No independent dispatch; r4 selection retained, closure r6a/r6b/r6c after r5p/r5/r5m/b3 |
 | Size / active time | Absorbed; see MS05r4, MS05r6a and MS05r6b |
 | Owner / milestone | Generator evidence; M5 requiredness budget selected |
 | Authority | R5/R23; SA2-Q-S12(c); S-OD2 recovery |
 | Status | Superseded as a dispatch and acceptance boundary |
 
-## Current routing — binding S-OD2 amendment
+## Current routing — binding S-OD2-S-OD4 amendment
 
-[MS05r4](MS05r4-select-recovery-allowance.md) owns the unchanged 288-request R5 selector and
-12 separate full-request G13/mega diagnostics. Infinity remains the normal default until
-measurement; a finite winner changes only the one default. **A none result stops the recovery
-for the owner**, despite being a mathematically allowed R5 outcome. No provisional number.
+[MS05r4](MS05r4-select-recovery-allowance.md) already ran the unchanged 288-request R5 selector,
+selected **256**, and stopped at original mega limits. Retain all twelve diagnostics and failed
+preflights as history. S-OD3/S-OD4 answer that stop; do not rerun selection or restore Infinity.
+r5p changes only the size-dependent attempt policy; all six selection boards still default to 8.
 
-MS05r4 also owns the early original-limit G13/mega preflights before r5/b3.
-[MS05r6a](MS05r6a-final-evidence-and-pins.md) owns final-source recheck, fresh complete E and
-listed pins; [MS05r6b](MS05r6b-quick-gd-and-combined-acceptance.md) owns full quick, classic9 GD,
-b3's outstanding CV3 list and sole acceptance. MS05b3 stays after selection/guards/r5 tooling.
-One combined commit follows r6b; MS05e waits for it.
+[MS05r6a](MS05r6a-final-evidence-and-pins.md) persists G13 first, then rechecks the approved
+contracts and records 520/5/14 E/pins. [MS05r6b](MS05r6b-quick-gd-and-combined-acceptance.md)
+reconciles r5m deep records, b3 CV3 reuse/items, classic9 GD and full quick evidence.
+r6c CI follows inside the same combined commit; MS05e waits for it. Performance-only stops in
+the archived body below are superseded by S-OD4; a changed final choice at MS18b still needs a decision.
 
 | Retained requirement | Current evidence owner |
 |---|---|

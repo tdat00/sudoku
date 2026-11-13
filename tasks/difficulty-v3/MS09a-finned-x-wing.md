@@ -87,11 +87,20 @@ node tests\tools\make-technique-examples.js ..\generator --ids=finnedXWing --sou
 Use B's colour/chain real sources, then classic9 hard/expert bounded discovery. Jobs 1/no --jobs.
 E 10-90 minutes; cost 1-30 seconds; GH 1-120 seconds curated or <=8 minutes/discovery.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
-Record at most one own-limit adjustment and rerun affected evidence; ten-minute command ceiling.
+Record at most one own-limit adjustment and rerun affected evidence; 540-second process ceiling.
 
 ## Definition of done & handoff
 
 Hand MS09b the bounded shared enumeration and its proof/ordering. Only finnedXWing is registered.
+
+## Resume rules — S-OD4
+
+Review: orchestrator against MS08a's template and generic soundness/order-invariant suites,
+not routine analyst cross-review. Correctness/evidence corruption or changing a decision stops;
+time/availability is a named numerical item for MS18c/MS18d and work continues within the bounds.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Any added suite owns its r6c CI group. No new slow-cell evidence/tooling class.
+Return the inherited/new item list, actual gates and CI membership.
 
 ## Execution log
 

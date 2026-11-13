@@ -2,11 +2,11 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS05r4 finite selection, classified focused checks and passed original-limit preflights |
+| Depends on | MS05r5p step evidence; retained r4 selection/triage; S-OD3 and S-OD4 contracts |
 | Size / active time | Medium; 40-60 minutes |
 | Machine time | Approximately 1-5 minutes of registration/scripted/runner checks |
 | Acceptance | Step evidence complete only; no commit or claim that the full quick set passed |
-| Authority | S-OD2 recommendation 6; every existing assertion/request retained |
+| Authority / review | S-OD2 recommendation 6, S-OD3/S-OD4; analyst cross-review |
 | Status | Not started |
 
 ## Goal & business context
@@ -15,6 +15,10 @@ Prove that disjoint, bounded runs cover the **whole** Generator and Player quick
 interim Generator chunks already took 714 s before steps/replay/player; splitting a command
 does not make the suite faster or forgive a failed request. A reproducible inventory and
 machine-readable results prevent a convenient set of passing filters from replacing coverage.
+
+r4's original mega failures are retained history, not an unmet dispatch prerequisite. r5p has
+installed the size default; r5m next owns the approved mega quick/deep replacement. This step
+inventories the current tree without executing the expensive callbacks or changing their tiers.
 
 ## Scope
 
@@ -123,11 +127,12 @@ in each app environment. Do not combine cached costs from several fresh processe
 may regenerate G13 and other cases, so record the actual cache boundary in each projection.
 
 Keep related assertions together where their unchanged cache and <=450 s projection allow.
-If one original test callback cannot fit, report it; do not split its internal loop, reduce
-its seeds, save G13, increase a guard or invent a new fallback contract in this task.
+If one original test callback cannot fit, report it as a named numerical item; do not split its
+internal loop, reduce seeds or change a guard here. The approved Nightmare decomposition belongs
+to r5m, and G13 persistence to r6a; neither is forbidden by the resumed decisions.
 The selected cap is a changed source, not a proof that a former timing is a current bound.
 
-The draft is refreshed after MS05b3 adds `manual-corpus` tests, r6a's legitimate pin updates
+The draft is refreshed after r5m's approved replacements, MS05b3's `manual-corpus` tests, r6a's pin updates
 and r6b's standing instruction corrections. r6b owns the **final** inventory, reconciliation and passing
 results; a planned manifest at this step is not full-quick acceptance.
 
@@ -149,13 +154,13 @@ results; a planned manifest at this step is not full-quick acceptance.
 3. Inventory both default quick sets; plan the disjoint <=450 s-projected shards.
 4. Preflight each planned selector without running tests; retain existing registration setup
    and record gaps/overlaps as errors.
-5. Hand the tooling/draft to MS05b3 and r6a/r6b. No full quick, golden/hash gate or G13 run here.
+5. Hand the tooling/draft to r5m, then b3/r6a/r6b/r6c. No full quick, golden/hash gate or G13 run here.
 
 ## Acceptance criteria — Business
 
 | ID | Criterion |
 |---|---|
-| MS05r5-B01 | Full quick means every original assertion in each app, not selected green suites |
+| MS05r5-B01 | Full quick means every current quick assertion in each app; r5m explicitly maps moved Nightmare coverage |
 | MS05r5-B02 | Bounded execution does not weaken request, runtime, skip or fallback contracts |
 
 ## Acceptance criteria — Technical
@@ -185,7 +190,7 @@ Invoke-Dv3Node -Task MS05r5 -NodeArgs @('tests\node-runner.js','--suite=mega','-
 ```
 
 ```powershell
-Set-Location Q:\git\sudoku\player
+Set-Location ..\player
 Invoke-Dv3Node -Task MS05r5 -NodeArgs @('tests\node-runner.js','--suite=harness,ui-contract,help','--results=..\docs\difficulty-v3\evidence\MS05r5\player-tooling.json')
 Invoke-Dv3Node -Task MS05r5 -NodeArgs @('tests\node-runner.js','--list-tests=..\docs\difficulty-v3\evidence\MS05r5\player-inventory.json')
 ```
@@ -198,15 +203,18 @@ CI or SG_DEEP changes to make acceptance easier.
 
 ## Stop rules
 
-Stop for executed test/hook/benchmark bodies during listing, changed callback order/semantics, hidden registration
-errors, incomplete/overlapping coverage, failed new tests or a single unbounded callback.
-Notify the orchestrator with exact identities; do not solve a timing failure by editing a test.
+Stop/report correctness defects: executed test/hook/benchmark bodies during listing, changed callback
+semantics, hidden registration errors or corrupt/overlapping coverage. Under S-OD4 a single costly
+callback is a named availability/cost item, not an owner stop; keep its planned membership and continue
+the tooling. Route its numbers to r5m where already authorized, otherwise MS07e and MS18c/MS18d.
+Do not invent another evidence class/tooling task or edit a test merely to avoid its timing failure.
 
 ## Definition of done & handoff
 
 Return the additive tooling diff, focused results, both inventories and the planned shard
-table with conservative projections. **Step evidence complete**; MS05b3 follows on this same
-uncommitted tree, then r6a closes E/pins and r6b freezes/reconciles final coverage. No commit.
+table with conservative projections and the inherited/new S-OD4 item list. **Step evidence complete**;
+MS05r5m follows on the same candidate, then b3/r6a/r6b. r6c uses the final manifest for CI inside
+the combined commit. No independent commit or backup/ref action.
 
 ## Execution log
 

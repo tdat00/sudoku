@@ -8,12 +8,12 @@
 | Authority | R2-R5/R23; FS04/FS06/FS22; S-OD2 recovery |
 | Status | Superseded as a dispatch and acceptance boundary |
 
-## Current routing — binding S-OD2 amendment
+## Current routing — binding S-OD2-S-OD4 amendment
 
-Implement [MS05r2](MS05r2-recovery-consumers.md), not this archived dispatch.
-It preserves every consumer/prefix/manual duty, with focused step evidence and no commit.
-MS05r3/r4 then instrument/select on that active tree; MS05b3's early manual evidence runs
-**after** the selected default/passed guards and r5 tooling, before the sole r6b acceptance/MS05e.
+[MS05r2](MS05r2-recovery-consumers.md) already delivered this scope as retained step evidence;
+do not redispatch it or this archived file. MS05b3 follows r5p/r5/r5m under S-OD3/S-OD4, not
+passed original mega limits. r6b reconciles its CV3 deep reuse and numerical item list; r6c
+closes CI before the combined commit/MS05e. Correctness remains mandatory; time-only findings continue.
 
 | Retained requirement | Current evidence owner |
 |---|---|

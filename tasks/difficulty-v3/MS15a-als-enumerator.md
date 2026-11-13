@@ -86,6 +86,14 @@ No heavy gate.
 
 MS15b/MS16 receive the exact ALS and shared-guard contracts. No solver ID is active yet.
 
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Correctness/evidence corruption or changing a recorded decision
+stops; time/availability is a named numerical item for MS18c/MS18d and work continues.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Own `tech-als`'s r6c CI group/manifest entry as well as all eight source/two HTML lists.
+No new slow-cell evidence/tooling class. Return the inherited/new item list and inactive-enumerator proof.
+
 ## Execution log
 
 | Field | Value |

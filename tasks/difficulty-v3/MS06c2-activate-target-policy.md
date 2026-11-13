@@ -170,21 +170,27 @@ Target 500: tier-used 650 beats non-tier 500; tier-used 550/450 tie keeps first;
 of quality 1000 from a below-band state of quality 2000 is still rejected by `score < max`;
 observe local accepted-state/log changes separately from the keeper's offer.
 
-| File:line / quote at `f788e02` (find quotes after MS05/MS06c1) | Change |
+| File:line / quote at `c9935cd` (find symbols after MS05/MS06c1) | Change |
 |---|---|
-| `generator/js/engine/digger.js:652-703`, `function removalObjective` | Separate current evaluation/removal; activate typed comparator |
-| `:719-797`, `function* digGuidedSteps` | Initialization, pool/apply/end policy |
-| `:1100-1147`, `function refineDown` | Entered continuation; one 64-rating allowance |
-| `:1192`, `const resolved =`; `:1217`, `strategy(model, solution, level, rng, resolved)` | Explicit strategy target route |
-| `:1313`, `function searchStrategy`; `:1320`, `function* localSearchSteps` | Original target and guarded local predicate |
-| `:1661`, `let attemptBest = null`; `:1672-1674`, `rng.fork('dig#'` | One draw in each original sample stream |
-| `:1695-1698`, `strategy: searchStrategy(attemptBest)` | Pass `target: attemptBest.target`, never redraw from search RNG |
+| `generator/js/engine/digger.js:671`, `removalObjective` | Separate current evaluation/removal; activate typed comparator |
+| `:736`, `digGuidedSteps` | Initialization, pool/apply/end policy |
+| `:1232`, `refineDown` | Entered continuation; one 64-rating allowance |
+| `:1324`, `const resolved =`; `:1349`, strategy call | Explicit strategy target route |
+| `:1459,1469,1481`, `searchStrategy`, `localSearchSteps`, `runLocalSearch` | Preserve collector wrapper/finally; change the inner path predicate, not its work lifetime |
+| `:1890,1903`, `attemptBest`, `rng.fork('dig#'` | One draw in each original sample stream |
+| `:1927`, `strategy: searchStrategy(attemptBest)` | Pass candidate target, never redraw from search RNG |
+
+The local wrapper now owns `enterLocal`/`leaveLocal` in `finally`; `rateCounted` charges refinement
+and continuation into that same collector. Keep all r3 work/allowance tests, including the initially
+shallow marker, memo non-charges, exact-at-last-rating stop and error work. The sample/refinement target
+must not reset `firstShallowAt`, create a second collector or lose work across pipeline/worker/cache.
 
 ## Files to create/modify (exclusive ownership)
 
 - `generator/js/engine/digger.js`; no Greater-Than algorithm edit.
 - Existing `digger-target`, `digger`, `difficulty-floor`, `greater-than-guided`, `pipeline`,
-  `events`, `worker`, `cache`, `replay`, `steps`, `explain`, `help` quick suites.
+  `events`, `worker`, `cache`, `replay`, `steps`, `help` quick suites.
+  There is no `explain` suite at HEAD: data/highlight checks are in `events`, card checks in `steps`.
 - Generator `locale.en.js`, `locale.vi.js`, help/explain data for changed facts, including
   `explain.dig.code.deeper` and affected `dig.*`/tune descriptions.
 - Complete E GG/GR fixtures and intentional replay/steps assertions.
@@ -245,7 +251,7 @@ observe local accepted-state/log changes separately from the keeper's offer.
 From Generator, under the checklist lock:
 
 ```powershell
-Invoke-Dv3Node -Task MS06c2 -NodeArgs @('tests\node-runner.js','--suite=digger-target,digger,difficulty-floor,greater-than-guided,pipeline,events,worker,cache,replay,steps,explain,help')
+Invoke-Dv3Node -Task MS06c2 -NodeArgs @('tests\node-runner.js','--suite=digger-target,digger,difficulty-floor,greater-than-guided,pipeline,events,worker,cache,replay,steps,help')
 # Complete E, not just these representative shards.
 Invoke-Dv3Node -Task MS06c2 -NodeArgs @('tests\perf.js','--hash-key=classic4/veryEasy','--hash-from=0','--hash-count=5','--hash-record=..\docs\difficulty-v3\evidence\MS06c2\hashes\classic4-veryEasy-00.json')
 Invoke-Dv3Node -Task MS06c2 -NodeArgs @('tests\replay-fixtures.js','--ids=G09','--record=..\docs\difficulty-v3\evidence\MS06c2\wire\G09.json')
@@ -262,6 +268,16 @@ in parallel on the same machine).** No GS yet; MS06d owns the full isolated comp
 Report the route/stop/refinement/local tests, real sign-target connection, unchanged bounds,
 all E differences and final source identity. MS06d compares all 17 cells/204 requests and reports
 every hit loss; this task makes no unmeasured improvement claim. No Git/pack/log edit.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Stop for correctness/evidence corruption or a recorded-decision change;
+time/availability becomes a named numerical item for MS07e then MS18c/MS18d, and work continues.
+No new evidence class/tooling task for a slow cell; failed/incomplete checks are never called green.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s, and r5's complete bounded
+quick manifest. Preflight/split the long targeted suite list at existing selector boundaries.
+Any authorized new suite owns its r6c CI group/manifest entry as part of this task.
+Return the inherited/new item list and current source/coverage identities.
 
 ## Execution log
 

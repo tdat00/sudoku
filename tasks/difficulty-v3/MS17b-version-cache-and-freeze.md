@@ -39,6 +39,10 @@ ratingVersion and normalized techniqueCounts in addition to existing givens/solu
 semantic model differences (units/regions/cages/signs) also cannot count as the same puzzle.
 Ignore timings/work counters and symbol display mode. Only current canonical producer data enters
 this cache; do not broaden requiredOf to imported summaries.
+Validate the raw decoded wire's explicit boolean **before** `SG.pipeline.fromWire`: that function
+already coerces an absent/non-boolean flag to false, so checking only the reconstructed result
+cannot distinguish a valid shallow entry from missing classification. Preserve r3's internal work
+and MS06 target transport while ignoring them for puzzle equality as specified.
 
 Keep exports' existing positive ratingVersion field and no external floor/target/work certificate.
 Do not blindly replace literal 2 in legacy/stub/import tests or old help source text.
@@ -49,15 +53,18 @@ Final catalogue 40 IDs/34 unscoped, uniqueness IDs exactly UR/BUG+1; orders 190/
 Write the actual selected limits (not just starting values), scope/counter definitions, cap and C
 decisions and source evidence in `docs/difficulty-v3/limits-v3.md`. New-pattern limits freeze with
 v3: subsequent changes require a new rating version. MS18 cannot tune them.
+Record the actual shallow allowance (256 unless later decided otherwise), size-attempt policy
+8/4/2, sign-pool choice and selected C separately from new-pattern limits. Do not copy obsolete
+global-eight or Infinity-default descriptions from the pause evidence.
 
-### Anchors at `f788e02` after MS02-MS04 (find quotes after later tasks)
+### Anchors verified at c9935cd (find symbols after later tasks)
 
 | File:line / quote | Change |
 |---|---|
 | `generator/js/ui/cache.js:47`, `const SCHEMA_VERSION = 2` | Purge old cache |
 | `generator/js/ui/cache.js:228-284`, `function verify` | Current classification and comparison |
 | `generator/tests/manual/difficulty.test.js:765-773`, `ratingVersion` | Current-only assertions |
-| `generator/tests/manual/difficulty.test.js:1366`, `p.rating.ratingVersion` | Generated version |
+| `generator/tests/manual/difficulty.test.js:1374`, `p.rating.ratingVersion` | Generated version |
 | `generator/tests/suites/replay.test.js:1600`, `techniqueCounts: report.spec.counts, ratingVersion: 2` | Inspect historical/stub intent, not blind replacement |
 
 ## Files to create/modify
@@ -110,13 +117,22 @@ Jobs 1/no --jobs; GR 5-35 minutes. Complete GD using checklist section 7's retai
 shards, with actual timing projections, not an unbounded whole-suite run. Hit/median-time findings
 at affected levels remain failed assertions and go to MS18d; correctness and coverage still block.
 Use the shared lock for all commands expected over 10 seconds. **Announce to the orchestrator
-before starting (pentomino runs in parallel on the same machine).** Ten-minute command ceiling.
+before starting (pentomino runs in parallel on the same machine).** 540-second process ceiling (check-list section 7).
 Version-only changes do not authorize a hash rewrite; full GG check belongs to final evidence.
 
 ## Definition of done & handoff
 
 Give MS18 the immutable release-candidate identity, actual frozen settings, reference catalogue and
 all compatibility results. No support publication or claim of final qualification yet.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review. Correctness/evidence corruption or changing a recorded decision
+stops; time/availability is a named numerical MS18c/MS18d item and work continues.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s, and the current bounded quick
+manifest. A cost-bounded unexecuted GD population stays explicit, not a passed gate or owner stop
+solely for time. Any added suite owns its r6c CI group; no new slow-cell evidence/tooling class.
+Return the inherited/new item list and actual frozen policy/source identities.
 
 ## Execution log
 

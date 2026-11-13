@@ -8,12 +8,13 @@
 | Authority | R5/R23; SA2-Q-S12; S-OD2 recovery |
 | Status | Superseded as a dispatch and acceptance boundary |
 
-## Current routing — binding S-OD2 amendment
+## Current routing — binding S-OD2-S-OD4 amendment
 
-Implement [MS05r3](MS05r3-recovery-allowance-instrumentation.md), not this archived dispatch.
-Default stays Infinity until MS05r4 measures the **active** path. Work conservation, initial/
-refinement ordinals, runtime overrides, cancellation and absolute-index shards are unchanged.
-MS05b3 no longer precedes instrumentation; it follows the finite selection/r5 tooling.
+[MS05r3](MS05r3-recovery-allowance-instrumentation.md) already delivered the instrumentation;
+MS05r4 selected **256**, now active. Do not redispatch either step or restore Infinity.
+Work conservation, refinement ordinals, cancellation and absolute-index shards remain.
+r5p changes size-dependent default attempts, not this allowance or the six-cell R5 result.
+b3 follows r5p/r5/r5m; r6a records five wires/fourteen analyses, r6b audits and r6c closes CI.
 
 | Retained requirement | Current evidence owner |
 |---|---|

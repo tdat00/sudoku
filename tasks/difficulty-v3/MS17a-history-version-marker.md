@@ -38,7 +38,7 @@ Add two localized strings for the earlier-version note and regeneration explanat
 EN+VI packs are registered INLINE at the end of history.js; do not duplicate them in another pack.
 Selecting remains the existing recipe regeneration flow, not loading a fabricated old board.
 
-### Anchors at `2c665bb`
+### Anchors verified unchanged at c9935cd
 
 | File:line / quote | Change |
 |---|---|
@@ -85,6 +85,14 @@ No heavy gate or fixture regeneration.
 ## Definition of done & handoff
 
 MS17b can bump the rating/cache without losing history. Report compatibility vectors and strings.
+
+## Resume rules — S-OD4
+
+Review: orchestrator only. Correctness/evidence corruption or changing a recorded decision stops;
+time/availability is a named numerical MS18c/MS18d item and work continues within the bounds.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s, and the current bounded quick
+manifest. Own any authorized new suite's r6c CI group; no new slow-cell evidence/tooling class.
+Preserve r5p's explicit/default attempt semantics in regenerated recipes. Return the inherited/new item list.
 
 ## Execution log
 

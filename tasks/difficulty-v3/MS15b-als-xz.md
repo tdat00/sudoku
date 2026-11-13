@@ -99,6 +99,15 @@ for MS16/MS17. Never relax performance targets to hide a miss.
 
 Hand MS16 the selected enumerator limits and sound records. Report GP misses and all reclassifications.
 
+## Resume rules — S-OD4
+
+Review: orchestrator against MS08a's template and generic soundness/order-invariant suites,
+not routine analyst cross-review. Correctness/evidence corruption or changing a decision stops;
+time/availability is a named numerical MS18c/MS18d item and work continues.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s; project GP before launch.
+Unsafe GP cells stay named/unmeasured, not new tooling tasks or omitted denominators. Use the
+current bounded quick manifest; own any added suite's CI group. Return the inherited/new item list.
+
 ## Execution log
 
 | Field | Value |

@@ -93,12 +93,21 @@ node tests\tools\make-technique-examples.js ..\generator --ids=sueDeCoq --source
 B sources: existing chains/ALS, then bounded classic9 nightmare/hell1. Jobs 1/no --jobs;
 E 10-90 minutes, cost 1-60 seconds, curated GH 1-120 seconds/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
-One own-limit adjustment maximum, not earlier ALS limits. Ten-minute command ceiling.
+One own-limit adjustment maximum, not earlier ALS limits. 540-second process ceiling (check-list section 7).
 
 ## Definition of done & handoff
 
 Give MS17 the complete catalogue and every final limit/source record. No missing ID/example waits
 for the version task.
+
+## Resume rules — S-OD4
+
+Review: orchestrator against MS08a's template and generic soundness/order-invariant suites,
+not routine analyst cross-review. Correctness/evidence corruption or changing a decision stops;
+time/availability is a named numerical item for MS18c/MS18d and work continues within the bounds.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Any added suite owns its r6c CI group. No new slow-cell evidence/tooling class.
+Return the inherited/new item list, actual gates and CI membership; all six S3 groups still remain.
 
 ## Execution log
 

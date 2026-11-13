@@ -42,7 +42,7 @@ target because GP failed. Any genuinely undefined target-policy case is a blocke
 
 GG retains all 26 combinations x 20 fixed seeds, including now-hidden requests through the MS03d
 diagnostic guard. Record fresh complete shards for current source/helper identity; compare only.
-Anchors at `f788e02` after MS03d: `generator/tests/fixtures/perf-helper.js:47-53`
+Anchors verified at `c9935cd`: `generator/tests/fixtures/perf-helper.js:47-53`
 (`p95 budgets in milliseconds`), `:77-89` (`function cells`), `:113-135` (`function measure`);
 `generator/tests/perf.js:455-476` (`if (plan.mode !== 'timing') return runHashes`).
 Find these quotes after later tooling changes.
@@ -62,13 +62,14 @@ leaving startup/variance margin below the 540-second ceiling. Report the full ta
 cells to the orchestrator **before the first GP command**, not only when one times out.
 Missing/inapplicable GQ data also blocks this preflight; it is not a zero-millisecond estimate.
 
-If any cell is flagged, stop GP dispatch until the orchestrator assigns and accepts a bounded
-measurement solution. This task does not own edits to `perf.js` or `measure` and does not invent
-an unsupported CLI. Any assigned ledger solution must retain every one of the 50 seed/outcome
-records, recompute nearest-rank percentiles from raw times, and explicitly preserve or obtain
-approval for changed cold/warm-process semantics. `--seed=9525 --runs=25` alone is **not** such
-a solution: restarting Node adds another cold start, and today's printed p95s cannot be merged.
-Never lower sample count, omit the cell or extend the ceiling on your own.
+If a cell is flagged, do not launch that unsafe command. Under S-OD4 create a named final-cost
+item and continue other credibly bounded cells; there is no automatic new tooling task/evidence
+class. This task does not own `perf.js`/`measure` changes or an unsupported CLI. Keep every
+flagged cell in the intended denominator and mark its measurement incomplete, not passed.
+Do not compute a complete >=90% verdict from only the cells that finished.
+`--seed=9525 --runs=25` is not a valid split: it adds a cold start and printed percentiles cannot
+be merged. A separately decided protocol change would need its own authorization; preserve
+50 raw outcomes, seeds, percentiles and cold/warm semantics unless that decision says otherwise.
 
 Implement a read-only task-owned `project-gp.js` in the artifact directory below. It accepts
 `--qualification=<file> --json=<file>`, loads the normal engine via the existing replay-fixture
@@ -76,8 +77,9 @@ Node loader, reads published `difficultySupport`, and joins each `(variant,level
 validated final qualification requests. It generates no puzzles and mutates no support array.
 Write `{qualificationHash, qualificationEngine, publishedCells, projections, flagged}` with
 the fields above, stable cell order and CRLF; print the flagged list. Exit 2 for missing/invalid
-input, 1 when complete projections flag any cell, 0 otherwise. Its exit 1 is a stop to schedule
-tooling, not a performance assertion failure or permission to skip that cell.
+input, 1 when complete projections flag any cell, 0 otherwise. Exit 1 prevents those commands,
+not the rest of the task; retain the named items and intended matrix. Missing/corrupt qualification
+input must be resolved, never guessed as a zero-cost cell.
 
 ## Files to create/modify
 
@@ -90,13 +92,14 @@ tooling, not a performance assertion failure or permission to skip that cell.
 
 ## Implementation steps
 
-0. Run the complete GQ-derived GP preflight above before any timing command. Report/stop for
-   assigned tooling if flagged, and retain the accepted disposition before resuming.
+0. Run the complete GQ-derived preflight before timing. Record flagged cells as named cost items;
+   continue safe cells without new tooling, relaxed guards or a false complete-matrix claim.
 1. Enumerate final intended cells; apply only qualification-authorized target updates with arithmetic.
 2. Measure every cell, save stdout/exit/time/source/seed metadata and all misses.
 3. Aggregate the complete matrix against >=90%; do not relax targets after seeing GP.
 4. Fresh-record every GG identity and complete check-only merge.
-5. Run quick sets if target/docs changed; report blockers rather than repairing algorithms here.
+5. Run bounded quick coverage if target/docs changed; reconcile inherited/new cost items, including
+   CV6 and checkpoint large-board findings. No algorithm repair or budget change here.
 
 ## Acceptance criteria — Business
 
@@ -112,12 +115,12 @@ tooling, not a performance assertion failure or permission to skip that cell.
 | MS18d-T01 | Every cell has 50 outcomes with seed/warmup/trace/percentile protocol preserved |
 | MS18d-T02 | Complete >=90% aggregate and every individual miss/error recorded |
 | MS18d-T03 | Fresh complete 520-key GG matches; any target changes follow only the documented rule |
-| MS18d-T04 | Full final-offer GP preflight is recorded before timing; every >450-second projection/missing-data blocker has an accepted bounded solution |
+| MS18d-T04 | Full preflight precedes timing; every >450-second projection has an explicit item/outcome, and missing/corrupt input is not hidden |
 
 ## Test plan and gates
 
 From Generator, preflight first (read-only, expected under a second; create the named artifact
-driver before this command). Do not start the GP examples below if it flags any cell:
+driver before this command). Do not start a flagged cell; other bounded cells may proceed:
 
 ```powershell
 node tests\artifacts\difficulty-v3\MS18d\project-gp.js --qualification=..\docs\difficulty-v3\qualification-v3.json --json=..\docs\difficulty-v3\evidence\MS18d\gp-preflight.json
@@ -138,15 +141,26 @@ Persist each command's transcript under evidence/MS18d with its exit code. Compl
 identities before merge; no --update-hashes. Jobs 1/no --jobs. Use the recorded per-cell preflight
 projections, not an assumed 1-540-second allowance; summed projections give the GP planning total.
 GG is approximately 10-90 minutes. **Announce to the orchestrator before starting (pentomino runs
-in parallel on the same machine).** Stop/investigate at ten minutes; do not silently split runs
-with changed cold/warm timing semantics. An unsupported safe split is a tooling blocker.
+in parallel on the same machine).** Enforce the 540-second process ceiling; do not silently split runs
+with changed cold/warm timing semantics. If no authorized safe route exists, retain a named
+unmeasured-cost item and the incomplete aggregate rather than create another tooling task.
 If files changed: Generator `--suite=perf-tooling,smoke,help` and both quick sets.
 
 ## Definition of done & handoff
 
-Return the preflight/projections and any assigned-tooling disposition, full cell coverage,
-target arithmetic, aggregate verdict, misses and complete GG evidence.
-Any performance fix is separately assigned and invalidates affected final evidence.
+Return preflight/projections, intended/completed cell coverage, target arithmetic, the actual
+aggregate verdict (incomplete where appropriate), complete GG evidence and the cumulative item list.
+S-OD4 allows continuing after a performance miss, not claiming a failed release gate passed.
+Any proposed change to a recorded performance contract still needs the owner; an authorized
+implementation change invalidates affected final evidence.
+
+## Resume rules — S-OD4
+
+Review: orchestrator only. Correctness/evidence corruption or changing a recorded decision stops;
+performance findings remain named numerical items with actual failed/incomplete verdicts.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s; do not invent another evidence
+class/tooling task for a slow cell. If docs/targets change, verify the current bounded quick manifest.
+Return the complete inherited/new item list to MS18e; no suite addition is authorized here.
 
 ## Execution log
 

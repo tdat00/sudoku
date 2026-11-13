@@ -2,11 +2,11 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS05r6a step evidence complete; same preserved uncommitted candidate and all prior recovery handoffs |
+| Depends on | MS05r6a step evidence; same preserved candidate and all r5p/r5/r5m/b3 handoffs |
 | Size / active time | Evidence/audit dispatch; approximately 1.5-2.5 hours hands-on |
 | Machine time | Approximately 25-60 minutes; actual shard projections control, <=540 s/invocation |
-| Acceptance | **Sole combined recovery acceptance**, then one orchestrator commit |
-| Authority | S-OD2, FS28/FS29/FS30; original r6 phases C/D and all absorbed b1/b2/c/d duties |
+| Acceptance | **Combined recovery audit**; r6c CI closure still required before the one orchestrator commit |
+| Authority / review | S-OD2-S-OD4, FS28-FS30, all absorbed b1/b2/c/d duties; analyst cross-review |
 | Status | Not started |
 
 ## Goal & business context
@@ -19,9 +19,9 @@ request, assertion, runtime guard or completeness requirement.
 ## Scope
 
 In: final quick inventories/results, complete classic9 GD, b3 I5/CV3/refusal reconciliation,
-standing-cost documentation/acknowledgement package and the combined audit.
+deep-record reconciliation, standing-cost documentation/acknowledgement package and the combined audit.
 Out: production/default/recorder changes, assertion/pin repairs, changed requests/populations,
-guards/factors, G13 persistence, qualification/offers, or a developer commit.
+guards/factors, further saved-wire expansion, qualification/offers, or a developer commit.
 r6a is the named pin owner; r3 retains schema/no-allowance-premise fixes.
 
 ## Repository rules
@@ -39,10 +39,10 @@ There is no intermediate acceptance or commit between r6a and r6b.
 
 ## Inputs & context
 
-Require r6a's current-source compatibility, complete checked 520-key/four-wire/fourteen-analysis
-E and resolved-pin manifest; r4's exact selection and original-limit guards; r1/r2/r3/r5 step
-evidence; b3's full early manual manifest and `deferred-cv3.json` (empty if none).
-The selected default is unchanged and active without an override.
+Require r6a's current-source compatibility, checked 520-key/five-wire/fourteen-analysis E and pin
+manifest; r4's selection and retained original-limit failures; r5p/r5/r5m and r1-r3 step evidence;
+b3's manual/reuse manifest and `deferred-cv3.json` (empty if none). Reconcile all named items.
+Allowance 256 and the size-default attempts are active without an override.
 
 ### A — Correct standing instructions before freezing quick inputs (FS30)
 
@@ -80,7 +80,7 @@ Invoke-Dv3Node -Task MS05r6b -NodeArgs @('tests\node-runner.js','--suite=pipelin
 From Player, under the helper defined/dot-sourced in that shell invocation:
 
 ```powershell
-Set-Location Q:\git\sudoku\player
+Set-Location ..\player
 Invoke-Dv3Node -Task MS05r6b -NodeArgs @('tests\node-runner.js','--list-tests=..\docs\difficulty-v3\evidence\MS05r6b\quick\player-inventory.json')
 # Whole Player is allowed only with its current <=450 s projection.
 Invoke-Dv3Node -Task MS05r6b -NodeArgs @('tests\node-runner.js','--verbose','--results=..\docs\difficulty-v3\evidence\MS05r6b\quick\player-all.json')
@@ -88,8 +88,9 @@ Invoke-Dv3Node -Task MS05r6b -NodeArgs @('tests\node-runner.js','--verbose','--r
 
 Run all remaining generator/player manifest shards with `--suite` plus the preflighted
 describe/full-name selector and a fresh `--results` path. Prioritize original G13 consumers
-and the heavy groups; keep their original 120000 ms guards. Keep mega's original callbacks,
-60000 ms guards and design assertions/factor. No budget or fallback exemption.
+and the heavy groups. G13 quick consumers now read the verified saved wire; the recorder's
+120000 ms guard stays. Mega Nightmare uses r5m's approved quick replacements and separate deep
+records, not the superseded compound callbacks/6 s and 20 s assertions. No global factor change.
 
 Prefer unchanged cache boundaries where they fit; a fresh shard may regenerate a puzzle.
 Every shared core case runs in **each** app environment. No `--bail`, omitted slow test,
@@ -101,7 +102,8 @@ Reconcile raw results against the complete inventory:
 key = (app,suite,ordinal), with fullName checked too
 same sourceHash/Node/timeFactor and expected selection membership
 every inventory key exactly once; no missing, duplicate or unexpected key
-all required tests pass; no bail, incomplete process or new skip
+correctness assertions pass; performance findings remain failed/named, never silently passed
+no bail or new skip; incomplete processes have explicit uncovered keys and S-OD4 items
 ```
 
 Existing explicit environment skips retain their reasons, never become a way around a
@@ -112,7 +114,21 @@ do not copy a new hash onto the old row. Early raw r4 transcripts are not final 
 Use an owned coverage reconciler and test it on tiny synthetic complete/gap/duplicate/
 unexpected/mixed-source/bail/zero-test data, not another real quick run. Save the final
 manifest, raw result paths, reconciled counts and the chosen nonoverlapping coverage set.
-Any remaining quick failure blocks acceptance; the manual availability exception does not apply.
+Classify every remaining failure under S-OD4. Correctness/corrupt coverage blocks; time/availability
+is a named numerical item, not an owner stop. An incomplete/failed run is not a green quick pass.
+
+### B1 — Reconcile r5m's mandatory deep coverage, do not regenerate it
+
+Account for all fourteen independent mega Nightmare occurrences and original invariant/CV5 relations.
+Use r6a's explicit compatibility proof where G13-only recorder/loader changes altered a broad hash;
+keep raw records under their actual producer identities. Relevant engine/default/request/check changes
+invalidate affected records, not just their labels. Re-run only genuinely invalidated coverage through
+the approved one-request tool; never re-run the whole population merely for r6b's name.
+
+Reconcile b3's mega16 seeds 1/2 and mega12 seeds 1/2/3 reuse against those records and its own CV3 checks.
+Do not double-count reused generation, collapse independent CV5 repeats, or infer current performance
+from r4's old eight-attempt times. Report deep record/check/relationship outcomes separately from
+quick counts and standing quick time. >240 s is an availability item for MS07e/MS18c, not a stop.
 
 ### C — Full retained manual coverage
 
@@ -122,14 +138,14 @@ No `--manual`/`--all`. Preflight/reconcile registrations through r5 listing and 
 Nightmare first when offered, then every other level and non-batch group exactly once:
 
 ```powershell
-Set-Location Q:\git\sudoku\generator
+Set-Location ..\generator
 Invoke-Dv3Node -Task MS05r6b -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=difficulty','--filter=time) > nightmare >','--verbose','--results=..\docs\difficulty-v3\evidence\MS05r6b\gd\classic9-nightmare.json')
 Invoke-Dv3Node -Task MS05r6b -NodeArgs @('tests\node-runner.js','--suite=difficulty','--filter=difficulty > digger.generate: guarantees','--verbose','--results=..\docs\difficulty-v3\evidence\MS05r6b\gd\guarantees.json')
 ```
 
 Those are examples, not the complete GD manifest. Project each unchanged batch before launching.
-An overlong/unknown batch is an outstanding gate and owner stop, not permission to reduce
-its count, split its median into averages, or silently move it to release.
+An overlong/unknown batch is an explicit outstanding population and named cost item, not an
+owner stop solely for time. Continue safe groups; do not reduce its count or merge medians.
 
 Reconcile every b3 I5/CV3/refusal row and its exact outstanding list. Early manual data may be
 retained only when its application, corpus/assertions, Node/factor/default/request identities
@@ -137,15 +153,17 @@ match; if later golden/pin/instruction publication changed the broad runner fing
 record the explicit file-diff compatibility proof for the manual inputs, never relabel JSON.
 Rerun genuinely affected cells. The final **quick** identity rule above remains stricter.
 
-This task owns b3's outstanding CV3 list. Execute only credibly bounded original selectors,
-same seeds 1..perLevel and counts, each selecting exactly one test. Still >450 s or no credible
-bound means **owner stop**, not a passed deferral, added tuning criterion or new test-tooling policy.
+This task reconciles b3's exact outstanding list. Execute only credibly bounded original selectors,
+same seeds 1..perLevel/counts, selected total 1. Mega16 Nightmare is not an inherited deferral:
+B1 reconciles its already required CV3 checks through the approved reuse route.
+Other >450 s/unknown projections retain explicit unexecuted populations and MS07e/MS18c item ownership.
+No new tuning criterion, extra tooling task, count reduction or passed-deferral label.
 
-Per-puzzle validity/uniqueness/requiredness, digLevel, cancellation, request timeouts and missing
-coverage block. Only existing intermediate **aggregate hit-rate** failures, or classic9
-median-time assertions coupled to the requiredness hit loss, may remain under the accepted
-R4/GD exception, with counts/times and named MS18c/MS18d handoff. They stay failed assertions;
-do not call all GD green. This grants no exception to quick tests or S-OD1's CV6.
+Per-puzzle validity/uniqueness/requiredness, digLevel, cancellation semantics, wrong warnings and
+lost/corrupt evidence block. Request timeouts and aggregate hit/time failures are named S-OD4
+availability/cost outcomes; keep counts, limits and truthful failed/incomplete status. A known
+unexecuted population is not missing evidence when honestly recorded, but is not passing coverage.
+CV6 remains S-AV01 for MS05e, with its old target intact; its performance-only stop is superseded.
 
 ### D — Measured standing cost and combined audit
 
@@ -157,7 +175,7 @@ sourceHash, node, machine, timeFactor, default, manifestPath,
 suiteCount, testCounts:{total,passed,failed,skipped}, shardCount,
 sumWallMs, maxShardWallMs, registrationIncluded:true,
 measurement:'sum of the accepted disjoint shard executions',
-excludedWork:{failedAttempts,replacedRuns,inventoryAndTooling,lockWait},
+excludedWork:{supersededAttempts,replacedRuns,inventoryAndTooling,lockWait},
 orchestratorAcknowledgement:'pending normal acceptance'
 ```
 
@@ -167,16 +185,23 @@ identify the small startup/measurement difference; do not silently substitute `r
 Report lock wait and development/retry work separately, not as the standing quick
 cost. Do not call the sum a measured unsharded command or a <=540 s whole quick run.
 Show the source-qualified prior baseline if available; the interim b1 **partial** 713.8 s
-is not a completed full-quick baseline.
+is not a completed full-quick baseline. Include any retained failing assertion's shard time,
+not only successful tests. If coverage is incomplete, label the total partial/lower-bound, not
+the measured cost of a complete quick set.
 
 Present both app totals and shard counts as the standing validation cost to be acknowledged
 **with the normal combined acceptance**. The orchestrator records the acknowledgement;
 the developer does not fill the Execution log or invent owner consent. A longer total alone
 is **not a new stop or performance criterion**: S-OD2 already allows complete bounded shards.
+If Generator's complete standing quick time remains above about **five minutes**, carry S-AV08
+with its per-suite/shard breakdown to **MS07e**, which proposes named generation-heavy cases for
+the manual tier. Do not make those moves here or block this task for that total. The report must
+give the number for Generator and Player separately.
+
 No individual guard/assertion changes. Future tasks must re-project for their changed source,
 not treat this report's cost as a permanent timing promise.
 
-Audit all b1 B/T requirements, r1-r5/b3/r6a step evidence, absorbed b2/c/d obligations and the
+Audit all b1 B/T requirements, r1-r5 (including r5p/r5m), b3/r6a evidence, absorbed b2/c/d duties and the
 final coverage. Check E still matches current hashed inputs with the no-generation merge
 checks below; do not rerun complete E merely because the task ID changed.
 
@@ -200,10 +225,10 @@ Invoke-Dv3Node -Task MS05r6b -NodeArgs @('tests\perf.js','--hash-merge=..\docs\d
 1. Review r6a's handoff and every prerequisite; retain all earlier failed/interim evidence.
 2. Complete A's instruction corrections/report skeleton before freezing quick inputs.
 3. Execute/reconcile B's complete final quick coverage on that source; stop on a real failure.
-4. Execute C's complete classic9 GD and reconcile all early/deferred manual coverage.
+4. Reconcile B1's deep records and C's classic9/early/reused/outstanding manual coverage.
 5. Complete D's measured cost report, current E checks and all B/T audit rows.
-6. Submit the sole combined acceptance/standing-cost acknowledgement package to the orchestrator.
-   No developer commit, no independently green r6a checkpoint.
+6. Submit the combined audit/standing-cost package and item list, then hand the final manifest to r6c.
+   No developer commit; the combined commit still waits for r6c's CI closure.
 
 ## Acceptance criteria — Business
 
@@ -211,17 +236,18 @@ Invoke-Dv3Node -Task MS05r6b -NodeArgs @('tests\perf.js','--hash-merge=..\docs\d
 |---|---|
 | MS05r6b-B01 | The active requiredness model uses the measured common default and truthful fallbacks |
 | MS05r6b-B02 | Every fixed request and correctness contract survives; the slower total quick cost is visible |
-| MS05r6b-B03 | Only the complete recovery is accepted; remaining contract/coverage failures return with numbers |
+| MS05r6b-B03 | The recovery audit is honest; correctness blocks and performance findings retain numbers/owners |
 
 ## Acceptance criteria — Technical
 
 | ID | Criterion |
 |---|---|
-| MS05r6b-T01 | Both final quick inventories reconcile exactly once; all required assertions pass |
-| MS05r6b-T02 | Classic9 GD and all early I5/CV3/refusal coverage are complete; only the named intermediate exceptions remain |
-| MS05r6b-T03 | r6a's original-limit/current E/pin evidence and every retained b1/r1-r5/b3/b2/c/d duty are audited |
+| MS05r6b-T01 | Both final quick inventories are reconciled without omissions disguised as passes; correctness passes and performance items are explicit |
+| MS05r6b-T02 | Classic9 GD and every I5/CV3/refusal/reuse obligation have an honest outcome/item; no deferred mega16 Nightmare cell |
+| MS05r6b-T03 | r6a's approved-contract/520/5/14 E/pins and every retained recovery/absorbed duty are audited |
 | MS05r6b-T04 | Actual per-app quick time/shard counts and truthful AGENTS/guides/report are ready for acknowledgement with acceptance |
 | MS05r6b-T05 | No source/guard/request/default/fixture drift, checkpoint commit or unapproved waiver |
+| MS05r6b-T06 | r5m's 14 independent records/relations and b3 reuse reconcile; final quick manifest goes to r6c before the combined commit |
 
 ## Test plan and gates
 
@@ -233,13 +259,13 @@ No GQ, GH, GP, browser, `--all`, `--manual` or `SG_DEEP` run here.
 
 ## Stop rules
 
-Any remaining original-limit/quick/validity failure, incomplete/still-unbounded required
-coverage, incompatible evidence or unjustified pin blocks acceptance and further MS05e work.
-Return the source/default, fixed request, work/cap hits/attempts, actual time/error/limit and
-r4's four-setting table. Do not invent a default, persist G13, weaken mega or expand a guard.
-An unexpected assertion is reported, not edited here: the orchestrator may assign a bounded
-r6a pin follow-up only after classifying it under r4's preserved-contract rule. Semantic or
-performance changes still need the owner's explicit disposition. Replace all affected evidence.
+S-OD4 controls: correctness failures, incompatible/corrupt evidence, unjustified pins or a
+proposed recorded-decision change stop for the owner. Time/availability findings are named with
+source/default/request/work/time/error/limit and MS07e/MS18c/MS18d ownership; continue independent
+work. Do not invent a default, expand a guard or fake a pass. G13 persistence and the mega tier
+replacement are already authorized and owned elsewhere.
+Unexpected assertions are not edited here; a genuine data-pin follow-up belongs to r6a after
+classification. Replace affected evidence, never rewrite its hashes.
 
 FS30's reported **total** quick cost alone is not a stop; do not confuse acknowledgement of
 that measured workflow cost with permission to change a failed individual latency assertion.
@@ -247,14 +273,16 @@ that measured workflow cost with permission to change a failed individual latenc
 ## Definition of done, commit and handoff
 
 Return acceptance IDs, full manifests/counts/durations, source/default identities, checked E,
-resolved-pin and manual outcomes, standing costs and any allowed availability handoffs.
-Only after complete review/acceptance does the orchestrator make **one meaningful commit**:
+deep/reuse/relations, pins/manual outcomes, per-app standing cost and the cumulative item list.
+**MS05r6c follows before any commit.** After r6b review plus r6c CI closure the orchestrator makes:
 `difficulty-v3 MS05: required exactness with measured bounded recovery`.
 
-Include retained b1, r1-r5/b3/r6a/r6b changes, evidence and docs with required trailers.
+Include retained b1, r1-r5 (r5p/r5m included), b3/r6a/r6b/**r6c** changes/evidence/docs with trailers.
+The commit body states: **"The earlier pause commit a7f6660 was not green and was not acceptance."**
 No retrospective intermediate green commits; private backups are safeguards, not acceptance.
 The orchestrator records the cost acknowledgement and fills the logs. MS05e begins only after
-this combined commit; MS06a still waits for MS05e's separate S-OD1 disposition.
+this combined commit; MS06a waits for MS05e's repair/result and S-OD4 item handoff, not a
+performance-only owner stop.
 
 ## Execution log
 

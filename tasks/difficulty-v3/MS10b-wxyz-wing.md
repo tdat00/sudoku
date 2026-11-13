@@ -88,11 +88,20 @@ node tests\tools\make-technique-examples.js ..\generator --ids=wxyzWing --source
 Prefer existing wing/chain sources, then bounded classic9 master/nightmare. Jobs 1/no --jobs;
 E 10-90 minutes, cost 1-30 seconds, GH 1-120 seconds curated/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
-One evidenced own-limit adjustment maximum; ten-minute ceiling.
+One evidenced own-limit adjustment maximum; 540-second process ceiling.
 
 ## Definition of done & handoff
 
 M10 completes with both named IDs integrated, no weight fitting, and the capacity proof recorded.
+
+## Resume rules — S-OD4
+
+Review: orchestrator against MS08a's template and generic soundness/order-invariant suites,
+not routine analyst cross-review. Correctness/evidence corruption or changing a decision stops;
+time/availability is a named numerical item for MS18c/MS18d and work continues within the bounds.
+Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
+manifest. Any added suite owns its r6c CI group. No new slow-cell evidence/tooling class.
+Return the inherited/new item list, actual gates and CI membership.
 
 ## Execution log
 

@@ -2,10 +2,10 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS05r6b combined recovery accepted/committed, including r6a E/pins, finite r4 default and post-selection b3 evidence; MS06a still waits |
+| Depends on | r6b/r6c combined recovery accepted/committed, including r5p/r5m, r6a 520/5/14 E/pins and b3 evidence |
 | Size / active time | Medium, about 450-750 changed lines; 50-60 active minutes plus bounded evidence runs |
 | Owner / milestone | Greater-Than generation; M5e CV6 disposition before the target baseline |
-| Authority | CV6-01/S-OD1 and R6 comparator; S-OD2 changes the prerequisite only |
+| Authority / review | CV6-01/S-OD1, R6, PR-S1/S-OD4 stop/review rules; analyst cross-review |
 | Gates owned | GS-CV6 diagnosis/comparison; per-level GD `greater-than` CV6/I5; scoped changes through GG/GR/GH |
 | Status | Not started |
 
@@ -19,15 +19,18 @@ unchanged 1,400 ms assertion in that run (700 ms design budget). Literal seeds 3
 
 The author and owner authorised one bounded repair: guide the sign-removal pass with a small pool.
 They did not promise it will succeed. Diagnose first; if this is not the dominant trap, stop before
-changing production code. If closure still fails CV6, stop and return the measured fallback choice
-to the owner. MS06a must not silently take a new baseline while this issue remains undisposed.
+changing production code: another strategy would change S-OD1. If closure still fails only CV6
+timing, retain S-AV01 with the measured numbers for MS07e/MS18d and continue the task under S-OD4.
+MS06a records that unresolved performance item explicitly in its new baseline; it does not wait
+for an owner answer merely because the unchanged timing assertion remains red.
 
 ## Scope
 
 In: the technique-oracle sign pass only, focused quick tests, a bounded diagnostic/measurement
 driver, current design facts, Greater-Than output evidence. Keep `signs.minimal`, reveals,
 `MAX_TUNE_ROUNDS`, keeper offers and final canonical rating as the accepted recovery left them.
-MS05r4 owns the old MS05d selection; r6b owns acceptance after r6a. No independent MS05d commit is awaited.
+MS05r4 selected 256; the r6b/r6c combined commit accepted the recovery. Greater-Than has 81 cells,
+so its default remains eight attempts after r5p. No independent MS05d commit is awaited.
 
 Out: any floor or `clueFloorScale`, `CAP_RATINGS`, `CAP_PROPOSALS`, attempt/sample limit,
 `MAX_TUNE_ROUNDS`, weight, order, band, exactness rule, CV6 assertion or performance target change.
@@ -86,22 +89,22 @@ finite production targets to this already-active comparator. Explicit null also 
 A finite target never outranks
 `tierUsed`. The guided sign pass does not add a new “current versus winner” stop or polishing pass.
 
-### Anchors (unchanged Greater-Than code at `2c665bb`; find moved lines by the quoted text)
+### Anchors at c9935cd (find the quoted symbols again after the recovery)
 
 | File:line / quote | Use |
 |---|---|
-| `generator/js/variants/greater-than.js:38`, `MAX_TUNE_ROUNDS = 8` | Add fixed `SIGN_POOL` beside it; do not change tune rounds |
-| `:198`, `function solveWithin` | Inherited budget, restricted techniques, no uniqueness assumption |
-| `:246`, `const stats =` | Oracle/evaluation accounting |
-| `:292-301`, `uniqueOracle`, `techniqueOracle` | Reuse the uniqueness count and bounded report |
+| `generator/js/variants/greater-than.js:40`, `MAX_TUNE_ROUNDS = 8` | Add fixed `SIGN_POOL` beside it; do not change tune rounds |
+| `:193`, `function solveWithin` | Inherited budget, restricted techniques, no uniqueness assumption |
+| `:249`, `const stats =` | Oracle/evaluation accounting |
+| `:291-300`, `uniqueOracle`, `techniqueOracle` | Reuse the uniqueness count and bounded report |
 | `:303-334`, `function* digPass` | Leave this sequential pass for `signs.minimal`; add the guided technique pass |
-| `:378-411`, `if (allowed !== null) yield* digPass` | Replace only the technique-pass call |
+| `:378-411`, `if (allowed !== null) yield* digPass` (line 380) | Replace only the technique-pass call |
 | `:445-450`, `clueFloorScale` | Unchanged |
-| `generator/js/engine/digger.js:894-918`, strategy registry | Read-only diagnostic wrapper via register/unregister/get |
-| `:1188-1208`, `const resolved =` | MS06b's later target forwarding point, not owned here |
+| `generator/js/engine/digger.js:911-932`, strategy registry | Signs may be wrapped/restored with register/unregister/get; built-in cells cannot be unregistered |
+| `:1324-1339`, `const resolved =` | MS06b's later target forwarding point, not owned here |
 | `core/js/engine/budget.js:47-65`, `tick`, `check` | Existing budget methods; check already accounts one work unit |
 | `generator/js/engine/replay.js:361-393`, sign accept / `keep` | Existing replay log operations already read both |
-| `generator/tests/manual/greater-than.test.js:18,183-207,1031-1035` | CV6 budgets, literal seeds and nearest-rank p95 |
+| `generator/tests/manual/greater-than.test.js:18,197,1037`, `puzzleRun`, `CV6:` | CV6 budgets, literal seed formula and nearest-rank p95; b3 makes access lazy |
 
 The present sign oracle only tests `report.solved`; the new score bound is part of the accepted
 guided pass. Do not copy the cells' proposal objective or `STUCK_SCORE` into this pass.
@@ -137,6 +140,7 @@ refuses at least one sign. Run `signs.minimal` exactly as before afterwards.
 
 - `generator/js/variants/greater-than.js`.
 - New `generator/tests/suites/greater-than-guided.test.js`; `generator/tests.html` test list.
+  Own its bounded CI group/manifest entry after r6c, without adding manual generation to CI.
   Add focused existing `replay`/`steps` suite cases only if needed to prove sign `keep` semantics;
   no replay engine redesign. `generator/tests/manual/greater-than.test.js` is run, not weakened.
 - `generator/design.md` section 8.3, both developer guides if they describe sign digging.
@@ -165,9 +169,10 @@ refuses at least one sign. Run `signs.minimal` exactly as before afterwards.
    otherwise compare the other permitted values once. Prefer an evidenced passing value without
    hit/neighbor regression; report the choice and all values tried. A disputed trade-off goes to
    the owner rather than inventing a looser acceptance. Fix the chosen literal in source.
-5. Run unchanged GD CV6 and closure comparisons on the final literal. If CV6 still fails,
-   stop/report with the fallback below; do not refresh fixtures to suggest acceptance.
-6. On success, finish GG/GR/GH and documentation. Record actual times and all intended differences.
+5. Run unchanged GD CV6 and closure comparisons on the final literal. A timing-only miss is S-AV01,
+   not a stop; do not claim that CV6 passed or implement a fallback policy without an answer.
+6. With correctness intact, finish GG/GR/GH and documentation even when a timing item remains.
+   Record actual times and all intended differences.
    If a correct intentional change affects an unrelated fixture, stop for assignment; do not
    silently expand the authorised Greater-Than-only scope.
 
@@ -197,14 +202,14 @@ This extra work is diagnosis, never headline latency. Do not edit production sou
 JSON includes source identity, Node, machine, lock/task id, config, literal seed list, pool value
 (null before the change), repeat label, all outcomes and total duration. Enforce a 540-second
 process ceiling; shard by literal seed range if needed and merge exactly once per key. A timeout
-stays a failure in the manifest and returns to the orchestrator.
+stays a failed availability item with its numbers; loss/corruption of a record is correctness.
 
 ## Acceptance criteria — Business
 
 | ID | Criterion |
 |---|---|
 | MS05e-B01 | The observed dominant trap is established before the authorised repair |
-| MS05e-B02 | CV6's unchanged assertion passes, or the task stops with the fixed fallback decision request |
+| MS05e-B02 | CV6's actual verdict is retained; a time-only miss continues as S-AV01, without changing its target |
 | MS05e-B03 | Honest required Normal results are not traded for old order 65, relaxed budgets or invalid puzzles |
 | MS05e-B04 | Easy/Hard/Expert and both Normal cohorts have matched time/hit/work evidence; no slowdown is hidden |
 
@@ -216,7 +221,7 @@ stays a failure in the manifest and returns to the orchestrator.
 | MS05e-T02 | One counted oracle/evaluation, inherited budget, rollback on error, cooperative parity and existing log vocabulary |
 | MS05e-T03 | Minimal signs, symmetry, clue floor, uniqueness, keeper and final-rating contracts remain valid |
 | MS05e-T04 | SIGN_POOL is one fixed value from 4/8/16; every tried value and all outcomes are recorded |
-| MS05e-T05 | Both quick suites, unchanged GD and scoped GG/GR/GH pass; only authorised differences are published |
+| MS05e-T05 | Quick correctness and scoped GG/GR/GH pass, unchanged GD outcomes/items are honest; only authorized differences and CI membership change |
 
 ## Test plan and gates
 
@@ -290,20 +295,22 @@ This is complete CV6/I5 coverage, not a claim that every unrelated Greater-Than 
 The quick sign/replay/steps tests and GS-CV6 controls cover this task's other changed behavior.
 Record the exit, named failures, raw 700 ms target and actual `SG.test.timeLimit(700)` threshold.
 `-AllowExit1` preserves the known-failure evidence, not acceptance. Any remaining CV6 failure
-invokes the fallback; any other failure is also reported. Prefer the current GS-CV6/post-allowance
+is retained as S-AV01 for MS07e/MS18d under S-OD4; any correctness failure still blocks.
+Prefer the current GS-CV6/post-allowance
 timings when projecting, and label MS05b3's data with its actual source/allowance. Earlier
 pre-allowance costs are planning context, not a proved upper bound for a different source.
 Before starting: jobs 1/no `--jobs`, initially 1-300 seconds per selector,
 roughly 5-30 minutes total. Report a projected >450-second level before starting; no command
 may exceed 540 seconds. An unchanged hit-rate threshold still failing under requiredness remains
-an availability failure under the checklist rule, never a green assertion. Normal CV6 has no
-such waiver: the fixed S-OD1 fallback applies. Do not lower any count, budget or threshold.
+an availability failure under the checklist rule, never a green assertion. Normal CV6's target
+still has no waiver, but its performance-only owner stop is superseded by S-OD4. Do not lower
+any count, budget or threshold.
 
 ### GG/GR/GH — Greater-Than differences only
 
 The current merge writers require complete current-source envelopes. Do not invent a partial
 `--write`/`--update-hashes` flag or relabel old ledgers as current. Record full E's 520 keys,
-four wire IDs and 14 analysis IDs in bounded shards; unrelated entries are invariant controls and
+five wire IDs G09-G13 and 14 analysis IDs in bounded shards; unrelated entries are invariant controls and
 must remain unchanged. Only the Greater-Than 40 hash keys and G11/G12 wire/analysis may differ.
 
 ```powershell
@@ -313,7 +320,7 @@ Invoke-Dv3Node -Task MS05e -NodeArgs @('tests\perf.js','--hash-key=greaterThan/n
 Invoke-Dv3Node -Task MS05e -NodeArgs @('tests\perf.js','--hash-merge=..\docs\difficulty-v3\evidence\MS05e\hashes','--update-hashes')
 Invoke-Dv3Node -Task MS05e -NodeArgs @('tests\perf.js','--hash-merge=..\docs\difficulty-v3\evidence\MS05e\hashes','--check-hashes')
 Invoke-Dv3Node -Task MS05e -NodeArgs @('tests\replay-fixtures.js','--ids=G11','--record=..\docs\difficulty-v3\evidence\MS05e\wire\G11.json')
-# Record G09/G10/G12 separately too; inspect: G09/G10 must be unchanged. Publish wire BEFORE analysis.
+# Record G09/G10/G12/G13 separately too; G09/G10/G13 are invariant controls. Publish wire BEFORE analysis.
 Invoke-Dv3Node -Task MS05e -NodeArgs @('tests\replay-fixtures.js','--merge=..\docs\difficulty-v3\evidence\MS05e\wire','--write')
 Invoke-Dv3Node -Task MS05e -NodeArgs @('tests\replay-fixtures.js','--merge=..\docs\difficulty-v3\evidence\MS05e\wire','--check')
 Invoke-Dv3Node -Task MS05e -NodeArgs @('tests\replay-goldens.js','--ids=G11','--record=..\docs\difficulty-v3\evidence\MS05e\analysis\G11.json')
@@ -345,14 +352,16 @@ attempts, full ratings and oracle work; every error; uniqueness/minimality/symme
 CV6 result; all gates and explained diffs. State the final literal and source. No claim that the
 700 ms design budget was met merely because a scaled assertion passed.
 
-**Fixed fallback:** if CV6 still fails, stop and report to the owner, who may choose only the
-already named option(b): a documented slower Normal contract applied consistently to CV6 and GP,
-or not offering the cell if final qualification fails it. Do not implement that choice here.
-Order 65, relaxed floors, new caps and a second strategy remain forbidden. A failed trial is not an
-accepted prerequisite; the orchestrator must record the owner's disposition before MS06a proceeds.
+**Fixed fallback, with S-OD4 process:** if CV6 still fails only for time, retain S-AV01 and continue.
+MS07e/MS18d receive the numbers. Changing the contract still requires the owner's option (b):
+a documented slower Normal target applied consistently to CV6 and GP, or qualification-based
+non-offering. Do not implement that choice here. Order 65, relaxed floors, new caps and another
+strategy remain forbidden. Correctness/evidence failures or a proposed decision change stop;
+time-only failure does not block MS06a's explicitly labelled before-record.
 
 Handoff to MS06b/MS06c2: `options.target` controls only the pool's second ranking key; no extra draw.
-The inequalities guard still prevents refinement. MS18d/MS18e verify the accepted CV6 disposition.
+The inequalities guard still prevents refinement. MS18d/MS18e verify the actual CV6 verdict and
+any later owner disposition. Return the inherited/new S-OD4 item list and the new suite's CI group.
 
 ## Execution log
 

@@ -1,39 +1,42 @@
-# MS05r6 — Recovery acceptance milestone (r6a/r6b; not a dispatch)
+# MS05r6 — Recovery acceptance milestone (r6a/r6b/r6c; not a dispatch)
 
 | Header | Value |
 |---|---|
-| Depends on | MS05r6a step evidence, then MS05r6b combined acceptance on the same candidate |
+| Depends on | MS05r6a step evidence, MS05r6b combined audit, then MS05r6c CI on the same candidate |
 | Size / active time | Split; use the two dispatch files, not the former 45-60-minute estimate |
 | Machine time | r6a 20-45 minutes; r6b 25-60 minutes; all invocations <=540 s |
-| Acceptance | Milestone closes only at r6b; one combined commit, none at r6a |
+| Acceptance | One combined boundary after r6b audit plus r6c CI, none at r6a |
 | Authority | S-OD2; FS27-FS30; all original b1/b2/c/d and early b3 duties retained |
 | Status | Superseded as a dispatch; preserved requirement/routing record |
 
-## Current routing — binding fourth-round amendment
+## Current routing — binding S-OD3/S-OD4 resume amendment
 
-- [MS05r4](MS05r4-select-recovery-allowance.md) now owns the **early** original-limit G13/mega
-  preflights, before r5/b3. It also classifies selected-default quick pins.
+- [MS05r4](MS05r4-select-recovery-allowance.md) selected 256; its original-limit mega failures
+  remain historical. r5p/r5/r5m replace that prerequisite under S-OD3/S-OD4.
 - [MS05r6a](MS05r6a-final-evidence-and-pins.md) owns the final-source compatibility/recheck,
-  complete E and specifically listed default/golden pin repairs. Step evidence only;
+  G13 persistence first, complete 520/5/14 E and listed default/golden pin repairs. Step evidence only;
   approximately 2-3 hands-on hours plus 20-45 machine minutes.
 - [MS05r6b](MS05r6b-quick-gd-and-combined-acceptance.md) owns every final quick/GD assertion,
   early-manual reconciliation, measured standing quick cost/AGENTS/guides and the **sole
-  combined acceptance**. Approximately 1.5-2.5 hands-on hours plus 25-60 machine minutes.
-- The orchestrator makes the same one meaningful recovery commit only after r6b. No r6a
-  checkpoint, budget/factor change, G13 persistence or new mega fallback assertion.
+  combined audit**, including r5m's deep records and b3's own CV3 checks of reused puzzles.
+  Approximately 1.5-2.5 hands-on hours plus 25-60 machine minutes.
+- [MS05r6c](MS05r6c-ci-test-tiers.md) closes bounded quick CI after r6b, inside the combined commit.
+  Its body states that pause commit a7f6660 was not green and was not acceptance.
+- S-OD4 controls stops/reviews/items; performance-only findings continue with numbers and named
+  MS07e/MS18c/MS18d owners. G13 persistence and the approved mega tier replacement are now allowed.
 
 | Retained original requirement | Current evidence owner |
 |---|---|
 | MS05r6-B01/B02/B03 | r6a and r6b, combined audit at r6b |
-| MS05r6-T01 | Early r4 guards, final-source r6a compatibility/recheck, all quick callbacks at r6b |
-| MS05r6-T02 | r6a complete 520/4/14 E; r6b final no-generation merge checks |
+| MS05r6-T01 | r4 history, r6a approved-contract recheck, r6b quick/deep reconciliation, r6c CI |
+| MS05r6-T02 | r6a complete 520/5/14 E; r6b final no-generation merge checks |
 | MS05r6-T03/T04 | r6b complete quick, classic9 GD and reconciled early/deferred manual coverage |
 | MS05r6-T05/T06 | r6b combined duty/identity/commit audit and standing-cost acknowledgement package |
 
 **Everything below is the archived pre-split contract.** Its late first preflight, old task
 artifact paths, generic assertion-ownership wording and estimate are not executable instructions.
 Use the current dispatch files and checklist. Historical/frozen references to “r6 acceptance”
-mean this milestone completed by r6b; no frozen r1 instruction requires an edit.
+mean r6b's audit with r6c's CI closure; no frozen r1-r4 instruction/log requires an edit.
 Leave the Execution log for the orchestrator's combined sign-off.
 
 ## Archived pre-split specification
@@ -185,7 +188,7 @@ The second command is allowed only if its current projection <=450 s; otherwise 
 describe/`--exact` shards from the manifest. The same applies to every other suite. From Player:
 
 ```powershell
-Set-Location Q:\git\sudoku\player
+Set-Location ..\player
 Invoke-Dv3Node -Task MS05r6 -NodeArgs @('tests\node-runner.js','--list-tests=..\docs\difficulty-v3\evidence\MS05r6\quick\player-inventory.json')
 Invoke-Dv3Node -Task MS05r6 -NodeArgs @('tests\node-runner.js','--verbose','--results=..\docs\difficulty-v3\evidence\MS05r6\quick\player-all.json')
 ```
@@ -208,7 +211,7 @@ Preflight/reconcile the registered tests using r5's listing, retain each command
 Nightmare first, then other levels and every non-batch group exactly once:
 
 ```powershell
-Set-Location Q:\git\sudoku\generator
+Set-Location ..\generator
 Invoke-Dv3Node -Task MS05r6 -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=difficulty','--filter=time) > nightmare >','--verbose','--results=..\docs\difficulty-v3\evidence\MS05r6\gd\classic9-nightmare.json')
 Invoke-Dv3Node -Task MS05r6 -NodeArgs @('tests\node-runner.js','--suite=difficulty','--filter=difficulty > digger.generate: guarantees','--verbose','--results=..\docs\difficulty-v3\evidence\MS05r6\gd\guarantees.json')
 ```
