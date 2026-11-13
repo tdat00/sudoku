@@ -262,11 +262,14 @@
     'explain.tune.what': 'So kết quả với mức độ bạn yêu cầu, rồi hoàn tất.',
     'explain.tune.why': 'Việc đào là ngẫu nhiên nên đề đầu tiên có thể hơi dễ hoặc hơi khó. Kiểm tra rồi ' +
       'thử lại là cách đảm bảo đúng mức độ.',
-    'explain.tune.how': 'Nếu đúng mức độ thì nhận đề. Nếu không, thử đào lại trên cùng lưới hoặc tạo một ' +
-      'lưới mới. Khi hết lượt thử, dùng đề gần nhất và đánh dấu là gần đúng. Cuối cùng kết quả được đóng ' +
-      'gói cùng số liệu thống kê.',
+    'explain.tune.how': 'Nếu đề được giải đầy đủ bằng logic, nằm trong dải đã chọn và cần một kỹ thuật ' +
+      'thuộc tầng của mức đó thì nhận đề. Nếu không, thử đào lại trên cùng lưới hoặc tạo một lưới mới. ' +
+      'Khi hết lượt thử, dùng đề gần nhất và đánh dấu là gần đúng; nếu đề nằm trong dải nhưng không cần ' +
+      'kỹ thuật của tầng đó thì thông báo nói rõ điều này. Cuối cùng kết quả được đóng gói cùng số liệu ' +
+      'thống kê.',
     'explain.tune.live': '{clues} số cho sẵn · điểm {score}',
-    'explain.tune.code.compare': 'nếu mức độ của đề đúng bằng mức độ yêu cầu:',
+    'explain.tune.code.compare': 'nếu đề được giải đầy đủ bằng logic, điểm nằm trong dải đã chọn và đề cần ' +
+      'một kỹ thuật thuộc tầng của mức đã chọn:',
     'explain.tune.code.accept': 'nhận đề',
     'explain.tune.code.retry': 'nếu không thì đào đề khác, hoặc tạo lưới mới',
     'explain.tune.code.best': 'khi hết lượt thử, dùng đề gần nhất',
@@ -525,7 +528,8 @@
   add({
     'difficulty.approximate': 'Trình sinh đề không đạt chính xác mức độ yêu cầu, nên đây là đề gần nhất mà ' +
       'nó tìm được.',
-    'difficulty.shallow': 'Đề nằm trong dải điểm của mức đã chọn nhưng không cần kỹ thuật của mức {level}.',
+    'difficulty.shallow': 'Đề nằm trong dải điểm của mức đã chọn nhưng không cần kỹ thuật nào thuộc tầng ' +
+      'của mức {level}.',
     'digger.unsoundTechnique': 'Một kỹ thuật giải đã cho ra đề không có lời giải duy nhất. Cách đào đơn ' +
       'giản và an toàn đã được dùng thay thế, nên độ khó có thể khác với điểm đánh giá.',
     'trace.downgraded': 'Bàn cờ quá lớn để phát lại từng bước đầy đủ, nên mức chi tiết đã được giảm xuống ' +

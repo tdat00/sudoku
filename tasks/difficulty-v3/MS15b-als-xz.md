@@ -26,16 +26,16 @@ R18, verbatim:
 > occurrence. For another common digit z, at least one z occurs in A or B: otherwise both ALS would
 > have to use x, impossible. Eliminate z only from targets seeing every z occurrence in both sets.
 
-Register alsXz: chain/order194/weight1250/baseCost106, unscoped, no uniqueness.
-ForcingChainLong is already198. Use MS15a individually complete records; enumerate disjoint pairs
+Register alsXz: chain/order 194/weight 1250/baseCost 106, unscoped, no uniqueness.
+ForcingChainLong is already 198. Use MS15a individually complete records; enumerate disjoint pairs
 canonically and test every restricted-common cross-peer. No disjoint-cell shortcut for visibility.
-Record cap4096/max cells4 and own50000 total work cover enumeration plus pairs/targets. A prefix of
+Record cap 4096/max cells 4 and own 50000 total work cover enumeration plus pairs/targets. A prefix of
 complete ALS records can give a constructive proof; never use truncation as an absence claim.
 R10 Finding; key `technique.alsXz.step`;
 args `{digitX:x,digitY:z,cells:string[]}`, copied sorted proof cells/eliminations, no placements.
 
 Witness vector: A={R1C1{1,2},R1C2{2,3}}, B={R1C4{1,4},R2C4{3,4}};
-x=1 cross-peers on row1, z=3 at R1C2/R2C4; remove3 at R2C2.
+x=1 cross-peers on row 1, z=3 at R1C2/R2C4; remove 3 at R2C2.
 Negative: overlapping sets, one missing x cross-peer, target missing one z occurrence, or wrong
 ALS cardinality. A different valid earlier witness may be returned by canonical enumeration;
 unit-test the specified witness independently and record exact real catalogue Findings.
@@ -51,7 +51,7 @@ the enumerator is delivered by MS15a.
 
 1. Implement bounded disjoint-pair witness search with one shared guard.
 2. Add exact real positives/negative and independent full-completion/visibility tests.
-3. Register/integrate at194 with group chain and both locale/help packs.
+3. Register/integrate at 194 with group chain and both locale/help packs.
 4. Measure limits/cost/affected GP, record current reference changes and E/GH.
 
 ## Acceptance criteria — Business
@@ -66,7 +66,7 @@ the enumerator is delivered by MS15a.
 | ID | Criterion |
 |---|---|
 | MS15b-T01 | Disjointness, every x/z peer and exact cardinality negatives pass |
-| MS15b-T02 | Shared work, retained records, state purity and order194<198 are validated |
+| MS15b-T02 | Shared work, retained records, state purity and order 194<198 are validated |
 | MS15b-T03 | Full B/E/GH/cost/GP records and both quick sets complete |
 
 ## Test plan and gates
@@ -89,8 +89,8 @@ node tests\tools\make-technique-examples.js ..\generator --ids=alsXz --sources=t
 node tests\tools\make-technique-examples.js ..\generator --ids=alsXz --sources=tests\artifacts\difficulty-v3\MS15b\sources.json --max-puzzles=8 --max-hints=400 --check
 ```
 
-B sources: existing chains, then bounded classic9 nightmare/hell1. Jobs1/no --jobs; E10-90 minutes,
-cost1-60 seconds, GP30-540 seconds/cell, curated GH1-120 seconds/discovery<=8 minutes.
+B sources: existing chains, then bounded classic9 nightmare/hell1. Jobs 1/no --jobs; E 10-90 minutes,
+cost 1-60 seconds, GP 30-540 seconds/cell, curated GH 1-120 seconds/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 This introducing task may adjust its new ALS limits once with before/after evidence; record them
 for MS16/MS17. Never relax performance targets to hide a miss.

@@ -16,7 +16,7 @@ selecting one will generate under a different rating model.
 ## Scope and repository rules
 
 In: optional per-entry ratingVersion, stored-field/read/render support, bilingual note/tests/docs.
-Out: changing history store VERSION1, deleting old entries, rating/cache bump (MS17b).
+Out: changing history store VERSION 1, deleting old entries, rating/cache bump (MS17b).
 AGENTS/checklist; no Git/pack/log edits; classic scripts, CRLF.
 
 ## Inputs & context
@@ -51,14 +51,14 @@ Selecting remains the existing recipe regeneration flow, not loading a fabricate
 ## Files to create/modify
 
 - `generator/js/ui/history.js`; history/i18n/help quick suites.
-- Generator design14.3/history section; both user and developer guides.
+- Generator design 14.3/history section; both user and developer guides.
 
 ## Implementation steps
 
 1. Add optional persistence without changing stored VERSION or key/identity.
 2. Render both-language note from actual/missing version; leave legacy recipe interaction intact.
 3. Test old envelope retention, new round trip, current/future versions and translated placeholders.
-4. Update docs; no claim that version3 is already active until MS17b.
+4. Update docs; no claim that version 3 is already active until MS17b.
 
 ## Acceptance criteria — Business
 
@@ -71,14 +71,14 @@ Selecting remains the existing recipe regeneration flow, not loading a fabricate
 
 | ID | Criterion |
 |---|---|
-| MS17a-T01 | VERSION/key remain1, missing version accepted, field persists round trip |
+| MS17a-T01 | VERSION/key remain 1, missing version accepted, field persists round trip |
 | MS17a-T02 | Legacy/current/future rendering and regeneration/dedup behavior are correct |
 | MS17a-T03 | Both inline locale packs, guides and both quick sets pass |
 
 ## Test plan
 
 Generator `node tests\node-runner.js --suite=history,i18n,help`, then both quick sets.
-Use a saved VERSION1 envelope with no ratingVersion, current result with actual version, known
+Use a saved VERSION 1 envelope with no ratingVersion, current result with actual version, known
 older positive version and future positive version. Check readable recipes and no invented board.
 No heavy gate or fixture regeneration.
 

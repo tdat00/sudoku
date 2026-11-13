@@ -15,7 +15,7 @@ at the path its readers already use.
 
 ## Scope
 
-In: full135-cell GQ-final, v2 archive, live table/support arrays, diagnostic fixed-corpus compatibility.
+In: full 135-cell GQ-final, v2 archive, live table/support arrays, diagnostic fixed-corpus compatibility.
 Out: solver/generator tuning, weight changes, intermediate table publication or dropped cells.
 
 ## Repository rules
@@ -31,7 +31,7 @@ R24, verbatim:
 > that historical record. It then updates `docs/difficulty-rating/qualification.md` in place with
 > the final v3 table and updates the variant `difficultySupport` lists together.
 
-Use Q's15 variants x9 levels, jobs4, base20260601, 40/100 seeds, exact+valid+solved+not-approximate
+Use Q's 15 variants x 9 levels, jobs 4, base 20260601, 40/100 seeds, exact+valid+solved+not-approximate
 hits and original p95 budgets. No diagnostic overrides or --probe. MS07d merge rejects incomplete/
 mixed records. Captured request errors/timeouts remain misses; worker/IPC loss is a failed run.
 Only after complete validation derive offered arrays, preserving global level order.
@@ -59,13 +59,21 @@ Baseline `generator/tests/qualify.js:141-171` (`function child`), `:443-466` (su
 - Only `difficultySupport` arrays in `generator/js/variants/*.js`.
 - Quick replay diagnostic loader/helper and focused regression; manual offered-table expectations
   only if directly affected. Existing reader path remains.
-- Generator design5.1/15.4 and both guides' actual availability facts.
+- Generator design 5.1/15.4 and both guides' actual availability facts.
 
 ## Implementation steps
 
 1. Freeze candidate/defaults and archive v2 before any live-table change.
-2. Collect all135 complete cells, merge/check, distinguish hidden verdicts from failures.
+2. Collect all 135 complete cells, merge/check, distinguish hidden verdicts from failures.
 3. Update live report and exact matching support arrays together; record every addition/removal.
+   Audit MS05b3's manual level/selector population against those offers now. Some variant suites
+   have fixed `LEVELS` arrays; requesting a newly hidden level through the normal pipeline throws
+   `difficulty.unsupportedLevel`. Identify any such test/publication compatibility work before
+   claiming publication accepted and assign a bounded follow-up through the orchestrator.
+   Do not leave MS18e to discover it, silently drop a selector, enable hidden production requests,
+   compact surviving seed indexes, or present a zero-test result as passed. This audit does not
+   authorize weakening an I5/hit threshold; record the explicit qualification-driven population
+   disposition and keep the independent fixed GG/GR diagnostic populations unchanged.
 4. Preserve fixed diagnostic recipes after hiding levels and restore arrays even on failure.
 5. Verify publication-only engine diff; hand MS18d the offered/performance manifest.
 
@@ -80,7 +88,7 @@ Baseline `generator/tests/qualify.js:141-171` (`function child`), `:443-466` (su
 
 | ID | Criterion |
 |---|---|
-| MS18c-T01 | Complete135-cell/jobs4 protocol, exact source/defaults and checked merge |
+| MS18c-T01 | Complete 135-cell/jobs 4 protocol, exact source/defaults and checked merge |
 | MS18c-T02 | Live table equals support lists; archive unchanged; no algorithm tuning |
 | MS18c-T03 | Hidden-level diagnostics restore arrays, recipes unchanged, both quick sets pass |
 
@@ -93,7 +101,7 @@ node tests\qualify.js --variant=classic4 --level=veryEasy --jobs=4 --json=..\doc
 node tests\qualify.js --merge=..\docs\difficulty-v3\evidence\MS18c\qualification --jobs=4 --json=..\docs\difficulty-v3\qualification-v3.json --markdown=..\docs\difficulty-v3\evidence\MS18c\table.md
 ```
 
-GQ jobs4; estimate10-540 seconds/cell, 1-12 hours total planning allowance.
+GQ jobs 4; estimate 10-540 seconds/cell, 1-12 hours total planning allowance.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Stop/investigate at ten minutes; a slow unsplittable cell blocks, never disappears.
 Generator `node tests\node-runner.js --suite=variants-registry,smoke,replay,help,ui-contract`;

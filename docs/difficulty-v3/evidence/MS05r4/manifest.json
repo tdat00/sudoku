@@ -1,0 +1,477 @@
+{
+  "manifestHash": "d881506a5bdb105552e688d2134d8f9f59d312265e561bdd2bfd6eecefc98026",
+  "schema": 1,
+  "task": "MS05r4",
+  "rule": "Choose the smallest finite cap with no exact-hit loss in any cell against no extra cap and a strict reduction in median full ratings in at least one cell. Otherwise choose no extra cap.",
+  "seedBase": 20260101,
+  "requestsPerCell": 12,
+  "settings": [
+    "64",
+    "128",
+    "256",
+    "none"
+  ],
+  "frozen": {
+    "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+    "toolHash": "da295e75f43dcd8cd5b66e0f566892b14036ea2ce9297b29a848abcb9c98bc72",
+    "node": "v26.13.0"
+  },
+  "cells": [
+    {
+      "variant": "classic9",
+      "level": "normal",
+      "route": "direct",
+      "requests": [
+        {
+          "index": 0,
+          "tag": "classic9:normal:0",
+          "pipelineSeed": null
+        },
+        {
+          "index": 1,
+          "tag": "classic9:normal:1",
+          "pipelineSeed": null
+        },
+        {
+          "index": 2,
+          "tag": "classic9:normal:2",
+          "pipelineSeed": null
+        },
+        {
+          "index": 3,
+          "tag": "classic9:normal:3",
+          "pipelineSeed": null
+        },
+        {
+          "index": 4,
+          "tag": "classic9:normal:4",
+          "pipelineSeed": null
+        },
+        {
+          "index": 5,
+          "tag": "classic9:normal:5",
+          "pipelineSeed": null
+        },
+        {
+          "index": 6,
+          "tag": "classic9:normal:6",
+          "pipelineSeed": null
+        },
+        {
+          "index": 7,
+          "tag": "classic9:normal:7",
+          "pipelineSeed": null
+        },
+        {
+          "index": 8,
+          "tag": "classic9:normal:8",
+          "pipelineSeed": null
+        },
+        {
+          "index": 9,
+          "tag": "classic9:normal:9",
+          "pipelineSeed": null
+        },
+        {
+          "index": 10,
+          "tag": "classic9:normal:10",
+          "pipelineSeed": null
+        },
+        {
+          "index": 11,
+          "tag": "classic9:normal:11",
+          "pipelineSeed": null
+        }
+      ]
+    },
+    {
+      "variant": "classic9",
+      "level": "master",
+      "route": "direct",
+      "requests": [
+        {
+          "index": 0,
+          "tag": "classic9:master:0",
+          "pipelineSeed": null
+        },
+        {
+          "index": 1,
+          "tag": "classic9:master:1",
+          "pipelineSeed": null
+        },
+        {
+          "index": 2,
+          "tag": "classic9:master:2",
+          "pipelineSeed": null
+        },
+        {
+          "index": 3,
+          "tag": "classic9:master:3",
+          "pipelineSeed": null
+        },
+        {
+          "index": 4,
+          "tag": "classic9:master:4",
+          "pipelineSeed": null
+        },
+        {
+          "index": 5,
+          "tag": "classic9:master:5",
+          "pipelineSeed": null
+        },
+        {
+          "index": 6,
+          "tag": "classic9:master:6",
+          "pipelineSeed": null
+        },
+        {
+          "index": 7,
+          "tag": "classic9:master:7",
+          "pipelineSeed": null
+        },
+        {
+          "index": 8,
+          "tag": "classic9:master:8",
+          "pipelineSeed": null
+        },
+        {
+          "index": 9,
+          "tag": "classic9:master:9",
+          "pipelineSeed": null
+        },
+        {
+          "index": 10,
+          "tag": "classic9:master:10",
+          "pipelineSeed": null
+        },
+        {
+          "index": 11,
+          "tag": "classic9:master:11",
+          "pipelineSeed": null
+        }
+      ]
+    },
+    {
+      "variant": "classic9",
+      "level": "nightmare",
+      "route": "direct",
+      "requests": [
+        {
+          "index": 0,
+          "tag": "classic9:nightmare:0",
+          "pipelineSeed": null
+        },
+        {
+          "index": 1,
+          "tag": "classic9:nightmare:1",
+          "pipelineSeed": null
+        },
+        {
+          "index": 2,
+          "tag": "classic9:nightmare:2",
+          "pipelineSeed": null
+        },
+        {
+          "index": 3,
+          "tag": "classic9:nightmare:3",
+          "pipelineSeed": null
+        },
+        {
+          "index": 4,
+          "tag": "classic9:nightmare:4",
+          "pipelineSeed": null
+        },
+        {
+          "index": 5,
+          "tag": "classic9:nightmare:5",
+          "pipelineSeed": null
+        },
+        {
+          "index": 6,
+          "tag": "classic9:nightmare:6",
+          "pipelineSeed": null
+        },
+        {
+          "index": 7,
+          "tag": "classic9:nightmare:7",
+          "pipelineSeed": null
+        },
+        {
+          "index": 8,
+          "tag": "classic9:nightmare:8",
+          "pipelineSeed": null
+        },
+        {
+          "index": 9,
+          "tag": "classic9:nightmare:9",
+          "pipelineSeed": null
+        },
+        {
+          "index": 10,
+          "tag": "classic9:nightmare:10",
+          "pipelineSeed": null
+        },
+        {
+          "index": 11,
+          "tag": "classic9:nightmare:11",
+          "pipelineSeed": null
+        }
+      ]
+    },
+    {
+      "variant": "killer",
+      "level": "hard",
+      "route": "pipeline",
+      "requests": [
+        {
+          "index": 0,
+          "tag": "killer:hard:0",
+          "pipelineSeed": 2442150552
+        },
+        {
+          "index": 1,
+          "tag": "killer:hard:1",
+          "pipelineSeed": 2458928171
+        },
+        {
+          "index": 2,
+          "tag": "killer:hard:2",
+          "pipelineSeed": 2475705790
+        },
+        {
+          "index": 3,
+          "tag": "killer:hard:3",
+          "pipelineSeed": 2492483409
+        },
+        {
+          "index": 4,
+          "tag": "killer:hard:4",
+          "pipelineSeed": 2509261028
+        },
+        {
+          "index": 5,
+          "tag": "killer:hard:5",
+          "pipelineSeed": 2526038647
+        },
+        {
+          "index": 6,
+          "tag": "killer:hard:6",
+          "pipelineSeed": 2542816266
+        },
+        {
+          "index": 7,
+          "tag": "killer:hard:7",
+          "pipelineSeed": 2559593885
+        },
+        {
+          "index": 8,
+          "tag": "killer:hard:8",
+          "pipelineSeed": 2307929600
+        },
+        {
+          "index": 9,
+          "tag": "killer:hard:9",
+          "pipelineSeed": 2324707219
+        },
+        {
+          "index": 10,
+          "tag": "killer:hard:10",
+          "pipelineSeed": 3558553217
+        },
+        {
+          "index": 11,
+          "tag": "killer:hard:11",
+          "pipelineSeed": 3541775598
+        }
+      ]
+    },
+    {
+      "variant": "killer",
+      "level": "expert",
+      "route": "pipeline",
+      "requests": [
+        {
+          "index": 0,
+          "tag": "killer:expert:0",
+          "pipelineSeed": 605397093
+        },
+        {
+          "index": 1,
+          "tag": "killer:expert:1",
+          "pipelineSeed": 588619474
+        },
+        {
+          "index": 2,
+          "tag": "killer:expert:2",
+          "pipelineSeed": 571841855
+        },
+        {
+          "index": 3,
+          "tag": "killer:expert:3",
+          "pipelineSeed": 555064236
+        },
+        {
+          "index": 4,
+          "tag": "killer:expert:4",
+          "pipelineSeed": 538286617
+        },
+        {
+          "index": 5,
+          "tag": "killer:expert:5",
+          "pipelineSeed": 521508998
+        },
+        {
+          "index": 6,
+          "tag": "killer:expert:6",
+          "pipelineSeed": 504731379
+        },
+        {
+          "index": 7,
+          "tag": "killer:expert:7",
+          "pipelineSeed": 487953760
+        },
+        {
+          "index": 8,
+          "tag": "killer:expert:8",
+          "pipelineSeed": 739618045
+        },
+        {
+          "index": 9,
+          "tag": "killer:expert:9",
+          "pipelineSeed": 722840426
+        },
+        {
+          "index": 10,
+          "tag": "killer:expert:10",
+          "pipelineSeed": 487136710
+        },
+        {
+          "index": 11,
+          "tag": "killer:expert:11",
+          "pipelineSeed": 503914329
+        }
+      ]
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "expert",
+      "route": "pipeline",
+      "requests": [
+        {
+          "index": 0,
+          "tag": "jigsaw9:expert:0",
+          "pipelineSeed": 1222646138
+        },
+        {
+          "index": 1,
+          "tag": "jigsaw9:expert:1",
+          "pipelineSeed": 1239423757
+        },
+        {
+          "index": 2,
+          "tag": "jigsaw9:expert:2",
+          "pipelineSeed": 1189090900
+        },
+        {
+          "index": 3,
+          "tag": "jigsaw9:expert:3",
+          "pipelineSeed": 1205868519
+        },
+        {
+          "index": 4,
+          "tag": "jigsaw9:expert:4",
+          "pipelineSeed": 1155535662
+        },
+        {
+          "index": 5,
+          "tag": "jigsaw9:expert:5",
+          "pipelineSeed": 1172313281
+        },
+        {
+          "index": 6,
+          "tag": "jigsaw9:expert:6",
+          "pipelineSeed": 1121980424
+        },
+        {
+          "index": 7,
+          "tag": "jigsaw9:expert:7",
+          "pipelineSeed": 1138758043
+        },
+        {
+          "index": 8,
+          "tag": "jigsaw9:expert:8",
+          "pipelineSeed": 1088425186
+        },
+        {
+          "index": 9,
+          "tag": "jigsaw9:expert:9",
+          "pipelineSeed": 1105202805
+        },
+        {
+          "index": 10,
+          "tag": "jigsaw9:expert:10",
+          "pipelineSeed": 2294997255
+        },
+        {
+          "index": 11,
+          "tag": "jigsaw9:expert:11",
+          "pipelineSeed": 2278219636
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "case": "G13",
+      "setting": "64"
+    },
+    {
+      "case": "mega12-nightmare",
+      "setting": "64"
+    },
+    {
+      "case": "mega16-nightmare",
+      "setting": "64"
+    },
+    {
+      "case": "G13",
+      "setting": "128"
+    },
+    {
+      "case": "mega12-nightmare",
+      "setting": "128"
+    },
+    {
+      "case": "mega16-nightmare",
+      "setting": "128"
+    },
+    {
+      "case": "G13",
+      "setting": "256"
+    },
+    {
+      "case": "mega12-nightmare",
+      "setting": "256"
+    },
+    {
+      "case": "mega16-nightmare",
+      "setting": "256"
+    },
+    {
+      "case": "G13",
+      "setting": "none"
+    },
+    {
+      "case": "mega12-nightmare",
+      "setting": "none"
+    },
+    {
+      "case": "mega16-nightmare",
+      "setting": "none"
+    }
+  ],
+  "counts": {
+    "selecting": 288,
+    "diagnostic": 12
+  }
+}

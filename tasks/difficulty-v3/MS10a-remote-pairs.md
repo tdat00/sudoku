@@ -27,16 +27,16 @@ R13, verbatim:
 > colours loses both digits. Odd means edges, not cells. Reject inconsistent odd-cycle colouring;
 > do not relabel a two-cell naked pair.
 
-Register remotePairs: wing/order132/weight440/baseCost44, unscoped, no uniqueness.
+Register remotePairs: wing/order 132/weight 440/baseCost 44, unscoped, no uniqueness.
 R10 Finding, placements=[]; key `technique.remotePairs.step`;
 args `{digits:[d1,d2],ends:string[],length}` where length is the odd endpoint path's edge count.
 Use actual peers, canonical cell order and BFS shortest witness. For a target use nontrivial
 opposite-colour endpoints (minimum visible opposite-colour path >=3); reject adjacent-pair-only
 justification. Never eliminate either digit from proving cells.
-Limit50000 edge/combination extensions, entry/every256 checks, per-call reset and metrics.
+Limit 50000 edge/combination extensions, entry/every 256 checks, per-call reset and metrics.
 
 Vector: all four cells have {2,7}: A=R1C1, B=R2C2, C=R2C5, D=R5C5.
-Edges AB(box), BC(row), CD(column); target R5C1 sees A/D only and loses2,7.
+Edges AB(box), BC(row), CD(column); target R5C1 sees A/D only and loses 2,7.
 The A-B-C even path cannot justify elimination at a target seeing only A/C.
 Test a two-cell component, an odd cycle, disconnected components and a missed endpoint.
 Baseline `core/js/engine/tech-wing.js:130-187` (`function findXyWing`);
@@ -87,7 +87,7 @@ node tests\tools\make-technique-examples.js ..\generator --ids=remotePairs --sou
 ```
 
 Start with wing/chain real sources, then B's bounded classic9 hard/expert/master.
-Jobs1/no --jobs; E10-90 minutes, cost1-30 seconds, GH1-120 seconds curated/discovery<=8 minutes.
+Jobs 1/no --jobs; E 10-90 minutes, cost 1-30 seconds, GH 1-120 seconds curated/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Own limit adjustment once with evidence; stop commands at ten minutes.
 

@@ -28,14 +28,15 @@ R5, verbatim:
 > GH and GD before MS18 resumes. MS18 changes no generation or solver logic or tuning constant.
 
 Cap: classic9 normal/master/nightmare, killer hard/expert, jigsaw9 expert; 12 requests each for
-64/128/256/none =>288 outcomes. Smallest finite cap with no per-cell exact-hit loss vs none and a
+64/128/256/none => 288 outcomes. Smallest finite cap with no per-cell exact-hit loss vs none and a
 strict full-rating upper-median reduction in at least one cell; else none.
-Window: classic9/diagonalX/jigsaw9 nightmare,12 requests each for C4 andC6 =>72 outcomes.
-More total exact hits wins; tie6. Total360 requests. Same base20260101/routes/budgets/configuration
+Window: classic9/diagonalX/jigsaw9 nightmare, 12 requests each for C4 and C6 => 72 outcomes.
+More total exact hits wins; tie 6. Total 360 requests. Same base 20260101/routes/budgets/configuration
 as original experiments, changing only the dimension being measured. All failures are misses.
 Use the other default currently in force; never run both overrides in one comparison request.
-Baseline anchors: `generator/tests/soak.js:202-228` (`function seedFor`);
-runtime overrides came from MS05c/MS07b.
+Anchors at `f788e02`: `generator/tests/soak.js:260` (`function seedFor(tag)`),
+`:267-283` (`function generateOne(combo, tag)`), `:353` (`const t0 = process.hrtime.bigint()`).
+Find quotes after later changes; runtime overrides come from MS05c/MS07c, not MS07b.
 
 ## Files to create/modify
 
@@ -45,7 +46,7 @@ runtime overrides came from MS05c/MS07b.
 ## Implementation steps
 
 1. Record defaults/source and both full manifests.
-2. Run distinct per-setting paths; verify288+72 complete outcomes and invariant/error status.
+2. Run distinct per-setting paths; verify 288+72 complete outcomes and invariant/error status.
 3. Recompute both exact selection rules; compare with settings in force.
 4. If changed, report and stop this milestone before GQ-final. Only the orchestrator obtains the
    owner's keep/change decision and inserts implementation/refresh work.
@@ -62,7 +63,7 @@ runtime overrides came from MS05c/MS07b.
 
 | ID | Criterion |
 |---|---|
-| MS18b-T01 | Exactly360 outcomes, same request identities and isolated overrides |
+| MS18b-T01 | Exactly 360 outcomes, same request identities and isolated overrides |
 | MS18b-T02 | Both deterministic rules, ties, errors and work medians applied literally |
 | MS18b-T03 | Changed choice blocks GQ until recorded owner action; no source edit here |
 
@@ -75,8 +76,8 @@ node tests\soak.js --variant=classic9 --level=normal --count=12 --seed=20260101 
 node tests\soak.js --variant=classic9 --level=nightmare --count=12 --seed=20260101 --no-gate --chain-window=4 --json=..\docs\difficulty-v3\evidence\MS18b\window-4\classic9-nightmare.json
 ```
 
-Repeat all cap cells/settings and window cells/settings. Jobs1/no --jobs. Estimate10-540
-seconds/cell, approximately1-5 hours total; ten-minute command ceiling.
+Repeat all cap cells/settings and window cells/settings. Jobs 1/no --jobs. Estimate 10-540
+seconds/cell, approximately 1-5 hours total; ten-minute command ceiling.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Evidence-only; no new application test or blanket hash rewrite. Incomplete evidence blocks the milestone.
 

@@ -1005,13 +1005,19 @@
               if (inUnit < spec.minCluesPerUnit) throw new Error('puzzle ' + i + ': a unit has ' + inUnit);
             });
             expect(p.config.difficulty).toBe(level);
-            if (p.rating.level === level) {
+            var again = SG.difficulty.rate(p.model, p.givens);
+            if (p.exact === true) {
               exact++;
+              expect(p.rating.level).toBe(level);
               expect(p.rating.score).toBeGreaterThanOrEqual(spec.min);
               expect(p.rating.score).toBeLessThan(spec.max);
+              expect(SG.difficulty.requiredOf(again, level, p.model).required).toBe(true);
               expect(p.warnings).toEqual([]);
+            } else {
+              expect(p.warnings).toContain('difficulty.approximate');
+              expect(p.warnings.indexOf('difficulty.shallow') !== -1).toBe(p.rating.level === level);
             }
-            expect(SG.difficulty.rate(p.model, p.givens).level).toBe(p.rating.level);
+            expect(again.level).toBe(p.rating.level);
             expect(p.rating.solved).toBe(true);
           });
           expect(exact / countOf(level)).toBeGreaterThanOrEqual(0.9);
@@ -1105,7 +1111,7 @@
           var spec = SG.difficulty.spec(p.config.difficulty, p.model);
           expect(clueCount(p.givens)).toBeGreaterThanOrEqual(spec.minClues);
         });
-        var exact = futoshikiRun().filter(function (p) { return p.rating.level === p.config.difficulty; });
+        var exact = futoshikiRun().filter(function (p) { return p.exact === true; });
         expect(exact.length / futoshikiRun().length).toBeGreaterThanOrEqual(0.85);
         expect(across).toBeGreaterThan(0);
       });

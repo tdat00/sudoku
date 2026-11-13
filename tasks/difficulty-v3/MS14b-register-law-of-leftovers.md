@@ -89,8 +89,8 @@ node tests\tools\make-technique-examples.js ..\generator --ids=lawOfLeftovers --
 node tests\tools\make-technique-examples.js ..\generator --ids=lawOfLeftovers --sources=tests\artifacts\difficulty-v3\MS14b\sources.json --max-puzzles=8 --max-hints=400 --check
 ```
 
-B permits bounded batches from Jigsaw's actual PLAN levels hard/expert/master if needed. Jobs1/no --jobs; E10-90
-minutes, cost1-60 seconds, GH1-120 seconds curated/discovery<=8 minutes.
+B permits bounded batches from Jigsaw's actual PLAN levels hard/expert/master if needed. Jobs 1/no --jobs; E 10-90
+minutes, cost 1-60 seconds, GH 1-120 seconds curated/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Only this introducing rule's limits may adjust once with evidence; ten-minute command ceiling.
 

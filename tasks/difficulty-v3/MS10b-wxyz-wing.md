@@ -29,16 +29,16 @@ R13, verbatim:
 > If z were absent, four cells would need three digits each usable at most once.
 > Remove z only from external candidates seeing all z occurrences.
 
-Register wxyzWing: wing/order155/weight800/baseCost57, unscoped, assumesUniqueness=false.
+Register wxyzWing: wing/order 155/weight 800/baseCost 57, unscoped, assumesUniqueness=false.
 1.25*800=1000 is not below Expert's upper edge, so the tier is Master.
 R10 Finding; key `technique.wxyzWing.step`, args `{digits:[...],digit:z,cells:string[]}`.
 Use all-pairs visibility per restricted digit and every z occurrence for a target, not a convenient
-pivot-only test. Canonical quartet order, sorted owned output, limit50000 combination extensions;
-entry/every256 checks and per-call metrics. No all-cell numeric mask.
+pivot-only test. Canonical quartet order, sorted owned output, limit 50000 combination extensions;
+entry/every 256 checks and per-call metrics. No all-cell numeric mask.
 
 Vector: A=R1C1{1,4}, B=R1C5{1,2}, C=R1C9{2,3}, D=R5C9{3,4}.
-Only4 is non-restricted; R5C1 sees A/D and loses4. Add1 to D to make a second non-restricted digit:
-reject. Add4 to B while target misses B: no target elimination. Also test union size !=4.
+Only 4 is non-restricted; R5C1 sees A/D and loses 4. Add 1 to D to make a second non-restricted digit:
+reject. Add 4 to B while target misses B: no target elimination. Also test union size !=4.
 Baseline `core/js/engine/tech-wing.js:130-249` (`function findXyWing` / `function findXyzWing`).
 
 ## Files to create/modify
@@ -85,8 +85,8 @@ node tests\tools\make-technique-examples.js ..\generator --ids=wxyzWing --source
 node tests\tools\make-technique-examples.js ..\generator --ids=wxyzWing --sources=tests\artifacts\difficulty-v3\MS10b\sources.json --max-puzzles=8 --max-hints=400 --check
 ```
 
-Prefer existing wing/chain sources, then bounded classic9 master/nightmare. Jobs1/no --jobs;
-E10-90 minutes, cost1-30 seconds, GH1-120 seconds curated/discovery<=8 minutes.
+Prefer existing wing/chain sources, then bounded classic9 master/nightmare. Jobs 1/no --jobs;
+E 10-90 minutes, cost 1-30 seconds, GH 1-120 seconds curated/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 One evidenced own-limit adjustment maximum; ten-minute ceiling.
 

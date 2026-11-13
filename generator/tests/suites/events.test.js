@@ -984,6 +984,14 @@
       expect(X.lineFor('nope', 'dig.try')).toBe(null);
     });
 
+    it('MS05b1-T04: a shallow tune result highlights the retry line, like a miss; a hit highlights accept',
+      function () {
+        expect(X.lineFor('tune', 'tune.shallow')).toBe('retry');
+        expect(X.lineFor('tune', 'tune.miss')).toBe('retry');
+        expect(X.lineFor('tune', 'tune.hit')).toBe('accept');
+        expect(X.tune.highlight['tune.shallow']).toBe(X.tune.highlight['tune.miss']);
+      });
+
     it('live(metrics) returns the status line key and its arguments', function () {
       var zero = { attempts: 0, accepted: 0, rejected: 0, clues: 0 };
       var r = X.dig.live({ attempts: 41, accepted: 20, rejected: 9, clues: 31, ignored: 5 });

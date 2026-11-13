@@ -26,7 +26,7 @@ R11, verbatim:
 > shares an orthogonal line; the other endpoints differ. At least one of the latter is d.
 > Eliminate d from external candidates seeing both.
 
-Register `skyscraper`: group fish, order112, weight330, baseCost33, unscoped, assumesUniqueness=false.
+Register `skyscraper`: group fish, order 112, weight 330, baseCost 33, unscoped, assumesUniqueness=false.
 Finding contract:
 
 ```text
@@ -37,22 +37,24 @@ Finding contract:
 Use actual peers and the fish module's safe line ownership tables, not row*9 arithmetic.
 Both row and column orientations; distinct four endpoints; do not turn an ordinary X-Wing into a
 skyscraper. Sort/deduplicate output and retain deterministic enumeration order.
-Limit50000 tested combination extensions/call; parent check at entry/every256, fresh counter.
+Limit 50000 tested combination extensions/call; parent check at entry/every 256, fresh counter.
 Emit MS07a pattern metrics. Exhaustion loses a deduction, never invents one.
 
-Geometry vector (unit test, not a substitute for real fixtures): digit5 pairs
-R1{C2,C8}, R4{C2,C7}; target R2C7 sees the two non-aligned ends, so remove5.
+Geometry vector (unit test, not a substitute for real fixtures): digit 5 pairs
+R1{C2,C8}, R4{C2,C7}; target R2C7 sees the two non-aligned ends, so remove 5.
 Transpose it. Adding a third candidate to either base, partial bases, overlapping endpoints or a
 target missing one end must not authorize that elimination.
 Baseline anchors: `core/js/engine/tech-fish.js:56-125` (line ownership),
-`:281-305` (`function findFish`); `core/tests/suites/techniques.test.js:71-87` (fixture coverage).
+`:281-305` (`function findFish`); fixture anchors after MS04 at `f788e02`:
+`core/tests/suites/techniques.test.js:91-107`, `has fixtures for exactly the techniques` and
+`has at least 2 positive and 1 negative fixture`.
 
 ## Files to create/modify
 
 - `core/js/engine/tech-fish.js`, `core/tests/suites/tech-fish.test.js`.
 - Full B: current core fixtures/registry list, Generator weights/reference expectations, both apps'
   locales/help/tests, real help catalogue, notes; E generated fixtures.
-- Generator design6.6 and Player hint/technique design; both user/developer guides.
+- Generator design 6.6 and Player hint/technique design; both user/developer guides.
 
 ## Implementation steps
 
@@ -96,7 +98,7 @@ node tests\tools\make-technique-examples.js ..\generator --ids=skyscraper --sour
 ```
 
 Prefer the existing simpleColouring source, then B's classic9 hard/expert bound. Jobs=1/no --jobs;
-E10-90 minutes, cost1-30 seconds, GH1-120 seconds/curated run (discovery<=8 minutes).
+E 10-90 minutes, cost 1-30 seconds, GH 1-120 seconds/curated run (discovery<=8 minutes).
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 No command exceeds ten minutes; own work-limit adjustment at most once with before/after evidence.
 

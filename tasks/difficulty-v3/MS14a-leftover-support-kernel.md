@@ -29,7 +29,7 @@ R17, verbatim:
 > no support in a matching signature may be removed.
 
 Add internal `SG.leftoverPatterns.find(model,state,ctx)` in tech-subset.js, unregistered.
-Scope guard jigsaw9. Choose n=1 or2; both chosen sides internally disjoint, complete units and equal
+Scope guard jigsaw9. Choose n=1 or 2; both chosen sides internally disjoint, complete units and equal
 unit counts. Difference sides each <=4 cells. Fixed cells contribute fixed counts; open cells use
 current candidates. Enumerate assignments respecting within-side peers; ignoring cross-side
 constraints is a safe over-approximation.
@@ -38,12 +38,12 @@ Signature: digit-count vector of length model.digits, not a bitset. Retain per-s
 supported digit masks. Only after both enumerations complete, intersect signatures; empty
 intersection => decline inconsistent state, not remove all candidates. For each open cell, union
 its supported candidates across matching signatures and remove only absent candidates.
-Budget50000 tested unit/assignment extensions across the ENTIRE call; check entry/every256.
+Budget 50000 tested unit/assignment extensions across the ENTIRE call; check entry/every 256.
 Any incomplete required enumeration => no Finding. No state-identity memoization.
 
 Kernel returns normal R10 Finding with id lawOfLeftovers, key `technique.lawOfLeftovers.step`,
 args `{lines:string[],regions:string[],cells:string[],digits:[...]}`, owned sorted output.
-Tests: singleton side {5} vs candidates{5,7} forces removal7; multiset{1,1,2} is NOT{1,2,2};
+Tests: singleton side {5} vs candidates {5,7} forces removal 7; multiset {1,1,2} is NOT {1,2,2};
 fixed values remain in signatures; transpose; mismatched unit counts; overlapping/partial sides.
 Baseline `core/js/engine/tech-subset.js:195-239` (`function findSubset` / registrations).
 
@@ -51,7 +51,7 @@ Baseline `core/js/engine/tech-subset.js:195-239` (`function findSubset` / regist
 
 - `core/js/engine/tech-subset.js`, `core/tests/suites/tech-subset.test.js`.
 - Pure core fixture helper for Jigsaw model construction if needed; both tests.html fixture lists.
-- Generator design6.6 and both developer guides describing the inactive support contract.
+- Generator design 6.6 and both developer guides describing the inactive support contract.
 
 ## Implementation steps
 

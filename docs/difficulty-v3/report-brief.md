@@ -47,7 +47,7 @@ cutoff 4 gave 2, not 6: four of the six floor-defeating boards became shallow He
 
 ## Decisions
 
-Recorded answers, including the owner's two choices, are in [`clarifications.md`, part E](clarifications.md#part-e-decisions-in-one-place).
+Recorded answers, including the owner's two choices, are in [`clarifications-resolved.md`, part E](clarifications-resolved.md#part-e-decisions-in-one-place).
 
 | Topic | Decision | Decided by |
 |---|---|---|
@@ -134,7 +134,7 @@ No heavy gate ran during analysis, and no new suite or generation probe ran whil
   main implementation/time risks. A changed final cap/cutoff selection goes back to the owner before qualification.
 - **AC01 accepted:** the “attainable range” is an analytic lower bound, not a guarantee of every reachable
   score or a global minimum. R23 specifies rounding, vacuous-tier and undefined-position handling explicitly.
-  Both analysts agree; the author accepted it in [`clarifications.md`, Part F](clarifications.md#part-f-remaining-concerns-after-the-answers-were-applied-for-acceptance).
+  Both analysts agree; the author accepted it in [`clarifications-resolved.md`, Part F](clarifications-resolved.md#part-f-remaining-concerns-after-the-answers-were-applied-for-acceptance).
 - Acceptance covers the answered specification, these consequences, the evidence obligations, effort and AC01.
   Acceptance has been given; it is not a claim that unperformed implementation tests have passed.
 
@@ -143,7 +143,7 @@ No heavy gate ran during analysis, and no new suite or generation probe ran whil
 | File | Content |
 |---|---|
 | [`report-detailed.md`](report-detailed.md) | R1–R24, code evidence, ownership, gates, traceability and acceptance/signatures |
-| [`clarifications.md`](clarifications.md) | Original answers at `1398dde`; accepted AC01 and Part G acceptance at `2c665bb` |
+| [`clarifications-resolved.md`](clarifications-resolved.md) | Original answers at `1398dde`; accepted AC01 and Part G acceptance at `2c665bb` |
 | [`tasks/difficulty-v3/check-list.md`](../../tasks/difficulty-v3/check-list.md) | Accepted execution order; MS01–MS03 prepared for review, MS04–MS18 indexed for the next tranche |
 | [`plan.md`](plan.md) | Original plan; corrections and chosen answers are applied in the detailed report |
 | [`claude-opus-5.5/`](claude-opus-5.5/) | SA1's independent report, cross-review, response, joint-draft check and final-report check |

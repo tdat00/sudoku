@@ -768,13 +768,19 @@
               if (inUnit < spec.minCluesPerUnit) throw new Error('puzzle ' + i + ': a unit has ' + inUnit);
             });
             expect(p.config.difficulty).toBe(level);
-            if (p.rating.level === level) {
+            var again = SG.difficulty.rate(p.model, p.givens);
+            if (p.exact === true) {
               exact++;
+              expect(p.rating.level).toBe(level);
               expect(p.rating.score).toBeGreaterThanOrEqual(spec.min);
               expect(p.rating.score).toBeLessThan(spec.max);
+              expect(SG.difficulty.requiredOf(again, level, p.model).required).toBe(true);
               expect(p.warnings).toEqual([]);
+            } else {
+              expect(p.warnings).toContain('difficulty.approximate');
+              expect(p.warnings.indexOf('difficulty.shallow') !== -1).toBe(p.rating.level === level);
             }
-            expect(SG.difficulty.rate(p.model, p.givens).level).toBe(p.rating.level);
+            expect(again.level).toBe(p.rating.level);
             expect(p.rating.solved).toBe(true);
           });
           expect(exact / PUZZLES_PER_LEVEL).toBeGreaterThanOrEqual(0.9);

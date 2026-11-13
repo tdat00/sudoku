@@ -138,8 +138,9 @@ thay đổi trong dữ liệu đã lưu nằm trong [hướng dẫn cho lập tr
   cùng một phiên bản trình sinh đề), xóa từng đề, hoặc xóa cả danh sách.
 - **Giao diện song ngữ** (Anh / Việt), đổi ngay không cần tải lại trang; mọi chuỗi chữ, kể cả tên kỹ thuật giải
   và luật của từng biến thể, đều có cả hai ngôn ngữ.
-- **Kết quả được đảm bảo** — đúng một lời giải (do một bộ giải riêng kiểm tra), đúng mức độ yêu cầu hoặc, khi
-  không đạt được, đề gần nhất kèm thông báo rõ ràng.
+- **Kết quả được đảm bảo** — đúng một lời giải (do một bộ giải riêng kiểm tra), đúng mức độ yêu cầu (điểm nằm
+  trong dải của mức và cần một kỹ thuật thuộc tầng của mức đó) hoặc, khi không đạt được, đề tốt nhất kèm thông báo
+  rõ ràng.
 - **In / PDF** — hộp thoại In đề in các đề bạn tick trong danh sách đã lưu (lúc đầu là đề đang hiển thị), 1, 2
   hoặc 4 đề mỗi trang (mặc định 4), có thể kèm lời giải ở các trang riêng; chọn "Lưu dưới
   dạng PDF" trong hộp thoại in để có tệp PDF (đồ họa vector nên nét kẻ luôn sắc).

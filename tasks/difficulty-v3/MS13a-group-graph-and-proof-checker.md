@@ -37,9 +37,9 @@ Add internal `SG.chainGraph.build(model,state,ctx)` returning
 Singletons: active candidates in ascending cell/digit order. Additional groups: current nonempty
 box-line intersections, canonical key digit+sorted cells, deduplicated and sorted lexicographically.
 No stale candidate cache. Weak/strong adjacency is deterministic and deduplicated.
-Group limit4096 additional nodes; work limit50000 tested combination/edge extensions. On incomplete
+Group limit 4096 additional nodes; work limit 50000 tested combination/edge extensions. On incomplete
 construction return complete=false; later search must not use it as a complete graph.
-Entry/every256 budget checks; allocate for actual nodes/edges, not old cell*digits products.
+Entry/every 256 budget checks; allocate for actual nodes/edges, not old cell*digits products.
 
 Independent test checker must recompute candidate membership, every cross-peer and complete-unit
 coverage from model/state, not trust builder adjacency. For paths verify polarity, each edge,
@@ -48,7 +48,7 @@ Define its fixture/test helper in `core/tests/fixtures/chain-proofs.js`, shared 
 
 Vectors: same-digit A={0,1}, B={9,10} is weak only if all four cross-pairs conflict; one missing
 pair or A/B overlap invalidates it. A={0,1}, B={2} is strong only if a complete unit's remaining
-digit occurrences are exactly{0,1,2}; add occurrence3 => no strong link.
+digit occurrences are exactly {0,1,2}; add occurrence 3 => no strong link.
 These predicate vectors are synthetic unit tests, never production help examples.
 Baseline `core/js/engine/tech-chain.js:78-112` (`function scratchFor`) and `:348-385`
 (`function pathData`); `core/tests/suites/tech-chain.test.js:124-185` (proof checker).
@@ -57,7 +57,7 @@ Baseline `core/js/engine/tech-chain.js:78-112` (`function scratchFor`) and `:348
 
 - `core/js/engine/tech-chain.js`; chain suite; new core fixture `chain-proofs.js`;
   both apps' tests.html CORE_FIXTURE_FILES entries.
-- Generator design6.6/13.6, Player proof design and both developer guides (inactive API stated).
+- Generator design 6.6/13.6, Player proof design and both developer guides (inactive API stated).
 
 ## Implementation steps
 

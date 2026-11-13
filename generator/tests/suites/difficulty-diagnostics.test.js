@@ -4,7 +4,9 @@
 // reference and final-path diagnostics with their failures, the ledger text, and (Node only) the soak itself
 // run on a small cell in a registry of its own with its file system, git and clock replaced: the order of
 // its solves, the partial ledgers and the old text it must not change. Every solve of the registry of the
-// other suites is a stub; the real generations run in the Node vm context.
+// other suites is a stub; the real generations run in the Node vm context. Also the consumers of exactness
+// (MS05r2): the ordered-prefix check that the soak runs before it generates anything, the strict `exact`
+// flag that decides a hit of the soak on both routes, and the hit of a qualification request.
 (function () {
   'use strict';
 
@@ -151,16 +153,34 @@
     };
   }
 
+  /** The counts of a rating that needs a technique of the tier of Hard and Normal (xyWing) or does not. */
+  var NEEDS_TIER = { nakedSingle: 30, hiddenSingleBox: 10, pointing: 2, xyWing: 1 };
+  var FLOOR_ONLY = { nakedSingle: 30, hiddenSingleBox: 10, pointing: 2 };
+
   /** A rating as `SG.difficulty.rate` returns it; `score` is set directly, the counts feed V. */
-  function ratingOf(score, solved) {
+  function ratingOf(score, solved, counts) {
     return { solved: solved !== false, score: solved === false ? null : score, empties: 50,
-      techniqueCounts: { nakedSingle: 30, hiddenSingleBox: 10, pointing: 2, xyWing: 1 }, ratingVersion: 2,
-      level: null };
+      techniqueCounts: Object.assign({}, counts || NEEDS_TIER), ratingVersion: 2, level: null };
+  }
+
+  /** The work of one attempt with `ratings` full ratings, `localSearches` as given. */
+  function attemptOf(ratings, localSearches, proposals) {
+    return { ratings: ratings, proposals: proposals || 0, maxRatings: 1024, maxProposals: 32768,
+      localSearches: localSearches || [] };
+  }
+
+  function searchOf(ratings, extra) {
+    return Object.assign({ ratings: ratings, proposals: ratings, firstShallowAt: null, shallowRatings: 0,
+      shallowLimit: null, capHit: null }, extra);
   }
 
   var made = 0;
 
-  /** A ledger row of a fabricated request of `level`; opts: score, solved, exact, error, achieved. */
+  /**
+   * A ledger row of a fabricated request of `level`; opts: score, solved, exact, error, achieved, shallow
+   * (the counts need no technique of the tier), unique, work (default: one attempt with one rating, which
+   * agrees with the one call counted) and workReason.
+   */
   function rowFor(level, opts) {
     opts = opts || {};
     var b = bandOf(level);
@@ -168,17 +188,21 @@
     var puzzle = opts.error ? null : {
       achieved: opts.achieved === undefined ? level : opts.achieved,
       exact: opts.exact !== false,
-      rating: ratingOf(opts.score, opts.solved)
+      rating: ratingOf(opts.score, opts.solved, opts.shallow ? FLOOR_ONLY : undefined),
+      model: model9
     };
     return F.rowOf({ variant: 'classic9', requested: level, index: index,
       tag: 'classic9:' + level + ':' + index, pipelineSeed: null, puzzle: puzzle, error: opts.error,
-      band: b.band, tierWeights: b.tierWeights, vacuous: b.vacuous, puzzleHash: 'h' + index,
-      generationMs: 5, fullRatings: 1 });
+      unique: opts.unique, band: b.band, tierWeights: b.tierWeights, vacuous: b.vacuous,
+      puzzleHash: 'h' + index, generationMs: 5, ratingCalls: 1,
+      work: opts.work === undefined ? [attemptOf(1)] : opts.work, workReason: opts.workReason });
   }
 
-  function entryOf(row, unique) {
+  /** `referenceSelected: false` makes the request one the reference was not sampled for. */
+  function entryOf(row, unique, referenceSelected) {
     return { row: row, model: model9, givens: new Int32Array(81).fill(0),
-      rating: ratingOf(row.score, row.solved), requested: row.requested, unique: unique !== false };
+      rating: ratingOf(row.score, row.solved, row.techniqueCounts), requested: row.requested,
+      unique: unique !== false, referenceSelected: referenceSelected };
   }
 
   /** An environment whose reference and rating are stubs; `log` records the calls and their budgets. */
@@ -208,7 +232,7 @@
     F.diagnose(entry, envOf([], {
       reference: function () { return reference; },
       rate: function () {
-        return Object.assign(ratingOf(row.score, row.solved), { steps: steps || [] });
+        return Object.assign(ratingOf(row.score, row.solved, row.techniqueCounts), { steps: steps || [] });
       }
     }));
     return row;
@@ -219,24 +243,52 @@
   var VACUOUS = { required: true, vacuous: true, floorLevel: null, unsolvedCount: 0 };
 
   describe('difficulty diagnostics: rows', function () {
-    it('starts a row with the generation facts, reference not run and unexposed counters null', function () {
-      var row = rowFor('hard', { score: 520 });
-      expect(Object.keys(row)).toEqual(['variant', 'requested', 'index', 'tag', 'pipelineSeed', 'outcome',
-        'error', 'achieved', 'solved', 'score', 'ratingVersion', 'techniqueCounts', 'empties', 'scoreHit',
-        'generationExact', 'qualifiedHit', 'required', 'referenceStatus', 'referenceError', 'shallow',
-        'position', 'generationMs', 'diagnosticMs', 'fullRatings', 'proposals', 'shallowRatings', 'capHits',
-        'chainLengths', 'nishioDepths', 'target', 'puzzleHash', 'pathCheck']);
-      expect([row.outcome, row.error, row.solved, row.score, row.scoreHit, row.generationExact])
-        .toEqual(['ok', null, true, 520, true, true]);
-      expect([row.qualifiedHit, row.required, row.referenceStatus, row.referenceError, row.shallow])
-        .toEqual([false, null, 'not-run', null, null]);
-      expect([row.proposals, row.shallowRatings, row.capHits, row.target, row.diagnosticMs])
-        .toEqual([null, null, null, null, null]);
-      expect([row.chainLengths, row.nishioDepths]).toEqual([[], []]);
-      expect(row.pathCheck).toEqual({ status: 'not-run', error: null });
-      expect(row.position.inputs.score).toBe(520);
-      expect(row.position.inputs.V).toBe(D.breakdown(row.techniqueCounts, row.empties).empty);
+    it('starts a row with the generation facts, the derived verdict and the work, reference not run',
+      function () {
+        var row = rowFor('hard', { score: 520 });
+        expect(Object.keys(row)).toEqual(['variant', 'requested', 'index', 'tag', 'pipelineSeed', 'outcome',
+          'error', 'achieved', 'solved', 'score', 'ratingVersion', 'techniqueCounts', 'empties', 'scoreHit',
+          'generationExact', 'qualifiedHit', 'required', 'referenceRequired', 'referenceStatus',
+          'referenceError', 'shallow', 'position', 'generationMs', 'diagnosticMs', 'fullRatings',
+          'ratingCalls', 'proposals', 'localRatings', 'shallowRatings', 'capHits', 'work', 'workCheck',
+          'chainLengths', 'nishioDepths', 'target', 'puzzleHash', 'pathCheck']);
+        expect([row.outcome, row.error, row.solved, row.score, row.scoreHit, row.generationExact])
+          .toEqual(['ok', null, true, 520, true, true]);
+        // the tier is needed (xyWing is outside the floor of Hard), whatever the reference will say
+        expect([row.required, row.qualifiedHit, row.shallow]).toEqual([true, true, false]);
+        expect([row.referenceRequired, row.referenceStatus, row.referenceError])
+          .toEqual([null, 'not-run', null]);
+        expect([row.fullRatings, row.ratingCalls, row.proposals, row.localRatings, row.shallowRatings])
+          .toEqual([1, 1, 0, 0, 0]);
+        expect(row.capHits).toEqual({ shallow: 0, ratings: 0, proposals: 0 });
+        expect(row.work).toEqual([attemptOf(1)]);
+        expect(row.workCheck).toEqual({ status: 'ok', reason: null });
+        expect([row.target, row.diagnosticMs]).toEqual([null, null]);
+        expect([row.chainLengths, row.nishioDepths]).toEqual([[], []]);
+        expect(row.pathCheck).toEqual({ status: 'not-run', error: null });
+        expect(row.position.inputs.score).toBe(520);
+        expect(row.position.inputs.V).toBe(D.breakdown(row.techniqueCounts, row.empties).empty);
+      });
+
+    it('derives the verdict from the returned rating on the returned model, not from a reference', function () {
+      var shallow = rowFor('hard', { score: 520, shallow: true, exact: false });
+      expect([shallow.required, shallow.qualifiedHit, shallow.shallow, shallow.referenceStatus])
+        .toEqual([false, false, true, 'not-run']);
+      var vacuous = rowFor('hell1', { score: 2500 });
+      expect([vacuous.required, vacuous.qualifiedHit, vacuous.shallow]).toEqual([true, true, false]);
+      var offBand = rowFor('hard', { score: 800, exact: false, achieved: 'expert' });
+      expect([offBand.required, offBand.qualifiedHit, offBand.shallow]).toEqual([true, false, null]);
+      var unrated = rowFor('hard', { solved: false, achieved: null, exact: false });
+      expect([unrated.required, unrated.qualifiedHit, unrated.shallow]).toEqual([null, false, null]);
     });
+
+    it('has no derived verdict for a puzzle that may have a second solution, and keeps its hits false',
+      function () {
+        var row = rowFor('hard', { score: 520, unique: false });
+        expect([row.required, row.qualifiedHit, row.shallow, row.scoreHit]).toEqual([null, false, null, true]);
+        var unknown = rowFor('hard', { score: 520, unique: undefined });
+        expect(unknown.required).toBe(true);
+      });
 
     it('records the inputs of both positions next to them', function () {
       var row = rowFor('hard', { score: 520 });
@@ -255,6 +307,7 @@
       var row = rowFor('hard', { error: error });
       expect([row.outcome, row.achieved, row.solved, row.score, row.scoreHit, row.generationExact,
         row.qualifiedHit]).toEqual(['error', null, false, null, false, false, false]);
+      expect([row.required, row.shallow]).toEqual([null, null]);
       expect(row.error.code).toBe('budget.exceeded');
       expect(typeof row.error.message).toBe('string');
       expect(row.position)
@@ -273,24 +326,99 @@
       expect([row.scoreHit, row.generationExact, row.position.reason]).toEqual([false, false, 'off-band']);
       expect(row.position.raw).toBe(1);
     });
+
+    describe('the work of a request', function () {
+      var WORK = [
+        attemptOf(40, [], 12),
+        attemptOf(30, [searchOf(25, { proposals: 90, firstShallowAt: 2, shallowRatings: 23, shallowLimit: 64 })],
+          100),
+        attemptOf(1100, [searchOf(1005, { proposals: 400, firstShallowAt: 0, shallowRatings: 1005,
+          capHit: 'ratings' }), searchOf(7, { capHit: 'shallow', shallowLimit: 5, shallowRatings: 5,
+          firstShallowAt: 1 })], 500)
+      ];
+
+      it('sums the attempts, the local searches and the cap hits, and keeps the raw work', function () {
+        var row = rowFor('hard', { score: 520, work: WORK });
+        expect([row.fullRatings, row.proposals, row.localRatings, row.shallowRatings])
+          .toEqual([1170, 612, 1037, 1033]);
+        expect(row.capHits).toEqual({ shallow: 1, ratings: 1, proposals: 0 });
+        expect(row.work).toEqual(WORK);
+        expect(row.work).not.toBe(WORK);
+        expect(row.work[2].localSearches).not.toBe(WORK[2].localSearches);
+        // the request counted 1 call: the work says 1170, so the conservation check fails and says why
+        expect(row.workCheck.status).toBe('mismatch');
+        expect(row.workCheck.reason).toContain('the work counts 1170 full ratings but 1 calls');
+      });
+
+      it('conserves: the ratings of all attempts are the calls made, the searches rate no more', function () {
+        var ok = F.conservationOf([attemptOf(40), attemptOf(30, [searchOf(30)])], 70);
+        expect(ok).toEqual({ status: 'ok', reason: null });
+        var short = F.conservationOf([attemptOf(40), attemptOf(30)], 71);
+        expect(short.status).toBe('mismatch');
+        expect(short.reason).toContain('the work counts 70 full ratings but 71 calls');
+        var more = F.conservationOf([attemptOf(10, [searchOf(6), searchOf(5)])], 10);
+        expect(more.status).toBe('mismatch');
+        expect(more.reason).toContain('attempt 1: its local searches made 11 full ratings, more than the 10');
+        var both = F.conservationOf([attemptOf(10, [searchOf(11)])], 12);
+        expect(both.status).toBe('mismatch');
+        expect(both.reason.split('; ')).toHaveLength(2);
+      });
+
+      it('is unavailable, never zero and never ok, for work that is missing or not of the shape', function () {
+        [undefined, null, 'x', [{ ratings: 1 }], [attemptOf(1, [{ ratings: 1 }])], [attemptOf(-1)],
+          [Object.assign(attemptOf(1), { localSearches: undefined })]].forEach(function (work) {
+          var check = F.conservationOf(work, 1, 'no work here');
+          expect([JSON.stringify(work), check.status]).toEqual([JSON.stringify(work), 'unavailable']);
+          expect(check.reason).toBe('no work here');
+          var row = rowFor('hard', { score: 520, work: work === undefined ? null : work,
+            workReason: 'no work here' });
+          expect([row.fullRatings, row.proposals, row.localRatings, row.shallowRatings, row.capHits, row.work])
+            .toEqual([null, null, null, null, null, null]);
+          expect(row.workCheck).toEqual({ status: 'unavailable', reason: 'no work here' });
+          expect(row.ratingCalls).toBe(1);
+        });
+        expect(F.conservationOf(undefined, 1).reason).toBe('the generation reported no work');
+        var noCalls = F.conservationOf([attemptOf(1)], null);
+        expect(noCalls.status).toBe('unavailable');
+        expect(noCalls.reason).toContain('no independent count');
+      });
+
+      it('keeps the partial work of a failed request, and says nothing is known when there is none',
+        function () {
+          var error = new SG.errors.GenerationError('budget.cancelled', { reason: 'cancelled' });
+          var partial = rowFor('hard', { error: error, work: [attemptOf(1), attemptOf(0)] });
+          expect([partial.outcome, partial.fullRatings, partial.work.length, partial.workCheck.status])
+            .toEqual(['error', 1, 2, 'ok']);
+          var unknown = rowFor('hard', { error: error, work: null, workReason: 'raised outside' });
+          expect([unknown.work, unknown.fullRatings]).toEqual([null, null]);
+          expect(unknown.workCheck).toEqual({ status: 'unavailable', reason: 'raised outside' });
+          var none = F.rowOf({ variant: 'classic9', requested: 'hard', index: 0, tag: 't', puzzle: null,
+            error: error, band: { min: 0, max: Infinity }, tierWeights: [], vacuous: false, generationMs: 1,
+            ratingCalls: 4, work: undefined, workReason: 'raised outside' });
+          expect([none.fullRatings, none.ratingCalls, none.work, none.proposals, none.capHits])
+            .toEqual([null, 4, null, null, null]);
+          expect(none.workCheck).toEqual({ status: 'unavailable', reason: 'raised outside' });
+        });
+    });
   });
 
   describe('difficulty diagnostics: the reference and the final path of a request', function () {
-    it('records a solved or stuck floor, and a vacuous one, with the hits that follow', function () {
-      var shallow = diagnosed(rowFor('hard', { score: 520 }), SOLVED);
-      expect([shallow.referenceStatus, shallow.required, shallow.qualifiedHit, shallow.shallow])
-        .toEqual(['ok', false, false, true]);
-      var needed = diagnosed(rowFor('hard', { score: 520 }), STUCK);
-      expect([needed.referenceStatus, needed.required, needed.qualifiedHit, needed.shallow])
-        .toEqual(['ok', true, true, false]);
+    it('records the sampled reference apart from the derived verdict, hits and shallow flag', function () {
+      var needed = diagnosed(rowFor('hard', { score: 520 }), SOLVED);
+      // the reference says "not required"; the derived verdict (and the hit it gives) are unchanged
+      expect([needed.referenceStatus, needed.referenceRequired, needed.required, needed.qualifiedHit,
+        needed.shallow]).toEqual(['ok', false, true, true, false]);
+      var shallow = diagnosed(rowFor('hard', { score: 520, shallow: true, exact: false }), STUCK);
+      expect([shallow.referenceStatus, shallow.referenceRequired, shallow.required, shallow.qualifiedHit,
+        shallow.shallow]).toEqual(['ok', true, false, false, true]);
       var vacuous = diagnosed(rowFor('hell1', { score: 2500 }), VACUOUS);
-      expect([vacuous.referenceStatus, vacuous.required, vacuous.qualifiedHit, vacuous.shallow])
-        .toEqual(['vacuous', true, true, false]);
+      expect([vacuous.referenceStatus, vacuous.referenceRequired, vacuous.required, vacuous.qualifiedHit,
+        vacuous.shallow]).toEqual(['vacuous', true, true, true, false]);
       var offBand = diagnosed(rowFor('hard', { score: 800, exact: false, achieved: 'expert' }), STUCK);
       expect([offBand.required, offBand.qualifiedHit, offBand.shallow]).toEqual([true, false, null]);
     });
 
-    it('gives a reference failure its own status: never required, shallow or a qualified hit', function () {
+    it('gives a reference failure its own status: the derived verdict and the hit stay', function () {
       var cancelled = SG.budget.create();
       cancelled.cancel();
       var failures = [
@@ -306,21 +434,43 @@
           .toEqual([k, 'error', null, codes[k]]);
         var row = rowFor('hard', { score: 520 });
         F.diagnose(entryOf(row), envOf([], { reference: run, rate: function () { return ratingOf(520); } }));
-        expect([k, row.referenceStatus, row.required, row.qualifiedHit, row.shallow, row.referenceError.code])
-          .toEqual([k, 'error', null, false, null, codes[k]]);
+        // the verdict of the generation is derived (the tier is needed): a failed reference changes nothing
+        expect([k, row.referenceStatus, row.referenceRequired, row.referenceError.code])
+          .toEqual([k, 'error', null, codes[k]]);
+        expect([k, row.required, row.qualifiedHit, row.shallow]).toEqual([k, true, true, false]);
         expect([k, row.outcome, row.scoreHit, row.score]).toEqual([k, 'ok', true, 520]);
       });
     });
 
     it('runs the reference only for a puzzle that I1 proved unique', function () {
       var log = [];
-      var row = rowFor('hard', { score: 520 });
+      var row = rowFor('hard', { score: 520, unique: false });
       F.diagnose(entryOf(row, false), envOf(log, { reference: function () { return STUCK; },
         rate: function () { return ratingOf(520); } }));
       expect(log).toEqual([]);
-      expect([row.referenceStatus, row.required, row.qualifiedHit, row.shallow, row.pathCheck.status])
-        .toEqual(['skipped-not-unique', null, false, null, 'not-run']);
+      expect([row.referenceStatus, row.referenceRequired, row.required, row.qualifiedHit, row.shallow,
+        row.pathCheck.status]).toEqual(['skipped-not-unique', null, null, false, null, 'not-run']);
       expect(typeof row.diagnosticMs).toBe('number');
+    });
+
+    it('runs no reference for a request that was not selected, and still checks its final path', function () {
+      var log = [];
+      var row = rowFor('hard', { score: 520 });
+      F.diagnose(entryOf(row, true, false), envOf(log, { reference: function () { return SOLVED; },
+        rate: function () { return Object.assign(ratingOf(520), { steps: [] }); } }));
+      expect(log.map(function (e) { return e.call; })).toEqual(['rate']);
+      // not selected is not a failure and not a verdict: the derived verdict and the hit are untouched
+      expect([row.referenceStatus, row.referenceRequired, row.referenceError]).toEqual(['not-selected', null, null]);
+      expect([row.required, row.qualifiedHit, row.shallow, row.pathCheck.status])
+        .toEqual([true, true, false, 'ok']);
+      var odd = rowFor('hard', { score: 520, unique: false });
+      F.diagnose(entryOf(odd, false, false), envOf([], { reference: function () { return SOLVED; },
+        rate: function () { throw new Error('not rated'); } }));
+      expect([odd.referenceStatus, odd.pathCheck.status]).toEqual(['not-selected', 'not-run']);
+      var selected = rowFor('hard', { score: 520 });
+      F.diagnose(entryOf(selected, true, true), envOf([], { reference: function () { return SOLVED; },
+        rate: function () { return Object.assign(ratingOf(520), { steps: [] }); } }));
+      expect(selected.referenceStatus).toBe('ok');
     });
 
     it('gives the reference and the final path one 120,000 ms budget per request, not renewed', function () {
@@ -406,7 +556,8 @@
       rows.push(diagnosed(rowFor('hard', { score: 800, exact: false, achieved: 'expert' }), STUCK));
       rows.push(diagnosed(rowFor('hard', { score: 350, exact: false, achieved: 'normal' }), SOLVED));
       [430, 470, 500, 560, 600, 640, 650, 690].forEach(function (score, k) {
-        rows.push(diagnosed(rowFor('hard', { score: score, exact: k !== 7 }), k < 3 ? SOLVED : STUCK));
+        rows.push(diagnosed(rowFor('hard', { score: score, exact: k !== 7 && k >= 3, shallow: k < 3 }),
+          k < 3 ? SOLVED : STUCK));
       });
       return rows;
     }
@@ -414,10 +565,13 @@
     it('keeps a failed request in every hit denominator, old hits apart from qualified hits', function () {
       var s = F.summaryOf(twelve());
       expect([s.requests, s.errors, s.unrated, s.inBand]).toEqual([12, 1, 1, 8]);
-      expect(s.oldHits).toEqual({ count: 7, denominator: 12, share: 7 / 12 });
+      // the generator's exact flag is the hit; the shallow ones (k < 3) and the last (k = 7) are not exact
+      expect(s.oldHits).toEqual({ count: 4, denominator: 12, share: 4 / 12 });
       expect(s.qualifiedHits).toEqual({ count: 5, denominator: 12, share: 5 / 12 });
       expect(s.matrix).toEqual({ hard: { error: 1, unrated: 1, expert: 1, normal: 1, hard: 8 } });
-      expect(s.references).toEqual({ ok: 11, vacuous: 0, error: 0, skipped: 0, notRun: 1 });
+      expect(s.references).toEqual({ ok: 11, vacuous: 0, error: 0, skipped: 0, notSelected: 0, notRun: 1 });
+      // k = 7 is a derived hit that the generator did not call exact: one disagreement
+      expect(s.exactDisagreements).toBe(1);
     });
 
     it('takes the shallow share over the solved in-band puzzles, not exact ones or requests', function () {
@@ -425,7 +579,7 @@
       expect(s.shallow).toEqual({ count: 3, denominator: 8, checked: 8, share: 3 / 8 });
     });
 
-    it('does not call a failed reference shallow and says how many verdicts there are', function () {
+    it('does not let a failed reference change a verdict, and counts it apart', function () {
       var rows = twelve();
       var cancelled = rowFor('hard', { score: 520 });
       F.diagnose(entryOf(cancelled), envOf([], { reference: function () {
@@ -434,24 +588,66 @@
       rows.push(cancelled);
       var s = F.summaryOf(rows);
       expect(s.inBand).toBe(9);
-      expect(s.shallow).toEqual({ count: 3, denominator: 9, checked: 8, share: 3 / 9 });
+      // its verdict is derived (the tier is needed): a hit and a verdict, whatever the reference did
+      expect(s.shallow).toEqual({ count: 3, denominator: 9, checked: 9, share: 3 / 9 });
       expect(s.references.error).toBe(1);
-      expect(s.qualifiedHits).toEqual({ count: 5, denominator: 13, share: 5 / 13 });
+      expect(s.qualifiedHits).toEqual({ count: 6, denominator: 13, share: 6 / 13 });
+    });
+
+    it('does not take unselected references for unmeasured verdicts: they are counted apart', function () {
+      var rows = [];
+      for (var k = 0; k < 12; k++) {
+        var row = rowFor('hard', { score: 430 + 20 * k, shallow: k % 3 === 0, exact: k % 3 !== 0 });
+        F.diagnose(entryOf(row, true, k === 0 || k === 11), envOf([], {
+          reference: function () { return STUCK; },
+          rate: function () { return ratingOf(row.score, true, row.techniqueCounts); } }));
+        rows.push(row);
+      }
+      var s = F.summaryOf(rows);
+      expect(s.references).toEqual({ ok: 2, vacuous: 0, error: 0, skipped: 0, notSelected: 10, notRun: 0 });
+      // all twelve have a derived verdict, though only two were checked by the reference
+      expect(s.shallow).toEqual({ count: 4, denominator: 12, checked: 12, share: 4 / 12 });
+      expect(s.qualifiedHits).toEqual({ count: 8, denominator: 12, share: 8 / 12 });
+      expect(s.oldHits.count).toBe(8);
+      expect(s.exactDisagreements).toBe(0);
+      var text = F.summaryLines(F.ledgerOf({ meta: {}, rows: rows }).summary).join('\n');
+      expect(text).toContain('sampled reference: ok 2, vacuous 0, error 0, skipped 0, notSelected 10, notRun 0');
+      expect(text).toContain('12 with a derived verdict');
+    });
+
+    it('summarises the work of the requests whose work is known, apart from those whose is not', function () {
+      var withSearch = [attemptOf(40, [searchOf(30, { capHit: 'shallow', shallowLimit: 5 })])];
+      var rows = [rowFor('hard', { score: 520, work: [attemptOf(1)] }),
+        rowFor('hard', { score: 520, work: withSearch }),
+        rowFor('hard', { score: 520, work: [attemptOf(3), attemptOf(5, [searchOf(2, { capHit: 'proposals' })])] }),
+        rowFor('hard', { score: 520, work: null, workReason: 'unknown' }),
+        rowFor('hard', { error: new Error('lost'), work: [attemptOf(9)] })];
+      var s = F.summaryOf(rows);
+      // the request counted 1 rating each: only the first agrees with its work
+      expect(s.work.checks).toEqual({ ok: 1, mismatch: 3, unavailable: 1 });
+      expect(s.work.capHits).toEqual({ shallow: 1, ratings: 0, proposals: 1 });
+      expect(s.work.fullRatings.n).toBe(4);
+      expect(s.work.fullRatings.upperMedian).toBe(9);
+      expect(F.summaryOf([]).work).toEqual({ checks: { ok: 0, mismatch: 0, unavailable: 0 },
+        capHits: { shallow: 0, ratings: 0, proposals: 0 }, fullRatings: { n: 0, deciles: null,
+        upperMedian: null } });
     });
 
     it('reports the exact and the all-in-band cohorts apart, off-band rows out of the spread', function () {
       var s = F.summaryOf(twelve());
       expect(s.cohorts.inBand.n).toBe(8);
-      expect(s.cohorts.exact.n).toBe(7);
+      expect(s.cohorts.exact.n).toBe(4);
       var scores = [430, 470, 500, 560, 600, 640, 650, 690];
       var raw = scores.map(function (score) { return (score - 400) / 300; });
       expect(s.cohorts.inBand.raw.n).toBe(8);
       expect(s.cohorts.inBand.raw.deciles[0]).toBe(raw[0]);
       expect(s.cohorts.inBand.raw.deciles[10]).toBe(raw[7]);
       expect(s.cohorts.inBand.raw.upperMedian).toBe(raw[4]);
-      expect(s.cohorts.exact.raw.n).toBe(7);
+      // the generator's exact rows are the scores 560 to 650
+      expect(s.cohorts.exact.raw.n).toBe(4);
+      expect(s.cohorts.exact.raw.deciles[0]).toBe(raw[3]);
       expect(s.cohorts.exact.raw.deciles[10]).toBe(raw[6]);
-      expect(s.cohorts.exact.raw.upperMedian).toBe(raw[3]);
+      expect(s.cohorts.exact.raw.upperMedian).toBe(raw[5]);
       // The adjusted position has its own lower bound; the lowest scores fall below it (kept, unclamped).
       expect(s.cohorts.inBand.adjusted.n).toBe(8);
       expect(s.cohorts.inBand.adjusted.deciles[0]).toBeLessThan(0);
@@ -548,16 +744,325 @@
     });
 
     it('prints the hits with their denominators and the shallow share over the in-band puzzles', function () {
-      var rows = [rowFor('hard', { error: new Error('lost') })];
+      var rows = [rowFor('hard', { error: new Error('lost'), work: null })];
       [430, 470, 500, 560].forEach(function (score, k) {
-        rows.push(diagnosed(rowFor('hard', { score: score }), k < 1 ? SOLVED : STUCK));
+        rows.push(diagnosed(rowFor('hard', { score: score, shallow: k < 1, exact: k >= 1 }),
+          k < 1 ? SOLVED : STUCK));
       });
       var text = F.summaryLines(F.ledgerOf({ meta: {}, rows: rows }).summary).join('\n');
       expect(text).toContain('== classic9/hard: 5 requests, 1 errors, 0 unrated, 4 solved in band ==');
-      expect(text).toContain('old hits 4/5 (80%), qualified hits 3/5 (60%), shallow 1/4 (25%; 4 with a ' +
-        'reference verdict)');
+      expect(text).toContain('old hits 3/5 (60%), qualified hits 3/5 (60%), shallow 1/4 (25%; 4 with a ' +
+        'derived verdict); exact flag against the derived verdict: 0 disagreements');
+      expect(text).toContain('sampled reference: ok 4, vacuous 0, error 0, skipped 0, notSelected 0, notRun 1');
+      expect(text).toContain('work: ok 4, mismatch 0, unavailable 1; local searches ended by shallow 0');
       expect(text).toContain('cohort all in band: 4 puzzles');
     });
+  });
+
+  describe('difficulty diagnostics: merging the ledgers of the shards of one logical cell', function () {
+    function shard(from, count, total, tweak) {
+      var rows = [];
+      for (var i = from; i < from + count; i++) {
+        rows.push({ variant: 'classic9', requested: 'hard', index: i, tag: 'classic9:hard:' + i });
+      }
+      var ledger = {
+        schema: 1, complete: true, rows: rows, summary: {},
+        meta: {
+          acceptance: 'canonical-required-tier', sourceHash: 'a'.repeat(64), sourceFiles: 63,
+          toolHash: 'b'.repeat(64), node: 'v26.0.0', seedBase: 20260101, shallowCap: null,
+          shallowSearchRatings: null,
+          manifest: {
+            quick: false, perCombo: 0, includeUnsupported: false, weights: null, bands: null, gate: false,
+            ratingVersion: 3, referenceBudgetMs: 120000,
+            cells: [{ variant: 'classic9', level: 'hard', requests: count, from: from, logicalTotal: total,
+              referenceIndexes: [0, total - 1], route: 'direct', unsupported: false }]
+          }
+        }
+      };
+      if (tweak) tweak(ledger);
+      return ledger;
+    }
+
+    it('merges the spans of a plan, in any order, into the raw rows 0 to total - 1 once each', function () {
+      var low = shard(0, 6, 12);
+      var high = shard(6, 6, 12);
+      [[low, high], [high, low]].forEach(function (pair) {
+        var merged = F.mergeShards(pair);
+        expect(merged.problems).toEqual([]);
+        expect(merged.ok).toBe(true);
+        expect(merged.cell).toEqual({ variant: 'classic9', requested: 'hard', total: 12 });
+        expect(merged.rows.map(function (row) { return row.index; }))
+          .toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+        expect(merged.rows[7]).toBe(high.rows[1]);
+      });
+      expect(F.mergeShards([shard(0, 12, 12)]).ok).toBe(true);
+      expect(F.mergeShards([shard(0, 5, 12), shard(5, 3, 12), shard(8, 4, 12)]).ok).toBe(true);
+      expect(F.mergeShards([shard(0, 1, 1)]).ok).toBe(true);
+    });
+
+    it('refuses a gap, a duplicate and an overlap: nothing is merged', function () {
+      var gap = F.mergeShards([shard(0, 6, 12), shard(7, 5, 12)]);
+      expect([gap.ok, gap.rows]).toEqual([false, null]);
+      expect(gap.problems).toEqual(['1 of 12 indexes are missing, from 6 to 6 at most']);
+      var half = F.mergeShards([shard(0, 6, 12)]);
+      expect(half.problems).toEqual(['6 of 12 indexes are missing, from 6 to 11 at most']);
+      var twice = F.mergeShards([shard(0, 6, 12), shard(0, 6, 12)]);
+      expect(twice.ok).toBe(false);
+      expect(twice.problems).toContain('index 0 is in ledger 0 and in ledger 1');
+      expect(twice.problems).toContain('6 of 12 indexes are missing, from 6 to 11 at most');
+      var overlap = F.mergeShards([shard(0, 7, 12), shard(6, 6, 12)]);
+      expect(overlap.ok).toBe(false);
+      expect(overlap.problems).toEqual(['index 6 is in ledger 0 and in ledger 1']);
+      var short = F.mergeShards([shard(0, 6, 12), shard(6, 6, 12, function (ledger) {
+        ledger.rows.pop();
+      })]);
+      expect(short.problems).toContain('ledger 1 has 5 rows for 6 requests');
+      expect(short.ok).toBe(false);
+      expect(F.mergeShards([shard(0, 6, 12), shard(6, 6, 13)]).ok).toBe(false);
+    });
+
+    it('refuses ledgers of another source, tool, Node, seed, allowance, setting or logical total', function () {
+      var changes = {
+        sourceHash: function (m) { m.sourceHash = 'c'.repeat(64); },
+        toolHash: function (m) { m.toolHash = 'c'.repeat(64); },
+        node: function (m) { m.node = 'v26.0.1'; },
+        seedBase: function (m) { m.seedBase = 1; },
+        shallowCap: function (m) { m.shallowCap = '64'; m.shallowSearchRatings = 64; },
+        weights: function (m) { m.manifest.weights = { nishio: 1 }; },
+        bands: function (m) { m.manifest.bands = [0, 1]; },
+        ratingVersion: function (m) { m.manifest.ratingVersion = 4; },
+        route: function (m) { m.manifest.cells[0].route = 'pipeline'; },
+        logicalTotal: function (m) { m.manifest.cells[0].logicalTotal = 13; }
+      };
+      Object.keys(changes).forEach(function (key) {
+        var merged = F.mergeShards([shard(0, 6, 12), shard(6, 6, 12, function (ledger) {
+          changes[key](ledger.meta);
+        })]);
+        expect([key, merged.ok, merged.rows]).toEqual([key, false, null]);
+        expect(merged.problems.some(function (text) { return text.indexOf('ledger 1 differs from ledger 0 in ') === 0; }))
+          .toBe(true);
+      });
+      var other = F.mergeShards([shard(0, 6, 12), shard(6, 6, 12, function (ledger) {
+        ledger.meta.shallowCap = '64';
+      })]);
+      expect(other.problems).toEqual(['ledger 1 differs from ledger 0 in shallowCap']);
+    });
+
+    it('refuses a ledger that is not complete, not current, not of one cell or has a row out of its span',
+      function () {
+        expect(F.mergeShards([]).problems).toEqual(['no ledger to merge']);
+        expect(F.mergeShards(null).ok).toBe(false);
+        var partial = F.mergeShards([shard(0, 6, 12), shard(6, 6, 12, function (ledger) {
+          ledger.complete = false;
+        })]);
+        expect(partial.problems).toContain('ledger 1 is not a complete schema 1 ledger');
+        var old = F.mergeShards([shard(0, 12, 12, function (ledger) { delete ledger.meta.acceptance; })]);
+        expect(old.ok).toBe(false);
+        expect(old.problems[0]).toContain('is not a ledger of the canonical required tier');
+        var two = F.mergeShards([shard(0, 12, 12, function (ledger) {
+          ledger.meta.manifest.cells.push(ledger.meta.manifest.cells[0]);
+        })]);
+        expect(two.problems).toContain('ledger 0 describes 2 cells, not one');
+        var out = F.mergeShards([shard(0, 6, 12), shard(6, 6, 12, function (ledger) {
+          ledger.rows[0].index = 3;
+        })]);
+        expect(out.ok).toBe(false);
+        expect(out.problems[0]).toBe('ledger 1 has a row with index 3 outside its span 6 to 11');
+        var tag = F.mergeShards([shard(0, 6, 12), shard(6, 6, 12, function (ledger) {
+          ledger.rows[2].tag = 'classic9:hard:2';
+        })]);
+        expect(tag.ok).toBe(false);
+        expect(tag.problems[0]).toBe('ledger 1 has a row whose tag classic9:hard:2 is not classic9:hard:8');
+        var span = F.mergeShards([shard(0, 6, 12, function (ledger) {
+          ledger.meta.manifest.cells[0].logicalTotal = 5;
+        })]);
+        expect(span.ok).toBe(false);
+        expect(span.problems[0]).toContain('has no valid span');
+      });
+  });
+
+  // ---------------------------------------------------------------------------------------------
+  // The ordered prefix of the ladder (the soak refuses weights or bands that break it)
+  // ---------------------------------------------------------------------------------------------
+
+  describe('difficulty diagnostics: the ordered prefix of the ladder', function () {
+    function prefixEnv() {
+      return {
+        difficulty: D, techniques: SG.techniques,
+        variantIds: SG.variants.list().map(function (def) { return def.id; })
+      };
+    }
+
+    /** A registry of two techniques, a then b, to build orders the real registry does not have. */
+    function fakeEnv(floorOf, tierOf) {
+      return {
+        difficulty: { LEVELS: ['low', 'high'], WEIGHTS: { a: 1, b: 2 }, floorTechniques: floorOf,
+          tierTechniques: tierOf },
+        techniques: {
+          list: function () { return [{ id: 'a' }, { id: 'b' }]; },
+          appliesTo: function () { return true; }
+        },
+        variantIds: ['probe']
+      };
+    }
+
+    it('holds for every registered variant, every level and the no-model case of the default tables',
+      function () {
+        expect(prefixEnv().variantIds.length).toBeGreaterThan(10);
+        expect(F.prefixViolationOf(prefixEnv())).toBeNull();
+      });
+
+    it('holds under an ordered band override, which is in force while it is checked', function () {
+      var saved = D.TABLE.map(function (row) { return row.min; });
+      try {
+        [0, 60, 200, 420, 720, 1050, 1600, 2500, 3700].forEach(function (min, i) { D.TABLE[i].min = min; });
+        expect(D.bandOf('veryEasy').max).toBe(60);
+        expect(F.prefixViolationOf(prefixEnv())).toBeNull();
+      } finally {
+        saved.forEach(function (min, i) { D.TABLE[i].min = min; });
+      }
+      expect(D.TABLE.map(function (row) { return row.min; })).toEqual(saved);
+    });
+
+    it('names the first variant, level and list when a late technique gets a cheap weight', function () {
+      var weight = D.WEIGHTS.nishio;
+      var violation;
+      try {
+        D.WEIGHTS.nishio = 1;
+        violation = F.prefixViolationOf(prefixEnv());
+      } finally {
+        D.WEIGHTS.nishio = weight;
+      }
+      expect(D.WEIGHTS.nishio).toBe(weight);
+      expect(violation).toEqual({
+        variantId: SG.variants.list()[0].id, level: 'veryEasy', kind: 'allowed',
+        expected: ['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'nishio'],
+        actual: ['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing']
+      });
+      expect(F.prefixViolationOf(prefixEnv())).toBeNull();
+    });
+
+    it('tells a floor that leaves the ladder order from a floor with its tier', function () {
+      var tier = function () { return ['a']; };
+      var floorB = function (level) { return level === 'low' ? [] : ['b']; };
+      expect(F.prefixViolationOf(fakeEnv(floorB, tier))).toEqual({
+        variantId: 'probe', level: 'high', kind: 'floor', expected: ['b'], actual: ['a']
+      });
+      var floorA = function () { return []; };
+      var tierB = function (level) { return level === 'low' ? ['b'] : ['a']; };
+      expect(F.prefixViolationOf(fakeEnv(floorA, tierB))).toEqual({
+        variantId: 'probe', level: 'low', kind: 'allowed', expected: ['b'], actual: ['a']
+      });
+    });
+
+    it('checks every level, the no-model case last, and compares the lists in order', function () {
+      var tier = function () { return []; };
+      var onlyNoModel = function (level, model) { return model === null && level === 'high' ? ['b'] : []; };
+      expect(F.prefixViolationOf(fakeEnv(onlyNoModel, tier)).variantId).toBeNull();
+      var swapped = function (level) { return level === 'high' ? ['b', 'a'] : []; };
+      expect(F.prefixViolationOf(fakeEnv(swapped, tier))).toEqual({
+        variantId: 'probe', level: 'high', kind: 'floor', expected: ['b', 'a'], actual: ['a', 'b']
+      });
+      var ordered = function (level) { return level === 'high' ? ['a', 'b'] : []; };
+      expect(F.prefixViolationOf(fakeEnv(ordered, tier))).toBeNull();
+    });
+  });
+
+  // ---------------------------------------------------------------------------------------------
+  // The hit of the qualifier (tests/qualify.js) in a vm of its own
+  // ---------------------------------------------------------------------------------------------
+
+  describe('difficulty diagnostics: the hit of a qualification request (Node only)', function () {
+    var GOOD = { valid: true, solved: true, approximate: false, exact: true, achieved: 'easy' };
+
+    /** tests/qualify.js as a module in a context of its own, with a fake process, to run its worker. */
+    function loadQualify() {
+      var node = SG.test.node;
+      if (!node || !node.vm || !node.fs || typeof process === 'undefined' || !process.getBuiltinModule) {
+        SG.test.skip('needs Node (vm, fs and process.getBuiltinModule); skipped in the browser');
+      }
+      var file = node.path.join(node.root, 'tests/qualify.js');
+      var sent = [];
+      var handlers = [];
+      var fakeProcess = {
+        on: function (name, fn) { handlers.push(fn); }, send: function (message) { sent.push(message); },
+        exit: function () {}, hrtime: process.hrtime, argv: ['node', file]
+      };
+      var modules = {
+        fs: node.fs, path: node.path, vm: node.vm, os: process.getBuiltinModule('os'),
+        crypto: process.getBuiltinModule('crypto'), child_process: process.getBuiltinModule('child_process')
+      };
+      var ctx = node.vm.createContext({
+        require: function (name) { return modules[name]; }, module: { exports: {} }, process: fakeProcess,
+        __filename: file, __dirname: node.path.dirname(file),
+        console: { log: function () {}, error: function () {} }
+      });
+      node.vm.runInContext(node.fs.readFileSync(file, 'utf8'), ctx, { filename: file });
+      return { ctx: ctx, sent: sent, handlers: handlers, exports: ctx.module.exports };
+    }
+
+    it('counts a request only with every guard and the exact flag of the generator', function () {
+      var hitOf = loadQualify().exports.hitOf;
+      expect(hitOf(GOOD, 'easy')).toBe(true);
+      expect(hitOf(Object.assign({}, GOOD, { achieved: 'normal' }), 'easy')).toBe(false);
+      var misses = [{ valid: false }, { solved: false }, { approximate: true }, { exact: false },
+        { exact: undefined }, { exact: 1 }, { valid: undefined }, { solved: undefined },
+        { approximate: undefined }];
+      misses.forEach(function (change) {
+        var out = Object.assign({}, GOOD, change);
+        expect([JSON.stringify(change), hitOf(out, 'easy')]).toEqual([JSON.stringify(change), false]);
+      });
+      var noFlag = Object.assign({}, GOOD);
+      delete noFlag.exact;
+      expect(hitOf(noFlag, 'easy')).toBe(false);
+    });
+
+    it('records the strict exact flag of the result and misses a shallow result in the requested level',
+      function () {
+        var q = loadQualify();
+        var answer = null;
+        var good = {
+          model: { cellCount: 2 }, givens: [0, 2], solution: [1, 2], warnings: [], exact: true,
+          rating: { level: 'easy', score: 70, solved: true }
+        };
+        var unique = 1;
+        q.ctx.fakeSG = {
+          difficulty: { LEVELS: ['veryEasy', 'easy'] },
+          variants: { list: function () { return [{}]; } },
+          budget: { create: function () { return {}; } },
+          pipeline: { run: function () { return answer; } },
+          model: { isSolution: function () { return true; } },
+          dfs: { countSolutions: function () { return unique; } }
+        };
+        SG.test.node.vm.runInContext('loadSources = function () { return fakeSG; }; child();', q.ctx);
+        expect(q.sent).toHaveLength(1);
+        expect(q.sent[0].ready).toBe(true);
+        function request(result, count) {
+          answer = result;
+          unique = count === undefined ? 1 : count;
+          q.handlers[0]({ key: 'classic9/easy', index: 3, seed: 7, variant: 'classic9', level: 'easy' });
+          return q.sent[q.sent.length - 1];
+        }
+        var hit = request(good);
+        expect([hit.hit, hit.exact, hit.valid, hit.achieved]).toEqual([true, true, true, 'easy']);
+        var shallow = request(Object.assign({}, good, { exact: false,
+          warnings: ['difficulty.approximate', 'difficulty.shallow'] }));
+        expect([shallow.hit, shallow.exact, shallow.approximate, shallow.achieved])
+          .toEqual([false, false, true, 'easy']);
+        var sameNameNoWarning = request(Object.assign({}, good, { exact: false }));
+        expect([sameNameNoWarning.hit, sameNameNoWarning.exact, sameNameNoWarning.approximate])
+          .toEqual([false, false, false]);
+        var absent = Object.assign({}, good);
+        delete absent.exact;
+        expect([request(absent).hit, q.sent[q.sent.length - 1].exact]).toEqual([false, false]);
+        expect(request(Object.assign({}, good, { exact: 'true' })).exact).toBe(false);
+        expect(request(good, 2).hit).toBe(false);
+        expect(request(Object.assign({}, good, { givens: [2, 2] })).hit).toBe(false);
+        expect(request(Object.assign({}, good, { rating: { level: 'easy', score: 70, solved: false } })).hit)
+          .toBe(false);
+        expect(request(Object.assign({}, good, { rating: { level: 'veryEasy', score: 10, solved: true } }))
+          .hit).toBe(false);
+      });
   });
 
   // ---------------------------------------------------------------------------------------------
@@ -701,7 +1206,8 @@
       expect([plain.code, diag.code]).toEqual([0, 0]);
       expect(plain.givens).toHaveLength(6);
       expect(diag.givens).toEqual(plain.givens);
-      var generation = diag.events.slice(0, diag.events.length - 10);
+      // 2 sampled references (the first and the last request) and 5 final-path rates
+      var generation = diag.events.slice(0, diag.events.length - 7);
       expect(oldLines(diag.text)).toEqual(oldLines(plain.text));
       expect(oldLines(plain.text).length).toBeGreaterThan(15);
       expect(plain.events.indexOf('reference')).toBe(-1);
@@ -719,7 +1225,7 @@
       expect(first).toBeGreaterThan(events.lastIndexOf('solve-steps'));
       expect(events.slice(first).filter(function (e) { return e !== 'reference' && e !== 'path-rate'; }))
         .toEqual([]);
-      expect(events.filter(function (e) { return e === 'reference'; })).toHaveLength(5);
+      expect(events.filter(function (e) { return e === 'reference'; })).toHaveLength(2);
       expect(events.filter(function (e) { return e === 'path-rate'; })).toHaveLength(5);
       expect(events.filter(function (e) { return e === 'generate'; })).toHaveLength(6);
     });
@@ -754,7 +1260,8 @@
       expect(ledger.meta.node).toBe(process.version);
       expect(ledger.meta.manifest.requests).toBe(5);
       expect(ledger.meta.manifest.cells).toEqual([
-        { variant: 'classic9', level: 'normal', requests: 5, route: 'direct', unsupported: false }]);
+        { variant: 'classic9', level: 'normal', requests: 5, from: 0, logicalTotal: 5,
+          referenceIndexes: [0, 4], route: 'direct', unsupported: false }]);
       expect(ledger.rows).toHaveLength(5);
       expect(ledger.rows.map(function (row) { return row.tag; })).toEqual([0, 1, 2, 3, 4].map(function (i) {
         return 'classic9:normal:' + i;
@@ -762,8 +1269,16 @@
       expect(ledger.rows.every(function (row) { return row.pipelineSeed === null && row.fullRatings >= 1; }))
         .toBe(true);
       expect(ledger.rows.every(function (row) { return /^[0-9a-f]{16}$/.test(row.puzzleHash); })).toBe(true);
-      expect(ledger.rows.every(function (row) { return row.referenceStatus === 'ok'; })).toBe(true);
+      // the reference is sampled: the first and the last request of the cell, the others are not selected
+      expect(ledger.rows.map(function (row) { return row.referenceStatus; }))
+        .toEqual(['ok', 'not-selected', 'not-selected', 'not-selected', 'ok']);
       expect(ledger.rows.every(function (row) { return row.pathCheck.status === 'ok'; })).toBe(true);
+      expect(ledger.rows.every(function (row) { return row.workCheck.status === 'ok'; })).toBe(true);
+      expect(ledger.meta.acceptance).toBe('canonical-required-tier');
+      // no --shallow-cap: the default of the source is in force, and the ledger says which it is
+      var inForce = SG.digger.SHALLOW_SEARCH_RATINGS;
+      expect([ledger.meta.shallowCap, ledger.meta.shallowSearchRatings])
+        .toEqual([null, inForce === Infinity ? null : inForce]);
       expect(ledger.summary.all.requests).toBe(5);
       expect(ledger.summary.checks.result).toBe('PASS');
       expect(diagnosedText(cached('diag', CELL.concat([JSON_ARG])))).toContain('DIAGNOSTICS: PASS');
@@ -814,6 +1329,305 @@
       expect(run.code).toBe(2);
       expect(run.err.join('\n')).toContain('--json needs a file inside the repository');
       expect(run.writes).toEqual([]);
+    });
+
+    it('rejects weights that break the ordered prefix before any generation, --no-gate included',
+      function () {
+        var rngCalls = 0;
+        var run = runSoak(CELL.concat(['--weights={"nishio":1}', JSON_ARG]), function (sg) {
+          var create = sg.rng.create;
+          sg.rng.create = function () {
+            rngCalls++;
+            return create.apply(this, arguments);
+          };
+        });
+        expect(run.thrown).toBeNull();
+        expect(run.code).toBe(2);
+        var message = run.err.join('\n');
+        expect(message).toContain('break the ordered prefix of the technique ladder');
+        expect(message).toContain('variant classic4, level veryEasy, floor with tier');
+        expect(message).toContain('expected: nakedSingle, hiddenSingleBox, hiddenSingleLine, nishio');
+        expect(message).toContain('actual:   nakedSingle, hiddenSingleBox, hiddenSingleLine, pointing');
+        expect(message).not.toContain('Usage:');
+        expect(run.events).toEqual([]);
+        expect(rngCalls).toBe(0);
+        expect(run.out).toEqual([]);
+        expect(run.writes).toEqual([]);
+      });
+
+    it('keeps malformed JSON in --weights a usage error of its own, not a prefix rejection', function () {
+      var run = runSoak(CELL.concat(['--weights={"nishio":']));
+      expect(run.code).toBe(2);
+      var message = run.err.join('\n');
+      expect(message).toContain('Usage: node tests/soak.js');
+      expect(message).not.toContain('nothing was generated');
+      expect(run.events).toEqual([]);
+    });
+
+    describe('the shallow allowance, the work and the shards of a plan', function () {
+      var CELL4 = ['--variant=classic4', '--level=veryEasy', '--seed=20260101', '--no-gate'];
+
+      function usageError(args, text, inject) {
+        var run = runSoak(args, inject);
+        expect(run.thrown).toBeNull();
+        expect([args.join(' '), run.code]).toEqual([args.join(' '), 2]);
+        expect(run.err.join('\n')).toContain(text);
+        expect(run.events).toEqual([]);
+        expect(run.writes).toEqual([]);
+        return run;
+      }
+
+      ['64', '128', '256', 'none'].forEach(function (cap) {
+        it('--shallow-cap=' + cap + ' sets the allowance of the engine before any generation and says so',
+          function () {
+            var seen = [];
+            var run = runSoak(CELL4.concat(['--count=1', '--shallow-cap=' + cap, JSON_ARG]), function (sg) {
+              var generate = sg.digger.generate;
+              sg.digger.generate = function () {
+                seen.push(sg.digger.SHALLOW_SEARCH_RATINGS);
+                return generate.apply(this, arguments);
+              };
+            });
+            expect(run.thrown).toBeNull();
+            expect(run.code).toBe(0);
+            var expected = cap === 'none' ? Infinity : Number(cap);
+            expect(seen.length).toBeGreaterThan(0);
+            expect(seen.every(function (value) { return value === expected; })).toBe(true);
+            var meta = ledgerOf(run).meta;
+            expect([meta.shallowCap, meta.shallowSearchRatings]).toEqual([cap, cap === 'none' ? null : expected]);
+            expect(run.text).toContain('Shallow-search allowance: ' +
+              (cap === 'none' ? 'none (Infinity)' : cap + ' full ratings') + ' (--shallow-cap)');
+          });
+      });
+
+      it('leaves the default allowance of the source alone without --shallow-cap', function () {
+        var seen = [];
+        var original;
+        var run = runSoak(CELL4.concat(['--count=1', JSON_ARG]), function (sg) {
+          var generate = sg.digger.generate;
+          original = sg.digger.SHALLOW_SEARCH_RATINGS;
+          sg.digger.generate = function () {
+            seen.push(sg.digger.SHALLOW_SEARCH_RATINGS);
+            return generate.apply(this, arguments);
+          };
+        });
+        expect(run.code).toBe(0);
+        expect(seen.length).toBeGreaterThan(0);
+        expect(seen.every(function (value) { return value === original; })).toBe(true);
+        expect(run.text).not.toContain('Shallow-search allowance');
+      });
+
+      it('rejects a --shallow-cap that is not one of 64, 128, 256 and none, before any generation', function () {
+        ['32', '0', 'Infinity', 'abc', ''].forEach(function (value) {
+          usageError(CELL4.concat(['--shallow-cap=' + value]), '--shallow-cap needs one of 64, 128, 256, none');
+        });
+      });
+
+      it('refuses --shallow-cap with a source that has no such setting', function () {
+        usageError(CELL4.concat(['--shallow-cap=64']), 'which this source does not have', function (sg) {
+          delete sg.digger.SHALLOW_SEARCH_RATINGS;
+        });
+      });
+
+      it('runs the shards of one logical cell as the whole cell: same tags, puzzles, work and sampled ends',
+        function () {
+          var whole = runSoak(CELL4.concat(['--count=12', JSON_ARG]));
+          var low = runSoak(CELL4.concat(['--count=6', '--from=0', '--total-count=12', JSON_ARG]));
+          var high = runSoak(CELL4.concat(['--count=6', '--from=6', '--total-count=12', JSON_ARG]));
+          [whole, low, high].forEach(function (run) {
+            expect([run.thrown, run.code]).toEqual([null, 0]);
+          });
+          var all = ledgerOf(whole);
+          var a = ledgerOf(low);
+          var b = ledgerOf(high);
+          expect(all.rows).toHaveLength(12);
+          expect([a.rows.length, b.rows.length]).toEqual([6, 6]);
+          var rows = a.rows.concat(b.rows);
+          var pick = function (row) {
+            return [row.index, row.tag, row.pipelineSeed, row.puzzleHash, row.outcome, row.achieved, row.score,
+              row.generationExact, row.ratingCalls, row.fullRatings, JSON.stringify(row.work),
+              row.referenceStatus, row.workCheck.status];
+          };
+          expect(rows.map(pick)).toEqual(all.rows.map(pick));
+          // the two shards merge into the plan of the whole cell, from their own metadata alone
+          expect(a.meta.toolHash).toMatch(/^[0-9a-f]{64}$/);
+          expect(a.meta.toolHash).toBe(b.meta.toolHash);
+          var merged = F.mergeShards([b, a]);
+          expect([merged.problems, merged.ok]).toEqual([[], true]);
+          expect(merged.rows.map(pick)).toEqual(all.rows.map(pick));
+          expect(F.mergeShards([all]).ok).toBe(true);
+          expect(F.mergeShards([a]).ok).toBe(false);
+          expect(F.mergeShards([a, a]).ok).toBe(false);
+          expect(rows.map(function (row) { return row.index; })).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+          expect(rows.map(function (row) { return row.tag; })).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+            .map(function (i) { return 'classic4:veryEasy:' + i; }));
+          // the sampled references are the first and the last request of the logical cell, whatever the shard
+          expect(all.rows.map(function (row) { return row.referenceStatus === 'not-selected'; })).toEqual(
+            [false, true, true, true, true, true, true, true, true, true, true, false]);
+          expect([a.meta.manifest.shard, b.meta.manifest.shard, all.meta.manifest.shard]).toEqual([
+            { from: 0, count: 6, total: 12 }, { from: 6, count: 6, total: 12 }, null]);
+          expect([a.meta.manifest.requests, a.meta.manifest.logicalRequests, all.meta.manifest.requests,
+            all.meta.manifest.logicalRequests]).toEqual([6, 12, 12, 12]);
+          expect(b.meta.manifest.cells[0]).toEqual({ variant: 'classic4', level: 'veryEasy', requests: 6,
+            from: 6, logicalTotal: 12, referenceIndexes: [0, 11], route: 'direct', unsupported: false });
+          expect(low.text).toContain('Shard of classic4/veryEasy: requests 0 to 5 of a logical cell of 12');
+          expect(high.text).toContain('requests 6 to 11 of a logical cell of 12');
+        });
+
+      it('refuses shard flags that do not describe a shard of one cell, before any generation', function () {
+        usageError(CELL4.concat(['--from=3']), '--from and --total-count need --count=<n>');
+        usageError(CELL4.concat(['--count=0', '--from=0', '--total-count=4']), 'need --count=<n> with n > 0');
+        usageError(CELL4.concat(['--count=6', '--from=6']), '--from > 0 needs --total-count=<N>');
+        usageError(CELL4.concat(['--count=6', '--from=6', '--total-count=11']),
+          '--total-count=11 is less than --from + --count = 12');
+        usageError(CELL4.concat(['--count=6', '--total-count=5']),
+          '--total-count=5 is less than --from + --count = 6');
+        usageError(CELL4.concat(['--count=6', '--from=x']), '--from needs a whole number, not "x"');
+        usageError(CELL4.concat(['--count=6', '--total-count=1.5']), '--total-count needs a whole number');
+        ['--quick', '--full', '--per-combo=3'].forEach(function (flag) {
+          usageError(CELL4.concat(['--count=6', '--from=0', '--total-count=12', flag]),
+            'cannot be combined with --quick, --full or --per-combo');
+        });
+        usageError(['--variant=classic4,classic6', '--count=2', '--from=0', '--seed=1', '--no-gate'],
+          'need exactly one variant and level');
+      });
+
+      it('has the work of every request on the direct and on the pipeline route, conserved against the calls',
+        function () {
+          [['classic4', 'veryEasy', 'direct'], ['killer', 'veryEasy', 'pipeline']].forEach(function (cell) {
+            var run = runSoak(['--variant=' + cell[0], '--level=' + cell[1], '--count=2', '--from=0',
+              '--seed=20260101', '--no-gate', JSON_ARG]);
+            expect([cell[0], run.thrown, run.code]).toEqual([cell[0], null, 0]);
+            var ledger = ledgerOf(run);
+            expect(ledger.meta.manifest.cells[0].route).toBe(cell[2]);
+            expect(ledger.rows).toHaveLength(2);
+            ledger.rows.forEach(function (row) {
+              expect([cell[0], row.workCheck.status]).toEqual([cell[0], 'ok']);
+              expect(row.work.length).toBeGreaterThanOrEqual(1);
+              expect(row.fullRatings).toBe(row.ratingCalls);
+              expect(row.fullRatings).toBeGreaterThanOrEqual(1);
+              expect(row.capHits).toEqual({ shallow: 0, ratings: 0, proposals: 0 });
+            });
+            expect(ledger.summary.checks.workUnavailable).toBe(0);
+            expect(ledger.summary.all.work.checks).toEqual({ ok: 2, mismatch: 0, unavailable: 0 });
+          });
+        });
+
+      it('fails the run when a rating of the generation is made outside the work it counts', function () {
+        var run = runSoak(CELL4.concat(['--count=1', '--from=0', JSON_ARG]), function (sg) {
+          var generate = sg.digger.generate;
+          sg.digger.generate = function () {
+            var p = generate.apply(this, arguments);
+            sg.difficulty.rate(p.model, p.givens);
+            return p;
+          };
+        });
+        expect([run.thrown, run.code]).toEqual([null, 0]);
+        var ledger = ledgerOf(run);
+        expect(ledger.rows[0].workCheck.status).toBe('mismatch');
+        expect(ledger.rows[0].workCheck.reason).toContain('calls');
+        expect(ledger.summary.checks.checkErrors[0]).toContain('classic4/veryEasy#0 work conservation:');
+        expect(ledger.summary.checks.result).toBe('FAIL');
+        expect(run.text).toContain('DIAGNOSTICS: FAIL');
+      });
+
+      it('fails the run when a result carries no work, and says it is unavailable, not zero', function () {
+        var run = runSoak(CELL4.concat(['--count=1', '--from=0', JSON_ARG]), function (sg) {
+          var generate = sg.digger.generate;
+          sg.digger.generate = function () {
+            var p = Object.assign({}, generate.apply(this, arguments));
+            delete p.work;
+            return p;
+          };
+        });
+        expect([run.thrown, run.code]).toEqual([null, 0]);
+        var ledger = ledgerOf(run);
+        expect([ledger.rows[0].fullRatings, ledger.rows[0].work]).toEqual([null, null]);
+        expect(ledger.rows[0].workCheck.status).toBe('unavailable');
+        expect(ledger.summary.checks.workUnavailable).toBe(1);
+        expect(ledger.summary.checks.result).toBe('INCOMPLETE');
+        expect(run.text).toContain('DIAGNOSTICS: INCOMPLETE');
+      });
+
+      it('has the partial work of a request that failed in the digger, and counts the request', function () {
+        var run = runSoak(CELL4.concat(['--count=1', '--from=0', JSON_ARG]), function (sg) {
+          sg.digger.generate = function () {
+            var err = new sg.errors.GenerationError('budget.exceeded', { reason: 'time' });
+            Object.defineProperty(err, 'work', { value: [{ ratings: 0, proposals: 0, maxRatings: 1024,
+              maxProposals: 32768, localSearches: [] }] });
+            throw err;
+          };
+        });
+        expect([run.thrown, run.code]).toEqual([null, 0]);
+        var row = ledgerOf(run).rows[0];
+        expect([row.outcome, row.fullRatings, row.workCheck.status]).toEqual(['error', 0, 'ok']);
+      });
+
+      it('reports a disagreement of the exact flag with the derived certificate as an I5 violation',
+        function () {
+          var run = runSoak(CELL4.concat(['--count=1', '--from=0', '--verbose', JSON_ARG]), function (sg) {
+            var generate = sg.digger.generate;
+            sg.digger.generate = function () {
+              return Object.assign({}, generate.apply(this, arguments), { exact: false });
+            };
+          });
+          expect([run.thrown, run.code]).toEqual([null, 0]);
+          var ledger = ledgerOf(run);
+          expect(ledger.summary.checks.invariantViolations.I5).toBe(1);
+          expect(run.text).toContain('the generator says exact false, the derived certificate true');
+          expect(ledger.summary.checks.result).toBe('FAIL');
+          var control = ledgerOf(runSoak(CELL4.concat(['--count=1', '--from=0', JSON_ARG])));
+          expect(control.summary.checks.invariantViolations.I5).toBe(0);
+        });
+    });
+
+    describe('the exact flag, not the level names, decides a hit on either route', function () {
+      var VERY_EASY = ['--level=veryEasy', '--count=1', '--seed=20260101', '--no-gate'];
+
+      function exactOf(run) {
+        var m = /^exact: (\d+) of (\d+)/m.exec(run.text);
+        expect(m).not.toBeNull();
+        return [Number(m[1]), Number(m[2])];
+      }
+
+      /** Very easy of a variant (every puzzle is in its level there), with the flag of the route changed. */
+      function flagged(variant, route, mode) {
+        var names = [];
+        var run = runSoak(['--variant=' + variant].concat(VERY_EASY), function (sg) {
+          var host = route === 'direct' ? sg.digger : sg.pipeline;
+          var method = route === 'direct' ? 'generate' : 'run';
+          var real = host[method];
+          host[method] = function () {
+            var result = real.apply(this, arguments);
+            if (mode === 'real') return result;
+            names.push(route === 'direct' ? result.achieved : result.rating.level);
+            var changed = Object.assign({}, result);
+            if (mode === 'false') changed.exact = false;
+            else delete changed.exact;
+            return changed;
+          };
+        });
+        expect(run.thrown).toBeNull();
+        expect(run.code).toBe(0);
+        return { run: run, names: names };
+      }
+
+      [['direct', 'classic9'], ['pipeline', 'killer']].forEach(function (pair) {
+        var route = pair[0];
+        var variant = pair[1];
+
+        it('on the ' + route + ' route (' + variant + '): equal level names with false or absent exact miss',
+          function () {
+            var control = exactOf(flagged(variant, route, 'real').run);
+            expect(control[0]).toBeGreaterThan(0);
+            ['false', 'absent'].forEach(function (mode) {
+              var changed = flagged(variant, route, mode);
+              expect(changed.names.filter(function (name) { return name === 'veryEasy'; }).length)
+                .toBeGreaterThanOrEqual(5);
+              expect([mode, exactOf(changed.run)]).toEqual([mode, [0, control[1]]]);
+            });
+          });
+      });
     });
   });
 })();

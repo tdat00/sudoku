@@ -15,7 +15,7 @@ checkpoint level is evidence, not permission to remove it yet.
 
 ## Scope
 
-In: full135-cell GQ-first, full GG check, GD, merged checkpoint record.
+In: full 135-cell GQ-first, full GG check, GD, merged checkpoint record.
 Out: live table/support-list changes, tuning, solver/generator edits or calibration.
 
 ## Repository rules
@@ -32,7 +32,7 @@ R24, verbatim:
 > intermediate availability shortfalls are recorded as such, not relabelled green or fixed by
 > weakening requiredness.
 
-Checklist Q is the fixed 15x9 manifest. Use jobs4, default selected settings, qualifier seed base
+Checklist Q is the fixed 15x9 manifest. Use jobs 4, default selected settings, qualifier seed base
 20260601, 40/100 protocol and 120000ms request guard. No diagnostic overrides or --probe.
 MS07d merge checks all metadata/requests; current offered lists do not restrict the matrix.
 Baseline anchors: `generator/tests/qualify.js:141-171` (`function child` / `out.hit =`),
@@ -47,10 +47,13 @@ Baseline anchors: `generator/tests/qualify.js:141-171` (`function child` / `out.
 
 ## Implementation steps
 
-1. Record source/defaults, machine/Node/jobs and the exact matrix.
+1. Record source/defaults, machine/Node/jobs and the exact matrix. Read MS07b's non-vacuous Hell 1
+   pilot, or MS07c's replacement if C changed; report its per-request and projected 20-request
+   GD times before scheduling the Hell 1 batch. It is an estimate, not current gate evidence.
 2. Run one bounded complete cell at a time; keep failed attempts separately, never invent a row.
 3. Merge only complete validated cells; publish checkpoint-only records.
-4. Check the full hash corpus against current expectations and run GD once.
+4. Check the full hash corpus against current expectations and obtain complete GD coverage once
+   through the checklist's bounded group/level shards.
 5. Report correctness failures separately from measured availability shortfalls.
 
 ## Acceptance criteria — Business
@@ -64,8 +67,8 @@ Baseline anchors: `generator/tests/qualify.js:141-171` (`function child` / `out.
 
 | ID | Criterion |
 |---|---|
-| MS07e-T01 | All135 cells, jobs4, exact protocol/source identity and complete merged requests |
-| MS07e-T02 | Full520-key GG check and GD evidence; soundness/API failures block |
+| MS07e-T01 | All 135 cells, jobs 4, exact protocol/source identity and complete merged requests |
+| MS07e-T02 | Full 520-key GG check and GD evidence; soundness/API failures block |
 | MS07e-T03 | Live offers/table unchanged; both quick sets verified |
 
 ## Test plan and gates
@@ -77,17 +80,28 @@ node tests\qualify.js --variant=classic4 --level=veryEasy --jobs=4 --json=..\doc
 node tests\qualify.js --merge=..\docs\difficulty-v3\evidence\MS07e\qualification --jobs=4 --json=..\docs\difficulty-v3\qualification-checkpoint-2026-11-12.json --markdown=..\docs\difficulty-v3\evidence\MS07e\table.md
 node tests\perf.js --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic4-veryEasy-00.json
 node tests\perf.js --hash-merge=..\docs\difficulty-v3\evidence\MS07e\hashes --check-hashes
-node tests\node-runner.js --suite=difficulty
+Invoke-Dv3Node -Task MS07e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=difficulty','--filter=time) > nightmare >')
 ```
 
-Complete E's520 hash identities before merge; **check only**, never --update-hashes in this task.
+Complete E's 520 hash identities before merge; **check only**, never --update-hashes in this task.
 Build the checkpoint narrative around the generated table, not by overwriting the live report.
 GQ jobs=4, others jobs=1/no --jobs. Planning allowance: 10-540 seconds/GQ cell, approximately
-1-12 hours total; GG10-90 minutes, GD1-8 minutes. Record actuals; no v3 benchmark is known yet.
+1-12 hours total; GG 10-90 minutes. GD uses checklist section 7's complete bounded manifest:
+retain the first Nightmare shard and separately run/retain the Hell 1 batch early, then every
+other offered-level/non-batch group exactly once. Project from the MS07b/MS07c pilot and actuals,
+especially the now-nonvacuous Hell 1. If its projected batch exceeds 450 seconds, stop before
+launch for an orchestrator-assigned protocol-preserving bounded solution; do not lift the
+540-second ceiling. No single full-suite invocation
+or assumed 1-8-minute ceiling is safe. Every selected group must have nonzero coverage.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Stop a command at ten minutes. A slow cell needing a safe protocol-preserving split is an explicit
 blocker, not permission to truncate, change worker count or call --probe.
-Both quick sets complete acceptance.
+Known intermediate requiredness-related hit/median-time failures remain failed assertions in the
+record and go to MS18d; do not lower budgets or call GD green. Correctness/incomplete coverage blocks.
+Use `--filter=time) > hell1 >` for the separate Hell 1 command, exactly as for Nightmare, only
+when it is in the recorded offered manifest. Do not count the two-request pilot as the unchanged
+20-request manual batch or the 40/100-request jobs-4 GQ cell.
+Use the shared lock for all gate/quick commands over 10 seconds. Both quick sets complete acceptance.
 
 ## Definition of done & handoff
 

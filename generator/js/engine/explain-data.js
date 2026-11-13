@@ -129,7 +129,9 @@
   }, ['clues', 'score']);
 
   explain.tune = describeStep('tune', 7, [
-    ['compare', 0], // if the level of the puzzle is the requested level:
+    // if the puzzle has a complete proof, its score is in the requested band and it needs a technique of the
+    // requested tier (the techniques the level adds to its floor; the first level needs none):
+    ['compare', 0],
     ['accept', 1], // accept the puzzle
     ['retry', 1], // otherwise dig another puzzle, or draw a new grid
     ['best', 0], // when the attempts run out, use the closest puzzle
@@ -137,6 +139,7 @@
   ], {
     'tune.hit': 'accept',
     'tune.miss': 'retry',
+    'tune.shallow': 'retry',
     'retry.difficulty': 'retry',
     'tune.best': 'best',
     'tune.final': 'package'

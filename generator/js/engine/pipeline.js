@@ -110,7 +110,10 @@
   // attempts and samples), attempts (full grids generated), warnings (i18n keys: 'difficulty.approximate' =
   // closest puzzle returned, 'digger.unsoundTechnique', 'trace.downgraded'), digLog (dig log of
   // SG.digger.generate for the sample that became the puzzle; the UI builds its replay from it, whatever
-  // `config.trace` was).
+  // `config.trace` was), work (internal, not part of any exchange format or option: the counters of each
+  // attempt, `GeneratedPuzzle.work` of the digger, with its local searches; owned plain data, a copy on the
+  // wire, and absent, never zero, when the result comes from a wire or cache entry written before it
+  // existed).
 
   // `emit` is a sink function, an `SG.events` emitter (which decides the verbosity) or null; a sink gets an
   // emitter with verbosity `config.trace`. At 'off' only step start/end, `done` and `error` events are sent.
@@ -244,7 +247,8 @@
       timings: Object.assign({}, stage.timings),
       attempts: puzzle.attempts,
       warnings: warnings.concat(puzzle.warnings),
-      digLog: puzzle.log
+      digLog: puzzle.log,
+      work: puzzle.work
     };
     em.done({
       requested: cfg.difficulty,
@@ -288,12 +292,20 @@
     };
   }
 
+  // The owned copy of the work of a result or a wire (`SG.digger.copyWork`), or undefined when there is none
+  // or it is not of that shape: unavailable, never read as zero.
+  function workCopy(work) {
+    const copy = SG.digger.copyWork(work);
+    return copy === null ? undefined : copy;
+  }
+
   // The PuzzleResult as data that survives postMessage and nothing else: the model is reduced to what
   // `SG.model.create` needs (`cellUnits` and `peers` are derived and stay behind). Typed arrays are shared,
   // not copied; the clone `postMessage` makes is the copy. `exact` is a strict boolean (a result without it
-  // is not exact); the wire version stays 1, because `fromWire` reads an absent flag as false.
+  // is not exact); the wire version stays 1, because `fromWire` reads an absent flag as false. The internal
+  // `work` crosses as a fresh copy of its counters, and is left out when the result has none.
   function toWire(result) {
-    return {
+    const wire = {
       v: WIRE_VERSION,
       model: modelToWire(result.model),
       givens: result.givens,
@@ -307,6 +319,9 @@
       warnings: result.warnings,
       digLog: result.digLog
     };
+    const work = workCopy(result.work);
+    if (work !== undefined) wire.work = work;
+    return wire;
   }
 
   // Rebuilds a PuzzleResult from `toWire` data on the receiving thread. The model is created anew with
@@ -315,7 +330,8 @@
   // and count solutions of a different puzzle. Per-model side data the variants keep in WeakMaps (layout
   // report, sign scope, build notes) does not cross; the UI does not read it. Throws 'unexpected' for data of
   // another wire version. `exact` is true only for a wire that says `exact === true`: an absent or other
-  // value (a result cached before the flag existed) is false, never rebuilt from matching level names.
+  // value (a result cached before the flag existed) is false, never rebuilt from matching level names. `work`
+  // is a copy of the wire's, or undefined for a wire without it (or with a malformed one): never zero work.
   function fromWire(wire) {
     if (wire === null || typeof wire !== 'object' || wire.v !== WIRE_VERSION || !wire.model) {
       throw fail('unexpected', { message: 'unsupported result format' });
@@ -334,7 +350,8 @@
       timings: wire.timings,
       attempts: wire.attempts,
       warnings: wire.warnings,
-      digLog: Array.isArray(wire.digLog) ? wire.digLog : undefined
+      digLog: Array.isArray(wire.digLog) ? wire.digLog : undefined,
+      work: workCopy(wire.work)
     };
   }
 

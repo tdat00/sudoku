@@ -112,6 +112,7 @@
     expect(a.attempts).toBe(b.attempts);
     expect(a.warnings).toEqual(b.warnings);
     expect(a.model).toEqual(b.model);
+    expect(a.work).toEqual(b.work);
     expect(Object.keys(a.timings)).toEqual(Object.keys(b.timings));
   }
 
@@ -120,6 +121,7 @@
     { variantId: 'classic9', difficulty: 'normal', seed: 7, trace: 'summary' },
     { variantId: 'classic9', difficulty: 'hard', seed: 3, trace: 'off' },
     { variantId: 'classic9', difficulty: 'master', seed: 11, trace: 'summary', maxAttempts: 1 },
+    { variantId: 'classic9', difficulty: 'nightmare', seed: 42, trace: 'summary', maxAttempts: 1 },
     { variantId: 'killer', difficulty: 'easy', seed: 2, trace: 'summary' },
     { variantId: 'greaterThan', difficulty: 'easy', seed: 5, trace: 'summary' },
     { variantId: 'jigsaw9', difficulty: 'normal', seed: 4, trace: 'summary' },
@@ -373,10 +375,12 @@
 
   describe('Resumable variant work: Killer layout and Greater-Than sign dig', function () {
     // Seeds picked for the work they need: the Killer ones repair the layout (split / merge / reveal),
-    // the Greater-Than ones run several rounds of the sign dig.
+    // the Greater-Than ones run several rounds of the sign dig. The Killer puzzles of these seeds are in the
+    // band but need no technique of the level, so a full run would search on for all eight attempts: one
+    // attempt (the one that repairs the layout) is the work these checks are about.
     var SLICED = [
-      { variantId: 'killer', difficulty: 'hard', seed: 5, trace: 'full' },
-      { variantId: 'killer', difficulty: 'master', seed: 2, trace: 'summary' },
+      { variantId: 'killer', difficulty: 'hard', seed: 5, trace: 'full', maxAttempts: 1 },
+      { variantId: 'killer', difficulty: 'master', seed: 2, trace: 'summary', maxAttempts: 1 },
       { variantId: 'greaterThan', difficulty: 'hard', seed: 3, trace: 'full' },
       { variantId: 'greaterThan', difficulty: 'master', seed: 2, trace: 'summary' }
     ];
@@ -620,6 +624,92 @@
           expect(P.fromWire(Object.assign({}, old, { exact: odd })).exact).toBe(false);
         });
       });
+
+    it('MS05r3-T02: the work crosses the wire as owned plain data, nested records copied', function () {
+      var made = P.run({ variantId: 'classic4', difficulty: 'veryEasy', seed: 5, trace: 'off' }, null);
+      expect(SG.digger.copyWork(made.work)).toEqual(made.work);
+      var work = [
+        { ratings: 40, proposals: 900, maxRatings: 1024, maxProposals: 32768, localSearches: [
+          { ratings: 30, proposals: 880, firstShallowAt: 2, shallowRatings: 28, shallowLimit: 64,
+            capHit: 'shallow' },
+          { ratings: 0, proposals: 0, firstShallowAt: null, shallowRatings: 0, shallowLimit: null,
+            capHit: null }] },
+        { ratings: 9, proposals: 3, maxRatings: 1024, maxProposals: 32768, localSearches: [
+          { ratings: 9, proposals: 3, firstShallowAt: 0, shallowRatings: 9, shallowLimit: null,
+            capHit: 'ratings' },
+          { ratings: 1, proposals: 3, firstShallowAt: null, shallowRatings: 0, shallowLimit: 256,
+            capHit: 'proposals' }] }
+      ];
+      var source = Object.assign({}, made, { work: work });
+      var wire = P.toWire(source);
+      expect(wire.work).toEqual(work);
+      expect(wire.work).not.toBe(work);
+      expect(wire.work[0].localSearches).not.toBe(work[0].localSearches);
+      expect(wire.work[0].localSearches[0]).not.toBe(work[0].localSearches[0]);
+      // plain counters and nothing else: no timing is part of the work
+      expect(Object.keys(wire.work[0])).toEqual(['ratings', 'proposals', 'maxRatings', 'maxProposals',
+        'localSearches']);
+      expect(Object.keys(wire.work[0].localSearches[0])).toEqual(['ratings', 'proposals', 'firstShallowAt',
+        'shallowRatings', 'shallowLimit', 'capHit']);
+      var cloned = structuredClone(wire);
+      expect(cloned).toEqual(wire);
+      var back = P.fromWire(cloned);
+      expect(back.work).toEqual(work);
+      // each side owns its copy: changing one changes neither the other nor the wire
+      back.work[0].localSearches[0].ratings = 999;
+      work[1].localSearches[1].capHit = null;
+      expect(cloned.work[0].localSearches[0].ratings).toBe(30);
+      expect(wire.work[1].localSearches[1].capHit).toBe('proposals');
+      expect(P.fromWire(cloned).work[0].localSearches[0].ratings).toBe(30);
+      expect(P.fromWire(cloned).work).not.toBe(P.fromWire(cloned).work);
+    });
+
+    it('MS05r3-T02: a real result carries its work over the wire; no work stays unavailable, never zero',
+      function () {
+        var made = P.run({ variantId: 'classic9', difficulty: 'master', seed: 1, trace: 'off', maxAttempts: 1 },
+          null);
+        expect(made.work.length).toBeGreaterThanOrEqual(1);
+        var back = P.fromWire(structuredClone(P.toWire(made)));
+        expect(back.work).toEqual(made.work);
+        expect(back.work).not.toBe(made.work);
+        // a result without work, a wire from before the work existed and a malformed one: unavailable
+        var bare = Object.assign({}, made);
+        delete bare.work;
+        var wire = structuredClone(P.toWire(bare));
+        expect('work' in wire).toBe(false);
+        expect(P.fromWire(wire).work).toBe(undefined);
+        var old = structuredClone(P.toWire(made));
+        delete old.work;
+        expect(P.fromWire(old).work).toBe(undefined);
+        var good = { ratings: 1, proposals: 0, maxRatings: 1024, maxProposals: 32768, localSearches: [] };
+        var search = { ratings: 1, proposals: 1, firstShallowAt: null, shallowRatings: 0, shallowLimit: null,
+          capHit: null };
+        [null, 'x', {}, [null], [{ ratings: 1 }], [Object.assign({}, good, { ratings: -1 })],
+          [Object.assign({}, good, { ratings: 1.5 })], [Object.assign({}, good, { localSearches: null })],
+          [Object.assign({}, good, { localSearches: [Object.assign({}, search, { capHit: 'other' })] })],
+          [Object.assign({}, good, { localSearches: [Object.assign({}, search, { shallowLimit: Infinity })] })],
+          [Object.assign({}, good, { localSearches: [Object.assign({}, search, { firstShallowAt: -1 })] })],
+          [Object.assign({}, good, { localSearches: [null] })]].forEach(function (odd, k) {
+          var tampered = structuredClone(P.toWire(made));
+          tampered.work = odd;
+          expect([k, P.fromWire(tampered).work]).toEqual([k, undefined]);
+          expect('work' in P.toWire(Object.assign({}, made, { work: odd }))).toBe(false);
+        });
+        // the same fields that were there are all there: nothing else of the result moved
+        var restored = P.fromWire(structuredClone(P.toWire(made)));
+        expectSameResult(restored, made);
+      }, SLOW);
+
+    it('MS05b1-T05: a shallow fallback crosses the wire with exact false and its two warnings', function () {
+      var made = P.run({ variantId: 'classic9', difficulty: 'nightmare', seed: 42, trace: 'off',
+        maxAttempts: 1 }, null);
+      expect(made.exact).toBe(false);
+      expect(made.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+      var back = P.fromWire(structuredClone(P.toWire(made)));
+      expectSameResult(back, made);
+      expect(back.exact).toBe(false);
+      expect(back.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+    }, SLOW);
 
     it('refuses data that is not of its version', function () {
       expectCode((function () { try { P.fromWire({ v: 99 }); } catch (e) { return e; } })(), 'unexpected');

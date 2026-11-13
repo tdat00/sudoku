@@ -139,8 +139,8 @@ changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-a
   puzzle within one generator version), remove one, or clear the list.
 - **Bilingual interface** (English / Vietnamese), switched without a reload; every string, including the
   solving techniques and the variant rules, exists in both languages.
-- **Guaranteed result** — exactly one solution (checked by a separate solver), the requested level or, when it
-  cannot be reached, the closest puzzle with a clear notice.
+- **Guaranteed result** — exactly one solution (checked by a separate solver), the requested level (a score in its
+  band and a technique of that level's tier) or, when it cannot be reached, the best puzzle with a clear notice.
 - **Print / PDF** — the Print dialog prints the puzzles you tick in the saved list (the one on screen is ticked at
   first), 1, 2 or 4 to a page (4 at first), optionally with their solutions on pages of their own; choose "Save as PDF" in the print dialog to get a PDF file (vector graphics, so the lines stay sharp).
 - **Text export** — the **Export** button next to **Print** shows the puzzles you tick in the saved list as readable text (`#1,Classic Sudoku 9x9,Hard,<seed>` then one grid row per line, `.` for empty cells) with a Copy

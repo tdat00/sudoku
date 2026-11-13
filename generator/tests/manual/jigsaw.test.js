@@ -840,13 +840,19 @@
             if (clueCount(p.givens) < spec.minClues) throw new Error('puzzle ' + i + ': too few clues');
             expect(p.config.difficulty).toBe(level);
             expect(p.rating.solved).toBe(true);
-            if (p.rating.level === level) {
+            var again = SG.difficulty.rate(p.model, p.givens);
+            if (p.exact === true) {
               exact++;
+              expect(p.rating.level).toBe(level);
               expect(p.rating.score).toBeGreaterThanOrEqual(spec.min);
               expect(p.rating.score).toBeLessThan(spec.max);
+              expect(SG.difficulty.requiredOf(again, level, p.model).required).toBe(true);
               expect(p.warnings).toEqual([]);
+            } else {
+              expect(p.warnings).toContain('difficulty.approximate');
+              expect(p.warnings.indexOf('difficulty.shallow') !== -1).toBe(p.rating.level === level);
             }
-            expect(SG.difficulty.rate(p.model, p.givens).level).toBe(p.rating.level);
+            expect(again.level).toBe(p.rating.level);
           });
           // The 90% hit rate that tests/soak.js asks of classic9 holds for jigsaw9 as well.
           expect(exact / countOf(level)).toBeGreaterThanOrEqual(0.9);

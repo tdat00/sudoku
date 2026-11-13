@@ -527,10 +527,14 @@
               var spec = SG.difficulty.spec(level, p.model);
               check(clueCount(p.givens) >= spec.minClues, tag + ' has fewer clues than ' + spec.minClues);
               check(p.rating.solved === true, tag + ': no complete proof');
-              if (p.rating.level === level) {
+              if (p.exact === true) {
+                check(p.rating.level === level, tag + ': exact, but rated ' + p.rating.level);
                 check(p.rating.score >= spec.min && p.rating.score < spec.max, tag + ': score not in band');
+                var verdict = SG.difficulty.requiredOf(p.rating, level, p.model);
+                check(verdict !== null && verdict.required === true, tag + ': exact without its tier');
               } else {
                 expect(p.warnings).toContain('difficulty.approximate');
+                expect(p.warnings.indexOf('difficulty.shallow') !== -1).toBe(p.rating.level === level);
               }
             });
           });
@@ -547,7 +551,7 @@
         function () {
           var exact = 0;
           allPuzzles(id).forEach(function (p) {
-            if (p.rating.level === p.config.difficulty) exact++;
+            if (p.exact === true) exact++;
           });
           expect(exact / allPuzzles(id).length).toBeGreaterThan(0.85);
         });

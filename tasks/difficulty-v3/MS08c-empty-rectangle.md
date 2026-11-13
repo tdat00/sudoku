@@ -29,18 +29,18 @@ R11, verbatim:
 > External conjugate pair p/q has p conflicting with every occurrence in A; then B or q is true.
 > Eliminate only where every B occurrence and q are seen.
 
-Register emptyRectangle: fish, order124, weight380, baseCost38, unscoped, no uniqueness.
+Register emptyRectangle: fish, order 124, weight 380, baseCost 38, unscoped, no uniqueness.
 Both external pair cells are outside the box. Reject a candidate at the empty intersection and
 three-line boxes; test both arm orientations/transposes. Use safe owner tables and complete units.
 Finding key `technique.emptyRectangle.step`; args `{digit,box:string,lines:string[],ends:string[]}`;
 normal R10 Finding fields, sorted owned cells/eliminations, no placements.
 
-Vector: box B1 digit5 arms A={R2C1,R2C3}, B={R1C2,R3C2}, no5 at R2C2.
-External column-C5 pair p=R2C5,q=R7C5 gives elimination5 at R7C2.
-Adding5 at the intersection or outside the arms invalidates this restricted witness.
+Vector: box B1 digit 5 arms A={R2C1,R2C3}, B={R1C2,R3C2}, no 5 at R2C2.
+External column-C5 pair p=R2C5,q=R7C5 gives elimination 5 at R7C2.
+Adding 5 at the intersection or outside the arms invalidates this restricted witness.
 Missing visibility to R3C2 must invalidate the target, even if it sees R1C2.
 
-Limit50000 tested arm/pair/target extensions; entry/every256 checks, reset each call, report metrics.
+Limit 50000 tested arm/pair/target extensions; entry/every 256 checks, reset each call, report metrics.
 Incomplete support search never supplies a false group claim.
 Baseline `core/js/engine/tech-fish.js:56-125` (ownership), `:309-335` (`function findStrongLinks`);
 current R10 integration is the B contract.
@@ -89,8 +89,8 @@ node tests\tools\make-technique-examples.js ..\generator --ids=emptyRectangle --
 node tests\tools\make-technique-examples.js ..\generator --ids=emptyRectangle --sources=tests\artifacts\difficulty-v3\MS08c\sources.json --max-puzzles=8 --max-hints=400 --check
 ```
 
-Prefer existing forcingChain/colour sources, then bounded classic9 hard/expert. Jobs1/no --jobs;
-E10-90 minutes, cost1-30 seconds, curated GH1-120 seconds; discovery<=8 minutes.
+Prefer existing forcingChain/colour sources, then bounded classic9 hard/expert. Jobs 1/no --jobs;
+E 10-90 minutes, cost 1-30 seconds, curated GH 1-120 seconds; discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 At most one evidenced own-limit change; stop any command at ten minutes.
 

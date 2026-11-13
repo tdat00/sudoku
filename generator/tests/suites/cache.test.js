@@ -428,6 +428,7 @@
       expect(a.attempts).toBe(b.attempts);
       expect(a.warnings).toEqual(b.warnings);
       expect(a.model).toEqual(b.model);
+      expect(a.work).toEqual(b.work);
       expect(Object.keys(a.timings)).toEqual(Object.keys(b.timings));
     }
 
@@ -512,6 +513,52 @@
       delete before.exact;
       expect(C.deserialize(before).exact).toBe(false);
     });
+
+    it('MS05r3-T02: keeps the work of the generation, nested records included; an old entry has none',
+      function () {
+        const made = P.run({ variantId: 'classic9', difficulty: 'master', seed: 1, trace: 'off',
+          maxAttempts: 1 }, null);
+        const work = [{ ratings: 7, proposals: 12, maxRatings: 1024, maxProposals: 32768, localSearches: [
+          { ratings: 5, proposals: 12, firstShallowAt: 2, shallowRatings: 3, shallowLimit: 64,
+            capHit: 'shallow' },
+          { ratings: 1, proposals: 0, firstShallowAt: null, shallowRatings: 0, shallowLimit: null,
+            capHit: null }] }];
+        [made.work, work].forEach(function (list) {
+          const data = C.serialize(Object.assign({}, made, { work: list }));
+          const back = C.deserialize(JSON.parse(JSON.stringify(data)), { trace: 'off' });
+          expect(back.work).toEqual(list);
+          expect(back.work).not.toBe(list);
+          expect(back.work[0].localSearches).not.toBe(list[0].localSearches);
+          expect(C.deserialize(JSON.stringify(data), { trace: 'off' }).work).toEqual(list);
+        });
+        const before = JSON.parse(JSON.stringify(C.serialize(made)));
+        delete before.work;
+        expect(C.deserialize(before, { trace: 'off' }).work).toBe(undefined);
+        const bare = Object.assign({}, made);
+        delete bare.work;
+        expect('work' in C.serialize(bare)).toBe(false);
+        // a malformed list is unavailable, never an empty list or zero work
+        const odd = JSON.parse(JSON.stringify(C.serialize(made)));
+        odd.work = [{ ratings: 7 }];
+        expect(C.deserialize(odd, { trace: 'off' }).work).toBe(undefined);
+      });
+
+    it('MS05b1-T05: a shallow fallback keeps exact false and both warnings; a required result keeps its flag',
+      function () {
+        const shallow = P.run({ variantId: 'classic9', difficulty: 'nightmare', seed: 42, trace: 'summary',
+          maxAttempts: 1 }, null);
+        expect(shallow.exact).toBe(false);
+        expect(shallow.rating.level).toBe('nightmare');
+        expect(shallow.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+        const back = C.deserialize(JSON.parse(JSON.stringify(C.serialize(shallow))), { trace: 'summary' });
+        expect(back.exact).toBe(false);
+        expect(back.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+        sameButTimings(back, shallow);
+        const required = P.run(CASES[0], null);
+        const again = C.deserialize(JSON.parse(JSON.stringify(C.serialize(required))), { trace: 'full' });
+        expect(again.exact).toBe(required.exact);
+        expect(again.warnings).toEqual(required.warnings);
+      });
 
     it('refuses data that is not a valid puzzle', function () {
       const made = P.run(CASES[0], null);

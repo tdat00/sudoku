@@ -29,18 +29,18 @@ R11, verbatim:
 > endpoint of each is in the same box and conflicts; at least one remaining endpoint is d.
 > Targets see both remaining endpoints.
 
-Register `twoStringKite`: fish, order114, weight340, baseCost34, unscoped, no uniqueness assumption.
+Register `twoStringKite`: fish, order 114, weight 340, baseCost 34, unscoped, no uniqueness assumption.
 Finding: `{technique,cells,placements:[],eliminations,i18nKey,i18nArgs}` with
 key `technique.twoStringKite.step`, args `{digit,lines:string[],bridge:string[],ends:string[]}`.
 All lists are owned/sorted/deduplicated; labels are strings, digit remains numeric.
 
 Use complete units and existing unambiguous owner tables. Check all four cells distinct, both
 bridge endpoints in the same real box, and all target peer obligations. No box => no pattern.
-Bound tested pair/orientation extensions at50000, entry/every256 budget checks, per-call reset,
+Bound tested pair/orientation extensions at 50000, entry/every 256 budget checks, per-call reset,
 MS07a work callback; cancellation propagates.
 
-Geometry vector: digit5 row R2 pair C1/C8, column C2 pair R1/R7. R2C1/R1C2 share box;
-remove5 at R7C8. Negative: shared endpoint, missing box link, incomplete row/column, target seeing
+Geometry vector: digit 5 row R2 pair C1/C8, column C2 pair R1/R7. R2C1/R1C2 share box;
+remove 5 at R7C8. Negative: shared endpoint, missing box link, incomplete row/column, target seeing
 only one free end. Include transpose and ambiguous multigrid ownership.
 Baseline: `core/js/engine/tech-fish.js:56-125` (owner tables), `:309-335`
 (`function findStrongLinks`); `core/tests/suites/techniques.test.js:71-87`.
@@ -49,7 +49,7 @@ Baseline: `core/js/engine/tech-fish.js:56-125` (owner tables), `:309-335`
 
 - Fish engine/suite; full B (current fixtures/registry/weights/references, both apps' locales/help,
   generated real example, notes) and E.
-- Generator design6.6, Player hint design, both language user/developer guides.
+- Generator design 6.6, Player hint design, both language user/developer guides.
 
 ## Implementation steps
 
@@ -92,8 +92,8 @@ node tests\tools\make-technique-examples.js ..\generator --ids=twoStringKite --s
 node tests\tools\make-technique-examples.js ..\generator --ids=twoStringKite --sources=tests\artifacts\difficulty-v3\MS08b\sources.json --max-puzzles=8 --max-hints=400 --check
 ```
 
-Use B's existing colour/chain sources then bounded classic9 hard/expert discovery. Jobs1/no --jobs;
-E10-90 minutes, cost1-30 seconds, curated GH1-120 seconds; discovery<=8 minutes.
+Use B's existing colour/chain sources then bounded classic9 hard/expert discovery. Jobs 1/no --jobs;
+E 10-90 minutes, cost 1-30 seconds, curated GH 1-120 seconds; discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Own limit can change once with evidence; no other task's limit is tuned.
 

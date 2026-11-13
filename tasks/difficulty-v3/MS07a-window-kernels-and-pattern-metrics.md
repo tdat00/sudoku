@@ -65,9 +65,22 @@ Fail unknown IDs, missing fixtures, empty selection or incomplete runs. Eight-mi
 check it again after a finder that may swallow budget.exceeded. No generated puzzle discovery.
 Pure parser/aggregation tests go in a quick suite; never assert wall-clock thresholds there.
 
-For rare techniques, retain all existing 120/300 random states and minFirings=3. Add deterministic
-real positive states to `opts.states` using H.assertSound's existing API, and assert the resulting
-random-plus-supplement count. Do not lower minFirings, skip an ID or replace random inputs.
+For rare techniques, retain all existing 120/300 random states and minFirings=3.
+`H.assertSound` uses `opts.states` **instead of** generating random states, so never pass only
+the supplements. Use this exact construction with the call site's existing model, count, seed
+and other options; the unexported default seed is 20260101:
+
+```js
+const seed = opts.seed === undefined ? 20260101 : opts.seed;
+const random = H.randomStatesWithKnownSolution(m, SG.testkit.rng.create(seed), count);
+opts.states = random.concat(supplements);
+opts.minFirings = 3;
+const stats = H.assertSound(t, techniqueId, opts);
+expect(stats.states).toBe(count + supplements.length);
+```
+
+Keep the existing count (120 or 300), `maxSteps` and seed; do not lower minFirings, skip an ID
+or replace random inputs. Test the actual random prefix as well as the total count.
 Use explicit fixture `after` arrays; historical LADDER is never extended.
 
 ### Anchors at `2c665bb`
@@ -110,12 +123,12 @@ Use explicit fixture `after` arrays; historical LADDER is never extended.
 | MS07a-T01 | Minimum/max edge semantics, two-path max, depth minimum and exhaustion are tested |
 | MS07a-T02 | Existing wrappers/fixtures stay unchanged and generic >12 tests remain possible |
 | MS07a-T03 | Metric records are bounded, deterministic apart from time, complete or explicit failure |
-| MS07a-T04 | State immutability, cancellation, script/test lists and both quick sets pass |
+| MS07a-T04 | State immutability, cancellation, unchanged random prefix plus supplements, script/test lists and both quick sets pass |
 
 ## Test plan
 
 Test a minimum 3-edge proof with requested min 5 => null, minimum 7 with [5,12] => Finding,
-max 6 => null; two paths 4/6 => length 6. Nishio depth1 proof with [2,2] => null.
+max 6 => null; two paths 4/6 => length 6. Nishio depth 1 proof with [2,2] => null.
 Test a shorter proof on a later root, ties, capped scan and supplementary/random counts.
 Generator: `node tests\node-runner.js --suite=tech-chain,techniques,pattern-cost-tools,ui-contract,help`;
 then both quick sets. Cost tool parser/render tests use fake results, not claimed gate evidence.

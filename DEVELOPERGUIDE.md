@@ -222,23 +222,28 @@ everything through `emit` as `GenerationEvent`s:
 eight cells (`{ cells: [{ i, value, state }], highlight, unhighlight }`), never a snapshot.
 `SG.events.VOCABULARY` is the contract for every event key.
 
-`dig`, `rate` and `tune` are three steps that repeat per *dig sample*: when the puzzle that was just dug misses
-the requested level (`tune.miss`), the next sample is dug from the same grid (up to 12 per grid); when none of
+`dig`, `rate` and `tune` are three steps that repeat per *dig sample*: when the puzzle that was just dug does not
+count as reached (`tune.miss`, or `tune.shallow` when its score is in the requested band but it needs no technique
+of the level's tier), the next sample is dug from the same grid (up to 12 per grid); when none of
 them hits, a local search starts from the closest one (it adds, removes or swaps symmetric groups of clues), and
 only then does `retry.difficulty` start a new grid (up to `attempts`, default 8). The top levels (nightmare, hell 1 and
 hell 2) also dig fast, uniqueness-only proposals and put clues back while a proposal is too hard. Every grid
 has fixed work caps (full ratings and proposed moves, counted, never timed), so a seed gives the same puzzle on
-every machine. If every attempt is used, the closest puzzle is returned with a notice instead of an error (only
+every machine. If every attempt is used, the best puzzle is returned with a notice instead of an error (only
 a puzzle with a complete logical proof is ever returned). `SG.pipeline.runSteps` is the same algorithm as a
 generator that yields at natural boundaries (what the worker and the main-thread mode run), and
 `SG.pipeline.toWire` / `fromWire` carry a result across `postMessage`. `result.exact` is a boolean, the digger's
-verdict for the returned puzzle and the `exact` of the `done` event: it crosses the wire as a strict flag (the wire
-version stays 1; a wire without it, such as an older cache entry, reads as `false`) and is never rebuilt from
-matching level names, so the result panel shows exactly what it says. The three band verdicts of the `tune` step
-(`tune.hit`, `tune.miss` and the new `tune.shallow`) may also carry `required` (`true`, `false` or `null`) and
-`target` (a finite number or `null`), and `difficulty.shallow` joins `difficulty.approximate` as a warning of the
-kind that offers "Retry"; all of that is *prepared, not produced yet*: the generator still emits `tune.hit` and
-`tune.miss` with their old arguments and accepts a puzzle by its level alone. The difficulty of a puzzle is
+verdict for the returned puzzle and the `exact` of the `done` event: a complete proof whose level is the requested
+one **and** that needs a technique of that level's tier (`SG.difficulty.requiredOf`; nothing is required of Very
+Easy). It crosses the wire as a strict flag (the wire version stays 1; a wire without it, such as an older cache
+entry, reads as `false`) and is never rebuilt from matching level names, so the result panel shows exactly what it
+says. The three band verdicts of the `tune` step (`tune.hit`, `tune.miss` and `tune.shallow`) carry `required`
+(`true` for a hit, `false` for a shallow result, `null` for every other miss, a solved one outside the band
+included) and may carry `target` (a finite number or `null`; nothing draws one yet). A complete result in the
+band that needs no technique of the tier is *shallow*: it is kept as a fallback, never exact, and the search goes
+on; when it ends as the answer it carries `difficulty.shallow` next to `difficulty.approximate`, a warning of the
+kind that offers "Retry". The soak, the qualification and the manual suites count a hit by this flag alone, never by
+comparing level names (an absent flag is a miss). The difficulty of a puzzle is
 `SG.difficulty.rate(...)`, from the technique weights `SG.difficulty.WEIGHTS`; use `rating.score`, never the
 solver's raw score.
 
@@ -506,14 +511,16 @@ sudoku/                     the repository (see "Layout" in the overview for the
     │                       · help.js · app.js
     └── tests/
         ├── node-runner.js · soak.js · perf.js · qualify.js · replay-fixtures.js · replay-goldens.js
+        │   · difficulty-recovery.js
         ├── fixtures/       the fixtures of the generator (rated puzzles, the performance helper with the hash
         │                   corpus and its merge, the regression hashes in regression.js, generated, the
         │                   testkit provider, the pure
         │                   helpers of the soak diagnostics, and the data of the replay suite:
         │                   replay-goldens.js, replay-wire.js, generated, with the helpers of their
-        │                   recorders, tool-records.js and replay-recording.js)
+        │                   recorders, tool-records.js and replay-recording.js, and the pure helpers of the
+        │                   recovery profile driver, recovery-profile.js)
         ├── suites/         the quick set, run by default together with ../core/tests/suites: one *.test.js per
-        │                   area, 31 of the generator's own (found automatically), smoke.test.js among them
+        │                   area, 32 of the generator's own (found automatically), smoke.test.js among them
         └── manual/         the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
                             extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
@@ -820,16 +827,16 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (47 suites, about 2,900 tests), about a minute
+node tests/node-runner.js                          # the quick set (48 suites, about 2,900 tests), about a minute
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8, about eight minutes)
-node tests/node-runner.js --all                    # quick + manual (55 suites, about 3,910 tests), about nine minutes
+node tests/node-runner.js --all                    # quick + manual (56 suites, about 3,910 tests), about nine minutes
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 47 suites, about
-2,900 tests, about one minute — the 31 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 48 suites, about
+2,900 tests, about one minute — the 32 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -848,8 +855,8 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts about 3,910 tests in 55 suites
-(about 2,900 in the 47 quick ones), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts about 3,910 tests in 56 suites
+(about 2,900 in the 48 quick ones), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text
@@ -902,20 +909,69 @@ on the reference machine and measured by `node tests/perf.js`.
   (the final QA preset: 25 puzzles per offered combination and 100 per classic9 level, about 3,550 puzzles),
   `node tests/soak.js --variant=jigsaw9 --count=180`, `node tests/soak.js --level=hard`
   (`--help` lists the rest); `--weights` and `--bands` try other technique weights or score bands without
-  editing the code. `--json=<file>` (a path inside the repository) adds the baseline diagnostics of difficulty v3
-  without changing which puzzles are generated: a ledger of every request (schema 1: the puzzle or its error, the
-  hits, the raw and the attainable position of the score, the generation counters) and a diagnostic summary after
+  editing the code. A hit is the generator's own `exact` flag, strictly true (`p.exact` where the soak calls the
+  digger, `r.exact` where it runs the pipeline), so an in-band puzzle that does not need the tier of its level is
+  not a hit. Before it generates anything, and also with `--no-gate`, the soak checks that the patched tables keep,
+  for every variant and level, the floor and the floor with the tier as ordered prefixes of the technique ladder
+  (the requiredness of a rating depends on it); otherwise it prints the variant, the level and both technique
+  lists and exits with code 2. `--weights={"nishio":1}` is such a case (pass the argument as one string, so that
+  the shell keeps the quotes); malformed JSON is a separate usage error. `--json=<file>` (a path inside the
+  repository) adds the baseline diagnostics of difficulty v3 without changing which puzzles are generated: a ledger
+  of every request (schema 1: the puzzle or its error, the hits, the raw and the attainable position of the score,
+  the generation counters) and a diagnostic summary after
   the text. Its new solves — the reference floor `SG.difficulty.certifyFloor` of the requested level, run only
   after I1 proved uniqueness, and the final path rated again with steps (forcing-chain lengths, Nishio depths) —
   run only after every generation and every I1–I7 check of the invocation has finished, because the subset finder
   keeps a check-spacing counter across solves. A failed request stays in the denominators as an error row, and
   errors and invariant violations fail the diagnostics even with `--no-gate`. The helpers are
   `SG.fixtures.difficultyDiagnostics` (`tests/fixtures/difficulty-diagnostics.js`); the baseline taken with
-  them is recorded in [docs/difficulty-v3/baseline.md](docs/difficulty-v3/baseline.md).
+  them is recorded in [docs/difficulty-v3/baseline.md](docs/difficulty-v3/baseline.md). Since the recovery task
+  MS05r3 the rows take `required`, `qualifiedHit` and `shallow` from the certificate derived from the returned
+  rating (`generationExact` is the strict producer flag and the two must agree: a disagreement is an I5 violation),
+  the independent reference runs only for the first and the last request of a cell (the other rows say
+  `not-selected`, which changes no verdict), and every row carries the work of its generation (`fullRatings`,
+  `proposals`, `shallowRatings`, `capHits`, `work`, `workCheck`): a rating made outside the counted entry point fails
+  the run, and missing work is `unavailable`, never zero. `--shallow-cap=64|128|256|none` runs the soak with that
+  shallow-search allowance (`SG.digger.SHALLOW_SEARCH_RATINGS`; `none` is `Infinity`; the default of the source is 256,
+  selected by the R5 comparison of task MS05r4, see
+  [docs/difficulty-v3/shallow-cap-2026-11-13.md](docs/difficulty-v3/shallow-cap-2026-11-13.md)), and
+  `--from=<k> --count=<n> --total-count=<N>` runs the requests k to k+n−1 of one logical cell of N
+  requests (one variant and level; not with `--quick`, `--full` or `--per-combo`) with the tags and seeds of the whole
+  cell, so a long cell can be split into bounded commands; `mergeShards` of the helper refuses ledgers with a gap, a
+  duplicate or a different source, tool, seed or setting.
+- **Recovery profile (difficulty v3)** — a diagnostic of one fixed request, not a production setting and not a passing
+  performance gate: `node tests/difficulty-recovery.js` generates it once and records where the time went, in the
+  ordinary dig samples or in the local continuation that follows them (the part a shallow-search allowance can
+  limit). The three cases are the actual G13 golden request (`SG.fixtures.replayGoldens`, through
+  `SG.store.toConfig`) and the seed 3 Nightmare requests of mega12 and mega16; the profile changes only
+  `maxAttempts` (to 1) and keeps every cap, floor and guard. Run one command at a time, through the shared timing
+  lock when others use the machine, since one profile can take minutes:
+
+  ```text
+  node tests/difficulty-recovery.js --mode=profile --case=G13 --json=<file.json>
+  node tests/difficulty-recovery.js --mode=profile --case=mega12-nightmare --json=<file.json>
+  node tests/difficulty-recovery.js --mode=profile --case=mega16-nightmare --json=<file.json>
+  ```
+
+  `--json` is a new `.json` path inside the repository (an existing file is never overwritten).
+  `--mode=diagnostic --shallow-cap=64|128|256|none` keeps the normal attempts and applies an allowance: the command
+  sets `SG.digger.SHALLOW_SEARCH_RATINGS` for the run (`none` is `Infinity`) and puts the previous value back; a source
+  without the setting is refused before anything is generated.
+  One process runs one case, and the engine and the checks of the returned puzzle (givens against the solution, an
+  independent uniqueness count, the complete canonical rating and its requiredness) share one 500,000 ms budget.
+  The record says which of `ok`, `generation-error`, `validation-error` and `instrumentation-error` happened, the
+  work of every attempt, and the time and the full ratings of every stage, split into ordinary samples, local
+  continuation and the rest. Exit code 0 means a record was written (read its `outcome`: a failed generation is a
+  record too), 1 that no trustworthy complete record could be made, 2 an invalid use. The helpers are
+  `SG.fixtures.recoveryProfile` (`tests/fixtures/recovery-profile.js`), tested by the `recovery-profile` suite; the
+  first profiles are reported in [docs/difficulty-v3/recovery-profile.md](docs/difficulty-v3/recovery-profile.md).
 - **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
   variant offers (40 fixed seeds per variant and level through the real pipeline, 60 more for a borderline level,
   a time budget on the 95th percentile) and prints the table and the support lists; `--variant`, `--level`,
-  `--jobs`, `--json` and `--markdown` narrow it down or save it; `--probe=N` takes a quick look (N seeds per level, no verdict). The last run is in
+  `--jobs`, `--json` and `--markdown` narrow it down or save it; `--probe=N` takes a quick look (N seeds per level,
+  no verdict). A request is a hit only with a valid, unique puzzle, a complete proof in the requested level, no
+  approximate warning **and** a strictly true `exact` flag of the result, so an in-band shallow result is a miss.
+  The last run is in
   [docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md).
 - **Performance** against the budgets of [design.md](generator/design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. The *regression hashes* in `tests/fixtures/regression.js`

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "211a1cb1858bb41f947d01176c5f5c86722fd9e898d7043a5cb14d5b8beffb09",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "f788e02616e7968143030700205d9a8ab843904c",
+  "dirty": true,
+  "generatedAt": "2026-11-12T15:59:29.423Z",
+  "argv": ["--hash-key=classic9/nightmare","--hash-from=10","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05b1\\hashes-N\\classic9-nightmare-10.json"],
+  "records": [
+    {"key":"classic9/nightmare#144","variant":"classic9","level":"nightmare","seed":144,"hash":"0caa79518030700d","ms":6200,"overrides":[]},
+    {"key":"classic9/nightmare#233","variant":"classic9","level":"nightmare","seed":233,"hash":"5b51d9e075f3fe7c","ms":7324,"overrides":[]},
+    {"key":"classic9/nightmare#377","variant":"classic9","level":"nightmare","seed":377,"hash":"b457b0449e9a0ee8","ms":5383,"overrides":[]},
+    {"key":"classic9/nightmare#610","variant":"classic9","level":"nightmare","seed":610,"hash":"71afbd6714c77a53","ms":5927,"overrides":[]},
+    {"key":"classic9/nightmare#987","variant":"classic9","level":"nightmare","seed":987,"hash":"d21fee25b9491269","ms":5146,"overrides":[]}
+  ]
+}

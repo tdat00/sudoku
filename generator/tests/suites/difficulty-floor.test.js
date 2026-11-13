@@ -911,18 +911,24 @@
       var gt = generated(own, 'greaterThan', 'normal');
       var killerMade = generated(own, 'killer', 'easy');
 
-      // one more sign, true in the solution, between two neighbours that have none yet
+      // one more sign, true in the solution, between two neighbours that have none yet; the first one whose
+      // rating differs from the rating of the puzzle (a sign that adds no deduction would prove nothing)
       var signed = {};
       gt.model.inequalities.forEach(function (s) {
         signed[Math.min(s.a, s.b) + ',' + Math.max(s.a, s.b)] = true;
       });
-      var moreSign = null;
-      for (var c = 0; c < 80 && moreSign === null; c++) {
+      var gtBefore = own.SG.difficulty.rate(gt.model, gt.givens);
+      var signModel = null;
+      for (var c = 0; c < 80 && signModel === null; c++) {
         if (c % 9 !== 8 && !signed[c + ',' + (c + 1)]) {
-          moreSign = gt.solution[c] < gt.solution[c + 1] ? { a: c, b: c + 1 } : { a: c + 1, b: c };
+          var moreSign = gt.solution[c] < gt.solution[c + 1] ? { a: c, b: c + 1 } : { a: c + 1, b: c };
+          var candidate = Object.assign({}, gt.model,
+            { inequalities: gt.model.inequalities.concat([moreSign]) });
+          var counts = own.SG.difficulty.rate(candidate, gt.givens).techniqueCounts;
+          if (JSON.stringify(counts) !== JSON.stringify(gtBefore.techniqueCounts)) signModel = candidate;
         }
       }
-      var signModel = Object.assign({}, gt.model, { inequalities: gt.model.inequalities.concat([moreSign]) });
+      expect(signModel).not.toBe(null);
 
       // every third cage of two or more cells falls apart into its first cell and the rest (sums: solution)
       var sumOf = function (cells) {

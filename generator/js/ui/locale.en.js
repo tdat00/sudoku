@@ -267,11 +267,14 @@
     'explain.tune.what': 'Compare the result with the level you asked for, and finish.',
     'explain.tune.why': 'Digging is random, so the first puzzle may be a little too easy or too hard. ' +
       'Checking and trying again is what guarantees the level.',
-    'explain.tune.how': 'When the level matches, the puzzle is accepted. Otherwise another dig is tried on ' +
-      'the same grid, or a new grid is drawn. When the attempts run out, the closest puzzle is used and ' +
-      'marked as approximate. Finally the result is packaged with its statistics.',
+    'explain.tune.how': 'When the puzzle has a complete proof in the requested band and needs a technique ' +
+      'of the requested tier, it is accepted. Otherwise another dig is tried on the same grid, or a new ' +
+      'grid is drawn. When the attempts run out, the closest puzzle is used and marked as approximate; if ' +
+      'it lies in the band but does not need the tier, the notice says so. Finally the result is packaged ' +
+      'with its statistics.',
     'explain.tune.live': '{clues} clues \u00b7 score {score}',
-    'explain.tune.code.compare': 'if the level of the puzzle is the requested level:',
+    'explain.tune.code.compare': 'if the puzzle has a complete proof, its score is in the requested ' +
+      'band and it needs a technique of the requested tier:',
     'explain.tune.code.accept': 'accept the puzzle',
     'explain.tune.code.retry': 'otherwise dig another puzzle, or draw a new grid',
     'explain.tune.code.best': 'when the attempts run out, use the closest puzzle',
@@ -541,7 +544,8 @@
   add({
     'difficulty.approximate': 'The generator could not hit the requested level exactly, so this is the ' +
       'closest puzzle it found.',
-    'difficulty.shallow': 'The puzzle is in the requested score band but does not need a {level} technique.',
+    'difficulty.shallow': 'The puzzle is in the requested score band but does not need a technique from ' +
+      'the {level} tier.',
     'digger.unsoundTechnique': 'A solving technique produced an ambiguous puzzle. A safe plain dig was ' +
       'used instead, so the difficulty may differ from the rating.',
     'trace.downgraded': 'The board is too large for a full step-by-step replay, so the detail level was ' +

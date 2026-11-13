@@ -870,7 +870,7 @@
     it('has exactly the fields of the contract', function () {
       var out = run({ difficulty: 'easy', seed: 4 });
       expect(Object.keys(out.result).sort()).toEqual(['attempts', 'config', 'digLog', 'exact', 'givens',
-        'model', 'rating', 'seed', 'solution', 'timings', 'warnings']);
+        'model', 'rating', 'seed', 'solution', 'timings', 'warnings', 'work']);
     });
 
     it('holds a valid puzzle: invariants I1, I2, I3 and I6, and the model and rating', function () {
@@ -891,7 +891,8 @@
         if (r.rating.level === level) {
           expect(r.rating.score).toBeGreaterThanOrEqual(spec.min);
           expect(r.rating.score).toBeLessThan(spec.max);
-          expect(r.warnings).toEqual([]);
+          // In the band, the puzzle is exact (no warning) or shallow: it does not need the tier of its level.
+          expect(r.warnings).toEqual(r.exact ? [] : ['difficulty.approximate', 'difficulty.shallow']);
         }
       });
     }, 60000);
@@ -1228,7 +1229,9 @@
         }
       });
       withVariant(def, function () {
-        var result = P.run({ variantId: 'hookCtx', difficulty: 'easy', seed: 6, trace: 'full' },
+        // Seed 2 needs one grid; seed 6, which hit Easy on its first grid before, now needs four, since an
+        // Easy puzzle has to need its tier (pointing, a box-line or a naked pair).
+        var result = P.run({ variantId: 'hookCtx', difficulty: 'easy', seed: 2, trace: 'full' },
           function (e) { events.push(e); });
         expect(calls).toHaveLength(1);
         var ctx = calls[0].ctx;
@@ -1249,7 +1252,7 @@
         expect(ctx.budget).toBe(null);
         expect(ctx.emit.isEmitter).toBe(true);
         expect(SG.model.isSolution(ctx.model, ctx.solution)).toBe(true);
-        expect(ctx.rng.seed).toBe(SG.rng.create(6).fork('extra#1').seed);
+        expect(ctx.rng.seed).toBe(SG.rng.create(2).fork('extra#1').seed);
         // It ran between the end of the full grid and the dig.
         var before = events.slice(0, calls[0].seen).map(function (e) { return e.i18nKey; });
         expect(before.slice(-2)).toEqual(['fullGrid.end', 'extraStructure.start']);
@@ -1669,6 +1672,1185 @@
       }
       expect(thrown && thrown.code).toBe('budget.cancelled');
       expect(seen).toBeLessThan(10);
+    });
+  });
+
+  // The keeper, the sample exits and the local search, driven through the strategy seam: a registered dig
+  // strategy hands back a real puzzle with a controlled canonical rating (counts decide the requiredness), and
+  // `SG.difficulty.rate` is replaced by a script where the search has to rate neighbours. Real unique counts.
+  describe('digger: exactness needs the tier of the level (MS05b1)', function () {
+    var Z = SG.digger;
+    var SEED = 11;
+    var OFF = { maxProposals: 0 };
+
+    /** A complete canonical rating as `SG.difficulty.rate` reports it; the technique counts decide. */
+    function rated(level, score, counts, hardest) {
+      return {
+        level: level, score: score, rawScore: score, hardestTechnique: hardest || 'nakedSingle',
+        hardestGroup: 'basic', confidence: 1, solved: true, empties: 50, techniqueCounts: counts,
+        ratingVersion: D.RATING_VERSION
+      };
+    }
+    var BASIC = { nakedSingle: 40, hiddenSingleBox: 8, pointing: 3, nakedPair: 2 };
+    function plus(counts) { return Object.assign({}, BASIC, counts); }
+    // Normal asks for a technique of its tier (hiddenPair, nakedTriple ...); the Easy ones are its floor.
+    var SHALLOW = rated('normal', 250, BASIC);
+    var SHALLOW_2 = rated('normal', 260, BASIC);
+    var REQUIRED = rated('normal', 230, plus({ hiddenPair: 1 }), 'hiddenPair');
+    var REQUIRED_2 = rated('normal', 300, plus({ nakedTriple: 1 }), 'nakedTriple');
+    var EASY = rated('easy', 120, BASIC);
+    var ABOVE = rated('hard', 450, plus({ xWing: 1 }), 'xWing');
+    var ABOVE_2 = rated('hard', 450, plus({ xWing: 2 }), 'xWing');
+    var UNSOLVED = {
+      level: null, score: null, rawScore: null, hardestTechnique: null, hardestGroup: null, confidence: 0,
+      solved: false, empties: 50, techniqueCounts: {}, ratingVersion: D.RATING_VERSION
+    };
+
+    var liveCaps = null;
+
+    function baseOf(model, solution, rng) {
+      return Z.dig(model, solution, rng.fork('base'), { minClues: 58 });
+    }
+
+    /** `givens` with the first `extra` empty symmetry groups shown: still a unique puzzle. */
+    function moreClues(model, solution, givens, extra) {
+      var out = Int32Array.from(givens);
+      var groups = SG.symmetry.groups(model, 'rotational180');
+      for (var k = 0; k < groups.length && extra > 0; k++) {
+        if (Array.from(groups[k]).every(function (c) { return out[c] === 0; })) {
+          Array.from(groups[k]).forEach(function (c) { out[c] = solution[c]; });
+          extra--;
+        }
+      }
+      return out;
+    }
+
+    function stats() {
+      return { groups: 0, tried: 0, accepted: 0, rejected: 0, skipped: 0, oracleCalls: 0 };
+    }
+
+    /**
+     * A dig strategy: the redundant base puzzle of the grid (58 clues or more, so most moves stay unique) with
+     * the rating `sample` (null: the digger rates it). `script` runs first with the keeper of the run and the
+     * base puzzle `a`, then `b` and `c` with one and two more groups of clues.
+     */
+    function sampling(sample, script, onModel) {
+      return function (model, solution, level, rng, o) {
+        liveCaps = o.caps;
+        var base = baseOf(model, solution, rng);
+        if (script) {
+          script({
+            keeper: o.keeper, options: o, model: model, solution: solution, a: base.givens,
+            b: moreClues(model, solution, base.givens, 1), c: moreClues(model, solution, base.givens, 2)
+          });
+        }
+        var dug = { givens: base.givens, clues: base.clues, stats: base.stats };
+        if (sample !== null) dug.rating = sample;
+        if (onModel) dug.model = onModel;
+        return dug;
+      };
+    }
+
+    function gen(level, strategy, extra) {
+      liveCaps = null;
+      return Z.generate(model9, level, SG.rng.create(SEED),
+        Object.assign({ strategy: strategy, maxAttempts: 1, digTries: 1 }, extra));
+    }
+
+    function offer(k, givens, rating, model) {
+      return k.keeper.offer({
+        model: model === undefined ? k.model : model, givens: givens, solution: k.solution, rating: rating,
+        logOf: function () { return []; }
+      });
+    }
+
+    /** `SG.difficulty.rate` replaced by `script(call, index)` while `fn(calls)` runs; every call is recorded. */
+    function withRater(script, fn) {
+      var original = D.rate;
+      var calls = [];
+      D.rate = function (model, givens) {
+        var call = {
+          model: model, givens: Int32Array.from(givens), proposals: liveCaps === null ? null : liveCaps.proposals
+        };
+        calls.push(call);
+        return script(call, calls.length - 1);
+      };
+      try {
+        return fn(calls);
+      } finally {
+        D.rate = original;
+      }
+    }
+
+    /** `SG.digger.SHALLOW_SEARCH_RATINGS` set to `value` while `fn()` runs; the previous setting is put back. */
+    function withAllowance(value, fn) {
+      var previous = SG.digger.SHALLOW_SEARCH_RATINGS;
+      SG.digger.SHALLOW_SEARCH_RATINGS = value;
+      try {
+        return fn();
+      } finally {
+        SG.digger.SHALLOW_SEARCH_RATINGS = previous;
+      }
+    }
+
+    /**
+     * The test `fn` with no extra allowance (Infinity), for a test whose setup needs more local ratings than a
+     * finite allowance gives. Only the old caps of the attempt bind the search; other tests keep the setting.
+     */
+    function noExtraAllowance(fn) {
+      return function () {
+        return withAllowance(Infinity, fn);
+      };
+    }
+
+    function tuneEvents(events) {
+      return events.filter(function (e) { return /^tune\.(hit|miss|shallow)$/.test(e.i18nKey); });
+    }
+
+    function collecting(events) {
+      return E.createEmitter('summary', function (e) { events.push(e); });
+    }
+
+    it('the controlled ratings are what they claim: required, shallow, off the band and unrated', function () {
+      var band = D.spec('normal', model9);
+      expect(band.min).toBe(180);
+      expect(band.max).toBe(400);
+      [SHALLOW, SHALLOW_2, REQUIRED, REQUIRED_2].forEach(function (r) {
+        expect(r.score >= band.min && r.score < band.max).toBe(true);
+      });
+      expect(D.requiredOf(SHALLOW, 'normal', model9).required).toBe(false);
+      expect(D.requiredOf(SHALLOW_2, 'normal', model9).required).toBe(false);
+      expect(D.requiredOf(REQUIRED, 'normal', model9).required).toBe(true);
+      expect(D.requiredOf(REQUIRED_2, 'normal', model9).required).toBe(true);
+      expect(D.requiredOf(UNSOLVED, 'normal', model9)).toBe(null);
+      expect(D.requiredOf(EASY, 'veryEasy', model9)).toEqual({ required: true, vacuous: true, floorLevel: null });
+    });
+
+    describe('the keeper: quality 0 for a required rating, 0.5 for a shallow one, else the distance', function () {
+      it('MS05b1-T01: each strict improvement replaces, in reverse order none does, the winner is returned',
+        function () {
+          var winner = null;
+          var out = gen('normal', sampling(EASY, function (k) {
+            expect(k.keeper.distance).toBe(Infinity);
+            expect(offer(k, k.a, ABOVE)).toBe(true);
+            expect(k.keeper.distance).toBeGreaterThan(1000);
+            expect(offer(k, k.b, SHALLOW)).toBe(true);
+            expect(k.keeper.distance).toBe(0.5);
+            expect(offer(k, k.c, REQUIRED)).toBe(true);
+            expect(k.keeper.distance).toBe(0);
+            expect(offer(k, k.a, SHALLOW)).toBe(false);
+            expect(offer(k, k.b, ABOVE)).toBe(false);
+            expect(offer(k, k.b, EASY)).toBe(false);
+            expect(Array.from(k.keeper.best.givens)).toEqual(Array.from(k.c));
+            winner = k.c;
+          }), OFF);
+          expect(out.exact).toBe(true);
+          expect(out.rating).toBe(REQUIRED);
+          expect(Array.from(out.givens)).toEqual(Array.from(winner));
+          expect(out.warnings).toEqual([]);
+        });
+
+      it('MS05b1-T01: a shallow rating after a required one is no gain; an equal quality keeps the first',
+        function () {
+          [[REQUIRED, SHALLOW, 0], [REQUIRED, REQUIRED_2, 0], [SHALLOW, SHALLOW_2, 0.5], [ABOVE, ABOVE_2, null]]
+            .forEach(function (pair) {
+              var first = null;
+              gen('normal', sampling(EASY, function (k) {
+                expect(offer(k, k.a, pair[0])).toBe(true);
+                var distance = k.keeper.distance;
+                if (pair[2] !== null) expect(distance).toBe(pair[2]);
+                expect(offer(k, k.b, pair[1])).toBe(false);
+                expect(k.keeper.distance).toBe(distance);
+                expect(Array.from(k.keeper.best.givens)).toEqual(Array.from(k.a));
+                expect(k.keeper.best.rating).toBe(pair[0]);
+                first = k.a;
+              }), OFF);
+              expect(first).not.toBe(null);
+            });
+        });
+
+      it('MS05b1-T01: closer(rating, model) is the question offer asks, and it needs the candidate model',
+        function () {
+          gen('normal', sampling(EASY, function (k) {
+            var keeper = k.keeper;
+            expect(keeper.closer(REQUIRED, k.model)).toBe(true);
+            expect(keeper.closer(REQUIRED, null)).toBe(false);
+            expect(keeper.closer(REQUIRED)).toBe(false);
+            expect(keeper.closer(null, k.model)).toBe(false);
+            expect(keeper.closer(UNSOLVED, k.model)).toBe(false);
+            expect(keeper.offer({ model: null, givens: k.a, solution: k.solution, rating: REQUIRED,
+              logOf: function () { return []; } })).toBe(false);
+            expect(keeper.best).toBe(null);
+            offer(k, k.a, SHALLOW);
+            expect(keeper.closer(SHALLOW_2, k.model)).toBe(false);
+            expect(keeper.closer(REQUIRED, k.model)).toBe(true);
+            offer(k, k.b, REQUIRED);
+            expect(keeper.closer(REQUIRED_2, k.model)).toBe(false);
+            expect(keeper.closer(SHALLOW, k.model)).toBe(false);
+          }), OFF);
+        });
+
+      it('MS05b1-T01: a count of 2 or an unprovable (null) count never stores; a proof contradicted marks unsound',
+        function () {
+          var UR = rated('normal', 230, plus({ hiddenPair: 1, uniqueRectangle: 1 }));
+          expect(D.provesUniqueness(REQUIRED)).toBe(true);
+          expect(D.provesUniqueness(UR)).toBe(false);
+          // 2: the empty grid has many solutions
+          gen('normal', sampling(EASY, function (k) {
+            expect(offer(k, new Int32Array(81), UR)).toBe(false);
+            expect(k.keeper.best).toBe(null);
+            expect(k.keeper.unsound).toBe(false);
+            expect(offer(k, new Int32Array(81), REQUIRED)).toBe(false);
+            expect(k.keeper.best).toBe(null);
+            expect(k.keeper.distance).toBe(Infinity);
+            expect(k.keeper.unsound).toBe(true);
+          }), OFF);
+          // null: the count needs more than the guard of search nodes
+          var real = SG.dfs.countSolutions;
+          gen('normal', sampling(EASY, function (k) {
+            SG.dfs.countSolutions = function (model, givens, max, slice) {
+              for (var i = 0; i < 300000; i++) slice.check();
+              return 1;
+            };
+            try {
+              expect(offer(k, k.a, REQUIRED)).toBe(false);
+            } finally {
+              SG.dfs.countSolutions = real;
+            }
+            expect(k.keeper.best).toBe(null);
+            expect(k.keeper.distance).toBe(Infinity);
+            expect(k.keeper.unsound).toBe(false);
+            expect(offer(k, k.a, REQUIRED)).toBe(true);
+          }), OFF);
+        });
+
+      it('MS05b1-T01: a cancellation during the count propagates and stores nothing', function () {
+        var budget = SG.budget.create({});
+        var caught = null;
+        var thrown = null;
+        try {
+          gen('normal', sampling(EASY, function (k) {
+            // an empty grid cannot be settled by propagation, so the count searches and checks the budget
+            budget.cancel();
+            try {
+              offer(k, new Int32Array(k.a.length), REQUIRED);
+            } catch (e) {
+              caught = e;
+            }
+            expect(k.keeper.best).toBe(null);
+            expect(k.keeper.distance).toBe(Infinity);
+          }), Object.assign({ budget: budget }, OFF));
+        } catch (e) {
+          thrown = e;
+        }
+        expect(caught && caught.code).toBe('budget.cancelled');
+        expect(thrown && thrown.code).toBe('budget.cancelled');
+      });
+    });
+
+    describe('every rating and prefilter is made for the actual model', function () {
+      var killer = SG.variants.get('killer').build({}, SG.rng.create(1));
+      // Cage combinations are a floor technique of a cage variant and the tier of nothing in Classic.
+      var CAGED = rated('normal', 230, plus({ cageCombo: 2 }));
+
+      it('MS05b1-T02: the same rating is required for one model and shallow for another', function () {
+        expect(D.requiredOf(CAGED, 'normal', model9).required).toBe(true);
+        expect(D.requiredOf(CAGED, 'normal', killer).required).toBe(false);
+        gen('normal', sampling(EASY, function (k) {
+          expect(k.keeper.closer(CAGED, k.model)).toBe(true);
+          expect(offer(k, k.a, CAGED, killer)).toBe(true);
+          expect(k.keeper.distance).toBe(0.5);
+          expect(k.keeper.closer(CAGED, killer)).toBe(false);
+          expect(k.keeper.closer(CAGED, k.model)).toBe(true);
+          expect(offer(k, k.b, CAGED, k.model)).toBe(true);
+          expect(k.keeper.distance).toBe(0);
+          expect(k.keeper.best.model).toBe(k.model);
+        }), OFF);
+      });
+
+      it('MS05b1-T02: a sample is exact for the model it was dug on, not for the requested one', function () {
+        var shallow = gen('normal', sampling(CAGED, null, killer), OFF);
+        expect(shallow.model).toBe(killer);
+        expect(shallow.exact).toBe(false);
+        expect(shallow.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+        var exact = gen('normal', sampling(CAGED, null), OFF);
+        expect(exact.model).toBe(model9);
+        expect(exact.exact).toBe(true);
+        expect(exact.warnings).toEqual([]);
+      });
+
+      it('MS05b1-T02: a safety-net replacement is rated again, the rating of the strategy is not reused',
+        function () {
+          var oneRow = function (model, solution, level, rng, o) {
+            liveCaps = o.caps;
+            var few = new Int32Array(81);
+            for (var c = 0; c < 9; c++) few[c] = solution[c];
+            return { givens: few, clues: 9, stats: stats(), rating: REQUIRED };
+          };
+          withRater(function () { return SHALLOW_2; }, function (calls) {
+            var out = gen('normal', oneRow, OFF);
+            expect(calls).toHaveLength(1);
+            expect(Array.from(calls[0].givens)).toEqual(Array.from(out.givens));
+            expect(clueCount(out.givens)).toBeGreaterThan(9);
+            expect(SG.dfs.countSolutions(out.model, out.givens, 2)).toBe(1);
+            expect(out.rating).toBe(SHALLOW_2);
+            expect(out.exact).toBe(false);
+            expect(out.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow', 'digger.unsoundTechnique']);
+          });
+        });
+
+      it('MS05b1-T02: removing a sign starts a new memo, so the same clues are rated again for the new signs',
+        noExtraAllowance(function () {
+          var greater = SG.variants.get('greaterThan');
+          var strategy = function (model, solution, level, rng, o) {
+            liveCaps = o.caps;
+            var dug = Z.dig(model, solution, rng.fork('base'), { minClues: 40 });
+            o.log.push({ op: 'signs', signs: model.inequalities.map(function (s) { return [s.a, s.b]; }) });
+            return { givens: dug.givens, clues: dug.clues, stats: dug.stats, rating: SHALLOW };
+          };
+          withRater(function () { return SHALLOW; }, function (calls) {
+            var out = Z.generate(greater.build({}, SG.rng.create(1)), 'normal', SG.rng.create(SEED), {
+              strategy: strategy, postGenerate: greater.postGenerate, maxAttempts: 1, digTries: 1,
+              maxProposals: 400
+            });
+            var rated = {};
+            var signsOf = {};
+            calls.forEach(function (c) {
+              var key = Array.from(c.givens).join('');
+              var pair = key + '|' + c.model.inequalities.length;
+              expect(rated[pair]).toBeUndefined();
+              rated[pair] = true;
+              signsOf[key] = signsOf[key] || {};
+              signsOf[key][c.model.inequalities.length] = true;
+            });
+            var again = Object.keys(signsOf).filter(function (key) { return Object.keys(signsOf[key]).length > 1; });
+            expect(again.length).toBeGreaterThan(0);
+            var counts = calls.map(function (c) { return c.model.inequalities.length; });
+            expect(counts[counts.length - 1]).toBeLessThan(counts[0]);
+            expect(out.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+          });
+        }));
+
+      it('MS05b1-T02: Killer asks closer about the layout it rated and offers that layout', function () {
+        var kill = SG.variants.get('killer');
+        var base = kill.build({}, SG.rng.create(3));
+        var solution = SG.fullGrid.generate(base, SG.rng.create(3).fork('g'), null);
+        var events = [];
+        var keeper = {
+          closer: function (rating, model) {
+            events.push({ kind: 'closer', model: model });
+            return true;
+          },
+          offer: function (candidate) {
+            events.push({ kind: 'offer', model: candidate.model });
+            return true;
+          }
+        };
+        var ctx = {
+          model: base, solution: solution, rng: SG.rng.create(3).fork('extra#1'), level: 'expert',
+          spec: D.spec('expert', base), attempt: 1, budget: null, emit: E.NULL_EMITTER, variantId: 'killer',
+          caps: { ratings: 0, proposals: 0, maxRatings: 24, maxProposals: 24 }, symmetry: 'rotational180',
+          keeper: keeper
+        };
+        withRater(function () { return SHALLOW; }, function (calls) {
+          var model = kill.postGenerate(ctx);
+          expect(model.cages.length).toBeGreaterThan(0);
+          var closers = events.filter(function (e) { return e.kind === 'closer'; });
+          expect(closers.length).toBeGreaterThan(0);
+          expect(calls.length).toBeGreaterThan(closers.length);
+          closers.forEach(function (e) {
+            expect(e.model.variantId).toBe('killer');
+            expect(e.model.cages.length).toBeGreaterThan(0);
+          });
+          events.forEach(function (e, i) {
+            if (e.kind === 'offer' && i > 0) expect(events[i - 1].model).toBe(e.model);
+          });
+        });
+      });
+
+      it('MS05b1-T02: Greater-Than offers the thinned model with the rating it made for it', function () {
+        var greater = SG.variants.get('greaterThan');
+        var base = greater.build({}, SG.rng.create(2));
+        var solution = SG.fullGrid.generate(base, SG.rng.create(2).fork('g'), null);
+        var model = greater.postGenerate({ model: base, solution: solution });
+        var offers = [];
+        var keeper = {
+          closer: function () { return false; },
+          offer: function (candidate) {
+            offers.push(candidate);
+            return false;
+          }
+        };
+        var found = SG.greaterThan.digSigns(model, solution, 'easy', SG.rng.create(8), {
+          spec: D.spec('easy', model), keeper: keeper, log: [],
+          caps: { ratings: 0, proposals: 0, maxRatings: 64, maxProposals: 64 }
+        });
+        expect(found.model.inequalities.length).toBeLessThan(model.inequalities.length);
+        expect(offers.length).toBeGreaterThan(0);
+        offers.forEach(function (c) {
+          expect(c.rating.solved).toBe(true);
+          expect(c.model.inequalities.length).toBeLessThanOrEqual(model.inequalities.length);
+        });
+        var last = offers[offers.length - 1];
+        expect(last.model).toBe(found.model);
+        expect(last.rating).toBe(found.rating);
+        expect(Array.from(last.givens)).toEqual(Array.from(found.givens));
+      });
+    });
+
+    describe('the first exact result ends the search: samples, local search, refinement and attempts', function () {
+      /** The symmetry groups of `givens` without a clue: what the downward refinement may show again. */
+      function emptyGroups(givens) {
+        return SG.symmetry.groups(model9, 'rotational180').filter(function (g) {
+          return Array.from(g).every(function (c) { return givens[c] === 0; });
+        }).length;
+      }
+
+      function differing(a, b) {
+        var n = 0;
+        for (var c = 0; c < a.length; c++) if (a[c] !== b[c]) n++;
+        return n;
+      }
+
+      function neverAfter(count, rating) {
+        return function (call, index) {
+          if (index >= count) throw new Error('rating ' + (index + 1) + ' after the exact result');
+          return rating(index);
+        };
+      }
+
+      it('MS05b1-T03: sampling stops at the first exact sample; a shallow sample does not block it', function () {
+        var seq = [SHALLOW, SHALLOW_2, REQUIRED, REQUIRED_2];
+        var strategyCalls = 0;
+        var out = gen('normal', function (model, solution, level, rng, o) {
+          return sampling(seq[strategyCalls++])(model, solution, level, rng, o);
+        }, { digTries: 5 });
+        expect(strategyCalls).toBe(3);
+        expect(out.samples).toBe(3);
+        expect(out.exact).toBe(true);
+        expect(out.rating).toBe(REQUIRED);
+        expect(out.warnings).toEqual([]);
+        expect(out.work[0].ratings).toBe(0);
+        expect(out.work[0].proposals).toBe(0);
+      });
+
+      it('MS05b1-T03: of two shallow samples the first is the result; no search finds a strictly better one',
+        function () {
+          var seq = [SHALLOW, SHALLOW_2];
+          var strategyCalls = 0;
+          withRater(function () { return SHALLOW_2; }, function (calls) {
+            var out = gen('normal', function (model, solution, level, rng, o) {
+              return sampling(seq[strategyCalls++])(model, solution, level, rng, o);
+            }, { digTries: 2, maxProposals: 6 });
+            expect(strategyCalls).toBe(2);
+            expect(out.rating).toBe(SHALLOW);
+            expect(out.exact).toBe(false);
+            expect(out.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+            expect(out.work[0].proposals).toBe(6);
+            expect(out.work[0].ratings).toBe(calls.length);
+          });
+        });
+
+      it('MS05b1-T03: an exact keeper ends the sampling and the attempt: no other sample, no search', function () {
+        var strategyCalls = 0;
+        withRater(function () { throw new Error('rated'); }, function (calls) {
+          var winner = null;
+          var out = gen('normal', function (model, solution, level, rng, o) {
+            strategyCalls++;
+            return sampling(SHALLOW, function (k) {
+              winner = k.b;
+              expect(offer(k, k.b, REQUIRED)).toBe(true);
+            })(model, solution, level, rng, o);
+          }, { digTries: 4, maxAttempts: 3 });
+          expect(strategyCalls).toBe(1);
+          expect(calls).toHaveLength(0);
+          expect(out.attempts).toBe(1);
+          expect(out.samples).toBe(1);
+          expect(out.work).toEqual([{ ratings: 0, proposals: 0, maxRatings: 1024, maxProposals: 32768,
+            localSearches: [] }]);
+          expect(out.exact).toBe(true);
+          expect(out.rating).toBe(REQUIRED);
+          expect(Array.from(out.givens)).toEqual(Array.from(winner));
+          expect(out.warnings).toEqual([]);
+        });
+      });
+
+      it('MS05b1-T03: a required neighbour with a lower score is kept; the search ends with no further proposal',
+        function () {
+          var neighbour = rated('normal', 200, plus({ hiddenPair: 1 }), 'hiddenPair');
+          withRater(neverAfter(1, function () { return neighbour; }), function (calls) {
+            var out = gen('normal', sampling(SHALLOW));
+            expect(calls).toHaveLength(1);
+            expect(out.work[0].ratings).toBe(1);
+            expect(out.work[0].proposals).toBe(calls[0].proposals);
+            expect(out.work[0].proposals).toBe(1);
+            expect(out.work[0].maxRatings).toBe(1024);
+            expect(out.work[0].maxProposals).toBe(32768);
+            expect(out.exact).toBe(true);
+            expect(out.rating).toBe(neighbour);
+            expect(Array.from(out.givens)).toEqual(Array.from(calls[0].givens));
+            // the path refused the move (its score is lower), and the keeper still has the puzzle
+            expect(out.stats.tried).toBe(1);
+            expect(out.stats.accepted).toBe(0);
+            expect(out.stats.rejected).toBe(1);
+            expect(out.warnings).toEqual([]);
+          });
+        });
+
+      it('MS05b1-T03: shallow neighbours are followed until a required one: its rating is the last', function () {
+        var seq = [SHALLOW_2, SHALLOW_2, SHALLOW_2, REQUIRED_2];
+        withRater(neverAfter(4, function (index) { return seq[index]; }), function (calls) {
+          var out = gen('normal', sampling(SHALLOW));
+          expect(calls).toHaveLength(4);
+          expect(out.work[0].ratings).toBe(4);
+          expect(out.work[0].proposals).toBe(calls[3].proposals);
+          expect(out.exact).toBe(true);
+          expect(out.rating).toBe(REQUIRED_2);
+          expect(Array.from(out.givens)).toEqual(Array.from(calls[3].givens));
+          expect(out.stats.tried).toBe(out.work[0].proposals);
+        });
+      });
+
+      it('MS05b1-T03: of equal quality the first puzzle in the band stays; later states of the search do not replace it',
+        function () {
+          var seq = [SHALLOW, SHALLOW_2, SHALLOW_2, SHALLOW_2, SHALLOW_2, SHALLOW_2];
+          withRater(function (call, index) { return seq[index]; }, function (calls) {
+            var out = gen('normal', sampling(EASY), { maxProposals: 6 });
+            expect(calls).toHaveLength(6);
+            expect(out.exact).toBe(false);
+            expect(out.rating).toBe(SHALLOW);
+            expect(Array.from(out.givens)).toEqual(Array.from(calls[0].givens));
+            // the path went on from the first puzzle in the band, so its last state is another puzzle
+            expect(out.stats.accepted).toBeGreaterThan(1);
+            expect(out.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+          });
+        });
+
+      it('MS05b1-T03: the old caps still bound a search that never finds a required neighbour', function () {
+        withRater(function () { return SHALLOW_2; }, function (calls) {
+          var byRatings = gen('normal', sampling(SHALLOW), { maxRatings: 3 });
+          expect(calls).toHaveLength(3);
+          expect(byRatings.work[0].ratings).toBe(3);
+          expect(byRatings.exact).toBe(false);
+          expect(byRatings.rating).toBe(SHALLOW);
+          expect(byRatings.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+          var byProposals = gen('normal', sampling(SHALLOW), { maxProposals: 5 });
+          expect(byProposals.work[0].proposals).toBe(5);
+          expect(byProposals.exact).toBe(false);
+        });
+        // the rating cap is used up before the sample is rated: unrated, never a candidate
+        withRater(function () { throw new Error('rated'); }, function () {
+          expectCode(function () { gen('normal', sampling(null), { maxRatings: 0 }); }, 'digger.noRatedPuzzle');
+        });
+      });
+
+      describe('a candidate above the band is refined downward first', function () {
+        it('MS05b1-T03: refined to a required rating: returned at once, nothing else is rated or proposed',
+          function () {
+            var solution = null;
+            withRater(neverAfter(1, function () { return REQUIRED; }), function (calls) {
+              var out = gen('normal', sampling(ABOVE, function (k) { solution = k.solution; }));
+              expect(calls).toHaveLength(1);
+              expect(out.work[0].ratings).toBe(1);
+              expect(out.work[0].proposals).toBe(0);
+              expect(out.exact).toBe(true);
+              expect(out.rating).toBe(REQUIRED);
+              var reveals = out.log.filter(function (e) { return e.op === 'reveal'; });
+              expect(reveals).toHaveLength(1);
+              expect(reveals[0].reason).toBe(undefined);
+              expect(Array.from(out.givens)).toEqual(Array.from(calls[0].givens));
+              reveals[0].cells.forEach(function (c) { expect(out.givens[c]).toBe(solution[c]); });
+              expect(out.clues).toBe(clueCount(out.givens));
+              expect(out.warnings).toEqual([]);
+            });
+          });
+
+        it('MS05b1-T03: refined to a shallow rating inside the band: the search goes on from the refined puzzle',
+          function () {
+            var start = null;
+            var solution = null;
+            var seq = [SHALLOW, REQUIRED_2];
+            withRater(neverAfter(2, function (index) { return seq[index]; }), function (calls) {
+              var out = gen('normal', sampling(ABOVE, function (k) {
+                start = k.a;
+                solution = k.solution;
+              }));
+              expect(calls).toHaveLength(2);
+              expect(out.work[0].ratings).toBe(2);
+              expect(out.work[0].proposals).toBe(calls[1].proposals);
+              expect(out.work[0].proposals).toBe(1);
+              // call 0 is the refined puzzle (one group shown again); call 1 is one move away from it
+              var shown = differing(calls[0].givens, start);
+              expect(shown).toBeGreaterThan(0);
+              expect(shown).toBeLessThan(3);
+              expect(clueCount(calls[0].givens)).toBe(clueCount(start) + shown);
+              expect(differing(calls[1].givens, calls[0].givens)).toBeLessThan(5);
+              expect(out.exact).toBe(true);
+              expect(out.rating).toBe(REQUIRED_2);
+              expect(Array.from(out.givens)).toEqual(Array.from(calls[1].givens));
+              expect(out.clues).toBe(clueCount(out.givens));
+              // the refinement is in the log once, the move of the search after it
+              var reveals = out.log.filter(function (e) { return e.op === 'reveal' && e.reason === undefined; });
+              expect(reveals).toHaveLength(1);
+              expect(out.log.indexOf(reveals[0])).toBeLessThan(out.log.length - 1);
+              expect(out.warnings).toEqual([]);
+            });
+          });
+
+        [
+          ['above the band', function () { return ABOVE; }],
+          ['incomplete', function () { return UNSOLVED; }],
+          ['below the band', function () { return rated('easy', 100, BASIC); }]
+        ].forEach(function (c) {
+          it('MS05b1-T03: a refinement that stays ' + c[0] + ' is returned: no proposal is made', function () {
+            var groups = 0;
+            withRater(c[1], function (calls) {
+              var out = gen('normal', sampling(ABOVE, function (k) { groups = emptyGroups(k.a); }));
+              expect(groups).toBeGreaterThan(1);
+              expect(groups).toBeLessThan(65);
+              // every group shown again once (the limit of 64 ratings is above the 41 groups of a 9x9 board)
+              expect(calls).toHaveLength(groups);
+              expect(out.work[0].ratings).toBe(groups);
+              expect(out.work[0].proposals).toBe(0);
+              expect(out.exact).toBe(false);
+              expect(out.rating).toBe(ABOVE);
+              expect(out.warnings).toEqual(['difficulty.approximate']);
+            });
+          });
+        });
+      });
+    });
+
+    describe('the tune verdicts, the events and the warnings', function () {
+      /** The tune verdict events of a controlled run. */
+      function verdictOf(sample, extra) {
+        var events = [];
+        var out = gen('normal', sampling(sample), Object.assign({ emit: collecting(events) }, OFF, extra));
+        return { out: out, events: tuneEvents(events), all: events };
+      }
+
+      it('MS05b1-T04: a required rating inside the band is tune.hit with required true', function () {
+        var v = verdictOf(REQUIRED);
+        expect(v.events).toHaveLength(1);
+        expect(v.events[0].i18nKey).toBe('tune.hit');
+        expect(v.events[0].i18nArgs).toEqual({
+          requested: 'normal', achieved: 'normal', score: 230, scoreMin: 180, scoreMax: 400,
+          hardestTechnique: 'hiddenPair', required: true
+        });
+        expect(E.eventProblems(v.events[0])).toEqual([]);
+        expect(v.out.exact).toBe(true);
+        expect(v.out.warnings).toEqual([]);
+      });
+
+      it('MS05b1-T04: a shallow rating inside the band is tune.shallow with required false', function () {
+        var v = verdictOf(SHALLOW);
+        expect(v.events).toHaveLength(1);
+        expect(v.events[0].i18nKey).toBe('tune.shallow');
+        expect(v.events[0].i18nArgs).toEqual({
+          requested: 'normal', achieved: 'normal', score: 250, scoreMin: 180, scoreMax: 400, sample: 1,
+          maxSamples: 1, required: false
+        });
+        expect(E.eventProblems(v.events[0])).toEqual([]);
+        expect(v.out.exact).toBe(false);
+        expect(v.out.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+        expect(count(v.all, 'tune.best')).toBe(1);
+        expect(v.out.rating).toBe(SHALLOW);
+      });
+
+      it('MS05b1-T04: every other sample is tune.miss with required null, a solved one off the band included',
+        function () {
+          [[EASY, 'easy'], [ABOVE, 'hard']].forEach(function (c) {
+            var v = verdictOf(c[0]);
+            expect(v.events).toHaveLength(1);
+            expect(v.events[0].i18nKey).toBe('tune.miss');
+            expect(Object.prototype.hasOwnProperty.call(v.events[0].i18nArgs, 'required')).toBe(true);
+            expect(v.events[0].i18nArgs.required).toBe(null);
+            expect(v.events[0].i18nArgs.achieved).toBe(c[1]);
+            expect(v.events[0].i18nArgs.sample).toBe(1);
+            expect(v.events[0].i18nArgs.maxSamples).toBe(1);
+            expect(E.eventProblems(v.events[0])).toEqual([]);
+            expect(v.out.exact).toBe(false);
+            expect(v.out.warnings).toEqual(['difficulty.approximate']);
+          });
+          // an incomplete sample is a miss too; with nothing else rated the run has no puzzle to return
+          var events = [];
+          expectCode(function () {
+            gen('normal', sampling(UNSOLVED), Object.assign({ emit: collecting(events) }, OFF));
+          }, 'digger.noRatedPuzzle');
+          var misses = tuneEvents(events);
+          expect(misses.map(function (e) { return e.i18nKey; })).toEqual(['tune.miss']);
+          expect(misses[0].i18nArgs.required).toBe(null);
+        });
+
+      it('MS05b1-T04: no event carries a target: nothing draws one yet', function () {
+        [REQUIRED, SHALLOW, EASY].forEach(function (sample) {
+          var v = verdictOf(sample);
+          expect(Object.prototype.hasOwnProperty.call(v.events[0].i18nArgs, 'target')).toBe(false);
+        });
+      });
+
+      it('MS05b1-T04: Very Easy stays vacuous: a real puzzle is a hit with required true', function () {
+        var out = run({ difficulty: 'veryEasy', seed: 3 }, 'summary');
+        var verdicts = tuneEvents(out.events);
+        expect(verdicts).toHaveLength(1);
+        expect(verdicts[0].i18nKey).toBe('tune.hit');
+        expect(verdicts[0].i18nArgs.required).toBe(true);
+        expect(out.result.exact).toBe(true);
+        expect(out.result.warnings).toEqual([]);
+      });
+
+      it('MS05b1-T04: a real board that cannot reach the level misses with required null, never true', function () {
+        withUnreachable(function () {
+          var out = run({ variantId: UNREACHABLE, difficulty: 'nightmare', seed: 9002, maxAttempts: 1 },
+            'summary');
+          var verdicts = tuneEvents(out.events);
+          expect(verdicts.length).toBeGreaterThan(1);
+          verdicts.forEach(function (e) {
+            expect(e.i18nKey).toBe('tune.miss');
+            expect(e.i18nArgs.required).toBe(null);
+            expect(e.i18nArgs.achieved).toBe('veryEasy');
+          });
+          expect(out.result.exact).toBe(false);
+          expect(out.result.warnings).toEqual(['difficulty.approximate']);
+          checkEvents(out.events);
+        });
+      }, 60000);
+
+      it('MS05b1-T04: a real complete result inside the band that needs no Nightmare technique is shallow',
+        function () {
+          var out = run({ difficulty: 'nightmare', seed: 42, maxAttempts: 1 }, 'summary');
+          var verdicts = tuneEvents(out.events);
+          var shallow = verdicts.filter(function (e) { return e.i18nKey === 'tune.shallow'; });
+          expect(shallow.length).toBeGreaterThan(0);
+          expect(count(out.events, 'tune.hit')).toBe(0);
+          verdicts.forEach(function (e) {
+            expect(e.i18nArgs.required).toBe(e.i18nKey === 'tune.shallow' ? false : null);
+            expect(e.i18nArgs.requested).toBe('nightmare');
+          });
+          shallow.forEach(function (e) { expect(e.i18nArgs.achieved).toBe('nightmare'); });
+          expect(out.result.exact).toBe(false);
+          expect(out.result.rating.level).toBe('nightmare');
+          expect(out.result.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+          // a fallback is still a valid puzzle with exactly one solution
+          expect(SG.dfs.countSolutions(out.result.model, out.result.givens, 2)).toBe(1);
+          expect(SG.model.isSolution(out.result.model, out.result.solution)).toBe(true);
+          var done = out.events[out.events.length - 1];
+          expect(done.i18nArgs.exact).toBe(false);
+          expect(done.i18nArgs.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+          expect(D.requiredOf(out.result.rating, 'nightmare', out.result.model).required).toBe(false);
+          expect(D.certifyFloor(out.result.model, out.result.givens, 'nightmare', null).required).toBe(false);
+          checkEvents(out.events);
+        }, 60000);
+    });
+
+    // The shallow-search allowance (R5): the full ratings a local search makes after its first shallow state.
+    // Scripted ratings and the real counted entry point, with the allowance set for each test by name; the
+    // production default is Infinity here and a test that wants the old caps alone says so.
+    describe('recovery: shallow allowance (MS05r3)', function () {
+      /** The record of a local search without its proposals (they depend on the moves the seed draws). */
+      function shown(entry) {
+        return {
+          ratings: entry.ratings, firstShallowAt: entry.firstShallowAt, shallowRatings: entry.shallowRatings,
+          shallowLimit: entry.shallowLimit, capHit: entry.capHit
+        };
+      }
+
+      function searchesOf(out, attempt) {
+        return out.work[attempt || 0].localSearches;
+      }
+
+      /** `n` ratings through the counted entry point before the search starts: earlier work, outside it. */
+      function earlier(n) {
+        return function (k) {
+          for (var i = 0; i < n; i++) Z.rateCounted(k.model, k.a, null, k.options.caps);
+        };
+      }
+
+      function keyOf(givens) {
+        return Array.from(givens).join(',');
+      }
+
+      function emptyGroups(givens) {
+        return SG.symmetry.groups(model9, 'rotational180').filter(function (g) {
+          return Array.from(g).every(function (c) { return givens[c] === 0; });
+        }).length;
+      }
+
+      /** The generation under `allowance`, the rater `script`, a sample and extra options. */
+      function searched(allowance, script, sample, extra, onCalls) {
+        var out = null;
+        withAllowance(allowance, function () {
+          withRater(script, function (calls) {
+            out = gen('normal', sampling(sample, extra && extra.script), extra && extra.options);
+            if (onCalls) onCalls(calls);
+          });
+        });
+        return out;
+      }
+
+      function always(rating) {
+        return function () { return rating; };
+      }
+
+      it('MS05r3-T01: 3 earlier ratings, the first shallow state at local ordinal 2, then 64 new ratings ' +
+        'and the next call is refused, not the identifying one', function () {
+        // calls 0-2 are made before the search; 3 is its first rating, 4 its second (the first shallow
+        // state), 5-68 are the allowance; the call after them is refused before it reaches the rater
+        var out = searched(64, function (call, index) {
+          return index === 4 ? SHALLOW : index < 5 ? EASY : SHALLOW_2;
+        }, EASY, { script: earlier(3) }, function (calls) {
+          expect(calls).toHaveLength(69);
+          expect(new Set(calls.slice(3).map(function (call) { return keyOf(call.givens); })).size).toBe(66);
+        });
+        var entry = searchesOf(out)[0];
+        expect(searchesOf(out)).toHaveLength(1);
+        expect(shown(entry)).toEqual({ ratings: 66, firstShallowAt: 2, shallowRatings: 64, shallowLimit: 64,
+          capHit: 'shallow' });
+        expect(out.work[0].ratings).toBe(69);
+        expect(out.work[0].maxRatings).toBe(1024);
+        expect(entry.proposals).toBe(out.work[0].proposals);
+        expect(entry.proposals).toBeGreaterThanOrEqual(66);
+        // the search ends on the best verified candidate it has: a shallow result, nothing is invented
+        expect(out.exact).toBe(false);
+        expect(out.rating).toBe(SHALLOW);
+        expect(out.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+        expect(SG.dfs.countSolutions(out.model, out.givens, 2)).toBe(1);
+      });
+
+      it('MS05r3-T01: a state shallow on entry has ordinal 0; a zero allowance refuses the first new rating',
+        function () {
+          var out = searched(0, always(null), SHALLOW, null, function (calls) {
+            expect(calls).toHaveLength(0);
+          });
+          var entry = searchesOf(out)[0];
+          expect(shown(entry)).toEqual({ ratings: 0, firstShallowAt: 0, shallowRatings: 0, shallowLimit: 0,
+            capHit: 'shallow' });
+          expect(entry.proposals).toBeGreaterThanOrEqual(1);
+          expect(out.work[0].ratings).toBe(0);
+          expect(out.rating).toBe(SHALLOW);
+          expect(out.exact).toBe(false);
+          expect(out.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+        });
+
+      it('MS05r3-T01: a refinement that becomes shallow on its third rating has ordinal 3, not 0', function () {
+        var seq = [ABOVE, ABOVE, SHALLOW];
+        var rater = function (call, index) { return index < 3 ? seq[index] : SHALLOW_2; };
+        var out = searched(4, rater, ABOVE, null, function (calls) {
+          // three ratings of the refinement and the four of the allowance; the fifth is refused
+          expect(calls).toHaveLength(7);
+        });
+        expect(shown(searchesOf(out)[0])).toEqual({ ratings: 7, firstShallowAt: 3, shallowRatings: 4,
+          shallowLimit: 4, capHit: 'shallow' });
+        expect(out.work[0].ratings).toBe(7);
+        // with no allowance the refinement is not cut short: it is not counted against it
+        var none = searched(0, rater, ABOVE, null, function (calls) {
+          expect(calls).toHaveLength(3);
+        });
+        expect(shown(searchesOf(none)[0])).toEqual({ ratings: 3, firstShallowAt: 3, shallowRatings: 0,
+          shallowLimit: 0, capHit: 'shallow' });
+        expect(none.rating).toBe(SHALLOW);
+      });
+
+      it('MS05r3-T01: a refinement that stays above the band returns with no proposal and no cap hit',
+        function () {
+          var groups = 0;
+          var out = searched(64, always(ABOVE), ABOVE, { script: function (k) { groups = emptyGroups(k.a); } },
+            function (calls) {
+              expect(groups).toBeGreaterThan(1);
+              expect(groups).toBeLessThan(65);
+              expect(calls).toHaveLength(groups);
+            });
+          expect(searchesOf(out)).toHaveLength(1);
+          expect(shown(searchesOf(out)[0])).toEqual({ ratings: groups, firstShallowAt: null, shallowRatings: 0,
+            shallowLimit: 64, capHit: null });
+          expect(searchesOf(out)[0].proposals).toBe(0);
+          expect(out.work[0].proposals).toBe(0);
+        });
+
+      it('MS05r3-T01: a repeated candidate is a proposal, not a rating, and costs no allowance', function () {
+        // every neighbour is above the band: the state never changes and the finite set of its neighbours is
+        // met again and again until the proposals run out
+        var run = function (allowance) {
+          var keys = [];
+          var out = searched(allowance, always(ABOVE), SHALLOW, { options: { maxProposals: 4000 } },
+            function (calls) {
+              keys = calls.map(function (call) { return keyOf(call.givens); });
+            });
+          return { entry: searchesOf(out)[0], keys: keys, out: out };
+        };
+        var free = run(100000);
+        var distinct = free.entry.ratings;
+        expect(distinct).toBeGreaterThan(20);
+        expect(new Set(free.keys).size).toBe(free.keys.length);
+        expect(free.keys).toHaveLength(distinct);
+        expect(free.entry.proposals).toBe(4000);
+        expect(free.entry.proposals).toBeGreaterThan(distinct);
+        expect(shown(free.entry)).toEqual({ ratings: distinct, firstShallowAt: 0, shallowRatings: distinct,
+          shallowLimit: 100000, capHit: 'proposals' });
+        // an allowance of exactly the distinct candidates is never exhausted by the memo visits
+        var exact = run(distinct);
+        expect(shown(exact.entry)).toEqual({ ratings: distinct, firstShallowAt: 0, shallowRatings: distinct,
+          shallowLimit: distinct, capHit: 'proposals' });
+        expect(exact.keys).toEqual(free.keys);
+        // one fewer refuses the last new candidate, and only that one
+        var fewer = run(distinct - 1);
+        expect(shown(fewer.entry)).toEqual({ ratings: distinct - 1, firstShallowAt: 0,
+          shallowRatings: distinct - 1, shallowLimit: distinct - 1, capHit: 'shallow' });
+        expect(fewer.keys).toEqual(free.keys.slice(0, distinct - 1));
+      });
+
+      it('MS05r3-T01: a band exit does not restart the count: it starts once, at the first shallow state',
+        function () {
+          var cycle = [SHALLOW, ABOVE, EASY];
+          var out = searched(6, function (call, index) { return cycle[index % 3]; }, EASY, null,
+            function (calls) {
+              expect(calls).toHaveLength(7);
+            });
+          expect(shown(searchesOf(out)[0])).toEqual({ ratings: 7, firstShallowAt: 1, shallowRatings: 6,
+            shallowLimit: 6, capHit: 'shallow' });
+        });
+
+      it('MS05r3-T01: each attempt has its own local search and its own allowance', function () {
+        var out = searched(3, always(SHALLOW_2), SHALLOW, { options: { maxAttempts: 2 } }, function (calls) {
+          expect(calls).toHaveLength(6);
+        });
+        expect(out.attempts).toBe(2);
+        expect(out.work).toHaveLength(2);
+        out.work.forEach(function (w) {
+          expect(w.ratings).toBe(3);
+          expect(w.localSearches).toHaveLength(1);
+          expect(shown(w.localSearches[0])).toEqual({ ratings: 3, firstShallowAt: 0, shallowRatings: 3,
+            shallowLimit: 3, capHit: 'shallow' });
+        });
+        expect(liveCaps.local).toBe(null);
+      });
+
+      it('MS05r3-T01: two cooperative generations that interleave keep their own collectors', function () {
+        var current = null;
+        var used = { A: 0, B: 0 };
+        // A starts shallow; B starts below the band and meets its first shallow state on its second rating
+        function rater() {
+          var n = used[current]++;
+          if (current === 'A') return SHALLOW_2;
+          return n === 0 ? EASY : n === 1 ? SHALLOW : SHALLOW_2;
+        }
+        function start(kind) {
+          return Z.generateSteps(model9, 'normal', SG.rng.create(SEED), { strategy: sampling(
+            kind === 'A' ? SHALLOW : EASY), maxAttempts: 1, digTries: 1, cooperative: true });
+        }
+        var alone = {};
+        var yields = { A: 0, B: 0 };
+        var together = {};
+        withAllowance(4, function () {
+          withRater(rater, function () {
+            ['A', 'B'].forEach(function (kind) {
+              used = { A: 0, B: 0 };
+              current = kind;
+              alone[kind] = gen('normal', sampling(kind === 'A' ? SHALLOW : EASY));
+            });
+            used = { A: 0, B: 0 };
+            var made = { A: start('A'), B: start('B') };
+            while (!together.A || !together.B) {
+              ['A', 'B'].forEach(function (kind) {
+                if (together[kind]) return;
+                current = kind;
+                var step = made[kind].next();
+                if (step.done) together[kind] = step.value;
+                else yields[kind]++;
+              });
+            }
+          });
+        });
+        expect(yields.A).toBeGreaterThan(2);
+        expect(yields.B).toBeGreaterThan(2);
+        expect(shown(searchesOf(together.A)[0])).toEqual({ ratings: 4, firstShallowAt: 0, shallowRatings: 4,
+          shallowLimit: 4, capHit: 'shallow' });
+        expect(shown(searchesOf(together.B)[0])).toEqual({ ratings: 6, firstShallowAt: 2, shallowRatings: 4,
+          shallowLimit: 4, capHit: 'shallow' });
+        expect(together.A.work).toEqual(alone.A.work);
+        expect(together.B.work).toEqual(alone.B.work);
+        expect(Array.from(together.A.givens)).toEqual(Array.from(alone.A.givens));
+        expect(Array.from(together.B.givens)).toEqual(Array.from(alone.B.givens));
+      });
+
+      it('MS05r3-T02: a rating that throws was invoked and stays counted; the error is the same object, ' +
+        'with the partial work', function () {
+        var boom = new Error('the rater failed');
+        var thrown = null;
+        withAllowance(5, function () {
+          withRater(function (call, index) {
+            if (index === 2) throw boom;
+            return SHALLOW_2;
+          }, function (calls) {
+            try {
+              gen('normal', sampling(SHALLOW));
+            } catch (e) {
+              thrown = e;
+            }
+            expect(calls).toHaveLength(3);
+          });
+        });
+        expect(thrown).toBe(boom);
+        expect(Object.keys(boom).indexOf('work')).toBe(-1);
+        expect(boom.work).toHaveLength(1);
+        expect(boom.work[0].ratings).toBe(3);
+        expect(shown(boom.work[0].localSearches[0])).toEqual({ ratings: 3, firstShallowAt: 0, shallowRatings: 3,
+          shallowLimit: 5, capHit: null });
+        expect(boom.work[0].localSearches[0].proposals).toBe(boom.work[0].proposals);
+        // the collector is not left behind: the next generation counts for itself
+        expect(liveCaps.local).toBe(null);
+        var next = searched(5, always(SHALLOW_2), SHALLOW);
+        expect(shown(searchesOf(next)[0])).toEqual({ ratings: 5, firstShallowAt: 0, shallowRatings: 5,
+          shallowLimit: 5, capHit: 'shallow' });
+        expect(next.work).toHaveLength(1);
+      });
+
+      it('MS05r3-T02: a parent cancellation in a local search is budget.cancelled, with the partial work',
+        function () {
+          var budget = SG.budget.create({});
+          var thrown = null;
+          withAllowance(50, function () {
+            withRater(function (call, index) {
+              if (index === 3) {
+                budget.cancel();
+                budget.check();
+              }
+              return SHALLOW_2;
+            }, function (calls) {
+              try {
+                gen('normal', sampling(SHALLOW), { budget: budget });
+              } catch (e) {
+                thrown = e;
+              }
+              expect(calls).toHaveLength(4);
+            });
+          });
+          expect(thrown instanceof SG.errors.GenerationError).toBe(true);
+          expect(thrown.code).toBe('budget.cancelled');
+          expect(thrown.work[0].ratings).toBe(4);
+          expect(shown(thrown.work[0].localSearches[0])).toEqual({ ratings: 4, firstShallowAt: 0,
+            shallowRatings: 4, shallowLimit: 50, capHit: null });
+          expect(liveCaps.local).toBe(null);
+        });
+
+      it('MS05r3-T01: an exact keeper found before exhaustion ends the search with no cap hit', function () {
+        var seq = [SHALLOW_2, SHALLOW_2, SHALLOW_2, REQUIRED_2];
+        var rater = function (call, index) {
+          if (index >= 4) throw new Error('rating ' + (index + 1) + ' after the exact result');
+          return seq[index];
+        };
+        var out = searched(10, rater, SHALLOW, null, function (calls) {
+          expect(calls).toHaveLength(4);
+        });
+        expect(shown(searchesOf(out)[0])).toEqual({ ratings: 4, firstShallowAt: 0, shallowRatings: 4,
+          shallowLimit: 10, capHit: null });
+        expect(out.exact).toBe(true);
+        expect(out.rating).toBe(REQUIRED_2);
+        // exact on the last permitted rating is the same: the allowance was not exceeded
+        var last = searched(4, rater, SHALLOW);
+        expect(shown(searchesOf(last)[0])).toEqual({ ratings: 4, firstShallowAt: 0, shallowRatings: 4,
+          shallowLimit: 4, capHit: null });
+        expect(last.exact).toBe(true);
+        // nor does an enclosing cap that the exact rating used up
+        var capped = searched(Infinity, rater, SHALLOW, { options: { maxRatings: 4 } });
+        expect(shown(searchesOf(capped)[0])).toEqual({ ratings: 4, firstShallowAt: 0, shallowRatings: 4,
+          shallowLimit: null, capHit: null });
+        expect(capped.exact).toBe(true);
+      });
+
+      it('MS05r3-T01: the old caps keep their own reason, whatever the allowance', function () {
+        var byRatings = searched(Infinity, always(SHALLOW_2), SHALLOW, { options: { maxRatings: 5 } });
+        expect(shown(searchesOf(byRatings)[0])).toEqual({ ratings: 5, firstShallowAt: 0, shallowRatings: 5,
+          shallowLimit: null, capHit: 'ratings' });
+        // an allowance equal to the cap does not make the cap a shallow hit: the cap stopped the loop first
+        var equal = searched(5, always(SHALLOW_2), SHALLOW, { options: { maxRatings: 5 } });
+        expect(shown(searchesOf(equal)[0])).toEqual({ ratings: 5, firstShallowAt: 0, shallowRatings: 5,
+          shallowLimit: 5, capHit: 'ratings' });
+        var below = searched(4, always(SHALLOW_2), SHALLOW, { options: { maxRatings: 5 } });
+        expect(shown(searchesOf(below)[0])).toEqual({ ratings: 4, firstShallowAt: 0, shallowRatings: 4,
+          shallowLimit: 4, capHit: 'shallow' });
+        var byProposals = searched(Infinity, always(SHALLOW_2), SHALLOW, { options: { maxProposals: 7 } });
+        var entry = searchesOf(byProposals)[0];
+        expect(entry.proposals).toBe(7);
+        expect(entry.capHit).toBe('proposals');
+        expect(entry.shallowLimit).toBe(null);
+        expect(entry.ratings).toBeLessThanOrEqual(7);
+        // a search cut off by its refinement, not by a cap, says nothing
+        var refined = searched(Infinity, always(ABOVE), ABOVE);
+        expect(searchesOf(refined)[0].capHit).toBe(null);
+      });
+
+      it('MS05r3-T01: an allowance that is not Infinity or a whole number >= 0 is refused, and put back',
+        function () {
+          var before = SG.digger.SHALLOW_SEARCH_RATINGS;
+          [-1, 1.5, NaN, -Infinity, '64', null, undefined, true].forEach(function (value) {
+            expectCode(function () { searched(value, always(SHALLOW_2), SHALLOW); }, 'digger.invalidOption');
+          });
+          expect(SG.digger.SHALLOW_SEARCH_RATINGS).toBe(before);
+        });
+
+      it('MS05r3-T01: Infinity and an allowance that never binds give the same puzzle and the same work',
+        function () {
+          var one = searched(Infinity, always(SHALLOW_2), SHALLOW, { options: { maxProposals: 60 } });
+          var big = searched(1e9, always(SHALLOW_2), SHALLOW, { options: { maxProposals: 60 } });
+          expect(Array.from(big.givens)).toEqual(Array.from(one.givens));
+          expect(searchesOf(one)[0].shallowLimit).toBe(null);
+          expect(searchesOf(big)[0].shallowLimit).toBe(1e9);
+          expect(big.work.map(function (w) { return [w.ratings, w.proposals]; }))
+            .toEqual(one.work.map(function (w) { return [w.ratings, w.proposals]; }));
+          expect(shown(Object.assign({}, searchesOf(big)[0], { shallowLimit: null })))
+            .toEqual(shown(searchesOf(one)[0]));
+        });
+
+      // A real 9x9 Master request whose local search meets shallow states and keeps going after them (a
+      // dozen seeds of the first 25 do): it shows the allowance on the real rater, not on a script.
+      var REAL = { level: 'master', seed: 1 };
+
+      function realRequest(allowance) {
+        var out = null;
+        withAllowance(allowance, function () {
+          out = Z.generate(model9, REAL.level, SG.rng.create(REAL.seed), { maxAttempts: 1 });
+        });
+        return out;
+      }
+
+      function plain(out) {
+        return out.work.map(function (w) {
+          return [w.ratings, w.proposals, w.localSearches.map(function (s) {
+            return [s.ratings, s.proposals, s.firstShallowAt, s.shallowRatings, s.capHit];
+          })];
+        });
+      }
+
+      it('MS05r3-T03: Infinity and an allowance that never binds give the same real puzzle and work',
+        function () {
+          var made = [realRequest(Infinity), realRequest(1e9)];
+          var entry = searchesOf(made[0])[0];
+          // not vacuous: the search found a shallow state and went on well past 64 ratings after it
+          expect(entry.firstShallowAt).toBeGreaterThan(0);
+          expect(entry.shallowRatings).toBeGreaterThan(64);
+          expect(entry.shallowLimit).toBe(null);
+          expect(Array.from(made[1].givens)).toEqual(Array.from(made[0].givens));
+          expect(made[1].exact).toBe(made[0].exact);
+          expect(made[1].rating.score).toBe(made[0].rating.score);
+          expect(plain(made[1])).toEqual(plain(made[0]));
+          expect(searchesOf(made[1])[0].shallowLimit).toBe(1e9);
+        }, 60000);
+
+      it('MS05r3-T01: on the real rater an allowance of 64 ends the search exactly 64 ratings after the ' +
+        'first shallow state, on the same path', function () {
+        var free = realRequest(Infinity);
+        var freeEntry = searchesOf(free)[0];
+        var bound = realRequest(64);
+        var entry = searchesOf(bound)[0];
+        expect(entry.firstShallowAt).toBe(freeEntry.firstShallowAt);
+        expect(shown(entry)).toEqual({ ratings: freeEntry.firstShallowAt + 64,
+          firstShallowAt: freeEntry.firstShallowAt, shallowRatings: 64, shallowLimit: 64, capHit: 'shallow' });
+        // the work outside the local search is the same: only the search was cut short
+        expect(bound.work[0].ratings - entry.ratings).toBe(free.work[0].ratings - freeEntry.ratings);
+        expect(bound.work[0].ratings).toBeLessThan(free.work[0].ratings);
+        expect(SG.dfs.countSolutions(bound.model, bound.givens, 2)).toBe(1);
+      }, 60000);
     });
   });
 })();

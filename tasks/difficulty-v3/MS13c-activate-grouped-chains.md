@@ -28,11 +28,11 @@ R16, verbatim:
 > An endpoint elimination must conflict with every member of each endpoint group.
 > Each emitted Finding owns copied node/cell/path data, not borrowed mutable graph scratch.
 
-Use MS13a canonical nodes/edges and MS13b proofVersion2:
+Use MS13a canonical nodes/edges and MS13b proofVersion 2:
 `chains:[[{cells:[...],digit,truth},...],...]`; length is maximum path edge count; Finding.cells
 is the full sorted union. Pure singleton paths may retain triples. Same IDs/weights/orders/windows.
 Never decode a new node as cell*digits+digit. Incomplete construction or minimum search => null.
-Construction plus search share a50000-work allowance; do not reset it between stages. Start with
+Construction plus search share a 50000-work allowance; do not reset it between stages. Start with
 4096 additional group nodes. Only these newly introduced limits may be adjusted once with evidence;
 do not tune earlier XY/Nishio limits or selected C.
 
@@ -92,7 +92,7 @@ node tests\tools\make-technique-examples.js ..\generator --ids=forcingChain,forc
 ```
 
 Curated chain sources first, then bounded classic9 master/nightmare/hell1 under B.
-Jobs1/no --jobs. E10-90 minutes, cost1-60 seconds, GP30-540 seconds/cell, curated GH1-120 seconds.
+Jobs 1/no --jobs. E 10-90 minutes, cost 1-60 seconds, GP 30-540 seconds/cell, curated GH 1-120 seconds.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Record GP misses, never relax targets; ten-minute command ceiling.
 

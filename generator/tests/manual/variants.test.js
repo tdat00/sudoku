@@ -199,10 +199,12 @@
         expect(r.givens).toHaveLength(r.model.cellCount);
         expect(r.solution).toHaveLength(r.model.cellCount);
         expect(LEVELS).toContain(r.rating.level);
-        var hit = r.rating.level === level;
+        var hit = r.exact === true;
         if (hit) exact++;
-        // A miss is never silent: the closest puzzle comes with 'difficulty.approximate'.
+        // A miss is never silent: the closest puzzle comes with 'difficulty.approximate', and one in the level
+        // that does not need its tier (shallow) also with 'difficulty.shallow'.
         expect(r.warnings.indexOf('difficulty.approximate') !== -1).toBe(!hit);
+        expect(r.warnings.indexOf('difficulty.shallow') !== -1).toBe(!hit && r.rating.level === level);
       });
       if (exact === 0) {
         throw new Error(def.id + ' ' + level + ': none of ' + puzzles.length + ' puzzles hit it');
@@ -256,8 +258,9 @@
         }
         // I3: the solution satisfies every unit, cage and inequality.
         if (!SG.model.isSolution(m, r.solution)) throw new Error(where + ': invalid solution (I3)');
-        // I5: a puzzle rated as requested has its score in the band and a hardest group of the level.
-        if (r.rating.level === level) {
+        // I5: an exact puzzle has its score in the band, a hardest group of the level and needs the tier.
+        if (r.exact === true) {
+          expect(r.rating.level).toBe(level);
           if (!(r.rating.score >= spec.min && r.rating.score < spec.max)) {
             throw new Error(where + ': score ' + r.rating.score + ' outside [' + spec.min + ', ' +
               spec.max + ') (I5)');
@@ -265,6 +268,10 @@
           var group = r.rating.hardestGroup === null ? 'basic' : r.rating.hardestGroup;
           if (spec.allowedGroups.indexOf(group) === -1) {
             throw new Error(where + ': group ' + group + ' (I5)');
+          }
+          var verdict = SG.difficulty.requiredOf(r.rating, level, m);
+          if (verdict === null || verdict.required !== true) {
+            throw new Error(where + ': exact, but the tier is not needed (I5)');
           }
         }
         // I6: at least the clue floor of the variant.

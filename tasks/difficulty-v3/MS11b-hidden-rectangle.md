@@ -25,15 +25,15 @@ R14, verbatim:
 > and column to the adjacent rectangle corners. It cannot be y, which would force a deadly rectangle.
 > Search the transposes and swapped digit roles.
 
-Same ID/order180/weight900/baseCost/uniqueness flag. Key
+Same ID/order 180/weight 900/baseCost/uniqueness flag. Key
 `technique.uniqueRectangle.hidden.step`, args `{digit:x,digits:[x,y],cells:string[]}`.
 Actual complete row/column conjugates, same swap-preserving geometry, no cages/signs, false
-uniqueness context => null. Preserve type1/2 priority and MS11a's types before the new hidden pass.
-Own work limit50000 extensions, entry/every256 checks, copied deterministic Findings/metrics.
+uniqueness context => null. Preserve type 1/2 priority and MS11a's types before the new hidden pass.
+Own work limit 50000 extensions, entry/every 256 checks, copied deterministic Findings/metrics.
 
 Vector: A=R1C1{1,2}, B=R1C4{1,2,4}, C=R2C1{1,2,5}, D=R2C4{1,2,3}.
-If1 is conjugate D-C on row2 and D-B on column4, eliminate2 at D. If D were2 then B/C are1
-and A is2, the forbidden rectangle. Add an extra1 in either conjugate unit => no such witness.
+If 1 is conjugate D-C on row 2 and D-B on column 4, eliminate 2 at D. If D were 2 then B/C are 1
+and A is 2, the forbidden rectangle. Add an extra 1 in either conjugate unit => no such witness.
 Test digit swap, transpose, wrong opposite corner, incomplete/extra units and ctx=false.
 Baseline `core/js/engine/tech-wing.js:349-399`, `:477-528` (`function findUniqueRectangle`).
 
@@ -82,8 +82,8 @@ node tests\tools\make-technique-examples.js ..\generator --ids=uniqueRectangle -
 node tests\tools\make-technique-examples.js ..\generator --ids=uniqueRectangle --sources=tests\artifacts\difficulty-v3\MS11b\sources.json --max-puzzles=8 --max-hints=400 --check
 ```
 
-B acquisition: existing UR source, then bounded classic9 master/nightmare. Jobs1/no --jobs;
-E10-90 minutes, cost1-60 seconds, curated GH1-120 seconds/discovery<=8 minutes.
+B acquisition: existing UR source, then bounded classic9 master/nightmare. Jobs 1/no --jobs;
+E 10-90 minutes, cost 1-60 seconds, curated GH 1-120 seconds/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Only this new pass's limit may adjust once; ten-minute command ceiling.
 

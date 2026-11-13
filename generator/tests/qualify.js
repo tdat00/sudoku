@@ -13,7 +13,9 @@
  * puzzles are generated with fixed seeds through the real pipeline (`SG.pipeline.run` with the 120 s
  * active-time guard of the application). A request is a HIT when it returns a valid puzzle (givens inside
  * the solution, a valid solution, exactly one solution by the DFS count) with a complete logical proof whose
- * level is exactly the requested one, without the warning 'difficulty.approximate'. Timeouts, errors,
+ * level is exactly the requested one, without the warning 'difficulty.approximate', and the result is `exact`
+ * (rating v3: the proof also needs a technique of the tier of the level; an absent flag is a miss, a shallow
+ * result in the band is not a hit). Timeouts, errors,
  * approximate and unrated results are misses, and every request counts, also in the time percentile.
  *  - 36 or more hits of 40, and p95 within the budget: the level is offered.
  *  - 30 to 35 hits: 60 more seeds; offered with at least 90 hits of the 100 and p95 (of all 100) within the
@@ -161,17 +163,29 @@ function child() {
       out.score = rating.score;
       out.solved = rating.solved === true;
       out.approximate = result.warnings.indexOf('difficulty.approximate') !== -1;
+      out.exact = result.exact === true;
       let consistent = true;
       for (let c = 0; c < model.cellCount; c++) {
         if (result.givens[c] !== 0 && result.givens[c] !== result.solution[c]) consistent = false;
       }
       out.valid = consistent && SG.model.isSolution(model, result.solution) &&
         SG.dfs.countSolutions(model, result.givens, 2) === 1;
-      out.hit = out.valid && out.solved && !out.approximate && rating.level === task.level;
+      out.hit = hitOf(out, task.level);
     }
     process.send(out);
   });
   process.send({ ready: true });
+}
+
+/**
+ * The hit of one request from the outcome the worker recorded: the independent checks (a valid puzzle that
+ * has a complete proof, no approximate warning), the level the rating reports, and the generator's own
+ * `exact` flag, strictly true (a complete proof in the requested level that needs its tier). A level name
+ * that matches is a consistency check and never enough: an absent or false `exact` is a miss.
+ */
+function hitOf(out, requested) {
+  return out.valid === true && out.solved === true && out.approximate === false &&
+    out.exact === true && out.achieved === requested;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -493,4 +507,6 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { budgetOf: budgetOf, percentile: percentile, seedFor: seedFor, SEED_BASE: SEED_BASE };
+module.exports = {
+  budgetOf: budgetOf, hitOf: hitOf, percentile: percentile, seedFor: seedFor, SEED_BASE: SEED_BASE
+};

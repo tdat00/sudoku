@@ -72,7 +72,7 @@ Baseline anchors:
 
 | ID | Criterion |
 |---|---|
-| MS13b-T01 | proofVersion2 and legacy paths format without lossy singleton conversion |
+| MS13b-T01 | proofVersion 2 and legacy paths format without lossy singleton conversion |
 | MS13b-T02 | Wordoku/hex, every member highlight and retained input ownership pass |
 | MS13b-T03 | Both locale/help sets and both quick sets pass; solver still inactive |
 
@@ -81,7 +81,7 @@ Baseline anchors:
 Generator `node tests\node-runner.js --suite=i18n,format,help`;
 Player `node tests\node-runner.js --suite=play,i18n,help`; then both quick sets.
 Test a two-path contradiction mixing singleton/group nodes, false group conjunction, true
-disjunction, a hex value1 displayed0, Wordoku letters and another call not mutating saved args.
+disjunction, a hex value 1 displayed 0, Wordoku letters and another call not mutating saved args.
 No heavy gate or synthetic canonical help entry.
 
 ## Definition of done & handoff

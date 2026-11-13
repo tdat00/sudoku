@@ -812,6 +812,32 @@
         });
       });
 
+    it('MS05b1-T04: the compare line, the how-text and the shallow notice state the tier rule in both languages',
+      function () {
+        packsReady();
+        var rule = {
+          en: { how: [/complete proof/, /requested band/, /requested tier/],
+            compare: [/complete proof/, /score is in the requested band/, /technique of the requested tier/] },
+          vi: { how: [/giải đầy đủ/, /dải đã chọn/, /tầng/], compare: [/giải đầy đủ/, /dải đã chọn/, /tầng/] }
+        };
+        LOCALES.forEach(function (code) {
+          rule[code].how.forEach(function (re) { expect(SG.locales[code]['explain.tune.how']).toMatch(re); });
+          rule[code].compare.forEach(function (re) {
+            expect(SG.locales[code]['explain.tune.code.compare']).toMatch(re);
+          });
+          expect(SG.locales[code]['explain.tune.code.compare']).not.toMatch(/equal|bằng mức/);
+          expect(placeholders(SG.locales[code]['explain.tune.how'])).toEqual([]);
+          expect(placeholders(SG.locales[code]['explain.tune.code.compare'])).toEqual([]);
+        });
+        ['Easy', 'Expert', 'Hard', 'Nightmare'].forEach(function (name) {
+          expect(I.t('difficulty.shallow', { level: name })).toBe('The puzzle is in the requested score band ' +
+            'but does not need a technique from the ' + name + ' tier.');
+        });
+        var vi = inLocale('vi', function () { return I.t('difficulty.shallow', { level: 'Dễ' }); });
+        expect(vi).toBe('Đề nằm trong dải điểm của mức đã chọn nhưng không cần kỹ thuật nào thuộc tầng của mức Dễ.');
+        expect(SG.explain.tune.highlight['tune.shallow']).toBe('retry');
+      });
+
     it('shows a dash for a missing value and the infinity sign for an open score band', function () {
       packsReady();
       var spec = I.eventText(event('buildModel.spec',

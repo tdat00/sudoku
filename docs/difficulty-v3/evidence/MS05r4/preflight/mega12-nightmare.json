@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "kind": "mega-original-limit-preflight",
+  "task": "MS05r4",
+  "group": "mega12 nightmare (generator/tests/suites/mega.test.js, `mega puzzles`)",
+  "command": {
+    "cwd": "generator",
+    "nodeArgs": ["tests\\node-runner.js", "--suite=mega", "--filter=> mega puzzles > mega12 nightmare:", "--verbose"],
+    "through": "Invoke-Dv3Node (docs/difficulty-v3/evidence/MS05r4/Invoke-Dv3Node.ps1), started by generator/tests/artifacts/difficulty-v3/MS05r4/Run-Dv3Logged.ps1 with -AllowExit1 and its output redirected to the transcript; runs.jsonl has the record"
+  },
+  "transcript": "docs/difficulty-v3/evidence/MS05r4/preflight/mega12-nightmare.txt",
+  "transcriptNote": "The complete console output of the command. The only edit: the absolute repository root in the stack frames is replaced by <repo> (the repository keeps no absolute paths in its files; tests/difficulty-recovery.js does the same). The last three lines are the helper's and the wrapper's.",
+  "startedAt": "2026-11-13T06:15:25.9373238Z",
+  "exit": 1,
+  "nodeSeconds": 186.144,
+  "wallSeconds": 231.346,
+  "lockWaitSeconds": 45,
+  "tests": {
+    "selected": 2,
+    "passed": 1,
+    "failed": 1,
+    "skipped": 0,
+    "results": [
+      {
+        "name": "mega > mega puzzles > mega12 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget",
+        "result": "FAIL",
+        "detail": "AssertionError: expected 48202.265400000004 to be < 6000 (mega.test.js:699, `expect(out.ms).toBeLessThan(limit)`); the first seed, 1, took 48.2 s and the loop stopped there: seeds 2 to 4 were not run"
+      },
+      {
+        "name": "mega > mega puzzles > mega12 nightmare: the same seed gives the same puzzle (CV5)",
+        "result": "ok",
+        "seconds": 137.74
+      }
+    ]
+  },
+  "limits": {
+    "generationGuardMs": 60000,
+    "designBudgetMs": 3000,
+    "timeFactor": 2,
+    "timeFactorSource": "SG.test.TIME_FACTOR of core/tests/harness.js: 2 by default; CI and SG_TIME_FACTOR are not set in this environment",
+    "timeLimitMs": 6000,
+    "assertion": "SG.test.timeLimit(3000), unchanged",
+    "seeds": [1, 2, 3, 4],
+    "cv5Seeds": [3, 3, 4]
+  },
+  "identity": {
+    "sourceHash": "9a833d9376381c6f9e2df4c5a79aba981bbd8a3dafce9e572ff2641bd61759ce",
+    "shallowSearchRatingsDefault": 256,
+    "runnerHash": "d9612046d707c0b8decb2b3cd318b06fb8fc90726d7ee2e136ca8933ee76cb21",
+    "runner": "generator/tests/node-runner.js",
+    "harnessHash": "47bc3d670ef97f74c3e3bfd49d0bf6c3c8b2b4c7ff33efee7b79ad18fd088288",
+    "harness": "core/tests/harness.js",
+    "suiteHash": "4ef04db8a9a44cf18a91fa55604d51863a340c994548727f55e7ebe5b52d93d0",
+    "suite": "generator/tests/suites/mega.test.js",
+    "hashes": "SHA-256 of the file text with LF line ends; the source hash is that of the 63 SOURCE_FILES as tests/soak.js builds it",
+    "commit": "f788e02616e7968143030700205d9a8ab843904c",
+    "dirty": true
+  },
+  "environment": {
+    "node": "v26.13.0",
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64,
+    "jobs": 1
+  },
+  "outcome": "failed: the original latency assertion (limit 6000 ms) is exceeded by the first seed (48.2 s); a fallback is not exempted. For reference, the diagnostic of the same request (seed 3, 8 attempts, no guard other than 500 s) took 47.1 s at 256 (record diagnostic/256/mega12-nightmare.json)"
+}

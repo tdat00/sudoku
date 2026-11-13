@@ -3,7 +3,7 @@
 | Header | Value |
 |---|---|
 | Depends on | MS14b accepted |
-| Size / active time | Small; 25-40 minutes plus GD |
+| Size / active time | Small; 25-40 minutes |
 | Owner / milestone | Core tests; M14 complete |
 | Authority | R17; SA2-Q-S09 |
 | Status | Not started |
@@ -28,9 +28,9 @@ R17, verbatim:
 Create `core/tests/suites/tech-cage.test.js`; none exists at the baseline. Build the model via
 SG.model.create with complete row/column/box units and explicit cages, enable existing core cage
 propagation as the helper requires. Do not rely on Generator variants in a shared suite.
-Case1: every feasible cage combination contains digit d and every location for d in the cage is
+Case 1: every feasible cage combination contains digit d and every location for d in the cage is
 within one unit; remove d from outside-cage candidates in that unit.
-Case2: a two-cell cage's allowed pair is confined to its unit; remove pair digits from other cells.
+Case 2: a two-cell cage's allowed pair is confined to its unit; remove pair digits from other cells.
 Near misses: d absent from one combination, a cage position outside the unit, or a target not in
 the common unit. Check exact nonempty eliminations and true solution preservation.
 
@@ -48,7 +48,8 @@ Baseline `core/js/engine/tech-cage.js:118-139` (`function pointOutOfCage`), `:17
 1. Build small exact core models demonstrating each existing behavior.
 2. Add positives/near-misses and run them through cageCombo, not a test-only imitation.
 3. Register the shared suite in both HTML pages; Node discovery is automatic.
-4. Run quick sets and the existing Killer manual selector; document the deliberate no-new-ID outcome.
+4. Run quick sets and only the corpus-free Killer combination-table selector below; document the
+   deliberate no-new-ID outcome. Do not generate the unchanged whole Killer corpus here.
 
 ## Acceptance criteria — Business
 
@@ -63,19 +64,22 @@ Baseline `core/js/engine/tech-cage.js:118-139` (`function pointOutOfCage`), `:17
 |---|---|
 | MS14c-T01 | Exact positive/negative behavior, core-only construction and both runners pass |
 | MS14c-T02 | Suite lists/docs and catalogue counts remain correct |
-| MS14c-T03 | GD Killer and both quick sets recorded |
+| MS14c-T03 | Both quick sets and the corpus-free Killer combination-table check pass; no unnecessary whole-corpus GD |
 
 ## Test plan and gate
 
 Each app: `node tests\node-runner.js --suite=tech-cage,techniques,ui-contract,help`, then quick set.
-Generator GD:
+Generator's existing corpus-free combination-table tests:
 
 ```powershell
-node tests\node-runner.js --suite=killer
+Invoke-Dv3Node -Task MS14c -NodeArgs @('tests\node-runner.js','--suite=killer','--filter=killer: combination table (P4)')
 ```
 
-Jobs1/no --jobs; expected 10-180 seconds, stop at ten minutes. **Announce to the orchestrator before
-starting (pentomino runs in parallel on the same machine).** No GG/GH or production rewrite.
+Jobs 1/no `--jobs`; expect seconds for this selector, with no `corpus()`/pipeline generation.
+Record nonzero selected counts. Quick sets use the shared lock when >10 seconds; 540-second
+ceiling. This is GD-fake/corpus-free only, not a whole-variant GD claim.
+MS05b3 already executed the manual exactness contracts; MS18e owns their final per-level rerun.
+No GG/GR/GH, qualification, whole Killer generation or production rewrite.
 
 ## Definition of done & handoff
 

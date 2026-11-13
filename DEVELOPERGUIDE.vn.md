@@ -206,24 +206,30 @@ một bộ giải và một bộ máy sinh đề phục vụ cả 15 biến th�
 Một `patch` là *phần thay đổi* của tối đa tám ô, không bao giờ là ảnh chụp cả bàn cờ. `SG.events.VOCABULARY` là
 hợp đồng cho mọi khóa sự kiện.
 
-Ba bước `dig`, `rate` và `tune` lặp lại theo từng *lần đào thử* (dig sample): khi đề vừa đào chưa đúng mức yêu
-cầu (`tune.miss`), lần đào kế tiếp được thực hiện trên cùng lưới (tối đa 12 lần mỗi lưới); khi không lần nào
+Ba bước `dig`, `rate` và `tune` lặp lại theo từng *lần đào thử* (dig sample): khi đề vừa đào chưa được tính là
+đạt (`tune.miss`, hoặc `tune.shallow` khi điểm nằm trong dải đã chọn nhưng đề không cần kỹ thuật nào thuộc tầng của
+mức đó), lần đào kế tiếp được thực hiện trên cùng lưới (tối đa 12 lần mỗi lưới); khi không lần nào
 đạt, một bước tìm kiếm cục bộ bắt đầu từ đề gần mức nhất (thêm, bỏ hoặc đổi chỗ các nhóm số cho sẵn đối xứng),
 và chỉ khi đó `retry.difficulty` mới bắt đầu một lưới mới (tối đa `attempts` lần, mặc định 8). Các mức cao nhất
 (ác mộng và địa ngục) còn đào nhanh những đề đề xuất chỉ dựa trên tính duy nhất, rồi trả lại số cho sẵn khi đề
 đề xuất còn quá khó. Mỗi lưới có giới hạn công việc cố định (số lần chấm điểm đầy đủ và số bước đề xuất, được
-đếm chứ không đo giờ), nên một seed cho cùng một đề trên mọi máy. Nếu dùng hết mọi lần thử, đề gần nhất được trả
+đếm chứ không đo giờ), nên một seed cho cùng một đề trên mọi máy. Nếu dùng hết mọi lần thử, đề tốt nhất được trả
 về kèm thông báo thay vì báo lỗi (chỉ đề có lời giải logic trọn vẹn mới được trả về). `SG.pipeline.runSteps` là
 cùng thuật toán đó dưới dạng generator, nhường quyền ở những ranh giới tự nhiên (là cái worker và chế độ luồng
 chính chạy), còn `SG.pipeline.toWire` / `fromWire` chuyển kết quả qua `postMessage`. `result.exact` là một giá trị
-boolean, kết luận của bộ đào cho đề được trả về và cũng là `exact` của sự kiện `done`: nó đi qua wire như một cờ
+boolean, kết luận của bộ đào cho đề được trả về và cũng là `exact` của sự kiện `done`: đề có lời giải logic trọn
+vẹn, mức độ đúng bằng mức yêu cầu **và** cần một kỹ thuật thuộc tầng của mức đó (`SG.difficulty.requiredOf`; mức
+rất dễ không đòi gì). Nó đi qua wire như một cờ
 chặt chẽ (phiên bản wire vẫn là 1; wire không có cờ này, chẳng hạn một mục cũ trong cache, được đọc là `false`)
 và không bao giờ được dựng lại từ việc hai tên mức độ trùng nhau, nên bảng kết quả hiển thị đúng điều cờ nói. Ba
-kết luận về dải điểm của bước `tune` (`tune.hit`, `tune.miss` và `tune.shallow` mới) còn có thể mang `required`
-(`true`, `false` hoặc `null`) và `target` (một số hữu hạn hoặc `null`), và `difficulty.shallow` được thêm vào
-cạnh `difficulty.approximate` như một cảnh báo cùng loại, có nút “Thử lại”; tất cả những điều đó *đã được chuẩn
-bị nhưng chưa được tạo ra*: bộ sinh vẫn phát `tune.hit` và `tune.miss` với tham số cũ và nhận một đề chỉ dựa vào
-mức độ của nó. Độ khó của một đề là
+kết luận về dải điểm của bước `tune` (`tune.hit`, `tune.miss` và `tune.shallow`) mang `required` (`true` cho một
+lần đạt, `false` cho một đề nông, `null` cho mọi lần trượt khác, kể cả đề đã giải xong nhưng nằm ngoài dải) và có
+thể mang `target` (một số hữu hạn hoặc `null`; hiện chưa có gì chọn mục tiêu). Đề có lời giải trọn vẹn nằm trong
+dải nhưng không cần kỹ thuật nào của tầng là đề *nông* (shallow): nó được giữ làm phương án dự phòng, không bao
+giờ là đúng mức, và việc tìm kiếm vẫn tiếp tục; nếu cuối cùng nó là đáp án thì kèm `difficulty.shallow` cạnh
+`difficulty.approximate`, một cảnh báo cùng loại, có nút “Thử lại”. Công cụ soak, qualify và các suite thủ công chỉ
+tính một lần đạt theo chính cờ này, không bao giờ so sánh tên mức độ (thiếu cờ nghĩa là trượt).
+Độ khó của một đề là
 `SG.difficulty.rate(...)`, tính từ trọng số kỹ thuật `SG.difficulty.WEIGHTS`; hãy dùng `rating.score`, không
 dùng điểm thô của bộ giải.
 
@@ -435,7 +441,7 @@ các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, ki
 
 Xem [cây thư mục ở bản tiếng Anh](DEVELOPERGUIDE.md#directory-tree): `generator/` gồm `index.html`, `tests.html`, `css/`, `js/engine/`
 (bộ máy sinh đề, không DOM; `js/engine/replay.js` là phần phân tích việc phát lại ở thẻ Các bước tạo đề: nước đi, điểm số và các chế độ xem), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
-thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/replay-fixtures.js` và `tests/replay-goldens.js`: tạo lại và kiểm tra dữ liệu của suite `replay`); phần dùng chung với trình chơi nằm
+thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/replay-fixtures.js` và `tests/replay-goldens.js`: tạo lại và kiểm tra dữ liệu của suite `replay`; `tests/difficulty-recovery.js`: công cụ chẩn đoán đo một yêu cầu cố định của đợt phục hồi độ khó v3); phần dùng chung với trình chơi nằm
 ở `core/` (bộ máy giải, `exchange`, `wordbook`, `symbols`, `board-view`, css nền và từ điển), tài liệu ở `docs/`.
 
 ## Định dạng trao đổi
@@ -577,16 +583,16 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (47 suite, khoảng 2.900 bài), khoảng một phút
+node tests/node-runner.js                          # bộ nhanh (48 suite, khoảng 2.900 bài), khoảng một phút
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
-node tests/node-runner.js --all                    # nhanh + thủ công (55 suite, khoảng 3.910 bài), khoảng chín phút
+node tests/node-runner.js --all                    # nhanh + thủ công (56 suite, khoảng 3.910 bài), khoảng chín phút
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 47 suite, khoảng 2.900 bài,
-khoảng một phút — 31 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 48 suite, khoảng 2.900 bài,
+khoảng một phút — 32 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw`, tổng cộng khoảng
@@ -604,7 +610,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm khoảng 3.910 bài trong 55 suite (khoảng 2.900 bài trong 47 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm khoảng 3.910 bài trong 56 suite (khoảng 2.900 bài trong 48 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ```text
@@ -655,21 +661,68 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   `node tests/soak.js --quick` (khoảng 700 đề), `node tests/soak.js --full` (mức chạy cuối cùng để kiểm định:
   25 đề cho mỗi tổ hợp được cung cấp và 100 đề cho mỗi mức của classic9, khoảng 3.550 đề),
   `node tests/soak.js --variant=jigsaw9 --count=180`, `node tests/soak.js --level=hard` (`--help` liệt kê phần
-  còn lại); `--weights` và `--bands` thử trọng số kỹ thuật hoặc khoảng điểm khác mà không phải sửa mã.
-  `--json=<tệp>` (một đường dẫn nằm trong kho mã) thêm các chẩn đoán đường cơ sở của độ khó v3 mà không đổi những đề
-  được sinh ra: một sổ ghi từng yêu cầu (schema 1: đề hoặc lỗi của nó, các lần đạt, vị trí thô và vị trí khả dĩ của
-  điểm, các bộ đếm của lần sinh) và một bản tóm tắt chẩn đoán sau phần chữ. Các lần giải mới của nó — sàn tham chiếu
-  `SG.difficulty.certifyFloor` của mức yêu cầu, chỉ chạy sau khi I1 đã chứng minh tính duy nhất, và đường giải cuối
+  còn lại); `--weights` và `--bands` thử trọng số kỹ thuật hoặc khoảng điểm khác mà không phải sửa mã. Một lần đạt
+  chính là cờ `exact` của bộ sinh đề, xét chặt chẽ (`p.exact` khi soak gọi bộ đào, `r.exact` khi chạy pipeline), nên
+  một đề nằm trong dải nhưng không cần bậc của mức đó không phải một lần đạt. Trước khi sinh bất cứ thứ gì, và cả khi
+  có `--no-gate`, soak kiểm tra rằng các bảng đã vá vẫn giữ, với mọi biến thể và mọi mức, sàn và sàn cùng bậc là các
+  tiền tố có thứ tự của chuỗi kỹ thuật (việc có cần bậc hay không của một điểm chuẩn phụ thuộc vào đó); nếu không, nó
+  in biến thể, mức và cả hai danh sách kỹ thuật rồi thoát với mã 2. `--weights={"nishio":1}` là một trường hợp như
+  vậy (hãy truyền đối số như một chuỗi duy nhất để shell giữ nguyên các dấu nháy); JSON sai cú pháp là một lỗi dùng
+  sai khác. `--json=<tệp>` (một đường dẫn nằm trong kho mã) thêm các chẩn đoán đường cơ sở của độ khó v3 mà không đổi
+  những đề được sinh ra: một sổ ghi từng yêu cầu (schema 1: đề hoặc lỗi của nó, các lần đạt, vị trí thô và vị trí khả
+  dĩ của điểm, các bộ đếm của lần sinh) và một bản tóm tắt chẩn đoán sau phần chữ. Các lần giải mới của nó — sàn tham
+  chiếu `SG.difficulty.certifyFloor` của mức yêu cầu, chỉ chạy sau khi I1 đã chứng minh tính duy nhất, và đường giải cuối
   được đánh giá lại có ghi các bước (độ dài chuỗi cưỡng bức, độ sâu Nishio) — chỉ chạy sau khi mọi lần sinh và mọi
   kiểm tra I1–I7 của lần gọi đã xong, vì bộ tìm tập con giữ một bộ đếm khoảng cách kiểm tra qua các lần giải. Một
   yêu cầu thất bại vẫn nằm trong các mẫu số dưới dạng một dòng lỗi, và lỗi cùng vi phạm bất biến làm hỏng phần chẩn
   đoán ngay cả khi có `--no-gate`. Các hàm trợ giúp là `SG.fixtures.difficultyDiagnostics`
   (`tests/fixtures/difficulty-diagnostics.js`); đường cơ sở đo bằng chúng được ghi ở
-  [docs/difficulty-v3/baseline.md](docs/difficulty-v3/baseline.md).
+  [docs/difficulty-v3/baseline.md](docs/difficulty-v3/baseline.md). Từ nhiệm vụ phục hồi MS05r3, các dòng lấy
+  `required`, `qualifiedHit` và `shallow` từ chứng nhận suy ra từ điểm chuẩn đã trả về (`generationExact` là cờ chặt
+  chẽ của bộ sinh đề và hai thứ phải khớp nhau: lệch nhau là một vi phạm I5), phép tham chiếu độc lập chỉ chạy cho yêu
+  cầu đầu và yêu cầu cuối của một ô (các dòng còn lại ghi `not-selected`, việc này không đổi kết luận nào), và mỗi
+  dòng mang công việc của lần sinh đề của nó (`fullRatings`, `proposals`, `shallowRatings`, `capHits`, `work`,
+  `workCheck`): một lần đánh giá thực hiện ngoài đầu vào có đếm làm hỏng lần chạy, còn công việc bị thiếu là
+  `unavailable`, không bao giờ là số không. `--shallow-cap=64|128|256|none` chạy soak với hạn mức tìm kiếm nông đó
+  (`SG.digger.SHALLOW_SEARCH_RATINGS`; `none` là `Infinity`; mặc định của mã nguồn là 256, do phép so sánh R5 của
+  nhiệm vụ MS05r4 chọn, xem [docs/difficulty-v3/shallow-cap-2026-11-13.md](docs/difficulty-v3/shallow-cap-2026-11-13.md)),
+  và `--from=<k> --count=<n> --total-count=<N>` chạy các yêu cầu từ k đến k+n−1 của một ô logic gồm N yêu cầu (một biến
+  thể và một mức; không dùng chung với `--quick`, `--full` hay `--per-combo`) với đúng thẻ và seed của cả ô, nên một ô
+  dài có thể chia thành các lệnh có giới hạn; `mergeShards` của bộ trợ giúp từ chối các sổ có chỗ hở, chỗ trùng hoặc
+  khác mã nguồn, công cụ, seed hay thiết lập.
+- **Hồ sơ phục hồi (độ khó v3)** — chẩn đoán một yêu cầu cố định, không phải một thiết lập của sản phẩm và không phải
+  một cổng hiệu năng đã đạt: `node tests/difficulty-recovery.js` sinh yêu cầu đó đúng một lần và ghi lại thời gian đã
+  đi đâu, vào các mẫu đào thường hay vào phần tìm cục bộ kế tiếp (phần mà một hạn mức của tìm kiếm nông có thể giới
+  hạn). Ba trường hợp là yêu cầu G13 thật của bộ đề chuẩn (`SG.fixtures.replayGoldens`, qua `SG.store.toConfig`) và các
+  yêu cầu Nightmare seed 3 của mega12 và mega16; hồ sơ chỉ đổi `maxAttempts` (thành 1) và giữ nguyên mọi giới hạn, sàn
+  và chốt chặn. Chạy từng lệnh một, qua khóa thời gian dùng chung khi người khác đang dùng máy, vì một hồ sơ có thể
+  mất vài phút:
+
+  ```text
+  node tests/difficulty-recovery.js --mode=profile --case=G13 --json=<file.json>
+  node tests/difficulty-recovery.js --mode=profile --case=mega12-nightmare --json=<file.json>
+  node tests/difficulty-recovery.js --mode=profile --case=mega16-nightmare --json=<file.json>
+  ```
+
+  `--json` là một đường dẫn `.json` mới nằm trong kho mã (tệp đã có không bao giờ bị ghi đè).
+  `--mode=diagnostic --shallow-cap=64|128|256|none` giữ số lượt thường lệ và áp dụng một hạn mức: lệnh đặt
+  `SG.digger.SHALLOW_SEARCH_RATINGS` cho lần chạy (`none` là `Infinity`) rồi trả lại giá trị cũ; mã nguồn không có thiết
+  lập này bị từ chối trước khi sinh bất cứ thứ gì. Một
+  tiến trình chạy đúng một trường hợp, và bộ máy cùng các kiểm tra của đề trả về (số đã cho so với lời giải, một lần
+  đếm tính duy nhất độc lập, điểm chuẩn đầy đủ và việc có cần bậc hay không) dùng chung một ngân sách 500.000 ms. Bản
+  ghi cho biết đã xảy ra `ok`, `generation-error`, `validation-error` hay `instrumentation-error`, công việc của từng
+  lượt, cùng thời gian và số lần chấm điểm đầy đủ của từng giai đoạn, chia thành mẫu đào thường, phần tìm cục bộ và
+  phần còn lại. Mã thoát 0 nghĩa là đã ghi được một bản ghi (đọc trường `outcome`: một lần sinh thất bại cũng là một
+  bản ghi), 1 là không thể lập được bản ghi đáng tin và đầy đủ, 2 là dùng sai. Các hàm trợ giúp là
+  `SG.fixtures.recoveryProfile` (`tests/fixtures/recovery-profile.js`), do suite `recovery-profile` kiểm thử; các hồ
+  sơ đầu tiên được báo cáo ở [docs/difficulty-v3/recovery-profile.md](docs/difficulty-v3/recovery-profile.md).
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
   cho phân vị 95) rồi in bảng và danh sách mức; `--variant`, `--level`, `--jobs`, `--json` và `--markdown` thu
-  hẹp phạm vi hoặc lưu kết quả; `--probe=N` xem nhanh (N seed mỗi mức, không kết luận). Lần chạy gần nhất nằm trong [docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md).
+  hẹp phạm vi hoặc lưu kết quả; `--probe=N` xem nhanh (N seed mỗi mức, không kết luận). Một yêu cầu chỉ là một lần
+  đạt khi đề hợp lệ và duy nhất, có lời giải trọn vẹn đúng mức yêu cầu, không có cảnh báo approximate **và** cờ `exact`
+  của kết quả đúng là `true`, nên một kết quả nằm trong dải nhưng nông là một lần trượt. Lần chạy gần nhất nằm trong
+  [docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md).
 - **Hiệu năng** so với ngân sách ở [design.md](generator/design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. *Mã băm hồi quy* trong `tests/fixtures/regression.js` bảo
   đảm một lần tối ưu không làm đổi đề (suite nhanh `smoke` kiểm tra một mẫu của chúng, suite thủ công `perf` kiểm

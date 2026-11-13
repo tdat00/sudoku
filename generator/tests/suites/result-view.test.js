@@ -339,7 +339,7 @@
       var shallow = withWarnings(real, ['difficulty.shallow'], { level: 'hard' }, 'hard');
       var en = inLocale('en', function () { return R.viewModel(shallow); });
       expect(en.warnings[0].text)
-        .toBe('The puzzle is in the requested score band but does not need a Hard technique.');
+        .toBe('The puzzle is in the requested score band but does not need a technique from the Hard tier.');
       ['en', 'vi'].forEach(function (code) {
         inLocale(code, function () {
           var vm = R.viewModel(shallow);
@@ -396,7 +396,7 @@
         expect(clicks).toBe(1);
         show(['difficulty.shallow']);
         expect(find('retry')).toHaveLength(1);
-        expect(host.textContent).toContain('does not need a Hard technique.');
+        expect(host.textContent).toContain('does not need a technique from the Hard tier.');
         expect(host.textContent).toContain('Requested: Hard. Reached: Hard.');
         show(['trace.downgraded']);
         expect(find('retry')).toHaveLength(0);

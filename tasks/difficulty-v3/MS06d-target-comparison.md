@@ -2,7 +2,7 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS06c accepted |
+| Depends on | MS06c2 accepted after MS06c1 |
 | Size / active time | Small; 20-30 minutes plus GS |
 | Owner / milestone | Evidence; M6 isolated comparison complete |
 | Authority | R7/R23; owner target decision and AC01 |
@@ -33,8 +33,9 @@ Use the exact MS06a manifest and commands, changing only output directory to MS0
 MS05 cap, base seed 20260101, 12 requests/cell and routes. Compare exact and all-in-band cohorts
 separately. Judge upper bias on the adjusted exact cohort; raw positions remain visible.
 MS02's null reasons/unclamped values apply. Every request remains in the hit denominator.
-Baseline code anchors: `generator/tests/soak.js:202-228` (`function generateOne`),
-`:234-241` (`const t0`); target instrumentation is delivered by MS06c.
+Anchors at `f788e02` after MS02: `generator/tests/soak.js:260` (`function seedFor(tag)`),
+`:267-283` (`function generateOne(combo, tag)`), `:353` (`const t0 = process.hrtime.bigint()`).
+MS05b2/MS05c move these further. Target transport is MS06c1's; all-stage activation is MS06c2's.
 
 ## Files to create/modify
 
@@ -72,7 +73,9 @@ From Generator:
 node tests\soak.js --variant=classic9 --level=normal --count=12 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\MS06d\classic9-normal.json
 ```
 
-Repeat all MS06a cells. Jobs=1, no --jobs. Estimate 10-540 seconds/cell, 0.5-3 hours total; stop
+Repeat all MS06a cells, using the same absolute-index MS05c shards if needed and merging raw
+rows once. Run possibly >10-second commands through the checklist lock wrapper.
+Jobs=1, no --jobs. Estimate 10-540 seconds/cell, 0.5-3 hours total; stop
 at ten minutes. **Announce to the orchestrator before starting (pentomino runs in parallel on
 the same machine).** Evidence-only: no new application test/golden run; acceptance quick verification
 belongs to the orchestrator.

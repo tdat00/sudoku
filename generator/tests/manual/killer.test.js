@@ -1068,13 +1068,16 @@
             var rating = p.result.rating;
             var spec = SG.difficulty.spec(p.level, p.result.model);
             expect(rating.solved).toBe(true);
-            if (rating.level === p.level) {
+            if (p.result.exact === true) {
               hits[p.level] = (hits[p.level] || 0) + 1;
+              expect(rating.level).toBe(p.level);
               expect(rating.score).toBeGreaterThanOrEqual(spec.min);
               expect(rating.score).toBeLessThan(spec.max);
+              expect(SG.difficulty.requiredOf(rating, p.level, p.result.model).required).toBe(true);
               expect(p.result.warnings).not.toContain('difficulty.approximate');
             } else {
               expect(p.result.warnings).toContain('difficulty.approximate');
+              expect(p.result.warnings.indexOf('difficulty.shallow') !== -1).toBe(rating.level === p.level);
             }
           });
           LEVELS.forEach(function (level) { expect(hits[level]).toBeGreaterThan(countOf(level) * 0.8); });

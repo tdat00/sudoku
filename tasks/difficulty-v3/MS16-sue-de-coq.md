@@ -30,10 +30,10 @@ R19, verbatim:
 > every Z digit occurs in I. Eliminate A digits elsewhere on the line, B digits elsewhere in
 > the box, Z digits elsewhere in either unit; never eliminate from the proving sets themselves.
 
-Register sueDeCoq: chain/order196/weight1300/baseCost112, unscoped, no uniqueness.
+Register sueDeCoq: chain/order 196/weight 1300/baseCost 112, unscoped, no uniqueness.
 Use genuine all-different line/box (or region) units and actual membership. The capacity argument
 does not assume a digit must appear elsewhere in an incomplete unit. No suitable geometry => null.
-Reuse complete ALS records/current MS15b limits; own total work starts50000 and includes enumeration/
+Reuse complete ALS records/current MS15b limits; own total work starts at 50000 and includes enumeration/
 pair extensions, never an uncounted second scan. Only this finder's own new work allowance may adjust once.
 
 R10 Finding; args `{digits:A digits,partDigits:B digits,forced:Z,line:string,box:string}`;
@@ -41,10 +41,10 @@ key `technique.sueDeCoq.step` for Z empty, `.step.extra` when Z nonempty. These 
 already localize correctly. Sorted owned eliminations, no placements.
 
 Vectors: I=R1C1/R1C2 with C={1,2,3,4}, A=R1C5{1,2}, B=R2C3{3,4}.
-Remove1/2 elsewhere row1 and3/4 elsewhere box1. Add R1C3 to I and5 to C: also remove5 elsewhere
-in row1 or box1. Reject overlapping A/B digits, wrong C size, wrong spatial membership or overlaps.
+Remove 1/2 elsewhere row 1 and 3/4 elsewhere box 1. Add R1C3 to I and 5 to C: also remove 5 elsewhere
+in row 1 or box 1. Reject overlapping A/B digits, wrong C size, wrong spatial membership or overlaps.
 Baseline orientation: core model all-different units and MS15a/b ALS module; final chain orders
-must be190/194/196/198/200/202, not a later deferred repair.
+must be 190/194/196/198/200/202, not a later deferred repair.
 
 ## Files to create/modify
 
@@ -55,7 +55,7 @@ must be190/194/196/198/200/202, not a later deferred repair.
 1. Enumerate I and compatible disjoint A/B records under the shared guard.
 2. Prove the capacity/cardinality conditions before constructing target removals.
 3. Add two real exact-Finding positives/negative, both subtype messages and real help.
-4. Confirm40 total IDs/34 unscoped, current references and complete cost/E/GH/quick evidence.
+4. Confirm 40 total IDs/34 unscoped, current references and complete cost/E/GH/quick evidence.
 
 ## Acceptance criteria — Business
 
@@ -90,8 +90,8 @@ node tests\tools\make-technique-examples.js ..\generator --ids=sueDeCoq --source
 node tests\tools\make-technique-examples.js ..\generator --ids=sueDeCoq --sources=tests\artifacts\difficulty-v3\MS16\sources.json --max-puzzles=8 --max-hints=400 --check
 ```
 
-B sources: existing chains/ALS, then bounded classic9 nightmare/hell1. Jobs1/no --jobs;
-E10-90 minutes, cost1-60 seconds, curated GH1-120 seconds/discovery<=8 minutes.
+B sources: existing chains/ALS, then bounded classic9 nightmare/hell1. Jobs 1/no --jobs;
+E 10-90 minutes, cost 1-60 seconds, curated GH 1-120 seconds/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 One own-limit adjustment maximum, not earlier ALS limits. Ten-minute command ceiling.
 

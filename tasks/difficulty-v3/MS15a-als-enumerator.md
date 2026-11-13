@@ -30,16 +30,16 @@ R18, verbatim:
 Create `core/js/engine/tech-als.js`, exposing internal `SG.alsPatterns.enumerate(model,state,ctx,work)`.
 Record: `{cells:sorted number[], digits:sorted number[], occurrences:{digit:sorted cell[]}}`.
 Return `{records,complete,capHit}`; each retained record is individually complete/valid.
-Maximum4 cells/set, 4096 retained records, 50000 combination extensions for an enclosing finder.
+Maximum 4 cells/set, 4096 retained records, 50000 combination extensions for an enclosing finder.
 The supplied per-call work guard is shared with later pair search; never reset it at phase changes.
-Check budget at entry/every256 units. Stop a retained-record prefix canonically; incomplete global
+Check budget at entry/every 256 units. Stop a retained-record prefix canonically; incomplete global
 enumeration is NOT an assertion that another ALS does not exist. Such valid records may supply a
 constructive witness if work remains. Work exhaustion leaves no allowance for an uncounted pair scan.
 
 Order by cell-count then lexicographic cell indexes; deduplicate by cells (candidate content fixed
 within this call). Candidate union/counts use digit masks only, never masks of all board cells.
 No cached candidate-dependent list survives mutation of the same state object.
-Vectors: two cells {1,2}/{2,3} form a2-cell ALS; union2 or4 does not. A bivalue cell is a1-cell ALS.
+Vectors: two cells {1,2}/{2,3} form a 2-cell ALS; union 2 or 4 does not. A bivalue cell is a 1-cell ALS.
 Duplicate row/box geometry yields one record. Genuine partial all-different units are allowed.
 
 Baseline orientation: `core/js/engine/model.js:249-257` (`const partial =`);
@@ -50,7 +50,7 @@ Baseline orientation: `core/js/engine/model.js:249-257` (`const partial =`);
 - New core tech-als.js and `core/tests/suites/tech-als.test.js`.
 - All eight L source lists; place after tech-chain.js in the existing technique block. Both
   tests.html CORE_SUITE_FILES lists include tech-als.
-- Generator design6.6/13.6, Player engine design, both developer guides.
+- Generator design 6.6/13.6, Player engine design, both developer guides.
 
 ## Implementation steps
 
@@ -78,7 +78,7 @@ Baseline orientation: `core/js/engine/model.js:249-257` (`const partial =`);
 
 Generator `node tests\node-runner.js --suite=tech-als,techniques,ui-contract,purity,help`;
 Player same selector except purity (Generator-only); then both quick sets.
-Test max4 boundary, 4096 prefix with lowered test-only limits for a small regression, repeated calls,
+Test max 4 boundary, 4096 prefix with lowered test-only limits for a small regression, repeated calls,
 same object changed candidates, complete-vs-partial units and a parent cancellation sentinel.
 No heavy gate.
 

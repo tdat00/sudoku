@@ -32,7 +32,7 @@ R14, verbatim:
 > extra digit, contradicting uniqueness. Place the extra digit. Reject cages, inequalities,
 > unsupported partial constraints, a second trivalue cell, and a merely local "three occurrences" test.
 
-Register bugPlusOne: wing/order182/weight920/baseCost72, unscoped, assumesUniqueness=true.
+Register bugPlusOne: wing/order 182/weight 920/baseCost 72, unscoped, assumesUniqueness=true.
 Direct find also honors ctx.assumeUniqueness=false.
 R10 Finding; key `technique.bugPlusOne.step`, args `{cell,label,digit}`; one placement at the
 trivalue cell, no eliminations. cells contains the proving/placed cell(s), sorted owned data.
@@ -41,11 +41,11 @@ For each candidate extra digit, virtually remove it without modifying state. Cou
 every complete constraint unit, with placed digits excluded correctly; do not inspect only the
 three units touching the trivalue cell. A unit where an unplaced digit has one/three/zero occurrences
 breaks the proposed Boolean remainder. Extra complete units participate; unsupported partial
-constraints/cages/signs reject the form. Limit50000 tested occurrence/extensions, standard checks.
+constraints/cages/signs reject the form. Limit 50000 tested occurrence/extensions, standard checks.
 Do not treat a contradictory artificial remainder as a fabricated uniqueness fixture.
 
 Baseline `core/js/engine/tech-wing.js:477-528` (`function findUniqueRectangle`);
-`core/tests/suites/techniques.test.js:64-69` (`expect(assuming)`).
+`core/tests/suites/techniques.test.js:75-79` at `f788e02` (`expect(assuming)`).
 
 ## Files to create/modify
 
@@ -94,8 +94,8 @@ node tests\tools\make-technique-examples.js ..\generator --ids=bugPlusOne --sour
 node tests\tools\make-technique-examples.js ..\generator --ids=bugPlusOne --sources=tests\artifacts\difficulty-v3\MS11c\sources.json --max-puzzles=8 --max-hints=400 --check
 ```
 
-B sources: uniqueness/chain examples, then bounded classic9 master/nightmare. Jobs1/no --jobs;
-E10-90 minutes, cost1-30 seconds, curated GH1-120 seconds/discovery<=8 minutes.
+B sources: uniqueness/chain examples, then bounded classic9 master/nightmare. Jobs 1/no --jobs;
+E 10-90 minutes, cost 1-30 seconds, curated GH 1-120 seconds/discovery<=8 minutes.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 One evidenced own-limit adjustment; no command beyond ten minutes.
 

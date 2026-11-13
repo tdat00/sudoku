@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "selectedDefault": 256,
+  "sourceHash": "9a833d9376381c6f9e2df4c5a79aba981bbd8a3dafce9e572ff2641bd61759ce",
+  "frozenMeasuredSourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+  "sourceDiff": "generator/js/engine/digger.js line 653: -  const SHALLOW_SEARCH_DEFAULT = Infinity;  +  const SHALLOW_SEARCH_DEFAULT = 256;  (the only production edit)",
+  "node": "v26.13.0",
+  "note": "No allowance override on any command below: the default of the source (256) is in force. The 520-key regression hashes (GG), the replay goldens (GR) and the suites outside these selections were not run here; the final-source E and the full quick coverage belong to MS05r6a and MS05r6b.",
+  "selections": [
+    {
+      "args": ["tests\\node-runner.js", "--suite=digger,difficulty-diagnostics,difficulty-floor,worker,cache,recovery-profile", "--verbose"],
+      "exit": 0,
+      "counts": { "suites": 6, "total": 463, "passed": 463, "failed": 0, "skipped": 0, "bySuite": { "cache": 101, "difficulty-diagnostics": 80, "difficulty-floor": 48, "digger": 64, "recovery-profile": 27, "worker": 143 } },
+      "seconds": 90.711,
+      "transcript": "docs/difficulty-v3/evidence/MS05r4/focused/six-suites.txt"
+    },
+    {
+      "args": ["tests\\node-runner.js", "--suite=pipeline", "--filter=MS05b1-", "--verbose"],
+      "exit": 0,
+      "counts": { "suites": 1, "total": 30, "passed": 30, "failed": 0, "skipped": 0 },
+      "seconds": 1.653,
+      "transcript": "docs/difficulty-v3/evidence/MS05r4/focused/pipeline-MS05b1.txt"
+    },
+    {
+      "args": ["tests\\node-runner.js", "--suite=pipeline", "--filter=recovery: shallow allowance", "--verbose"],
+      "exit": 0,
+      "counts": { "suites": 1, "total": 16, "passed": 16, "failed": 0, "skipped": 0 },
+      "seconds": 1.769,
+      "transcript": "docs/difficulty-v3/evidence/MS05r4/focused/pipeline-allowance.txt"
+    }
+  ],
+  "pins": [],
+  "returnedPremises": [],
+  "blockers": [
+    {
+      "id": "mega12-nightmare-original-limit",
+      "kind": "original-limit-preflight",
+      "detail": "the unchanged assertion SG.test.timeLimit(3000) = 6000 ms fails for seed 1 (48.2 s); the CV5 test passes (137.74 s)",
+      "evidence": "docs/difficulty-v3/evidence/MS05r4/preflight/mega12-nightmare.json",
+      "owner": "orchestrator, for the owner (S-OD2 stop): not a pin and not a premise"
+    },
+    {
+      "id": "mega16-nightmare-original-limit",
+      "kind": "original-limit-preflight",
+      "detail": "both tests end in budget.exceeded at the 60000 ms generation guard (seeds 1 and 3); the diagnostic needs 310.2 s at 256",
+      "evidence": "docs/difficulty-v3/evidence/MS05r4/preflight/mega16-nightmare.json",
+      "owner": "orchestrator, for the owner (S-OD2 stop): not a pin and not a premise"
+    }
+  ]
+}

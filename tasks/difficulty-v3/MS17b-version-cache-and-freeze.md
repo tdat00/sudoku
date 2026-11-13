@@ -15,7 +15,7 @@ Player imports and historical evidence. Freeze all measured new-pattern limits.
 
 ## Scope
 
-In: rating/cache3, classification-aware cache validation/comparison, current references/docs,
+In: rating/cache 3, classification-aware cache validation/comparison, current references/docs,
 frozen limit record. Out: retuning, history envelope change, export floor certificate or offers.
 
 ## Repository rules
@@ -32,7 +32,7 @@ R22, verbatim:
 > Cache comparison must include acceptance-relevant current classification, not just same grids,
 > score and level.
 
-Keep worker wire version1 and history store VERSION1. Current own-cache wire must have explicit
+Keep worker wire version 1 and history store VERSION 1. Current own-cache wire must have explicit
 boolean exact and a complete current-version rating; reject missing classification/old version,
 not infer it from level equality. No new solve in a cache comparator. Compare exact, solved,
 ratingVersion and normalized techniqueCounts in addition to existing givens/solution/score/level;
@@ -41,24 +41,24 @@ Ignore timings/work counters and symbol display mode. Only current canonical pro
 this cache; do not broaden requiredOf to imported summaries.
 
 Keep exports' existing positive ratingVersion field and no external floor/target/work certificate.
-Do not blindly replace literal2 in legacy/stub/import tests or old help source text.
+Do not blindly replace literal 2 in legacy/stub/import tests or old help source text.
 Current reference fields are `v3Expected:{level,required}`; unrated null/null. Historical labels,
 v2 family certificates and preprocessing arrays remain history. Consolidate every reclassification.
-Final catalogue40 IDs/34 unscoped, uniqueness IDs exactly UR/BUG+1; orders190/194/196/198/200/202.
+Final catalogue 40 IDs/34 unscoped, uniqueness IDs exactly UR/BUG+1; orders 190/194/196/198/200/202.
 
 Write the actual selected limits (not just starting values), scope/counter definitions, cap and C
 decisions and source evidence in `docs/difficulty-v3/limits-v3.md`. New-pattern limits freeze with
 v3: subsequent changes require a new rating version. MS18 cannot tune them.
 
-### Anchors at `2c665bb`
+### Anchors at `f788e02` after MS02-MS04 (find quotes after later tasks)
 
 | File:line / quote | Change |
 |---|---|
 | `generator/js/ui/cache.js:47`, `const SCHEMA_VERSION = 2` | Purge old cache |
 | `generator/js/ui/cache.js:228-284`, `function verify` | Current classification and comparison |
-| `generator/tests/manual/difficulty.test.js:759-767`, `ratingVersion` | Current-only assertions |
-| `generator/tests/manual/difficulty.test.js:1316`, `p.rating.ratingVersion` | Generated version |
-| `generator/tests/suites/replay.test.js:1601` | Inspect historical/stub intent, not blind replacement |
+| `generator/tests/manual/difficulty.test.js:765-773`, `ratingVersion` | Current-only assertions |
+| `generator/tests/manual/difficulty.test.js:1366`, `p.rating.ratingVersion` | Generated version |
+| `generator/tests/suites/replay.test.js:1600`, `techniqueCounts: report.spec.counts, ratingVersion: 2` | Inspect historical/stub intent, not blind replacement |
 
 ## Files to create/modify
 
@@ -66,8 +66,8 @@ v3: subsequent changes require a new rating version. MS18 cannot tune them.
   replay current-version tests, manual difficulty reference/version assertions.
 - E's affected GR data; Player importer/fixtures tests only for positive-version compatibility,
   never rewrite old puzzle/export fixture claims.
-- Limits-v3, notes, `docs/README.md`; Generator design6.6/6.7/6.8/13.7/14.3 and limitations;
-  Player design6.2/8.3/9/10; both user/developer guides.
+- Limits-v3, notes, `docs/README.md`; Generator design 6.6/6.7/6.8/13.7/14.3 and limitations;
+  Player design 6.2/8.3/9/10; both user/developer guides.
 
 ## Implementation steps
 
@@ -88,25 +88,28 @@ v3: subsequent changes require a new rating version. MS18 cannot tune them.
 
 | ID | Criterion |
 |---|---|
-| MS17b-T01 | Rating/cache3, history/wire1, cache2 purge and explicit exactness enforced |
+| MS17b-T01 | Rating/cache 3, history/wire 1, cache 2 purge and explicit exactness enforced |
 | MS17b-T02 | Same-grid different classification/model rejected; timing/display differences ignored |
-| MS17b-T03 | Current references,40/34 catalogue, selected limit record and old imports pass |
-| MS17b-T04 | GR/GD and both quick sets pass or intermediate availability misses are explicitly recorded |
+| MS17b-T03 | Current references, 40/34 catalogue, selected limit record and old imports pass |
+| MS17b-T04 | GR and both quick sets pass; complete GD coverage with any requiredness-related availability/median-time misses explicitly recorded under section 7, never waived silently |
 
 ## Test plan and gates
 
 Generator `node tests\node-runner.js --suite=cache,history,export,pipeline,technique-weights,difficulty-floor`;
 Player `node tests\node-runner.js --suite=importer,fixtures,help`; both quick sets.
-Test schema2 purge, schema3 missing exact/counts/version, exact/shallow same score/grid, changed cages,
-Wordoku display-only change and old positive ratingVersion2 import. Complete E GR under MS17b:
+Test schema 2 purge, schema 3 missing exact/counts/version, exact/shallow same score/grid, changed cages,
+Wordoku display-only change and old positive ratingVersion 2 import. Complete E GR under MS17b:
 
 ```powershell
 node tests\replay-fixtures.js --ids=G09 --record=..\docs\difficulty-v3\evidence\MS17b\wire\G09.json
 node tests\replay-goldens.js --ids=G01 --record=..\docs\difficulty-v3\evidence\MS17b\analysis\G01.json
-node tests\node-runner.js --suite=difficulty
+Invoke-Dv3Node -Task MS17b -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=difficulty','--filter=time) > nightmare >')
 ```
 
-Jobs1/no --jobs; GR5-35 minutes, GD1-8 minutes planning allowance. **Announce to the orchestrator
+Jobs 1/no --jobs; GR 5-35 minutes. Complete GD using checklist section 7's retained level/group
+shards, with actual timing projections, not an unbounded whole-suite run. Hit/median-time findings
+at affected levels remain failed assertions and go to MS18d; correctness and coverage still block.
+Use the shared lock for all commands expected over 10 seconds. **Announce to the orchestrator
 before starting (pentomino runs in parallel on the same machine).** Ten-minute command ceiling.
 Version-only changes do not authorize a hash rewrite; full GG check belongs to final evidence.
 

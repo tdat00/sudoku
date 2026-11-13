@@ -17,17 +17,20 @@
  *  - `digLevel` runs stage A down to about half the clues, then `digGuided`, which repeatedly takes the
  *    removal that makes the puzzle hardest without its score reaching the upper edge of the band, rates the
  *    result once and re-verifies it with `SG.dfs.countSolutions` (safety net against technique bugs). A
- *    sample is exact only with a complete logical proof whose level is the requested one.
+ *    sample is exact only with a complete logical proof whose level is the requested one that also needs a
+ *    technique of the level's tier (`SG.difficulty.requiredOf`, see `isExact`); a complete proof in the band
+ *    that does not is 'shallow'.
  *  - On the top tiers (nightmare, hell1, hell2) every other sample is the fast proposal dig (stage A with the
  *    uniqueness oracle, then the guided pass towards puzzles the techniques below 'nightmare' cannot finish;
  *    every uniqueness check of a removal is guarded at `UNIQUE_NODES` search nodes); a proposal above the
  *    band is refined downward by showing symmetric clue groups again (`refineDown`).
- *  - `generate` repeats that over fresh grids and several dig samples per grid until a puzzle is rated
- *    exactly the requested level. An attempt without an exact sample ends with a local search from its
- *    closest completely rated candidate (`searchStrategy`). Every attempt has deterministic caps (full
- *    ratings, proposed moves); when every attempt is used it returns the closest completely rated puzzle with
- *    the warning 'difficulty.approximate', and throws 'digger.noRatedPuzzle' only when no sample at all had a
- *    complete proof. It never loops without bound.
+ *  - `generate` repeats that over fresh grids and several dig samples per grid until a puzzle is exact (rated
+ *    in the requested level and needing its tier). An attempt without an exact sample ends with a local
+ *    search from its closest completely rated candidate (`searchStrategy`). Every attempt has deterministic
+ *    caps (full ratings, proposed moves); when every attempt is used it returns the closest completely rated
+ *    puzzle with the warning 'difficulty.approximate' (and 'difficulty.shallow' when it lies in the band
+ *    without needing the tier), and throws 'digger.noRatedPuzzle' only when no sample at all had a complete
+ *    proof. It never loops without bound.
  *
  * Why stage B is guided and not "dig further with a relaxed oracle": a puzzle that stage A has finished is
  * minimal (every remaining clue is needed for uniqueness itself), so a relaxed oracle finds nothing more to
@@ -641,6 +644,20 @@
   const OBJECTIVE_STEPS = 100000;
   const OBJECTIVE_GUARD_CODE = 'digger.objectiveGuard';
 
+  // The shallow-search allowance (difficulty v3, R5): the full ratings one local search may make after its
+  // first shallow state, a complete rating in the band of the level that does not need the tier. It is one
+  // common number, read from `SG.digger.SHALLOW_SEARCH_RATINGS` each time a local search starts (a tool sets
+  // it for one run), and it limits only the local search: not the layout, dig or sample ratings and not the
+  // number of attempts. `Infinity` leaves only the caps above; a finite value is a whole number (0 is for
+  // tests).
+  const SHALLOW_SEARCH_DEFAULT = 256;
+
+  function shallowLimitOf() {
+    const value = SG.digger.SHALLOW_SEARCH_RATINGS;
+    if (value === Infinity || (Number.isInteger(value) && value >= 0)) return value;
+    throw fail('digger.invalidOption', { option: 'SHALLOW_SEARCH_RATINGS', value: String(value) });
+  }
+
   // Stage B objective: how hard is the puzzle after the cells of `group` were removed (cleared in `givens` on
   // entry, as for the oracles)? Returns a negative `REFUSED_*` value when the removal must be refused, else a
   // number where more is harder; the guided stage keeps the highest.
@@ -988,12 +1005,123 @@
   // variant strategies (Killer's layout search, Greater-Than's tuning) all call it. Every rating it makes
   // counts toward the attempt's full-rating cap and none starts once the cap is used up (`caps` = `ctx.caps`;
   // null: outside a generation, not counted). Returns null when the cap is used up: nothing was rated.
+  // While a local search runs, `caps.local` is its collector (`enterLocal`): a rating it invokes is counted
+  // there as well, one after the first shallow state also against the shallow allowance, and once that is
+  // used up the next new rating is refused like one beyond the cap (null, before the rater is invoked). A
+  // rating that throws was invoked and stays counted; the rating that first shows a shallow state is not an
+  // allowance rating (`firstShallowAt` is its ordinal, the allowance counts what follows).
   function rateCounted(model, givens, budget, caps) {
+    const local = caps && caps.local ? caps.local : null;
     if (caps) {
-      if (caps.ratings >= caps.maxRatings) return null;
+      if (caps.ratings >= caps.maxRatings) {
+        if (local !== null && local.entry.capHit === null) local.entry.capHit = 'ratings';
+        return null;
+      }
+      if (local !== null && local.entry.firstShallowAt !== null &&
+          local.entry.shallowRatings >= local.limit) {
+        if (local.entry.capHit === null) local.entry.capHit = 'shallow';
+        return null;
+      }
       caps.ratings++;
+      if (local !== null) {
+        local.entry.ratings++;
+        if (local.entry.firstShallowAt !== null) local.entry.shallowRatings++;
+      }
     }
-    return SG.difficulty.rate(model, givens, { budget: budget });
+    const rating = SG.difficulty.rate(model, givens, { budget: budget });
+    if (local !== null && local.entry.firstShallowAt === null && isShallow(rating, local.level, model)) {
+      local.entry.firstShallowAt = local.entry.ratings;
+    }
+    return rating;
+  }
+
+  // The collector of one local search, kept in the caps of its attempt (never in a variable of the module, so
+  // two requests cannot share it): `entry` is the plain record that becomes `work[].localSearches[]`, the
+  // rest is internal. The search enters before its first rating, the initial downward refinement included,
+  // and `leaveLocal` puts the previous collector back whatever happens to the search. A state that is shallow
+  // on entry has `firstShallowAt` 0.
+  function enterLocal(caps, spec, candidate) {
+    if (!caps) return null;
+    const limit = shallowLimitOf();
+    const entry = {
+      ratings: 0, proposals: 0, firstShallowAt: null, shallowRatings: 0,
+      shallowLimit: limit === Infinity ? null : limit, capHit: null
+    };
+    if (isShallow(candidate.rating, spec.level, candidate.model)) entry.firstShallowAt = 0;
+    if (!Array.isArray(caps.localSearches)) caps.localSearches = [];
+    caps.localSearches.push(entry);
+    const local = { entry: entry, level: spec.level, limit: limit, previous: caps.local || null };
+    caps.local = local;
+    return local;
+  }
+
+  function leaveLocal(caps, local) {
+    if (local !== null) caps.local = local.previous;
+  }
+
+  // How a local search ended, for its record. An exact state of its own or of the keeper has priority: the
+  // search stopped because it was done, not because of a cap. Otherwise the allowance or the cap that refused
+  // a rating is already there, else the cap of the attempt that is used up (ratings before proposals).
+  function closeLocal(local, state, ctx) {
+    if (local === null || local.entry.capHit !== null) return;
+    const keeper = ctx.keeper || null;
+    const done = isExact(state.rating, ctx.spec.level, state.model) ||
+      (keeper !== null && keeper.distance === 0);
+    if (done) return;
+    const caps = ctx.caps;
+    if (caps.ratings >= caps.maxRatings) local.entry.capHit = 'ratings';
+    else if (caps.proposals >= caps.maxProposals) local.entry.capHit = 'proposals';
+  }
+
+  function isCount(x) {
+    return Number.isInteger(x) && x >= 0;
+  }
+
+  const CAP_HITS = [null, 'shallow', 'ratings', 'proposals'];
+
+  function copyLocal(l) {
+    const plain = l !== null && typeof l === 'object' && isCount(l.ratings) && isCount(l.proposals) &&
+      isCount(l.shallowRatings) && (l.firstShallowAt === null || isCount(l.firstShallowAt)) &&
+      (l.shallowLimit === null || isCount(l.shallowLimit)) && CAP_HITS.indexOf(l.capHit) !== -1;
+    return plain ? {
+      ratings: l.ratings, proposals: l.proposals, firstShallowAt: l.firstShallowAt,
+      shallowRatings: l.shallowRatings, shallowLimit: l.shallowLimit, capHit: l.capHit
+    } : null;
+  }
+
+  // The work of the attempts of a generation (`GeneratedPuzzle.work`) as owned plain data: a fresh copy with
+  // the counters and nothing else. Null when `work` is not a list of attempts of that shape, so data from
+  // before the work existed stays unavailable and is never read as zero. Counters only: no timing is part of
+  // the work.
+  function copyWork(work) {
+    if (!Array.isArray(work)) return null;
+    const out = [];
+    for (let i = 0; i < work.length; i++) {
+      const w = work[i];
+      if (w === null || typeof w !== 'object' || !isCount(w.ratings) || !isCount(w.proposals) ||
+          !isCount(w.maxRatings) || !isCount(w.maxProposals) || !Array.isArray(w.localSearches)) return null;
+      const locals = w.localSearches.map(copyLocal);
+      if (locals.indexOf(null) !== -1) return null;
+      out.push({
+        ratings: w.ratings, proposals: w.proposals, maxRatings: w.maxRatings, maxProposals: w.maxProposals,
+        localSearches: locals
+      });
+    }
+    return out;
+  }
+
+  // Puts a copy of the work done so far on an error that ends a generation. The property is not enumerable
+  // and the error is the same object, so its identity, its code and a cancellation stay what they were.
+  function attachWork(err, work) {
+    if (err === null || (typeof err !== 'object' && typeof err !== 'function')) return;
+    const copy = copyWork(work);
+    if (copy === null) return;
+    try {
+      Object.defineProperty(err, 'work',
+        { value: copy, writable: true, configurable: true, enumerable: false });
+    } catch (ignored) {
+      // a frozen error keeps no work
+    }
   }
 
   // The rating of a sample that could not be rated because the full-rating cap was used up: no proof, no
@@ -1014,13 +1142,15 @@
   }
 
   // New caps for one full-grid attempt; `options.maxRatings` / `options.maxProposals` of `generate` lower
-  // them (tests).
+  // them (tests). `localSearches` collects the records of the attempt's local searches and `local` is the
+  // collector of the one that runs (see `enterLocal`).
   function newCaps(options) {
     const o = options || {};
     return {
       ratings: 0, proposals: 0,
       maxRatings: Number.isInteger(o.maxRatings) && o.maxRatings >= 0 ? o.maxRatings : CAP_RATINGS,
-      maxProposals: Number.isInteger(o.maxProposals) && o.maxProposals >= 0 ? o.maxProposals : CAP_PROPOSALS
+      maxProposals: Number.isInteger(o.maxProposals) && o.maxProposals >= 0 ? o.maxProposals : CAP_PROPOSALS,
+      localSearches: [], local: null
     };
   }
 
@@ -1037,20 +1167,22 @@
   // only when the DFS count of `countWithin` finds exactly one solution. A complete proof that needs no
   // technique assuming uniqueness, contradicted by a second solution, marks the run `unsound` (a technique
   // bug, reported as `digger.unsoundTechnique`). The final choice compares the kept candidate with the
-  // samples. `budget` is checked during the counts.
+  // samples. `budget` is checked during the counts. "Closest" is `qualityOf` of the candidate's rating for
+  // the candidate's own model (`distance` is the quality of the best, 0 once it is exact); an equal quality
+  // keeps the candidate met first.
   function createKeeper(spec, level, budget) {
     const keeper = {
       best: null,
       distance: Infinity,
       unsound: false,
-      /** Would a rating be kept (strictly closer than the best so far)? Nothing is copied or checked. */
-      closer: function (rating) {
-        return rating !== null && distanceToLevel(rating, spec, level) < keeper.distance;
+      /** Would a rating of `model` be kept (strictly better than the best so far)? Nothing is copied. */
+      closer: function (rating, model) {
+        return qualityOf(rating, spec, level, model) < keeper.distance;
       },
       // Offers `{ model, givens, solution, rating, logOf, stats? }`; true when it is kept.
       offer: function (candidate) {
         if (!candidate || !candidate.rating) return false;
-        const distance = distanceToLevel(candidate.rating, spec, level);
+        const distance = qualityOf(candidate.rating, spec, level, candidate.model);
         if (!(distance < keeper.distance)) return false;
         const count = countWithin(candidate.model, candidate.givens, budget);
         if (count !== 1) {
@@ -1082,7 +1214,7 @@
       requested: level,
       achieved: kept.rating.level,
       rating: kept.rating,
-      exact: kept.rating.solved === true && kept.rating.level === level,
+      exact: isExact(kept.rating, level, kept.model),
       unsound: false,
       stats: kept.stats,
       log: kept.log
@@ -1147,10 +1279,10 @@
   }
 
   // LevelPuzzle: { model, givens, solution, clues, removed, requested (the level asked for), achieved
-  // (`rating.level`), rating, exact (a complete logical proof and achieved === requested: the score lies in
-  // the level's band), unsound (the technique-bounded dig produced a puzzle that was not unique, so a
-  // technique has a bug; the returned puzzle comes from the DFS fallback and is unique), stats, log (the dig
-  // log of this sample) }
+  // (`rating.level`), rating, exact (`isExact`: a complete canonical proof whose level is the requested one,
+  // so the score lies in the level's band, and that needs a technique of the level's tier), unsound (the
+  // technique-bounded dig produced a puzzle that was not unique, so a technique has a bug; the returned
+  // puzzle comes from the DFS fallback and is unique), stats, log (the dig log of this sample) }
 
   // One attempt at a puzzle of the requested level from a given solution, as three pipeline steps: 'dig' (the
   // dig strategy, default `digStage`, then the safety net `secureUniqueness`), 'rate' (one deferred rating)
@@ -1262,8 +1394,11 @@
       return rated;
     });
 
-    // Rating v2: a sample is exact only with a complete proof whose level is the requested one.
-    const exact = rating.solved === true && rating.level === level;
+    // A sample is exact only with a complete canonical proof in the requested level that needs its tier
+    // (`isExact`); a complete proof in the band that does not is shallow; every other sample, a solved one
+    // outside the band included, is a miss whose requiredness is not derived.
+    const exact = isExact(rating, level, dug.model);
+    const shallow = !exact && isComplete(rating, level);
     yield* stage('tune', Object.assign({}, where), function tuneStep(scope) {
       const band = {
         requested: level,
@@ -1274,11 +1409,13 @@
       };
       if (exact) {
         band.hardestTechnique = rating.hardestTechnique;
+        band.required = true;
         em.step('tune', 'progress', 'tune.hit', band);
       } else {
         band.sample = where.sample || 1;
         band.maxSamples = where.maxSamples || 1;
-        em.step('tune', 'progress', 'tune.miss', band);
+        band.required = shallow ? false : null;
+        em.step('tune', 'progress', shallow ? 'tune.shallow' : 'tune.miss', band);
       }
       scope.metrics = ratingMetrics(dug.clues, rating);
     });
@@ -1300,16 +1437,25 @@
   }
 
   // Local search from the closest completely rated candidate of an attempt, run as the strategy of one more
-  // sample. A candidate above the band is refined downward (`refineDown`). Below the band the search proposes
+  // sample. A candidate above the band is refined downward (`refineDown`): an exact result or one still above
+  // the band is returned as it is, and a result inside the band that does not need the tier of the level (a
+  // shallow one) goes on with the search from the refined puzzle. Otherwise the search proposes
   // symmetry-preserving moves on clue groups (removal, swap of a full group for an empty one, addition) and,
   // on Greater-Than, the removal of a sign; a move is kept iff the puzzle stays unique (`uniqueWithin`) with
   // a complete proof, its score does not decrease and stays below the band maximum. The clue floor and the
   // unit minimum of the level are kept. Where the signs were dug to a minimal set (Greater-Than) no clue is
   // added, so the signs stay minimal. A candidate that comes up again is judged from a memo, not checked or
-  // rated twice (it still counts as a proposal). The search stops on entering the band or when the caps of
-  // the attempt are used up. The candidate's dig log comes first in the log of the result, followed by the
-  // kept moves (`accept` for a removed group or sign, `reveal` with `reason: 'search'` for an added group),
-  // so the Generation Steps replay shows what happened. Returns a dig strategy (signature of `digStage`).
+  // rated twice (it still counts as a proposal). Every unique, completely rated candidate is offered to the
+  // keeper before the search decides whether it follows the move, so a required neighbour that the path
+  // rejects (its score is lower) is not lost. The search stops as soon as its own state or the keeper is
+  // exact, or when the caps of the attempt are used up; after that no proposal and no rating is made. The
+  // candidate's dig log comes first in the log of the result, followed by the kept moves (`accept` for a
+  // removed group or sign, `reveal` with `reason: 'search'` for an added group), so the Generation Steps
+  // replay shows what happened. After its first shallow state the search may make
+  // `SG.digger.SHALLOW_SEARCH_RATINGS` more full ratings (Infinity: no allowance beyond the caps); when it is
+  // used up the next new rating is refused and the search ends on the state it has, the keeper holding its
+  // best verified candidate. A repeated candidate judged from the memo is a proposal, not a rating. Returns a
+  // dig strategy (signature of `digStage`).
   function searchStrategy(candidate) {
     return function search(model, solution, level, rng, options) {
       const steps = localSearchSteps(candidate, solution, rng, options);
@@ -1317,7 +1463,22 @@
     };
   }
 
+  // One local search is one collector (`enterLocal`) from before its initial refinement to its end, and one
+  // record of the attempt's `work`; the collector is left in a `finally`, so an error or an abandoned
+  // generator cannot leave it behind.
   function* localSearchSteps(candidate, solution, rng, ctx) {
+    const caps = ctx.caps;
+    const local = enterLocal(caps, ctx.spec, candidate);
+    try {
+      const state = yield* runLocalSearch(candidate, solution, rng, ctx, local);
+      closeLocal(local, state, ctx);
+      return state;
+    } finally {
+      leaveLocal(caps, local);
+    }
+  }
+
+  function* runLocalSearch(candidate, solution, rng, ctx, local) {
     const coop = ctx.cooperative === true;
     const spec = ctx.spec;
     const caps = ctx.caps;
@@ -1341,9 +1502,18 @@
     for (let c = 0; c < givens.length; c++) if (givens[c] !== 0) clues++;
     if (rating.score >= spec.max) {
       const refined = refineDown(model, solution, givens, rating, spec, rng.fork('refine'), ctx);
-      return {
+      const refinedState = {
         givens: refined.givens, clues: refined.clues, stats: stats, model: model, rating: refined.rating
       };
+      // Only a complete result inside the band that does not need the tier goes on; an exact one, one still
+      // above the band and anything else is returned, and an exact keeper leaves nothing to search.
+      const inBand = refined.rating.solved === true && refined.rating.score >= spec.min &&
+        refined.rating.score < spec.max;
+      const keeperExact = keeper !== null && keeper.distance === 0;
+      if (!inBand || isExact(refined.rating, spec.level, model) || keeperExact) return refinedState;
+      givens = refined.givens;
+      rating = refined.rating;
+      clues = refined.clues;
     }
 
     const groups = SG.symmetry.groups(model, ctx.symmetry);
@@ -1389,8 +1559,11 @@
       return String.fromCharCode.apply(null, values);
     }
 
-    while (rating.score < spec.min && !capsExhausted(caps)) {
+    // The search is over when its own state or the keeper is exact: no further proposal or rating is made.
+    while (!isExact(rating, spec.level, model) && !(keeper !== null && keeper.distance === 0) &&
+           !capsExhausted(caps)) {
       caps.proposals++;
+      if (local !== null) local.entry.proposals++;
       stats.tried++;
       let candModel = model;
       const cand = Int32Array.from(givens);
@@ -1459,8 +1632,9 @@
       }
       const next = seen.rating;
       const entries = entriesOf(removed, added, signPair, sign);
-      // Every unique, completely rated candidate may be the closest of the run, kept or not.
-      if (keeper !== null && next.solved && keeper.closer(next)) {
+      // Every unique, completely rated candidate may be the closest of the run, kept or not (the path below
+      // may still refuse it: a lower score does not follow, but a required neighbour is kept).
+      if (keeper !== null && next.solved && keeper.closer(next, candModel)) {
         keeper.offer({
           model: candModel, givens: cand, solution: solution, rating: next, stats: stats,
           logOf: function () { return (log !== null ? log.slice() : []).concat(entries); }
@@ -1514,36 +1688,79 @@
     return gap * 1000 + off;
   }
 
+  /** A complete proof whose level is `level`: the score lies in its band. */
+  function isComplete(rating, level) {
+    return !!rating && rating.solved === true && rating.level === level;
+  }
+
+  /** In the band of `level` with a complete proof but not needing its tier: what the allowance follows. */
+  function isShallow(rating, level, model) {
+    return isComplete(rating, level) && !isExact(rating, level, model);
+  }
+
+  // Exactness, the one rule of the generator: a complete canonical rating in the requested level that needs
+  // a technique of its tier. `SG.difficulty.requiredOf` reads the counts of that rating, so the rating must
+  // have been made for this very model and givens; veryEasy and a level with an empty tier are vacuous. The
+  // oracle's `tierUsed` is never a certificate.
+  function isExact(rating, level, model) {
+    if (!model || !isComplete(rating, level)) return false;
+    const verdict = SG.difficulty.requiredOf(rating, level, model);
+    return verdict !== null && verdict.required === true;
+  }
+
+  /** The quality of a complete rating in the band whose tier is not needed (shallow). */
+  const SHALLOW_QUALITY = 0.5;
+
+  // How good a rating of `model` is as the result for `level`, lower is better: infinite without a model or a
+  // complete rating; 0 for a required (exact) rating in the level; `SHALLOW_QUALITY` for a shallow one; else
+  // the distance of `distanceToLevel` (at least one whole level apart, so never below 1000).
+  function qualityOf(rating, spec, level, model) {
+    if (!model || !rating || rating.solved !== true || rating.level === null) return Infinity;
+    if (rating.level === level) return isExact(rating, level, model) ? 0 : SHALLOW_QUALITY;
+    return distanceToLevel(rating, spec, level);
+  }
+
   // GeneratedPuzzle: { model (the one passed in, or the one the variant's `postGenerate` returned for the
-  // attempt the puzzle comes from), givens, solution, clues, requested, achieved, rating, exact (achieved ===
-  // requested), attempts (full grids generated), samples (dug puzzles rated: at most maxAttempts x digTries;
-  // the local search of an attempt is not a dig sample and is not counted), warnings
-  // ('difficulty.approximate' when the level was not reached exactly; 'digger.unsoundTechnique' when a
-  // technique produced an ambiguous puzzle: a bug), stats (of the returned puzzle's dig), log (its dig log),
-  // work (per attempt: { ratings (every full rating), proposals, maxRatings, maxProposals }, counted against
-  // its caps) }
+  // attempt the puzzle comes from), givens, solution, clues, requested, achieved, rating, exact (`isExact`:
+  // in the requested level and needing its tier), attempts (full grids generated), samples (dug puzzles
+  // rated: at most maxAttempts x digTries; the local search of an attempt is not a dig sample and is not
+  // counted), warnings ('difficulty.approximate' when the level was not reached exactly, with
+  // 'difficulty.shallow' added when the puzzle lies in the band without needing its tier;
+  // 'digger.unsoundTechnique' when a technique produced an ambiguous puzzle: a bug), stats (of the returned
+  // puzzle's dig), log (its dig log), work (per attempt: { ratings (every full rating), proposals,
+  // maxRatings, maxProposals, localSearches }, counted against its caps; `localSearches` has one record per
+  // local search of the attempt: { ratings (full ratings of the search, the refinement included), proposals,
+  // firstShallowAt (the one-based ordinal among them of the rating that first showed a shallow state, 0 for
+  // a search entered in one, null for none), shallowRatings (the ratings after it: what the allowance
+  // limits), shallowLimit (the allowance, null for Infinity), capHit (null; 'shallow' when the allowance
+  // refused a rating, else the cap of the attempt that ended the search, 'ratings' or 'proposals'; null for
+  // an exact end) } }) }
 
   // Generates a puzzle of the requested difficulty: the outer restart loop. Each attempt draws a fresh full
   // grid and digs up to `digTries` puzzles from it (a dig costs about a millisecond, a grid more, and one dig
-  // in a few misses the level, so the grid is reused); the first puzzle rated exactly the requested level is
-  // returned. When every attempt is used up, the closest puzzle seen is returned with
-  // 'difficulty.approximate' in `warnings`; it neither throws for that nor loops longer than maxAttempts x
-  // digTries digs. Every returned puzzle has exactly one solution. Deterministic: the same model, level, rng
-  // seed and options give the same puzzle, whatever the emitter and the stage runner do. The random streams
-  // are `rng.fork('grid#A')` for the grid of attempt A, `rng.fork('extra#A')` for the variant hook and
-  // `rng.fork('dig#A.T')` for dig sample T of attempt A.
+  // in a few misses the level, so the grid is reused); the first exact puzzle (rated in the requested level
+  // and needing its tier) is returned. When every attempt is used up, the closest puzzle seen is returned
+  // with 'difficulty.approximate' in `warnings`; it neither throws for that nor loops longer than
+  // maxAttempts x digTries digs. Every returned puzzle has exactly one solution. Deterministic: the same
+  // model, level, rng seed and options give the same puzzle, whatever the emitter and the stage runner do.
+  // The random streams are `rng.fork('grid#A')` for the grid of attempt A, `rng.fork('extra#A')` for the
+  // variant hook and `rng.fork('dig#A.T')` for dig sample T of attempt A.
   // Each attempt runs the steps 'fullGrid' and 'extraStructure', then per sample 'dig', 'rate' and 'tune'
   // (see `digLevel`), all through `options.stage`. After a missed attempt it emits `retry.difficulty`.
-  // Rating v2: a sample is exact only with a complete proof whose level is the requested one. On the top
+  // Rating v3: a sample is exact only with a complete canonical proof in the requested level that needs a
+  // technique of its tier, and "closest" is `qualityOf`: exact 0, shallow 0.5, else the distance of the
+  // level and the score (a strict improvement is needed, so an equal quality keeps the first met). On the top
   // tiers (`spec.proposal`) the odd samples of an attempt are the fast proposal dig (rated at once and
   // refined downward into the band when above it, see `refineDown`), the even ones the score-targeted dig.
   // When no sample of an attempt is exact, one more sample runs the local search (`searchStrategy`) from the
-  // closest completely rated candidate of the attempt (stream `rng.fork('search#A')`). Every attempt has
-  // deterministic caps (`CAP_RATINGS` full ratings, `CAP_PROPOSALS` proposed moves), passed to the samples
-  // and to the variant hook as `caps`; a used-up cap ends the attempt, and every full rating goes through
-  // `rateCounted`, which never starts one beyond the cap. The fallback is the closest completely rated
-  // candidate of the whole run: a dig sample, or a candidate that the searches, the refinement or a variant's
-  // strategy met on the way (`createKeeper`); when there is none at all, 'digger.noRatedPuzzle' is thrown.
+  // closest completely rated candidate of the attempt (stream `rng.fork('search#A')`). Once a sample or the
+  // keeper is exact, no other sample (after the first), no proposal and no rating of the local search starts.
+  // Every attempt has deterministic caps (`CAP_RATINGS` full ratings, `CAP_PROPOSALS` proposed moves), passed
+  // to the samples and to the variant hook as `caps`; a used-up cap ends the attempt, and every full rating
+  // goes through `rateCounted`, which never starts one beyond the cap. The fallback is the closest completely
+  // rated candidate of the whole run: a dig sample, or a candidate that the searches, the refinement or a
+  // variant's strategy met on the way (`createKeeper`); when there is none at all, 'digger.noRatedPuzzle' is
+  // thrown.
   // Options: those of `digLevel`, and maxAttempts (default 8), digTries (dig samples per grid; default 12, or
   // 30 when the symmetry has groups of more than two cells, which miss the level more often), maxRatings /
   // maxProposals (lower the caps of an attempt; tests), postGenerate (the variant's hook, called once per
@@ -1568,8 +1785,21 @@
   // That is the granularity limit: a slice is never shorter than the longest of those pieces (a few ms on 9x9
   // boards, tens of ms for a Killer layout search or a Samurai uniqueness check). Events, random draws,
   // budget accounting and result are those of `generate`, which is this generator driven to its end. It may
-  // be abandoned at any yield (`.return()` runs the `finally` blocks and nothing else).
+  // be abandoned at any yield (`.return()` runs the `finally` blocks and nothing else). An error that ends it
+  // carries a copy of the work done so far as its non-enumerable `work` property (`attachWork`); the error
+  // itself is rethrown untouched.
   function* generateSteps(model, level, rng, options) {
+    const work = [];
+    try {
+      return yield* generateAttempts(model, level, rng, options, work);
+    } catch (err) {
+      attachWork(err, work);
+      throw err;
+    }
+  }
+
+  // The restart loop of `generateSteps`; `work` receives the caps of each attempt as it starts.
+  function* generateAttempts(model, level, rng, options, work) {
     options = options || {};
     const coop = options.cooperative === true;
     const spec = SG.difficulty.spec(level, model);
@@ -1601,7 +1831,6 @@
     let attempts = 0;
     let samples = 0;
     let unsound = false;
-    const work = [];
 
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
       const caps = newCaps(options);
@@ -1661,6 +1890,7 @@
       let attemptBest = null;
       let attemptDistance = Infinity;
       let lastSample = 0;
+      let searched = null;
       for (let t = 1; t <= digTries; t++) {
         // A kept candidate inside the band (say, a layout of the structure search whose dig missed it) ends
         // the sampling: it is returned unless a sample hits the band itself.
@@ -1675,7 +1905,7 @@
         samples++;
         lastSample = t;
         unsound = unsound || puzzle.unsound;
-        const distance = distanceToLevel(puzzle.rating, spec, level);
+        const distance = qualityOf(puzzle.rating, spec, level, puzzle.model);
         if (best === null || distance < bestDistance) {
           best = puzzle;
           bestDistance = distance;
@@ -1697,17 +1927,22 @@
             where: where, caps: caps, proposal: false, strategy: searchStrategy(attemptBest)
           }));
         unsound = unsound || puzzle.unsound;
-        const distance = distanceToLevel(puzzle.rating, spec, level);
-        if (distance < bestDistance) {
-          best = puzzle;
-          bestDistance = distance;
-        }
+        searched = puzzle;
       }
       // The closest completely rated candidate wins: a dig sample, or a candidate the searches, the
-      // refinement, a variant's tuning or its structure search met on the way.
+      // refinement, a variant's tuning or its structure search met on the way. The keeper meets the
+      // candidates of the local search in order and keeps the first of an equal quality, so it is asked
+      // before the state the search ended in, which is one of them.
       if (keeper.best !== null && keeper.distance < bestDistance) {
         best = keptPuzzle(keeper.best, level);
         bestDistance = keeper.distance;
+      }
+      if (searched !== null) {
+        const distance = qualityOf(searched.rating, spec, level, searched.model);
+        if (distance < bestDistance) {
+          best = searched;
+          bestDistance = distance;
+        }
       }
       if (best !== null && best.exact) break;
       em.retry('tune', 'retry.difficulty', {
@@ -1737,7 +1972,11 @@
     }
 
     const warnings = [];
-    if (!best.exact) warnings.push('difficulty.approximate');
+    if (!best.exact) {
+      warnings.push('difficulty.approximate');
+      // In the band, but the tier of the level is not needed: the Retry warning says so.
+      if (isComplete(best.rating, level)) warnings.push('difficulty.shallow');
+    }
     if (unsound || keeper.unsound) warnings.push('digger.unsoundTechnique');
     return {
       model: best.model,
@@ -1753,16 +1992,14 @@
       warnings: warnings,
       stats: best.stats,
       log: best.log,
-      work: work.map(function (c) {
-        return { ratings: c.ratings, proposals: c.proposals, maxRatings: c.maxRatings,
-          maxProposals: c.maxProposals };
-      })
+      work: copyWork(work)
     };
   }
 
   SG.digger = {
     ORDERS: ORDERS,
     CAP_RATINGS: CAP_RATINGS,
+    SHALLOW_SEARCH_RATINGS: SHALLOW_SEARCH_DEFAULT,
     dig: dig,
     digSteps: digSteps,
     digStage: digStage,
@@ -1772,6 +2009,7 @@
     generate: generate,
     generateSteps: generateSteps,
     rateCounted: rateCounted,
+    copyWork: copyWork,
     createStageSteps: createStageSteps,
     registerStrategy: registerStrategy,
     unregisterStrategy: unregisterStrategy,

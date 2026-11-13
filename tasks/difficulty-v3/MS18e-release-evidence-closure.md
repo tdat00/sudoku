@@ -21,10 +21,10 @@ AGENTS/checklist; CRLF, both guide languages; no Git writes.
 
 ## Inputs & context
 
-Final invariants: rating/cache3, history/wire1,40 IDs/34 unscoped, two uniqueness IDs, fixed weights/
+Final invariants: rating/cache 3, history/wire 1, 40 IDs/34 unscoped, two uniqueness IDs, fixed weights/
 bands, selected cap/C and frozen pattern limits. Exact means canonical solved/in-band/required;
-legacy history/imports remain honest. Complete final135-cell qualification and >=90% performance
-matrix use the accepted source/configuration. Fixed520 hashes remain present.
+legacy history/imports remain honest. Complete final 135-cell qualification and >=90% performance
+matrix use the accepted source/configuration. Fixed 520 hashes remain present.
 
 R20, verbatim:
 
@@ -33,11 +33,14 @@ R20, verbatim:
 
 Consolidate, do not invent missing earlier evidence. Verify current references, old-history
 retention, shallow warning/Retry and proof coverage are all documented in both languages.
-S0 baseline old202/204 versus qualified91/204 is not a v3 result. Include isolated target and final
+S0 baseline old 202/204 versus qualified 91/204 is not a v3 result. Include isolated target and final
 matched comparisons, per-cell losses, omitted levels and all performance misses.
 No new floor certificate or target leaks into the external Player exchange.
-Baseline anchors `generator/tests/manual/difficulty.test.js:1182,1212,1363` (updated exactness
-contracts), `generator/js/ui/cache.js:47`, `generator/js/ui/history.js:19` (version boundaries).
+Anchors at `f788e02`: `generator/tests/manual/difficulty.test.js:1232`
+(`hits the requested level in at least 90 %`), `:1262` (`I5: every puzzle has a complete proof`),
+`:1413` (`expect(puzzle.exact)` in `digLevel makes one attempt`);
+`generator/js/ui/cache.js:47` (`const SCHEMA_VERSION = 2` before MS17b),
+`generator/js/ui/history.js:19` (`const VERSION = 1`). Find the quoted tests after later changes.
 
 ## Files to create/modify
 
@@ -73,22 +76,61 @@ contracts), `generator/js/ui/cache.js:47`, `generator/js/ui/history.js:19` (vers
 Generator:
 
 ```powershell
-node tests\node-runner.js --suite=difficulty
-node tests\node-runner.js --suite=killer --filter="I5:"
-node tests\node-runner.js --suite=jigsaw --filter="I5:"
-node tests\node-runner.js --suite=greater-than --filter="I5:"
-node tests\node-runner.js --suite=extra-regions --filter="I5:"
-node tests\node-runner.js --suite=wordoku --filter="I5:"
-node tests\node-runner.js --suite=variants --filter=CV3
-node tests\node-runner.js
+$offered = @(& node -e "require('./tests/replay-fixtures.js').nodeEnv().engine(); console.log(SG.variants.get('classic9').difficultySupport.join('\n'))")
+if ($LASTEXITCODE -ne 0) { throw 'offered-level manifest failed' }
+$offered = @($offered | Where-Object { $_ -ne '' })
+$first = if ($offered -contains 'nightmare') { 'nightmare' } elseif ($offered.Count -gt 0) { $offered[0] } else { $null }
+if ($null -ne $first) {
+  Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=difficulty',"--filter=time) > $first >")
+}
+# Examples of ONE cell each: complete the full current per-level/variant manifest below.
+Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=killer','--filter=> normal: 20 puzzles > I5:','--verbose')
+Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=jigsaw','--filter=> normal: 20 puzzles > I5:','--verbose')
+Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=greater-than','--filter=> normal: 20 puzzles > I5:','--verbose')
+Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=extra-regions','--filter=> diagonalX normal: 20 puzzles > I5:','--verbose')
+Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=wordoku','--filter=> normal: 20 puzzles > I5:','--verbose')
+Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=variants','--filter=> variants: classic9 > CV3 normal:','--verbose')
+Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=variants','--filter=> variants: classic9 > CV3 unsupported:','--verbose')
+Invoke-Dv3Node -Task MS18e -NodeArgs @('tests\node-runner.js')
 ```
 
-Player: `node tests\node-runner.js`.
-These targeted manual consumers were corrected with MS05b; no blanket manual suite is inferred.
-GD jobs1/no --jobs, estimated1-8 minutes per selector; quick baseline was about one minute Generator and fifteen
-seconds Player, but record the actual expanded-suite counts/times. **Announce to the orchestrator
+Player, under the same lock: `Invoke-Dv3Node -Task MS18e -NodeArgs @('tests\node-runner.js')`.
+These consumers were corrected in MS05b2 and first executed with MS05b3's lazy corpora;
+no blanket manual suite is inferred. Rebuild the current MS05b3 manifest: **one I5 per actual
+level** of Killer/Jigsaw/Greater-Than/Wordoku, one per `(diagonalX|hyper,level)` in extra-regions,
+one **CV3 per (variant, supported level)** and one separate unsupported-level refusal check
+per variant. Never use a whole-variant CV3 selector: it still represents many requests.
+Use each I5 suite's original `countOf`/`PER_LEVEL` and indexes/seeds; CV3 keeps its own 2/3
+requests per supported level, seeds 1..perLevel and the 240-second request guard.
+The four Normal examples use 20; top levels may use 8 or 10, not a guessed 20.
+Keep the leading `> ` boundary in every filter so Easy cannot match Very Easy.
+CV3 names are `CV3 <level>:` and `CV3 unsupported:`. Each selector must select exactly one
+test: check its full name and the runner summary's total **1** before recording cell evidence;
+zero, multiple or skipped tests do not establish that cell's result.
+Retain a literal test/variant/level/count/seed/command manifest and prove no requested assertion
+is missing or duplicated; never use one `--filter=I5:` for the whole multi-level corpus.
+
+Qualification can hide a level. Reconcile the current manual population with the published
+offers before executing: an unadapted fixed manual list requesting a now-hidden level is a
+test/publication compatibility blocker for an assigned MS18c follow-up, not a zero-test pass,
+permission to drop its assertion silently, or permission to enable hidden production requests.
+Record every intended population change under final qualification. Fixed GG/GR recipes use
+their separate diagnostic guards and remain complete.
+Complete the difficulty suite through checklist section 7's disjoint offered-level/non-batch
+manifest after the first selected shard; never repeat it in a whole-suite command. Record a
+qualified-hidden Nightmare as absent from the offered manifest, not as a zero-test pass.
+GD jobs 1/no --jobs; prefer latest matching-source/post-allowance per-level measurements,
+including MS05d's deferred-CV3 outcomes and current Hell 1 evidence. Label older MS05b3
+measurements with their actual source/allowance; they are not proved upper bounds.
+Preflight every final CV3 cell before launching. A >450-second projection or missing credible
+bound stops that command for assigned bounded completion; no MS05b3 deferral is inherited as a
+final pass or silently omitted. Preserve counts and record current-source actuals; each command
+under 540 seconds. A selector with no tests is not a pass. Quick baseline was about one minute
+Generator and fifteen seconds Player, but record actual expanded-suite counts/times.
+Use the shared lock for all commands expected over 10 seconds. **Announce to the orchestrator
 before starting (pentomino runs in parallel on the same machine).** Ten-minute command ceiling.
-Final offered-level hit failures are not waived by the earlier "intermediate availability" rule.
+Final offered-level hit or timing failures are not waived by the earlier intermediate rule:
+record the failed gate and obtain an explicit owner disposition before release. S-OD1 controls CV6.
 No new --all/--manual/browser/SG_DEEP permission is inferred.
 
 ## Definition of done & handoff

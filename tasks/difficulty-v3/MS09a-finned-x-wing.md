@@ -27,14 +27,14 @@ R12, verbatim:
 > outside the bases, and sees every fin. If no fin is true, the ordinary n-fish fills the covers;
 > if a fin is true, it excludes the target. This permits a missing apparent corner (sashimi).
 
-Register finnedXWing: fish/order126/weight400/baseCost40, unscoped, no uniqueness.
+Register finnedXWing: fish/order 126/weight 400/baseCost 40, unscoped, no uniqueness.
 Finding key `technique.finnedXWing.step`; args `{digit,bases:string[],covers:string[],fins:string[]}`;
 R10 fields with placements=[], sorted/deduplicated owned output.
 Use safe fish owner tables, actual peers and genuine complete lines; no all-cell bit mask.
 Keep n=2/3/4 ordinary fish outputs unchanged. Fins must be nonempty; an ordinary fish is not relabelled.
-New work limit50000 combination extensions, entry/every256 checks, per-call reset and metrics.
+New work limit 50000 combination extensions, entry/every 256 checks, per-call reset and metrics.
 
-Vector: digit5 bases R1{C2,C8}, R4{C2,C8,C9}; covers C2/C8, fin R4C9; eliminate at R5C8.
+Vector: digit 5 bases R1{C2,C8}, R4{C2,C8,C9}; covers C2/C8, fin R4C9; eliminate at R5C8.
 Remove apparent R4C2 corner for sashimi. Add R4C7 as a same-box second fin.
 Reject split-box fins, off-cover target R5C7, target R7C8 missing fin visibility, partial/overlapping lines.
 These geometry vectors supplement, not replace, real fixture/help requirements.
@@ -42,7 +42,7 @@ Baseline `core/js/engine/tech-fish.js:56-125` and `:281-305` (`function findFish
 
 ## Files to create/modify
 
-- Fish engine/suite; full B and E. Generator design6.6, Player technique design, both guide languages.
+- Fish engine/suite; full B and E. Generator design 6.6, Player technique design, both guide languages.
 
 ## Implementation steps
 
@@ -84,8 +84,8 @@ node tests\tools\make-technique-examples.js ..\generator --ids=finnedXWing --sou
 node tests\tools\make-technique-examples.js ..\generator --ids=finnedXWing --sources=tests\artifacts\difficulty-v3\MS09a\sources.json --max-puzzles=8 --max-hints=400 --check
 ```
 
-Use B's colour/chain real sources, then classic9 hard/expert bounded discovery. Jobs1/no --jobs.
-E10-90 minutes; cost1-30 seconds; GH1-120 seconds curated or <=8 minutes/discovery.
+Use B's colour/chain real sources, then classic9 hard/expert bounded discovery. Jobs 1/no --jobs.
+E 10-90 minutes; cost 1-30 seconds; GH 1-120 seconds curated or <=8 minutes/discovery.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
 Record at most one own-limit adjustment and rerun affected evidence; ten-minute command ceiling.
 

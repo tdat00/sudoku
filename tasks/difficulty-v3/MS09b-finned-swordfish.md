@@ -30,12 +30,12 @@ R12, verbatim:
 Use exactly three disjoint complete bases and three disjoint covers. If no fin is true the
 three bases fill the three covers; otherwise the true fin excludes the target. Missing corners
 are allowed; no complete-support claim from truncated enumeration.
-Register finnedSwordfish: fish/order134/weight480/baseCost48, unscoped, no uniqueness.
+Register finnedSwordfish: fish/order 134/weight 480/baseCost 48, unscoped, no uniqueness.
 R10 Finding; key `technique.finnedSwordfish.step`;
 args `{digit,bases:string[],covers:string[],fins:string[]}`. Sorted owned cells/eliminations.
-Own work limit starts50000; do not silently change finnedXWing's already selected limit.
+Own work limit starts at 50000; do not silently change finnedXWing's already selected limit.
 
-Vector: digit5 bases R1{C2,C5}, R4{C5,C8,C9}, R7{C2,C8}; covers C2/C5/C8;
+Vector: digit 5 bases R1{C2,C5}, R4{C5,C8,C9}, R7{C2,C8}; covers C2/C5/C8;
 fin R4C9; target R5C8. Add same-box fins, a missing apparent corner and transpose.
 Negative: wrong base/cover count, split fin boxes, off-cover target, one unseen fin,
 overlapping/partial units. Preserve every ordinary n=2/3/4 regression.
@@ -85,8 +85,8 @@ node tests\tools\make-technique-examples.js ..\generator --ids=finnedSwordfish -
 node tests\tools\make-technique-examples.js ..\generator --ids=finnedSwordfish --sources=tests\artifacts\difficulty-v3\MS09b\sources.json --max-puzzles=8 --max-hints=400 --check
 ```
 
-Use B's fish/chain sources then bounded classic9 hard/expert/master. Jobs1/no --jobs; E10-90 minutes,
-cost1-30 seconds, curated GH1-120 seconds/discovery<=8 minutes. **Announce to the orchestrator
+Use B's fish/chain sources then bounded classic9 hard/expert/master. Jobs 1/no --jobs; E 10-90 minutes,
+cost 1-30 seconds, curated GH 1-120 seconds/discovery<=8 minutes. **Announce to the orchestrator
 before starting (pentomino runs in parallel on the same machine).** Own limit may adjust once
 with evidence. Never exceed ten minutes/command.
 

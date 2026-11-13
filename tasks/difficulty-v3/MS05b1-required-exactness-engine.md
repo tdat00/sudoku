@@ -1,0 +1,226 @@
+# MS05b1 — Required exactness in the engine
+
+| Header | Value |
+|---|---|
+| Depends on | MS05a accepted and committed (`f788e02`); MS04's `requiredOf` |
+| Size / active time | Implemented scope retained; remaining closure belongs to MS05r1-r6 |
+| Owner / milestone | Generator engine and activation UI; M5b1 |
+| Authority | R2-R5; SA1-Q-S7/S3, SA2-Q-S06; FS02-FS05; S-OD2 acceptance amendment |
+| Status | Open, uncommitted implementation preserved; not an independent redispatch |
+
+**S-OD2, 2026-11-13:** keep the existing working tree and failed/interim evidence. The first
+recovery task is [MS05r1](MS05r1-profile-active-recovery.md), not a fresh implementation of b1.
+All B/T requirements below remain; their sole acceptance is
+[MS05r6](MS05r6-combined-recovery-acceptance.md), after r1-r5 and post-selection MS05b3.
+No checkpoint commit, dark switch, provisional allowance or changed request/guard is authorized.
+
+## Goal & business context
+
+Make exact puzzles genuinely need their requested tier, without wasting the rest of an attempt
+after a required candidate has already been found. Activate the prepared shallow explanation.
+MS05r2 absorbs MS05b2's diagnostic/qualification/manual consumers without changing generation.
+
+## Scope
+
+In: canonical requiredness, keeper prefilters, sample/local/outer exits, shallow continuation
+after refinement, model-safe ratings, events/warnings, explanation highlighting, tests and docs.
+Out: soak/qualifier/manual predicates (MS05r2), extra shallow allowance (MS05r3/r4), target policy,
+new techniques, sign-dig optimisation (MS05e), offers or scoring changes.
+
+## Repository rules
+
+AGENTS/checklist; no Git, task-pack or Execution-log edits. Classic IIFEs; CRLF/no BOM/final newline.
+Use the inherited budget and canonical rating; no second production floor solve or exported floor
+certificate. Both complete quick sets must pass at MS05r6, using its bounded manifest. Run only
+the current recovery task's named gates, after announcement and the shared
+lock. Existing tests may change only where their old exactness/warning contract intentionally changes.
+
+## Inputs & context
+
+### R3 contract
+
+```text
+isExact(rating, L, model) =
+  rating exists AND rating.solved === true AND rating.level === L
+  AND SG.difficulty.requiredOf(rating, L, model)?.required === true
+
+quality(rating, requestedSpec, L, candidateModel):
+  missing model or absent/incomplete rating -> Infinity
+  complete rating in L, required -> 0
+  complete rating in L, shallow -> 0.5
+  otherwise -> existing level-gap distance
+```
+
+The existing off-band calculation remains `gap * 1000 + off`, where
+`gap = abs(levelIndex(rating.level) - levelIndex(L))`,
+`off = (spec.min-score)/max(spec.min,1)` below band, or `(score-spec.max)/spec.max` above it.
+Do not use the bounded oracle's `tierUsed` as a certificate. Only complete canonical ratings for
+the candidate's actual model/givens qualify; a safety-net replacement invalidates its prerating.
+Sign/cage changes need their own fresh rating, and a sign change invalidates the givens-only memo.
+
+Compute quality before **every** keeper prefilter, including `closer`, not only inside `offer`.
+`closer(rating, model)` requires the candidate model; update every caller, including Killer.
+`offer` still requires `countWithin(candidate.model, candidate.givens, budget) === 1` before storing.
+Null/2 counts cannot store; cancellation/errors propagate. Strict quality ties keep encounter order.
+Do not export the private keeper for tests: use the existing strategy seam and `options.keeper`.
+
+### First-exact and refinement continuation (FS02/FS03)
+
+Offer every completely rated valid candidate before deciding whether the local path accepts its
+score. A lower-score required neighbor can therefore win the keeper while the path rejects it.
+The local loop is exactly bounded by:
+
+```js
+while (!isExact(rating, spec.level, model) &&
+       !(keeper !== null && keeper.distance === 0) &&
+       !capsExhausted(caps)) {
+  // existing proposals, uniqueness checks and counted canonical ratings
+}
+```
+
+No new proposal or rating is made after either the current state or keeper is exact. Preserve the
+same first-exact stop in sampling/attempt selection and use the same predicate in `keptPuzzle`.
+Returning the path's state from local search is allowed: the outer choice still selects the verified
+keeper result. Do not lose that keeper winner or rate it again.
+
+After an above-band call to `refineDown`, use this exhaustive branch table:
+
+| Refined result | Action |
+|---|---|
+| Exact | Return the refined result |
+| Solved, `spec.min <= score < spec.max`, not exact | Assign `givens`, `rating`, `clues` from it and continue local setup |
+| Still above band, incomplete, or any other result | Return it as today; no futile local proposals |
+
+The continuing path builds groups, unit-clue counts and an empty memo **after** those assignments.
+`refineDown` already wrote its reveals into the shared log; do not duplicate them. Keep its 64-rating
+limit and inequality guard. No new below-band reveal, sign-model clue addition or target polishing.
+If the keeper is already exact after refinement, no local work starts.
+
+### Events, warnings and MS05a handoff
+
+MS05a is frozen. It already transports `exact` through result/worker/cache and prepares the schema.
+This task supplies the production semantics:
+
+| Result of the sample | Event | `required` |
+|---|---|---|
+| Complete in-band required, including vacuous | `tune.hit` | true |
+| Complete in-band shallow | `tune.shallow` | false |
+| Anything else, **including solved off-band** | `tune.miss` | null |
+
+Keep all existing event arguments; hit retains `hardestTechnique`, shallow/miss retain sample counts.
+No target is drawn here. Every non-exact returned fallback keeps `difficulty.approximate`.
+Only a complete in-band shallow fallback additionally gets `difficulty.shallow`; retain one Retry.
+UI/views consume the flag, never infer it again from level names.
+
+Own the remaining MS05a explanation/text items in this activation:
+
+- `generator/js/engine/explain-data.js`: map `tune.shallow` to the existing `retry` line; update
+  its compare-line comment to include complete proof, band and required tier.
+- Both Generator locales: replace the old `explain.tune.code.compare` equality-only sentence
+  with that same rule, and keep the highlight's message consistent.
+- Fix English `difficulty.shallow` to:
+  `The puzzle is in the requested score band but does not need a technique from the {level} tier.`
+  This avoids “a Easy technique”; preserve localized `{level}` and equivalent Vietnamese meaning.
+
+### Anchors
+
+Engine anchors below are unchanged from `2c665bb` at the MS05a handoff; UI preparation is at `f788e02`.
+Use the quoted name if a preceding task moved a line.
+
+| File:line / quote | Change |
+|---|---|
+| `generator/js/engine/digger.js:1041-1091`, `function createKeeper`, `function keptPuzzle` | Model-aware quality and exactness |
+| `:1100-1147`, `function refineDown` | Fresh ratings; retain guards and log |
+| `:1266`, `const exact =` | Sample exactness/event |
+| `:1320-1499`, `function* localSearchSteps` | FS02/FS03 branches and exits |
+| `:1661-1739`, `let attemptBest = null` | All sample/keeper/outer stops and warnings |
+| `generator/js/variants/killer.js:825,849,907`, keeper offer / `rateCounted` / `keeper.closer(r)` | Use each layout's actual model and rating |
+| `generator/js/variants/greater-than.js:403`, `keeper.offer` | Preserve actual thinned model/rating |
+| `generator/js/engine/explain-data.js:131-142`, `explain.tune` | Requiredness comparison/highlight |
+| `generator/js/ui/locale.en.js`, `explain.tune.code.compare`, `difficulty.shallow` | Same facts, grammatical level placeholder |
+
+## Files to create/modify (exclusive ownership)
+
+- `generator/js/engine/digger.js`; exactness-related Killer/Greater-Than call sites only.
+- `generator/js/engine/explain-data.js`; Generator `js/ui/locale.en.js`, `locale.vi.js`;
+  prepared event/view wiring only if an activation test proves a required fix.
+- Existing Generator suites `digger`, `difficulty-floor`, `pipeline`, `events`, `result-view`,
+  `worker`, `cache`, `steps`, `i18n`; the existing strategy/fixture helpers they use.
+- Existing interim E fixtures/evidence are preserved; final complete refreshes are owned by MS05r6.
+- `generator/design.md` 6.8/7.2/13.13, both user/developer guides, v3 notes.
+- Evidence under `docs/difficulty-v3/evidence/MS05b1/`.
+
+No `soak.js`, `qualify.js` or manual-suite edits here; MS05r2 owns them. Their legacy predicates
+must not be used to claim final qualification. There is no interim commit or additional setting/cap.
+
+## Implementation steps
+
+1. Implement the one private exactness/quality rule and update every model-aware keeper caller.
+2. Apply the first-exact exits and the three refinement outcomes; preserve secured-model/memo behavior.
+3. Emit the prepared events and warnings; finish the explicit MS05a explanation/text handoff.
+4. Add focused strategy-seam tests and update only directly obsolete exactness/warning assertions.
+5. Preserve the completed implementation/interim artifacts; hand them to MS05r1. Final GG/GR,
+   pins, living facts and complete bounded quick coverage belong to the combined MS05r6 acceptance.
+
+## Acceptance criteria — Business
+
+| ID | Criterion |
+|---|---|
+| MS05b1-B01 | A shallow result cannot block or impersonate required exactness |
+| MS05b1-B02 | Finding a required keeper result ends unnecessary search immediately |
+| MS05b1-B03 | Shallow fallback is explained in both languages with Retry; no invalid puzzle is published |
+
+## Acceptance criteria — Technical
+
+| ID | Criterion |
+|---|---|
+| MS05b1-T01 | Quality 0.5/0, reverse order, exact ties and null/ambiguous counts are covered |
+| MS05b1-T02 | Every rating/prefilter uses the actual model; safety replacement and sign memo invalidation are tested |
+| MS05b1-T03 | All refinement branch outcomes and the keeper-zero local stop have exact work/proposal assertions |
+| MS05b1-T04 | hit=true, shallow=false, every miss=null; solved off-band tested; explanation highlight and grammar corrected |
+| MS05b1-T05 | Sync/cooperative parity, original enclosing caps, worker/cache flags, full bounded quick coverage and explained final-source GG/GR pass at MS05r6 |
+
+## Test plan and gates
+
+Use controlled canonical-rating reports through existing seams, not a histogram as proof:
+
+- Keeper 0.5 then 0 replaces; 0 then 0.5 does not; equal quality keeps first. CountWithin null/2 never stores.
+- Local current in-band shallow, first neighbor lower-score required: keeper stores it; path may reject its
+  score decrease; **no next proposal/rating**, one counted neighbor rating, returned global result is required.
+- Above-band -> in-band shallow: continue from refined givens, correct clue/unit counts and existing log.
+  Above-band -> still above: return with no local proposals. Above-band -> exact: no further search.
+- Sign/cage model changes, stale prerating after safety net, missing/unsolved ratings, cap return null,
+  cancellation, and equal-distance encounters.
+- Real small unique variants; complete off-band sample emits miss/null, not true; VeryEasy remains vacuous.
+- `SG.explain.lineFor('tune','tune.shallow')` selects retry; English Easy label reads naturally; EN/VI parity.
+
+Do not rerun the previous whole/combined long selectors or renew the incomplete interim E.
+MS05r3 covers focused allowance/counter regressions while preserving these semantics. MS05r6
+owns fresh complete E, wire before analysis, the genuine G06/G07 pins and both full quick
+sets via the checked bounded manifest. Its original-contract G13/mega preflight comes first.
+All fixed requests/assertions remain. The original MS05b1 artifact directory is historical,
+not the final-source acceptance directory. Every possibly >10-second command uses the shared
+lock, jobs 1/no `--jobs`, <=540 s. No separate b1 GQ/GP/GD or commit.
+
+## Definition of done & handoff
+
+Keep the developer's predicate/caller/keeper/model-safety/warning handoff and all interim
+failures. MS05r1 starts with the preserved implementation; r2/r3/r4 complete the consumers,
+measurement and selection. MS05r6 audits these B/T duties and alone closes the recovery.
+CV6 remains separately owned by MS05e, which cannot start before the combined commit.
+
+## Execution log
+
+| Field | Value |
+|---|---|
+| Status | |
+| Start | |
+| End | |
+| Duration | |
+| Model | |
+| Token usage | |
+| AI credits | |
+| Verification | |
+| Acceptance | |
+| Issues & resolutions | |
+| Handoff | |

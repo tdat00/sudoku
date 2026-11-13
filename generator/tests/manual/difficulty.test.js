@@ -1229,7 +1229,7 @@
 
       describe(level, function () {
         it('hits the requested level in at least 90 % of the puzzles', function () {
-          var hits = batch(level).puzzles.filter(function (p) { return p.achieved === level; }).length;
+          var hits = batch(level).puzzles.filter(function (p) { return p.exact === true; }).length;
           expect(hits).toBeGreaterThanOrEqual(0.9 * countOf(level));
         });
 
@@ -1259,12 +1259,20 @@
         it('I5: every puzzle has a complete proof; an exact one has its score in the band', function () {
           batch(level).puzzles.forEach(function (p) {
             expect(p.rating.solved).toBe(true);
-            expect(p.exact).toBe(p.achieved === level);
-            if (!p.exact) return;
+            expect(typeof p.exact).toBe('boolean');
+            if (!p.exact) {
+              // A miss is never silent; a complete proof in the level that does not need its tier is shallow.
+              expect(p.warnings).toContain('difficulty.approximate');
+              expect(p.warnings.indexOf('difficulty.shallow') !== -1).toBe(p.achieved === level);
+              return;
+            }
+            expect(p.achieved).toBe(level);
+            expect(p.warnings).not.toContain('difficulty.approximate');
             var rating = D.rate(model9, p.givens);
             expect(rating.score).toBe(p.rating.score);
             expect(rating.score).toBeGreaterThanOrEqual(spec.min);
             expect(rating.score).toBeLessThan(spec.max);
+            expect(D.requiredOf(rating, level, model9).required).toBe(true);
           });
         });
 
@@ -1410,7 +1418,14 @@
       var solution = SG.fullGrid.generate(model9, rng.fork('grid'), null);
       var puzzle = SG.digger.digLevel(model9, solution, 'easy', rng.fork('dig'), {});
       expect(puzzle.requested).toBe('easy');
-      expect(puzzle.exact).toBe(puzzle.achieved === 'easy');
+      // Exact means in the requested level and needing its tier; in the level without the tier is shallow.
+      expect(typeof puzzle.exact).toBe('boolean');
+      if (puzzle.exact) {
+        expect(puzzle.achieved).toBe('easy');
+        expect(D.requiredOf(puzzle.rating, 'easy', puzzle.model).required).toBe(true);
+      } else if (puzzle.achieved === 'easy') {
+        expect(D.requiredOf(puzzle.rating, 'easy', puzzle.model).required).toBe(false);
+      }
       expect(puzzle.unsound).toBe(false);
       expect(SG.dfs.countSolutions(model9, puzzle.givens, 2)).toBe(1);
       expect(puzzle.removed).toBe(81 - puzzle.clues);

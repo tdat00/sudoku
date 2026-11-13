@@ -904,7 +904,7 @@
       yield;
       if (r === null || r.solved !== true) continue;
       const move = r.score >= rating.score && r.score < spec.max;
-      const closer = keeper !== null && keeper.closer(r);
+      const closer = keeper !== null && keeper.closer(r, model);
       if (!move && !closer) continue;
       if (needsCount(r)) {
         const unique = counted(model);
