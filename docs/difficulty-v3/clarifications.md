@@ -26,7 +26,69 @@ Requested:
    the rest of the pack continue as planned or change, together with the answer to CV6-03 (c) below.
 2. Any difference in working-status.md section 5 that you do not accept, and what replaces it.
 
-**Plan-author answer:** pending.
+**Plan-author answer (claude-fable-5-2, 2026-11-13).** I read working-status.md in full and checked the code
+anchors it relies on for CV6-03. The owner's four decisions of today are recorded here as **S-OD4**: the (c)
+design of CV6-03 (both parts); the full scope stays (all six S3 groups, no deferral); a lighter process for the
+remaining tasks; and, for the companion repository, the Hell levels (its PR-P1).
+
+**1. Direction: continue, with one added task and a lighter process.** The work is on course for the original
+goal, but slowly: 8 of 51 tasks, and three stops in MS05, all three about time and none about a wrong puzzle.
+What has been built is sound and matches the intent: tiers and the reference floor (MS01), the baseline (MS02),
+monotone orders with the derived certificate (MS04), and requiredness active in the engine (MS05b1). Hard is now
+required to need a hard-tier technique; that part of the goal is implemented and waits only for its acceptance.
+
+- *Sequence.* MS05r5p, MS05r5, MS05r5m, MS05b3, MS05r6a, MS05r6b, MS05r6c, the combined commit; then MS05e,
+  MS06a to MS06d, MS07a to MS07e, MS08a to MS16 (every group, as the owner confirmed), MS17a, MS17b, MS18a to
+  MS18e. Details of the first seven are in the CV6-03 answer below.
+- *Why the stops happened, and what changes.* Requiredness was activated before the techniques of the upper
+  tiers exist (S2.2, S3) and before the weights that make some cells unreachable can be looked at (Killer). In that
+  intermediate state several cells have no required puzzle at all, and every test, recorder and guard written for
+  v2's speed measured that state. This was foreseeable from the order PROC-S1 fixed, and I did not foresee it. The
+  remedy is not to tune the intermediate state further, but to stop treating its speed as a blocker:
+  - **Stops (owner, S-OD4).** A task stops for the owner only for a correctness failure (an invalid or
+    non-unique puzzle, an unsound deduction, a wrong exact flag or warning, lost or corrupted evidence) or when it
+    would have to change a recorded decision. A performance or availability finding (a guard, latency assertion
+    or projection exceeded; a cell with few or no exact hits) is recorded as a named item with its numbers, routed
+    to MS07e (first checkpoint) or MS18c/MS18d (final), and the task continues under the bounded-command rules.
+    The item list is part of every task's final reply and of MS18e's audit.
+  - **Reviews (owner, S-OD4).** The analysts cross-review only tasks that change generation or rating semantics:
+    the remaining MS05 steps, MS05e, MS06b to MS06c2, MS07a to MS07c, MS13a to MS13c (the grouped graph), MS15a
+    (the ALS enumerator), MS17b and MS18c. The technique tasks (MS08a to MS12, MS14a to MS14c, MS15b, MS16) follow
+    one template: the first of them (MS08a) is cross-reviewed as the template; the others are checked by the
+    orchestrator against it, and by the generic soundness and order-invariant suites, which are the real safety
+    net for a new finder.
+  - **Evidence.** Step evidence stays, but no new evidence class or tooling task is created to work around a slow
+    intermediate cell; such a cell goes on the item list.
+- *Expectation to hold the plan to.* S2.2 gives Nightmare and Hell 1 their own techniques, so classic9
+  Nightmare (2 of 12 today) is expected to recover at MS07; S3 widens the hard tier. Killer Hard and Expert (0 of 12
+  at every setting) are **not** expected to recover from S3: their tier is `cageSplit` and fish, and their band is
+  reached through `ruleOf45` work. That is the weight question plan §6 deferred (`ruleOf45` 260 and `cageSplit`
+  520, flagged in the v2 report). MS07e reports these cells; if they are hidden there, the owner is asked then
+  whether the Killer weights are recalibrated inside v3 or the cells stay hidden until a later calibration. No
+  weight changes before that answer.
+
+**2. Section 5: every difference is accepted, with these remarks.**
+
+| Row | Position |
+|---|---|
+| D1, allowance 256 | Accepted as the default. It is the approved rule applied as written; its basis is thin (one cell, a 5 % lower median) and it buys little, which the report says honestly. MS18b's recheck on the final technique set is the real test; no re-selection before it |
+| D2, cost of requiredness | Accepted as a finding. It is a consequence of R3 that the plan underestimated ("cheaper than a full rating" was about the certificate, not about the search that follows a shallow result). No common bound on samples now: the size default of attempts (CV6-03 (c2)) bounds the large boards, the allowance bounds the local search, and the final qualification judges the rest. A sample-level bound may be proposed at MS18b with data, as its own decision |
+| D3, D4, the recovery and the pause commit | Accepted. I would have preferred SA1's (g), an off-by-default landing that keeps every commit green; that is past. The pause commit is a checkpoint, not an acceptance; MS05r6b (with MS05r6c) remains the acceptance boundary, and the combined commit message says that the earlier pause commit was not green |
+| D5, mega Nightmare out of the quick contract | Accepted. It moves a latency promise that requiredness made false; it does not weaken a correctness assertion, which is what plan rule 3 protects. The deep tier must keep every original request and relation |
+| D6, G13 persisted | Accepted. With (c2) G13 also regains margin under the recorder's 120 s guard |
+| D7 | Answered in CV6-03 |
+| D8, the sharded and slower quick set | Accepted for the recovery. For the remaining 37 tasks it is a real cost (every task runs both quick sets); MS05r6b's standing-cost report must give the number per app. If the Generator quick set stays above about five minutes, MS07e proposes which generation-heavy quick cases move to the manual tier, as a named item, not a stop |
+| D9, D10 | Accepted |
+| D11, MS05e after the recovery | Accepted. CV6 stays red until then by S-OD1; it is a named item, not a blocker for the tasks before MS05e |
+| D12 | Accepted |
+| D13, the warning's wording | Accepted; "a technique from the {level} tier" is better than my text |
+| 5.3 to 5.7 | Accepted |
+
+**3. Records to bring in line when work resumes (pack author, before the first dispatch).** Check-list §2 and §4
+get rows for S-OD3 and S-OD4 (G13 persistence allowed, the mega contract, (c1) and (c2), the stop rule, the review
+rule); MS05r5, MS05b3 and MS05r6a get the amended prerequisite; MS05r5p and MS05r6c are written; the index
+checkboxes of MS05r1 to MS05r3 follow the rule of check-list §1; the temporary branch `fable-q/cv6-03` can be
+deleted.
 
 ---
 
@@ -275,7 +337,84 @@ extension to MS05r6b's CV3 mega16 Nightmare cell is still needed under your desi
 item (SA1's cross-check) needs a task now, and (3) where the change goes in the recovery sequence (MS05r5, MS05r5m,
 MS05b3, MS05r6a, MS05r6b). SA2 then writes the tasks and SA1 cross-checks them.
 
-**Plan-author answer:** pending.
+**Plan-author answer (claude-fable-5-2, 2026-11-13), with the owner's decision S-OD4 taken on the command line the
+same day: design (c) has two parts, both approved by the owner.**
+
+**(c1) What is offered is decided by the final qualification, for every board and level.** This is R24 and
+SA1-Q-S5 applied without exception to the large grids and to Nightmare and Hell: a cell is offered only with at
+least 36 exact hits of 40 (or 90 of 100) and a p95 inside its budget (30 s for boards over 81 cells); a cell that
+fails is hidden at MS18c, the store moves a stored request to the nearest offered level with its note and the
+pipeline refuses it. SA1's reading is right and is adopted: a bounded fallback is a miss and does not keep a level
+offered. No large-grid level is hidden now, before S2.2 and S3 change the proofs, and no browser budget is raised.
+The interim state (levels offered that will probably be hidden) exists only on the undeployed branch.
+
+**(c2) The default number of attempts depends on the board size.** New in this recovery:
+
+```text
+defaultMaxAttempts(cellCount) = 8   for cellCount <= 81    (classic4/6/9, diagonalX, hyper, jigsaw9, killer,
+                                                            greaterThan, wordoku: unchanged)
+                              = 4   for 82 .. 144          (mega12, butterfly)
+                              = 2   for cellCount > 144    (flower 189, mega16 256, sohei 288, samurai 369)
+```
+
+- *Why.* Since requiredness, a request that meets no required puzzle runs every attempt (working-status D2).
+  On a large board one attempt already costs seconds to a minute, so attempts beyond the first few cannot make a
+  request fit the 30 s qualification budget; they only turn a miss into the app's 120 s error. With the size
+  default such a request ends with the truthful fallback and its warnings instead. Estimates from MS05r4's
+  per-attempt times at 256 (not new measurements): G13 about 27 s instead of 105 s, mega12 Nightmare about 24 s
+  instead of 47 s, mega16 Nightmare about 110 s instead of 310 s. The exact hit of mega16 seed 3 at attempt 6 is
+  given up knowingly: a 310 s hit can never qualify.
+- *What it is not.* Not a time rule (the puzzle of a seed stays the same on every machine), not a change of the
+  allowance (256 stays, with R5's selection and MS18b's recheck as written), not a bound on samples inside an
+  attempt, and not a change for boards of at most 81 cells. An explicit value still wins: the advanced control
+  keeps its range 1 to 20, and a caller's `maxAttempts` is used as given.
+- *Where.* One function, exported once and used by both defaults: `generator/js/engine/pipeline.js`
+  (`DEFAULT_MAX_ATTEMPTS`, lines 26 and 73) and `generator/js/engine/digger.js` (lines 624 and 1807). The store's
+  default (`generator/js/ui/store.js`, `MAX_ATTEMPTS.default`) becomes the size default of the selected variant:
+  a stored value equal to the old default 8 on a larger board is read as "default" once and follows the new
+  default; any other stored value is kept. The control shows the effective default. Strings, if a hint is added,
+  in English and Vietnamese.
+- *Tests.* The function at 81, 82, 144, 145; pipeline and direct digger agree; an explicit 8 on mega16 still runs
+  eight attempts; the store migration; a mega12 request that ends shallow after exactly four attempts carries
+  `difficulty.approximate` and `difficulty.shallow`. The qualifier and the soak use the default (they must not
+  pass 8 explicitly); record that in their headers.
+- *Documents.* `generator/design.md` (the pipeline options and §6.8), both developer guides, both user guides
+  (the advanced control's default).
+
+**Sub-question (1), CV3's mega16 Nightmare cell.** The extension is still wanted, in the narrow form SA1
+proposed. With two attempts a mega16 Nightmare request projects at about 110 s, under the 240 s request guard, and
+the two-request cell at about 220 s, under the 450 s projection limit, so the cell should no longer be deferred. It
+is an estimate: if a request still exceeds 240 s, it is recorded as a named availability item for MS07e and MS18c
+and does not stop the recovery, while validity, uniqueness, requiredness and the warnings still block. MS05b3 may
+take these puzzles from MS05r5m's deep-tier records with CV3's own per-puzzle checks instead of generating them
+again. The same rule applies in advance to mega's `hell1` quick tests when MS07b makes Hell 1 non-vacuous.
+
+**Sub-question (2), CI.** Yes, a task now, small and inside the recovery, because the recovery is what breaks
+the workflows: **MS05r6c, CI workflows for the v3 test tiers**, after MS05r6b's evidence and inside the same
+combined commit. It makes `.github/scripts/generator-suites.sh` and the two workflows run the bounded quick
+manifest of MS05r5 in jobs that fit their 30 minutes, keeps the deep tier (a tool, S-OD3 (a) (i)) out of CI, and
+states in the workflow which evidence replaces it. It does not raise `SG_TIME_FACTOR` or a job timeout. From then
+on each task that adds a suite owns its CI group, and MS18e checks the workflows once on the final tree. The
+owner of the v3 pull request's CI is MS18e.
+
+**Sub-question (3), the place in the sequence.** One new task and no reordering of the rest:
+
+| Order | Task | Change |
+|---|---|---|
+| 1 | **MS05r5p, size-dependent default attempts** (new; S, about 40 minutes plus its checks) | First, because it is an engine change and everything after it measures the final source. It ends with the three closure requests (G13, mega12 and mega16 Nightmare seed 3) run once each as diagnostics under the lock, to replace the estimates above by numbers |
+| 2 | MS05r5 | As written, with the prerequisite amended from "passed original-limit preflights" to "S-OD3 and S-OD4 contracts" |
+| 3 | MS05r5m | As S-OD3 (a) with SA1's conditions (i) to (iii). The deep tier runs the fixed population with the default attempts of each board; the quick one-attempt mega12 request and the scripted mega16 stop control stay |
+| 4 | MS05b3 | As written, with sub-question (1) |
+| 5 | MS05r6a | (d) first, then the final-source recheck and the complete E (five wires, fourteen analyses, 520 keys) |
+| 6 | MS05r6b | As written; it reconciles MS05r5m's records |
+| 7 | MS05r6c | CI (sub-question (2)); then the combined commit |
+
+MS05r5p invalidates MS05r4's diagnostic times for the large boards only (the selection cells are all 81-cell
+boards, whose default does not change), so R5's selection of 256 stands without a new run.
+
+**What is left for the owner later, named so that it is not rediscovered:** if MS07e's first checkpoint shows
+large-board Nightmare or Hell cells hidden and the owner wants them back, the remedy is a generation-speed task
+for large boards after S3 (SA1's proposal), not a larger budget and not a weaker exactness test.
 
 Only existing evidence was read and summarized, and the budget path was inspected. No new generation, timing
 experiment, browser run, source change, fixture write, staging or commit was performed to raise CV6-03.
