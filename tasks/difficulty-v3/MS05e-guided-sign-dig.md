@@ -1,5 +1,18 @@
 # MS05e — Guided sign dig for Greater-Than
 
+> **Closed: measured, set aside — CV6-05 / S-OD6, 2026-11-14.** Fable chose Q1(b), withdraw
+> the pool, and Q2(a), keep the contracts. The orchestrator restored the 12 existing files
+> byte-for-byte from `f7be90f` (runtime `00647f9`), deleted the added guided suite and proved
+> fingerprinted-source/artifact identity, with no run. The rejected 13-file candidate is retained in
+> `docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch`, which rebuilds it from `f7be90f`.
+> S-AV01 stays open; S-AV16/S-AV17 are withdrawn as current-source items, not erased from history.
+> MS05e-B02's honest CV6 verdict is retained; IR29, IR30, F01 and F02 are moot and need no owner.
+> MS06 transports the target through the first-allowed sign pass without consuming it there;
+> no edit to `greater-than.js`. After the document corrections and SA1's pack cross-check,
+> MS06a captures all 17 cells on the restored source. The original dispatch brief below is
+> historical, not permission to reinstate its pool, suite or target-consumer handoff.
+> The orchestrator owns the formal index mark and Execution log.
+
 | Header | Value |
 |---|---|
 | Depends on | r6b/r6c combined recovery accepted/committed, including r5p/r5m, r6a 520/5/14 E/pins and b3 evidence |
@@ -367,14 +380,14 @@ any later owner disposition. Return the inherited/new S-OD4 item list and the ne
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Closed: measured, set aside (CV6-05 / S-OD6; Fable's Q1(b) withdraw the pool, Q2(a) keep the contracts). Not an accepted repair; the runtime is the pre-MS05e baseline |
+| Start | 2026-11-14 12:28 (+07:00) |
+| End | 2026-11-14 15:19 developer implementation and pool comparison; 15:52 D1 to the owner (email and CLI); 16:38 owner delegates D1 to Fable (S-OD6); 17:00 CV6-05 pushed to `clarifications` (snapshot `c0e4954`, also `refs/dv3-wip/MS05e-pending-20261114-1700`); Fable's answer read 17:12, branch deleted; 17:19 developer document rounds; 17:50 SA2 pack edits with SA1's cross-check; orchestrator commit |
+| Duration | 2 h 51 min developer implementation and evidence runs + about 25 min of document rounds; SA1 review (`11-review-of-ms05e.md` sections 1-5) and cross-check (section 6); SA2 ruling, CV6-05 and pack edits |
+| Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (SA1 review and cross-check); gpt-6-astra (SA2 ruling, CV6-05, pack edits); claude-opus-5.5 (orchestrator) |
+| Token usage | Developer 373 model calls (292 implementation, 81 document rounds); 140,739,353 input tokens (139,009,263 cache reads); 400,215 output tokens |
+| AI credits | about 2,223 (developer: 1,722 implementation, 501 document rounds) |
+| Verification | Candidate (history): the developer's correctness checks were green and the quick sets green on the pool-4 tree (Generator 3,279, Player 1,683); the pool comparison 4/8/16 over 240 requests per source, matched repeats; SA1 confirmed the measurements, GG/GR/pins and E for that tree. Disposition (orchestrator, no run, as Fable requires): (1) the 13 candidate files equal snapshot `c0e4954` blob for blob; (2) `evidence/MS05e/candidate-pool-4.patch` written as `git diff -U0 --full-index f7be90f c0e4954` over those 13 paths, and applied with `git apply --cached --unidiff-zero` to `f7be90f` in a temporary index it yields a tree identical to the candidate on all 13 paths; (3) the 12 existing files restored byte for byte from `f7be90f` and `generator/tests/suites/greater-than-guided.test.js` deleted (SA1 section 4, option (ii), steps 1-2); (4) identity: `git diff --quiet HEAD -- generator core player DEVELOPERGUIDE.md DEVELOPERGUIDE.vn.md AGENTS.md .github` exit 0, no untracked file in a fingerprinted folder (only the scratch scripts of `generator/tests/artifacts/difficulty-v3/MS05e/`, outside every fingerprint); `greater-than.js` blob `cbab64b8` equals `f7be90f`'s. MS05r6c's final quick runs (Generator 3,262 in 7 shards, 648.0 s; Player 1,683), MS05r6b's E and GD and MS05e's `before/` and `gd/before/` records therefore apply by identity |
+| Acceptance | MS05e-B02 holds: CV6's verdict is retained and reported honestly (Normal 5,209 ms against the unchanged 1,400 ms assertion). The guided pool did not close CV6 at any permitted value and broke Nightmare CV6 (40,396 ms against 20,000 ms), so per CV6-05 it is set aside, not accepted. The record of the measured repair is kept: report `docs/difficulty-v3/cv6-guided-sign-dig-2026-11-14.md` (outcome "measured, set aside", IR23-IR28 applied, Fable's two acknowledged errors), `docs/difficulty-v3/evidence/MS05e/` with the candidate patch, the scratch scripts and SA1's review 11 |
+| Issues & resolutions | (1) IR23 (Major): the diagnosis dropped S-OD1's clue-floor condition; the named trap was 83/376 = 22.1 % of misses, so step 1's stop-and-report condition was met and not taken. Fable acknowledged the premise (one seed, 308) and the cost (about `SIGN_POOL` ratings per removal) as his errors; the check-list now requires an exact-predicate gate table and a wait before the first production edit. (2) D1 went to the owner, who delegated it to Fable (S-OD6); CV6-05 answered Q1(b), Q2(a). (3) IR24-IR28 corrected in the report, evidence and notes; IR27 left as "unexplained" (optional). (4) IR29, IR30, F01, F02 moot with the pool. (5) SA1 cross-check CC01 (design.md section 9.1 named in the conditional Normal contract step) applied by SA2; CC02 (short Expert seed for MS06c2's T01) left to MS06b/MS06c2 as optional |
+| Handoff | MS06a: the complete 17-cell, 204-request before-record on the restored source (Greater-Than Normal/Hard/Expert included). MS06: on Greater-Than the target is transported, not consumed, by the first-allowed sign pass; no edit to `greater-than.js`; MS06c2's T01 lives in `digger-target`; MS06d may find a small or null effect on the three Greater-Than cells. Items: S-AV01 open (5,209 ms against 1,400 ms; 10.6 s p95 on 7000-7039) with the three fixed endings of Q2(a); S-AV16/S-AV17 withdrawn as current-source items, kept as history; S-AV08 648.0 s; Nightmare CV6 passes at 19,192 of 20,000 ms (about 4 % margin) — noted for MS07e |

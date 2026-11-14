@@ -1,0 +1,4 @@
+merged 104 ledgers: all 520 keys exactly once, recorded from the current sources
+CHANGED greaterThan/normal: seeds 1, 2, 3, 5, 13, 21, 34, 144, 610, 987, 1597, 2584, 4181, 6765, 10946
+CHANGED greaterThan/hard: seeds 2, 5, 8, 13, 21, 34, 55, 89, 377, 987, 1597, 2584, 4181, 6765, 10946
+regression hashes: 30 of 520 puzzles changed (merged ledgers, nothing generated)

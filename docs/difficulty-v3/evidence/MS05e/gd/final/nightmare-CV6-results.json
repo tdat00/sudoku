@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "e6ba01d45657640021106bb97ef0d93267a9bb908f22f4703e691eec80f2e2aa",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["greater-than"],"filter":"> nightmare: 10 puzzles > CV6:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 111008.4,
+  "results": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 110814.7,
+    "tests": [
+      {"suite":"greater-than","name":"CV6: p95 of the generation time is within the design.md 9.1 budget of 10000 ms","fullName":"greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 10 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 10000 ms","status":"fail","ms":110813.384,"reason":"","error":{"name":"AssertionError","message":"expected 40395.7468 to be < 20000","stack":"AssertionError: expected 40395.7468 to be < 20000\n    at api.<computed> [as toBeLessThan] (<repo>\\core\\tests\\harness.js:286:17)\n    at Object.<anonymous> (<repo>\\generator\\tests\\manual\\greater-than.test.js:1041:45)\n    at invoke (<repo>\\core\\tests\\harness.js:416:18)\n    at runTest (<repo>\\core\\tests\\harness.js:457:18)\n    at Object.run (<repo>\\core\\tests\\harness.js:621:27)\n    at main (<repo>\\generator\\tests\\node-runner.js:356:33)\n    at Object.<anonymous> (<repo>\\generator\\tests\\node-runner.js:409:1)\n    at Module._compile (node:internal/modules/cjs/loader:1968:14)\n    at Object..js (node:internal/modules/cjs/loader:2108:10)\n    at Module.load (node:internal/modules/cjs/loader:1690:32)"},"ordinal":91}
+    ],
+    "suites": [
+      {"name":"greater-than","total":1,"passed":0,"failed":1,"skipped":0,"ms":110814.622}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=greater-than","--filter=> nightmare: 10 puzzles > CV6:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05e\\gd\\final\\nightmare-CV6-results.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

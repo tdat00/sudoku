@@ -5,7 +5,7 @@
 | Depends on | MS18c accepted |
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
-| Authority | R24/R21 |
+| Authority | R24/R21; CV6-05 final Normal contract handoff |
 | Status | Not started |
 
 ## Goal & business context
@@ -40,6 +40,19 @@ or above the qualification budget. The v2 Easy-from-Normal migration does not re
 bands. Record old/new target, qualifying p95, previous target and budget before GP; never change a
 target because GP failed. Any genuinely undefined target-policy case is a blocker, not an omitted cell.
 
+**CV6-05 / S-AV01 precondition:** obtain MS18c's fixed ending before final timing. A hidden Normal
+cell is not offered and follows the ordinary performance manifest. If Normal qualifies but its
+final-source CV6 still fails, the plan author decides the conditional fallback contract once on
+MS18c's data, before GP: one millisecond base for `BUDGET_MS.normal` and the same base for its
+GP target if present, no more than 10,000 ms, machine scaling left to `SG.test.timeLimit`.
+The assigned step changes the test, matching GP target, `generator/design.md` section 9.1
+(the `greaterThan` Normal cell) and both developer guides together.
+Until that decision the CV6 base remains 700 ms and ordinary GP rules stand; do not choose a value
+here or use GP results to fit it. A recorded common Normal base governs that cell rather than
+being immediately replaced by the generic `ceil(3*p95)` rule above. Other cells' rules are unchanged.
+If final-source CV6 passed, S-AV01 closes with that measurement; keep any historical red outcome honest.
+S-AV16/S-AV17 are withdrawn current-source items, not outstanding pool regressions on this source.
+
 GG retains all 26 combinations x 20 fixed seeds, including now-hidden requests through the MS03d
 diagnostic guard. Record fresh complete shards for current source/helper identity; compare only.
 Anchors verified at `c9935cd`: `generator/tests/fixtures/perf-helper.js:47-53`
@@ -50,7 +63,8 @@ Find these quotes after later tooling changes.
 ### PR-S2 remarks — performance evidence, unchanged scope
 
 Fable's answer (`92a7693`, `docs/difficulty-v3/clarifications-resolved.md`) leaves MS05e-MS18e
-unchanged. The following notes belong to the existing performance/item reporting; they add no
+unchanged at that review; CV6-05 subsequently sets MS05e aside and fixes the Normal handoff above.
+The following notes belong to the existing performance/item reporting; they add no
 new scope, cap, budget, performance target or generator change.
 
 - **S-AV11 stage profile:** when this task measures performance, obtain a stage profile of the
@@ -118,7 +132,8 @@ input must be resolved, never guessed as a zero-cost cell.
 
 ## Implementation steps
 
-0. Run the complete GQ-derived preflight before timing. Record flagged cells as named cost items;
+0. Check MS18c's CV6-05 disposition/contract handoff, then run the complete GQ-derived preflight
+   before timing. Record flagged cells as named cost items;
    continue safe cells without new tooling, relaxed guards or a false complete-matrix claim.
 1. Enumerate final intended cells; apply only qualification-authorized target updates with arithmetic.
 2. Measure every cell, save stdout/exit/time/source/seed metadata and all misses.
@@ -177,7 +192,8 @@ If files changed: Generator `--suite=perf-tooling,smoke,help` and both quick set
 Return preflight/projections, intended/completed cell coverage, target arithmetic, the actual
 aggregate verdict (incomplete where appropriate), complete GG evidence and the cumulative item list.
 S-OD4 allows continuing after a performance miss, not claiming a failed release gate passed.
-Any proposed change to a recorded performance contract still needs the owner; an authorized
+Any proposed change to a recorded performance contract still needs its owner/delegated decision
+(including the specific CV6-05 Normal route above); an authorized
 implementation change invalidates affected final evidence.
 
 ## Resume rules — S-OD4

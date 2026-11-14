@@ -2,17 +2,18 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS05e accepted after r6b/r6c combined commit, with its actual CV6 verdict and S-OD4 item handoff |
+| Depends on | MS05e closed, set aside, identity proved (CV6-05); document corrections complete and SA1's pack cross-check recorded |
 | Size / active time | Small; 20-30 minutes plus GS |
 | Owner / milestone | Evidence; M6a before-data preserved |
-| Authority | R7/R23; SA2-Q-S03, SA1-Q-S4, AC01 |
+| Authority | R7/R23; SA2-Q-S03, SA1-Q-S4, AC01; CV6-05 / S-OD6 |
 | Status | Not started |
 
 ## Goal & business context
 
 Separate the target policy's effect from requiredness and later new techniques. Record the selected
-MS05 allowance, size-default attempts and MS05e sign implementation in force, before any target
-change. A remaining CV6 timing item is identified, not hidden or made an owner-stop prerequisite.
+MS05 allowance, size-default attempts and the restored first-allowed sign pass: MS05e was measured
+and set aside under CV6-05, with identity proved against `f7be90f` (runtime `00647f9`), before any
+target change. A remaining CV6 timing item is identified, not hidden or made an owner-stop prerequisite.
 
 ## Scope
 
@@ -36,6 +37,10 @@ Twelve requests each, seed base 20260101, unchanged direct/pipeline routes: 204 
 Use the no-override MS05r4 default accepted at MS05r6b (the absorbed MS05d selection).
 Preserve generation times, exact/shallow/miss counts, work and
 both position metrics. Source/hash/job identity and all errors stay in the record.
+Greater-Than Normal, Hard and Expert remain in this manifest. CV6-05 did not remove a cell or
+change its seeds/settings: S-AV01 remains open at 5,209 ms against 1,400 ms on CV6's seeds and
+10.6 s p95 on 7000-7039, under unchanged contracts. These are historical controls, not this
+204-request before-record. Do not load the rejected pool patch or regenerate its evidence.
 
 AC01: adjusted positions use `[max(min,1.25*wMin+V),max)`, only where defined; raw stays alongside.
 Undefined adjusted values are null with a reason (unrated/off-band, non-finite/non-positive width,
@@ -53,7 +58,10 @@ Use r3's accepted JSON/absolute-index shard API; all 17 boards have 81 cells, de
 
 ## Implementation steps
 
-1. Record the MS05r4/r6b accepted default and MS05e source/disposition, machine and exact manifest.
+1. Record the MS05r4/r6b accepted default, restored first-allowed sign pass and MS05e's
+   "measured, set aside" disposition. Cite the orchestrator's existing identity proof and completed
+   record corrections; do not repeat restoration or proof through developer Git actions.
+   Record the actual source, machine and exact manifest.
 2. Run each cell with its own JSON path. Confirm 12 outcomes/cell and 204 overall.
 3. Produce the before-table, including failures, per-cohort denominators, both distributions and times.
 4. Hand the immutable before-record to MS06b/MS06d.

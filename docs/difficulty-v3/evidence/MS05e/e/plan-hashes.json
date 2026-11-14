@@ -1,0 +1,1250 @@
+[
+  {
+    "label": "e-hash-classic4-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic4-veryEasy-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.508 s by MS05r6a (b3-hash-classic4-veryEasy-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic4-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic4-veryEasy-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.509 s by MS05r6a (b3-hash-classic4-veryEasy-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic4-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic4-veryEasy-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.529 s by MS05r6a (b3-hash-classic4-veryEasy-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic4-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic4-veryEasy-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.509 s by MS05r6a (b3-hash-classic4-veryEasy-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic6-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic6-veryEasy-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.504 s by MS05r6a (b3-hash-classic6-veryEasy-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic6-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic6-veryEasy-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.502 s by MS05r6a (b3-hash-classic6-veryEasy-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic6-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic6-veryEasy-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.497 s by MS05r6a (b3-hash-classic6-veryEasy-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic6-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic6-veryEasy-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.511 s by MS05r6a (b3-hash-classic6-veryEasy-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic6-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic6-hard-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.876 s by MS05r6a (b3-hash-classic6-hard-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic6-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic6-hard-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.967 s by MS05r6a (b3-hash-classic6-hard-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic6-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic6-hard-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.052 s by MS05r6a (b3-hash-classic6-hard-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic6-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic6-hard-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.22 s by MS05r6a (b3-hash-classic6-hard-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-veryEasy-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.507 s by MS05r6a (b3-hash-classic9-veryEasy-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-veryEasy-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.507 s by MS05r6a (b3-hash-classic9-veryEasy-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-veryEasy-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.518 s by MS05r6a (b3-hash-classic9-veryEasy-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-veryEasy-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.527 s by MS05r6a (b3-hash-classic9-veryEasy-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-easy-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.627 s by MS05r6a (b3-hash-classic9-easy-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-easy-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.629 s by MS05r6a (b3-hash-classic9-easy-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-easy-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.695 s by MS05r6a (b3-hash-classic9-easy-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-easy-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 2.711 s by MS05r6a (b3-hash-classic9-easy-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-normal-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.47 s by MS05r6a (b3-hash-classic9-normal-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-normal-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 3.197 s by MS05r6a (b3-hash-classic9-normal-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-normal-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 2.289 s by MS05r6a (b3-hash-classic9-normal-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-normal-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 2.381 s by MS05r6a (b3-hash-classic9-normal-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-hard-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.607 s by MS05r6a (b3-hash-classic9-hard-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-hard-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.605 s by MS05r6a (b3-hash-classic9-hard-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-hard-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.655 s by MS05r6a (b3-hash-classic9-hard-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-hard-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.588 s by MS05r6a (b3-hash-classic9-hard-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-expert-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-expert-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.838 s by MS05r6a (b3-hash-classic9-expert-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-expert-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-expert-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.893 s by MS05r6a (b3-hash-classic9-expert-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-expert-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-expert-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.742 s by MS05r6a (b3-hash-classic9-expert-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-expert-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-expert-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.929 s by MS05r6a (b3-hash-classic9-expert-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-master-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.557 s by MS05r6a (b3-hash-classic9-master-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-master-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.834 s by MS05r6a (b3-hash-classic9-master-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-master-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.389 s by MS05r6a (b3-hash-classic9-master-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-master-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.894 s by MS05r6a (b3-hash-classic9-master-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-nightmare-00.json"
+    ],
+    "projectionSeconds": 62,
+    "projectionBasis": "MEASURED 20.573 s by MS05r6a (b3-hash-classic9-nightmare-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-nightmare-05.json"
+    ],
+    "projectionSeconds": 69,
+    "projectionBasis": "MEASURED 22.936 s by MS05r6a (b3-hash-classic9-nightmare-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-nightmare-10.json"
+    ],
+    "projectionSeconds": 85,
+    "projectionBasis": "MEASURED 28.359 s by MS05r6a (b3-hash-classic9-nightmare-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-classic9-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\classic9-nightmare-15.json"
+    ],
+    "projectionSeconds": 61,
+    "projectionBasis": "MEASURED 20.351 s by MS05r6a (b3-hash-classic9-nightmare-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-mega12-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\mega12-normal-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.564 s by MS05r6a (b3-hash-mega12-normal-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-mega12-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\mega12-normal-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.597 s by MS05r6a (b3-hash-mega12-normal-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-mega12-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\mega12-normal-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.572 s by MS05r6a (b3-hash-mega12-normal-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-mega12-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\mega12-normal-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.567 s by MS05r6a (b3-hash-mega12-normal-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-mega16-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\mega16-easy-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.591 s by MS05r6a (b3-hash-mega16-easy-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-mega16-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\mega16-easy-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.609 s by MS05r6a (b3-hash-mega16-easy-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-mega16-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\mega16-easy-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.619 s by MS05r6a (b3-hash-mega16-easy-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-mega16-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\mega16-easy-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.616 s by MS05r6a (b3-hash-mega16-easy-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-diagonalX-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\diagonalX-easy-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 3.86 s by MS05r6a (b3-hash-diagonalX-easy-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-diagonalX-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\diagonalX-easy-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 3.283 s by MS05r6a (b3-hash-diagonalX-easy-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-diagonalX-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\diagonalX-easy-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.535 s by MS05r6a (b3-hash-diagonalX-easy-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-diagonalX-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\diagonalX-easy-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 3.007 s by MS05r6a (b3-hash-diagonalX-easy-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-diagonalX-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\diagonalX-nightmare-00.json"
+    ],
+    "projectionSeconds": 135,
+    "projectionBasis": "MEASURED 45.143 s by MS05r6a (b3-hash-diagonalX-nightmare-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-diagonalX-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\diagonalX-nightmare-05.json"
+    ],
+    "projectionSeconds": 145,
+    "projectionBasis": "MEASURED 48.357 s by MS05r6a (b3-hash-diagonalX-nightmare-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-diagonalX-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\diagonalX-nightmare-10.json"
+    ],
+    "projectionSeconds": 166,
+    "projectionBasis": "MEASURED 55.495 s by MS05r6a (b3-hash-diagonalX-nightmare-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-diagonalX-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\diagonalX-nightmare-15.json"
+    ],
+    "projectionSeconds": 99,
+    "projectionBasis": "MEASURED 33.117 s by MS05r6a (b3-hash-diagonalX-nightmare-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-hyper-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\hyper-hard-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.567 s by MS05r6a (b3-hash-hyper-hard-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-hyper-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\hyper-hard-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.549 s by MS05r6a (b3-hash-hyper-hard-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-hyper-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\hyper-hard-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.563 s by MS05r6a (b3-hash-hyper-hard-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-hyper-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\hyper-hard-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.585 s by MS05r6a (b3-hash-hyper-hard-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-jigsaw9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\jigsaw9-normal-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.446 s by MS05r6a (b3-hash-jigsaw9-normal-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-jigsaw9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\jigsaw9-normal-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.684 s by MS05r6a (b3-hash-jigsaw9-normal-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-jigsaw9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\jigsaw9-normal-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.896 s by MS05r6a (b3-hash-jigsaw9-normal-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-jigsaw9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\jigsaw9-normal-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.939 s by MS05r6a (b3-hash-jigsaw9-normal-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-jigsaw9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\jigsaw9-master-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.805 s by MS05r6a (b3-hash-jigsaw9-master-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-jigsaw9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\jigsaw9-master-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.388 s by MS05r6a (b3-hash-jigsaw9-master-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-jigsaw9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\jigsaw9-master-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.918 s by MS05r6a (b3-hash-jigsaw9-master-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-jigsaw9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\jigsaw9-master-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.942 s by MS05r6a (b3-hash-jigsaw9-master-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-killer-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\killer-easy-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.608 s by MS05r6a (b3-hash-killer-easy-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-killer-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\killer-easy-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.617 s by MS05r6a (b3-hash-killer-easy-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-killer-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\killer-easy-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.606 s by MS05r6a (b3-hash-killer-easy-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-killer-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\killer-easy-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.613 s by MS05r6a (b3-hash-killer-easy-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-killer-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\killer-hard-00.json"
+    ],
+    "projectionSeconds": 76,
+    "projectionBasis": "MEASURED 25.466 s by MS05r6a (b3-hash-killer-hard-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-killer-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\killer-hard-05.json"
+    ],
+    "projectionSeconds": 83,
+    "projectionBasis": "MEASURED 27.602 s by MS05r6a (b3-hash-killer-hard-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-killer-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\killer-hard-10.json"
+    ],
+    "projectionSeconds": 78,
+    "projectionBasis": "MEASURED 26.163 s by MS05r6a (b3-hash-killer-hard-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-killer-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\killer-hard-15.json"
+    ],
+    "projectionSeconds": 78,
+    "projectionBasis": "MEASURED 25.942 s by MS05r6a (b3-hash-killer-hard-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-greaterThan-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\greaterThan-normal-00.json"
+    ],
+    "projectionSeconds": 150,
+    "projectionBasis": "STATED BOUND 150 s: the item generates Greater-Than puzzles with the chosen pool 4; the slowest single request of this task's pool-4 cohorts was 22.8 s (expert), 18.3 s (normal) and 6.9 s (hard), five requests per hash shard (docs/difficulty-v3/evidence/MS05e/comparison.md)"
+  },
+  {
+    "label": "e-hash-greaterThan-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\greaterThan-normal-05.json"
+    ],
+    "projectionSeconds": 150,
+    "projectionBasis": "STATED BOUND 150 s: the item generates Greater-Than puzzles with the chosen pool 4; the slowest single request of this task's pool-4 cohorts was 22.8 s (expert), 18.3 s (normal) and 6.9 s (hard), five requests per hash shard (docs/difficulty-v3/evidence/MS05e/comparison.md)"
+  },
+  {
+    "label": "e-hash-greaterThan-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\greaterThan-normal-10.json"
+    ],
+    "projectionSeconds": 150,
+    "projectionBasis": "STATED BOUND 150 s: the item generates Greater-Than puzzles with the chosen pool 4; the slowest single request of this task's pool-4 cohorts was 22.8 s (expert), 18.3 s (normal) and 6.9 s (hard), five requests per hash shard (docs/difficulty-v3/evidence/MS05e/comparison.md)"
+  },
+  {
+    "label": "e-hash-greaterThan-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\greaterThan-normal-15.json"
+    ],
+    "projectionSeconds": 150,
+    "projectionBasis": "STATED BOUND 150 s: the item generates Greater-Than puzzles with the chosen pool 4; the slowest single request of this task's pool-4 cohorts was 22.8 s (expert), 18.3 s (normal) and 6.9 s (hard), five requests per hash shard (docs/difficulty-v3/evidence/MS05e/comparison.md)"
+  },
+  {
+    "label": "e-hash-greaterThan-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\greaterThan-hard-00.json"
+    ],
+    "projectionSeconds": 100,
+    "projectionBasis": "STATED BOUND 100 s: the item generates Greater-Than puzzles with the chosen pool 4; the slowest single request of this task's pool-4 cohorts was 22.8 s (expert), 18.3 s (normal) and 6.9 s (hard), five requests per hash shard (docs/difficulty-v3/evidence/MS05e/comparison.md)"
+  },
+  {
+    "label": "e-hash-greaterThan-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\greaterThan-hard-05.json"
+    ],
+    "projectionSeconds": 100,
+    "projectionBasis": "STATED BOUND 100 s: the item generates Greater-Than puzzles with the chosen pool 4; the slowest single request of this task's pool-4 cohorts was 22.8 s (expert), 18.3 s (normal) and 6.9 s (hard), five requests per hash shard (docs/difficulty-v3/evidence/MS05e/comparison.md)"
+  },
+  {
+    "label": "e-hash-greaterThan-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\greaterThan-hard-10.json"
+    ],
+    "projectionSeconds": 100,
+    "projectionBasis": "STATED BOUND 100 s: the item generates Greater-Than puzzles with the chosen pool 4; the slowest single request of this task's pool-4 cohorts was 22.8 s (expert), 18.3 s (normal) and 6.9 s (hard), five requests per hash shard (docs/difficulty-v3/evidence/MS05e/comparison.md)"
+  },
+  {
+    "label": "e-hash-greaterThan-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\greaterThan-hard-15.json"
+    ],
+    "projectionSeconds": 100,
+    "projectionBasis": "STATED BOUND 100 s: the item generates Greater-Than puzzles with the chosen pool 4; the slowest single request of this task's pool-4 cohorts was 22.8 s (expert), 18.3 s (normal) and 6.9 s (hard), five requests per hash shard (docs/difficulty-v3/evidence/MS05e/comparison.md)"
+  },
+  {
+    "label": "e-hash-samurai-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\samurai-easy-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.652 s by MS05r6a (b3-hash-samurai-easy-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-samurai-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\samurai-easy-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.852 s by MS05r6a (b3-hash-samurai-easy-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-samurai-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\samurai-easy-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.661 s by MS05r6a (b3-hash-samurai-easy-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-samurai-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\samurai-easy-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.715 s by MS05r6a (b3-hash-samurai-easy-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-sohei-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\sohei-veryEasy-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.539 s by MS05r6a (b3-hash-sohei-veryEasy-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-sohei-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\sohei-veryEasy-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.533 s by MS05r6a (b3-hash-sohei-veryEasy-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-sohei-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\sohei-veryEasy-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.54 s by MS05r6a (b3-hash-sohei-veryEasy-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-sohei-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\sohei-veryEasy-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.532 s by MS05r6a (b3-hash-sohei-veryEasy-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-butterfly-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\butterfly-normal-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.268 s by MS05r6a (b3-hash-butterfly-normal-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-butterfly-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\butterfly-normal-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.966 s by MS05r6a (b3-hash-butterfly-normal-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-butterfly-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\butterfly-normal-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.977 s by MS05r6a (b3-hash-butterfly-normal-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-butterfly-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\butterfly-normal-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.858 s by MS05r6a (b3-hash-butterfly-normal-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-flower-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\flower-normal-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.807 s by MS05r6a (b3-hash-flower-normal-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-flower-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\flower-normal-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.036 s by MS05r6a (b3-hash-flower-normal-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-flower-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\flower-normal-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.106 s by MS05r6a (b3-hash-flower-normal-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-flower-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\flower-normal-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.177 s by MS05r6a (b3-hash-flower-normal-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-wordoku-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\wordoku-normal-00.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.794 s by MS05r6a (b3-hash-wordoku-normal-00, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-wordoku-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\wordoku-normal-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.198 s by MS05r6a (b3-hash-wordoku-normal-05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-wordoku-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\wordoku-normal-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.443 s by MS05r6a (b3-hash-wordoku-normal-10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-hash-wordoku-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05e\\hashes\\wordoku-normal-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 2.345 s by MS05r6a (b3-hash-wordoku-normal-15, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  }
+]

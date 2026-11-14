@@ -728,3 +728,100 @@ synthetic negative checks, `actionlint`, a YAML parse, `bash -n`. Projected jobs
 times a stated margin, not CI measurements. Not run: any remote job, the deep tier, the manual tier, GD, E, GQ, GP, the browser
 scripts. Named items R6C-I01 to R6C-I06 in `evidence.md` (renamed job names for any branch protection, remote durations to record,
 `docs/architecture.md` and `player/design.md` statements outside this task's files, new-suite ownership, superseded quick rows).
+
+## MS05e: the guided sign dig (a sign pool) for Greater-Than, measured and set aside
+
+The one bounded repair that CV6-01 / S-OD1 authorised, with its diagnosis first and every permitted value measured once.
+**Outcome: measured, set aside** (CV6-05, the plan author's Q1(b) under S-OD6; Q2(a) keeps the contracts and final
+qualification decides whether Normal is offered). MS05e closes as "set aside", not as an accepted repair. The 12 tracked files
+were restored byte for byte from `f7be90f`, the new suite deleted, and the reviewed candidate saved as
+`docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch` (13 files; rebuild and identity proof in `evidence.md`, section I).
+`greater-than.js`, `generator/design.md` and both developer guides are at baseline: the experiment is described here and in the
+report, not in the guides. Everything below that describes the pool is the candidate and is history only.
+Report: [cv6-guided-sign-dig-2026-11-14.md](cv6-guided-sign-dig-2026-11-14.md); evidence: `docs/difficulty-v3/evidence/MS05e/`
+(`evidence.md` is the index). Source measured: `rating-v3` at `f7be90f` (pack notes on the runtime baseline `00647f9`, no source difference) plus the candidate, Node v26.13.0, allowance 256, default attempts 8
+for the 81 cells of Greater-Than; the floors, caps, orders, weights, bands, exactness rule and the CV6 assertion were unchanged.
+
+### What the candidate changed (set aside)
+
+- **The technique pass of the sign dig took a pool.** `SIGN_POOL` (4) live signs of the shuffled order that the pass had not
+  refused were rated per step, each against the same current set (uniqueness count, then the bounded solve with the level's
+  techniques, classified without another solve); the winner was removed: a solve that needed a technique of the level's tier
+  first (`tierUsed`, a proxy from the technique counts), then the nearest to `options.target` (absent), else the
+  highest score; ties kept the shuffled order. Ambiguous, stuck and top-of-band removals were refused for the rest of the pass
+  (a fresh mask each tune round). One `tried` and one `oracleCalls` per rating, one inherited `budget.check()`, no cap, clock or
+  random draw; the temporary clear was undone in a `finally`. The log got `keep` (cells, sign, score) for every allowed
+  member, the winner included. `signs.minimal`, reveals, `MAX_TUNE_ROUNDS` and the keeper were as before.
+- **Tests and CI.** A new quick suite `greater-than-guided` (15 tests) and two replay cases; its own CI shard (30 s); the bounds of
+  `own-fast` and `pipeline` went up to 300 s and 400 s because Greater-Than generation inside the quick tier was slower (the
+  quick set was 726 s, against 648 s).
+- **Documents:** `generator/design.md` 7.5, 8.3 and 15, both developer guides (the dig log of Greater-Than and the suite counts:
+  51 suites, 3,279 tests). All restored to baseline text by the set-aside.
+
+### The diagnosis and the comparison
+
+Seeds 300-319, Normal, unchanged source: 394 dug samples, 18 exact, 376 misses (21 shallow, none above the band, 21 local searches
+ended on the proposal cap and the requests that had one took 95 % of the time). The trap that S-OD1 step 1 names is a sample below
+the band **at the clue floor** with a minimal sign set: 83 of the 376 misses (22.1 %), 94 of 484 (19.4 %) after the change. Every
+sample is minimal by construction, so the 355 misses (94 %) below the band are not the trap. The largest class is a setup that ended
+two or more clues above the floor (187, 49.7 %; 217, 44.8 % after), then 85 below the band after a tune reveal (22.6 %; 142, 29.3 %
+after). **Step 1's stop-and-report condition was met before the production edit and was not taken**; what holds the extra clues
+is not recorded, and the split went into the decision (report section 7). Each of 4, 8 and 16 was run once on 240 requests
+(Normal 300-319 and 7000-7039, Easy, Hard and Expert 300-319, two repeats each). On the diagnosed cohort the pool does not raise the
+exact share of dug samples (4.0 % at pool 4 against 4.6 %); on the other cohorts it lowers the dug samples per exact request on most
+values (Normal 7000-7039 35.9 before, 23.6, 20.8, 16.9 at pools 4, 8, 16; Hard 9.3, 8.3, 7.5, 5.3; Expert 29.6, 22.8, 36.7, 21.8;
+Normal 300-319 19.7, 25.2, 17.1, 14.3), but each sample costs about `SIGN_POOL` times the ratings and it multiplies the oracle calls
+(x4.5, x5.8, x9.4 on Normal 300-319), so every value is slower than the unguided pass (Normal 300-319 p95 5.3 s to 17.0 s at
+pool 4, 23.0 s at 8, 15.9 s at 16); only Normal 7000-7039 at pool 4 breaks even. Pool 4 has the lowest total time on four of the five
+cohorts and in their sum (pool 8 is lower on Normal 300-319: 88.1 / 87.7 s against 89.7 / 93.0 s) and was the candidate carried to
+the review. With it CV6 of Normal still failed (17,014 ms against 1,400 ms; 5,209 ms before) and CV6 of Nightmare failed too
+(40,396 ms against 20,000 ms).
+
+### The decision (CV6-05) and the two errors the plan author acknowledges
+
+Q1(b), withdraw the pool, and Q2(a), keep the contracts (`BUDGET_MS.normal` stays 700 ms, GP's rules stay, final qualification
+decides whether Normal is offered). Reasons, in short: no tried value closes CV6 and no further value or strategy may be tried;
+Nightmare CV6 went from a pass to 40,396 ms, a second failing contract that no recorded decision covers; Easy, Hard and Expert
+paid 3.3, 2.9 and 1.3 times and the quick set 12 %; Normal 7000-7039 sits at the 10 s qualification budget with or without the
+pool (p95 10.6 against 10.7 s); a target cannot pay back a dig that costs 3.6 times more per sample. The plan author states two
+errors of his own: (1) the CV6-01 premise ("below the band at the clue floor ... with nothing left to remove") came from one
+seed (308) and covers only a fifth of the misses (83 of 376; 187 are setups with two or more clues above the floor); (2) step 2
+and PR-S2 underestimated the cost: the evaluation reuses the oracle's solve, but the losers are rated again, so a removal costs
+about `SIGN_POOL` ratings instead of 1.15, over about 103 removals per sample. IR23 is acknowledged as written: the gate's
+stop-and-report condition was met and not taken. Every measurement stands. No second strategy (IR29's lever included) is
+authorised; the observations stay as evidence for the later improve-generating feature.
+
+Sign target (replaces S-OD1's MS06 sentence): on Greater-Than the target is transported, not consumed, by the sign dig; MS06
+makes no edit to `greater-than.js`; the pack edits belong to SA2.
+
+### The candidate's output differences and what caused each (history only; none applies to the restored source)
+
+| Output | Changed | Cause |
+|---|---|---|
+| Regression hashes (520 keys) | 30: `greaterThan/normal` 15 seeds, `greaterThan/hard` 15 seeds; the other 490 unchanged (ten Greater-Than keys among them keep their hash; why is not measured) | The pool removes other signs, so the same seed is another puzzle |
+| Replay wire G09-G13 | G11 (1,418 fields) and G12 (552); G09, G10, G13 unchanged | Same cause (the two Greater-Than requests) |
+| Replay analysis G01-G14 | G11 (167 fields) and G12 (131); the other twelve unchanged | The two new puzzles |
+| Help examples | none | Both Greater-Than examples match |
+| Pinned assertions of `replay`, `steps` and `player` | 12 tests re-derived from the refreshed goldens (details jumps 16 to 14, distinct 18 to 16, 29 to 27 jumps, G11's positions, signs and totals) | G11 and G12 changed |
+
+### Verified for the candidate (history only), what applies by identity, and the items
+
+Verified for the candidate: the Generator quick set in four locked CI groups (3,279 of 3,279), the Player quick set (1,683 of
+1,683), the CI check and self-test, the 18 per-level CV6 and I5 cells (16 pass; Normal and Nightmare CV6 fail on time; they
+applied to the candidate's final tree, see `evidence/MS05e/evidence.md` section E, "GD applicability"), the three E merges (5
+wires, 14 analyses, 520 keys, written and checked), GH. Not run: GQ, GP, `--all`, the other manual cells, the browser scripts,
+`SG_DEEP`. None of it applies to what is committed.
+
+Applies to the restored source by identity (proof, no run: `git diff --quiet HEAD -- generator core player DEVELOPERGUIDE.md
+DEVELOPERGUIDE.vn.md AGENTS.md .github` exits 0, no untracked file in a fingerprinted folder, `greater-than.js` blob `cbab64b8`
+equal to `f7be90f`'s): MS05r6c's final quick sets (Generator 3,262 of 3,262 in 50 suites and 7 shards, 648.0 s; Player 1,683 of
+1,683), MS05r6b's E and GD records, and this task's records of the unchanged source (`before/`, `gd/before/`).
+
+Items (CV6-05; SA2 updates the check-list): S-AV01 carried open under Q2(a), Normal CV6 5,209 ms against 1,400 ms and 10.6 s p95
+on seeds 7000-7039; S-AV16 (Nightmare CV6 40,396 ms) and S-AV17 (the cost on the other levels and in the quick tier) withdrawn as
+current-source items, their observations kept as history; S-AV08 back to 648.0 s; Nightmare CV6 passes at 19,192 ms of 20,000
+(a 4 % margin, MS05b3's same-seed I5 record), noted for MS07e because MS07's chain work will move it; F01 and F02 (and IR29,
+IR30) moot. How S-AV01 ends (report section 7): hidden by the existing rule if Normal fails qualification at MS18c; if it
+qualifies but CV6 still exceeds its assertion, MS18c returns to the plan author before MS18d's final timing runs and the first
+branch of S-OD1's fallback (b) is decided once, on the final-source data (one base value in milliseconds for
+`BUDGET_MS.normal`, never above 10,000 ms, with the test and both guides changed in that step); until then 700 ms stands.

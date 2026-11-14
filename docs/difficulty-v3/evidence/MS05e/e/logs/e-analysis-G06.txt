@@ -1,0 +1,2 @@
+G06 jigsaw9 nightmare 42: 1.3 s
+recorded 1 of 14 keys (G06) in docs/difficulty-v3/evidence/MS05e/analysis/G06.json; a ledger is one shard, merge them all with --merge

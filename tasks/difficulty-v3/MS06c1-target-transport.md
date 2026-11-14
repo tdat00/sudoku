@@ -5,14 +5,15 @@
 | Depends on | MS06b accepted and committed |
 | Size / active time | Medium; 45-60 minutes plus GG check/GR |
 | Owner / milestone | Generator plumbing; M6c1 inactive target lifetime and objective types |
-| Authority | R6/R7/R23; FS15/FS20; MS05e S-OD1 comparator |
+| Authority | R6/R7/R23; FS15/FS20; CV6-05 sign-target transport |
 | Gates owned | GG check-only; GR deliberate nullable metadata refresh |
 | Status | Not started |
 
 ## Goal & business context
 
 Prepare the internal data and objective types without changing which puzzle is generated.
-MS06c2 can then activate all three stages and the existing sign-pool comparator in one change.
+MS06c2 can then activate all candidate-comparing stages in one change. Greater-Than's restored
+first-allowed sign pass transports the target but has no comparator that consumes it.
 MS06a's before-record stays valid: no target is drawn or used for normal production in this task.
 
 ## Scope
@@ -22,9 +23,11 @@ soak reporting, discriminated objective results with a **behavior-equivalent old
 Out: new target draws, finite targets from normal callers, new objective evaluations, tier-first
 or target-driven selection, refinement/local-policy changes, new caps/weights, exports/history.
 
-Unlike the review's first suggested split, do **not** draw a finite target and send it into
-Greater-Than here: MS05e already consumes it, so that would activate sign-only targeting and
-make the promised unchanged GG false. MS06c2 owns both the draw and all policy activation.
+Do **not** draw a finite target or send one from a normal caller in this preparation task:
+MS06c2 owns both the draw and atomic activation of every candidate-comparing stage. Under
+CV6-05 the registered `signs` strategy receives an explicitly supplied option but ignores it;
+its keeper offers acquire the originating target through the keeper view below. No edit to
+`greater-than.js`, no sign pool and no target-ranking consumer are introduced.
 
 ## Repository rules
 
@@ -160,7 +163,8 @@ Engine anchors at `c9935cd`; use symbols after r5p/MS06b:
 - Objective parity: refused cases, bounded equal/unequal scores, solved/stuck proposals and
   equal priorities; same old `keep` value and oracle call counts.
 - Spy the default sample RNG and `signs` strategy: no `target` child draw/new finite option here.
-  Finite S-OD1 connection and all-stage acceptance tests are MS06c2's, not claimed prematurely.
+  The finite real-`signs` transport proof and active-stage acceptance tests are MS06c2's,
+  not claimed prematurely. The sign dig itself still does not read the target.
   Label these as preparation-phase assertions: MS06c2 replaces their expected no-draw/legacy
   ranking behavior with the corresponding active-policy tests, while retaining transport coverage.
 

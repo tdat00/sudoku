@@ -54,7 +54,9 @@ Write the actual selected limits (not just starting values), scope/counter defin
 decisions and source evidence in `docs/difficulty-v3/limits-v3.md`. New-pattern limits freeze with
 v3: subsequent changes require a new rating version. MS18 cannot tune them.
 Record the actual shallow allowance (256 unless later decided otherwise), size-attempt policy
-8/4/2, sign-pool choice and selected C separately from new-pattern limits. Do not copy obsolete
+8/4/2, CV6-05's restored first-allowed sign pass (no sign-pool constant; target transported, not
+consumed there) and selected C separately from new-pattern limits. MS05e's rejected candidate
+belongs to historical evidence, not the frozen production configuration. Do not copy obsolete
 global-eight or Infinity-default descriptions from the pause evidence.
 
 ### Anchors verified at c9935cd (find symbols after later tasks)

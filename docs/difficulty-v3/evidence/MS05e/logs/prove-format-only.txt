@@ -1,0 +1,5 @@
+wrapped statement present: true
+final greater-than.js sha256            daecf790bd56e8818a5fb6f495033121dec37198a58a29fc9e0ebeffdf7771ae
+final with the statement on one line    1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0
+pool-4 files record (greaterThanHash)   1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0
+identical apart from the wrap: true

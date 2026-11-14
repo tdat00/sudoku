@@ -1,0 +1,2 @@
+  mega12/normal: seeds 144, 233, 377, 610, 987 (0.1 s)
+recorded 5 of 520 keys (mega12/normal, seed indexes 10-14 (seeds 144, 233, 377, 610, 987)) in docs/difficulty-v3/evidence/MS05e/hashes/mega12-normal-10.json; a ledger is one shard, merge them all with --hash-merge

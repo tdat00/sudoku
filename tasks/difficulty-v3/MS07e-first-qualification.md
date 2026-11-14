@@ -43,8 +43,9 @@ Resume anchors at c9935cd: `qualify.js:143,186` (`child`, `hitOf`), `:223` (`dec
 ### PR-S2 remarks — existing evidence, unchanged scope
 
 Fable's answer in `92a7693`, now in `docs/difficulty-v3/clarifications-resolved.md`, confirms the
-MS05e-MS18e route unchanged. `docs/improve-generating/plan.md` is a later, separately authorized
-feature, not work or a new prerequisite for this checkpoint. No new cap, budget or scope is added.
+remaining route at that review; CV6-05 subsequently sets MS05e aside and clarifies sign-target
+transport. `docs/improve-generating/plan.md` is a later feature requiring separate authorization,
+not work or a new prerequisite for this checkpoint. No new cap, budget or scope is added.
 
 - **Existing request counters:** where this task already writes per-request records, keep the
   existing `stats` counters, including `samples`, `attempts` and `oracleCalls`, alongside the
@@ -64,6 +65,18 @@ classic9 Nightmare, Killer Hard/Expert and per-app quick cost. Report their curr
 exact hits/denominators, p95/guard/projection, limits and evidence. Keep historical numbers
 separately; do not claim S3 has already repaired a cell.
 
+- **CV6-05 handoff:** MS05e is closed "measured, set aside", with the first-allowed sign pass
+  restored by identity. S-AV01 remains open: 5,209 ms against 1,400 ms on CV6's Normal seeds
+  and 10.6 s p95 on 7000-7039. Keep the 700 ms base, unchanged GP rules and current offers;
+  no assertion edit/skip/wrapper or interim pruning. Record this checkpoint's own source/data,
+  then carry S-AV01 to MS18c/MS18d under the three fixed endings in checklist section 2.
+  S-AV16/S-AV17 are withdrawn as current-source items; keep their rejected-pool observations
+  as history. S-AV08's restored quick baseline is 648.0 s, not the candidate's 726.2 s.
+- **Greater-Than Nightmare CV6 margin (CV6-05):** the restored-source observation is a pass at
+  19,192 ms of 20,000 ms, only about **4% margin**. MS07's chain work will move it; this is
+  not a current-source upper bound or a qualification result. If it fails later, the task
+  that moved it records a new named item with its source and actual numbers, not a revival
+  of the withdrawn pool's S-AV16. This note does not add another experiment or change a budget.
 - **Killer Hard and Expert:** report both individually. R5 found 0/12 in each at every setting.
   Their tier is cageSplit/fish and their band is often reached through ruleOf45 work; Fable does
   not expect S3 to fix that weight problem. If the checkpoint classifies either cell hidden,

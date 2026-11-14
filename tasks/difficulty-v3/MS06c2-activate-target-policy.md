@@ -5,19 +5,20 @@
 | Depends on | MS06c1 accepted and committed |
 | Size / active time | Medium; 50-60 minutes plus GG/GR |
 | Owner / milestone | Generator policy; M6c2 atomic full-target activation |
-| Authority | R3/R6/R7/R23; FS13-FS16/FS20; S-OD1 sign-pool handoff; AC01 |
+| Authority | R3/R6/R7/R23; FS13-FS16/FS20; CV6-05 sign-target handoff; AC01 |
 | Gates owned | Complete E GG/GR |
 | Status | Not started |
 
 ## Goal & business context
 
-Seek a reproducible position inside the raw band throughout cells/signs digging, already-entered
-refinement and local search. Requiredness wins over cosmetic proximity. Preserve first-exact
-outer stopping, all existing caps and the no-clue-additions rule on models with inequalities.
+Seek a reproducible position inside the raw band through cells guided digging and already-entered
+refinement/local search. Greater-Than's first-allowed sign pass transports its target without
+consuming it. Requiredness wins over cosmetic proximity. Preserve first-exact outer stopping,
+all existing caps and the no-clue-additions rule on models with inequalities.
 
 ## Scope
 
-In: one production target draw/route; activate the tested pool, refinement and local policies
+In: one production target draw/route; activate the tested cells-pool, refinement and local policies
 together; target messages/docs and controlled tests. Out: weights/bands/caps/floors, offer changes,
 attainable-only sampling, post-exact polishing, another sign strategy, or performance-budget fixes.
 MS06a's immutable before-record and MS06c1's transport API are inputs, not editable evidence.
@@ -59,7 +60,7 @@ sample loop's target
  -> digLevelSteps options.target
  -> resolved.target (MS06b's hasOwn forwarding)
  -> selected strategy options.target, including registered "signs"
- -> cells guided context / Greater-Than's existing sign-pool comparator
+ -> cells guided context; the registered "signs" strategy receives the option and does not read it
  -> captured keeper view, LevelPuzzle.target, attemptBest.target
  -> search digLevelSteps options.target = attemptBest.target
  -> searchStrategy/localSearchSteps/refineDown context
@@ -73,9 +74,12 @@ already supplies it, so it must not be initialized again. A later search always 
 candidate's property even when null. Do not activate target initialization in an untargeted
 Killer structure-only stage; its offers retain null.
 
-No edit to the Greater-Than pool/variant algorithm is required: MS05e already consumes this
-option. The strategy caller/forwarding is the only MS06 change to sign digging. Do not add a
-current-versus-winner stop to that sign pool; the table below is the cells guided-stage policy.
+**No edit to `greater-than.js` (CV6-05).** The first-allowed sign pass compares no candidates
+and ignores `options.target`; add no pool, constant or comparator there. Its keeper offers carry
+the sample's target through MS06c1's keeper view. On Greater-Than the target acts only in
+already-entered local acceptance (`preferRated`) and the `attemptBest` continuation; refinement
+is not entered for models with inequalities. R6's pool comparator below applies to cells only.
+Do not introduce a cross-sample target tiebreak when preserving `attemptBest`'s originating target.
 
 ### Guided objectives and exact stop policy (FS13)
 
@@ -187,8 +191,8 @@ must not reset `firstShallowAt`, create a second collector or lose work across p
 
 ## Files to create/modify (exclusive ownership)
 
-- `generator/js/engine/digger.js`; no Greater-Than algorithm edit.
-- Existing `digger-target`, `digger`, `difficulty-floor`, `greater-than-guided`, `pipeline`,
+- `generator/js/engine/digger.js`; **no edit to `greater-than.js`**.
+- Existing `digger-target`, `digger`, `difficulty-floor`, `pipeline`,
   `events`, `worker`, `cache`, `replay`, `steps`, `help` quick suites.
   There is no `explain` suite at HEAD: data/highlight checks are in `events`, card checks in `steps`.
 - Generator `locale.en.js`, `locale.vi.js`, help/explain data for changed facts, including
@@ -218,14 +222,14 @@ must not reset `firstShallowAt`, create a second collector or lose work across p
 
 | ID | Criterion |
 |---|---|
-| MS06c2-B01 | One raw-band target steers all stages, including the S-OD1 sign pool, with requiredness first |
+| MS06c2-B01 | One raw-band target steers every stage that compares candidates; the first-allowed sign dig compares none |
 | MS06c2-B02 | No post-exact search, budget expansion, partial activation or attainable-subrange draw |
 
 ## Acceptance criteria — Technical
 
 | ID | Criterion |
 |---|---|
-| MS06c2-T01 | Exact sample-to-strategy/signs-to-selected-result route and inherited search/keeper target are proved, not just field presence |
+| MS06c2-T01 | In `digger-target`, the option reaches the real `signs` strategy and the selected result's target equals its originating invocation's; search/keeper inheritance is proved, not just field presence |
 | MS06c2-T02 | Refused winner ends the cells pass, all-refused/empty pools terminate correctly, initialization is counted once, traces remain numeric |
 | MS06c2-T03 | Explicit local ceiling, every refinement vector, 64-rating cap, shallow continuation, first-exact/sign guards and parity pass |
 | MS06c2-T04 | Both quick sets and complete explained GG/GR pass; MS06a evidence unchanged |
@@ -238,20 +242,22 @@ must not reset `firstShallowAt`, create a second collector or lose work across p
   Keep the current board and exactly one guided end record.
 - A later local search starting from an earlier `attemptBest` receives that earlier target,
   even when the most recent sample had another target; structure-only keeper target remains null.
-- In `greater-than-guided`, wrap registered `signs` via get/unregister/register in `try/finally`
+- In `digger-target`, wrap registered `signs` via get/unregister/register in `try/finally`
   for one fixed-seed Greater-Than Expert pipeline request. Delegate to the real strategy.
   Record every invocation's target and check it equals `targetFor(spec, SG.rng.create(rng.seed))`
   computed on a separate test RNG. Multiple attempts are allowed; do not assume one call.
   Associate copied returned/keeper-offered candidate identities with their captured targets;
   the ultimately selected result's target must equal its originating sign invocation's finite
-  target, not merely some target in the list. The pool's target-ranking cases remain MS05e's.
-- Explicit null on an infinite band draws nothing and keeps higher-score secondary ranking.
+  target, not merely some target in the list. This proves transport through the real first-allowed
+  strategy and its keeper view, not consumption by a sign comparator. Do not restore the deleted suite.
+- Explicit null on an infinite band draws nothing and keeps higher-score secondary ranking
+  where candidates are compared; the first-allowed sign dig still ignores the option.
   Target child draws do not change parent random/guided draws. Wire/events carry the selected value.
 
 From Generator, under the checklist lock:
 
 ```powershell
-Invoke-Dv3Node -Task MS06c2 -NodeArgs @('tests\node-runner.js','--suite=digger-target,digger,difficulty-floor,greater-than-guided,pipeline,events,worker,cache,replay,steps,help')
+Invoke-Dv3Node -Task MS06c2 -NodeArgs @('tests\node-runner.js','--suite=digger-target,digger,difficulty-floor,pipeline,events,worker,cache,replay,steps,help')
 # Complete E, not just these representative shards.
 Invoke-Dv3Node -Task MS06c2 -NodeArgs @('tests\perf.js','--hash-key=classic4/veryEasy','--hash-from=0','--hash-count=5','--hash-record=..\docs\difficulty-v3\evidence\MS06c2\hashes\classic4-veryEasy-00.json')
 Invoke-Dv3Node -Task MS06c2 -NodeArgs @('tests\replay-fixtures.js','--ids=G09','--record=..\docs\difficulty-v3\evidence\MS06c2\wire\G09.json')
@@ -265,7 +271,7 @@ in parallel on the same machine).** No GS yet; MS06d owns the full isolated comp
 
 ## Definition of done & handoff
 
-Report the route/stop/refinement/local tests, real sign-target connection, unchanged bounds,
+Report the route/stop/refinement/local tests, real sign-target transport without consumption, unchanged bounds,
 all E differences and final source identity. MS06d compares all 17 cells/204 requests and reports
 every hit loss; this task makes no unmeasured improvement claim. No Git/pack/log edit.
 

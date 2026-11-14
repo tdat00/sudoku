@@ -75,6 +75,18 @@ No item vanishes because a test moved tiers or a level became hidden: link its f
 or cost verdict. A proposal not approved is not an implemented change. No weights changed before
 an answer; no missing S3 group, new unapproved evidence class or silent performance waiver.
 
+**CV6-05 audit:** MS05e is "measured, set aside", not an accepted sign repair. Keep its saved
+`docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch`, measurements and restoration/identity
+proof as history; do not rebuild or run the rejected candidate for this audit. S-AV16/S-AV17
+are withdrawn current-source items, not deleted observations. S-AV08's restored baseline was
+648.0 s; report the actual final-source quick cost separately. Verify S-AV01's one evidenced
+ending under checklist section 2 and MS18c: not offered by ordinary qualification/population
+rules; final-source CV6 pass; or the recorded final Normal contract decision before MS18d timing.
+For that conditional contract verify the same base in CV6 and its GP target if present, <=10,000 ms,
+factor application through `SG.test.timeLimit`, and updates to the test, corresponding GP target,
+`generator/design.md` section 9.1 (the `greaterThan` Normal cell) and both developer guides in the
+same assigned step. Never relabel an old failed selector as a new-contract pass.
+
 Audit `.github/scripts/generator-suites.sh`, its portable manifest and both workflows against
 the **final** suite inventory. Check every newly added suite's group, disjoint current quick
 membership, no manual/deep catch-all, source/result completeness, realistic per-job cost <=30
@@ -222,8 +234,10 @@ Use the shared lock for all commands expected over 10 seconds. **Announce to the
 before starting (pentomino runs in parallel on the same machine).** 540-second process ceiling (check-list section 7).
 S-OD4 lets the task continue after a time/availability finding, not claim release gates passed.
 Record unsatisfied final gates and pending PR CI explicitly. A change to a recorded gate needs
-the owner; correctness/evidence corruption stops immediately. CV6's target remains S-OD1,
-its performance-only stop is superseded. No new evidence class to hide a slow cell.
+the owner or its recorded delegated decision route; correctness/evidence corruption stops immediately.
+CV6-05 leaves Normal's base at 700 ms unless its specific final contract decision was recorded
+through MS18c before GP; audit that actual disposition. Its performance-only stop is superseded.
+No new evidence class to hide a slow cell.
 No new --all/--manual/browser/SG_DEEP permission is inferred.
 
 ## Definition of done & handoff

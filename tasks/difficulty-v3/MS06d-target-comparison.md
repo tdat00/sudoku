@@ -5,7 +5,7 @@
 | Depends on | MS06c2 accepted after MS06c1 |
 | Size / active time | Small; 20-30 minutes plus GS |
 | Owner / milestone | Evidence; M6 isolated comparison complete |
-| Authority | R7/R23; owner target decision and AC01 |
+| Authority | R7/R23; owner target decision and AC01; CV6-05 |
 | Status | Not started |
 
 ## Goal & business context
@@ -36,6 +36,13 @@ MS02's null reasons/unclamped values apply. Every request remains in the hit den
 Anchors at `c9935cd`: `generator/tests/soak.js:378` (`seedFor`), `:388-403` (`generateOne`),
 `:484` (generation timer). Use r3's absolute-index shards, MS06c1 transport and MS06c2 activation;
 keep r5p's default policy. These fixed 81-cell comparison boards still default to eight attempts.
+
+**CV6-05 expectation (projection, not an acceptance threshold):** a small or null target effect
+on Greater-Than Normal, Hard and Expert is a valid result, not a defect to repair. Their restored
+first-allowed sign pass transports the target but does not consume it; the target acts only in
+already-entered local acceptance and `attemptBest` continuation, with no inequality refinement.
+Keep all three cells in the 17-cell/204-request comparison, report actual effects and any hit loss,
+and do not add a sign comparator, rerun discovery or tune the policy to manufacture an improvement.
 
 ## Files to create/modify
 

@@ -6,16 +6,19 @@ one band target through generation, the expanded solver, and rating/cache versio
 executable files are written for serial dispatch; review follows the S-OD4 matrix below.
 Only the orchestrator changes Done marks, Execution logs and the execution summary.
 **Authority:** `docs/difficulty-v3/clarifications-resolved.md` Parts F/G (AC01 and acceptance),
-owner acceptance, 2026-11-12 11:50; Part H and PR-S1/CV6-03, S-OD1 through S-OD4, also bind.
+owner acceptance, 2026-11-12 11:50; Part H, PR-S1/PR-S2, CV6-03 to CV6-05 and S-OD1 through S-OD6 also bind.
 S-OD3/S-OD4 supersede the earlier performance-only recovery stops, not correctness or evidence integrity.
 **Traceability:** [accepted report](../../docs/difficulty-v3/report-detailed.md), R1-R24;
-[answers](../../docs/difficulty-v3/clarifications-resolved.md), Parts A-H, PR-S1 and CV6-03;
+[answers](../../docs/difficulty-v3/clarifications-resolved.md), Parts A-H, PR-S1/PR-S2 and CV6-03 to CV6-05;
 [open questions](../../docs/difficulty-v3/clarifications.md).
 **Execution:** claude-sonnet-5.5 developers, one active task in this repository; branch `rating-v3`;
 the orchestrator reviews and commits, nothing pushed.
 **Resume baseline:** `c9935cd` on `rating-v3`, after pause commit `a7f6660`. Neither checkpoint accepts
 MS05b1/recovery. Remaining-task anchors were checked at this HEAD; quoted symbols remain the locator
 after a prerequisite moves lines. Historical dispatched files and their Execution logs stay unchanged.
+**Post-MS05e disposition (CV6-05):** measured, set aside. The orchestrator restored the
+fingerprinted source/artifacts to `f7be90f` (runtime `00647f9`) and proved identity without a run.
+The first-allowed sign pass is the MS06a baseline; the rejected candidate remains evidence only.
 
 The pack uses execution-order IDs: **MS03 is tooling (old report MS04); MS04 is orders (old MS03)**.
 The accepted order is unchanged. Historical analyst documents/answers keep their old labels.
@@ -43,7 +46,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS03c | [MS03c](MS03c-jigsaw-help-snapshots.md) | Region-aware Jigsaw snapshots | MS03b | S-M, 30-45 min | Player help | M3c Jigsaw ready | 5 |
 | [x] | MS03d | [MS03d](MS03d-bounded-regression-hashes.md) | Selected hash records and complete merge | MS03c | M, 45-60 min + GG check | Generator tooling | M3d bounded hashes | 6 |
 | [x] | MS04 | [MS04](MS04-orders-and-requiredness.md) | Orders, counter and derived certificate | MS03d | M, 45-60 min | Shared solver | M4 prefix invariant | 7 |
-| [ ] | MS05 | MS05a, recovery, MS05e | Required exactness and CV6 repair (parent) | MS04 | split | Generator | M5 | 8-11a |
+| [ ] | MS05 | MS05a, recovery, MS05e | Required exactness and CV6 disposition (parent) | MS04 | split | Generator | M5 | 8-11a |
 | [x] | MS05a | [MS05a](MS05a-exactness-transport-and-messages.md) | Exactness transport/messages | MS04 | M, 40-55 min | Generator UI | M5a | 8 |
 | [x] | MS05b1 | [MS05b1](MS05b1-required-exactness-engine.md) | Preserve implemented engine; closure at r6b, not a redispatch | MS05a | retained | Generator engine/UI | M5b1 in recovery | — |
 | [x] | MS05b2 | [MS05b2](MS05b2-required-exactness-consumers.md) | Absorbed consumer scope; not a dispatch | MS05r2/r6b | absorbed | Generator tools/tests | M5b2 in recovery | — |
@@ -61,9 +64,9 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS05r6a | [MS05r6a](MS05r6a-final-evidence-and-pins.md) | Persist G13, final-source recheck, complete E and pins | MS05b3 + all earlier recovery evidence; S-OD3/S-OD4 | M code; 2-3 h operation + gates | Recorders/evidence/pins | step evidence only | 9r6a |
 | [x] | MS05r6b | [MS05r6b](MS05r6b-quick-gd-and-combined-acceptance.md) | Full quick/GD, deep reconciliation, standing cost and audit | MS05r6a step evidence | 1.5-2.5 h operation + gates | Evidence/acceptance docs | combined audit; r6c still required | 9r6b |
 | [x] | MS05r6c | [MS05r6c](MS05r6c-ci-test-tiers.md) | CI workflows for the v3 test tiers | MS05r6b evidence and final quick manifest | S-M, 30-50 min + checks | CI | inside combined commit | 9r6c |
-| [ ] | MS05e | [MS05e](MS05e-guided-sign-dig.md) | Guided sign dig; CV6 result and named findings | r6b/r6c combined commit | M, 50-60 min + gates | Greater-Than | M5e | 11a |
-| [ ] | MS06 | MS06a-MS06d | One target through all stages (parent) | MS05e | split | Generator | M6 | 12-15 |
-| [ ] | MS06a | [MS06a](MS06a-pre-target-evidence.md) | Isolated pre-target evidence | MS05e | S, 20-30 min | Evidence | M6a | 12 |
+| [x] | MS05e | [MS05e](MS05e-guided-sign-dig.md) | Closed: guided sign dig measured, set aside (CV6-05) | r6b/r6c combined commit | M, 50-60 min + gates | Greater-Than | M5e | 11a |
+| [ ] | MS06 | MS06a-MS06d | One target through all stages (parent) | MS05e closed, set aside, identity proved | split | Generator | M6 | 12-15 |
+| [ ] | MS06a | [MS06a](MS06a-pre-target-evidence.md) | Isolated pre-target evidence | MS05e closed, set aside, identity proved | S, 20-30 min | Evidence | M6a | 12 |
 | [ ] | MS06b | [MS06b](MS06b-target-policy-primitives.md) | Inactive target policy primitives | MS06a | M, 35-50 min | Generator engine | M6b | 13 |
 | [ ] | MS06c | MS06c1-MS06c2 below | Target transport and atomic activation (parent) | MS06b | split | Generator | M6c | 14a-14b |
 | [ ] | MS06c1 | [MS06c1](MS06c1-target-transport.md) | Nullable target transport; no policy activation | MS06b | M, 45-60 min + GG check/GR | Generator plumbing | M6c1 | 14a |
@@ -139,13 +142,23 @@ r6a/r6b explicitly inspect both deep `identity.currentMatches` fields; an exact-
 non-generation-file changes permits retention, otherwise their named MEGA-REFRESH step replaces
 invalidated coverage. Exit 0 alone is not compatibility.
 r6b reconciles deep/live-CV3/manual/quick evidence and reports per-app standing cost. r6c closes CI before
-the one combined commit. MS05e then measures and implements the approved sign repair before
-MS06a captures before-data. A remaining CV6 timing miss is a named S-OD4 item, not an owner stop;
-changing its target, strategy or another recorded decision still needs the owner's answer.
+the one combined commit. **MS05e is closed "measured, set aside", not an accepted repair
+(CV6-05 / S-OD6).** Fable chose Q1(b), withdraw the pool, and Q2(a), keep the contracts.
+The orchestrator saved `docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch`, restored
+the 12 existing files from `f7be90f`, deleted the added guided suite and proved identity over
+the fingerprinted source/artifact surface, with no untracked fingerprinted input and no run.
+After the developer's report/evidence/notes corrections and SA1's cross-check of these pack
+edits, MS06a captures all 17 cells/204 requests on the restored first-allowed sign pass.
+Its prerequisite is **MS05e closed, set aside, identity proved**, not an accepted pool or a
+passing Normal CV6. S-AV01 remains open under the fixed Q2(a) endings below.
 MS06b's pure policy helpers are inactive; its sole production-path edit forwards an explicitly
 present strategy target and is tested for number/null/absence. MS06c1 adds nullable transport
 and typed objectives with unchanged numeric ranking, but draws no target and activates no
-sign/cells policy. MS06c2 draws the one target and connects all stages atomically. Waves 14a/14b
+policy. MS06c2 draws the one target and activates all candidate-comparing stages atomically.
+Under CV6-05 the real `signs` strategy receives `options.target` and ignores it; its keeper view
+preserves the originating target for local acceptance and `attemptBest` continuation.
+MS06 makes no edit to `greater-than.js` and adds no pool, constant or comparator there.
+Refinement is still not entered for models with inequalities. Waves 14a/14b
 replace 14; historical references to MS06c mean both parts, not a dispatchable old file.
 MS07a kernels precede registration MS07b, selection MS07c, merger MS07d and first GQ MS07e.
 MS13a graph stays inactive until consumers MS13b and activation MS13c. MS14a/MS15a kernels likewise
@@ -166,6 +179,7 @@ accepted. The owner-ordered pause commit `a7f6660` was not green; preserve it as
 | S-OD4 (c1), (c2) | Final qualification alone determines all offers; a bounded fallback is a miss. Default attempts are 8/4/2 by <=81/82-144/>144 cells; explicit settings win; R5 remains 256 until the final recheck. |
 | S-OD4 stops/evidence | Correctness or a proposed recorded-decision change stops for the owner. Performance/availability is a named numerical item, first MS07e then MS18c/MS18d, and work continues within existing bounds. No new evidence class/tooling task for a slow intermediate cell. |
 | S-OD4 reviews/scope | All six S3 groups remain. Analyst cross-review only on the named semantics tasks below; MS08a supplies the technique template. |
+| S-OD6 (MS05e D1), answered CV6-05 | Owner delegated both choices to Fable on 2026-11-14 at 16:38. Fable chose Q1(b), withdraw the pool, and Q2(a), keep the contracts and let final qualification decide the offer. MS05e closes "measured, set aside"; the candidate patch and all measurements remain history, baseline identity is proved without a run. Greater-Than transports but does not consume the target in its first-allowed sign dig; MS06 edits no `greater-than.js`. S-AV01 follows the three fixed endings below; no present budget/offer change or future improvement feature is authorized. |
 
 The following are serial ownership transfers, not permission for parallel edits:
 
@@ -182,7 +196,7 @@ The following are serial ownership transfers, not permission for parallel edits:
 | Subset engine/suite | MS14a/b after MS04; MS14c changes existing Killer tests only |
 | Digger | retained MS05b1, MS05r3, MS05r4 (allowance literal), MS05r5p (attempt default), MS06b/c1/c2 |
 | Pipeline/store attempt defaults and controls | MS05r5p: one size policy, default/explicit intent, once-only legacy migration and effective controls; recorded-attempt history/cache/export replay, with narrowly coupled app/history/cache/export handoff edits only if needed (RS01) |
-| Greater-Than technique-oracle sign dig and its focused quick suite | MS05e algorithm; MS06b tests inert caller forwarding; MS06c2 activates/tests the originating target without editing the sign algorithm |
+| Greater-Than first-allowed sign dig and target transport | MS05e measured/set aside under CV6-05; no retained guided suite. MS06b tests inert caller forwarding; MS06c1 uses the keeper view; MS06c2 proves the real `signs` route in `digger-target`, with target use only in later local/attemptBest continuation. No MS06 edit to `greater-than.js`. |
 | Events/pipeline/result view/app | MS05a transport, retained MS05b1 activation, MS05r3 work, MS06c1 nullable target transport; MS06c2 activates value production |
 | `generator/js/engine/explain-data.js`, tune explanation, shallow-warning grammar | MS05b1 finishes MS05a's handoff; MS06c2 later target facts |
 | Seven manual exactness/warning consumer contracts | MS05r2 absorbs MS05b2; GD owners run them, no threshold relaxation |
@@ -200,7 +214,7 @@ The following are serial ownership transfers, not permission for parallel edits:
 | Qualifier/record helper/suite | MS05r2 predicate, MS05r5p default-contract header/tests, MS07d merger; MS07e/MS18c use it |
 | Cache/history/version | MS05r5p recorded-attempt replay/intent handoff only (no version or history migration); MS17a history marker; MS17b rating/cache/reference freeze |
 | Live qualification table, v2 archive, support lists | MS18c only |
-| Qualification-authorized performance targets | MS18d only; no post-GP relaxation |
+| Qualification-authorized performance targets | MS18d under the existing rule; CV6-05's conditional final Normal contract is decided through MS18c and implemented in one assigned step before MS18d timing, never after GP |
 | Regression/replay fixtures and `player/js/ui/help-examples.js` | behavior owner using its gate; recovery final GG/GR/pins exclusively MS05r6a, r6b checks current merges; no recovery GH or separate fixture writer |
 | Standing quick cost, AGENTS quick comments and both developer-guide testing paragraphs | MS05r6b before final quick freeze; actual cost data afterwards in the separate report, acknowledged with combined acceptance |
 | `.github/scripts/generator-suites.sh`, both workflows and bounded CI manifest | MS05r6c first; each later suite-adding task owns its group/membership update; MS18e owns the final-tree audit and v3 PR CI |
@@ -215,6 +229,10 @@ outside the scope rather than quietly taking another task's work.
    step evidence on the same preserved tree), then dispatches one named task.
 2. Developer reads `AGENTS.md`, this checklist and the task. Implement only its scope; run its targeted
    checks and owned gates, recording actual commands, exit codes, counts and durations.
+   **CV6-05 diagnosis-gate rule:** where a task has a diagnosis gate, the developer reports it
+   as a table using the gate's exact predicate, every condition included, and waits for the
+   orchestrator before the first production edit. This also applies when the table supports
+   proceeding; S-OD4's performance-only rule does not waive the gate. No task scope changes.
 3. **Developer never stages, commits, stashes, resets, pushes or switches branches; never edits the
    task pack, checklist or Execution log.** Do not change unrelated work in this shared checkout.
 4. Orchestrator re-runs the task's quick checks, reviews the diff and acceptance IDs, fills the empty
@@ -257,21 +275,40 @@ do not confuse that with stopping the task for an owner decision.
   The orchestrator checks MS08b-MS12, MS14a-c, MS15b and MS16 against that template and the generic
   soundness/order-invariant suites. Other tasks receive orchestrator review, not routine analyst review.
 
-Initial carried findings (historical numbers, not measurements of the resumed defaults):
+Carried findings (pause-origin numbers remain historical unless a later source/disposition is stated):
 
-| Item | Evidence at the pause | First/final owner |
+| Item | Source-qualified evidence and current disposition | First/final owner |
 |---|---|---|
-| S-AV01 Greater-Than Normal CV6 | 2035 ms p95 against 1400 ms scaled assertion, 700 ms design target; CV6-01 | MS05e repair/result, MS07e, MS18d |
+| S-AV01 Greater-Than Normal CV6 | **Open, CV6-05 Q2(a).** Restored `f7be90f` source: 5,209 ms p95 against 1,400 ms on seeds 300-319; 10.6 s p95 on 7000-7039. `BUDGET_MS.normal` stays 700 ms and GP rules stay unchanged. These cohorts are not final qualification; the three fixed endings below govern. Origin: CV6-01, 2,035 ms at MS04 | MS07e, then MS18c/MS18d; MS18e audit |
 | S-AV02 mega12 Nightmare | r4 seed 1: 48.202 s against 6 s; seed 3: 47.1 s, shallow at 8 attempts | r5p/r5m update, MS07e, MS18c/MS18d |
 | S-AV03 mega16 Nightmare | r4 quick: 60 s timeouts; seed 3 diagnostic: 310.2 s, exact at attempt 6; app 120 s. **PR-S2 remark:** on the reviewed size-default search, mega16 Nightmare fails the 30 s qualification budget by its work ceiling, not as a tail | r5p/r5m update, MS07e, MS18c/MS18d |
 | S-AV04 samurai Nightmare/G13 | r4: 104.712 s of 120 s, shallow at 8 attempts | r5p/r6a update, MS07e, MS18c/MS18d |
 | S-AV05 Killer Hard | 0/12 exact at every R5 setting; S3 is not expected to repair its weight problem | MS07e owner question if hidden, MS18c |
 | S-AV06 Killer Expert | 0/12 exact at every R5 setting; no weight change without the later answer | MS07e owner question if hidden, MS18c |
 | S-AV07 classic9 Nightmare | 2/12 exact at none and 256; S2.2 is expected to add the missing tier | MS07e, MS18c |
-| S-AV08 standing quick cost | b1 partial Generator chunks 713.8 s, not a complete baseline | r6b per-app measurement; MS07e proposal if Generator remains above about 5 minutes |
+| S-AV08 standing quick cost | **648.0 s**, MS05r6c Generator quick baseline retained by the CV6-05 restoration/identity proof. Rejected pool: 726.2 s, historical only. Earlier b1's 713.8 s was partial, not a complete baseline | MS07e proposal if Generator remains above about 5 minutes; MS18d/MS18e |
+| S-AV16 Greater-Than Nightmare CV6 | **Withdrawn as a current-source item (CV6-05).** Rejected pool p95 40,396 ms against 20,000 ms remains historical evidence. Restored source returns to the observed 19,192 ms pass; see the margin note below | History retained; MS18e audit, not an open pool regression |
+| S-AV17 pool's neighbour and quick-cost regressions | **Withdrawn as a current-source item (CV6-05).** Preserve candidate Easy/Hard/Expert slowdowns and 726.2 s quick cost as measured history; do not describe them as the restored source | History retained; MS18e audit, not an open pool regression |
+
+**CV6-05: S-AV01's three fixed endings.** Nobody now edits, skips or wraps the Normal CV6
+assertion. It is manual, outside the quick set and CI, and its honest red outcome blocks no
+task. Keep Greater-Than Normal offered until final qualification; no interim pruning.
+
+| Final outcome | Binding S-AV01 disposition |
+|---|---|
+| Normal fails final qualification at MS18c | Hide it by the existing rule and close S-AV01 as **"not offered"**. Its CV6 timing case follows the same recorded MS18c population treatment as every hidden cell's manual cases; no special treatment. |
+| Normal qualifies but final-source CV6 still exceeds its assertion | MS18c returns through the orchestrator to the plan author with final-source numbers **before MS18d's final timing runs**; decide the first branch of fallback (b) once on those data. Its fixed form is one base value in milliseconds for `BUDGET_MS.normal`, the same base for a Greater-Than Normal GP target if GP has one, the machine factor left to `SG.test.timeLimit`, never above 10,000 ms (Expert and the qualification budget). Change the test, corresponding GP target, `generator/design.md` section 9.1 (the `greaterThan` Normal cell) and both developer guides in that same assigned step. Until that recorded decision the 700 ms stands. Qualification never makes a failed CV6 assertion pass. |
+| CV6 passes on the final source | Close S-AV01 with the measured final-source result; no contract adjustment is inferred. |
+
+**Greater-Than Nightmare margin for MS07e (CV6-05):** the restored-source observation is
+19,192 ms of 20,000 ms, a pass with about **4% margin**, not a reusable upper bound. MS07's
+chain work will move it. If it fails later, the task that moved it records a new named item
+with its own source/numbers; do not attribute that to the withdrawn pool or revive S-AV16
+as though the candidate remained active. This note adds no measurement to the CV6-05 closure.
 
 **PR-S2 remark (Fable, `92a7693`, archived in `docs/difficulty-v3/clarifications-resolved.md`):** MS05e-MS18e
-continue as written. MS18d profiles the single S-AV11 Jigsaw request when doing its performance
+were confirmed as written at that review; CV6-05 subsequently closes MS05e and amends the sign-target
+handoff as above. MS18d profiles the single S-AV11 Jigsaw request when doing its performance
 work; until then its stage/cause is unknown, not a dig cost. MS07e/MS18d retain the existing
 per-request `stats` counters (`samples`, `attempts`, `oracleCalls`) as the later feature's baseline.
 These are reporting/evidence notes, not new scope, caps or budgets.
@@ -469,7 +506,7 @@ No implementer chooses an alternative from the original reports.
 | AUTH-S1 | Live qualification table updated in place, v2 archived first |
 | AUTH-S2; PROC-S1 | Baseline/tooling, orders, S1, split chains, all S3, version/final evidence |
 | AC01, Parts F/G | Analytic lower bound, null/reason when undefined, defined values unclamped, raw position retained; bounded search is not a global-minimum proof |
-| CV6-01 / S-OD1, Part H; amended by S-OD4 | MS05e follows the r6b/r6c combined commit, before MS06a. Diagnose the trap, then technique-pass-only pool initially 8; at most one comparison each of 4/8/16. Keep R6 comparator, work and log semantics; no floors/caps/orders/weights/bands/exactness/CV6 change. A remaining timing miss is S-AV01 for MS07e/MS18d, not a stop. A different strategy or slower CV6/GP contract still needs the recorded fallback decision. MS06b forwards target; no inequality refinement. |
+| CV6-01 / S-OD1, Part H; superseding disposition CV6-05 / S-OD6 | The guided sign dig was measured and set aside (CV6-05); fallback (b) applies. Q1(b) restores the first-allowed sign pass by proved identity; Q2(a) keeps Normal's 700 ms base and GP rules, with S-AV01's three fixed endings in section 2. No new strategy, IR29 optimization, cap/floor/order/weight/band or qualification change. The target is transported, not consumed, by the sign dig; MS06 edits no `greater-than.js`, uses the keeper view and later local/attemptBest continuation, and never enters inequality refinement. |
 | CV6-02 / S-OD2, Part H; historical stop rule superseded | Preserve active b1 and r1-r4 evidence, unchanged R5 selector and private backups. The pause commit is not acceptance. r6b audits the combined bundle, r6c closes CI, then one combined commit. No dark switch, provisional allowance or further checkpoint commit. S-OD3/S-OD4 below replace the former bans on G13 persistence/mega tier changes and performance-only stops. |
 | CV6-03 / S-OD3 | 256 retained. G13 persistence at r6a is allowed with its seed 42, Nightmare request and 120 s recorder guard unchanged. Full-attempt mega Nightmare leaves quick coverage (mega16 has only scripted quick stop control); a tool-based deep tier keeps all 14 original calls and every invariant/CV5 relation. Quick retains a real one-attempt mega12 request; SA1 conditions (i)-(iii) apply. |
 | CV6-03 / S-OD4 (c1), (c2) | Every offer follows final qualification; bounded fallbacks are misses. One exported defaultMaxAttempts(cellCount) gives 8/4/2 at <=81/82-144/>144. CV6-04 corrects (c2): a stored value equal to the old default 8 without the intent marker is read as default on every board; other stored numbers and marked explicit settings remain. The same-task [MS05r5p legacy-8 fix round](MS05r5p-legacy-8-fix-round.md) completes before r6b, with no engine change or new diagnostic/deep measurement. No interim pruning, browser-budget raise or R5 re-selection. |
@@ -478,7 +515,7 @@ No implementer chooses an alternative from the original reports.
 | CV6-03 sub-questions (1)-(3) / S-OD4 | CV3 mega16 Nightmare is not deferred; matching r5m puzzles may be reused with CV3's checks. Implementation: B1 selects the live route for MS05b3 instead. >240 s is an availability item, not a stop. Apply the same authorized contract to mega hell1 at MS07b. r6c owns bounded quick CI before the combined commit; every later suite owner updates its group, and MS18e owns the final PR CI. |
 | FS22 implementation disposition, updated by S-OD3/S-OD4 and B1 | MS05r2 absorbed consumers; b3 follows r5p/r5/r5m under the approved contracts, not passed original mega limits. Lazy per-level I5/CV3 remains; the mega CV3 cells run live under B1 with their own checks. Syntax is not GD evidence. MS14c stays corpus-free; final I5 remains per level. |
 | SA1 IR02 / IR04, implementation review 2026-11-14 | Binding B1 is copied into MS05b3: live mega CV3, no record provider/replay entry point/reuse code or edits to the deep tool/fixture/SOURCE_FILES. r6a/r6b check both currentMatches hashes explicitly; retain only a proved exact-diff non-generation-file mismatch, else execute their named MEGA-REFRESH step. Original hashes/records remain untouched. |
-| FS12-FS16 / FS20 implementation dispositions | `acceptReveal` receives current/next exact flags. A cells guided winner refused by the apply table ends that pass; local acceptance retains `next.score < spec.max`. MS06c1 transports null/inert metadata with no production draw; MS06c2 draws once and activates all stages, including strategy `options.target` for signs. No sign-only intermediate policy, new RNG stream or post-exact polishing. |
+| FS12-FS16 / FS20 implementation dispositions; CV6-05 sign handoff | `acceptReveal` receives current/next exact flags. A cells guided winner refused by the apply table ends that pass; local acceptance retains `next.score < spec.max`. MS06c1 transports null/inert metadata with no production draw; MS06c2 draws once and activates all candidate-comparing stages. The real `signs` strategy receives but ignores `options.target`; `digger-target` proves its originating target reaches the selected result. No partial intermediate policy, sign comparator, new RNG stream or post-exact polishing. |
 | FS17-FS19 implementation dispositions | Supplemental soundness inputs concatenate the complete existing seeded random population. MS07b keeps coupled registration/help and records a two-request non-vacuous Hell 1 pilot; MS07c owns the cutoff CLI/GP-cost and repeats the pilot only if C changes. GD/GQ planning uses these actuals without extending the 540-second ceiling. |
 | FS23, updated by S-OD4 | MS18d projects every final offered GP cell from GQ raw means before timing. A >450-second projection stops that command and becomes a named final-cost item; continue safe cells. No automatic tooling task, unsupported seed split, merged p95s, fewer requests or changed cold/warm protocol. Report an incomplete matrix honestly. |
 | FS25/FS26, updated by S-OD4 | Anchor I5/CV6 filters with `> `; selected total 1. b3 preserves 2/3 requests and eager aggregate API. No mega16 Nightmare deferral: use the approved per-request deep route when needed. Other unsafe commands are recorded with full populations as named items, not passed coverage or owner stops solely for time. |
@@ -498,8 +535,8 @@ The first three groups keep production generation, scoring, orders, support list
 | Hard and other nonvacuous levels need their tier | MS01, MS04, MS05a, retained b1, MS05r2/r6a/r6b; R1-R4 | canonical/reference agreement, keeper and wire exactness |
 | Continued search has a justified cost | MS05r1/r3/r4/r5p/r6a/r6b, MS18b; R5/R23/S-OD4 | measured local work, fixed selector, size-dependent attempts and approved-contract evidence |
 | Activation has a reachable but honest acceptance boundary | MS05r1-r5m, MS05b3, MS05r6a-c; S-OD2-S-OD4 | preserved failures, owned pins, complete bounded quick/E/deep accounting, per-app cost, CI and one combined commit |
-| Greater-Than Normal remains honest without hiding CV6 | MS05e, MS06a/b/c, MS18d/e; CV6-01/S-OD1 | diagnosis first, unchanged CV6, literal-seed comparisons and Easy/Hard/Expert controls, fixed fallback |
-| Scores are sought across the band | MS02, MS06a/b/c1/c2/d, MS18a; R6/R7/R23 | one target, explicit strategy/sign connection, guarded all-stage policy, both positions, isolated/matched comparisons |
+| Greater-Than Normal remains honest without hiding CV6 | MS05e closed/set aside, MS06a/b/c, MS07e, MS18c/d/e; CV6-05 / S-OD6 | rejected candidate and identity proof preserved; unchanged contracts, no interim pruning, three fixed S-AV01 endings |
+| Scores are sought across the band | MS02, MS06a/b/c1/c2/d, MS18a; R6/R7/R23, CV6-05 | one target through comparing stages; sign dig transports/ignores it, later local continuation uses it; both positions and isolated/matched comparisons, including a valid null Greater-Than effect |
 | Honest chain/depth labels | MS07a/b/c; R9/R10 | shortest represented proof, enforced windows, measured C |
 | Named techniques replace generic proofs | MS08a/b/c, MS09a/b, MS10a/b, MS11a/b/c, MS12, MS13a/b/c, MS14a/b/c, MS15a/b, MS16; R11-R19 | each algorithm, soundness/coverage, full B |
 | Old puzzles/claims/history stay honest | MS04 and introducing tasks, MS17a/b; R20/R22 | separate references, cache 3, history 1 and compatible imports |
@@ -516,7 +553,7 @@ The first three groups keep production generation, scoring, orders, support list
 | S2.1 / R8/R21 | MS03a/b/c/d, MS04 | AUTH-S2, PROC-S1 |
 | S1.1 / R3-R5 | MS05a, retained b1, MS05r1-r5m, MS05b3, MS05r6a-c | S-OD2 absorbs b2/c/d; S-OD3/S-OD4 retain 256 and add the size default/approved validation contracts |
 | Recovery validation / R21 | MS05r4/r5/r5m/r6a-c, post-selection MS05b3 | S-OD3/S-OD4: old failures preserved, 520/5/14 E, full quick/deep/GD accounting, measured per-app cost and bounded CI |
-| Post-acceptance Greater-Than repair | MS05e; tested target forwarding MS06b/c2; final verification MS18d/e | CV6-01 / S-OD1 |
+| Measured Greater-Than experiment and restored sign-target route | MS05e closed/set aside; tested transport MS06b/c1/c2; item review MS07e and final disposition MS18c/d/e | CV6-01 / S-OD1, superseded for the pool/handoff by CV6-05 / S-OD6 |
 | S1.2 / R6/R7 | MS06a/b/c1/c2/d | SA1-Q-S4, SA2-Q-S03, AC01; FS12-FS16/FS20 |
 | S2.2 / R9/R10 | MS07a/b/c/d/e | SA1-Q-S1, SA2-Q-S04, PROC-S1 |
 | S3 group 1 / R11 | MS08a/b/c | confirmed R10 costs/limits, Part D |
@@ -710,7 +747,7 @@ S-OD2 **step evidence complete** handoff is reviewed for use inside the retained
 | GR | Same behavior owners, plus MS05a, MS06c1 and MS17b | After r6a: complete E five-wire/fourteen-analysis record/merge/write/check; G09-G13 wires, G01-G14 analyses. Earlier four-wire evidence stays historical. r6b checks current merges. MS06c1 permits only target metadata, not changed puzzles/ratings/old operations. |
 | GH | MS04 if affected; MS07b/c, all introducing/enhanced-proof tasks through MS16 | B bounded real sources, E write/check for every affected ID. No GH for inactive kernels; MS14c changes no finder. |
 | GQ-first | MS07e, merger prepared in MS07d | All Q135 cells, `--jobs=4`, per-cell JSON/markdown, checked complete merge; checkpoint-only report, no support changes. |
-| GD | MS04; MS05r6b; MS07e; MS17b; MS18e | Bounded difficulty coverage below; historical MS04 also ran killer/greater-than. MS05r2/MS07d use only fast fake-worker `--filter="qualification:"`. Post-selection b3 owns early I5/CV3/refusals; r6b closes its named outstanding CV3 list. MS18e reruns current-source selectors; MS14c is corpus-free. MS05e owns GD-CV6 separately. |
+| GD | MS04; MS05r6b; MS07e; MS17b; MS18e | Bounded difficulty coverage below; historical MS04 also ran killer/greater-than. MS05r2/MS07d use only fast fake-worker `--filter="qualification:"`. Post-selection b3 owns early I5/CV3/refusals; r6b closes its named outstanding CV3 list. MS18e owns full final GD; MS14c is corpus-free. MS05e's GD-CV6 experiment is closed/set aside; MS18c's conditional Normal CV6 below supplies the CV6-05 decision before GP. |
 | GD-I5/CV3 early | MS05b3 after r5p/r5/r5m; r6b reconciliation | Per-level I5 with `> <level>: <count> puzzles > I5:` (extra-regions includes variant); `> variants: <id> > CV3 <level>:` plus `> variants: <id> > CV3 unsupported:`. Selected total 1, same seeds/counts, jobs 1, locked <=540 s. B1 requires live mega Nightmare CV3, one locked command per cell, with deep occurrence-id references; >240 s is a named availability item. |
 | Recovery profiles | MS05r1 | G13, mega12 Nightmare seed 3, mega16 Nightmare seed 3; maxAttempts 1, actual per-attempt work and sample/local stage time; one bounded request/invocation. |
 | Recovery non-selecting diagnostics | MS05r4 | The same three requests at all 64/128/256/none, full normal attempts: 12 outcomes outside R5's matrix. Report all four even if none wins; do not change the selector. |
@@ -726,8 +763,9 @@ S-OD2 **step evidence complete** handoff is reviewed for use inside the retained
 | GP | MS13c and MS15b affected cells; MS18d entire final offered matrix | `node tests\perf.js --variant=<id> --level=<level> --runs=50 --warmup=0 --seed=7000 --gate`; final aggregate >=90%, all misses visible. Project before launch. Unsafe commands become named cost items, not automatic new tooling tasks; continue other cells without claiming an incomplete matrix passed. |
 | GS cap | MS05r4 (absorbed MS05d), repeated MS18b | Six cells x 64/128/256/none, 12 requests each, seed 20260101: 288 primary requests. r4 selected 256; the final changed winner needs the recorded owner decision. Closure diagnostics never become selecting cells. |
 | Mega hell1 / final deep | MS07b extends r5m; MS18e final-source closure | MS07b preserves fourteen additional hell1 occurrences/relations under the same quick/deep rule. Final current-source inventory: 28 Nightmare/hell1 occurrences, one per locked request. MS18e's offered mega CV3 cells run live, one locked cell at a time as in B1, with deep occurrence ids only as cross-references; no CV3 record-provider/reuse route, deep generation in CI or blanket per-technique deep rerun. |
-| GS-CV6 / GD-CV6 | MS05e | Diagnosis first; literal Normal seeds 300-319/7000-7039, Easy/Hard/Expert 300-319, matched repeats per task; fixed pool from 4/8/16. After MS05b3 use `--suite=greater-than --filter="> <level>: <count> puzzles > CV6:"` and I5 equivalents: 18 existing assertions, selected total 1 each, unchanged seeds/counts/CV6. Keep the leading boundary. Announce, lock, jobs 1/no --jobs, 540-second shards; no whole-corpus invocation. |
-| GG/GR/GH-CV6 | MS05e | Task's exact Greater-Than recipe. Complete current-source publication envelopes, but only 40 Greater-Than hash records, G11/G12 wire/analysis and Greater-Than help IDs may change; all other entries are invariant controls. Publish wire before recording analysis. |
+| GS-CV6 / GD-CV6 | MS05e, historical experiment closed/set aside | Preserve literal Normal 300-319/7000-7039 and Easy/Hard/Expert 300-319 comparisons, tried pools 4/8/16 and the 18 CV6/I5 selector outcomes. CV6-05 restores the first-allowed pass and keeps the failed candidate's evidence, not its algorithm. No repeat for this answer; subsequent tasks use the restored baseline and their own authorized evidence. |
+| GG/GR/GH-CV6 | MS05e, historical experiment closed/set aside | Candidate E and 12 pins stay recorded; the saved patch rebuilds their source. Production fixtures, pins, suite/CI lists and guides return to `f7be90f`; earlier E/quick/GD stand only after the orchestrator's exact-identity proof. Do not mix the rejected candidate with restored expectations or relabel its ledgers. |
+| Final Normal GD-CV6 disposition | MS18c, conditional under CV6-05 | If Normal qualifies, use compatible final-source CV6 evidence or collect only `--suite=greater-than --filter="> normal: 20 puzzles > CV6:"` before MS18d timing, with selected total 1, unchanged seeds/count/budget and existing lock/projection rules. This is not full GD or permission to alter an assertion; apply section 2's three endings. MS18e accounts for the final selector under the normal source-identity rules. |
 | GS target | MS06a before / MS06d after | All 17 cells before/after MS06c1 transport + atomic MS06c2 activation; retain isolated comparison and report every hit loss. |
 | GS window | MS07c, repeated MS18b | Three Nightmare cells x C4/C6, 12 requests each; more exact hits, tie 6. |
 | GS Hell 1 pilot | MS07b; MS07c repeats only if default C changes | `node tests\soak.js --variant=classic9 --level=hell1 --from=0 --count=2 --total-count=2 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\<task>\hell1-pilot.json`; exact two-request shard (bare --count=2 runs at least five at HEAD). Jobs 1/no --jobs; 540 s ceiling. Project unchanged 20-request GD/40-request GQ cost; pilot is not selection evidence. |
@@ -800,9 +838,10 @@ Per-puzzle I5/digLevel/soundness failures block. An aggregate hit-rate or timing
 **failed assertion**, with old/new exact counts, timings and source identities. Under S-OD4 it is
 routed first to MS07e, finally to MS18c/MS18d, and does not by itself stop the task. Classify exceptions:
 a recorded generation timeout is availability; lost/corrupt evidence or a wrong puzzle is correctness.
-Never change `BUDGET_MS` or call failed GD green. Release gates remain unsatisfied until honestly
-disposed of; changing one requires the owner. CV6's target/repair remain S-OD1; its timing-only stop
-is superseded by S-OD4.
+Never change `BUDGET_MS` without a recorded contract decision or call failed GD green. Release
+gates remain unsatisfied until honestly disposed of. CV6-05 leaves Normal's base at 700 ms,
+with no skipped/wrapped assertion; its sole conditional final contract decision follows section 2
+before MS18d timing. The sign repair was set aside, and S-OD4 still supersedes performance-only stops.
 
 **Variant GD after MS05b3:** lazy access isolates a level; it does not prove that level fits the
 time ceiling, nor bound every aggregate test. The harness uses case-insensitive substring
@@ -1037,4 +1076,5 @@ empty until that review. The analyst reports are traceability, not additional de
 | MS05r6a | Step evidence complete (S-OD2; combined commit after MS05r6b and MS05r6c); G13 persisted; complete E (520/5/14); 13 pins; COV01 for MS18e | 2 h 17 min developer in two rounds + 25 min review | about 1,748 | (combined) |
 | MS05r6b | Audit complete (S-OD2; combined commit with MS05r6c); quick sets green (Generator 3,262, Player 1,683); R6B-F01 fixed by MS05r5p; GD with S-AV07, S-AV14, S-AV15; standing cost measured (S-AV08) | 1 h 14 min developer in two runs + 15 min review | about 1,582 | (combined) |
 | MS05r6c | Accepted in the combined commit; CI groups over the bounded quick manifest; final quick runs green (Generator 3,262, Player 1,683); SA1's IR14/IR15/IR19 applied | 48 min developer + 15 min review | about 506 | `difficulty-v3 MS05` |
+| MS05e | Closed: measured, set aside (CV6-05, Q1(b) withdraw the pool, Q2(a) keep the contracts); runtime restored byte for byte to `f7be90f` with identity proof, no run; candidate kept as `candidate-pool-4.patch`; IR23 gate met and not taken | 2 h 51 min developer + about 25 min document rounds; SA1 review and cross-check | about 2,223 | `difficulty-v3 MS05e` |
 | MS05 (combined) | Accepted: retained MS05b1, MS05r1-r4, MS05r5p, MS05r5, MS05r5m, MS05b3, MS05r6a, MS05r6b, MS05r6c in one commit (S-OD2); the pause commit `a7f6660` was not green and was not acceptance | recovery developers 2026-11-13/14 + reviews | about 13,400 (developers of MS05r1-MS05r6c and the fix rounds; MS05b1 not recorded) | `difficulty-v3 MS05: required exactness with measured bounded recovery` |

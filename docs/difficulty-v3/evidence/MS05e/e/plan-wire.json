@@ -1,0 +1,52 @@
+[
+  {
+    "label": "e-wire-G09",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\wire\\G09.json"
+    ],
+    "projectionSeconds": 42,
+    "projectionBasis": "MEASURED 13.972 s by MS05r6a (b1-wire-G09, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-wire-G10",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\wire\\G10.json"
+    ],
+    "projectionSeconds": 77,
+    "projectionBasis": "MEASURED 25.802 s by MS05r6a (b1-wire-G10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-wire-G11",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\wire\\G11.json"
+    ],
+    "projectionSeconds": 120,
+    "projectionBasis": "STATED BOUND 120 s: the item generates Greater-Than puzzles with the chosen pool 4; the slowest single request of this task's pool-4 cohorts was 22.8 s (expert), 18.3 s (normal) and 6.9 s (hard), five requests per hash shard (docs/difficulty-v3/evidence/MS05e/comparison.md)"
+  },
+  {
+    "label": "e-wire-G12",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\wire\\G12.json"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "STATED BOUND 60 s: the item generates Greater-Than puzzles with the chosen pool 4; the slowest single request of this task's pool-4 cohorts was 22.8 s (expert), 18.3 s (normal) and 6.9 s (hard), five requests per hash shard (docs/difficulty-v3/evidence/MS05e/comparison.md)"
+  },
+  {
+    "label": "e-wire-G13",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\wire\\G13.json"
+    ],
+    "projectionSeconds": 67,
+    "projectionBasis": "MEASURED 22.167 s by MS05r6a (b1-wire-G13, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  }
+]

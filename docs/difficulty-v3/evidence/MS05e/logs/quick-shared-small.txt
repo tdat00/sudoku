@@ -1,0 +1,115 @@
+==== shard core-shared (1143 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook --results=..\docs\difficulty-v3\evidence\MS05e\quick\generator-core-shared.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (59 ms)
+ok   board-view: 37 passed  (73 ms)
+ok   constraints: 43 passed  (75 ms)
+ok   exchange: 20 passed  (220 ms)
+ok   harness: 25 passed  (2.03 s)
+ok   logical-solver: 100 passed  (260 ms)
+ok   model: 49 passed  (35 ms)
+ok   solver: 50 passed  (2.70 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.83 s)
+ok   tech-chain: 62 passed  (6.50 s)
+ok   tech-fish: 106 passed  (6.35 s)
+ok   tech-subset: 100 passed  (886 ms)
+ok   tech-wing: 168 passed  (1.60 s)
+ok   techniques: 165 passed  (1.49 s)
+ok   wordbook: 7 passed  (8 ms)
+
+Suites: 16
+Tests:  1143 total, 1143 passed, 0 failed, 0 skipped
+Time:   24.11 s running tests, 24.40 s total
+Results: docs/difficulty-v3/evidence/MS05e/quick/generator-core-shared.json
+==== shard steps (57 tests): node tests/node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS05e\quick\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL steps: 53 passed, 4 failed  (11.16 s)
+
+Failures:
+  FAIL steps > stepView: the tiers, the badge and the lines > marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view
+       AssertionError: expected {compact: 13, details: 14} to equal {compact: 13, details: 16}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:849:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the tiers, the badge and the lines > also tells a new hardest technique when the score is flat or falls (details view)
+       AssertionError: expected 2862 to be 1967
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:902:49
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:890:7)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1045:24
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1044:18
+  FAIL steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1082:26
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1078:58)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  57 total, 53 passed, 4 failed, 0 skipped
+Time:   11.16 s running tests, 11.34 s total
+Results: docs/difficulty-v3/evidence/MS05e/quick/generator-steps.json
+==== shard replay (155 tests): node tests/node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS05e\quick\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL replay: 150 passed, 5 failed  (10.60 s)
+
+Failures:
+  FAIL replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G11, G12, G01)
+       TypeError: Cannot read properties of undefined (reading 'before')
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1248:25
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1244:84)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: golden compact view and transitions > has 13 compact, 16 details and 18 distinct jump transitions in the 14 goldens
+       AssertionError: expected {compact: 13, details: 14} to equal {compact: 13, details: 16}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1270:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > labels a new hardest technique also at a flat or lower score (details: G13, G11)
+       AssertionError: expected Array(3)[2862, 1084, -1778] to equal Array(3)[1967, 1264, -703]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1279:59
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1277:9)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details
+       AssertionError: expected {compact: 13, details: 14} to equal {compact: 13, details: 16}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1586:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > frames the details jumps too: G06 R8C4 and the four sign jumps of G11
+       AssertionError: expected Array(2)[{kind: "sign", sign: 67}, {kind: "sign", sign: 5}] to equal Array(4)[{kind: "sign", sign: 7}, {kind: "sign", sign: 43}, {kind: "sign", sign: 75}, {kind: "sign", sign: 6}]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1596:63)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  155 total, 150 passed, 5 failed, 0 skipped
+Time:   10.60 s running tests, 10.78 s total
+Results: docs/difficulty-v3/evidence/MS05e/quick/generator-replay.json
+==== shard mega (111 tests): node tests/node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS05e\quick\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 111 passed  (11.25 s)
+
+Suites: 1
+Tests:  111 total, 111 passed, 0 failed, 0 skipped
+Time:   11.25 s running tests, 11.42 s total
+Results: docs/difficulty-v3/evidence/MS05e/quick/generator-mega.json
+shard core-shared: exit 0, 24.6 s
+shard steps: exit 1, 11.5 s
+shard replay: exit 1, 11.0 s
+shard mega: exit 0, 11.6 s
+FAILED: steps, replay
+MS05e exit=1 seconds=60.039

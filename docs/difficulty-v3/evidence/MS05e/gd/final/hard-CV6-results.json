@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "e6ba01d45657640021106bb97ef0d93267a9bb908f22f4703e691eec80f2e2aa",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["greater-than"],"filter":"> hard: 10 puzzles > CV6:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 20296.8,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 20111.1,
+    "tests": [
+      {"suite":"greater-than","name":"CV6: p95 of the generation time is within the design.md 9.1 budget of 6000 ms","fullName":"greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hard: 10 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 6000 ms","status":"pass","ms":20110.362,"reason":"","error":null,"ordinal":73}
+    ],
+    "suites": [
+      {"name":"greater-than","total":1,"passed":1,"failed":0,"skipped":0,"ms":20111.016}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=greater-than","--filter=> hard: 10 puzzles > CV6:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05e\\gd\\final\\hard-CV6-results.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

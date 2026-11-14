@@ -5,7 +5,7 @@
 | Depends on | MS06a accepted |
 | Size / active time | Medium; 35-50 minutes |
 | Owner / milestone | Generator; M6b tested policy, not activated |
-| Authority | R3/R6/R7 |
+| Authority | R3/R6/R7; CV6-05 sign-target handoff |
 | Status | Not started |
 
 ## Goal & business context
@@ -110,8 +110,9 @@ Test through the existing `options.strategy` seam, not a new export: a spy recor
 `SG.digger.digLevel(model, solution, level, rng, options)` three times with target 812, target null
 and no property. Expect `[true,812]`, `[true,null]`, `[false,undefined]`, and identical givens,
 rating, statistics and old log operations. Use a fresh `SG.rng.create(seed)` each time.
-Default cells generation is not yet a caller of the target policy; the `signs` pool's explicit
-target handling is already owned/tested by MS05e.
+Default cells generation is not yet a caller of the target policy. Under CV6-05 the restored registered
+`signs` strategy has no target consumer: it receives the option through this unchanged forwarding
+and ignores it. No edit to `greater-than.js`; MS06c1's keeper view carries its candidates' target.
 
 Resume anchors at `c9935cd`: `generator/js/engine/digger.js:671` (`removalObjective`),
 `:1681` (`distanceToLevel`), `:1717` (`qualityOf`), `:1999` (`SG.digger`),
@@ -159,8 +160,9 @@ vector above, not just comparator tests. No heavy gate. Use the checklist lock f
 ## Definition of done & handoff
 
 MS06c1 receives the exact helper/forwarding contracts for inactive transport. MS06c2 draws and
-activates targets in all stages, including the sign strategy. No guided-only or sign-only
-intermediate production policy is permitted.
+activates targets in the stages that compare candidates. The first-allowed sign pass transports,
+but does not consume, its option; Greater-Than's later local/attemptBest continuation uses the
+originating target. No guided-only or other partial intermediate production policy is permitted.
 
 ## Resume rules — S-OD4
 

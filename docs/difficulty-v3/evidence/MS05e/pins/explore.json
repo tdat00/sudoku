@@ -1,0 +1,8562 @@
+{
+ "G11": {
+  "moves": 108,
+  "transitions": [
+   {
+    "view": "compact",
+    "from": 0,
+    "to": 0,
+    "tier": null,
+    "role": "step",
+    "before": 0,
+    "after": 0,
+    "change": null,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": null,
+    "hardestBefore": null,
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "compact",
+    "from": 0,
+    "to": 1,
+    "tier": "first",
+    "role": "step",
+    "before": 0,
+    "after": 131,
+    "change": 131,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": null,
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "compact",
+    "from": 1,
+    "to": 62,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 134,
+    "change": 3,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "compact",
+    "from": 62,
+    "to": 102,
+    "tier": "jump",
+    "role": "step",
+    "before": 134,
+    "after": 589,
+    "change": 455,
+    "ratio": 4.3,
+    "newHardest": true,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": 606,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": {
+     "class": "multi-move",
+     "frame": null,
+     "k": 1,
+     "n": 40,
+     "kMove": 63,
+     "sign": null
+    },
+    "choice": "combined"
+   },
+   {
+    "view": "compact",
+    "from": 102,
+    "to": 107,
+    "tier": "newPeak",
+    "role": "step",
+    "before": 589,
+    "after": 963,
+    "change": 374,
+    "ratio": null,
+    "newHardest": true,
+    "hardestAfter": "xyWing",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": 2862,
+     "aboveBand": true,
+     "revealed": 4,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "compact",
+    "from": 107,
+    "to": 107,
+    "tier": null,
+    "role": "final",
+    "before": 963,
+    "after": 963,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "xyWing",
+    "hardestBefore": "xyWing",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 0,
+    "to": 0,
+    "tier": null,
+    "role": "step",
+    "before": 0,
+    "after": 0,
+    "change": null,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": null,
+    "hardestBefore": null,
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 0,
+    "to": 1,
+    "tier": "first",
+    "role": "step",
+    "before": 0,
+    "after": 131,
+    "change": 131,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": null,
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 1,
+    "to": 2,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 2,
+    "to": 3,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 3,
+    "to": 4,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 4,
+    "to": 5,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 5,
+    "to": 6,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 6,
+    "to": 7,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 7,
+    "to": 8,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 8,
+    "to": 9,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 9,
+    "to": 10,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 10,
+    "to": 11,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 11,
+    "to": 12,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 12,
+    "to": 13,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 13,
+    "to": 14,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 14,
+    "to": 15,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 15,
+    "to": 16,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 16,
+    "to": 17,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 17,
+    "to": 18,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 18,
+    "to": 19,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 19,
+    "to": 20,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 20,
+    "to": 21,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 21,
+    "to": 22,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 22,
+    "to": 23,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 23,
+    "to": 24,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 24,
+    "to": 25,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 25,
+    "to": 26,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 26,
+    "to": 27,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 27,
+    "to": 28,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 28,
+    "to": 29,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 29,
+    "to": 30,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 30,
+    "to": 31,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 31,
+    "to": 32,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 32,
+    "to": 33,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 33,
+    "to": 34,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 34,
+    "to": 35,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 35,
+    "to": 36,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 36,
+    "to": 37,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 37,
+    "to": 38,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 38,
+    "to": 39,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 39,
+    "to": 40,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 40,
+    "to": 41,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 41,
+    "to": 42,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 42,
+    "to": 43,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 43,
+    "to": 44,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 44,
+    "to": 45,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 45,
+    "to": 46,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 46,
+    "to": 47,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 47,
+    "to": 48,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 48,
+    "to": 49,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 49,
+    "to": 50,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 50,
+    "to": 51,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 51,
+    "to": 52,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 132,
+    "change": 1,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 52,
+    "to": 53,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 132,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 53,
+    "to": 54,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 132,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 54,
+    "to": 55,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 132,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 55,
+    "to": 56,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 134,
+    "change": 2,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 56,
+    "to": 57,
+    "tier": null,
+    "role": "step",
+    "before": 134,
+    "after": 134,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 57,
+    "to": 58,
+    "tier": null,
+    "role": "step",
+    "before": 134,
+    "after": 134,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 58,
+    "to": 59,
+    "tier": null,
+    "role": "step",
+    "before": 134,
+    "after": 134,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 59,
+    "to": 60,
+    "tier": null,
+    "role": "step",
+    "before": 134,
+    "after": 134,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 60,
+    "to": 61,
+    "tier": null,
+    "role": "step",
+    "before": 134,
+    "after": 134,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 61,
+    "to": 62,
+    "tier": null,
+    "role": "step",
+    "before": 134,
+    "after": 134,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 62,
+    "to": 63,
+    "tier": "jump",
+    "role": "step",
+    "before": 134,
+    "after": 606,
+    "change": 472,
+    "ratio": 4.5,
+    "newHardest": true,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": {
+     "class": "single-sign",
+     "frame": {
+      "kind": "sign",
+      "sign": 67
+     },
+     "k": null,
+     "n": null,
+     "kMove": null,
+     "sign": 67
+    },
+    "choice": "checked"
+   },
+   {
+    "view": "details",
+    "from": 63,
+    "to": 64,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 64,
+    "to": 65,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 65,
+    "to": 66,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 66,
+    "to": 67,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 67,
+    "to": 68,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 68,
+    "to": 69,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 69,
+    "to": 70,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 70,
+    "to": 71,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 71,
+    "to": 72,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 72,
+    "to": 73,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 73,
+    "to": 74,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 74,
+    "to": 75,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 75,
+    "to": 76,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 76,
+    "to": 77,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 77,
+    "to": 78,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 78,
+    "to": 79,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 79,
+    "to": 80,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 80,
+    "to": 81,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 81,
+    "to": 82,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 82,
+    "to": 83,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 83,
+    "to": 84,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 84,
+    "to": 85,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 85,
+    "to": 86,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 86,
+    "to": 87,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 606,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 87,
+    "to": 88,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 603,
+    "change": -3,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 88,
+    "to": 89,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 89,
+    "to": 90,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 90,
+    "to": 91,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 91,
+    "to": 92,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 92,
+    "to": 93,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 93,
+    "to": 94,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 94,
+    "to": 95,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 95,
+    "to": 96,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 96,
+    "to": 97,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 97,
+    "to": 98,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 98,
+    "to": 99,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 603,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 99,
+    "to": 100,
+    "tier": null,
+    "role": "step",
+    "before": 603,
+    "after": 599,
+    "change": -4,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 100,
+    "to": 101,
+    "tier": null,
+    "role": "step",
+    "before": 599,
+    "after": 596,
+    "change": -3,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 101,
+    "to": 102,
+    "tier": null,
+    "role": "step",
+    "before": 596,
+    "after": 589,
+    "change": -7,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 102,
+    "to": 103,
+    "tier": "jump",
+    "role": "step",
+    "before": 589,
+    "after": 2862,
+    "change": 2273,
+    "ratio": 4.8,
+    "newHardest": true,
+    "hardestAfter": "nishio",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": {
+     "class": "single-sign",
+     "frame": {
+      "kind": "sign",
+      "sign": 5
+     },
+     "k": null,
+     "n": null,
+     "kMove": null,
+     "sign": 5
+    },
+    "choice": "checked"
+   },
+   {
+    "view": "details",
+    "from": 103,
+    "to": 104,
+    "tier": "newPeak",
+    "role": "step",
+    "before": 2862,
+    "after": 1084,
+    "change": -1778,
+    "ratio": null,
+    "newHardest": true,
+    "hardestAfter": "xyWing",
+    "hardestBefore": "nishio",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 2,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 104,
+    "to": 105,
+    "tier": null,
+    "role": "step",
+    "before": 1084,
+    "after": 1084,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "xyWing",
+    "hardestBefore": "xyWing",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 105,
+    "to": 106,
+    "tier": null,
+    "role": "step",
+    "before": 1084,
+    "after": 972,
+    "change": -112,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "xyWing",
+    "hardestBefore": "xyWing",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 2,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 106,
+    "to": 107,
+    "tier": null,
+    "role": "step",
+    "before": 972,
+    "after": 963,
+    "change": -9,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "xyWing",
+    "hardestBefore": "xyWing",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 107,
+    "to": 107,
+    "tier": null,
+    "role": "final",
+    "before": 963,
+    "after": 963,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "xyWing",
+    "hardestBefore": "xyWing",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   }
+  ],
+  "steps": {
+   "compact": [
+    {
+     "index": 0,
+     "position": 0,
+     "first": 0,
+     "last": 0,
+     "transition": null,
+     "before": null,
+     "after": null,
+     "parts": [
+      {
+       "key": "replay.solution"
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "position": 0,
+     "first": 0,
+     "last": 0,
+     "transition": null,
+     "before": 0,
+     "after": 0,
+     "parts": [
+      {
+       "key": "replay.signs"
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "position": 1,
+     "first": 1,
+     "last": 1,
+     "transition": "first",
+     "before": 0,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.clues"
+      }
+     ]
+    },
+    {
+     "index": 3,
+     "position": 62,
+     "first": 2,
+     "last": 62,
+     "transition": null,
+     "before": 131,
+     "after": 134,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 4,
+     "position": 102,
+     "first": 63,
+     "last": 102,
+     "transition": "jump",
+     "before": 134,
+     "after": 589,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      },
+      {
+       "key": "replay.folded.peak",
+       "args": {
+        "peak": 606
+       }
+      }
+     ]
+    },
+    {
+     "index": 5,
+     "position": 107,
+     "first": 103,
+     "last": 107,
+     "transition": "newPeak",
+     "before": 589,
+     "after": 963,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      },
+      {
+       "key": "replay.reveal"
+      },
+      {
+       "key": "replay.signDig.some"
+      },
+      {
+       "key": "replay.reveal"
+      },
+      {
+       "key": "replay.signDig.some"
+      },
+      {
+       "key": "replay.folded.reveal",
+       "args": {
+        "peak": 2862,
+        "revealed": 4
+       }
+      }
+     ]
+    },
+    {
+     "index": 6,
+     "position": 107,
+     "first": 107,
+     "last": 107,
+     "transition": null,
+     "before": 963,
+     "after": 963,
+     "parts": [
+      {
+       "key": "replay.final.signs"
+      }
+     ]
+    }
+   ],
+   "details": [
+    {
+     "index": 0,
+     "position": 0,
+     "first": 0,
+     "last": 0,
+     "transition": null,
+     "before": null,
+     "after": null,
+     "parts": [
+      {
+       "key": "replay.solution"
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "position": 0,
+     "first": 0,
+     "last": 0,
+     "transition": null,
+     "before": 0,
+     "after": 0,
+     "parts": [
+      {
+       "key": "replay.signs"
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "position": 1,
+     "first": 1,
+     "last": 1,
+     "transition": "first",
+     "before": 0,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.clues"
+      }
+     ]
+    },
+    {
+     "index": 3,
+     "position": 2,
+     "first": 2,
+     "last": 2,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 4,
+     "position": 3,
+     "first": 3,
+     "last": 3,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 5,
+     "position": 4,
+     "first": 4,
+     "last": 4,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 6,
+     "position": 5,
+     "first": 5,
+     "last": 5,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 7,
+     "position": 6,
+     "first": 6,
+     "last": 6,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 8,
+     "position": 7,
+     "first": 7,
+     "last": 7,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 9,
+     "position": 8,
+     "first": 8,
+     "last": 8,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 10,
+     "position": 9,
+     "first": 9,
+     "last": 9,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 11,
+     "position": 10,
+     "first": 10,
+     "last": 10,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 12,
+     "position": 11,
+     "first": 11,
+     "last": 11,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 13,
+     "position": 12,
+     "first": 12,
+     "last": 12,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 14,
+     "position": 13,
+     "first": 13,
+     "last": 13,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 15,
+     "position": 14,
+     "first": 14,
+     "last": 14,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 16,
+     "position": 15,
+     "first": 15,
+     "last": 15,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 17,
+     "position": 16,
+     "first": 16,
+     "last": 16,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 18,
+     "position": 17,
+     "first": 17,
+     "last": 17,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 19,
+     "position": 18,
+     "first": 18,
+     "last": 18,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 20,
+     "position": 19,
+     "first": 19,
+     "last": 19,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 21,
+     "position": 20,
+     "first": 20,
+     "last": 20,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 22,
+     "position": 21,
+     "first": 21,
+     "last": 21,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 23,
+     "position": 22,
+     "first": 22,
+     "last": 22,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 24,
+     "position": 23,
+     "first": 23,
+     "last": 23,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 25,
+     "position": 24,
+     "first": 24,
+     "last": 24,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 26,
+     "position": 25,
+     "first": 25,
+     "last": 25,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 27,
+     "position": 26,
+     "first": 26,
+     "last": 26,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 28,
+     "position": 27,
+     "first": 27,
+     "last": 27,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 29,
+     "position": 28,
+     "first": 28,
+     "last": 28,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 30,
+     "position": 29,
+     "first": 29,
+     "last": 29,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 31,
+     "position": 30,
+     "first": 30,
+     "last": 30,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 32,
+     "position": 31,
+     "first": 31,
+     "last": 31,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 33,
+     "position": 32,
+     "first": 32,
+     "last": 32,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 34,
+     "position": 33,
+     "first": 33,
+     "last": 33,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 35,
+     "position": 34,
+     "first": 34,
+     "last": 34,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 36,
+     "position": 35,
+     "first": 35,
+     "last": 35,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 37,
+     "position": 36,
+     "first": 36,
+     "last": 36,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 38,
+     "position": 37,
+     "first": 37,
+     "last": 37,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 39,
+     "position": 38,
+     "first": 38,
+     "last": 38,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 40,
+     "position": 39,
+     "first": 39,
+     "last": 39,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 41,
+     "position": 40,
+     "first": 40,
+     "last": 40,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 42,
+     "position": 41,
+     "first": 41,
+     "last": 41,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 43,
+     "position": 42,
+     "first": 42,
+     "last": 42,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 44,
+     "position": 43,
+     "first": 43,
+     "last": 43,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 45,
+     "position": 44,
+     "first": 44,
+     "last": 44,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 46,
+     "position": 45,
+     "first": 45,
+     "last": 45,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 47,
+     "position": 46,
+     "first": 46,
+     "last": 46,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 48,
+     "position": 47,
+     "first": 47,
+     "last": 47,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 49,
+     "position": 48,
+     "first": 48,
+     "last": 48,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 50,
+     "position": 49,
+     "first": 49,
+     "last": 49,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 51,
+     "position": 50,
+     "first": 50,
+     "last": 50,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 52,
+     "position": 51,
+     "first": 51,
+     "last": 51,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 53,
+     "position": 52,
+     "first": 52,
+     "last": 52,
+     "transition": null,
+     "before": 131,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 54,
+     "position": 53,
+     "first": 53,
+     "last": 53,
+     "transition": null,
+     "before": 132,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 55,
+     "position": 54,
+     "first": 54,
+     "last": 54,
+     "transition": null,
+     "before": 132,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 56,
+     "position": 55,
+     "first": 55,
+     "last": 55,
+     "transition": null,
+     "before": 132,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 57,
+     "position": 56,
+     "first": 56,
+     "last": 56,
+     "transition": null,
+     "before": 132,
+     "after": 134,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 58,
+     "position": 57,
+     "first": 57,
+     "last": 57,
+     "transition": null,
+     "before": 134,
+     "after": 134,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 59,
+     "position": 58,
+     "first": 58,
+     "last": 58,
+     "transition": null,
+     "before": 134,
+     "after": 134,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 60,
+     "position": 59,
+     "first": 59,
+     "last": 59,
+     "transition": null,
+     "before": 134,
+     "after": 134,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 61,
+     "position": 60,
+     "first": 60,
+     "last": 60,
+     "transition": null,
+     "before": 134,
+     "after": 134,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 62,
+     "position": 61,
+     "first": 61,
+     "last": 61,
+     "transition": null,
+     "before": 134,
+     "after": 134,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 63,
+     "position": 62,
+     "first": 62,
+     "last": 62,
+     "transition": null,
+     "before": 134,
+     "after": 134,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 64,
+     "position": 63,
+     "first": 63,
+     "last": 63,
+     "transition": "jump",
+     "before": 134,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 65,
+     "position": 64,
+     "first": 64,
+     "last": 64,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 66,
+     "position": 65,
+     "first": 65,
+     "last": 65,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 67,
+     "position": 66,
+     "first": 66,
+     "last": 66,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 68,
+     "position": 67,
+     "first": 67,
+     "last": 67,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 69,
+     "position": 68,
+     "first": 68,
+     "last": 68,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 70,
+     "position": 69,
+     "first": 69,
+     "last": 69,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 71,
+     "position": 70,
+     "first": 70,
+     "last": 70,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 72,
+     "position": 71,
+     "first": 71,
+     "last": 71,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 73,
+     "position": 72,
+     "first": 72,
+     "last": 72,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 74,
+     "position": 73,
+     "first": 73,
+     "last": 73,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 75,
+     "position": 74,
+     "first": 74,
+     "last": 74,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 76,
+     "position": 75,
+     "first": 75,
+     "last": 75,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 77,
+     "position": 76,
+     "first": 76,
+     "last": 76,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 78,
+     "position": 77,
+     "first": 77,
+     "last": 77,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 79,
+     "position": 78,
+     "first": 78,
+     "last": 78,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 80,
+     "position": 79,
+     "first": 79,
+     "last": 79,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 81,
+     "position": 80,
+     "first": 80,
+     "last": 80,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 82,
+     "position": 81,
+     "first": 81,
+     "last": 81,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 83,
+     "position": 82,
+     "first": 82,
+     "last": 82,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 84,
+     "position": 83,
+     "first": 83,
+     "last": 83,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 85,
+     "position": 84,
+     "first": 84,
+     "last": 84,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 86,
+     "position": 85,
+     "first": 85,
+     "last": 85,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 87,
+     "position": 86,
+     "first": 86,
+     "last": 86,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 88,
+     "position": 87,
+     "first": 87,
+     "last": 87,
+     "transition": null,
+     "before": 606,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 89,
+     "position": 88,
+     "first": 88,
+     "last": 88,
+     "transition": null,
+     "before": 606,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 90,
+     "position": 89,
+     "first": 89,
+     "last": 89,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 91,
+     "position": 90,
+     "first": 90,
+     "last": 90,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 92,
+     "position": 91,
+     "first": 91,
+     "last": 91,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 93,
+     "position": 92,
+     "first": 92,
+     "last": 92,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 94,
+     "position": 93,
+     "first": 93,
+     "last": 93,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 95,
+     "position": 94,
+     "first": 94,
+     "last": 94,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 96,
+     "position": 95,
+     "first": 95,
+     "last": 95,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 97,
+     "position": 96,
+     "first": 96,
+     "last": 96,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 98,
+     "position": 97,
+     "first": 97,
+     "last": 97,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 99,
+     "position": 98,
+     "first": 98,
+     "last": 98,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 100,
+     "position": 99,
+     "first": 99,
+     "last": 99,
+     "transition": null,
+     "before": 603,
+     "after": 603,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 101,
+     "position": 100,
+     "first": 100,
+     "last": 100,
+     "transition": null,
+     "before": 603,
+     "after": 599,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 102,
+     "position": 101,
+     "first": 101,
+     "last": 101,
+     "transition": null,
+     "before": 599,
+     "after": 596,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 103,
+     "position": 102,
+     "first": 102,
+     "last": 102,
+     "transition": null,
+     "before": 596,
+     "after": 589,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 104,
+     "position": 103,
+     "first": 103,
+     "last": 103,
+     "transition": "jump",
+     "before": 589,
+     "after": 2862,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 105,
+     "position": 104,
+     "first": 104,
+     "last": 104,
+     "transition": "newPeak",
+     "before": 2862,
+     "after": 1084,
+     "parts": [
+      {
+       "key": "replay.reveal"
+      }
+     ]
+    },
+    {
+     "index": 106,
+     "position": 105,
+     "first": 105,
+     "last": 105,
+     "transition": null,
+     "before": 1084,
+     "after": 1084,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 107,
+     "position": 106,
+     "first": 106,
+     "last": 106,
+     "transition": null,
+     "before": 1084,
+     "after": 972,
+     "parts": [
+      {
+       "key": "replay.reveal"
+      }
+     ]
+    },
+    {
+     "index": 108,
+     "position": 107,
+     "first": 107,
+     "last": 107,
+     "transition": null,
+     "before": 972,
+     "after": 963,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 109,
+     "position": 107,
+     "first": 107,
+     "last": 107,
+     "transition": null,
+     "before": 963,
+     "after": 963,
+     "parts": [
+      {
+       "key": "replay.final.signs"
+      }
+     ]
+    }
+   ]
+  },
+  "sentences": {
+   "compact:102": [
+    "After the 40 changes in this step, the generator's solution uses Simple Colouring once; previously, its hardest technique was Inequality Chain.",
+    "The largest technique weight, 360, contributes in full as the P term of the score (P = 360).",
+    "Within this step, Simple Colouring first appears after complete change 1 of 40 (the sign between R6C2 and R6C3 is removed)."
+   ],
+   "compact:107:line": [
+    "963 (+374)",
+    "The generator's solution now uses XY-Wing (weight 650) as its hardest technique, instead of Simple Colouring (weight 360).",
+    "xyWing"
+   ],
+   "details:63": [
+    "After the sign between R6C2 and R6C3 is removed, the generator's solution uses Simple Colouring once; previously, its hardest technique was Inequality Chain.",
+    "The largest technique weight, 360, contributes in full as the P term of the score (P = 360).",
+    "This step removes one sign; there is no smaller sign-removal move to show."
+   ],
+   "details:103": [
+    "After the sign between R1C5 and R1C4 is removed, the generator's solution uses Nishio (trial and error) once; previously, its hardest technique was Simple Colouring.",
+    "The largest technique weight, 1,700, contributes in full as the P term of the score (P = 1,700).",
+    "This step removes one sign; there is no smaller sign-removal move to show."
+   ],
+   "details:104:line": [
+    "1,084 (−1,778)",
+    "The generator's solution now uses XY-Wing (weight 650) as its hardest technique, instead of Nishio (trial and error) (weight 1,700).",
+    "xyWing"
+   ]
+  }
+ },
+ "G12": {
+  "moves": 105,
+  "transitions": [
+   {
+    "view": "compact",
+    "from": 0,
+    "to": 0,
+    "tier": null,
+    "role": "step",
+    "before": 0,
+    "after": 0,
+    "change": null,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": null,
+    "hardestBefore": null,
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "compact",
+    "from": 0,
+    "to": 1,
+    "tier": "first",
+    "role": "step",
+    "before": 0,
+    "after": 129,
+    "change": 129,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": null,
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "compact",
+    "from": 1,
+    "to": 93,
+    "tier": null,
+    "role": "step",
+    "before": 129,
+    "after": 132,
+    "change": 3,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": 136,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "compact",
+    "from": 93,
+    "to": 104,
+    "tier": "jump",
+    "role": "step",
+    "before": 132,
+    "after": 592,
+    "change": 460,
+    "ratio": 4.4,
+    "newHardest": true,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": 612,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": {
+     "class": "multi-move",
+     "frame": null,
+     "k": 1,
+     "n": 11,
+     "kMove": 94,
+     "sign": null
+    },
+    "choice": "combined"
+   },
+   {
+    "view": "compact",
+    "from": 104,
+    "to": 104,
+    "tier": null,
+    "role": "final",
+    "before": 592,
+    "after": 592,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 0,
+    "to": 0,
+    "tier": null,
+    "role": "step",
+    "before": 0,
+    "after": 0,
+    "change": null,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": null,
+    "hardestBefore": null,
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 0,
+    "to": 1,
+    "tier": "first",
+    "role": "step",
+    "before": 0,
+    "after": 129,
+    "change": 129,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": null,
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 1,
+    "to": 2,
+    "tier": null,
+    "role": "step",
+    "before": 129,
+    "after": 130,
+    "change": 1,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 2,
+    "to": 3,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 3,
+    "to": 4,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 4,
+    "to": 5,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 5,
+    "to": 6,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 6,
+    "to": 7,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 7,
+    "to": 8,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 8,
+    "to": 9,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 9,
+    "to": 10,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 10,
+    "to": 11,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 11,
+    "to": 12,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 12,
+    "to": 13,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 13,
+    "to": 14,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 14,
+    "to": 15,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 15,
+    "to": 16,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 16,
+    "to": 17,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 17,
+    "to": 18,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 18,
+    "to": 19,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 19,
+    "to": 20,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 20,
+    "to": 21,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 21,
+    "to": 22,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 22,
+    "to": 23,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 23,
+    "to": 24,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 24,
+    "to": 25,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 25,
+    "to": 26,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 26,
+    "to": 27,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 27,
+    "to": 28,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 28,
+    "to": 29,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 130,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 29,
+    "to": 30,
+    "tier": null,
+    "role": "step",
+    "before": 130,
+    "after": 131,
+    "change": 1,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 30,
+    "to": 31,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 31,
+    "to": 32,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 32,
+    "to": 33,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 33,
+    "to": 34,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 34,
+    "to": 35,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 35,
+    "to": 36,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 36,
+    "to": 37,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 37,
+    "to": 38,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 38,
+    "to": 39,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 39,
+    "to": 40,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 40,
+    "to": 41,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 41,
+    "to": 42,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 42,
+    "to": 43,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 43,
+    "to": 44,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 44,
+    "to": 45,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 45,
+    "to": 46,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 46,
+    "to": 47,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 47,
+    "to": 48,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 131,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 48,
+    "to": 49,
+    "tier": null,
+    "role": "step",
+    "before": 131,
+    "after": 132,
+    "change": 1,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 49,
+    "to": 50,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 132,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 50,
+    "to": 51,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 132,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 51,
+    "to": 52,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 132,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 52,
+    "to": 53,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 132,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 53,
+    "to": 54,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 132,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 54,
+    "to": 55,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 132,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 55,
+    "to": 56,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 132,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 56,
+    "to": 57,
+    "tier": null,
+    "role": "step",
+    "before": 132,
+    "after": 136,
+    "change": 4,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 57,
+    "to": 58,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 136,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 58,
+    "to": 59,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 136,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 59,
+    "to": 60,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 136,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 60,
+    "to": 61,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 136,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 61,
+    "to": 62,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 136,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 62,
+    "to": 63,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 136,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 63,
+    "to": 64,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 136,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 64,
+    "to": 65,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 136,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 65,
+    "to": 66,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 136,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 66,
+    "to": 67,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 136,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 67,
+    "to": 68,
+    "tier": null,
+    "role": "step",
+    "before": 136,
+    "after": 135,
+    "change": -1,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 68,
+    "to": 69,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 69,
+    "to": 70,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 70,
+    "to": 71,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 71,
+    "to": 72,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 72,
+    "to": 73,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 73,
+    "to": 74,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 74,
+    "to": 75,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 75,
+    "to": 76,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 76,
+    "to": 77,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 77,
+    "to": 78,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 78,
+    "to": 79,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 79,
+    "to": 80,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 80,
+    "to": 81,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 81,
+    "to": 82,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 82,
+    "to": 83,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 83,
+    "to": 84,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 84,
+    "to": 85,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 85,
+    "to": 86,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 135,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 86,
+    "to": 87,
+    "tier": null,
+    "role": "step",
+    "before": 135,
+    "after": 134,
+    "change": -1,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 87,
+    "to": 88,
+    "tier": null,
+    "role": "step",
+    "before": 134,
+    "after": 134,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 88,
+    "to": 89,
+    "tier": null,
+    "role": "step",
+    "before": 134,
+    "after": 133,
+    "change": -1,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 89,
+    "to": 90,
+    "tier": null,
+    "role": "step",
+    "before": 133,
+    "after": 133,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 90,
+    "to": 91,
+    "tier": null,
+    "role": "step",
+    "before": 133,
+    "after": 133,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 91,
+    "to": 92,
+    "tier": null,
+    "role": "step",
+    "before": 133,
+    "after": 133,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 92,
+    "to": 93,
+    "tier": null,
+    "role": "step",
+    "before": 133,
+    "after": 132,
+    "change": -1,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "ineqChain",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 93,
+    "to": 94,
+    "tier": "jump",
+    "role": "step",
+    "before": 132,
+    "after": 609,
+    "change": 477,
+    "ratio": 4.6,
+    "newHardest": true,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "ineqChain",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": {
+     "class": "single-sign",
+     "frame": {
+      "kind": "sign",
+      "sign": 95
+     },
+     "k": null,
+     "n": null,
+     "kMove": null,
+     "sign": 95
+    },
+    "choice": "checked"
+   },
+   {
+    "view": "details",
+    "from": 94,
+    "to": 95,
+    "tier": null,
+    "role": "step",
+    "before": 609,
+    "after": 609,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 95,
+    "to": 96,
+    "tier": null,
+    "role": "step",
+    "before": 609,
+    "after": 609,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 96,
+    "to": 97,
+    "tier": null,
+    "role": "step",
+    "before": 609,
+    "after": 609,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 97,
+    "to": 98,
+    "tier": null,
+    "role": "step",
+    "before": 609,
+    "after": 609,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 98,
+    "to": 99,
+    "tier": null,
+    "role": "step",
+    "before": 609,
+    "after": 609,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 99,
+    "to": 100,
+    "tier": null,
+    "role": "step",
+    "before": 609,
+    "after": 612,
+    "change": 3,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 100,
+    "to": 101,
+    "tier": null,
+    "role": "step",
+    "before": 612,
+    "after": 612,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 101,
+    "to": 102,
+    "tier": null,
+    "role": "step",
+    "before": 612,
+    "after": 606,
+    "change": -6,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 102,
+    "to": 103,
+    "tier": null,
+    "role": "step",
+    "before": 606,
+    "after": 599,
+    "change": -7,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 103,
+    "to": 104,
+    "tier": null,
+    "role": "step",
+    "before": 599,
+    "after": 592,
+    "change": -7,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   },
+   {
+    "view": "details",
+    "from": 104,
+    "to": 104,
+    "tier": null,
+    "role": "final",
+    "before": 592,
+    "after": 592,
+    "change": 0,
+    "ratio": null,
+    "newHardest": false,
+    "hardestAfter": "simpleColouring",
+    "hardestBefore": "simpleColouring",
+    "folded": {
+     "peak": null,
+     "aboveBand": false,
+     "revealed": 0,
+     "unscored": 0,
+     "restart": null
+    },
+    "cause": null,
+    "choice": null
+   }
+  ],
+  "steps": {
+   "compact": [
+    {
+     "index": 0,
+     "position": 0,
+     "first": 0,
+     "last": 0,
+     "transition": null,
+     "before": null,
+     "after": null,
+     "parts": [
+      {
+       "key": "replay.solution"
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "position": 0,
+     "first": 0,
+     "last": 0,
+     "transition": null,
+     "before": 0,
+     "after": 0,
+     "parts": [
+      {
+       "key": "replay.signs"
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "position": 1,
+     "first": 1,
+     "last": 1,
+     "transition": "first",
+     "before": 0,
+     "after": 129,
+     "parts": [
+      {
+       "key": "replay.clues"
+      }
+     ]
+    },
+    {
+     "index": 3,
+     "position": 93,
+     "first": 2,
+     "last": 93,
+     "transition": null,
+     "before": 129,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      },
+      {
+       "key": "replay.folded.peak",
+       "args": {
+        "peak": 136
+       }
+      }
+     ]
+    },
+    {
+     "index": 4,
+     "position": 104,
+     "first": 94,
+     "last": 104,
+     "transition": "jump",
+     "before": 132,
+     "after": 592,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      },
+      {
+       "key": "replay.folded.peak",
+       "args": {
+        "peak": 612
+       }
+      }
+     ]
+    },
+    {
+     "index": 5,
+     "position": 104,
+     "first": 104,
+     "last": 104,
+     "transition": null,
+     "before": 592,
+     "after": 592,
+     "parts": [
+      {
+       "key": "replay.final.signs"
+      }
+     ]
+    }
+   ],
+   "details": [
+    {
+     "index": 0,
+     "position": 0,
+     "first": 0,
+     "last": 0,
+     "transition": null,
+     "before": null,
+     "after": null,
+     "parts": [
+      {
+       "key": "replay.solution"
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "position": 0,
+     "first": 0,
+     "last": 0,
+     "transition": null,
+     "before": 0,
+     "after": 0,
+     "parts": [
+      {
+       "key": "replay.signs"
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "position": 1,
+     "first": 1,
+     "last": 1,
+     "transition": "first",
+     "before": 0,
+     "after": 129,
+     "parts": [
+      {
+       "key": "replay.clues"
+      }
+     ]
+    },
+    {
+     "index": 3,
+     "position": 2,
+     "first": 2,
+     "last": 2,
+     "transition": null,
+     "before": 129,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 4,
+     "position": 3,
+     "first": 3,
+     "last": 3,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 5,
+     "position": 4,
+     "first": 4,
+     "last": 4,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 6,
+     "position": 5,
+     "first": 5,
+     "last": 5,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 7,
+     "position": 6,
+     "first": 6,
+     "last": 6,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 8,
+     "position": 7,
+     "first": 7,
+     "last": 7,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 9,
+     "position": 8,
+     "first": 8,
+     "last": 8,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 10,
+     "position": 9,
+     "first": 9,
+     "last": 9,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 11,
+     "position": 10,
+     "first": 10,
+     "last": 10,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 12,
+     "position": 11,
+     "first": 11,
+     "last": 11,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 13,
+     "position": 12,
+     "first": 12,
+     "last": 12,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 14,
+     "position": 13,
+     "first": 13,
+     "last": 13,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 15,
+     "position": 14,
+     "first": 14,
+     "last": 14,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 16,
+     "position": 15,
+     "first": 15,
+     "last": 15,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 17,
+     "position": 16,
+     "first": 16,
+     "last": 16,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 18,
+     "position": 17,
+     "first": 17,
+     "last": 17,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 19,
+     "position": 18,
+     "first": 18,
+     "last": 18,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 20,
+     "position": 19,
+     "first": 19,
+     "last": 19,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 21,
+     "position": 20,
+     "first": 20,
+     "last": 20,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 22,
+     "position": 21,
+     "first": 21,
+     "last": 21,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 23,
+     "position": 22,
+     "first": 22,
+     "last": 22,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 24,
+     "position": 23,
+     "first": 23,
+     "last": 23,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 25,
+     "position": 24,
+     "first": 24,
+     "last": 24,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 26,
+     "position": 25,
+     "first": 25,
+     "last": 25,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 27,
+     "position": 26,
+     "first": 26,
+     "last": 26,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 28,
+     "position": 27,
+     "first": 27,
+     "last": 27,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 29,
+     "position": 28,
+     "first": 28,
+     "last": 28,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 30,
+     "position": 29,
+     "first": 29,
+     "last": 29,
+     "transition": null,
+     "before": 130,
+     "after": 130,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 31,
+     "position": 30,
+     "first": 30,
+     "last": 30,
+     "transition": null,
+     "before": 130,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 32,
+     "position": 31,
+     "first": 31,
+     "last": 31,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 33,
+     "position": 32,
+     "first": 32,
+     "last": 32,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 34,
+     "position": 33,
+     "first": 33,
+     "last": 33,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 35,
+     "position": 34,
+     "first": 34,
+     "last": 34,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 36,
+     "position": 35,
+     "first": 35,
+     "last": 35,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 37,
+     "position": 36,
+     "first": 36,
+     "last": 36,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 38,
+     "position": 37,
+     "first": 37,
+     "last": 37,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 39,
+     "position": 38,
+     "first": 38,
+     "last": 38,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 40,
+     "position": 39,
+     "first": 39,
+     "last": 39,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 41,
+     "position": 40,
+     "first": 40,
+     "last": 40,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 42,
+     "position": 41,
+     "first": 41,
+     "last": 41,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 43,
+     "position": 42,
+     "first": 42,
+     "last": 42,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 44,
+     "position": 43,
+     "first": 43,
+     "last": 43,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 45,
+     "position": 44,
+     "first": 44,
+     "last": 44,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 46,
+     "position": 45,
+     "first": 45,
+     "last": 45,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 47,
+     "position": 46,
+     "first": 46,
+     "last": 46,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 48,
+     "position": 47,
+     "first": 47,
+     "last": 47,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 49,
+     "position": 48,
+     "first": 48,
+     "last": 48,
+     "transition": null,
+     "before": 131,
+     "after": 131,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 50,
+     "position": 49,
+     "first": 49,
+     "last": 49,
+     "transition": null,
+     "before": 131,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 51,
+     "position": 50,
+     "first": 50,
+     "last": 50,
+     "transition": null,
+     "before": 132,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 52,
+     "position": 51,
+     "first": 51,
+     "last": 51,
+     "transition": null,
+     "before": 132,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 53,
+     "position": 52,
+     "first": 52,
+     "last": 52,
+     "transition": null,
+     "before": 132,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 54,
+     "position": 53,
+     "first": 53,
+     "last": 53,
+     "transition": null,
+     "before": 132,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 55,
+     "position": 54,
+     "first": 54,
+     "last": 54,
+     "transition": null,
+     "before": 132,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 56,
+     "position": 55,
+     "first": 55,
+     "last": 55,
+     "transition": null,
+     "before": 132,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 57,
+     "position": 56,
+     "first": 56,
+     "last": 56,
+     "transition": null,
+     "before": 132,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 58,
+     "position": 57,
+     "first": 57,
+     "last": 57,
+     "transition": null,
+     "before": 132,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 59,
+     "position": 58,
+     "first": 58,
+     "last": 58,
+     "transition": null,
+     "before": 136,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 60,
+     "position": 59,
+     "first": 59,
+     "last": 59,
+     "transition": null,
+     "before": 136,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 61,
+     "position": 60,
+     "first": 60,
+     "last": 60,
+     "transition": null,
+     "before": 136,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 62,
+     "position": 61,
+     "first": 61,
+     "last": 61,
+     "transition": null,
+     "before": 136,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 63,
+     "position": 62,
+     "first": 62,
+     "last": 62,
+     "transition": null,
+     "before": 136,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 64,
+     "position": 63,
+     "first": 63,
+     "last": 63,
+     "transition": null,
+     "before": 136,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 65,
+     "position": 64,
+     "first": 64,
+     "last": 64,
+     "transition": null,
+     "before": 136,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 66,
+     "position": 65,
+     "first": 65,
+     "last": 65,
+     "transition": null,
+     "before": 136,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 67,
+     "position": 66,
+     "first": 66,
+     "last": 66,
+     "transition": null,
+     "before": 136,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 68,
+     "position": 67,
+     "first": 67,
+     "last": 67,
+     "transition": null,
+     "before": 136,
+     "after": 136,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 69,
+     "position": 68,
+     "first": 68,
+     "last": 68,
+     "transition": null,
+     "before": 136,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 70,
+     "position": 69,
+     "first": 69,
+     "last": 69,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 71,
+     "position": 70,
+     "first": 70,
+     "last": 70,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 72,
+     "position": 71,
+     "first": 71,
+     "last": 71,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 73,
+     "position": 72,
+     "first": 72,
+     "last": 72,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 74,
+     "position": 73,
+     "first": 73,
+     "last": 73,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 75,
+     "position": 74,
+     "first": 74,
+     "last": 74,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 76,
+     "position": 75,
+     "first": 75,
+     "last": 75,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 77,
+     "position": 76,
+     "first": 76,
+     "last": 76,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 78,
+     "position": 77,
+     "first": 77,
+     "last": 77,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 79,
+     "position": 78,
+     "first": 78,
+     "last": 78,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 80,
+     "position": 79,
+     "first": 79,
+     "last": 79,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 81,
+     "position": 80,
+     "first": 80,
+     "last": 80,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 82,
+     "position": 81,
+     "first": 81,
+     "last": 81,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 83,
+     "position": 82,
+     "first": 82,
+     "last": 82,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 84,
+     "position": 83,
+     "first": 83,
+     "last": 83,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 85,
+     "position": 84,
+     "first": 84,
+     "last": 84,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 86,
+     "position": 85,
+     "first": 85,
+     "last": 85,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 87,
+     "position": 86,
+     "first": 86,
+     "last": 86,
+     "transition": null,
+     "before": 135,
+     "after": 135,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 88,
+     "position": 87,
+     "first": 87,
+     "last": 87,
+     "transition": null,
+     "before": 135,
+     "after": 134,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 89,
+     "position": 88,
+     "first": 88,
+     "last": 88,
+     "transition": null,
+     "before": 134,
+     "after": 134,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 90,
+     "position": 89,
+     "first": 89,
+     "last": 89,
+     "transition": null,
+     "before": 134,
+     "after": 133,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 91,
+     "position": 90,
+     "first": 90,
+     "last": 90,
+     "transition": null,
+     "before": 133,
+     "after": 133,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 92,
+     "position": 91,
+     "first": 91,
+     "last": 91,
+     "transition": null,
+     "before": 133,
+     "after": 133,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 93,
+     "position": 92,
+     "first": 92,
+     "last": 92,
+     "transition": null,
+     "before": 133,
+     "after": 133,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 94,
+     "position": 93,
+     "first": 93,
+     "last": 93,
+     "transition": null,
+     "before": 133,
+     "after": 132,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 95,
+     "position": 94,
+     "first": 94,
+     "last": 94,
+     "transition": "jump",
+     "before": 132,
+     "after": 609,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 96,
+     "position": 95,
+     "first": 95,
+     "last": 95,
+     "transition": null,
+     "before": 609,
+     "after": 609,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 97,
+     "position": 96,
+     "first": 96,
+     "last": 96,
+     "transition": null,
+     "before": 609,
+     "after": 609,
+     "parts": [
+      {
+       "key": "replay.signDig.some"
+      }
+     ]
+    },
+    {
+     "index": 98,
+     "position": 97,
+     "first": 97,
+     "last": 97,
+     "transition": null,
+     "before": 609,
+     "after": 609,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 99,
+     "position": 98,
+     "first": 98,
+     "last": 98,
+     "transition": null,
+     "before": 609,
+     "after": 609,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 100,
+     "position": 99,
+     "first": 99,
+     "last": 99,
+     "transition": null,
+     "before": 609,
+     "after": 609,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 101,
+     "position": 100,
+     "first": 100,
+     "last": 100,
+     "transition": null,
+     "before": 609,
+     "after": 612,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 102,
+     "position": 101,
+     "first": 101,
+     "last": 101,
+     "transition": null,
+     "before": 612,
+     "after": 612,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 103,
+     "position": 102,
+     "first": 102,
+     "last": 102,
+     "transition": null,
+     "before": 612,
+     "after": 606,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 104,
+     "position": 103,
+     "first": 103,
+     "last": 103,
+     "transition": null,
+     "before": 606,
+     "after": 599,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 105,
+     "position": 104,
+     "first": 104,
+     "last": 104,
+     "transition": null,
+     "before": 599,
+     "after": 592,
+     "parts": [
+      {
+       "key": "replay.signDig.all"
+      }
+     ]
+    },
+    {
+     "index": 106,
+     "position": 104,
+     "first": 104,
+     "last": 104,
+     "transition": null,
+     "before": 592,
+     "after": 592,
+     "parts": [
+      {
+       "key": "replay.final.signs"
+      }
+     ]
+    }
+   ]
+  },
+  "sentences": {
+   "compact:104": [
+    "After the 11 changes in this step, the generator's solution uses Simple Colouring once; previously, its hardest technique was Inequality Chain.",
+    "The largest technique weight, 360, contributes in full as the P term of the score (P = 360).",
+    "Within this step, Simple Colouring first appears after complete change 1 of 11 (the sign between R9C5 and R8C5 is removed)."
+   ],
+   "details:94": [
+    "After the sign between R9C5 and R8C5 is removed, the generator's solution uses Simple Colouring once; previously, its hardest technique was Inequality Chain.",
+    "The largest technique weight, 360, contributes in full as the P term of the score (P = 360).",
+    "This step removes one sign; there is no smaller sign-removal move to show."
+   ]
+  }
+ }
+}

@@ -5,7 +5,7 @@
 | Depends on | MS18b accepted, including any owner-directed replacement task/evidence |
 | Size / active time | Medium; 35-50 minutes plus GQ |
 | Owner / milestone | Qualification/publication; M18c |
-| Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1); analyst cross-review |
+| Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), CV6-05; analyst cross-review |
 | Status | Not started |
 
 ## Goal & business context
@@ -16,7 +16,7 @@ at the path its readers already use.
 ## Scope
 
 In: full 135-cell GQ-final, v2 archive, live table/support arrays, stored-request notification and
-diagnostic/publication compatibility of the final offers.
+diagnostic/publication compatibility of the final offers; CV6-05's final S-AV01 disposition before GP.
 Out: solver/generator tuning, weight changes, intermediate table publication or dropped cells.
 
 ## Repository rules
@@ -69,6 +69,39 @@ hell1) with final verdicts. If a Killer calibration decision was requested at MS
 recorded disposition; no weight change here. A hidden verdict needs no calibration to be legitimate.
 Route remaining cost findings to MS18d; include the complete item list for MS18e.
 
+### CV6-05 — the three fixed S-AV01 endings, before MS18d timing
+
+The sign pool was measured and set aside; Greater-Than uses its restored first-allowed sign
+pass. S-AV01 enters final work open at 5,209 ms against 1,400 ms on CV6's seeds and 10.6 s p95
+on 7000-7039. These are historical cohorts, not qualification verdicts. Normal's CV6 base
+remains 700 ms and GP rules stay unchanged until the specific decision below.
+
+- If Normal fails final qualification, hide it by (c1), close S-AV01 as **"not offered"**, and
+  record its CV6 case's treatment with the same hidden-cell manual population policy as every
+  other cell. No Normal-specific exception, skipped assertion or diagnostic request loss.
+- If Normal qualifies, obtain its **final-source CV6 result** before the MS18d handoff: retain
+  compatible existing evidence or run only the unchanged Normal CV6 selector below. If it still
+  fails, return the final-source numbers through the orchestrator to the plan author under
+  CV6-05, before MS18d's final timing runs. Do not select a budget in this task.
+  The decided contract's form is fixed: one base value in milliseconds for `BUDGET_MS.normal`,
+  the same base for a Greater-Than Normal GP target if GP has one, factor application only
+  through `SG.test.timeLimit`, and no base above **10,000 ms** (Expert/qualification budget).
+  The test, corresponding GP target, `generator/design.md` section 9.1 (the `greaterThan` Normal
+  cell) and both developer guides change in the same assigned contract step. Until the recorded
+  decision, 700 ms stands; qualification does not make CV6 pass.
+- If CV6 passes on the final source, close S-AV01 with that measurement, not an inferred waiver.
+
+This conditional single-cell check does not move full GD from MS18e. Preserve raw old-contract
+failures and source identities if a contract is subsequently changed; the final audit must not
+relabel them as new-contract passes. If no bounded complete final-source CV6 record can be
+obtained, keep the missing evidence/item explicit and resolve the contract handoff through the
+orchestrator before final GP; continue independent publication/audit work, not an unsafe command.
+
+S-AV16 and S-AV17 remain withdrawn as current-source pool regressions, with their observations
+retained as history. Any later regression has its own originating task/source and named item.
+
+### Publication and diagnostic compatibility
+
 The qualifier's --markdown writes a table BODY. Render to an evidence file, then compose the live
 report with protocol, machine/Node/jobs/source, complete table and removals; do not erase its
 explanatory metadata by blindly replacing it with the table body.
@@ -104,6 +137,11 @@ priority. Hidden explicit pipeline requests must still throw; existing Player pu
   Enumerate directly affected quick/manual offer assertions/populations before editing; preserve original
   diagnostic requests and public refusal coverage. Existing reader path remains.
 - Generator design 5.1/15.4 and both guides' actual availability facts.
+- Only if CV6-05's conditional final decision is actually needed and recorded: an orchestrator-assigned
+  contract step owns Normal's `BUDGET_MS` in `generator/tests/manual/greater-than.test.js`,
+  the matching Greater-Than Normal target in `generator/tests/fixtures/perf-helper.js` if present,
+  `generator/design.md` section 9.1 (the `greaterThan` Normal cell) and both developer guides
+  together. No value is authorized in advance; no seed/count/other-budget edit.
 
 ## Implementation steps
 
@@ -124,7 +162,9 @@ priority. Hidden explicit pipeline requests must still throw; existing Player pu
    Keep diagnostic generation separate from public unsupported-level refusal; no lost request
    or reindexed manual seed is disguised as a qualification-driven test update.
    Verify stored hidden-request nearest-level selection and its visible initial note in both languages.
-5. Verify publication-only engine diff; hand MS18d the offered/performance manifest.
+5. Verify publication-only engine diff and resolve S-AV01 by the three CV6-05 endings above.
+   Hand MS18d the offered/performance manifest, final-source CV6 evidence and any recorded
+   same-step Normal contract change before its final timing runs.
 
 ## Acceptance criteria — Business
 
@@ -140,7 +180,7 @@ priority. Hidden explicit pipeline requests must still throw; existing Player pu
 | MS18c-T01 | Complete 135-cell/jobs 4 protocol, exact source/defaults and checked merge |
 | MS18c-T02 | Live table equals support lists; archive unchanged; no algorithm tuning |
 | MS18c-T03 | Hidden-level diagnostics restore arrays, recipes unchanged, both quick sets pass |
-| MS18c-T04 | (c1) covers every board/level, fallbacks miss, stored hidden requests show the note, Player imports remain compatible, all items reconcile |
+| MS18c-T04 | (c1) covers every board/level, fallbacks miss, stored hidden requests show the note, Player imports remain compatible, all items reconcile, and S-AV01's CV6-05 disposition precedes MS18d timing |
 
 ## Test plan and gates
 
@@ -150,6 +190,19 @@ Generator, first cell then every Q cell:
 node tests\qualify.js --variant=classic4 --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS18c\qualification\classic4-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS18c\qualification\classic4-veryEasy.md
 node tests\qualify.js --merge=..\docs\difficulty-v3\evidence\MS18c\qualification --jobs=4 --json=..\docs\difficulty-v3\qualification-v3.json --markdown=..\docs\difficulty-v3\evidence\MS18c\table.md
 ```
+
+**Conditional Normal CV6 only (CV6-05):** if Normal qualifies and no compatible final-source
+record exists, preflight the exact selector with `--list-tests` (selected total 1), then use
+the current-source projection and existing lock/450 s planning/540 s ceiling rules:
+
+```powershell
+Invoke-Dv3Node -Task MS18c -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=greater-than','--filter=> normal: 20 puzzles > CV6:','--verbose','--results=..\docs\difficulty-v3\evidence\MS18c\cv6\normal-results.json')
+```
+
+Keep all 20 requests and original seeds; `-AllowExit1` records the expected timing failure,
+not acceptance. No whole Greater-Than corpus or other CV6/I5 selector is added here.
+Hand this record and its identity to MS18e for coverage reconciliation; any later changed
+contract/fingerprint requires the normal compatibility/replacement handling.
 
 GQ jobs 4; estimate 10-540 seconds/cell, 1-12 hours total planning allowance.
 **Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
@@ -166,7 +219,8 @@ Run the stored-load notification through actual startup/control initialization, 
 ## Definition of done & handoff
 
 Give MS18d/e full qualification/provenance, offered lists, v2 archive, compatibility evidence and
-the cumulative numerical item list. A correctly hidden large-board cell is a valid result, not a blocker.
+the cumulative numerical item list, including S-AV01's fixed ending and any decided Normal
+contract update completed before GP. A correctly hidden large-board cell is a valid result, not a blocker.
 If any variant has no offered level and current UI/registry cannot represent that, report a blocker
 for an assigned compatibility fix; never invent a qualified level.
 

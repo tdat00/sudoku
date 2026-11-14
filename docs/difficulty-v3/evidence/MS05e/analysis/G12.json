@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "f678cf42724ec083f4ecf436eb36c62ec761f6b6f7554c1173e2984b5c062c1e",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+  "dirty": true,
+  "generatedAt": "2026-11-14T07:09:03.560Z",
+  "argv": ["--ids=G12","--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G12.json"],
+  "records": [
+    {"key":"G12","request":{"variantId":"greaterThan","difficulty":"hard","seed":"3115968914"},"value":{"id":"G12","request":{"variantId":"greaterThan","difficulty":"hard","seed":"3115968914"},"today":{"steps":12,"missing":11},"counts":{"compact":6,"details":107},"board":{"cells":81,"cages":0,"signsFrom":108,"signsTo":5,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Sig",0,0,0,"—","—","—","—"],[3,1,"C/Clues",57,129,129,"ineqChain","—","—","F"],[4,93,"I/Signs",57,132,3,"ineqChain","—","—","—"],[5,104,"I/Signs",57,592,460,"simpleColouring","Y","—","—"],[6,104,"F/Final",57,592,0,"simpleColouring","—","—","—"]],"details":[0,0,129,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,130,131,131,131,131,131,131,131,131,131,131,131,131,131,131,131,131,131,131,131,132,132,132,132,132,132,132,132,136,136,136,136,136,136,136,136,136,136,136,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,134,134,133,133,133,133,132,609,609,609,609,609,609,612,612,606,599,592,592],"alive":[108,108,108,16,5,5],"folds":[{"step":4,"peak":136,"end":132,"removed":0,"restored":0,"signs":92,"opening":false},{"step":5,"peak":612,"end":592,"removed":0,"restored":0,"signs":11,"opening":false}],"jumps":[{"step":5,"from":132,"to":592,"before":{"P":40,"W":859.75,"R":44.914523,"V":47.010309,"E":57,"level":"easy"},"after":{"P":360,"W":1142,"R":185.47344,"V":47.010309,"E":57,"level":"hard"},"choice":null,"singles":[],"cause":"multi-move","frame":null,"firstUse":{"k":55,"n":74,"technique":"simpleColouring"},"key":"technique.simpleColouring.step","effects":"remove candidate 7@R2C5, 7@R7C2, 7@R7C6, 7@R8C3"}]},"ms":6146,"overrides":[]}
+  ]
+}

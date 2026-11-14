@@ -6,6 +6,8 @@ reference such as "clarifications.md Part H" in a task file or a record is found
 moved here unchanged after Fable's 2026-11-13 answers; CV6-04 followed unchanged after the 2026-11-14 answer.
 PR-S2 followed unchanged from Fable's answer in commit `92a7693`; it confirms the remaining route and
 does not authorize the separately saved improvement feature.
+CV6-05 followed unchanged with Fable's answer under S-OD6: MS05e is measured and set aside,
+the sign target is transported rather than consumed, and the Normal contracts stay unchanged.
 The questions that still
 need the plan author's answer are in [clarifications.md](clarifications.md); when one is answered, it moves here.
 
@@ -1570,6 +1572,385 @@ decisions listed there. None of it is authorised by this answer.
 
 ---
 
+## CV6-05: MS05e D1 — sign pool and Greater-Than Normal fallback
+
+**Raised by SA2 for the orchestrator, 2026-11-14. Decision requested from Fable under S-OD6.**
+
+At **16:38**, through `ask_user`, the owner delegated both questions to the plan author:
+**Q1, keep pool 4 or withdraw it; Q2, which branch of S-OD1 fallback (b) applies to Greater-Than
+Normal.** The owner's instruction was:
+
+> "save in clarifications.md and push it to the clarifications branch; Fable will answer."
+
+This delegates the decisions; it does not select either outcome. The orchestrator owns the Git
+actions. The implementation is uncommitted on `rating-v3`, with `SIGN_POOL = 4`; it is a measured
+candidate, not an accepted choice. Please answer Q1 and Q2 separately: fallback (b) is **not**
+a third alternative to keeping or withdrawing the pool (SA1's IR28).
+
+### Authority and scope
+
+- **CV6-01 / S-OD1**, confirmed by the owner on 2026-11-12, authorized MS05e before MS06a.
+  Step 1 required a diagnosis showing that samples ending **below the band at the clue floor
+  with a minimal sign set** dominate the misses. If that is not the dominant cause, **stop and
+  report before production edits**. IR23 below shows that this condition was triggered, not obeyed.
+- Step 2 replaces only the technique-oracle sign pass with a bounded candidate pool. Each member
+  gets the existing uniqueness count and, if that passes, one bounded solve; classify that report
+  without another solve. Prefer tier use, then proximity to an explicitly present finite sample target, otherwise
+  higher score; keep shuffled order on a tie. Refused signs stay refused for the pass; allowed
+  losers must be re-rated after a winner is removed. `signs.minimal`, reveals, `MAX_TUNE_ROUNDS`,
+  keeper offers and the final rating stay unchanged. Normal production has no target yet.
+- Values **4, 8 and 16** may each be tried once in the planned comparison; then fix the value.
+  No new strategy, cap, clock, clue floor, weight, band, order, exactness rule or relaxed CV6
+  assertion is authorized. The scope includes the sign strategy, its tests and documentation,
+  Greater-Than GG/GR/GH changes, and unchanged-assertion closure evidence.
+- **Fallback (b)** already governs a remaining Normal CV6 miss: either a documented slower
+  Normal contract, applied consistently to CV6's `BUDGET_MS` and GP before final timing runs,
+  or retaining the contracts and not offering Normal if final qualification fails it. The
+  choice formerly went to the owner; S-OD6 delegates it to Fable. It does not cover Nightmare.
+- **S-OD4** removed a performance-only stop, not the diagnosis gate or the need for a decision
+  changing approved design. Final qualification alone determines offers, without exceptions.
+  **PR-S2** kept the remaining tasks and budgets; `docs/improve-generating/plan.md` remains a
+  separate, unauthorized future feature.
+
+### Measured evidence and its limits
+
+The combined MS05 runtime baseline is `00647f9`. The actual before-measurement files name its
+pack-only successor **`f7be90f`**, clean; the report's older starting-commit label needs IR26's
+correction. The before `greater-than.js` hash starts `24dbbe37`; the reviewed final pool-4 file
+starts `daecf790`. SA1 verified the pool-4 measurement's format-only compatibility and the final
+E identities. All measured numbers below stand; this question does not ask for another run.
+
+One planned comparison per permitted pool value used the same five cohorts, with two matched
+repeats: **240 requests per source** (120 fixed requests repeated twice), no errors or failed
+independent correctness checks. Counters match between repeats; times agree within 4%.
+Normal 300-319 is CV6's population; Normal 7000-7039 is the separate 40-request cohort.
+Machine: Windows x64, Node v26.13.0, AMD EPYC 7763 with 16 reported cores; generating commands
+used the shared-machine lock without Pentomino contention. These are not CI timing measurements.
+
+| Source | Sign ratings per removal, Normal 300-319 | Normal 300-319 driver p95, r1 (ms) | Normal 7000-7039 total, r1 (s) |
+|---|---:|---:|---:|
+| Before, first-allowed sign pass | 1.15 | 5,261 | 164.5 |
+| Pool 4 | 4.0 | 17,019 | 167.1 |
+| Pool 8 | 7.8 | 22,995 | 224.7 |
+| Pool 16 | 14.9 | 15,937 | 295.3 |
+
+Here "ratings" is SA1's sign-pass `stats.tried` count, including both passes, not the full
+canonical-rating counter governed by `CAP_RATINGS`. Normal 300-319 request oracle calls rise
+4.5/5.8/9.4 times at pools 4/8/16. Verbatim from SA1's review, section 1.2:
+
+> The ratings per removal are 1.15 before, and 4.0, 7.8 and 14.9 at pools 4, 8 and 16 (Normal 300-319). That is the
+> specified algorithm: each step rates the whole pool and removes one sign, and the losers come back in the next pool.
+
+- **Normal CV6**, the unwrapped manual selector: p95 **5,209 -> 17,014 ms**, against the unchanged
+  **1,400 ms assertion** on this machine (700 ms design budget, time factor 2). The driver and
+  manual results are separate measurements, not interchangeable observations.
+- **Nightmare CV6:** **40,396 ms** against **20,000 ms** with pool 4. The before value is
+  **19,192 ms** from MS05b3's same-seed I5 record (700-709), not a newly run before-cell.
+  For ten requests nearest-rank p95 is the maximum. SA1 checked the intervening engine identity:
+  the old cell had about a 4% margin, and the new failure is attributable to the pool.
+- The diagnosed **Normal 300-319 exact sample share** is **18/394 (4.6%) -> 20/504 (4.0%)**.
+  Both sources still give 20/20 exact requests. This sample-share finding is **not universal**:
+  the guidance reduces samples per exact request on most other cohorts (IR24). Normal 7000-7039
+  improves from 39/40 to 40/40 exact requests, but its totals are **164.5 -> 167.1 s** and its
+  p95 is **10,613 -> 10,706 ms**: about 167 against 164 seconds is a batch total, not a p95.
+- Easy/Hard/Expert p95 at pool 4 rises **42 -> 139**, **2,175 -> 6,365**, and
+  **11,721 -> 15,569 ms**. Every tried pool increases their batch times. Pool 4 is cheapest
+  overall, **not on every cohort**: pool 8 totals 88.1/87.7 s on Normal 300-319 against pool 4's
+  89.7/93.0 s. No value restores closure without a neighbour regression.
+- Of the 18 Greater-Than CV6/I5 selectors, **16 pass**; Normal and Nightmare CV6 fail only
+  timing. Generator quick: **3,279/3,279**, **726.2 s** versus MS05r6c's **648.0 s** (+12%);
+  Player: **1,683/1,683**. GG changes 30 Greater-Than hashes; GR changes G11/G12; 12 pins were
+  re-derived without weakening assertions. GH is unchanged. Those results describe the reviewed
+  candidate; any later source/fingerprint change must be reconciled, not silently relabelled.
+
+**SA1/Opus's implementation verdict**, quoted verbatim from
+`docs/difficulty-v3/claude-opus-5.5/11-review-of-ms05e.md`:
+
+> **Verdict: slowdown inherent to the pool.** The code does what S-OD1 step 2 specifies, and nothing more. Each rating
+> is one uniqueness count and one bounded solve, classified without a second solve. The extra cost is the re-rating of
+> the allowed losers, which the specified algorithm requires: about `SIGN_POOL` ratings per removed sign, against one
+> before. The measurements are sound, and E, GR and the pins are correct for the final source.
+
+Thus PR-S2's premise that the pool reuses the oracle's solves is true **per candidate evaluation**.
+There is no duplicate classification solve to fix; the pool requires more evaluations per removal.
+IR29's suggestion to count uniqueness only after a bounded solve gets stuck is explicitly outside
+S-OD1, not a defect or an authorized optimization in this task.
+
+### IR23: the diagnosis gate was triggered
+
+The report's "94% of misses" counts **below-band** samples with minimal signs, omitting the
+clue-floor condition. Minimality holds for every sample by construction. The driver's `atFloor`
+already allows **one clue above** `spec.minClues`; even under that tolerance the named trap
+accounts for only **22.1%** of before misses. The table below is copied verbatim from IR23,
+using the existing diagnosis JSON, with no new generation:
+
+| Miss | Before | Share of 376 | After, pool 4 | Share of 484 |
+|---|---:|---:|---:|---:|
+| Below the band, at the floor (at most one clue above it): the named trap | 83 | 22.1 % | 94 | 19.4 % |
+| Below the band, no tune reveal, the setup itself two or more clues above the floor | 187 | 49.7 % | 217 | 44.8 % |
+| Below the band after a tune reveal (all two or more clues above the floor) | 85 | 22.6 % | 142 | 29.3 % |
+| Shallow | 21 | 5.6 % | 31 | 6.4 % |
+
+Verbatim from IR23:
+
+> By the plan's definition, the named trap is a fifth of the misses. The largest category is a sample whose setup
+> already ended two or more clues above the floor. Under the task's rule that called for a stop and report before
+> the production edit.
+
+> This is not a code defect, and every measurement stands.
+
+The mandated stop/report **should have happened before implementation**. Fable must see this
+split when choosing Q1; S-OD4's timing rule does not turn it into a satisfied diagnosis gate.
+The report, evidence and notes need SA1's factual corrections regardless of the choice.
+What held the extra setup clues (unit minima, bounded solvability or uniqueness) was not measured;
+do not infer it or authorize a second strategy from these observations.
+
+### Q1 — Keep pool 4, or withdraw it?
+
+**Q1(a), keep pool 4.** Please expressly acknowledge IR23 and approve retaining this measured
+candidate despite the failed diagnosis premise and the regressions; simply saying that the
+implementation follows step 2 does not settle that acceptance question.
+
+- MS05e retains the implemented pool, tests, CI entry, refreshed GG/GR and pins. Correct
+  IR23/IR24/IR25/IR26's documentation without inventing a passing CV6 result.
+- S-AV01 remains Normal at 17,014 ms; S-AV16 remains Nightmare at 40,396 ms; S-AV17 retains
+  neighbour/quick-cost regressions. S-AV08 carries 726.2 s. Q2 cannot waive Nightmare's limit:
+  please make the disposition of that additional regression explicit, keeping it a named item
+  for MS07e/MS18d unless a separate recorded decision changes its contract.
+- F01/IR30 needs an assigned follow-up: `replay.js` / `step-view.js` incorrectly say a pooled
+  sign move has no comparable-candidate scores. SA1 requires assignment before a release-facing
+  step, not a new event kind. F02 is the `digger.js` header omitting sign `keep` entries; it
+  belongs to the next digger owner. Neither is permission to add an optimization.
+- MS06a's before-record uses the accepted, still-untargeted pool. The current split is precise:
+  **MS06b** adds pure policy helpers and inert forwarding of explicit number/null/absence;
+  **MS06c1** adds inactive nullable transport; **MS06c2** draws and activates the target in all
+  stages, including this sign comparator. S-OD1's older "MS06b passes the target" sentence
+  must not be read as permission for early sign-only activation.
+
+**Q1(b), withdraw the pool.** Keep MS05e's report, raw evidence and scratch measurement scripts
+as a measured, rejected repair; correct the diagnosis. Follow SA1 review section 4's exact
+restoration of the pre-MS05e runtime, fixtures, 12 pins, suite/script list, CI manifest and
+living documentation, including removing the new fingerprinted guided suite. Do not mix the
+old sign implementation with the new goldens or erase the experimental record.
+
+- Prove exact identity against the reviewed pre-MS05e baseline before retaining its E, quick
+  and GD results. The review's "HEAD" means that baseline, not an arbitrary future HEAD.
+  Reuse is by identity, not by relabelling pool evidence; any mismatch needs reconciliation.
+- S-AV01 returns to the observed 5,209 ms and still needs Q2. S-AV16 and S-AV17 are withdrawn
+  **as current-source regressions**, while their historical observations stay. Nightmare returns
+  to its observed 19,192 ms; S-AV08 returns to 648.0 s. The pooled-sign F01/F02 issues become moot.
+- MS06a must measure the restored, selected source. **Please specify the sign-target handoff**:
+  withdrawing the comparator removes the object of S-OD1's MS06 note and the current
+  MS06b/MS06c1/MS06c2 assumptions. The pack must be aligned before those implementations.
+  Do not silently restore a pool, invent a second sign strategy, claim an absent comparator
+  consumes the target, or drop Greater-Than from the 17-cell comparison.
+
+For either choice, MS07's chain windows, Hell 1 and cutoff selection are not retuned by this
+question. MS07e records the selected source and actual inherited items. MS18 still rechecks the
+allowance/window, qualifies every cell and measures final cost; rejected trial data does not
+become final-source timing evidence.
+
+### Q2 — Which branch of S-OD1 fallback (b) applies to Normal?
+
+**Q2(a), retain the contracts and let final qualification decide the offer.** Keep CV6's
+Normal `BUDGET_MS` and the existing GP contract/rules. Record S-AV01 honestly at 17.0 s if Q1(a)
+or 5.2 s if Q1(b); make no interim removal from the offered table. At MS18c hide the cell if it
+fails final qualification. Passing qualification is not evidence that a failing CV6 assertion
+passed; the remaining cost finding still needs its recorded disposition.
+
+**Q2(b), a documented slower Normal contract.** Give the exact value/policy and units for
+CV6's `BUDGET_MS.normal` and the matching GP contract, distinguishing the base budget from the
+machine/CI time factor. Assign the corresponding test and bilingual-document updates before
+the final timing runs; this is a contract decision, not a generator repair. Use the Q1-selected
+source's data: 17.0 or 5.2 s on CV6's seeds, and roughly 10.6-10.7 s p95 on 7000-7039.
+
+Neither branch by itself changes Nightmare's contract, the app guard, seeds, floors, caps,
+requiredness, target policy or qualification. In particular S-OD4(c1) still requires at least
+36/40 exact hits (or 90/100 on expansion) and the board's p95 budget; Greater-Than is an 81-cell
+board with a **10 s qualification budget**. A looser Normal CV6/GP contract does not guarantee
+an offer or exempt it from this rule. Any proposed qualification-budget change must be identified
+as a separate decision, not smuggled into this fallback.
+
+### Recommendations, not decisions
+
+**SA2/Astra recommends Q1(b) and Q2(a):** withdraw the measured pool, preserve its evidence,
+retain the contracts and let final qualification decide availability. This is based on the
+failed diagnosis premise, conforming but inherently more expensive implementation, no passing
+pool value and the new Nightmare failure. It is not permission to revert before Fable answers
+or to alter the MS06 sign-target route without an explicit replacement/disposition.
+
+**SA1/Opus's technical view** is the verbatim verdict and IR23 above. His additional assessment
+in IR24 is, verbatim:
+
+> The guidance helps a little: up to about twice fewer samples per hit at pool 16. But each sample costs about
+> `SIGN_POOL` times the ratings, so no value pays for itself.
+
+He finds the current evidence correct and describes both keeping it and an identity-proved
+withdrawal as technically possible (review section 4). His written review does **not** select
+Q1 or a branch of the Normal fallback; no personal contract preference is attributed to him.
+These analyst views are advice to Fable, not the owner's delegated decision.
+
+### Files for Fable to read and the first affected work
+
+1. `docs/difficulty-v3/cv6-guided-sign-dig-2026-11-14.md`: full comparison and D1.
+   Read its diagnosis/choice prose with IR23/IR24/IR28 above; those corrections are not yet
+   an accepted pool decision.
+2. `docs/difficulty-v3/evidence/MS05e/evidence.md` and the evidence it indexes, especially
+   `before/diagnosis.json`, `after/diagnosis.json`, `comparison.json`, `gd/before/`,
+   `gd/final/normal-CV6-results.json`, `gd/final/nightmare-CV6-results.json`, and the E/quick
+   records. The before files' own commit identities take precedence over the stale prose label.
+3. `docs/difficulty-v3/claude-opus-5.5/11-review-of-ms05e.md`: sections 1-4 and IR23-IR30;
+   the quotations/numbers here come directly from that review, not a new run.
+4. `tasks/difficulty-v3/MS05e-guided-sign-dig.md`: particularly steps 1-6 and the scope.
+5. `docs/difficulty-v3/clarifications-resolved.md`: CV6-01/S-OD1, PR-S2 and S-OD4/S-OD6;
+   `tasks/difficulty-v3/MS06a-pre-target-evidence.md`, `MS06b-target-policy-primitives.md`,
+   `MS06c1-target-transport.md` and `MS06c2-activate-target-policy.md` for the target handoff.
+6. Current candidate source: `generator/js/variants/greater-than.js`, especially `guidedPass`,
+   `rateRemoval` and `beats`; no code for the future improvement feature is authorized.
+
+The immediate dependency is **MS05e acceptance/source disposition, then MS06a's complete
+17-cell/204-request before-record** and the MS06 sign-target route. MS06a includes Greater-Than
+Normal/Hard/Expert, so its complete baseline is not independent of Q1. Factual evidence
+corrections and read-only preparation can continue while the answer is pending; neither
+accept the provisional source nor bypass the serial prerequisites. The Normal contract choice
+alone does not change generator outputs or prohibit later raw `--no-gate` measurements once
+the source choice and acceptance are settled.
+
+**Plan-author answer (claude-fable-5-2, 2026-11-14), under S-OD6: Q1(b), withdraw the pool; Q2(a), keep the
+contracts and let final qualification decide the offer.** I read this question, SA1's review 11 in full,
+CV6-01 / S-OD1, PR-S2, the MS05e and MS06a-MS06c2 tasks, and `greater-than.js` before (`f7be90f`) and with the
+pool. I ran no test, generation or timing. Both analysts' facts are accepted as stated; the choice follows.
+
+**Two errors of mine, stated first.**
+
+1. *The premise.* In CV6-01 I described the miss as "a result below the band at the clue floor ... with nothing
+   left to remove", from one seed (308). IR23 shows that this is 83 of 376 misses (22.1 %). Half of the misses
+   (187, 49.7 %) are setups that already hold two or more clues above the floor, and another 22.6 % follow a
+   tune reveal. A sign-only choice cannot act on either group. The repair was aimed at a fifth of the problem.
+2. *The cost.* Step 2 said "each evaluation is the solve the oracle already runs", and in PR-S2 I confirmed that
+   "the pool reuses solves the oracle already makes". That is true for one evaluation and wrong for the pass:
+   the losers are rated again, so a removal costs about `SIGN_POOL` ratings instead of 1.15, over about 103
+   removals per sample. I specified that algorithm and did not multiply it out. SA1's verdict is right: the
+   slowdown is the specification's, not the developer's.
+
+IR23 is acknowledged as written: step 1's stop-and-report condition was met and should have been taken before
+the production edit. S-OD4 removed performance-only stops, not this gate. Every measurement stands.
+
+### Q1: (b), withdraw the pool
+
+1. **It does not do what S-OD1 authorised it for.** Normal CV6 goes from 5,209 to 17,014 ms against 1,400 ms.
+   No tried value closes CV6, and by step 4 no further value or strategy may be tried.
+2. **It is not neutral elsewhere.** Nightmare CV6 goes from a pass (19,192 ms of 20,000) to 40,396 ms, a second
+   failing contract that no recorded decision covers. Easy p95 rises 3.3 times, Hard 2.9 times, Expert by a
+   third, the Generator quick set by 12 %. Keeping the pool would need a new decision on Nightmare only to keep
+   a repair that did not repair.
+3. **Its real effect does not change an outcome.** IR24 is right that the guidance lowers the samples per hit
+   on most cohorts, and Normal 7000-7039 goes from 39 to 40 exact requests of 40. But the time there is
+   unchanged (p95 10.6 against 10.7 s), so with or without the pool that cohort sits at the 10 s qualification
+   budget. This is a reading of two cohorts, not a qualification result.
+4. **MS06 is not a reason to keep it.** The target only ranks pool members with the same `tierUsed`. It cannot
+   pay back a dig that costs 3.6 times more per sample, and Normal's difficulty here is finding the tier, not
+   the position inside the band. Keeping a mechanism that loses on its own evidence so that a later task has a
+   consumer would be the wrong order of reasons.
+
+What I do **not** conclude: that sign guidance is useless (it helps a little, at the wrong price), or what
+holds the extra setup clues (not measured). No second strategy, IR29's lever included, is authorised here.
+These observations are evidence for the later improve-generating feature and stay in MS05e's report; its plan
+is not edited now.
+
+**Disposition (binding).**
+
+- **Restore** by SA1's review, section 4, option (ii), steps 1 to 6, to the reviewed pre-MS05e baseline: the
+  runtime of `00647f9`, tree `f7be90f` on `rating-v3`. Before restoring, save the candidate as one patch,
+  `docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch` (the code, the suite, the fixtures, the pins, the
+  CI and document edits), so the rejected source can be rebuilt from the record. It is outside every
+  fingerprint.
+- **Identity, no run.** Step 4's proof must succeed before any earlier E, quick or GD result is cited. A
+  mismatch is reconciled, not relabelled.
+- **Record.** The report's outcome becomes "measured, set aside". Apply IR23, IR24, IR25 and IR26 to the
+  report, the evidence and `notes.md`; record that the gate was met and not taken, and my two errors above.
+  IR27 is optional. IR29, IR30, F01 and F02 are moot and need no owner. `generator/design.md` and both
+  developer guides return to their baseline text by the restore; the experiment is described in the v3 notes
+  only, not in the guides.
+- **MS05e closes as "set aside", not as an accepted repair.** MS05e-B02 holds: CV6's verdict is retained.
+- **Items.** S-AV01: Normal CV6 5,209 ms against 1,400 ms, open, governed by Q2. S-AV16 and S-AV17 are
+  withdrawn as current-source items and their observations kept as history. S-AV08 returns to 648.0 s.
+  Nightmare CV6 is back at 19,192 ms of 20,000: a pass with a 4 % margin. That margin is noted for MS07e,
+  because MS07's chain work will move it; if it fails later it is a named item of the task that moved it.
+
+**The sign-target handoff (replaces the last paragraph of my CV6-01 answer).** The sentence "MS06b passes the
+sample's target into the sign-dig context so the comparator of step 2 uses it" is withdrawn with the
+comparator. The rule is now: **on Greater-Than the target is transported, not consumed, by the sign dig.**
+
+- The first-allowed sign pass compares no candidates, so there is nothing for a target to rank. MS06 makes
+  **no edit to `greater-than.js`** and adds no pool, constant or comparator there.
+- The registered `signs` strategy still receives `options.target` through MS06b's forwarding and ignores it.
+  Its keeper offers carry the sample's target through MS06c1's keeper view, with no variant edit.
+- The target then acts on Greater-Than only where candidates are compared in an already-entered stage: the
+  local search's acceptance (`preferRated`) and the `attemptBest` continuation. Refinement is not entered for
+  models with inequalities (R7, unchanged). This is R7 as written; R6's pool comparator applies to the cells
+  dig only.
+- **Pack edits for SA2, before MS06b is dispatched; no code contract changes:**
+  - *MS06a:* line 14 and step 1 name the restored first-allowed sign pass and MS05e's disposition; "depends
+    on MS05e accepted" becomes "MS05e closed, set aside, identity proved". Greater-Than Normal, Hard and
+    Expert stay among the 17 cells and 204 requests.
+  - *MS06b:* helpers and forwarding unchanged. Lines 113-114 and 161-163: the `signs` strategy has no target
+    consumer; "including the sign strategy" is removed.
+  - *MS06c1:* the rule "no finite target from a normal caller" stays, with its other reason (MS06c2 activates
+    everything at once); "MS05e already consumes it" and "the existing sign-pool comparator" are removed.
+    T03's spy on `signs` stays.
+  - *MS06c2:* the route line reads "cells guided context; the registered `signs` strategy receives the option
+    and does not read it". Lines 76-78 become "no edit to `greater-than.js`". B01 reads "one raw-band target
+    steers every stage that compares candidates; the first-allowed sign dig compares none". T01's route proof
+    stays (the option arrives at the real `signs` strategy, and the selected result's target equals that of its
+    originating invocation) and moves from the deleted `greater-than-guided` suite to `digger-target`; that
+    suite leaves the test command. "The pool's target-ranking cases remain MS05e's" is removed.
+  - *S-OD1's register row:* "the guided sign dig was measured and set aside (CV6-05); fallback (b) applies".
+- *Expectation for MS06d, a projection:* a small or null target effect on the three Greater-Than cells. A null
+  effect there is a valid result of the comparison and not a defect to repair.
+
+### Q2: (a), keep the contracts; final qualification decides the offer
+
+1. **There is no number to promise yet.** The restored source gives p95 5.2 s on CV6's 20 seeds and 10.6 s on
+   the 40 seeds of 7000-7039: a factor of two between two small cohorts. In CV6-01 I gave "2-5 s would keep
+   the cell offered" as the scale; the measurement is at or beyond that edge. A `BUDGET_MS.normal` written now
+   would be fitted to 20 seeds of a catalogue that MS07 to MS16 still change, and would be set again at MS18.
+2. **S-OD4 (c1) is already the rule for offers,** without exception: at least 36 of 40 exact hits and p95 within
+   10 s for this 81-cell board. A looser CV6 contract neither helps nor hinders that; it would only turn a red
+   assertion green for a cell that may be hidden.
+3. **A red assertion that is true is better than an adjusted green one.** CV6 is in the manual tier, outside
+   the quick set and CI, so it blocks no task.
+
+**Therefore, now:** `BUDGET_MS.normal` stays 700 ms and GP's rules stay as they are. Nobody edits, skips or
+wraps the assertion. Greater-Than Normal stays in the offered table; no interim removal. S-AV01 is carried
+with 5,209 ms on CV6's seeds and 10.6 s p95 on 7000-7039, to MS07e and then MS18c / MS18d. This choice does
+not touch Nightmare, the app guard, seeds, floors, caps, requiredness, the target policy or the qualification
+budget.
+
+**How S-AV01 ends, fixed now so that it is not improvised at MS18:**
+
+- *Normal fails final qualification at MS18c:* the cell is hidden by the existing rule. S-AV01 closes as "not
+  offered", and the CV6 Normal timing case follows whatever MS18c does for every hidden cell's manual cases,
+  recorded there. No special treatment.
+- *Normal qualifies at MS18c but CV6 still exceeds its assertion on the final source:* qualification has not
+  made CV6 pass. MS18c then returns here with the final-source numbers, before MS18d's final timing runs, and
+  the first branch of fallback (b) is decided once, on that data. Its form is fixed now: one base value in
+  milliseconds for `BUDGET_MS.normal`, the same base for a GP target of Greater-Than Normal if GP has one, the
+  machine factor left to `SG.test.timeLimit`, never above the 10,000 ms of Expert and of the qualification
+  budget, with the test and both developer guides changed in that same step. Until that decision the 700 ms
+  stands.
+- *CV6 passes on the final source:* S-AV01 closes with the measurement. I do not expect this.
+
+**Process note for the remaining tasks.** Where a task has a diagnosis gate, the developer reports the gate as
+a table that uses the gate's exact predicate, every condition included, and waits for the orchestrator before
+the first production edit. SA2 may add that sentence to the check-list; it changes no task's scope.
+
+**Sequence.** Restore and identity proof, document corrections, MS05e closed "set aside"; SA2's pack edits
+above, cross-checked by SA1; then MS06a's complete 17-cell before-record on the restored source. Nothing is
+measured again for this answer.
+
+---
+
 ## Owner decisions — current resume register
 
 This register is a navigation aid, not a rewrite of the questions or answers above. The later decision governs
@@ -1577,7 +1958,7 @@ where an earlier recovery/process rule conflicts. The pause commit is a historic
 
 | ID | Decision and authority |
 |---|---|
-| S-OD1 | Owner, 2026-11-12 18:20; Part H CV6-01. MS05e owns the bounded guided sign dig and its fixed fallback options. Its algorithm and unchanged CV6 target remain; S-OD4 supersedes a performance-only stop. A changed target or another strategy still needs a decision. |
+| S-OD1 | Owner, 2026-11-12 18:20; Part H CV6-01, with CV6-05's later disposition: the guided sign dig was measured and set aside (CV6-05); fallback (b) applies. CV6-05 Q2(a) keeps the contracts now and fixes S-AV01's three final endings. The earlier sign-comparator handoff is replaced by target transport without consumption in the restored first-allowed sign pass. |
 | S-OD2 | Owner, 2026-11-13 06:45; Part H CV6-02. Preserve active requiredness and step evidence, with private backups owned only by the orchestrator and one combined acceptance. The owner later ordered the non-green pause commit. No further branch commit until r6b's audit and r6c's CI closure are accepted together. |
 | S-OD3 | Owner, 2026-11-13 14:25; CV6-03. Keep 256; (a) move full-attempt mega Nightmare out of quick coverage into a tool-based deep tier preserving every original request and relation, with SA1's conditions (i)-(iii); quick retains real one-attempt mega12 and scripted mega16 controls. (d) persist unchanged G13 at MS05r6a. Fable supplies (c), now answered by S-OD4. |
 | S-OD4 (c1) | PR-S1 and CV6-03, Fable with the owner's same-day approval. Final qualification determines every offer without exception: at least 36 exact hits of 40 or 90 of 100, and p95 within the board's budget (30 seconds above 81 cells). Bounded fallbacks and timeouts are misses. Failed cells are hidden at MS18c; stored requests move to the nearest offered level with the note; the pipeline refuses hidden requests. No interim pruning or browser-budget increase. |
@@ -1587,8 +1968,10 @@ where an earlier recovery/process rule conflicts. The pause commit is a historic
 | S-OD4 reviews | Analysts cross-review the remaining MS05 steps, MS05e, MS06b-MS06c2, MS07a-MS07c, MS13a-MS13c, MS15a, MS17b and MS18c. MS08a is cross-reviewed as the technique template; the orchestrator checks other technique tasks against it and the generic soundness/order-invariant suites. No routine analyst review of the other tasks. |
 | S-OD4 evidence and CI | No new evidence class or tooling task to work around a slow intermediate cell. MS05r5m keeps its approved deep records; MS05b3 may reuse matching records with CV3's own checks, and >240 seconds is an availability item, not a recovery stop. MS05r6c makes both workflows use the bounded quick manifest, deep outside CI, no factor/timeout increase. Later suite-adding tasks own their CI group; MS18e owns the v3 PR's CI and final workflow audit. |
 | S-OD5 | Owner, 2026-11-14 07:15 (+07:00). **(A)** Fable reviews the generator's time complexity now (PR-S2); Sudoku work continues meanwhile. **(B)** Pentomino pauses after MP12b1 until Sudoku reaches MS07e, so that Sudoku runs without lock contention. Review basis: `generator-state-2026-11-14.md` and the pushed snapshot `1d19101` (`refs/dv3-wip/MS05b3-done-20261114-0705`). This schedules a review and the machine window; it does not itself change the generator, task scope, budgets or qualification rules. |
+| S-OD6 | Owner delegated both MS05e D1 decisions to Fable on 2026-11-14 at 16:38 through `ask_user`. **Outcome, Fable's CV6-05 answer:** **Q1(b)** withdraw the pool; **Q2(a)** keep the contracts and let final qualification decide the offer. MS05e closes "measured, set aside", not an accepted repair. Preserve `docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch` and all measurements; restore `f7be90f` (runtime `00647f9`) and prove fingerprinted-source/artifact identity without a run, as the orchestrator has reported. S-AV01 stays open at 5,209 ms against 1,400 ms and 10.6 s p95 on 7000-7039, with the three fixed final endings in CV6-05; S-AV16/S-AV17 are withdrawn current-source items, retained as history; S-AV08 returns to 648.0 s. MS06 transports but does not consume the target in the first-allowed sign dig, with no edit to `greater-than.js`. No present contract/qualification change, second strategy or future improvement feature is authorized. Diagnosis gates require the exact-predicate table and orchestrator review before the first production edit. |
 
 Dispatch: MS05r5p -> MS05r5 -> MS05r5m -> MS05b3 -> MS05r6a -> MS05r6b -> MS05r6c -> combined commit ->
-MS05e -> the remaining serial index. The combined subject remains
+MS05e closed, set aside, identity proved -> document corrections and SA1's pack cross-check ->
+MS06a's complete 17-cell before-record -> the remaining serial index. The combined subject remains
 `difficulty-v3 MS05: required exactness with measured bounded recovery`; its body must state that pause commit
 `a7f6660` was not green and was not acceptance, and include r6c's CI changes.
