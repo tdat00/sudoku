@@ -382,7 +382,7 @@ any later owner disposition. Return the inherited/new S-OD4 item list and the ne
 |---|---|
 | Status | Closed: measured, set aside (CV6-05 / S-OD6; Fable's Q1(b) withdraw the pool, Q2(a) keep the contracts). Not an accepted repair; the runtime is the pre-MS05e baseline |
 | Start | 2026-11-14 12:28 (+07:00) |
-| End | 2026-11-14 15:19 developer implementation and pool comparison; 15:52 D1 to the owner (email and CLI); 16:38 owner delegates D1 to Fable (S-OD6); 17:00 CV6-05 pushed to `clarifications` (snapshot `c0e4954`, also `refs/dv3-wip/MS05e-pending-20261114-1700`); Fable's answer read 17:12, branch deleted; 17:19 developer document rounds; 17:50 SA2 pack edits with SA1's cross-check; orchestrator commit |
+| End | 2026-11-14 15:19 developer implementation and pool comparison; 15:52 D1 to the owner (email and CLI); 16:38 owner delegates D1 to Fable (S-OD6); 17:00 CV6-05 pushed to `clarifications` (snapshot `c0e4954`, also `refs/dv3-wip/MS05e-pending-20261114-1700`); Fable's answer read 17:12, branch deleted; 17:19 developer document rounds; 17:43 SA2 pack edits with SA1's cross-check (CC01 applied); 17:44 orchestrator commit |
 | Duration | 2 h 51 min developer implementation and evidence runs + about 25 min of document rounds; SA1 review (`11-review-of-ms05e.md` sections 1-5) and cross-check (section 6); SA2 ruling, CV6-05 and pack edits |
 | Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (SA1 review and cross-check); gpt-6-astra (SA2 ruling, CV6-05, pack edits); claude-opus-5.5 (orchestrator) |
 | Token usage | Developer 373 model calls (292 implementation, 81 document rounds); 140,739,353 input tokens (139,009,263 cache reads); 400,215 output tokens |

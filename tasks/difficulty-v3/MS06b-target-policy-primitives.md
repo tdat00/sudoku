@@ -178,14 +178,14 @@ Return the inherited/new item list, actual quick coverage and CI membership.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (SA1 verdict: accept; IR31/IR32 carried to MS06c1 as binding items instead of a fix round) |
+| Start | 2026-11-14 18:12 (+07:00) |
+| End | 2026-11-14 18:40 developer; 18:42-18:58 SA1 implementation review (`claude-opus-5.5/12-review-of-ms06b.md`); orchestrator acceptance and commit |
+| Duration | 28 min developer (final quick runs: four locked Generator groups, shard sum 652.9 s; Player 31.9 s); about 16 min review |
+| Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (SA1 review); claude-opus-5.5 (orchestrator) |
+| Token usage | 122 model calls; 23,906,391 input tokens (23,621,358 cache reads); 97,154 output tokens |
+| AI credits | about 405 (developer) |
+| Verification | Developer: `SG.digger.targetPolicy` (`targetFor`, `preferObjective`, `applyBounded`, `preferRated`, `acceptReveal`) and the single forwarding line `if (hasOwnProperty.call(options, 'target')) resolved.target = options.target;`; new suite `digger-target` (28 tests: every task vector, table row and tie; forwarding spy [true,812], [true,null], [false,undefined], [true,0] with identical givens, rating, stats, log and rng position; helpers never called across `generate` at easy/normal/expert; mutation check of the forwarding line). Final quick runs on the final tree, one group per locked command: Generator 3,290/3,290 in 4 groups (`shared-small` 1,464, 60.5 s; `own-suites` 1,607, 165.6 s; `pipeline` 150, 290.2 s; `replay-player` 69, 139.5 s; fingerprint `bae3ceb6…`), Player 1,683/1,683 (`28fc49a4…`); results in `docs/difficulty-v3/evidence/MS06b/quick/`. SA1 recomputed both fingerprints for the current tree. Orchestrator: locked focused re-run `--suite=digger-target,digger,replay,steps,ui-contract,help` 399/399 (26.7 s); `generator-suites.sh check` exit 0 (3,290 of 3,290 in exactly one shard, every job inside its limit; IR37) |
+| Acceptance | MS06b's business and technical criteria met (SA1: all five helpers match the task's tables and vectors exactly; the forwarding line is the only production-path change and is inert for every default request; `greater-than.js` untouched, per CV6-05). CI: new shard `digger-target` (bound 30 s, measured 0.7 s) in group `own-suites` (projected 930 s of 1,800 s). Documentation: `generator/design.md` section 6.8 and 15.2, both developer guides; counts 35 own suites, 51 quick suites, 3,290 tests, 59 suites |
+| Issues & resolutions | (1) The developer's three choices within the spec (`preferObjective` false unless both objectives succeed and are of the same kind; a non-finite target acts as no target; hell2 tested with a literal spec) are allowed by the spec (SA1), no routing. (2) IR31 Minor: `acceptReveal`'s floor check is not exercised on its own -> binding for MS06c1 (add the target-705 case: exact 730 -> 699 false, 730 -> 701 true). (3) IR32 Minor: `generator/design.md:719` names a non-existent "no sign is added back" rule; the real guard is that no clue is added to a model with signs -> binding for MS06c1. (4) IR33/IR36 Info: a misleading test name; the Vietnamese guide lacks the link to section 6.8 -> MS06c1. (5) IR34/IR38 Info: a lost target is indistinguishable from no target, and `generate` copies a caller's `options.target` into every sample -> MS06c2's transport tests must stay strict and override with each sample's own draw. (6) IR35 Info: the hell2 literal could use `SG.difficulty.bandOf('hell2')` (optional). (7) IR37: the CI check was run by the orchestrator; quick results moved from `generator/tests/artifacts/` to `evidence/MS06b/quick/` |
+| Handoff | MS06c1: binding IR31, IR32, IR33 (rename or make a success win), IR36; optional IR35. MS06c2: IR34, IR38; seed each pool's incumbent with its first success; CC02 (the `digger-target` shard measured 0.7 s; a real Greater-Than Expert request fits the 30 s bound only with a short seed). Items unchanged; S-AV08 standing cost now 652.9 s |

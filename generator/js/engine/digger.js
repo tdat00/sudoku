@@ -916,7 +916,8 @@
 
   // Registers a dig strategy, e.g. 'signs' for Greater-Than. It has the signature of `digStage` and receives
   // the resolved options (`spec`, `symmetry`, `order`, `minClues`, `minCluesPerUnit`, `guided`, `budget`,
-  // `emit`, `cooperative`, `log`). It should emit its events through `emit` (a `SG.events` emitter) with
+  // `emit`, `cooperative`, `log`), plus `target` (a number or null) when the dig was given one (`digLevel`);
+  // the built-in strategies ignore it. It should emit its events through `emit` (a `SG.events` emitter) with
   // `stepId` 'dig', keep the replay board in step (patches of at most 8 cells), append its decisions to the
   // dig log `log` (see the file header) and return `{ givens, clues, stats }`, plus `model` when it removed
   // structure from the model. It may ignore `cooperative` and return the result at once (the whole dig of a
@@ -1306,8 +1307,10 @@
   // (`createStageSteps`, what the pipeline passes) or a plain `SG.events.createStageRunner` runner whose
   // steps never yield; default: a stepper stage that emits the step events), strategy (default `digStage`),
   // strategyId (default 'cells', for the 'dig.start' event), where ({ attempt, maxAttempts, sample,
-  // maxSamples }: the position in the restart loop, goes into the step start events). Throws
-  // 'difficulty.unknownLevel', 'difficulty.unsupportedLevel', 'digger.invalidSolution',
+  // maxSamples }: the position in the restart loop, goes into the step start events), target (a number or
+  // null; given to the strategy as it is, in its resolved options, only when the property is present: an
+  // explicit null is not an absent target; no caller supplies one yet and nothing reads it in generation).
+  // Throws 'difficulty.unknownLevel', 'difficulty.unsupportedLevel', 'digger.invalidSolution',
   // 'digger.invalidOption' or a budget error.
   function digLevel(model, solution, level, rng, options) {
     return drive(digLevelSteps(model, solution, level, rng, options));
@@ -1351,6 +1354,7 @@
       cooperative: coop,
       log: log
     };
+    if (Object.prototype.hasOwnProperty.call(options, 'target')) resolved.target = options.target;
 
     const dug = yield* stage('dig', Object.assign({}, where, {
       level: level,
@@ -1735,6 +1739,83 @@
     return distanceToLevel(rating, spec, level);
   }
 
+  // The target policy of difficulty v3 (R6/R7), as pure helpers: they rate nothing, keep no state and draw
+  // only the one child stream 'target' of the rng they are given, which advances no parent stream. Generation
+  // does not call them yet (MS06b); only `digLevelSteps` forwards an explicit `options.target` to a strategy.
+  // An objective is { kind: 'bounded', score, tierUsed }, { kind: 'proposal', priority } or
+  // { kind: 'refused', reason }; two objectives are compared only when both are successful and of the same
+  // kind, so a proposal is never read as a score and a refusal never wins. The caller starts a pool with its
+  // first successful objective as the incumbent. A target that is not a finite number acts as no target.
+
+  /** Higher is better; with a finite target, nearer is better (strict: an equal distance is not better). */
+  function nearerOrHigher(score, other, target) {
+    if (Number.isFinite(target)) return Math.abs(score - target) < Math.abs(other - target);
+    return score > other;
+  }
+
+  function isBoundedObjective(objective) {
+    return !!objective && objective.kind === 'bounded' && Number.isFinite(objective.score) &&
+      typeof objective.tierUsed === 'boolean';
+  }
+
+  function isProposalObjective(objective) {
+    return !!objective && objective.kind === 'proposal' && Number.isFinite(objective.priority);
+  }
+
+  function isRatedFinite(rating) {
+    return !!rating && rating.solved === true && Number.isFinite(rating.score);
+  }
+
+  const targetPolicy = {
+    // The score a sample aims at: null without an upper bound (the level keeps its unbounded policy), else a
+    // point of the raw band drawn from `rng.fork('target')`.
+    targetFor: function (spec, rng) {
+      if (spec.max === Infinity) return null;
+      return spec.min + rng.fork('target').next() * (spec.max - spec.min);
+    },
+
+    // Does `candidate` beat `incumbent` in a pool of one kind? Bounded: the tier first, then the nearer score
+    // to a finite target or the higher one. Proposal: the higher priority, whatever the target. Strict.
+    preferObjective: function (candidate, incumbent, target) {
+      if (isProposalObjective(candidate)) {
+        return isProposalObjective(incumbent) && candidate.priority > incumbent.priority;
+      }
+      if (!isBoundedObjective(candidate) || !isBoundedObjective(incumbent)) return false;
+      if (candidate.tierUsed !== incumbent.tierUsed) return candidate.tierUsed;
+      return nearerOrHigher(candidate.score, incumbent.score, target);
+    },
+
+    // Is the winner of a bounded pool applied to the current state? A tier-using state is never traded for a
+    // shallower one; a state without the tier takes any winner; two tier-using states need a strictly nearer
+    // score for a finite target and take the winner for none.
+    applyBounded: function (current, winner, target) {
+      if (!isBoundedObjective(current) || !isBoundedObjective(winner)) return false;
+      if (current.tierUsed !== winner.tierUsed) return winner.tierUsed;
+      if (!current.tierUsed) return true;
+      return Number.isFinite(target)
+        ? Math.abs(winner.score - target) < Math.abs(current.score - target) : true;
+    },
+
+    // Does a completely rated candidate replace the current one in a local search? The lower quality of
+    // `qualityOf` first (Infinity for an unrated one), then the nearer score or the higher; equal is false.
+    preferRated: function (candidateQuality, candidateScore, currentQuality, currentScore, target) {
+      if (candidateQuality < currentQuality) return true;
+      if (candidateQuality !== currentQuality) return false;
+      return nearerOrHigher(candidateScore, currentScore, target);
+    },
+
+    // May the downward refinement keep `next` after `current`? `current` and `next` are ratings, and the
+    // caller says on each candidate's own model whether it is exact (a required proof in the band).
+    acceptReveal: function (current, next, spec, target, currentIsExact, nextIsExact) {
+      if (!isRatedFinite(current) || !isRatedFinite(next)) return false;
+      if (current.score >= spec.max) return next.score >= spec.min;
+      return current.score >= spec.min && currentIsExact === true && nextIsExact === true &&
+        Number.isFinite(target) && current.score > target &&
+        next.score >= spec.min && next.score < spec.max &&
+        Math.abs(next.score - target) < Math.abs(current.score - target);
+    }
+  };
+
   // GeneratedPuzzle: { model (the one passed in, or the one the variant's `postGenerate` returned for the
   // attempt the puzzle comes from), givens, solution, clues, requested, achieved, rating, exact (`isExact`:
   // in the requested level and needing its tier), attempts (full grids generated), samples (dug puzzles
@@ -2032,6 +2113,7 @@
     createStageSteps: createStageSteps,
     registerStrategy: registerStrategy,
     unregisterStrategy: unregisterStrategy,
-    getStrategy: getStrategy
+    getStrategy: getStrategy,
+    targetPolicy: targetPolicy
   };
 })(typeof self !== 'undefined' ? self : globalThis);

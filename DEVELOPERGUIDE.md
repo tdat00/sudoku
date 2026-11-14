@@ -269,6 +269,23 @@ number into a default, and a recorded number that is not its board's default bec
 ([design.md](generator/design.md) §6.8, §14.2,
 §14.3). The marker never reaches `GenerateConfig`, the history, the cache or an exported puzzle.
 
+**The target policy (internal, not wired yet).** `SG.digger.targetPolicy` holds the pure helpers of the
+difficulty-v3 target policy. They rate nothing, keep no state and are called by no generation code, so a seed still
+gives the same puzzle. `targetFor(spec, rng)` is `null` without an upper bound (`spec.max` is `Infinity`) and
+otherwise a point of the raw band, `spec.min + rng.fork('target').next() × (spec.max − spec.min)`: only that child
+stream is drawn, so no other stream moves. `preferObjective(candidate, incumbent, target)` and
+`applyBounded(current, winner, target)` order and apply the candidates of a guided pool (an objective is
+`{ kind: 'bounded', score, tierUsed }`, `{ kind: 'proposal', priority }` or `{ kind: 'refused', reason }`): the tier
+comes before the distance to a finite target (the higher score when there is none), a proposal maximises its priority
+and is never compared with a score, a refusal never wins, and an equal value keeps the first.
+`preferRated(candidateQuality, candidateScore, currentQuality, currentScore, target)` compares the rated candidates
+of a local search (the lower quality, then the nearer score, or the higher with no target; equal is false), and
+`acceptReveal(current, next, spec, target, currentIsExact, nextIsExact)` decides each reveal of the downward
+refinement; its caller says on each model whether a rating is exact. The one line of the policy in the production path
+is in `SG.digger.digLevel`: an explicit `options.target` (a number or `null`) reaches the dig strategy as it is, and an
+absent one stays absent; the built-in strategies, `signs` included, ignore it
+([design.md](generator/design.md) §6.8).
+
 The UI never slows the algorithm down to animate it, and its replay does not read the events. Next to them
 the digger keeps a compact **dig log** of the sample that became the puzzle (`result.digLog`: entries `pass`,
 `accept`, `reject`, `keep` and `restart`, plus `signs`, `clear`, `reveal` and sign verdicts for Greater-Than;
@@ -851,9 +868,9 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (50 suites, 3,262 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (51 suites, 3,290 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
-node tests/node-runner.js --all                    # quick + manual (58 suites)
+node tests/node-runner.js --all                    # quick + manual (59 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --suite=help --exact="<full name>"   # only the tests of exactly this full name
@@ -862,8 +879,8 @@ node tests/node-runner.js --suite=help --results=<file.json>    # run, and write
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 50 suites,
-3,262 tests — the 34 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 51 suites,
+3,290 tests — the 35 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -913,7 +930,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 58 suites, 50 of them quick (3,262 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 59 suites, 51 of them quick (3,290 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
