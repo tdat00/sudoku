@@ -1,5 +1,9 @@
 # Improve generating (Sudoku): a faster generator for the upper levels
 
+> **Reviewed 2026-11-14.** The joint analysis in [report.md](report.md) and the plan-author answers and revised phase
+> order in [clarifications.md](clarifications.md) supersede this plan where they differ. In particular §4's
+> projections, S1 as a speed item, the "byte-identical" claim of S3 and OD-S1's "stored puzzle" wording are withdrawn.
+
 Plan author: claude-fable-5-2, 2026-11-14. Written with the answer to **PR-S2**
 ([clarifications.md](../difficulty-v3/clarifications.md)). Status: **proposal, nothing implemented**.
 It is the input of a later feature ("improve-generating"); architects turn it into a design and a task pack.
