@@ -1,0 +1,249 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S01",
+  "shard": "loader-parity",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 4,
+    "completed": 4,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "correctness controls, not timing observations"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "9c2facb6fd74275f048b56b3135d0e5411b5bb2ae36a328f1994a2f824aa23ea",
+    "adapterIds": [
+      "noop-expose"
+    ],
+    "adapterHashes": [
+      "f73aa49991cc0141ef7f9bfe34fc0df39d936e122d600ed2ddf2a59a8f2a2c85"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 103.48340000000002,
+      "changesSeen": 7,
+      "incrementsMs": [
+        16,
+        15,
+        15,
+        16,
+        16,
+        15
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 1719
+  },
+  "pairedRows": [
+    {
+      "pairId": "classic4:veryEasy:1",
+      "reference": {
+        "key": "IG-S01/loader-parity/classic4:veryEasy:1/native",
+        "outcome": "complete",
+        "readyWallMs": 7.650099999999952,
+        "coldWallMs": 111.98169999999993,
+        "cpuTotalMs": 188,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "357db3ddfa704c2a616d7c32359952ee3773f59393283ad93808e4856f6b153e"
+      },
+      "prototype": {
+        "key": "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+        "outcome": "complete",
+        "readyWallMs": 7.801500000000033,
+        "coldWallMs": 99.0942,
+        "cpuTotalMs": 94,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "357db3ddfa704c2a616d7c32359952ee3773f59393283ad93808e4856f6b153e"
+      },
+      "cpuFactor": 0.5,
+      "readyWallFactor": 1.0197905909726777,
+      "coldWallFactor": 0.8849142315217581
+    },
+    {
+      "pairId": "classic9:hard:1",
+      "reference": {
+        "key": "IG-S01/loader-parity/classic9:hard:1/native",
+        "outcome": "complete",
+        "readyWallMs": 64.75350000000003,
+        "coldWallMs": 150.48080000000004,
+        "cpuTotalMs": 251,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "378e2e6823ed40bdd318eb4c66c1eb53589082e8a8eeef6470216ed23ae91af4"
+      },
+      "prototype": {
+        "key": "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+        "outcome": "complete",
+        "readyWallMs": 64.87560000000008,
+        "coldWallMs": 155.31799999999998,
+        "cpuTotalMs": 297,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "378e2e6823ed40bdd318eb4c66c1eb53589082e8a8eeef6470216ed23ae91af4"
+      },
+      "cpuFactor": 1.1832669322709164,
+      "readyWallFactor": 1.0018856123607225,
+      "coldWallFactor": 1.0321449646732337
+    }
+  ],
+  "arms": {
+    "reference": {
+      "requests": 2,
+      "complete": 2,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 2,
+        "p50": 7.650099999999952,
+        "p95": 64.75350000000003,
+        "max": 64.75350000000003,
+        "upperMedian": 64.75350000000003,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 2,
+        "p50": 111.98169999999993,
+        "p95": 150.48080000000004,
+        "max": 150.48080000000004,
+        "upperMedian": 150.48080000000004,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 2,
+        "p50": 188,
+        "p95": 251,
+        "max": 251,
+        "upperMedian": 251,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalAggregateMs": 439,
+      "cpuAggregateStatus": "resolved",
+      "verifiedHits": 2,
+      "hitsPerCpuSecond": 4.555808656036446,
+      "hitsPerColdWallSecond": 7.469604312650746
+    },
+    "prototype": {
+      "requests": 2,
+      "complete": 2,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 2,
+        "p50": 7.801500000000033,
+        "p95": 64.87560000000008,
+        "max": 64.87560000000008,
+        "upperMedian": 64.87560000000008,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 2,
+        "p50": 99.0942,
+        "p95": 155.31799999999998,
+        "max": 155.31799999999998,
+        "upperMedian": 155.31799999999998,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 2,
+        "p50": 94,
+        "p95": 297,
+        "max": 297,
+        "upperMedian": 297,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalAggregateMs": 391,
+      "cpuAggregateStatus": "resolved",
+      "verifiedHits": 2,
+      "hitsPerCpuSecond": 5.115089514066496,
+      "hitsPerColdWallSecond": 7.735821689310061
+    }
+  },
+  "estimateVerdict": "not applicable: IG-S01 is infrastructure only and confirms no speed estimate",
+  "extra": {
+    "loaderParity": {
+      "pairs": [
+        {
+          "pairId": "classic4:veryEasy:1",
+          "verdict": "parity-ok",
+          "problems": [],
+          "digestsEqual": true,
+          "differing": [],
+          "referenceDigest": "15f0dd915a0b137f765dac3bdfe4eadef1801ef92076e6fdc6c58b24caaf631f",
+          "prototypeDigest": "15f0dd915a0b137f765dac3bdfe4eadef1801ef92076e6fdc6c58b24caaf631f",
+          "sections": [
+            "structure",
+            "givens",
+            "solution",
+            "rating",
+            "config",
+            "warnings",
+            "log",
+            "work",
+            "scalars",
+            "puzzle"
+          ],
+          "claimedExact": true,
+          "verifiedExact": true,
+          "puzzleHash": "357db3ddfa704c2a616d7c32359952ee3773f59393283ad93808e4856f6b153e"
+        },
+        {
+          "pairId": "classic9:hard:1",
+          "verdict": "parity-ok",
+          "problems": [],
+          "digestsEqual": true,
+          "differing": [],
+          "referenceDigest": "a375f65cad8529c9885ffc8d9196b9e42c4039289ae9e66defc35d5814c06aae",
+          "prototypeDigest": "a375f65cad8529c9885ffc8d9196b9e42c4039289ae9e66defc35d5814c06aae",
+          "sections": [
+            "structure",
+            "givens",
+            "solution",
+            "rating",
+            "config",
+            "warnings",
+            "log",
+            "work",
+            "scalars",
+            "puzzle"
+          ],
+          "claimedExact": true,
+          "verifiedExact": true,
+          "puzzleHash": "378e2e6823ed40bdd318eb4c66c1eb53589082e8a8eeef6470216ed23ae91af4"
+        }
+      ],
+      "failed": 0,
+      "ok": 2
+    }
+  },
+  "notes": []
+}

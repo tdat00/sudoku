@@ -1,0 +1,45 @@
+{
+  "schema": "ig-s-ledger/1",
+  "round": "provisional-r1",
+  "approvals": [],
+  "entries": [
+    {
+      "round": "provisional-r1",
+      "shard": "loader-parity",
+      "requestedAt": "2026-11-14T14:15:34.5729547Z",
+      "commandJson": "IG-S01/loader-parity/command.json",
+      "occupiedMs": 1956,
+      "task": "IG-S01",
+      "chargedGraceMs": 45000,
+      "attemptId": "a1",
+      "seq": 1,
+      "wrapperExit": 0,
+      "wrapperTask": "IG-S01/loader-parity",
+      "chargedMs": 46956,
+      "endedAt": "2026-11-14T14:16:21.7919546Z",
+      "status": "complete",
+      "wrapperSeconds": 1.956,
+      "note": null,
+      "priorityWaitMs": 45263
+    },
+    {
+      "task": "IG-S01",
+      "priorityWaitMs": 57220,
+      "chargedGraceMs": 45000,
+      "attemptId": "a3",
+      "commandJson": "IG-S01/loader-parity/a3/command.json",
+      "requestedAt": "2026-11-14T14:47:21.4715046Z",
+      "note": null,
+      "endedAt": "2026-11-14T14:48:21.4462764Z",
+      "seq": 2,
+      "wrapperSeconds": 2.755,
+      "wrapperTask": "IG-S01/loader-parity",
+      "round": "provisional-r1",
+      "status": "complete",
+      "chargedMs": 47755,
+      "shard": "loader-parity",
+      "occupiedMs": 2755,
+      "wrapperExit": 0
+    }
+  ]
+}

@@ -1,0 +1,321 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S01",
+  "shard": "loader-parity",
+  "round": "provisional-r1",
+  "attemptId": "a2",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "paused-unstarted",
+  "exit": 0,
+  "coverage": {
+    "planned": 4,
+    "completed": 2,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 2,
+    "complete": false,
+    "exclusions": [
+      "correctness controls, not timing observations"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "64b1e3869d7e0869090aa0f258c596b72782c107bfe63146f3eb3f1a16e6d3eb",
+    "adapterIds": [
+      "noop-expose"
+    ],
+    "adapterHashes": [
+      "f73aa49991cc0141ef7f9bfe34fc0df39d936e122d600ed2ddf2a59a8f2a2c85"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 84.3306,
+      "changesSeen": 7,
+      "incrementsMs": [
+        15,
+        16,
+        16,
+        16,
+        15,
+        16
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 813,
+    "processAgeAtHostMs": 412.0657
+  },
+  "pairedRows": [
+    {
+      "pairId": "classic4:veryEasy:1",
+      "reference": {
+        "key": "IG-S01/loader-parity/classic4:veryEasy:1/native",
+        "outcome": "complete",
+        "readyWallMs": 8.183500000000095,
+        "coldWallMs": 114.02020000000005,
+        "cpuTotalMs": 110,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "357db3ddfa704c2a616d7c32359952ee3773f59393283ad93808e4856f6b153e"
+      },
+      "prototype": {
+        "key": "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+        "outcome": "complete",
+        "readyWallMs": 7.626500000000078,
+        "coldWallMs": 98.18050000000005,
+        "cpuTotalMs": 109,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "357db3ddfa704c2a616d7c32359952ee3773f59393283ad93808e4856f6b153e"
+      },
+      "cpuFactor": 0.990909090909091,
+      "readyWallFactor": 0.931936213111748,
+      "coldWallFactor": 0.8610798788284884
+    },
+    {
+      "pairId": "classic9:hard:1",
+      "reference": {
+        "key": "IG-S01/loader-parity/classic9:hard:1/native",
+        "outcome": "unstarted",
+        "readyWallMs": null,
+        "coldWallMs": null,
+        "cpuTotalMs": null,
+        "cpuResolutionStatus": null,
+        "claimedExact": null,
+        "verifiedExact": null,
+        "puzzleHash": null
+      },
+      "prototype": {
+        "key": "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+        "outcome": "unstarted",
+        "readyWallMs": null,
+        "coldWallMs": null,
+        "cpuTotalMs": null,
+        "cpuResolutionStatus": null,
+        "claimedExact": null,
+        "verifiedExact": null,
+        "puzzleHash": null
+      },
+      "cpuFactor": null,
+      "readyWallFactor": null,
+      "coldWallFactor": null
+    }
+  ],
+  "arms": {
+    "reference": {
+      "requests": 2,
+      "complete": 1,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 1,
+      "readyWallMs": {
+        "n": 1,
+        "p50": 8.183500000000095,
+        "p95": 8.183500000000095,
+        "max": 8.183500000000095,
+        "upperMedian": 8.183500000000095,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 1,
+        "p50": 114.02020000000005,
+        "p95": 114.02020000000005,
+        "max": 114.02020000000005,
+        "upperMedian": 114.02020000000005,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 1,
+        "p50": 110,
+        "p95": 110,
+        "max": 110,
+        "upperMedian": 110,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 1,
+          "cpuMs": 110,
+          "wallMs": 116.69569999999999
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 1,
+          "cpuMs": 110,
+          "wallMs": 116.69569999999999
+        }
+      },
+      "cpuTotalAggregateMs": 110,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 116.69569999999999,
+      "verifiedHits": 1,
+      "hitsPerCpuSecond": 9.09090909090909,
+      "hitsPerColdWallSecond": 8.569296040899538
+    },
+    "prototype": {
+      "requests": 2,
+      "complete": 1,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 1,
+      "readyWallMs": {
+        "n": 1,
+        "p50": 7.626500000000078,
+        "p95": 7.626500000000078,
+        "max": 7.626500000000078,
+        "upperMedian": 7.626500000000078,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 1,
+        "p50": 98.18050000000005,
+        "p95": 98.18050000000005,
+        "max": 98.18050000000005,
+        "upperMedian": 98.18050000000005,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 1,
+        "p50": 109,
+        "p95": 109,
+        "max": 109,
+        "upperMedian": 109,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 1,
+          "cpuMs": 109,
+          "wallMs": 99.7151
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 1,
+          "cpuMs": 109,
+          "wallMs": 99.7151
+        }
+      },
+      "cpuTotalAggregateMs": 109,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 99.7151,
+      "verifiedHits": 1,
+      "hitsPerCpuSecond": 9.174311926605505,
+      "hitsPerColdWallSecond": 10.028571399918368
+    }
+  },
+  "estimateVerdict": "not applicable: IG-S01 is infrastructure only and confirms no speed estimate",
+  "extra": {
+    "loaderParity": {
+      "pairs": [
+        {
+          "pairId": "classic4:veryEasy:1",
+          "verdict": "parity-ok",
+          "problems": [],
+          "digestsEqual": true,
+          "differing": [],
+          "referenceDigest": "15f0dd915a0b137f765dac3bdfe4eadef1801ef92076e6fdc6c58b24caaf631f",
+          "prototypeDigest": "15f0dd915a0b137f765dac3bdfe4eadef1801ef92076e6fdc6c58b24caaf631f",
+          "sections": [
+            "structure",
+            "givens",
+            "solution",
+            "rating",
+            "config",
+            "warnings",
+            "log",
+            "work",
+            "scalars",
+            "puzzle"
+          ],
+          "claimedExact": true,
+          "verifiedExact": true,
+          "puzzleHash": "357db3ddfa704c2a616d7c32359952ee3773f59393283ad93808e4856f6b153e"
+        },
+        {
+          "pairId": "classic9:hard:1",
+          "verdict": "not-started"
+        }
+      ],
+      "failed": 0,
+      "ok": 1,
+      "deferred": 1,
+      "complete": false
+    },
+    "chain": {
+      "attempts": [
+        "a2"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S01/loader-parity/classic4:veryEasy:1/native",
+        "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": [
+        "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+        "IG-S01/loader-parity/classic9:hard:1/native"
+      ]
+    }
+  },
+  "notes": []
+}
