@@ -136,12 +136,12 @@ no staging/commit. Subsequent tasks extend this harness rather than create indep
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start /end | |
-| Developer /model | |
-| Files /source identities | |
-| Verification /evidence | |
-| Machine charged /priority wait | |
-| Findings /author answers | |
-| Orchestrator review /acceptance | |
-| Handoff | |
+| Status | Accepted (pack author: IG-S01 ACCEPT after one fix round) |
+| Start /end | 2026-11-14 20:35-21:17 (+07:00) first pass; 21:31-21:51 fix round; 21:55 author acceptance; orchestrator commit |
+| Developer /model | claude-sonnet-5.5; 137 model calls, 56,690,835 input tokens (55,505,132 cache reads), 481,975 output tokens, about 1,333 AI credits. Author review gpt-6-astra; orchestrator claude-opus-5.5 |
+| Files /source identities | `generator/tests/artifacts/improve-generating/phase0/` (`Invoke-IgTask.ps1`, `run.cjs`, `host.cjs`, `worker.cjs`, `loader.cjs`, `manifest.cjs`, `records.cjs`, `self-test.cjs`, `common.cjs`, `README.md`); accepted harness fingerprint `64b1e386…`; runtime `36b2b832…b50a` (the worktree's source, equal to `f7be90f`); catalogue `d035b740…fb3e` (rating version 2, 15 variants, 26 techniques). No tracked file changed |
+| Verification /evidence | `docs/improve-generating/evidence/phase0/provisional-r1/IG-S01/`: self-test 31/31 (a1), then 36/36 (a2) through `Invoke-IgNode`; loader parity on `classic4/veryEasy/1` and `classic9/hard/1`: native and no-op-loader digests equal in every section, claimed exact equals verified exact; busy-worker kill at 458 ms with CPU not double counted; real wrapped pause and resume: a2 `paused-unstarted` (classic4 pair only), a3 `-ResumeUnstarted` to `complete` (classic9 pair only), `chain.noRerun` true, both pairs `parity-ok` |
+| Machine charged /priority wait | 237.0 s of the 240 s allocation (six wrapped commands, each with 45 s grace); priority waits behind difficulty-v3 about 63, 45, 66, 59 and 129 s, not charged |
+| Findings /author answers | Author's acceptance review: four fixes (lock owner must be proved; rate denominators charge all spent work with censored/error/unknown listed apart; deadlines from process start, late decisions dropped, termination timeout stops without forgetting the worker; deferred parity reconciled over the resume chain with a real pause/resume) and `runtimeFingerprint` in `ig-s-budget/1` with both receipts validated before frozen generation; all applied. Receipt names `ig-s-freeze/1` and `ig-s-budget/1` approved. Accepted as disclosed: full `SOURCE_FILES` loading in each worker, docs firewall by size and mtime, no optional per-thread CPU attribution |
+| Orchestrator review /acceptance | Worktree status shows only the new harness and evidence folders; no production, test, golden or difficulty-v3 file changed; formats checked (CRLF, no BOM) |
+| Handoff | IG-S02 dispatched as written: reuse the accepted foundation `64b1e386…` and its guards, accounting and resume logic; charge further work to IG-S02's allocation; no further IG-S01 runs |

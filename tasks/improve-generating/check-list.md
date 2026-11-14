@@ -43,7 +43,7 @@ is separate. No silent retries or new seed searches may spend the reserve.
 
 | Done | ID | File | Title | Depends on | Active development estimate | Machine allocation | Estimate/report rows addressed |
 |---|---|---|---|---|---|---:|---|
-| [ ] | IG-S01 | [01](01-harness-and-records.md) | Isolated loader, manifests, safety and records | owner instruction | 60-120 min | 4 min | Common trustworthy baseline and CPU/wall accounting |
+| [x] | IG-S01 | [01](01-harness-and-records.md) | Isolated loader, manifests, safety and records | owner instruction | 60-120 min | 4 min | Common trustworthy baseline and CPU/wall accounting |
 | [ ] | IG-S02 | [02](02-headline-baseline-and-attempt-pool.md) | Paired headline baseline and S5a width4 | IG-S01 accepted | 90-150 min | 25 min | Six Nightmare rows; S5a and the two-attempt local limit |
 | [ ] | IG-S03 | [03](03-scoped-solver-and-check-parity.md) | Small S3 prototype with virtual-check parity | IG-S02 accepted | 2-3 h | 22 min | S3 multiplier; S3+S5a headline requests |
 | [ ] | IG-S04 | [04](04-frontier-prototype-and-budget-pilot.md) | S1/S2 variants and staged budget pilot | IG-S03 accepted | 2-4 h | 12 min | Measure large-board cost before admitting the rest |
@@ -392,7 +392,7 @@ pause exit handling for the supplied wrapper. No measurements or production chan
 
 | Task | Status | Source /evidence | Machine charged /priority wait | Review /issues | Milestone |
 |---|---|---|---|---|---|
-| IG-S01 | | | | | |
+| IG-S01 | Accepted | harness `64b1e386…`; `evidence/phase0/provisional-r1/IG-S01/` | 237.0 s of 240 s /about 362 s waits | author fix round (4 fixes + `runtimeFingerprint`); self-test 36/36; real pause/resume | M0 harness |
 | IG-S02 | | | | | |
 | IG-S03 | | | | | |
 | IG-S04 | | | | | |

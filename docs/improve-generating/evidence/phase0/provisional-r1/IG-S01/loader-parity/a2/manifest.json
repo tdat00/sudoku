@@ -1,0 +1,224 @@
+{
+  "manifest": {
+    "schema": "ig-s-phase0/1",
+    "task": "IG-S01",
+    "round": "provisional-r1",
+    "evidenceStatus": "provisional (pre-freeze)",
+    "guards": {
+      "commandMs": 270000,
+      "requestMs": 180000,
+      "sampleMs": 45000,
+      "jigsawMs": 240000,
+      "validationMs": 60000,
+      "wrapperLimitMs": 300000,
+      "graceMs": 45000,
+      "finalizeReserveMs": 8000,
+      "startMarginMs": 2000,
+      "minWindowMs": 15000
+    },
+    "pairOrder": [
+      {
+        "pairId": "classic4:veryEasy:1",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "classic9:hard:1",
+        "seedIndex": 1,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      }
+    ],
+    "shards": [
+      {
+        "shard": "self-test",
+        "kind": "synthetic",
+        "blockKeys": [],
+        "jobKeys": []
+      },
+      {
+        "shard": "loader-parity",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S01/loader-parity/classic4:veryEasy:1",
+          "IG-S01/loader-parity/classic9:hard:1"
+        ],
+        "jobKeys": [
+          "IG-S01/loader-parity/classic4:veryEasy:1/native",
+          "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+          "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+          "IG-S01/loader-parity/classic9:hard:1/native"
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "blockKey": "IG-S01/loader-parity/classic4:veryEasy:1",
+        "shard": "loader-parity",
+        "jobKeys": [
+          "IG-S01/loader-parity/classic4:veryEasy:1/native",
+          "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose"
+        ],
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S01/loader-parity/classic9:hard:1",
+        "shard": "loader-parity",
+        "jobKeys": [
+          "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+          "IG-S01/loader-parity/classic9:hard:1/native"
+        ],
+        "estimateMs": 20000
+      }
+    ],
+    "jobs": [
+      {
+        "key": "IG-S01/loader-parity/classic4:veryEasy:1/native",
+        "blockKey": "IG-S01/loader-parity/classic4:veryEasy:1",
+        "shard": "loader-parity",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "classic4:veryEasy:1",
+        "gridCluster": null,
+        "requestSeed": 1,
+        "variantId": "native",
+        "puzzleVariant": "classic4",
+        "level": "veryEasy",
+        "mode": "native-default",
+        "arm": "reference",
+        "adapterIds": [],
+        "request": {
+          "variantId": "classic4",
+          "difficulty": "veryEasy",
+          "seed": 1,
+          "trace": "off"
+        },
+        "estimateMs": 10000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+        "blockKey": "IG-S01/loader-parity/classic4:veryEasy:1",
+        "shard": "loader-parity",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": "classic4:veryEasy:1",
+        "gridCluster": null,
+        "requestSeed": 1,
+        "variantId": "noop-expose",
+        "puzzleVariant": "classic4",
+        "level": "veryEasy",
+        "mode": "native-default",
+        "arm": "prototype",
+        "adapterIds": [
+          "noop-expose"
+        ],
+        "request": {
+          "variantId": "classic4",
+          "difficulty": "veryEasy",
+          "seed": 1,
+          "trace": "off"
+        },
+        "estimateMs": 10000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+        "blockKey": "IG-S01/loader-parity/classic9:hard:1",
+        "shard": "loader-parity",
+        "order": 2,
+        "seedIndex": 1,
+        "pairId": "classic9:hard:1",
+        "gridCluster": null,
+        "requestSeed": 1,
+        "variantId": "noop-expose",
+        "puzzleVariant": "classic9",
+        "level": "hard",
+        "mode": "native-default",
+        "arm": "prototype",
+        "adapterIds": [
+          "noop-expose"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "hard",
+          "seed": 1,
+          "trace": "off"
+        },
+        "estimateMs": 10000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S01/loader-parity/classic9:hard:1/native",
+        "blockKey": "IG-S01/loader-parity/classic9:hard:1",
+        "shard": "loader-parity",
+        "order": 3,
+        "seedIndex": 1,
+        "pairId": "classic9:hard:1",
+        "gridCluster": null,
+        "requestSeed": 1,
+        "variantId": "native",
+        "puzzleVariant": "classic9",
+        "level": "hard",
+        "mode": "native-default",
+        "arm": "reference",
+        "adapterIds": [],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "hard",
+          "seed": 1,
+          "trace": "off"
+        },
+        "estimateMs": 10000,
+        "guardScope": "request"
+      }
+    ],
+    "manifestHash": "309948fc333d6ef48697dd8701c5c20e90f585b7679c6a3d7929f1bb1e179ab2"
+  },
+  "attemptKeys": [
+    "IG-S01/loader-parity/classic4:veryEasy:1/native",
+    "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+    "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+    "IG-S01/loader-parity/classic9:hard:1/native"
+  ],
+  "runKeys": [
+    "IG-S01/loader-parity/classic4:veryEasy:1/native",
+    "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose"
+  ],
+  "physicalPlan": {
+    "windowMs": 28000,
+    "commands": [
+      {
+        "index": 0,
+        "blockKeys": [
+          "IG-S01/loader-parity/classic4:veryEasy:1"
+        ],
+        "jobKeys": [
+          "IG-S01/loader-parity/classic4:veryEasy:1/native",
+          "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose"
+        ],
+        "estimateMs": 20000,
+        "split": false
+      },
+      {
+        "index": 1,
+        "blockKeys": [
+          "IG-S01/loader-parity/classic9:hard:1"
+        ],
+        "jobKeys": [
+          "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+          "IG-S01/loader-parity/classic9:hard:1/native"
+        ],
+        "estimateMs": 20000,
+        "split": false
+      }
+    ],
+    "oversize": [],
+    "hash": "19ef60a1f9dad325f4cc1a6932f6d1fe57f02628c8f2016fe4b447d3378a9dde"
+  }
+}
