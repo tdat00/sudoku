@@ -893,3 +893,34 @@ puzzle-generating tests (the three instrumentation-cost tests 75 to 87 s each, +
 seeds" 18.2 to 22.0 s, +21 %; the other 144 tests -2.2 s); `mega` 11.0 to 15.4 s (+40 %); the 520 regression-hash requests got
 faster, 567 to 522 s. The first final run (SA1's review) had +40.2 s, +16 % to +21 % and +43 %. A mixed generation cost of the
 active policy, not a stop. No other S-OD4 item is new; the inherited list is unchanged.
+
+## MS06d: the isolated target comparison (17 cells, 204 requests)
+
+MS06a's 17 commands repeated on the source of MS06c2 (HEAD `091a44b`, source hash `e435640c...`, the policy active; the before-record is
+MS06a at `ef8a9cc`, `a073f9bd...`), one locked command per cell, 12 requests per cell, seed base 20260101, the same routes, allowance
+256 and eight attempts; nothing sharded, 570.5 s of helper time, no lock wait, every command exit 0. **Evidence only**: the before-record
+is untouched, the after and the comparison are appended to `docs/difficulty-v3/target-scope-2026-11-14.md` and the ledgers, transcripts,
+the comparison script and its generated tables are in `docs/difficulty-v3/evidence/MS06d/` (917 recomputation checks, 0 disagreements).
+All 204 request identities equal MS06a's; 128 of the 204 requests generate the identical puzzle, 76 another one.
+
+- **Hits.** 164 exact / 38 shallow / 2 miss against 163 / 39 / 2 (in band 202 both times); classic9 Normal 10 to 11, classic9
+  Nightmare 2 to 3, **jigsaw9 Expert 11 to 10**, 14 cells unchanged. Seven requests changed outcome, four gains and three losses (R7
+  loss report: jigsaw9 Expert request 0 exact in 0.57 s to shallow in 2.62 s with all eight attempts; classic9 Nightmare 1; diagonalX
+  Nightmare 6, 2.39 to 11.75 s), every one among the 76 changed puzzles. The soak's old gate line: 4 FAIL to 3 FAIL (classic9 Normal now 92%).
+- **Positions (AC01).** The adjusted exact median fell in 8 of 14 cells (jigsaw9 Hard 0.806 to 0.528, classic9 Master 0.511 to 0.426,
+  Expert 0.636 to 0.561), rose in diagonalX Nightmare (0.623 to 0.711), and is unchanged in classic9 Normal, killer Normal and the three
+  Greater-Than cells; pooled, 0.623 to 0.560 and the top quarter 35 of 151 to 31 of 152. The Hell 1 adjusted positions stay `empty-tier`,
+  the two off-band Greater-Than Expert rows `off-band`; the same 14 undefined rows before and after. The target deviation (after only)
+  shows a weak pull on aggregate (paired 0.297 against 0.316 shuffled), clear in classic9 Normal, Hard and Hell 1.
+- **Time and work.** Generation 454.62 to 454.42 s (1.00x); jigsaw9 Nightmare 5.94 to 9.08 s (1.53x) and Expert 7.98 to 10.30 s (1.29x)
+  slower, classic9 and diagonalX Nightmare 0.92x; 9 `SLOW` flags before and after. Full ratings 73,393 to 79,170 (+7.9%); jigsaw9
+  Nightmare 2.6x. The plateau effect SA1 asked about (G10 is killer Nightmare, not in the 17): killer Hard +22% full ratings and killer
+  Expert +0.8% at unchanged time, 95 of 96 Hard searches still end on the proposal cap.
+- **Greater-Than (CV6-05).** All 36 requests give the identical puzzle: a null effect, not a defect; exact 12/12, 12/12, 10/12, requests 2
+  and 5 of Expert still off-band in Master.
+- **Errors.** None: 0 request errors, 0 invariant violations, 0 check, reference, final-path or work errors in 204 rows.
+
+Named items (S-OD4, none a stop): new **S-AV21** jigsaw9 Expert exact loss (11 to 10), **S-AV22** request-level exact churn (three
+losses, four gains), **S-AV23** jigsaw9 Nightmare and Expert cost; S-AV01, S-AV05-S-AV08, S-AV14, S-AV18-S-AV20 re-measured (S-AV08's
+690.7 s is a quick-suite figure, not measured by the 204 requests, which show no rise); the rest unchanged. Routes: MS07e, then MS18c
+(availability) and MS18d (cost).

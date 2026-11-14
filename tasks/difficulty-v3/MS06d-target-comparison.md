@@ -105,14 +105,14 @@ Return the inherited/new item list; verify the unchanged quick baseline, with no
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (evidence only) |
+| Start | 2026-11-14 23:58 (+07:00) |
+| End | 2026-11-15 00:25 developer (17 locked commands 00:00:18-00:14:22, 570.5 s helper time); orchestrator review and commit |
+| Duration | 27 min developer; about 10 min review |
+| Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (orchestrator review) |
+| Token usage | 74 model calls; 12,734,900 input tokens (12,443,824 cache reads); 128,429 output tokens |
+| AI credits | about 326 (developer) |
+| Verification | Developer: MS06a's 17 cells x 12 requests repeated on HEAD `091a44b` (source `e435640c…`; `greater-than.js` byte-identical to before): **204 of 204 outcomes**, request identities, commands and manifest equal to MS06a's in every cell; 0 request errors or invariant failures; 128 requests give the identical puzzle, 76 a different one. Orchestrator: only `docs/` changed (`target-scope-2026-11-14.md` insertions only, the before text byte-identical); locked re-runs of classic9 Hard and jigsaw9 Normal reproduce the MS06d ledgers row for row |
+| Acceptance | MS06d's criteria met: exact/shallow/miss 163/39/2 -> 164/38/2, in band 202 -> 202 (four request-level gains, three losses, all among the 76 changed puzzles; no loss hidden behind a better median); adjusted exact median lower in 8 of 14 non-empty cells, higher in 1, unchanged in 5 (pooled 0.623 -> 0.560); the 14 undefined adjusted rows identical; generation time 454.62 -> 454.42 s; full ratings +7.9 % (73,393 -> 79,170). Greater-Than: all 36 requests give the identical puzzle, the null effect CV6-05 projected. Comparison in `docs/difficulty-v3/target-scope-2026-11-14.md` (after and comparison sections) and `docs/difficulty-v3/evidence/MS06d/` (17 ledgers, 17 transcripts, `compare.cjs`, `comparison-tables.md`) |
+| Issues & resolutions | (1) New items S-AV21 (jigsaw9 Expert exact 11 -> 10: request 0 from exact in 0.57 s to shallow in 2.62 s), S-AV22 (three request-level exact losses against four gains: classic9 Nightmare 1, jigsaw9 Expert 0, diagonalX Nightmare 6), S-AV23 (jigsaw9 cost: Nightmare 1.53x time and 2.6x full ratings, Expert 1.29x) added to check-list section 2. (2) Plateau effect: G10 (Killer Nightmare) is not among the 17 cells; Killer Hard full ratings +22 % and Expert +0.8 % at unchanged time. (3) S-AV08's 690.7 s is the quick-suite figure; the 204 requests show no rise. (4) Deviations: the after/comparison sections appended to MS06a's record as the task names it (before text byte-identical); the sequencer and comparison scripts kept in `evidence/MS06d/` so the soak's tracked-tree check stays clean (`dirty: false`) |
+| Handoff | MS07a: M6 complete; the inherited items with MS06d's numbers (S-AV01, S-AV05-S-AV08, S-AV14, S-AV18-S-AV20) and new S-AV21-S-AV23 go to MS07e/MS18c; jigsaw9's cost and the request-level losses are watched at MS07e |

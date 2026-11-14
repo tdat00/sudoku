@@ -1,0 +1,61 @@
+START 2026-11-15T00:12:53.6737294+07:00
+Sudoku Generator soak test  (node v26.13.0, seed 20260101, 12 puzzles in 88.1 s)
+
+Calibration in force (score bands, lower bound of each level, the same on every board):
+  veryEasy 0 | easy 45 | normal 180 | hard 400 | expert 700 | master 1000 | nightmare 1500 | hell1 2400 | hell2 3600
+Technique weights: nakedSingle 1, hiddenSingleBox 1.25, hiddenSingleLine 1.5, pointing 40, boxLine 50, nakedPair 120, hiddenPair 145, nakedTriple 180, hiddenTriple 220, nakedQuad 260, hiddenQuad 300, xWing 320, simpleColouring 360, swordfish 420, jellyfish 520, xyWing 650, xyzWing 750, wWing 850, uniqueRectangle 900, forcingChain 1100, nishio 1700, cageCombo 40, ruleOf45 260, cageSplit 520, ineqChain 40, minMaxForcing 180
+
+== diagonalX (81 cells) ==
+requested     veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2    n    hit  samples  ms p50     p95     max  budget
+nightmare            .          .          .          .          .          .         12          .          .   12    83%     53.1    6299   11752   117523000 SLOW
+exact: 10 of 12 (83.3%)
+
+group of the hardest technique per requested level (share of puzzles):
+  nightmare  chain 92%  wing 8%
+
+Score histogram (the bands of every board), all puzzles, by requested level:
+bin            veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2   all
+0-45                  .          .          .          .          .          .          .          .          .      0
+45-180                .          .          .          .          .          .          .          .          .      0
+180-400               .          .          .          .          .          .          .          .          .      0
+400-700               .          .          .          .          .          .          .          .          .      0
+700-1000              .          .          .          .          .          .          .          .          .      0
+1000-1500             .          .          .          .          .          .          .          .          .      0
+1500-2400             .          .          .          .          .          .         12          .          .     12 ##############################
+2400-3600             .          .          .          .          .          .          .          .          .      0
+3600-5400             .          .          .          .          .          .          .          .          .      0
+5400+                 .          .          .          .          .          .          .          .          .      0
+
+Invariants over 12 puzzles:
+  I1 ok
+  I2 ok
+  I3 ok
+  I4 ok
+  I5 ok
+  I6 ok
+  I7 ok
+
+other variants: lowest hit rate 83% (diagonalX/nightmare), required at least 80%
+RESULT: PASS
+
+Difficulty diagnostics (docs/difficulty-v3/evidence/MS06d/diagonalX-nightmare.json): 12 of 12 requests recorded; the diagnostic solves took 0.0 s after the generation and the checks
+
+== diagonalX/nightmare: 12 requests, 0 errors, 0 unrated, 12 solved in band ==
+  old hits 10/12 (83%), qualified hits 10/12 (83%), shallow 2/12 (17%; 12 with a derived verdict); exact flag against the derived verdict: 0 disagreements
+  sampled reference: ok 2, vacuous 0, error 0, skipped 0, notSelected 10, notRun 0; final path: ok 12, mismatch 0, error 0, notRun 0
+  work: ok 12, mismatch 0, unavailable 0; local searches ended by shallow 34, ratings 0, proposals 12
+    full ratings (n=12): min 6, p10 46, p50 1197, p90 2326, max 2341, upper median 1197
+  cohort exact (old hits): 10 puzzles, peak nishio 10
+    raw position (n=10): min 0.834, p10 0.859, p50 0.927, p90 0.988, max 0.988, upper median 0.927
+    adjusted position (n=10): min 0.346, p10 0.44, p50 0.711, p90 0.952, max 0.952, upper median 0.711
+    adjusted undefined: -
+  cohort all in band: 12 puzzles, peak nishio 10, wWing 1, forcingChain 1
+    raw position (n=12): min 0.077, p10 0.497, p50 0.921, p90 0.982, max 0.988, upper median 0.921
+    adjusted position (n=12): min -2.592, p10 -0.981, p50 0.689, p90 0.93, max 0.952, upper median 0.689
+    adjusted undefined: -
+  forcing-chain steps (1 of 12 rated paths): length 4 1; per-puzzle maximum 4 1
+  nishio steps (10 of 12 rated paths): depth 1 10; per-puzzle maximum 1 10
+
+DIAGNOSTICS: PASS (request errors 0, invariant violations 0, check errors 0, reference errors 0, final-path errors 0, final-path mismatches 0, work unavailable 0)
+MS06d diagonalX-nightmare exit=0 seconds=88.606
+END 2026-11-15T00:14:22.3568531+07:00

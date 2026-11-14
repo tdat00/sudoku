@@ -65,13 +65,13 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS05r6b | [MS05r6b](MS05r6b-quick-gd-and-combined-acceptance.md) | Full quick/GD, deep reconciliation, standing cost and audit | MS05r6a step evidence | 1.5-2.5 h operation + gates | Evidence/acceptance docs | combined audit; r6c still required | 9r6b |
 | [x] | MS05r6c | [MS05r6c](MS05r6c-ci-test-tiers.md) | CI workflows for the v3 test tiers | MS05r6b evidence and final quick manifest | S-M, 30-50 min + checks | CI | inside combined commit | 9r6c |
 | [x] | MS05e | [MS05e](MS05e-guided-sign-dig.md) | Closed: guided sign dig measured, set aside (CV6-05) | r6b/r6c combined commit | M, 50-60 min + gates | Greater-Than | M5e | 11a |
-| [ ] | MS06 | MS06a-MS06d | One target through all stages (parent) | MS05e closed, set aside, identity proved | split | Generator | M6 | 12-15 |
+| [x] | MS06 | MS06a-MS06d | One target through all stages (parent) | MS05e closed, set aside, identity proved | split | Generator | M6 | 12-15 |
 | [x] | MS06a | [MS06a](MS06a-pre-target-evidence.md) | Isolated pre-target evidence | MS05e closed, set aside, identity proved | S, 20-30 min | Evidence | M6a | 12 |
 | [x] | MS06b | [MS06b](MS06b-target-policy-primitives.md) | Inactive target policy primitives | MS06a | M, 35-50 min | Generator engine | M6b | 13 |
 | [ ] | MS06c | MS06c1-MS06c2 below | Target transport and atomic activation (parent) | MS06b | split | Generator | M6c | 14a-14b |
 | [x] | MS06c1 | [MS06c1](MS06c1-target-transport.md) | Nullable target transport; no policy activation | MS06b | M, 45-60 min + GG check/GR | Generator plumbing | M6c1 | 14a |
 | [x] | MS06c2 | [MS06c2](MS06c2-activate-target-policy.md) | Atomic all-stage target activation | MS06c1 | M, 50-60 min + GG/GR | Generator engine | M6c2 | 14b |
-| [ ] | MS06d | [MS06d](MS06d-target-comparison.md) | Isolated target comparison | MS06c2 | S, 20-30 min | Evidence | M6 | 15 |
+| [x] | MS06d | [MS06d](MS06d-target-comparison.md) | Isolated target comparison | MS06c2 | S, 20-30 min | Evidence | M6 | 15 |
 | [ ] | MS07 | MS07a-MS07e | Windows/selection/checkpoint (parent) | MS06d | split | Solver/tools | M7 | 16-20 |
 | [ ] | MS07a | [MS07a](MS07a-window-kernels-and-pattern-metrics.md) | Window kernels and pattern metrics | MS06d | M, 50-60 min | Shared solver/tools | M7a | 16 |
 | [ ] | MS07b | [MS07b](MS07b-register-chain-windows.md) | Chain/depth integration and Hell 1 pilot | MS07a | M, 50-60 min + E/GH/pilot | Shared solver | M7b | 17 |
@@ -292,6 +292,9 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV18 Greater-Than Expert off-band misses | MS06a (restored source, seeds 20260101): 10/12 exact; requests 2 and 5 end off-band in Master (scores 1013 and 1046, about 14 s each); the same two requests missed in MS02 | MS06d comparison, MS07e, MS18c |
 | S-AV19 design 9.1 p95 flags | MS06a: the soak's informational `SLOW` flag against the design section 9.1 p95 target fires in 9 of 17 cells at 12 samples each; not a gate | MS18d (GP decides), MS18e audit |
 | S-AV20 shallow results without an inherited item | MS06a: jigsaw9 Expert 1/12 shallow, diagonalX Nightmare 2/12 shallow | MS06d comparison, MS07e, MS18c |
+| S-AV21 jigsaw9 Expert exact loss | MS06d (target active): exact 11/12 -> 10/12; request 0 from exact (0.57 s, 2 attempts) to shallow (2.62 s, 8 attempts) | MS07e, MS18c |
+| S-AV22 request-level exact losses | MS06d: four gains and three losses among the 76 changed puzzles (classic9 Nightmare 1, jigsaw9 Expert 0, diagonalX Nightmare 6: 2.39 -> 11.75 s); in band 202 -> 202 | MS07e, MS18c |
+| S-AV23 jigsaw9 cost under the target | MS06d: Nightmare 1.53x generation time and 2.6x full ratings; Expert 1.29x | MS07e, MS18c/MS18d |
 
 **CV6-05: S-AV01's three fixed endings.** Nobody now edits, skips or wraps the Normal CV6
 assertion. It is manual, outside the quick set and CI, and its honest red outcome blocks no
@@ -1084,4 +1087,5 @@ empty until that review. The analyst reports are traceability, not additional de
 | MS06b | Accepted: pure target policy helpers and inert forwarding; 28 tests in `digger-target`; quick sets green (Generator 3,290, Player 1,683; 652.9 s); SA1 IR31-IR38, IR31/IR32 carried to MS06c1 | 28 min developer + 16 min review | about 405 | `difficulty-v3 MS06b` |
 | MS06c1 | Accepted: nullable target transport, keeper views and typed objectives without activation; GG 520/520 unchanged, GR wires `target: null` only; quick sets green (Generator 3,323, Player 1,683; 650.7 s); SA1 IR39-IR44 | 63 min developer + 12 min review | about 1,190 | `difficulty-v3 MS06c1` |
 | MS06c2 | Accepted: one originating target per sample activated in every candidate-comparing stage; complete E (194 of 520 hashes changed, wires `target`, analyses G01/G04/G05/G06); quick sets green (Generator 3,346, 690.7 s; Player 1,683); SA1 IR45-IR51, fix round applied | 2 h 38 min developer (incl. fix round) + 16 min review | about 2,558 | `difficulty-v3 MS06c2` |
+| MS06d | Accepted (evidence only): 204 outcomes after the target, 163/39/2 -> 164/38/2, adjusted exact median lower in 8 of 14 cells (pooled 0.623 -> 0.560), time unchanged, Greater-Than null effect; S-AV21-S-AV23 new | 27 min developer + 10 min review | about 326 | `difficulty-v3 MS06d` |
 | MS05 (combined) | Accepted: retained MS05b1, MS05r1-r4, MS05r5p, MS05r5, MS05r5m, MS05b3, MS05r6a, MS05r6b, MS05r6c in one commit (S-OD2); the pause commit `a7f6660` was not green and was not acceptance | recovery developers 2026-11-13/14 + reviews | about 13,400 (developers of MS05r1-MS05r6c and the fix rounds; MS05b1 not recorded) | `difficulty-v3 MS05: required exactness with measured bounded recovery` |
