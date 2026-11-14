@@ -46,6 +46,14 @@ catalogue (`-Round frozen-gate`, with a freeze receipt and a budget receipt).
 | `ig04-aggregate.cjs` | IG-S04 task documents from evidence only: `variant-manifest.json`, `pilot-reprojection.json`, `budgets.json`, `s2-audit.json`, `summary.json/md`; with `--suffix=-r2` the revision files (reusing a frozen `budgets-r2.json`, with the branch review of the corrections). |
 | `frontier-test.cjs` | IG-S04 tests: pure cases on a scripted fake engine (`--only=pure`, no engine) and the engine cases of the first command. |
 | `ig04-retest.cjs` | IG-S04 revision r2: reruns the pure cases and the real-engine cases of `frontier-test.cjs` after a correction (one wrapped command, no trial, nothing timed) and writes `engine-retest-r2.json`. |
+| `screen.cjs` | IG-S05: the two-sample grid trial of the SM2 screen (native loop of one kind, the frontier loop, the stop rules, the trial status) and the post-timing canonical classifier of the final phase A parent. |
+| `ig05-worker.cjs` | IG-S05 worker side (every job kind `ig05-`, one line in `worker.cjs`): the grid trial, the parent classification, the synthetic engine tests. |
+| `plans/ig-s05.cjs` | IG-S05: the single shard `screen`, the 32 logical blocks and 256 grid-mode trials, the frozen IG-S04 budget vectors (hash checked) and the pilot-based admission estimates. |
+| `ig05-run.cjs` | IG-S05 glue for `run.cjs`: pre-registration checks, the trial executor with the per-sample guard, the parent classification, record additions, identity and the shard summary. |
+| `ig05-stats.cjs` | IG-S05 analysis (pure functions): verified-hit rates per CPU and wall second, paired whole-cluster bootstrap, coverage, funnel, parent classes, the diagnostic selection and its stability. |
+| `ig05-aggregate.cjs` | IG-S05 documents from evidence only: `screen-manifest.json` (before any run) and `rates.json`, `paired-intervals.json`, `selection.json`, `summary.json/md`. |
+| `ig05-test.cjs` | IG-S05 tests: pure cases on synthetic records, a scripted fake engine and fake workers (`--only=pure`, no engine) and the engine cases of the first command. |
+| `ig05-dev-check.cjs` | IG-S05: one wrapped development check (synthetic engine tests and the complete per-job flow on a few real jobs) written beside the shard evidence; its trials are not part of the screen. |
 
 ## Commands
 
@@ -411,3 +419,77 @@ Invoke-IgNode -Repo sudoku -Task 'IG-S04/engine-retest' -NodeArgs @(
   corrections; `summary-r2` states which corrected branch any completed trial exercised.
 - **Frozen rerun.** The same command with `-Round frozen-gate` and the two receipts; the catalogue, the floor sets and the
   ceilings are re-derived from the loaded source (nothing is hard-coded).
+
+## IG-S05: paired SM2 grid screen and yield rates
+
+Test side only; every number is provisional (pre-freeze). The reference solver only (no S3 gain assumed), the eight modes of
+IG-S04, the frozen IG-S04 budget (`budgets-r2.json`, hash `f0a0c422…`, checked by the plan: any other hash is a source/budget
+mismatch and nothing runs) and no retuning. A trial is ONE grid per mode (the native model and full grid of the request seed: forks
+`model`, `grid#1`, built afresh for every mode; the grid hashes of a cluster must agree) and at most two native-fork samples
+`dig#1.1` and `dig#1.2` on that grid:
+
+- `proposal-only` / `ordinary-only`: the native `digLevel` sample of that kind for BOTH samples, with the native attempt caps and
+  keeper shared by the two samples (as one attempt of `generateAttempts`), the native guards and no count budget; a later sample is
+  not started once the keeper is exact or the caps are used up. No local-search continuation.
+- `F0 F1 FC FM FU FS`: the IG-S04 frontier sample (frontier.cjs, unchanged) for each ordinal, each with the frozen per-cell count
+  vector and its own fresh counters.
+- The first exact sample ends the trial (`skipped-first-exact` for the later ordinal); the best candidate of the trial is the native
+  one (a strict improvement is needed). The independent verifier runs after the timed interval, never steers generation and a failed
+  check is a correctness stop (no replacement sample).
+- Guard: the 45 s research guard of one sample observation, re-opened at the start of every sample (the worker posts
+  `sample-start`); a trial that runs past it is censored with its CPU and progress and never retried.
+
+Design: 4 cells (classic9, mega12, mega16, samurai) x grid seeds 101-108 (8 clusters per cell) x 8 modes = 256 trials (at most 512
+sample observations), as 32 logical blocks (tier x cell x seed block): (1) primary: proposal-only, ordinary-only, F1; (2) floors:
+FC, FM; (3) reference: FU, FS; (4) s2-control: F0; tier-major, inside a tier the seed block 101-104 across the four cells, then
+105-108; arms rotate by the cluster index. It is ONE shard (`screen`) so that the physical packing (a separate layer with its own hash,
+pilot-based admission estimates, never splitting a started trial) flows across blocks; a pause leaves the extension tiers unstarted.
+
+```powershell
+# 1. before any run: save the planned keys, the frozen budget and variant identities (written once)
+node generator\tests\artifacts\improve-generating\phase0\ig05-aggregate.cjs --task=IG-S05 --round=provisional-r1 --stage=manifest
+# 2. the plan (no engine, nothing timed, nothing written)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S05 -Round provisional-r1 -PlanOnly
+# 3. the one command (the first command also runs the unmeasured synthetic engine tests)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S05 -Round provisional-r1
+# 4. the documents (evidence only, no engine, written once; --suffix=-r2 for a later revision)
+node generator\tests\artifacts\improve-generating\phase0\ig05-aggregate.cjs --task=IG-S05 --round=provisional-r1
+# development only, no engine, no timing: the pure cases (synthetic records, scripted fake engine, fake workers)
+node generator\tests\artifacts\improve-generating\phase0\ig05-test.cjs
+# frozen rerun, after a separate budget approval (101-140 = 40 clusters per cell, 1,280 trials; the IG-S04 budgets must be
+# recomputed on the frozen pilot first: until then the plan only projects the cost from the provisional vectors)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S05 -Round frozen-gate -FreezeReceipt '.\docs\improve-generating\evidence\phase0\freeze.json' -BudgetReceipt '.\docs\improve-generating\evidence\phase0\frozen-budget.json'
+```
+
+- **Rates.** The numerator is the number of VERIFIED delivered grid hits (claimed by the generation AND independently verified exact;
+  at most one per grid trial; a rejected, unverified, censored or budget-ended trial and a second copy of one return never count).
+  The denominator is all generation CPU (wall) of the started trials of the mode from engine-ready to the end of cleanup, the actual
+  grid build included; a started trial with unknown spend makes the rate null and an unresolved CPU sum is null, never infinity. The
+  cold-inclusive rates, the conditional rate that excludes trials ending on the sample budget (secondary: it selects nothing) and the
+  derived setup-amortised sensitivity (sample cost plus grid build divided by the native sample count) are reported apart.
+- **Uncertainty.** Whole paired grid clusters are resampled (2,000 draws, analysis seed 20261114); rate differences of each frontier
+  variant against `proposal-only` (the proposal-only control and the current proposal kind) and `ordinary-only`; one-sided 95% lower
+  bound and 95% interval; zero hits give a zero lower bound and no pseudo-count. Eight clusters: descriptive intervals with poor
+  small-sample coverage. A mode missing in a cluster keeps its coverage visible (an incomplete row selects nothing).
+- **Parent classification.** After the timed interval an unpatched instance rebuilds the final phase A parent of every frontier
+  sample (from the full grid and the removed groups, hash checked), counts its solutions and rates it with the untouched canonical
+  rating: exact / shallow / below / above / incomplete / ambiguous / unknown. It never steers generation and never enters a hit count.
+  Equal parents of one grid (F1, FU, FS share their phase A) are classified once per process.
+- **Selection.** `selection.json` ranks, among variants with every planned trial observed, both controls observed everywhere and at
+  least one verified hit, by hits per ready CPU second, then per wall second, then F1, FC, FM, FU, FS, F0; with none, F1 is an
+  explicitly non-winning diagnostic default (never the fastest zero-hit mode). It reports how often resampled clusters pick each
+  outcome. Every cell's formal gate is `not-evaluable-pre-freeze`; the zero-baseline feasibility is `projection-awaits-author-review`.
+- **Records.** Common records plus `samples` (per sample: fork, kind, status, class, claimed exact, hash, counts, budget stop, the whole
+  frontier detail), `skippedOrdinals`, `sampleStates` (returned / sample-budget / skipped-first-exact / censored / not-reached),
+  `hostSamples` and `intervals` (startup, grid build, samples, cleanup apart), `parents`, `budgetStops`.
+- **Revision r2 (reporting and accounting closure, no generation).** `ig05-aggregate.cjs --suffix=-r2` writes `rates-r2.json`,
+  `paired-intervals-r2.json`, `summary-r2.json` and `summary-r2.md` beside the unchanged r1 files; `selection.json` is not rewritten (the
+  revision recomputes the selection document and stops unless its hash equals the one of `selection.json`; the same check stops it if a
+  hit count, a primary/cold-inclusive/conditional rate, a cell-mode outcome count or the verdict differs from r1). Changes: the
+  setup-amortised sensitivity is `readyTotal - gridCost + m x gridCost / N` per started trial (m = the samples that started, N = the
+  native sample count; r1 charged one share per trial) with r1's denominators beside it; an interval whose resamples are all identical
+  is labelled `degenerate` (not evidence of equivalence or non-inferiority); the funnel counts empty frontiers and every cell has the
+  separate problems (empty frontier, shallow or off-band candidates, budget-ended trials); the summary carries the interpretation and
+  the disclosure of the wrapped dev-check (`ig05-dev-check.cjs`: 16 real screen keys under an earlier harness and manifest, excluded
+  from every number, compared read-only with the screen's own trials of the same keys). The dev-check's charge (its occupied time plus
+  the 45 s grace) is a ledger entry of shard `dev-check`: a wrapped command launched by hand is charged like a dispatcher command.

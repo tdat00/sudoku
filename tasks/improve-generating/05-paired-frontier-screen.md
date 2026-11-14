@@ -151,12 +151,12 @@ that finding and ask the author/orchestrator; no automatic bank decision or larg
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start /end | |
-| Developer /model | |
-| Files /source identities | |
-| Verification /evidence | |
-| Machine charged /priority wait | |
-| Findings /author answers | |
-| Orchestrator review /acceptance | |
-| Handoff | |
+| Status | Accepted (pack author: inconclusive by the preregistered rule; B03 raw-coverage review passes; reporting/accounting closure r2 applied) |
+| Start /end | 2026-11-15 03:44-05:41 (+07:00) (matrix 04:16-05:39, mostly waiting behind difficulty-v3); 05:48 author review; 05:50-06:10 closure r2; orchestrator commit |
+| Developer /model | claude-sonnet-5.5; 170 model calls, 73,233,673 input tokens (71,971,697 cache reads), 339,584 output tokens, about 1,375 AI credits. Author review gpt-6-astra; orchestrator claude-opus-5.5 |
+| Files /source identities | New under `phase0/`: `screen.cjs`, `ig05-worker.cjs`, `plans/ig-s05.cjs`, `ig05-run.cjs`, `ig05-stats.cjs`, `ig05-aggregate.cjs`, `ig05-test.cjs`, `ig05-dev-check.cjs`; one line each in `worker.cjs` and `run.cjs`; README. All screen commands ran on harness `58c583c2…` (manifest `e0815e48…`, written before any run); the reporting closure is `f297ca31…`; budgets `f0a0c422…` unchanged |
+| Verification /evidence | `docs/improve-generating/evidence/phase0/provisional-r1/IG-S05/` (`summary-r2.md` current, r1 kept; `rates-r2.json`, `paired-intervals-r2.json`, `selection.json` `67420e10…`, `screen-manifest.json`). 256/256 trials started (243 complete, 13 budget-ended, 0 censored, 0 errors); no false exact flags, grid-hash or parent-hash disagreements. **Every mode in all four cells: 0 verified hits in 8 trials**; all 104 paired intervals are 0 [0, 0], labelled degenerate (not evidence of equivalence or non-inferiority). Native samples 0 exact of 128 (89 shallow). Pure tests 29/29; IG-S04's 41/41 still pass |
+| Machine charged /priority wait | 841.3 s of 2,880 s (incl. the 60 s dev-check, recorded in the ledger by the closure); priority waits about 4,810 s, not charged |
+| Findings /author answers | Verdict **inconclusive** in all four cells (formal gate `not-evaluable-pre-freeze`). Interpretation: no demonstrated exact-yield benefit on this pre-MS07 cohort; no S1 drop and no S9 routing implied. Separate problems: empty unique frontiers (classic9 16/16, samurai 15/16, mega12 12/16 for F0/F1/FU/FS), above-band or shallow candidates (never exact), budget-limited searches (mega16 25 % per frontier variant, samurai FM 12.5 %); the two-sample trials exclude whole-request and local-search recovery. Phase A takes 52-92 % of F1 sample wall time. Parent classification (post-timing, never in hits): 0 exact. The setup-amortised sensitivity is corrected (`readyTotal - gridCost + m x gridCost / N`). The dev-check's 16 keys (earlier harness/manifest, admission rule only) were identical to the screen's and stay excluded |
+| Orchestrator review /acceptance | Only harness and evidence folders changed; formats checked |
+| Handoff | IG-S06 **deferred** this pre-freeze round (no winning frontier variant to compose; not passed or refuted). IG-S07 next with its dependency on IG-S06 waived: native stage-by-finder costs, S3-covered vs remaining finders, the existing frontier phase-A evidence; same cells, seeds and 12-minute allocation. A non-gating interim note for the plan author is in `docs/improve-generating/clarifications.md`; the full interpretation, SM1 attribution and the frozen-rerun proposal come at IG-S10 |

@@ -47,9 +47,9 @@ is separate. No silent retries or new seed searches may spend the reserve.
 | [x] | IG-S02 | [02](02-headline-baseline-and-attempt-pool.md) | Paired headline baseline and S5a width4 | IG-S01 accepted | 90-150 min | 25 min | Six Nightmare rows; S5a and the two-attempt local limit |
 | [x] | IG-S03 | [03](03-scoped-solver-and-check-parity.md) | Small S3 prototype with virtual-check parity | IG-S02 accepted | 2-3 h | 22 min | S3 multiplier; S3+S5a headline requests |
 | [x] | IG-S04 | [04](04-frontier-prototype-and-budget-pilot.md) | S1/S2 variants and staged budget pilot | IG-S03 accepted | 2-4 h | 12 min | Measure large-board cost before admitting the rest |
-| [ ] | IG-S05 | [05](05-paired-frontier-screen.md) | Prioritised paired SM2 screen and yield rates | IG-S04 accepted | 45-75 min | 48 min | Native kinds/F1 first; extensions only within allocation |
-| [ ] | IG-S06 | [06](06-composed-request-confirmation.md) | Held-out full requests and ordered sample lanes | IG-S05 accepted | 90-150 min | 24 min | Direct before/after headline rows; S5b composition versus projections |
-| [ ] | IG-S07 | [07](07-sm1-profiles.md) | SM1 stage/finder profiles and overhead | IG-S06 accepted | 60-90 min | 12 min | Sample/local/finder shares behind the time factors |
+| [x] | IG-S05 | [05](05-paired-frontier-screen.md) | Prioritised paired SM2 screen and yield rates | IG-S04 accepted | 45-75 min | 48 min | Native kinds/F1 first; extensions only within allocation |
+| [ ] | IG-S06 | [06](06-composed-request-confirmation.md) | DEFERRED this pre-freeze round: held-out requests and sample lanes | Reschedule after frozen SM2 review | 90-150 min | 24 min (deferred) | Full-request composition remains unmeasured, not passed or refuted |
+| [ ] | IG-S07 | [07](07-sm1-profiles.md) | SM1 stage/finder profiles and overhead | IG-S05 reporting/accounting closure; IG-S02/03 baselines; IG-S06 waived | 60-90 min | 12 min | Sample/local/finder shares behind the time factors |
 | [ ] | IG-S08 | [08](08-sm3-jigsaw-attribution.md) | Bounded SM3 Jigsaw tail attribution | IG-S07 accepted | 30-60 min | 6 min | Jigsaw Expert seed1111, not a guessed tail fix |
 | [ ] | IG-S09 | [09](09-greater-than-diagnostic.md) | Greater-Than miss split and solve-first diagnostic | IG-S08 accepted | 60-90 min | 15 min | Q16; S-AV01; sign-pass and local-work assumptions |
 | [ ] | IG-S10 | [10](10-reconcile-and-freeze-handoff.md) | Results reconciliation and frozen-rerun handoff | IG-S09 accepted | 30-60 min | 4 min | Every estimate versus its measured scope; provisional gate report |
@@ -57,8 +57,26 @@ is separate. No silent retries or new seed searches may spend the reserve.
 | | **Total** | | | | | **180 min** | **172 planned +8 reserve** |
 
 Milestones: M0=IG-S01; M1=IG-S02 (first paired headlines); M2=IG-S03; M3=IG-S05;
-M4=IG-S06; M5=IG-S10. The orchestrator commits/pushes accepted work at these boundaries.
+M4=IG-S06 (deferred this round); M5=IG-S10. The orchestrator commits/pushes accepted work at these boundaries.
 No parallel developers or independent generation commands in this worktree.
+
+### Scheduling decision, 2026-11-15
+
+IG-S06 is **deferred for the pre-freeze round**, not passed or refuted. IG-S05 found no verified exact
+hit in any mode, including the native controls, on its eight grid clusters per cell. F1 is a non-winning
+diagnostic default, not a selected strategy to compose. These pre-MS07 observations cannot decide
+IG-S-Q05 or the S9 route; the catalogue, floors and search may change when difficulty-v3 freezes.
+
+The author and orchestrator waive IG-S07's dependency on IG-S06. Close IG-S05's reporting/accounting
+items before further timed work, then proceed IG-S07 -> IG-S08 -> IG-S09 -> IG-S10. IG-S07 retains its
+fixed cells/seeds and12-minute allocation: native stage-by-finder profiles, the nine partial-S3 finders
+versus the remaining registered finders, and analysis of the existing IG-S04/05 frontier phase-A ledgers.
+Its brief distinguishes measured phase-A wall/counts from unmeasured frontier per-finder wall time.
+
+This decision supersedes IG-S06's execution order in its task file for this round. Its24 minutes are not
+an automatic transfer or a spending target; the180-minute round ceiling and difficulty-v3 priority stay.
+IG-S10 must record composition as deferred/unmeasured, preserve the non-winning selection, and propose
+when to implement and run IG-S06 after the frozen SM2 review and separate budget approval.
 
 Negative performance, zero hits, a censored request or an unsupported projection are valid research outcomes,
 not reasons to change the population. Invalid puzzles, false exact flags, an identity violation, corrupt
@@ -357,7 +375,8 @@ and budget decision.
 ## 8. Estimate versus measured - orchestrator fills after review
 
 Do not use the joint report's midpoint as an acceptance threshold. These predictions organise experiments.
-S3 is deliberately partial; the composed run omits S4/S6/S7 runtime changes, stock/bank and WebAssembly.
+S3 is deliberately partial. The deferred IG-S06 design omits S4/S6/S7 runtime changes, stock/bank and
+WebAssembly; full-request S1/S2 plus S5b composition remains unmeasured in this round.
 
 | Report row / multiplier | Report planning anchor | Paired measured before | Measured prototype after | CPU ratio /wall ratio | Hits /CPU s /wall s | Scope, censoring, source | Verdict |
 |---|---|---|---|---|---|---|---|
@@ -396,8 +415,8 @@ pause exit handling for the supplied wrapper. No measurements or production chan
 | IG-S02 | Accepted | harness `c4f3a6e0…` (generation `dd759a22…`); `evidence/phase0/provisional-r1/IG-S02/` | 1,399.9 s of 1,500 s /3,000 s waits | Killer verifier rule and re-audit; pool bug fixed; 18/18 pairs identity-ok | M1 pool baseline |
 | IG-S03 | Accepted | harness `baeb9ea2…`/`dedddaef…`; `IG-S03/summary-r3` | 1,307.2 s (+90 s approved) /960 s waits | partial S3: no material net gain; SM4 parity sufficient for these families | M2 S3 parity |
 | IG-S04 | Accepted | harness `694eea9b…` (trials), `98016f2c…` (corrected); `IG-S04/summary-r2`, `budgets-r2.json` | 828.3 s (cap 1,050 s with 330 s approved) /1,318.5 s waits | 64/64 trials, 0 exact hits; budgets frozen; correction round | M3 frontier pilot |
-| IG-S05 | | | | | |
-| IG-S06 | | | | | |
+| IG-S05 | Accepted (inconclusive) | harness `58c583c2…` (screen), `f297ca31…` (closure); `IG-S05/summary-r2` | 841.3 s of 2,880 s /about 4,810 s waits | 256/256 trials, 0 hits in every mode; degenerate intervals labelled; IG-S06 deferred | M3 screen |
+| IG-S06 | Deferred (pre-freeze) | 2026-11-15 scheduling decision above; no IG-S06 measurements | Not run | No winning frontier variant; not passed or refuted | M4 deferred |
 | IG-S07 | | | | | |
 | IG-S08 | | | | | |
 | IG-S09 | | | | | |

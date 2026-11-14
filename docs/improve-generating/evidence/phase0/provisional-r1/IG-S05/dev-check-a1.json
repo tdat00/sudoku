@@ -1,0 +1,1234 @@
+{
+  "schema": "ig-s05-dev-check/1",
+  "task": "IG-S05",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "notice": "development check before the matrix: its trials are not part of the screen",
+  "startedAt": "2026-11-14T21:14:25.237Z",
+  "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+  "harnessFingerprint": "6507cb5a07bb53b8f8b3e3dff490c14d14f6b9a2b421663c7af6d3276368d3de",
+  "manifestHash": "0970555a736e61b38b703b31e83e0dba1d902b50f592082398f1868aec1df369",
+  "catalogueFingerprint": "d035b740ff3ad78310773050a53f0633ca6ac4e4b38e68df173c19befef9fb3e",
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 80.9258,
+      "changesSeen": 7,
+      "incrementsMs": [
+        16,
+        16,
+        15,
+        16,
+        15,
+        16
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    }
+  },
+  "synthetic": {
+    "passed": 7,
+    "total": 7,
+    "results": [
+      {
+        "id": "engine.native-first-sample-equals-s04",
+        "group": "engine",
+        "ok": true,
+        "title": "the first native sample of the screen is the IG-S04 sample (both kinds, classic9)"
+      },
+      {
+        "id": "engine.trial-all-modes",
+        "group": "engine",
+        "ok": true,
+        "title": "the trial of every mode on classic9: forks, early stop, wire, parent hash and classification"
+      },
+      {
+        "id": "engine.determinism",
+        "group": "engine",
+        "ok": true,
+        "title": "the same trial twice gives the same samples (forks never depend on scheduling)"
+      },
+      {
+        "id": "engine.second-fork-differs",
+        "group": "engine",
+        "ok": true,
+        "title": "sample 2 of a frontier trial uses another dig order than sample 1"
+      },
+      {
+        "id": "engine.frontier-budget-per-sample",
+        "group": "engine",
+        "ok": true,
+        "title": "a count budget stops each frontier sample separately and the trial ends sample-budget"
+      },
+      {
+        "id": "verify.classifier-unpatched",
+        "group": "engine",
+        "ok": true,
+        "title": "the classifier runs on an unpatched instance"
+      },
+      {
+        "id": "verify.classifier-cases",
+        "group": "engine",
+        "ok": true,
+        "title": "a fully given grid is unique and below the band, an empty grid is ambiguous, a wrong hash is refused"
+      }
+    ],
+    "wallMs": 676.7466,
+    "cpuMs": 1047
+  },
+  "jobs": [
+    {
+      "key": "IG-S05/screen/classic9:nightmare:101/proposal-only",
+      "mode": "proposal-only",
+      "estimateMs": 800,
+      "occupiedMs": 258.62069999999994,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 47.93859999999995,
+      "cpuReadyTotalMs": 94,
+      "coldWallMs": 140.264,
+      "gridBuildWallMs": 9.326000000000022,
+      "validationWallMs": 113.46270000000004,
+      "validationStatus": "verified",
+      "gridHash": "d95e6365c4c93356e7869c2d66b6800884b4508ec81fc3a58a061de6a8682136",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "below",
+        "shallow"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "proposal",
+          "wallMs": 12.897000000000162,
+          "cpuMs": 31,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "proposal",
+          "wallMs": 21.843700000000126,
+          "cpuMs": 47,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "not-applicable",
+        "wallMs": 0,
+        "cpuMs": 0,
+        "classes": [],
+        "unique": []
+      },
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 8082,
+        "dfsEntries": 65,
+        "dfsChecks": 32,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": null,
+        "fuFilterSolves": null
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/classic9:nightmare:101/ordinary-only",
+      "mode": "ordinary-only",
+      "estimateMs": 1400,
+      "occupiedMs": 322.18439999999987,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 116.65189999999984,
+      "cpuReadyTotalMs": 219,
+      "coldWallMs": 205.23520000000008,
+      "gridBuildWallMs": 9.435899999999947,
+      "validationWallMs": 113.7047,
+      "validationStatus": "verified",
+      "gridHash": "d95e6365c4c93356e7869c2d66b6800884b4508ec81fc3a58a061de6a8682136",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "below",
+        "shallow"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "ordinary",
+          "wallMs": 42.42530000000011,
+          "cpuMs": 109,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "ordinary",
+          "wallMs": 61.39260000000013,
+          "cpuMs": 110,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "not-applicable",
+        "wallMs": 0,
+        "cpuMs": 0,
+        "classes": [],
+        "unique": []
+      },
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 63062,
+        "dfsEntries": 5,
+        "dfsChecks": 3,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": null,
+        "fuFilterSolves": null
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/classic9:nightmare:101/F1",
+      "mode": "F1",
+      "estimateMs": 1300,
+      "occupiedMs": 332.2274,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 37.45510000000013,
+      "cpuReadyTotalMs": 110,
+      "coldWallMs": 128.75649999999996,
+      "gridBuildWallMs": 9.307600000000093,
+      "validationWallMs": 92.76070000000004,
+      "validationStatus": "verified",
+      "gridHash": "d95e6365c4c93356e7869c2d66b6800884b4508ec81fc3a58a061de6a8682136",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "fallback",
+        "fallback"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 18.30029999999988,
+          "cpuMs": 32,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 5.625,
+          "cpuMs": 47,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 106.84399999999982,
+        "cpuMs": 172,
+        "classes": [
+          "below",
+          "below"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 82,
+        "floorDeductions": 1652,
+        "solverChecks": 9869,
+        "dfsEntries": 157,
+        "dfsChecks": 101,
+        "ladderPasses": 6,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/classic9:nightmare:101/FC",
+      "mode": "FC",
+      "estimateMs": 1300,
+      "occupiedMs": 222.31629999999996,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 37.76700000000005,
+      "cpuReadyTotalMs": 110,
+      "coldWallMs": 126.38480000000004,
+      "gridBuildWallMs": 9.540700000000015,
+      "validationWallMs": 92.12580000000003,
+      "validationStatus": "verified",
+      "gridHash": "d95e6365c4c93356e7869c2d66b6800884b4508ec81fc3a58a061de6a8682136",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "fallback",
+        "fallback"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 18.20569999999998,
+          "cpuMs": 47,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 5.732500000000073,
+          "cpuMs": 47,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 0,
+        "cpuMs": 0,
+        "classes": [
+          "below (cache)",
+          "below (cache)"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 82,
+        "floorDeductions": 1652,
+        "solverChecks": 9869,
+        "dfsEntries": 157,
+        "dfsChecks": 101,
+        "ladderPasses": 2,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/classic9:nightmare:101/FM",
+      "mode": "FM",
+      "estimateMs": 1400,
+      "occupiedMs": 224.34709999999995,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 42.0916000000002,
+      "cpuReadyTotalMs": 77,
+      "coldWallMs": 130.5332000000003,
+      "gridBuildWallMs": 9.276800000000094,
+      "validationWallMs": 90.88059999999996,
+      "validationStatus": "verified",
+      "gridHash": "d95e6365c4c93356e7869c2d66b6800884b4508ec81fc3a58a061de6a8682136",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "fallback",
+        "fallback"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 21.202900000000227,
+          "cpuMs": 77,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 8.091699999999946,
+          "cpuMs": 0,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 0,
+        "cpuMs": 0,
+        "classes": [
+          "below (cache)",
+          "below (cache)"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 82,
+        "floorDeductions": 1654,
+        "solverChecks": 12795,
+        "dfsEntries": 157,
+        "dfsChecks": 101,
+        "ladderPasses": 2,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/classic9:nightmare:101/FU",
+      "mode": "FU",
+      "estimateMs": 1400,
+      "occupiedMs": 214.3503999999998,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 34.50759999999991,
+      "cpuReadyTotalMs": 62,
+      "coldWallMs": 121.72989999999982,
+      "gridBuildWallMs": 9.04110000000037,
+      "validationWallMs": 90.04100000000017,
+      "validationStatus": "verified",
+      "gridHash": "d95e6365c4c93356e7869c2d66b6800884b4508ec81fc3a58a061de6a8682136",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "fallback",
+        "fallback"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 17.014700000000175,
+          "cpuMs": 62,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 5.376900000000205,
+          "cpuMs": 0,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 0,
+        "cpuMs": 0,
+        "classes": [
+          "below (cache)",
+          "below (cache)"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 82,
+        "floorDeductions": 1652,
+        "solverChecks": 9869,
+        "dfsEntries": 157,
+        "dfsChecks": 101,
+        "ladderPasses": 6,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/classic9:nightmare:101/FS",
+      "mode": "FS",
+      "estimateMs": 1400,
+      "occupiedMs": 215.59770000000026,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 36.2808,
+      "cpuReadyTotalMs": 47,
+      "coldWallMs": 122.68539999999985,
+      "gridBuildWallMs": 8.762499999999818,
+      "validationWallMs": 89.06870000000026,
+      "validationStatus": "verified",
+      "gridHash": "d95e6365c4c93356e7869c2d66b6800884b4508ec81fc3a58a061de6a8682136",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "fallback",
+        "fallback"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 18.07629999999972,
+          "cpuMs": 16,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 5.239000000000033,
+          "cpuMs": 31,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 0,
+        "cpuMs": 0,
+        "classes": [
+          "below (cache)",
+          "below (cache)"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 82,
+        "floorDeductions": 1652,
+        "solverChecks": 9869,
+        "dfsEntries": 157,
+        "dfsChecks": 101,
+        "ladderPasses": 6,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/classic9:nightmare:101/F0",
+      "mode": "F0",
+      "estimateMs": 1300,
+      "occupiedMs": 213.23100000000022,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 33.30659999999989,
+      "cpuReadyTotalMs": 63,
+      "coldWallMs": 118.4414999999999,
+      "gridBuildWallMs": 8.460300000000188,
+      "validationWallMs": 90.94309999999996,
+      "validationStatus": "verified",
+      "gridHash": "d95e6365c4c93356e7869c2d66b6800884b4508ec81fc3a58a061de6a8682136",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "fallback",
+        "fallback"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 16.32439999999997,
+          "cpuMs": 32,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 4.358799999999974,
+          "cpuMs": 0,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 0,
+        "cpuMs": 0,
+        "classes": [
+          "below (cache)",
+          "below (cache)"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 82,
+        "floorDeductions": 2150,
+        "solverChecks": 10367,
+        "dfsEntries": 157,
+        "dfsChecks": 101,
+        "ladderPasses": 6,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/mega12:nightmare:101/ordinary-only",
+      "mode": "ordinary-only",
+      "estimateMs": 2800,
+      "occupiedMs": 1524.7273,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 1288.1254000000004,
+      "cpuReadyTotalMs": 1718,
+      "coldWallMs": 1373.3192000000004,
+      "gridBuildWallMs": 10.790700000000015,
+      "validationWallMs": 144.5646000000006,
+      "validationStatus": "verified",
+      "gridHash": "5f4312c26270f048e16889bc1bd9310c7508e665a304708b7efa20092b944d50",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "shallow",
+        "shallow"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "ordinary",
+          "wallMs": 583.0095000000001,
+          "cpuMs": 844,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "ordinary",
+          "wallMs": 687.0567000000001,
+          "cpuMs": 797,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "not-applicable",
+        "wallMs": 0,
+        "cpuMs": 0,
+        "classes": [],
+        "unique": []
+      },
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 825679,
+        "dfsEntries": 11,
+        "dfsChecks": 9,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": null,
+        "fuFilterSolves": null
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/mega12:nightmare:101/F1",
+      "mode": "F1",
+      "estimateMs": 15200,
+      "occupiedMs": 530.9339,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 208.64679999999953,
+      "cpuReadyTotalMs": 345,
+      "coldWallMs": 301.14830000000075,
+      "gridBuildWallMs": 10.92450000000008,
+      "validationWallMs": 124.0689999999995,
+      "validationStatus": "verified",
+      "gridHash": "5f4312c26270f048e16889bc1bd9310c7508e665a304708b7efa20092b944d50",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "fallback",
+        "above"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 33.577800000000025,
+          "cpuMs": 110,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 160.29619999999977,
+          "cpuMs": 219,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 102.42600000000039,
+        "cpuMs": 108,
+        "classes": [
+          "below",
+          "below"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 152,
+        "floorDeductions": 5525,
+        "solverChecks": 131815,
+        "dfsEntries": 860,
+        "dfsChecks": 746,
+        "ladderPasses": 6,
+        "phaseBSolves": 3,
+        "deepenProposals": 0,
+        "verificationSolves": 5,
+        "canonicalRatings": 5,
+        "phaseBTries": 3,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/samurai:nightmare:101/proposal-only",
+      "mode": "proposal-only",
+      "estimateMs": 2100,
+      "occupiedMs": 404.22249999999985,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 200.4978999999994,
+      "cpuReadyTotalMs": 407,
+      "coldWallMs": 282.8828000000003,
+      "gridBuildWallMs": 13.54950000000008,
+      "validationWallMs": 114.14450000000033,
+      "validationStatus": "verified",
+      "gridHash": "39e6cfb33aaf41935474267e2bcf7c7f1a8df4f52890923351ee5bc371687fa3",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "below",
+        "below"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "proposal",
+          "wallMs": 76.54930000000058,
+          "cpuMs": 156,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "proposal",
+          "wallMs": 102.87299999999959,
+          "cpuMs": 219,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "not-applicable",
+        "wallMs": 0,
+        "cpuMs": 0,
+        "classes": [],
+        "unique": []
+      },
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 269619,
+        "dfsEntries": 443,
+        "dfsChecks": 333,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": null,
+        "fuFilterSolves": null
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/samurai:nightmare:101/F1",
+      "mode": "F1",
+      "estimateMs": 3700,
+      "occupiedMs": 608.8395,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 230.8181999999997,
+      "cpuReadyTotalMs": 421,
+      "coldWallMs": 316.5517,
+      "gridBuildWallMs": 14.26679999999942,
+      "validationWallMs": 96.33440000000064,
+      "validationStatus": "verified",
+      "gridHash": "39e6cfb33aaf41935474267e2bcf7c7f1a8df4f52890923351ee5bc371687fa3",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "fallback",
+        "fallback"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 171.36430000000018,
+          "cpuMs": 296,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 38.64299999999912,
+          "cpuMs": 62,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 190.13880000000063,
+        "cpuMs": 313,
+        "classes": [
+          "above",
+          "below"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 374,
+        "floorDeductions": 45490,
+        "solverChecks": 313885,
+        "dfsEntries": 1133,
+        "dfsChecks": 915,
+        "ladderPasses": 6,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 2,
+        "canonicalRatings": 2,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/samurai:nightmare:101/FC",
+      "mode": "FC",
+      "estimateMs": 10400,
+      "occupiedMs": 2078.389800000001,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 1630.5661,
+      "cpuReadyTotalMs": 2077,
+      "coldWallMs": 1714.1598999999997,
+      "gridBuildWallMs": 13.533599999999751,
+      "validationWallMs": 247.77829999999994,
+      "validationStatus": "verified",
+      "gridHash": "39e6cfb33aaf41935474267e2bcf7c7f1a8df4f52890923351ee5bc371687fa3",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "above",
+        "below"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 240.16939999999977,
+          "cpuMs": 484,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 1370.5032,
+          "cpuMs": 1578,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 110.16639999999916,
+        "cpuMs": 157,
+        "classes": [
+          "below",
+          "below"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 370,
+        "floorDeductions": 44652,
+        "solverChecks": 970512,
+        "dfsEntries": 1139,
+        "dfsChecks": 920,
+        "ladderPasses": 2,
+        "phaseBSolves": 2,
+        "deepenProposals": 16,
+        "verificationSolves": 4,
+        "canonicalRatings": 4,
+        "phaseBTries": 3,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/mega16:nightmare:101/proposal-only",
+      "mode": "proposal-only",
+      "estimateMs": 3800,
+      "occupiedMs": 1773.7038000000002,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 1523.8781,
+      "cpuReadyTotalMs": 1876,
+      "coldWallMs": 1607.7327000000005,
+      "gridBuildWallMs": 13.051499999999578,
+      "validationWallMs": 159.47109999999884,
+      "validationStatus": "verified",
+      "gridHash": "5617797a1915b0d29329ad15647f12b5387213000bae3a4b7b6c96d7993c69c5",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "shallow",
+        "shallow"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "proposal",
+          "wallMs": 1030.8302999999996,
+          "cpuMs": 1297,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "proposal",
+          "wallMs": 472.84419999999955,
+          "cpuMs": 579,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "not-applicable",
+        "wallMs": 0,
+        "cpuMs": 0,
+        "classes": [],
+        "unique": []
+      },
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 602807,
+        "dfsEntries": 38932,
+        "dfsChecks": 38823,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 12,
+        "canonicalRatings": 12,
+        "phaseBTries": null,
+        "fuFilterSolves": null
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/mega16:nightmare:101/F1",
+      "mode": "F1",
+      "estimateMs": 3900,
+      "occupiedMs": 1224.0739999999987,
+      "outcome": "complete",
+      "claimedExact": false,
+      "verifiedExact": false,
+      "problems": [],
+      "readyOccupiedWallMs": 727.3856000000014,
+      "cpuReadyTotalMs": 969,
+      "coldWallMs": 813.3526000000002,
+      "gridBuildWallMs": 12.864800000001196,
+      "validationWallMs": 184.9873000000007,
+      "validationStatus": "verified",
+      "gridHash": "5617797a1915b0d29329ad15647f12b5387213000bae3a4b7b6c96d7993c69c5",
+      "sampleStates": [
+        "returned",
+        "returned"
+      ],
+      "sampleClasses": [
+        "above",
+        "fallback"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 581.7113000000008,
+          "cpuMs": 750,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 126.57130000000143,
+          "cpuMs": 156,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 220.13910000000033,
+        "cpuMs": 469,
+        "classes": [
+          "shallow",
+          "above"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 283,
+        "floorDeductions": 16767,
+        "solverChecks": 328880,
+        "dfsEntries": 19373,
+        "dfsChecks": 19154,
+        "ladderPasses": 6,
+        "phaseBSolves": 2,
+        "deepenProposals": 0,
+        "verificationSolves": 4,
+        "canonicalRatings": 4,
+        "phaseBTries": 2,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [],
+      "error": null
+    },
+    {
+      "key": "IG-S05/screen/mega16:nightmare:101/FC",
+      "mode": "FC",
+      "estimateMs": 5000,
+      "occupiedMs": 3818.0401,
+      "outcome": "sample-budget",
+      "claimedExact": false,
+      "verifiedExact": null,
+      "problems": [],
+      "readyOccupiedWallMs": 3619.4112000000005,
+      "cpuReadyTotalMs": 3969,
+      "coldWallMs": 3703.6116,
+      "gridBuildWallMs": 12.757799999999406,
+      "validationWallMs": null,
+      "validationStatus": null,
+      "gridHash": "5617797a1915b0d29329ad15647f12b5387213000bae3a4b7b6c96d7993c69c5",
+      "sampleStates": [
+        "sample-budget",
+        "returned"
+      ],
+      "sampleClasses": [
+        "shallow",
+        "above"
+      ],
+      "hostSamples": [
+        {
+          "ordinal": 1,
+          "fork": "dig#1.1",
+          "kind": "frontier",
+          "wallMs": 3424.2582999999995,
+          "cpuMs": 3719,
+          "censored": false
+        },
+        {
+          "ordinal": 2,
+          "fork": "dig#1.2",
+          "kind": "frontier",
+          "wallMs": 175.29439999999886,
+          "cpuMs": 235,
+          "censored": false
+        }
+      ],
+      "parents": {
+        "status": "classified",
+        "wallMs": 108.56399999999849,
+        "cpuMs": 141,
+        "classes": [
+          "below",
+          "below"
+        ],
+        "unique": [
+          true,
+          true
+        ]
+      },
+      "counts": {
+        "floorTests": 256,
+        "floorDeductions": 15208,
+        "solverChecks": 1139254,
+        "dfsEntries": 13651,
+        "dfsChecks": 13453,
+        "ladderPasses": 2,
+        "phaseBSolves": 7,
+        "deepenProposals": 9,
+        "verificationSolves": 9,
+        "canonicalRatings": 9,
+        "phaseBTries": 13,
+        "fuFilterSolves": 0
+      },
+      "budgetStops": [
+        {
+          "ordinal": 1,
+          "dimension": "solverChecks",
+          "limit": 1048576,
+          "used": 1048577,
+          "phase": "deepen",
+          "atPhase": "phaseB"
+        }
+      ],
+      "error": null
+    }
+  ],
+  "endedAt": "2026-11-14T21:14:40.145Z",
+  "occupiedMs": 14955,
+  "identity": [
+    {
+      "cluster": "classic9:nightmare:101",
+      "gridHashes": 1
+    },
+    {
+      "cluster": "mega12:nightmare:101",
+      "gridHashes": 1
+    },
+    {
+      "cluster": "samurai:nightmare:101",
+      "gridHashes": 1
+    },
+    {
+      "cluster": "mega16:nightmare:101",
+      "gridHashes": 1
+    }
+  ]
+}

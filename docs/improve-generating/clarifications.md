@@ -524,3 +524,18 @@ the multigrids reach Nightmare, and any Hell level after MS07b, depends on S1's 
 | IG-S-Q01 | **Confirmed as answered:** `generatorVersion` and history version 2 (stored puzzle and provenance) ship in phase 1, before the search changes; version-1 entries regenerate on the current path with a notice that they may differ. |
 | IG-S-Q02 | **Confirmed as answered:** with a pool, the 120 s guard is the wall time of the request from its start. |
 | Phase 0 | **Confirmed:** the official phase-0 measurements start once difficulty-v3 freezes. Prototypes are built now as test-side harnesses with no production change; their numbers are provisional (pre-freeze) and are re-run on the frozen catalogue. |
+
+## Interim note after the first prototype measurements (2026-11-15)
+
+**Non-gating; provisional (pre-freeze), on the pre-MS07 catalogue.** These prototypes changed no production code.
+IG-S02 median ready-wall S5a speed-ups (three pairs per cell): mega16 1.92x, mega12 3.22x, samurai 1.79x,
+classic9 3.22x, Killer 2.55x and Greater-Than 2.62x; CPU costs and early-exact regressions are retained.
+IG-S03 found no material net gain from partial S3 (singles and subsets); this does not refute full S3,
+or show that the remaining finders dominate solver time.
+IG-S04/05 show no demonstrated exact-yield benefit on classic9, mega12, mega16 and samurai.
+IG-S05: zero verified hits in every mode, native controls included, over eight grid clusters per cell.
+Failure modes differ: empty unique frontiers, above-band or shallow candidates, and count-budget stops.
+MS07 may change the window, floors and search; these pre-freeze results decide neither the S1 gate nor S9.
+IG-S06 is deferred (not passed or refuted); SM1, SM3 and the Greater-Than diagnostic continue.
+IG-S10 will bring the full interpretation, SM1 attribution and the frozen-catalogue rerun proposal.
+No question or policy decision is requested.

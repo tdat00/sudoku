@@ -2,12 +2,12 @@
 
 | Header | Value |
 |---|---|
-| Depends on | IG-S06 accepted |
+| Depends on | IG-S05 reporting/accounting closure; accepted IG-S02/03 baselines; IG-S06 dependency waived (2026-11-15) |
 | Developer | claude-sonnet-5.5 |
 | Size /active time | Medium-large;60-90 min |
 | Machine allocation | 12 min, nine admission periods included |
 | Owner /milestone | Attribution, after the early paired headline work |
-| Authority | Report section6; IG-S-Q05/Q06; owner ordering |
+| Authority | Report section6; IG-S-Q05/Q06; author/orchestrator scheduling decision of 2026-11-15 |
 | Status | Not started |
 
 ## Goal and scope
@@ -19,6 +19,30 @@ asymmetry, and the unmeasured finder share behind S3.
 In H: `profile.cjs`, read-only/private observation hooks, reporting tests and evidence.
 Out: optimisation, a new policy/cap, production changes, a full corpus run and treating instrumented
 profile latency as the headline before/after figure.
+
+## Dispatch clarification after IG-S05 (2026-11-15)
+
+IG-S06 is deferred, not passed or refuted: the pre-MS07 screen has no winning frontier variant, and its
+all-zero rates are not a frozen S1/S9 decision. This task does not need IG-S06 results. Finish IG-S05's
+reporting/accounting closure before timing so those shared-harness edits cannot invalidate a profile.
+The nine profiled native requests and three controls below, the12-minute allocation and all guards stay
+unchanged. No additional generation cohort or frontier strategy is introduced.
+
+- Use IG-S02's accepted native baselines, including the Killer audit overlay, and IG-S03's corrected
+  partial-S3 report. Keep their source identities; check active reference compatibility before reuse.
+- For each cell, report finder time by generation stage and sample kind. Separate nakedSingle,
+  hiddenSingleBox, hiddenSingleLine and the six naked/hidden pair/triple/quad finders from all other
+  registered finders (17 on this source); list their IDs and retain individual expensive-finder rows.
+  Keep state/context work, applying Findings, budget/bookkeeping and unattributed time as measured
+  buckets or an explicit residual. Do not assume the unimplemented families explain the lack of S3 gain.
+- For frontier phase A, use the existing IG-S04/05 ledgers on classic9, mega12, mega16 and samurai:
+  compare F1 with FC/FM, separating accepted/refused floor tests, uniqueness DFS, allowed-set/canonical
+  work and deepen. Classic9's empty frontier, the larger boards' overshoot/shallow candidates and the
+  budget-ended searches are different outcomes, not interchangeable failures.
+- Existing frontier phase-A wall includes floor tests and their DFS checks; its per-purpose counts
+  are not per-purpose or per-finder wall measurements. Show that limit explicitly. Native-request
+  finder shares cannot be transplanted into frontier phase A, nor prove scoped-cache overhead.
+  New frontier per-finder profiles would be separately authorised work, not extra runs hidden here.
 
 ## Fixed measurements
 
@@ -77,7 +101,8 @@ Frozen rerun, same cells/seeds:
 3. Execute the nine fixed shards; preserve puzzle/hash/flags versus the unprofiled comparator.
 4. Compute stage/finder fractions, actual oracle-call counts and profile-overhead ratios.
 5. Link these to IG-S03's implemented scopes and IG-S05's floor-cost ledger; do not extrapolate a
-   partial-S3 result to all chains or every unimplemented finder.
+   partial-S3 result to all chains or every unimplemented finder. Keep native stage-by-finder timing
+   separate from the existing frontier phase-A wall/count evidence and its attribution gaps.
 
 ## Acceptance criteria - Business
 

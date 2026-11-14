@@ -1,0 +1,3539 @@
+{
+  "schema": "ig-s05-paired-intervals/1",
+  "task": "IG-S05",
+  "round": "provisional-r1",
+  "revision": "r2",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "provisional (pre-freeze): eight grid clusters per cell, at most two native-fork samples per grid; descriptive rates and intervals only; no S1 allowlisting, no bank decision, no formal gate (not-evaluable-pre-freeze)",
+  "method": "whole paired grid clusters resampled with replacement, 2,000 draws, fixed analysis seed 20261114; rate differences; the one-sided 95% lower bound is the 5th percentile; zero hits give a zero lower bound and no pseudo-count; descriptive provisional intervals with poor small-sample coverage, never reliable guarantees",
+  "degenerateRows": {
+    "rows": 104,
+    "degenerate": 104,
+    "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+  },
+  "cells": {
+    "classic9": {
+      "paired": [
+        {
+          "cell": "classic9",
+          "mode": "F0",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "F0",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "F1",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "F1",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FC",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FC",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FM",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FM",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FU",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FU",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FS",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FS",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "ordinary-only",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "ordinary-only",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "F0",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "F0",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "F1",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "F1",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FC",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FC",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FM",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FM",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FU",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FU",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FS",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "classic9",
+          "mode": "FS",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        }
+      ],
+      "own": [
+        {
+          "cell": "classic9",
+          "mode": "proposal-only",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "classic9",
+          "mode": "ordinary-only",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "classic9",
+          "mode": "F0",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "classic9",
+          "mode": "F1",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "classic9",
+          "mode": "FC",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "classic9",
+          "mode": "FM",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "classic9",
+          "mode": "FU",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "classic9",
+          "mode": "FS",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        }
+      ]
+    },
+    "mega12": {
+      "paired": [
+        {
+          "cell": "mega12",
+          "mode": "F0",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "F0",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "F1",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "F1",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FC",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FC",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FM",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FM",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FU",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FU",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FS",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FS",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "ordinary-only",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "ordinary-only",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "F0",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "F0",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "F1",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "F1",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FC",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FC",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FM",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FM",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FU",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FU",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FS",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega12",
+          "mode": "FS",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        }
+      ],
+      "own": [
+        {
+          "cell": "mega12",
+          "mode": "proposal-only",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega12",
+          "mode": "ordinary-only",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega12",
+          "mode": "F0",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega12",
+          "mode": "F1",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega12",
+          "mode": "FC",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega12",
+          "mode": "FM",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega12",
+          "mode": "FU",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega12",
+          "mode": "FS",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        }
+      ]
+    },
+    "mega16": {
+      "paired": [
+        {
+          "cell": "mega16",
+          "mode": "F0",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "F0",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "F1",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "F1",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FC",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FC",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FM",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FM",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FU",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FU",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FS",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FS",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "ordinary-only",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "ordinary-only",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "F0",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "F0",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "F1",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "F1",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FC",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FC",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FM",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FM",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FU",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FU",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FS",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "mega16",
+          "mode": "FS",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        }
+      ],
+      "own": [
+        {
+          "cell": "mega16",
+          "mode": "proposal-only",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega16",
+          "mode": "ordinary-only",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega16",
+          "mode": "F0",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega16",
+          "mode": "F1",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega16",
+          "mode": "FC",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega16",
+          "mode": "FM",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega16",
+          "mode": "FU",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "mega16",
+          "mode": "FS",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        }
+      ]
+    },
+    "samurai": {
+      "paired": [
+        {
+          "cell": "samurai",
+          "mode": "F0",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "F0",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "F1",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "F1",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FC",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FC",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FM",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FM",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FU",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FU",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FS",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FS",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "ordinary-only",
+          "control": "proposal-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "ordinary-only",
+          "control": "proposal-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "F0",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "F0",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "F1",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "F1",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FC",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FC",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FM",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FM",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FU",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FU",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FS",
+          "control": "ordinary-only",
+          "per": "cpu",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        },
+        {
+          "cell": "samurai",
+          "mode": "FS",
+          "control": "ordinary-only",
+          "per": "wall",
+          "status": "complete-coverage",
+          "pairedClusters": 8,
+          "planned": 8,
+          "hitsMode": 0,
+          "hitsControl": 0,
+          "rateMode": 0,
+          "rateControl": 0,
+          "difference": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "lowerBound95OneSided": 0,
+          "degenerate": true,
+          "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority",
+          "unresolvedResamples": 0,
+          "resamples": 2000,
+          "seed": 20261114,
+          "note": "descriptive provisional interval over whole grid clusters; zero hits give a zero lower bound, no pseudo-count"
+        }
+      ],
+      "own": [
+        {
+          "cell": "samurai",
+          "mode": "proposal-only",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "samurai",
+          "mode": "ordinary-only",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "samurai",
+          "mode": "F0",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "samurai",
+          "mode": "F1",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "samurai",
+          "mode": "FC",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "samurai",
+          "mode": "FM",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "samurai",
+          "mode": "FU",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        },
+        {
+          "cell": "samurai",
+          "mode": "FS",
+          "cpu": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          },
+          "wall": {
+            "point": 0,
+            "ci95": [
+              0,
+              0
+            ],
+            "lowerBound95OneSided": 0,
+            "clusters": 8,
+            "unresolvedResamples": 0,
+            "degenerate": true,
+            "interpretation": "degenerate: every resample gave the same value (all-zero [0, 0] when neither arm has a hit); not evidence of equivalence or non-inferiority"
+          }
+        }
+      ]
+    }
+  },
+  "supersedes": "paired-intervals.json (r1)",
+  "revisionNote": "r2: every interval whose resamples are all identical (here the all-zero [0, 0] ones) is labelled degenerate (not evidence of equivalence or non-inferiority); rows also carry the hits of each arm; the numbers are those of r1",
+  "hash": "c3252a5550014dce40ae7f3868b0f921eedcded1b4865274f161e9daba2f2fd5"
+}
