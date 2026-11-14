@@ -1,0 +1,1597 @@
+{
+  "schema": "ig-s05-screen-manifest/1",
+  "task": "IG-S05",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "provisional (pre-freeze): eight grid clusters per cell, at most two native-fork samples per grid; descriptive rates and intervals only; no S1 allowlisting, no bank decision, no formal gate (not-evaluable-pre-freeze)",
+  "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+  "harnessFingerprint": "58c583c213f125117d72fa89db558c9ac887c43a95152c455d15b850a165ebdc",
+  "manifestHash": "e0815e48be61b3bc2eff6cc58a123cf6d6ea911122e8b38fbb837419f0375092",
+  "logicalHash": "9fda23923c8b0bfbb4de0b9048fe0512bb9dfaa8926709f2609205a1ea82fb7e",
+  "population": {
+    "cells": [
+      "classic9",
+      "mega12",
+      "mega16",
+      "samurai"
+    ],
+    "level": "nightmare",
+    "seeds": [
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108
+    ],
+    "clusters": 32,
+    "modes": [
+      "proposal-only",
+      "ordinary-only",
+      "F0",
+      "F1",
+      "FC",
+      "FM",
+      "FU",
+      "FS"
+    ],
+    "tiers": [
+      {
+        "id": "primary",
+        "priority": 1,
+        "modes": [
+          "proposal-only",
+          "ordinary-only",
+          "F1"
+        ]
+      },
+      {
+        "id": "floors",
+        "priority": 2,
+        "modes": [
+          "FC",
+          "FM"
+        ]
+      },
+      {
+        "id": "reference",
+        "priority": 3,
+        "modes": [
+          "FU",
+          "FS"
+        ]
+      },
+      {
+        "id": "s2-control",
+        "priority": 4,
+        "modes": [
+          "F0"
+        ]
+      }
+    ],
+    "samplesPerGrid": 2,
+    "sampleForks": [
+      "dig#1.1",
+      "dig#1.2"
+    ],
+    "gridForks": [
+      "model",
+      "grid#1"
+    ],
+    "trials": 256,
+    "sampleObservationsMax": 512,
+    "request": {
+      "difficulty": "nightmare",
+      "trace": "off",
+      "symmetry": "rotational180",
+      "digOrder": "random"
+    },
+    "solver": "reference solver, pool width 1; the S3 prototype is not loaded",
+    "stopping": "the first exact sample (or an exact keeper candidate) ends the trial; the skipped ordinals are recorded; a failed independent check is a correctness stop, never permission for a replacement sample; no local continuation",
+    "guard": "the 45 s research guard of one sample observation (from the start of the trial to the start of sample 1, then from each sample start to its end); the 270 s command window",
+    "rotation": "arms rotate inside a block by the cluster index (the index of the seed in the preregistered list)"
+  },
+  "order": "tier-major: primary, floors, reference, s2-control; inside a tier the seed block 101-104 across classic9, mega12, mega16, samurai, then 105-108; one shard (screen) so that packing flows across blocks and tiers",
+  "budget": {
+    "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S04/budgets-r2.json",
+    "hash": "f0a0c422032765250d4b8f5daa5f2cfb9c30dc8dcb7ebceab8036bd87a44c755",
+    "source": "frozen-by-ig-s04-acceptance",
+    "projection": false,
+    "perCellLimits": {
+      "classic9": {
+        "floorTests": 123,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 4096,
+        "solverChecks": 16384,
+        "dfsEntries": 256,
+        "dfsChecks": 128
+      },
+      "mega12": {
+        "floorTests": 216,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 8192,
+        "solverChecks": 4194304,
+        "dfsEntries": 1024,
+        "dfsChecks": 512
+      },
+      "mega16": {
+        "floorTests": 384,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 32768,
+        "solverChecks": 1048576,
+        "dfsEntries": 32768,
+        "dfsChecks": 32768
+      },
+      "samurai": {
+        "floorTests": 555,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 65536,
+        "solverChecks": 4194304,
+        "dfsEntries": 2048,
+        "dfsChecks": 2048
+      }
+    },
+    "rule": "one vector per cell for every frontier arm, fresh for every sample; the native-kind controls keep their native guards and caps; no retuning"
+  },
+  "variantManifest": {
+    "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S04/variant-manifest-r2.json",
+    "hash": "4b2aa26d4dbd4b8eb8bfab02d6cd8a5e0671a2710354e4e7029ef712f769d02b",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "catalogueFingerprint": "d035b740ff3ad78310773050a53f0633ca6ac4e4b38e68df173c19befef9fb3e"
+  },
+  "allocation": {
+    "taskMs": 2880000,
+    "note": "including the quiet-admission grace of every command, tests, audits and reporting"
+  },
+  "estimates": {
+    "basis": "IG-S04 pilot records (grids 11 and 12), the larger of the two per cell and mode, in ms: [cold wall of a one-sample trial, independent verification]",
+    "pilotMs": {
+      "classic9": {
+        "proposal-only": [
+          120,
+          100
+        ],
+        "ordinary-only": [
+          340,
+          110
+        ],
+        "F0": [
+          120,
+          100
+        ],
+        "F1": [
+          120,
+          100
+        ],
+        "FC": [
+          120,
+          100
+        ],
+        "FM": [
+          130,
+          100
+        ],
+        "FU": [
+          130,
+          100
+        ],
+        "FS": [
+          130,
+          100
+        ]
+      },
+      "mega12": {
+        "proposal-only": [
+          250,
+          160
+        ],
+        "ordinary-only": [
+          870,
+          160
+        ],
+        "F0": [
+          5000,
+          140
+        ],
+        "F1": [
+          5090,
+          140
+        ],
+        "FC": [
+          5010,
+          140
+        ],
+        "FM": [
+          5040,
+          140
+        ],
+        "FU": [
+          220,
+          140
+        ],
+        "FS": [
+          5060,
+          140
+        ]
+      },
+      "mega16": {
+        "proposal-only": [
+          1240,
+          190
+        ],
+        "ordinary-only": [
+          9890,
+          200
+        ],
+        "F0": [
+          400,
+          110
+        ],
+        "F1": [
+          330,
+          110
+        ],
+        "FC": [
+          720,
+          210
+        ],
+        "FM": [
+          730,
+          200
+        ],
+        "FU": [
+          360,
+          110
+        ],
+        "FS": [
+          360,
+          100
+        ]
+      },
+      "samurai": {
+        "proposal-only": [
+          580,
+          200
+        ],
+        "ordinary-only": [
+          600,
+          160
+        ],
+        "F0": [
+          280,
+          110
+        ],
+        "F1": [
+          260,
+          100
+        ],
+        "FC": [
+          2870,
+          230
+        ],
+        "FM": [
+          2880,
+          230
+        ],
+        "FU": [
+          260,
+          120
+        ],
+        "FS": [
+          270,
+          110
+        ]
+      }
+    },
+    "startupMs": 100,
+    "parentReserveMs": {
+      "classic9": 400,
+      "mega12": 1500,
+      "mega16": 2000,
+      "samurai": 2000
+    },
+    "formula": "ceil((2 x cold - startup + verification + parent reserve) x 1.25 + 500 ms) to 100 ms; a frontier mode uses the largest cold and verification figure of any frontier mode of its cell and never less than the floor",
+    "frontierFloorMs": {
+      "classic9": 1500,
+      "mega12": 8000,
+      "mega16": 8000,
+      "samurai": 8000
+    },
+    "byKey": {
+      "IG-S05/screen/classic9:nightmare:101/proposal-only": 800,
+      "IG-S05/screen/classic9:nightmare:101/ordinary-only": 1400,
+      "IG-S05/screen/classic9:nightmare:101/F1": 1500,
+      "IG-S05/screen/classic9:nightmare:102/ordinary-only": 1400,
+      "IG-S05/screen/classic9:nightmare:102/F1": 1500,
+      "IG-S05/screen/classic9:nightmare:102/proposal-only": 800,
+      "IG-S05/screen/classic9:nightmare:103/F1": 1500,
+      "IG-S05/screen/classic9:nightmare:103/proposal-only": 800,
+      "IG-S05/screen/classic9:nightmare:103/ordinary-only": 1400,
+      "IG-S05/screen/classic9:nightmare:104/proposal-only": 800,
+      "IG-S05/screen/classic9:nightmare:104/ordinary-only": 1400,
+      "IG-S05/screen/classic9:nightmare:104/F1": 1500,
+      "IG-S05/screen/mega12:nightmare:101/proposal-only": 1200,
+      "IG-S05/screen/mega12:nightmare:101/ordinary-only": 2800,
+      "IG-S05/screen/mega12:nightmare:101/F1": 15200,
+      "IG-S05/screen/mega12:nightmare:102/ordinary-only": 2800,
+      "IG-S05/screen/mega12:nightmare:102/F1": 15200,
+      "IG-S05/screen/mega12:nightmare:102/proposal-only": 1200,
+      "IG-S05/screen/mega12:nightmare:103/F1": 15200,
+      "IG-S05/screen/mega12:nightmare:103/proposal-only": 1200,
+      "IG-S05/screen/mega12:nightmare:103/ordinary-only": 2800,
+      "IG-S05/screen/mega12:nightmare:104/proposal-only": 1200,
+      "IG-S05/screen/mega12:nightmare:104/ordinary-only": 2800,
+      "IG-S05/screen/mega12:nightmare:104/F1": 15200,
+      "IG-S05/screen/mega16:nightmare:101/proposal-only": 3800,
+      "IG-S05/screen/mega16:nightmare:101/ordinary-only": 25400,
+      "IG-S05/screen/mega16:nightmare:101/F1": 8000,
+      "IG-S05/screen/mega16:nightmare:102/ordinary-only": 25400,
+      "IG-S05/screen/mega16:nightmare:102/F1": 8000,
+      "IG-S05/screen/mega16:nightmare:102/proposal-only": 3800,
+      "IG-S05/screen/mega16:nightmare:103/F1": 8000,
+      "IG-S05/screen/mega16:nightmare:103/proposal-only": 3800,
+      "IG-S05/screen/mega16:nightmare:103/ordinary-only": 25400,
+      "IG-S05/screen/mega16:nightmare:104/proposal-only": 3800,
+      "IG-S05/screen/mega16:nightmare:104/ordinary-only": 25400,
+      "IG-S05/screen/mega16:nightmare:104/F1": 8000,
+      "IG-S05/screen/samurai:nightmare:101/proposal-only": 2100,
+      "IG-S05/screen/samurai:nightmare:101/ordinary-only": 2100,
+      "IG-S05/screen/samurai:nightmare:101/F1": 10400,
+      "IG-S05/screen/samurai:nightmare:102/ordinary-only": 2100,
+      "IG-S05/screen/samurai:nightmare:102/F1": 10400,
+      "IG-S05/screen/samurai:nightmare:102/proposal-only": 2100,
+      "IG-S05/screen/samurai:nightmare:103/F1": 10400,
+      "IG-S05/screen/samurai:nightmare:103/proposal-only": 2100,
+      "IG-S05/screen/samurai:nightmare:103/ordinary-only": 2100,
+      "IG-S05/screen/samurai:nightmare:104/proposal-only": 2100,
+      "IG-S05/screen/samurai:nightmare:104/ordinary-only": 2100,
+      "IG-S05/screen/samurai:nightmare:104/F1": 10400,
+      "IG-S05/screen/classic9:nightmare:105/ordinary-only": 1400,
+      "IG-S05/screen/classic9:nightmare:105/F1": 1500,
+      "IG-S05/screen/classic9:nightmare:105/proposal-only": 800,
+      "IG-S05/screen/classic9:nightmare:106/F1": 1500,
+      "IG-S05/screen/classic9:nightmare:106/proposal-only": 800,
+      "IG-S05/screen/classic9:nightmare:106/ordinary-only": 1400,
+      "IG-S05/screen/classic9:nightmare:107/proposal-only": 800,
+      "IG-S05/screen/classic9:nightmare:107/ordinary-only": 1400,
+      "IG-S05/screen/classic9:nightmare:107/F1": 1500,
+      "IG-S05/screen/classic9:nightmare:108/ordinary-only": 1400,
+      "IG-S05/screen/classic9:nightmare:108/F1": 1500,
+      "IG-S05/screen/classic9:nightmare:108/proposal-only": 800,
+      "IG-S05/screen/mega12:nightmare:105/ordinary-only": 2800,
+      "IG-S05/screen/mega12:nightmare:105/F1": 15200,
+      "IG-S05/screen/mega12:nightmare:105/proposal-only": 1200,
+      "IG-S05/screen/mega12:nightmare:106/F1": 15200,
+      "IG-S05/screen/mega12:nightmare:106/proposal-only": 1200,
+      "IG-S05/screen/mega12:nightmare:106/ordinary-only": 2800,
+      "IG-S05/screen/mega12:nightmare:107/proposal-only": 1200,
+      "IG-S05/screen/mega12:nightmare:107/ordinary-only": 2800,
+      "IG-S05/screen/mega12:nightmare:107/F1": 15200,
+      "IG-S05/screen/mega12:nightmare:108/ordinary-only": 2800,
+      "IG-S05/screen/mega12:nightmare:108/F1": 15200,
+      "IG-S05/screen/mega12:nightmare:108/proposal-only": 1200,
+      "IG-S05/screen/mega16:nightmare:105/ordinary-only": 25400,
+      "IG-S05/screen/mega16:nightmare:105/F1": 8000,
+      "IG-S05/screen/mega16:nightmare:105/proposal-only": 3800,
+      "IG-S05/screen/mega16:nightmare:106/F1": 8000,
+      "IG-S05/screen/mega16:nightmare:106/proposal-only": 3800,
+      "IG-S05/screen/mega16:nightmare:106/ordinary-only": 25400,
+      "IG-S05/screen/mega16:nightmare:107/proposal-only": 3800,
+      "IG-S05/screen/mega16:nightmare:107/ordinary-only": 25400,
+      "IG-S05/screen/mega16:nightmare:107/F1": 8000,
+      "IG-S05/screen/mega16:nightmare:108/ordinary-only": 25400,
+      "IG-S05/screen/mega16:nightmare:108/F1": 8000,
+      "IG-S05/screen/mega16:nightmare:108/proposal-only": 3800,
+      "IG-S05/screen/samurai:nightmare:105/ordinary-only": 2100,
+      "IG-S05/screen/samurai:nightmare:105/F1": 10400,
+      "IG-S05/screen/samurai:nightmare:105/proposal-only": 2100,
+      "IG-S05/screen/samurai:nightmare:106/F1": 10400,
+      "IG-S05/screen/samurai:nightmare:106/proposal-only": 2100,
+      "IG-S05/screen/samurai:nightmare:106/ordinary-only": 2100,
+      "IG-S05/screen/samurai:nightmare:107/proposal-only": 2100,
+      "IG-S05/screen/samurai:nightmare:107/ordinary-only": 2100,
+      "IG-S05/screen/samurai:nightmare:107/F1": 10400,
+      "IG-S05/screen/samurai:nightmare:108/ordinary-only": 2100,
+      "IG-S05/screen/samurai:nightmare:108/F1": 10400,
+      "IG-S05/screen/samurai:nightmare:108/proposal-only": 2100,
+      "IG-S05/screen/classic9:nightmare:101/FC": 1500,
+      "IG-S05/screen/classic9:nightmare:101/FM": 1500,
+      "IG-S05/screen/classic9:nightmare:102/FM": 1500,
+      "IG-S05/screen/classic9:nightmare:102/FC": 1500,
+      "IG-S05/screen/classic9:nightmare:103/FC": 1500,
+      "IG-S05/screen/classic9:nightmare:103/FM": 1500,
+      "IG-S05/screen/classic9:nightmare:104/FM": 1500,
+      "IG-S05/screen/classic9:nightmare:104/FC": 1500,
+      "IG-S05/screen/mega12:nightmare:101/FC": 15200,
+      "IG-S05/screen/mega12:nightmare:101/FM": 15200,
+      "IG-S05/screen/mega12:nightmare:102/FM": 15200,
+      "IG-S05/screen/mega12:nightmare:102/FC": 15200,
+      "IG-S05/screen/mega12:nightmare:103/FC": 15200,
+      "IG-S05/screen/mega12:nightmare:103/FM": 15200,
+      "IG-S05/screen/mega12:nightmare:104/FM": 15200,
+      "IG-S05/screen/mega12:nightmare:104/FC": 15200,
+      "IG-S05/screen/mega16:nightmare:101/FC": 8000,
+      "IG-S05/screen/mega16:nightmare:101/FM": 8000,
+      "IG-S05/screen/mega16:nightmare:102/FM": 8000,
+      "IG-S05/screen/mega16:nightmare:102/FC": 8000,
+      "IG-S05/screen/mega16:nightmare:103/FC": 8000,
+      "IG-S05/screen/mega16:nightmare:103/FM": 8000,
+      "IG-S05/screen/mega16:nightmare:104/FM": 8000,
+      "IG-S05/screen/mega16:nightmare:104/FC": 8000,
+      "IG-S05/screen/samurai:nightmare:101/FC": 10400,
+      "IG-S05/screen/samurai:nightmare:101/FM": 10400,
+      "IG-S05/screen/samurai:nightmare:102/FM": 10400,
+      "IG-S05/screen/samurai:nightmare:102/FC": 10400,
+      "IG-S05/screen/samurai:nightmare:103/FC": 10400,
+      "IG-S05/screen/samurai:nightmare:103/FM": 10400,
+      "IG-S05/screen/samurai:nightmare:104/FM": 10400,
+      "IG-S05/screen/samurai:nightmare:104/FC": 10400,
+      "IG-S05/screen/classic9:nightmare:105/FC": 1500,
+      "IG-S05/screen/classic9:nightmare:105/FM": 1500,
+      "IG-S05/screen/classic9:nightmare:106/FM": 1500,
+      "IG-S05/screen/classic9:nightmare:106/FC": 1500,
+      "IG-S05/screen/classic9:nightmare:107/FC": 1500,
+      "IG-S05/screen/classic9:nightmare:107/FM": 1500,
+      "IG-S05/screen/classic9:nightmare:108/FM": 1500,
+      "IG-S05/screen/classic9:nightmare:108/FC": 1500,
+      "IG-S05/screen/mega12:nightmare:105/FC": 15200,
+      "IG-S05/screen/mega12:nightmare:105/FM": 15200,
+      "IG-S05/screen/mega12:nightmare:106/FM": 15200,
+      "IG-S05/screen/mega12:nightmare:106/FC": 15200,
+      "IG-S05/screen/mega12:nightmare:107/FC": 15200,
+      "IG-S05/screen/mega12:nightmare:107/FM": 15200,
+      "IG-S05/screen/mega12:nightmare:108/FM": 15200,
+      "IG-S05/screen/mega12:nightmare:108/FC": 15200,
+      "IG-S05/screen/mega16:nightmare:105/FC": 8000,
+      "IG-S05/screen/mega16:nightmare:105/FM": 8000,
+      "IG-S05/screen/mega16:nightmare:106/FM": 8000,
+      "IG-S05/screen/mega16:nightmare:106/FC": 8000,
+      "IG-S05/screen/mega16:nightmare:107/FC": 8000,
+      "IG-S05/screen/mega16:nightmare:107/FM": 8000,
+      "IG-S05/screen/mega16:nightmare:108/FM": 8000,
+      "IG-S05/screen/mega16:nightmare:108/FC": 8000,
+      "IG-S05/screen/samurai:nightmare:105/FC": 10400,
+      "IG-S05/screen/samurai:nightmare:105/FM": 10400,
+      "IG-S05/screen/samurai:nightmare:106/FM": 10400,
+      "IG-S05/screen/samurai:nightmare:106/FC": 10400,
+      "IG-S05/screen/samurai:nightmare:107/FC": 10400,
+      "IG-S05/screen/samurai:nightmare:107/FM": 10400,
+      "IG-S05/screen/samurai:nightmare:108/FM": 10400,
+      "IG-S05/screen/samurai:nightmare:108/FC": 10400,
+      "IG-S05/screen/classic9:nightmare:101/FU": 1500,
+      "IG-S05/screen/classic9:nightmare:101/FS": 1500,
+      "IG-S05/screen/classic9:nightmare:102/FS": 1500,
+      "IG-S05/screen/classic9:nightmare:102/FU": 1500,
+      "IG-S05/screen/classic9:nightmare:103/FU": 1500,
+      "IG-S05/screen/classic9:nightmare:103/FS": 1500,
+      "IG-S05/screen/classic9:nightmare:104/FS": 1500,
+      "IG-S05/screen/classic9:nightmare:104/FU": 1500,
+      "IG-S05/screen/mega12:nightmare:101/FU": 15200,
+      "IG-S05/screen/mega12:nightmare:101/FS": 15200,
+      "IG-S05/screen/mega12:nightmare:102/FS": 15200,
+      "IG-S05/screen/mega12:nightmare:102/FU": 15200,
+      "IG-S05/screen/mega12:nightmare:103/FU": 15200,
+      "IG-S05/screen/mega12:nightmare:103/FS": 15200,
+      "IG-S05/screen/mega12:nightmare:104/FS": 15200,
+      "IG-S05/screen/mega12:nightmare:104/FU": 15200,
+      "IG-S05/screen/mega16:nightmare:101/FU": 8000,
+      "IG-S05/screen/mega16:nightmare:101/FS": 8000,
+      "IG-S05/screen/mega16:nightmare:102/FS": 8000,
+      "IG-S05/screen/mega16:nightmare:102/FU": 8000,
+      "IG-S05/screen/mega16:nightmare:103/FU": 8000,
+      "IG-S05/screen/mega16:nightmare:103/FS": 8000,
+      "IG-S05/screen/mega16:nightmare:104/FS": 8000,
+      "IG-S05/screen/mega16:nightmare:104/FU": 8000,
+      "IG-S05/screen/samurai:nightmare:101/FU": 10400,
+      "IG-S05/screen/samurai:nightmare:101/FS": 10400,
+      "IG-S05/screen/samurai:nightmare:102/FS": 10400,
+      "IG-S05/screen/samurai:nightmare:102/FU": 10400,
+      "IG-S05/screen/samurai:nightmare:103/FU": 10400,
+      "IG-S05/screen/samurai:nightmare:103/FS": 10400,
+      "IG-S05/screen/samurai:nightmare:104/FS": 10400,
+      "IG-S05/screen/samurai:nightmare:104/FU": 10400,
+      "IG-S05/screen/classic9:nightmare:105/FU": 1500,
+      "IG-S05/screen/classic9:nightmare:105/FS": 1500,
+      "IG-S05/screen/classic9:nightmare:106/FS": 1500,
+      "IG-S05/screen/classic9:nightmare:106/FU": 1500,
+      "IG-S05/screen/classic9:nightmare:107/FU": 1500,
+      "IG-S05/screen/classic9:nightmare:107/FS": 1500,
+      "IG-S05/screen/classic9:nightmare:108/FS": 1500,
+      "IG-S05/screen/classic9:nightmare:108/FU": 1500,
+      "IG-S05/screen/mega12:nightmare:105/FU": 15200,
+      "IG-S05/screen/mega12:nightmare:105/FS": 15200,
+      "IG-S05/screen/mega12:nightmare:106/FS": 15200,
+      "IG-S05/screen/mega12:nightmare:106/FU": 15200,
+      "IG-S05/screen/mega12:nightmare:107/FU": 15200,
+      "IG-S05/screen/mega12:nightmare:107/FS": 15200,
+      "IG-S05/screen/mega12:nightmare:108/FS": 15200,
+      "IG-S05/screen/mega12:nightmare:108/FU": 15200,
+      "IG-S05/screen/mega16:nightmare:105/FU": 8000,
+      "IG-S05/screen/mega16:nightmare:105/FS": 8000,
+      "IG-S05/screen/mega16:nightmare:106/FS": 8000,
+      "IG-S05/screen/mega16:nightmare:106/FU": 8000,
+      "IG-S05/screen/mega16:nightmare:107/FU": 8000,
+      "IG-S05/screen/mega16:nightmare:107/FS": 8000,
+      "IG-S05/screen/mega16:nightmare:108/FS": 8000,
+      "IG-S05/screen/mega16:nightmare:108/FU": 8000,
+      "IG-S05/screen/samurai:nightmare:105/FU": 10400,
+      "IG-S05/screen/samurai:nightmare:105/FS": 10400,
+      "IG-S05/screen/samurai:nightmare:106/FS": 10400,
+      "IG-S05/screen/samurai:nightmare:106/FU": 10400,
+      "IG-S05/screen/samurai:nightmare:107/FU": 10400,
+      "IG-S05/screen/samurai:nightmare:107/FS": 10400,
+      "IG-S05/screen/samurai:nightmare:108/FS": 10400,
+      "IG-S05/screen/samurai:nightmare:108/FU": 10400,
+      "IG-S05/screen/classic9:nightmare:101/F0": 1500,
+      "IG-S05/screen/classic9:nightmare:102/F0": 1500,
+      "IG-S05/screen/classic9:nightmare:103/F0": 1500,
+      "IG-S05/screen/classic9:nightmare:104/F0": 1500,
+      "IG-S05/screen/mega12:nightmare:101/F0": 15200,
+      "IG-S05/screen/mega12:nightmare:102/F0": 15200,
+      "IG-S05/screen/mega12:nightmare:103/F0": 15200,
+      "IG-S05/screen/mega12:nightmare:104/F0": 15200,
+      "IG-S05/screen/mega16:nightmare:101/F0": 8000,
+      "IG-S05/screen/mega16:nightmare:102/F0": 8000,
+      "IG-S05/screen/mega16:nightmare:103/F0": 8000,
+      "IG-S05/screen/mega16:nightmare:104/F0": 8000,
+      "IG-S05/screen/samurai:nightmare:101/F0": 10400,
+      "IG-S05/screen/samurai:nightmare:102/F0": 10400,
+      "IG-S05/screen/samurai:nightmare:103/F0": 10400,
+      "IG-S05/screen/samurai:nightmare:104/F0": 10400,
+      "IG-S05/screen/classic9:nightmare:105/F0": 1500,
+      "IG-S05/screen/classic9:nightmare:106/F0": 1500,
+      "IG-S05/screen/classic9:nightmare:107/F0": 1500,
+      "IG-S05/screen/classic9:nightmare:108/F0": 1500,
+      "IG-S05/screen/mega12:nightmare:105/F0": 15200,
+      "IG-S05/screen/mega12:nightmare:106/F0": 15200,
+      "IG-S05/screen/mega12:nightmare:107/F0": 15200,
+      "IG-S05/screen/mega12:nightmare:108/F0": 15200,
+      "IG-S05/screen/mega16:nightmare:105/F0": 8000,
+      "IG-S05/screen/mega16:nightmare:106/F0": 8000,
+      "IG-S05/screen/mega16:nightmare:107/F0": 8000,
+      "IG-S05/screen/mega16:nightmare:108/F0": 8000,
+      "IG-S05/screen/samurai:nightmare:105/F0": 10400,
+      "IG-S05/screen/samurai:nightmare:106/F0": 10400,
+      "IG-S05/screen/samurai:nightmare:107/F0": 10400,
+      "IG-S05/screen/samurai:nightmare:108/F0": 10400
+    }
+  },
+  "blocks": [
+    {
+      "blockKey": "IG-S05/screen/primary/classic9:101-104",
+      "tier": "primary",
+      "cell": "classic9",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/classic9:nightmare:101/proposal-only",
+        "IG-S05/screen/classic9:nightmare:101/ordinary-only",
+        "IG-S05/screen/classic9:nightmare:101/F1",
+        "IG-S05/screen/classic9:nightmare:102/ordinary-only",
+        "IG-S05/screen/classic9:nightmare:102/F1",
+        "IG-S05/screen/classic9:nightmare:102/proposal-only",
+        "IG-S05/screen/classic9:nightmare:103/F1",
+        "IG-S05/screen/classic9:nightmare:103/proposal-only",
+        "IG-S05/screen/classic9:nightmare:103/ordinary-only",
+        "IG-S05/screen/classic9:nightmare:104/proposal-only",
+        "IG-S05/screen/classic9:nightmare:104/ordinary-only",
+        "IG-S05/screen/classic9:nightmare:104/F1"
+      ],
+      "estimateMs": 14800
+    },
+    {
+      "blockKey": "IG-S05/screen/primary/mega12:101-104",
+      "tier": "primary",
+      "cell": "mega12",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/mega12:nightmare:101/proposal-only",
+        "IG-S05/screen/mega12:nightmare:101/ordinary-only",
+        "IG-S05/screen/mega12:nightmare:101/F1",
+        "IG-S05/screen/mega12:nightmare:102/ordinary-only",
+        "IG-S05/screen/mega12:nightmare:102/F1",
+        "IG-S05/screen/mega12:nightmare:102/proposal-only",
+        "IG-S05/screen/mega12:nightmare:103/F1",
+        "IG-S05/screen/mega12:nightmare:103/proposal-only",
+        "IG-S05/screen/mega12:nightmare:103/ordinary-only",
+        "IG-S05/screen/mega12:nightmare:104/proposal-only",
+        "IG-S05/screen/mega12:nightmare:104/ordinary-only",
+        "IG-S05/screen/mega12:nightmare:104/F1"
+      ],
+      "estimateMs": 76800
+    },
+    {
+      "blockKey": "IG-S05/screen/primary/mega16:101-104",
+      "tier": "primary",
+      "cell": "mega16",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/mega16:nightmare:101/proposal-only",
+        "IG-S05/screen/mega16:nightmare:101/ordinary-only",
+        "IG-S05/screen/mega16:nightmare:101/F1",
+        "IG-S05/screen/mega16:nightmare:102/ordinary-only",
+        "IG-S05/screen/mega16:nightmare:102/F1",
+        "IG-S05/screen/mega16:nightmare:102/proposal-only",
+        "IG-S05/screen/mega16:nightmare:103/F1",
+        "IG-S05/screen/mega16:nightmare:103/proposal-only",
+        "IG-S05/screen/mega16:nightmare:103/ordinary-only",
+        "IG-S05/screen/mega16:nightmare:104/proposal-only",
+        "IG-S05/screen/mega16:nightmare:104/ordinary-only",
+        "IG-S05/screen/mega16:nightmare:104/F1"
+      ],
+      "estimateMs": 148800
+    },
+    {
+      "blockKey": "IG-S05/screen/primary/samurai:101-104",
+      "tier": "primary",
+      "cell": "samurai",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/samurai:nightmare:101/proposal-only",
+        "IG-S05/screen/samurai:nightmare:101/ordinary-only",
+        "IG-S05/screen/samurai:nightmare:101/F1",
+        "IG-S05/screen/samurai:nightmare:102/ordinary-only",
+        "IG-S05/screen/samurai:nightmare:102/F1",
+        "IG-S05/screen/samurai:nightmare:102/proposal-only",
+        "IG-S05/screen/samurai:nightmare:103/F1",
+        "IG-S05/screen/samurai:nightmare:103/proposal-only",
+        "IG-S05/screen/samurai:nightmare:103/ordinary-only",
+        "IG-S05/screen/samurai:nightmare:104/proposal-only",
+        "IG-S05/screen/samurai:nightmare:104/ordinary-only",
+        "IG-S05/screen/samurai:nightmare:104/F1"
+      ],
+      "estimateMs": 58400
+    },
+    {
+      "blockKey": "IG-S05/screen/primary/classic9:105-108",
+      "tier": "primary",
+      "cell": "classic9",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/classic9:nightmare:105/ordinary-only",
+        "IG-S05/screen/classic9:nightmare:105/F1",
+        "IG-S05/screen/classic9:nightmare:105/proposal-only",
+        "IG-S05/screen/classic9:nightmare:106/F1",
+        "IG-S05/screen/classic9:nightmare:106/proposal-only",
+        "IG-S05/screen/classic9:nightmare:106/ordinary-only",
+        "IG-S05/screen/classic9:nightmare:107/proposal-only",
+        "IG-S05/screen/classic9:nightmare:107/ordinary-only",
+        "IG-S05/screen/classic9:nightmare:107/F1",
+        "IG-S05/screen/classic9:nightmare:108/ordinary-only",
+        "IG-S05/screen/classic9:nightmare:108/F1",
+        "IG-S05/screen/classic9:nightmare:108/proposal-only"
+      ],
+      "estimateMs": 14800
+    },
+    {
+      "blockKey": "IG-S05/screen/primary/mega12:105-108",
+      "tier": "primary",
+      "cell": "mega12",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/mega12:nightmare:105/ordinary-only",
+        "IG-S05/screen/mega12:nightmare:105/F1",
+        "IG-S05/screen/mega12:nightmare:105/proposal-only",
+        "IG-S05/screen/mega12:nightmare:106/F1",
+        "IG-S05/screen/mega12:nightmare:106/proposal-only",
+        "IG-S05/screen/mega12:nightmare:106/ordinary-only",
+        "IG-S05/screen/mega12:nightmare:107/proposal-only",
+        "IG-S05/screen/mega12:nightmare:107/ordinary-only",
+        "IG-S05/screen/mega12:nightmare:107/F1",
+        "IG-S05/screen/mega12:nightmare:108/ordinary-only",
+        "IG-S05/screen/mega12:nightmare:108/F1",
+        "IG-S05/screen/mega12:nightmare:108/proposal-only"
+      ],
+      "estimateMs": 76800
+    },
+    {
+      "blockKey": "IG-S05/screen/primary/mega16:105-108",
+      "tier": "primary",
+      "cell": "mega16",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/mega16:nightmare:105/ordinary-only",
+        "IG-S05/screen/mega16:nightmare:105/F1",
+        "IG-S05/screen/mega16:nightmare:105/proposal-only",
+        "IG-S05/screen/mega16:nightmare:106/F1",
+        "IG-S05/screen/mega16:nightmare:106/proposal-only",
+        "IG-S05/screen/mega16:nightmare:106/ordinary-only",
+        "IG-S05/screen/mega16:nightmare:107/proposal-only",
+        "IG-S05/screen/mega16:nightmare:107/ordinary-only",
+        "IG-S05/screen/mega16:nightmare:107/F1",
+        "IG-S05/screen/mega16:nightmare:108/ordinary-only",
+        "IG-S05/screen/mega16:nightmare:108/F1",
+        "IG-S05/screen/mega16:nightmare:108/proposal-only"
+      ],
+      "estimateMs": 148800
+    },
+    {
+      "blockKey": "IG-S05/screen/primary/samurai:105-108",
+      "tier": "primary",
+      "cell": "samurai",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/samurai:nightmare:105/ordinary-only",
+        "IG-S05/screen/samurai:nightmare:105/F1",
+        "IG-S05/screen/samurai:nightmare:105/proposal-only",
+        "IG-S05/screen/samurai:nightmare:106/F1",
+        "IG-S05/screen/samurai:nightmare:106/proposal-only",
+        "IG-S05/screen/samurai:nightmare:106/ordinary-only",
+        "IG-S05/screen/samurai:nightmare:107/proposal-only",
+        "IG-S05/screen/samurai:nightmare:107/ordinary-only",
+        "IG-S05/screen/samurai:nightmare:107/F1",
+        "IG-S05/screen/samurai:nightmare:108/ordinary-only",
+        "IG-S05/screen/samurai:nightmare:108/F1",
+        "IG-S05/screen/samurai:nightmare:108/proposal-only"
+      ],
+      "estimateMs": 58400
+    },
+    {
+      "blockKey": "IG-S05/screen/floors/classic9:101-104",
+      "tier": "floors",
+      "cell": "classic9",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/classic9:nightmare:101/FC",
+        "IG-S05/screen/classic9:nightmare:101/FM",
+        "IG-S05/screen/classic9:nightmare:102/FM",
+        "IG-S05/screen/classic9:nightmare:102/FC",
+        "IG-S05/screen/classic9:nightmare:103/FC",
+        "IG-S05/screen/classic9:nightmare:103/FM",
+        "IG-S05/screen/classic9:nightmare:104/FM",
+        "IG-S05/screen/classic9:nightmare:104/FC"
+      ],
+      "estimateMs": 12000
+    },
+    {
+      "blockKey": "IG-S05/screen/floors/mega12:101-104",
+      "tier": "floors",
+      "cell": "mega12",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/mega12:nightmare:101/FC",
+        "IG-S05/screen/mega12:nightmare:101/FM",
+        "IG-S05/screen/mega12:nightmare:102/FM",
+        "IG-S05/screen/mega12:nightmare:102/FC",
+        "IG-S05/screen/mega12:nightmare:103/FC",
+        "IG-S05/screen/mega12:nightmare:103/FM",
+        "IG-S05/screen/mega12:nightmare:104/FM",
+        "IG-S05/screen/mega12:nightmare:104/FC"
+      ],
+      "estimateMs": 121600
+    },
+    {
+      "blockKey": "IG-S05/screen/floors/mega16:101-104",
+      "tier": "floors",
+      "cell": "mega16",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/mega16:nightmare:101/FC",
+        "IG-S05/screen/mega16:nightmare:101/FM",
+        "IG-S05/screen/mega16:nightmare:102/FM",
+        "IG-S05/screen/mega16:nightmare:102/FC",
+        "IG-S05/screen/mega16:nightmare:103/FC",
+        "IG-S05/screen/mega16:nightmare:103/FM",
+        "IG-S05/screen/mega16:nightmare:104/FM",
+        "IG-S05/screen/mega16:nightmare:104/FC"
+      ],
+      "estimateMs": 64000
+    },
+    {
+      "blockKey": "IG-S05/screen/floors/samurai:101-104",
+      "tier": "floors",
+      "cell": "samurai",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/samurai:nightmare:101/FC",
+        "IG-S05/screen/samurai:nightmare:101/FM",
+        "IG-S05/screen/samurai:nightmare:102/FM",
+        "IG-S05/screen/samurai:nightmare:102/FC",
+        "IG-S05/screen/samurai:nightmare:103/FC",
+        "IG-S05/screen/samurai:nightmare:103/FM",
+        "IG-S05/screen/samurai:nightmare:104/FM",
+        "IG-S05/screen/samurai:nightmare:104/FC"
+      ],
+      "estimateMs": 83200
+    },
+    {
+      "blockKey": "IG-S05/screen/floors/classic9:105-108",
+      "tier": "floors",
+      "cell": "classic9",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/classic9:nightmare:105/FC",
+        "IG-S05/screen/classic9:nightmare:105/FM",
+        "IG-S05/screen/classic9:nightmare:106/FM",
+        "IG-S05/screen/classic9:nightmare:106/FC",
+        "IG-S05/screen/classic9:nightmare:107/FC",
+        "IG-S05/screen/classic9:nightmare:107/FM",
+        "IG-S05/screen/classic9:nightmare:108/FM",
+        "IG-S05/screen/classic9:nightmare:108/FC"
+      ],
+      "estimateMs": 12000
+    },
+    {
+      "blockKey": "IG-S05/screen/floors/mega12:105-108",
+      "tier": "floors",
+      "cell": "mega12",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/mega12:nightmare:105/FC",
+        "IG-S05/screen/mega12:nightmare:105/FM",
+        "IG-S05/screen/mega12:nightmare:106/FM",
+        "IG-S05/screen/mega12:nightmare:106/FC",
+        "IG-S05/screen/mega12:nightmare:107/FC",
+        "IG-S05/screen/mega12:nightmare:107/FM",
+        "IG-S05/screen/mega12:nightmare:108/FM",
+        "IG-S05/screen/mega12:nightmare:108/FC"
+      ],
+      "estimateMs": 121600
+    },
+    {
+      "blockKey": "IG-S05/screen/floors/mega16:105-108",
+      "tier": "floors",
+      "cell": "mega16",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/mega16:nightmare:105/FC",
+        "IG-S05/screen/mega16:nightmare:105/FM",
+        "IG-S05/screen/mega16:nightmare:106/FM",
+        "IG-S05/screen/mega16:nightmare:106/FC",
+        "IG-S05/screen/mega16:nightmare:107/FC",
+        "IG-S05/screen/mega16:nightmare:107/FM",
+        "IG-S05/screen/mega16:nightmare:108/FM",
+        "IG-S05/screen/mega16:nightmare:108/FC"
+      ],
+      "estimateMs": 64000
+    },
+    {
+      "blockKey": "IG-S05/screen/floors/samurai:105-108",
+      "tier": "floors",
+      "cell": "samurai",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/samurai:nightmare:105/FC",
+        "IG-S05/screen/samurai:nightmare:105/FM",
+        "IG-S05/screen/samurai:nightmare:106/FM",
+        "IG-S05/screen/samurai:nightmare:106/FC",
+        "IG-S05/screen/samurai:nightmare:107/FC",
+        "IG-S05/screen/samurai:nightmare:107/FM",
+        "IG-S05/screen/samurai:nightmare:108/FM",
+        "IG-S05/screen/samurai:nightmare:108/FC"
+      ],
+      "estimateMs": 83200
+    },
+    {
+      "blockKey": "IG-S05/screen/reference/classic9:101-104",
+      "tier": "reference",
+      "cell": "classic9",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/classic9:nightmare:101/FU",
+        "IG-S05/screen/classic9:nightmare:101/FS",
+        "IG-S05/screen/classic9:nightmare:102/FS",
+        "IG-S05/screen/classic9:nightmare:102/FU",
+        "IG-S05/screen/classic9:nightmare:103/FU",
+        "IG-S05/screen/classic9:nightmare:103/FS",
+        "IG-S05/screen/classic9:nightmare:104/FS",
+        "IG-S05/screen/classic9:nightmare:104/FU"
+      ],
+      "estimateMs": 12000
+    },
+    {
+      "blockKey": "IG-S05/screen/reference/mega12:101-104",
+      "tier": "reference",
+      "cell": "mega12",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/mega12:nightmare:101/FU",
+        "IG-S05/screen/mega12:nightmare:101/FS",
+        "IG-S05/screen/mega12:nightmare:102/FS",
+        "IG-S05/screen/mega12:nightmare:102/FU",
+        "IG-S05/screen/mega12:nightmare:103/FU",
+        "IG-S05/screen/mega12:nightmare:103/FS",
+        "IG-S05/screen/mega12:nightmare:104/FS",
+        "IG-S05/screen/mega12:nightmare:104/FU"
+      ],
+      "estimateMs": 121600
+    },
+    {
+      "blockKey": "IG-S05/screen/reference/mega16:101-104",
+      "tier": "reference",
+      "cell": "mega16",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/mega16:nightmare:101/FU",
+        "IG-S05/screen/mega16:nightmare:101/FS",
+        "IG-S05/screen/mega16:nightmare:102/FS",
+        "IG-S05/screen/mega16:nightmare:102/FU",
+        "IG-S05/screen/mega16:nightmare:103/FU",
+        "IG-S05/screen/mega16:nightmare:103/FS",
+        "IG-S05/screen/mega16:nightmare:104/FS",
+        "IG-S05/screen/mega16:nightmare:104/FU"
+      ],
+      "estimateMs": 64000
+    },
+    {
+      "blockKey": "IG-S05/screen/reference/samurai:101-104",
+      "tier": "reference",
+      "cell": "samurai",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/samurai:nightmare:101/FU",
+        "IG-S05/screen/samurai:nightmare:101/FS",
+        "IG-S05/screen/samurai:nightmare:102/FS",
+        "IG-S05/screen/samurai:nightmare:102/FU",
+        "IG-S05/screen/samurai:nightmare:103/FU",
+        "IG-S05/screen/samurai:nightmare:103/FS",
+        "IG-S05/screen/samurai:nightmare:104/FS",
+        "IG-S05/screen/samurai:nightmare:104/FU"
+      ],
+      "estimateMs": 83200
+    },
+    {
+      "blockKey": "IG-S05/screen/reference/classic9:105-108",
+      "tier": "reference",
+      "cell": "classic9",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/classic9:nightmare:105/FU",
+        "IG-S05/screen/classic9:nightmare:105/FS",
+        "IG-S05/screen/classic9:nightmare:106/FS",
+        "IG-S05/screen/classic9:nightmare:106/FU",
+        "IG-S05/screen/classic9:nightmare:107/FU",
+        "IG-S05/screen/classic9:nightmare:107/FS",
+        "IG-S05/screen/classic9:nightmare:108/FS",
+        "IG-S05/screen/classic9:nightmare:108/FU"
+      ],
+      "estimateMs": 12000
+    },
+    {
+      "blockKey": "IG-S05/screen/reference/mega12:105-108",
+      "tier": "reference",
+      "cell": "mega12",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/mega12:nightmare:105/FU",
+        "IG-S05/screen/mega12:nightmare:105/FS",
+        "IG-S05/screen/mega12:nightmare:106/FS",
+        "IG-S05/screen/mega12:nightmare:106/FU",
+        "IG-S05/screen/mega12:nightmare:107/FU",
+        "IG-S05/screen/mega12:nightmare:107/FS",
+        "IG-S05/screen/mega12:nightmare:108/FS",
+        "IG-S05/screen/mega12:nightmare:108/FU"
+      ],
+      "estimateMs": 121600
+    },
+    {
+      "blockKey": "IG-S05/screen/reference/mega16:105-108",
+      "tier": "reference",
+      "cell": "mega16",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/mega16:nightmare:105/FU",
+        "IG-S05/screen/mega16:nightmare:105/FS",
+        "IG-S05/screen/mega16:nightmare:106/FS",
+        "IG-S05/screen/mega16:nightmare:106/FU",
+        "IG-S05/screen/mega16:nightmare:107/FU",
+        "IG-S05/screen/mega16:nightmare:107/FS",
+        "IG-S05/screen/mega16:nightmare:108/FS",
+        "IG-S05/screen/mega16:nightmare:108/FU"
+      ],
+      "estimateMs": 64000
+    },
+    {
+      "blockKey": "IG-S05/screen/reference/samurai:105-108",
+      "tier": "reference",
+      "cell": "samurai",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/samurai:nightmare:105/FU",
+        "IG-S05/screen/samurai:nightmare:105/FS",
+        "IG-S05/screen/samurai:nightmare:106/FS",
+        "IG-S05/screen/samurai:nightmare:106/FU",
+        "IG-S05/screen/samurai:nightmare:107/FU",
+        "IG-S05/screen/samurai:nightmare:107/FS",
+        "IG-S05/screen/samurai:nightmare:108/FS",
+        "IG-S05/screen/samurai:nightmare:108/FU"
+      ],
+      "estimateMs": 83200
+    },
+    {
+      "blockKey": "IG-S05/screen/s2-control/classic9:101-104",
+      "tier": "s2-control",
+      "cell": "classic9",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/classic9:nightmare:101/F0",
+        "IG-S05/screen/classic9:nightmare:102/F0",
+        "IG-S05/screen/classic9:nightmare:103/F0",
+        "IG-S05/screen/classic9:nightmare:104/F0"
+      ],
+      "estimateMs": 6000
+    },
+    {
+      "blockKey": "IG-S05/screen/s2-control/mega12:101-104",
+      "tier": "s2-control",
+      "cell": "mega12",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/mega12:nightmare:101/F0",
+        "IG-S05/screen/mega12:nightmare:102/F0",
+        "IG-S05/screen/mega12:nightmare:103/F0",
+        "IG-S05/screen/mega12:nightmare:104/F0"
+      ],
+      "estimateMs": 60800
+    },
+    {
+      "blockKey": "IG-S05/screen/s2-control/mega16:101-104",
+      "tier": "s2-control",
+      "cell": "mega16",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/mega16:nightmare:101/F0",
+        "IG-S05/screen/mega16:nightmare:102/F0",
+        "IG-S05/screen/mega16:nightmare:103/F0",
+        "IG-S05/screen/mega16:nightmare:104/F0"
+      ],
+      "estimateMs": 32000
+    },
+    {
+      "blockKey": "IG-S05/screen/s2-control/samurai:101-104",
+      "tier": "s2-control",
+      "cell": "samurai",
+      "seeds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "keys": [
+        "IG-S05/screen/samurai:nightmare:101/F0",
+        "IG-S05/screen/samurai:nightmare:102/F0",
+        "IG-S05/screen/samurai:nightmare:103/F0",
+        "IG-S05/screen/samurai:nightmare:104/F0"
+      ],
+      "estimateMs": 41600
+    },
+    {
+      "blockKey": "IG-S05/screen/s2-control/classic9:105-108",
+      "tier": "s2-control",
+      "cell": "classic9",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/classic9:nightmare:105/F0",
+        "IG-S05/screen/classic9:nightmare:106/F0",
+        "IG-S05/screen/classic9:nightmare:107/F0",
+        "IG-S05/screen/classic9:nightmare:108/F0"
+      ],
+      "estimateMs": 6000
+    },
+    {
+      "blockKey": "IG-S05/screen/s2-control/mega12:105-108",
+      "tier": "s2-control",
+      "cell": "mega12",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/mega12:nightmare:105/F0",
+        "IG-S05/screen/mega12:nightmare:106/F0",
+        "IG-S05/screen/mega12:nightmare:107/F0",
+        "IG-S05/screen/mega12:nightmare:108/F0"
+      ],
+      "estimateMs": 60800
+    },
+    {
+      "blockKey": "IG-S05/screen/s2-control/mega16:105-108",
+      "tier": "s2-control",
+      "cell": "mega16",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/mega16:nightmare:105/F0",
+        "IG-S05/screen/mega16:nightmare:106/F0",
+        "IG-S05/screen/mega16:nightmare:107/F0",
+        "IG-S05/screen/mega16:nightmare:108/F0"
+      ],
+      "estimateMs": 32000
+    },
+    {
+      "blockKey": "IG-S05/screen/s2-control/samurai:105-108",
+      "tier": "s2-control",
+      "cell": "samurai",
+      "seeds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "keys": [
+        "IG-S05/screen/samurai:nightmare:105/F0",
+        "IG-S05/screen/samurai:nightmare:106/F0",
+        "IG-S05/screen/samurai:nightmare:107/F0",
+        "IG-S05/screen/samurai:nightmare:108/F0"
+      ],
+      "estimateMs": 41600
+    }
+  ],
+  "plannedKeys": [
+    "IG-S05/screen/classic9:nightmare:101/proposal-only",
+    "IG-S05/screen/classic9:nightmare:101/ordinary-only",
+    "IG-S05/screen/classic9:nightmare:101/F1",
+    "IG-S05/screen/classic9:nightmare:102/ordinary-only",
+    "IG-S05/screen/classic9:nightmare:102/F1",
+    "IG-S05/screen/classic9:nightmare:102/proposal-only",
+    "IG-S05/screen/classic9:nightmare:103/F1",
+    "IG-S05/screen/classic9:nightmare:103/proposal-only",
+    "IG-S05/screen/classic9:nightmare:103/ordinary-only",
+    "IG-S05/screen/classic9:nightmare:104/proposal-only",
+    "IG-S05/screen/classic9:nightmare:104/ordinary-only",
+    "IG-S05/screen/classic9:nightmare:104/F1",
+    "IG-S05/screen/mega12:nightmare:101/proposal-only",
+    "IG-S05/screen/mega12:nightmare:101/ordinary-only",
+    "IG-S05/screen/mega12:nightmare:101/F1",
+    "IG-S05/screen/mega12:nightmare:102/ordinary-only",
+    "IG-S05/screen/mega12:nightmare:102/F1",
+    "IG-S05/screen/mega12:nightmare:102/proposal-only",
+    "IG-S05/screen/mega12:nightmare:103/F1",
+    "IG-S05/screen/mega12:nightmare:103/proposal-only",
+    "IG-S05/screen/mega12:nightmare:103/ordinary-only",
+    "IG-S05/screen/mega12:nightmare:104/proposal-only",
+    "IG-S05/screen/mega12:nightmare:104/ordinary-only",
+    "IG-S05/screen/mega12:nightmare:104/F1",
+    "IG-S05/screen/mega16:nightmare:101/proposal-only",
+    "IG-S05/screen/mega16:nightmare:101/ordinary-only",
+    "IG-S05/screen/mega16:nightmare:101/F1",
+    "IG-S05/screen/mega16:nightmare:102/ordinary-only",
+    "IG-S05/screen/mega16:nightmare:102/F1",
+    "IG-S05/screen/mega16:nightmare:102/proposal-only",
+    "IG-S05/screen/mega16:nightmare:103/F1",
+    "IG-S05/screen/mega16:nightmare:103/proposal-only",
+    "IG-S05/screen/mega16:nightmare:103/ordinary-only",
+    "IG-S05/screen/mega16:nightmare:104/proposal-only",
+    "IG-S05/screen/mega16:nightmare:104/ordinary-only",
+    "IG-S05/screen/mega16:nightmare:104/F1",
+    "IG-S05/screen/samurai:nightmare:101/proposal-only",
+    "IG-S05/screen/samurai:nightmare:101/ordinary-only",
+    "IG-S05/screen/samurai:nightmare:101/F1",
+    "IG-S05/screen/samurai:nightmare:102/ordinary-only",
+    "IG-S05/screen/samurai:nightmare:102/F1",
+    "IG-S05/screen/samurai:nightmare:102/proposal-only",
+    "IG-S05/screen/samurai:nightmare:103/F1",
+    "IG-S05/screen/samurai:nightmare:103/proposal-only",
+    "IG-S05/screen/samurai:nightmare:103/ordinary-only",
+    "IG-S05/screen/samurai:nightmare:104/proposal-only",
+    "IG-S05/screen/samurai:nightmare:104/ordinary-only",
+    "IG-S05/screen/samurai:nightmare:104/F1",
+    "IG-S05/screen/classic9:nightmare:105/ordinary-only",
+    "IG-S05/screen/classic9:nightmare:105/F1",
+    "IG-S05/screen/classic9:nightmare:105/proposal-only",
+    "IG-S05/screen/classic9:nightmare:106/F1",
+    "IG-S05/screen/classic9:nightmare:106/proposal-only",
+    "IG-S05/screen/classic9:nightmare:106/ordinary-only",
+    "IG-S05/screen/classic9:nightmare:107/proposal-only",
+    "IG-S05/screen/classic9:nightmare:107/ordinary-only",
+    "IG-S05/screen/classic9:nightmare:107/F1",
+    "IG-S05/screen/classic9:nightmare:108/ordinary-only",
+    "IG-S05/screen/classic9:nightmare:108/F1",
+    "IG-S05/screen/classic9:nightmare:108/proposal-only",
+    "IG-S05/screen/mega12:nightmare:105/ordinary-only",
+    "IG-S05/screen/mega12:nightmare:105/F1",
+    "IG-S05/screen/mega12:nightmare:105/proposal-only",
+    "IG-S05/screen/mega12:nightmare:106/F1",
+    "IG-S05/screen/mega12:nightmare:106/proposal-only",
+    "IG-S05/screen/mega12:nightmare:106/ordinary-only",
+    "IG-S05/screen/mega12:nightmare:107/proposal-only",
+    "IG-S05/screen/mega12:nightmare:107/ordinary-only",
+    "IG-S05/screen/mega12:nightmare:107/F1",
+    "IG-S05/screen/mega12:nightmare:108/ordinary-only",
+    "IG-S05/screen/mega12:nightmare:108/F1",
+    "IG-S05/screen/mega12:nightmare:108/proposal-only",
+    "IG-S05/screen/mega16:nightmare:105/ordinary-only",
+    "IG-S05/screen/mega16:nightmare:105/F1",
+    "IG-S05/screen/mega16:nightmare:105/proposal-only",
+    "IG-S05/screen/mega16:nightmare:106/F1",
+    "IG-S05/screen/mega16:nightmare:106/proposal-only",
+    "IG-S05/screen/mega16:nightmare:106/ordinary-only",
+    "IG-S05/screen/mega16:nightmare:107/proposal-only",
+    "IG-S05/screen/mega16:nightmare:107/ordinary-only",
+    "IG-S05/screen/mega16:nightmare:107/F1",
+    "IG-S05/screen/mega16:nightmare:108/ordinary-only",
+    "IG-S05/screen/mega16:nightmare:108/F1",
+    "IG-S05/screen/mega16:nightmare:108/proposal-only",
+    "IG-S05/screen/samurai:nightmare:105/ordinary-only",
+    "IG-S05/screen/samurai:nightmare:105/F1",
+    "IG-S05/screen/samurai:nightmare:105/proposal-only",
+    "IG-S05/screen/samurai:nightmare:106/F1",
+    "IG-S05/screen/samurai:nightmare:106/proposal-only",
+    "IG-S05/screen/samurai:nightmare:106/ordinary-only",
+    "IG-S05/screen/samurai:nightmare:107/proposal-only",
+    "IG-S05/screen/samurai:nightmare:107/ordinary-only",
+    "IG-S05/screen/samurai:nightmare:107/F1",
+    "IG-S05/screen/samurai:nightmare:108/ordinary-only",
+    "IG-S05/screen/samurai:nightmare:108/F1",
+    "IG-S05/screen/samurai:nightmare:108/proposal-only",
+    "IG-S05/screen/classic9:nightmare:101/FC",
+    "IG-S05/screen/classic9:nightmare:101/FM",
+    "IG-S05/screen/classic9:nightmare:102/FM",
+    "IG-S05/screen/classic9:nightmare:102/FC",
+    "IG-S05/screen/classic9:nightmare:103/FC",
+    "IG-S05/screen/classic9:nightmare:103/FM",
+    "IG-S05/screen/classic9:nightmare:104/FM",
+    "IG-S05/screen/classic9:nightmare:104/FC",
+    "IG-S05/screen/mega12:nightmare:101/FC",
+    "IG-S05/screen/mega12:nightmare:101/FM",
+    "IG-S05/screen/mega12:nightmare:102/FM",
+    "IG-S05/screen/mega12:nightmare:102/FC",
+    "IG-S05/screen/mega12:nightmare:103/FC",
+    "IG-S05/screen/mega12:nightmare:103/FM",
+    "IG-S05/screen/mega12:nightmare:104/FM",
+    "IG-S05/screen/mega12:nightmare:104/FC",
+    "IG-S05/screen/mega16:nightmare:101/FC",
+    "IG-S05/screen/mega16:nightmare:101/FM",
+    "IG-S05/screen/mega16:nightmare:102/FM",
+    "IG-S05/screen/mega16:nightmare:102/FC",
+    "IG-S05/screen/mega16:nightmare:103/FC",
+    "IG-S05/screen/mega16:nightmare:103/FM",
+    "IG-S05/screen/mega16:nightmare:104/FM",
+    "IG-S05/screen/mega16:nightmare:104/FC",
+    "IG-S05/screen/samurai:nightmare:101/FC",
+    "IG-S05/screen/samurai:nightmare:101/FM",
+    "IG-S05/screen/samurai:nightmare:102/FM",
+    "IG-S05/screen/samurai:nightmare:102/FC",
+    "IG-S05/screen/samurai:nightmare:103/FC",
+    "IG-S05/screen/samurai:nightmare:103/FM",
+    "IG-S05/screen/samurai:nightmare:104/FM",
+    "IG-S05/screen/samurai:nightmare:104/FC",
+    "IG-S05/screen/classic9:nightmare:105/FC",
+    "IG-S05/screen/classic9:nightmare:105/FM",
+    "IG-S05/screen/classic9:nightmare:106/FM",
+    "IG-S05/screen/classic9:nightmare:106/FC",
+    "IG-S05/screen/classic9:nightmare:107/FC",
+    "IG-S05/screen/classic9:nightmare:107/FM",
+    "IG-S05/screen/classic9:nightmare:108/FM",
+    "IG-S05/screen/classic9:nightmare:108/FC",
+    "IG-S05/screen/mega12:nightmare:105/FC",
+    "IG-S05/screen/mega12:nightmare:105/FM",
+    "IG-S05/screen/mega12:nightmare:106/FM",
+    "IG-S05/screen/mega12:nightmare:106/FC",
+    "IG-S05/screen/mega12:nightmare:107/FC",
+    "IG-S05/screen/mega12:nightmare:107/FM",
+    "IG-S05/screen/mega12:nightmare:108/FM",
+    "IG-S05/screen/mega12:nightmare:108/FC",
+    "IG-S05/screen/mega16:nightmare:105/FC",
+    "IG-S05/screen/mega16:nightmare:105/FM",
+    "IG-S05/screen/mega16:nightmare:106/FM",
+    "IG-S05/screen/mega16:nightmare:106/FC",
+    "IG-S05/screen/mega16:nightmare:107/FC",
+    "IG-S05/screen/mega16:nightmare:107/FM",
+    "IG-S05/screen/mega16:nightmare:108/FM",
+    "IG-S05/screen/mega16:nightmare:108/FC",
+    "IG-S05/screen/samurai:nightmare:105/FC",
+    "IG-S05/screen/samurai:nightmare:105/FM",
+    "IG-S05/screen/samurai:nightmare:106/FM",
+    "IG-S05/screen/samurai:nightmare:106/FC",
+    "IG-S05/screen/samurai:nightmare:107/FC",
+    "IG-S05/screen/samurai:nightmare:107/FM",
+    "IG-S05/screen/samurai:nightmare:108/FM",
+    "IG-S05/screen/samurai:nightmare:108/FC",
+    "IG-S05/screen/classic9:nightmare:101/FU",
+    "IG-S05/screen/classic9:nightmare:101/FS",
+    "IG-S05/screen/classic9:nightmare:102/FS",
+    "IG-S05/screen/classic9:nightmare:102/FU",
+    "IG-S05/screen/classic9:nightmare:103/FU",
+    "IG-S05/screen/classic9:nightmare:103/FS",
+    "IG-S05/screen/classic9:nightmare:104/FS",
+    "IG-S05/screen/classic9:nightmare:104/FU",
+    "IG-S05/screen/mega12:nightmare:101/FU",
+    "IG-S05/screen/mega12:nightmare:101/FS",
+    "IG-S05/screen/mega12:nightmare:102/FS",
+    "IG-S05/screen/mega12:nightmare:102/FU",
+    "IG-S05/screen/mega12:nightmare:103/FU",
+    "IG-S05/screen/mega12:nightmare:103/FS",
+    "IG-S05/screen/mega12:nightmare:104/FS",
+    "IG-S05/screen/mega12:nightmare:104/FU",
+    "IG-S05/screen/mega16:nightmare:101/FU",
+    "IG-S05/screen/mega16:nightmare:101/FS",
+    "IG-S05/screen/mega16:nightmare:102/FS",
+    "IG-S05/screen/mega16:nightmare:102/FU",
+    "IG-S05/screen/mega16:nightmare:103/FU",
+    "IG-S05/screen/mega16:nightmare:103/FS",
+    "IG-S05/screen/mega16:nightmare:104/FS",
+    "IG-S05/screen/mega16:nightmare:104/FU",
+    "IG-S05/screen/samurai:nightmare:101/FU",
+    "IG-S05/screen/samurai:nightmare:101/FS",
+    "IG-S05/screen/samurai:nightmare:102/FS",
+    "IG-S05/screen/samurai:nightmare:102/FU",
+    "IG-S05/screen/samurai:nightmare:103/FU",
+    "IG-S05/screen/samurai:nightmare:103/FS",
+    "IG-S05/screen/samurai:nightmare:104/FS",
+    "IG-S05/screen/samurai:nightmare:104/FU",
+    "IG-S05/screen/classic9:nightmare:105/FU",
+    "IG-S05/screen/classic9:nightmare:105/FS",
+    "IG-S05/screen/classic9:nightmare:106/FS",
+    "IG-S05/screen/classic9:nightmare:106/FU",
+    "IG-S05/screen/classic9:nightmare:107/FU",
+    "IG-S05/screen/classic9:nightmare:107/FS",
+    "IG-S05/screen/classic9:nightmare:108/FS",
+    "IG-S05/screen/classic9:nightmare:108/FU",
+    "IG-S05/screen/mega12:nightmare:105/FU",
+    "IG-S05/screen/mega12:nightmare:105/FS",
+    "IG-S05/screen/mega12:nightmare:106/FS",
+    "IG-S05/screen/mega12:nightmare:106/FU",
+    "IG-S05/screen/mega12:nightmare:107/FU",
+    "IG-S05/screen/mega12:nightmare:107/FS",
+    "IG-S05/screen/mega12:nightmare:108/FS",
+    "IG-S05/screen/mega12:nightmare:108/FU",
+    "IG-S05/screen/mega16:nightmare:105/FU",
+    "IG-S05/screen/mega16:nightmare:105/FS",
+    "IG-S05/screen/mega16:nightmare:106/FS",
+    "IG-S05/screen/mega16:nightmare:106/FU",
+    "IG-S05/screen/mega16:nightmare:107/FU",
+    "IG-S05/screen/mega16:nightmare:107/FS",
+    "IG-S05/screen/mega16:nightmare:108/FS",
+    "IG-S05/screen/mega16:nightmare:108/FU",
+    "IG-S05/screen/samurai:nightmare:105/FU",
+    "IG-S05/screen/samurai:nightmare:105/FS",
+    "IG-S05/screen/samurai:nightmare:106/FS",
+    "IG-S05/screen/samurai:nightmare:106/FU",
+    "IG-S05/screen/samurai:nightmare:107/FU",
+    "IG-S05/screen/samurai:nightmare:107/FS",
+    "IG-S05/screen/samurai:nightmare:108/FS",
+    "IG-S05/screen/samurai:nightmare:108/FU",
+    "IG-S05/screen/classic9:nightmare:101/F0",
+    "IG-S05/screen/classic9:nightmare:102/F0",
+    "IG-S05/screen/classic9:nightmare:103/F0",
+    "IG-S05/screen/classic9:nightmare:104/F0",
+    "IG-S05/screen/mega12:nightmare:101/F0",
+    "IG-S05/screen/mega12:nightmare:102/F0",
+    "IG-S05/screen/mega12:nightmare:103/F0",
+    "IG-S05/screen/mega12:nightmare:104/F0",
+    "IG-S05/screen/mega16:nightmare:101/F0",
+    "IG-S05/screen/mega16:nightmare:102/F0",
+    "IG-S05/screen/mega16:nightmare:103/F0",
+    "IG-S05/screen/mega16:nightmare:104/F0",
+    "IG-S05/screen/samurai:nightmare:101/F0",
+    "IG-S05/screen/samurai:nightmare:102/F0",
+    "IG-S05/screen/samurai:nightmare:103/F0",
+    "IG-S05/screen/samurai:nightmare:104/F0",
+    "IG-S05/screen/classic9:nightmare:105/F0",
+    "IG-S05/screen/classic9:nightmare:106/F0",
+    "IG-S05/screen/classic9:nightmare:107/F0",
+    "IG-S05/screen/classic9:nightmare:108/F0",
+    "IG-S05/screen/mega12:nightmare:105/F0",
+    "IG-S05/screen/mega12:nightmare:106/F0",
+    "IG-S05/screen/mega12:nightmare:107/F0",
+    "IG-S05/screen/mega12:nightmare:108/F0",
+    "IG-S05/screen/mega16:nightmare:105/F0",
+    "IG-S05/screen/mega16:nightmare:106/F0",
+    "IG-S05/screen/mega16:nightmare:107/F0",
+    "IG-S05/screen/mega16:nightmare:108/F0",
+    "IG-S05/screen/samurai:nightmare:105/F0",
+    "IG-S05/screen/samurai:nightmare:106/F0",
+    "IG-S05/screen/samurai:nightmare:107/F0",
+    "IG-S05/screen/samurai:nightmare:108/F0"
+  ],
+  "projectedPhysicalPlan": {
+    "note": "a projection of the separate physical layer (never part of the logical hash); each command is a separately admitted wrapper invocation",
+    "windowMs": 258000,
+    "hash": "4f767781b514e644e50a16c7b910a5949d1b01e62f249c43f0ee713d5a46140b",
+    "commands": 10,
+    "projectedMachineMs": 2451600,
+    "perCommand": [
+      {
+        "jobs": 36,
+        "blocks": 3,
+        "estimateMs": 240400
+      },
+      {
+        "jobs": 36,
+        "blocks": 3,
+        "estimateMs": 150000
+      },
+      {
+        "jobs": 32,
+        "blocks": 3,
+        "estimateMs": 219200
+      },
+      {
+        "jobs": 16,
+        "blocks": 2,
+        "estimateMs": 185600
+      },
+      {
+        "jobs": 24,
+        "blocks": 3,
+        "estimateMs": 216800
+      },
+      {
+        "jobs": 24,
+        "blocks": 3,
+        "estimateMs": 159200
+      },
+      {
+        "jobs": 16,
+        "blocks": 2,
+        "estimateMs": 185600
+      },
+      {
+        "jobs": 24,
+        "blocks": 3,
+        "estimateMs": 216800
+      },
+      {
+        "jobs": 28,
+        "blocks": 5,
+        "estimateMs": 246000
+      },
+      {
+        "jobs": 20,
+        "blocks": 5,
+        "estimateMs": 182000
+      }
+    ]
+  },
+  "hash": "dcc22501e45449c6cb45d024bff827fb0dac774a718eac96b0902eff100ed182"
+}

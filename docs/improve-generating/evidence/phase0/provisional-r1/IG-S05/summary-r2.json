@@ -1,0 +1,636 @@
+{
+  "schema": "ig-s05-summary/1",
+  "task": "IG-S05",
+  "round": "provisional-r1",
+  "revision": "r2",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "provisional (pre-freeze): eight grid clusters per cell, at most two native-fork samples per grid; descriptive rates and intervals only; no S1 allowlisting, no bank decision, no formal gate (not-evaluable-pre-freeze)",
+  "formalGate": "not-evaluable-pre-freeze",
+  "verdict": "inconclusive (all verified-hit rates are zero in every cell): stop for review before IG-S06",
+  "allRatesZero": true,
+  "allCovered": true,
+  "coverage": {
+    "plannedTrials": 256,
+    "started": 256,
+    "unstarted": 0,
+    "complete": 243,
+    "censored": 0,
+    "budgetEnded": 13,
+    "errors": 0,
+    "byShard": [
+      {
+        "shard": "screen",
+        "status": "recorded",
+        "attempts": [
+          "a1",
+          "a2",
+          "a3",
+          "a4",
+          "a5",
+          "a6",
+          "a7",
+          "a8",
+          "a9",
+          "a10"
+        ],
+        "unstartedKeys": 0
+      }
+    ]
+  },
+  "cells": [
+    {
+      "cell": "classic9",
+      "formalGate": "not-evaluable-pre-freeze",
+      "finding": "inconclusive (every rate is zero in this cell: no verified hit in any mode)",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      },
+      "zeroBaselineFeasibility": "projection-awaits-author-review",
+      "hits": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      }
+    },
+    {
+      "cell": "mega12",
+      "formalGate": "not-evaluable-pre-freeze",
+      "finding": "inconclusive (every rate is zero in this cell: no verified hit in any mode)",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      },
+      "zeroBaselineFeasibility": "projection-awaits-author-review",
+      "hits": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      }
+    },
+    {
+      "cell": "mega16",
+      "formalGate": "not-evaluable-pre-freeze",
+      "finding": "inconclusive (every rate is zero in this cell: no verified hit in any mode)",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      },
+      "zeroBaselineFeasibility": "projection-awaits-author-review",
+      "hits": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      }
+    },
+    {
+      "cell": "samurai",
+      "formalGate": "not-evaluable-pre-freeze",
+      "finding": "inconclusive (every rate is zero in this cell: no verified hit in any mode)",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      },
+      "zeroBaselineFeasibility": "projection-awaits-author-review",
+      "hits": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      }
+    }
+  ],
+  "anomalies": [],
+  "identity": {
+    "problems": [],
+    "manifestHashes": [
+      "e0815e48be61b3bc2eff6cc58a123cf6d6ea911122e8b38fbb837419f0375092"
+    ],
+    "runtimeFingerprints": [
+      "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a"
+    ],
+    "harnessFingerprints": [
+      "58c583c213f125117d72fa89db558c9ac887c43a95152c455d15b850a165ebdc"
+    ],
+    "budgetIdentity": {
+      "classic9": {
+        "vectors": 1,
+        "equalsFrozen": true
+      },
+      "mega12": {
+        "vectors": 1,
+        "equalsFrozen": true
+      },
+      "mega16": {
+        "vectors": 1,
+        "equalsFrozen": true
+      },
+      "samurai": {
+        "vectors": 1,
+        "equalsFrozen": true
+      }
+    }
+  },
+  "machine": {
+    "allocationMs": 2880000,
+    "chargedMs": 841285,
+    "remainingMs": 2038715,
+    "commands": 11,
+    "priorityWaitMs": 4811739,
+    "entries": [
+      {
+        "shard": "screen",
+        "attemptId": "a1",
+        "status": "paused-unstarted",
+        "occupiedMs": 88337,
+        "chargedMs": 133337,
+        "priorityWaitMs": 3025193,
+        "requestedAt": "2026-11-14T21:16:49.7581334Z",
+        "endedAt": "2026-11-14T22:08:43.2879638Z"
+      },
+      {
+        "shard": "screen",
+        "attemptId": "a2",
+        "status": "paused-unstarted",
+        "occupiedMs": 31138,
+        "chargedMs": 76138,
+        "priorityWaitMs": 947184,
+        "requestedAt": "2026-11-14T22:08:43.6641338Z",
+        "endedAt": "2026-11-14T22:25:01.9861137Z"
+      },
+      {
+        "shard": "screen",
+        "attemptId": "a3",
+        "status": "paused-unstarted",
+        "occupiedMs": 94800,
+        "chargedMs": 139800,
+        "priorityWaitMs": 150406,
+        "requestedAt": "2026-11-14T22:25:02.2385809Z",
+        "endedAt": "2026-11-14T22:29:07.4446476Z"
+      },
+      {
+        "shard": "screen",
+        "attemptId": "a4",
+        "status": "paused-unstarted",
+        "occupiedMs": 16009,
+        "chargedMs": 61009,
+        "priorityWaitMs": 216634,
+        "requestedAt": "2026-11-14T22:29:07.7216964Z",
+        "endedAt": "2026-11-14T22:33:00.364571Z"
+      },
+      {
+        "shard": "screen",
+        "attemptId": "a5",
+        "status": "paused-unstarted",
+        "occupiedMs": 18006,
+        "chargedMs": 63006,
+        "priorityWaitMs": 45102,
+        "requestedAt": "2026-11-14T22:33:00.6309055Z",
+        "endedAt": "2026-11-14T22:34:03.7393352Z"
+      },
+      {
+        "shard": "screen",
+        "attemptId": "a6",
+        "status": "paused-unstarted",
+        "occupiedMs": 20410,
+        "chargedMs": 65410,
+        "priorityWaitMs": 45133,
+        "requestedAt": "2026-11-14T22:34:04.0225064Z",
+        "endedAt": "2026-11-14T22:35:09.5655767Z"
+      },
+      {
+        "shard": "screen",
+        "attemptId": "a7",
+        "status": "paused-unstarted",
+        "occupiedMs": 12508,
+        "chargedMs": 57508,
+        "priorityWaitMs": 45106,
+        "requestedAt": "2026-11-14T22:35:09.8645398Z",
+        "endedAt": "2026-11-14T22:36:07.4787633Z"
+      },
+      {
+        "shard": "screen",
+        "attemptId": "a8",
+        "status": "paused-unstarted",
+        "occupiedMs": 11064,
+        "chargedMs": 56064,
+        "priorityWaitMs": 45117,
+        "requestedAt": "2026-11-14T22:36:07.7593254Z",
+        "endedAt": "2026-11-14T22:37:03.9403813Z"
+      },
+      {
+        "shard": "screen",
+        "attemptId": "a9",
+        "status": "paused-unstarted",
+        "occupiedMs": 24020,
+        "chargedMs": 69020,
+        "priorityWaitMs": 45110,
+        "requestedAt": "2026-11-14T22:37:04.2335199Z",
+        "endedAt": "2026-11-14T22:38:13.363911Z"
+      },
+      {
+        "shard": "screen",
+        "attemptId": "a10",
+        "status": "complete",
+        "occupiedMs": 14964,
+        "chargedMs": 59964,
+        "priorityWaitMs": 45110,
+        "requestedAt": "2026-11-14T22:38:13.6604245Z",
+        "endedAt": "2026-11-14T22:39:13.7342006Z"
+      },
+      {
+        "shard": "dev-check",
+        "attemptId": "a1",
+        "status": "dev-check-complete",
+        "occupiedMs": 15029,
+        "chargedMs": 60029,
+        "priorityWaitMs": 201644,
+        "requestedAt": "2026-11-14T21:11:03.5056858Z",
+        "endedAt": "2026-11-14T21:14:40.179195Z"
+      }
+    ],
+    "note": "charged = occupied wrapper time + the 45 s quiet-admission grace per command; the priority wait is not charged",
+    "approvedExtraMs": 0,
+    "approvals": [],
+    "effectiveCapMs": 2880000
+  },
+  "screenManifestHash": "dcc22501e45449c6cb45d024bff827fb0dac774a718eac96b0902eff100ed182",
+  "budgetHash": "f0a0c422032765250d4b8f5daa5f2cfb9c30dc8dcb7ebceab8036bd87a44c755",
+  "harness": {
+    "fingerprints": [
+      "58c583c213f125117d72fa89db558c9ac887c43a95152c455d15b850a165ebdc"
+    ],
+    "summaryWrittenBy": "f297ca310d948f88e14f659b5c293ab4e5f9340102dc8cbfd573c9b87365574d"
+  },
+  "files": [
+    "rates-r2.json",
+    "paired-intervals-r2.json",
+    "summary-r2.json",
+    "summary-r2.md"
+  ],
+  "closure": {
+    "revision": "r2",
+    "corrections": [
+      "Accounting: the wrapped dev-check (15.0 s occupied + 45 s grace = 60.0 s) is now recorded in ledger.json as an entry of shard dev-check; IG-S05 is charged 841.3 s of 2880.0 s over 11 wrapper commands (r1 showed 781.3 s over the 10 screen commands).",
+      "Setup-amortised sensitivity: r1 divided one grid cost by N per trial whatever the number of samples; r2 uses readyTotal - gridCost + m x gridCost / N per trial, m being the samples that started, so a one-sample early stop and a two-sample trial differ (corrected denominators below, r1's beside them). Every rate stays 0.",
+      "Intervals: every interval whose resamples are all identical (here the all-zero [0, 0] ones, with no hit in either arm) is labelled degenerate: not evidence of equivalence or non-inferiority. The numbers are r1's.",
+      "The interpretation above and the \"Separate problems\" table were added; the funnel now also counts empty frontiers.",
+      "The dev-check disclosure below was added; its observations stay excluded from every count, rate, interval and selection.",
+      "Verified unchanged from r1: every hit count, the primary, cold-inclusive and conditional rates, the outcome counts and the interval sums of all 32 cell-mode rows, the verdict, and the selection (the recomputed selection document has the hash of selection.json, 67420e102d8e…, which stands for IG-S06 with the budget hash f0a0c4220327…).",
+      "B03: the pack author reviewed the raw paired coverage and passed it."
+    ],
+    "interpretation": [
+      "No demonstrated exact-yield benefit on this pre-MS07 cohort: 0 verified exact hits in 256 grid trials (up to two samples each), the two native kinds included. This is not a finding that S1 must be dropped and it implies no S9 (bank) routing decision.",
+      "Three distinct problems are kept apart (the \"Separate problems\" table) and are not merged into one verdict: (a) empty frontiers: samples that finished phase A with no frontier entry because every refused group proved ambiguous; (b) shallow, above-band or below-band candidates among those that did reach the canonical rating; (c) searches cut by the count budget.",
+      "The native samples also had zero hits: 0 exact of 128 native samples (89 of them shallow, in band without needing the tier); the frontier variants had 0 verified hits.",
+      "These two-sample grid trials exclude whole-request recovery (up to 8, 4 or 2 attempts by board size, up to 12 samples per grid) and the local-search continuation (IG-S-Q05 records that the one historical mega16 hit came from local search): a zero here is not a request-level yield and says nothing about the frozen catalogue.",
+      "104 of the 104 paired intervals are degenerate (every resample identical, the all-zero [0, 0] ones): they are not evidence of equivalence or non-inferiority.",
+      "Two-grid budget fits are experimental limits, not tail guarantees; the screen is rerun on the frozen catalogue before any decision."
+    ],
+    "unchangedFromR1": {
+      "primaryRatesEqual": true,
+      "differing": [],
+      "verdictEqual": true,
+      "r1Verdict": "inconclusive (all verified-hit rates are zero in every cell): stop for review before IG-S06",
+      "r1Files": {
+        "rates": "d36180a5496ad167e99f108bd17d4b5e3374f6b49a213a47865b46c699997f0d",
+        "summary": "fb0764f8afae07c4adababc9efe3c712a00d2a943f55d4e01318ec0876fb01c1",
+        "selection": "67420e102d8ef863d79ce14c1f46c6d8cc478f21ebac7c51989701c1ce08777b"
+      },
+      "selection": {
+        "file": "selection.json",
+        "hash": "67420e102d8ef863d79ce14c1f46c6d8cc478f21ebac7c51989701c1ce08777b",
+        "recomputedEqual": true
+      }
+    },
+    "devChecks": [
+      {
+        "file": "dev-check-a1.json",
+        "sha256": "9ee89f6cde88f199b40655e55057204d5220c7ae80d5c904ab7381d9872ba26e",
+        "startedAt": "2026-11-14T21:14:25.237Z",
+        "endedAt": "2026-11-14T21:14:40.145Z",
+        "occupiedMs": 14955,
+        "harnessFingerprint": "6507cb5a07bb53b8f8b3e3dff490c14d14f6b9a2b421663c7af6d3276368d3de",
+        "manifestHash": "0970555a736e61b38b703b31e83e0dba1d902b50f592082398f1868aec1df369",
+        "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "catalogueFingerprint": "d035b740ff3ad78310773050a53f0633ca6ac4e4b38e68df173c19befef9fb3e",
+        "synthetic": "7/7",
+        "keys": 16,
+        "jobs": [
+          {
+            "key": "IG-S05/screen/classic9:nightmare:101/proposal-only",
+            "mode": "proposal-only",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/classic9:nightmare:101/ordinary-only",
+            "mode": "ordinary-only",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/classic9:nightmare:101/F1",
+            "mode": "F1",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/classic9:nightmare:101/FC",
+            "mode": "FC",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/classic9:nightmare:101/FM",
+            "mode": "FM",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/classic9:nightmare:101/FU",
+            "mode": "FU",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/classic9:nightmare:101/FS",
+            "mode": "FS",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/classic9:nightmare:101/F0",
+            "mode": "F0",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/mega12:nightmare:101/ordinary-only",
+            "mode": "ordinary-only",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/mega12:nightmare:101/F1",
+            "mode": "F1",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/samurai:nightmare:101/proposal-only",
+            "mode": "proposal-only",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/samurai:nightmare:101/F1",
+            "mode": "F1",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/samurai:nightmare:101/FC",
+            "mode": "FC",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/mega16:nightmare:101/proposal-only",
+            "mode": "proposal-only",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/mega16:nightmare:101/F1",
+            "mode": "F1",
+            "devOutcome": "complete",
+            "screenOutcome": "complete",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          },
+          {
+            "key": "IG-S05/screen/mega16:nightmare:101/FC",
+            "mode": "FC",
+            "devOutcome": "sample-budget",
+            "screenOutcome": "sample-budget",
+            "same": {
+              "gridHash": true,
+              "outcome": true,
+              "claimedExact": true,
+              "sampleClasses": true,
+              "budgetStops": true
+            },
+            "equal": true
+          }
+        ],
+        "identical": 16,
+        "different": 0,
+        "charge": {
+          "occupiedMs": 15029,
+          "chargedMs": 60029,
+          "shard": "dev-check",
+          "attemptId": "a1"
+        }
+      }
+    ],
+    "changedBefore": [
+      "plans/ig-s05.cjs: the admission-estimate rule, which only affects the physical packing (a frontier trial is estimated from the largest pilot figure of any frontier mode of its cell, with a floor of 8 s for mega12, mega16 and samurai and 1.5 s for classic9: the dev-check saw a mega16 FC trial at 3.8 s against a 0.7 s pilot). The manifest hash changed from 0970555a736e… to e0815e48be61…; no key, seed, order, budget vector, guard or generation setting changed.",
+      "ig05-aggregate.cjs: the estimates text of the screen manifest (documentation only). README.md (not part of the fingerprint).",
+      "Unchanged between the dev-check and the screen: screen.cjs, ig05-worker.cjs, ig05-run.cjs, ig05-stats.cjs, ig05-test.cjs, ig05-dev-check.cjs, worker.cjs, run.cjs and every IG-S01 to IG-S04 file; the screen manifest was saved after the dev-check and before the first screen command.",
+      "After the screen (this revision): ig05-stats.cjs, ig05-aggregate.cjs and ig05-test.cjs, reporting only; every screen command ran under harness 58c583c213f1…, this summary was written by f297ca310d94…."
+    ]
+  },
+  "interpretationNotes": [
+    "the intervals come from eight whole grid clusters per cell and are descriptive provisional ones with poor small-sample coverage, not lower-confidence guarantees",
+    "a per-sample rate is not extrapolated to an unqualified 90% request claim; two-grid budget fits are experimental limits, not tail guarantees",
+    "the zero-baseline feasibility threshold (the lower-bound rate projecting to half of the requests inside the budget at width 4) is projection-awaits-author-review, never evaluated here",
+    "F0/F1 is the isolated S2 comparison, FC/FM/F1 the floor choices, FU/F1 the uniqueness filter, FS/F1 the reference-parent choice; the gains are correlated and are not multiplied",
+    "the final phase A parent classification is a post-timing diagnostic: it never steers generation and never enters a hit count",
+    "unreached keys are unstarted/inconclusive: they are not zero-cost trials and not censored observations"
+  ],
+  "acceptance": [
+    {
+      "id": "B01",
+      "status": "met",
+      "evidence": "rates.json and paired-intervals.json: verified hits per ready CPU and wall second of every mode, the two native kinds included, with the paired difference of each frontier variant against each"
+    },
+    {
+      "id": "B02",
+      "status": "met",
+      "evidence": "zero-hit rates are shown with their trial counts, the budget-ended share and the unstarted keys; a hit counts once per grid trial; censored and budget-ended trials stay in the denominators (256 of 256 keys started)"
+    },
+    {
+      "id": "B03",
+      "status": "met",
+      "evidence": "selection.json (r1, unchanged, hash recomputed equal) is a labelled diagnostic written before the held-out cohort: F1 as an explicitly non-winning default in every cell; the pack author reviewed the raw paired coverage and passed it (closure of 2026-11-15)"
+    },
+    {
+      "id": "T01",
+      "status": "met",
+      "evidence": "every started trial lists the state of ordinals 1 and 2 (returned, sample-budget, skipped-first-exact, censored, not-reached); unstarted keys are listed as unstarted (0)"
+    },
+    {
+      "id": "T02",
+      "status": "met",
+      "evidence": "one grid per mode built afresh; the grid hashes of the modes of a cluster are equal (0 clusters differ); the forks are model, grid#1, dig#1.1, dig#1.2"
+    },
+    {
+      "id": "T03",
+      "status": "met",
+      "evidence": "the frozen IG-S04 budget vector of each cell is used by every frontier arm of that cell (hash classic9 equal, mega12 equal, mega16 equal, samurai equal)"
+    },
+    {
+      "id": "T04",
+      "status": "met",
+      "evidence": "whole grid clusters are resampled together (2,000 draws, seed 20261114); zero hits give a zero lower bound; no pseudo-count"
+    },
+    {
+      "id": "T05",
+      "status": "met",
+      "evidence": "0 false exact flags, 0 error records; every numerator is a claimed AND independently verified exact return; the denominator is all engine-ready-to-cleanup CPU/wall of the started trials"
+    }
+  ],
+  "hash": "b719adebdfa267dbf8c7516e7142bfa53ce2602271036e867a32794a42784916"
+}

@@ -1,0 +1,6117 @@
+{
+  "schema": "ig-s05-rates/1",
+  "task": "IG-S05",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "provisional (pre-freeze): eight grid clusters per cell, at most two native-fork samples per grid; descriptive rates and intervals only; no S1 allowlisting, no bank decision, no formal gate (not-evaluable-pre-freeze)",
+  "cpuQuantumMs": 16,
+  "definition": "verified delivered grid hits divided by all engine-ready-to-cleanup generation CPU (wall) of the started trials of that mode; grid build and cleanup included; the cold start is reported apart",
+  "coverage": [
+    {
+      "cell": "classic9",
+      "mode": "proposal-only",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "classic9",
+      "mode": "ordinary-only",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "classic9",
+      "mode": "F0",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "classic9",
+      "mode": "F1",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "classic9",
+      "mode": "FC",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "classic9",
+      "mode": "FM",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "classic9",
+      "mode": "FU",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "classic9",
+      "mode": "FS",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega12",
+      "mode": "proposal-only",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega12",
+      "mode": "ordinary-only",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega12",
+      "mode": "F0",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega12",
+      "mode": "F1",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega12",
+      "mode": "FC",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega12",
+      "mode": "FM",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega12",
+      "mode": "FU",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega12",
+      "mode": "FS",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega16",
+      "mode": "proposal-only",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega16",
+      "mode": "ordinary-only",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega16",
+      "mode": "F0",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 6,
+      "censored": 0,
+      "budgetEnded": 2,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 14,
+        "sample-budget": 2,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega16",
+      "mode": "F1",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 6,
+      "censored": 0,
+      "budgetEnded": 2,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 14,
+        "sample-budget": 2,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega16",
+      "mode": "FC",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 6,
+      "censored": 0,
+      "budgetEnded": 2,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 14,
+        "sample-budget": 2,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega16",
+      "mode": "FM",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 6,
+      "censored": 0,
+      "budgetEnded": 2,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 14,
+        "sample-budget": 2,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega16",
+      "mode": "FU",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 6,
+      "censored": 0,
+      "budgetEnded": 2,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 14,
+        "sample-budget": 2,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "mega16",
+      "mode": "FS",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 6,
+      "censored": 0,
+      "budgetEnded": 2,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 14,
+        "sample-budget": 2,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "samurai",
+      "mode": "proposal-only",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "samurai",
+      "mode": "ordinary-only",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "samurai",
+      "mode": "F0",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "samurai",
+      "mode": "F1",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "samurai",
+      "mode": "FC",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "samurai",
+      "mode": "FM",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 7,
+      "censored": 0,
+      "budgetEnded": 1,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 15,
+        "sample-budget": 1,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "samurai",
+      "mode": "FU",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    },
+    {
+      "cell": "samurai",
+      "mode": "FS",
+      "planned": 8,
+      "rows": 8,
+      "started": 8,
+      "complete": 8,
+      "censored": 0,
+      "budgetEnded": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "sampleOrdinals": {
+        "returned": 16,
+        "sample-budget": 0,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "complete8": true
+    }
+  ],
+  "cells": {
+    "classic9": {
+      "modes": {
+        "proposal-only": {
+          "mode": "proposal-only",
+          "kind": "native",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 658,
+            "wallMs": 295.65,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 1313,
+            "wallMs": 1033.94
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 655,
+            "startupWallMs": 738.29,
+            "gridBuildCpuMs": 64,
+            "gridBuildWallMs": 73.969,
+            "samplesCpuMs": 578,
+            "samplesWallMs": 194.837,
+            "cleanupCpuMs": 0,
+            "cleanupWallMs": 16.212
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 12.18,
+            "meanSampleCpuMs": 36.13,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": null,
+              "floorDeductions": null,
+              "solverChecks": 3210,
+              "dfsEntries": 29.8,
+              "dfsChecks": 13.8,
+              "canonicalRatings": 1,
+              "phaseBSolves": null,
+              "deepenProposals": null
+            }
+          },
+          "funnel": null,
+          "native": {
+            "samples": 16,
+            "class": {
+              "exact": 0,
+              "shallow": 2,
+              "below": 14,
+              "above": 0,
+              "unrated": 0
+            },
+            "groupsTried": 1097,
+            "accepted": 427,
+            "rejected": 229,
+            "skipped": 290,
+            "oracleCalls": 2070,
+            "canonicalRatings": 16,
+            "proposals": 0,
+            "keeperHeld": 16,
+            "keptReturned": 0
+          },
+          "parents": null
+        },
+        "ordinary-only": {
+          "mode": "ordinary-only",
+          "kind": "native",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2062,
+            "wallMs": 1006.251,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2842,
+            "wallMs": 1733.403
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 780,
+            "startupWallMs": 727.152,
+            "gridBuildCpuMs": 127,
+            "gridBuildWallMs": 73.585,
+            "samplesCpuMs": 1857,
+            "samplesWallMs": 904.568,
+            "cleanupCpuMs": 32,
+            "cleanupWallMs": 18.399
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 56.54,
+            "meanSampleCpuMs": 116.06,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": null,
+              "floorDeductions": null,
+              "solverChecks": 31303,
+              "dfsEntries": 1.7,
+              "dfsChecks": 0.7,
+              "canonicalRatings": 1,
+              "phaseBSolves": null,
+              "deepenProposals": null
+            }
+          },
+          "funnel": null,
+          "native": {
+            "samples": 16,
+            "class": {
+              "exact": 0,
+              "shallow": 2,
+              "below": 14,
+              "above": 0,
+              "unrated": 0
+            },
+            "groupsTried": 1097,
+            "accepted": 427,
+            "rejected": 229,
+            "skipped": 290,
+            "oracleCalls": 1097,
+            "canonicalRatings": 16,
+            "proposals": 0,
+            "keeperHeld": 0,
+            "keptReturned": 0
+          },
+          "parents": null
+        },
+        "F0": {
+          "mode": "F0",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 562,
+            "wallMs": 266.387,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 1297,
+            "wallMs": 1002.235
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 735,
+            "startupWallMs": 735.847,
+            "gridBuildCpuMs": 80,
+            "gridBuildWallMs": 72.894,
+            "samplesCpuMs": 435,
+            "samplesWallMs": 161.91,
+            "cleanupCpuMs": 16,
+            "cleanupWallMs": 22.79
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 10.12,
+            "meanSampleCpuMs": 27.19,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 41,
+              "floorDeductions": 1119.9,
+              "solverChecks": 4900,
+              "dfsEntries": 81.3,
+              "dfsChecks": 52.6,
+              "canonicalRatings": 1,
+              "phaseBSolves": 0,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 656,
+            "acceptedByFullProof": 427,
+            "acceptedByRederivation": 0,
+            "refusedStuckUnique": 0,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 229,
+            "floorSkipped": 458,
+            "entriesAtEnd": 0,
+            "phaseBTries": 0,
+            "proofUnique": 0,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 0,
+            "allowedSolved": 0,
+            "canonicalRated": 0,
+            "canonicalComplete": 0,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 0,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 0,
+              "fallback": 16,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.61140000000023,
+              "phaseA": 131.24999999998954,
+              "phaseB": 0,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 0,
+              "floor": 78393,
+              "dfs": 0
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 1300
+            },
+            "purposeSolves": {
+              "canonical": 16,
+              "floor": 656,
+              "dfs": 0
+            },
+            "logicalChecks": 78393,
+            "dfsEntries": 1300,
+            "dfsChecks": 842,
+            "shares": {
+              "wall": {
+                "init": 0.07480117917912128,
+                "phaseA": 0.9251988208208787,
+                "phaseB": 0,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0,
+                "floor": 1,
+                "dfs": 0
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "F1": {
+          "mode": "F1",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 622,
+            "wallMs": 292.054,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 1339,
+            "wallMs": 1035.72
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 717,
+            "startupWallMs": 743.666,
+            "gridBuildCpuMs": 78,
+            "gridBuildWallMs": 78.757,
+            "samplesCpuMs": 464,
+            "samplesWallMs": 180.493,
+            "cleanupCpuMs": 48,
+            "cleanupWallMs": 23.375
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 11.28,
+            "meanSampleCpuMs": 29,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 41,
+              "floorDeductions": 914.8,
+              "solverChecks": 4695,
+              "dfsEntries": 81.3,
+              "dfsChecks": 52.6,
+              "canonicalRatings": 1,
+              "phaseBSolves": 0,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 656,
+            "acceptedByFullProof": 65,
+            "acceptedByRederivation": 362,
+            "refusedStuckUnique": 0,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 229,
+            "floorSkipped": 458,
+            "entriesAtEnd": 0,
+            "phaseBTries": 0,
+            "proofUnique": 0,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 0,
+            "allowedSolved": 0,
+            "canonicalRated": 0,
+            "canonicalComplete": 0,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 0,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 0,
+              "fallback": 16,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 12.05770000000257,
+              "phaseA": 145.6578000000036,
+              "phaseB": 0,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 0,
+              "floor": 75112,
+              "dfs": 0
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 1300
+            },
+            "purposeSolves": {
+              "canonical": 16,
+              "floor": 656,
+              "dfs": 0
+            },
+            "logicalChecks": 75112,
+            "dfsEntries": 1300,
+            "dfsChecks": 842,
+            "shares": {
+              "wall": {
+                "init": 0.076452219344339,
+                "phaseA": 0.923547780655661,
+                "phaseB": 0,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0,
+                "floor": 1,
+                "dfs": 0
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FC": {
+          "mode": "FC",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 499,
+            "wallMs": 260.961,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 1188,
+            "wallMs": 976.785
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 689,
+            "startupWallMs": 715.824,
+            "gridBuildCpuMs": 62,
+            "gridBuildWallMs": 72.656,
+            "samplesCpuMs": 391,
+            "samplesWallMs": 159.982,
+            "cleanupCpuMs": 46,
+            "cleanupWallMs": 20.131
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 10,
+            "meanSampleCpuMs": 24.44,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 41,
+              "floorDeductions": 914.8,
+              "solverChecks": 4695,
+              "dfsEntries": 81.3,
+              "dfsChecks": 52.6,
+              "canonicalRatings": 1,
+              "phaseBSolves": 0,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 656,
+            "acceptedByFullProof": 65,
+            "acceptedByRederivation": 362,
+            "refusedStuckUnique": 0,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 229,
+            "floorSkipped": 0,
+            "entriesAtEnd": 0,
+            "phaseBTries": 0,
+            "proofUnique": 0,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 0,
+            "allowedSolved": 0,
+            "canonicalRated": 0,
+            "canonicalComplete": 0,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 0,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 0,
+              "fallback": 16,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.563399999986359,
+              "phaseA": 130.29210000000512,
+              "phaseB": 0,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 0,
+              "floor": 75112,
+              "dfs": 0
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 1300
+            },
+            "purposeSolves": {
+              "canonical": 16,
+              "floor": 656,
+              "dfs": 0
+            },
+            "logicalChecks": 75112,
+            "dfsEntries": 1300,
+            "dfsChecks": 842,
+            "shares": {
+              "wall": {
+                "init": 0.07499458665076619,
+                "phaseA": 0.9250054133492338,
+                "phaseB": 0,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0,
+                "floor": 1,
+                "dfs": 0
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FM": {
+          "mode": "FM",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 875,
+            "wallMs": 317.481,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 1565,
+            "wallMs": 1031.25
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 690,
+            "startupWallMs": 713.77,
+            "gridBuildCpuMs": 79,
+            "gridBuildWallMs": 69.843,
+            "samplesCpuMs": 734,
+            "samplesWallMs": 219.066,
+            "cleanupCpuMs": 47,
+            "cleanupWallMs": 20.474
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 13.69,
+            "meanSampleCpuMs": 45.88,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 41,
+              "floorDeductions": 924.6,
+              "solverChecks": 6181,
+              "dfsEntries": 81.3,
+              "dfsChecks": 52.6,
+              "canonicalRatings": 1,
+              "phaseBSolves": 0,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 656,
+            "acceptedByFullProof": 65,
+            "acceptedByRederivation": 362,
+            "refusedStuckUnique": 0,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 229,
+            "floorSkipped": 0,
+            "entriesAtEnd": 0,
+            "phaseBTries": 0,
+            "proofUnique": 0,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 0,
+            "allowedSolved": 0,
+            "canonicalRated": 0,
+            "canonicalComplete": 0,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 0,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 0,
+              "fallback": 16,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.453099999979713,
+              "phaseA": 189.3172999999997,
+              "phaseB": 0,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 0,
+              "floor": 98895,
+              "dfs": 0
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 1300
+            },
+            "purposeSolves": {
+              "canonical": 16,
+              "floor": 656,
+              "dfs": 0
+            },
+            "logicalChecks": 98895,
+            "dfsEntries": 1300,
+            "dfsChecks": 842,
+            "shares": {
+              "wall": {
+                "init": 0.05232556975398152,
+                "phaseA": 0.9476744302460185,
+                "phaseB": 0,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0,
+                "floor": 1,
+                "dfs": 0
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FU": {
+          "mode": "FU",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 671,
+            "wallMs": 274.752,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 1360,
+            "wallMs": 1005.659
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 689,
+            "startupWallMs": 730.907,
+            "gridBuildCpuMs": 47,
+            "gridBuildWallMs": 74.831,
+            "samplesCpuMs": 436,
+            "samplesWallMs": 167.612,
+            "cleanupCpuMs": 125,
+            "cleanupWallMs": 23.105
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 10.48,
+            "meanSampleCpuMs": 27.25,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 41,
+              "floorDeductions": 914.8,
+              "solverChecks": 4695,
+              "dfsEntries": 81.3,
+              "dfsChecks": 52.6,
+              "canonicalRatings": 1,
+              "phaseBSolves": 0,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 656,
+            "acceptedByFullProof": 65,
+            "acceptedByRederivation": 362,
+            "refusedStuckUnique": 0,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 229,
+            "floorSkipped": 458,
+            "entriesAtEnd": 0,
+            "phaseBTries": 0,
+            "proofUnique": 0,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 0,
+            "allowedSolved": 0,
+            "canonicalRated": 0,
+            "canonicalComplete": 0,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 0,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 0,
+              "fallback": 16,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.649600000000646,
+              "phaseA": 136.4027999999962,
+              "phaseB": 0,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 0,
+              "floor": 75112,
+              "dfs": 0
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 1300
+            },
+            "purposeSolves": {
+              "canonical": 16,
+              "floor": 656,
+              "dfs": 0
+            },
+            "logicalChecks": 75112,
+            "dfsEntries": 1300,
+            "dfsChecks": 842,
+            "shares": {
+              "wall": {
+                "init": 0.07242044332497038,
+                "phaseA": 0.9275795566750297,
+                "phaseB": 0,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0,
+                "floor": 1,
+                "dfs": 0
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FS": {
+          "mode": "FS",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 624,
+            "wallMs": 263.576,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 1327,
+            "wallMs": 1004.458
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 703,
+            "startupWallMs": 740.882,
+            "gridBuildCpuMs": 76,
+            "gridBuildWallMs": 73.936,
+            "samplesCpuMs": 345,
+            "samplesWallMs": 161.994,
+            "cleanupCpuMs": 63,
+            "cleanupWallMs": 19.175
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 10.12,
+            "meanSampleCpuMs": 21.56,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 41,
+              "floorDeductions": 914.8,
+              "solverChecks": 4695,
+              "dfsEntries": 81.3,
+              "dfsChecks": 52.6,
+              "canonicalRatings": 1,
+              "phaseBSolves": 0,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 656,
+            "acceptedByFullProof": 65,
+            "acceptedByRederivation": 362,
+            "refusedStuckUnique": 0,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 229,
+            "floorSkipped": 458,
+            "entriesAtEnd": 0,
+            "phaseBTries": 0,
+            "proofUnique": 0,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 0,
+            "allowedSolved": 0,
+            "canonicalRated": 0,
+            "canonicalComplete": 0,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 0,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 0,
+              "fallback": 16,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.714800000007926,
+              "phaseA": 131.36179999998967,
+              "phaseB": 0,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 0,
+              "floor": 75112,
+              "dfs": 0
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 1300
+            },
+            "purposeSolves": {
+              "canonical": 16,
+              "floor": 656,
+              "dfs": 0
+            },
+            "logicalChecks": 75112,
+            "dfsEntries": 1300,
+            "dfsChecks": 842,
+            "shares": {
+              "wall": {
+                "init": 0.07541565606164638,
+                "phaseA": 0.9245843439383536,
+                "phaseB": 0,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0,
+                "floor": 1,
+                "dfs": 0
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        }
+      }
+    },
+    "mega12": {
+      "modes": {
+        "proposal-only": {
+          "mode": "proposal-only",
+          "kind": "native",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2658,
+            "wallMs": 1145.573,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 3358,
+            "wallMs": 1865.725
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 700,
+            "startupWallMs": 720.152,
+            "gridBuildCpuMs": 79,
+            "gridBuildWallMs": 84.127,
+            "samplesCpuMs": 2471,
+            "samplesWallMs": 1015.697,
+            "cleanupCpuMs": 62,
+            "cleanupWallMs": 34.799
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 63.48,
+            "meanSampleCpuMs": 154.44,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": null,
+              "floorDeductions": null,
+              "solverChecks": 42396,
+              "dfsEntries": 179.5,
+              "dfsChecks": 150.8,
+              "canonicalRatings": 2.69,
+              "phaseBSolves": null,
+              "deepenProposals": null
+            }
+          },
+          "funnel": null,
+          "native": {
+            "samples": 16,
+            "class": {
+              "exact": 0,
+              "shallow": 16,
+              "below": 0,
+              "above": 0,
+              "unrated": 0
+            },
+            "groupsTried": 2051,
+            "accepted": 725,
+            "rejected": 427,
+            "skipped": 517,
+            "oracleCalls": 3867,
+            "canonicalRatings": 43,
+            "proposals": 0,
+            "keeperHeld": 16,
+            "keptReturned": 0
+          },
+          "parents": null
+        },
+        "ordinary-only": {
+          "mode": "ordinary-only",
+          "kind": "native",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 12363,
+            "wallMs": 10062.548,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 13049,
+            "wallMs": 10788.133
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 686,
+            "startupWallMs": 725.584,
+            "gridBuildCpuMs": 79,
+            "gridBuildWallMs": 85.937,
+            "samplesCpuMs": 12174,
+            "samplesWallMs": 9921.351,
+            "cleanupCpuMs": 47,
+            "cleanupWallMs": 43.507
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 620.08,
+            "meanSampleCpuMs": 760.88,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": null,
+              "floorDeductions": null,
+              "solverChecks": 342289,
+              "dfsEntries": 9.1,
+              "dfsChecks": 8.1,
+              "canonicalRatings": 1,
+              "phaseBSolves": null,
+              "deepenProposals": null
+            }
+          },
+          "funnel": null,
+          "native": {
+            "samples": 16,
+            "class": {
+              "exact": 0,
+              "shallow": 14,
+              "below": 2,
+              "above": 0,
+              "unrated": 0
+            },
+            "groupsTried": 2002,
+            "accepted": 714,
+            "rejected": 438,
+            "skipped": 517,
+            "oracleCalls": 2002,
+            "canonicalRatings": 16,
+            "proposals": 0,
+            "keeperHeld": 0,
+            "keptReturned": 0
+          },
+          "parents": null
+        },
+        "F0": {
+          "mode": "F0",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 1972,
+            "wallMs": 900.294,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2719,
+            "wallMs": 1637.41
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 747,
+            "startupWallMs": 737.116,
+            "gridBuildCpuMs": 95,
+            "gridBuildWallMs": 87.18,
+            "samplesCpuMs": 1846,
+            "samplesWallMs": 783.156,
+            "cleanupCpuMs": 15,
+            "cleanupWallMs": 19.678
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 48.95,
+            "meanSampleCpuMs": 115.38,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 74.75,
+              "floorDeductions": 3297.4,
+              "solverChecks": 32125,
+              "dfsEntries": 340.3,
+              "dfsChecks": 285.6,
+              "canonicalRatings": 1.44,
+              "phaseBSolves": 0.44,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 1196,
+            "acceptedByFullProof": 736,
+            "acceptedByRederivation": 0,
+            "refusedStuckUnique": 51,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 409,
+            "floorSkipped": 797,
+            "entriesAtEnd": 7,
+            "phaseBTries": 7,
+            "proofUnique": 7,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 7,
+            "allowedSolved": 7,
+            "canonicalRated": 7,
+            "canonicalComplete": 7,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 7,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 4,
+              "fallback": 12,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 11.747000000005755,
+              "phaseA": 446.82299999999213,
+              "phaseB": 300.6715000000049,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 106570,
+              "floor": 300867,
+              "dfs": 0,
+              "allowed": 106570
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 5445,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 23,
+              "floor": 1196,
+              "dfs": 0,
+              "allowed": 7
+            },
+            "logicalChecks": 514007,
+            "dfsEntries": 5445,
+            "dfsChecks": 4569,
+            "shares": {
+              "wall": {
+                "init": 0.015472020430924431,
+                "phaseA": 0.5885123508132662,
+                "phaseB": 0.3960156287558093,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.20733180676527752,
+                "floor": 0.585336386469445,
+                "dfs": 0,
+                "allowed": 0.20733180676527752
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 3,
+              "below": 12,
+              "above": 1,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 3,
+              "below": 12,
+              "above": 1,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "F1": {
+          "mode": "F1",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2248,
+            "wallMs": 888.09,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2920,
+            "wallMs": 1618.771
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 672,
+            "startupWallMs": 730.681,
+            "gridBuildCpuMs": 109,
+            "gridBuildWallMs": 86.225,
+            "samplesCpuMs": 2062,
+            "samplesWallMs": 774.038,
+            "cleanupCpuMs": 31,
+            "cleanupWallMs": 18.193
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 48.38,
+            "meanSampleCpuMs": 128.88,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 74.75,
+              "floorDeductions": 2651.8,
+              "solverChecks": 31453,
+              "dfsEntries": 340.3,
+              "dfsChecks": 285.6,
+              "canonicalRatings": 1.44,
+              "phaseBSolves": 0.44,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 1196,
+            "acceptedByFullProof": 74,
+            "acceptedByRederivation": 662,
+            "refusedStuckUnique": 51,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 409,
+            "floorSkipped": 797,
+            "entriesAtEnd": 7,
+            "phaseBTries": 7,
+            "proofUnique": 7,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 7,
+            "allowedSolved": 7,
+            "canonicalRated": 7,
+            "canonicalComplete": 7,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 7,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 4,
+              "fallback": 12,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 11.900899999999638,
+              "phaseA": 435.43889999999465,
+              "phaseB": 301.80359999999837,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 106570,
+              "floor": 290106,
+              "dfs": 0,
+              "allowed": 106570
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 5445,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 23,
+              "floor": 1196,
+              "dfs": 0,
+              "allowed": 7
+            },
+            "logicalChecks": 503246,
+            "dfsEntries": 5445,
+            "dfsChecks": 4569,
+            "shares": {
+              "wall": {
+                "init": 0.01588601060891647,
+                "phaseA": 0.5812490639308828,
+                "phaseB": 0.4028649254602007,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.21176522019052313,
+                "floor": 0.5764695596189537,
+                "dfs": 0,
+                "allowed": 0.21176522019052313
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 3,
+              "below": 12,
+              "above": 1,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 3,
+              "below": 12,
+              "above": 1,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FC": {
+          "mode": "FC",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 7342,
+            "wallMs": 5816.906,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 8062,
+            "wallMs": 6557.496
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 720,
+            "startupWallMs": 740.59,
+            "gridBuildCpuMs": 154,
+            "gridBuildWallMs": 88.286,
+            "samplesCpuMs": 7109,
+            "samplesWallMs": 5699.253,
+            "cleanupCpuMs": 16,
+            "cleanupWallMs": 19.555
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 356.2,
+            "meanSampleCpuMs": 444.31,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 72,
+              "floorDeductions": 2556.5,
+              "solverChecks": 111492,
+              "dfsEntries": 320.3,
+              "dfsChecks": 266.8,
+              "canonicalRatings": 2,
+              "phaseBSolves": 1,
+              "deepenProposals": 1
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 1152,
+            "acceptedByFullProof": 74,
+            "acceptedByRederivation": 657,
+            "refusedStuckUnique": 30,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 391,
+            "floorSkipped": 0,
+            "entriesAtEnd": 30,
+            "phaseBTries": 30,
+            "proofUnique": 16,
+            "proofAmbiguousAtReference": 14,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 16,
+            "allowedSolved": 16,
+            "canonicalRated": 16,
+            "canonicalComplete": 16,
+            "candidateExact": 0,
+            "candidateShallow": 5,
+            "candidateBelow": 1,
+            "candidateAbove": 10,
+            "deepenRuns": 1,
+            "deepenProposals": 16,
+            "deepenCommitted": 0,
+            "deepenRefused": 16,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 3,
+              "below": 0,
+              "above": 6,
+              "fallback": 7,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 11.676799999998707,
+              "phaseA": 282.2750000000011,
+              "phaseB": 552.9834000000016,
+              "deepen": 4828.8503
+            },
+            "purposeChecks": {
+              "canonical": 171563,
+              "floor": 200088,
+              "dfs": 0,
+              "allowed": 171563,
+              "deepen": 1240657
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 5124,
+              "allowed": 0,
+              "deepen": 0
+            },
+            "purposeSolves": {
+              "canonical": 32,
+              "floor": 1152,
+              "dfs": 0,
+              "allowed": 16,
+              "deepen": 16
+            },
+            "logicalChecks": 1783871,
+            "dfsEntries": 5124,
+            "dfsChecks": 4268,
+            "shares": {
+              "wall": {
+                "init": 0.0020573011436035953,
+                "phaseA": 0.049733204329163075,
+                "phaseB": 0.09742852332950239,
+                "deepen": 0.8507809711977309
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.09617455522288326,
+                "floor": 0.11216506126283796,
+                "dfs": 0,
+                "allowed": 0.09617455522288326,
+                "deepen": 0.6954858282913955
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0,
+                "deepen": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FM": {
+          "mode": "FM",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2173,
+            "wallMs": 948.105,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2955,
+            "wallMs": 1678.124
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 782,
+            "startupWallMs": 730.019,
+            "gridBuildCpuMs": 142,
+            "gridBuildWallMs": 85.416,
+            "samplesCpuMs": 1969,
+            "samplesWallMs": 833.132,
+            "cleanupCpuMs": 31,
+            "cleanupWallMs": 19.622
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 52.07,
+            "meanSampleCpuMs": 123.06,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 72,
+              "floorDeductions": 2537.7,
+              "solverChecks": 34024,
+              "dfsEntries": 340.7,
+              "dfsChecks": 287.6,
+              "canonicalRatings": 1.81,
+              "phaseBSolves": 0.81,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 1152,
+            "acceptedByFullProof": 74,
+            "acceptedByRederivation": 658,
+            "refusedStuckUnique": 23,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 397,
+            "floorSkipped": 0,
+            "entriesAtEnd": 23,
+            "phaseBTries": 23,
+            "proofUnique": 13,
+            "proofAmbiguousAtReference": 10,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 13,
+            "allowedSolved": 13,
+            "canonicalRated": 13,
+            "canonicalComplete": 13,
+            "candidateExact": 0,
+            "candidateShallow": 7,
+            "candidateBelow": 0,
+            "candidateAbove": 6,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 3,
+              "below": 0,
+              "above": 4,
+              "fallback": 9,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 11.538999999995667,
+              "phaseA": 396.05919999999537,
+              "phaseB": 401.8473000000006,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 139061,
+              "floor": 266265,
+              "dfs": 0,
+              "allowed": 139061
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 5451,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 29,
+              "floor": 1152,
+              "dfs": 0,
+              "allowed": 13
+            },
+            "logicalChecks": 544387,
+            "dfsEntries": 5451,
+            "dfsChecks": 4601,
+            "shares": {
+              "wall": {
+                "init": 0.014255437827495226,
+                "phaseA": 0.4892969322826546,
+                "phaseB": 0.4964476298898502,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.2554451153315564,
+                "floor": 0.48910976933688716,
+                "dfs": 0,
+                "allowed": 0.2554451153315564
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 16,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FU": {
+          "mode": "FU",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2003,
+            "wallMs": 944.974,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2672,
+            "wallMs": 1676.47
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 669,
+            "startupWallMs": 731.496,
+            "gridBuildCpuMs": 64,
+            "gridBuildWallMs": 88.185,
+            "samplesCpuMs": 1812,
+            "samplesWallMs": 827.417,
+            "cleanupCpuMs": 48,
+            "cleanupWallMs": 19.047
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 51.71,
+            "meanSampleCpuMs": 113.25,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 74.75,
+              "floorDeductions": 2665.6,
+              "solverChecks": 33614,
+              "dfsEntries": 340.3,
+              "dfsChecks": 285.6,
+              "canonicalRatings": 1.44,
+              "phaseBSolves": 0.44,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 1196,
+            "acceptedByFullProof": 74,
+            "acceptedByRederivation": 662,
+            "refusedStuckUnique": 51,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 409,
+            "floorSkipped": 797,
+            "entriesAtEnd": 7,
+            "phaseBTries": 7,
+            "proofUnique": 7,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 7,
+            "allowedSolved": 7,
+            "canonicalRated": 7,
+            "canonicalComplete": 7,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 7,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 4,
+              "fallback": 12,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 12.343399999998837,
+              "phaseA": 437.7696000000012,
+              "phaseB": 352.9531999999997,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 106570,
+              "floor": 290106,
+              "dfs": 0,
+              "fu": 34582,
+              "allowed": 106570
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 5445,
+              "fu": 0,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 23,
+              "floor": 1196,
+              "dfs": 0,
+              "fu": 7,
+              "allowed": 7
+            },
+            "logicalChecks": 537828,
+            "dfsEntries": 5445,
+            "dfsChecks": 4569,
+            "shares": {
+              "wall": {
+                "init": 0.015370339331924119,
+                "phaseA": 0.5451226810442295,
+                "phaseB": 0.43950697962384644,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.19814885056188966,
+                "floor": 0.5394029317923202,
+                "dfs": 0,
+                "fu": 0.06429936708390042,
+                "allowed": 0.19814885056188966
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "fu": 0,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 3,
+              "below": 12,
+              "above": 1,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 3,
+              "below": 12,
+              "above": 1,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FS": {
+          "mode": "FS",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 2297,
+            "wallMs": 930.917,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 3109,
+            "wallMs": 1666.69
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 812,
+            "startupWallMs": 735.773,
+            "gridBuildCpuMs": 157,
+            "gridBuildWallMs": 88.255,
+            "samplesCpuMs": 2125,
+            "samplesWallMs": 814.873,
+            "cleanupCpuMs": 15,
+            "cleanupWallMs": 17.88
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 50.93,
+            "meanSampleCpuMs": 132.81,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 74.75,
+              "floorDeductions": 2651.8,
+              "solverChecks": 31453,
+              "dfsEntries": 340.3,
+              "dfsChecks": 285.6,
+              "canonicalRatings": 1.44,
+              "phaseBSolves": 0.44,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 1196,
+            "acceptedByFullProof": 74,
+            "acceptedByRederivation": 662,
+            "refusedStuckUnique": 51,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 409,
+            "floorSkipped": 797,
+            "entriesAtEnd": 7,
+            "phaseBTries": 7,
+            "proofUnique": 7,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 7,
+            "allowedSolved": 7,
+            "canonicalRated": 7,
+            "canonicalComplete": 7,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 7,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 4,
+              "fallback": 12,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 11.964700000001585,
+              "phaseA": 468.2301999999961,
+              "phaseB": 309.89650000000097,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 106570,
+              "floor": 290106,
+              "dfs": 0,
+              "allowed": 106570
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 5445,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 23,
+              "floor": 1196,
+              "dfs": 0,
+              "allowed": 7
+            },
+            "logicalChecks": 503246,
+            "dfsEntries": 5445,
+            "dfsChecks": 4569,
+            "shares": {
+              "wall": {
+                "init": 0.01514343783516895,
+                "phaseA": 0.5926278908997071,
+                "phaseB": 0.3922286712651239,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.21176522019052313,
+                "floor": 0.5764695596189537,
+                "dfs": 0,
+                "allowed": 0.21176522019052313
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 3,
+              "below": 12,
+              "above": 1,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 3,
+              "below": 12,
+              "above": 1,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        }
+      }
+    },
+    "mega16": {
+      "modes": {
+        "proposal-only": {
+          "mode": "proposal-only",
+          "kind": "native",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 11231,
+            "wallMs": 8497.15,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 11937,
+            "wallMs": 9231.036
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 706,
+            "startupWallMs": 733.886,
+            "gridBuildCpuMs": 186,
+            "gridBuildWallMs": 110.189,
+            "samplesCpuMs": 10781,
+            "samplesWallMs": 8330.197,
+            "cleanupCpuMs": 264,
+            "cleanupWallMs": 45.047
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 520.64,
+            "meanSampleCpuMs": 673.81,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": null,
+              "floorDeductions": null,
+              "solverChecks": 209672,
+              "dfsEntries": 14334.2,
+              "dfsChecks": 14279.4,
+              "canonicalRatings": 5.75,
+              "phaseBSolves": null,
+              "deepenProposals": null
+            }
+          },
+          "funnel": null,
+          "native": {
+            "samples": 16,
+            "class": {
+              "exact": 0,
+              "shallow": 16,
+              "below": 0,
+              "above": 0,
+              "unrated": 0
+            },
+            "groupsTried": 2472,
+            "accepted": 1221,
+            "rejected": 827,
+            "skipped": 890,
+            "oracleCalls": 4401,
+            "canonicalRatings": 92,
+            "proposals": 0,
+            "keeperHeld": 16,
+            "keptReturned": 0
+          },
+          "parents": null
+        },
+        "ordinary-only": {
+          "mode": "ordinary-only",
+          "kind": "native",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 125764,
+            "wallMs": 123583.708,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 126469,
+            "wallMs": 124330.647
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 705,
+            "startupWallMs": 746.939,
+            "gridBuildCpuMs": 169,
+            "gridBuildWallMs": 114.021,
+            "samplesCpuMs": 125564,
+            "samplesWallMs": 123411.57,
+            "cleanupCpuMs": 15,
+            "cleanupWallMs": 45.931
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 7713.22,
+            "meanSampleCpuMs": 7847.75,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": null,
+              "floorDeductions": null,
+              "solverChecks": 2413201,
+              "dfsEntries": 422.6,
+              "dfsChecks": 421.6,
+              "canonicalRatings": 1,
+              "phaseBSolves": null,
+              "deepenProposals": null
+            }
+          },
+          "funnel": null,
+          "native": {
+            "samples": 16,
+            "class": {
+              "exact": 0,
+              "shallow": 16,
+              "below": 0,
+              "above": 0,
+              "unrated": 0
+            },
+            "groupsTried": 2416,
+            "accepted": 1212,
+            "rejected": 836,
+            "skipped": 890,
+            "oracleCalls": 2416,
+            "canonicalRatings": 16,
+            "proposals": 0,
+            "keeperHeld": 0,
+            "keptReturned": 0
+          },
+          "parents": null
+        },
+        "F0": {
+          "mode": "F0",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 8611,
+            "wallMs": 6341.444,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 9389,
+            "wallMs": 7084.693
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 6,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 778,
+            "startupWallMs": 743.25,
+            "gridBuildCpuMs": 78,
+            "gridBuildWallMs": 116.767,
+            "samplesCpuMs": 8393,
+            "samplesWallMs": 6169.453,
+            "cleanupCpuMs": 124,
+            "cleanupWallMs": 43.604
+          },
+          "outcomes": {
+            "complete": 6,
+            "censored": 0,
+            "budgetEnded": 2,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0.25,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 385.59,
+            "meanSampleCpuMs": 524.56,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 138.88,
+              "floorDeductions": 9963.1,
+              "solverChecks": 188643,
+              "dfsEntries": 11056.8,
+              "dfsChecks": 10945.6,
+              "canonicalRatings": 2.5,
+              "phaseBSolves": 1.5,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 2,
+            "budgetStopsByDimension": {
+              "dfsEntries": 2
+            },
+            "floorTests": 2222,
+            "acceptedByFullProof": 1241,
+            "acceptedByRederivation": 0,
+            "refusedStuckUnique": 217,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 762,
+            "floorSkipped": 1321,
+            "entriesAtEnd": 41,
+            "phaseBTries": 29,
+            "proofUnique": 24,
+            "proofAmbiguousAtReference": 5,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 24,
+            "allowedSolved": 24,
+            "canonicalRated": 24,
+            "canonicalComplete": 24,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 24,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 11,
+              "fallback": 5,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.936299999988478,
+              "phaseA": 3185.5276000000003,
+              "phaseB": 2945.1604000000098,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 880197,
+              "floor": 1257896,
+              "dfs": 0,
+              "allowed": 880197
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 176909,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 40,
+              "floor": 2222,
+              "dfs": 0,
+              "allowed": 24
+            },
+            "logicalChecks": 3018290,
+            "dfsEntries": 176909,
+            "dfsChecks": 175130,
+            "shares": {
+              "wall": {
+                "init": 0.001780685282228755,
+                "phaseA": 0.5186783567988685,
+                "phaseB": 0.4795409579189027,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.2916210834611651,
+                "floor": 0.4167578330776698,
+                "dfs": 0,
+                "allowed": 0.2916210834611651
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 14,
+            "perSample": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 5,
+              "above": 3,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 14,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 5,
+              "above": 3,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "F1": {
+          "mode": "F1",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 8735,
+            "wallMs": 6345.5,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 9516,
+            "wallMs": 7089.579
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 6,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 781,
+            "startupWallMs": 744.078,
+            "gridBuildCpuMs": 189,
+            "gridBuildWallMs": 110.349,
+            "samplesCpuMs": 8452,
+            "samplesWallMs": 6181.685,
+            "cleanupCpuMs": 63,
+            "cleanupWallMs": 42.218
+          },
+          "outcomes": {
+            "complete": 6,
+            "censored": 0,
+            "budgetEnded": 2,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0.25,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 386.36,
+            "meanSampleCpuMs": 528.25,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 138.88,
+              "floorDeductions": 8054.8,
+              "solverChecks": 185834,
+              "dfsEntries": 11056.8,
+              "dfsChecks": 10945.6,
+              "canonicalRatings": 2.5,
+              "phaseBSolves": 1.5,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 2,
+            "budgetStopsByDimension": {
+              "dfsEntries": 2
+            },
+            "floorTests": 2222,
+            "acceptedByFullProof": 71,
+            "acceptedByRederivation": 1170,
+            "refusedStuckUnique": 217,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 762,
+            "floorSkipped": 1321,
+            "entriesAtEnd": 41,
+            "phaseBTries": 29,
+            "proofUnique": 24,
+            "proofAmbiguousAtReference": 5,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 24,
+            "allowedSolved": 24,
+            "canonicalRated": 24,
+            "canonicalComplete": 24,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 24,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 11,
+              "fallback": 5,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.278399999988324,
+              "phaseA": 3198.4914999999783,
+              "phaseB": 2945.569700000002,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 880197,
+              "floor": 1212952,
+              "dfs": 0,
+              "allowed": 880197
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 176909,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 40,
+              "floor": 2222,
+              "dfs": 0,
+              "allowed": 24
+            },
+            "logicalChecks": 2973346,
+            "dfsEntries": 176909,
+            "dfsChecks": 175130,
+            "shares": {
+              "wall": {
+                "init": 0.0016701060825418826,
+                "phaseA": 0.5197131955474141,
+                "phaseB": 0.47861669837004395,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.2960291200553182,
+                "floor": 0.4079417598893637,
+                "dfs": 0,
+                "allowed": 0.2960291200553182
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 14,
+            "perSample": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 5,
+              "above": 3,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 14,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 5,
+              "above": 3,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FC": {
+          "mode": "FC",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 12280,
+            "wallMs": 9874.308,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 13013,
+            "wallMs": 10606.152
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 6,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 733,
+            "startupWallMs": 731.845,
+            "gridBuildCpuMs": 125,
+            "gridBuildWallMs": 110.253,
+            "samplesCpuMs": 12014,
+            "samplesWallMs": 9710.397,
+            "cleanupCpuMs": 125,
+            "cleanupWallMs": 42.41
+          },
+          "outcomes": {
+            "complete": 6,
+            "censored": 0,
+            "budgetEnded": 2,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0.25,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 606.9,
+            "meanSampleCpuMs": 750.88,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 127.81,
+              "floorDeductions": 7439.9,
+              "solverChecks": 271863,
+              "dfsEntries": 9101.4,
+              "dfsChecks": 8997,
+              "canonicalRatings": 4.44,
+              "phaseBSolves": 3.44,
+              "deepenProposals": 0.56
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 2,
+            "budgetStopsByDimension": {
+              "solverChecks": 1,
+              "dfsEntries": 1
+            },
+            "floorTests": 2045,
+            "acceptedByFullProof": 71,
+            "acceptedByRederivation": 1160,
+            "refusedStuckUnique": 129,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 684,
+            "floorSkipped": 0,
+            "entriesAtEnd": 129,
+            "phaseBTries": 113,
+            "proofUnique": 55,
+            "proofAmbiguousAtReference": 58,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 55,
+            "allowedSolved": 55,
+            "canonicalRated": 55,
+            "canonicalComplete": 55,
+            "candidateExact": 0,
+            "candidateShallow": 12,
+            "candidateBelow": 1,
+            "candidateAbove": 42,
+            "deepenRuns": 1,
+            "deepenProposals": 9,
+            "deepenCommitted": 0,
+            "deepenRefused": 8,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 7,
+              "below": 0,
+              "above": 7,
+              "fallback": 2,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.247399999998606,
+              "phaseA": 1828.2680999999995,
+              "phaseB": 4832.116099999991,
+              "deepen": 3010.1065
+            },
+            "purposeChecks": {
+              "canonical": 1413425,
+              "floor": 674638,
+              "dfs": 0,
+              "allowed": 1413425,
+              "deepen": 848323
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 145622,
+              "allowed": 0,
+              "deepen": 0
+            },
+            "purposeSolves": {
+              "canonical": 71,
+              "floor": 2045,
+              "dfs": 0,
+              "allowed": 55,
+              "deepen": 9
+            },
+            "logicalChecks": 4349811,
+            "dfsEntries": 145622,
+            "dfsChecks": 143952,
+            "shares": {
+              "wall": {
+                "init": 0.0010585349891862705,
+                "phaseA": 0.1888562711969247,
+                "phaseB": 0.49914748752473703,
+                "deepen": 0.31093770628915196
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.3249394054132467,
+                "floor": 0.1550959340532267,
+                "dfs": 0,
+                "allowed": 0.3249394054132467,
+                "deepen": 0.19502525512027993
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0,
+                "deepen": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 15,
+            "perSample": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 15,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 15,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 15,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FM": {
+          "mode": "FM",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 9498,
+            "wallMs": 6831.207,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 10186,
+            "wallMs": 7566.95
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 6,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 688,
+            "startupWallMs": 735.743,
+            "gridBuildCpuMs": 156,
+            "gridBuildWallMs": 111.4,
+            "samplesCpuMs": 9187,
+            "samplesWallMs": 6665.02,
+            "cleanupCpuMs": 124,
+            "cleanupWallMs": 43.526
+          },
+          "outcomes": {
+            "complete": 6,
+            "censored": 0,
+            "budgetEnded": 2,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0.25,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 416.56,
+            "meanSampleCpuMs": 574.19,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 127.19,
+              "floorDeductions": 7480,
+              "solverChecks": 214944,
+              "dfsEntries": 9259.1,
+              "dfsChecks": 9156.5,
+              "canonicalRatings": 4,
+              "phaseBSolves": 3,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 2,
+            "budgetStopsByDimension": {
+              "dfsEntries": 2
+            },
+            "floorTests": 2035,
+            "acceptedByFullProof": 71,
+            "acceptedByRederivation": 1162,
+            "refusedStuckUnique": 125,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 675,
+            "floorSkipped": 0,
+            "entriesAtEnd": 125,
+            "phaseBTries": 106,
+            "proofUnique": 48,
+            "proofAmbiguousAtReference": 58,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 48,
+            "allowedSolved": 48,
+            "canonicalRated": 48,
+            "canonicalComplete": 48,
+            "candidateExact": 0,
+            "candidateShallow": 10,
+            "candidateBelow": 0,
+            "candidateAbove": 38,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 7,
+              "below": 0,
+              "above": 6,
+              "fallback": 3,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.242099999999027,
+              "phaseA": 2318.1586999999968,
+              "phaseB": 4308.289700000005,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 1288127,
+              "floor": 862854,
+              "dfs": 0,
+              "allowed": 1288127
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 148146,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 64,
+              "floor": 2035,
+              "dfs": 0,
+              "allowed": 48
+            },
+            "logicalChecks": 3439108,
+            "dfsEntries": 148146,
+            "dfsChecks": 146504,
+            "shares": {
+              "wall": {
+                "init": 0.0015432541264353108,
+                "phaseA": 0.3492943809870291,
+                "phaseB": 0.6491623648865356,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.37455264562787793,
+                "floor": 0.25089470874424413,
+                "dfs": 0,
+                "allowed": 0.37455264562787793
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 14,
+            "perSample": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 14,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 14,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 14,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FU": {
+          "mode": "FU",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 9122,
+            "wallMs": 6514.471,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 9831,
+            "wallMs": 7264.507
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 6,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 709,
+            "startupWallMs": 750.036,
+            "gridBuildCpuMs": 201,
+            "gridBuildWallMs": 115.236,
+            "samplesCpuMs": 8843,
+            "samplesWallMs": 6342.55,
+            "cleanupCpuMs": 15,
+            "cleanupWallMs": 43.656
+          },
+          "outcomes": {
+            "complete": 6,
+            "censored": 0,
+            "budgetEnded": 2,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0.25,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 396.41,
+            "meanSampleCpuMs": 552.69,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 138.88,
+              "floorDeductions": 8136,
+              "solverChecks": 193601,
+              "dfsEntries": 11056.8,
+              "dfsChecks": 10945.6,
+              "canonicalRatings": 2.5,
+              "phaseBSolves": 1.5,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 2,
+            "budgetStopsByDimension": {
+              "dfsEntries": 2
+            },
+            "floorTests": 2222,
+            "acceptedByFullProof": 71,
+            "acceptedByRederivation": 1170,
+            "refusedStuckUnique": 217,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 762,
+            "floorSkipped": 1321,
+            "entriesAtEnd": 41,
+            "phaseBTries": 29,
+            "proofUnique": 24,
+            "proofAmbiguousAtReference": 5,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 24,
+            "allowedSolved": 24,
+            "canonicalRated": 24,
+            "canonicalComplete": 24,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 24,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 11,
+              "fallback": 5,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.556500000001165,
+              "phaseA": 3214.8221999999955,
+              "phaseB": 3089.387999999998,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 880197,
+              "floor": 1212952,
+              "dfs": 0,
+              "fu": 124268,
+              "allowed": 880197
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 176909,
+              "fu": 0,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 40,
+              "floor": 2222,
+              "dfs": 0,
+              "fu": 24,
+              "allowed": 24
+            },
+            "logicalChecks": 3097614,
+            "dfsEntries": 176909,
+            "dfsChecks": 175130,
+            "shares": {
+              "wall": {
+                "init": 0.0016717165497184836,
+                "phaseA": 0.5090959575751228,
+                "phaseB": 0.48923232587515875,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.2841532224479874,
+                "floor": 0.3915762260888542,
+                "dfs": 0,
+                "fu": 0.04011732901517103,
+                "allowed": 0.2841532224479874
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "fu": 0,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 14,
+            "perSample": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 5,
+              "above": 3,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 14,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 5,
+              "above": 3,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FS": {
+          "mode": "FS",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 9765,
+            "wallMs": 7039.37,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 10500,
+            "wallMs": 7781.739
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 6,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 735,
+            "startupWallMs": 742.369,
+            "gridBuildCpuMs": 200,
+            "gridBuildWallMs": 113.207,
+            "samplesCpuMs": 9392,
+            "samplesWallMs": 6869.407,
+            "cleanupCpuMs": 173,
+            "cleanupWallMs": 44.666
+          },
+          "outcomes": {
+            "complete": 6,
+            "censored": 0,
+            "budgetEnded": 2,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0.25,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 429.34,
+            "meanSampleCpuMs": 587,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 138.88,
+              "floorDeductions": 8054.8,
+              "solverChecks": 210924,
+              "dfsEntries": 11044.4,
+              "dfsChecks": 10933.6,
+              "canonicalRatings": 2.81,
+              "phaseBSolves": 1.81,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 2,
+            "budgetStopsByDimension": {
+              "dfsEntries": 2
+            },
+            "floorTests": 2222,
+            "acceptedByFullProof": 71,
+            "acceptedByRederivation": 1170,
+            "refusedStuckUnique": 217,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 762,
+            "floorSkipped": 1321,
+            "entriesAtEnd": 41,
+            "phaseBTries": 29,
+            "proofUnique": 29,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 29,
+            "allowedSolved": 29,
+            "canonicalRated": 29,
+            "canonicalComplete": 29,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 29,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 12,
+              "fallback": 4,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 10.202400000003308,
+              "phaseA": 3206.1216999999983,
+              "phaseB": 3625.4597000000012,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 1080912,
+              "floor": 1212952,
+              "dfs": 0,
+              "allowed": 1080912
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 176711,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 45,
+              "floor": 2222,
+              "dfs": 0,
+              "allowed": 29
+            },
+            "logicalChecks": 3374776,
+            "dfsEntries": 176711,
+            "dfsChecks": 174937,
+            "shares": {
+              "wall": {
+                "init": 0.0014911900606978117,
+                "phaseA": 0.46860903438661666,
+                "phaseB": 0.5298997755526855,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.32029148008638203,
+                "floor": 0.35941703982723594,
+                "dfs": 0,
+                "allowed": 0.32029148008638203
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 14,
+            "perSample": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 5,
+              "above": 3,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 14,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 5,
+              "above": 3,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        }
+      }
+    },
+    "samurai": {
+      "modes": {
+        "proposal-only": {
+          "mode": "proposal-only",
+          "kind": "native",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 7532,
+            "wallMs": 4911.942,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 8252,
+            "wallMs": 5632.444
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 720,
+            "startupWallMs": 720.502,
+            "gridBuildCpuMs": 172,
+            "gridBuildWallMs": 113.883,
+            "samplesCpuMs": 7190,
+            "samplesWallMs": 4742.319,
+            "cleanupCpuMs": 108,
+            "cleanupWallMs": 41.497
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 296.39,
+            "meanSampleCpuMs": 449.38,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": null,
+              "floorDeductions": null,
+              "solverChecks": 301866,
+              "dfsEntries": 1863.2,
+              "dfsChecks": 1808.8,
+              "canonicalRatings": 4,
+              "phaseBSolves": null,
+              "deepenProposals": null
+            }
+          },
+          "funnel": null,
+          "native": {
+            "samples": 16,
+            "class": {
+              "exact": 0,
+              "shallow": 13,
+              "below": 3,
+              "above": 0,
+              "unrated": 0
+            },
+            "groupsTried": 5262,
+            "accepted": 2121,
+            "rejected": 839,
+            "skipped": 1318,
+            "oracleCalls": 10024,
+            "canonicalRatings": 64,
+            "proposals": 0,
+            "keeperHeld": 16,
+            "keptReturned": 0
+          },
+          "parents": null
+        },
+        "ordinary-only": {
+          "mode": "ordinary-only",
+          "kind": "native",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 23812,
+            "wallMs": 20476.869,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 24532,
+            "wallMs": 21204.248
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 720,
+            "startupWallMs": 727.379,
+            "gridBuildCpuMs": 204,
+            "gridBuildWallMs": 114.265,
+            "samplesCpuMs": 23483,
+            "samplesWallMs": 20306.906,
+            "cleanupCpuMs": 109,
+            "cleanupWallMs": 41.618
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 1269.18,
+            "meanSampleCpuMs": 1467.69,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": null,
+              "floorDeductions": null,
+              "solverChecks": 923794,
+              "dfsEntries": 366.4,
+              "dfsChecks": 365.4,
+              "canonicalRatings": 1,
+              "phaseBSolves": null,
+              "deepenProposals": null
+            }
+          },
+          "funnel": null,
+          "native": {
+            "samples": 16,
+            "class": {
+              "exact": 0,
+              "shallow": 10,
+              "below": 5,
+              "above": 1,
+              "unrated": 0
+            },
+            "groupsTried": 5204,
+            "accepted": 2105,
+            "rejected": 855,
+            "skipped": 1318,
+            "oracleCalls": 5204,
+            "canonicalRatings": 16,
+            "proposals": 0,
+            "keeperHeld": 0,
+            "keptReturned": 0
+          },
+          "parents": null
+        },
+        "F0": {
+          "mode": "F0",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 3781,
+            "wallMs": 1911.684,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 4564,
+            "wallMs": 2657.56
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 783,
+            "startupWallMs": 745.875,
+            "gridBuildCpuMs": 219,
+            "gridBuildWallMs": 125.578,
+            "samplesCpuMs": 3390,
+            "samplesWallMs": 1731.167,
+            "cleanupCpuMs": 94,
+            "cleanupWallMs": 42.497
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 108.2,
+            "meanSampleCpuMs": 211.88,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 187.25,
+              "floorDeductions": 28766,
+              "solverChecks": 169751,
+              "dfsEntries": 603.9,
+              "dfsChecks": 497.6,
+              "canonicalRatings": 1.06,
+              "phaseBSolves": 0.06,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 2996,
+            "acceptedByFullProof": 2128,
+            "acceptedByRederivation": 0,
+            "refusedStuckUnique": 37,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 831,
+            "floorSkipped": 1647,
+            "entriesAtEnd": 1,
+            "phaseBTries": 1,
+            "proofUnique": 1,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 1,
+            "allowedSolved": 1,
+            "canonicalRated": 1,
+            "canonicalComplete": 1,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 1,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 1,
+              "fallback": 15,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 14.211700000001088,
+              "phaseA": 1498.097999999999,
+              "phaseB": 185.16800000000012,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 81294,
+              "floor": 2553433,
+              "dfs": 0,
+              "allowed": 81294
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 9662,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 17,
+              "floor": 2996,
+              "dfs": 0,
+              "allowed": 1
+            },
+            "logicalChecks": 2716021,
+            "dfsEntries": 9662,
+            "dfsChecks": 7962,
+            "shares": {
+              "wall": {
+                "init": 0.008372245479278511,
+                "phaseA": 0.8825435527076431,
+                "phaseB": 0.10908420181307836,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.029931285509206297,
+                "floor": 0.9401374289815874,
+                "dfs": 0,
+                "allowed": 0.029931285509206297
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 8,
+              "above": 2,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 8,
+              "above": 2,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "F1": {
+          "mode": "F1",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 3953,
+            "wallMs": 1804.436,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 4670,
+            "wallMs": 2534.672
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 717,
+            "startupWallMs": 730.236,
+            "gridBuildCpuMs": 172,
+            "gridBuildWallMs": 116.107,
+            "samplesCpuMs": 3594,
+            "samplesWallMs": 1635.209,
+            "cleanupCpuMs": 172,
+            "cleanupWallMs": 41.651
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 102.2,
+            "meanSampleCpuMs": 224.63,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 187.25,
+              "floorDeductions": 22962.8,
+              "solverChecks": 155801,
+              "dfsEntries": 603.9,
+              "dfsChecks": 497.6,
+              "canonicalRatings": 1.06,
+              "phaseBSolves": 0.06,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 2996,
+            "acceptedByFullProof": 87,
+            "acceptedByRederivation": 2041,
+            "refusedStuckUnique": 37,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 831,
+            "floorSkipped": 1647,
+            "entriesAtEnd": 1,
+            "phaseBTries": 1,
+            "proofUnique": 1,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 1,
+            "allowedSolved": 1,
+            "canonicalRated": 1,
+            "canonicalComplete": 1,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 1,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 1,
+              "fallback": 15,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 13.899800000008327,
+              "phaseA": 1407.0303000000113,
+              "phaseB": 183.44570000000203,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 81294,
+              "floor": 2330227,
+              "dfs": 0,
+              "allowed": 81294
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 9662,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 17,
+              "floor": 2996,
+              "dfs": 0,
+              "allowed": 1
+            },
+            "logicalChecks": 2492815,
+            "dfsEntries": 9662,
+            "dfsChecks": 7962,
+            "shares": {
+              "wall": {
+                "init": 0.008663680915660868,
+                "phaseA": 0.8769954645289416,
+                "phaseB": 0.11434085455539754,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.03261132494790026,
+                "floor": 0.9347773501041995,
+                "dfs": 0,
+                "allowed": 0.03261132494790026
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 8,
+              "above": 2,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 8,
+              "above": 2,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FC": {
+          "mode": "FC",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 5640,
+            "wallMs": 3247.032,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 6424,
+            "wallMs": 3979.799
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 784,
+            "startupWallMs": 732.767,
+            "gridBuildCpuMs": 188,
+            "gridBuildWallMs": 123.944,
+            "samplesCpuMs": 5326,
+            "samplesWallMs": 3066.198,
+            "cleanupCpuMs": 110,
+            "cleanupWallMs": 44.446
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 191.64,
+            "meanSampleCpuMs": 332.88,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 185,
+              "floorDeductions": 22563.5,
+              "solverChecks": 195908,
+              "dfsEntries": 592.3,
+              "dfsChecks": 486.1,
+              "canonicalRatings": 1.69,
+              "phaseBSolves": 0.69,
+              "deepenProposals": 1
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 2960,
+            "acceptedByFullProof": 87,
+            "acceptedByRederivation": 2031,
+            "refusedStuckUnique": 26,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 816,
+            "floorSkipped": 0,
+            "entriesAtEnd": 26,
+            "phaseBTries": 26,
+            "proofUnique": 11,
+            "proofAmbiguousAtReference": 15,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 11,
+            "allowedSolved": 11,
+            "canonicalRated": 11,
+            "canonicalComplete": 11,
+            "candidateExact": 0,
+            "candidateShallow": 7,
+            "candidateBelow": 1,
+            "candidateAbove": 3,
+            "deepenRuns": 1,
+            "deepenProposals": 16,
+            "deepenCommitted": 0,
+            "deepenRefused": 16,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 1,
+              "above": 3,
+              "fallback": 6,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 13.944199999997181,
+              "phaseA": 1016.0074999999999,
+              "phaseB": 690.8818000000017,
+              "deepen": 1312.7442
+            },
+            "purposeChecks": {
+              "canonical": 276730,
+              "floor": 1962201,
+              "dfs": 0,
+              "allowed": 276730,
+              "deepen": 618864
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 9476,
+              "allowed": 0,
+              "deepen": 0
+            },
+            "purposeSolves": {
+              "canonical": 27,
+              "floor": 2960,
+              "dfs": 0,
+              "allowed": 11,
+              "deepen": 16
+            },
+            "logicalChecks": 3134525,
+            "dfsEntries": 9476,
+            "dfsChecks": 7777,
+            "shares": {
+              "wall": {
+                "init": 0.004596618705364688,
+                "phaseA": 0.3349205461261138,
+                "phaseB": 0.22774488354130568,
+                "deepen": 0.4327379516272158
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.0882845088171254,
+                "floor": 0.625996283328415,
+                "dfs": 0,
+                "allowed": 0.0882845088171254,
+                "deepen": 0.1974346990373342
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0,
+                "deepen": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 2,
+              "below": 14,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 2,
+              "below": 14,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FM": {
+          "mode": "FM",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 5139,
+            "wallMs": 2932.513,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 5907,
+            "wallMs": 3677.225
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 7,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 768,
+            "startupWallMs": 744.712,
+            "gridBuildCpuMs": 249,
+            "gridBuildWallMs": 122.167,
+            "samplesCpuMs": 4686,
+            "samplesWallMs": 2757.028,
+            "cleanupCpuMs": 156,
+            "cleanupWallMs": 41.593
+          },
+          "outcomes": {
+            "complete": 7,
+            "censored": 0,
+            "budgetEnded": 1,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0.125,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 172.31,
+            "meanSampleCpuMs": 292.88,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 184.31,
+              "floorDeductions": 22328.7,
+              "solverChecks": 214037,
+              "dfsEntries": 776.9,
+              "dfsChecks": 671.8,
+              "canonicalRatings": 1.94,
+              "phaseBSolves": 0.94,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 1,
+            "budgetStopsByDimension": {
+              "dfsEntries": 1
+            },
+            "floorTests": 2949,
+            "acceptedByFullProof": 87,
+            "acceptedByRederivation": 2024,
+            "refusedStuckUnique": 21,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 816,
+            "floorSkipped": 0,
+            "entriesAtEnd": 21,
+            "phaseBTries": 21,
+            "proofUnique": 15,
+            "proofAmbiguousAtReference": 6,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 15,
+            "allowedSolved": 15,
+            "canonicalRated": 15,
+            "canonicalComplete": 15,
+            "candidateExact": 0,
+            "candidateShallow": 9,
+            "candidateBelow": 0,
+            "candidateAbove": 6,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 5,
+              "below": 0,
+              "above": 5,
+              "fallback": 6,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 15.29280000000199,
+              "phaseA": 1670.4337999999952,
+              "phaseB": 1037.9306000000024,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 447778,
+              "floor": 2529034,
+              "dfs": 0,
+              "allowed": 447778
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 12430,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 31,
+              "floor": 2949,
+              "dfs": 0,
+              "allowed": 15
+            },
+            "logicalChecks": 3424590,
+            "dfsEntries": 12430,
+            "dfsChecks": 10749,
+            "shares": {
+              "wall": {
+                "init": 0.005614803507578704,
+                "phaseA": 0.6133054482774101,
+                "phaseB": 0.3810797482150112,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.13075375446403803,
+                "floor": 0.7384924910719239,
+                "dfs": 0,
+                "allowed": 0.13075375446403803
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 15,
+            "perSample": {
+              "exact": 0,
+              "shallow": 4,
+              "below": 11,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 15,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 4,
+              "below": 11,
+              "above": 0,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FU": {
+          "mode": "FU",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 3903,
+            "wallMs": 1861.952,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 4640,
+            "wallMs": 2616.474
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 737,
+            "startupWallMs": 754.523,
+            "gridBuildCpuMs": 171,
+            "gridBuildWallMs": 123.254,
+            "samplesCpuMs": 3546,
+            "samplesWallMs": 1684.408,
+            "cleanupCpuMs": 140,
+            "cleanupWallMs": 41.961
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 105.28,
+            "meanSampleCpuMs": 221.63,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 187.25,
+              "floorDeductions": 22971.1,
+              "solverChecks": 156394,
+              "dfsEntries": 603.9,
+              "dfsChecks": 497.6,
+              "canonicalRatings": 1.06,
+              "phaseBSolves": 0.06,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 2996,
+            "acceptedByFullProof": 87,
+            "acceptedByRederivation": 2041,
+            "refusedStuckUnique": 37,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 831,
+            "floorSkipped": 1647,
+            "entriesAtEnd": 1,
+            "phaseBTries": 1,
+            "proofUnique": 1,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 1,
+            "allowedSolved": 1,
+            "canonicalRated": 1,
+            "canonicalComplete": 1,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 1,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 1,
+              "fallback": 15,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 14.453000000001566,
+              "phaseA": 1438.6655000000028,
+              "phaseB": 198.20319999999992,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 81294,
+              "floor": 2330227,
+              "dfs": 0,
+              "fu": 9486,
+              "allowed": 81294
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 9662,
+              "fu": 0,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 17,
+              "floor": 2996,
+              "dfs": 0,
+              "fu": 1,
+              "allowed": 1
+            },
+            "logicalChecks": 2502301,
+            "dfsEntries": 9662,
+            "dfsChecks": 7962,
+            "shares": {
+              "wall": {
+                "init": 0.008752383015375823,
+                "phaseA": 0.8712206107386581,
+                "phaseB": 0.12002700624596613,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.032487698322464,
+                "floor": 0.9312336925094143,
+                "dfs": 0,
+                "fu": 0.0037909108456576565,
+                "allowed": 0.032487698322464
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "fu": 0,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 8,
+              "above": 2,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 8,
+              "above": 2,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        },
+        "FS": {
+          "mode": "FS",
+          "kind": "frontier",
+          "trials": 8,
+          "planned": 8,
+          "complete": true,
+          "hits": 0,
+          "claimedExact": 0,
+          "primary": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 3580,
+            "wallMs": 1845.953,
+            "cpuStatus": "resolved",
+            "wallStatus": "resolved"
+          },
+          "coldInclusive": {
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "cpuMs": 4390,
+            "wallMs": 2588.324
+          },
+          "conditionalExcludingBudgetEnded": {
+            "trials": 8,
+            "hits": 0,
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "conditional and secondary: it may select no winner and pass no gate"
+          },
+          "setupAmortised": {
+            "divisor": "the native sample count (12 for rotational180)",
+            "perCpuSecond": 0,
+            "perWallSecond": 0,
+            "note": "derived sensitivity: not measured request throughput, no extra observation, never the primary denominator"
+          },
+          "intervals": {
+            "startupCpuMs": 810,
+            "startupWallMs": 742.371,
+            "gridBuildCpuMs": 235,
+            "gridBuildWallMs": 120.292,
+            "samplesCpuMs": 3298,
+            "samplesWallMs": 1670.183,
+            "cleanupCpuMs": 47,
+            "cleanupWallMs": 43.447
+          },
+          "outcomes": {
+            "complete": 8,
+            "censored": 0,
+            "budgetEnded": 0,
+            "errors": 0,
+            "unstarted": 0
+          },
+          "budgetEndedShare": 0,
+          "samples": {
+            "samplesObserved": 16,
+            "claimedExactSamples": 0,
+            "rawExactSampleRate": 0,
+            "distinctHitHashes": 0,
+            "firstHitOrdinal": {},
+            "skippedFirstExact": {},
+            "meanSampleWallMs": 104.39,
+            "meanSampleCpuMs": 206.13,
+            "censoredSamples": 0,
+            "meanCountsPerSample": {
+              "floorTests": 187.25,
+              "floorDeductions": 22962.8,
+              "solverChecks": 155801,
+              "dfsEntries": 603.9,
+              "dfsChecks": 497.6,
+              "canonicalRatings": 1.06,
+              "phaseBSolves": 0.06,
+              "deepenProposals": 0
+            }
+          },
+          "funnel": {
+            "samples": 16,
+            "budgetStopSamples": 0,
+            "budgetStopsByDimension": {},
+            "floorTests": 2996,
+            "acceptedByFullProof": 87,
+            "acceptedByRederivation": 2041,
+            "refusedStuckUnique": 37,
+            "refusedStuckUnknown": 0,
+            "refusedAmbiguous": 831,
+            "floorSkipped": 1647,
+            "entriesAtEnd": 1,
+            "phaseBTries": 1,
+            "proofUnique": 1,
+            "proofAmbiguousAtReference": 0,
+            "proofUnknown": 0,
+            "fuFiltered": 0,
+            "allowedSolves": 1,
+            "allowedSolved": 1,
+            "canonicalRated": 1,
+            "canonicalComplete": 1,
+            "candidateExact": 0,
+            "candidateShallow": 0,
+            "candidateBelow": 0,
+            "candidateAbove": 1,
+            "deepenRuns": 0,
+            "deepenProposals": 0,
+            "deepenCommitted": 0,
+            "deepenRefused": 0,
+            "deepenReachedBand": 0,
+            "deepenRated": 0,
+            "deepenExact": 0,
+            "deepenShallow": 0,
+            "deepenBelow": 0,
+            "deepenAbove": 0,
+            "sampleClass": {
+              "exact": 0,
+              "shallow": 0,
+              "below": 0,
+              "above": 1,
+              "fallback": 15,
+              "unrated": 0,
+              "none": 0
+            },
+            "phaseWallMs": {
+              "init": 13.97600000000216,
+              "phaseA": 1436.9837999999916,
+              "phaseB": 186.91190000000006,
+              "deepen": 0
+            },
+            "purposeChecks": {
+              "canonical": 81294,
+              "floor": 2330227,
+              "dfs": 0,
+              "allowed": 81294
+            },
+            "purposeDfsEntries": {
+              "canonical": 0,
+              "floor": 0,
+              "dfs": 9662,
+              "allowed": 0
+            },
+            "purposeSolves": {
+              "canonical": 17,
+              "floor": 2996,
+              "dfs": 0,
+              "allowed": 1
+            },
+            "logicalChecks": 2492815,
+            "dfsEntries": 9662,
+            "dfsChecks": 7962,
+            "shares": {
+              "wall": {
+                "init": 0.00853302490054759,
+                "phaseA": 0.8773482074328515,
+                "phaseB": 0.11411876766660098,
+                "deepen": 0
+              },
+              "logicalChecksByPurpose": {
+                "canonical": 0.03261132494790026,
+                "floor": 0.9347773501041995,
+                "dfs": 0,
+                "allowed": 0.03261132494790026
+              },
+              "dfsEntriesByPurpose": {
+                "canonical": 0,
+                "floor": 0,
+                "dfs": 1,
+                "allowed": 0
+              },
+              "note": "phase A holds every floor test and the DFS after each stuck one; phase B excludes the nested deepen; the shares are of the sample work after the grid, by the engine purposes the frontier code names"
+            }
+          },
+          "native": null,
+          "parents": {
+            "samplesWithParent": 16,
+            "perSample": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 8,
+              "above": 2,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0,
+              "unclassified": 0
+            },
+            "distinctParents": 16,
+            "perDistinct": {
+              "exact": 0,
+              "shallow": 6,
+              "below": 8,
+              "above": 2,
+              "incomplete": 0,
+              "ambiguous": 0,
+              "unknown": 0
+            },
+            "note": "a diagnostic of what the omitted final parent would have rated: never steered generation, never a hit"
+          }
+        }
+      }
+    }
+  },
+  "hash": "d36180a5496ad167e99f108bd17d4b5e3374f6b49a213a47865b46c699997f0d"
+}
