@@ -514,3 +514,13 @@ the multigrids reach Nightmare, and any Hell level after MS07b, depends on S1's 
    report's §6 and these answers. Nothing in `generator/js` changes in phase 0.
 3. Architect: start the design of phase 1 (version field, history v2, S5a) in parallel; it does not depend on phase 0.
 4. After phase 0: revise `plan.md` to version 2 with measured numbers before any design of phase 2.
+
+---
+
+## Owner decisions (2026-11-14, 19:10, through `ask_user` and email)
+
+| Id | Decision |
+|---|---|
+| IG-S-Q01 | **Confirmed as answered:** `generatorVersion` and history version 2 (stored puzzle and provenance) ship in phase 1, before the search changes; version-1 entries regenerate on the current path with a notice that they may differ. |
+| IG-S-Q02 | **Confirmed as answered:** with a pool, the 120 s guard is the wall time of the request from its start. |
+| Phase 0 | **Confirmed:** the official phase-0 measurements start once difficulty-v3 freezes. Prototypes are built now as test-side harnesses with no production change; their numbers are provisional (pre-freeze) and are re-run on the frozen catalogue. |
