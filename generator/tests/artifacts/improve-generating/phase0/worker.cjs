@@ -157,7 +157,16 @@ function validate(engine, wire, validationMs) {
     const def = engine.variants.get(cfg.variantId);
     const base = def.build(cfg.variantOptions, engine.rng.create(cfg.seed).fork('model'));
     let same;
-    if (typeof def.postGenerate === 'function') {
+    let killerProblems = null;
+    if (cfg.variantId === 'killer') {
+      // Killer adds one cage unit per cage of two or more cells: its own rule (killer-audit.cjs, author-approved)
+      // replaces the units comparison below, which would reject every Killer puzzle.
+      killerProblems = require('./killer-audit.cjs').structureProblems({ wireModel: wire.model,
+        solution: wire.solution, rebuild: function (cages) {
+          return emptyWire(engine, engine.killer.modelFromCages(cages));
+        } });
+      same = killerProblems.length === 0;
+    } else if (typeof def.postGenerate === 'function') {
       const core = function (m) {
         return { cellCount: m.cellCount, digits: m.digits, units: m.units, rows: m.layout.rows, cols: m.layout.cols };
       };
@@ -167,7 +176,10 @@ function validate(engine, wire, validationMs) {
     }
     verdict.structureValid = checked.ok === true && same;
     if (!checked.ok) note('model.validate', { message: checked.errors.join('; ') });
-    if (!same) note('structure', { message: 'the model differs from the variant rebuilt from the seed' });
+    if (!same) {
+      note('structure', { message: killerProblems !== null ? 'killer: ' + killerProblems.join('; ') :
+        'the model differs from the variant rebuilt from the seed' });
+    }
   } catch (err) {
     verdict.structureValid = false;
     note('structure', err);
@@ -270,6 +282,8 @@ function syntheticJob(job) {
     post({ type: 'decision', wire: null, spinProof: x !== undefined, engineElapsedMs: job.spinMs || 0 });
   } else if (job.kind === 'selftest-throw') {
     post({ type: 'error', error: { code: 'selftest', name: 'Error', message: 'synthetic engine error' } });
+  } else if (job.kind === 'selftest-attempt') {
+    require('./attempt-worker.cjs').syntheticAttempt(job, post);
   } else if (job.kind === 'selftest-handmade-wire' && SG) {
     try {
       post({ type: 'decision', wire: handmadeWire(), engineElapsedMs: 0 });
@@ -284,6 +298,7 @@ function syntheticJob(job) {
 function handle(job) {
   if (job.kind === 'pipeline-request') pipelineRequest(job);
   else if (job.kind === 'verify') verifyJob(job);
+  else if (job.kind === 'attempt-run') require('./attempt-worker.cjs').run({ SG: SG, job: job, post: post, failure: failure });
   else if (data.testOnly === true) syntheticJob(job);
   else post({ type: 'fatal', error: { code: 'job-kind', name: null, message: 'unknown job kind ' + job.kind } });
 }
