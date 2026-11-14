@@ -129,12 +129,12 @@ S3 failure on a family is reported to Astra; it does not authorise changing the 
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start /end | |
-| Developer /model | |
-| Files /source identities | |
-| Verification /evidence | |
-| Machine charged /priority wait | |
-| Findings /author answers | |
-| Orchestrator review /acceptance | |
-| Handoff | |
+| Status | Accepted (pack author: SM4 sufficient for these families on this runtime; reporting fixes applied in `summary-r3`) |
+| Start /end | 2026-11-15 00:07-01:21 (+07:00) first pass; 01:25 orchestrator approval of 90 s and the mega16 serial row (r2); 01:55 reporting revision r3; orchestrator commit |
+| Developer /model | claude-sonnet-5.5; 159 model calls, 67,028,961 input tokens (65,751,633 cache reads), 350,637 output tokens, about 1,327 AI credits. Author review gpt-6-astra; orchestrator claude-opus-5.5 |
+| Files /source identities | New under `phase0/`: `scoped-solver.cjs`, `adapters/scoped-solver.cjs`, `adapters/scoped-audit.cjs`, `scoped-audit.cjs`, `scoped-audit-worker.cjs`, `scoped-audit-host.cjs`, `scoped-test.cjs`, `plans/ig-s03.cjs`, `ig03-run.cjs`, `ig03-aggregate.cjs`; `run.cjs` (one hook line) and `README.md` changed. Harness `baeb9ea2…` for the generation shards, `dedddaef…` for `ser-m16` (only the aggregator differs); runtime unchanged; baselines IG-S02 `summary-r2` reused, never rerun |
+| Verification /evidence | `docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/` (`summary-r3.md` current; r1 and r2 kept as history). SM4 parity: 18 saved puzzles x 4 solver sets equal in findings, steps, ratings, final states and check-site token hash; 770 injected count failures equal in ordinal, site, steps and error fields; boundary-injected ceilings (100,000 objective guard, 30,000 Killer slice); 0 skipped-scope audit violations; four deliberate mutations detected; 24 request identities digest-equal to IG-S02. Families: singles proved with no checks; six subset finders proved in replay form; 17 other techniques stay native full scans |
+| Machine charged /priority wait | 1,307.2 s of 1,320 s + 90 s approved by the orchestrator (12 commands; the failed audit-1 a1 cost 309 s); priority waits 959.9 s, not charged |
+| Findings /author answers | Verdict (r3): this partial S3 (singles and subsets) gives **no material net gain observed on this cohort** (serial 0.94-1.03, incremental over the pool 0.91-1.02; combined equals the pool's gain: mega16 1.97, mega12 3.34, samurai 1.83, classic9 2.92, Killer 2.50, Greater-Than 2.45); it does not supply the report's 1.3-1.65x and does **not** refute full S3: the remaining 17 families' cost and the cache overhead were not measured, so SM1 (IG-S07) must locate the solver time. Early-exact regressions (first exact at attempt 1): classic9:2 and Greater-Than:1, combined 0.83x. SM4 is sufficient for these families on this runtime; multi-check skipped scopes are covered only by engine-free tests; not a certification of the frozen source. Disclosures: an audit-session race (two consumers of one worker channel) failed a1, fixed and rerun as a2 with a1 kept; one prohibited read-only `git status` (not repeated) |
+| Orchestrator review /acceptance | Only harness and evidence folders changed; formats checked |
+| Handoff | IG-S04 as written: 12-minute cap, reference solver only, no assumed S3 gain, mega16/samurai seed-11 controls and F1 first, then the mandatory reprojection. The reporting-only harness change `baeb9ea2…` -> `dedddaef…` is compatible |

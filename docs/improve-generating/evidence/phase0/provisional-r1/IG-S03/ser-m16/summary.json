@@ -1,0 +1,358 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S03",
+  "shard": "ser-m16",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 1,
+    "completed": 1,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "the baselines are IG-S02's records (not rerun here)",
+      "audited wall time is not a speed measurement",
+      "the unmeasured catalogue probe and the independent audit are outside every generation time",
+      "a censored or unverified arm proves neither identity nor speed"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "dedddaef9979cddbc692430588e0962ae9c5a8926d1e599c05b537ca4d80e58c",
+    "adapterIds": [
+      "scoped-solver"
+    ],
+    "adapterHashes": [
+      "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 92.79179999999997,
+      "changesSeen": 7,
+      "incrementsMs": [
+        15,
+        16,
+        15,
+        16,
+        16,
+        16
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 106000,
+    "processAgeAtHostMs": 531.3298
+  },
+  "pairedRows": [
+    {
+      "pairId": "mega16:nightmare:3",
+      "reference": null,
+      "prototype": {
+        "key": "IG-S03/ser-m16/mega16:nightmare:3/scoped-native-w1",
+        "outcome": "complete",
+        "readyWallMs": 104490.8838,
+        "coldWallMs": 104583.68639999999,
+        "cpuTotalMs": 105141,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7"
+      },
+      "cpuFactor": null,
+      "readyWallFactor": null,
+      "coldWallFactor": null
+    }
+  ],
+  "arms": {
+    "prototype": {
+      "requests": 1,
+      "complete": 1,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 1,
+        "p50": 104490.8838,
+        "p95": 104490.8838,
+        "max": 104490.8838,
+        "upperMedian": 104490.8838,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 1,
+        "p50": 104583.68639999999,
+        "p95": 104583.68639999999,
+        "max": 104583.68639999999,
+        "upperMedian": 104583.68639999999,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 1,
+        "p50": 105141,
+        "p95": 105141,
+        "max": 105141,
+        "upperMedian": 105141,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 1,
+          "cpuMs": 105141,
+          "wallMs": 104588.288
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 1,
+          "cpuMs": 105141,
+          "wallMs": 104588.288
+        }
+      },
+      "cpuTotalAggregateMs": 105141,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 104588.288,
+      "verifiedHits": 0,
+      "hitsPerCpuSecond": 0,
+      "hitsPerColdWallSecond": 0
+    }
+  },
+  "estimateVerdict": "provisional; judged in the task summary against IG-S02's matched baselines",
+  "extra": {
+    "arms": {
+      "prototype": "S3 prototype (scoped negative scans of singles and subsets) with the harness paths of IG-S02",
+      "audit": "three engine instances: plain native, native with audit annotations, scoped with audit annotations"
+    },
+    "identity": {
+      "pairs": [
+        {
+          "pairId": "IG-S03/ser-m16/mega16:nightmare:3/scoped-native-w1",
+          "baselineKey": "IG-S02/m16-3/mega16:nightmare:3/native-w1",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "puzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+          "baselinePuzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+          "scopedDigest": "969eb86ca7b4705c1fd99bf9194818c41153f8e49d4a2b90babca56169ad8d19",
+          "baselineDigest": "969eb86ca7b4705c1fd99bf9194818c41153f8e49d4a2b90babca56169ad8d19"
+        }
+      ],
+      "failed": 0,
+      "ok": 1,
+      "notComparable": 0,
+      "deferred": 0,
+      "complete": true
+    },
+    "scoped": [
+      {
+        "key": "IG-S03/ser-m16/mega16:nightmare:3/scoped-native-w1",
+        "stats": {
+          "messages": 1,
+          "solve": {
+            "solvesBegun": 2814,
+            "stepsApplied": 356700,
+            "cellsInvalidated": 11728424,
+            "unitsInvalidated": 11570146,
+            "applyCalls": 0
+          },
+          "finders": {
+            "nakedSingle": {
+              "calls": 357432,
+              "scopesVisited": 65641531,
+              "realScopes": 9421384,
+              "negativeRecorded": 9217241,
+              "positiveScopes": 204143,
+              "skippedScopes": 56220147,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenSingleBox": {
+              "calls": 153289,
+              "scopesVisited": 1933316,
+              "realScopes": 603474,
+              "negativeRecorded": 534856,
+              "positiveScopes": 68618,
+              "skippedScopes": 1329842,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenSingleLine": {
+              "calls": 84671,
+              "scopesVisited": 2442166,
+              "realScopes": 829918,
+              "negativeRecorded": 813110,
+              "positiveScopes": 16808,
+              "skippedScopes": 1612248,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "nakedPair": {
+              "calls": 42180,
+              "scopesVisited": 1915961,
+              "realScopes": 594050,
+              "negativeRecorded": 590497,
+              "positiveScopes": 3553,
+              "skippedScopes": 1321909,
+              "enumNodesReal": 2117648,
+              "enumNodesSkipped": 4994410,
+              "realEntryChecks": 594050,
+              "virtualEntryChecks": 1321909,
+              "realNodeChecks": 1641,
+              "virtualNodeChecks": 6566,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenPair": {
+              "calls": 38625,
+              "scopesVisited": 1741186,
+              "realScopes": 538391,
+              "negativeRecorded": 534648,
+              "positiveScopes": 3743,
+              "skippedScopes": 1202795,
+              "enumNodesReal": 2449679,
+              "enumNodesSkipped": 5585484,
+              "realEntryChecks": 538391,
+              "virtualEntryChecks": 1202795,
+              "realNodeChecks": 2516,
+              "virtualNodeChecks": 8513,
+              "nativeFallbackCalls": 0
+            },
+            "nakedTriple": {
+              "calls": 34882,
+              "scopesVisited": 1651448,
+              "realScopes": 509279,
+              "negativeRecorded": 508327,
+              "positiveScopes": 952,
+              "skippedScopes": 1142166,
+              "enumNodesReal": 4386304,
+              "enumNodesSkipped": 9802627,
+              "realEntryChecks": 509279,
+              "virtualEntryChecks": 1142166,
+              "realNodeChecks": 10925,
+              "virtualNodeChecks": 27273,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenTriple": {
+              "calls": 33927,
+              "scopesVisited": 1610009,
+              "realScopes": 495832,
+              "negativeRecorded": 495009,
+              "positiveScopes": 823,
+              "skippedScopes": 1114176,
+              "enumNodesReal": 4388111,
+              "enumNodesSkipped": 9812604,
+              "realEntryChecks": 495832,
+              "virtualEntryChecks": 1114176,
+              "realNodeChecks": 11456,
+              "virtualNodeChecks": 27334,
+              "nativeFallbackCalls": 0
+            },
+            "nakedQuad": {
+              "calls": 33103,
+              "scopesVisited": 1584088,
+              "realScopes": 484270,
+              "negativeRecorded": 484036,
+              "positiveScopes": 234,
+              "skippedScopes": 1099816,
+              "enumNodesReal": 7136544,
+              "enumNodesSkipped": 15623959,
+              "realEntryChecks": 484270,
+              "virtualEntryChecks": 1099816,
+              "realNodeChecks": 22076,
+              "virtualNodeChecks": 50330,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenQuad": {
+              "calls": 32867,
+              "scopesVisited": 1573230,
+              "realScopes": 481423,
+              "negativeRecorded": 481201,
+              "positiveScopes": 222,
+              "skippedScopes": 1091807,
+              "enumNodesReal": 6563524,
+              "enumNodesSkipped": 14439306,
+              "realEntryChecks": 481423,
+              "virtualEntryChecks": 1091807,
+              "realNodeChecks": 19780,
+              "virtualNodeChecks": 46074,
+              "nativeFallbackCalls": 0
+            }
+          },
+          "fallbackReasons": {},
+          "violations": 0
+        },
+        "note": "summed over the one pipeline run of the request"
+      }
+    ],
+    "audits": [],
+    "catalogueProbe": {
+      "wallMs": 101.16190000000006,
+      "cpuMs": 140,
+      "note": "unmeasured: loads the engine once per command so no arm carries the catalogue discovery"
+    },
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S03/ser-m16/mega16:nightmare:3/scoped-native-w1"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": []
+    }
+  },
+  "notes": []
+}

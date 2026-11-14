@@ -26,6 +26,16 @@ catalogue (`-Round frozen-gate`, with a freeze receipt and a budget receipt).
 | `killer-audit.cjs` | IG-S02 re-audit: the Killer-only structure rule (data checks plus the complete rebuilt model wire), used by `worker.cjs` `validate()`. |
 | `ig02-killer-audit.cjs` | IG-S02 re-audit: the one wrapped command that verifies the saved Killer puzzles again and writes the hash-linked sidecar. |
 | `killer-audit-test.cjs` | IG-S02 re-audit tests (rule, malformed cages and units, reconciliation links, an offline dry run); no engine. |
+| `scoped-solver.cjs` | IG-S03: the runtime of the S3 prototype (scoped negative scans of singles and subsets, replayed budget checks, counters, deliberate test mutations). |
+| `adapters/scoped-solver.cjs` | IG-S03: the ten in-memory transforms that hook the runtime into `logical-solver.js`, `tech-basic.js`, `tech-subset.js` and `pipeline.js`. |
+| `adapters/scoped-audit.cjs` | IG-S03: audit-only annotations of the native check sites (no behaviour change); never loaded in a timing instance. |
+| `scoped-audit.cjs` | IG-S03: the check-site observer (token hash, bounded windows, checkpoints), the budget forms, ordinal selection and the audit comparisons. |
+| `scoped-audit-worker.cjs` | IG-S03: one engine instance in the role plain / ref / scoped (ops: configure, phase1, phase2, synthetic). |
+| `scoped-audit-host.cjs` | IG-S03: the three-instance session, the audit of one saved puzzle, the synthetic scenarios and the mutation tests. |
+| `plans/ig-s03.cjs` | IG-S03: the eleven shards (two audit, six pooled, three serial), with the hash of every saved puzzle and synthetic state. |
+| `ig03-run.cjs` | IG-S03 glue for `run.cjs`: executors, record additions, identity against IG-S02's baselines, shard summary. |
+| `ig03-aggregate.cjs` | IG-S03 task summary across the shards: `parity.json`, `check-sequences.json`, `coverage.json`, `summary.json/md`. |
+| `scoped-test.cjs` | IG-S03 focused tests that need no engine (the runtime against a native-style reference on a fake of the engine pieces; deliberate mutations; plan; transforms). |
 
 ## Commands
 
@@ -245,3 +255,59 @@ node generator\tests\artifacts\improve-generating\phase0\aggregate.cjs --task=IG
   changed afterwards only in `validate()` (the Killer branch) and `killer-audit.cjs`, `ig02-killer-audit.cjs`,
   `killer-audit-test.cjs` are new: verification only, no generation path. The sidecar lists the per-file comparison with the
   evidence manifest.
+
+## IG-S03: scoped solver prototype (partial S3) and virtual-check parity
+
+Test side only; every number is provisional (pre-freeze). The S3 prototype changes nothing outside private in-memory copies of
+`logical-solver.js`, `tech-basic.js`, `tech-subset.js` and `pipeline.js` of a worker's engine; no production source, S4, graph
+caching, extra technique, weight/order or cap-unit change. Implemented: negative scans of naked singles (cell scope), hidden
+singles (unit scope) and the six naked/hidden pair/triple/quad finders (unit scope). Every other finder stays a native full scan.
+
+- **`solverMode=reference|scoped`** is chosen by the adapter list of a worker: no adapter = reference (the native engine),
+  `scoped-solver` = scoped (add `attempt-pool` for the pool). Records name the arm in `solverMode` (`scoped-native-w1`,
+  `scoped-attempts-w4`); the audit adds `scoped-audit` to annotate the native check sites (never in a timing instance).
+- **Scope proof** (`scoped-solver.cjs` header, `coverage.json`): a scope's result and, for the subset finders, its raw node
+  increment depend only on the values/candidates of its cells (plus `completeUnits[u]`, fixed per solve); only negatives are
+  cached; a placement dirties the placed cell and its peers, an elimination its cell, a dirty cell its units. Subset checks are
+  replayed one by one: the unit-entry check, then `floor((r + inc) / 256) - floor(r / 256)` real `ctx.check()` calls at the virtual
+  node positions, the node counter being at the boundary at every call and at `r + inc` at the end. A negative is recorded only
+  after a completed scan. The audit mode shadow-checks every invalidation and re-scans every skipped scope natively.
+- **Audit** (`scoped-audit*.cjs`): three engine instances (plain native, native + site annotations, scoped + annotations) over the 18
+  saved IG-S02 puzzles (the native-w1 result of each request; the pooled arm returned the identical puzzle) in four solver sets
+  (canonical ladder, floor set, oracle set with `assumeUniqueness: false`, proposal set without chains): unlimited runs must agree
+  in the check count, the check-site token hash and checkpoints, every step and the rating; then count failures at the first,
+  middle, last check and around the first, first multi-check, middle and last skipped scope must fail at the same ordinal, site,
+  steps and with the same native error fields. Ceiling cases (100,000 objective, 30,000 Killer rating) are **boundary-injected**
+  by controlled precharge, never presented as naturally binding; a natural case is listed apart when a solve crosses it.
+  Nine synthetic states (fixed seeds, initial-state hashes in the manifest) cross the node cadence with different residues; four
+  deliberate mutations (stale peers, last-check-count caching, dirty-first scan order, bulk check) must FAIL the same comparison and the
+  prototype is restored and re-checked before any measurement. `scoped-test.cjs` has the engine-free counterparts.
+- **Timing**: `scoped-attempts-w4` for the 18 H3 requests (six cell shards) and `scoped-native-w1` for mega16:3, mega12:3,
+  samurai:42, classic9:3, killer:3, greaterThan:3 (three shards), each against IG-S02's matched native-w1 and attempts-w4 records
+  (harness `dd759a22…` generation baselines, reused with the author's approval, never rerun). Identity against those baselines is
+  checked on every digest section. Serial S3, incremental S3 over the pool and the combined factor are reported separately.
+
+```powershell
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S03 -Round provisional-r1
+# after the shards: the task summary, parity.json, check-sequences.json, coverage.json (evidence only, no engine, write once)
+node generator\tests\artifacts\improve-generating\phase0\ig03-aggregate.cjs --task=IG-S03 --round=provisional-r1
+# development only, no engine, no timing: the engine-free focused tests
+node generator\tests\artifacts\improve-generating\phase0\scoped-test.cjs
+```
+
+Shards (plan order): `audit-1` (synthetic states and mutations, then the 9x9 puzzles), `audit-2` (samurai, mega12, mega16), `sc-c9`,
+`sc-gt`, `sc-killer`, `sc-m12`, `sc-sam`, `sc-m16`, `ser-small`, `ser-m12-sam`, `ser-m16`. A started audit job that cannot start its
+three engine instances stops the command (`unsupported-source`, never a silent retry). The first audit attempt (`audit-1` a1)
+failed on a race in the audit session (two consumers of one worker channel, the second dropped `ready`); it is preserved, the fix
+is in attempt a2.
+
+- **Harness changes since the shard evidence** (fingerprint `baeb9ea2…`, attempt a2 and every later shard): `ig03-aggregate.cjs`
+  only, in reporting (criterion B03 counted the sixth serial row; the limitation texts; `--out=summary-r2` writes its own
+  `parity-r2.json`, `check-sequences-r2.json`, `coverage-r2.json`; the approved extra machine time is shown). `summary.json/md`
+  of the round were written by the earlier text and are kept as history: their B03 row reads "NOT met" because serial mega16:3
+  was then unstarted. `summary-r2.json/md` adds all 24 requests (B03 met by its own wording). `summary-r3.json/md` (reporting
+  fixes after the author's review, no run and no machine time) is the current summary: verdict wording "no material net gain
+  observed on this cohort" with what it does and does not say (partial S3 does not supply 1.3-1.65x, does not refute full S3,
+  SM1 / IG-S07 still needed), the early-exact list limited to `firstExactOrdinal = 1`, B02 counting the 24 request identities
+  apart from the 19 audit jobs, and the SM4 scope statement (sufficient for these families on this runtime, not a certification
+  of the frozen source). The r1 and r2 files are kept unchanged.

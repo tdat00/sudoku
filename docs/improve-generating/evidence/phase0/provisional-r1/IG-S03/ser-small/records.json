@@ -1,0 +1,1131 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S03",
+  "shard": "ser-small",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "38862b3141574728056c2289c25bd8aeeb724fa4ddae47a0825ce7289801e22f",
+  "records": [
+    {
+      "key": "IG-S03/ser-small/classic9:nightmare:3/scoped-native-w1",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "classic9:nightmare:3",
+      "gridCluster": null,
+      "requestSeed": 3,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-native-w1",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "classic9",
+        "difficulty": "nightmare",
+        "seed": 3,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-native-w1",
+      "poolWidth": 1,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 5821.8526,
+        "coldWallMs": 5917.466200000001,
+        "occupiedWallMs": 5924.2555,
+        "cpuToDecisionMs": 6625,
+        "cpuTotalMs": 6625,
+        "cpuReadyTotalMs": 6546,
+        "startupMs": 95.61360000000002,
+        "startupCpuMs": 79,
+        "cleanupMs": 6.789299999999457,
+        "readyOccupiedWallMs": 5828.6419,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 133.91109999999935,
+        "cpuMs": 281,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 2288,
+      "puzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+      "attemptsUsed": 8,
+      "samplesUsed": null,
+      "canonicalRatings": 1143,
+      "localProposals": 231588,
+      "localCapReasons": [
+        "proposals",
+        "proposals",
+        "shallow",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "classic9",
+      "blockKey": "IG-S03/ser-small/classic9:nightmare:3",
+      "shard": "ser-small",
+      "order": 0,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": 5820.518400000001,
+      "digests": {
+        "structure": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+        "givens": "2f118325c6f13660477b79b18247cf362205a62a6f72c959e759c7cac7853cd5",
+        "solution": "bef0c5faf8b7731c32b9568521704cef54941b23f034de7185467fce2331d68c",
+        "rating": "fc783d30401c2b1cd7539e65934b8e125638eaff7b32788d51efdcf7db862b1b",
+        "config": "dcb3136df0094bb40e6e3e5dd050e7a91e6531a4c879011e4a34b950607be58b",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "6ca9f8aecb49a5a2cd073824778518658dcbc6aa5a60604455d8b820ee48e9da",
+        "work": "a4254d1be8ec34d38c17813b22fbbac4fafb24ef2cbf5c8f939919bfcfb8b6a4",
+        "scalars": "4b50d9b96770b6c059f37ac9975810e18737267280dcbd0a8cb78346975ad143",
+        "puzzle": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+        "all": "48a2dddbebec707b86a85a349352e08efd710f836c0d6a95aa0444b8f9ab9d49"
+      },
+      "engineTimingsMs": {
+        "configure": 0.3191999999999098,
+        "buildModel": 1.548599999999965,
+        "fullGrid": 2.875399999999445,
+        "extraStructure": 0.2405999999996311,
+        "dig": 5762.546399999996,
+        "rate": 46.88710000000003,
+        "tune": 0.4707999999977801
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "scoped": {
+        "messages": 1,
+        "solve": {
+          "solvesBegun": 6364,
+          "stepsApplied": 279244,
+          "cellsInvalidated": 5659683,
+          "unitsInvalidated": 6220019,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 279933,
+            "scopesVisited": 13106657,
+            "realScopes": 4025990,
+            "negativeRecorded": 3784270,
+            "positiveScopes": 241720,
+            "skippedScopes": 9080667,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 38213,
+            "scopesVisited": 236633,
+            "realScopes": 121722,
+            "negativeRecorded": 98027,
+            "positiveScopes": 23695,
+            "skippedScopes": 114911,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 14518,
+            "scopesVisited": 237039,
+            "realScopes": 107473,
+            "negativeRecorded": 104405,
+            "positiveScopes": 3068,
+            "skippedScopes": 129566,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 7739,
+            "scopesVisited": 192396,
+            "realScopes": 90100,
+            "negativeRecorded": 89096,
+            "positiveScopes": 1004,
+            "skippedScopes": 102296,
+            "enumNodesReal": 245497,
+            "enumNodesSkipped": 303409,
+            "realEntryChecks": 90100,
+            "virtualEntryChecks": 102296,
+            "realNodeChecks": 1,
+            "virtualNodeChecks": 6,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 6735,
+            "scopesVisited": 174241,
+            "realScopes": 83469,
+            "negativeRecorded": 82975,
+            "positiveScopes": 494,
+            "skippedScopes": 90772,
+            "enumNodesReal": 263912,
+            "enumNodesSkipped": 312788,
+            "realEntryChecks": 83469,
+            "virtualEntryChecks": 90772,
+            "realNodeChecks": 1,
+            "virtualNodeChecks": 5,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 6241,
+            "scopesVisited": 166973,
+            "realScopes": 80192,
+            "negativeRecorded": 80039,
+            "positiveScopes": 153,
+            "skippedScopes": 86781,
+            "enumNodesReal": 386752,
+            "enumNodesSkipped": 463708,
+            "realEntryChecks": 80192,
+            "virtualEntryChecks": 86781,
+            "realNodeChecks": 120,
+            "virtualNodeChecks": 271,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 6088,
+            "scopesVisited": 164229,
+            "realScopes": 79080,
+            "negativeRecorded": 79072,
+            "positiveScopes": 8,
+            "skippedScopes": 85149,
+            "enumNodesReal": 355105,
+            "enumNodesSkipped": 419446,
+            "realEntryChecks": 79080,
+            "virtualEntryChecks": 85149,
+            "realNodeChecks": 48,
+            "virtualNodeChecks": 156,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 6080,
+            "scopesVisited": 164160,
+            "realScopes": 79040,
+            "negativeRecorded": 79040,
+            "positiveScopes": 0,
+            "skippedScopes": 85120,
+            "enumNodesReal": 386962,
+            "enumNodesSkipped": 447710,
+            "realEntryChecks": 79040,
+            "virtualEntryChecks": 85120,
+            "realNodeChecks": 178,
+            "virtualNodeChecks": 376,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 6080,
+            "scopesVisited": 164160,
+            "realScopes": 79040,
+            "negativeRecorded": 79040,
+            "positiveScopes": 0,
+            "skippedScopes": 85120,
+            "enumNodesReal": 336438,
+            "enumNodesSkipped": 386889,
+            "realEntryChecks": 79040,
+            "virtualEntryChecks": 85120,
+            "realNodeChecks": 87,
+            "virtualNodeChecks": 234,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the one pipeline run of the request"
+    },
+    {
+      "key": "IG-S03/ser-small/killer:nightmare:3/scoped-native-w1",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "killer:nightmare:3",
+      "gridCluster": null,
+      "requestSeed": 3,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-native-w1",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "killer",
+        "difficulty": "nightmare",
+        "seed": 3,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-native-w1",
+      "poolWidth": 1,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 22402.8052,
+        "coldWallMs": 22498.539399999998,
+        "occupiedWallMs": 22507.4549,
+        "cpuToDecisionMs": 23923,
+        "cpuTotalMs": 23923,
+        "cpuReadyTotalMs": 23829,
+        "startupMs": 95.73420000000078,
+        "startupCpuMs": 94,
+        "cleanupMs": 8.915500000002794,
+        "readyOccupiedWallMs": 22411.7207,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 129.41569999999774,
+        "cpuMs": 218,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 2009,
+      "puzzleHash": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+      "attemptsUsed": 8,
+      "samplesUsed": null,
+      "canonicalRatings": 3632,
+      "localProposals": 201404,
+      "localCapReasons": [
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "shallow",
+        "proposals",
+        "proposals",
+        "shallow"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "killer",
+      "blockKey": "IG-S03/ser-small/killer:nightmare:3",
+      "shard": "ser-small",
+      "order": 2,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": 22401.312,
+      "digests": {
+        "structure": "72f05cae46b4680ba26428c64f97ba7ef56b480405f1a96ffe8ecfef346015fa",
+        "givens": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb",
+        "solution": "bef0c5faf8b7731c32b9568521704cef54941b23f034de7185467fce2331d68c",
+        "rating": "d8dabd22509f62824ec7f06e4c4c87dafbb342d74bb5b0e0919338ec0afc3d34",
+        "config": "d798b2417912f4999658b47a31e7519f2a98a0e3f9116891c5119a3587b5e3c2",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "ef28f986908f9d2280a7c2e91ca8fb3be4183950148a043f703d37f85acf8772",
+        "work": "5f17aef6714ce54a25935b96801e970dcee7b5ba7da839ced9f6e0716aeeba25",
+        "scalars": "4b50d9b96770b6c059f37ac9975810e18737267280dcbd0a8cb78346975ad143",
+        "puzzle": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+        "all": "2c38999202a0010d9bce1d172af1074aae83c2727736c0f1100fdc1f59dfa191"
+      },
+      "engineTimingsMs": {
+        "configure": 0.3018000000001848,
+        "buildModel": 1.4656000000004497,
+        "fullGrid": 3.052000000001499,
+        "extraStructure": 5063.878199999999,
+        "dig": 17271.789900000007,
+        "rate": 53.181300000013835,
+        "tune": 0.4823000000187676
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "scoped": {
+        "messages": 1,
+        "solve": {
+          "solvesBegun": 21334,
+          "stepsApplied": 1519786,
+          "cellsInvalidated": 27242580,
+          "unitsInvalidated": 42014498,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 1520308,
+            "scopesVisited": 89840257,
+            "realScopes": 22071571,
+            "negativeRecorded": 21230607,
+            "positiveScopes": 840964,
+            "skippedScopes": 67768686,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 679344,
+            "scopesVisited": 16319983,
+            "realScopes": 6264036,
+            "negativeRecorded": 6080554,
+            "positiveScopes": 183482,
+            "skippedScopes": 10055947,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 495862,
+            "scopesVisited": 8596165,
+            "realScopes": 4698833,
+            "negativeRecorded": 4662115,
+            "positiveScopes": 36718,
+            "skippedScopes": 3897332,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 37010,
+            "scopesVisited": 1708732,
+            "realScopes": 569446,
+            "negativeRecorded": 567024,
+            "positiveScopes": 2422,
+            "skippedScopes": 1139285,
+            "enumNodesReal": 451549,
+            "enumNodesSkipped": 894589,
+            "realEntryChecks": 569446,
+            "virtualEntryChecks": 1139285,
+            "realNodeChecks": 9,
+            "virtualNodeChecks": 29,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 34587,
+            "scopesVisited": 1650814,
+            "realScopes": 550971,
+            "negativeRecorded": 550081,
+            "positiveScopes": 890,
+            "skippedScopes": 1099842,
+            "enumNodesReal": 381797,
+            "enumNodesSkipped": 763230,
+            "realEntryChecks": 550971,
+            "virtualEntryChecks": 1099842,
+            "realNodeChecks": 4,
+            "virtualNodeChecks": 13,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 33696,
+            "scopesVisited": 1616122,
+            "realScopes": 541670,
+            "negativeRecorded": 540963,
+            "positiveScopes": 707,
+            "skippedScopes": 1074448,
+            "enumNodesReal": 819075,
+            "enumNodesSkipped": 1521435,
+            "realEntryChecks": 541670,
+            "virtualEntryChecks": 1074448,
+            "realNodeChecks": 377,
+            "virtualNodeChecks": 888,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 32985,
+            "scopesVisited": 1596114,
+            "realScopes": 537050,
+            "negativeRecorded": 536721,
+            "positiveScopes": 329,
+            "skippedScopes": 1059062,
+            "enumNodesReal": 742547,
+            "enumNodesSkipped": 1354837,
+            "realEntryChecks": 537050,
+            "virtualEntryChecks": 1059062,
+            "realNodeChecks": 146,
+            "virtualNodeChecks": 493,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 6453,
+            "scopesVisited": 303492,
+            "realScopes": 125818,
+            "negativeRecorded": 125754,
+            "positiveScopes": 64,
+            "skippedScopes": 177674,
+            "enumNodesReal": 390375,
+            "enumNodesSkipped": 432339,
+            "realEntryChecks": 125818,
+            "virtualEntryChecks": 177674,
+            "realNodeChecks": 408,
+            "virtualNodeChecks": 612,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 6389,
+            "scopesVisited": 302083,
+            "realScopes": 125233,
+            "negativeRecorded": 125206,
+            "positiveScopes": 27,
+            "skippedScopes": 176850,
+            "enumNodesReal": 364552,
+            "enumNodesSkipped": 412647,
+            "realEntryChecks": 125233,
+            "virtualEntryChecks": 176850,
+            "realNodeChecks": 315,
+            "virtualNodeChecks": 551,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the one pipeline run of the request"
+    },
+    {
+      "key": "IG-S03/ser-small/greaterThan:nightmare:3/scoped-native-w1",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "greaterThan:nightmare:3",
+      "gridCluster": null,
+      "requestSeed": 3,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-native-w1",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "greaterThan",
+        "difficulty": "nightmare",
+        "seed": 3,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-native-w1",
+      "poolWidth": 1,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 11454.723500000004,
+        "coldWallMs": 11545.021200000003,
+        "occupiedWallMs": 11563.4954,
+        "cpuToDecisionMs": 15484,
+        "cpuTotalMs": 15500,
+        "cpuReadyTotalMs": 15422,
+        "startupMs": 90.29769999999917,
+        "startupCpuMs": 78,
+        "cleanupMs": 18.474199999996927,
+        "readyOccupiedWallMs": 11473.1977,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 16
+      },
+      "validation": {
+        "wallMs": 106.47499999999854,
+        "cpuMs": 109,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": true,
+      "verifiedExact": true,
+      "required": true,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "nightmare",
+      "score": 2361,
+      "puzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+      "attemptsUsed": 4,
+      "samplesUsed": null,
+      "canonicalRatings": 117,
+      "localProposals": 98304,
+      "localCapReasons": [
+        "proposals",
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "greaterThan",
+      "blockKey": "IG-S03/ser-small/greaterThan:nightmare:3",
+      "shard": "ser-small",
+      "order": 4,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": 11453.4741,
+      "digests": {
+        "structure": "cc9ddbfecf96fa559e15a5b1dc3c495442e4230c3b1f07f3a28b8c79c159f872",
+        "givens": "ed8e9686cec423d0bf18a328d02f64a451bbbf5f3c56c4e787fc566bf1e2f625",
+        "solution": "52a7d008fdad6f2b1b51660647035a9e17ec3e4bdf6e089ce2ff3dd5128fe300",
+        "rating": "3ee470ab451a1f910d100824bb37ebeeef1d247e95e6563d040769f45c53e8b0",
+        "config": "0b01bb1d274f4566978ddd2d86cd257a4a78436aec030729c50c47d6fa663899",
+        "warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "log": "cd3275b65f614f44bdd8baadadbf489da908e83421338a62bfd8a02ebea04863",
+        "work": "afce789376923b26a749eed26c5163681aeefeff2f2950986e3e165ac408d3d7",
+        "scalars": "61d378dc7ded0db3585a99f9e6ff00752327b959b0a24dc46d6a4872fc6e9861",
+        "puzzle": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "all": "a75550bfe613914f81487b35f446a774b22899c6b09953870d5c25fe661b45e9"
+      },
+      "engineTimingsMs": {
+        "configure": 0.30020000000149594,
+        "buildModel": 1.5200000000004366,
+        "fullGrid": 3.3054000000011,
+        "extraStructure": 1.227100000003702,
+        "dig": 11442.363600000004,
+        "rate": 0.3428999999741791,
+        "tune": 0.2461999999868567
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "scoped": {
+        "messages": 1,
+        "solve": {
+          "solvesBegun": 3948,
+          "stepsApplied": 397203,
+          "cellsInvalidated": 5363374,
+          "unitsInvalidated": 6111385,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 397228,
+            "scopesVisited": 25328027,
+            "realScopes": 4577883,
+            "negativeRecorded": 4404274,
+            "positiveScopes": 173609,
+            "skippedScopes": 20750144,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 223619,
+            "scopesVisited": 1782568,
+            "realScopes": 610488,
+            "negativeRecorded": 553875,
+            "positiveScopes": 56613,
+            "skippedScopes": 1172080,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 167006,
+            "scopesVisited": 2878486,
+            "realScopes": 1159106,
+            "negativeRecorded": 1146374,
+            "positiveScopes": 12732,
+            "skippedScopes": 1719380,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 17597,
+            "scopesVisited": 451567,
+            "realScopes": 179522,
+            "negativeRecorded": 177908,
+            "positiveScopes": 1614,
+            "skippedScopes": 272045,
+            "enumNodesReal": 359031,
+            "enumNodesSkipped": 535809,
+            "realEntryChecks": 179522,
+            "virtualEntryChecks": 272045,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 17,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 15983,
+            "scopesVisited": 416060,
+            "realScopes": 166897,
+            "negativeRecorded": 165981,
+            "positiveScopes": 916,
+            "skippedScopes": 249163,
+            "enumNodesReal": 395794,
+            "enumNodesSkipped": 555213,
+            "realEntryChecks": 166897,
+            "virtualEntryChecks": 249163,
+            "realNodeChecks": 17,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 15067,
+            "scopesVisited": 403870,
+            "realScopes": 162517,
+            "negativeRecorded": 162301,
+            "positiveScopes": 216,
+            "skippedScopes": 241353,
+            "enumNodesReal": 682133,
+            "enumNodesSkipped": 902877,
+            "realEntryChecks": 162517,
+            "virtualEntryChecks": 241353,
+            "realNodeChecks": 46,
+            "virtualNodeChecks": 69,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 13651,
+            "scopesVisited": 367217,
+            "realScopes": 153774,
+            "negativeRecorded": 153688,
+            "positiveScopes": 86,
+            "skippedScopes": 213443,
+            "enumNodesReal": 664034,
+            "enumNodesSkipped": 844702,
+            "realEntryChecks": 153774,
+            "virtualEntryChecks": 213443,
+            "realNodeChecks": 51,
+            "virtualNodeChecks": 128,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 13565,
+            "scopesVisited": 366185,
+            "realScopes": 153312,
+            "negativeRecorded": 153306,
+            "positiveScopes": 6,
+            "skippedScopes": 212873,
+            "enumNodesReal": 945843,
+            "enumNodesSkipped": 1137842,
+            "realEntryChecks": 153312,
+            "virtualEntryChecks": 212873,
+            "realNodeChecks": 317,
+            "virtualNodeChecks": 633,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 13559,
+            "scopesVisited": 366093,
+            "realScopes": 153285,
+            "negativeRecorded": 153285,
+            "positiveScopes": 0,
+            "skippedScopes": 212808,
+            "enumNodesReal": 860484,
+            "enumNodesSkipped": 1054970,
+            "realEntryChecks": 153285,
+            "virtualEntryChecks": 212808,
+            "realNodeChecks": 202,
+            "virtualNodeChecks": 467,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the one pipeline run of the request"
+    }
+  ]
+}

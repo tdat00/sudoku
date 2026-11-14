@@ -1,0 +1,23 @@
+IG-S03 engine-free focused tests (provisional (pre-freeze)); node scoped-test.cjs, run 2026-11-15T01:18 +07:00.
+No engine, no worker, no timing, nothing written by the run; this file is its console transcript.
+The engine-level counterparts (real tech-subset.js, saved puzzles, injected count failures, synthetic states, the four
+deliberate mutations on the real engine) are the audit jobs of shard audit-1 attempt a2 under the low-priority wrapper.
+
+ok   P01 the scoped runtime equals the native-style loop (check sequence, findings) on 40 scripts (65 ms)
+ok   P02 a failure injected at EVERY ordinal of a script fails at the same ordinal, site and boundary state (942 ms)
+ok   P03 incoming residues differ and cross the cadence: skipped scopes replay one check per virtual position (12 ms)
+ok   M01 the deliberate mutation "stale-peers" is detected (it must FAIL the parity cases) (22 ms)
+ok   M02 the deliberate mutation "last-count" is detected (it must FAIL the parity cases) (23 ms)
+ok   M03 the deliberate mutation "dirty-first" is detected (it must FAIL the parity cases) (22 ms)
+ok   M04 the deliberate mutation "bulk-check" is detected (it must FAIL the parity cases) (19 ms)
+ok   M05 the stale-peer mutation is also caught by the shadow check of the audit mode (12 ms)
+ok   M06 a bulk check that skips the true failure boundary is caught by an injected failure inside a skipped scope (16 ms)
+ok   P04 per-solve ownership: another ctx or a foreign state is native, solves do not share dirty state (0 ms)
+ok   P05 budget-error cleanup: an interrupted real scan records nothing and the cache stays valid after the throw (1 ms)
+ok   P06 the audit comparison reports a mismatch with its context (0 ms)
+ok   P07 ordinal selection: first, middle, last, then before / middle / after the skipped scopes, deduplicated (0 ms)
+ok   P08 the transforms apply to the current source (unique anchors, compiles) and leave the others alone (63 ms)
+ok   P09 the plan is fixed: 18 audit puzzles, 18 pooled and 6 serial observations, hashes in the manifest (17 ms)
+ok   P10 singles: naked and hidden scans over cached negatives equal the native scans (80 steps, 30 states) (22 ms)
+ok   M07 the stale-peer mutation is detected on singles too (steps differ or the audit reports an unmarked change) (19 ms)
+17/17 passed

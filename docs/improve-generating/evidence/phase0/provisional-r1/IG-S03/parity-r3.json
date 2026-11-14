@@ -1,0 +1,2525 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S03",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "synthetic": {
+    "key": "IG-S03/audit-1/synthetic/audit",
+    "verdict": "pass",
+    "problems": [],
+    "scenarios": [
+      {
+        "id": "syn-m16-1",
+        "variantId": "mega16",
+        "seed": 20261114,
+        "initialStateHash": "adbb3afd4a912819c52682192d99a75311dc3fbb5e5353d7345d4c8fa9cc8bce",
+        "checks": 1106,
+        "tokenHash": "f105e3191cf3d424",
+        "findingsDigest": "a256cc632d5a5f9a90e1d19fd39a546c8cea67b4b95dc5ead2674c1c1bf605a7",
+        "positives": 22,
+        "equal": true,
+        "problems": [],
+        "coverage": {
+          "skippedScopes": 155,
+          "crossing": 22,
+          "multi": 0,
+          "distinctResidues": 116
+        },
+        "counters": {
+          "skipped": 155,
+          "virtualEntryChecks": 155,
+          "virtualNodeChecks": 22,
+          "enumNodesSkipped": 6293,
+          "enumNodesReal": 32485
+        }
+      },
+      {
+        "id": "syn-m16-2",
+        "variantId": "mega16",
+        "seed": 20261115,
+        "initialStateHash": "2806481bbfadd06562917d333034fe3bed4afd77264e452b84eb85a7855f7f1d",
+        "checks": 974,
+        "tokenHash": "6a6fac002451ea45",
+        "findingsDigest": "0f6c0503fb1fe135b8ec787fd097c33c67f4b8cb2fa17049b7c4ab4806ebb345",
+        "positives": 28,
+        "equal": true,
+        "problems": [],
+        "coverage": {
+          "skippedScopes": 22,
+          "crossing": 4,
+          "multi": 0,
+          "distinctResidues": 19
+        },
+        "counters": {
+          "skipped": 22,
+          "virtualEntryChecks": 22,
+          "virtualNodeChecks": 4,
+          "enumNodesSkipped": 622,
+          "enumNodesReal": 53634
+        }
+      },
+      {
+        "id": "syn-m16-3",
+        "variantId": "mega16",
+        "seed": 20261116,
+        "initialStateHash": "fd6c6b101ad6a4066898f2f0ce06a6dcd21ebe63e40832e802ec43eba4bd4aa1",
+        "checks": 984,
+        "tokenHash": "907089e9828a1c6e",
+        "findingsDigest": "0960693ecc2df0ce07c93d6af6f0c6c11273d19ec84c41f2e0f918ff66258d07",
+        "positives": 26,
+        "equal": true,
+        "problems": [],
+        "coverage": {
+          "skippedScopes": 40,
+          "crossing": 5,
+          "multi": 0,
+          "distinctResidues": 38
+        },
+        "counters": {
+          "skipped": 40,
+          "virtualEntryChecks": 40,
+          "virtualNodeChecks": 5,
+          "enumNodesSkipped": 2212,
+          "enumNodesReal": 44548
+        }
+      },
+      {
+        "id": "syn-m16-4",
+        "variantId": "mega16",
+        "seed": 20261117,
+        "initialStateHash": "80de16b075376a03f1ba5452a059b307cce59090404f100605bb99e8e6c4fa63",
+        "checks": 831,
+        "tokenHash": "b681e2be3c8693d2",
+        "findingsDigest": "70d295e1314edbb7efd22955f19d67e42cd7befad487ab95d1a81b5daa853f5c",
+        "positives": 30,
+        "equal": true,
+        "problems": [],
+        "coverage": {
+          "skippedScopes": 23,
+          "crossing": 9,
+          "multi": 0,
+          "distinctResidues": 23
+        },
+        "counters": {
+          "skipped": 23,
+          "virtualEntryChecks": 23,
+          "virtualNodeChecks": 9,
+          "enumNodesSkipped": 1526,
+          "enumNodesReal": 42989
+        }
+      },
+      {
+        "id": "syn-m16-5",
+        "variantId": "mega16",
+        "seed": 20261118,
+        "initialStateHash": "cd4bbec734f86094e0e10c49c07cd73364be89d01c0431702552b042a7c1ddc0",
+        "checks": 932,
+        "tokenHash": "96b79a524b619001",
+        "findingsDigest": "d4b218471f04ba51a963e5651ed25731e593a772f2ef6279122e74273ec47e57",
+        "positives": 30,
+        "equal": true,
+        "problems": [],
+        "coverage": {
+          "skippedScopes": 99,
+          "crossing": 24,
+          "multi": 0,
+          "distinctResidues": 81
+        },
+        "counters": {
+          "skipped": 99,
+          "virtualEntryChecks": 99,
+          "virtualNodeChecks": 24,
+          "enumNodesSkipped": 6729,
+          "enumNodesReal": 40270
+        }
+      },
+      {
+        "id": "syn-m16-6",
+        "variantId": "mega16",
+        "seed": 20261119,
+        "initialStateHash": "9e50cc96c0cc43f4c04c0d7f9294c5c77b356c9a16cbf0c31562f4ba2bca54e0",
+        "checks": 1029,
+        "tokenHash": "4e5b4f5aeaf2c459",
+        "findingsDigest": "9595b3f96cd3a2998aa48be93b96e9e8ffeafb589040d4b31bf7cb2f66841840",
+        "positives": 27,
+        "equal": true,
+        "problems": [],
+        "coverage": {
+          "skippedScopes": 159,
+          "crossing": 23,
+          "multi": 0,
+          "distinctResidues": 116
+        },
+        "counters": {
+          "skipped": 159,
+          "virtualEntryChecks": 159,
+          "virtualNodeChecks": 23,
+          "enumNodesSkipped": 6696,
+          "enumNodesReal": 32440
+        }
+      },
+      {
+        "id": "syn-m12-1",
+        "variantId": "mega12",
+        "seed": 20261214,
+        "initialStateHash": "fc5b47326a6481d08f9beb69b9c4167ed734b254839ca0665afc811839d342ae",
+        "checks": 1160,
+        "tokenHash": "5bea1e4e160fecd7",
+        "findingsDigest": "062c0635ed5072ffff74cba88dec60647b79dd3fe64f0e511e781fdfecc45b76",
+        "positives": 14,
+        "equal": true,
+        "problems": [],
+        "coverage": {
+          "skippedScopes": 59,
+          "crossing": 5,
+          "multi": 0,
+          "distinctResidues": 49
+        },
+        "counters": {
+          "skipped": 59,
+          "virtualEntryChecks": 59,
+          "virtualNodeChecks": 5,
+          "enumNodesSkipped": 1786,
+          "enumNodesReal": 26347
+        }
+      },
+      {
+        "id": "syn-m12-2",
+        "variantId": "mega12",
+        "seed": 20261215,
+        "initialStateHash": "259e131d41216195aba4f7fb853822e5cec85a1a98e11666f112ecd4ea27fd00",
+        "checks": 721,
+        "tokenHash": "046d791a5de45890",
+        "findingsDigest": "bdc9bfd1fe4e64f8912e39697b7d542b97d716e1ffcac720555be78973cf7584",
+        "positives": 31,
+        "equal": true,
+        "problems": [],
+        "coverage": {
+          "skippedScopes": 151,
+          "crossing": 13,
+          "multi": 0,
+          "distinctResidues": 99
+        },
+        "counters": {
+          "skipped": 151,
+          "virtualEntryChecks": 151,
+          "virtualNodeChecks": 13,
+          "enumNodesSkipped": 3877,
+          "enumNodesReal": 14294
+        }
+      },
+      {
+        "id": "syn-m12-3",
+        "variantId": "mega12",
+        "seed": 20261216,
+        "initialStateHash": "1787479550f9b3e94193e2ed5ced15b64c0c6d5ec7bc53f39da3ba04595ed476",
+        "checks": 1010,
+        "tokenHash": "440ad68a2e99117e",
+        "findingsDigest": "dd30af0c5c99a05bf21a3896e1e311e082e6043b26184ebb7b5b2539627ddc95",
+        "positives": 19,
+        "equal": true,
+        "problems": [],
+        "coverage": {
+          "skippedScopes": 49,
+          "crossing": 3,
+          "multi": 0,
+          "distinctResidues": 43
+        },
+        "counters": {
+          "skipped": 49,
+          "virtualEntryChecks": 49,
+          "virtualNodeChecks": 3,
+          "enumNodesSkipped": 939,
+          "enumNodesReal": 18356
+        }
+      }
+    ],
+    "mutations": [
+      {
+        "mutation": "stale-peers",
+        "detected": true,
+        "scenariosDiffering": [
+          "syn-m16-1",
+          "syn-m16-2",
+          "syn-m16-3",
+          "syn-m16-4",
+          "syn-m16-5",
+          "syn-m16-6",
+          "syn-m12-1",
+          "syn-m12-2",
+          "syn-m12-3"
+        ],
+        "firstProblem": "checks differs",
+        "realSolve": {
+          "puzzleKey": "IG-S03/audit-1/synthetic/audit",
+          "detected": true,
+          "problem": "checks: 2235 vs 2271"
+        }
+      },
+      {
+        "mutation": "last-count",
+        "detected": true,
+        "scenariosDiffering": [
+          "syn-m16-1",
+          "syn-m16-2",
+          "syn-m16-3",
+          "syn-m16-4",
+          "syn-m16-5",
+          "syn-m16-6",
+          "syn-m12-1",
+          "syn-m12-2",
+          "syn-m12-3"
+        ],
+        "firstProblem": "checks differs",
+        "realSolve": {
+          "puzzleKey": "IG-S03/audit-1/synthetic/audit",
+          "detected": false,
+          "problem": null
+        }
+      },
+      {
+        "mutation": "dirty-first",
+        "detected": true,
+        "scenariosDiffering": [
+          "syn-m16-1",
+          "syn-m16-2",
+          "syn-m16-3",
+          "syn-m16-4",
+          "syn-m16-5",
+          "syn-m16-6",
+          "syn-m12-1",
+          "syn-m12-2",
+          "syn-m12-3"
+        ],
+        "firstProblem": "checks differs",
+        "realSolve": {
+          "puzzleKey": "IG-S03/audit-1/synthetic/audit",
+          "detected": true,
+          "problem": "tokenHash: \"7ad13b5272c0467c\" vs \"571981e25d170468\""
+        }
+      },
+      {
+        "mutation": "bulk-check",
+        "detected": true,
+        "scenariosDiffering": [
+          "syn-m16-1",
+          "syn-m16-2",
+          "syn-m16-3",
+          "syn-m16-4",
+          "syn-m16-5",
+          "syn-m16-6",
+          "syn-m12-1",
+          "syn-m12-2",
+          "syn-m12-3"
+        ],
+        "firstProblem": "tokenHash differs",
+        "realSolve": {
+          "puzzleKey": "IG-S03/audit-1/synthetic/audit",
+          "detected": false,
+          "problem": null
+        }
+      }
+    ],
+    "restored": {
+      "equal": true,
+      "problems": []
+    },
+    "coverage": {
+      "scenarios": 9,
+      "skippedScopes": 757,
+      "crossingScopes": 108,
+      "multiCheckScopes": 0,
+      "maxDistinctResidues": 116,
+      "virtualNodeChecks": 108,
+      "positives": 227
+    },
+    "adapters": {
+      "plain": {
+        "adapterIds": [],
+        "adapterHashes": [],
+        "hooks": {
+          "scoped": false,
+          "audit": false,
+          "subsetKit": false,
+          "basicKit": false
+        },
+        "transforms": [],
+        "loadMs": 76.4598
+      },
+      "ref": {
+        "adapterIds": [
+          "scoped-audit"
+        ],
+        "adapterHashes": [
+          "df76326083d5e98de7e55bea3d8a2c45106c8a62ae46f30481adbd25b5b20d8f"
+        ],
+        "hooks": {
+          "scoped": false,
+          "audit": true,
+          "subsetKit": false,
+          "basicKit": false
+        },
+        "transforms": [
+          {
+            "id": "scoped-audit.boot",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+            "afterTextHash": "9d52ead84c6b5782bb2e7f4d0feed08c9b8541a0ec7951c839155526d32d0872"
+          },
+          {
+            "id": "scoped-audit.step-site",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "9d52ead84c6b5782bb2e7f4d0feed08c9b8541a0ec7951c839155526d32d0872",
+            "afterTextHash": "876164e064af36196f0c26a4988cffbceab3be098d4e46be2589c8181f0b8217"
+          },
+          {
+            "id": "scoped-audit.stuck-site",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "876164e064af36196f0c26a4988cffbceab3be098d4e46be2589c8181f0b8217",
+            "afterTextHash": "ade0bab4e234013ff60b1c38cb28381cf86ccf731f4220fbf3fe4684e333f1dc"
+          },
+          {
+            "id": "scoped-audit.finder",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "ade0bab4e234013ff60b1c38cb28381cf86ccf731f4220fbf3fe4684e333f1dc",
+            "afterTextHash": "986fcedcd1af7fadc331142fd45fd51d70fa7898fbdf5a18e80cc700d2d2c963"
+          },
+          {
+            "id": "scoped-audit.subset-unit",
+            "file": "../core/js/engine/tech-subset.js",
+            "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+            "afterTextHash": "6d11e8d720981e22c1a7c3f848e6d3bb9ee2012d4fb729f7957d7dda733b52b3"
+          },
+          {
+            "id": "scoped-audit.subset-node",
+            "file": "../core/js/engine/tech-subset.js",
+            "beforeTextHash": "6d11e8d720981e22c1a7c3f848e6d3bb9ee2012d4fb729f7957d7dda733b52b3",
+            "afterTextHash": "588fd88998d33d37b7246612350d6450b5d475e19405142d316034e6306a3abe"
+          }
+        ],
+        "loadMs": 82.7149
+      },
+      "scoped": {
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "adapterHashes": [
+          "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f",
+          "df76326083d5e98de7e55bea3d8a2c45106c8a62ae46f30481adbd25b5b20d8f"
+        ],
+        "hooks": {
+          "scoped": true,
+          "audit": true,
+          "subsetKit": true,
+          "basicKit": true
+        },
+        "transforms": [
+          {
+            "id": "scoped-solver.boot",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+            "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+          },
+          {
+            "id": "scoped-solver.iterate-begin",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+            "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+          },
+          {
+            "id": "scoped-solver.iterate-applied",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+            "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+          },
+          {
+            "id": "scoped-solver.basic-kit",
+            "file": "../core/js/engine/tech-basic.js",
+            "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+            "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+          },
+          {
+            "id": "scoped-solver.naked-single",
+            "file": "../core/js/engine/tech-basic.js",
+            "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+            "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+          },
+          {
+            "id": "scoped-solver.hidden-single-box",
+            "file": "../core/js/engine/tech-basic.js",
+            "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+            "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+          },
+          {
+            "id": "scoped-solver.hidden-single-line",
+            "file": "../core/js/engine/tech-basic.js",
+            "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+            "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+          },
+          {
+            "id": "scoped-solver.subset-kit",
+            "file": "../core/js/engine/tech-subset.js",
+            "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+            "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+          },
+          {
+            "id": "scoped-solver.subset-find",
+            "file": "../core/js/engine/tech-subset.js",
+            "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+            "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+          },
+          {
+            "id": "scoped-solver.run-flush",
+            "file": "js/engine/pipeline.js",
+            "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+            "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+          },
+          {
+            "id": "scoped-audit.boot",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb",
+            "afterTextHash": "fea38464fb9b0186094ed1f34e721d01379ce17349def33c635ead18396020c6"
+          },
+          {
+            "id": "scoped-audit.step-site",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "fea38464fb9b0186094ed1f34e721d01379ce17349def33c635ead18396020c6",
+            "afterTextHash": "997821537ae73f0b60255d520972282957045ad93c81bd7a2deba9242d633cd7"
+          },
+          {
+            "id": "scoped-audit.stuck-site",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "997821537ae73f0b60255d520972282957045ad93c81bd7a2deba9242d633cd7",
+            "afterTextHash": "2924c4f29d96a424a3c6ca0524f561768ba18602df7a45c2c7db6822cd0dadaa"
+          },
+          {
+            "id": "scoped-audit.finder",
+            "file": "../core/js/engine/logical-solver.js",
+            "beforeTextHash": "2924c4f29d96a424a3c6ca0524f561768ba18602df7a45c2c7db6822cd0dadaa",
+            "afterTextHash": "1bbfd95655d541f8b8a2e4fe55e9ab92f383fa5056bbd5f2932524341deb8328"
+          },
+          {
+            "id": "scoped-audit.subset-unit",
+            "file": "../core/js/engine/tech-subset.js",
+            "beforeTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5",
+            "afterTextHash": "0d3d3d263558eb82bfe32da66195f09ea0b371403534dfcd484bbe0fb8fc6374"
+          },
+          {
+            "id": "scoped-audit.subset-node",
+            "file": "../core/js/engine/tech-subset.js",
+            "beforeTextHash": "0d3d3d263558eb82bfe32da66195f09ea0b371403534dfcd484bbe0fb8fc6374",
+            "afterTextHash": "447d15add676805406d244e6389706f839da6fc6bb59e504f95ee487d2837d9d"
+          }
+        ],
+        "loadMs": 88.0309
+      }
+    }
+  },
+  "puzzles": [
+    {
+      "key": "IG-S03/audit-1/classic9:nightmare:1/audit",
+      "cell": "classic9",
+      "seed": 1,
+      "variant": "classic9",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-1.json",
+      "puzzleFileSha256": "070d126175156af47578e855cf11041d00728df43e14131a2cbab209251a9267",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 2235,
+          "steps": 63,
+          "status": "solved",
+          "tokenHash": "7ad13b5272c0467c",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 498,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 140
+          }
+        },
+        "floor": {
+          "checks": 2235,
+          "steps": 63,
+          "status": "solved",
+          "tokenHash": "7ad13b5272c0467c",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 498,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 140
+          }
+        },
+        "oracle": {
+          "checks": 2203,
+          "steps": 63,
+          "status": "solved",
+          "tokenHash": "8169eb925a1e376f",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 498,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 140
+          }
+        },
+        "proposal": {
+          "checks": 619,
+          "steps": 14,
+          "status": "stuck",
+          "tokenHash": "6e5053280c65b352",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 204,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 84
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-1/classic9:nightmare:2/audit",
+      "cell": "classic9",
+      "seed": 2,
+      "variant": "classic9",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-2.json",
+      "puzzleFileSha256": "feccda67327c42c937a4c003f0e761544591b9194935a77494507a0eb423b088",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 1014,
+          "steps": 60,
+          "status": "solved",
+          "tokenHash": "002b65b2d39af679",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 216,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 71
+          }
+        },
+        "floor": {
+          "checks": 968,
+          "steps": 14,
+          "status": "stuck",
+          "tokenHash": "d57513e26bffe3b4",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 216,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 71
+          }
+        },
+        "oracle": {
+          "checks": 1006,
+          "steps": 60,
+          "status": "solved",
+          "tokenHash": "5244aeb26284f9f6",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 216,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 71
+          }
+        },
+        "proposal": {
+          "checks": 776,
+          "steps": 14,
+          "status": "stuck",
+          "tokenHash": "08b3e8e22e9b0d48",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 216,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 71
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-1/classic9:nightmare:3/audit",
+      "cell": "classic9",
+      "seed": 3,
+      "variant": "classic9",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-3.json",
+      "puzzleFileSha256": "9cc47b23f0d6b5d93abc1ad1b176a0af7733c434ab4d7ba5da4941f593792fe6",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 7366,
+          "steps": 82,
+          "status": "solved",
+          "tokenHash": "0df64f4a078fb8df",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1664,
+            "virtualNodeChecks": 17,
+            "crossing": 17,
+            "multi": 0,
+            "distinctResidues": 243
+          }
+        },
+        "floor": {
+          "checks": 7366,
+          "steps": 82,
+          "status": "solved",
+          "tokenHash": "0df64f4a078fb8df",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1664,
+            "virtualNodeChecks": 17,
+            "crossing": 17,
+            "multi": 0,
+            "distinctResidues": 243
+          }
+        },
+        "oracle": {
+          "checks": 7254,
+          "steps": 82,
+          "status": "solved",
+          "tokenHash": "5f4ba76a8ecb3ed7",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1664,
+            "virtualNodeChecks": 17,
+            "crossing": 17,
+            "multi": 0,
+            "distinctResidues": 243
+          }
+        },
+        "proposal": {
+          "checks": 1178,
+          "steps": 19,
+          "status": "stuck",
+          "tokenHash": "1f5fb8da92aa3aa6",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 458,
+            "virtualNodeChecks": 6,
+            "crossing": 6,
+            "multi": 0,
+            "distinctResidues": 160
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-1/killer:nightmare:1/audit",
+      "cell": "killer",
+      "seed": 1,
+      "variant": "killer",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/killer/puzzles/native-w1__killer-1.json",
+      "puzzleFileSha256": "ae727f15f21f5761e5e7862bc8c544df095f7a7cf8f03a0a55c5947fc20fd483",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 3481,
+          "steps": 140,
+          "status": "solved",
+          "tokenHash": "691b3525269023e0",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1678,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 25
+          }
+        },
+        "floor": {
+          "checks": 3481,
+          "steps": 140,
+          "status": "solved",
+          "tokenHash": "691b3525269023e0",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1678,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 25
+          }
+        },
+        "oracle": {
+          "checks": 3481,
+          "steps": 140,
+          "status": "solved",
+          "tokenHash": "691b3525269023e0",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1678,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 25
+          }
+        },
+        "proposal": {
+          "checks": 2931,
+          "steps": 42,
+          "status": "stuck",
+          "tokenHash": "cd5aeb4aacef3d4f",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1678,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 25
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-1/killer:nightmare:2/audit",
+      "cell": "killer",
+      "seed": 2,
+      "variant": "killer",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/killer/puzzles/native-w1__killer-2.json",
+      "puzzleFileSha256": "468d7be35881a661bcfcdec40666ba1968c5c836f6495f3d1c44acc04254260a",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 969,
+          "steps": 97,
+          "status": "solved",
+          "tokenHash": "b080f438babd1737",
+          "unlimitedEqual": true,
+          "failuresTested": 4,
+          "failuresEqual": true,
+          "failuresWithError": 4,
+          "boundaryInjected": 1,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        },
+        "floor": {
+          "checks": 969,
+          "steps": 97,
+          "status": "solved",
+          "tokenHash": "b080f438babd1737",
+          "unlimitedEqual": true,
+          "failuresTested": 3,
+          "failuresEqual": true,
+          "failuresWithError": 3,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        },
+        "oracle": {
+          "checks": 969,
+          "steps": 97,
+          "status": "solved",
+          "tokenHash": "b080f438babd1737",
+          "unlimitedEqual": true,
+          "failuresTested": 4,
+          "failuresEqual": true,
+          "failuresWithError": 4,
+          "boundaryInjected": 1,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        },
+        "proposal": {
+          "checks": 841,
+          "steps": 73,
+          "status": "stuck",
+          "tokenHash": "2c74ebb6588f6f76",
+          "unlimitedEqual": true,
+          "failuresTested": 3,
+          "failuresEqual": true,
+          "failuresWithError": 3,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-1/killer:nightmare:3/audit",
+      "cell": "killer",
+      "seed": 3,
+      "variant": "killer",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/killer/puzzles/native-w1__killer-3.json",
+      "puzzleFileSha256": "d5744e0a7ac75a3f9e2f6e09f95817e688f8ca527f17376e036bd03260854c14",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 4885,
+          "steps": 149,
+          "status": "solved",
+          "tokenHash": "56c2f53427d60ea9",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 2799,
+            "virtualNodeChecks": 2,
+            "crossing": 2,
+            "multi": 0,
+            "distinctResidues": 109
+          }
+        },
+        "floor": {
+          "checks": 4885,
+          "steps": 149,
+          "status": "solved",
+          "tokenHash": "56c2f53427d60ea9",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 2799,
+            "virtualNodeChecks": 2,
+            "crossing": 2,
+            "multi": 0,
+            "distinctResidues": 109
+          }
+        },
+        "oracle": {
+          "checks": 4885,
+          "steps": 149,
+          "status": "solved",
+          "tokenHash": "56c2f53427d60ea9",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 2799,
+            "virtualNodeChecks": 2,
+            "crossing": 2,
+            "multi": 0,
+            "distinctResidues": 109
+          }
+        },
+        "proposal": {
+          "checks": 4396,
+          "steps": 57,
+          "status": "stuck",
+          "tokenHash": "81039e49620f53cc",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 2799,
+            "virtualNodeChecks": 2,
+            "crossing": 2,
+            "multi": 0,
+            "distinctResidues": 109
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-1/greaterThan:nightmare:1/audit",
+      "cell": "greaterThan",
+      "seed": 1,
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/gt/puzzles/native-w1__greaterThan-1.json",
+      "puzzleFileSha256": "5587527f8752c6258dc8a558ba0d1819a48162c4c2badfa73b8906fd8c11e5dc",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 895,
+          "steps": 65,
+          "status": "solved",
+          "tokenHash": "ea07bf6bd73104e6",
+          "unlimitedEqual": true,
+          "failuresTested": 9,
+          "failuresEqual": true,
+          "failuresWithError": 9,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 12,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 11
+          }
+        },
+        "floor": {
+          "checks": 446,
+          "steps": 27,
+          "status": "stuck",
+          "tokenHash": "3acf68e3f4604baf",
+          "unlimitedEqual": true,
+          "failuresTested": 3,
+          "failuresEqual": true,
+          "failuresWithError": 3,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        },
+        "oracle": {
+          "checks": 895,
+          "steps": 65,
+          "status": "solved",
+          "tokenHash": "ea07bf6bd73104e6",
+          "unlimitedEqual": true,
+          "failuresTested": 11,
+          "failuresEqual": true,
+          "failuresWithError": 11,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 12,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 11
+          }
+        },
+        "proposal": {
+          "checks": 290,
+          "steps": 27,
+          "status": "stuck",
+          "tokenHash": "30d00083bafb0e47",
+          "unlimitedEqual": true,
+          "failuresTested": 3,
+          "failuresEqual": true,
+          "failuresWithError": 3,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-1/greaterThan:nightmare:2/audit",
+      "cell": "greaterThan",
+      "seed": 2,
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/gt/puzzles/native-w1__greaterThan-2.json",
+      "puzzleFileSha256": "90e58b059f9d3d6df3f1920fad6b2868b3f4625ae186faf4332bcac62728744f",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 538,
+          "steps": 80,
+          "status": "solved",
+          "tokenHash": "7b53609f026acbda",
+          "unlimitedEqual": true,
+          "failuresTested": 3,
+          "failuresEqual": true,
+          "failuresWithError": 3,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        },
+        "floor": {
+          "checks": 491,
+          "steps": 38,
+          "status": "stuck",
+          "tokenHash": "1815d6458348632e",
+          "unlimitedEqual": true,
+          "failuresTested": 3,
+          "failuresEqual": true,
+          "failuresWithError": 3,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        },
+        "oracle": {
+          "checks": 538,
+          "steps": 80,
+          "status": "solved",
+          "tokenHash": "7b53609f026acbda",
+          "unlimitedEqual": true,
+          "failuresTested": 4,
+          "failuresEqual": true,
+          "failuresWithError": 4,
+          "boundaryInjected": 1,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        },
+        "proposal": {
+          "checks": 317,
+          "steps": 38,
+          "status": "stuck",
+          "tokenHash": "54b22a4d52c14f88",
+          "unlimitedEqual": true,
+          "failuresTested": 3,
+          "failuresEqual": true,
+          "failuresWithError": 3,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-1/greaterThan:nightmare:3/audit",
+      "cell": "greaterThan",
+      "seed": 3,
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/gt/puzzles/native-w1__greaterThan-3.json",
+      "puzzleFileSha256": "e3483c81833c5849a0c171b1af3b9ca552c0512a0ff319e89838df4b52694252",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 616,
+          "steps": 87,
+          "status": "solved",
+          "tokenHash": "0ced9944a4bba88c",
+          "unlimitedEqual": true,
+          "failuresTested": 3,
+          "failuresEqual": true,
+          "failuresWithError": 3,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        },
+        "floor": {
+          "checks": 542,
+          "steps": 34,
+          "status": "stuck",
+          "tokenHash": "d51882c04a0f45f6",
+          "unlimitedEqual": true,
+          "failuresTested": 3,
+          "failuresEqual": true,
+          "failuresWithError": 3,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        },
+        "oracle": {
+          "checks": 616,
+          "steps": 87,
+          "status": "solved",
+          "tokenHash": "0ced9944a4bba88c",
+          "unlimitedEqual": true,
+          "failuresTested": 4,
+          "failuresEqual": true,
+          "failuresWithError": 4,
+          "boundaryInjected": 1,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        },
+        "proposal": {
+          "checks": 324,
+          "steps": 34,
+          "status": "stuck",
+          "tokenHash": "a4569d38600a6c41",
+          "unlimitedEqual": true,
+          "failuresTested": 3,
+          "failuresEqual": true,
+          "failuresWithError": 3,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 0,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 0
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-2/samurai:nightmare:1/audit",
+      "cell": "samurai",
+      "seed": 1,
+      "variant": "samurai",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/sam/puzzles/native-w1__samurai-1.json",
+      "puzzleFileSha256": "bb6ba2c365a401df5ec64ec1f80db9666868d605eae8b26c6411df18f39853f6",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 17489,
+          "steps": 313,
+          "status": "solved",
+          "tokenHash": "c48d6c7c7ee92dc8",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 10504,
+            "virtualNodeChecks": 24,
+            "crossing": 24,
+            "multi": 0,
+            "distinctResidues": 251
+          }
+        },
+        "floor": {
+          "checks": 17489,
+          "steps": 313,
+          "status": "solved",
+          "tokenHash": "c48d6c7c7ee92dc8",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 10504,
+            "virtualNodeChecks": 24,
+            "crossing": 24,
+            "multi": 0,
+            "distinctResidues": 251
+          }
+        },
+        "oracle": {
+          "checks": 18510,
+          "steps": 313,
+          "status": "solved",
+          "tokenHash": "84478f7b83693153",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 11278,
+            "virtualNodeChecks": 24,
+            "crossing": 24,
+            "multi": 0,
+            "distinctResidues": 252
+          }
+        },
+        "proposal": {
+          "checks": 4028,
+          "steps": 180,
+          "status": "stuck",
+          "tokenHash": "0a1a7fd37bd64260",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 2183,
+            "virtualNodeChecks": 9,
+            "crossing": 9,
+            "multi": 0,
+            "distinctResidues": 216
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-2/samurai:nightmare:2/audit",
+      "cell": "samurai",
+      "seed": 2,
+      "variant": "samurai",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/sam/puzzles/native-w1__samurai-2.json",
+      "puzzleFileSha256": "80a1306fdd97a332df3431421b347bd6dc807a3c67ad9e2ae3417a8d1090d995",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 16227,
+          "steps": 321,
+          "status": "solved",
+          "tokenHash": "e44f4ca5f10921ad",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 8047,
+            "virtualNodeChecks": 106,
+            "crossing": 106,
+            "multi": 0,
+            "distinctResidues": 256
+          }
+        },
+        "floor": {
+          "checks": 16227,
+          "steps": 321,
+          "status": "solved",
+          "tokenHash": "e44f4ca5f10921ad",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 8047,
+            "virtualNodeChecks": 106,
+            "crossing": 106,
+            "multi": 0,
+            "distinctResidues": 256
+          }
+        },
+        "oracle": {
+          "checks": 28643,
+          "steps": 329,
+          "status": "solved",
+          "tokenHash": "6bb990ebaf893b26",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 13282,
+            "virtualNodeChecks": 192,
+            "crossing": 192,
+            "multi": 0,
+            "distinctResidues": 256
+          }
+        },
+        "proposal": {
+          "checks": 4532,
+          "steps": 99,
+          "status": "stuck",
+          "tokenHash": "282b97663d8b87f6",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 2221,
+            "virtualNodeChecks": 19,
+            "crossing": 19,
+            "multi": 0,
+            "distinctResidues": 243
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-2/samurai:nightmare:42/audit",
+      "cell": "samurai",
+      "seed": 42,
+      "variant": "samurai",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/sam/puzzles/native-w1__samurai-42.json",
+      "puzzleFileSha256": "5757ed7c4691f6202c1430a35c922b7e3772e5da75f99be1be5b45962afa03eb",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 2201,
+          "steps": 269,
+          "status": "solved",
+          "tokenHash": "714f5b9363470b68",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 656,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 12
+          }
+        },
+        "floor": {
+          "checks": 2201,
+          "steps": 269,
+          "status": "solved",
+          "tokenHash": "714f5b9363470b68",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 656,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 12
+          }
+        },
+        "oracle": {
+          "checks": 2174,
+          "steps": 269,
+          "status": "solved",
+          "tokenHash": "66bdb5863515b54a",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 656,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 12
+          }
+        },
+        "proposal": {
+          "checks": 2106,
+          "steps": 249,
+          "status": "stuck",
+          "tokenHash": "b72cc744a657e61f",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 656,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 12
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-2/mega12:nightmare:1/audit",
+      "cell": "mega12",
+      "seed": 1,
+      "variant": "mega12",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m12/puzzles/native-w1__mega12-1.json",
+      "puzzleFileSha256": "6fb88ac87e2321d0b9ac05e554768f5d301585c7d95e767a38d4d6e696082af1",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 4254,
+          "steps": 105,
+          "status": "solved",
+          "tokenHash": "69dac8dec5b781d3",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1170,
+            "virtualNodeChecks": 12,
+            "crossing": 12,
+            "multi": 0,
+            "distinctResidues": 225
+          }
+        },
+        "floor": {
+          "checks": 4254,
+          "steps": 105,
+          "status": "solved",
+          "tokenHash": "69dac8dec5b781d3",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1170,
+            "virtualNodeChecks": 12,
+            "crossing": 12,
+            "multi": 0,
+            "distinctResidues": 225
+          }
+        },
+        "oracle": {
+          "checks": 4104,
+          "steps": 105,
+          "status": "solved",
+          "tokenHash": "e433727314ec8d82",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1170,
+            "virtualNodeChecks": 12,
+            "crossing": 12,
+            "multi": 0,
+            "distinctResidues": 225
+          }
+        },
+        "proposal": {
+          "checks": 756,
+          "steps": 38,
+          "status": "stuck",
+          "tokenHash": "137893e0f2d2c94f",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 198,
+            "virtualNodeChecks": 1,
+            "crossing": 1,
+            "multi": 0,
+            "distinctResidues": 95
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-2/mega12:nightmare:2/audit",
+      "cell": "mega12",
+      "seed": 2,
+      "variant": "mega12",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m12/puzzles/native-w1__mega12-2.json",
+      "puzzleFileSha256": "d069c2645b8f307cc6166e45b26f84b7d351f29f821fa0462c6381163c68115f",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 6215,
+          "steps": 113,
+          "status": "solved",
+          "tokenHash": "837150ae517879e1",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1544,
+            "virtualNodeChecks": 30,
+            "crossing": 30,
+            "multi": 0,
+            "distinctResidues": 247
+          }
+        },
+        "floor": {
+          "checks": 6215,
+          "steps": 113,
+          "status": "solved",
+          "tokenHash": "837150ae517879e1",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1544,
+            "virtualNodeChecks": 30,
+            "crossing": 30,
+            "multi": 0,
+            "distinctResidues": 247
+          }
+        },
+        "oracle": {
+          "checks": 6015,
+          "steps": 113,
+          "status": "solved",
+          "tokenHash": "7e6aca608662bb0e",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1544,
+            "virtualNodeChecks": 30,
+            "crossing": 30,
+            "multi": 0,
+            "distinctResidues": 247
+          }
+        },
+        "proposal": {
+          "checks": 735,
+          "steps": 33,
+          "status": "stuck",
+          "tokenHash": "0ca1c306543765dc",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 207,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 92
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-2/mega12:nightmare:3/audit",
+      "cell": "mega12",
+      "seed": 3,
+      "variant": "mega12",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m12/puzzles/native-w1__mega12-3.json",
+      "puzzleFileSha256": "f4ea1b42f7f0200461edcab81073df147e22bf08de86f5655ae375383a79e292",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 4826,
+          "steps": 108,
+          "status": "solved",
+          "tokenHash": "186431562a88f05f",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1216,
+            "virtualNodeChecks": 9,
+            "crossing": 9,
+            "multi": 0,
+            "distinctResidues": 215
+          }
+        },
+        "floor": {
+          "checks": 4826,
+          "steps": 108,
+          "status": "solved",
+          "tokenHash": "186431562a88f05f",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1216,
+            "virtualNodeChecks": 9,
+            "crossing": 9,
+            "multi": 0,
+            "distinctResidues": 215
+          }
+        },
+        "oracle": {
+          "checks": 4651,
+          "steps": 108,
+          "status": "solved",
+          "tokenHash": "f41e0af90c8c8739",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1216,
+            "virtualNodeChecks": 9,
+            "crossing": 9,
+            "multi": 0,
+            "distinctResidues": 215
+          }
+        },
+        "proposal": {
+          "checks": 868,
+          "steps": 47,
+          "status": "stuck",
+          "tokenHash": "546bea546a66f410",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 151,
+            "virtualNodeChecks": 0,
+            "crossing": 0,
+            "multi": 0,
+            "distinctResidues": 68
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-2/mega16:nightmare:1/audit",
+      "cell": "mega16",
+      "seed": 1,
+      "variant": "mega16",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m16-1/puzzles/native-w1__mega16-1.json",
+      "puzzleFileSha256": "0ee52a63079fc1d7f91e654be88b72910c8ee4e98c89f08517dfd22c126f1c3f",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 10584,
+          "steps": 169,
+          "status": "solved",
+          "tokenHash": "f465c1fe1ebec9bc",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 2267,
+            "virtualNodeChecks": 57,
+            "crossing": 57,
+            "multi": 0,
+            "distinctResidues": 254
+          }
+        },
+        "floor": {
+          "checks": 10584,
+          "steps": 169,
+          "status": "solved",
+          "tokenHash": "f465c1fe1ebec9bc",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 2267,
+            "virtualNodeChecks": 57,
+            "crossing": 57,
+            "multi": 0,
+            "distinctResidues": 254
+          }
+        },
+        "oracle": {
+          "checks": 9936,
+          "steps": 169,
+          "status": "solved",
+          "tokenHash": "503063be106abd62",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 2267,
+            "virtualNodeChecks": 57,
+            "crossing": 57,
+            "multi": 0,
+            "distinctResidues": 254
+          }
+        },
+        "proposal": {
+          "checks": 1046,
+          "steps": 52,
+          "status": "stuck",
+          "tokenHash": "b84bdb42232956a8",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 310,
+            "virtualNodeChecks": 6,
+            "crossing": 6,
+            "multi": 0,
+            "distinctResidues": 143
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-2/mega16:nightmare:2/audit",
+      "cell": "mega16",
+      "seed": 2,
+      "variant": "mega16",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m16-2/puzzles/native-w1__mega16-2.json",
+      "puzzleFileSha256": "de1f87ae54f277f0e9022796027c1708658013243fa9a82f07bcfad3bdbdca73",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 9792,
+          "steps": 177,
+          "status": "solved",
+          "tokenHash": "fbcb248bfbed572a",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1586,
+            "virtualNodeChecks": 49,
+            "crossing": 49,
+            "multi": 0,
+            "distinctResidues": 248
+          }
+        },
+        "floor": {
+          "checks": 9792,
+          "steps": 177,
+          "status": "solved",
+          "tokenHash": "fbcb248bfbed572a",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1586,
+            "virtualNodeChecks": 49,
+            "crossing": 49,
+            "multi": 0,
+            "distinctResidues": 248
+          }
+        },
+        "oracle": {
+          "checks": 9216,
+          "steps": 177,
+          "status": "solved",
+          "tokenHash": "afc4e00b81121d9a",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1586,
+            "virtualNodeChecks": 49,
+            "crossing": 49,
+            "multi": 0,
+            "distinctResidues": 248
+          }
+        },
+        "proposal": {
+          "checks": 1455,
+          "steps": 45,
+          "status": "stuck",
+          "tokenHash": "d375ee957ed696cc",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 611,
+            "virtualNodeChecks": 11,
+            "crossing": 11,
+            "multi": 0,
+            "distinctResidues": 191
+          }
+        }
+      }
+    },
+    {
+      "key": "IG-S03/audit-2/mega16:nightmare:3/audit",
+      "cell": "mega16",
+      "seed": 3,
+      "variant": "mega16",
+      "level": "nightmare",
+      "puzzleFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m16-3/puzzles/native-w1__mega16-3.json",
+      "puzzleFileSha256": "6133ce80dfecabe6af91a3a002ede4f6fd0040d620891604bbec1dad635fd3d2",
+      "verdict": "parity-ok",
+      "problems": [],
+      "sets": {
+        "canonical": {
+          "checks": 3870,
+          "steps": 172,
+          "status": "solved",
+          "tokenHash": "78e313b3562f1243",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1108,
+            "virtualNodeChecks": 21,
+            "crossing": 21,
+            "multi": 0,
+            "distinctResidues": 235
+          }
+        },
+        "floor": {
+          "checks": 3870,
+          "steps": 172,
+          "status": "solved",
+          "tokenHash": "78e313b3562f1243",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1108,
+            "virtualNodeChecks": 21,
+            "crossing": 21,
+            "multi": 0,
+            "distinctResidues": 235
+          }
+        },
+        "oracle": {
+          "checks": 3726,
+          "steps": 172,
+          "status": "solved",
+          "tokenHash": "80b7c1d369734776",
+          "unlimitedEqual": true,
+          "failuresTested": 14,
+          "failuresEqual": true,
+          "failuresWithError": 14,
+          "boundaryInjected": 2,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 1108,
+            "virtualNodeChecks": 21,
+            "crossing": 21,
+            "multi": 0,
+            "distinctResidues": 235
+          }
+        },
+        "proposal": {
+          "checks": 2214,
+          "steps": 65,
+          "status": "stuck",
+          "tokenHash": "1d2f323bd20ff30f",
+          "unlimitedEqual": true,
+          "failuresTested": 12,
+          "failuresEqual": true,
+          "failuresWithError": 12,
+          "boundaryInjected": 0,
+          "naturalBinding": [],
+          "skipped": {
+            "scopes": 966,
+            "virtualNodeChecks": 19,
+            "crossing": 19,
+            "multi": 0,
+            "distinctResidues": 231
+          }
+        }
+      }
+    }
+  ],
+  "perSet": {
+    "canonical": {
+      "puzzles": 18,
+      "unlimitedEqual": 18,
+      "failuresTested": 191,
+      "failuresEqual": 191,
+      "checks": 97457
+    },
+    "floor": {
+      "puzzles": 18,
+      "unlimitedEqual": 18,
+      "failuresTested": 180,
+      "failuresEqual": 180,
+      "checks": 96841
+    },
+    "oracle": {
+      "puzzles": 18,
+      "unlimitedEqual": 18,
+      "failuresTested": 219,
+      "failuresEqual": 219,
+      "checks": 108822
+    },
+    "proposal": {
+      "puzzles": 18,
+      "unlimitedEqual": 18,
+      "failuresTested": 180,
+      "failuresEqual": 180,
+      "checks": 29412
+    }
+  },
+  "verdicts": {
+    "ok": 18,
+    "failed": 0
+  },
+  "requestIdentity": {
+    "pairs": [
+      {
+        "pairId": "IG-S03/audit-1/synthetic/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-1/classic9:nightmare:1/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-1/classic9:nightmare:2/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-1/classic9:nightmare:3/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-1/killer:nightmare:1/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-1/killer:nightmare:2/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-1/killer:nightmare:3/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-1/greaterThan:nightmare:1/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-1/greaterThan:nightmare:2/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-1/greaterThan:nightmare:3/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-2/samurai:nightmare:1/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-2/samurai:nightmare:2/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-2/samurai:nightmare:42/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-2/mega12:nightmare:1/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-2/mega12:nightmare:2/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-2/mega12:nightmare:3/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-2/mega16:nightmare:1/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-2/mega16:nightmare:2/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/audit-2/mega16:nightmare:3/audit",
+        "verdict": "identity-ok",
+        "problems": []
+      },
+      {
+        "pairId": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+        "baselineKey": "IG-S02/c9/classic9:nightmare:1/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "9667bc7b9b8e771acb4c2ff056f1aa76ac0bc054054a6a5b691800c6efdd38c1",
+        "baselinePuzzleHash": "9667bc7b9b8e771acb4c2ff056f1aa76ac0bc054054a6a5b691800c6efdd38c1",
+        "scopedDigest": "ef4fe4477e17601ede46f08024353faed819ced8d6a85a315a5d63577b1609ec",
+        "baselineDigest": "ef4fe4477e17601ede46f08024353faed819ced8d6a85a315a5d63577b1609ec"
+      },
+      {
+        "pairId": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+        "baselineKey": "IG-S02/c9/classic9:nightmare:2/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "1701c0ee3bb8dc23245541f235b95384045bfd539e299480660f360eab945f45",
+        "baselinePuzzleHash": "1701c0ee3bb8dc23245541f235b95384045bfd539e299480660f360eab945f45",
+        "scopedDigest": "e8f3ebe2ab9eb99b5e118813728d922512645066f38dec36968b41ffbc2aced3",
+        "baselineDigest": "e8f3ebe2ab9eb99b5e118813728d922512645066f38dec36968b41ffbc2aced3"
+      },
+      {
+        "pairId": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+        "baselineKey": "IG-S02/c9/classic9:nightmare:3/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+        "baselinePuzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+        "scopedDigest": "48a2dddbebec707b86a85a349352e08efd710f836c0d6a95aa0444b8f9ab9d49",
+        "baselineDigest": "48a2dddbebec707b86a85a349352e08efd710f836c0d6a95aa0444b8f9ab9d49"
+      },
+      {
+        "pairId": "IG-S03/sc-gt/greaterThan:nightmare:1/scoped-attempts-w4",
+        "baselineKey": "IG-S02/gt/greaterThan:nightmare:1/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "43209b9cdb1435d74a599787b90ba8a51b69dff73bc7872f6a86a72e054959d9",
+        "baselinePuzzleHash": "43209b9cdb1435d74a599787b90ba8a51b69dff73bc7872f6a86a72e054959d9",
+        "scopedDigest": "a21aef370b17a6c4a37629be101c95086beb1f86587533360553331eb6a3a1d9",
+        "baselineDigest": "a21aef370b17a6c4a37629be101c95086beb1f86587533360553331eb6a3a1d9"
+      },
+      {
+        "pairId": "IG-S03/sc-gt/greaterThan:nightmare:2/scoped-attempts-w4",
+        "baselineKey": "IG-S02/gt/greaterThan:nightmare:2/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "eef4d6bf7ecd527e0ce83f9fdc21f378fddc394ccf7a6e88c1ac56927aafe0ae",
+        "baselinePuzzleHash": "eef4d6bf7ecd527e0ce83f9fdc21f378fddc394ccf7a6e88c1ac56927aafe0ae",
+        "scopedDigest": "176853e01327994cde504323ace124788f7260cdfb739f31d580fba9c547c6f3",
+        "baselineDigest": "176853e01327994cde504323ace124788f7260cdfb739f31d580fba9c547c6f3"
+      },
+      {
+        "pairId": "IG-S03/sc-gt/greaterThan:nightmare:3/scoped-attempts-w4",
+        "baselineKey": "IG-S02/gt/greaterThan:nightmare:3/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "baselinePuzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "scopedDigest": "a75550bfe613914f81487b35f446a774b22899c6b09953870d5c25fe661b45e9",
+        "baselineDigest": "a75550bfe613914f81487b35f446a774b22899c6b09953870d5c25fe661b45e9"
+      },
+      {
+        "pairId": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+        "baselineKey": "IG-S02/killer/killer:nightmare:1/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "4e092605feea23c59789f6a9e8345157e241f675523d07614c7512f554ade73b",
+        "baselinePuzzleHash": "4e092605feea23c59789f6a9e8345157e241f675523d07614c7512f554ade73b",
+        "scopedDigest": "435f77ceb9b0ad742b7ffd468b42fe065c1146312359b43974e4b72c26d53506",
+        "baselineDigest": "435f77ceb9b0ad742b7ffd468b42fe065c1146312359b43974e4b72c26d53506"
+      },
+      {
+        "pairId": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+        "baselineKey": "IG-S02/killer/killer:nightmare:2/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "a8fc1719429a1c83d575dace65473bcac17c47e5d1a72ab5c101b2a77eab1cd4",
+        "baselinePuzzleHash": "a8fc1719429a1c83d575dace65473bcac17c47e5d1a72ab5c101b2a77eab1cd4",
+        "scopedDigest": "0aa50b0bd457348d467c40ffb76808213a975776c3244eef8cd25c76d785c3ee",
+        "baselineDigest": "0aa50b0bd457348d467c40ffb76808213a975776c3244eef8cd25c76d785c3ee"
+      },
+      {
+        "pairId": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+        "baselineKey": "IG-S02/killer/killer:nightmare:3/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+        "baselinePuzzleHash": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+        "scopedDigest": "2c38999202a0010d9bce1d172af1074aae83c2727736c0f1100fdc1f59dfa191",
+        "baselineDigest": "2c38999202a0010d9bce1d172af1074aae83c2727736c0f1100fdc1f59dfa191"
+      },
+      {
+        "pairId": "IG-S03/sc-m12/mega12:nightmare:1/scoped-attempts-w4",
+        "baselineKey": "IG-S02/m12/mega12:nightmare:1/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "290f5389a3e7d5afb4f16a1ea945014c968b9cbb1b472febc662a8f97e5aaad2",
+        "baselinePuzzleHash": "290f5389a3e7d5afb4f16a1ea945014c968b9cbb1b472febc662a8f97e5aaad2",
+        "scopedDigest": "089a457dfb267ab04472f05b95f7800f7cbbce2ce4fab25b1315f5330fe8a021",
+        "baselineDigest": "089a457dfb267ab04472f05b95f7800f7cbbce2ce4fab25b1315f5330fe8a021"
+      },
+      {
+        "pairId": "IG-S03/sc-m12/mega12:nightmare:2/scoped-attempts-w4",
+        "baselineKey": "IG-S02/m12/mega12:nightmare:2/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "c27720d7a6a903b668cb0fa164c25c5de31fc577013c6437631b1a05ec3f9a85",
+        "baselinePuzzleHash": "c27720d7a6a903b668cb0fa164c25c5de31fc577013c6437631b1a05ec3f9a85",
+        "scopedDigest": "8d09588a7b1ab2eb56ff890dbc15ad8297957bd84f08e6f2a387fb3ee1b92ffe",
+        "baselineDigest": "8d09588a7b1ab2eb56ff890dbc15ad8297957bd84f08e6f2a387fb3ee1b92ffe"
+      },
+      {
+        "pairId": "IG-S03/sc-m12/mega12:nightmare:3/scoped-attempts-w4",
+        "baselineKey": "IG-S02/m12/mega12:nightmare:3/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "da06846642b580acd05fd918eaaf19348df9a69f7e0e569eac26d50079a386cf",
+        "baselinePuzzleHash": "da06846642b580acd05fd918eaaf19348df9a69f7e0e569eac26d50079a386cf",
+        "scopedDigest": "31ab8a793ef7db28e5fd6af04df2fb26c03a3f9194409ae3338bf983ff57821a",
+        "baselineDigest": "31ab8a793ef7db28e5fd6af04df2fb26c03a3f9194409ae3338bf983ff57821a"
+      },
+      {
+        "pairId": "IG-S03/sc-sam/samurai:nightmare:1/scoped-attempts-w4",
+        "baselineKey": "IG-S02/sam/samurai:nightmare:1/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "f98f3e849c6aa099717fb2d5d7455b5777f03b0ccca5e56c65a7e137acf649f6",
+        "baselinePuzzleHash": "f98f3e849c6aa099717fb2d5d7455b5777f03b0ccca5e56c65a7e137acf649f6",
+        "scopedDigest": "26f865482e18b243d16f11c690023463e50607597bb004d7b476749b2ab5241b",
+        "baselineDigest": "26f865482e18b243d16f11c690023463e50607597bb004d7b476749b2ab5241b"
+      },
+      {
+        "pairId": "IG-S03/sc-sam/samurai:nightmare:2/scoped-attempts-w4",
+        "baselineKey": "IG-S02/sam/samurai:nightmare:2/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "b6231fc3ecf400a79990bd7f249fe22d4599f9ba8e0dc9ef6b0fdea381d37102",
+        "baselinePuzzleHash": "b6231fc3ecf400a79990bd7f249fe22d4599f9ba8e0dc9ef6b0fdea381d37102",
+        "scopedDigest": "468ffd63d09093251fde79398b25a43d1019a4e928292ff54dcdb6c414ae56ff",
+        "baselineDigest": "468ffd63d09093251fde79398b25a43d1019a4e928292ff54dcdb6c414ae56ff"
+      },
+      {
+        "pairId": "IG-S03/sc-sam/samurai:nightmare:42/scoped-attempts-w4",
+        "baselineKey": "IG-S02/sam/samurai:nightmare:42/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587",
+        "baselinePuzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587",
+        "scopedDigest": "95955fe0e5d55620af7fe78d7227be736d2e0662eee3006ea1b331e112920821",
+        "baselineDigest": "95955fe0e5d55620af7fe78d7227be736d2e0662eee3006ea1b331e112920821"
+      },
+      {
+        "pairId": "IG-S03/sc-m16/mega16:nightmare:1/scoped-attempts-w4",
+        "baselineKey": "IG-S02/m16-1/mega16:nightmare:1/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+        "baselinePuzzleHash": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+        "scopedDigest": "e15e5b9a87cc1b1f473811b6bfac991e88ad08653d534292a780d9be4ca43559",
+        "baselineDigest": "e15e5b9a87cc1b1f473811b6bfac991e88ad08653d534292a780d9be4ca43559"
+      },
+      {
+        "pairId": "IG-S03/sc-m16/mega16:nightmare:2/scoped-attempts-w4",
+        "baselineKey": "IG-S02/m16-2/mega16:nightmare:2/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "cc87297a51b08ef12f3da5b982af5e27ac2352443e3588ed0c39f0d6a56a826d",
+        "baselinePuzzleHash": "cc87297a51b08ef12f3da5b982af5e27ac2352443e3588ed0c39f0d6a56a826d",
+        "scopedDigest": "e86d509bfad1fface7431f32ec491db77aba8723a4fb575740931f6541297060",
+        "baselineDigest": "e86d509bfad1fface7431f32ec491db77aba8723a4fb575740931f6541297060"
+      },
+      {
+        "pairId": "IG-S03/sc-m16/mega16:nightmare:3/scoped-attempts-w4",
+        "baselineKey": "IG-S02/m16-3/mega16:nightmare:3/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+        "baselinePuzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+        "scopedDigest": "969eb86ca7b4705c1fd99bf9194818c41153f8e49d4a2b90babca56169ad8d19",
+        "baselineDigest": "969eb86ca7b4705c1fd99bf9194818c41153f8e49d4a2b90babca56169ad8d19"
+      },
+      {
+        "pairId": "IG-S03/ser-small/classic9:nightmare:3/scoped-native-w1",
+        "baselineKey": "IG-S02/c9/classic9:nightmare:3/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+        "baselinePuzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+        "scopedDigest": "48a2dddbebec707b86a85a349352e08efd710f836c0d6a95aa0444b8f9ab9d49",
+        "baselineDigest": "48a2dddbebec707b86a85a349352e08efd710f836c0d6a95aa0444b8f9ab9d49"
+      },
+      {
+        "pairId": "IG-S03/ser-small/killer:nightmare:3/scoped-native-w1",
+        "baselineKey": "IG-S02/killer/killer:nightmare:3/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+        "baselinePuzzleHash": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+        "scopedDigest": "2c38999202a0010d9bce1d172af1074aae83c2727736c0f1100fdc1f59dfa191",
+        "baselineDigest": "2c38999202a0010d9bce1d172af1074aae83c2727736c0f1100fdc1f59dfa191"
+      },
+      {
+        "pairId": "IG-S03/ser-small/greaterThan:nightmare:3/scoped-native-w1",
+        "baselineKey": "IG-S02/gt/greaterThan:nightmare:3/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "baselinePuzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "scopedDigest": "a75550bfe613914f81487b35f446a774b22899c6b09953870d5c25fe661b45e9",
+        "baselineDigest": "a75550bfe613914f81487b35f446a774b22899c6b09953870d5c25fe661b45e9"
+      },
+      {
+        "pairId": "IG-S03/ser-m12-sam/mega12:nightmare:3/scoped-native-w1",
+        "baselineKey": "IG-S02/m12/mega12:nightmare:3/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "da06846642b580acd05fd918eaaf19348df9a69f7e0e569eac26d50079a386cf",
+        "baselinePuzzleHash": "da06846642b580acd05fd918eaaf19348df9a69f7e0e569eac26d50079a386cf",
+        "scopedDigest": "31ab8a793ef7db28e5fd6af04df2fb26c03a3f9194409ae3338bf983ff57821a",
+        "baselineDigest": "31ab8a793ef7db28e5fd6af04df2fb26c03a3f9194409ae3338bf983ff57821a"
+      },
+      {
+        "pairId": "IG-S03/ser-m12-sam/samurai:nightmare:42/scoped-native-w1",
+        "baselineKey": "IG-S02/sam/samurai:nightmare:42/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587",
+        "baselinePuzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587",
+        "scopedDigest": "95955fe0e5d55620af7fe78d7227be736d2e0662eee3006ea1b331e112920821",
+        "baselineDigest": "95955fe0e5d55620af7fe78d7227be736d2e0662eee3006ea1b331e112920821"
+      },
+      {
+        "pairId": "IG-S03/ser-m16/mega16:nightmare:3/scoped-native-w1",
+        "baselineKey": "IG-S02/m16-3/mega16:nightmare:3/native-w1",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "puzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+        "baselinePuzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+        "scopedDigest": "969eb86ca7b4705c1fd99bf9194818c41153f8e49d4a2b90babca56169ad8d19",
+        "baselineDigest": "969eb86ca7b4705c1fd99bf9194818c41153f8e49d4a2b90babca56169ad8d19"
+      }
+    ],
+    "failed": 0,
+    "ok": 43,
+    "notComparable": 0,
+    "deferred": 0,
+    "complete": true
+  },
+  "note": "boundary-injected = a count failure placed at the real ceiling (100,000 objective, 30,000 Killer rating) by controlled precharge, NOT a naturally binding measurement; naturally binding captured cases are listed apart"
+}

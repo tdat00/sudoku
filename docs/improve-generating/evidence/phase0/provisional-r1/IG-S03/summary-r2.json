@@ -1,0 +1,2804 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S03",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "scope": "PARTIAL S3: negative scans of naked/hidden singles and the six subset finders only (pointing, box/line, fish, wings, chains, cages and inequalities stay native). The measured gain is that of this partial prototype, not the full-S3 forecast of the report.",
+  "baseline": {
+    "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/summary-r2.json",
+    "sha256": "fbbb8298da2ef695bf692c3368ba0bdd6ea3e092081a5a17e0a115b7d80973f2",
+    "note": "IG-S02 summary-r2 (Killer audit overlay); generation baselines of harness dd759a22 reused with the author's approval, nothing rerun"
+  },
+  "coverage": {
+    "plannedKeys": 43,
+    "completed": 43,
+    "censored": 0,
+    "errors": 0,
+    "validationUnknown": 0,
+    "shards": [
+      {
+        "shard": "audit-1",
+        "status": "recorded",
+        "attempts": [
+          "a2"
+        ],
+        "unstarted": 0
+      },
+      {
+        "shard": "audit-2",
+        "status": "recorded",
+        "attempts": [
+          "a1"
+        ],
+        "unstarted": 0
+      },
+      {
+        "shard": "sc-c9",
+        "status": "recorded",
+        "attempts": [
+          "a1"
+        ],
+        "unstarted": 0
+      },
+      {
+        "shard": "sc-gt",
+        "status": "recorded",
+        "attempts": [
+          "a1"
+        ],
+        "unstarted": 0
+      },
+      {
+        "shard": "sc-killer",
+        "status": "recorded",
+        "attempts": [
+          "a1"
+        ],
+        "unstarted": 0
+      },
+      {
+        "shard": "sc-m12",
+        "status": "recorded",
+        "attempts": [
+          "a1"
+        ],
+        "unstarted": 0
+      },
+      {
+        "shard": "sc-sam",
+        "status": "recorded",
+        "attempts": [
+          "a1"
+        ],
+        "unstarted": 0
+      },
+      {
+        "shard": "sc-m16",
+        "status": "recorded",
+        "attempts": [
+          "a1"
+        ],
+        "unstarted": 0
+      },
+      {
+        "shard": "ser-small",
+        "status": "recorded",
+        "attempts": [
+          "a1"
+        ],
+        "unstarted": 0
+      },
+      {
+        "shard": "ser-m12-sam",
+        "status": "recorded",
+        "attempts": [
+          "a1"
+        ],
+        "unstarted": 0
+      },
+      {
+        "shard": "ser-m16",
+        "status": "recorded",
+        "attempts": [
+          "a1"
+        ],
+        "unstarted": 0
+      }
+    ]
+  },
+  "reportEstimates": {
+    "s3": {
+      "low": 1.3,
+      "high": 1.65,
+      "wide": [
+        1,
+        2.75
+      ]
+    },
+    "s5a": {
+      "mega16": [
+        1.7,
+        1.8
+      ],
+      "mega12": [
+        2.8,
+        3
+      ],
+      "samurai": [
+        1.7,
+        1.8
+      ],
+      "classic9": [
+        2.8,
+        3
+      ],
+      "killer": [
+        2.8,
+        3
+      ],
+      "greaterThan": [
+        2.8,
+        3
+      ]
+    },
+    "note": "S3 x 1.3 - 1.65 on solve work (1.0 - 2.75), report section 5; the combined range is the product with IG-S02's S5a factor of the cell; planning anchors, not thresholds"
+  },
+  "cells": [
+    {
+      "cell": "mega16",
+      "requests": 3,
+      "report": {
+        "s3": [
+          1.3,
+          1.65
+        ],
+        "s3Wide": [
+          1,
+          2.75
+        ],
+        "s5a": [
+          1.7,
+          1.8
+        ],
+        "combinedProduct": [
+          2.21,
+          2.97
+        ]
+      },
+      "serial": {
+        "factor": {
+          "n": 1,
+          "p50": 1.0290373158849673,
+          "p95": 1.0290373158849673,
+          "max": 1.0290373158849673,
+          "upperMedian": 1.0290373158849673,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0290373158849673
+        },
+        "coldFactor": {
+          "n": 1,
+          "p50": 1.0289831282902648,
+          "p95": 1.0289831282902648,
+          "max": 1.0289831282902648,
+          "upperMedian": 1.0289831282902648,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0289831282902648
+        },
+        "cpuRatio": {
+          "n": 1,
+          "p50": 0.9776283857290301,
+          "p95": 0.9776283857290301,
+          "max": 0.9776283857290301,
+          "upperMedian": 0.9776283857290301,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9776283857290301
+        },
+        "verdict": "below the planning range (median 1.03 < 1.30); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "incremental": {
+        "factor": {
+          "n": 3,
+          "p50": 1.0119194753351932,
+          "p95": 1.022604825125855,
+          "max": 1.022604825125855,
+          "upperMedian": 1.0119194753351932,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0006142817037051
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 1.0116415634303202,
+          "p95": 1.0224616068361196,
+          "max": 1.0224616068361196,
+          "upperMedian": 1.0116415634303202,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0004343950838135
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 0.9933517909372586,
+          "p95": 1.0163453850937194,
+          "max": 1.0163453850937194,
+          "upperMedian": 0.9933517909372586,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9796028368794326
+        },
+        "verdict": "below the planning range (median 1.01 < 1.30); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "combined": {
+        "factor": {
+          "n": 3,
+          "p50": 1.9672095956254052,
+          "p95": 1.9827275559304893,
+          "max": 1.9827275559304893,
+          "upperMedian": 1.9672095956254052,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.6596761637720077
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 1.9649061732019526,
+          "p95": 1.9798202813594605,
+          "max": 1.9798202813594605,
+          "upperMedian": 1.9649061732019526,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.6581816203400959
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 0.9850673047130513,
+          "p95": 0.9993885394828791,
+          "max": 0.9993885394828791,
+          "upperMedian": 0.9850673047130513,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9632346787915981
+        },
+        "verdict": "below the planning range (median 1.97 < 2.21); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "earlyExactRegressions": [],
+      "verifiedExact": {
+        "baselineNative": 0,
+        "scopedPool": 0
+      },
+      "speculation": [
+        {
+          "pairId": "mega16:nightmare:1",
+          "baselineStarted": 2,
+          "baselineConsumed": 2,
+          "scopedStarted": 2,
+          "scopedConsumed": 2
+        },
+        {
+          "pairId": "mega16:nightmare:2",
+          "baselineStarted": 2,
+          "baselineConsumed": 2,
+          "scopedStarted": 2,
+          "scopedConsumed": 2
+        },
+        {
+          "pairId": "mega16:nightmare:3",
+          "baselineStarted": 2,
+          "baselineConsumed": 2,
+          "scopedStarted": 2,
+          "scopedConsumed": 2
+        }
+      ]
+    },
+    {
+      "cell": "mega12",
+      "requests": 3,
+      "report": {
+        "s3": [
+          1.3,
+          1.65
+        ],
+        "s3Wide": [
+          1,
+          2.75
+        ],
+        "s5a": [
+          2.8,
+          3
+        ],
+        "combinedProduct": [
+          3.64,
+          4.95
+        ]
+      },
+      "serial": {
+        "factor": {
+          "n": 1,
+          "p50": 1.00739375289317,
+          "p95": 1.00739375289317,
+          "max": 1.00739375289317,
+          "upperMedian": 1.00739375289317,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.00739375289317
+        },
+        "coldFactor": {
+          "n": 1,
+          "p50": 1.0073651639783074,
+          "p95": 1.0073651639783074,
+          "max": 1.0073651639783074,
+          "upperMedian": 1.0073651639783074,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0073651639783074
+        },
+        "cpuRatio": {
+          "n": 1,
+          "p50": 1.0077752696262854,
+          "p95": 1.0077752696262854,
+          "max": 1.0077752696262854,
+          "upperMedian": 1.0077752696262854,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0077752696262854
+        },
+        "verdict": "below the planning range (median 1.01 < 1.30); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "incremental": {
+        "factor": {
+          "n": 3,
+          "p50": 1.019741176026208,
+          "p95": 1.0380464427527218,
+          "max": 1.0380464427527218,
+          "upperMedian": 1.019741176026208,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9719239574812515
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 1.0190041268737433,
+          "p95": 1.0368301965853886,
+          "max": 1.0368301965853886,
+          "upperMedian": 1.0190041268737433,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9701783092980966
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 0.9909561218624258,
+          "p95": 1.0128824476650564,
+          "max": 1.0128824476650564,
+          "upperMedian": 0.9909561218624258,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9738912324706419
+        },
+        "verdict": "below the planning range (median 1.02 < 1.30); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "combined": {
+        "factor": {
+          "n": 3,
+          "p50": 3.3378047849554835,
+          "p95": 3.494662259295981,
+          "max": 3.494662259295981,
+          "upperMedian": 3.3378047849554835,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 2.9503646528556713
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 3.2927774084868955,
+          "p95": 3.4468036721266864,
+          "max": 3.4468036721266864,
+          "upperMedian": 3.2927774084868955,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 2.9117563746022794
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 1.09996995321286,
+          "p95": 1.1350931677018634,
+          "max": 1.1350931677018634,
+          "upperMedian": 1.09996995321286,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.080971490678037
+        },
+        "verdict": "below the planning range (median 3.34 < 3.64); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "earlyExactRegressions": [],
+      "verifiedExact": {
+        "baselineNative": 0,
+        "scopedPool": 0
+      },
+      "speculation": [
+        {
+          "pairId": "mega12:nightmare:1",
+          "baselineStarted": 4,
+          "baselineConsumed": 4,
+          "scopedStarted": 4,
+          "scopedConsumed": 4
+        },
+        {
+          "pairId": "mega12:nightmare:2",
+          "baselineStarted": 4,
+          "baselineConsumed": 4,
+          "scopedStarted": 4,
+          "scopedConsumed": 4
+        },
+        {
+          "pairId": "mega12:nightmare:3",
+          "baselineStarted": 4,
+          "baselineConsumed": 4,
+          "scopedStarted": 4,
+          "scopedConsumed": 4
+        }
+      ]
+    },
+    {
+      "cell": "samurai",
+      "requests": 3,
+      "report": {
+        "s3": [
+          1.3,
+          1.65
+        ],
+        "s3Wide": [
+          1,
+          2.75
+        ],
+        "s5a": [
+          1.7,
+          1.8
+        ],
+        "combinedProduct": [
+          2.21,
+          2.97
+        ]
+      },
+      "serial": {
+        "factor": {
+          "n": 1,
+          "p50": 1.0136678369479235,
+          "p95": 1.0136678369479235,
+          "max": 1.0136678369479235,
+          "upperMedian": 1.0136678369479235,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0136678369479235
+        },
+        "coldFactor": {
+          "n": 1,
+          "p50": 1.013170568145106,
+          "p95": 1.013170568145106,
+          "max": 1.013170568145106,
+          "upperMedian": 1.013170568145106,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.013170568145106
+        },
+        "cpuRatio": {
+          "n": 1,
+          "p50": 0.9971863695234693,
+          "p95": 0.9971863695234693,
+          "max": 0.9971863695234693,
+          "upperMedian": 0.9971863695234693,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9971863695234693
+        },
+        "verdict": "below the planning range (median 1.01 < 1.30); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "incremental": {
+        "factor": {
+          "n": 3,
+          "p50": 1.0179366020118943,
+          "p95": 1.0205160905848327,
+          "max": 1.0205160905848327,
+          "upperMedian": 1.0179366020118943,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9829186764936311
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 1.017351106120893,
+          "p95": 1.0187314332012352,
+          "max": 1.0187314332012352,
+          "upperMedian": 1.017351106120893,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9822390150682786
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 1.0055252532407735,
+          "p95": 1.0263636767120856,
+          "max": 1.0263636767120856,
+          "upperMedian": 1.0055252532407735,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9825286842497393
+        },
+        "verdict": "below the planning range (median 1.02 < 1.30); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "combined": {
+        "factor": {
+          "n": 3,
+          "p50": 1.8261535930669204,
+          "p95": 1.86129027528636,
+          "max": 1.86129027528636,
+          "upperMedian": 1.8261535930669204,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.6670037649772897
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 1.8163305008617057,
+          "p95": 1.8522984324512366,
+          "max": 1.8522984324512366,
+          "upperMedian": 1.8163305008617057,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.6591446913290164
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 1.032781028091644,
+          "p95": 1.0460189381378726,
+          "max": 1.0460189381378726,
+          "upperMedian": 1.032781028091644,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0318453894605062
+        },
+        "verdict": "below the planning range (median 1.83 < 2.21); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "earlyExactRegressions": [],
+      "verifiedExact": {
+        "baselineNative": 0,
+        "scopedPool": 0
+      },
+      "speculation": [
+        {
+          "pairId": "samurai:nightmare:1",
+          "baselineStarted": 2,
+          "baselineConsumed": 2,
+          "scopedStarted": 2,
+          "scopedConsumed": 2
+        },
+        {
+          "pairId": "samurai:nightmare:2",
+          "baselineStarted": 2,
+          "baselineConsumed": 2,
+          "scopedStarted": 2,
+          "scopedConsumed": 2
+        },
+        {
+          "pairId": "samurai:nightmare:42",
+          "baselineStarted": 2,
+          "baselineConsumed": 2,
+          "scopedStarted": 2,
+          "scopedConsumed": 2
+        }
+      ]
+    },
+    {
+      "cell": "classic9",
+      "requests": 3,
+      "report": {
+        "s3": [
+          1.3,
+          1.65
+        ],
+        "s3Wide": [
+          1,
+          2.75
+        ],
+        "s5a": [
+          2.8,
+          3
+        ],
+        "combinedProduct": [
+          3.64,
+          4.95
+        ]
+      },
+      "serial": {
+        "factor": {
+          "n": 1,
+          "p50": 0.9696042287295286,
+          "p95": 0.9696042287295286,
+          "max": 0.9696042287295286,
+          "upperMedian": 0.9696042287295286,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9696042287295286
+        },
+        "coldFactor": {
+          "n": 1,
+          "p50": 0.9680069655488697,
+          "p95": 0.9680069655488697,
+          "max": 0.9680069655488697,
+          "upperMedian": 0.9680069655488697,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9680069655488697
+        },
+        "cpuRatio": {
+          "n": 1,
+          "p50": 1.087134886773876,
+          "p95": 1.087134886773876,
+          "max": 1.087134886773876,
+          "upperMedian": 1.087134886773876,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.087134886773876
+        },
+        "verdict": "slower than the baseline in every observed pair"
+      },
+      "incremental": {
+        "factor": {
+          "n": 3,
+          "p50": 0.9070570987520625,
+          "p95": 0.9852916210889806,
+          "max": 0.9852916210889806,
+          "upperMedian": 0.9070570987520625,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9059196919177697
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 0.9213696737727654,
+          "p95": 0.9890361307983313,
+          "max": 0.9890361307983313,
+          "upperMedian": 0.9213696737727654,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9072548321205762
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 1.1023296320487699,
+          "p95": 1.1278856724074753,
+          "max": 1.1278856724074753,
+          "upperMedian": 1.1023296320487699,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0055093189544015
+        },
+        "verdict": "slower than the baseline in every observed pair"
+      },
+      "combined": {
+        "factor": {
+          "n": 3,
+          "p50": 2.916220358892795,
+          "p95": 3.2018396321529794,
+          "max": 3.2018396321529794,
+          "upperMedian": 2.916220358892795,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.827500356927618
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 2.760484000193333,
+          "p95": 3.048628948206106,
+          "max": 3.048628948206106,
+          "upperMedian": 2.760484000193333,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.8146089544930615
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 1.6369438042900195,
+          "p95": 4.840344168260038,
+          "max": 4.840344168260038,
+          "upperMedian": 1.6369438042900195,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.4076140466032163
+        },
+        "verdict": "below the planning range (median 2.92 < 3.64); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "earlyExactRegressions": [
+        {
+          "pairId": "classic9:nightmare:2",
+          "firstExactOrigin": "keeper",
+          "firstExactOrdinal": 1,
+          "baselinePoolVsNative": 0.9134367696278428,
+          "serial": null,
+          "incremental": 0.9059196919177697,
+          "combined": 0.827500356927618,
+          "regression": true
+        }
+      ],
+      "verifiedExact": {
+        "baselineNative": 1,
+        "scopedPool": 1
+      },
+      "speculation": [
+        {
+          "pairId": "classic9:nightmare:1",
+          "baselineStarted": 8,
+          "baselineConsumed": 8,
+          "scopedStarted": 8,
+          "scopedConsumed": 8
+        },
+        {
+          "pairId": "classic9:nightmare:2",
+          "baselineStarted": 5,
+          "baselineConsumed": 1,
+          "scopedStarted": 5,
+          "scopedConsumed": 1
+        },
+        {
+          "pairId": "classic9:nightmare:3",
+          "baselineStarted": 8,
+          "baselineConsumed": 8,
+          "scopedStarted": 8,
+          "scopedConsumed": 8
+        }
+      ]
+    },
+    {
+      "cell": "killer",
+      "requests": 3,
+      "report": {
+        "s3": [
+          1.3,
+          1.65
+        ],
+        "s3Wide": [
+          1,
+          2.75
+        ],
+        "s5a": [
+          2.8,
+          3
+        ],
+        "combinedProduct": [
+          3.64,
+          4.95
+        ]
+      },
+      "serial": {
+        "factor": {
+          "n": 1,
+          "p50": 0.9424913671079016,
+          "p95": 0.9424913671079016,
+          "max": 0.9424913671079016,
+          "upperMedian": 0.9424913671079016,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9424913671079016
+        },
+        "coldFactor": {
+          "n": 1,
+          "p50": 0.9422929561374108,
+          "p95": 0.9422929561374108,
+          "max": 0.9422929561374108,
+          "upperMedian": 0.9422929561374108,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9422929561374108
+        },
+        "cpuRatio": {
+          "n": 1,
+          "p50": 1.0797039310375953,
+          "p95": 1.0797039310375953,
+          "max": 1.0797039310375953,
+          "upperMedian": 1.0797039310375953,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0797039310375953
+        },
+        "verdict": "slower than the baseline in every observed pair"
+      },
+      "incremental": {
+        "factor": {
+          "n": 3,
+          "p50": 0.9755971855175778,
+          "p95": 0.980416102007725,
+          "max": 0.980416102007725,
+          "upperMedian": 0.9755971855175778,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9425178254823815
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 0.9750882244774071,
+          "p95": 0.9777859833779773,
+          "max": 0.9777859833779773,
+          "upperMedian": 0.9750882244774071,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.9420901693092667
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 1.0573938256865085,
+          "p95": 1.1003408100182295,
+          "max": 1.1003408100182295,
+          "upperMedian": 1.0573938256865085,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0406833441935575
+        },
+        "verdict": "slower than the baseline in every observed pair"
+      },
+      "combined": {
+        "factor": {
+          "n": 3,
+          "p50": 2.496291730994306,
+          "p95": 2.498650404470643,
+          "max": 2.498650404470643,
+          "upperMedian": 2.496291730994306,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 2.016513379099116
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 2.4653442810642128,
+          "p95": 2.4716200219382034,
+          "max": 2.4716200219382034,
+          "upperMedian": 2.4653442810642128,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 2.00562595002776
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 1.2531479893487385,
+          "p95": 1.2850702181686273,
+          "max": 1.2850702181686273,
+          "upperMedian": 1.2531479893487385,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.1678323901570546
+        },
+        "verdict": "below the planning range (median 2.50 < 3.64); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "earlyExactRegressions": [],
+      "verifiedExact": {
+        "baselineNative": 0,
+        "scopedPool": 0
+      },
+      "speculation": [
+        {
+          "pairId": "killer:nightmare:1",
+          "baselineStarted": 8,
+          "baselineConsumed": 8,
+          "scopedStarted": 8,
+          "scopedConsumed": 8
+        },
+        {
+          "pairId": "killer:nightmare:2",
+          "baselineStarted": 8,
+          "baselineConsumed": 8,
+          "scopedStarted": 8,
+          "scopedConsumed": 8
+        },
+        {
+          "pairId": "killer:nightmare:3",
+          "baselineStarted": 8,
+          "baselineConsumed": 8,
+          "scopedStarted": 8,
+          "scopedConsumed": 8
+        }
+      ]
+    },
+    {
+      "cell": "greaterThan",
+      "requests": 3,
+      "report": {
+        "s3": [
+          1.3,
+          1.65
+        ],
+        "s3Wide": [
+          1,
+          2.75
+        ],
+        "s5a": [
+          2.8,
+          3
+        ],
+        "combinedProduct": [
+          3.64,
+          4.95
+        ]
+      },
+      "serial": {
+        "factor": {
+          "n": 1,
+          "p50": 1.0096906922284066,
+          "p95": 1.0096906922284066,
+          "max": 1.0096906922284066,
+          "upperMedian": 1.0096906922284066,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0096906922284066
+        },
+        "coldFactor": {
+          "n": 1,
+          "p50": 1.0094305413661777,
+          "p95": 1.0094305413661777,
+          "max": 1.0094305413661777,
+          "upperMedian": 1.0094305413661777,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.0094305413661777
+        },
+        "cpuRatio": {
+          "n": 1,
+          "p50": 1,
+          "p95": 1,
+          "max": 1,
+          "upperMedian": 1,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1
+        },
+        "verdict": "below the planning range (median 1.01 < 1.30); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "incremental": {
+        "factor": {
+          "n": 3,
+          "p50": 0.9297736324595716,
+          "p95": 0.9331465543709649,
+          "max": 0.9331465543709649,
+          "upperMedian": 0.9297736324595716,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.8873186972778141
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 0.9281889199218185,
+          "p95": 0.9314991055146244,
+          "max": 0.9314991055146244,
+          "upperMedian": 0.9281889199218185,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.8880308238018986
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 1.09524783248814,
+          "p95": 1.1349439061703213,
+          "max": 1.1349439061703213,
+          "upperMedian": 1.09524783248814,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.083912768647282
+        },
+        "verdict": "slower than the baseline in every observed pair"
+      },
+      "combined": {
+        "factor": {
+          "n": 3,
+          "p50": 2.4481538303174397,
+          "p95": 2.7151604425717606,
+          "max": 2.7151604425717606,
+          "upperMedian": 2.4481538303174397,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.8281459970207461
+        },
+        "coldFactor": {
+          "n": 3,
+          "p50": 2.403560163164692,
+          "p95": 2.6855905996984375,
+          "max": 2.6855905996984375,
+          "upperMedian": 2.403560163164692,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 0.8136932314359632
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 1.7278064516129032,
+          "p95": 4.480078380143697,
+          "max": 4.480078380143697,
+          "upperMedian": 1.7278064516129032,
+          "note": "p95 is the observed maximum, not a production-tail estimate",
+          "min": 1.3913417207157928
+        },
+        "verdict": "below the planning range (median 2.45 < 3.64); no measurable gain from this partial S3 when the median is within 0.05 of 1"
+      },
+      "earlyExactRegressions": [
+        {
+          "pairId": "greaterThan:nightmare:1",
+          "firstExactOrigin": "sample",
+          "firstExactOrdinal": 1,
+          "baselinePoolVsNative": 0.8906963674911007,
+          "serial": null,
+          "incremental": 0.9297736324595716,
+          "combined": 0.8281459970207461,
+          "regression": true
+        },
+        {
+          "pairId": "greaterThan:nightmare:2",
+          "firstExactOrigin": "sample",
+          "firstExactOrdinal": 6,
+          "baselinePoolVsNative": 3.059960813292386,
+          "serial": null,
+          "incremental": 0.8873186972778141,
+          "combined": 2.7151604425717606,
+          "regression": false
+        },
+        {
+          "pairId": "greaterThan:nightmare:3",
+          "firstExactOrigin": "sample",
+          "firstExactOrdinal": 4,
+          "baselinePoolVsNative": 2.6235469861084604,
+          "serial": 1.0096906922284066,
+          "incremental": 0.9331465543709649,
+          "combined": 2.4481538303174397,
+          "regression": false
+        }
+      ],
+      "verifiedExact": {
+        "baselineNative": 3,
+        "scopedPool": 3
+      },
+      "speculation": [
+        {
+          "pairId": "greaterThan:nightmare:1",
+          "baselineStarted": 5,
+          "baselineConsumed": 1,
+          "scopedStarted": 5,
+          "scopedConsumed": 1
+        },
+        {
+          "pairId": "greaterThan:nightmare:2",
+          "baselineStarted": 8,
+          "baselineConsumed": 6,
+          "scopedStarted": 8,
+          "scopedConsumed": 6
+        },
+        {
+          "pairId": "greaterThan:nightmare:3",
+          "baselineStarted": 8,
+          "baselineConsumed": 4,
+          "scopedStarted": 8,
+          "scopedConsumed": 4
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "pairId": "mega16:nightmare:1",
+      "cell": "mega16",
+      "seed": 1,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 116041.10789999999,
+        "coldWallMs": 116132.04879999999,
+        "cpuTotalMs": 116188,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 69960.87089999998,
+        "coldWallMs": 70066.20659999999,
+        "cpuTotalMs": 115219,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.64,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 69917.9216,
+        "coldWallMs": 70035.7834,
+        "cpuTotalMs": 114453,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.622,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 1.0006142817037051,
+        "coldSpeedup": 1.0004343950838135,
+        "cpuRatio": 0.9933517909372586
+      },
+      "combined": {
+        "readySpeedup": 1.6596761637720077,
+        "coldSpeedup": 1.6581816203400959,
+        "cpuRatio": 0.9850673047130513
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "mega16:nightmare:2",
+      "cell": "mega16",
+      "seed": 2,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 102686.07100000001,
+        "coldWallMs": 102769.842,
+        "cpuTotalMs": 103032,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "cc87297a51b08ef12f3da5b982af5e27ac2352443e3588ed0c39f0d6a56a826d",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 52407.6214,
+        "coldWallMs": 52512.9703,
+        "cpuTotalMs": 101313,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "cc87297a51b08ef12f3da5b982af5e27ac2352443e3588ed0c39f0d6a56a826d",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.913,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 51790.308099999995,
+        "coldWallMs": 51908.6722,
+        "cpuTotalMs": 102969,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "cc87297a51b08ef12f3da5b982af5e27ac2352443e3588ed0c39f0d6a56a826d",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.965,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 1.0119194753351932,
+        "coldSpeedup": 1.0116415634303202,
+        "cpuRatio": 1.0163453850937194
+      },
+      "combined": {
+        "readySpeedup": 1.9827275559304893,
+        "coldSpeedup": 1.9798202813594605,
+        "cpuRatio": 0.9993885394828791
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "mega16:nightmare:3",
+      "cell": "mega16",
+      "seed": 3,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 107525.0186,
+        "coldWallMs": 107614.8488,
+        "cpuTotalMs": 107547,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 55894.19810000001,
+        "coldWallMs": 55998.628700000016,
+        "cpuTotalMs": 105750,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.879,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 54658.6489,
+        "coldWallMs": 54768.4415,
+        "cpuTotalMs": 103593,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.877,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 104490.8838,
+        "coldWallMs": 104583.68639999999,
+        "cpuTotalMs": 105141,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+        "pool": null
+      },
+      "serial": {
+        "readySpeedup": 1.0290373158849673,
+        "coldSpeedup": 1.0289831282902648,
+        "cpuRatio": 0.9776283857290301
+      },
+      "incremental": {
+        "readySpeedup": 1.022604825125855,
+        "coldSpeedup": 1.0224616068361196,
+        "cpuRatio": 0.9796028368794326
+      },
+      "combined": {
+        "readySpeedup": 1.9672095956254052,
+        "coldSpeedup": 1.9649061732019526,
+        "cpuRatio": 0.9632346787915981
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "mega12:nightmare:1",
+      "cell": "mega12",
+      "seed": 1,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 23352.643099999998,
+        "coldWallMs": 23457.408099999997,
+        "cpuTotalMs": 23828,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "290f5389a3e7d5afb4f16a1ea945014c968b9cbb1b472febc662a8f97e5aaad2",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 7692.945100000001,
+        "coldWallMs": 7815.856,
+        "cpuTotalMs": 26703,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "290f5389a3e7d5afb4f16a1ea945014c968b9cbb1b472febc662a8f97e5aaad2",
+        "pool": {
+          "attemptsStarted": 4,
+          "attemptsConsumed": 4,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 3.165,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 7915.1718,
+        "coldWallMs": 8056.1026,
+        "cpuTotalMs": 27047,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "290f5389a3e7d5afb4f16a1ea945014c968b9cbb1b472febc662a8f97e5aaad2",
+        "pool": {
+          "attemptsStarted": 4,
+          "attemptsConsumed": 4,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 3.059,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 0.9719239574812515,
+        "coldSpeedup": 0.9701783092980966,
+        "cpuRatio": 1.0128824476650564
+      },
+      "combined": {
+        "readySpeedup": 2.9503646528556713,
+        "coldSpeedup": 2.9117563746022794,
+        "cpuRatio": 1.1350931677018634
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "mega12:nightmare:2",
+      "cell": "mega12",
+      "seed": 2,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 22710.7048,
+        "coldWallMs": 22794.9994,
+        "cpuTotalMs": 23297,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "c27720d7a6a903b668cb0fa164c25c5de31fc577013c6437631b1a05ec3f9a85",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 7062.955399999999,
+        "coldWallMs": 7177.692499999997,
+        "cpuTotalMs": 26313,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "c27720d7a6a903b668cb0fa164c25c5de31fc577013c6437631b1a05ec3f9a85",
+        "pool": {
+          "attemptsStarted": 4,
+          "attemptsConsumed": 4,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 3.429,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 6804.084199999999,
+        "coldWallMs": 6922.7271,
+        "cpuTotalMs": 25626,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "c27720d7a6a903b668cb0fa164c25c5de31fc577013c6437631b1a05ec3f9a85",
+        "pool": {
+          "attemptsStarted": 4,
+          "attemptsConsumed": 4,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 3.423,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 1.0380464427527218,
+        "coldSpeedup": 1.0368301965853886,
+        "cpuRatio": 0.9738912324706419
+      },
+      "combined": {
+        "readySpeedup": 3.3378047849554835,
+        "coldSpeedup": 3.2927774084868955,
+        "cpuRatio": 1.09996995321286
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "mega12:nightmare:3",
+      "cell": "mega12",
+      "seed": 3,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 23499.831900000005,
+        "coldWallMs": 23597.58830000001,
+        "cpuTotalMs": 23922,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "da06846642b580acd05fd918eaaf19348df9a69f7e0e569eac26d50079a386cf",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 6857.242400000003,
+        "coldWallMs": 6976.330000000002,
+        "cpuTotalMs": 26095,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "da06846642b580acd05fd918eaaf19348df9a69f7e0e569eac26d50079a386cf",
+        "pool": {
+          "attemptsStarted": 4,
+          "attemptsConsumed": 4,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 3.486,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 6724.492999999999,
+        "coldWallMs": 6846.223499999998,
+        "cpuTotalMs": 25859,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "da06846642b580acd05fd918eaaf19348df9a69f7e0e569eac26d50079a386cf",
+        "pool": {
+          "attemptsStarted": 4,
+          "attemptsConsumed": 4,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 3.477,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 23327.3552,
+        "coldWallMs": 23425.0589,
+        "cpuTotalMs": 24108,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "da06846642b580acd05fd918eaaf19348df9a69f7e0e569eac26d50079a386cf",
+        "pool": null
+      },
+      "serial": {
+        "readySpeedup": 1.00739375289317,
+        "coldSpeedup": 1.0073651639783074,
+        "cpuRatio": 1.0077752696262854
+      },
+      "incremental": {
+        "readySpeedup": 1.019741176026208,
+        "coldSpeedup": 1.0190041268737433,
+        "cpuRatio": 0.9909561218624258
+      },
+      "combined": {
+        "readySpeedup": 3.494662259295981,
+        "coldSpeedup": 3.4468036721266864,
+        "cpuRatio": 1.080971490678037
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "samurai:nightmare:1",
+      "cell": "samurai",
+      "seed": 1,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 26528.6892,
+        "coldWallMs": 26615.370499999997,
+        "cpuTotalMs": 27141,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "f98f3e849c6aa099717fb2d5d7455b5777f03b0ccca5e56c65a7e137acf649f6",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 14825.1244,
+        "coldWallMs": 14927.852900000002,
+        "cpuTotalMs": 28234,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "f98f3e849c6aa099717fb2d5d7455b5777f03b0ccca5e56c65a7e137acf649f6",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.816,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 14527.0854,
+        "coldWallMs": 14653.3742,
+        "cpuTotalMs": 28390,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "f98f3e849c6aa099717fb2d5d7455b5777f03b0ccca5e56c65a7e137acf649f6",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.825,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 1.0205160905848327,
+        "coldSpeedup": 1.0187314332012352,
+        "cpuRatio": 1.0055252532407735
+      },
+      "combined": {
+        "readySpeedup": 1.8261535930669204,
+        "coldSpeedup": 1.8163305008617057,
+        "cpuRatio": 1.0460189381378726
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "samurai:nightmare:2",
+      "cell": "samurai",
+      "seed": 2,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 24933.6141,
+        "coldWallMs": 25020.234300000004,
+        "cpuTotalMs": 25561,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "b6231fc3ecf400a79990bd7f249fe22d4599f9ba8e0dc9ef6b0fdea381d37102",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 13636.152700000006,
+        "coldWallMs": 13742.042100000006,
+        "cpuTotalMs": 26844,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "b6231fc3ecf400a79990bd7f249fe22d4599f9ba8e0dc9ef6b0fdea381d37102",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.869,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 13395.8762,
+        "coldWallMs": 13507.6691,
+        "cpuTotalMs": 26375,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "b6231fc3ecf400a79990bd7f249fe22d4599f9ba8e0dc9ef6b0fdea381d37102",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.877,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 1.0179366020118943,
+        "coldSpeedup": 1.017351106120893,
+        "cpuRatio": 0.9825286842497393
+      },
+      "combined": {
+        "readySpeedup": 1.86129027528636,
+        "coldSpeedup": 1.8522984324512366,
+        "cpuRatio": 1.0318453894605062
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "samurai:nightmare:42",
+      "cell": "samurai",
+      "seed": 42,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 21697.037200000006,
+        "coldWallMs": 21781.642900000006,
+        "cpuTotalMs": 22391,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 12793.266300000003,
+        "coldWallMs": 12895.065500000012,
+        "cpuTotalMs": 22531,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.669,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 13015.589799999998,
+        "coldWallMs": 13128.235899999996,
+        "cpuTotalMs": 23125,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587",
+        "pool": {
+          "attemptsStarted": 2,
+          "attemptsConsumed": 2,
+          "attemptsSpeculative": 0,
+          "peakActive": 2,
+          "meanBusyLanes": 1.671,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 21404.484200000003,
+        "coldWallMs": 21498.4955,
+        "cpuTotalMs": 22328,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 2,
+        "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587",
+        "pool": null
+      },
+      "serial": {
+        "readySpeedup": 1.0136678369479235,
+        "coldSpeedup": 1.013170568145106,
+        "cpuRatio": 0.9971863695234693
+      },
+      "incremental": {
+        "readySpeedup": 0.9829186764936311,
+        "coldSpeedup": 0.9822390150682786,
+        "cpuRatio": 1.0263636767120856
+      },
+      "combined": {
+        "readySpeedup": 1.6670037649772897,
+        "coldSpeedup": 1.6591446913290164,
+        "cpuRatio": 1.032781028091644
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "classic9:nightmare:1",
+      "cell": "classic9",
+      "seed": 1,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 4982.0347,
+        "coldWallMs": 5071.6915,
+        "cpuTotalMs": 5641,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "9667bc7b9b8e771acb4c2ff056f1aa76ac0bc054054a6a5b691800c6efdd38c1",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 1549.6050999999989,
+        "coldWallMs": 1666.8513999999986,
+        "cpuTotalMs": 8187,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "9667bc7b9b8e771acb4c2ff056f1aa76ac0bc054054a6a5b691800c6efdd38c1",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 8,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 3.524,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 1708.3875999999998,
+        "coldWallMs": 1837.2471999999998,
+        "cpuTotalMs": 9234,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "9667bc7b9b8e771acb4c2ff056f1aa76ac0bc054054a6a5b691800c6efdd38c1",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 8,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 3.509,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 0.9070570987520625,
+        "coldSpeedup": 0.9072548321205762,
+        "cpuRatio": 1.1278856724074753
+      },
+      "combined": {
+        "readySpeedup": 2.916220358892795,
+        "coldSpeedup": 2.760484000193333,
+        "cpuRatio": 1.6369438042900195
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "classic9:nightmare:2",
+      "cell": "classic9",
+      "seed": 2,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 654.9475000000002,
+        "coldWallMs": 739.3319999999985,
+        "cpuTotalMs": 1046,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 1,
+        "puzzleHash": "1701c0ee3bb8dc23245541f235b95384045bfd539e299480660f360eab945f45",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 717.0146000000004,
+        "coldWallMs": 836.2271000000001,
+        "cpuTotalMs": 4593,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 1,
+        "puzzleHash": "1701c0ee3bb8dc23245541f235b95384045bfd539e299480660f360eab945f45",
+        "pool": {
+          "attemptsStarted": 5,
+          "attemptsConsumed": 1,
+          "attemptsSpeculative": 4,
+          "peakActive": 4,
+          "meanBusyLanes": 3.419,
+          "firstExactOrigin": "keeper",
+          "firstExactOrdinal": 1
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 791.4769999999999,
+        "coldWallMs": 907.5913,
+        "cpuTotalMs": 5063,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 1,
+        "puzzleHash": "1701c0ee3bb8dc23245541f235b95384045bfd539e299480660f360eab945f45",
+        "pool": {
+          "attemptsStarted": 5,
+          "attemptsConsumed": 1,
+          "attemptsSpeculative": 4,
+          "peakActive": 4,
+          "meanBusyLanes": 3.475,
+          "firstExactOrigin": "keeper",
+          "firstExactOrdinal": 1
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 0.9059196919177697,
+        "coldSpeedup": 0.9213696737727654,
+        "cpuRatio": 1.1023296320487699
+      },
+      "combined": {
+        "readySpeedup": 0.827500356927618,
+        "coldSpeedup": 0.8146089544930615,
+        "cpuRatio": 4.840344168260038
+      },
+      "earlyExact": true
+    },
+    {
+      "pairId": "classic9:nightmare:3",
+      "cell": "classic9",
+      "seed": 3,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 5644.892900000001,
+        "coldWallMs": 5728.148500000001,
+        "cpuTotalMs": 6094,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 1737.0843999999997,
+        "coldWallMs": 1858.3257999999987,
+        "cpuTotalMs": 8531,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 8,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 3.4,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 1763.0155,
+        "coldWallMs": 1878.9261000000001,
+        "cpuTotalMs": 8578,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 8,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 3.477,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 5821.8526,
+        "coldWallMs": 5917.466200000001,
+        "cpuTotalMs": 6625,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+        "pool": null
+      },
+      "serial": {
+        "readySpeedup": 0.9696042287295286,
+        "coldSpeedup": 0.9680069655488697,
+        "cpuRatio": 1.087134886773876
+      },
+      "incremental": {
+        "readySpeedup": 0.9852916210889806,
+        "coldSpeedup": 0.9890361307983313,
+        "cpuRatio": 1.0055093189544015
+      },
+      "combined": {
+        "readySpeedup": 3.2018396321529794,
+        "coldSpeedup": 3.048628948206106,
+        "cpuRatio": 1.4076140466032163
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "killer:nightmare:1",
+      "cell": "killer",
+      "seed": 1,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 18004.2836,
+        "coldWallMs": 18091.556,
+        "cpuTotalMs": 19297,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "4e092605feea23c59789f6a9e8345157e241f675523d07614c7512f554ade73b",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 7064.4895,
+        "coldWallMs": 7175.334500000001,
+        "cpuTotalMs": 23452,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "4e092605feea23c59789f6a9e8345157e241f675523d07614c7512f554ade73b",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 8,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 2.822,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 7205.6033,
+        "coldWallMs": 7338.3487,
+        "cpuTotalMs": 24798,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "4e092605feea23c59789f6a9e8345157e241f675523d07614c7512f554ade73b",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 8,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 2.851,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 0.980416102007725,
+        "coldSpeedup": 0.9777859833779773,
+        "cpuRatio": 1.0573938256865085
+      },
+      "combined": {
+        "readySpeedup": 2.498650404470643,
+        "coldSpeedup": 2.4653442810642128,
+        "cpuRatio": 1.2850702181686273
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "killer:nightmare:2",
+      "cell": "killer",
+      "seed": 2,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 30444.4767,
+        "coldWallMs": 30527.637800000004,
+        "cpuTotalMs": 31454,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "a8fc1719429a1c83d575dace65473bcac17c47e5d1a72ab5c101b2a77eab1cd4",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 14729.158799999997,
+        "coldWallMs": 14841.820399999997,
+        "cpuTotalMs": 35297,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "a8fc1719429a1c83d575dace65473bcac17c47e5d1a72ab5c101b2a77eab1cd4",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 8,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 2.187,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 15097.582299999998,
+        "coldWallMs": 15221.0026,
+        "cpuTotalMs": 36733,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "a8fc1719429a1c83d575dace65473bcac17c47e5d1a72ab5c101b2a77eab1cd4",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 8,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 2.192,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 0.9755971855175778,
+        "coldSpeedup": 0.9750882244774071,
+        "cpuRatio": 1.0406833441935575
+      },
+      "combined": {
+        "readySpeedup": 2.016513379099116,
+        "coldSpeedup": 2.00562595002776,
+        "cpuRatio": 1.1678323901570546
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "killer:nightmare:3",
+      "cell": "killer",
+      "seed": 3,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 21114.450500000006,
+        "coldWallMs": 21200.215200000006,
+        "cpuTotalMs": 22157,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 7972.1235000000015,
+        "coldWallMs": 8080.738200000007,
+        "cpuTotalMs": 25234,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 8,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 2.727,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 8458.3265,
+        "coldWallMs": 8577.457300000002,
+        "cpuTotalMs": 27766,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 8,
+          "attemptsSpeculative": 0,
+          "peakActive": 4,
+          "meanBusyLanes": 2.788,
+          "firstExactOrigin": null,
+          "firstExactOrdinal": null
+        }
+      },
+      "scopedSerial": {
+        "outcome": "complete",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "readyWallMs": 22402.8052,
+        "coldWallMs": 22498.539399999998,
+        "cpuTotalMs": 23923,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 8,
+        "puzzleHash": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+        "pool": null
+      },
+      "serial": {
+        "readySpeedup": 0.9424913671079016,
+        "coldSpeedup": 0.9422929561374108,
+        "cpuRatio": 1.0797039310375953
+      },
+      "incremental": {
+        "readySpeedup": 0.9425178254823815,
+        "coldSpeedup": 0.9420901693092667,
+        "cpuRatio": 1.1003408100182295
+      },
+      "combined": {
+        "readySpeedup": 2.496291730994306,
+        "coldSpeedup": 2.4716200219382034,
+        "cpuRatio": 1.2531479893487385
+      },
+      "earlyExact": false
+    },
+    {
+      "pairId": "greaterThan:nightmare:1",
+      "cell": "greaterThan",
+      "seed": 1,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 926.8663,
+        "coldWallMs": 1013.2113,
+        "cpuTotalMs": 1531,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 1,
+        "puzzleHash": "43209b9cdb1435d74a599787b90ba8a51b69dff73bc7872f6a86a72e054959d9",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 1040.6086000000003,
+        "coldWallMs": 1155.7814000000003,
+        "cpuTotalMs": 6328,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 1,
+        "puzzleHash": "43209b9cdb1435d74a599787b90ba8a51b69dff73bc7872f6a86a72e054959d9",
+        "pool": {
+          "attemptsStarted": 5,
+          "attemptsConsumed": 1,
+          "attemptsSpeculative": 4,
+          "peakActive": 4,
+          "meanBusyLanes": 3.594,
+          "firstExactOrigin": "sample",
+          "firstExactOrdinal": 1
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 1119.2064,
+        "coldWallMs": 1245.2006,
+        "cpuTotalMs": 6859,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 1,
+        "puzzleHash": "43209b9cdb1435d74a599787b90ba8a51b69dff73bc7872f6a86a72e054959d9",
+        "pool": {
+          "attemptsStarted": 5,
+          "attemptsConsumed": 1,
+          "attemptsSpeculative": 4,
+          "peakActive": 4,
+          "meanBusyLanes": 3.586,
+          "firstExactOrigin": "sample",
+          "firstExactOrdinal": 1
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 0.9297736324595716,
+        "coldSpeedup": 0.9281889199218185,
+        "cpuRatio": 1.083912768647282
+      },
+      "combined": {
+        "readySpeedup": 0.8281459970207461,
+        "coldSpeedup": 0.8136932314359632,
+        "cpuRatio": 4.480078380143697
+      },
+      "earlyExact": true
+    },
+    {
+      "pairId": "greaterThan:nightmare:2",
+      "cell": "greaterThan",
+      "seed": 2,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 19319.8998,
+        "coldWallMs": 19421.1339,
+        "cpuTotalMs": 25594,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 6,
+        "puzzleHash": "eef4d6bf7ecd527e0ce83f9fdc21f378fddc394ccf7a6e88c1ac56927aafe0ae",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 6313.7736,
+        "coldWallMs": 6421.8893,
+        "cpuTotalMs": 31376,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 6,
+        "puzzleHash": "eef4d6bf7ecd527e0ce83f9fdc21f378fddc394ccf7a6e88c1ac56927aafe0ae",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 6,
+          "attemptsSpeculative": 2,
+          "peakActive": 4,
+          "meanBusyLanes": 3.619,
+          "firstExactOrigin": "sample",
+          "firstExactOrdinal": 6
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 7115.564700000001,
+        "coldWallMs": 7231.6063,
+        "cpuTotalMs": 35610,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 6,
+        "puzzleHash": "eef4d6bf7ecd527e0ce83f9fdc21f378fddc394ccf7a6e88c1ac56927aafe0ae",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 6,
+          "attemptsSpeculative": 2,
+          "peakActive": 4,
+          "meanBusyLanes": 3.597,
+          "firstExactOrigin": "sample",
+          "firstExactOrdinal": 6
+        }
+      },
+      "scopedSerial": null,
+      "serial": null,
+      "incremental": {
+        "readySpeedup": 0.8873186972778141,
+        "coldSpeedup": 0.8880308238018986,
+        "cpuRatio": 1.1349439061703213
+      },
+      "combined": {
+        "readySpeedup": 2.7151604425717606,
+        "coldSpeedup": 2.6855905996984375,
+        "cpuRatio": 1.3913417207157928
+      },
+      "earlyExact": true
+    },
+    {
+      "pairId": "greaterThan:nightmare:3",
+      "cell": "greaterThan",
+      "seed": 3,
+      "baselineNative": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 11565.7277,
+        "coldWallMs": 11653.897,
+        "cpuTotalMs": 15500,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "pool": null
+      },
+      "baselinePooled": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 4408.431700000001,
+        "coldWallMs": 4516.464699999997,
+        "cpuTotalMs": 24452,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 4,
+          "attemptsSpeculative": 4,
+          "peakActive": 4,
+          "meanBusyLanes": 3.903,
+          "firstExactOrigin": "sample",
+          "firstExactOrdinal": 4
+        }
+      },
+      "scopedPool": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 4724.265099999999,
+        "coldWallMs": 4848.598,
+        "cpuTotalMs": 26781,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "pool": {
+          "attemptsStarted": 8,
+          "attemptsConsumed": 4,
+          "attemptsSpeculative": 4,
+          "peakActive": 4,
+          "meanBusyLanes": 3.897,
+          "firstExactOrigin": "sample",
+          "firstExactOrdinal": 4
+        }
+      },
+      "scopedSerial": {
+        "outcome": "complete",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "readyWallMs": 11454.723500000004,
+        "coldWallMs": 11545.021200000003,
+        "cpuTotalMs": 15500,
+        "cpuResolutionStatus": "resolved",
+        "attemptsUsed": 4,
+        "puzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "pool": null
+      },
+      "serial": {
+        "readySpeedup": 1.0096906922284066,
+        "coldSpeedup": 1.0094305413661777,
+        "cpuRatio": 1
+      },
+      "incremental": {
+        "readySpeedup": 0.9331465543709649,
+        "coldSpeedup": 0.9314991055146244,
+        "cpuRatio": 1.09524783248814
+      },
+      "combined": {
+        "readySpeedup": 2.4481538303174397,
+        "coldSpeedup": 2.403560163164692,
+        "cpuRatio": 1.7278064516129032
+      },
+      "earlyExact": true
+    }
+  ],
+  "parity": {
+    "verdicts": {
+      "ok": 18,
+      "failed": 0
+    },
+    "synthetic": {
+      "verdict": "pass",
+      "coverage": {
+        "scenarios": 9,
+        "skippedScopes": 757,
+        "crossingScopes": 108,
+        "multiCheckScopes": 0,
+        "maxDistinctResidues": 116,
+        "virtualNodeChecks": 108,
+        "positives": 227
+      },
+      "mutations": [
+        {
+          "mutation": "stale-peers",
+          "detected": true,
+          "scenariosDiffering": 9
+        },
+        {
+          "mutation": "last-count",
+          "detected": true,
+          "scenariosDiffering": 9
+        },
+        {
+          "mutation": "dirty-first",
+          "detected": true,
+          "scenariosDiffering": 9
+        },
+        {
+          "mutation": "bulk-check",
+          "detected": true,
+          "scenariosDiffering": 9
+        }
+      ],
+      "restored": true
+    },
+    "perSet": {
+      "canonical": {
+        "puzzles": 18,
+        "unlimitedEqual": 18,
+        "failuresTested": 191,
+        "failuresEqual": 191,
+        "checks": 97457
+      },
+      "floor": {
+        "puzzles": 18,
+        "unlimitedEqual": 18,
+        "failuresTested": 180,
+        "failuresEqual": 180,
+        "checks": 96841
+      },
+      "oracle": {
+        "puzzles": 18,
+        "unlimitedEqual": 18,
+        "failuresTested": 219,
+        "failuresEqual": 219,
+        "checks": 108822
+      },
+      "proposal": {
+        "puzzles": 18,
+        "unlimitedEqual": 18,
+        "failuresTested": 180,
+        "failuresEqual": 180,
+        "checks": 29412
+      }
+    }
+  },
+  "identity": {
+    "ok": 43,
+    "failed": 0,
+    "notComparable": 0,
+    "requests": {
+      "total": 24,
+      "ok": 24,
+      "failed": 0,
+      "notComparable": 0
+    }
+  },
+  "coverageSummary": {
+    "families": [
+      {
+        "id": "nakedSingle",
+        "status": "proved + exercised (skipped scopes under audit)",
+        "skippedAudit": 1268188,
+        "skippedTiming": 1829497618,
+        "virtualNodeChecksAudit": 0,
+        "virtualNodeChecksTiming": 0
+      },
+      {
+        "id": "hiddenSingleBox",
+        "status": "proved + exercised (skipped scopes under audit)",
+        "skippedAudit": 62625,
+        "skippedTiming": 72704958,
+        "virtualNodeChecksAudit": 0,
+        "virtualNodeChecksTiming": 0
+      },
+      {
+        "id": "hiddenSingleLine",
+        "status": "proved + exercised (skipped scopes under audit)",
+        "skippedAudit": 62542,
+        "skippedTiming": 52285638,
+        "virtualNodeChecksAudit": 0,
+        "virtualNodeChecksTiming": 0
+      },
+      {
+        "id": "nakedPair",
+        "status": "proved + exercised (skipped scopes under audit)",
+        "skippedAudit": 30582,
+        "skippedTiming": 21833513,
+        "virtualNodeChecksAudit": 63,
+        "virtualNodeChecksTiming": 52744
+      },
+      {
+        "id": "hiddenPair",
+        "status": "proved + exercised (skipped scopes under audit)",
+        "skippedAudit": 24582,
+        "skippedTiming": 19474356,
+        "virtualNodeChecksAudit": 76,
+        "virtualNodeChecksTiming": 65336
+      },
+      {
+        "id": "nakedTriple",
+        "status": "proved + exercised (skipped scopes under audit)",
+        "skippedAudit": 20222,
+        "skippedTiming": 18336336,
+        "virtualNodeChecksAudit": 226,
+        "virtualNodeChecksTiming": 187820
+      },
+      {
+        "id": "hiddenTriple",
+        "status": "proved + exercised (skipped scopes under audit)",
+        "skippedAudit": 18833,
+        "skippedTiming": 17835458,
+        "virtualNodeChecksAudit": 170,
+        "virtualNodeChecksTiming": 181543
+      },
+      {
+        "id": "nakedQuad",
+        "status": "proved + exercised (skipped scopes under audit)",
+        "skippedAudit": 14852,
+        "skippedTiming": 14233752,
+        "virtualNodeChecksAudit": 321,
+        "virtualNodeChecksTiming": 311885
+      },
+      {
+        "id": "hiddenQuad",
+        "status": "proved + exercised (skipped scopes under audit)",
+        "skippedAudit": 14679,
+        "skippedTiming": 14193258,
+        "virtualNodeChecksAudit": 284,
+        "virtualNodeChecksTiming": 274831
+      }
+    ],
+    "nativeFullScan": 17,
+    "invalidations": {
+      "audit": {
+        "cellsInvalidated": 185206,
+        "unitsInvalidated": 220564,
+        "solves": 72,
+        "steps": 8665
+      },
+      "timing": {
+        "cellsInvalidated": 359997142,
+        "unitsInvalidated": 463714339,
+        "solves": 181533,
+        "steps": 17281319
+      }
+    },
+    "virtualCheckCharges": {
+      "audit": {
+        "virtualEntryChecks": 123750,
+        "virtualNodeChecks": 1140
+      },
+      "timing": {
+        "virtualEntryChecks": 105906673,
+        "virtualNodeChecks": 1074159
+      }
+    },
+    "scopeAuditViolations": {
+      "audit": 0,
+      "timing": 0
+    }
+  },
+  "machine": {
+    "allocationMs": 1320000,
+    "chargedMs": 1307230,
+    "remainingMs": 102770,
+    "commands": 12,
+    "priorityWaitMs": 959947,
+    "entries": [
+      {
+        "shard": "audit-1",
+        "attemptId": "a1",
+        "status": "parity-failed",
+        "occupiedMs": 264093,
+        "chargedMs": 309093,
+        "priorityWaitMs": 135489,
+        "requestedAt": "2026-11-14T17:37:30.351428Z",
+        "endedAt": "2026-11-14T17:44:09.93312Z"
+      },
+      {
+        "shard": "audit-1",
+        "attemptId": "a2",
+        "status": "complete",
+        "occupiedMs": 2141,
+        "chargedMs": 47141,
+        "priorityWaitMs": 45216,
+        "requestedAt": "2026-11-14T17:49:12.6448237Z",
+        "endedAt": "2026-11-14T17:50:00.0018395Z"
+      },
+      {
+        "shard": "audit-2",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 4055,
+        "chargedMs": 49055,
+        "priorityWaitMs": 45207,
+        "requestedAt": "2026-11-14T17:50:57.6368753Z",
+        "endedAt": "2026-11-14T17:51:46.8991036Z"
+      },
+      {
+        "shard": "sc-c9",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 6504,
+        "chargedMs": 51504,
+        "priorityWaitMs": 72192,
+        "requestedAt": "2026-11-14T17:51:47.1992414Z",
+        "endedAt": "2026-11-14T17:53:05.8956388Z"
+      },
+      {
+        "shard": "sc-gt",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 15443,
+        "chargedMs": 60443,
+        "priorityWaitMs": 45120,
+        "requestedAt": "2026-11-14T17:53:06.1459672Z",
+        "endedAt": "2026-11-14T17:54:06.709005Z"
+      },
+      {
+        "shard": "sc-killer",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 33046,
+        "chargedMs": 78046,
+        "priorityWaitMs": 45121,
+        "requestedAt": "2026-11-14T17:54:07.1014217Z",
+        "endedAt": "2026-11-14T17:55:25.2688486Z"
+      },
+      {
+        "shard": "sc-m12",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 23674,
+        "chargedMs": 68674,
+        "priorityWaitMs": 45127,
+        "requestedAt": "2026-11-14T17:55:25.6654468Z",
+        "endedAt": "2026-11-14T17:56:34.4663995Z"
+      },
+      {
+        "shard": "sc-sam",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 43263,
+        "chargedMs": 88263,
+        "priorityWaitMs": 45117,
+        "requestedAt": "2026-11-14T17:56:34.7025726Z",
+        "endedAt": "2026-11-14T17:58:03.0829561Z"
+      },
+      {
+        "shard": "sc-m16",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 178822,
+        "chargedMs": 223822,
+        "priorityWaitMs": 96280,
+        "requestedAt": "2026-11-14T17:58:03.5188054Z",
+        "endedAt": "2026-11-14T18:02:38.6209093Z"
+      },
+      {
+        "shard": "ser-small",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 41767,
+        "chargedMs": 86767,
+        "priorityWaitMs": 45120,
+        "requestedAt": "2026-11-14T18:02:38.8665596Z",
+        "endedAt": "2026-11-14T18:04:05.7538205Z"
+      },
+      {
+        "shard": "ser-m12-sam",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 47068,
+        "chargedMs": 92068,
+        "priorityWaitMs": 60171,
+        "requestedAt": "2026-11-14T18:04:06.2132093Z",
+        "endedAt": "2026-11-14T18:05:53.4520704Z"
+      },
+      {
+        "shard": "ser-m16",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 107354,
+        "chargedMs": 152354,
+        "priorityWaitMs": 279787,
+        "requestedAt": "2026-11-14T18:22:53.9486824Z",
+        "endedAt": "2026-11-14T18:29:21.0897475Z"
+      }
+    ],
+    "note": "charged = occupied wrapper time + the 45 s quiet-admission grace per command; the priority wait is not charged",
+    "approvedExtraMs": 90000,
+    "approvals": [
+      {
+        "task": "IG-S03",
+        "extraMs": 90000,
+        "by": "orchestrator (claude-opus-5.5) 2026-11-15 01:25 +07:00: serial scoped-native-w1 mega16:3 only"
+      }
+    ]
+  },
+  "sources": {
+    "runtimeFingerprints": [
+      "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a"
+    ],
+    "harnessFingerprints": [
+      "baeb9ea2c1ae6477e2b9a83efc57d73975a204b450b95f7b80e76f1706a20944",
+      "dedddaef9979cddbc692430588e0962ae9c5a8926d1e599c05b537ca4d80e58c"
+    ],
+    "adapterHashes": [
+      "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f",
+      "df76326083d5e98de7e55bea3d8a2c45106c8a62ae46f30481adbd25b5b20d8f",
+      "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06"
+    ],
+    "adapterIds": [
+      "scoped-solver",
+      "scoped-audit",
+      "attempt-pool"
+    ],
+    "sourceStable": true,
+    "firewallClean": true,
+    "commandStatuses": [
+      "audit-1:a2:complete",
+      "audit-2:a1:complete",
+      "sc-c9:a1:complete",
+      "sc-gt:a1:complete",
+      "sc-killer:a1:complete",
+      "sc-m12:a1:complete",
+      "sc-sam:a1:complete",
+      "sc-m16:a1:complete",
+      "ser-small:a1:complete",
+      "ser-m12-sam:a1:complete",
+      "ser-m16:a1:complete"
+    ]
+  },
+  "timingInstanceInstrumentation": {
+    "auditAdapterLoaded": false,
+    "note": "timing arms load only the adapters scoped-solver (and attempt-pool): no per-check hashing, no per-finder clock; only integer counters"
+  },
+  "acceptance": [
+    {
+      "id": "B01",
+      "status": "met",
+      "evidence": "every table labels the prototype PARTIAL S3 and the planning range as the full-S3 forecast of the report; no figure is presented as the forecast"
+    },
+    {
+      "id": "B02",
+      "status": "met",
+      "evidence": "request identity 43 ok / 0 failed; unlimited parity on every audited set; injected failures equal"
+    },
+    {
+      "id": "B03",
+      "status": "met",
+      "evidence": "18 of 18 scoped-pool requests (all six headline rows) completed with matched IG-S02 baselines; the two-attempt local work stays limited (peak active attempts in the pool records); serial rows completed: 6 of 6 (a timing-plan item, not part of this criterion)"
+    },
+    {
+      "id": "T01",
+      "status": "met",
+      "evidence": "18 saved puzzles audited; Finding/step/rating digests and the logical check sequences equal in all four sets"
+    },
+    {
+      "id": "T02",
+      "status": "met",
+      "evidence": "count failures at the first, middle, last and skipped-scope boundary checks fail at the same ordinal, site and with the same error fields"
+    },
+    {
+      "id": "T03",
+      "status": "met",
+      "evidence": "synthetic states crossing the cadence, peer invalidation (shadow check), per-solve isolation and budget-error cleanup; the four deliberate mutations are detected and the prototype restored"
+    },
+    {
+      "id": "T04",
+      "status": "met",
+      "evidence": "uncensored scoped outputs against IG-S02's native and pooled digests (every section)"
+    },
+    {
+      "id": "T05",
+      "status": "met",
+      "evidence": "timing instances carry no audit instrumentation; skipped/real/virtual counters and CPU are in the records"
+    }
+  ],
+  "limitations": [
+    "multi-check scopes: 0 skipped scopes of the saved puzzles and 0 of the synthetic states charged two or more virtual node checks (the units of these boards enumerate fewer than 512 nodes per scan); the crossing of the cadence with different incoming residues IS exercised at engine level, the replay of several checks in one scope only by the engine-free tests of scoped-test.cjs on the same runtime code (every ordinal of scripts with multi-check scopes is swept there)",
+    "no solve of the audit population reached a real ceiling by itself: the longest has 28643 checks (ceilings: 100,000 objective, 30,000 Killer rating); naturally binding captured cases: 0. Every ceiling case is boundary-injected by controlled precharge",
+    "the focused engine-free tests (per-solve isolation, budget-error cleanup, mutations on a fake of the engine pieces) ran outside the wrapper because they load no engine and time nothing; their transcript is kept beside this summary",
+    "S3 counters of a pooled request cover the pipeline runs that finished in its workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+  ],
+  "attachments": {
+    "parity": "parity-r2.json",
+    "checkSequences": "check-sequences-r2.json",
+    "coverage": "coverage-r2.json"
+  },
+  "revision": {
+    "file": "summary-r2",
+    "supersedes": "summary.json/md (kept unchanged as history; written before the sixth serial request, with the earlier B03 text)"
+  }
+}
