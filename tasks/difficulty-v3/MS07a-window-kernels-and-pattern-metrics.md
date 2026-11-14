@@ -151,14 +151,14 @@ Return the inherited/new item list, quick coverage and CI ownership.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (SA1 verdict: accept, no fix round; IR52 carried to MS07b) |
+| Start | 2026-11-15 00:29 (+07:00) |
+| End | 2026-11-15 01:48 developer; 01:50-02:10 SA1 implementation review (`claude-opus-5.5/15-review-of-ms07a.md`); orchestrator commit |
+| Duration | 1 h 19 min developer (final quick groups 690.2 s, Player 31.8 s); about 20 min review |
+| Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (SA1 review); claude-opus-5.5 (orchestrator) |
+| Token usage | 233 model calls; 92,404,025 input tokens (91,741,126 cache reads); 295,908 output tokens |
+| AI credits | about 1,379 (developer) |
+| Verification | Developer: unregistered windowed kernels in `core/js/engine/tech-chain.js` (`SG.chainSearch`), measurement CLI `generator/tests/pattern-cost.js` with fixtures, tests `tech-chain` 62 -> 89, `techniques` 165 -> 169, new `pattern-cost-tools` 28 (Generator quick 3,405, Player 1,714); three kernel mutations detected; differential against HEAD's `tech-chain.js`: 35,020 `forcingChain`/`nishio` finds (findings, error codes, budget ticks) identical in all 66 runs; the registered finders keep their old cadence; output-pinning suites pass; wrapper cost +2.6 % on a find-only microbenchmark. CLI `--ids=forcingChain,nishio --runs=20`: 6/6 cases complete, largest forcing case 22,221 of 50,000 units. Final quick runs on the final tree: Generator 3,405/3,405 (690.2 s; `ae9c1dfe…`), Player 1,714/1,714 (`1b727545…`); CI check exit 0. SA1 recomputed both fingerprints and the CLI record hashes. Orchestrator: locked focused re-run `--suite=tech-chain,techniques,pattern-cost-tools,replay,steps,help` 527/527 (35.3 s); CI check 3,405 of 3,405 |
+| Acceptance | MS07a's criteria met: the kernels are unregistered and inert in production (no registration, window, default, help example or generated-output change); the differential is a sound proof of unchanged behaviour; the tests catch wrong windows, off-by-one bounds, summed chains, a skipped Nishio depth 1, unenforced caps and stale counters; the CLI is deterministic and bounded (480 s budget, `--runs` <= 200, incomplete runs fail). Evidence: `docs/difficulty-v3/evidence/MS07a/` |
+| Issues & resolutions | IR53 deviation rulings: the impossible "4/6" case replaced by 7/6 and 3/2 (accepted); the old cadence for the registered finders (accepted); absent `workLimit` = 50,000 and `null`/`Infinity` = unbounded is within scope (R10's "50000 per new finder"; the evidence's "the task does not name a default" is inaccurate); the seam leaves `maxChainLength`/`maxNishioDepth` to the MS07b wrapper (accepted); empty `supplements` (accepted). IR52 (Minor): up to about 283 units can pass between budget checks on 9x9 while the engine comment and design 6.6 say 256 -> MS07b. IR54/IR55 (Info) -> MS07b's brief |
+| Handoff | MS07b: explicit `workLimit` for each of the four IDs (SA2 ruling on the existing `forcingChain`/`nishio` limit), explicit min/max windows, own budget checks (a swallowed budget error reports `capHit: null`), supplements at the scoped `lawOfLeftovers` call site; IR52 strict gate or rewording; IR55 evidence notes. Items unchanged; S-AV08 690.2 s |

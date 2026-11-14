@@ -746,6 +746,17 @@
   /** Current fixtures that replace a historical entry (none yet), in the shape of the entries of the map. */
   var CURRENT = {};
 
+  /**
+   * Supplemental soundness positions per technique id (rating v3, MS07a; none yet). The sweep of
+   * techniques.test.js always runs the complete seeded random population of its call site first (120 states for
+   * the chain group, 300 for the others, seed 20260101, minFirings 3) and these positions after it, so that a
+   * rare pattern gets real positions without weakening or replacing the random ones. An entry is a list of
+   * positions in the shape of the positive fixtures above ({ name, puzzle, after, propagate }): a real puzzle
+   * with exactly one solution, and an explicit `after` array of registered ids (or null), never the
+   * `before(id)` / `through(id)` of an id that is not in LADDER.
+   */
+  var SUPPLEMENTS = {};
+
   var BY_ID = Object.assign({}, HISTORY_BY_ID, CURRENT);
 
   SG.fixtures.techniques = {
@@ -754,6 +765,7 @@
     historyV2: { ladder: LADDER, byId: HISTORY_BY_ID },
     registryOrder: REGISTRY_ORDER,
     nothingToFind: NOTHING_TO_FIND,
+    supplements: SUPPLEMENTS,
     ladder: LADDER
   };
 })();

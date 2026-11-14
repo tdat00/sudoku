@@ -1,0 +1,75 @@
+MS07a command transcripts (console output as printed; tool and quick-run output copied verbatim, times local +07:00).
+All commands below ran from the generator folder (or the repository root for the CI groups) through Invoke-Dv3Node,
+except the registration-only CI check. Newer tool output follows; the results JSON of every quick shard is in quick/.
+
+=== 1. Narrow selector on the final tree (tests\node-runner.js --suite=tech-chain,techniques,pattern-cost-tools,ui-contract,help)
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   help: 30 passed  (4.05 s)
+ok   pattern-cost-tools: 28 passed  (2.45 s)
+ok   tech-chain: 89 passed  (5.53 s)
+ok   techniques: 169 passed  (1.28 s)
+ok   ui-contract: 67 passed  (335 ms)
+
+Suites: 5
+Tests:  383 total, 383 passed, 0 failed, 0 skipped
+Time:   13.65 s running tests, 13.75 s total
+MS07a narrow final tree exit=0 seconds=13.876
+
+=== 2. Differential against the original tech-chain.js (first run, 2000 states; current, then original)
+finds 35020 ms 922 digest e872019b7ce2f1e53f08b7317a5b03de1d5edf3409728f16f6d671d4b2fc35e6
+MS07a differential current 2000 exit=0 seconds=1.117
+finds 35020 ms 876 digest e872019b7ce2f1e53f08b7317a5b03de1d5edf3409728f16f6d671d4b2fc35e6
+MS07a differential original 2000 exit=0 seconds=1.059
+
+=== 3. Cost of the wrappers, final form (tests\artifacts\difficulty-v3\MS07a\overhead.js, 8 alternating rounds, find-only ms)
+current : 426.902 430.429 423.244 454.095 449.749 426.764 431.463 420.379
+original: 414.233 420.434 429.676 421.088 412.331 418.307 408.926 417.205
+digests e872019b7ce2 equal true
+median ms current 428.6655 original 417.756 ratio 1.026
+MS07a overhead find-only validation-free exit=0 seconds=17.253
+(earlier forms: per-edge call 436.498 against 417.72 = 1.045; batch accounting 433.543 against 421.29 = 1.029;
+ batch accounting with a closure-free path 433.9525 against 414.6085 = 1.047, a baseline that moved by 1.5 percent)
+
+=== 4. Pattern-cost tool, final tree
+> node tests\pattern-cost.js --ids=forcingChain,nishio --runs=20 --json=..\docs\difficulty-v3\evidence\MS07a\pattern-cost-forcingChain-nishio.json
+pattern-cost: 6 of 6 cases x 20 runs (120 finds), complete true, found 4, none 2, outcome not the fixture's 0, capped 0, wall 0.112 s
+  forcingChain:positive:1 found, work 12232 of unbounded, ms p50 0.377 p95 1.133 max 3.660
+  forcingChain:positive:2 found, work 6530 of unbounded, ms p50 0.196 p95 0.284 max 0.300
+  forcingChain:negative:1 none, work 22221 of unbounded, ms p50 0.459 p95 0.598 max 0.602
+  nishio:positive:1 found, work 2 of unbounded, ms p50 0.095 p95 0.175 max 0.852
+  nishio:positive:2 found, work 1 of unbounded, ms p50 0.007 p95 0.014 max 0.029
+  nishio:negative:1 none, work 1458 of unbounded, ms p50 2.079 p95 3.387 max 4.492
+record: docs/difficulty-v3/evidence/MS07a/pattern-cost-forcingChain-nishio.json
+MS07a pattern-cost final tree exit=0 seconds=0.633
+> node tests\pattern-cost.js --ids=forcingChain,nishio --list
+forcingChain:positive:1  first forcingChain on puzzle 1
+forcingChain:positive:2  first forcingChain on puzzle 2
+forcingChain:negative:1  forcingChain has nothing left to do once the ladder through it is exhausted
+nishio:positive:1  first nishio on puzzle 1
+nishio:positive:2  first nishio on puzzle 2
+nishio:negative:1  nishio finds nothing on a board where every candidate is still possible (the empty board)
+> refusals (exit code 2, nothing run): --ids=nope --list -> "unknown technique id nope"; --ids=cageCombo --list ->
+  "technique cageCombo is scoped to [killer]: the tool has no scoped fixtures yet"; --ids=nishio --case=zzz --list ->
+  "empty selection: no case of nishio contains "zzz""; no arguments -> "--ids=<id>[,<id>] is required" and the usage.
+
+=== 5. Final quick runs (one CI group per locked command)
+> generator-quick.js run shared-small:  core-shared 1174/1174 (25.2 s), steps 57/57 (11.8 s), replay 154/154 (11.0 s),
+  mega 111/111 (13.4 s); command 62.755 s, exit 0
+> generator-quick.js run own-suites:    own-fast 1611/1611 (167.3 s), digger-target 75/75 (1.8 s); command 169.984 s, exit 0
+> generator-quick.js run pipeline:      pipeline 154/154 (323.2 s); command 323.563 s, exit 0
+> generator-quick.js run replay-player: player 69/69 (133.5 s); command 133.856 s, exit 0
+> player\tests\node-runner.js:          30 suites, 1714/1714, 31.35 s running tests; command 31.804 s, exit 0
+fingerprints: Generator ae9c1dfedf71ff83913245a021f5277936aca9e33f036608a3407e62c3ea86fa (all eight shards),
+              Player 1b7275453fa216a553bd4b206073c1c2dcdebd71b58be6a731a4eef3ce0c4ad0
+
+=== 6. CI check (bash .github/scripts/generator-suites.sh check, registration only)
+Generator quick set: 3405 tests in 52 suites; Player quick set: 1714 tests in 30 suites
+  group shared-small: 4 shard(s) (core-shared, steps, replay, mega), 1496 tests, projected 630 s of 1800 s
+  group own-suites: 2 shard(s) (own-fast, digger-target), 1686 tests, projected 930 s of 1800 s
+  group pipeline: 1 shard(s) (pipeline), 154 tests, projected 1260 s of 1800 s
+  group replay-player: 1 shard(s) (player), 69 tests, projected 720 s of 1800 s
+  Player job: projected 360 s of 1800 s
+Every quick test is in exactly one shard (3405 of 3405), no manual or unknown suite, no empty shard, every job inside its limit: check passed.
+ci check exit=0 seconds=3.9

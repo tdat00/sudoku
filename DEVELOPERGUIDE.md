@@ -561,7 +561,7 @@ sudoku/                     the repository (see "Layout" in the overview for the
     │                       · help.js · app.js
     └── tests/
         ├── node-runner.js · soak.js · perf.js · qualify.js · replay-fixtures.js · replay-goldens.js
-        │   · difficulty-recovery.js · mega-contract.js
+        │   · difficulty-recovery.js · mega-contract.js · pattern-cost.js
         ├── fixtures/       the fixtures of the generator (rated puzzles, the performance helper with the hash
         │                   corpus and its merge, the regression hashes in regression.js, generated, the
         │                   testkit provider, the pure
@@ -569,10 +569,10 @@ sudoku/                     the repository (see "Layout" in the overview for the
         │                   replay-goldens.js, replay-wire.js, generated, with the helpers of their
         │                   recorders, tool-records.js and replay-recording.js, and the pure helpers of the
         │                   recovery profile driver, recovery-profile.js, of the mega Nightmare deep
-        │                   tier, mega-contract.js, and the lazy per-level corpora of the heavy suites,
-        │                   manual-corpus.js)
+        │                   tier, mega-contract.js, of the pattern-cost tool, pattern-cost.js, and the lazy
+        │                   per-level corpora of the heavy suites, manual-corpus.js)
         ├── suites/         the quick set, run by default together with ../core/tests/suites: one *.test.js per
-        │                   area, 34 of the generator's own (found automatically), smoke.test.js among them
+        │                   area, 36 of the generator's own (found automatically), smoke.test.js among them
         └── manual/         the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
                             extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
@@ -831,7 +831,16 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 1. **Rules of `find`**: read `state`, never write to it (the solver applies the finding, which keeps the
    scoring honest); return `null` when nothing applies, otherwise exactly one deduction that really changes
    the state; no randomness; work on any unit shape through `model.units` (never assume rows and boxes); call
-   `ctx.check()` in long loops.
+   `ctx.check()` in long loops. A bounded search reports its work through the optional observer
+   `ctx.options.onPatternWork(record)` (`{ id, work, limit, capHit, retained }`, a fresh record per call that never
+   selects a result). The chain searches are written once as the unregistered kernels
+   `SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit })` and
+   `SG.chainSearch.nishio(model, state, ctx, { id, minDepth, maxDepth, workLimit })` (`core/js/engine/tech-chain.js`):
+   the inclusive range applies to the **shortest** proof of the whole search (a minimum below `min` gives `null`, so a
+   longer technique never relabels a shorter proof), `length` counts edges (the longer chain of a two-chain proof,
+   not the sum), `workLimit` is 50,000 when absent and `null` for unbounded, and a spent limit gives `null`, never the
+   best proof so far. A registered wrapper intersects its own range with the explicit maximum of its caller; the
+   registered `forcingChain` and `nishio` call the kernels with their old defaults until a task registers more.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -868,7 +877,12 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    positive and negative fixtures to the matching `../core/tests/suites/tech-<group>.test.js` (helpers in
    `../core/tests/fixtures/techniques-helper.js`). The soundness check — a technique must never eliminate a value
    that belongs to the true solution — needs no code of yours: `techniques.test.js` runs it for every registered
-   technique.
+   technique. A rare pattern that the seeded random states seldom reach gets deterministic real positions in the
+   `SUPPLEMENTS` of that fixture file (`{ name, puzzle, after, propagate }` with an explicit `after` array, a puzzle
+   with one solution): the sweep runs the complete random population of its call site first, never fewer states
+   and never a lower firing minimum, and the supplements after it. What a finder costs on its fixtures is measured
+   with `tests/pattern-cost.js` (see "Pattern cost" below); a finder reports its work through
+   `ctx.options.onPatternWork` (`SG.chainSearch` in `core/js/engine/tech-chain.js` is the model).
 6. **A real help example**: the guide of the player (`player/help.html`) shows one real example for every
    technique, and `player/tests/suites/help.test.js` fails until the catalogue has exactly the registered techniques.
    Record real puzzle sources for the new technique and write the catalogue with the bounded help-example tool of the
@@ -879,9 +893,9 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (51 suites, 3,346 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (52 suites, 3,405 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
-node tests/node-runner.js --all                    # quick + manual (59 suites)
+node tests/node-runner.js --all                    # quick + manual (60 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --suite=help --exact="<full name>"   # only the tests of exactly this full name
@@ -890,8 +904,8 @@ node tests/node-runner.js --suite=help --results=<file.json>    # run, and write
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 51 suites,
-3,346 tests — the 35 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 52 suites,
+3,405 tests — the 36 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -925,7 +939,7 @@ the check until its author gives it a shard with a measured bound; it is never p
 `tests/manual/`. `selftest` runs the check on synthetic plans (a gap, a duplicate, an unknown or a manual suite, an
 empty shard, a registration error) and `run <group> --dry-run` prints the commands without running a test. The time
 factor (3 on CI, from the variable `CI`) and the job limits are not raised: split a group instead. CI does not run the
-manual suites, `--all`, the deep tier (`tests/mega-contract.js`), `soak.js`, `perf.js` or `qualify.js`; what replaces
+manual suites, `--all`, the deep tier (`tests/mega-contract.js`), `tests/pattern-cost.js`, `soak.js`, `perf.js` or `qualify.js`; what replaces
 them is offline evidence, kept in `docs/difficulty-v3/evidence/` by the tasks that own it (the 14 deep mega Nightmare
 requests and their relations by the records of MS05r5m reconciled by MS05r6b, the live CV3 outcomes by MS05b3, the
 manual corpora, GD, E, qualification and performance by MS05r6a, MS05r6b and the later gate tasks), and listed in
@@ -941,7 +955,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 59 suites, 51 of them quick (3,346 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 60 suites, 52 of them quick (3,405 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1140,6 +1154,34 @@ on the reference machine and measured by `node tests/perf.js`.
   time"). The interface stays, as a read-only consumer of an invariant request (or `reuse(directory, query)` of the
   tool): the record must match the engine sources, the tool, the normalised configuration, the default attempts and the
   allowance now and its digests must hold; the caller applies its own checks to the decoded copy.
+- **Pattern cost (difficulty v3)** — what a technique finder costs on its real fixtures is evidence for the task that
+  owns the finder (its GP-cost), never a time assertion of a quick test. `tests/pattern-cost.js` measures registered
+  finders on the positive and negative fixtures of the active map of `../core/tests/fixtures/techniques.js` (never
+  the frozen `historyV2`), generates no puzzle and runs no suite. It loads what `tests/node-runner.js` loads, in the
+  same order (the harness, `SOURCE_FILES`, then `FIXTURES_DIRS`, read from that file). Run it through the shared
+  timing lock when others use the machine:
+
+  ```text
+  node tests/pattern-cost.js --ids=forcingChain,nishio --runs=20 --json=<new.json>   # one record: 20 identical finds per case
+  node tests/pattern-cost.js --ids=nishio --list --case=negative                      # the cases, no run
+  ```
+
+  A case is `<id>:<positive|negative>:<n>`; `--case=<text>` keeps the cases whose key or fixture name contains the
+  text. `--ids` takes registered, unscoped technique ids (a scoped technique has no fixtures in the tool before the
+  adapter of MS14b); an unknown id, an id without fixtures and a selection that is empty are refused before any run
+  (exit code 2). `--json` is a new project-relative `.json` file (never overwritten, not inside the fingerprinted
+  sources, for example the evidence folder of a task) and `--runs` is 1 to 200 (default 20). Every run of a case is
+  the same read-only find with a fresh context whose `ctx.options.onPatternWork` collects the work records of the
+  finder (`{ id, work, limit, capHit, retained }`; a finder that reports none has none, never zero) and the state is
+  compared after each run. The record holds the SHA-256 of the engine sources, of the loaded fixtures and of the two
+  tool files, Node, the machine, the configuration and, per case, the Finding with its digest, the work records, the
+  cap hit and min / p50 / p95 / max / mean of the time in milliseconds; everything but the clock readings is
+  deterministic, and a Finding or a work record that changes between runs makes the record incomplete (exit code 1).
+  One caller budget of 480,000 ms, below the 540-second limit of a bounded command, is shared by every find and is
+  checked again after each one, because a finder may turn a spent budget into "nothing found": a spent budget ends the
+  run with the cases measured so far and a problem, never with a short sample. The helpers are
+  `SG.fixtures.patternCost` (`tests/fixtures/pattern-cost.js`), tested on fake observations, fake clocks, the real
+  fixtures of `forcingChain` and `nishio` and the tool itself by the `pattern-cost-tools` suite.
 - **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
   variant offers (40 fixed seeds per variant and level through the real pipeline, 60 more for a borderline level,
   a time budget on the 95th percentile) and prints the table and the support lists; `--variant`, `--level`,
@@ -1278,7 +1320,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 1,683 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 1,714 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

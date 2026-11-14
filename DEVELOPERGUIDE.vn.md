@@ -493,7 +493,7 @@ các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, ki
 
 Xem [cây thư mục ở bản tiếng Anh](DEVELOPERGUIDE.md#directory-tree): `generator/` gồm `index.html`, `tests.html`, `css/`, `js/engine/`
 (bộ máy sinh đề, không DOM; `js/engine/replay.js` là phần phân tích việc phát lại ở thẻ Các bước tạo đề: nước đi, điểm số và các chế độ xem), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
-thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/fixtures/manual-corpus.js`: các kho đề theo từng mức của các suite nặng; `tests/replay-fixtures.js` và `tests/replay-goldens.js`: tạo lại và kiểm tra dữ liệu của suite `replay`; `tests/difficulty-recovery.js`: công cụ chẩn đoán đo một yêu cầu cố định của đợt phục hồi độ khó v3; `tests/mega-contract.js`: tầng kiểm tra sâu cho các yêu cầu Nightmare của mega12 và mega16); phần dùng chung với trình chơi nằm
+thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/fixtures/manual-corpus.js`: các kho đề theo từng mức của các suite nặng; `tests/replay-fixtures.js` và `tests/replay-goldens.js`: tạo lại và kiểm tra dữ liệu của suite `replay`; `tests/difficulty-recovery.js`: công cụ chẩn đoán đo một yêu cầu cố định của đợt phục hồi độ khó v3; `tests/mega-contract.js`: tầng kiểm tra sâu cho các yêu cầu Nightmare của mega12 và mega16; `tests/pattern-cost.js`: công cụ đo chi phí của các bộ tìm kỹ thuật trên các mẫu thật của chúng, không sinh đề); phần dùng chung với trình chơi nằm
 ở `core/` (bộ máy giải, `exchange`, `wordbook`, `symbols`, `board-view`, css nền và từ điển), tài liệu ở `docs/`.
 
 ## Định dạng trao đổi
@@ -586,7 +586,17 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 1. **Quy tắc của `find`**: chỉ đọc `state`, không bao giờ ghi vào (bộ giải tự áp dụng kết quả, nhờ đó điểm số
    luôn trung thực); trả về `null` khi không áp dụng được, nếu không thì trả về đúng một phép suy luận thật sự
    làm đổi trạng thái; không dùng ngẫu nhiên; làm việc với mọi hình dạng nhóm qua `model.units` (không giả định
-   hàng và khối); gọi `ctx.check()` trong các vòng lặp dài.
+   hàng và khối); gọi `ctx.check()` trong các vòng lặp dài. Một phép tìm kiếm có giới hạn báo công việc của nó qua bộ
+   quan sát tùy chọn `ctx.options.onPatternWork(record)` (`{ id, work, limit, capHit, retained }`, mỗi lần gọi một bản
+   ghi mới và nó không bao giờ chọn kết quả). Các phép tìm chuỗi được viết một lần thành các lõi chưa đăng ký
+   `SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit })` và
+   `SG.chainSearch.nishio(model, state, ctx, { id, minDepth, maxDepth, workLimit })` (`core/js/engine/tech-chain.js`):
+   khoảng đóng áp dụng cho chứng minh **ngắn nhất** của toàn bộ phép tìm (cực tiểu nhỏ hơn `min` cho `null`, nên một
+   kỹ thuật dài hơn không bao giờ gắn lại nhãn cho chứng minh ngắn hơn), `length` đếm số cạnh (chuỗi dài hơn của một
+   chứng minh hai chuỗi, không phải tổng), `workLimit` là 50.000 khi vắng mặt và `null` nghĩa là không giới hạn, và khi
+   hết giới hạn thì trả `null`, không bao giờ trả chứng minh tốt nhất đã có. Lớp bao đã đăng ký lấy giao của khoảng của
+   nó với cực đại tường minh của người gọi; `forcingChain` và `nishio` đã đăng ký gọi các lõi với giá trị mặc định cũ
+   cho đến khi một nhiệm vụ đăng ký thêm.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -624,7 +634,12 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    mẫu đúng, mẫu sai vào `../core/tests/suites/tech-<nhóm>.test.js` tương ứng (công
    cụ trong `../core/tests/fixtures/techniques-helper.js`). Phép kiểm tra tính chắc chắn — một kỹ thuật không bao
    giờ được loại một giá trị thuộc về lời giải thật — không cần bạn viết gì: `techniques.test.js` tự chạy nó cho
-   mọi kỹ thuật đã đăng ký.
+   mọi kỹ thuật đã đăng ký. Một mẫu hiếm mà các thế cờ ngẫu nhiên có hạt giống hiếm khi chạm tới thì có các thế cờ
+   thật, tất định trong `SUPPLEMENTS` của tệp mẫu đó (`{ name, puzzle, after, propagate }` với mảng `after` tường
+   minh, đề có đúng một lời giải): lượt quét luôn chạy trọn quần thể ngẫu nhiên của chỗ gọi nó trước, không bao giờ ít
+   thế cờ hơn và không bao giờ hạ mức tối thiểu số lần kích hoạt, rồi mới đến các thế cờ bổ sung. Chi phí của một bộ
+   tìm trên các mẫu của nó được đo bằng `tests/pattern-cost.js` (xem “Chi phí của kỹ thuật” bên dưới); một bộ tìm báo
+   công việc qua `ctx.options.onPatternWork` (`SG.chainSearch` trong `core/js/engine/tech-chain.js` là hình mẫu).
 6. **Ví dụ thật cho trang Trợ giúp**: trang hướng dẫn của trình chơi (`player/help.html`) cho mỗi kỹ thuật một ví dụ
    thật, và `player/tests/suites/help.test.js` báo lỗi cho đến khi danh mục có đúng các kỹ thuật đã đăng ký. Hãy ghi
    các nguồn đề thật cho kỹ thuật mới rồi ghi danh mục bằng công cụ ví dụ trợ giúp có giới hạn của trình chơi, không bao
@@ -635,9 +650,9 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (51 suite, 3.346 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (52 suite, 3.405 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
-node tests/node-runner.js --all                    # nhanh + thủ công (59 suite)
+node tests/node-runner.js --all                    # nhanh + thủ công (60 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --suite=help --exact="<tên đầy đủ>"   # chỉ các bài có đúng tên đầy đủ này
@@ -646,8 +661,8 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 51 suite, 3.346 bài —
-35 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 52 suite, 3.405 bài —
+36 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw` — không thuộc lần chạy mặc định: chạy bằng `--manual` (chỉ các suite này) hoặc
@@ -679,7 +694,7 @@ vậy một suite thêm sau này làm `check` thất bại cho đến khi tác g
 nhặt vào một cách âm thầm, và không bao giờ từ `tests/manual/`. `selftest` chạy phép kiểm tra trên các kế hoạch giả
 (thiếu, trùng, suite lạ hay suite thủ công, đợt rỗng, lỗi đăng ký) và `run <nhóm> --dry-run` in các lệnh mà không
 chạy bài nào. Hệ số thời gian (3 trên CI, từ biến `CI`) và giới hạn của job không được nâng: hãy chia nhỏ nhóm. CI
-không chạy các suite thủ công, `--all`, tầng sâu (`tests/mega-contract.js`), `soak.js`, `perf.js` hay
+không chạy các suite thủ công, `--all`, tầng sâu (`tests/mega-contract.js`), `tests/pattern-cost.js`, `soak.js`, `perf.js` hay
 `qualify.js`; thứ thay thế chúng là bằng chứng ngoại tuyến, lưu trong `docs/difficulty-v3/evidence/` bởi các nhiệm
 vụ sở hữu chúng (14 yêu cầu mega Nightmare sâu và các quan hệ của chúng bằng các bản ghi của MS05r5m do MS05r6b đối
 chiếu, các kết quả CV3 chạy thật bằng MS05b3, các kho đề thủ công, GD, E, kiểm định và hiệu năng bằng MS05r6a, MS05r6b và
@@ -695,7 +710,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 59 suite, trong đó 51 suite nhanh (3.346 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 60 suite, trong đó 52 suite nhanh (3.405 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -891,6 +906,34 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   một"). Giao diện đó vẫn còn, như một bên đọc chỉ-đọc của một yêu cầu invariant (hoặc `reuse(directory, query)` của
   công cụ): bản ghi phải khớp với mã nguồn bộ máy, công cụ, cấu hình đã chuẩn hóa, số lần thử mặc định và hạn mức hiện
   tại, và các mã băm của nó phải đúng; bên gọi tự áp dụng các kiểm tra của riêng mình lên bản sao đã giải mã.
+- **Chi phí của kỹ thuật (độ khó v3)** — một bộ tìm kỹ thuật tốn bao nhiêu trên các mẫu thật của nó là bằng chứng cho
+  nhiệm vụ sở hữu bộ tìm đó (GP-cost của nó), không bao giờ là một khẳng định về thời gian trong bài kiểm thử nhanh.
+  `tests/pattern-cost.js` đo các bộ tìm đã đăng ký trên các mẫu đúng và mẫu sai của bản đồ đang dùng trong
+  `../core/tests/fixtures/techniques.js` (không bao giờ là `historyV2` đã đóng băng), không sinh đề và không chạy suite
+  nào. Nó nạp đúng những gì `tests/node-runner.js` nạp, theo cùng thứ tự (harness, `SOURCE_FILES`, rồi `FIXTURES_DIRS`,
+  đọc từ chính tệp đó). Hãy chạy qua khóa đo thời gian dùng chung khi máy còn người khác dùng:
+
+  ```text
+  node tests/pattern-cost.js --ids=forcingChain,nishio --runs=20 --json=<new.json>   # một bản ghi: 20 lần tìm giống hệt cho mỗi ca
+  node tests/pattern-cost.js --ids=nishio --list --case=negative                      # các ca, không chạy
+  ```
+
+  Một ca là `<id>:<positive|negative>:<n>`; `--case=<text>` giữ các ca có khóa hoặc tên mẫu chứa đoạn chữ đó. `--ids`
+  nhận các id kỹ thuật đã đăng ký và không có phạm vi (kỹ thuật có phạm vi chưa có mẫu trong công cụ trước bộ chuyển
+  đổi của MS14b); id lạ, id không có mẫu và lựa chọn rỗng bị từ chối trước khi chạy (mã thoát 2). `--json` là một
+  tệp `.json` mới, đường dẫn tương đối trong dự án (không bao giờ ghi đè, không nằm trong các nguồn được lấy dấu vân
+  tay, ví dụ thư mục bằng chứng của một nhiệm vụ) và `--runs` từ 1 đến 200 (mặc định 20). Mỗi lần chạy của một ca là
+  cùng một lần tìm chỉ-đọc với một ngữ cảnh mới có `ctx.options.onPatternWork` thu các bản ghi công việc của bộ tìm
+  (`{ id, work, limit, capHit, retained }`; bộ tìm không báo thì không có bản ghi, không bao giờ là số không) và trạng
+  thái được so sánh sau mỗi lần chạy. Bản ghi chứa SHA-256 của các nguồn bộ máy, của các mẫu đã nạp và của hai tệp công
+  cụ, Node, máy, cấu hình và, cho từng ca, Finding cùng mã băm của nó, các bản ghi công việc, lần chạm giới hạn và
+  min / p50 / p95 / max / trung bình của thời gian tính bằng mili giây; mọi thứ trừ số đo đồng hồ đều tất định, và một
+  Finding hay bản ghi công việc đổi giữa các lần chạy làm bản ghi không đầy đủ (mã thoát 1). Một ngân sách của người
+  gọi là 480.000 ms, dưới giới hạn 540 giây của một lệnh có giới hạn, dùng chung cho mọi lần tìm và được kiểm tra lại
+  sau từng lần, vì một bộ tìm có thể biến ngân sách đã cạn thành “không tìm thấy gì”: ngân sách cạn kết thúc đợt chạy
+  với các ca đã đo và một vấn đề, không bao giờ với một mẫu ngắn. Các hàm trợ giúp là `SG.fixtures.patternCost`
+  (`tests/fixtures/pattern-cost.js`), do suite `pattern-cost-tools` kiểm thử trên các quan sát giả, đồng hồ giả, các
+  mẫu thật của `forcingChain` và `nishio` và chính công cụ.
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
   cho phân vị 95) rồi in bảng và danh sách mức; `--variant`, `--level`, `--jobs`, `--json` và `--markdown` thu
@@ -1025,7 +1068,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 1.683 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 1.714 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

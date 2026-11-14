@@ -23,6 +23,8 @@
   /** States per technique in the soundness sweep; the chain group is dearer per state, so it gets fewer. */
   var SWEEP_STATES = { chain: 120 };
   var SWEEP_DEFAULT = 300;
+  /** The seed of the random population (the default of H.assertSound, which does not export it). */
+  var SWEEP_SEED = 20260101;
 
   /** How often each technique fired in the sweep: filled by the tests below, read by the last one. */
   var firings = {};
@@ -35,6 +37,25 @@
 
   function pairs(list) {
     return list.map(function (p) { return p[0] + ':' + p[1]; }).sort();
+  }
+
+  /** The supplemental positions of a technique as soundness states (the shape of randomStatesWithKnownSolution). */
+  function supplementItems(fixtures) {
+    return fixtures.map(function (fixture) {
+      var givens = H.parsePuzzle(model9, fixture.puzzle);
+      return { state: stateOf(fixture), solution: SG.dfs.solve(model9, givens), givens: givens,
+        kind: 'supplement' };
+    });
+  }
+
+  /**
+   * The states of one soundness sweep: the complete seeded random population of the call site, then the
+   * supplemental positions. assertSound uses `states` INSTEAD of generating random ones, so the random
+   * prefix is built here with the helper's own default seed and the supplements are only ever appended.
+   */
+  function sweepStates(count, seed, supplements) {
+    var random = H.randomStatesWithKnownSolution(model9, SG.testkit.rng.create(seed), count);
+    return random.concat(supplements);
   }
 
   describe('techniques: registry', function () {
@@ -167,9 +188,12 @@
       }
 
       it(tech.id + ' never eliminates a candidate of the true solution (' + count + ' states)', function () {
-        var stats = H.assertSound(SG.test, tech.id, { count: count, minFirings: 3 });
+        var supplements = supplementItems(F.supplements[tech.id] || []);
+        var stats = H.assertSound(SG.test, tech.id, {
+          model: model9, count: count, minFirings: 3, states: sweepStates(count, SWEEP_SEED, supplements)
+        });
         firings[tech.id] = stats.firings;
-        expect(stats.states).toBe(count);
+        expect(stats.states).toBe(count + supplements.length);
       });
     });
 
@@ -195,6 +219,77 @@
           }
         });
       });
+    });
+  });
+
+  describe('techniques: supplemental soundness positions (fixtures/techniques.js supplements)', function () {
+    // The mechanism for a rare pattern, shown on two real positions of forcingChain (they are positive fixtures
+    // of the ladder, used here only as a stand-in for a supplement list).
+    var stand = F.byId.forcingChain.positive;
+
+    it('lists supplements only for registered techniques, as explicit real unique positions', function () {
+      Object.keys(F.supplements).forEach(function (id) {
+        expect(SG.techniques.has(id)).toBe(true);
+        expect(Array.isArray(F.supplements[id])).toBe(true);
+        F.supplements[id].forEach(function (fixture) {
+          expect(typeof fixture.name).toBe('string');
+          expect(fixture.puzzle.length).toBe(81);
+          if (fixture.after !== null) {
+            expect(Array.isArray(fixture.after)).toBe(true);
+            fixture.after.forEach(function (after) { expect(SG.techniques.has(after)).toBe(true); });
+          }
+          expect(SG.dfs.countSolutions(model9, H.parsePuzzle(model9, fixture.puzzle), 2)).toBe(1);
+        });
+      });
+    });
+
+    it('builds soundness items with the unique solution that lies in every candidate set', function () {
+      var items = supplementItems(stand);
+      expect(items.length).toBe(stand.length);
+      items.forEach(function (item) {
+        expect(item.kind).toBe('supplement');
+        expect(SG.model.isSolution(model9, item.solution)).toBe(true);
+        for (var c = 0; c < model9.cellCount; c++) {
+          expect(item.state.candidates[c] & (1 << (item.solution[c] - 1))).not.toBe(0);
+        }
+      });
+    });
+
+    it('runs the complete seeded random population first and appends the supplements', function () {
+      var count = 12;
+      var items = supplementItems(stand);
+      var states = sweepStates(count, SWEEP_SEED, items);
+      var random = H.randomStatesWithKnownSolution(model9, SG.testkit.rng.create(SWEEP_SEED), count);
+      expect(states.length).toBe(count + items.length);
+      random.forEach(function (item, i) {
+        expect(states[i].kind).toBe(item.kind);
+        expect(states[i].state.candidates).toEqual(item.state.candidates);
+        expect(states[i].state.value).toEqual(item.state.value);
+        expect(states[i].solution).toEqual(item.solution);
+        expect(states[i].givens).toEqual(item.givens);
+      });
+      expect(states.slice(count)).toEqual(items);
+      expect(sweepStates(count, SWEEP_SEED, []).length).toBe(count);
+    });
+
+    it('counts the supplements on top of the random states and keeps the firing minimum', function () {
+      var count = 12;
+      var items = supplementItems(stand);
+      var stats = H.assertSound(SG.test, 'forcingChain', {
+        model: model9, count: count, minFirings: 3, states: sweepStates(count, SWEEP_SEED, items)
+      });
+      expect(stats.states).toBe(count + items.length);
+      var alone = H.assertSound(SG.test, 'forcingChain', {
+        model: model9, states: sweepStates(count, SWEEP_SEED, [])
+      });
+      expect(alone.states).toBe(count);
+      expect(stats.firings).toBeGreaterThan(alone.firings);
+      // a minimum that the states cannot reach still fails, supplements or not
+      expect(function () {
+        H.assertSound(SG.test, 'forcingChain', {
+          model: model9, minFirings: 1000000, states: sweepStates(count, SWEEP_SEED, items)
+        });
+      }).toThrow({ name: 'AssertionError' });
     });
   });
 

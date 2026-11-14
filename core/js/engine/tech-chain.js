@@ -35,8 +35,10 @@
  * A search only PROVES things; cutting it short (length limit, budget) can only lose deductions, never
  * produce a wrong one. Finding.i18nArgs: { kind, length, chains }; `chains` are paths of [cell, digit, truth]
  * (truth 1 = candidate true, 0 = false), start literal first. `endpoints` has one chain, `contradiction` and
- * `forced` two, ending in both polarities of the same node.
- * i18nKey: 'technique.forcingChain.step.endpoints' | '.contradiction' | '.forced'.
+ * `forced` two, ending in both polarities of the same node. `length` counts edges; for the two chains of a
+ * `contradiction` or `forced` proof it is the longer one, not the sum (their lengths differ by an odd number:
+ * the literals of one node have opposite polarity, and every edge changes the polarity).
+ * i18nKey: 'technique.forcingChain.step.' + kind, with kind 'endpoints' | 'contradiction' | 'forced'.
  *
  * nishio: controlled trial and error. For every open cell (fewest candidates first) and each of its
  * candidates, assume it true on a COPY of the state and run `SG.constraints.place` (peer elimination,
@@ -50,6 +52,30 @@
  * assumption only and only the final contradiction leaves it, so nesting is sound. `maxChainLength` does not
  * apply. Finding: i18nKey 'technique.nishio.step', i18nArgs { cell, label, digit, depth } (the nesting of the
  * guess needed).
+ *
+ * The two searches are also a parameterised seam that no registered technique uses yet (difficulty v3, MS07a;
+ * the registered finders above call it with their old defaults):
+ *
+ *   SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit })
+ *   SG.chainSearch.nishio(model, state, ctx, { id, minDepth, maxDepth, workLimit })
+ *
+ * `id` becomes Finding.technique and the prefix of its i18nKey ('technique.' + id + '.step[.kind]'). The
+ * inclusive range [min, max] is applied to the SHORTEST proof of the whole search: the search always starts
+ * at length (depth) 1 and runs up to max, and a minimum below min is rejected (null), so a longer or deeper
+ * technique called alone never relabels a proof that a shorter one owns. Nothing is clamped here (the seam
+ * serves tests of chains longer than 12 edges); a registered wrapper intersects its own range with the
+ * explicit maximum of its caller. Defaults: min 1, max 12 edges / depth 2. The tie order and the iterative
+ * deepening are those of the registered finders.
+ *
+ * Work. A forcing unit is one edge expansion of the breadth first search, a nishio unit one trial (one
+ * assumption entered on a copy). `workLimit` is a whole number: absent = DEFAULT_WORK_LIMIT (50000, R10),
+ * null = unbounded (what the registered finders use). The counter is reset per call; a bounded call checks
+ * the parent budget at entry and at least every 256 units (a nishio trial always checks). A spent limit ends
+ * the call with null, never with the best proof so far: a proof is published only when its minimum is
+ * established. A spent budget ('budget.exceeded') is "nothing found" as for the registered finders;
+ * cancellation and every other error propagate. An optional `ctx.options.onPatternWork(record)` observes the
+ * call and never selects its result: record = { id, work, limit (null = unbounded), capHit (null | 'work'),
+ * retained (null) }, a fresh object per call.
  */
 (function (root) {
   'use strict';
@@ -67,6 +93,15 @@
 
   /** A nested guess is only tried in cells that have at most this many candidates left. */
   const NESTED_MAX_CANDIDATES = 3;
+
+  // R10: the work units one call of a bounded kernel may spend, and how often it checks its parent budget.
+  const DEFAULT_WORK_LIMIT = 50000;
+  const WORK_CHECK_UNITS = 256;
+
+  const ID_PATTERN = /^[A-Za-z][A-Za-z0-9_]*$/;
+
+  // Thrown through the nested trials of a nishio call whose work limit is spent.
+  const WORK_CAP = Object.freeze({ capHit: 'work' });
 
   const KIND_ENDPOINTS = 'endpoints';
   const KIND_CONTRADICTION = 'contradiction';
@@ -128,17 +163,71 @@
     return Math.min(Math.floor(raw), NISHIO_DEPTH_CEILING);
   }
 
-  // Runs a search and treats a spent budget as "no result". Only 'budget.exceeded' is swallowed; the logical
-  // solver notices the spent budget on its own at the next check.
-  function withBudget(search) {
-    return function find(model, state, ctx) {
-      try {
-        return search(model, state, ctx);
-      } catch (err) {
-        if (err && err.code === 'budget.exceeded') return null;
-        throw err;
+  function invalidOption(seam, key, reason) {
+    const err = new SG.errors.GenerationError('solver.invalidOption',
+      { option: 'chainSearch.' + seam + '.' + key });
+    err.message = 'solver.invalidOption: chainSearch.' + seam + ' ' + key + ' ' + reason;
+    return err;
+  }
+
+  // A window bound of the seam: a number (Infinity included), floored.
+  function bound(seam, key, value, fallback) {
+    if (value === undefined) return fallback;
+    if (typeof value !== 'number' || Number.isNaN(value)) throw invalidOption(seam, key, 'must be a number');
+    return Math.floor(value);
+  }
+
+  // The options of a seam call: { id, min, max, limit } with the work limit Infinity when unbounded.
+  function seamOptions(seam, opts, minKey, maxKey, defaultMax) {
+    if (opts === null || typeof opts !== 'object') throw invalidOption(seam, 'options', 'must be an object');
+    if (typeof opts.id !== 'string' || !ID_PATTERN.test(opts.id)) {
+      throw invalidOption(seam, 'id', 'must be a technique id');
+    }
+    let limit = DEFAULT_WORK_LIMIT;
+    if (opts.workLimit === null) {
+      limit = Infinity;
+    } else if (opts.workLimit !== undefined) {
+      if (typeof opts.workLimit !== 'number' || Number.isNaN(opts.workLimit) || opts.workLimit < 0) {
+        throw invalidOption(seam, 'workLimit', 'must be null or a number of at least 0');
       }
+      limit = Math.floor(opts.workLimit);
+    }
+    return {
+      id: opts.id,
+      min: Math.max(1, bound(seam, minKey, opts[minKey], 1)),
+      max: bound(seam, maxKey, opts[maxKey], defaultMax),
+      limit: limit
     };
+  }
+
+  // A finder call: a spent budget is "no result" (the logical solver notices the spent budget on its own at
+  // the next check); cancellation and every other error propagate. The work goes to the optional observer.
+  function measured(model, state, ctx, spec, run, scan) {
+    let found = null;
+    try {
+      found = scan(model, state, ctx, spec, run);
+    } catch (err) {
+      if (err === WORK_CAP) run.capped = true;
+      else if (!(err && err.code === 'budget.exceeded')) throw err;
+    }
+    const observer = ctx.options ? ctx.options.onPatternWork : undefined;
+    if (typeof observer === 'function') {
+      observer({
+        id: spec.id,
+        work: run.work,
+        limit: spec.limit === Infinity ? null : spec.limit,
+        capHit: run.capped ? 'work' : null,
+        retained: null
+      });
+    }
+    return found;
+  }
+
+  // A bounded call checks its parent budget before an expansion of `n` edges that carries its work over a
+  // multiple of 256, so that no more than 256 units pass between two checks.
+  function gate(run, n) {
+    const reached = Math.floor((run.work + n) / WORK_CHECK_UNITS);
+    if (reached !== Math.floor(run.work / WORK_CHECK_UNITS)) run.ctx.check();
   }
 
   // Collects the strong links of `state` as pairs of nodes and lays them out as adjacency lists (`sStart` /
@@ -334,12 +423,41 @@
       const node = lit >> 1;
       if ((lit & 1) === 1) {
         const count = collectWeak(r, node, expanded);
-        for (let i = 0; i < count; i++) {
-          if (visit(r, expanded[i] * 2, lit, d + 1)) return;
+        // The edges this expansion may still spend (all of them without a limit); a cut ends the search.
+        let todo = count;
+        if (r.bounded) {
+          if (r.workLimit - r.work < count) todo = r.workLimit - r.work;
+          gate(r, todo);
+        }
+        for (let i = 0; i < todo; i++) {
+          if (visit(r, expanded[i] * 2, lit, d + 1)) {
+            r.work += i + 1;
+            return;
+          }
+        }
+        r.work += todo;
+        if (todo < count) {
+          r.capped = true;
+          return;
         }
       } else {
-        for (let k = s.sStart[node]; k < s.sStart[node + 1]; k++) {
-          if (visit(r, s.sTo[k] * 2 + 1, lit, d + 1)) return;
+        const first = s.sStart[node];
+        const count = s.sStart[node + 1] - first;
+        let todo = count;
+        if (r.bounded) {
+          if (r.workLimit - r.work < count) todo = r.workLimit - r.work;
+          gate(r, todo);
+        }
+        for (let i = 0; i < todo; i++) {
+          if (visit(r, s.sTo[first + i] * 2 + 1, lit, d + 1)) {
+            r.work += i + 1;
+            return;
+          }
+        }
+        r.work += todo;
+        if (todo < count) {
+          r.capped = true;
+          return;
         }
       }
     }
@@ -353,7 +471,7 @@
     });
   }
 
-  function buildChainFinding(model, best) {
+  function buildChainFinding(model, best, id) {
     const digits = model.digits;
     const chains = [pathData(digits, best.path)];
     if (best.other !== null) chains.push(pathData(digits, best.other));
@@ -377,34 +495,63 @@
       placements = [[start[0], start[1]]];
     }
     return {
-      technique: 'forcingChain',
+      technique: id,
       cells: cells,
       placements: placements,
       eliminations: eliminations,
-      i18nKey: 'technique.forcingChain.step.' + best.kind,
+      i18nKey: 'technique.' + id + '.step.' + best.kind,
       i18nArgs: { kind: best.kind, length: best.length, chains: chains }
     };
   }
 
-  function findForcingChain(model, state, ctx) {
-    const maxLength = chainLimit(ctx);
-    if (maxLength < 1) return null;
+  // The forcing chain search of the seam: the shortest proof of the whole scan up to `spec.max` links, kept
+  // only when it has at least `spec.min` links. `r` is the search state with the counters of the call.
+  function scanForcing(model, state, ctx, spec, r) {
+    const maxLength = spec.max;
+    if (maxLength < 1 || maxLength < spec.min) return null;
+    if (r.bounded) ctx.check();
     const s = scratchFor(model);
     if (s.stampId > 2000000000) {
       s.stamp.fill(0);
       s.stampId = 0;
     }
     buildStrongLinks(model, state, ctx.completeUnits, s);
+    r.s = s;
 
-    const digits = model.digits;
+    const digits = r.digits;
+    for (let node = 0; node < s.nodes; node++) {
+      const cell = (node / digits) | 0;
+      if (r.val[cell] !== 0 || (r.cand[cell] & (1 << (node - cell * digits))) === 0) continue;
+      for (let truth = 0; truth <= 1; truth++) {
+        if (truth === 0 && s.sStart[node + 1] === s.sStart[node]) continue;
+        const limit = Math.min(maxLength, r.bestLength - 1);
+        if (limit < 1) return buildChainFinding(model, r.best, spec.id);
+        ctx.check();
+        search(r, node, truth, limit);
+        if (r.capped) return null;
+        // The minimum can only fall from here, so a proof below the window is the answer: nothing.
+        if (r.best !== null && r.bestLength < spec.min) return null;
+      }
+    }
+    return r.best === null ? null : buildChainFinding(model, r.best, spec.id);
+  }
+
+  // The search of a spec { id, min, max, limit }: the seam checks one from its options, the registered
+  // finders build theirs with their old defaults.
+  function forcingWith(model, state, ctx, spec) {
     const r = {
       model: model,
-      s: s,
+      s: null,
       n: model.cellCount,
-      digits: digits,
+      digits: model.digits,
       cand: state.candidates,
       val: state.value,
       peers: model.peers,
+      ctx: ctx,
+      bounded: spec.limit !== Infinity,
+      work: 0,
+      workLimit: spec.limit,
+      capped: false,
       stampId: 0,
       startNode: 0,
       startTruth: 0,
@@ -413,24 +560,23 @@
       best: null,
       bestLength: Infinity
     };
+    return measured(model, state, ctx, spec, r, scanForcing);
+  }
 
-    for (let node = 0; node < s.nodes; node++) {
-      const cell = (node / digits) | 0;
-      if (r.val[cell] !== 0 || (r.cand[cell] & (1 << (node - cell * digits))) === 0) continue;
-      for (let truth = 0; truth <= 1; truth++) {
-        if (truth === 0 && s.sStart[node + 1] === s.sStart[node]) continue;
-        const limit = Math.min(maxLength, r.bestLength - 1);
-        if (limit < 1) return buildChainFinding(model, r.best);
-        ctx.check();
-        search(r, node, truth, limit);
-      }
-    }
-    return r.best === null ? null : buildChainFinding(model, r.best);
+  function chainForcing(model, state, ctx, opts) {
+    return forcingWith(model, state, ctx,
+      seamOptions('forcing', opts, 'minLength', 'maxLength', DEFAULT_MAX_CHAIN_LENGTH));
+  }
+
+  // The registered finder: every length from 1 to the caller's limit, no work limit.
+  function findForcingChain(model, state, ctx) {
+    const spec = { id: 'forcingChain', min: 1, max: chainLimit(ctx), limit: Infinity };
+    return forcingWith(model, state, ctx, spec);
   }
 
   // Whether assuming `digit` in `cell` on top of `base` (not modified) leads to a contradiction; with `depth`
   // > 1 nested guesses of `depth - 1` are tried inside the copy. `level` selects the scratch state of this
-  // nesting level.
+  // nesting level. One call is one work unit; a spent work limit unwinds all the levels with WORK_CAP.
   function refutes(r, base, cell, digit, depth, level) {
     const model = r.model;
     let trial = r.pool[level];
@@ -439,6 +585,8 @@
       r.pool[level] = trial;
     }
     r.ctx.check();
+    if (r.work >= r.workLimit) throw WORK_CAP;
+    r.work++;
     SG.model.cloneState(base, trial);
     if (!SG.constraints.place(model, trial, cell, digit, r.budget)) return true;
     if (depth <= 1) return false;
@@ -469,22 +617,17 @@
     }
   }
 
-  function findNishio(model, state, ctx) {
-    const maxDepth = nishioDepth(ctx);
-    if (maxDepth < 1) return null;
+  // The nishio search of the seam: iterative deepening from depth 1, so the first refutation is at the least
+  // depth; it is accepted only when that depth is at least `spec.min` and at most `spec.max`.
+  function scanNishio(model, state, ctx, spec, r) {
+    // A guess is made in an open cell and settles it: no refutation nests deeper than there are cells.
+    const maxDepth = Math.min(spec.max, model.cellCount);
+    if (maxDepth < 1 || maxDepth < spec.min) return null;
+    if (r.bounded) ctx.check();
     const n = model.cellCount;
     const cand = state.candidates;
     const val = state.value;
-    const popcount = SG.bits.popcount;
-    const r = {
-      model: model,
-      ctx: ctx,
-      budget: ctx.budget,
-      n: n,
-      digits: model.digits,
-      popcount: popcount,
-      pool: []
-    };
+    const popcount = r.popcount;
 
     for (let depth = 1; depth <= maxDepth; depth++) {
       // Cells with two candidates first: their trials are the cheapest to understand and to apply.
@@ -497,12 +640,14 @@
             rest ^= low;
             const digit = 32 - Math.clz32(low);
             if (refutes(r, state, cell, digit, depth, 0)) {
+              // The depth only grows from here: a refutation below the window is the answer, nothing.
+              if (depth < spec.min) return null;
               return {
-                technique: 'nishio',
+                technique: spec.id,
                 cells: [cell],
                 placements: [],
                 eliminations: [[cell, digit]],
-                i18nKey: 'technique.nishio.step',
+                i18nKey: 'technique.' + spec.id + '.step',
                 i18nArgs: { cell: cell, label: SG.model.cellLabel(model, cell), digit: digit, depth: depth }
               };
             }
@@ -513,6 +658,35 @@
     return null;
   }
 
+  function nishioWith(model, state, ctx, spec) {
+    const r = {
+      model: model,
+      ctx: ctx,
+      budget: ctx.budget,
+      n: model.cellCount,
+      digits: model.digits,
+      popcount: SG.bits.popcount,
+      pool: [],
+      bounded: spec.limit !== Infinity,
+      work: 0,
+      workLimit: spec.limit,
+      capped: false
+    };
+    return measured(model, state, ctx, spec, r, scanNishio);
+  }
+
+  function chainNishio(model, state, ctx, opts) {
+    return nishioWith(model, state, ctx,
+      seamOptions('nishio', opts, 'minDepth', 'maxDepth', DEFAULT_MAX_NISHIO_DEPTH));
+  }
+
+  // The registered finder: depths 1 to the caller's limit, no work limit.
+  function findNishio(model, state, ctx) {
+    return nishioWith(model, state, ctx, { id: 'nishio', min: 1, max: nishioDepth(ctx), limit: Infinity });
+  }
+
+  SG.chainSearch = { forcing: chainForcing, nishio: chainNishio };
+
   SG.techniques.register({
     id: 'forcingChain',
     group: 'chain',
@@ -521,7 +695,7 @@
     i18nKey: 'technique.forcingChain',
     variantScope: null,
     assumesUniqueness: false,
-    find: withBudget(findForcingChain)
+    find: findForcingChain
   });
 
   SG.techniques.register({
@@ -532,6 +706,6 @@
     i18nKey: 'technique.nishio',
     variantScope: null,
     assumesUniqueness: false,
-    find: withBudget(findNishio)
+    find: findNishio
   });
 })(typeof self !== 'undefined' ? self : globalThis);
