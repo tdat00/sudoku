@@ -1,0 +1,2869 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S04",
+  "shard": "s5-large-reference",
+  "round": "provisional-r1",
+  "attemptId": "a2",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "f197c9cab708af392e23942709d088fb2acc6e852b6252955afdb6e4a0d15dcf",
+  "records": [
+    {
+      "key": "IG-S04/s5-large-reference/mega16:nightmare:12/FS",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": null,
+      "gridCluster": "mega16:12",
+      "requestSeed": 12,
+      "attempt": 1,
+      "sample": 1,
+      "variantId": "FS",
+      "level": "nightmare",
+      "mode": "FS",
+      "normalisedConfig": {
+        "variantId": "mega16",
+        "difficulty": "nightmare",
+        "seed": 12,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "reference",
+      "poolWidth": 1,
+      "sampleMode": "frontier",
+      "parentMode": "snapshot",
+      "floorIds": [
+        {
+          "rung": "cheap",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "middle",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "full",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        }
+      ],
+      "tierIds": [
+        "nishio"
+      ],
+      "limits": {
+        "guardMs": 45000,
+        "guardScope": "sample",
+        "commandDeadlineMs": 178994,
+        "budget": {
+          "floorTests": 384,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 1671168,
+          "solverChecks": 102400000,
+          "dfsEntries": 95200000,
+          "dfsChecks": 95200000
+        },
+        "ceilings": {
+          "floorTests": 384,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 1671168,
+          "solverChecks": 102400000,
+          "dfsEntries": 95200000,
+          "dfsChecks": 95200000
+        }
+      },
+      "limitOrigin": "research safety guard (trial 45 s, observation backstop); count budget: pilot ceilings (diagnostic safety envelopes, not fitted)",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 98.4022,
+        "coldWallMs": 192.05830000000003,
+        "occupiedWallMs": 194.5462,
+        "cpuToDecisionMs": 312,
+        "cpuTotalMs": 312,
+        "cpuReadyTotalMs": 234,
+        "startupMs": 93.65610000000004,
+        "startupCpuMs": 78,
+        "cleanupMs": 2.487899999999968,
+        "readyOccupiedWallMs": 100.89009999999996,
+        "gridBuildWallMs": 13.4842000000001,
+        "gridBuildCpuMs": 46,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 99.50790000000006,
+        "cpuMs": 94,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "veryEasy",
+      "score": 0,
+      "puzzleHash": "ddb986edd01fe246a3c28b875d2f7646f77139957da6f57b98de963a79c6cf64",
+      "attemptsUsed": 1,
+      "samplesUsed": 1,
+      "canonicalRatings": 1,
+      "localProposals": null,
+      "localCapReasons": null,
+      "counts": {
+        "floorTests": 129,
+        "floorDeductions": 6636,
+        "solverChecks": 41674,
+        "dfsEntries": 1641,
+        "dfsChecks": 1542,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1,
+        "canonicalRatings": 1,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "error": null,
+      "arm": "FS",
+      "puzzleVariant": "mega16",
+      "blockKey": "IG-S04/s5-large-reference/mega16:nightmare:12",
+      "shard": "s5-large-reference",
+      "order": 2,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "frontier-hooks"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "frontier-hooks.solve-options",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851"
+        },
+        {
+          "id": "frontier-hooks.step",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851",
+          "afterTextHash": "969bace8cc314fad46f0ccaee045d9d835905b72e48d1b8cac966f97d2dd885f"
+        },
+        {
+          "id": "frontier-hooks.dfs-begin",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+          "afterTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3"
+        },
+        {
+          "id": "frontier-hooks.dfs-entry",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3",
+          "afterTextHash": "c9956d7f967a0870905d466e9e9b4bc7cbfdec0bf4bb5f609f81b24eb0ab4a19"
+        },
+        {
+          "id": "frontier-hooks.digger-boot",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "e7db29bca4eb575efae5c0d4507829d8ec8714f324de1c33cdd6a9d7ba70d90a"
+        }
+      ],
+      "engineElapsedMs": 93.85230000000001,
+      "digests": {
+        "structure": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+        "givens": "ea3ff7b78a5147c891d1fdf8b365cfe0ab6b91b48be1f3bea44ccb4693caca43",
+        "solution": "ea3ff7b78a5147c891d1fdf8b365cfe0ab6b91b48be1f3bea44ccb4693caca43",
+        "rating": "435fb170e0139a784622e2a1928e4d1c999d2e2e384265cb3344e262a908811d",
+        "config": "f5540f91cf20411a5527f0570cd9d331db304f1db0c660df44a9e07ff42d8ff7",
+        "warnings": "8655c0e7356845cc9cc375cdfb4e770af2452d3b2c08b8c3da7fb67003da0639",
+        "log": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "scalars": "bf82d5dcd20186f5ef1f39cc1a78a546bc0bd5c061810a36cffdd360605c5f39",
+        "puzzle": "ddb986edd01fe246a3c28b875d2f7646f77139957da6f57b98de963a79c6cf64",
+        "all": "0a39f8434c203147374a95c1b0b492577741f78e0fe30945de77492502920cab"
+      },
+      "engineTimingsMs": {},
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "performanceScope": "minimal S2 early-exit prototype: no initial-state cache, no reuse of parent eliminations; it shortens accepted tests only",
+      "forkLabels": [
+        "model",
+        "grid#1",
+        "dig#1.1",
+        "dig#1.1>random (native dig order)",
+        "dig#1.1>deepen"
+      ],
+      "gridHash": "4033d980da910122316cfaae7ec6e6dc01f3f9107b060e4af9f6f5a99fcf9b73",
+      "cellCount": 256,
+      "groupCount": 128,
+      "digits": 16,
+      "nativeConstants": {
+        "CAP_RATINGS": 1024,
+        "CAP_PROPOSALS": 32768,
+        "OBJECTIVE_STEPS": 100000,
+        "UNIQUE_NODES": 200000
+      },
+      "gridBuild": {
+        "wallMs": 5.981300000000033,
+        "counters": {
+          "logicalSolves": 0,
+          "deductions": 0,
+          "floorDeductions": 0,
+          "solverChecks": 0,
+          "dfsCalls": 1,
+          "dfsEntries": 111,
+          "dfsChecks": 110
+        }
+      },
+      "gridWorkerWallMs": 5.981300000000033,
+      "progressMessages": 25,
+      "budgetStop": null,
+      "engineCounters": {
+        "logicalSolves": 130,
+        "deductions": 6636,
+        "floorDeductions": 6636,
+        "solverChecks": 41674,
+        "dfsCalls": 50,
+        "dfsEntries": 1641,
+        "dfsChecks": 1542
+      },
+      "enginePurposes": {
+        "canonical": {
+          "solves": 1,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "floor": {
+          "solves": 129,
+          "deductions": 6636,
+          "logicalChecks": 41674,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "dfs": {
+          "solves": 0,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 50,
+          "dfsEntries": 1641,
+          "dfsChecks": 1542
+        }
+      },
+      "best": {
+        "source": "fallback",
+        "quality": 6001,
+        "exact": false,
+        "uniqueness": "full-grid",
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true,
+        "hardestTechnique": null,
+        "entry": null,
+        "clues": 256
+      },
+      "fallback": {
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true
+      },
+      "frontier": {
+        "groups": 128,
+        "rungs": [
+          {
+            "id": "cheap",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "middle",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "full",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle",
+              "forcingChain"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "forcingChain"
+            ]
+          }
+        ],
+        "singleDigitPatterns": [
+          "xWing",
+          "simpleColouring",
+          "swordfish",
+          "jellyfish"
+        ],
+        "passes": [
+          {
+            "rung": "cheap",
+            "index": 0,
+            "ids": 15,
+            "effectiveIds": 14,
+            "tests": 128,
+            "solved": 3,
+            "rederived": 76,
+            "stuckUnique": 1,
+            "stuckUnknown": 0,
+            "ambiguous": 48,
+            "skippedAmbiguous": 0,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 79,
+            "deductionsSolved": 58,
+            "deductionsRederived": 3918,
+            "deductionsStuck": 2616
+          },
+          {
+            "rung": "middle",
+            "index": 1,
+            "ids": 19,
+            "effectiveIds": 18,
+            "tests": 1,
+            "solved": 0,
+            "rederived": 0,
+            "stuckUnique": 0,
+            "stuckUnknown": 0,
+            "ambiguous": 1,
+            "skippedAmbiguous": 48,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 0,
+            "deductionsSolved": 0,
+            "deductionsRederived": 0,
+            "deductionsStuck": 44
+          },
+          {
+            "rung": "full",
+            "index": 2,
+            "ids": 20,
+            "effectiveIds": 19,
+            "tests": 0,
+            "solved": 0,
+            "rederived": 0,
+            "stuckUnique": 0,
+            "stuckUnknown": 0,
+            "ambiguous": 0,
+            "skippedAmbiguous": 49,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 0,
+            "deductionsSolved": 0,
+            "deductionsRederived": 0,
+            "deductionsStuck": 0
+          }
+        ],
+        "removalsCount": 79,
+        "removals": [
+          [
+            60,
+            0,
+            0,
+            2,
+            1
+          ],
+          [
+            10,
+            0,
+            0,
+            4,
+            2
+          ],
+          [
+            71,
+            0,
+            1,
+            4,
+            3
+          ],
+          [
+            50,
+            0,
+            1,
+            7,
+            4
+          ],
+          [
+            22,
+            0,
+            1,
+            9,
+            5
+          ],
+          [
+            106,
+            0,
+            1,
+            7,
+            6
+          ],
+          [
+            29,
+            0,
+            1,
+            12,
+            7
+          ],
+          [
+            57,
+            0,
+            1,
+            12,
+            8
+          ],
+          [
+            42,
+            0,
+            1,
+            15,
+            9
+          ],
+          [
+            44,
+            0,
+            1,
+            16,
+            10
+          ],
+          [
+            58,
+            0,
+            1,
+            14,
+            11
+          ],
+          [
+            54,
+            0,
+            1,
+            17,
+            12
+          ],
+          [
+            63,
+            0,
+            1,
+            16,
+            13
+          ],
+          [
+            20,
+            0,
+            1,
+            27,
+            14
+          ],
+          [
+            126,
+            0,
+            1,
+            16,
+            15
+          ],
+          [
+            34,
+            0,
+            1,
+            28,
+            16
+          ],
+          [
+            70,
+            0,
+            1,
+            21,
+            17
+          ],
+          [
+            32,
+            0,
+            1,
+            32,
+            18
+          ],
+          [
+            104,
+            0,
+            1,
+            22,
+            19
+          ],
+          [
+            51,
+            0,
+            1,
+            30,
+            20
+          ],
+          [
+            65,
+            0,
+            1,
+            27,
+            21
+          ],
+          [
+            67,
+            0,
+            1,
+            28,
+            22
+          ],
+          [
+            127,
+            0,
+            1,
+            24,
+            23
+          ],
+          [
+            64,
+            0,
+            1,
+            33,
+            24
+          ],
+          [
+            123,
+            0,
+            1,
+            28,
+            25
+          ],
+          [
+            1,
+            0,
+            0,
+            52,
+            26
+          ],
+          [
+            113,
+            0,
+            1,
+            31,
+            27
+          ],
+          [
+            88,
+            0,
+            1,
+            35,
+            28
+          ],
+          [
+            2,
+            0,
+            1,
+            57,
+            29
+          ],
+          [
+            43,
+            0,
+            1,
+            51,
+            30
+          ],
+          [
+            46,
+            0,
+            1,
+            49,
+            31
+          ],
+          [
+            117,
+            0,
+            1,
+            36,
+            32
+          ],
+          [
+            30,
+            0,
+            1,
+            60,
+            33
+          ],
+          [
+            12,
+            0,
+            1,
+            65,
+            34
+          ],
+          [
+            97,
+            0,
+            1,
+            41,
+            35
+          ],
+          [
+            62,
+            0,
+            1,
+            52,
+            36
+          ],
+          [
+            36,
+            0,
+            1,
+            61,
+            37
+          ],
+          [
+            49,
+            0,
+            1,
+            58,
+            38
+          ],
+          [
+            11,
+            0,
+            1,
+            75,
+            39
+          ],
+          [
+            21,
+            0,
+            1,
+            74,
+            40
+          ],
+          [
+            87,
+            0,
+            1,
+            51,
+            41
+          ],
+          [
+            82,
+            0,
+            1,
+            53,
+            42
+          ],
+          [
+            105,
+            0,
+            1,
+            48,
+            43
+          ],
+          [
+            68,
+            0,
+            1,
+            71,
+            44
+          ],
+          [
+            13,
+            0,
+            1,
+            85,
+            45
+          ],
+          [
+            24,
+            0,
+            1,
+            83,
+            46
+          ],
+          [
+            6,
+            0,
+            1,
+            92,
+            47
+          ],
+          [
+            37,
+            0,
+            1,
+            83,
+            48
+          ],
+          [
+            15,
+            0,
+            1,
+            91,
+            49
+          ],
+          [
+            90,
+            0,
+            1,
+            45,
+            50
+          ],
+          [
+            78,
+            0,
+            1,
+            51,
+            51
+          ],
+          [
+            116,
+            0,
+            1,
+            40,
+            52
+          ],
+          [
+            95,
+            0,
+            1,
+            36,
+            53
+          ],
+          [
+            112,
+            0,
+            1,
+            72,
+            54
+          ],
+          [
+            19,
+            0,
+            1,
+            102,
+            55
+          ],
+          [
+            39,
+            0,
+            1,
+            81,
+            56
+          ],
+          [
+            28,
+            0,
+            1,
+            88,
+            57
+          ],
+          [
+            53,
+            0,
+            1,
+            100,
+            58
+          ],
+          [
+            80,
+            0,
+            1,
+            47,
+            59
+          ],
+          [
+            41,
+            0,
+            1,
+            111,
+            60
+          ],
+          [
+            56,
+            0,
+            1,
+            78,
+            61
+          ],
+          [
+            110,
+            0,
+            1,
+            50,
+            64
+          ],
+          [
+            125,
+            0,
+            1,
+            20,
+            65
+          ],
+          [
+            8,
+            0,
+            1,
+            109,
+            67
+          ],
+          [
+            5,
+            0,
+            1,
+            128,
+            69
+          ],
+          [
+            114,
+            0,
+            1,
+            25,
+            70
+          ],
+          [
+            55,
+            0,
+            1,
+            98,
+            71
+          ],
+          [
+            85,
+            0,
+            1,
+            42,
+            72
+          ],
+          [
+            101,
+            0,
+            1,
+            28,
+            73
+          ],
+          [
+            98,
+            0,
+            1,
+            55,
+            74
+          ],
+          [
+            17,
+            0,
+            1,
+            123,
+            75
+          ],
+          [
+            76,
+            0,
+            1,
+            76,
+            77
+          ],
+          [
+            72,
+            0,
+            1,
+            10,
+            80
+          ],
+          [
+            118,
+            0,
+            1,
+            39,
+            85
+          ],
+          [
+            9,
+            0,
+            1,
+            96,
+            88
+          ],
+          [
+            102,
+            0,
+            1,
+            130,
+            93
+          ],
+          [
+            120,
+            0,
+            1,
+            25,
+            121
+          ],
+          [
+            91,
+            0,
+            1,
+            145,
+            123
+          ],
+          [
+            83,
+            0,
+            1,
+            21,
+            126
+          ]
+        ],
+        "s2": {
+          "rederived": 76,
+          "solved": 3
+        },
+        "refusals": {
+          "stuckUnique": 1,
+          "stuckUnknown": 0,
+          "ambiguous": 49
+        },
+        "entries": [],
+        "diagnostics": [
+          {
+            "group": 79,
+            "cells": [
+              79,
+              176
+            ],
+            "rung": "cheap",
+            "ordinal": 1,
+            "unsolved": 122,
+            "proof": "unique",
+            "parentHash": "39a6922129414401e8d675a94d86b9710fdd6b5e6a8804dfdb11f23caefca073",
+            "clues": 106,
+            "test": 91,
+            "fate": "ambiguous-later"
+          }
+        ],
+        "phaseB": [],
+        "referenceChecks": [],
+        "deepen": {
+          "runs": [],
+          "proposals": 0
+        },
+        "objectiveKind": "numeric",
+        "phaseCosts": {
+          "init": {
+            "wallMs": 1.1912999999999556,
+            "solves": 1,
+            "deductions": 0,
+            "logicalChecks": 0,
+            "dfsCalls": 0,
+            "dfsEntries": 0,
+            "dfsChecks": 0
+          },
+          "phaseA": {
+            "wallMs": 80.64530000000002,
+            "solves": 129,
+            "deductions": 6636,
+            "logicalChecks": 41674,
+            "dfsCalls": 50,
+            "dfsEntries": 1641,
+            "dfsChecks": 1542
+          }
+        },
+        "finalParentHash": "58c776e374666729d2e7f038cc21459d141d7486df4f11ac402040c2e7bb7dae",
+        "finalClues": 98,
+        "parentMode": "snapshot"
+      },
+      "native": null,
+      "engineMs": 93.85230000000001,
+      "s2Audit": {
+        "status": "audited",
+        "wallMs": 105.23489999999993,
+        "cpuMs": 109,
+        "checkLimit": 300000,
+        "acceptedRemovals": 79,
+        "rederivedRemovals": 76,
+        "audited": 3,
+        "removals": [
+          {
+            "index": 2,
+            "group": 71,
+            "rung": "cheap",
+            "kind": "rederived",
+            "recordedOrdinal": 4,
+            "cells": 2,
+            "status": "audited",
+            "checks": 6,
+            "fullStatus": "solved",
+            "fullSolved": true,
+            "fullOrdinal": 6,
+            "stepsToStuckOrEnd": 6,
+            "rederivedOrdinal": 4,
+            "unsound": false,
+            "ordinalMatches": true,
+            "operationalDisagreement": false,
+            "placedCells": 2
+          },
+          {
+            "index": 40,
+            "group": 87,
+            "rung": "cheap",
+            "kind": "rederived",
+            "recordedOrdinal": 51,
+            "cells": 2,
+            "status": "audited",
+            "checks": 82,
+            "fullStatus": "solved",
+            "fullSolved": true,
+            "fullOrdinal": 82,
+            "stepsToStuckOrEnd": 82,
+            "rederivedOrdinal": 51,
+            "unsound": false,
+            "ordinalMatches": true,
+            "operationalDisagreement": false,
+            "placedCells": 2
+          },
+          {
+            "index": 78,
+            "group": 83,
+            "rung": "cheap",
+            "kind": "rederived",
+            "recordedOrdinal": 21,
+            "cells": 2,
+            "status": "audited",
+            "checks": 160,
+            "fullStatus": "solved",
+            "fullSolved": true,
+            "fullOrdinal": 160,
+            "stepsToStuckOrEnd": 160,
+            "rederivedOrdinal": 21,
+            "unsound": false,
+            "ordinalMatches": true,
+            "operationalDisagreement": false,
+            "placedCells": 2
+          }
+        ],
+        "finalParent": {
+          "hash": "58c776e374666729d2e7f038cc21459d141d7486df4f11ac402040c2e7bb7dae",
+          "recordedHash": "58c776e374666729d2e7f038cc21459d141d7486df4f11ac402040c2e7bb7dae",
+          "hashMatches": true,
+          "ownLastRung": {
+            "rung": "full",
+            "status": "audited",
+            "checks": 160,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          },
+          "fullFloor": {
+            "status": "audited",
+            "checks": 160,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          }
+        },
+        "operationalDisagreements": 0,
+        "correctnessProblems": 0
+      }
+    },
+    {
+      "key": "IG-S04/s5-large-reference/mega16:nightmare:12/FU",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": null,
+      "gridCluster": "mega16:12",
+      "requestSeed": 12,
+      "attempt": 1,
+      "sample": 1,
+      "variantId": "FU",
+      "level": "nightmare",
+      "mode": "FU",
+      "normalisedConfig": {
+        "variantId": "mega16",
+        "difficulty": "nightmare",
+        "seed": 12,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "reference",
+      "poolWidth": 1,
+      "sampleMode": "frontier",
+      "parentMode": "final",
+      "floorIds": [
+        {
+          "rung": "cheap",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "middle",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "full",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        }
+      ],
+      "tierIds": [
+        "nishio"
+      ],
+      "limits": {
+        "guardMs": 45000,
+        "guardScope": "sample",
+        "commandDeadlineMs": 178994,
+        "budget": {
+          "floorTests": 384,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 1671168,
+          "solverChecks": 102400000,
+          "dfsEntries": 95200000,
+          "dfsChecks": 95200000
+        },
+        "ceilings": {
+          "floorTests": 384,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 1671168,
+          "solverChecks": 102400000,
+          "dfsEntries": 95200000,
+          "dfsChecks": 95200000
+        }
+      },
+      "limitOrigin": "research safety guard (trial 45 s, observation backstop); count budget: pilot ceilings (diagnostic safety envelopes, not fitted)",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 85.47609999999986,
+        "coldWallMs": 178.00250000000005,
+        "occupiedWallMs": 180.1785000000002,
+        "cpuToDecisionMs": 281,
+        "cpuTotalMs": 281,
+        "cpuReadyTotalMs": 187,
+        "startupMs": 92.5264000000002,
+        "startupCpuMs": 94,
+        "cleanupMs": 2.1760000000001583,
+        "readyOccupiedWallMs": 87.65210000000002,
+        "gridBuildWallMs": 12.279600000000073,
+        "gridBuildCpuMs": 0,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 97.92999999999984,
+        "cpuMs": 140,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "veryEasy",
+      "score": 0,
+      "puzzleHash": "ddb986edd01fe246a3c28b875d2f7646f77139957da6f57b98de963a79c6cf64",
+      "attemptsUsed": 1,
+      "samplesUsed": 1,
+      "canonicalRatings": 1,
+      "localProposals": null,
+      "localCapReasons": null,
+      "counts": {
+        "floorTests": 129,
+        "floorDeductions": 6636,
+        "solverChecks": 41674,
+        "dfsEntries": 1641,
+        "dfsChecks": 1542,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1,
+        "canonicalRatings": 1,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "error": null,
+      "arm": "FU",
+      "puzzleVariant": "mega16",
+      "blockKey": "IG-S04/s5-large-reference/mega16:nightmare:12",
+      "shard": "s5-large-reference",
+      "order": 3,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "frontier-hooks"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "frontier-hooks.solve-options",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851"
+        },
+        {
+          "id": "frontier-hooks.step",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851",
+          "afterTextHash": "969bace8cc314fad46f0ccaee045d9d835905b72e48d1b8cac966f97d2dd885f"
+        },
+        {
+          "id": "frontier-hooks.dfs-begin",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+          "afterTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3"
+        },
+        {
+          "id": "frontier-hooks.dfs-entry",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3",
+          "afterTextHash": "c9956d7f967a0870905d466e9e9b4bc7cbfdec0bf4bb5f609f81b24eb0ab4a19"
+        },
+        {
+          "id": "frontier-hooks.digger-boot",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "e7db29bca4eb575efae5c0d4507829d8ec8714f324de1c33cdd6a9d7ba70d90a"
+        }
+      ],
+      "engineElapsedMs": 81.88249999999994,
+      "digests": {
+        "structure": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+        "givens": "ea3ff7b78a5147c891d1fdf8b365cfe0ab6b91b48be1f3bea44ccb4693caca43",
+        "solution": "ea3ff7b78a5147c891d1fdf8b365cfe0ab6b91b48be1f3bea44ccb4693caca43",
+        "rating": "435fb170e0139a784622e2a1928e4d1c999d2e2e384265cb3344e262a908811d",
+        "config": "f5540f91cf20411a5527f0570cd9d331db304f1db0c660df44a9e07ff42d8ff7",
+        "warnings": "8655c0e7356845cc9cc375cdfb4e770af2452d3b2c08b8c3da7fb67003da0639",
+        "log": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "scalars": "bf82d5dcd20186f5ef1f39cc1a78a546bc0bd5c061810a36cffdd360605c5f39",
+        "puzzle": "ddb986edd01fe246a3c28b875d2f7646f77139957da6f57b98de963a79c6cf64",
+        "all": "0a39f8434c203147374a95c1b0b492577741f78e0fe30945de77492502920cab"
+      },
+      "engineTimingsMs": {},
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "performanceScope": "minimal S2 early-exit prototype: no initial-state cache, no reuse of parent eliminations; it shortens accepted tests only",
+      "forkLabels": [
+        "model",
+        "grid#1",
+        "dig#1.1",
+        "dig#1.1>random (native dig order)",
+        "dig#1.1>deepen"
+      ],
+      "gridHash": "4033d980da910122316cfaae7ec6e6dc01f3f9107b060e4af9f6f5a99fcf9b73",
+      "cellCount": 256,
+      "groupCount": 128,
+      "digits": 16,
+      "nativeConstants": {
+        "CAP_RATINGS": 1024,
+        "CAP_PROPOSALS": 32768,
+        "OBJECTIVE_STEPS": 100000,
+        "UNIQUE_NODES": 200000
+      },
+      "gridBuild": {
+        "wallMs": 5.7939000000001215,
+        "counters": {
+          "logicalSolves": 0,
+          "deductions": 0,
+          "floorDeductions": 0,
+          "solverChecks": 0,
+          "dfsCalls": 1,
+          "dfsEntries": 111,
+          "dfsChecks": 110
+        }
+      },
+      "gridWorkerWallMs": 5.7939000000001215,
+      "progressMessages": 25,
+      "budgetStop": null,
+      "engineCounters": {
+        "logicalSolves": 130,
+        "deductions": 6636,
+        "floorDeductions": 6636,
+        "solverChecks": 41674,
+        "dfsCalls": 50,
+        "dfsEntries": 1641,
+        "dfsChecks": 1542
+      },
+      "enginePurposes": {
+        "canonical": {
+          "solves": 1,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "floor": {
+          "solves": 129,
+          "deductions": 6636,
+          "logicalChecks": 41674,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "dfs": {
+          "solves": 0,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 50,
+          "dfsEntries": 1641,
+          "dfsChecks": 1542
+        }
+      },
+      "best": {
+        "source": "fallback",
+        "quality": 6001,
+        "exact": false,
+        "uniqueness": "full-grid",
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true,
+        "hardestTechnique": null,
+        "entry": null,
+        "clues": 256
+      },
+      "fallback": {
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true
+      },
+      "frontier": {
+        "groups": 128,
+        "rungs": [
+          {
+            "id": "cheap",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "middle",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "full",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle",
+              "forcingChain"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "forcingChain"
+            ]
+          }
+        ],
+        "singleDigitPatterns": [
+          "xWing",
+          "simpleColouring",
+          "swordfish",
+          "jellyfish"
+        ],
+        "passes": [
+          {
+            "rung": "cheap",
+            "index": 0,
+            "ids": 15,
+            "effectiveIds": 14,
+            "tests": 128,
+            "solved": 3,
+            "rederived": 76,
+            "stuckUnique": 1,
+            "stuckUnknown": 0,
+            "ambiguous": 48,
+            "skippedAmbiguous": 0,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 79,
+            "deductionsSolved": 58,
+            "deductionsRederived": 3918,
+            "deductionsStuck": 2616
+          },
+          {
+            "rung": "middle",
+            "index": 1,
+            "ids": 19,
+            "effectiveIds": 18,
+            "tests": 1,
+            "solved": 0,
+            "rederived": 0,
+            "stuckUnique": 0,
+            "stuckUnknown": 0,
+            "ambiguous": 1,
+            "skippedAmbiguous": 48,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 0,
+            "deductionsSolved": 0,
+            "deductionsRederived": 0,
+            "deductionsStuck": 44
+          },
+          {
+            "rung": "full",
+            "index": 2,
+            "ids": 20,
+            "effectiveIds": 19,
+            "tests": 0,
+            "solved": 0,
+            "rederived": 0,
+            "stuckUnique": 0,
+            "stuckUnknown": 0,
+            "ambiguous": 0,
+            "skippedAmbiguous": 49,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 0,
+            "deductionsSolved": 0,
+            "deductionsRederived": 0,
+            "deductionsStuck": 0
+          }
+        ],
+        "removalsCount": 79,
+        "removals": [
+          [
+            60,
+            0,
+            0,
+            2,
+            1
+          ],
+          [
+            10,
+            0,
+            0,
+            4,
+            2
+          ],
+          [
+            71,
+            0,
+            1,
+            4,
+            3
+          ],
+          [
+            50,
+            0,
+            1,
+            7,
+            4
+          ],
+          [
+            22,
+            0,
+            1,
+            9,
+            5
+          ],
+          [
+            106,
+            0,
+            1,
+            7,
+            6
+          ],
+          [
+            29,
+            0,
+            1,
+            12,
+            7
+          ],
+          [
+            57,
+            0,
+            1,
+            12,
+            8
+          ],
+          [
+            42,
+            0,
+            1,
+            15,
+            9
+          ],
+          [
+            44,
+            0,
+            1,
+            16,
+            10
+          ],
+          [
+            58,
+            0,
+            1,
+            14,
+            11
+          ],
+          [
+            54,
+            0,
+            1,
+            17,
+            12
+          ],
+          [
+            63,
+            0,
+            1,
+            16,
+            13
+          ],
+          [
+            20,
+            0,
+            1,
+            27,
+            14
+          ],
+          [
+            126,
+            0,
+            1,
+            16,
+            15
+          ],
+          [
+            34,
+            0,
+            1,
+            28,
+            16
+          ],
+          [
+            70,
+            0,
+            1,
+            21,
+            17
+          ],
+          [
+            32,
+            0,
+            1,
+            32,
+            18
+          ],
+          [
+            104,
+            0,
+            1,
+            22,
+            19
+          ],
+          [
+            51,
+            0,
+            1,
+            30,
+            20
+          ],
+          [
+            65,
+            0,
+            1,
+            27,
+            21
+          ],
+          [
+            67,
+            0,
+            1,
+            28,
+            22
+          ],
+          [
+            127,
+            0,
+            1,
+            24,
+            23
+          ],
+          [
+            64,
+            0,
+            1,
+            33,
+            24
+          ],
+          [
+            123,
+            0,
+            1,
+            28,
+            25
+          ],
+          [
+            1,
+            0,
+            0,
+            52,
+            26
+          ],
+          [
+            113,
+            0,
+            1,
+            31,
+            27
+          ],
+          [
+            88,
+            0,
+            1,
+            35,
+            28
+          ],
+          [
+            2,
+            0,
+            1,
+            57,
+            29
+          ],
+          [
+            43,
+            0,
+            1,
+            51,
+            30
+          ],
+          [
+            46,
+            0,
+            1,
+            49,
+            31
+          ],
+          [
+            117,
+            0,
+            1,
+            36,
+            32
+          ],
+          [
+            30,
+            0,
+            1,
+            60,
+            33
+          ],
+          [
+            12,
+            0,
+            1,
+            65,
+            34
+          ],
+          [
+            97,
+            0,
+            1,
+            41,
+            35
+          ],
+          [
+            62,
+            0,
+            1,
+            52,
+            36
+          ],
+          [
+            36,
+            0,
+            1,
+            61,
+            37
+          ],
+          [
+            49,
+            0,
+            1,
+            58,
+            38
+          ],
+          [
+            11,
+            0,
+            1,
+            75,
+            39
+          ],
+          [
+            21,
+            0,
+            1,
+            74,
+            40
+          ],
+          [
+            87,
+            0,
+            1,
+            51,
+            41
+          ],
+          [
+            82,
+            0,
+            1,
+            53,
+            42
+          ],
+          [
+            105,
+            0,
+            1,
+            48,
+            43
+          ],
+          [
+            68,
+            0,
+            1,
+            71,
+            44
+          ],
+          [
+            13,
+            0,
+            1,
+            85,
+            45
+          ],
+          [
+            24,
+            0,
+            1,
+            83,
+            46
+          ],
+          [
+            6,
+            0,
+            1,
+            92,
+            47
+          ],
+          [
+            37,
+            0,
+            1,
+            83,
+            48
+          ],
+          [
+            15,
+            0,
+            1,
+            91,
+            49
+          ],
+          [
+            90,
+            0,
+            1,
+            45,
+            50
+          ],
+          [
+            78,
+            0,
+            1,
+            51,
+            51
+          ],
+          [
+            116,
+            0,
+            1,
+            40,
+            52
+          ],
+          [
+            95,
+            0,
+            1,
+            36,
+            53
+          ],
+          [
+            112,
+            0,
+            1,
+            72,
+            54
+          ],
+          [
+            19,
+            0,
+            1,
+            102,
+            55
+          ],
+          [
+            39,
+            0,
+            1,
+            81,
+            56
+          ],
+          [
+            28,
+            0,
+            1,
+            88,
+            57
+          ],
+          [
+            53,
+            0,
+            1,
+            100,
+            58
+          ],
+          [
+            80,
+            0,
+            1,
+            47,
+            59
+          ],
+          [
+            41,
+            0,
+            1,
+            111,
+            60
+          ],
+          [
+            56,
+            0,
+            1,
+            78,
+            61
+          ],
+          [
+            110,
+            0,
+            1,
+            50,
+            64
+          ],
+          [
+            125,
+            0,
+            1,
+            20,
+            65
+          ],
+          [
+            8,
+            0,
+            1,
+            109,
+            67
+          ],
+          [
+            5,
+            0,
+            1,
+            128,
+            69
+          ],
+          [
+            114,
+            0,
+            1,
+            25,
+            70
+          ],
+          [
+            55,
+            0,
+            1,
+            98,
+            71
+          ],
+          [
+            85,
+            0,
+            1,
+            42,
+            72
+          ],
+          [
+            101,
+            0,
+            1,
+            28,
+            73
+          ],
+          [
+            98,
+            0,
+            1,
+            55,
+            74
+          ],
+          [
+            17,
+            0,
+            1,
+            123,
+            75
+          ],
+          [
+            76,
+            0,
+            1,
+            76,
+            77
+          ],
+          [
+            72,
+            0,
+            1,
+            10,
+            80
+          ],
+          [
+            118,
+            0,
+            1,
+            39,
+            85
+          ],
+          [
+            9,
+            0,
+            1,
+            96,
+            88
+          ],
+          [
+            102,
+            0,
+            1,
+            130,
+            93
+          ],
+          [
+            120,
+            0,
+            1,
+            25,
+            121
+          ],
+          [
+            91,
+            0,
+            1,
+            145,
+            123
+          ],
+          [
+            83,
+            0,
+            1,
+            21,
+            126
+          ]
+        ],
+        "s2": {
+          "rederived": 76,
+          "solved": 3
+        },
+        "refusals": {
+          "stuckUnique": 1,
+          "stuckUnknown": 0,
+          "ambiguous": 49
+        },
+        "entries": [],
+        "diagnostics": [
+          {
+            "group": 79,
+            "cells": [
+              79,
+              176
+            ],
+            "rung": "cheap",
+            "ordinal": 1,
+            "unsolved": 122,
+            "proof": "unique",
+            "parentHash": "39a6922129414401e8d675a94d86b9710fdd6b5e6a8804dfdb11f23caefca073",
+            "clues": 106,
+            "test": 91,
+            "fate": "ambiguous-later"
+          }
+        ],
+        "phaseB": [],
+        "referenceChecks": [],
+        "deepen": {
+          "runs": [],
+          "proposals": 0
+        },
+        "objectiveKind": "numeric",
+        "phaseCosts": {
+          "init": {
+            "wallMs": 1.2227000000000317,
+            "solves": 1,
+            "deductions": 0,
+            "logicalChecks": 0,
+            "dfsCalls": 0,
+            "dfsEntries": 0,
+            "dfsChecks": 0
+          },
+          "phaseA": {
+            "wallMs": 69.36490000000003,
+            "solves": 129,
+            "deductions": 6636,
+            "logicalChecks": 41674,
+            "dfsCalls": 50,
+            "dfsEntries": 1641,
+            "dfsChecks": 1542
+          }
+        },
+        "finalParentHash": "58c776e374666729d2e7f038cc21459d141d7486df4f11ac402040c2e7bb7dae",
+        "finalClues": 98,
+        "parentMode": "final"
+      },
+      "native": null,
+      "engineMs": 81.88249999999994,
+      "s2Audit": {
+        "status": "audited",
+        "wallMs": 100.22160000000008,
+        "cpuMs": 125,
+        "checkLimit": 300000,
+        "acceptedRemovals": 79,
+        "rederivedRemovals": 76,
+        "audited": 3,
+        "removals": [
+          {
+            "index": 2,
+            "group": 71,
+            "rung": "cheap",
+            "kind": "rederived",
+            "recordedOrdinal": 4,
+            "cells": 2,
+            "status": "audited",
+            "checks": 6,
+            "fullStatus": "solved",
+            "fullSolved": true,
+            "fullOrdinal": 6,
+            "stepsToStuckOrEnd": 6,
+            "rederivedOrdinal": 4,
+            "unsound": false,
+            "ordinalMatches": true,
+            "operationalDisagreement": false,
+            "placedCells": 2
+          },
+          {
+            "index": 40,
+            "group": 87,
+            "rung": "cheap",
+            "kind": "rederived",
+            "recordedOrdinal": 51,
+            "cells": 2,
+            "status": "audited",
+            "checks": 82,
+            "fullStatus": "solved",
+            "fullSolved": true,
+            "fullOrdinal": 82,
+            "stepsToStuckOrEnd": 82,
+            "rederivedOrdinal": 51,
+            "unsound": false,
+            "ordinalMatches": true,
+            "operationalDisagreement": false,
+            "placedCells": 2
+          },
+          {
+            "index": 78,
+            "group": 83,
+            "rung": "cheap",
+            "kind": "rederived",
+            "recordedOrdinal": 21,
+            "cells": 2,
+            "status": "audited",
+            "checks": 160,
+            "fullStatus": "solved",
+            "fullSolved": true,
+            "fullOrdinal": 160,
+            "stepsToStuckOrEnd": 160,
+            "rederivedOrdinal": 21,
+            "unsound": false,
+            "ordinalMatches": true,
+            "operationalDisagreement": false,
+            "placedCells": 2
+          }
+        ],
+        "finalParent": {
+          "hash": "58c776e374666729d2e7f038cc21459d141d7486df4f11ac402040c2e7bb7dae",
+          "recordedHash": "58c776e374666729d2e7f038cc21459d141d7486df4f11ac402040c2e7bb7dae",
+          "hashMatches": true,
+          "ownLastRung": {
+            "rung": "full",
+            "status": "audited",
+            "checks": 160,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          },
+          "fullFloor": {
+            "status": "audited",
+            "checks": 160,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          }
+        },
+        "operationalDisagreements": 0,
+        "correctnessProblems": 0
+      }
+    },
+    {
+      "key": "IG-S04/s5-large-reference/samurai:nightmare:11/FU",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": null,
+      "gridCluster": "samurai:11",
+      "requestSeed": 11,
+      "attempt": null,
+      "sample": null,
+      "variantId": "FU",
+      "level": "nightmare",
+      "mode": "FU",
+      "normalisedConfig": null,
+      "solverMode": null,
+      "poolWidth": null,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": null,
+      "limitOrigin": null,
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "unstarted",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": null,
+        "coldWallMs": null,
+        "occupiedWallMs": null,
+        "cpuToDecisionMs": null,
+        "cpuTotalMs": null,
+        "cpuReadyTotalMs": null,
+        "startupMs": null,
+        "startupCpuMs": null,
+        "cleanupMs": null,
+        "readyOccupiedWallMs": null,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": null,
+        "cpuResolutionStatus": null
+      },
+      "validation": {
+        "wallMs": null,
+        "cpuMs": null,
+        "solutionValid": null,
+        "givensAgree": null,
+        "structureValid": null,
+        "unique": null,
+        "canonicalEqual": null
+      },
+      "claimedExact": null,
+      "verifiedExact": null,
+      "required": null,
+      "vacuous": null,
+      "shallow": null,
+      "achieved": null,
+      "score": null,
+      "puzzleHash": null,
+      "attemptsUsed": null,
+      "samplesUsed": null,
+      "canonicalRatings": null,
+      "localProposals": null,
+      "localCapReasons": null,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": null,
+      "error": null,
+      "arm": "FU",
+      "puzzleVariant": "samurai",
+      "blockKey": "IG-S04/s5-large-reference/samurai:nightmare:11",
+      "shard": "s5-large-reference",
+      "order": 4
+    },
+    {
+      "key": "IG-S04/s5-large-reference/samurai:nightmare:11/FS",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": null,
+      "gridCluster": "samurai:11",
+      "requestSeed": 11,
+      "attempt": null,
+      "sample": null,
+      "variantId": "FS",
+      "level": "nightmare",
+      "mode": "FS",
+      "normalisedConfig": null,
+      "solverMode": null,
+      "poolWidth": null,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": null,
+      "limitOrigin": null,
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "unstarted",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": null,
+        "coldWallMs": null,
+        "occupiedWallMs": null,
+        "cpuToDecisionMs": null,
+        "cpuTotalMs": null,
+        "cpuReadyTotalMs": null,
+        "startupMs": null,
+        "startupCpuMs": null,
+        "cleanupMs": null,
+        "readyOccupiedWallMs": null,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": null,
+        "cpuResolutionStatus": null
+      },
+      "validation": {
+        "wallMs": null,
+        "cpuMs": null,
+        "solutionValid": null,
+        "givensAgree": null,
+        "structureValid": null,
+        "unique": null,
+        "canonicalEqual": null
+      },
+      "claimedExact": null,
+      "verifiedExact": null,
+      "required": null,
+      "vacuous": null,
+      "shallow": null,
+      "achieved": null,
+      "score": null,
+      "puzzleHash": null,
+      "attemptsUsed": null,
+      "samplesUsed": null,
+      "canonicalRatings": null,
+      "localProposals": null,
+      "localCapReasons": null,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": null,
+      "error": null,
+      "arm": "FS",
+      "puzzleVariant": "samurai",
+      "blockKey": "IG-S04/s5-large-reference/samurai:nightmare:11",
+      "shard": "s5-large-reference",
+      "order": 5
+    },
+    {
+      "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FS",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": null,
+      "gridCluster": "samurai:12",
+      "requestSeed": 12,
+      "attempt": null,
+      "sample": null,
+      "variantId": "FS",
+      "level": "nightmare",
+      "mode": "FS",
+      "normalisedConfig": null,
+      "solverMode": null,
+      "poolWidth": null,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": null,
+      "limitOrigin": null,
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "unstarted",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": null,
+        "coldWallMs": null,
+        "occupiedWallMs": null,
+        "cpuToDecisionMs": null,
+        "cpuTotalMs": null,
+        "cpuReadyTotalMs": null,
+        "startupMs": null,
+        "startupCpuMs": null,
+        "cleanupMs": null,
+        "readyOccupiedWallMs": null,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": null,
+        "cpuResolutionStatus": null
+      },
+      "validation": {
+        "wallMs": null,
+        "cpuMs": null,
+        "solutionValid": null,
+        "givensAgree": null,
+        "structureValid": null,
+        "unique": null,
+        "canonicalEqual": null
+      },
+      "claimedExact": null,
+      "verifiedExact": null,
+      "required": null,
+      "vacuous": null,
+      "shallow": null,
+      "achieved": null,
+      "score": null,
+      "puzzleHash": null,
+      "attemptsUsed": null,
+      "samplesUsed": null,
+      "canonicalRatings": null,
+      "localProposals": null,
+      "localCapReasons": null,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": null,
+      "error": null,
+      "arm": "FS",
+      "puzzleVariant": "samurai",
+      "blockKey": "IG-S04/s5-large-reference/samurai:nightmare:12",
+      "shard": "s5-large-reference",
+      "order": 6
+    },
+    {
+      "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FU",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": null,
+      "gridCluster": "samurai:12",
+      "requestSeed": 12,
+      "attempt": null,
+      "sample": null,
+      "variantId": "FU",
+      "level": "nightmare",
+      "mode": "FU",
+      "normalisedConfig": null,
+      "solverMode": null,
+      "poolWidth": null,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": null,
+      "limitOrigin": null,
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "unstarted",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": null,
+        "coldWallMs": null,
+        "occupiedWallMs": null,
+        "cpuToDecisionMs": null,
+        "cpuTotalMs": null,
+        "cpuReadyTotalMs": null,
+        "startupMs": null,
+        "startupCpuMs": null,
+        "cleanupMs": null,
+        "readyOccupiedWallMs": null,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": null,
+        "cpuResolutionStatus": null
+      },
+      "validation": {
+        "wallMs": null,
+        "cpuMs": null,
+        "solutionValid": null,
+        "givensAgree": null,
+        "structureValid": null,
+        "unique": null,
+        "canonicalEqual": null
+      },
+      "claimedExact": null,
+      "verifiedExact": null,
+      "required": null,
+      "vacuous": null,
+      "shallow": null,
+      "achieved": null,
+      "score": null,
+      "puzzleHash": null,
+      "attemptsUsed": null,
+      "samplesUsed": null,
+      "canonicalRatings": null,
+      "localProposals": null,
+      "localCapReasons": null,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": null,
+      "error": null,
+      "arm": "FU",
+      "puzzleVariant": "samurai",
+      "blockKey": "IG-S04/s5-large-reference/samurai:nightmare:12",
+      "shard": "s5-large-reference",
+      "order": 7
+    }
+  ]
+}

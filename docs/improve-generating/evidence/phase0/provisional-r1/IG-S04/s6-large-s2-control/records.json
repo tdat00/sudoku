@@ -1,0 +1,5721 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S04",
+  "shard": "s6-large-s2-control",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "f197c9cab708af392e23942709d088fb2acc6e852b6252955afdb6e4a0d15dcf",
+  "records": [
+    {
+      "key": "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": null,
+      "gridCluster": "mega16:11",
+      "requestSeed": 11,
+      "attempt": 1,
+      "sample": 1,
+      "variantId": "F0",
+      "level": "nightmare",
+      "mode": "F0",
+      "normalisedConfig": {
+        "variantId": "mega16",
+        "difficulty": "nightmare",
+        "seed": 11,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "reference",
+      "poolWidth": 1,
+      "sampleMode": "frontier",
+      "parentMode": "final",
+      "floorIds": [
+        {
+          "rung": "cheap",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "middle",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "full",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        }
+      ],
+      "tierIds": [
+        "nishio"
+      ],
+      "limits": {
+        "guardMs": 45000,
+        "guardScope": "sample",
+        "commandDeadlineMs": 270000,
+        "budget": {
+          "floorTests": 384,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 1671168,
+          "solverChecks": 102400000,
+          "dfsEntries": 95200000,
+          "dfsChecks": 95200000
+        },
+        "ceilings": {
+          "floorTests": 384,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 1671168,
+          "solverChecks": 102400000,
+          "dfsEntries": 95200000,
+          "dfsChecks": 95200000
+        }
+      },
+      "limitOrigin": "research safety guard (trial 45 s, observation backstop); count budget: pilot ceilings (diagnostic safety envelopes, not fitted)",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 291.99390000000017,
+        "coldWallMs": 391.9017000000001,
+        "occupiedWallMs": 395.2637,
+        "cpuToDecisionMs": 561,
+        "cpuTotalMs": 577,
+        "cpuReadyTotalMs": 484,
+        "startupMs": 99.90779999999995,
+        "startupCpuMs": 93,
+        "cleanupMs": 3.3619999999998527,
+        "readyOccupiedWallMs": 295.3559,
+        "gridBuildWallMs": 13.42610000000002,
+        "gridBuildCpuMs": 32,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 16
+      },
+      "validation": {
+        "wallMs": 109.26189999999997,
+        "cpuMs": 140,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "veryEasy",
+      "score": 0,
+      "puzzleHash": "b43b27981784061bf350f4e9b2dbf996a87d4cf59ec2bfb594397be2a518a0dd",
+      "attemptsUsed": 1,
+      "samplesUsed": 1,
+      "canonicalRatings": 1,
+      "localProposals": null,
+      "localCapReasons": null,
+      "counts": {
+        "floorTests": 137,
+        "floorDeductions": 9049,
+        "solverChecks": 78048,
+        "dfsEntries": 10463,
+        "dfsChecks": 10352,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1,
+        "canonicalRatings": 1,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "error": null,
+      "arm": "F0",
+      "puzzleVariant": "mega16",
+      "blockKey": "IG-S04/s6-large-s2-control/mega16:nightmare:11",
+      "shard": "s6-large-s2-control",
+      "order": 0,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "frontier-hooks"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "frontier-hooks.solve-options",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851"
+        },
+        {
+          "id": "frontier-hooks.step",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851",
+          "afterTextHash": "969bace8cc314fad46f0ccaee045d9d835905b72e48d1b8cac966f97d2dd885f"
+        },
+        {
+          "id": "frontier-hooks.dfs-begin",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+          "afterTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3"
+        },
+        {
+          "id": "frontier-hooks.dfs-entry",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3",
+          "afterTextHash": "c9956d7f967a0870905d466e9e9b4bc7cbfdec0bf4bb5f609f81b24eb0ab4a19"
+        },
+        {
+          "id": "frontier-hooks.digger-boot",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "e7db29bca4eb575efae5c0d4507829d8ec8714f324de1c33cdd6a9d7ba70d90a"
+        }
+      ],
+      "engineElapsedMs": 287.62379999999996,
+      "digests": {
+        "structure": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+        "givens": "8a93ffadf2f5c05e06a55b8ff638bb7332f3130b16b07558109b41dbb53630cc",
+        "solution": "8a93ffadf2f5c05e06a55b8ff638bb7332f3130b16b07558109b41dbb53630cc",
+        "rating": "435fb170e0139a784622e2a1928e4d1c999d2e2e384265cb3344e262a908811d",
+        "config": "a992236d54822611a771af2f822c1c1a6ec24ed582cc4c12ccd6478ca529d534",
+        "warnings": "8655c0e7356845cc9cc375cdfb4e770af2452d3b2c08b8c3da7fb67003da0639",
+        "log": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "scalars": "7a1054cac12d2328369e9327cdda37db5324bc6ad2e61bf902d8e39af92692f2",
+        "puzzle": "b43b27981784061bf350f4e9b2dbf996a87d4cf59ec2bfb594397be2a518a0dd",
+        "all": "a07c266a89d8ad131aed86f1e0f48dc1076c827d9ca46f70dc3f29290f00b574"
+      },
+      "engineTimingsMs": {},
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "performanceScope": "S2 off: every accepted test is a full floor solve",
+      "forkLabels": [
+        "model",
+        "grid#1",
+        "dig#1.1",
+        "dig#1.1>random (native dig order)",
+        "dig#1.1>deepen"
+      ],
+      "gridHash": "7a83cf6b10cd6806d3d2f4b70a196eb1ee8a201ca3f778e3687f6a6a804c7b6d",
+      "cellCount": 256,
+      "groupCount": 128,
+      "digits": 16,
+      "nativeConstants": {
+        "CAP_RATINGS": 1024,
+        "CAP_PROPOSALS": 32768,
+        "OBJECTIVE_STEPS": 100000,
+        "UNIQUE_NODES": 200000
+      },
+      "gridBuild": {
+        "wallMs": 6.088200000000029,
+        "counters": {
+          "logicalSolves": 0,
+          "deductions": 0,
+          "floorDeductions": 0,
+          "solverChecks": 0,
+          "dfsCalls": 1,
+          "dfsEntries": 112,
+          "dfsChecks": 111
+        }
+      },
+      "gridWorkerWallMs": 6.088200000000029,
+      "progressMessages": 26,
+      "budgetStop": null,
+      "engineCounters": {
+        "logicalSolves": 138,
+        "deductions": 9049,
+        "floorDeductions": 9049,
+        "solverChecks": 78048,
+        "dfsCalls": 60,
+        "dfsEntries": 10463,
+        "dfsChecks": 10352
+      },
+      "enginePurposes": {
+        "canonical": {
+          "solves": 1,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "floor": {
+          "solves": 137,
+          "deductions": 9049,
+          "logicalChecks": 78048,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "dfs": {
+          "solves": 0,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 60,
+          "dfsEntries": 10463,
+          "dfsChecks": 10352
+        }
+      },
+      "best": {
+        "source": "fallback",
+        "quality": 6001,
+        "exact": false,
+        "uniqueness": "full-grid",
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true,
+        "hardestTechnique": null,
+        "entry": null,
+        "clues": 256
+      },
+      "fallback": {
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true
+      },
+      "frontier": {
+        "groups": 128,
+        "rungs": [
+          {
+            "id": "cheap",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "middle",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "full",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle",
+              "forcingChain"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "forcingChain"
+            ]
+          }
+        ],
+        "singleDigitPatterns": [
+          "xWing",
+          "simpleColouring",
+          "swordfish",
+          "jellyfish"
+        ],
+        "passes": [
+          {
+            "rung": "cheap",
+            "index": 0,
+            "ids": 15,
+            "effectiveIds": 14,
+            "tests": 128,
+            "solved": 76,
+            "rederived": 0,
+            "stuckUnique": 6,
+            "stuckUnknown": 0,
+            "ambiguous": 46,
+            "skippedAmbiguous": 0,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 76,
+            "deductionsSolved": 5961,
+            "deductionsRederived": 0,
+            "deductionsStuck": 2526
+          },
+          {
+            "rung": "middle",
+            "index": 1,
+            "ids": 19,
+            "effectiveIds": 18,
+            "tests": 6,
+            "solved": 0,
+            "rederived": 0,
+            "stuckUnique": 3,
+            "stuckUnknown": 0,
+            "ambiguous": 3,
+            "skippedAmbiguous": 46,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 0,
+            "deductionsSolved": 0,
+            "deductionsRederived": 0,
+            "deductionsStuck": 249
+          },
+          {
+            "rung": "full",
+            "index": 2,
+            "ids": 20,
+            "effectiveIds": 19,
+            "tests": 3,
+            "solved": 1,
+            "rederived": 0,
+            "stuckUnique": 0,
+            "stuckUnknown": 0,
+            "ambiguous": 2,
+            "skippedAmbiguous": 49,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 1,
+            "deductionsSolved": 199,
+            "deductionsRederived": 0,
+            "deductionsStuck": 114
+          }
+        ],
+        "removalsCount": 77,
+        "removals": [
+          [
+            4,
+            0,
+            0,
+            2,
+            1
+          ],
+          [
+            34,
+            0,
+            0,
+            4,
+            2
+          ],
+          [
+            58,
+            0,
+            0,
+            6,
+            3
+          ],
+          [
+            0,
+            0,
+            0,
+            8,
+            4
+          ],
+          [
+            63,
+            0,
+            0,
+            10,
+            5
+          ],
+          [
+            106,
+            0,
+            0,
+            12,
+            6
+          ],
+          [
+            38,
+            0,
+            0,
+            14,
+            7
+          ],
+          [
+            77,
+            0,
+            0,
+            16,
+            8
+          ],
+          [
+            30,
+            0,
+            0,
+            18,
+            9
+          ],
+          [
+            47,
+            0,
+            0,
+            20,
+            10
+          ],
+          [
+            102,
+            0,
+            0,
+            22,
+            11
+          ],
+          [
+            68,
+            0,
+            0,
+            24,
+            12
+          ],
+          [
+            43,
+            0,
+            0,
+            26,
+            13
+          ],
+          [
+            67,
+            0,
+            0,
+            28,
+            14
+          ],
+          [
+            33,
+            0,
+            0,
+            30,
+            15
+          ],
+          [
+            54,
+            0,
+            0,
+            32,
+            16
+          ],
+          [
+            48,
+            0,
+            0,
+            34,
+            17
+          ],
+          [
+            86,
+            0,
+            0,
+            36,
+            18
+          ],
+          [
+            9,
+            0,
+            0,
+            38,
+            19
+          ],
+          [
+            64,
+            0,
+            0,
+            40,
+            20
+          ],
+          [
+            80,
+            0,
+            0,
+            42,
+            21
+          ],
+          [
+            90,
+            0,
+            0,
+            44,
+            22
+          ],
+          [
+            24,
+            0,
+            0,
+            46,
+            23
+          ],
+          [
+            103,
+            0,
+            0,
+            48,
+            24
+          ],
+          [
+            110,
+            0,
+            0,
+            50,
+            25
+          ],
+          [
+            117,
+            0,
+            0,
+            52,
+            26
+          ],
+          [
+            62,
+            0,
+            0,
+            54,
+            27
+          ],
+          [
+            29,
+            0,
+            0,
+            56,
+            28
+          ],
+          [
+            93,
+            0,
+            0,
+            58,
+            29
+          ],
+          [
+            1,
+            0,
+            0,
+            60,
+            30
+          ],
+          [
+            88,
+            0,
+            0,
+            62,
+            31
+          ],
+          [
+            28,
+            0,
+            0,
+            64,
+            32
+          ],
+          [
+            91,
+            0,
+            0,
+            66,
+            33
+          ],
+          [
+            96,
+            0,
+            0,
+            68,
+            34
+          ],
+          [
+            19,
+            0,
+            0,
+            70,
+            35
+          ],
+          [
+            81,
+            0,
+            0,
+            72,
+            36
+          ],
+          [
+            6,
+            0,
+            0,
+            74,
+            37
+          ],
+          [
+            79,
+            0,
+            0,
+            76,
+            38
+          ],
+          [
+            44,
+            0,
+            0,
+            78,
+            39
+          ],
+          [
+            72,
+            0,
+            0,
+            80,
+            40
+          ],
+          [
+            116,
+            0,
+            0,
+            82,
+            41
+          ],
+          [
+            7,
+            0,
+            0,
+            84,
+            42
+          ],
+          [
+            23,
+            0,
+            0,
+            86,
+            43
+          ],
+          [
+            40,
+            0,
+            0,
+            88,
+            44
+          ],
+          [
+            13,
+            0,
+            0,
+            90,
+            45
+          ],
+          [
+            124,
+            0,
+            0,
+            92,
+            46
+          ],
+          [
+            41,
+            0,
+            0,
+            94,
+            47
+          ],
+          [
+            31,
+            0,
+            0,
+            96,
+            48
+          ],
+          [
+            112,
+            0,
+            0,
+            98,
+            49
+          ],
+          [
+            121,
+            0,
+            0,
+            100,
+            50
+          ],
+          [
+            56,
+            0,
+            0,
+            102,
+            51
+          ],
+          [
+            22,
+            0,
+            0,
+            104,
+            52
+          ],
+          [
+            20,
+            0,
+            0,
+            106,
+            53
+          ],
+          [
+            25,
+            0,
+            0,
+            108,
+            54
+          ],
+          [
+            95,
+            0,
+            0,
+            110,
+            55
+          ],
+          [
+            27,
+            0,
+            0,
+            112,
+            56
+          ],
+          [
+            12,
+            0,
+            0,
+            114,
+            57
+          ],
+          [
+            66,
+            0,
+            0,
+            116,
+            58
+          ],
+          [
+            51,
+            0,
+            0,
+            118,
+            59
+          ],
+          [
+            78,
+            0,
+            0,
+            120,
+            60
+          ],
+          [
+            70,
+            0,
+            0,
+            122,
+            62
+          ],
+          [
+            18,
+            0,
+            0,
+            124,
+            63
+          ],
+          [
+            107,
+            0,
+            0,
+            126,
+            64
+          ],
+          [
+            10,
+            0,
+            0,
+            128,
+            65
+          ],
+          [
+            115,
+            0,
+            0,
+            130,
+            66
+          ],
+          [
+            113,
+            0,
+            0,
+            132,
+            68
+          ],
+          [
+            65,
+            0,
+            0,
+            134,
+            70
+          ],
+          [
+            122,
+            0,
+            0,
+            136,
+            71
+          ],
+          [
+            36,
+            0,
+            0,
+            146,
+            72
+          ],
+          [
+            75,
+            0,
+            0,
+            148,
+            74
+          ],
+          [
+            76,
+            0,
+            0,
+            150,
+            76
+          ],
+          [
+            92,
+            0,
+            0,
+            155,
+            78
+          ],
+          [
+            105,
+            0,
+            0,
+            157,
+            79
+          ],
+          [
+            42,
+            0,
+            0,
+            164,
+            85
+          ],
+          [
+            85,
+            0,
+            0,
+            173,
+            90
+          ],
+          [
+            101,
+            0,
+            0,
+            176,
+            116
+          ],
+          [
+            50,
+            2,
+            0,
+            199,
+            135
+          ]
+        ],
+        "s2": {
+          "rederived": 0,
+          "solved": 77
+        },
+        "refusals": {
+          "stuckUnique": 9,
+          "stuckUnknown": 0,
+          "ambiguous": 51
+        },
+        "entries": [],
+        "diagnostics": [
+          {
+            "group": 50,
+            "cells": [
+              50,
+              205
+            ],
+            "rung": "cheap",
+            "ordinal": 1,
+            "unsolved": 110,
+            "proof": "unique",
+            "parentHash": "7229531541e2a42e99ad7eb6aa796051dcd70b0ad092eeca0f6c217c34e2d72b",
+            "clues": 106,
+            "test": 92,
+            "fate": "replaced-by-later-rung"
+          },
+          {
+            "group": 55,
+            "cells": [
+              55,
+              200
+            ],
+            "rung": "cheap",
+            "ordinal": 2,
+            "unsolved": 135,
+            "proof": "unique",
+            "parentHash": "7229531541e2a42e99ad7eb6aa796051dcd70b0ad092eeca0f6c217c34e2d72b",
+            "clues": 106,
+            "test": 93,
+            "fate": "replaced-by-later-rung"
+          },
+          {
+            "group": 104,
+            "cells": [
+              104,
+              151
+            ],
+            "rung": "cheap",
+            "ordinal": 3,
+            "unsolved": 136,
+            "proof": "unique",
+            "parentHash": "7229531541e2a42e99ad7eb6aa796051dcd70b0ad092eeca0f6c217c34e2d72b",
+            "clues": 106,
+            "test": 97,
+            "fate": "ambiguous-later"
+          },
+          {
+            "group": 98,
+            "cells": [
+              98,
+              157
+            ],
+            "rung": "cheap",
+            "ordinal": 4,
+            "unsolved": 133,
+            "proof": "unique",
+            "parentHash": "7229531541e2a42e99ad7eb6aa796051dcd70b0ad092eeca0f6c217c34e2d72b",
+            "clues": 106,
+            "test": 102,
+            "fate": "ambiguous-later"
+          },
+          {
+            "group": 37,
+            "cells": [
+              37,
+              218
+            ],
+            "rung": "cheap",
+            "ordinal": 5,
+            "unsolved": 138,
+            "proof": "unique",
+            "parentHash": "7229531541e2a42e99ad7eb6aa796051dcd70b0ad092eeca0f6c217c34e2d72b",
+            "clues": 106,
+            "test": 103,
+            "fate": "replaced-by-later-rung"
+          },
+          {
+            "group": 5,
+            "cells": [
+              5,
+              250
+            ],
+            "rung": "cheap",
+            "ordinal": 6,
+            "unsolved": 134,
+            "proof": "unique",
+            "parentHash": "7229531541e2a42e99ad7eb6aa796051dcd70b0ad092eeca0f6c217c34e2d72b",
+            "clues": 106,
+            "test": 115,
+            "fate": "ambiguous-later"
+          },
+          {
+            "group": 50,
+            "cells": [
+              50,
+              205
+            ],
+            "rung": "middle",
+            "ordinal": 7,
+            "unsolved": 110,
+            "proof": "unique",
+            "parentHash": "82d1df88ba6a213cd6344412ff7da58aa33f6dbb8348da917178db6a7e2e7cd0",
+            "clues": 104,
+            "test": 129,
+            "fate": "removed-later"
+          },
+          {
+            "group": 55,
+            "cells": [
+              55,
+              200
+            ],
+            "rung": "middle",
+            "ordinal": 8,
+            "unsolved": 136,
+            "proof": "unique",
+            "parentHash": "82d1df88ba6a213cd6344412ff7da58aa33f6dbb8348da917178db6a7e2e7cd0",
+            "clues": 104,
+            "test": 130,
+            "fate": "ambiguous-later"
+          },
+          {
+            "group": 37,
+            "cells": [
+              37,
+              218
+            ],
+            "rung": "middle",
+            "ordinal": 9,
+            "unsolved": 129,
+            "proof": "unique",
+            "parentHash": "82d1df88ba6a213cd6344412ff7da58aa33f6dbb8348da917178db6a7e2e7cd0",
+            "clues": 104,
+            "test": 133,
+            "fate": "ambiguous-later"
+          }
+        ],
+        "phaseB": [],
+        "referenceChecks": [],
+        "deepen": {
+          "runs": [],
+          "proposals": 0
+        },
+        "objectiveKind": "numeric",
+        "phaseCosts": {
+          "init": {
+            "wallMs": 1.3164999999999054,
+            "solves": 1,
+            "deductions": 0,
+            "logicalChecks": 0,
+            "dfsCalls": 0,
+            "dfsEntries": 0,
+            "dfsChecks": 0
+          },
+          "phaseA": {
+            "wallMs": 273.7761999999997,
+            "solves": 137,
+            "deductions": 9049,
+            "logicalChecks": 78048,
+            "dfsCalls": 60,
+            "dfsEntries": 10463,
+            "dfsChecks": 10352
+          }
+        },
+        "finalParentHash": "c77252ddcce50576bce9119fd09801f587eecdc6b6264a52ef60d981ab1c281b",
+        "finalClues": 102,
+        "parentMode": "final"
+      },
+      "native": null,
+      "engineMs": 287.62379999999996,
+      "s2Audit": {
+        "status": "audited",
+        "wallMs": 164.2748999999999,
+        "cpuMs": 251,
+        "checkLimit": 300000,
+        "acceptedRemovals": 77,
+        "rederivedRemovals": 0,
+        "audited": 0,
+        "removals": [],
+        "finalParent": {
+          "hash": "c77252ddcce50576bce9119fd09801f587eecdc6b6264a52ef60d981ab1c281b",
+          "recordedHash": "c77252ddcce50576bce9119fd09801f587eecdc6b6264a52ef60d981ab1c281b",
+          "hashMatches": true,
+          "ownLastRung": {
+            "rung": "full",
+            "status": "audited",
+            "checks": 12525,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          },
+          "fullFloor": {
+            "status": "audited",
+            "checks": 12525,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          }
+        },
+        "operationalDisagreements": 0,
+        "correctnessProblems": 0
+      }
+    },
+    {
+      "key": "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": null,
+      "gridCluster": "mega16:12",
+      "requestSeed": 12,
+      "attempt": 1,
+      "sample": 1,
+      "variantId": "F0",
+      "level": "nightmare",
+      "mode": "F0",
+      "normalisedConfig": {
+        "variantId": "mega16",
+        "difficulty": "nightmare",
+        "seed": 12,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "reference",
+      "poolWidth": 1,
+      "sampleMode": "frontier",
+      "parentMode": "final",
+      "floorIds": [
+        {
+          "rung": "cheap",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "middle",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "full",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        }
+      ],
+      "tierIds": [
+        "nishio"
+      ],
+      "limits": {
+        "guardMs": 45000,
+        "guardScope": "sample",
+        "commandDeadlineMs": 270000,
+        "budget": {
+          "floorTests": 384,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 1671168,
+          "solverChecks": 102400000,
+          "dfsEntries": 95200000,
+          "dfsChecks": 95200000
+        },
+        "ceilings": {
+          "floorTests": 384,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 1671168,
+          "solverChecks": 102400000,
+          "dfsEntries": 95200000,
+          "dfsChecks": 95200000
+        }
+      },
+      "limitOrigin": "research safety guard (trial 45 s, observation backstop); count budget: pilot ceilings (diagnostic safety envelopes, not fitted)",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 88.49000000000001,
+        "coldWallMs": 185.19539999999984,
+        "occupiedWallMs": 187.5824,
+        "cpuToDecisionMs": 266,
+        "cpuTotalMs": 282,
+        "cpuReadyTotalMs": 172,
+        "startupMs": 96.70539999999983,
+        "startupCpuMs": 110,
+        "cleanupMs": 2.387000000000171,
+        "readyOccupiedWallMs": 90.87700000000018,
+        "gridBuildWallMs": 12.481899999999996,
+        "gridBuildCpuMs": 0,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 16
+      },
+      "validation": {
+        "wallMs": 105.81550000000016,
+        "cpuMs": 125,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "veryEasy",
+      "score": 0,
+      "puzzleHash": "ddb986edd01fe246a3c28b875d2f7646f77139957da6f57b98de963a79c6cf64",
+      "attemptsUsed": 1,
+      "samplesUsed": 1,
+      "canonicalRatings": 1,
+      "localProposals": null,
+      "localCapReasons": null,
+      "counts": {
+        "floorTests": 129,
+        "floorDeductions": 8984,
+        "solverChecks": 44022,
+        "dfsEntries": 1641,
+        "dfsChecks": 1542,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1,
+        "canonicalRatings": 1,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "error": null,
+      "arm": "F0",
+      "puzzleVariant": "mega16",
+      "blockKey": "IG-S04/s6-large-s2-control/mega16:nightmare:12",
+      "shard": "s6-large-s2-control",
+      "order": 1,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "frontier-hooks"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "frontier-hooks.solve-options",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851"
+        },
+        {
+          "id": "frontier-hooks.step",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851",
+          "afterTextHash": "969bace8cc314fad46f0ccaee045d9d835905b72e48d1b8cac966f97d2dd885f"
+        },
+        {
+          "id": "frontier-hooks.dfs-begin",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+          "afterTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3"
+        },
+        {
+          "id": "frontier-hooks.dfs-entry",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3",
+          "afterTextHash": "c9956d7f967a0870905d466e9e9b4bc7cbfdec0bf4bb5f609f81b24eb0ab4a19"
+        },
+        {
+          "id": "frontier-hooks.digger-boot",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "e7db29bca4eb575efae5c0d4507829d8ec8714f324de1c33cdd6a9d7ba70d90a"
+        }
+      ],
+      "engineElapsedMs": 84.54120000000012,
+      "digests": {
+        "structure": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+        "givens": "ea3ff7b78a5147c891d1fdf8b365cfe0ab6b91b48be1f3bea44ccb4693caca43",
+        "solution": "ea3ff7b78a5147c891d1fdf8b365cfe0ab6b91b48be1f3bea44ccb4693caca43",
+        "rating": "435fb170e0139a784622e2a1928e4d1c999d2e2e384265cb3344e262a908811d",
+        "config": "f5540f91cf20411a5527f0570cd9d331db304f1db0c660df44a9e07ff42d8ff7",
+        "warnings": "8655c0e7356845cc9cc375cdfb4e770af2452d3b2c08b8c3da7fb67003da0639",
+        "log": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "scalars": "bf82d5dcd20186f5ef1f39cc1a78a546bc0bd5c061810a36cffdd360605c5f39",
+        "puzzle": "ddb986edd01fe246a3c28b875d2f7646f77139957da6f57b98de963a79c6cf64",
+        "all": "0a39f8434c203147374a95c1b0b492577741f78e0fe30945de77492502920cab"
+      },
+      "engineTimingsMs": {},
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "performanceScope": "S2 off: every accepted test is a full floor solve",
+      "forkLabels": [
+        "model",
+        "grid#1",
+        "dig#1.1",
+        "dig#1.1>random (native dig order)",
+        "dig#1.1>deepen"
+      ],
+      "gridHash": "4033d980da910122316cfaae7ec6e6dc01f3f9107b060e4af9f6f5a99fcf9b73",
+      "cellCount": 256,
+      "groupCount": 128,
+      "digits": 16,
+      "nativeConstants": {
+        "CAP_RATINGS": 1024,
+        "CAP_PROPOSALS": 32768,
+        "OBJECTIVE_STEPS": 100000,
+        "UNIQUE_NODES": 200000
+      },
+      "gridBuild": {
+        "wallMs": 5.4271000000001095,
+        "counters": {
+          "logicalSolves": 0,
+          "deductions": 0,
+          "floorDeductions": 0,
+          "solverChecks": 0,
+          "dfsCalls": 1,
+          "dfsEntries": 111,
+          "dfsChecks": 110
+        }
+      },
+      "gridWorkerWallMs": 5.4271000000001095,
+      "progressMessages": 25,
+      "budgetStop": null,
+      "engineCounters": {
+        "logicalSolves": 130,
+        "deductions": 8984,
+        "floorDeductions": 8984,
+        "solverChecks": 44022,
+        "dfsCalls": 50,
+        "dfsEntries": 1641,
+        "dfsChecks": 1542
+      },
+      "enginePurposes": {
+        "canonical": {
+          "solves": 1,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "floor": {
+          "solves": 129,
+          "deductions": 8984,
+          "logicalChecks": 44022,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "dfs": {
+          "solves": 0,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 50,
+          "dfsEntries": 1641,
+          "dfsChecks": 1542
+        }
+      },
+      "best": {
+        "source": "fallback",
+        "quality": 6001,
+        "exact": false,
+        "uniqueness": "full-grid",
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true,
+        "hardestTechnique": null,
+        "entry": null,
+        "clues": 256
+      },
+      "fallback": {
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true
+      },
+      "frontier": {
+        "groups": 128,
+        "rungs": [
+          {
+            "id": "cheap",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "middle",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "full",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle",
+              "forcingChain"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "forcingChain"
+            ]
+          }
+        ],
+        "singleDigitPatterns": [
+          "xWing",
+          "simpleColouring",
+          "swordfish",
+          "jellyfish"
+        ],
+        "passes": [
+          {
+            "rung": "cheap",
+            "index": 0,
+            "ids": 15,
+            "effectiveIds": 14,
+            "tests": 128,
+            "solved": 79,
+            "rederived": 0,
+            "stuckUnique": 1,
+            "stuckUnknown": 0,
+            "ambiguous": 48,
+            "skippedAmbiguous": 0,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 79,
+            "deductionsSolved": 6324,
+            "deductionsRederived": 0,
+            "deductionsStuck": 2616
+          },
+          {
+            "rung": "middle",
+            "index": 1,
+            "ids": 19,
+            "effectiveIds": 18,
+            "tests": 1,
+            "solved": 0,
+            "rederived": 0,
+            "stuckUnique": 0,
+            "stuckUnknown": 0,
+            "ambiguous": 1,
+            "skippedAmbiguous": 48,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 0,
+            "deductionsSolved": 0,
+            "deductionsRederived": 0,
+            "deductionsStuck": 44
+          },
+          {
+            "rung": "full",
+            "index": 2,
+            "ids": 20,
+            "effectiveIds": 19,
+            "tests": 0,
+            "solved": 0,
+            "rederived": 0,
+            "stuckUnique": 0,
+            "stuckUnknown": 0,
+            "ambiguous": 0,
+            "skippedAmbiguous": 49,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 0,
+            "deductionsSolved": 0,
+            "deductionsRederived": 0,
+            "deductionsStuck": 0
+          }
+        ],
+        "removalsCount": 79,
+        "removals": [
+          [
+            60,
+            0,
+            0,
+            2,
+            1
+          ],
+          [
+            10,
+            0,
+            0,
+            4,
+            2
+          ],
+          [
+            71,
+            0,
+            0,
+            6,
+            3
+          ],
+          [
+            50,
+            0,
+            0,
+            8,
+            4
+          ],
+          [
+            22,
+            0,
+            0,
+            10,
+            5
+          ],
+          [
+            106,
+            0,
+            0,
+            12,
+            6
+          ],
+          [
+            29,
+            0,
+            0,
+            14,
+            7
+          ],
+          [
+            57,
+            0,
+            0,
+            16,
+            8
+          ],
+          [
+            42,
+            0,
+            0,
+            18,
+            9
+          ],
+          [
+            44,
+            0,
+            0,
+            20,
+            10
+          ],
+          [
+            58,
+            0,
+            0,
+            22,
+            11
+          ],
+          [
+            54,
+            0,
+            0,
+            24,
+            12
+          ],
+          [
+            63,
+            0,
+            0,
+            26,
+            13
+          ],
+          [
+            20,
+            0,
+            0,
+            28,
+            14
+          ],
+          [
+            126,
+            0,
+            0,
+            30,
+            15
+          ],
+          [
+            34,
+            0,
+            0,
+            32,
+            16
+          ],
+          [
+            70,
+            0,
+            0,
+            34,
+            17
+          ],
+          [
+            32,
+            0,
+            0,
+            36,
+            18
+          ],
+          [
+            104,
+            0,
+            0,
+            38,
+            19
+          ],
+          [
+            51,
+            0,
+            0,
+            40,
+            20
+          ],
+          [
+            65,
+            0,
+            0,
+            42,
+            21
+          ],
+          [
+            67,
+            0,
+            0,
+            44,
+            22
+          ],
+          [
+            127,
+            0,
+            0,
+            46,
+            23
+          ],
+          [
+            64,
+            0,
+            0,
+            48,
+            24
+          ],
+          [
+            123,
+            0,
+            0,
+            50,
+            25
+          ],
+          [
+            1,
+            0,
+            0,
+            52,
+            26
+          ],
+          [
+            113,
+            0,
+            0,
+            54,
+            27
+          ],
+          [
+            88,
+            0,
+            0,
+            56,
+            28
+          ],
+          [
+            2,
+            0,
+            0,
+            58,
+            29
+          ],
+          [
+            43,
+            0,
+            0,
+            60,
+            30
+          ],
+          [
+            46,
+            0,
+            0,
+            62,
+            31
+          ],
+          [
+            117,
+            0,
+            0,
+            64,
+            32
+          ],
+          [
+            30,
+            0,
+            0,
+            66,
+            33
+          ],
+          [
+            12,
+            0,
+            0,
+            68,
+            34
+          ],
+          [
+            97,
+            0,
+            0,
+            70,
+            35
+          ],
+          [
+            62,
+            0,
+            0,
+            72,
+            36
+          ],
+          [
+            36,
+            0,
+            0,
+            74,
+            37
+          ],
+          [
+            49,
+            0,
+            0,
+            76,
+            38
+          ],
+          [
+            11,
+            0,
+            0,
+            78,
+            39
+          ],
+          [
+            21,
+            0,
+            0,
+            80,
+            40
+          ],
+          [
+            87,
+            0,
+            0,
+            82,
+            41
+          ],
+          [
+            82,
+            0,
+            0,
+            84,
+            42
+          ],
+          [
+            105,
+            0,
+            0,
+            86,
+            43
+          ],
+          [
+            68,
+            0,
+            0,
+            88,
+            44
+          ],
+          [
+            13,
+            0,
+            0,
+            90,
+            45
+          ],
+          [
+            24,
+            0,
+            0,
+            92,
+            46
+          ],
+          [
+            6,
+            0,
+            0,
+            94,
+            47
+          ],
+          [
+            37,
+            0,
+            0,
+            96,
+            48
+          ],
+          [
+            15,
+            0,
+            0,
+            98,
+            49
+          ],
+          [
+            90,
+            0,
+            0,
+            100,
+            50
+          ],
+          [
+            78,
+            0,
+            0,
+            102,
+            51
+          ],
+          [
+            116,
+            0,
+            0,
+            104,
+            52
+          ],
+          [
+            95,
+            0,
+            0,
+            106,
+            53
+          ],
+          [
+            112,
+            0,
+            0,
+            108,
+            54
+          ],
+          [
+            19,
+            0,
+            0,
+            110,
+            55
+          ],
+          [
+            39,
+            0,
+            0,
+            112,
+            56
+          ],
+          [
+            28,
+            0,
+            0,
+            114,
+            57
+          ],
+          [
+            53,
+            0,
+            0,
+            116,
+            58
+          ],
+          [
+            80,
+            0,
+            0,
+            118,
+            59
+          ],
+          [
+            41,
+            0,
+            0,
+            120,
+            60
+          ],
+          [
+            56,
+            0,
+            0,
+            122,
+            61
+          ],
+          [
+            110,
+            0,
+            0,
+            124,
+            64
+          ],
+          [
+            125,
+            0,
+            0,
+            126,
+            65
+          ],
+          [
+            8,
+            0,
+            0,
+            128,
+            67
+          ],
+          [
+            5,
+            0,
+            0,
+            130,
+            69
+          ],
+          [
+            114,
+            0,
+            0,
+            132,
+            70
+          ],
+          [
+            55,
+            0,
+            0,
+            134,
+            71
+          ],
+          [
+            85,
+            0,
+            0,
+            136,
+            72
+          ],
+          [
+            101,
+            0,
+            0,
+            138,
+            73
+          ],
+          [
+            98,
+            0,
+            0,
+            140,
+            74
+          ],
+          [
+            17,
+            0,
+            0,
+            142,
+            75
+          ],
+          [
+            76,
+            0,
+            0,
+            144,
+            77
+          ],
+          [
+            72,
+            0,
+            0,
+            146,
+            80
+          ],
+          [
+            118,
+            0,
+            0,
+            148,
+            85
+          ],
+          [
+            9,
+            0,
+            0,
+            150,
+            88
+          ],
+          [
+            102,
+            0,
+            0,
+            152,
+            93
+          ],
+          [
+            120,
+            0,
+            0,
+            154,
+            121
+          ],
+          [
+            91,
+            0,
+            0,
+            158,
+            123
+          ],
+          [
+            83,
+            0,
+            0,
+            160,
+            126
+          ]
+        ],
+        "s2": {
+          "rederived": 0,
+          "solved": 79
+        },
+        "refusals": {
+          "stuckUnique": 1,
+          "stuckUnknown": 0,
+          "ambiguous": 49
+        },
+        "entries": [],
+        "diagnostics": [
+          {
+            "group": 79,
+            "cells": [
+              79,
+              176
+            ],
+            "rung": "cheap",
+            "ordinal": 1,
+            "unsolved": 122,
+            "proof": "unique",
+            "parentHash": "39a6922129414401e8d675a94d86b9710fdd6b5e6a8804dfdb11f23caefca073",
+            "clues": 106,
+            "test": 91,
+            "fate": "ambiguous-later"
+          }
+        ],
+        "phaseB": [],
+        "referenceChecks": [],
+        "deepen": {
+          "runs": [],
+          "proposals": 0
+        },
+        "objectiveKind": "numeric",
+        "phaseCosts": {
+          "init": {
+            "wallMs": 1.2243999999998323,
+            "solves": 1,
+            "deductions": 0,
+            "logicalChecks": 0,
+            "dfsCalls": 0,
+            "dfsEntries": 0,
+            "dfsChecks": 0
+          },
+          "phaseA": {
+            "wallMs": 72.00850000000014,
+            "solves": 129,
+            "deductions": 8984,
+            "logicalChecks": 44022,
+            "dfsCalls": 50,
+            "dfsEntries": 1641,
+            "dfsChecks": 1542
+          }
+        },
+        "finalParentHash": "58c776e374666729d2e7f038cc21459d141d7486df4f11ac402040c2e7bb7dae",
+        "finalClues": 98,
+        "parentMode": "final"
+      },
+      "native": null,
+      "engineMs": 84.54120000000012,
+      "s2Audit": {
+        "status": "audited",
+        "wallMs": 105.1416999999999,
+        "cpuMs": 93,
+        "checkLimit": 300000,
+        "acceptedRemovals": 79,
+        "rederivedRemovals": 0,
+        "audited": 0,
+        "removals": [],
+        "finalParent": {
+          "hash": "58c776e374666729d2e7f038cc21459d141d7486df4f11ac402040c2e7bb7dae",
+          "recordedHash": "58c776e374666729d2e7f038cc21459d141d7486df4f11ac402040c2e7bb7dae",
+          "hashMatches": true,
+          "ownLastRung": {
+            "rung": "full",
+            "status": "audited",
+            "checks": 160,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          },
+          "fullFloor": {
+            "status": "audited",
+            "checks": 160,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          }
+        },
+        "operationalDisagreements": 0,
+        "correctnessProblems": 0
+      }
+    },
+    {
+      "key": "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": null,
+      "gridCluster": "samurai:11",
+      "requestSeed": 11,
+      "attempt": 1,
+      "sample": 1,
+      "variantId": "F0",
+      "level": "nightmare",
+      "mode": "F0",
+      "normalisedConfig": {
+        "variantId": "samurai",
+        "difficulty": "nightmare",
+        "seed": 11,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "reference",
+      "poolWidth": 1,
+      "sampleMode": "frontier",
+      "parentMode": "final",
+      "floorIds": [
+        {
+          "rung": "cheap",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "middle",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "full",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        }
+      ],
+      "tierIds": [
+        "nishio"
+      ],
+      "limits": {
+        "guardMs": 45000,
+        "guardScope": "sample",
+        "commandDeadlineMs": 270000,
+        "budget": {
+          "floorTests": 555,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 2047950,
+          "solverChecks": 102400000,
+          "dfsEntries": 129400000,
+          "dfsChecks": 129400000
+        },
+        "ceilings": {
+          "floorTests": 555,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 2047950,
+          "solverChecks": 102400000,
+          "dfsEntries": 129400000,
+          "dfsChecks": 129400000
+        }
+      },
+      "limitOrigin": "research safety guard (trial 45 s, observation backstop); count budget: pilot ceilings (diagnostic safety envelopes, not fitted)",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 134.25919999999974,
+        "coldWallMs": 235.75729999999976,
+        "occupiedWallMs": 241.42830000000004,
+        "cpuToDecisionMs": 391,
+        "cpuTotalMs": 454,
+        "cpuReadyTotalMs": 361,
+        "startupMs": 101.49810000000002,
+        "startupCpuMs": 93,
+        "cleanupMs": 5.6710000000002765,
+        "readyOccupiedWallMs": 139.9302,
+        "gridBuildWallMs": 15.05230000000006,
+        "gridBuildCpuMs": 16,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 63
+      },
+      "validation": {
+        "wallMs": 105.75720000000001,
+        "cpuMs": 126,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "veryEasy",
+      "score": 0,
+      "puzzleHash": "641f422ec19cd45c4629efaff5043728f19feb147772911320da059bd8cf06e1",
+      "attemptsUsed": 1,
+      "samplesUsed": 1,
+      "canonicalRatings": 1,
+      "localProposals": null,
+      "localCapReasons": null,
+      "counts": {
+        "floorTests": 188,
+        "floorDeductions": 28168,
+        "solverChecks": 140796,
+        "dfsEntries": 438,
+        "dfsChecks": 327,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1,
+        "canonicalRatings": 1,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "error": null,
+      "arm": "F0",
+      "puzzleVariant": "samurai",
+      "blockKey": "IG-S04/s6-large-s2-control/samurai:nightmare:11",
+      "shard": "s6-large-s2-control",
+      "order": 2,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "frontier-hooks"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "frontier-hooks.solve-options",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851"
+        },
+        {
+          "id": "frontier-hooks.step",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851",
+          "afterTextHash": "969bace8cc314fad46f0ccaee045d9d835905b72e48d1b8cac966f97d2dd885f"
+        },
+        {
+          "id": "frontier-hooks.dfs-begin",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+          "afterTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3"
+        },
+        {
+          "id": "frontier-hooks.dfs-entry",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3",
+          "afterTextHash": "c9956d7f967a0870905d466e9e9b4bc7cbfdec0bf4bb5f609f81b24eb0ab4a19"
+        },
+        {
+          "id": "frontier-hooks.digger-boot",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "e7db29bca4eb575efae5c0d4507829d8ec8714f324de1c33cdd6a9d7ba70d90a"
+        }
+      ],
+      "engineElapsedMs": 129.92509999999993,
+      "digests": {
+        "structure": "6f3935c95d186f13494850b49d8a93dda043492ae3a44b51e0b58fccd71d2b69",
+        "givens": "045fd1ef960f882de753c218cea435147de390dfbe58694ec5ffd95bea8fe0dd",
+        "solution": "045fd1ef960f882de753c218cea435147de390dfbe58694ec5ffd95bea8fe0dd",
+        "rating": "435fb170e0139a784622e2a1928e4d1c999d2e2e384265cb3344e262a908811d",
+        "config": "13a508f03695a1fda422813a2b4fd437d3ad3a66c79d7c540c4eb434f20e0cdc",
+        "warnings": "8655c0e7356845cc9cc375cdfb4e770af2452d3b2c08b8c3da7fb67003da0639",
+        "log": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "scalars": "7a1054cac12d2328369e9327cdda37db5324bc6ad2e61bf902d8e39af92692f2",
+        "puzzle": "641f422ec19cd45c4629efaff5043728f19feb147772911320da059bd8cf06e1",
+        "all": "3a1a1365a0e6573c722e03f8bb5b24893e9313b83f25f2c542605d69e9a95242"
+      },
+      "engineTimingsMs": {},
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "performanceScope": "S2 off: every accepted test is a full floor solve",
+      "forkLabels": [
+        "model",
+        "grid#1",
+        "dig#1.1",
+        "dig#1.1>random (native dig order)",
+        "dig#1.1>deepen"
+      ],
+      "gridHash": "dce29b64a0cd5ba1b8ea95afede9dca99411196477bd26ea65b34e7dd4708a6c",
+      "cellCount": 369,
+      "groupCount": 185,
+      "digits": 9,
+      "nativeConstants": {
+        "CAP_RATINGS": 1024,
+        "CAP_PROPOSALS": 32768,
+        "OBJECTIVE_STEPS": 100000,
+        "UNIQUE_NODES": 200000
+      },
+      "gridBuild": {
+        "wallMs": 6.435600000000022,
+        "counters": {
+          "logicalSolves": 0,
+          "deductions": 0,
+          "floorDeductions": 0,
+          "solverChecks": 0,
+          "dfsCalls": 1,
+          "dfsEntries": 164,
+          "dfsChecks": 163
+        }
+      },
+      "gridWorkerWallMs": 6.435600000000022,
+      "progressMessages": 32,
+      "budgetStop": null,
+      "engineCounters": {
+        "logicalSolves": 189,
+        "deductions": 28168,
+        "floorDeductions": 28168,
+        "solverChecks": 140796,
+        "dfsCalls": 57,
+        "dfsEntries": 438,
+        "dfsChecks": 327
+      },
+      "enginePurposes": {
+        "canonical": {
+          "solves": 1,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "floor": {
+          "solves": 188,
+          "deductions": 28168,
+          "logicalChecks": 140796,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "dfs": {
+          "solves": 0,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 57,
+          "dfsEntries": 438,
+          "dfsChecks": 327
+        }
+      },
+      "best": {
+        "source": "fallback",
+        "quality": 6001,
+        "exact": false,
+        "uniqueness": "full-grid",
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true,
+        "hardestTechnique": null,
+        "entry": null,
+        "clues": 369
+      },
+      "fallback": {
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true
+      },
+      "frontier": {
+        "groups": 185,
+        "rungs": [
+          {
+            "id": "cheap",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "middle",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "full",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle",
+              "forcingChain"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "forcingChain"
+            ]
+          }
+        ],
+        "singleDigitPatterns": [
+          "xWing",
+          "simpleColouring",
+          "swordfish",
+          "jellyfish"
+        ],
+        "passes": [
+          {
+            "rung": "cheap",
+            "index": 0,
+            "ids": 15,
+            "effectiveIds": 14,
+            "tests": 185,
+            "solved": 130,
+            "rederived": 0,
+            "stuckUnique": 2,
+            "stuckUnknown": 0,
+            "ambiguous": 53,
+            "skippedAmbiguous": 0,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 130,
+            "deductionsSolved": 17030,
+            "deductionsRederived": 0,
+            "deductionsStuck": 10480
+          },
+          {
+            "rung": "middle",
+            "index": 1,
+            "ids": 19,
+            "effectiveIds": 18,
+            "tests": 2,
+            "solved": 0,
+            "rederived": 0,
+            "stuckUnique": 1,
+            "stuckUnknown": 0,
+            "ambiguous": 1,
+            "skippedAmbiguous": 53,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 0,
+            "deductionsSolved": 0,
+            "deductionsRederived": 0,
+            "deductionsStuck": 369
+          },
+          {
+            "rung": "full",
+            "index": 2,
+            "ids": 20,
+            "effectiveIds": 19,
+            "tests": 1,
+            "solved": 1,
+            "rederived": 0,
+            "stuckUnique": 0,
+            "stuckUnknown": 0,
+            "ambiguous": 0,
+            "skippedAmbiguous": 54,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 1,
+            "deductionsSolved": 289,
+            "deductionsRederived": 0,
+            "deductionsStuck": 0
+          }
+        ],
+        "removalsCount": 131,
+        "removals": [
+          [
+            119,
+            0,
+            0,
+            2,
+            1
+          ],
+          [
+            108,
+            0,
+            0,
+            4,
+            2
+          ],
+          [
+            42,
+            0,
+            0,
+            6,
+            3
+          ],
+          [
+            182,
+            0,
+            0,
+            8,
+            4
+          ],
+          [
+            38,
+            0,
+            0,
+            10,
+            5
+          ],
+          [
+            31,
+            0,
+            0,
+            12,
+            6
+          ],
+          [
+            128,
+            0,
+            0,
+            14,
+            7
+          ],
+          [
+            68,
+            0,
+            0,
+            16,
+            8
+          ],
+          [
+            154,
+            0,
+            0,
+            18,
+            9
+          ],
+          [
+            134,
+            0,
+            0,
+            20,
+            10
+          ],
+          [
+            17,
+            0,
+            0,
+            22,
+            11
+          ],
+          [
+            147,
+            0,
+            0,
+            24,
+            12
+          ],
+          [
+            3,
+            0,
+            0,
+            26,
+            13
+          ],
+          [
+            29,
+            0,
+            0,
+            28,
+            14
+          ],
+          [
+            59,
+            0,
+            0,
+            30,
+            15
+          ],
+          [
+            136,
+            0,
+            0,
+            32,
+            16
+          ],
+          [
+            174,
+            0,
+            0,
+            34,
+            17
+          ],
+          [
+            168,
+            0,
+            0,
+            36,
+            18
+          ],
+          [
+            18,
+            0,
+            0,
+            38,
+            19
+          ],
+          [
+            40,
+            0,
+            0,
+            40,
+            20
+          ],
+          [
+            76,
+            0,
+            0,
+            42,
+            21
+          ],
+          [
+            41,
+            0,
+            0,
+            44,
+            22
+          ],
+          [
+            121,
+            0,
+            0,
+            46,
+            23
+          ],
+          [
+            175,
+            0,
+            0,
+            48,
+            24
+          ],
+          [
+            172,
+            0,
+            0,
+            50,
+            25
+          ],
+          [
+            58,
+            0,
+            0,
+            52,
+            26
+          ],
+          [
+            97,
+            0,
+            0,
+            54,
+            27
+          ],
+          [
+            105,
+            0,
+            0,
+            56,
+            28
+          ],
+          [
+            117,
+            0,
+            0,
+            58,
+            29
+          ],
+          [
+            95,
+            0,
+            0,
+            60,
+            30
+          ],
+          [
+            1,
+            0,
+            0,
+            62,
+            31
+          ],
+          [
+            51,
+            0,
+            0,
+            64,
+            32
+          ],
+          [
+            52,
+            0,
+            0,
+            66,
+            33
+          ],
+          [
+            6,
+            0,
+            0,
+            68,
+            34
+          ],
+          [
+            179,
+            0,
+            0,
+            70,
+            35
+          ],
+          [
+            54,
+            0,
+            0,
+            72,
+            36
+          ],
+          [
+            130,
+            0,
+            0,
+            74,
+            37
+          ],
+          [
+            160,
+            0,
+            0,
+            76,
+            38
+          ],
+          [
+            127,
+            0,
+            0,
+            78,
+            39
+          ],
+          [
+            30,
+            0,
+            0,
+            80,
+            40
+          ],
+          [
+            129,
+            0,
+            0,
+            82,
+            41
+          ],
+          [
+            67,
+            0,
+            0,
+            84,
+            42
+          ],
+          [
+            140,
+            0,
+            0,
+            86,
+            44
+          ],
+          [
+            8,
+            0,
+            0,
+            88,
+            45
+          ],
+          [
+            104,
+            0,
+            0,
+            90,
+            46
+          ],
+          [
+            13,
+            0,
+            0,
+            92,
+            47
+          ],
+          [
+            144,
+            0,
+            0,
+            94,
+            48
+          ],
+          [
+            7,
+            0,
+            0,
+            96,
+            49
+          ],
+          [
+            0,
+            0,
+            0,
+            98,
+            50
+          ],
+          [
+            39,
+            0,
+            0,
+            100,
+            51
+          ],
+          [
+            83,
+            0,
+            0,
+            102,
+            52
+          ],
+          [
+            87,
+            0,
+            0,
+            104,
+            53
+          ],
+          [
+            75,
+            0,
+            0,
+            106,
+            54
+          ],
+          [
+            115,
+            0,
+            0,
+            108,
+            55
+          ],
+          [
+            14,
+            0,
+            0,
+            110,
+            57
+          ],
+          [
+            109,
+            0,
+            0,
+            112,
+            58
+          ],
+          [
+            9,
+            0,
+            0,
+            114,
+            59
+          ],
+          [
+            103,
+            0,
+            0,
+            116,
+            60
+          ],
+          [
+            47,
+            0,
+            0,
+            118,
+            61
+          ],
+          [
+            161,
+            0,
+            0,
+            120,
+            62
+          ],
+          [
+            153,
+            0,
+            0,
+            122,
+            63
+          ],
+          [
+            98,
+            0,
+            0,
+            124,
+            64
+          ],
+          [
+            164,
+            0,
+            0,
+            126,
+            65
+          ],
+          [
+            70,
+            0,
+            0,
+            128,
+            66
+          ],
+          [
+            79,
+            0,
+            0,
+            130,
+            67
+          ],
+          [
+            21,
+            0,
+            0,
+            132,
+            68
+          ],
+          [
+            53,
+            0,
+            0,
+            134,
+            69
+          ],
+          [
+            72,
+            0,
+            0,
+            136,
+            70
+          ],
+          [
+            106,
+            0,
+            0,
+            138,
+            71
+          ],
+          [
+            124,
+            0,
+            0,
+            140,
+            72
+          ],
+          [
+            16,
+            0,
+            0,
+            142,
+            73
+          ],
+          [
+            37,
+            0,
+            0,
+            144,
+            74
+          ],
+          [
+            150,
+            0,
+            0,
+            146,
+            75
+          ],
+          [
+            152,
+            0,
+            0,
+            148,
+            76
+          ],
+          [
+            181,
+            0,
+            0,
+            150,
+            77
+          ],
+          [
+            145,
+            0,
+            0,
+            152,
+            78
+          ],
+          [
+            148,
+            0,
+            0,
+            154,
+            80
+          ],
+          [
+            107,
+            0,
+            0,
+            156,
+            81
+          ],
+          [
+            66,
+            0,
+            0,
+            158,
+            82
+          ],
+          [
+            90,
+            0,
+            0,
+            160,
+            83
+          ],
+          [
+            94,
+            0,
+            0,
+            162,
+            84
+          ],
+          [
+            101,
+            0,
+            0,
+            164,
+            85
+          ],
+          [
+            132,
+            0,
+            0,
+            166,
+            86
+          ],
+          [
+            36,
+            0,
+            0,
+            168,
+            87
+          ],
+          [
+            169,
+            0,
+            0,
+            170,
+            88
+          ],
+          [
+            146,
+            0,
+            0,
+            172,
+            89
+          ],
+          [
+            20,
+            0,
+            0,
+            174,
+            91
+          ],
+          [
+            99,
+            0,
+            0,
+            176,
+            93
+          ],
+          [
+            86,
+            0,
+            0,
+            178,
+            94
+          ],
+          [
+            142,
+            0,
+            0,
+            180,
+            95
+          ],
+          [
+            123,
+            0,
+            0,
+            182,
+            96
+          ],
+          [
+            114,
+            0,
+            0,
+            184,
+            98
+          ],
+          [
+            24,
+            0,
+            0,
+            186,
+            99
+          ],
+          [
+            11,
+            0,
+            0,
+            188,
+            100
+          ],
+          [
+            92,
+            0,
+            0,
+            190,
+            101
+          ],
+          [
+            171,
+            0,
+            0,
+            192,
+            102
+          ],
+          [
+            112,
+            0,
+            0,
+            194,
+            105
+          ],
+          [
+            96,
+            0,
+            0,
+            196,
+            106
+          ],
+          [
+            63,
+            0,
+            0,
+            198,
+            107
+          ],
+          [
+            34,
+            0,
+            0,
+            200,
+            108
+          ],
+          [
+            44,
+            0,
+            0,
+            202,
+            111
+          ],
+          [
+            137,
+            0,
+            0,
+            204,
+            112
+          ],
+          [
+            26,
+            0,
+            0,
+            206,
+            113
+          ],
+          [
+            177,
+            0,
+            0,
+            208,
+            114
+          ],
+          [
+            71,
+            0,
+            0,
+            210,
+            115
+          ],
+          [
+            113,
+            0,
+            0,
+            212,
+            116
+          ],
+          [
+            73,
+            0,
+            0,
+            214,
+            117
+          ],
+          [
+            143,
+            0,
+            0,
+            216,
+            118
+          ],
+          [
+            45,
+            0,
+            0,
+            218,
+            119
+          ],
+          [
+            166,
+            0,
+            0,
+            220,
+            120
+          ],
+          [
+            180,
+            0,
+            0,
+            222,
+            121
+          ],
+          [
+            158,
+            0,
+            0,
+            224,
+            122
+          ],
+          [
+            178,
+            0,
+            0,
+            226,
+            123
+          ],
+          [
+            80,
+            0,
+            0,
+            228,
+            125
+          ],
+          [
+            27,
+            0,
+            0,
+            230,
+            128
+          ],
+          [
+            28,
+            0,
+            0,
+            232,
+            129
+          ],
+          [
+            138,
+            0,
+            0,
+            234,
+            131
+          ],
+          [
+            165,
+            0,
+            0,
+            236,
+            132
+          ],
+          [
+            85,
+            0,
+            0,
+            238,
+            133
+          ],
+          [
+            62,
+            0,
+            0,
+            240,
+            135
+          ],
+          [
+            110,
+            0,
+            0,
+            242,
+            137
+          ],
+          [
+            167,
+            0,
+            0,
+            244,
+            140
+          ],
+          [
+            135,
+            0,
+            0,
+            246,
+            141
+          ],
+          [
+            126,
+            0,
+            0,
+            248,
+            142
+          ],
+          [
+            163,
+            0,
+            0,
+            250,
+            143
+          ],
+          [
+            61,
+            0,
+            0,
+            252,
+            148
+          ],
+          [
+            10,
+            0,
+            0,
+            254,
+            153
+          ],
+          [
+            22,
+            0,
+            0,
+            256,
+            155
+          ],
+          [
+            81,
+            0,
+            0,
+            258,
+            165
+          ],
+          [
+            60,
+            0,
+            0,
+            260,
+            171
+          ],
+          [
+            162,
+            2,
+            0,
+            289,
+            188
+          ]
+        ],
+        "s2": {
+          "rederived": 0,
+          "solved": 131
+        },
+        "refusals": {
+          "stuckUnique": 3,
+          "stuckUnknown": 0,
+          "ambiguous": 54
+        },
+        "entries": [],
+        "diagnostics": [
+          {
+            "group": 120,
+            "cells": [
+              120,
+              203
+            ],
+            "rung": "cheap",
+            "ordinal": 1,
+            "unsolved": 34,
+            "proof": "unique",
+            "parentHash": "156a95122042606ba8718ae9f5d23ec0b1360d2f07537a8f49ae956bb89d73b7",
+            "clues": 113,
+            "test": 157,
+            "fate": "ambiguous-later"
+          },
+          {
+            "group": 162,
+            "cells": [
+              324,
+              368
+            ],
+            "rung": "cheap",
+            "ordinal": 2,
+            "unsolved": 134,
+            "proof": "unique",
+            "parentHash": "2be6e6c41ea177d2b9128b8b08727b9af8b98efc6a96e5df02e9eebcb4419b6c",
+            "clues": 109,
+            "test": 179,
+            "fate": "replaced-by-later-rung"
+          },
+          {
+            "group": 162,
+            "cells": [
+              324,
+              368
+            ],
+            "rung": "middle",
+            "ordinal": 3,
+            "unsolved": 134,
+            "proof": "unique",
+            "parentHash": "2be6e6c41ea177d2b9128b8b08727b9af8b98efc6a96e5df02e9eebcb4419b6c",
+            "clues": 109,
+            "test": 187,
+            "fate": "removed-later"
+          }
+        ],
+        "phaseB": [],
+        "referenceChecks": [],
+        "deepen": {
+          "runs": [],
+          "proposals": 0
+        },
+        "objectiveKind": "numeric",
+        "phaseCosts": {
+          "init": {
+            "wallMs": 1.8195000000000618,
+            "solves": 1,
+            "deductions": 0,
+            "logicalChecks": 0,
+            "dfsCalls": 0,
+            "dfsEntries": 0,
+            "dfsChecks": 0
+          },
+          "phaseA": {
+            "wallMs": 113.88100000000009,
+            "solves": 188,
+            "deductions": 28168,
+            "logicalChecks": 140796,
+            "dfsCalls": 57,
+            "dfsEntries": 438,
+            "dfsChecks": 327
+          }
+        },
+        "finalParentHash": "02299a72c83e2cd1f9a47f27ee1943db7a29b4e69279fffe76164d69d842a6de",
+        "finalClues": 107,
+        "parentMode": "final"
+      },
+      "native": null,
+      "engineMs": 129.92509999999993,
+      "s2Audit": {
+        "status": "audited",
+        "wallMs": 160.8186999999998,
+        "cpuMs": 311,
+        "checkLimit": 300000,
+        "acceptedRemovals": 131,
+        "rederivedRemovals": 0,
+        "audited": 0,
+        "removals": [],
+        "finalParent": {
+          "hash": "02299a72c83e2cd1f9a47f27ee1943db7a29b4e69279fffe76164d69d842a6de",
+          "recordedHash": "02299a72c83e2cd1f9a47f27ee1943db7a29b4e69279fffe76164d69d842a6de",
+          "hashMatches": true,
+          "ownLastRung": {
+            "rung": "full",
+            "status": "audited",
+            "checks": 17253,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          },
+          "fullFloor": {
+            "status": "audited",
+            "checks": 17253,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          }
+        },
+        "operationalDisagreements": 0,
+        "correctnessProblems": 0
+      }
+    },
+    {
+      "key": "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": null,
+      "gridCluster": "samurai:12",
+      "requestSeed": 12,
+      "attempt": 1,
+      "sample": 1,
+      "variantId": "F0",
+      "level": "nightmare",
+      "mode": "F0",
+      "normalisedConfig": {
+        "variantId": "samurai",
+        "difficulty": "nightmare",
+        "seed": 12,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "reference",
+      "poolWidth": 1,
+      "sampleMode": "frontier",
+      "parentMode": "final",
+      "floorIds": [
+        {
+          "rung": "cheap",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "middle",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle"
+          ]
+        },
+        {
+          "rung": "full",
+          "ids": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        }
+      ],
+      "tierIds": [
+        "nishio"
+      ],
+      "limits": {
+        "guardMs": 45000,
+        "guardScope": "sample",
+        "commandDeadlineMs": 270000,
+        "budget": {
+          "floorTests": 555,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 2047950,
+          "solverChecks": 102400000,
+          "dfsEntries": 129400000,
+          "dfsChecks": 129400000
+        },
+        "ceilings": {
+          "floorTests": 555,
+          "ladderPasses": 3,
+          "phaseBSolves": 12,
+          "deepenProposals": 16,
+          "canonicalRatings": 64,
+          "floorDeductions": 2047950,
+          "solverChecks": 102400000,
+          "dfsEntries": 129400000,
+          "dfsChecks": 129400000
+        }
+      },
+      "limitOrigin": "research safety guard (trial 45 s, observation backstop); count budget: pilot ceilings (diagnostic safety envelopes, not fitted)",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 183.56719999999996,
+        "coldWallMs": 274.5277000000001,
+        "occupiedWallMs": 279.6527000000001,
+        "cpuToDecisionMs": 453,
+        "cpuTotalMs": 453,
+        "cpuReadyTotalMs": 360,
+        "startupMs": 90.96050000000014,
+        "startupCpuMs": 93,
+        "cleanupMs": 5.125,
+        "readyOccupiedWallMs": 188.69219999999996,
+        "gridBuildWallMs": 12.85590000000002,
+        "gridBuildCpuMs": 16,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 101.23959999999988,
+        "cpuMs": 141,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "veryEasy",
+      "score": 0,
+      "puzzleHash": "23d93b63d9fa9aeeb0491bca14cb1a779daca18c273be69a0fd1e4d54c0e8f2c",
+      "attemptsUsed": 1,
+      "samplesUsed": 1,
+      "canonicalRatings": 1,
+      "localProposals": null,
+      "localCapReasons": null,
+      "counts": {
+        "floorTests": 188,
+        "floorDeductions": 27613,
+        "solverChecks": 229291,
+        "dfsEntries": 955,
+        "dfsChecks": 852,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1,
+        "canonicalRatings": 1,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate"
+      ],
+      "error": null,
+      "arm": "F0",
+      "puzzleVariant": "samurai",
+      "blockKey": "IG-S04/s6-large-s2-control/samurai:nightmare:12",
+      "shard": "s6-large-s2-control",
+      "order": 3,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "frontier-hooks"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "frontier-hooks.solve-options",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851"
+        },
+        {
+          "id": "frontier-hooks.step",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "a52c09ad9f59811634ee003f1f2f3b032d9e0c748f9d5da1872002236c6ad851",
+          "afterTextHash": "969bace8cc314fad46f0ccaee045d9d835905b72e48d1b8cac966f97d2dd885f"
+        },
+        {
+          "id": "frontier-hooks.dfs-begin",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+          "afterTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3"
+        },
+        {
+          "id": "frontier-hooks.dfs-entry",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "ec1b6b6072417188ec7bd869a5373e643541c6cd6e02a818cb13abb9971a59f3",
+          "afterTextHash": "c9956d7f967a0870905d466e9e9b4bc7cbfdec0bf4bb5f609f81b24eb0ab4a19"
+        },
+        {
+          "id": "frontier-hooks.digger-boot",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "e7db29bca4eb575efae5c0d4507829d8ec8714f324de1c33cdd6a9d7ba70d90a"
+        }
+      ],
+      "engineElapsedMs": 180.02469999999994,
+      "digests": {
+        "structure": "6f3935c95d186f13494850b49d8a93dda043492ae3a44b51e0b58fccd71d2b69",
+        "givens": "5b760704583bebb292fa8c8131250c85ea4a3d7e94be0a8e19f86040b8a68946",
+        "solution": "5b760704583bebb292fa8c8131250c85ea4a3d7e94be0a8e19f86040b8a68946",
+        "rating": "435fb170e0139a784622e2a1928e4d1c999d2e2e384265cb3344e262a908811d",
+        "config": "6f7376c10d41a1766b2879ec2eb83849c48c87ef52a454804f1b7d33e253615c",
+        "warnings": "8655c0e7356845cc9cc375cdfb4e770af2452d3b2c08b8c3da7fb67003da0639",
+        "log": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "scalars": "bf82d5dcd20186f5ef1f39cc1a78a546bc0bd5c061810a36cffdd360605c5f39",
+        "puzzle": "23d93b63d9fa9aeeb0491bca14cb1a779daca18c273be69a0fd1e4d54c0e8f2c",
+        "all": "a9036b8b634fdbc8db2cfb3a7a49f61eb6734b88f6144c95e1e661666539d84d"
+      },
+      "engineTimingsMs": {},
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "performanceScope": "S2 off: every accepted test is a full floor solve",
+      "forkLabels": [
+        "model",
+        "grid#1",
+        "dig#1.1",
+        "dig#1.1>random (native dig order)",
+        "dig#1.1>deepen"
+      ],
+      "gridHash": "f2273c77cc40ecc12ef60ce9bff3432b5ab32de540ce4f601ddb0a2ee12e31a9",
+      "cellCount": 369,
+      "groupCount": 185,
+      "digits": 9,
+      "nativeConstants": {
+        "CAP_RATINGS": 1024,
+        "CAP_PROPOSALS": 32768,
+        "OBJECTIVE_STEPS": 100000,
+        "UNIQUE_NODES": 200000
+      },
+      "gridBuild": {
+        "wallMs": 6.251499999999851,
+        "counters": {
+          "logicalSolves": 0,
+          "deductions": 0,
+          "floorDeductions": 0,
+          "solverChecks": 0,
+          "dfsCalls": 1,
+          "dfsEntries": 162,
+          "dfsChecks": 161
+        }
+      },
+      "gridWorkerWallMs": 6.251499999999851,
+      "progressMessages": 32,
+      "budgetStop": null,
+      "engineCounters": {
+        "logicalSolves": 189,
+        "deductions": 27613,
+        "floorDeductions": 27613,
+        "solverChecks": 229291,
+        "dfsCalls": 53,
+        "dfsEntries": 955,
+        "dfsChecks": 852
+      },
+      "enginePurposes": {
+        "canonical": {
+          "solves": 1,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "floor": {
+          "solves": 188,
+          "deductions": 27613,
+          "logicalChecks": 229291,
+          "dfsCalls": 0,
+          "dfsEntries": 0,
+          "dfsChecks": 0
+        },
+        "dfs": {
+          "solves": 0,
+          "deductions": 0,
+          "logicalChecks": 0,
+          "dfsCalls": 53,
+          "dfsEntries": 955,
+          "dfsChecks": 852
+        }
+      },
+      "best": {
+        "source": "fallback",
+        "quality": 6001,
+        "exact": false,
+        "uniqueness": "full-grid",
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true,
+        "hardestTechnique": null,
+        "entry": null,
+        "clues": 369
+      },
+      "fallback": {
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true
+      },
+      "frontier": {
+        "groups": 185,
+        "rungs": [
+          {
+            "id": "cheap",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "middle",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing"
+            ]
+          },
+          {
+            "id": "full",
+            "ids": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "uniqueRectangle",
+              "forcingChain"
+            ],
+            "effectiveIds": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "pointing",
+              "boxLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple",
+              "hiddenTriple",
+              "nakedQuad",
+              "hiddenQuad",
+              "xWing",
+              "simpleColouring",
+              "swordfish",
+              "jellyfish",
+              "xyWing",
+              "xyzWing",
+              "wWing",
+              "forcingChain"
+            ]
+          }
+        ],
+        "singleDigitPatterns": [
+          "xWing",
+          "simpleColouring",
+          "swordfish",
+          "jellyfish"
+        ],
+        "passes": [
+          {
+            "rung": "cheap",
+            "index": 0,
+            "ids": 15,
+            "effectiveIds": 14,
+            "tests": 185,
+            "solved": 134,
+            "rederived": 0,
+            "stuckUnique": 2,
+            "stuckUnknown": 0,
+            "ambiguous": 49,
+            "skippedAmbiguous": 0,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 134,
+            "deductionsSolved": 18147,
+            "deductionsRederived": 0,
+            "deductionsStuck": 8944
+          },
+          {
+            "rung": "middle",
+            "index": 1,
+            "ids": 19,
+            "effectiveIds": 18,
+            "tests": 2,
+            "solved": 0,
+            "rederived": 0,
+            "stuckUnique": 1,
+            "stuckUnknown": 0,
+            "ambiguous": 1,
+            "skippedAmbiguous": 49,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 0,
+            "deductionsSolved": 0,
+            "deductionsRederived": 0,
+            "deductionsStuck": 174
+          },
+          {
+            "rung": "full",
+            "index": 2,
+            "ids": 20,
+            "effectiveIds": 19,
+            "tests": 1,
+            "solved": 1,
+            "rederived": 0,
+            "stuckUnique": 0,
+            "stuckUnknown": 0,
+            "ambiguous": 0,
+            "skippedAmbiguous": 50,
+            "skippedMinClues": 0,
+            "skippedUnitMinimum": 0,
+            "accepted": 1,
+            "deductionsSolved": 348,
+            "deductionsRederived": 0,
+            "deductionsStuck": 0
+          }
+        ],
+        "removalsCount": 135,
+        "removals": [
+          [
+            149,
+            0,
+            0,
+            2,
+            1
+          ],
+          [
+            81,
+            0,
+            0,
+            4,
+            2
+          ],
+          [
+            4,
+            0,
+            0,
+            6,
+            3
+          ],
+          [
+            160,
+            0,
+            0,
+            8,
+            4
+          ],
+          [
+            62,
+            0,
+            0,
+            10,
+            5
+          ],
+          [
+            127,
+            0,
+            0,
+            12,
+            6
+          ],
+          [
+            107,
+            0,
+            0,
+            14,
+            7
+          ],
+          [
+            134,
+            0,
+            0,
+            16,
+            8
+          ],
+          [
+            94,
+            0,
+            0,
+            18,
+            9
+          ],
+          [
+            82,
+            0,
+            0,
+            20,
+            10
+          ],
+          [
+            155,
+            0,
+            0,
+            22,
+            11
+          ],
+          [
+            116,
+            0,
+            0,
+            24,
+            12
+          ],
+          [
+            53,
+            0,
+            0,
+            26,
+            13
+          ],
+          [
+            14,
+            0,
+            0,
+            28,
+            14
+          ],
+          [
+            56,
+            0,
+            0,
+            30,
+            15
+          ],
+          [
+            10,
+            0,
+            0,
+            32,
+            16
+          ],
+          [
+            146,
+            0,
+            0,
+            34,
+            17
+          ],
+          [
+            181,
+            0,
+            0,
+            36,
+            18
+          ],
+          [
+            68,
+            0,
+            0,
+            38,
+            19
+          ],
+          [
+            8,
+            0,
+            0,
+            40,
+            20
+          ],
+          [
+            86,
+            0,
+            0,
+            42,
+            21
+          ],
+          [
+            154,
+            0,
+            0,
+            44,
+            22
+          ],
+          [
+            33,
+            0,
+            0,
+            46,
+            23
+          ],
+          [
+            157,
+            0,
+            0,
+            48,
+            24
+          ],
+          [
+            150,
+            0,
+            0,
+            50,
+            25
+          ],
+          [
+            0,
+            0,
+            0,
+            52,
+            26
+          ],
+          [
+            175,
+            0,
+            0,
+            54,
+            27
+          ],
+          [
+            102,
+            0,
+            0,
+            56,
+            28
+          ],
+          [
+            126,
+            0,
+            0,
+            58,
+            29
+          ],
+          [
+            179,
+            0,
+            0,
+            60,
+            30
+          ],
+          [
+            43,
+            0,
+            0,
+            62,
+            31
+          ],
+          [
+            151,
+            0,
+            0,
+            64,
+            32
+          ],
+          [
+            17,
+            0,
+            0,
+            66,
+            33
+          ],
+          [
+            25,
+            0,
+            0,
+            68,
+            34
+          ],
+          [
+            111,
+            0,
+            0,
+            70,
+            35
+          ],
+          [
+            12,
+            0,
+            0,
+            72,
+            36
+          ],
+          [
+            75,
+            0,
+            0,
+            74,
+            37
+          ],
+          [
+            50,
+            0,
+            0,
+            76,
+            38
+          ],
+          [
+            48,
+            0,
+            0,
+            78,
+            39
+          ],
+          [
+            184,
+            0,
+            0,
+            79,
+            40
+          ],
+          [
+            65,
+            0,
+            0,
+            81,
+            41
+          ],
+          [
+            21,
+            0,
+            0,
+            83,
+            42
+          ],
+          [
+            106,
+            0,
+            0,
+            85,
+            43
+          ],
+          [
+            178,
+            0,
+            0,
+            87,
+            44
+          ],
+          [
+            76,
+            0,
+            0,
+            89,
+            45
+          ],
+          [
+            123,
+            0,
+            0,
+            91,
+            46
+          ],
+          [
+            91,
+            0,
+            0,
+            93,
+            47
+          ],
+          [
+            19,
+            0,
+            0,
+            95,
+            48
+          ],
+          [
+            52,
+            0,
+            0,
+            97,
+            49
+          ],
+          [
+            132,
+            0,
+            0,
+            99,
+            50
+          ],
+          [
+            78,
+            0,
+            0,
+            101,
+            51
+          ],
+          [
+            136,
+            0,
+            0,
+            103,
+            52
+          ],
+          [
+            182,
+            0,
+            0,
+            105,
+            53
+          ],
+          [
+            140,
+            0,
+            0,
+            107,
+            54
+          ],
+          [
+            183,
+            0,
+            0,
+            109,
+            55
+          ],
+          [
+            92,
+            0,
+            0,
+            111,
+            56
+          ],
+          [
+            110,
+            0,
+            0,
+            113,
+            57
+          ],
+          [
+            143,
+            0,
+            0,
+            115,
+            58
+          ],
+          [
+            2,
+            0,
+            0,
+            117,
+            59
+          ],
+          [
+            64,
+            0,
+            0,
+            119,
+            60
+          ],
+          [
+            104,
+            0,
+            0,
+            121,
+            61
+          ],
+          [
+            20,
+            0,
+            0,
+            123,
+            62
+          ],
+          [
+            29,
+            0,
+            0,
+            125,
+            63
+          ],
+          [
+            51,
+            0,
+            0,
+            127,
+            64
+          ],
+          [
+            9,
+            0,
+            0,
+            129,
+            65
+          ],
+          [
+            40,
+            0,
+            0,
+            131,
+            66
+          ],
+          [
+            153,
+            0,
+            0,
+            133,
+            67
+          ],
+          [
+            131,
+            0,
+            0,
+            135,
+            68
+          ],
+          [
+            5,
+            0,
+            0,
+            137,
+            69
+          ],
+          [
+            105,
+            0,
+            0,
+            139,
+            70
+          ],
+          [
+            167,
+            0,
+            0,
+            141,
+            71
+          ],
+          [
+            168,
+            0,
+            0,
+            143,
+            72
+          ],
+          [
+            159,
+            0,
+            0,
+            145,
+            73
+          ],
+          [
+            57,
+            0,
+            0,
+            147,
+            74
+          ],
+          [
+            3,
+            0,
+            0,
+            149,
+            75
+          ],
+          [
+            15,
+            0,
+            0,
+            151,
+            76
+          ],
+          [
+            95,
+            0,
+            0,
+            153,
+            77
+          ],
+          [
+            46,
+            0,
+            0,
+            155,
+            78
+          ],
+          [
+            138,
+            0,
+            0,
+            157,
+            79
+          ],
+          [
+            169,
+            0,
+            0,
+            159,
+            80
+          ],
+          [
+            90,
+            0,
+            0,
+            161,
+            81
+          ],
+          [
+            152,
+            0,
+            0,
+            163,
+            82
+          ],
+          [
+            96,
+            0,
+            0,
+            165,
+            83
+          ],
+          [
+            176,
+            0,
+            0,
+            167,
+            84
+          ],
+          [
+            59,
+            0,
+            0,
+            169,
+            86
+          ],
+          [
+            125,
+            0,
+            0,
+            171,
+            87
+          ],
+          [
+            108,
+            0,
+            0,
+            173,
+            88
+          ],
+          [
+            118,
+            0,
+            0,
+            175,
+            90
+          ],
+          [
+            177,
+            0,
+            0,
+            177,
+            91
+          ],
+          [
+            28,
+            0,
+            0,
+            179,
+            92
+          ],
+          [
+            11,
+            0,
+            0,
+            181,
+            93
+          ],
+          [
+            69,
+            0,
+            0,
+            183,
+            94
+          ],
+          [
+            139,
+            0,
+            0,
+            185,
+            95
+          ],
+          [
+            44,
+            0,
+            0,
+            187,
+            96
+          ],
+          [
+            84,
+            0,
+            0,
+            189,
+            97
+          ],
+          [
+            71,
+            0,
+            0,
+            191,
+            98
+          ],
+          [
+            109,
+            0,
+            0,
+            193,
+            99
+          ],
+          [
+            113,
+            0,
+            0,
+            195,
+            103
+          ],
+          [
+            30,
+            0,
+            0,
+            197,
+            104
+          ],
+          [
+            161,
+            0,
+            0,
+            199,
+            105
+          ],
+          [
+            121,
+            0,
+            0,
+            201,
+            106
+          ],
+          [
+            87,
+            0,
+            0,
+            203,
+            107
+          ],
+          [
+            16,
+            0,
+            0,
+            205,
+            109
+          ],
+          [
+            61,
+            0,
+            0,
+            207,
+            112
+          ],
+          [
+            74,
+            0,
+            0,
+            209,
+            114
+          ],
+          [
+            73,
+            0,
+            0,
+            211,
+            115
+          ],
+          [
+            120,
+            0,
+            0,
+            213,
+            116
+          ],
+          [
+            163,
+            0,
+            0,
+            215,
+            117
+          ],
+          [
+            130,
+            0,
+            0,
+            219,
+            119
+          ],
+          [
+            180,
+            0,
+            0,
+            221,
+            121
+          ],
+          [
+            147,
+            0,
+            0,
+            223,
+            124
+          ],
+          [
+            34,
+            0,
+            0,
+            225,
+            125
+          ],
+          [
+            24,
+            0,
+            0,
+            227,
+            126
+          ],
+          [
+            67,
+            0,
+            0,
+            229,
+            127
+          ],
+          [
+            38,
+            0,
+            0,
+            231,
+            128
+          ],
+          [
+            79,
+            0,
+            0,
+            233,
+            130
+          ],
+          [
+            72,
+            0,
+            0,
+            235,
+            132
+          ],
+          [
+            49,
+            0,
+            0,
+            237,
+            133
+          ],
+          [
+            172,
+            0,
+            0,
+            239,
+            134
+          ],
+          [
+            100,
+            0,
+            0,
+            240,
+            136
+          ],
+          [
+            101,
+            0,
+            0,
+            244,
+            138
+          ],
+          [
+            36,
+            0,
+            0,
+            246,
+            141
+          ],
+          [
+            32,
+            0,
+            0,
+            248,
+            142
+          ],
+          [
+            128,
+            0,
+            0,
+            250,
+            144
+          ],
+          [
+            137,
+            0,
+            0,
+            252,
+            145
+          ],
+          [
+            115,
+            0,
+            0,
+            255,
+            146
+          ],
+          [
+            13,
+            0,
+            0,
+            257,
+            150
+          ],
+          [
+            7,
+            0,
+            0,
+            259,
+            151
+          ],
+          [
+            54,
+            0,
+            0,
+            261,
+            155
+          ],
+          [
+            145,
+            0,
+            0,
+            270,
+            160
+          ],
+          [
+            135,
+            0,
+            0,
+            278,
+            163
+          ],
+          [
+            142,
+            0,
+            0,
+            284,
+            165
+          ],
+          [
+            144,
+            0,
+            0,
+            286,
+            166
+          ],
+          [
+            60,
+            0,
+            0,
+            295,
+            179
+          ],
+          [
+            80,
+            2,
+            0,
+            348,
+            188
+          ]
+        ],
+        "s2": {
+          "rederived": 0,
+          "solved": 135
+        },
+        "refusals": {
+          "stuckUnique": 3,
+          "stuckUnknown": 0,
+          "ambiguous": 50
+        },
+        "entries": [],
+        "diagnostics": [
+          {
+            "group": 70,
+            "cells": [
+              70,
+              253
+            ],
+            "rung": "cheap",
+            "ordinal": 1,
+            "unsolved": 227,
+            "proof": "unique",
+            "parentHash": "f931888d989bffbdf17c7dd11cf5193d64e777344e41316c1b175bde46833281",
+            "clues": 104,
+            "test": 170,
+            "fate": "ambiguous-later"
+          },
+          {
+            "group": 80,
+            "cells": [
+              80,
+              243
+            ],
+            "rung": "cheap",
+            "ordinal": 2,
+            "unsolved": 218,
+            "proof": "unique",
+            "parentHash": "f931888d989bffbdf17c7dd11cf5193d64e777344e41316c1b175bde46833281",
+            "clues": 104,
+            "test": 171,
+            "fate": "replaced-by-later-rung"
+          },
+          {
+            "group": 80,
+            "cells": [
+              80,
+              243
+            ],
+            "rung": "middle",
+            "ordinal": 3,
+            "unsolved": 221,
+            "proof": "unique",
+            "parentHash": "b8b4bbbc5cd4e8e528ff6d81061f56b31ba56d961bd10a52014dbd8b92ce6ccc",
+            "clues": 102,
+            "test": 187,
+            "fate": "removed-later"
+          }
+        ],
+        "phaseB": [],
+        "referenceChecks": [],
+        "deepen": {
+          "runs": [],
+          "proposals": 0
+        },
+        "objectiveKind": "numeric",
+        "phaseCosts": {
+          "init": {
+            "wallMs": 1.6107999999999265,
+            "solves": 1,
+            "deductions": 0,
+            "logicalChecks": 0,
+            "dfsCalls": 0,
+            "dfsEntries": 0,
+            "dfsChecks": 0
+          },
+          "phaseA": {
+            "wallMs": 165.60430000000042,
+            "solves": 188,
+            "deductions": 27613,
+            "logicalChecks": 229291,
+            "dfsCalls": 53,
+            "dfsEntries": 955,
+            "dfsChecks": 852
+          }
+        },
+        "finalParentHash": "3dfef678928f8cc4f0b792a4e9a0d2bcef7abb56a26f36866b3522f8b3c6b459",
+        "finalClues": 100,
+        "parentMode": "final"
+      },
+      "native": null,
+      "engineMs": 180.02469999999994,
+      "s2Audit": {
+        "status": "audited",
+        "wallMs": 223.27340000000004,
+        "cpuMs": 328,
+        "checkLimit": 300000,
+        "acceptedRemovals": 135,
+        "rederivedRemovals": 0,
+        "audited": 0,
+        "removals": [],
+        "finalParent": {
+          "hash": "3dfef678928f8cc4f0b792a4e9a0d2bcef7abb56a26f36866b3522f8b3c6b459",
+          "recordedHash": "3dfef678928f8cc4f0b792a4e9a0d2bcef7abb56a26f36866b3522f8b3c6b459",
+          "hashMatches": true,
+          "ownLastRung": {
+            "rung": "full",
+            "status": "audited",
+            "checks": 48131,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          },
+          "fullFloor": {
+            "status": "audited",
+            "checks": 48131,
+            "solved": true,
+            "reportStatus": "solved",
+            "unsolved": 0
+          }
+        },
+        "operationalDisagreements": 0,
+        "correctnessProblems": 0
+      }
+    }
+  ]
+}

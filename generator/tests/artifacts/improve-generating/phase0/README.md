@@ -36,6 +36,16 @@ catalogue (`-Round frozen-gate`, with a freeze receipt and a budget receipt).
 | `ig03-run.cjs` | IG-S03 glue for `run.cjs`: executors, record additions, identity against IG-S02's baselines, shard summary. |
 | `ig03-aggregate.cjs` | IG-S03 task summary across the shards: `parity.json`, `check-sequences.json`, `coverage.json`, `summary.json/md`. |
 | `scoped-test.cjs` | IG-S03 focused tests that need no engine (the runtime against a native-style reference on a fake of the engine pieces; deliberate mutations; plan; transforms). |
+| `frontier.cjs` | IG-S04: the S1/S2 frontier prototype (the six variants F0/F1/FC/FM/FU/FS, phase A ladder, phase B, deepen, fallback), the native comparison sample, the post-timing S2 audit and the list of interpretations. |
+| `frontier-runtime.cjs` | IG-S04: the engine-side runtime of the hooks (counters per purpose, enforced count limits, the S2 early exit, the native helpers exposed by the digger transform). |
+| `sample-budget.cjs` | IG-S04: the count vector of one sample, the pilot ceilings, the budget stop and the fixed fitting rule of `budgets.json`. |
+| `adapters/frontier-hooks.cjs` | IG-S04: the five in-memory transforms of `logical-solver.js`, `dfs-solver.js` and `digger.js` (reference solver only; observers and sentinel errors, no behaviour change). |
+| `ig04-worker.cjs` | IG-S04 worker side (every job kind `ig04-*`, one line in `worker.cjs`): the grid trial, the S2 audit, the parity run, the synthetic engine tests. |
+| `plans/ig-s04.cjs` | IG-S04: the six shards and the 64 preregistered keys with their rotation and admission estimates. |
+| `ig04-run.cjs` | IG-S04 glue for `run.cjs`: prepare (catalogue probe, synthetic tests, parity), the trial executor, record additions, identity, summary and the stage reprojection. |
+| `ig04-aggregate.cjs` | IG-S04 task documents from evidence only: `variant-manifest.json`, `pilot-reprojection.json`, `budgets.json`, `s2-audit.json`, `summary.json/md`; with `--suffix=-r2` the revision files (reusing a frozen `budgets-r2.json`, with the branch review of the corrections). |
+| `frontier-test.cjs` | IG-S04 tests: pure cases on a scripted fake engine (`--only=pure`, no engine) and the engine cases of the first command. |
+| `ig04-retest.cjs` | IG-S04 revision r2: reruns the pure cases and the real-engine cases of `frontier-test.cjs` after a correction (one wrapped command, no trial, nothing timed) and writes `engine-retest-r2.json`. |
 
 ## Commands
 
@@ -311,3 +321,93 @@ is in attempt a2.
   SM1 / IG-S07 still needed), the early-exact list limited to `firstExactOrdinal = 1`, B02 counting the 24 request identities
   apart from the 19 audit jobs, and the SM4 scope statement (sufficient for these families on this runtime, not a certification
   of the frozen source). The r1 and r2 files are kept unchanged.
+
+## IG-S04: frontier prototype (S1/S2 variants) and the staged budget pilot
+
+Test side only; every number is provisional (pre-freeze). Reference solver only (the S3 prototype is never loaded) and no S3
+gain is assumed. The five private transforms of the adapter `frontier-hooks` observe the engine (counters per purpose, the
+enforced count limits, the S2 early exit, the exposure of the digger's own constants and helpers); without the runtime the
+patched code is the native code. A trial is one fresh worker: the native model and full grid of the request seed (forks `model`
+and `grid#1`), then ONE sample of ordinal 1 (root fork `dig#1.1`) in one of eight modes.
+
+| Mode | What it is |
+|---|---|
+| `proposal-only`, `ordinary-only` | the native `digLevel` sample of that kind at ordinal 1 (native forks, caps, keeper, guards); only the kind is forced |
+| `F0` | full ladder (cheap, middle, full floor), S2 off, final parent |
+| `F1` | full ladder, S2 on, final parent (the default frontier) |
+| `FC`, `FM` | the cheap / middle set only (S2 on, final parent) |
+| `FU` | F1, then, after the fresh DFS proof of the reference candidate, the actual full canonical floor with uniqueness enabled |
+| `FS` | F1 with the stored immutable snapshot of each entry as its reference parent |
+
+Cheap = the actual floor ids of the groups basic, locked, subset and wing; middle adds fish (the registered single-digit patterns
+are in that group); full = the whole actual floor; all in registry order, equal rungs removed. An empty tier, or a registry
+without these families, stops for the author. Phase A always runs `assumeUniqueness: false`; S2 raises a separate `rederived`
+outcome (never a forged solved report or rating) when every removed cell holds its original value again and the grid is not yet
+complete; a cell with another value is an unsound deduction. The readings the task text leaves open are listed in
+`frontier.cjs` (`INTERPRETATIONS`) and in `variant-manifest.json` for the author.
+
+```powershell
+# the plan (no engine, nothing timed, nothing written)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S04 -Round provisional-r1 -PlanOnly
+# staged, as the task requires: the large-board probes first (the first command also runs the unmeasured synthetic engine
+# tests and the patched/plain parity run), whose end emits pilot-reprojection.json; later shards refuse to start without it
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S04 -Round provisional-r1 -Shard s1-large-controls
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S04 -Round provisional-r1 -Shard s2-small-all
+# the documented single command runs every shard in the fixed priority order
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S04 -Round provisional-r1
+# the task documents (evidence only, no engine, write once; --suffix=-r2 for a later revision: a budgets-r2.json frozen
+# beforehand is reused, never recomputed)
+node generator\tests\artifacts\improve-generating\phase0\ig04-aggregate.cjs --task=IG-S04 --round=provisional-r1
+# development only, no engine, no timing: the pure cases on the scripted fake engine
+node generator\tests\artifacts\improve-generating\phase0\frontier-test.cjs --only=pure
+# after a correction of the frontier code: the pure cases plus the real-engine cases, one wrapped command, nothing timed
+. (Join-Path $env:USERPROFILE '.copilot\session-state\c2f29688-8568-4f25-bace-e644d381e5f9\files\ig-lock.ps1')
+Invoke-IgNode -Repo sudoku -Task 'IG-S04/engine-retest' -NodeArgs @(
+  'generator\tests\artifacts\improve-generating\phase0\ig04-retest.cjs', '--round=provisional-r1', '--suffix=-r2')
+```
+
+- **Population.** Cells classic9, mega12, mega16, samurai; Nightmare; grid seeds 11 and 12 (attempt 1); the eight modes: 64
+  keys. Shards in the fixed priority: `s1-large-controls` (mega16/11 and samurai/11: both native controls and F1),
+  `s2-small-all` (classic9 and mega12, all modes), `s3-large-native-f1`, `s4-large-floors` (FC, FM), `s5-large-reference`
+  (FU, FS), `s6-large-s2-control` (F0). Arms rotate inside a block by the grid index. Whole trials are packed into the 270 s
+  window by planning estimates; unreached keys stay unstarted/inconclusive (never a zero-cost or censored observation).
+- **Guards and accounting.** The 45 s trial guard is the host's `sample` guard (a cut trial is a `request-timeout`, scope
+  `sample`, with the progress it had posted); the primary CPU/wall interval starts at engine-ready and ends after the trial's
+  cleanup (`readyOccupiedWallMs`, `cpuReadyTotalMs`), with the grid build, the cold start and the verifier/audit reported apart.
+- **Budget.** A count vector, never a time: floor tests (3G), ladder passes (3), phase B solves (K_F = 12), deepen proposals
+  (16), canonical ratings (64, the fallback rating included), and the four fitted dimensions (floor deductions, logical checks,
+  DFS entries, DFS checks) whose pilot ceilings follow the task formulas from the engine's own constants. A stop is the outcome
+  `sample-budget` with the dimension, limit and phase; the fully given fallback stays valid but is never offered as a result.
+  `budgets.json` applies the fixed fit (`min(ceiling, next power of two >= 2 x the largest observed count)`) only to a cell whose
+  planned variants all completed; any censored, stopped, errored or missing variant leaves the cell unfitted with the pilot
+  ceilings, and a dimension never observed (or only zero) keeps its ceiling, flagged. The hash is in the file.
+- **Records.** Common records plus the counts of every budget part, the per-phase cost (phase A includes the refused-test DFS),
+  the passes, the entries and diagnostics (discovery ordinal, parent hash, floor open cells, proof), the phase B rows
+  (reference hash, fresh proof, filter, allowed-set status, canonical rating, quality), the deepen runs, the fork labels and the
+  grid hash. `s2-audit.json`: after the timed interval, an unpatched instance re-solves in full the first, middle and last
+  S2 removal and the final phase A parent; an operational disagreement is guidance waste, an unsound deduction or a differing
+  ordinal is a correctness stop.
+- **Tests.** `frontier-test.cjs`: 41 pure cases (multi-cell re-derivation, an already-derived cell, a wrong value, no
+  re-derivation, the uniqueness-assuming finder excluded, a floor-budget stop versus a true stuck floor, unique versus two
+  solutions versus unknown, stale snapshot and final parent, empty tier, coarse symmetry and clue/unit floors, the last
+  executed rung only at phase B, a contradiction after proved uniqueness as an error, exact/shallow/off-band keeper ties,
+  the typed/numeric objective adapter with an unsupported objective as a stop, a budget stop in every phase, the fit rule,
+  the plan and packing, the reprojection, the adapter anchors on the real source text) and the engine cases that run in the
+  first command under the wrapper (hook counters, S2 against an independent full solve, the trial path of every mode on
+  classic9, a budget stop per dimension with the hooks restored, patched-versus-plain parity).
+- **Reading the pilot.** Phase A is not empty: it accepts many removals. What is often empty is the frontier LIST (every
+  refused group proved ambiguous by the DFS), an anticipated failure mode of the route; the DFS after every genuinely stuck
+  floor test is the intended behaviour. `K_F = 12` bounds the ATTEMPTED phase B entries (`phaseBTries`); the allowed-set
+  solves (`phaseBSolves`) are only the attempts that passed the fresh uniqueness proof (and the FU filter, counted apart).
+  K_F and the 16 deepen proposals are acceptable prototype limits. The final phase A parent is omitted as a declared
+  prototype restriction, not a theorem (S2 operational solvability is heuristic; canonical requiredness is the authority).
+- **Revision r2.** After the pilot the author's review corrected the code (phase B admits only entries of the last executed
+  rung; an unsupported objective stops the sample as `unsupported-source`; an allowed-set solve ending other than solved or
+  stuck after proved uniqueness is an error) and the wording, added two pure cases (last rung only, contradiction) and
+  changed the typed-objective case, and an approved extension
+  finished the six keys the first command chain had left unstarted (samurai/12 FU and FS in `s5`, F0 on mega16 and samurai
+  for seeds 11 and 12 in `s6`). `budgets-r2.json` is the completed fit frozen with the unchanged harness; `summary-r2.*`
+  and `variant-manifest-r2.json` are the revision documents; the first-round files are kept. The trials ran before the
+  corrections; `summary-r2` states which corrected branch any completed trial exercised.
+- **Frozen rerun.** The same command with `-Round frozen-gate` and the two receipts; the catalogue, the floor sets and the
+  ceilings are re-derived from the loaded source (nothing is hard-coded).

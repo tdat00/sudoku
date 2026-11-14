@@ -1,0 +1,2585 @@
+{
+  "schema": "ig-s04-summary/1",
+  "task": "IG-S04",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "provisional (pre-freeze): pilot figures on seeds 11 and 12, one sample per mode; they decide neither S1 nor the bank route, enable no cell and are not a gate result",
+  "formalGate": "not-evaluable-pre-freeze",
+  "coverage": {
+    "planned": 64,
+    "started": 58,
+    "completed": 58,
+    "censored": 0,
+    "budgetStops": 0,
+    "errors": 0,
+    "unstarted": 2
+  },
+  "byShard": [
+    {
+      "shard": "s1-large-controls",
+      "status": "recorded",
+      "attempts": [
+        "a2"
+      ],
+      "unstartedKeys": []
+    },
+    {
+      "shard": "s2-small-all",
+      "status": "recorded",
+      "attempts": [
+        "a1",
+        "a2",
+        "a3"
+      ],
+      "unstartedKeys": []
+    },
+    {
+      "shard": "s3-large-native-f1",
+      "status": "recorded",
+      "attempts": [
+        "a1"
+      ],
+      "unstartedKeys": []
+    },
+    {
+      "shard": "s4-large-floors",
+      "status": "recorded",
+      "attempts": [
+        "a1",
+        "a2"
+      ],
+      "unstartedKeys": []
+    },
+    {
+      "shard": "s5-large-reference",
+      "status": "paused",
+      "attempts": [
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5"
+      ],
+      "unstartedKeys": [
+        "IG-S04/s5-large-reference/samurai:nightmare:12/FS",
+        "IG-S04/s5-large-reference/samurai:nightmare:12/FU"
+      ]
+    },
+    {
+      "shard": "s6-large-s2-control",
+      "status": "not-run",
+      "attempts": [],
+      "unstartedKeys": [
+        "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+        "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0",
+        "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+        "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0"
+      ]
+    }
+  ],
+  "perCellMode": [
+    {
+      "cell": "mega16",
+      "mode": "proposal-only",
+      "kind": "native",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 911.2,
+      "readyOccupiedWallMsMax": 1151.7,
+      "cpuReadyTotalMsMean": 1140.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 341559,
+        "dfsEntries": 22245,
+        "dfsChecks": 22189,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 10
+      },
+      "maxCounts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 389684,
+        "dfsEntries": 36679,
+        "dfsChecks": 36621
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "ordinary-only",
+      "kind": "native",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 8525.7,
+      "readyOccupiedWallMsMax": 9790.8,
+      "cpuReadyTotalMsMean": 8789,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 2629064,
+        "dfsEntries": 31.5,
+        "dfsChecks": 30.5,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 2773897,
+        "dfsEntries": 32,
+        "dfsChecks": 31
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "F0",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 0,
+      "complete": 0,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 2,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": null,
+      "readyOccupiedWallMsMax": null,
+      "cpuReadyTotalMsMean": null,
+      "hitsPerCpuSecond": null,
+      "hitsPerReadyWallSecond": null,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "maxCounts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "F1",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 163.8,
+      "readyOccupiedWallMsMax": 238.2,
+      "cpuReadyTotalMsMean": 344,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 133,
+        "floorDeductions": 6880.5,
+        "solverChecks": 58603,
+        "dfsEntries": 6052,
+        "dfsChecks": 5947,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 137,
+        "floorDeductions": 7125,
+        "solverChecks": 75532,
+        "dfsEntries": 10463,
+        "dfsChecks": 10352
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "FC",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 353.2,
+      "readyOccupiedWallMsMax": 624.7,
+      "cpuReadyTotalMsMean": 522.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 128,
+        "floorDeductions": 6603,
+        "solverChecks": 159042,
+        "dfsEntries": 5908,
+        "dfsChecks": 5805,
+        "ladderPasses": 1,
+        "phaseBSolves": 1.5,
+        "deepenProposals": 0,
+        "verificationSolves": 2.5
+      },
+      "maxCounts": {
+        "floorTests": 128,
+        "floorDeductions": 6614,
+        "solverChecks": 277828,
+        "dfsEntries": 10175,
+        "dfsChecks": 10068
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "FM",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 377.4,
+      "readyOccupiedWallMsMax": 641.9,
+      "cpuReadyTotalMsMean": 539.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 128,
+        "floorDeductions": 6630.5,
+        "solverChecks": 169048.5,
+        "dfsEntries": 5908,
+        "dfsChecks": 5805,
+        "ladderPasses": 1,
+        "phaseBSolves": 1.5,
+        "deepenProposals": 0,
+        "verificationSolves": 2.5
+      },
+      "maxCounts": {
+        "floorTests": 128,
+        "floorDeductions": 6643,
+        "solverChecks": 286694,
+        "dfsEntries": 10175,
+        "dfsChecks": 10068
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "FU",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 173.5,
+      "readyOccupiedWallMsMax": 259.3,
+      "cpuReadyTotalMsMean": 312,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 133,
+        "floorDeductions": 6880.5,
+        "solverChecks": 58603,
+        "dfsEntries": 6052,
+        "dfsChecks": 5947,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 137,
+        "floorDeductions": 7125,
+        "solverChecks": 75532,
+        "dfsEntries": 10463,
+        "dfsChecks": 10352
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "FS",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 179.3,
+      "readyOccupiedWallMsMax": 257.6,
+      "cpuReadyTotalMsMean": 390.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 133,
+        "floorDeductions": 6880.5,
+        "solverChecks": 58603,
+        "dfsEntries": 6052,
+        "dfsChecks": 5947,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 137,
+        "floorDeductions": 7125,
+        "solverChecks": 75532,
+        "dfsEntries": 10463,
+        "dfsChecks": 10352
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "proposal-only",
+      "kind": "native",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 288.7,
+      "readyOccupiedWallMsMax": 488,
+      "cpuReadyTotalMsMean": 484,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 306594,
+        "dfsEntries": 1336.5,
+        "dfsChecks": 1282,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 5
+      },
+      "maxCounts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 570811,
+        "dfsEntries": 2562,
+        "dfsChecks": 2508
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "ordinary-only",
+      "kind": "native",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 417.6,
+      "readyOccupiedWallMsMax": 502.3,
+      "cpuReadyTotalMsMean": 664,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 445090.5,
+        "dfsEntries": 14.5,
+        "dfsChecks": 13.5,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 635362,
+        "dfsEntries": 17,
+        "dfsChecks": 16
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "F0",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 0,
+      "complete": 0,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 2,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": null,
+      "readyOccupiedWallMsMax": null,
+      "cpuReadyTotalMsMean": null,
+      "hitsPerCpuSecond": null,
+      "hitsPerReadyWallSecond": null,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "maxCounts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "F1",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 143.7,
+      "readyOccupiedWallMsMax": 164.7,
+      "cpuReadyTotalMsMean": 336,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 188,
+        "floorDeductions": 21940.5,
+        "solverChecks": 164043,
+        "dfsEntries": 696.5,
+        "dfsChecks": 589.5,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 188,
+        "floorDeductions": 22084,
+        "solverChecks": 193374,
+        "dfsEntries": 955,
+        "dfsChecks": 852
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "FC",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 1493,
+      "readyOccupiedWallMsMax": 2771.6,
+      "cpuReadyTotalMsMean": 1781,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 185,
+        "floorDeductions": 21465.5,
+        "solverChecks": 787521,
+        "dfsEntries": 696.5,
+        "dfsChecks": 589.5,
+        "ladderPasses": 1,
+        "phaseBSolves": 1,
+        "deepenProposals": 8,
+        "verificationSolves": 2
+      },
+      "maxCounts": {
+        "floorTests": 185,
+        "floorDeductions": 21475,
+        "solverChecks": 1340239,
+        "dfsEntries": 955,
+        "dfsChecks": 852
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "FM",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 1523.5,
+      "readyOccupiedWallMsMax": 2788.1,
+      "cpuReadyTotalMsMean": 1945.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 185,
+        "floorDeductions": 21469,
+        "solverChecks": 802270,
+        "dfsEntries": 696.5,
+        "dfsChecks": 589.5,
+        "ladderPasses": 1,
+        "phaseBSolves": 1,
+        "deepenProposals": 8,
+        "verificationSolves": 2
+      },
+      "maxCounts": {
+        "floorTests": 185,
+        "floorDeductions": 21522,
+        "solverChecks": 1357381,
+        "dfsEntries": 955,
+        "dfsChecks": 852
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "FU",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 1,
+      "complete": 1,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 1,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 122.4,
+      "readyOccupiedWallMsMax": 122.4,
+      "cpuReadyTotalMsMean": 313,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 188,
+        "floorDeductions": 22084,
+        "solverChecks": 134712,
+        "dfsEntries": 438,
+        "dfsChecks": 327,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 188,
+        "floorDeductions": 22084,
+        "solverChecks": 134712,
+        "dfsEntries": 438,
+        "dfsChecks": 327
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "FS",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 1,
+      "complete": 1,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 1,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 144.8,
+      "readyOccupiedWallMsMax": 144.8,
+      "cpuReadyTotalMsMean": 406,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 188,
+        "floorDeductions": 22084,
+        "solverChecks": 134712,
+        "dfsEntries": 438,
+        "dfsChecks": 327,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 188,
+        "floorDeductions": 22084,
+        "solverChecks": 134712,
+        "dfsEntries": 438,
+        "dfsChecks": 327
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "proposal-only",
+      "kind": "native",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 23.4,
+      "readyOccupiedWallMsMax": 24.1,
+      "cpuReadyTotalMsMean": 39,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 1880,
+        "dfsEntries": 28.5,
+        "dfsChecks": 13,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 2093,
+        "dfsEntries": 31,
+        "dfsChecks": 16
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "ordinary-only",
+      "kind": "native",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 149.9,
+      "readyOccupiedWallMsMax": 241.8,
+      "cpuReadyTotalMsMean": 274,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 52894,
+        "dfsEntries": 1,
+        "dfsChecks": 0,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 87854,
+        "dfsEntries": 1,
+        "dfsChecks": 0
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "F0",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 25.1,
+      "readyOccupiedWallMsMax": 26.1,
+      "cpuReadyTotalMsMean": 46,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 41,
+        "floorDeductions": 1202,
+        "solverChecks": 3925,
+        "dfsEntries": 66.5,
+        "dfsChecks": 40.5,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 41,
+        "floorDeductions": 1207,
+        "solverChecks": 4271,
+        "dfsEntries": 76,
+        "dfsChecks": 50
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "F1",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 26.3,
+      "readyOccupiedWallMsMax": 28.1,
+      "cpuReadyTotalMsMean": 70.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 41,
+        "floorDeductions": 986,
+        "solverChecks": 3709,
+        "dfsEntries": 66.5,
+        "dfsChecks": 40.5,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 41,
+        "floorDeductions": 996,
+        "solverChecks": 4050,
+        "dfsEntries": 76,
+        "dfsChecks": 50
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "FC",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 26,
+      "readyOccupiedWallMsMax": 27.7,
+      "cpuReadyTotalMsMean": 70,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 41,
+        "floorDeductions": 986,
+        "solverChecks": 3709,
+        "dfsEntries": 66.5,
+        "dfsChecks": 40.5,
+        "ladderPasses": 1,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 41,
+        "floorDeductions": 996,
+        "solverChecks": 4050,
+        "dfsEntries": 76,
+        "dfsChecks": 50
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "FM",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 29.8,
+      "readyOccupiedWallMsMax": 32.1,
+      "cpuReadyTotalMsMean": 62.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 41,
+        "floorDeductions": 987.5,
+        "solverChecks": 4809,
+        "dfsEntries": 66.5,
+        "dfsChecks": 40.5,
+        "ladderPasses": 1,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 41,
+        "floorDeductions": 996,
+        "solverChecks": 5431,
+        "dfsEntries": 76,
+        "dfsChecks": 50
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "FU",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 25.6,
+      "readyOccupiedWallMsMax": 27.1,
+      "cpuReadyTotalMsMean": 55,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 41,
+        "floorDeductions": 986,
+        "solverChecks": 3709,
+        "dfsEntries": 66.5,
+        "dfsChecks": 40.5,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 41,
+        "floorDeductions": 996,
+        "solverChecks": 4050,
+        "dfsEntries": 76,
+        "dfsChecks": 50
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "FS",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 26.3,
+      "readyOccupiedWallMsMax": 29.7,
+      "cpuReadyTotalMsMean": 78,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 41,
+        "floorDeductions": 986,
+        "solverChecks": 3709,
+        "dfsEntries": 66.5,
+        "dfsChecks": 40.5,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": 41,
+        "floorDeductions": 996,
+        "solverChecks": 4050,
+        "dfsEntries": 76,
+        "dfsChecks": 50
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "proposal-only",
+      "kind": "native",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 125,
+      "readyOccupiedWallMsMax": 156.5,
+      "cpuReadyTotalMsMean": 304.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 55643.5,
+        "dfsEntries": 120,
+        "dfsChecks": 88,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 5.5
+      },
+      "maxCounts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 85020,
+        "dfsEntries": 159,
+        "dfsChecks": 126
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "ordinary-only",
+      "kind": "native",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 638.9,
+      "readyOccupiedWallMsMax": 759.7,
+      "cpuReadyTotalMsMean": 985,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 348556.5,
+        "dfsEntries": 6.5,
+        "dfsChecks": 5.5,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 1
+      },
+      "maxCounts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 468424,
+        "dfsEntries": 9,
+        "dfsChecks": 8
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "F0",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 2521.3,
+      "readyOccupiedWallMsMax": 4897.8,
+      "cpuReadyTotalMsMean": 2680.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 77.5,
+        "floorDeductions": 3458.5,
+        "solverChecks": 663796,
+        "dfsEntries": 232,
+        "dfsChecks": 170,
+        "ladderPasses": 3,
+        "phaseBSolves": 1,
+        "deepenProposals": 8,
+        "verificationSolves": 2
+      },
+      "maxCounts": {
+        "floorTests": 81,
+        "floorDeductions": 3475,
+        "solverChecks": 1259027,
+        "dfsEntries": 264,
+        "dfsChecks": 198
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "F1",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 2559.9,
+      "readyOccupiedWallMsMax": 4998.3,
+      "cpuReadyTotalMsMean": 2804,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 77.5,
+        "floorDeductions": 2890.5,
+        "solverChecks": 663228,
+        "dfsEntries": 232,
+        "dfsChecks": 170,
+        "ladderPasses": 3,
+        "phaseBSolves": 1,
+        "deepenProposals": 8,
+        "verificationSolves": 2
+      },
+      "maxCounts": {
+        "floorTests": 81,
+        "floorDeductions": 2913,
+        "solverChecks": 1258420,
+        "dfsEntries": 264,
+        "dfsChecks": 198
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "FC",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 2525.1,
+      "readyOccupiedWallMsMax": 4915.3,
+      "cpuReadyTotalMsMean": 2774.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 72,
+        "floorDeductions": 2682.5,
+        "solverChecks": 667141,
+        "dfsEntries": 197,
+        "dfsChecks": 138.5,
+        "ladderPasses": 1,
+        "phaseBSolves": 2,
+        "deepenProposals": 8,
+        "verificationSolves": 3
+      },
+      "maxCounts": {
+        "floorTests": 72,
+        "floorDeductions": 2778,
+        "solverChecks": 1255493,
+        "dfsEntries": 212,
+        "dfsChecks": 151
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "FM",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 2542.3,
+      "readyOccupiedWallMsMax": 4945.1,
+      "cpuReadyTotalMsMean": 2734.5,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 72,
+        "floorDeductions": 2724,
+        "solverChecks": 672754,
+        "dfsEntries": 197,
+        "dfsChecks": 138.5,
+        "ladderPasses": 1,
+        "phaseBSolves": 2,
+        "deepenProposals": 8,
+        "verificationSolves": 3
+      },
+      "maxCounts": {
+        "floorTests": 72,
+        "floorDeductions": 2782,
+        "solverChecks": 1259063,
+        "dfsEntries": 212,
+        "dfsChecks": 151
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "FU",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 91.6,
+      "readyOccupiedWallMsMax": 126.6,
+      "cpuReadyTotalMsMean": 250,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 77.5,
+        "floorDeductions": 2951,
+        "solverChecks": 43364.5,
+        "dfsEntries": 232,
+        "dfsChecks": 170,
+        "ladderPasses": 3,
+        "phaseBSolves": 0.5,
+        "deepenProposals": 0,
+        "verificationSolves": 1.5
+      },
+      "maxCounts": {
+        "floorTests": 81,
+        "floorDeductions": 2968,
+        "solverChecks": 70891,
+        "dfsEntries": 264,
+        "dfsChecks": 198
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "FS",
+      "kind": "frontier",
+      "planned": 2,
+      "started": 2,
+      "complete": 2,
+      "censored": 0,
+      "budgetStops": 0,
+      "errors": 0,
+      "unstarted": 0,
+      "claimedExact": 0,
+      "verifiedHits": 0,
+      "readyOccupiedWallMsMean": 2547.4,
+      "readyOccupiedWallMsMax": 4964.5,
+      "cpuReadyTotalMsMean": 2750,
+      "hitsPerCpuSecond": 0,
+      "hitsPerReadyWallSecond": 0,
+      "counts": {
+        "floorTests": 77.5,
+        "floorDeductions": 2890.5,
+        "solverChecks": 664529,
+        "dfsEntries": 214,
+        "dfsChecks": 152.5,
+        "ladderPasses": 3,
+        "phaseBSolves": 1.5,
+        "deepenProposals": 8,
+        "verificationSolves": 2.5
+      },
+      "maxCounts": {
+        "floorTests": 81,
+        "floorDeductions": 2913,
+        "solverChecks": 1258420,
+        "dfsEntries": 228,
+        "dfsChecks": 163
+      }
+    }
+  ],
+  "pairedComparisons": [
+    {
+      "cluster": "mega16:11",
+      "comparison": "FC / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 2.6226264593889925,
+      "floorDeductionRatio": 0.9282807017543859,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega16:11",
+      "comparison": "FM / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 2.694926930843532,
+      "floorDeductionRatio": 0.9323508771929825,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega16:11",
+      "comparison": "FU / F1",
+      "purpose": "uniqueness filter",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.088630934638682,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega16:11",
+      "comparison": "FS / F1",
+      "purpose": "reference-parent choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.0815490409279613,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "samurai:11",
+      "comparison": "FC / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 22.57386475625498,
+      "floorDeductionRatio": 0.9724234740083318,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "samurai:11",
+      "comparison": "FM / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 22.70811811063413,
+      "floorDeductionRatio": 0.9745517116464408,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "samurai:11",
+      "comparison": "FU / F1",
+      "purpose": "uniqueness filter",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9967967043438866,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "samurai:11",
+      "comparison": "FS / F1",
+      "purpose": "reference-parent choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.17898302489499,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "classic9:11",
+      "comparison": "F0 / F1",
+      "purpose": "isolated S2 comparison",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9314438994154347,
+      "floorDeductionRatio": 1.2264344262295082,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "classic9:11",
+      "comparison": "FC / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9879630520199918,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "classic9:11",
+      "comparison": "FM / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.1418749710564668,
+      "floorDeductionRatio": 1.0030737704918034,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "classic9:11",
+      "comparison": "FU / F1",
+      "purpose": "uniqueness filter",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9661547668665098,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "classic9:11",
+      "comparison": "FS / F1",
+      "purpose": "reference-parent choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.0580331220900656,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "classic9:12",
+      "comparison": "F0 / F1",
+      "purpose": "isolated S2 comparison",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.981552604698667,
+      "floorDeductionRatio": 1.211847389558233,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "classic9:12",
+      "comparison": "FC / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9904106230847628,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "classic9:12",
+      "comparison": "FM / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.1249724208375917,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "classic9:12",
+      "comparison": "FU / F1",
+      "purpose": "uniqueness filter",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9807640449437993,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "classic9:12",
+      "comparison": "FS / F1",
+      "purpose": "reference-parent choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9322288049029452,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega12:11",
+      "comparison": "F0 / F1",
+      "purpose": "isolated S2 comparison",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9798747774690515,
+      "floorDeductionRatio": 1.2116457461645747,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega12:11",
+      "comparison": "FC / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9833745926180398,
+      "floorDeductionRatio": 0.9686192468619247,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega12:11",
+      "comparison": "FM / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9893534259917827,
+      "floorDeductionRatio": 0.9700139470013946,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega12:11",
+      "comparison": "FU / F1",
+      "purpose": "uniqueness filter",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.01130331077075342,
+      "floorDeductionRatio": 1.0348675034867503,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega12:11",
+      "comparison": "FS / F1",
+      "purpose": "reference-parent choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9932332065521549,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega12:12",
+      "comparison": "F0 / F1",
+      "purpose": "isolated S2 comparison",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.1937745594740865,
+      "floorDeductionRatio": 1.1815997253690353,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega12:12",
+      "comparison": "FC / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.1114161909233944,
+      "floorDeductionRatio": 0.8880878819086852,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega12:12",
+      "comparison": "FM / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.1495918081539525,
+      "floorDeductionRatio": 0.9152076896670099,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega12:12",
+      "comparison": "FU / F1",
+      "purpose": "uniqueness filter",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.0430203725213993,
+      "floorDeductionRatio": 1.007209062821833,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega12:12",
+      "comparison": "FS / F1",
+      "purpose": "reference-parent choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.0726688579690113,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega16:12",
+      "comparison": "FC / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9144923774962721,
+      "floorDeductionRatio": 0.9933694996986137,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega16:12",
+      "comparison": "FM / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.2623454580437825,
+      "floorDeductionRatio": 0.9972875226039783,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega16:12",
+      "comparison": "FU / F1",
+      "purpose": "uniqueness filter",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 0.9805231270387411,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "mega16:12",
+      "comparison": "FS / F1",
+      "purpose": "reference-parent choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.1286104535915424,
+      "floorDeductionRatio": 1,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "samurai:12",
+      "comparison": "FC / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.3016328555631111,
+      "floorDeductionRatio": 0.9843556452722851,
+      "aHit": false,
+      "bHit": false
+    },
+    {
+      "cluster": "samurai:12",
+      "comparison": "FM / F1",
+      "purpose": "floor choice",
+      "aOutcome": "complete",
+      "bOutcome": "complete",
+      "wallRatio": 1.572494742665375,
+      "floorDeductionRatio": 0.9825205303482131,
+      "aHit": false,
+      "bHit": false
+    }
+  ],
+  "machine": {
+    "allocationMs": 720000,
+    "chargedMs": 683879,
+    "remainingMs": 36121,
+    "commands": 13,
+    "priorityWaitMs": 734322,
+    "entries": [
+      {
+        "shard": "s1-large-controls",
+        "attemptId": "a1",
+        "status": "error",
+        "occupiedMs": 3182,
+        "chargedMs": 48182,
+        "priorityWaitMs": 45228,
+        "requestedAt": "2026-11-14T19:28:29.1178559Z",
+        "endedAt": "2026-11-14T19:29:17.5277418Z"
+      },
+      {
+        "shard": "s1-large-controls",
+        "attemptId": "a2",
+        "status": "complete",
+        "occupiedMs": 14361,
+        "chargedMs": 59361,
+        "priorityWaitMs": 45252,
+        "requestedAt": "2026-11-14T19:31:20.71773Z",
+        "endedAt": "2026-11-14T19:32:20.3310502Z"
+      },
+      {
+        "shard": "s2-small-all",
+        "attemptId": "a1",
+        "status": "paused-unstarted",
+        "occupiedMs": 6164,
+        "chargedMs": 51164,
+        "priorityWaitMs": 45210,
+        "requestedAt": "2026-11-14T19:33:31.1113388Z",
+        "endedAt": "2026-11-14T19:34:22.4855714Z"
+      },
+      {
+        "shard": "s2-small-all",
+        "attemptId": "a2",
+        "status": "paused-unstarted",
+        "occupiedMs": 29191,
+        "chargedMs": 74191,
+        "priorityWaitMs": 45154,
+        "requestedAt": "2026-11-14T19:34:22.7994136Z",
+        "endedAt": "2026-11-14T19:35:37.1445544Z"
+      },
+      {
+        "shard": "s2-small-all",
+        "attemptId": "a3",
+        "status": "complete",
+        "occupiedMs": 6087,
+        "chargedMs": 51087,
+        "priorityWaitMs": 45114,
+        "requestedAt": "2026-11-14T19:35:37.3733123Z",
+        "endedAt": "2026-11-14T19:36:28.5745363Z"
+      },
+      {
+        "shard": "s3-large-native-f1",
+        "attemptId": "a1",
+        "status": "complete",
+        "occupiedMs": 15314,
+        "chargedMs": 60314,
+        "priorityWaitMs": 45174,
+        "requestedAt": "2026-11-14T19:36:53.8335637Z",
+        "endedAt": "2026-11-14T19:37:54.3218217Z"
+      },
+      {
+        "shard": "s4-large-floors",
+        "attemptId": "a1",
+        "status": "paused-unstarted",
+        "occupiedMs": 4372,
+        "chargedMs": 49372,
+        "priorityWaitMs": 90224,
+        "requestedAt": "2026-11-14T19:37:54.6269274Z",
+        "endedAt": "2026-11-14T19:39:29.2232855Z"
+      },
+      {
+        "shard": "s4-large-floors",
+        "attemptId": "a2",
+        "status": "complete",
+        "occupiedMs": 9588,
+        "chargedMs": 54588,
+        "priorityWaitMs": 45112,
+        "requestedAt": "2026-11-14T19:39:29.4855255Z",
+        "endedAt": "2026-11-14T19:40:24.1853716Z"
+      },
+      {
+        "shard": "s5-large-reference",
+        "attemptId": "a1",
+        "status": "paused-unstarted",
+        "occupiedMs": 2747,
+        "chargedMs": 47747,
+        "priorityWaitMs": 45115,
+        "requestedAt": "2026-11-14T19:40:24.5813029Z",
+        "endedAt": "2026-11-14T19:41:12.4430924Z"
+      },
+      {
+        "shard": "s5-large-reference",
+        "attemptId": "a2",
+        "status": "paused-unstarted",
+        "occupiedMs": 2309,
+        "chargedMs": 47309,
+        "priorityWaitMs": 75191,
+        "requestedAt": "2026-11-14T19:41:12.6925559Z",
+        "endedAt": "2026-11-14T19:42:30.1929259Z"
+      },
+      {
+        "shard": "s5-large-reference",
+        "attemptId": "a3",
+        "status": "paused-unstarted",
+        "occupiedMs": 1876,
+        "chargedMs": 46876,
+        "priorityWaitMs": 45130,
+        "requestedAt": "2026-11-14T19:42:30.4260677Z",
+        "endedAt": "2026-11-14T19:43:17.4319401Z"
+      },
+      {
+        "shard": "s5-large-reference",
+        "attemptId": "a4",
+        "status": "paused-unstarted",
+        "occupiedMs": 2146,
+        "chargedMs": 47146,
+        "priorityWaitMs": 93238,
+        "requestedAt": "2026-11-14T19:43:17.6748153Z",
+        "endedAt": "2026-11-14T19:44:53.0585675Z"
+      },
+      {
+        "shard": "s5-large-reference",
+        "attemptId": "a5",
+        "status": "paused-unstarted",
+        "occupiedMs": 1542,
+        "chargedMs": 46542,
+        "priorityWaitMs": 69180,
+        "requestedAt": "2026-11-14T19:44:53.4099930Z",
+        "endedAt": "2026-11-14T19:46:04.1321842Z"
+      }
+    ],
+    "note": "charged = occupied wrapper time + the 45 s quiet-admission grace per command; the priority wait is not charged"
+  },
+  "budgets": [
+    {
+      "cell": "mega16",
+      "status": "unfitted",
+      "limits": {
+        "floorTests": 384,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 1671168,
+        "solverChecks": 102400000,
+        "dfsEntries": 95200000,
+        "dfsChecks": 95200000
+      },
+      "problems": [
+        {
+          "key": "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+          "problem": "not-run"
+        },
+        {
+          "key": "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0",
+          "problem": "not-run"
+        }
+      ]
+    },
+    {
+      "cell": "samurai",
+      "status": "unfitted",
+      "limits": {
+        "floorTests": 555,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 2047950,
+        "solverChecks": 102400000,
+        "dfsEntries": 129400000,
+        "dfsChecks": 129400000
+      },
+      "problems": [
+        {
+          "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FS",
+          "problem": "not-run"
+        },
+        {
+          "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FU",
+          "problem": "not-run"
+        },
+        {
+          "key": "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+          "problem": "not-run"
+        },
+        {
+          "key": "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0",
+          "problem": "not-run"
+        }
+      ]
+    },
+    {
+      "cell": "classic9",
+      "status": "fitted",
+      "limits": {
+        "floorTests": 123,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 4096,
+        "solverChecks": 16384,
+        "dfsEntries": 256,
+        "dfsChecks": 128
+      },
+      "problems": []
+    },
+    {
+      "cell": "mega12",
+      "status": "fitted",
+      "limits": {
+        "floorTests": 216,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 8192,
+        "solverChecks": 4194304,
+        "dfsEntries": 1024,
+        "dfsChecks": 512
+      },
+      "problems": []
+    }
+  ],
+  "budgetsHash": "53b4c103c00d5aeda5c9dbe2378126842722f9a12f32564b675c6e6b06710a60",
+  "s2Audit": {
+    "trialsAudited": 42,
+    "acceptedRemovals": 2696,
+    "rederivedRemovals": 2396,
+    "auditedRemovals": 114,
+    "operationalDisagreements": 0,
+    "correctnessProblems": 0
+  },
+  "reprojection": {
+    "file": "pilot-reprojection.json",
+    "hash": "26faa27043aebf22606111284167e6eaa2a6e328b351695d331a70765684ac0b"
+  },
+  "finalProjection": {
+    "remainingPopulation": {
+      "keys": 58,
+      "shards": [
+        {
+          "shard": "s2-small-all",
+          "keys": 32,
+          "observedScenarioMs": 37082,
+          "observedScenarioPartialMs": 37082,
+          "observedScenarioComplete": true,
+          "observedScenarioChargedMs": 82082,
+          "ceilingScenarioMs": 1696000,
+          "ceilingScenarioChargedMs": 2011000,
+          "rows": [
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:11/proposal-only",
+              "cell": "classic9",
+              "mode": "proposal-only",
+              "estimateMs": 4000,
+              "projectedMs": 215.3,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:11/ordinary-only",
+              "cell": "classic9",
+              "mode": "ordinary-only",
+              "estimateMs": 5000,
+              "projectedMs": 342.3,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:11/F0",
+              "cell": "classic9",
+              "mode": "F0",
+              "estimateMs": 12000,
+              "projectedMs": 305,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:11/F1",
+              "cell": "classic9",
+              "mode": "F1",
+              "estimateMs": 12000,
+              "projectedMs": 309.5,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:11/FC",
+              "cell": "classic9",
+              "mode": "FC",
+              "estimateMs": 12000,
+              "projectedMs": 311,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:11/FM",
+              "cell": "classic9",
+              "mode": "FM",
+              "estimateMs": 12000,
+              "projectedMs": 330.7,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:11/FU",
+              "cell": "classic9",
+              "mode": "FU",
+              "estimateMs": 12000,
+              "projectedMs": 310.2,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:11/FS",
+              "cell": "classic9",
+              "mode": "FS",
+              "estimateMs": 12000,
+              "projectedMs": 310.8,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:12/ordinary-only",
+              "cell": "classic9",
+              "mode": "ordinary-only",
+              "estimateMs": 5000,
+              "projectedMs": 342.3,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:12/F0",
+              "cell": "classic9",
+              "mode": "F0",
+              "estimateMs": 12000,
+              "projectedMs": 305,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:12/F1",
+              "cell": "classic9",
+              "mode": "F1",
+              "estimateMs": 12000,
+              "projectedMs": 309.5,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:12/FC",
+              "cell": "classic9",
+              "mode": "FC",
+              "estimateMs": 12000,
+              "projectedMs": 311,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:12/FM",
+              "cell": "classic9",
+              "mode": "FM",
+              "estimateMs": 12000,
+              "projectedMs": 330.7,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:12/FU",
+              "cell": "classic9",
+              "mode": "FU",
+              "estimateMs": 12000,
+              "projectedMs": 310.2,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:12/FS",
+              "cell": "classic9",
+              "mode": "FS",
+              "estimateMs": 12000,
+              "projectedMs": 310.8,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/classic9:nightmare:12/proposal-only",
+              "cell": "classic9",
+              "mode": "proposal-only",
+              "estimateMs": 4000,
+              "projectedMs": 215.3,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:11/proposal-only",
+              "cell": "mega12",
+              "mode": "proposal-only",
+              "estimateMs": 8000,
+              "projectedMs": 362,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:11/ordinary-only",
+              "cell": "mega12",
+              "mode": "ordinary-only",
+              "estimateMs": 16000,
+              "projectedMs": 888.4,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:11/F0",
+              "cell": "mega12",
+              "mode": "F0",
+              "estimateMs": 34000,
+              "projectedMs": 2884.3,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:11/F1",
+              "cell": "mega12",
+              "mode": "F1",
+              "estimateMs": 34000,
+              "projectedMs": 2919.7,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:11/FC",
+              "cell": "mega12",
+              "mode": "FC",
+              "estimateMs": 34000,
+              "projectedMs": 2847.9,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:11/FM",
+              "cell": "mega12",
+              "mode": "FM",
+              "estimateMs": 34000,
+              "projectedMs": 2858.9,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:11/FU",
+              "cell": "mega12",
+              "mode": "FU",
+              "estimateMs": 34000,
+              "projectedMs": 438.4,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:11/FS",
+              "cell": "mega12",
+              "mode": "FS",
+              "estimateMs": 34000,
+              "projectedMs": 2906.5,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:12/ordinary-only",
+              "cell": "mega12",
+              "mode": "ordinary-only",
+              "estimateMs": 16000,
+              "projectedMs": 888.4,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:12/F0",
+              "cell": "mega12",
+              "mode": "F0",
+              "estimateMs": 34000,
+              "projectedMs": 2884.3,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:12/F1",
+              "cell": "mega12",
+              "mode": "F1",
+              "estimateMs": 34000,
+              "projectedMs": 2919.7,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:12/FC",
+              "cell": "mega12",
+              "mode": "FC",
+              "estimateMs": 34000,
+              "projectedMs": 2847.9,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:12/FM",
+              "cell": "mega12",
+              "mode": "FM",
+              "estimateMs": 34000,
+              "projectedMs": 2858.9,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:12/FU",
+              "cell": "mega12",
+              "mode": "FU",
+              "estimateMs": 34000,
+              "projectedMs": 438.4,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:12/FS",
+              "cell": "mega12",
+              "mode": "FS",
+              "estimateMs": 34000,
+              "projectedMs": 2906.5,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s2-small-all/mega12:nightmare:12/proposal-only",
+              "cell": "mega12",
+              "mode": "proposal-only",
+              "estimateMs": 8000,
+              "projectedMs": 362,
+              "basis": "observed: same cell and mode (2 trials)"
+            }
+          ]
+        },
+        {
+          "shard": "s3-large-native-f1",
+          "keys": 6,
+          "observedScenarioMs": 12200,
+          "observedScenarioPartialMs": 12200,
+          "observedScenarioComplete": true,
+          "observedScenarioChargedMs": 57200,
+          "ceilingScenarioMs": 318000,
+          "ceilingScenarioChargedMs": 408000,
+          "rows": [
+            {
+              "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/ordinary-only",
+              "cell": "mega16",
+              "mode": "ordinary-only",
+              "estimateMs": 32000,
+              "projectedMs": 8808.8,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/F1",
+              "cell": "mega16",
+              "mode": "F1",
+              "estimateMs": 62000,
+              "projectedMs": 490.3,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/proposal-only",
+              "cell": "mega16",
+              "mode": "proposal-only",
+              "estimateMs": 14000,
+              "projectedMs": 1182.5,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/ordinary-only",
+              "cell": "samurai",
+              "mode": "ordinary-only",
+              "estimateMs": 32000,
+              "projectedMs": 641.1,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/F1",
+              "cell": "samurai",
+              "mode": "F1",
+              "estimateMs": 62000,
+              "projectedMs": 546.6,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/proposal-only",
+              "cell": "samurai",
+              "mode": "proposal-only",
+              "estimateMs": 14000,
+              "projectedMs": 531,
+              "basis": "observed: same cell and mode (2 trials)"
+            }
+          ]
+        },
+        {
+          "shard": "s4-large-floors",
+          "keys": 8,
+          "observedScenarioMs": 10381,
+          "observedScenarioPartialMs": 10381,
+          "observedScenarioComplete": true,
+          "observedScenarioChargedMs": 55381,
+          "ceilingScenarioMs": 424000,
+          "ceilingScenarioChargedMs": 514000,
+          "rows": [
+            {
+              "key": "IG-S04/s4-large-floors/mega16:nightmare:11/FC",
+              "cell": "mega16",
+              "mode": "FC",
+              "estimateMs": 62000,
+              "projectedMs": 700.1,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s4-large-floors/mega16:nightmare:11/FM",
+              "cell": "mega16",
+              "mode": "FM",
+              "estimateMs": 62000,
+              "projectedMs": 717.4,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s4-large-floors/mega16:nightmare:12/FM",
+              "cell": "mega16",
+              "mode": "FM",
+              "estimateMs": 62000,
+              "projectedMs": 717.4,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s4-large-floors/mega16:nightmare:12/FC",
+              "cell": "mega16",
+              "mode": "FC",
+              "estimateMs": 62000,
+              "projectedMs": 700.1,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+              "cell": "samurai",
+              "mode": "FC",
+              "estimateMs": 62000,
+              "projectedMs": 1870.2,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s4-large-floors/samurai:nightmare:11/FM",
+              "cell": "samurai",
+              "mode": "FM",
+              "estimateMs": 62000,
+              "projectedMs": 1902.7,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+              "cell": "samurai",
+              "mode": "FM",
+              "estimateMs": 62000,
+              "projectedMs": 1902.7,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s4-large-floors/samurai:nightmare:12/FC",
+              "cell": "samurai",
+              "mode": "FC",
+              "estimateMs": 62000,
+              "projectedMs": 1870.2,
+              "basis": "observed: same cell and mode (2 trials)"
+            }
+          ]
+        },
+        {
+          "shard": "s5-large-reference",
+          "keys": 8,
+          "observedScenarioMs": 4077,
+          "observedScenarioPartialMs": 4077,
+          "observedScenarioComplete": true,
+          "observedScenarioChargedMs": 49077,
+          "ceilingScenarioMs": 424000,
+          "ceilingScenarioChargedMs": 514000,
+          "rows": [
+            {
+              "key": "IG-S04/s5-large-reference/mega16:nightmare:11/FU",
+              "cell": "mega16",
+              "mode": "FU",
+              "estimateMs": 62000,
+              "projectedMs": 512,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s5-large-reference/mega16:nightmare:11/FS",
+              "cell": "mega16",
+              "mode": "FS",
+              "estimateMs": 62000,
+              "projectedMs": 522.4,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s5-large-reference/mega16:nightmare:12/FS",
+              "cell": "mega16",
+              "mode": "FS",
+              "estimateMs": 62000,
+              "projectedMs": 522.4,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s5-large-reference/mega16:nightmare:12/FU",
+              "cell": "mega16",
+              "mode": "FU",
+              "estimateMs": 62000,
+              "projectedMs": 512,
+              "basis": "observed: same cell and mode (2 trials)"
+            },
+            {
+              "key": "IG-S04/s5-large-reference/samurai:nightmare:11/FU",
+              "cell": "samurai",
+              "mode": "FU",
+              "estimateMs": 62000,
+              "projectedMs": 482.2,
+              "basis": "observed: same cell and mode (1 trial)"
+            },
+            {
+              "key": "IG-S04/s5-large-reference/samurai:nightmare:11/FS",
+              "cell": "samurai",
+              "mode": "FS",
+              "estimateMs": 62000,
+              "projectedMs": 522,
+              "basis": "observed: same cell and mode (1 trial)"
+            },
+            {
+              "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FS",
+              "cell": "samurai",
+              "mode": "FS",
+              "estimateMs": 62000,
+              "projectedMs": 522,
+              "basis": "observed: same cell and mode (1 trial)"
+            },
+            {
+              "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FU",
+              "cell": "samurai",
+              "mode": "FU",
+              "estimateMs": 62000,
+              "projectedMs": 482.2,
+              "basis": "observed: same cell and mode (1 trial)"
+            }
+          ]
+        },
+        {
+          "shard": "s6-large-s2-control",
+          "keys": 4,
+          "observedScenarioMs": 2074,
+          "observedScenarioPartialMs": 2074,
+          "observedScenarioComplete": true,
+          "observedScenarioChargedMs": 47074,
+          "ceilingScenarioMs": 212000,
+          "ceilingScenarioChargedMs": 257000,
+          "rows": [
+            {
+              "key": "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+              "cell": "mega16",
+              "mode": "F0",
+              "estimateMs": 62000,
+              "projectedMs": 490.3,
+              "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+            },
+            {
+              "key": "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0",
+              "cell": "mega16",
+              "mode": "F0",
+              "estimateMs": 62000,
+              "projectedMs": 490.3,
+              "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+            },
+            {
+              "key": "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+              "cell": "samurai",
+              "mode": "F0",
+              "estimateMs": 62000,
+              "projectedMs": 546.6,
+              "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+            },
+            {
+              "key": "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0",
+              "cell": "samurai",
+              "mode": "F0",
+              "estimateMs": 62000,
+              "projectedMs": 546.6,
+              "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+            }
+          ]
+        }
+      ],
+      "observedScenarioPartialMs": 65814,
+      "observedScenarioComplete": true,
+      "ceilingScenarioChargedMs": 3704000,
+      "verdict": "the guard-ceiling scenario does NOT fit the remaining allocation: the pilot is staged and possibly partial, unreached keys stay unstarted/inconclusive (never zero-cost or censored observations)"
+    },
+    "igS05PrimaryTier": {
+      "population": "8 grid seeds per cell x proposal-only, ordinary-only and F1 x at most 2 samples per mode and grid, per cell",
+      "cells": {
+        "classic9": {
+          "modes": {
+            "proposal-only": {
+              "perSampleMs": 215.3,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 3445,
+              "guardCeilingMs": 848000
+            },
+            "ordinary-only": {
+              "perSampleMs": 342.3,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 5477,
+              "guardCeilingMs": 848000
+            },
+            "F1": {
+              "perSampleMs": 309.5,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 4952,
+              "guardCeilingMs": 848000
+            }
+          },
+          "observedScenarioMs": 13874,
+          "guardCeilingMs": 2544000
+        },
+        "mega12": {
+          "modes": {
+            "proposal-only": {
+              "perSampleMs": 362,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 5792,
+              "guardCeilingMs": 848000
+            },
+            "ordinary-only": {
+              "perSampleMs": 888.4,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 14215,
+              "guardCeilingMs": 848000
+            },
+            "F1": {
+              "perSampleMs": 2919.7,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 46715,
+              "guardCeilingMs": 848000
+            }
+          },
+          "observedScenarioMs": 66722,
+          "guardCeilingMs": 2544000
+        },
+        "mega16": {
+          "modes": {
+            "proposal-only": {
+              "perSampleMs": 1182.5,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 18920,
+              "guardCeilingMs": 848000
+            },
+            "ordinary-only": {
+              "perSampleMs": 8808.8,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 140942,
+              "guardCeilingMs": 848000
+            },
+            "F1": {
+              "perSampleMs": 490.3,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 7845,
+              "guardCeilingMs": 848000
+            }
+          },
+          "observedScenarioMs": 167707,
+          "guardCeilingMs": 2544000
+        },
+        "samurai": {
+          "modes": {
+            "proposal-only": {
+              "perSampleMs": 531,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 8496,
+              "guardCeilingMs": 848000
+            },
+            "ordinary-only": {
+              "perSampleMs": 641.1,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 10258,
+              "guardCeilingMs": 848000
+            },
+            "F1": {
+              "perSampleMs": 546.6,
+              "basis": "observed: same cell and mode (2 trials)",
+              "upperBoundMs": 8745,
+              "guardCeilingMs": 848000
+            }
+          },
+          "observedScenarioMs": 27499,
+          "guardCeilingMs": 2544000
+        }
+      },
+      "note": "per-sample costs are the machine time of one pilot trial (cold start to cleanup, verifier and audit); a null cost is an unmeasured cell and mode, reported as such, never as zero"
+    },
+    "allocation": {
+      "taskAllocationMs": 720000,
+      "chargedBeforeThisCommandMs": 683879,
+      "chargedWithThisCommandMs": 683879,
+      "remainingMs": 36121,
+      "note": "charged = occupied wrapper time + 45 s quiet-admission grace per command; priority waits are not charged"
+    },
+    "note": "recomputed from all pilot records at the end of the task"
+  },
+  "interpretationNotes": [
+    "S1 is a hit-rate item, not a speed item: these pilot hit counts (one sample per mode, two grids per cell) are small-n descriptions and carry no uncertainty guarantee; the gating numbers come from the frozen catalogue later",
+    "F0/F1 is the isolated S2 comparison, FC/FM/F1 the floor choices, FU/F1 the uniqueness filter, FS/F1 the reference-parent choice; the gains are correlated and are not multiplied as independent factors",
+    "unreached keys are unstarted/inconclusive: they are not zero-cost trials and not censored observations"
+  ],
+  "acceptance": [
+    {
+      "id": "B01",
+      "status": "met",
+      "evidence": "variant-manifest.json lists the eight modes with floors, S2, parent, filter, forks, budgets and every interpretation; nothing is adopted silently"
+    },
+    {
+      "id": "B02",
+      "status": "met",
+      "evidence": "every frontier record carries floor tests by rung, DFS entries/checks, ladder passes, phaseB solves, deepen proposals and verification solves; refused-test DFS is in the per-phase cost (phaseA includes it)"
+    },
+    {
+      "id": "B03",
+      "status": "met",
+      "evidence": "every document says provisional (pre-freeze); no variant, S1 or bank decision is made"
+    },
+    {
+      "id": "T01",
+      "status": "met",
+      "evidence": "frontier-test.cjs: pure cases (fake engine) and the engine cases of the first command: every floor solve asserts assumeUniqueness false; FU enables it only after the fresh DFS proof of that candidate"
+    },
+    {
+      "id": "T02",
+      "status": "met",
+      "evidence": "S2 is the Rederived signal (never a solved report or a rating); the audit compares ordinals (0 correctness problems)"
+    },
+    {
+      "id": "T03",
+      "status": "met",
+      "evidence": "reference hashes and the immutable snapshot hashes are recorded per phaseB try and checked; a fresh bounded count precedes every reference candidate"
+    },
+    {
+      "id": "T04",
+      "status": "met",
+      "evidence": "every dimension is charged; a stop is outcome sample-budget with the dimension; the hooks and the solution are restored (unit and engine cases)"
+    },
+    {
+      "id": "T05",
+      "status": "met",
+      "evidence": "budgets.json: the fixed rule; cells fitted: classic9, mega12; unfitted (pilot ceilings kept): mega16, samurai"
+    },
+    {
+      "id": "correctness",
+      "status": "met",
+      "evidence": "0 false exact flags, 0 error records, 0 audit correctness problems"
+    }
+  ],
+  "hash": "fba036098c34f21fe2c4f1704b5cd14bd462da752b74d3a5d0ab7f0510b4cdaf"
+}

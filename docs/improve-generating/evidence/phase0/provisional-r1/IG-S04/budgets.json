@@ -1,0 +1,893 @@
+{
+  "schema": "ig-s04-budgets/1",
+  "task": "IG-S04",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "provisional (pre-freeze): diagnostic safety envelopes and a first-round fit; not production values",
+  "formulas": {
+    "floorTests": "3 * G",
+    "ladderPasses": "3",
+    "phaseBSolves": "K_F = 12",
+    "deepenProposals": "16",
+    "canonicalRatings": "64 (canonical ratings / verification solves of the sample, the initial fallback rating included)",
+    "floorDeductions": "3 * G * N * (D + 1)",
+    "solverChecks": "CAP_RATINGS * OBJECTIVE_STEPS",
+    "dfsEntries": "(3 * G + K_F + 16 + 64) * UNIQUE_NODES",
+    "dfsChecks": "(3 * G + K_F + 16 + 64) * UNIQUE_NODES",
+    "fit": "min(pilot ceiling, next power of two >= 2 * largest observed count over the completed pilot variants)"
+  },
+  "structural": {
+    "K_F": 12,
+    "deepenMax": 16,
+    "ladderMax": 3,
+    "canonicalMax": 64
+  },
+  "nativeConstants": {
+    "CAP_RATINGS": 1024,
+    "CAP_PROPOSALS": 32768,
+    "OBJECTIVE_STEPS": 100000,
+    "UNIQUE_NODES": 200000
+  },
+  "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+  "harnessFingerprint": "694eea9bf608f949a057eb7262cd257445429ed1e86bb8e486e39ea539cf6401",
+  "inputs": [
+    {
+      "key": "IG-S04/s1-large-controls/mega16:nightmare:11/F1",
+      "cell": "mega16",
+      "outcome": "complete",
+      "shard": "s1-large-controls",
+      "digest": "8535339e6638db6c4d7266b369001b6772c6756af69ab2440ada774229e90b4f"
+    },
+    {
+      "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/F1",
+      "cell": "mega16",
+      "outcome": "complete",
+      "shard": "s3-large-native-f1",
+      "digest": "db5e978da2da19b99234405020e0fc9380b003c9c0cae8f18c342d3d77ba7b54"
+    },
+    {
+      "key": "IG-S04/s4-large-floors/mega16:nightmare:11/FC",
+      "cell": "mega16",
+      "outcome": "complete",
+      "shard": "s4-large-floors",
+      "digest": "6a4353befb1c59933a128cd7775ff3ecfe0e99bd197c5b2b6d1d114467789989"
+    },
+    {
+      "key": "IG-S04/s4-large-floors/mega16:nightmare:11/FM",
+      "cell": "mega16",
+      "outcome": "complete",
+      "shard": "s4-large-floors",
+      "digest": "8e8bbe311562c4e50d8b5428db0ec9741b4570c2d0dc319e1c2fc59c8355717c"
+    },
+    {
+      "key": "IG-S04/s4-large-floors/mega16:nightmare:12/FM",
+      "cell": "mega16",
+      "outcome": "complete",
+      "shard": "s4-large-floors",
+      "digest": "3392c72be7bb797acb31cfcf65365476f3eb78f2313e989168a516d5fc92cf1a"
+    },
+    {
+      "key": "IG-S04/s4-large-floors/mega16:nightmare:12/FC",
+      "cell": "mega16",
+      "outcome": "complete",
+      "shard": "s4-large-floors",
+      "digest": "5f2386b063f5fdaaed38f16345cfd0a8926bd0d9a585e546b1048ed74143d9c0"
+    },
+    {
+      "key": "IG-S04/s5-large-reference/mega16:nightmare:11/FU",
+      "cell": "mega16",
+      "outcome": "complete",
+      "shard": "s5-large-reference",
+      "digest": "6d8c6e04314d30d53073b7f4e062823fa521dfb484fc9655a140431dbb38e253"
+    },
+    {
+      "key": "IG-S04/s5-large-reference/mega16:nightmare:11/FS",
+      "cell": "mega16",
+      "outcome": "complete",
+      "shard": "s5-large-reference",
+      "digest": "fb3a2731d8e80ebc8598b6c432c56e3cc5ebda3f86a5eba6c2753ef80fbb53b9"
+    },
+    {
+      "key": "IG-S04/s5-large-reference/mega16:nightmare:12/FS",
+      "cell": "mega16",
+      "outcome": "complete",
+      "shard": "s5-large-reference",
+      "digest": "9afca6b68a0563143de3dd0dc22bf4923c785933a5064cf7b8b277713b85e598"
+    },
+    {
+      "key": "IG-S04/s5-large-reference/mega16:nightmare:12/FU",
+      "cell": "mega16",
+      "outcome": "complete",
+      "shard": "s5-large-reference",
+      "digest": "54152c8a72a41b94e12930063725ddb013e64f963341c233afcadb8877afc2cb"
+    },
+    {
+      "key": "IG-S04/s1-large-controls/samurai:nightmare:11/F1",
+      "cell": "samurai",
+      "outcome": "complete",
+      "shard": "s1-large-controls",
+      "digest": "c7c5f91333cef405bce841b26c12a526cb547de0d5585cc550ab429906609fee"
+    },
+    {
+      "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/F1",
+      "cell": "samurai",
+      "outcome": "complete",
+      "shard": "s3-large-native-f1",
+      "digest": "9ef9daf93c88f85277da8d1e3082c1df812583b72b717a95420eb20f94fada96"
+    },
+    {
+      "key": "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+      "cell": "samurai",
+      "outcome": "complete",
+      "shard": "s4-large-floors",
+      "digest": "08ef7033d5d1fefc7ba791b253731d1e51cb4f823f92ededab2bbd125028fe32"
+    },
+    {
+      "key": "IG-S04/s4-large-floors/samurai:nightmare:11/FM",
+      "cell": "samurai",
+      "outcome": "complete",
+      "shard": "s4-large-floors",
+      "digest": "28b592b18f9c6d85b26c9a5a8034c54b2de49ef5b5fc5168d5ab3697235706ac"
+    },
+    {
+      "key": "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+      "cell": "samurai",
+      "outcome": "complete",
+      "shard": "s4-large-floors",
+      "digest": "c39e219215b475874be11c65c454704c05d6e982f0f4aa44878e3ffc508189bb"
+    },
+    {
+      "key": "IG-S04/s4-large-floors/samurai:nightmare:12/FC",
+      "cell": "samurai",
+      "outcome": "complete",
+      "shard": "s4-large-floors",
+      "digest": "df9683a63f60df7f61f82bf65ecf091d11904e72eae1f32dd1ef30b49ae2d8f0"
+    },
+    {
+      "key": "IG-S04/s5-large-reference/samurai:nightmare:11/FU",
+      "cell": "samurai",
+      "outcome": "complete",
+      "shard": "s5-large-reference",
+      "digest": "068df3a0f947d6b235eeac28c1a5d8297d7f62cd85950af1a5a703ee68d5d0ec"
+    },
+    {
+      "key": "IG-S04/s5-large-reference/samurai:nightmare:11/FS",
+      "cell": "samurai",
+      "outcome": "complete",
+      "shard": "s5-large-reference",
+      "digest": "ed8646aa001b604e073828c7dda5405db56fba05dd95c0bb18798f992b47930e"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:11/F0",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "7ffe36f6cc6756ce938b7dc6bc28496a3d8fda265eb185219229017b1da7ff52"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:11/F1",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "acf534a751723718201530b8ebb917196d63105cd7e871dc1f4375af0d64f164"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:11/FC",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "07f5b246f2e7dedd70104c18223dffe915d6d708d18b7908b4a5c30690328d11"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:11/FM",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "26752fb01e44c4054ea4631895cf598401eb3cafe8af4734efc862a6c9fed3b3"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:11/FU",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "50349652c33f99de03541dc6145f46917ea4eaa24ba6c257241a4236e7a28047"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:11/FS",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "0ef602635105e802ef967c4cb2870b00ce5bb3ccd1d56b6a87703eaabd37bc5f"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:12/F0",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "5a9bd99b0e8b2a05ca32ff4d5c27b85ff0231a31611e77014db57a22dc9b70f8"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:12/F1",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "e74024e016efe6945d904cd82cfae4c4c1b1868fc79e5de5568382707fb72a10"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:12/FC",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "0deff5bfcbf7bed646dac9491188b8d3b87007e5c9be191402b2fdb92a364611"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:12/FM",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "4d672dd8bd8f1daa72d867df6c5a8e5f967955a7abd4f7a106e906519bfb6a2f"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:12/FU",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "b199b15642e91c359eeb882746dcc01abc554bcf40e27a720568a1c11338800b"
+    },
+    {
+      "key": "IG-S04/s2-small-all/classic9:nightmare:12/FS",
+      "cell": "classic9",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "fdae13ce0b2a6f19c9440cf857de6ba220c0df26b286497f20fab929300dae3f"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:11/F0",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "6eb08f1f9ca9668c581872ff55c5a7b176e0b02e7e324084df607176eea7da5a"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:11/F1",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "ab18d08f96eda17cb4ac7cdf8889abcbef8d256139c9090061378ed8f4d7ae99"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:11/FC",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "0eb84fbaa384fe880efce5d0e2e8a7e9b994e80b5ac54c1aed49d5ccdd5f4651"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:11/FM",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "aab9a7e72d1b12dd0893af14a6627137adc6e58db058392ef375d2c84877145f"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:11/FU",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "2bcd75624008361b402b17fc51055a27f1d48ef89225820df7b2e122f2792ca2"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:11/FS",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "cfe8085292333add2eb3e2b503ae1fbac9c5646299694e050d0dd83ac61f115b"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:12/F0",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "76e3fa05d2fcc2f7498106b88169df79a23e772861c719a9e48da0584e183a35"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:12/F1",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "b649f0b4cedd5c71684d4d4b7e0236d17edb73feca6cbb0741a10af29b056930"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:12/FC",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "b3ec4b7c7bab6ea5ed5265befd334b268409e83cdd1e5ea9b5f82c818ccd56ca"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:12/FM",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "3e180abd8366a4efb26e7169902a9f8a60bd19f4b810b68c26a573a1c8698d6c"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:12/FU",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "6689ba68d5834cd7b2a51ffd37d1b38043cd03e66e532d069a2d8156838d076b"
+    },
+    {
+      "key": "IG-S04/s2-small-all/mega12:nightmare:12/FS",
+      "cell": "mega12",
+      "outcome": "complete",
+      "shard": "s2-small-all",
+      "digest": "80d9cb8cb7b368203c5de840ffc54400af62a65ea9ff8f97848ecd1fad1e20a9"
+    }
+  ],
+  "cells": {
+    "mega16": {
+      "cell": "mega16",
+      "status": "unfitted",
+      "plannedKeys": [
+        "IG-S04/s1-large-controls/mega16:nightmare:11/F1",
+        "IG-S04/s3-large-native-f1/mega16:nightmare:12/F1",
+        "IG-S04/s4-large-floors/mega16:nightmare:11/FC",
+        "IG-S04/s4-large-floors/mega16:nightmare:11/FM",
+        "IG-S04/s4-large-floors/mega16:nightmare:12/FM",
+        "IG-S04/s4-large-floors/mega16:nightmare:12/FC",
+        "IG-S04/s5-large-reference/mega16:nightmare:11/FU",
+        "IG-S04/s5-large-reference/mega16:nightmare:11/FS",
+        "IG-S04/s5-large-reference/mega16:nightmare:12/FS",
+        "IG-S04/s5-large-reference/mega16:nightmare:12/FU",
+        "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+        "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0"
+      ],
+      "completedKeys": [
+        "IG-S04/s1-large-controls/mega16:nightmare:11/F1",
+        "IG-S04/s3-large-native-f1/mega16:nightmare:12/F1",
+        "IG-S04/s4-large-floors/mega16:nightmare:11/FC",
+        "IG-S04/s4-large-floors/mega16:nightmare:11/FM",
+        "IG-S04/s4-large-floors/mega16:nightmare:12/FM",
+        "IG-S04/s4-large-floors/mega16:nightmare:12/FC",
+        "IG-S04/s5-large-reference/mega16:nightmare:11/FU",
+        "IG-S04/s5-large-reference/mega16:nightmare:11/FS",
+        "IG-S04/s5-large-reference/mega16:nightmare:12/FS",
+        "IG-S04/s5-large-reference/mega16:nightmare:12/FU"
+      ],
+      "problems": [
+        {
+          "key": "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+          "problem": "not-run"
+        },
+        {
+          "key": "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0",
+          "problem": "not-run"
+        }
+      ],
+      "unfittedReasons": [
+        "planned variant coverage incomplete or censored: the pilot ceilings are kept (never a survivor-only fit); the explicit unfitted status needs the author's acceptance before the screen"
+      ],
+      "ceilings": {
+        "floorTests": 384,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 1671168,
+        "solverChecks": 102400000,
+        "dfsEntries": 95200000,
+        "dfsChecks": 95200000
+      },
+      "limits": {
+        "floorTests": 384,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 1671168,
+        "solverChecks": 102400000,
+        "dfsEntries": 95200000,
+        "dfsChecks": 95200000
+      },
+      "dimensions": {
+        "floorTests": {
+          "kind": "structural",
+          "limit": 384,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 384
+        },
+        "ladderPasses": {
+          "kind": "structural",
+          "limit": 3,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 3
+        },
+        "phaseBSolves": {
+          "kind": "structural",
+          "limit": 12,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 12
+        },
+        "deepenProposals": {
+          "kind": "structural",
+          "limit": 16,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 16
+        },
+        "canonicalRatings": {
+          "kind": "structural",
+          "limit": 64,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 64
+        },
+        "floorDeductions": {
+          "kind": "fitted",
+          "limit": 1671168,
+          "fitted": false,
+          "reason": "cell-unfitted",
+          "ceiling": 1671168,
+          "observedMax": null,
+          "candidate": null
+        },
+        "solverChecks": {
+          "kind": "fitted",
+          "limit": 102400000,
+          "fitted": false,
+          "reason": "cell-unfitted",
+          "ceiling": 102400000,
+          "observedMax": null,
+          "candidate": null
+        },
+        "dfsEntries": {
+          "kind": "fitted",
+          "limit": 95200000,
+          "fitted": false,
+          "reason": "cell-unfitted",
+          "ceiling": 95200000,
+          "observedMax": null,
+          "candidate": null
+        },
+        "dfsChecks": {
+          "kind": "fitted",
+          "limit": 95200000,
+          "fitted": false,
+          "reason": "cell-unfitted",
+          "ceiling": 95200000,
+          "observedMax": null,
+          "candidate": null
+        }
+      },
+      "geometry": {
+        "groups": 128,
+        "cells": 256,
+        "digits": 16
+      }
+    },
+    "samurai": {
+      "cell": "samurai",
+      "status": "unfitted",
+      "plannedKeys": [
+        "IG-S04/s1-large-controls/samurai:nightmare:11/F1",
+        "IG-S04/s3-large-native-f1/samurai:nightmare:12/F1",
+        "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+        "IG-S04/s4-large-floors/samurai:nightmare:11/FM",
+        "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+        "IG-S04/s4-large-floors/samurai:nightmare:12/FC",
+        "IG-S04/s5-large-reference/samurai:nightmare:11/FU",
+        "IG-S04/s5-large-reference/samurai:nightmare:11/FS",
+        "IG-S04/s5-large-reference/samurai:nightmare:12/FS",
+        "IG-S04/s5-large-reference/samurai:nightmare:12/FU",
+        "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+        "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0"
+      ],
+      "completedKeys": [
+        "IG-S04/s1-large-controls/samurai:nightmare:11/F1",
+        "IG-S04/s3-large-native-f1/samurai:nightmare:12/F1",
+        "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+        "IG-S04/s4-large-floors/samurai:nightmare:11/FM",
+        "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+        "IG-S04/s4-large-floors/samurai:nightmare:12/FC",
+        "IG-S04/s5-large-reference/samurai:nightmare:11/FU",
+        "IG-S04/s5-large-reference/samurai:nightmare:11/FS"
+      ],
+      "problems": [
+        {
+          "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FS",
+          "problem": "not-run"
+        },
+        {
+          "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FU",
+          "problem": "not-run"
+        },
+        {
+          "key": "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+          "problem": "not-run"
+        },
+        {
+          "key": "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0",
+          "problem": "not-run"
+        }
+      ],
+      "unfittedReasons": [
+        "planned variant coverage incomplete or censored: the pilot ceilings are kept (never a survivor-only fit); the explicit unfitted status needs the author's acceptance before the screen"
+      ],
+      "ceilings": {
+        "floorTests": 555,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 2047950,
+        "solverChecks": 102400000,
+        "dfsEntries": 129400000,
+        "dfsChecks": 129400000
+      },
+      "limits": {
+        "floorTests": 555,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 2047950,
+        "solverChecks": 102400000,
+        "dfsEntries": 129400000,
+        "dfsChecks": 129400000
+      },
+      "dimensions": {
+        "floorTests": {
+          "kind": "structural",
+          "limit": 555,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 555
+        },
+        "ladderPasses": {
+          "kind": "structural",
+          "limit": 3,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 3
+        },
+        "phaseBSolves": {
+          "kind": "structural",
+          "limit": 12,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 12
+        },
+        "deepenProposals": {
+          "kind": "structural",
+          "limit": 16,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 16
+        },
+        "canonicalRatings": {
+          "kind": "structural",
+          "limit": 64,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 64
+        },
+        "floorDeductions": {
+          "kind": "fitted",
+          "limit": 2047950,
+          "fitted": false,
+          "reason": "cell-unfitted",
+          "ceiling": 2047950,
+          "observedMax": null,
+          "candidate": null
+        },
+        "solverChecks": {
+          "kind": "fitted",
+          "limit": 102400000,
+          "fitted": false,
+          "reason": "cell-unfitted",
+          "ceiling": 102400000,
+          "observedMax": null,
+          "candidate": null
+        },
+        "dfsEntries": {
+          "kind": "fitted",
+          "limit": 129400000,
+          "fitted": false,
+          "reason": "cell-unfitted",
+          "ceiling": 129400000,
+          "observedMax": null,
+          "candidate": null
+        },
+        "dfsChecks": {
+          "kind": "fitted",
+          "limit": 129400000,
+          "fitted": false,
+          "reason": "cell-unfitted",
+          "ceiling": 129400000,
+          "observedMax": null,
+          "candidate": null
+        }
+      },
+      "geometry": {
+        "groups": 185,
+        "cells": 369,
+        "digits": 9
+      }
+    },
+    "classic9": {
+      "cell": "classic9",
+      "status": "fitted",
+      "plannedKeys": [
+        "IG-S04/s2-small-all/classic9:nightmare:11/F0",
+        "IG-S04/s2-small-all/classic9:nightmare:11/F1",
+        "IG-S04/s2-small-all/classic9:nightmare:11/FC",
+        "IG-S04/s2-small-all/classic9:nightmare:11/FM",
+        "IG-S04/s2-small-all/classic9:nightmare:11/FU",
+        "IG-S04/s2-small-all/classic9:nightmare:11/FS",
+        "IG-S04/s2-small-all/classic9:nightmare:12/F0",
+        "IG-S04/s2-small-all/classic9:nightmare:12/F1",
+        "IG-S04/s2-small-all/classic9:nightmare:12/FC",
+        "IG-S04/s2-small-all/classic9:nightmare:12/FM",
+        "IG-S04/s2-small-all/classic9:nightmare:12/FU",
+        "IG-S04/s2-small-all/classic9:nightmare:12/FS"
+      ],
+      "completedKeys": [
+        "IG-S04/s2-small-all/classic9:nightmare:11/F0",
+        "IG-S04/s2-small-all/classic9:nightmare:11/F1",
+        "IG-S04/s2-small-all/classic9:nightmare:11/FC",
+        "IG-S04/s2-small-all/classic9:nightmare:11/FM",
+        "IG-S04/s2-small-all/classic9:nightmare:11/FU",
+        "IG-S04/s2-small-all/classic9:nightmare:11/FS",
+        "IG-S04/s2-small-all/classic9:nightmare:12/F0",
+        "IG-S04/s2-small-all/classic9:nightmare:12/F1",
+        "IG-S04/s2-small-all/classic9:nightmare:12/FC",
+        "IG-S04/s2-small-all/classic9:nightmare:12/FM",
+        "IG-S04/s2-small-all/classic9:nightmare:12/FU",
+        "IG-S04/s2-small-all/classic9:nightmare:12/FS"
+      ],
+      "problems": [],
+      "unfittedReasons": [],
+      "ceilings": {
+        "floorTests": 123,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 99630,
+        "solverChecks": 102400000,
+        "dfsEntries": 43000000,
+        "dfsChecks": 43000000
+      },
+      "limits": {
+        "floorTests": 123,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 4096,
+        "solverChecks": 16384,
+        "dfsEntries": 256,
+        "dfsChecks": 128
+      },
+      "dimensions": {
+        "floorTests": {
+          "kind": "structural",
+          "limit": 123,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 123
+        },
+        "ladderPasses": {
+          "kind": "structural",
+          "limit": 3,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 3
+        },
+        "phaseBSolves": {
+          "kind": "structural",
+          "limit": 12,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 12
+        },
+        "deepenProposals": {
+          "kind": "structural",
+          "limit": 16,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 16
+        },
+        "canonicalRatings": {
+          "kind": "structural",
+          "limit": 64,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 64
+        },
+        "floorDeductions": {
+          "kind": "fitted",
+          "limit": 4096,
+          "fitted": true,
+          "reason": "fitted",
+          "observedMax": 1207,
+          "candidate": 4096,
+          "ceiling": 99630
+        },
+        "solverChecks": {
+          "kind": "fitted",
+          "limit": 16384,
+          "fitted": true,
+          "reason": "fitted",
+          "observedMax": 5431,
+          "candidate": 16384,
+          "ceiling": 102400000
+        },
+        "dfsEntries": {
+          "kind": "fitted",
+          "limit": 256,
+          "fitted": true,
+          "reason": "fitted",
+          "observedMax": 76,
+          "candidate": 256,
+          "ceiling": 43000000
+        },
+        "dfsChecks": {
+          "kind": "fitted",
+          "limit": 128,
+          "fitted": true,
+          "reason": "fitted",
+          "observedMax": 50,
+          "candidate": 128,
+          "ceiling": 43000000
+        }
+      },
+      "geometry": {
+        "groups": 41,
+        "cells": 81,
+        "digits": 9
+      }
+    },
+    "mega12": {
+      "cell": "mega12",
+      "status": "fitted",
+      "plannedKeys": [
+        "IG-S04/s2-small-all/mega12:nightmare:11/F0",
+        "IG-S04/s2-small-all/mega12:nightmare:11/F1",
+        "IG-S04/s2-small-all/mega12:nightmare:11/FC",
+        "IG-S04/s2-small-all/mega12:nightmare:11/FM",
+        "IG-S04/s2-small-all/mega12:nightmare:11/FU",
+        "IG-S04/s2-small-all/mega12:nightmare:11/FS",
+        "IG-S04/s2-small-all/mega12:nightmare:12/F0",
+        "IG-S04/s2-small-all/mega12:nightmare:12/F1",
+        "IG-S04/s2-small-all/mega12:nightmare:12/FC",
+        "IG-S04/s2-small-all/mega12:nightmare:12/FM",
+        "IG-S04/s2-small-all/mega12:nightmare:12/FU",
+        "IG-S04/s2-small-all/mega12:nightmare:12/FS"
+      ],
+      "completedKeys": [
+        "IG-S04/s2-small-all/mega12:nightmare:11/F0",
+        "IG-S04/s2-small-all/mega12:nightmare:11/F1",
+        "IG-S04/s2-small-all/mega12:nightmare:11/FC",
+        "IG-S04/s2-small-all/mega12:nightmare:11/FM",
+        "IG-S04/s2-small-all/mega12:nightmare:11/FU",
+        "IG-S04/s2-small-all/mega12:nightmare:11/FS",
+        "IG-S04/s2-small-all/mega12:nightmare:12/F0",
+        "IG-S04/s2-small-all/mega12:nightmare:12/F1",
+        "IG-S04/s2-small-all/mega12:nightmare:12/FC",
+        "IG-S04/s2-small-all/mega12:nightmare:12/FM",
+        "IG-S04/s2-small-all/mega12:nightmare:12/FU",
+        "IG-S04/s2-small-all/mega12:nightmare:12/FS"
+      ],
+      "problems": [],
+      "unfittedReasons": [],
+      "ceilings": {
+        "floorTests": 216,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 404352,
+        "solverChecks": 102400000,
+        "dfsEntries": 61600000,
+        "dfsChecks": 61600000
+      },
+      "limits": {
+        "floorTests": 216,
+        "ladderPasses": 3,
+        "phaseBSolves": 12,
+        "deepenProposals": 16,
+        "canonicalRatings": 64,
+        "floorDeductions": 8192,
+        "solverChecks": 4194304,
+        "dfsEntries": 1024,
+        "dfsChecks": 512
+      },
+      "dimensions": {
+        "floorTests": {
+          "kind": "structural",
+          "limit": 216,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 216
+        },
+        "ladderPasses": {
+          "kind": "structural",
+          "limit": 3,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 3
+        },
+        "phaseBSolves": {
+          "kind": "structural",
+          "limit": 12,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 12
+        },
+        "deepenProposals": {
+          "kind": "structural",
+          "limit": 16,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 16
+        },
+        "canonicalRatings": {
+          "kind": "structural",
+          "limit": 64,
+          "fitted": false,
+          "reason": "structural-fixed",
+          "ceiling": 64
+        },
+        "floorDeductions": {
+          "kind": "fitted",
+          "limit": 8192,
+          "fitted": true,
+          "reason": "fitted",
+          "observedMax": 3475,
+          "candidate": 8192,
+          "ceiling": 404352
+        },
+        "solverChecks": {
+          "kind": "fitted",
+          "limit": 4194304,
+          "fitted": true,
+          "reason": "fitted",
+          "observedMax": 1259063,
+          "candidate": 4194304,
+          "ceiling": 102400000
+        },
+        "dfsEntries": {
+          "kind": "fitted",
+          "limit": 1024,
+          "fitted": true,
+          "reason": "fitted",
+          "observedMax": 264,
+          "candidate": 1024,
+          "ceiling": 61600000
+        },
+        "dfsChecks": {
+          "kind": "fitted",
+          "limit": 512,
+          "fitted": true,
+          "reason": "fitted",
+          "observedMax": 198,
+          "candidate": 512,
+          "ceiling": 61600000
+        }
+      },
+      "geometry": {
+        "groups": 72,
+        "cells": 144,
+        "digits": 12
+      }
+    }
+  },
+  "rule": "one budget vector per cell, shared by every arm of that cell's frontier screen; no per-seed adaptive cap, no retuning after IG-S05",
+  "hash": "53b4c103c00d5aeda5c9dbe2378126842722f9a12f32564b675c6e6b06710a60"
+}

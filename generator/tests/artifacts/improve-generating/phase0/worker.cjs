@@ -299,6 +299,9 @@ function handle(job) {
   if (job.kind === 'pipeline-request') pipelineRequest(job);
   else if (job.kind === 'verify') verifyJob(job);
   else if (job.kind === 'attempt-run') require('./attempt-worker.cjs').run({ SG: SG, job: job, post: post, failure: failure });
+  else if (typeof job.kind === 'string' && job.kind.indexOf('ig04-') === 0) {
+    require('./ig04-worker.cjs').handle({ SG: SG, job: job, post: post, failure: failure });
+  }
   else if (data.testOnly === true) syntheticJob(job);
   else post({ type: 'fatal', error: { code: 'job-kind', name: null, message: 'unknown job kind ' + job.kind } });
 }
