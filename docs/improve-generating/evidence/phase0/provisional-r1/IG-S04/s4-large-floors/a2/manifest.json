@@ -1,0 +1,2638 @@
+{
+  "manifest": {
+    "schema": "ig-s-phase0/1",
+    "task": "IG-S04",
+    "round": "provisional-r1",
+    "evidenceStatus": "provisional (pre-freeze)",
+    "guards": {
+      "commandMs": 270000,
+      "requestMs": 180000,
+      "sampleMs": 45000,
+      "jigsawMs": 240000,
+      "validationMs": 60000,
+      "wrapperLimitMs": 300000,
+      "graceMs": 45000,
+      "finalizeReserveMs": 8000,
+      "startMarginMs": 2000,
+      "minWindowMs": 15000
+    },
+    "pairOrder": [],
+    "shards": [
+      {
+        "shard": "s1-large-controls",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S04/s1-large-controls/mega16:nightmare:11",
+          "IG-S04/s1-large-controls/samurai:nightmare:11"
+        ],
+        "jobKeys": [
+          "IG-S04/s1-large-controls/mega16:nightmare:11/proposal-only",
+          "IG-S04/s1-large-controls/mega16:nightmare:11/ordinary-only",
+          "IG-S04/s1-large-controls/mega16:nightmare:11/F1",
+          "IG-S04/s1-large-controls/samurai:nightmare:11/proposal-only",
+          "IG-S04/s1-large-controls/samurai:nightmare:11/ordinary-only",
+          "IG-S04/s1-large-controls/samurai:nightmare:11/F1"
+        ]
+      },
+      {
+        "shard": "s2-small-all",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S04/s2-small-all/classic9:nightmare:11",
+          "IG-S04/s2-small-all/classic9:nightmare:12",
+          "IG-S04/s2-small-all/mega12:nightmare:11",
+          "IG-S04/s2-small-all/mega12:nightmare:12"
+        ],
+        "jobKeys": [
+          "IG-S04/s2-small-all/classic9:nightmare:11/proposal-only",
+          "IG-S04/s2-small-all/classic9:nightmare:11/ordinary-only",
+          "IG-S04/s2-small-all/classic9:nightmare:11/F0",
+          "IG-S04/s2-small-all/classic9:nightmare:11/F1",
+          "IG-S04/s2-small-all/classic9:nightmare:11/FC",
+          "IG-S04/s2-small-all/classic9:nightmare:11/FM",
+          "IG-S04/s2-small-all/classic9:nightmare:11/FU",
+          "IG-S04/s2-small-all/classic9:nightmare:11/FS",
+          "IG-S04/s2-small-all/classic9:nightmare:12/ordinary-only",
+          "IG-S04/s2-small-all/classic9:nightmare:12/F0",
+          "IG-S04/s2-small-all/classic9:nightmare:12/F1",
+          "IG-S04/s2-small-all/classic9:nightmare:12/FC",
+          "IG-S04/s2-small-all/classic9:nightmare:12/FM",
+          "IG-S04/s2-small-all/classic9:nightmare:12/FU",
+          "IG-S04/s2-small-all/classic9:nightmare:12/FS",
+          "IG-S04/s2-small-all/classic9:nightmare:12/proposal-only",
+          "IG-S04/s2-small-all/mega12:nightmare:11/proposal-only",
+          "IG-S04/s2-small-all/mega12:nightmare:11/ordinary-only",
+          "IG-S04/s2-small-all/mega12:nightmare:11/F0",
+          "IG-S04/s2-small-all/mega12:nightmare:11/F1",
+          "IG-S04/s2-small-all/mega12:nightmare:11/FC",
+          "IG-S04/s2-small-all/mega12:nightmare:11/FM",
+          "IG-S04/s2-small-all/mega12:nightmare:11/FU",
+          "IG-S04/s2-small-all/mega12:nightmare:11/FS",
+          "IG-S04/s2-small-all/mega12:nightmare:12/ordinary-only",
+          "IG-S04/s2-small-all/mega12:nightmare:12/F0",
+          "IG-S04/s2-small-all/mega12:nightmare:12/F1",
+          "IG-S04/s2-small-all/mega12:nightmare:12/FC",
+          "IG-S04/s2-small-all/mega12:nightmare:12/FM",
+          "IG-S04/s2-small-all/mega12:nightmare:12/FU",
+          "IG-S04/s2-small-all/mega12:nightmare:12/FS",
+          "IG-S04/s2-small-all/mega12:nightmare:12/proposal-only"
+        ]
+      },
+      {
+        "shard": "s3-large-native-f1",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S04/s3-large-native-f1/mega16:nightmare:12",
+          "IG-S04/s3-large-native-f1/samurai:nightmare:12"
+        ],
+        "jobKeys": [
+          "IG-S04/s3-large-native-f1/mega16:nightmare:12/ordinary-only",
+          "IG-S04/s3-large-native-f1/mega16:nightmare:12/F1",
+          "IG-S04/s3-large-native-f1/mega16:nightmare:12/proposal-only",
+          "IG-S04/s3-large-native-f1/samurai:nightmare:12/ordinary-only",
+          "IG-S04/s3-large-native-f1/samurai:nightmare:12/F1",
+          "IG-S04/s3-large-native-f1/samurai:nightmare:12/proposal-only"
+        ]
+      },
+      {
+        "shard": "s4-large-floors",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S04/s4-large-floors/mega16:nightmare:11",
+          "IG-S04/s4-large-floors/mega16:nightmare:12",
+          "IG-S04/s4-large-floors/samurai:nightmare:11",
+          "IG-S04/s4-large-floors/samurai:nightmare:12"
+        ],
+        "jobKeys": [
+          "IG-S04/s4-large-floors/mega16:nightmare:11/FC",
+          "IG-S04/s4-large-floors/mega16:nightmare:11/FM",
+          "IG-S04/s4-large-floors/mega16:nightmare:12/FM",
+          "IG-S04/s4-large-floors/mega16:nightmare:12/FC",
+          "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+          "IG-S04/s4-large-floors/samurai:nightmare:11/FM",
+          "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+          "IG-S04/s4-large-floors/samurai:nightmare:12/FC"
+        ]
+      },
+      {
+        "shard": "s5-large-reference",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S04/s5-large-reference/mega16:nightmare:11",
+          "IG-S04/s5-large-reference/mega16:nightmare:12",
+          "IG-S04/s5-large-reference/samurai:nightmare:11",
+          "IG-S04/s5-large-reference/samurai:nightmare:12"
+        ],
+        "jobKeys": [
+          "IG-S04/s5-large-reference/mega16:nightmare:11/FU",
+          "IG-S04/s5-large-reference/mega16:nightmare:11/FS",
+          "IG-S04/s5-large-reference/mega16:nightmare:12/FS",
+          "IG-S04/s5-large-reference/mega16:nightmare:12/FU",
+          "IG-S04/s5-large-reference/samurai:nightmare:11/FU",
+          "IG-S04/s5-large-reference/samurai:nightmare:11/FS",
+          "IG-S04/s5-large-reference/samurai:nightmare:12/FS",
+          "IG-S04/s5-large-reference/samurai:nightmare:12/FU"
+        ]
+      },
+      {
+        "shard": "s6-large-s2-control",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S04/s6-large-s2-control/mega16:nightmare:11",
+          "IG-S04/s6-large-s2-control/mega16:nightmare:12",
+          "IG-S04/s6-large-s2-control/samurai:nightmare:11",
+          "IG-S04/s6-large-s2-control/samurai:nightmare:12"
+        ],
+        "jobKeys": [
+          "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+          "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0",
+          "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+          "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0"
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "blockKey": "IG-S04/s1-large-controls/mega16:nightmare:11",
+        "shard": "s1-large-controls",
+        "jobKeys": [
+          "IG-S04/s1-large-controls/mega16:nightmare:11/proposal-only",
+          "IG-S04/s1-large-controls/mega16:nightmare:11/ordinary-only",
+          "IG-S04/s1-large-controls/mega16:nightmare:11/F1"
+        ],
+        "estimateMs": 108000
+      },
+      {
+        "blockKey": "IG-S04/s1-large-controls/samurai:nightmare:11",
+        "shard": "s1-large-controls",
+        "jobKeys": [
+          "IG-S04/s1-large-controls/samurai:nightmare:11/proposal-only",
+          "IG-S04/s1-large-controls/samurai:nightmare:11/ordinary-only",
+          "IG-S04/s1-large-controls/samurai:nightmare:11/F1"
+        ],
+        "estimateMs": 108000
+      },
+      {
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:11",
+        "shard": "s2-small-all",
+        "jobKeys": [
+          "IG-S04/s2-small-all/classic9:nightmare:11/proposal-only",
+          "IG-S04/s2-small-all/classic9:nightmare:11/ordinary-only",
+          "IG-S04/s2-small-all/classic9:nightmare:11/F0",
+          "IG-S04/s2-small-all/classic9:nightmare:11/F1",
+          "IG-S04/s2-small-all/classic9:nightmare:11/FC",
+          "IG-S04/s2-small-all/classic9:nightmare:11/FM",
+          "IG-S04/s2-small-all/classic9:nightmare:11/FU",
+          "IG-S04/s2-small-all/classic9:nightmare:11/FS"
+        ],
+        "estimateMs": 81000
+      },
+      {
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:12",
+        "shard": "s2-small-all",
+        "jobKeys": [
+          "IG-S04/s2-small-all/classic9:nightmare:12/ordinary-only",
+          "IG-S04/s2-small-all/classic9:nightmare:12/F0",
+          "IG-S04/s2-small-all/classic9:nightmare:12/F1",
+          "IG-S04/s2-small-all/classic9:nightmare:12/FC",
+          "IG-S04/s2-small-all/classic9:nightmare:12/FM",
+          "IG-S04/s2-small-all/classic9:nightmare:12/FU",
+          "IG-S04/s2-small-all/classic9:nightmare:12/FS",
+          "IG-S04/s2-small-all/classic9:nightmare:12/proposal-only"
+        ],
+        "estimateMs": 81000
+      },
+      {
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:11",
+        "shard": "s2-small-all",
+        "jobKeys": [
+          "IG-S04/s2-small-all/mega12:nightmare:11/proposal-only",
+          "IG-S04/s2-small-all/mega12:nightmare:11/ordinary-only",
+          "IG-S04/s2-small-all/mega12:nightmare:11/F0",
+          "IG-S04/s2-small-all/mega12:nightmare:11/F1",
+          "IG-S04/s2-small-all/mega12:nightmare:11/FC",
+          "IG-S04/s2-small-all/mega12:nightmare:11/FM",
+          "IG-S04/s2-small-all/mega12:nightmare:11/FU",
+          "IG-S04/s2-small-all/mega12:nightmare:11/FS"
+        ],
+        "estimateMs": 228000
+      },
+      {
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:12",
+        "shard": "s2-small-all",
+        "jobKeys": [
+          "IG-S04/s2-small-all/mega12:nightmare:12/ordinary-only",
+          "IG-S04/s2-small-all/mega12:nightmare:12/F0",
+          "IG-S04/s2-small-all/mega12:nightmare:12/F1",
+          "IG-S04/s2-small-all/mega12:nightmare:12/FC",
+          "IG-S04/s2-small-all/mega12:nightmare:12/FM",
+          "IG-S04/s2-small-all/mega12:nightmare:12/FU",
+          "IG-S04/s2-small-all/mega12:nightmare:12/FS",
+          "IG-S04/s2-small-all/mega12:nightmare:12/proposal-only"
+        ],
+        "estimateMs": 228000
+      },
+      {
+        "blockKey": "IG-S04/s3-large-native-f1/mega16:nightmare:12",
+        "shard": "s3-large-native-f1",
+        "jobKeys": [
+          "IG-S04/s3-large-native-f1/mega16:nightmare:12/ordinary-only",
+          "IG-S04/s3-large-native-f1/mega16:nightmare:12/F1",
+          "IG-S04/s3-large-native-f1/mega16:nightmare:12/proposal-only"
+        ],
+        "estimateMs": 108000
+      },
+      {
+        "blockKey": "IG-S04/s3-large-native-f1/samurai:nightmare:12",
+        "shard": "s3-large-native-f1",
+        "jobKeys": [
+          "IG-S04/s3-large-native-f1/samurai:nightmare:12/ordinary-only",
+          "IG-S04/s3-large-native-f1/samurai:nightmare:12/F1",
+          "IG-S04/s3-large-native-f1/samurai:nightmare:12/proposal-only"
+        ],
+        "estimateMs": 108000
+      },
+      {
+        "blockKey": "IG-S04/s4-large-floors/mega16:nightmare:11",
+        "shard": "s4-large-floors",
+        "jobKeys": [
+          "IG-S04/s4-large-floors/mega16:nightmare:11/FC",
+          "IG-S04/s4-large-floors/mega16:nightmare:11/FM"
+        ],
+        "estimateMs": 124000
+      },
+      {
+        "blockKey": "IG-S04/s4-large-floors/mega16:nightmare:12",
+        "shard": "s4-large-floors",
+        "jobKeys": [
+          "IG-S04/s4-large-floors/mega16:nightmare:12/FM",
+          "IG-S04/s4-large-floors/mega16:nightmare:12/FC"
+        ],
+        "estimateMs": 124000
+      },
+      {
+        "blockKey": "IG-S04/s4-large-floors/samurai:nightmare:11",
+        "shard": "s4-large-floors",
+        "jobKeys": [
+          "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+          "IG-S04/s4-large-floors/samurai:nightmare:11/FM"
+        ],
+        "estimateMs": 124000
+      },
+      {
+        "blockKey": "IG-S04/s4-large-floors/samurai:nightmare:12",
+        "shard": "s4-large-floors",
+        "jobKeys": [
+          "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+          "IG-S04/s4-large-floors/samurai:nightmare:12/FC"
+        ],
+        "estimateMs": 124000
+      },
+      {
+        "blockKey": "IG-S04/s5-large-reference/mega16:nightmare:11",
+        "shard": "s5-large-reference",
+        "jobKeys": [
+          "IG-S04/s5-large-reference/mega16:nightmare:11/FU",
+          "IG-S04/s5-large-reference/mega16:nightmare:11/FS"
+        ],
+        "estimateMs": 124000
+      },
+      {
+        "blockKey": "IG-S04/s5-large-reference/mega16:nightmare:12",
+        "shard": "s5-large-reference",
+        "jobKeys": [
+          "IG-S04/s5-large-reference/mega16:nightmare:12/FS",
+          "IG-S04/s5-large-reference/mega16:nightmare:12/FU"
+        ],
+        "estimateMs": 124000
+      },
+      {
+        "blockKey": "IG-S04/s5-large-reference/samurai:nightmare:11",
+        "shard": "s5-large-reference",
+        "jobKeys": [
+          "IG-S04/s5-large-reference/samurai:nightmare:11/FU",
+          "IG-S04/s5-large-reference/samurai:nightmare:11/FS"
+        ],
+        "estimateMs": 124000
+      },
+      {
+        "blockKey": "IG-S04/s5-large-reference/samurai:nightmare:12",
+        "shard": "s5-large-reference",
+        "jobKeys": [
+          "IG-S04/s5-large-reference/samurai:nightmare:12/FS",
+          "IG-S04/s5-large-reference/samurai:nightmare:12/FU"
+        ],
+        "estimateMs": 124000
+      },
+      {
+        "blockKey": "IG-S04/s6-large-s2-control/mega16:nightmare:11",
+        "shard": "s6-large-s2-control",
+        "jobKeys": [
+          "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0"
+        ],
+        "estimateMs": 62000
+      },
+      {
+        "blockKey": "IG-S04/s6-large-s2-control/mega16:nightmare:12",
+        "shard": "s6-large-s2-control",
+        "jobKeys": [
+          "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0"
+        ],
+        "estimateMs": 62000
+      },
+      {
+        "blockKey": "IG-S04/s6-large-s2-control/samurai:nightmare:11",
+        "shard": "s6-large-s2-control",
+        "jobKeys": [
+          "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0"
+        ],
+        "estimateMs": 62000
+      },
+      {
+        "blockKey": "IG-S04/s6-large-s2-control/samurai:nightmare:12",
+        "shard": "s6-large-s2-control",
+        "jobKeys": [
+          "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0"
+        ],
+        "estimateMs": 62000
+      }
+    ],
+    "jobs": [
+      {
+        "key": "IG-S04/s1-large-controls/mega16:nightmare:11/proposal-only",
+        "blockKey": "IG-S04/s1-large-controls/mega16:nightmare:11",
+        "shard": "s1-large-controls",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega16:11",
+        "requestSeed": 11,
+        "variantId": "proposal-only",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "proposal-only",
+        "arm": "proposal-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "proposal-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 14000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s1-large-controls/mega16:nightmare:11/ordinary-only",
+        "blockKey": "IG-S04/s1-large-controls/mega16:nightmare:11",
+        "shard": "s1-large-controls",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega16:11",
+        "requestSeed": 11,
+        "variantId": "ordinary-only",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "ordinary-only",
+        "arm": "ordinary-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "ordinary-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 32000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s1-large-controls/mega16:nightmare:11/F1",
+        "blockKey": "IG-S04/s1-large-controls/mega16:nightmare:11",
+        "shard": "s1-large-controls",
+        "order": 2,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega16:11",
+        "requestSeed": 11,
+        "variantId": "F1",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "F1",
+        "arm": "F1",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F1",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s1-large-controls/samurai:nightmare:11/proposal-only",
+        "blockKey": "IG-S04/s1-large-controls/samurai:nightmare:11",
+        "shard": "s1-large-controls",
+        "order": 3,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "samurai:11",
+        "requestSeed": 11,
+        "variantId": "proposal-only",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "proposal-only",
+        "arm": "proposal-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "proposal-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 14000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s1-large-controls/samurai:nightmare:11/ordinary-only",
+        "blockKey": "IG-S04/s1-large-controls/samurai:nightmare:11",
+        "shard": "s1-large-controls",
+        "order": 4,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "samurai:11",
+        "requestSeed": 11,
+        "variantId": "ordinary-only",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "ordinary-only",
+        "arm": "ordinary-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "ordinary-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 32000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s1-large-controls/samurai:nightmare:11/F1",
+        "blockKey": "IG-S04/s1-large-controls/samurai:nightmare:11",
+        "shard": "s1-large-controls",
+        "order": 5,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "samurai:11",
+        "requestSeed": 11,
+        "variantId": "F1",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "F1",
+        "arm": "F1",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F1",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:11/proposal-only",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "classic9:11",
+        "requestSeed": 11,
+        "variantId": "proposal-only",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "proposal-only",
+        "arm": "proposal-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "proposal-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 4000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:11/ordinary-only",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "classic9:11",
+        "requestSeed": 11,
+        "variantId": "ordinary-only",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "ordinary-only",
+        "arm": "ordinary-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "ordinary-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 5000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:11/F0",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 2,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "classic9:11",
+        "requestSeed": 11,
+        "variantId": "F0",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "F0",
+        "arm": "F0",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F0",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:11/F1",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 3,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "classic9:11",
+        "requestSeed": 11,
+        "variantId": "F1",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "F1",
+        "arm": "F1",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F1",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:11/FC",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 4,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "classic9:11",
+        "requestSeed": 11,
+        "variantId": "FC",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "FC",
+        "arm": "FC",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FC",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:11/FM",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 5,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "classic9:11",
+        "requestSeed": 11,
+        "variantId": "FM",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "FM",
+        "arm": "FM",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FM",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:11/FU",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 6,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "classic9:11",
+        "requestSeed": 11,
+        "variantId": "FU",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "FU",
+        "arm": "FU",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FU",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:11/FS",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 7,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "classic9:11",
+        "requestSeed": 11,
+        "variantId": "FS",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "FS",
+        "arm": "FS",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FS",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:12/ordinary-only",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 8,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "classic9:12",
+        "requestSeed": 12,
+        "variantId": "ordinary-only",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "ordinary-only",
+        "arm": "ordinary-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "ordinary-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 5000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:12/F0",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 9,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "classic9:12",
+        "requestSeed": 12,
+        "variantId": "F0",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "F0",
+        "arm": "F0",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F0",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:12/F1",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 10,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "classic9:12",
+        "requestSeed": 12,
+        "variantId": "F1",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "F1",
+        "arm": "F1",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F1",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:12/FC",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 11,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "classic9:12",
+        "requestSeed": 12,
+        "variantId": "FC",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "FC",
+        "arm": "FC",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FC",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:12/FM",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 12,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "classic9:12",
+        "requestSeed": 12,
+        "variantId": "FM",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "FM",
+        "arm": "FM",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FM",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:12/FU",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 13,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "classic9:12",
+        "requestSeed": 12,
+        "variantId": "FU",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "FU",
+        "arm": "FU",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FU",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:12/FS",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 14,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "classic9:12",
+        "requestSeed": 12,
+        "variantId": "FS",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "FS",
+        "arm": "FS",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FS",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 12000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/classic9:nightmare:12/proposal-only",
+        "blockKey": "IG-S04/s2-small-all/classic9:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 15,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "classic9:12",
+        "requestSeed": 12,
+        "variantId": "proposal-only",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "proposal-only",
+        "arm": "proposal-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "proposal-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 4000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:11/proposal-only",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 16,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega12:11",
+        "requestSeed": 11,
+        "variantId": "proposal-only",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "proposal-only",
+        "arm": "proposal-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "proposal-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 8000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:11/ordinary-only",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 17,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega12:11",
+        "requestSeed": 11,
+        "variantId": "ordinary-only",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "ordinary-only",
+        "arm": "ordinary-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "ordinary-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 16000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:11/F0",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 18,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega12:11",
+        "requestSeed": 11,
+        "variantId": "F0",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "F0",
+        "arm": "F0",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F0",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:11/F1",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 19,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega12:11",
+        "requestSeed": 11,
+        "variantId": "F1",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "F1",
+        "arm": "F1",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F1",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:11/FC",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 20,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega12:11",
+        "requestSeed": 11,
+        "variantId": "FC",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "FC",
+        "arm": "FC",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FC",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:11/FM",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 21,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega12:11",
+        "requestSeed": 11,
+        "variantId": "FM",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "FM",
+        "arm": "FM",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FM",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:11/FU",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 22,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega12:11",
+        "requestSeed": 11,
+        "variantId": "FU",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "FU",
+        "arm": "FU",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FU",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:11/FS",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:11",
+        "shard": "s2-small-all",
+        "order": 23,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega12:11",
+        "requestSeed": 11,
+        "variantId": "FS",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "FS",
+        "arm": "FS",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FS",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:12/ordinary-only",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 24,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega12:12",
+        "requestSeed": 12,
+        "variantId": "ordinary-only",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "ordinary-only",
+        "arm": "ordinary-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "ordinary-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 16000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:12/F0",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 25,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega12:12",
+        "requestSeed": 12,
+        "variantId": "F0",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "F0",
+        "arm": "F0",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F0",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:12/F1",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 26,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega12:12",
+        "requestSeed": 12,
+        "variantId": "F1",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "F1",
+        "arm": "F1",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F1",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:12/FC",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 27,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega12:12",
+        "requestSeed": 12,
+        "variantId": "FC",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "FC",
+        "arm": "FC",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FC",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:12/FM",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 28,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega12:12",
+        "requestSeed": 12,
+        "variantId": "FM",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "FM",
+        "arm": "FM",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FM",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:12/FU",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 29,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega12:12",
+        "requestSeed": 12,
+        "variantId": "FU",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "FU",
+        "arm": "FU",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FU",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:12/FS",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 30,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega12:12",
+        "requestSeed": 12,
+        "variantId": "FS",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "FS",
+        "arm": "FS",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FS",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 34000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s2-small-all/mega12:nightmare:12/proposal-only",
+        "blockKey": "IG-S04/s2-small-all/mega12:nightmare:12",
+        "shard": "s2-small-all",
+        "order": 31,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega12:12",
+        "requestSeed": 12,
+        "variantId": "proposal-only",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "proposal-only",
+        "arm": "proposal-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "proposal-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 8000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/ordinary-only",
+        "blockKey": "IG-S04/s3-large-native-f1/mega16:nightmare:12",
+        "shard": "s3-large-native-f1",
+        "order": 0,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega16:12",
+        "requestSeed": 12,
+        "variantId": "ordinary-only",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "ordinary-only",
+        "arm": "ordinary-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "ordinary-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 32000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/F1",
+        "blockKey": "IG-S04/s3-large-native-f1/mega16:nightmare:12",
+        "shard": "s3-large-native-f1",
+        "order": 1,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega16:12",
+        "requestSeed": 12,
+        "variantId": "F1",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "F1",
+        "arm": "F1",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F1",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/proposal-only",
+        "blockKey": "IG-S04/s3-large-native-f1/mega16:nightmare:12",
+        "shard": "s3-large-native-f1",
+        "order": 2,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega16:12",
+        "requestSeed": 12,
+        "variantId": "proposal-only",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "proposal-only",
+        "arm": "proposal-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "proposal-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 14000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/ordinary-only",
+        "blockKey": "IG-S04/s3-large-native-f1/samurai:nightmare:12",
+        "shard": "s3-large-native-f1",
+        "order": 3,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "samurai:12",
+        "requestSeed": 12,
+        "variantId": "ordinary-only",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "ordinary-only",
+        "arm": "ordinary-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "ordinary-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 32000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/F1",
+        "blockKey": "IG-S04/s3-large-native-f1/samurai:nightmare:12",
+        "shard": "s3-large-native-f1",
+        "order": 4,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "samurai:12",
+        "requestSeed": 12,
+        "variantId": "F1",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "F1",
+        "arm": "F1",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F1",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/proposal-only",
+        "blockKey": "IG-S04/s3-large-native-f1/samurai:nightmare:12",
+        "shard": "s3-large-native-f1",
+        "order": 5,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "samurai:12",
+        "requestSeed": 12,
+        "variantId": "proposal-only",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "proposal-only",
+        "arm": "proposal-only",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "proposal-only",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 14000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s4-large-floors/mega16:nightmare:11/FC",
+        "blockKey": "IG-S04/s4-large-floors/mega16:nightmare:11",
+        "shard": "s4-large-floors",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega16:11",
+        "requestSeed": 11,
+        "variantId": "FC",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "FC",
+        "arm": "FC",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FC",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s4-large-floors/mega16:nightmare:11/FM",
+        "blockKey": "IG-S04/s4-large-floors/mega16:nightmare:11",
+        "shard": "s4-large-floors",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega16:11",
+        "requestSeed": 11,
+        "variantId": "FM",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "FM",
+        "arm": "FM",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FM",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s4-large-floors/mega16:nightmare:12/FM",
+        "blockKey": "IG-S04/s4-large-floors/mega16:nightmare:12",
+        "shard": "s4-large-floors",
+        "order": 2,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega16:12",
+        "requestSeed": 12,
+        "variantId": "FM",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "FM",
+        "arm": "FM",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FM",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s4-large-floors/mega16:nightmare:12/FC",
+        "blockKey": "IG-S04/s4-large-floors/mega16:nightmare:12",
+        "shard": "s4-large-floors",
+        "order": 3,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega16:12",
+        "requestSeed": 12,
+        "variantId": "FC",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "FC",
+        "arm": "FC",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FC",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+        "blockKey": "IG-S04/s4-large-floors/samurai:nightmare:11",
+        "shard": "s4-large-floors",
+        "order": 4,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "samurai:11",
+        "requestSeed": 11,
+        "variantId": "FC",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "FC",
+        "arm": "FC",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FC",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s4-large-floors/samurai:nightmare:11/FM",
+        "blockKey": "IG-S04/s4-large-floors/samurai:nightmare:11",
+        "shard": "s4-large-floors",
+        "order": 5,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "samurai:11",
+        "requestSeed": 11,
+        "variantId": "FM",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "FM",
+        "arm": "FM",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FM",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+        "blockKey": "IG-S04/s4-large-floors/samurai:nightmare:12",
+        "shard": "s4-large-floors",
+        "order": 6,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "samurai:12",
+        "requestSeed": 12,
+        "variantId": "FM",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "FM",
+        "arm": "FM",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FM",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s4-large-floors/samurai:nightmare:12/FC",
+        "blockKey": "IG-S04/s4-large-floors/samurai:nightmare:12",
+        "shard": "s4-large-floors",
+        "order": 7,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "samurai:12",
+        "requestSeed": 12,
+        "variantId": "FC",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "FC",
+        "arm": "FC",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FC",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s5-large-reference/mega16:nightmare:11/FU",
+        "blockKey": "IG-S04/s5-large-reference/mega16:nightmare:11",
+        "shard": "s5-large-reference",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega16:11",
+        "requestSeed": 11,
+        "variantId": "FU",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "FU",
+        "arm": "FU",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FU",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s5-large-reference/mega16:nightmare:11/FS",
+        "blockKey": "IG-S04/s5-large-reference/mega16:nightmare:11",
+        "shard": "s5-large-reference",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega16:11",
+        "requestSeed": 11,
+        "variantId": "FS",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "FS",
+        "arm": "FS",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FS",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s5-large-reference/mega16:nightmare:12/FS",
+        "blockKey": "IG-S04/s5-large-reference/mega16:nightmare:12",
+        "shard": "s5-large-reference",
+        "order": 2,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega16:12",
+        "requestSeed": 12,
+        "variantId": "FS",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "FS",
+        "arm": "FS",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FS",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s5-large-reference/mega16:nightmare:12/FU",
+        "blockKey": "IG-S04/s5-large-reference/mega16:nightmare:12",
+        "shard": "s5-large-reference",
+        "order": 3,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega16:12",
+        "requestSeed": 12,
+        "variantId": "FU",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "FU",
+        "arm": "FU",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FU",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s5-large-reference/samurai:nightmare:11/FU",
+        "blockKey": "IG-S04/s5-large-reference/samurai:nightmare:11",
+        "shard": "s5-large-reference",
+        "order": 4,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "samurai:11",
+        "requestSeed": 11,
+        "variantId": "FU",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "FU",
+        "arm": "FU",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FU",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s5-large-reference/samurai:nightmare:11/FS",
+        "blockKey": "IG-S04/s5-large-reference/samurai:nightmare:11",
+        "shard": "s5-large-reference",
+        "order": 5,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "samurai:11",
+        "requestSeed": 11,
+        "variantId": "FS",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "FS",
+        "arm": "FS",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FS",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FS",
+        "blockKey": "IG-S04/s5-large-reference/samurai:nightmare:12",
+        "shard": "s5-large-reference",
+        "order": 6,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "samurai:12",
+        "requestSeed": 12,
+        "variantId": "FS",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "FS",
+        "arm": "FS",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FS",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FU",
+        "blockKey": "IG-S04/s5-large-reference/samurai:nightmare:12",
+        "shard": "s5-large-reference",
+        "order": 7,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "samurai:12",
+        "requestSeed": 12,
+        "variantId": "FU",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "FU",
+        "arm": "FU",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "FU",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+        "blockKey": "IG-S04/s6-large-s2-control/mega16:nightmare:11",
+        "shard": "s6-large-s2-control",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "mega16:11",
+        "requestSeed": 11,
+        "variantId": "F0",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "F0",
+        "arm": "F0",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F0",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0",
+        "blockKey": "IG-S04/s6-large-s2-control/mega16:nightmare:12",
+        "shard": "s6-large-s2-control",
+        "order": 1,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "mega16:12",
+        "requestSeed": 12,
+        "variantId": "F0",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "F0",
+        "arm": "F0",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F0",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+        "blockKey": "IG-S04/s6-large-s2-control/samurai:nightmare:11",
+        "shard": "s6-large-s2-control",
+        "order": 2,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": "samurai:11",
+        "requestSeed": 11,
+        "variantId": "F0",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "F0",
+        "arm": "F0",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 11,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F0",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      },
+      {
+        "key": "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0",
+        "blockKey": "IG-S04/s6-large-s2-control/samurai:nightmare:12",
+        "shard": "s6-large-s2-control",
+        "order": 3,
+        "seedIndex": 1,
+        "pairId": null,
+        "gridCluster": "samurai:12",
+        "requestSeed": 12,
+        "variantId": "F0",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "F0",
+        "arm": "F0",
+        "solverMode": "reference",
+        "executor": "frontier-trial",
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 12,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "trial": {
+          "mode": "F0",
+          "sample": 1,
+          "attempt": 1
+        },
+        "estimateMs": 62000,
+        "guardScope": "sample"
+      }
+    ],
+    "manifestHash": "f197c9cab708af392e23942709d088fb2acc6e852b6252955afdb6e4a0d15dcf"
+  },
+  "attemptKeys": [
+    "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+    "IG-S04/s4-large-floors/samurai:nightmare:11/FM",
+    "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+    "IG-S04/s4-large-floors/samurai:nightmare:12/FC"
+  ],
+  "runKeys": [
+    "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+    "IG-S04/s4-large-floors/samurai:nightmare:11/FM",
+    "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+    "IG-S04/s4-large-floors/samurai:nightmare:12/FC"
+  ],
+  "physicalPlan": {
+    "windowMs": 258000,
+    "commands": [
+      {
+        "index": 0,
+        "blockKeys": [
+          "IG-S04/s4-large-floors/samurai:nightmare:11",
+          "IG-S04/s4-large-floors/samurai:nightmare:12"
+        ],
+        "jobKeys": [
+          "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+          "IG-S04/s4-large-floors/samurai:nightmare:11/FM",
+          "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+          "IG-S04/s4-large-floors/samurai:nightmare:12/FC"
+        ],
+        "estimateMs": 248000,
+        "split": false
+      }
+    ],
+    "oversize": [],
+    "hash": "49e71924f93ab4e61370352144b01e3e2994ea6772af7134b3800ca90a1f3f0a"
+  }
+}

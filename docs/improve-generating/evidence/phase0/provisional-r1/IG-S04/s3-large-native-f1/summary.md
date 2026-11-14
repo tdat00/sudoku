@@ -1,0 +1,370 @@
+# IG-S04 / s3-large-native-f1 (provisional-r1, a1)
+
+**PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.**
+
+Evidence status: **provisional (pre-freeze)**. Formal gate: **not-evaluable-pre-freeze**.
+Command status: **complete** (exit 0). Estimate verdict: provisional; judged in the task summary (the pilot measures cost and exact hits per variant; it decides neither S1 nor the bank route).
+
+## Coverage
+
+| planned | completed | censored | errors | unstarted | coverage complete |
+|---|---|---|---|---|---|
+| 6 | 6 | 0 | 0 | 0 | true |
+
+Exclusions: one sample (ordinal 1) per mode on each pilot grid: not a default request and not a qualification; the unmeasured catalogue probe, the independent verifier and the S2 audit are outside every generation time; a censored, budget-stopped or unverified trial proves neither a hit nor a zero rate
+
+## Sources
+
+| item | value |
+|---|---|
+| runtime label (supplied) | 1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc) |
+| runtime fingerprint | 36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a |
+| runtime files | 63 |
+| harness fingerprint | 694eea9bf608f949a057eb7262cd257445429ed1e86bb8e486e39ea539cf6401 |
+| adapters | frontier-hooks |
+| sources stable | true |
+| firewall clean | true |
+
+CPU: process.cpuUsage (user+system of the host process, worker threads included; read once at the host); observed quantum 16 ms. A value below the quantum is unresolved and gives no rate or factor.
+
+## Task details
+
+```json
+{
+  "arms": [
+    {
+      "id": "proposal-only",
+      "kind": "native",
+      "description": "native digLevel sample of the proposal kind at ordinal 1 (fork dig#1.1), native caps and keeper"
+    },
+    {
+      "id": "ordinary-only",
+      "kind": "native",
+      "description": "native digLevel sample of the ordinary (score-targeted) kind at ordinal 1 (fork dig#1.1), native caps"
+    },
+    {
+      "id": "F0",
+      "kind": "frontier",
+      "description": "full ladder (cheap, middle, full floor), S2 off, final parent, no extra filter"
+    },
+    {
+      "id": "F1",
+      "kind": "frontier",
+      "description": "full ladder, S2 on, final parent, no extra filter (the default frontier)"
+    },
+    {
+      "id": "FC",
+      "kind": "frontier",
+      "description": "cheap floor only (basic, locked, subset, wing), S2 on, final parent"
+    },
+    {
+      "id": "FM",
+      "kind": "frontier",
+      "description": "middle floor only (cheap plus fish and the single-digit patterns), S2 on, final parent"
+    },
+    {
+      "id": "FU",
+      "kind": "frontier",
+      "description": "full ladder, S2 on, final parent, then after the fresh uniqueness proof the full canonical floor with uniqueness enabled filters floor-solvable entries"
+    },
+    {
+      "id": "FS",
+      "kind": "frontier",
+      "description": "full ladder, S2 on, the stored immutable snapshot of each entry as its reference parent"
+    }
+  ],
+  "identity": {
+    "pairs": [
+      {
+        "pairId": "mega16:12",
+        "verdict": "identity-ok",
+        "problems": [],
+        "gridHash": "4033d980da910122316cfaae7ec6e6dc01f3f9107b060e4af9f6f5a99fcf9b73",
+        "trials": 3
+      },
+      {
+        "pairId": "samurai:12",
+        "verdict": "identity-ok",
+        "problems": [],
+        "gridHash": "f2273c77cc40ecc12ef60ce9bff3432b5ab32de540ce4f601ddb0a2ee12e31a9",
+        "trials": 3
+      }
+    ],
+    "failed": 0,
+    "ok": 2,
+    "deferred": 0,
+    "complete": true
+  },
+  "trials": [
+    {
+      "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/ordinary-only",
+      "cell": "mega16",
+      "seed": 12,
+      "mode": "ordinary-only",
+      "outcome": "complete",
+      "readyWallMs": 9786.0465,
+      "readyOccupiedWallMs": 9790.8154,
+      "cpuReadyTotalMs": 10109,
+      "coldWallMs": 9881.951200000001,
+      "gridBuildWallMs": 13.152599999999893,
+      "claimedExact": false,
+      "verifiedExact": false,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 2773897,
+        "dfsEntries": 31,
+        "dfsChecks": 30,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 1,
+        "canonicalRatings": 1
+      },
+      "budgetStop": null,
+      "best": {
+        "source": "sample",
+        "quality": 0.5,
+        "exact": false,
+        "uniqueness": "secureUniqueness",
+        "level": "nightmare",
+        "score": 2379,
+        "solved": true,
+        "hardestTechnique": "forcingChain",
+        "entry": null,
+        "clues": 102
+      },
+      "censoredProgress": null
+    },
+    {
+      "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/F1",
+      "cell": "mega16",
+      "seed": 12,
+      "mode": "F1",
+      "outcome": "complete",
+      "readyWallMs": 86.9403999999995,
+      "readyOccupiedWallMs": 89.39320000000043,
+      "cpuReadyTotalMs": 173,
+      "coldWallMs": 180.3739000000005,
+      "gridBuildWallMs": 12.266899999998714,
+      "claimedExact": false,
+      "verifiedExact": false,
+      "counts": {
+        "floorTests": 129,
+        "floorDeductions": 6636,
+        "solverChecks": 41674,
+        "dfsEntries": 1641,
+        "dfsChecks": 1542,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1,
+        "canonicalRatings": 1,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "budgetStop": null,
+      "best": {
+        "source": "fallback",
+        "quality": 6001,
+        "exact": false,
+        "uniqueness": "full-grid",
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true,
+        "hardestTechnique": null,
+        "entry": null,
+        "clues": 256
+      },
+      "censoredProgress": null
+    },
+    {
+      "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/proposal-only",
+      "cell": "mega16",
+      "seed": 12,
+      "mode": "proposal-only",
+      "outcome": "complete",
+      "readyWallMs": 1146.0113999999994,
+      "readyOccupiedWallMs": 1151.7295999999988,
+      "cpuReadyTotalMs": 1359,
+      "coldWallMs": 1238.762999999999,
+      "gridBuildWallMs": 11.817799999998897,
+      "claimedExact": false,
+      "verifiedExact": false,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 389684,
+        "dfsEntries": 36679,
+        "dfsChecks": 36621,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 15,
+        "canonicalRatings": 15
+      },
+      "budgetStop": null,
+      "best": {
+        "source": "sample",
+        "quality": 0.5,
+        "exact": false,
+        "uniqueness": "secureUniqueness",
+        "level": "nightmare",
+        "score": 2204,
+        "solved": true,
+        "hardestTechnique": "forcingChain",
+        "entry": null,
+        "clues": 118
+      },
+      "censoredProgress": null
+    },
+    {
+      "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/ordinary-only",
+      "cell": "samurai",
+      "seed": 12,
+      "mode": "ordinary-only",
+      "outcome": "complete",
+      "readyWallMs": 497.5142999999989,
+      "readyOccupiedWallMs": 502.3328999999994,
+      "cpuReadyTotalMs": 782,
+      "coldWallMs": 590.5867999999991,
+      "gridBuildWallMs": 13.34269999999924,
+      "claimedExact": false,
+      "verifiedExact": false,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 635362,
+        "dfsEntries": 17,
+        "dfsChecks": 16,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 1,
+        "canonicalRatings": 1
+      },
+      "budgetStop": null,
+      "best": {
+        "source": "sample",
+        "quality": 0.5,
+        "exact": false,
+        "uniqueness": "secureUniqueness",
+        "level": "nightmare",
+        "score": 2156,
+        "solved": true,
+        "hardestTechnique": "forcingChain",
+        "entry": null,
+        "clues": 100
+      },
+      "censoredProgress": null
+    },
+    {
+      "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/F1",
+      "cell": "samurai",
+      "seed": 12,
+      "mode": "F1",
+      "outcome": "complete",
+      "readyWallMs": 159.83210000000145,
+      "readyOccupiedWallMs": 164.6747000000014,
+      "cpuReadyTotalMs": 375,
+      "coldWallMs": 252.71870000000126,
+      "gridBuildWallMs": 12.159499999999753,
+      "claimedExact": false,
+      "verifiedExact": false,
+      "counts": {
+        "floorTests": 188,
+        "floorDeductions": 21797,
+        "solverChecks": 193374,
+        "dfsEntries": 955,
+        "dfsChecks": 852,
+        "ladderPasses": 3,
+        "phaseBSolves": 0,
+        "deepenProposals": 0,
+        "verificationSolves": 1,
+        "canonicalRatings": 1,
+        "phaseBTries": 0,
+        "fuFilterSolves": 0
+      },
+      "budgetStop": null,
+      "best": {
+        "source": "fallback",
+        "quality": 6001,
+        "exact": false,
+        "uniqueness": "full-grid",
+        "level": "veryEasy",
+        "score": 0,
+        "solved": true,
+        "hardestTechnique": null,
+        "entry": null,
+        "clues": 369
+      },
+      "censoredProgress": null
+    },
+    {
+      "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/proposal-only",
+      "cell": "samurai",
+      "seed": 12,
+      "mode": "proposal-only",
+      "outcome": "complete",
+      "readyWallMs": 482.9305000000004,
+      "readyOccupiedWallMs": 488.02659999999923,
+      "cpuReadyTotalMs": 781,
+      "coldWallMs": 573.6072999999997,
+      "gridBuildWallMs": 12.488600000000588,
+      "claimedExact": false,
+      "verifiedExact": false,
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 570811,
+        "dfsEntries": 2562,
+        "dfsChecks": 2508,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": 9,
+        "canonicalRatings": 9
+      },
+      "budgetStop": null,
+      "best": {
+        "source": "sample",
+        "quality": 0.5,
+        "exact": false,
+        "uniqueness": "secureUniqueness",
+        "level": "nightmare",
+        "score": 2355,
+        "solved": true,
+        "hardestTechnique": "forcingChain",
+        "entry": null,
+        "clues": 108
+      },
+      "censoredProgress": null
+    }
+  ],
+  "synthetic": null,
+  "reprojection": null,
+  "catalogueProbe": {
+    "wallMs": 102.97149999999999,
+    "cpuMs": 110,
+    "note": "unmeasured: loads the engine once per command so no trial carries the catalogue discovery"
+  },
+  "chain": {
+    "attempts": [
+      "a1"
+    ],
+    "resumed": false,
+    "startedBefore": [],
+    "startedHere": [
+      "IG-S04/s3-large-native-f1/mega16:nightmare:12/ordinary-only",
+      "IG-S04/s3-large-native-f1/mega16:nightmare:12/F1",
+      "IG-S04/s3-large-native-f1/mega16:nightmare:12/proposal-only",
+      "IG-S04/s3-large-native-f1/samurai:nightmare:12/ordinary-only",
+      "IG-S04/s3-large-native-f1/samurai:nightmare:12/F1",
+      "IG-S04/s3-large-native-f1/samurai:nightmare:12/proposal-only"
+    ],
+    "rerunKeys": [],
+    "noRerun": true,
+    "unstartedAfter": []
+  }
+}
+```

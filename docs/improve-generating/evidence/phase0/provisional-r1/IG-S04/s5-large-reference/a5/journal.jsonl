@@ -1,0 +1,2 @@
+{"seq":1,"at":"2026-11-14T19:46:03.521Z","type":"command-start","task":"IG-S04","shard":"s5-large-reference","attemptId":"a5","keys":["IG-S04/s5-large-reference/samurai:nightmare:12/FS","IG-S04/s5-large-reference/samurai:nightmare:12/FU"],"manifestHash":"f197c9cab708af392e23942709d088fb2acc6e852b6252955afdb6e4a0d15dcf","physicalPlanHash":"5df2c2bc74f74cd430c6c0902f436a5eabb9ff4da50f608dbc1a18e14acf2734"}
+{"seq":2,"at":"2026-11-14T19:46:04.112Z","type":"command-end","status":"paused-unstarted","exit":0}

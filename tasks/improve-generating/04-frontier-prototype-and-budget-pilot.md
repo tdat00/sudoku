@@ -179,12 +179,12 @@ for the measurement developer. A poor/zero-hit pilot is evidence, not permission
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start /end | |
-| Developer /model | |
-| Files /source identities | |
-| Verification /evidence | |
-| Machine charged /priority wait | |
-| Findings /author answers | |
-| Orchestrator review /acceptance | |
-| Handoff | |
+| Status | Accepted (pack author: IG-S04 ACCEPT after the six-key completion and one correction round) |
+| Start /end | 2026-11-15 01:46-02:47 (+07:00) first pass (58 of 64 trials at the 12-minute cap); 03:12 author review; 03:15-03:36 six keys and corrections (r2); 03:42 author acceptance; orchestrator commit |
+| Developer /model | claude-sonnet-5.5; 241 model calls, 77,796,100 input tokens (76,779,619 cache reads), 487,671 output tokens, about 1,510 AI credits. Author review gpt-6-astra; orchestrator claude-opus-5.5 |
+| Files /source identities | New under `phase0/`: `sample-budget.cjs`, `frontier-runtime.cjs`, `adapters/frontier-hooks.cjs`, `frontier.cjs`, `ig04-worker.cjs`, `ig04-run.cjs`, `ig04-aggregate.cjs`, `ig04-retest.cjs`, `plans/ig-s04.cjs`, `frontier-test.cjs`; one line each in `worker.cjs` and `run.cjs`; README. All trials and the frozen budget fit ran on harness `694eea9b…`; the corrected harness is `98016f2c…` (the changed branches were exercised by no trial; reuse approved by the author). Reference solver only, no S3 gain assumed |
+| Verification /evidence | `docs/improve-generating/evidence/phase0/provisional-r1/IG-S04/` (`summary-r2.md` current, r1 kept; `variant-manifest-r2.json`, `budgets-r2.json` `f0a0c422…`, `s2-audit-r2.json`, `engine-retest-r2.json`, `pilot-reprojection.json`). Controls and F1 first (mega16/11, samurai/11), reprojection emitted after stage 1. **64/64 trials complete, 0 censored, 0 budget stops, 0 errors, 0 claimed or verified exact hits.** S2 audit: 0 correctness problems. Pure tests 41/41; real-engine retest 15/15 |
+| Machine charged /priority wait | 828.33 s of 1,050 s (720 s allocation + 330 s approved by the orchestrator per the author; 16 commands); priority waits 1,318.5 s, not charged |
+| Findings /author answers | (1) The frontier list is usually empty: refused groups turn out ambiguous under the DFS check (DFS after every genuinely stuck floor test is correct); mega16 and samurai F1 samples end in the fallback; mega12 yields candidates, none exact, with `deepen` dominating. (2) Budgets fitted and frozen for all four cells (e.g. mega16 384 floor tests / 32,768 DFS entries; ladder 3, phase-B solves 12, deepen 16, canonical ratings 64 everywhere); two-grid fits are experimental limits, not tail guarantees. (3) Corrections: phase B admits only the last executed rung's entries; unsupported objectives stop as `unsupported-source`; a contradiction after proved uniqueness is an error; the final-parent omission is a declared prototype restriction, not a theorem; attempted K_F entries are separated from allowed-set solves; coverage header corrected. (4) Zero hits across 64 heterogeneous, correlated trials is not a gate result |
+| Orchestrator review /acceptance | Only harness and evidence folders changed; formats checked |
+| Handoff | IG-S05 (48 min, 2,880 s, including grace, tests, audits and reporting): keep the four cells, eight modes, seeds 101-108 and at most two samples per grid; freeze `budgets-r2.json` in every dimension; pilot-based packing; reference solver, width 1, one grid per mode reused for the two native sample forks, native caps, keeper semantics and first-exact stopping preserved; primary rates charge all ready-interval generation work, grid construction and cleanup, cold costs apart; report the frontier/uniqueness/canonical/deepen funnel and budget-stop shares; post-timing canonical parent classification excluded from hits and never steering generation; never select the fastest zero-hit mode; all-zero rates are reported inconclusive and reviewed before IG-S06 |

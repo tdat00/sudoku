@@ -1,0 +1,22 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S04",
+  "shard": "engine-retest-r2",
+  "round": "provisional-r1",
+  "attemptId": "r2",
+  "status": "complete",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+  "harnessFingerprint": "98016f2c5c6c8a0e6671e0301e26518ab44d30ce15a33711f4222a2ca7a8d847",
+  "timing": {
+    "requestedAt": "2026-11-14T20:32:03.3673168Z",
+    "admittedAt": "2026-11-14T20:35:40.060Z",
+    "endedAt": "2026-11-14T20:35:41.652Z",
+    "occupiedMs": 1592,
+    "chargedGraceMs": 45000,
+    "priorityWaitMs": 216693
+  },
+  "notes": [
+    "unmeasured self-tests after the r2 corrections (15/15 engine cases, pure 41/41 passed); engine-retest-r2.json hash 32d2376ed592f819995675ad8905fb00c2968abb80de9e80881465575c43a649"
+  ]
+}

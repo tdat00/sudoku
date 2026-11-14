@@ -1,0 +1,337 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S04",
+  "shard": "s6-large-s2-control",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 4,
+    "completed": 4,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "one sample (ordinal 1) per mode on each pilot grid: not a default request and not a qualification",
+      "the unmeasured catalogue probe, the independent verifier and the S2 audit are outside every generation time",
+      "a censored, budget-stopped or unverified trial proves neither a hit nor a zero rate"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "694eea9bf608f949a057eb7262cd257445429ed1e86bb8e486e39ea539cf6401",
+    "adapterIds": [
+      "frontier-hooks"
+    ],
+    "adapterHashes": [
+      "424efd29f49f1c93001074a760b1d898acb3f2eee9aaa791477a32ec68b98143"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 92.17640000000006,
+      "changesSeen": 7,
+      "incrementsMs": [
+        15,
+        16,
+        15,
+        16,
+        16,
+        15
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 3890,
+    "processAgeAtHostMs": 545.8033
+  },
+  "pairedRows": [],
+  "arms": {},
+  "estimateVerdict": "provisional; judged in the task summary (the pilot measures cost and exact hits per variant; it decides neither S1 nor the bank route)",
+  "extra": {
+    "arms": [
+      {
+        "id": "proposal-only",
+        "kind": "native",
+        "description": "native digLevel sample of the proposal kind at ordinal 1 (fork dig#1.1), native caps and keeper"
+      },
+      {
+        "id": "ordinary-only",
+        "kind": "native",
+        "description": "native digLevel sample of the ordinary (score-targeted) kind at ordinal 1 (fork dig#1.1), native caps"
+      },
+      {
+        "id": "F0",
+        "kind": "frontier",
+        "description": "full ladder (cheap, middle, full floor), S2 off, final parent, no extra filter"
+      },
+      {
+        "id": "F1",
+        "kind": "frontier",
+        "description": "full ladder, S2 on, final parent, no extra filter (the default frontier)"
+      },
+      {
+        "id": "FC",
+        "kind": "frontier",
+        "description": "cheap floor only (basic, locked, subset, wing), S2 on, final parent"
+      },
+      {
+        "id": "FM",
+        "kind": "frontier",
+        "description": "middle floor only (cheap plus fish and the single-digit patterns), S2 on, final parent"
+      },
+      {
+        "id": "FU",
+        "kind": "frontier",
+        "description": "full ladder, S2 on, final parent, then after the fresh uniqueness proof the full canonical floor with uniqueness enabled filters floor-solvable entries"
+      },
+      {
+        "id": "FS",
+        "kind": "frontier",
+        "description": "full ladder, S2 on, the stored immutable snapshot of each entry as its reference parent"
+      }
+    ],
+    "identity": {
+      "pairs": [
+        {
+          "pairId": "mega16:11",
+          "verdict": "identity-ok",
+          "problems": [],
+          "gridHash": "7a83cf6b10cd6806d3d2f4b70a196eb1ee8a201ca3f778e3687f6a6a804c7b6d",
+          "trials": 1
+        },
+        {
+          "pairId": "mega16:12",
+          "verdict": "identity-ok",
+          "problems": [],
+          "gridHash": "4033d980da910122316cfaae7ec6e6dc01f3f9107b060e4af9f6f5a99fcf9b73",
+          "trials": 1
+        },
+        {
+          "pairId": "samurai:11",
+          "verdict": "identity-ok",
+          "problems": [],
+          "gridHash": "dce29b64a0cd5ba1b8ea95afede9dca99411196477bd26ea65b34e7dd4708a6c",
+          "trials": 1
+        },
+        {
+          "pairId": "samurai:12",
+          "verdict": "identity-ok",
+          "problems": [],
+          "gridHash": "f2273c77cc40ecc12ef60ce9bff3432b5ab32de540ce4f601ddb0a2ee12e31a9",
+          "trials": 1
+        }
+      ],
+      "failed": 0,
+      "ok": 4,
+      "deferred": 0,
+      "complete": true
+    },
+    "trials": [
+      {
+        "key": "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+        "cell": "mega16",
+        "seed": 11,
+        "mode": "F0",
+        "outcome": "complete",
+        "readyWallMs": 291.99390000000017,
+        "readyOccupiedWallMs": 295.3559,
+        "cpuReadyTotalMs": 484,
+        "coldWallMs": 391.9017000000001,
+        "gridBuildWallMs": 13.42610000000002,
+        "claimedExact": false,
+        "verifiedExact": false,
+        "counts": {
+          "floorTests": 137,
+          "floorDeductions": 9049,
+          "solverChecks": 78048,
+          "dfsEntries": 10463,
+          "dfsChecks": 10352,
+          "ladderPasses": 3,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1,
+          "canonicalRatings": 1,
+          "phaseBTries": 0,
+          "fuFilterSolves": 0
+        },
+        "budgetStop": null,
+        "best": {
+          "source": "fallback",
+          "quality": 6001,
+          "exact": false,
+          "uniqueness": "full-grid",
+          "level": "veryEasy",
+          "score": 0,
+          "solved": true,
+          "hardestTechnique": null,
+          "entry": null,
+          "clues": 256
+        },
+        "censoredProgress": null
+      },
+      {
+        "key": "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0",
+        "cell": "mega16",
+        "seed": 12,
+        "mode": "F0",
+        "outcome": "complete",
+        "readyWallMs": 88.49000000000001,
+        "readyOccupiedWallMs": 90.87700000000018,
+        "cpuReadyTotalMs": 172,
+        "coldWallMs": 185.19539999999984,
+        "gridBuildWallMs": 12.481899999999996,
+        "claimedExact": false,
+        "verifiedExact": false,
+        "counts": {
+          "floorTests": 129,
+          "floorDeductions": 8984,
+          "solverChecks": 44022,
+          "dfsEntries": 1641,
+          "dfsChecks": 1542,
+          "ladderPasses": 3,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1,
+          "canonicalRatings": 1,
+          "phaseBTries": 0,
+          "fuFilterSolves": 0
+        },
+        "budgetStop": null,
+        "best": {
+          "source": "fallback",
+          "quality": 6001,
+          "exact": false,
+          "uniqueness": "full-grid",
+          "level": "veryEasy",
+          "score": 0,
+          "solved": true,
+          "hardestTechnique": null,
+          "entry": null,
+          "clues": 256
+        },
+        "censoredProgress": null
+      },
+      {
+        "key": "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+        "cell": "samurai",
+        "seed": 11,
+        "mode": "F0",
+        "outcome": "complete",
+        "readyWallMs": 134.25919999999974,
+        "readyOccupiedWallMs": 139.9302,
+        "cpuReadyTotalMs": 361,
+        "coldWallMs": 235.75729999999976,
+        "gridBuildWallMs": 15.05230000000006,
+        "claimedExact": false,
+        "verifiedExact": false,
+        "counts": {
+          "floorTests": 188,
+          "floorDeductions": 28168,
+          "solverChecks": 140796,
+          "dfsEntries": 438,
+          "dfsChecks": 327,
+          "ladderPasses": 3,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1,
+          "canonicalRatings": 1,
+          "phaseBTries": 0,
+          "fuFilterSolves": 0
+        },
+        "budgetStop": null,
+        "best": {
+          "source": "fallback",
+          "quality": 6001,
+          "exact": false,
+          "uniqueness": "full-grid",
+          "level": "veryEasy",
+          "score": 0,
+          "solved": true,
+          "hardestTechnique": null,
+          "entry": null,
+          "clues": 369
+        },
+        "censoredProgress": null
+      },
+      {
+        "key": "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0",
+        "cell": "samurai",
+        "seed": 12,
+        "mode": "F0",
+        "outcome": "complete",
+        "readyWallMs": 183.56719999999996,
+        "readyOccupiedWallMs": 188.69219999999996,
+        "cpuReadyTotalMs": 360,
+        "coldWallMs": 274.5277000000001,
+        "gridBuildWallMs": 12.85590000000002,
+        "claimedExact": false,
+        "verifiedExact": false,
+        "counts": {
+          "floorTests": 188,
+          "floorDeductions": 27613,
+          "solverChecks": 229291,
+          "dfsEntries": 955,
+          "dfsChecks": 852,
+          "ladderPasses": 3,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1,
+          "canonicalRatings": 1,
+          "phaseBTries": 0,
+          "fuFilterSolves": 0
+        },
+        "budgetStop": null,
+        "best": {
+          "source": "fallback",
+          "quality": 6001,
+          "exact": false,
+          "uniqueness": "full-grid",
+          "level": "veryEasy",
+          "score": 0,
+          "solved": true,
+          "hardestTechnique": null,
+          "entry": null,
+          "clues": 369
+        },
+        "censoredProgress": null
+      }
+    ],
+    "synthetic": null,
+    "reprojection": null,
+    "catalogueProbe": {
+      "wallMs": 105.56540000000007,
+      "cpuMs": 110,
+      "note": "unmeasured: loads the engine once per command so no trial carries the catalogue discovery"
+    },
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+        "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0",
+        "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+        "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": []
+    }
+  },
+  "notes": []
+}

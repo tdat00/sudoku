@@ -1,0 +1,404 @@
+{
+  "schema": "ig-s04-engine-retest/1",
+  "task": "IG-S04",
+  "round": "provisional-r1",
+  "revision": "r2",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "note": "unmeasured self-tests after the r2 corrections; no trial ran, nothing was timed, the patched/plain parity run is not repeated (hooks and adapter unchanged)",
+  "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+  "harnessFingerprint": "98016f2c5c6c8a0e6671e0301e26518ab44d30ce15a33711f4222a2ca7a8d847",
+  "ok": true,
+  "passed": 15,
+  "total": 15,
+  "pure": "41/41 passed",
+  "engineWallMs": 1063,
+  "results": [
+    {
+      "id": "engine.hooks-counters",
+      "group": "engine",
+      "ok": true,
+      "title": "the patched engine counts solves, deductions, logical checks and DFS work",
+      "ms": 9,
+      "detail": {
+        "applied": 41,
+        "solved": true,
+        "checks": 41,
+        "dfs": {
+          "logicalSolves": 0,
+          "deductions": 0,
+          "floorDeductions": 0,
+          "solverChecks": 0,
+          "dfsCalls": 1,
+          "dfsEntries": 1,
+          "dfsChecks": 0
+        }
+      }
+    },
+    {
+      "id": "engine.s2-rederivation",
+      "group": "engine",
+      "ok": true,
+      "title": "S2 re-derives removed cells; the ordinal equals an independent full solve",
+      "ms": 1,
+      "detail": {
+        "tried": 1,
+        "ordinal": 41,
+        "fullSteps": 43,
+        "fullStatus": "solved"
+      }
+    },
+    {
+      "id": "engine.s2-wrong-value",
+      "group": "engine",
+      "ok": true,
+      "title": "an S2 session with a wrong expected value stops with an unsound deduction",
+      "ms": 0,
+      "detail": {
+        "info": {
+          "cell": 2,
+          "value": 8,
+          "expected": 1,
+          "ordinal": 17
+        }
+      }
+    },
+    {
+      "id": "engine.no-uniqueness-in-phase-a",
+      "group": "engine",
+      "ok": true,
+      "title": "a uniqueness-assuming finder is excluded when uniqueness is not assumed",
+      "ms": 1,
+      "detail": {
+        "cheap": 15,
+        "effective": 14
+      }
+    },
+    {
+      "id": "engine.trial-FC",
+      "group": "engine",
+      "ok": true,
+      "title": "FC (one cheap pass, S2) on classic9: counts, final parent, audit, restored state",
+      "ms": 20,
+      "detail": {
+        "audit": {
+          "accepted": 27,
+          "rederived": 25,
+          "audited": 3,
+          "disagreements": 0,
+          "ordinalMatches": [
+            true,
+            true,
+            true
+          ]
+        },
+        "exact": false,
+        "level": "veryEasy",
+        "score": 0,
+        "counts": {
+          "floorTests": 41,
+          "floorDeductions": 898,
+          "solverChecks": 4443,
+          "dfsEntries": 87,
+          "dfsChecks": 59,
+          "ladderPasses": 1,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1,
+          "canonicalRatings": 1,
+          "phaseBTries": 0,
+          "fuFilterSolves": 0
+        },
+        "entries": 0
+      }
+    },
+    {
+      "id": "engine.trial-F1",
+      "group": "engine",
+      "ok": true,
+      "title": "F1 on classic9 (K_F 1): complete, consistent, audited",
+      "ms": 8,
+      "detail": {
+        "audit": {
+          "accepted": 27,
+          "rederived": 25,
+          "audited": 3,
+          "disagreements": 0,
+          "ordinalMatches": [
+            true,
+            true,
+            true
+          ]
+        },
+        "exact": false,
+        "level": "veryEasy",
+        "score": 0,
+        "counts": {
+          "floorTests": 41,
+          "floorDeductions": 898,
+          "solverChecks": 4443,
+          "dfsEntries": 87,
+          "dfsChecks": 59,
+          "ladderPasses": 3,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1,
+          "canonicalRatings": 1,
+          "phaseBTries": 0,
+          "fuFilterSolves": 0
+        },
+        "entries": 0
+      }
+    },
+    {
+      "id": "engine.trial-F0",
+      "group": "engine",
+      "ok": true,
+      "title": "F0 on classic9 (K_F 1): complete, consistent, audited",
+      "ms": 5,
+      "detail": {
+        "audit": {
+          "accepted": 27,
+          "rederived": 0,
+          "audited": 0,
+          "disagreements": 0,
+          "ordinalMatches": []
+        },
+        "exact": false,
+        "level": "veryEasy",
+        "score": 0,
+        "counts": {
+          "floorTests": 41,
+          "floorDeductions": 1067,
+          "solverChecks": 4612,
+          "dfsEntries": 87,
+          "dfsChecks": 59,
+          "ladderPasses": 3,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1,
+          "canonicalRatings": 1,
+          "phaseBTries": 0,
+          "fuFilterSolves": 0
+        },
+        "entries": 0
+      }
+    },
+    {
+      "id": "engine.trial-FM",
+      "group": "engine",
+      "ok": true,
+      "title": "FM on classic9 (K_F 1): complete, consistent, audited",
+      "ms": 11,
+      "detail": {
+        "audit": {
+          "accepted": 27,
+          "rederived": 25,
+          "audited": 3,
+          "disagreements": 0,
+          "ordinalMatches": [
+            true,
+            true,
+            true
+          ]
+        },
+        "exact": false,
+        "level": "veryEasy",
+        "score": 0,
+        "counts": {
+          "floorTests": 41,
+          "floorDeductions": 902,
+          "solverChecks": 5951,
+          "dfsEntries": 87,
+          "dfsChecks": 59,
+          "ladderPasses": 1,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1,
+          "canonicalRatings": 1,
+          "phaseBTries": 0,
+          "fuFilterSolves": 0
+        },
+        "entries": 0
+      }
+    },
+    {
+      "id": "engine.trial-FU",
+      "group": "engine",
+      "ok": true,
+      "title": "FU on classic9 (K_F 1): complete, consistent, audited",
+      "ms": 6,
+      "detail": {
+        "audit": {
+          "accepted": 27,
+          "rederived": 25,
+          "audited": 3,
+          "disagreements": 0,
+          "ordinalMatches": [
+            true,
+            true,
+            true
+          ]
+        },
+        "exact": false,
+        "level": "veryEasy",
+        "score": 0,
+        "counts": {
+          "floorTests": 41,
+          "floorDeductions": 898,
+          "solverChecks": 4443,
+          "dfsEntries": 87,
+          "dfsChecks": 59,
+          "ladderPasses": 3,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1,
+          "canonicalRatings": 1,
+          "phaseBTries": 0,
+          "fuFilterSolves": 0
+        },
+        "entries": 0
+      }
+    },
+    {
+      "id": "engine.trial-FS",
+      "group": "engine",
+      "ok": true,
+      "title": "FS on classic9 (K_F 1): complete, consistent, audited",
+      "ms": 5,
+      "detail": {
+        "audit": {
+          "accepted": 27,
+          "rederived": 25,
+          "audited": 3,
+          "disagreements": 0,
+          "ordinalMatches": [
+            true,
+            true,
+            true
+          ]
+        },
+        "exact": false,
+        "level": "veryEasy",
+        "score": 0,
+        "counts": {
+          "floorTests": 41,
+          "floorDeductions": 898,
+          "solverChecks": 4443,
+          "dfsEntries": 87,
+          "dfsChecks": 59,
+          "ladderPasses": 3,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1,
+          "canonicalRatings": 1,
+          "phaseBTries": 0,
+          "fuFilterSolves": 0
+        },
+        "entries": 0
+      }
+    },
+    {
+      "id": "engine.native-proposal-only",
+      "group": "engine",
+      "ok": true,
+      "title": "proposal-only on classic9: the native sample with its native caps, counted",
+      "ms": 12,
+      "detail": {
+        "exact": false,
+        "level": "easy",
+        "score": 49,
+        "counts": {
+          "floorTests": null,
+          "floorDeductions": null,
+          "solverChecks": 1914,
+          "dfsEntries": 22,
+          "dfsChecks": 6,
+          "ladderPasses": null,
+          "phaseBSolves": null,
+          "deepenProposals": null,
+          "verificationSolves": 1,
+          "canonicalRatings": 1
+        },
+        "entries": null
+      }
+    },
+    {
+      "id": "engine.native-ordinary-only",
+      "group": "engine",
+      "ok": true,
+      "title": "ordinary-only on classic9: the native sample with its native caps, counted",
+      "ms": 65,
+      "detail": {
+        "exact": false,
+        "level": "easy",
+        "score": 49,
+        "counts": {
+          "floorTests": null,
+          "floorDeductions": null,
+          "solverChecks": 28404,
+          "dfsEntries": 1,
+          "dfsChecks": 0,
+          "ladderPasses": null,
+          "phaseBSolves": null,
+          "deepenProposals": null,
+          "verificationSolves": 1,
+          "canonicalRatings": 1
+        },
+        "entries": null
+      }
+    },
+    {
+      "id": "engine.phaseB-coverage",
+      "group": "engine",
+      "ok": true,
+      "title": "phase B, FU filter, FS snapshot and deepen on real classic9 grids: consistent, independently checked",
+      "ms": 758,
+      "detail": {
+        "seeds": 60,
+        "trials": 180,
+        "entries": 3,
+        "phaseBSolves": 3,
+        "fuFilterSolves": 1,
+        "fuFiltered": 0,
+        "snapshotChecks": 1,
+        "deepenRuns": 0,
+        "deepenCommitted": 0,
+        "exact": 0,
+        "shallow": 0,
+        "ambiguousAtReference": 0,
+        "kept": 3,
+        "coverage": "some paths never ran on these grids"
+      }
+    },
+    {
+      "id": "engine.budget-stops",
+      "group": "engine",
+      "ok": true,
+      "title": "a tiny limit per dimension stops explicitly and restores the hooks",
+      "ms": 9,
+      "detail": {
+        "stoppedIn": {
+          "canonicalRatings": "init",
+          "floorTests": "phaseA",
+          "floorDeductions": "phaseA",
+          "solverChecks": "phaseA",
+          "dfsChecks": "phaseA",
+          "dfsEntries": "phaseA",
+          "ladderPasses": "phaseA"
+        },
+        "phaseBChecked": false
+      }
+    },
+    {
+      "id": "engine.suite",
+      "group": "engine",
+      "ok": true,
+      "title": "the engine suite finished",
+      "ms": 910,
+      "detail": {
+        "cases": 14
+      }
+    }
+  ],
+  "hash": "32d2376ed592f819995675ad8905fb00c2968abb80de9e80881465575c43a649"
+}

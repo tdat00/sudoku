@@ -1,0 +1,830 @@
+{
+  "schema": "ig-s04-reprojection/1",
+  "task": "IG-S04",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "provisional (pre-freeze): pilot figures on seeds 11 and 12, one sample per mode; they decide neither S1 nor the bank route, enable no cell and are not a gate result",
+  "kind": "projection, not measurement",
+  "emittedAfter": "s1-large-controls (mega16/11 and samurai/11: the two native controls and F1), before any other real trial",
+  "stage": {
+    "planned": 6,
+    "started": 6,
+    "completed": 6,
+    "censored": 0,
+    "budgetStops": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "commandOccupiedMs": 12856,
+    "commandChargedMs": 57856,
+    "trialMachineMs": 10361,
+    "trials": [
+      {
+        "key": "IG-S04/s1-large-controls/mega16:nightmare:11/proposal-only",
+        "cell": "mega16",
+        "seed": 11,
+        "mode": "proposal-only",
+        "outcome": "complete",
+        "readyOccupiedWallMs": 670.5771,
+        "readyWallMs": 667.7075,
+        "coldWallMs": 763.0945999999999,
+        "cpuReadyTotalMs": 922,
+        "gridBuildWallMs": 18.227899999999863,
+        "machineMs": 937.4065,
+        "claimedExact": false,
+        "verifiedExact": false,
+        "counts": {
+          "floorTests": null,
+          "floorDeductions": null,
+          "solverChecks": 293434,
+          "dfsEntries": 7811,
+          "dfsChecks": 7757,
+          "ladderPasses": null,
+          "phaseBSolves": null,
+          "deepenProposals": null,
+          "verificationSolves": 5
+        },
+        "censoredAt": null
+      },
+      {
+        "key": "IG-S04/s1-large-controls/mega16:nightmare:11/ordinary-only",
+        "cell": "mega16",
+        "seed": 11,
+        "mode": "ordinary-only",
+        "outcome": "complete",
+        "readyOccupiedWallMs": 7260.5573,
+        "readyWallMs": 7255.5843,
+        "coldWallMs": 7348.392100000001,
+        "cpuReadyTotalMs": 7469,
+        "gridBuildWallMs": 12.200000000000273,
+        "machineMs": 7532.349900000001,
+        "claimedExact": false,
+        "verifiedExact": false,
+        "counts": {
+          "floorTests": null,
+          "floorDeductions": null,
+          "solverChecks": 2484231,
+          "dfsEntries": 32,
+          "dfsChecks": 31,
+          "ladderPasses": null,
+          "phaseBSolves": null,
+          "deepenProposals": null,
+          "verificationSolves": 1
+        },
+        "censoredAt": null
+      },
+      {
+        "key": "IG-S04/s1-large-controls/mega16:nightmare:11/F1",
+        "cell": "mega16",
+        "seed": 11,
+        "mode": "F1",
+        "outcome": "complete",
+        "readyOccupiedWallMs": 238.19900000000052,
+        "readyWallMs": 235.95920000000115,
+        "coldWallMs": 326.8744000000006,
+        "cpuReadyTotalMs": 515,
+        "gridBuildWallMs": 11.772799999998824,
+        "machineMs": 595.5923000000003,
+        "claimedExact": false,
+        "verifiedExact": false,
+        "counts": {
+          "floorTests": 137,
+          "floorDeductions": 7125,
+          "solverChecks": 75532,
+          "dfsEntries": 10463,
+          "dfsChecks": 10352,
+          "ladderPasses": 3,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1
+        },
+        "censoredAt": null
+      },
+      {
+        "key": "IG-S04/s1-large-controls/samurai:nightmare:11/proposal-only",
+        "cell": "samurai",
+        "seed": 11,
+        "mode": "proposal-only",
+        "outcome": "complete",
+        "readyOccupiedWallMs": 89.46579999999994,
+        "readyWallMs": 84.94629999999961,
+        "coldWallMs": 175.4434000000001,
+        "cpuReadyTotalMs": 187,
+        "gridBuildWallMs": 12.87250000000131,
+        "machineMs": 285.65720000000147,
+        "claimedExact": false,
+        "verifiedExact": false,
+        "counts": {
+          "floorTests": null,
+          "floorDeductions": null,
+          "solverChecks": 42377,
+          "dfsEntries": 111,
+          "dfsChecks": 56,
+          "ladderPasses": null,
+          "phaseBSolves": null,
+          "deepenProposals": null,
+          "verificationSolves": 1
+        },
+        "censoredAt": null
+      },
+      {
+        "key": "IG-S04/s1-large-controls/samurai:nightmare:11/ordinary-only",
+        "cell": "samurai",
+        "seed": 11,
+        "mode": "ordinary-only",
+        "outcome": "complete",
+        "readyOccupiedWallMs": 332.9346000000005,
+        "readyWallMs": 327.7420999999995,
+        "coldWallMs": 418.02239999999983,
+        "cpuReadyTotalMs": 546,
+        "gridBuildWallMs": 11.98739999999998,
+        "machineMs": 532.8559000000005,
+        "claimedExact": false,
+        "verifiedExact": false,
+        "counts": {
+          "floorTests": null,
+          "floorDeductions": null,
+          "solverChecks": 254819,
+          "dfsEntries": 12,
+          "dfsChecks": 11,
+          "ladderPasses": null,
+          "phaseBSolves": null,
+          "deepenProposals": null,
+          "verificationSolves": 1
+        },
+        "censoredAt": null
+      },
+      {
+        "key": "IG-S04/s1-large-controls/samurai:nightmare:11/F1",
+        "cell": "samurai",
+        "seed": 11,
+        "mode": "F1",
+        "outcome": "complete",
+        "readyOccupiedWallMs": 122.77979999999843,
+        "readyWallMs": 118.01789999999892,
+        "coldWallMs": 208.8779999999988,
+        "cpuReadyTotalMs": 297,
+        "gridBuildWallMs": 15.381700000001729,
+        "machineMs": 477.1869999999981,
+        "claimedExact": false,
+        "verifiedExact": false,
+        "counts": {
+          "floorTests": 188,
+          "floorDeductions": 22084,
+          "solverChecks": 134712,
+          "dfsEntries": 438,
+          "dfsChecks": 327,
+          "ladderPasses": 3,
+          "phaseBSolves": 0,
+          "deepenProposals": 0,
+          "verificationSolves": 1
+        },
+        "censoredAt": null
+      }
+    ]
+  },
+  "censoredWork": [],
+  "allocation": {
+    "taskAllocationMs": 720000,
+    "chargedBeforeThisCommandMs": 48182,
+    "chargedWithThisCommandMs": 106038,
+    "remainingMs": 613962,
+    "note": "charged = occupied wrapper time + 45 s quiet-admission grace per command; priority waits are not charged"
+  },
+  "remainingPopulation": {
+    "keys": 58,
+    "shards": [
+      {
+        "shard": "s2-small-all",
+        "keys": 32,
+        "observedScenarioMs": null,
+        "observedScenarioPartialMs": 0,
+        "observedScenarioComplete": false,
+        "observedScenarioChargedMs": null,
+        "ceilingScenarioMs": 1696000,
+        "ceilingScenarioChargedMs": 2011000,
+        "rows": [
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:11/proposal-only",
+            "cell": "classic9",
+            "mode": "proposal-only",
+            "estimateMs": 4000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:11/ordinary-only",
+            "cell": "classic9",
+            "mode": "ordinary-only",
+            "estimateMs": 5000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:11/F0",
+            "cell": "classic9",
+            "mode": "F0",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:11/F1",
+            "cell": "classic9",
+            "mode": "F1",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:11/FC",
+            "cell": "classic9",
+            "mode": "FC",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:11/FM",
+            "cell": "classic9",
+            "mode": "FM",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:11/FU",
+            "cell": "classic9",
+            "mode": "FU",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:11/FS",
+            "cell": "classic9",
+            "mode": "FS",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:12/ordinary-only",
+            "cell": "classic9",
+            "mode": "ordinary-only",
+            "estimateMs": 5000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:12/F0",
+            "cell": "classic9",
+            "mode": "F0",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:12/F1",
+            "cell": "classic9",
+            "mode": "F1",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:12/FC",
+            "cell": "classic9",
+            "mode": "FC",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:12/FM",
+            "cell": "classic9",
+            "mode": "FM",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:12/FU",
+            "cell": "classic9",
+            "mode": "FU",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:12/FS",
+            "cell": "classic9",
+            "mode": "FS",
+            "estimateMs": 12000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/classic9:nightmare:12/proposal-only",
+            "cell": "classic9",
+            "mode": "proposal-only",
+            "estimateMs": 4000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:11/proposal-only",
+            "cell": "mega12",
+            "mode": "proposal-only",
+            "estimateMs": 8000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:11/ordinary-only",
+            "cell": "mega12",
+            "mode": "ordinary-only",
+            "estimateMs": 16000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:11/F0",
+            "cell": "mega12",
+            "mode": "F0",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:11/F1",
+            "cell": "mega12",
+            "mode": "F1",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:11/FC",
+            "cell": "mega12",
+            "mode": "FC",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:11/FM",
+            "cell": "mega12",
+            "mode": "FM",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:11/FU",
+            "cell": "mega12",
+            "mode": "FU",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:11/FS",
+            "cell": "mega12",
+            "mode": "FS",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:12/ordinary-only",
+            "cell": "mega12",
+            "mode": "ordinary-only",
+            "estimateMs": 16000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:12/F0",
+            "cell": "mega12",
+            "mode": "F0",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:12/F1",
+            "cell": "mega12",
+            "mode": "F1",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:12/FC",
+            "cell": "mega12",
+            "mode": "FC",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:12/FM",
+            "cell": "mega12",
+            "mode": "FM",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:12/FU",
+            "cell": "mega12",
+            "mode": "FU",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:12/FS",
+            "cell": "mega12",
+            "mode": "FS",
+            "estimateMs": 34000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          },
+          {
+            "key": "IG-S04/s2-small-all/mega12:nightmare:12/proposal-only",
+            "cell": "mega12",
+            "mode": "proposal-only",
+            "estimateMs": 8000,
+            "projectedMs": null,
+            "basis": "unmeasured: no observation of this cell and mode"
+          }
+        ]
+      },
+      {
+        "shard": "s3-large-native-f1",
+        "keys": 6,
+        "observedScenarioMs": 10361,
+        "observedScenarioPartialMs": 10361,
+        "observedScenarioComplete": true,
+        "observedScenarioChargedMs": 55361,
+        "ceilingScenarioMs": 318000,
+        "ceilingScenarioChargedMs": 408000,
+        "rows": [
+          {
+            "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/ordinary-only",
+            "cell": "mega16",
+            "mode": "ordinary-only",
+            "estimateMs": 32000,
+            "projectedMs": 7532.3,
+            "basis": "observed: same cell and mode (1 trial)"
+          },
+          {
+            "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/F1",
+            "cell": "mega16",
+            "mode": "F1",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "observed: same cell and mode (1 trial)"
+          },
+          {
+            "key": "IG-S04/s3-large-native-f1/mega16:nightmare:12/proposal-only",
+            "cell": "mega16",
+            "mode": "proposal-only",
+            "estimateMs": 14000,
+            "projectedMs": 937.4,
+            "basis": "observed: same cell and mode (1 trial)"
+          },
+          {
+            "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/ordinary-only",
+            "cell": "samurai",
+            "mode": "ordinary-only",
+            "estimateMs": 32000,
+            "projectedMs": 532.9,
+            "basis": "observed: same cell and mode (1 trial)"
+          },
+          {
+            "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/F1",
+            "cell": "samurai",
+            "mode": "F1",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "observed: same cell and mode (1 trial)"
+          },
+          {
+            "key": "IG-S04/s3-large-native-f1/samurai:nightmare:12/proposal-only",
+            "cell": "samurai",
+            "mode": "proposal-only",
+            "estimateMs": 14000,
+            "projectedMs": 285.7,
+            "basis": "observed: same cell and mode (1 trial)"
+          }
+        ]
+      },
+      {
+        "shard": "s4-large-floors",
+        "keys": 8,
+        "observedScenarioMs": 4291,
+        "observedScenarioPartialMs": 4291,
+        "observedScenarioComplete": true,
+        "observedScenarioChargedMs": 49291,
+        "ceilingScenarioMs": 424000,
+        "ceilingScenarioChargedMs": 514000,
+        "rows": [
+          {
+            "key": "IG-S04/s4-large-floors/mega16:nightmare:11/FC",
+            "cell": "mega16",
+            "mode": "FC",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s4-large-floors/mega16:nightmare:11/FM",
+            "cell": "mega16",
+            "mode": "FM",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s4-large-floors/mega16:nightmare:12/FM",
+            "cell": "mega16",
+            "mode": "FM",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s4-large-floors/mega16:nightmare:12/FC",
+            "cell": "mega16",
+            "mode": "FC",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s4-large-floors/samurai:nightmare:11/FC",
+            "cell": "samurai",
+            "mode": "FC",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s4-large-floors/samurai:nightmare:11/FM",
+            "cell": "samurai",
+            "mode": "FM",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s4-large-floors/samurai:nightmare:12/FM",
+            "cell": "samurai",
+            "mode": "FM",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s4-large-floors/samurai:nightmare:12/FC",
+            "cell": "samurai",
+            "mode": "FC",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          }
+        ]
+      },
+      {
+        "shard": "s5-large-reference",
+        "keys": 8,
+        "observedScenarioMs": 4291,
+        "observedScenarioPartialMs": 4291,
+        "observedScenarioComplete": true,
+        "observedScenarioChargedMs": 49291,
+        "ceilingScenarioMs": 424000,
+        "ceilingScenarioChargedMs": 514000,
+        "rows": [
+          {
+            "key": "IG-S04/s5-large-reference/mega16:nightmare:11/FU",
+            "cell": "mega16",
+            "mode": "FU",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s5-large-reference/mega16:nightmare:11/FS",
+            "cell": "mega16",
+            "mode": "FS",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s5-large-reference/mega16:nightmare:12/FS",
+            "cell": "mega16",
+            "mode": "FS",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s5-large-reference/mega16:nightmare:12/FU",
+            "cell": "mega16",
+            "mode": "FU",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s5-large-reference/samurai:nightmare:11/FU",
+            "cell": "samurai",
+            "mode": "FU",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s5-large-reference/samurai:nightmare:11/FS",
+            "cell": "samurai",
+            "mode": "FS",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FS",
+            "cell": "samurai",
+            "mode": "FS",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s5-large-reference/samurai:nightmare:12/FU",
+            "cell": "samurai",
+            "mode": "FU",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          }
+        ]
+      },
+      {
+        "shard": "s6-large-s2-control",
+        "keys": 4,
+        "observedScenarioMs": 2146,
+        "observedScenarioPartialMs": 2146,
+        "observedScenarioComplete": true,
+        "observedScenarioChargedMs": 47146,
+        "ceilingScenarioMs": 212000,
+        "ceilingScenarioChargedMs": 257000,
+        "rows": [
+          {
+            "key": "IG-S04/s6-large-s2-control/mega16:nightmare:11/F0",
+            "cell": "mega16",
+            "mode": "F0",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s6-large-s2-control/mega16:nightmare:12/F0",
+            "cell": "mega16",
+            "mode": "F0",
+            "estimateMs": 62000,
+            "projectedMs": 595.6,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s6-large-s2-control/samurai:nightmare:11/F0",
+            "cell": "samurai",
+            "mode": "F0",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          },
+          {
+            "key": "IG-S04/s6-large-s2-control/samurai:nightmare:12/F0",
+            "cell": "samurai",
+            "mode": "F0",
+            "estimateMs": 62000,
+            "projectedMs": 477.2,
+            "basis": "assumption: the F1 cost of the cell stands for this unmeasured frontier variant"
+          }
+        ]
+      }
+    ],
+    "observedScenarioPartialMs": 21089,
+    "observedScenarioComplete": false,
+    "ceilingScenarioChargedMs": 3704000,
+    "verdict": "the guard-ceiling scenario does NOT fit the remaining allocation: the pilot is staged and possibly partial, unreached keys stay unstarted/inconclusive (never zero-cost or censored observations)"
+  },
+  "igS05PrimaryTier": {
+    "population": "8 grid seeds per cell x proposal-only, ordinary-only and F1 x at most 2 samples per mode and grid, per cell",
+    "cells": {
+      "classic9": {
+        "modes": {
+          "proposal-only": {
+            "perSampleMs": null,
+            "basis": "unmeasured: no observation of this cell and mode",
+            "upperBoundMs": null,
+            "guardCeilingMs": 848000
+          },
+          "ordinary-only": {
+            "perSampleMs": null,
+            "basis": "unmeasured: no observation of this cell and mode",
+            "upperBoundMs": null,
+            "guardCeilingMs": 848000
+          },
+          "F1": {
+            "perSampleMs": null,
+            "basis": "unmeasured: no observation of this cell and mode",
+            "upperBoundMs": null,
+            "guardCeilingMs": 848000
+          }
+        },
+        "observedScenarioMs": null,
+        "guardCeilingMs": 2544000
+      },
+      "mega12": {
+        "modes": {
+          "proposal-only": {
+            "perSampleMs": null,
+            "basis": "unmeasured: no observation of this cell and mode",
+            "upperBoundMs": null,
+            "guardCeilingMs": 848000
+          },
+          "ordinary-only": {
+            "perSampleMs": null,
+            "basis": "unmeasured: no observation of this cell and mode",
+            "upperBoundMs": null,
+            "guardCeilingMs": 848000
+          },
+          "F1": {
+            "perSampleMs": null,
+            "basis": "unmeasured: no observation of this cell and mode",
+            "upperBoundMs": null,
+            "guardCeilingMs": 848000
+          }
+        },
+        "observedScenarioMs": null,
+        "guardCeilingMs": 2544000
+      },
+      "mega16": {
+        "modes": {
+          "proposal-only": {
+            "perSampleMs": 937.4,
+            "basis": "observed: same cell and mode (1 trial)",
+            "upperBoundMs": 14999,
+            "guardCeilingMs": 848000
+          },
+          "ordinary-only": {
+            "perSampleMs": 7532.3,
+            "basis": "observed: same cell and mode (1 trial)",
+            "upperBoundMs": 120518,
+            "guardCeilingMs": 848000
+          },
+          "F1": {
+            "perSampleMs": 595.6,
+            "basis": "observed: same cell and mode (1 trial)",
+            "upperBoundMs": 9529,
+            "guardCeilingMs": 848000
+          }
+        },
+        "observedScenarioMs": 145046,
+        "guardCeilingMs": 2544000
+      },
+      "samurai": {
+        "modes": {
+          "proposal-only": {
+            "perSampleMs": 285.7,
+            "basis": "observed: same cell and mode (1 trial)",
+            "upperBoundMs": 4571,
+            "guardCeilingMs": 848000
+          },
+          "ordinary-only": {
+            "perSampleMs": 532.9,
+            "basis": "observed: same cell and mode (1 trial)",
+            "upperBoundMs": 8526,
+            "guardCeilingMs": 848000
+          },
+          "F1": {
+            "perSampleMs": 477.2,
+            "basis": "observed: same cell and mode (1 trial)",
+            "upperBoundMs": 7635,
+            "guardCeilingMs": 848000
+          }
+        },
+        "observedScenarioMs": 20732,
+        "guardCeilingMs": 2544000
+      }
+    },
+    "note": "per-sample costs are the machine time of one pilot trial (cold start to cleanup, verifier and audit); a null cost is an unmeasured cell and mode, reported as such, never as zero"
+  },
+  "admission": "the dispatcher admits a trial only when its planning estimate fits the command window and the remaining task allocation; budgets and algorithm are never enlarged or shortened to make work fit",
+  "hash": "26faa27043aebf22606111284167e6eaa2a6e328b351695d331a70765684ac0b"
+}
