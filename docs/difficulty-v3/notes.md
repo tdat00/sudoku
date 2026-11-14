@@ -825,3 +825,35 @@ IR30) moot. How S-AV01 ends (report section 7): hidden by the existing rule if N
 qualifies but CV6 still exceeds its assertion, MS18c returns to the plan author before MS18d's final timing runs and the first
 branch of S-OD1's fallback (b) is decided once, on the final-source data (one base value in milliseconds for
 `BUDGET_MS.normal`, never above 10,000 ms, with the test and both guides changed in that step); until then 700 ms stands.
+
+## MS06c1: nullable target transport, no policy activation
+
+Preparation for MS06c2, which draws the one target per sample and activates every candidate-comparing stage at once. **No target is
+drawn, no policy is called, the first-allowed sign pass is untouched (`greater-than.js` is not edited), and no puzzle changes:** the
+520 regression hashes are the same before and after. What it adds, all internal and all `null` for a normal request:
+
+- **Typed objectives.** `SG.digger.removalObjective` returns `{ kind: 'refused', reason }`, `{ kind: 'bounded', score, tierUsed }`
+  (`tierUsed` from the same restricted solve, vacuous for Very Easy and an empty tier, never `requiredOf`) or `{ kind: 'proposal',
+  priority }`. The guided pass ranks by the old number (`score` or `priority`), first of an equal value wins, refusals keep their
+  reason, `trace.keep` shows the number. 29 recorded passes (bounded and proposal, `characterize.cjs`, captured on HEAD `1d657b1`
+  before the edit) have the same givens, statistics, oracle calls, dig log and events (`digger-target`).
+- **Keeper views.** `SG.digger.keeperView(keeper, target)`: the shared keeper through its prototype (live `best`, `distance`,
+  `unsound`, model-aware `closer`), with an `offer` that gives every candidate the scalar target captured for its own sample or search.
+  `createKeeper` stores it, `keptPuzzle` hands it on, `LevelPuzzle.target`, `GeneratedPuzzle.target`, `PuzzleResult.target`,
+  `toWire` / `fromWire` (an old wire or cache entry gives `null`, nothing is inferred from the score), the `tune` events (finite target
+  only) and the soak row carry it. The local search takes `attemptBest.target`. Tests exercise two suspended contexts with targets 812.5 and
+  915 on one keeper, an earlier structure-only winner (`null`), zero and `null`, the wire, worker, cache and soak routes.
+- **Preparation-phase assertions** (replaced by MS06c2's active-policy tests, transport tests kept): plain generation draws no `target`
+  stream and the registered `signs` strategy gets no `target` option.
+- **SA1's binding items from MS06b.** IR31: the floor case of `acceptReveal` (target 705: 730 to 699 refused, 730 to 701 allowed),
+  confirmed by mutation (removing `next.score >= spec.min` fails it alone). IR32: `design.md` 6.8 names the real guard, no clue added to a
+  model with signs. IR33: the case is named for what it asserts. IR36: the Vietnamese guide links `design.md` 6.8. IR35: the hell2 band is
+  `SG.difficulty.bandOf('hell2')`.
+
+Evidence (`docs/difficulty-v3/evidence/MS06c1/`): GG check-only, 104 shards, all 520 puzzles unchanged (`hash-check.txt`); GR: the five
+wires differ from HEAD by one field each, `target` (saved undefined, fresh `null`), published (`wire-check-before-write.txt`,
+`wire-write-and-check.txt`), the 14 analyses match unchanged (`analysis-check.txt`); the compound driver is MS05r6a's with per-item
+projections (`generator/tests/artifacts/difficulty-v3/MS06c1/`). Final quick sets on the final tree, one CI group per locked command:
+Generator 3,323 of 3,323 (3,290 + 33 new) in four groups (shard process-seconds sum 650.7 s; S-AV08 was 652.9 s), fingerprint `d9e03806...`; Player 1,683 of 1,683, `3873abea...`;
+`generator-suites.sh check` passes (3,323 of 3,323 in exactly one shard); no suite or shard was added. No S-OD4 item is new; the
+inherited list is unchanged (S-AV01-S-AV15, S-AV18-S-AV20, MS05r6a-COV01; S-AV16 and S-AV17 withdrawn).

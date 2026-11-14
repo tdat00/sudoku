@@ -46,7 +46,9 @@
  *   attempts and their local searches) / capHits ({ shallow, ratings, proposals }: local searches ended by
  *   each) / work (the per-attempt work as the engine reports it, a failed request's partial work included) /
  *   workCheck ({ status: 'ok' | 'mismatch' | 'unavailable', reason }: the conservation check, never 'ok' for
- *   missing work), target (null: not exposed yet), chainLengths / nishioDepths (of the final path),
+ *   missing work), target (the target of the selected result: a finite number, zero included, or null, which
+ *   is what a result without one has; never a draw or a value computed by the soak), chainLengths /
+ *   nishioDepths (of the final path),
  *   puzzleHash (identity of the puzzle) and pathCheck ({ status: 'not-run' | 'ok' | 'mismatch' | 'error',
  *   error }).
  */
@@ -384,11 +386,12 @@
 
   /**
    * One ledger row. input: { variant, requested, index, tag, pipelineSeed, puzzle (null for a failed request:
-   * { achieved, exact, rating, model }), unique (false: a second solution was found; the derived verdict
-   * needs uniqueness), error, band: { min, max }, tierWeights, vacuous, puzzleHash, generationMs, ratingCalls
-   * (the independent count of the full ratings), work (the per-attempt work, a failed request's partial work
-   * included; absent: unavailable) and workReason (why it is absent) }. The reference and path fields start
-   * as not run; the derived verdict, the hits that follow from it and the work are there from the start.
+   * { achieved, exact, rating, model, target? }), unique (false: a second solution was found; the derived
+   * verdict needs uniqueness), error, band: { min, max }, tierWeights, vacuous, puzzleHash, generationMs,
+   * ratingCalls (the independent count of the full ratings), work (the per-attempt work, a failed request's
+   * partial work included; absent: unavailable) and workReason (why it is absent) }. The reference and path
+   * fields start as not run; the derived verdict, the hits that follow from it and the work are there from the
+   * start.
    */
   function rowOf(input) {
     var puzzle = input.puzzle || null;
@@ -449,7 +452,7 @@
       workCheck: conservationOf(input.work, calls, input.workReason),
       chainLengths: [],
       nishioDepths: [],
-      target: null,
+      target: puzzle && finite(puzzle.target) ? puzzle.target : null,
       puzzleHash: input.puzzleHash === undefined ? null : input.puzzleHash,
       pathCheck: { status: 'not-run', error: null }
     };

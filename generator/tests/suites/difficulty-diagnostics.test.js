@@ -189,7 +189,8 @@
       achieved: opts.achieved === undefined ? level : opts.achieved,
       exact: opts.exact !== false,
       rating: ratingOf(opts.score, opts.solved, opts.shallow ? FLOOR_ONLY : undefined),
-      model: model9
+      model: model9,
+      target: opts.target
     };
     return F.rowOf({ variant: 'classic9', requested: level, index: index,
       tag: 'classic9:' + level + ':' + index, pipelineSeed: null, puzzle: puzzle, error: opts.error,
@@ -268,6 +269,20 @@
         expect(row.pathCheck).toEqual({ status: 'not-run', error: null });
         expect(row.position.inputs.score).toBe(520);
         expect(row.position.inputs.V).toBe(D.breakdown(row.techniqueCounts, row.empties).empty);
+      });
+
+    it('MS06c1-T01: the target is the one of the selected result: a number, zero or null, never a draw',
+      function () {
+        [[812.5, 812.5], [0, 0], [-3, -3], [null, null], [undefined, null], [NaN, null], ['812', null],
+          [Infinity, null]].forEach(function (pair) {
+          expect([pair[0], rowFor('hard', { score: 520, target: pair[0] }).target]).toEqual([pair[0], pair[1]]);
+        });
+        // a failed request has no result, so no target; the target is no part of the position or the hit
+        expect(rowFor('hard', { error: new Error('lost'), target: 812.5 }).target).toBe(null);
+        var plain = rowFor('hard', { score: 520 });
+        var targeted = rowFor('hard', { score: 520, target: 812.5 });
+        expect(Object.assign({}, targeted, { target: null, index: plain.index, tag: plain.tag,
+          puzzleHash: plain.puzzleHash })).toEqual(plain);
       });
 
     it('derives the verdict from the returned rating on the returned model, not from a reference', function () {
@@ -1562,6 +1577,34 @@
             });
             expect(ledger.summary.checks.workUnavailable).toBe(0);
             expect(ledger.summary.all.work.checks).toEqual({ ok: 2, mismatch: 0, unavailable: 0 });
+          });
+        });
+
+      it('MS06c1-T01: records the target of the selected result on either route, null when it has none',
+        function () {
+          [['classic4', 'veryEasy', 'direct'], ['killer', 'veryEasy', 'pipeline']].forEach(function (cell) {
+            var args = ['--variant=' + cell[0], '--level=' + cell[1], '--count=2', '--from=0',
+              '--seed=20260101', '--no-gate', JSON_ARG];
+            var plain = ledgerOf(runSoak(args));
+            expect(plain.meta.manifest.cells[0].route).toBe(cell[2]);
+            expect(plain.rows.map(function (row) { return row.target; })).toEqual([null, null]);
+            [812.5, 0].forEach(function (value) {
+              var run = runSoak(args, function (sg) {
+                var host = cell[2] === 'direct' ? sg.digger : sg.pipeline;
+                var method = cell[2] === 'direct' ? 'generate' : 'run';
+                var real = host[method];
+                host[method] = function () {
+                  return Object.assign({}, real.apply(this, arguments), { target: value });
+                };
+              });
+              expect([cell[0], run.thrown, run.code]).toEqual([cell[0], null, 0]);
+              var ledger = ledgerOf(run);
+              expect([cell[0], ledger.rows.map(function (row) { return row.target; })])
+                .toEqual([cell[0], [value, value]]);
+              // the soak only reads the value: the same puzzles, nothing drawn or recomputed
+              expect(ledger.rows.map(function (row) { return row.puzzleHash; }))
+                .toEqual(plain.rows.map(function (row) { return row.puzzleHash; }));
+            });
           });
         });
 

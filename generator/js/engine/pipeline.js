@@ -41,6 +41,11 @@
     return x === Infinity ? null : x;
   }
 
+  /** A target as the result and the wire keep it: a finite number (zero included) or null, never a score. */
+  function nullableTarget(value) {
+    return Number.isFinite(value) ? value : null;
+  }
+
   // GenerateConfig: variantId, difficulty (default 'normal'; a level the variant supports), seed (default
   // random; uint32 once normalised), symbolMode (default: the variant's), symmetry (SG.symmetry.KINDS,
   // default 'rotational180'), digOrder (SG.digger.ORDERS, default 'random'), maxAttempts (full grids tried
@@ -117,7 +122,10 @@
   // `config.trace` was), work (internal, not part of any exchange format or option: the counters of each
   // attempt, `GeneratedPuzzle.work` of the digger, with its local searches; owned plain data, a copy on the
   // wire, and absent, never zero, when the result comes from a wire or cache entry written before it
-  // existed).
+  // existed), target (internal, not part of any exchange format: the target of the sample, search or kept
+  // candidate the result comes from, `GeneratedPuzzle.target` of the digger: a finite number, zero included,
+  // or null. No normal caller gives one, so it is null; it crosses the wire, and a wire or cache entry
+  // written before the field decodes as null).
 
   // `emit` is a sink function, an `SG.events` emitter (which decides the verbosity) or null; a sink gets an
   // emitter with verbosity `config.trace`. At 'off' only step start/end, `done` and `error` events are sent.
@@ -252,7 +260,8 @@
       attempts: puzzle.attempts,
       warnings: warnings.concat(puzzle.warnings),
       digLog: puzzle.log,
-      work: puzzle.work
+      work: puzzle.work,
+      target: nullableTarget(puzzle.target)
     };
     em.done({
       requested: cfg.difficulty,
@@ -307,7 +316,8 @@
   // `SG.model.create` needs (`cellUnits` and `peers` are derived and stay behind). Typed arrays are shared,
   // not copied; the clone `postMessage` makes is the copy. `exact` is a strict boolean (a result without it
   // is not exact); the wire version stays 1, because `fromWire` reads an absent flag as false. The internal
-  // `work` crosses as a fresh copy of its counters, and is left out when the result has none.
+  // `work` crosses as a fresh copy of its counters, and is left out when the result has none. `target` always
+  // crosses, a finite number (zero included) or null.
   function toWire(result) {
     const wire = {
       v: WIRE_VERSION,
@@ -321,7 +331,8 @@
       timings: result.timings,
       attempts: result.attempts,
       warnings: result.warnings,
-      digLog: result.digLog
+      digLog: result.digLog,
+      target: nullableTarget(result.target)
     };
     const work = workCopy(result.work);
     if (work !== undefined) wire.work = work;
@@ -336,6 +347,8 @@
   // another wire version. `exact` is true only for a wire that says `exact === true`: an absent or other
   // value (a result cached before the flag existed) is false, never rebuilt from matching level names. `work`
   // is a copy of the wire's, or undefined for a wire without it (or with a malformed one): never zero work.
+  // `target` is the wire's finite number, zero included, and null for an absent or any other value (a wire
+  // from before the field): never a midpoint of the band and never inferred from the score.
   function fromWire(wire) {
     if (wire === null || typeof wire !== 'object' || wire.v !== WIRE_VERSION || !wire.model) {
       throw fail('unexpected', { message: 'unsupported result format' });
@@ -355,7 +368,8 @@
       attempts: wire.attempts,
       warnings: wire.warnings,
       digLog: Array.isArray(wire.digLog) ? wire.digLog : undefined,
-      work: workCopy(wire.work)
+      work: workCopy(wire.work),
+      target: nullableTarget(wire.target)
     };
   }
 

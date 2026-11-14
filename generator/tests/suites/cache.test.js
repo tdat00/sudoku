@@ -514,6 +514,33 @@
       expect(C.deserialize(before).exact).toBe(false);
     });
 
+    it('MS06c1-T01: keeps the target (a number, zero, null) of the result; an entry stored before it is null',
+      function () {
+        const made = P.run(CASES[0], null);
+        expect(made.target).toBe(null);
+        [812.5, 0, null].forEach(function (value) {
+          const data = C.serialize(Object.assign({}, made, { target: value }));
+          expect(data.target).toBe(value);
+          expect(C.deserialize(JSON.parse(JSON.stringify(data))).target).toBe(value);
+          expect(C.deserialize(JSON.stringify(data)).target).toBe(value);
+        });
+        const plain = C.serialize(made);
+        expect(plain.target).toBe(null);
+        expect(C.deserialize(JSON.parse(JSON.stringify(plain))).target).toBe(null);
+        // an entry stored before the field, and a value that is no finite number: no target, never a guess
+        const before = JSON.parse(JSON.stringify(C.serialize(Object.assign({}, made, { target: 812.5 }))));
+        delete before.target;
+        expect(C.deserialize(before).target).toBe(null);
+        ['812', true, {}, []].forEach(function (odd) {
+          const tampered = JSON.parse(JSON.stringify(plain));
+          tampered.target = odd;
+          expect(C.deserialize(tampered).target).toBe(null);
+        });
+        // an infinite number never reaches the cache entry: the wire has made it null
+        const infinite = C.serialize(Object.assign({}, made, { target: Infinity }));
+        expect(infinite.target).toBe(null);
+      });
+
     it('MS05r3-T02: keeps the work of the generation, nested records included; an old entry has none',
       function () {
         const made = P.run({ variantId: 'classic9', difficulty: 'master', seed: 1, trace: 'off',

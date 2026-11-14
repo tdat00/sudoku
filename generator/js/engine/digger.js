@@ -611,15 +611,10 @@
   /** Objective of a removal that leaves a puzzle the techniques below 'nightmare' cannot finish. */
   const STUCK_SCORE = 1e9;
 
-  /** Objective values below zero refuse the removal; the value says why (scores are never negative). */
-  const REFUSED_TECHNIQUES = -1;
-  const REFUSED_TOO_HARD = -2;
-  const REFUSED_AMBIGUOUS = -3;
-
-  function refusalReason(value) {
-    if (value === REFUSED_TECHNIQUES) return 'techniques';
-    return value === REFUSED_TOO_HARD ? 'tooHard' : 'ambiguous';
-  }
+  /** Objective values of a refused removal, by the reason the guided pass records in its log and events. */
+  const REFUSED_TECHNIQUES = Object.freeze({ kind: 'refused', reason: 'techniques' });
+  const REFUSED_TOO_HARD = Object.freeze({ kind: 'refused', reason: 'tooHard' });
+  const REFUSED_AMBIGUOUS = Object.freeze({ kind: 'refused', reason: 'ambiguous' });
 
   // The default number of full-grid attempts depends on the size of the board (difficulty v3, CV6-03 (c2)): a
   // request that meets no required puzzle runs every attempt, and on a large board one attempt costs seconds
@@ -674,15 +669,20 @@
   }
 
   // Stage B objective: how hard is the puzzle after the cells of `group` were removed (cleared in `givens` on
-  // entry, as for the oracles)? Returns a negative `REFUSED_*` value when the removal must be refused, else a
-  // number where more is harder; the guided stage keeps the highest.
+  // entry, as for the oracles)? Returns a typed objective (difficulty v3, R6): `{ kind: 'refused', reason }`
+  // when the removal must be refused ('ambiguous', 'techniques' or 'tooHard'), `{ kind: 'bounded', score,
+  // tierUsed }` for a score-targeted dig, `{ kind: 'proposal', priority }` for a proposal dig. Until the
+  // target policy is activated (MS06c2) the guided stage keeps the highest number, `objectiveValue`.
   // Score-targeted dig (every level): the bounded logical solve with the level's techniques is the oracle
   // (stuck = refused) and the objective at once, namely the score; a score at or above the band's upper bound
-  // is refused, so digging never overshoots the band. Proposal dig (the fast candidates of the top tiers):
-  // the removal must keep the solution unique (DFS); the objective is the score when the techniques below the
-  // chain group finish the puzzle, and above everything when they do not (the more cells they leave open the
-  // better). Uniqueness is proven by the DFS here, so the solver may use the techniques that assume it. The
-  // proposal is rated afterwards and refined into the band when it is above.
+  // is refused, so digging never overshoots the band. `tierUsed` says whether that same restricted solve used
+  // a technique of the level's tier (always true where the tier is vacuous: Very Easy, or an empty tier); it
+  // is not the requiredness of the puzzle and costs no solve. Proposal dig (the fast candidates of the top
+  // tiers): the removal must keep the solution unique (DFS); the priority is the score when the techniques
+  // below the chain group finish the puzzle, and above everything when they do not (the more cells they leave
+  // open the better), a proposal even when the solve finishes. Uniqueness is proven by the DFS here, so the
+  // solver may use the techniques that assume it. The proposal is rated afterwards and refined into the band
+  // when it is above.
   function removalObjective(model, spec, proposal) {
     if (proposal === true) {
       const below = spec.allowedTechniques.filter(function (id) {
@@ -698,8 +698,11 @@
         if (!guardedKeepsUnique(model, givens, solution, group, budget, stats)) return REFUSED_AMBIGUOUS;
         nightmareOptions.budget = budget;
         const report = SG.logicalSolver.solve(model, givens, nightmareOptions);
-        return report.solved ? SG.difficulty.classify(report, model).score
-          : STUCK_SCORE + report.state.unsolvedCount;
+        return {
+          kind: 'proposal',
+          priority: report.solved ? SG.difficulty.classify(report, model).score
+            : STUCK_SCORE + report.state.unsolvedCount
+        };
       };
     }
     const options = {
@@ -708,6 +711,13 @@
       assumeUniqueness: false,
       budget: null
     };
+    const tier = Array.isArray(spec.tierTechniques) ? spec.tierTechniques : [];
+    const vacuousTier = tier.length === 0 || SG.difficulty.levelIndex(spec.level) === 0;
+    function usesTier(report) {
+      if (vacuousTier) return true;
+      const counts = report.techniqueCounts || {};
+      return tier.some(function (id) { return counts[id] > 0; });
+    }
     return function boundedObjective(givens, solution, group, budget, stats) {
       stats.oracleCalls++;
       let used = 0;
@@ -729,8 +739,14 @@
       }
       if (!report.solved) return REFUSED_TECHNIQUES;
       const score = SG.difficulty.classify(report, model).score;
-      return score < spec.max ? score : REFUSED_TOO_HARD;
+      if (!(score < spec.max)) return REFUSED_TOO_HARD;
+      return { kind: 'bounded', score: score, tierUsed: usesTier(report) };
     };
+  }
+
+  /** The number the guided pass ranks by while the target policy is inactive: a score or a priority. */
+  function objectiveValue(objective) {
+    return objective.kind === 'bounded' ? objective.score : objective.priority;
   }
 
   // Stage B, "dig deeper": continues a dug puzzle by always taking the removal that makes it hardest. Each
@@ -795,13 +811,15 @@
         stats.tried++;
         trace.tryGroup(group, 'guided');
         for (i = 0; i < group.length; i++) givens[group[i]] = 0;
-        const value = objective(givens, solution, group, ctx.budget, stats);
+        const objectiveResult = objective(givens, solution, group, ctx.budget, stats);
         for (i = 0; i < group.length; i++) givens[group[i]] = solution[group[i]];
-        if (value < 0) {
+        if (objectiveResult.kind === 'refused') {
           for (i = 0; i < group.length; i++) rejected[group[i]] = 1;
           stats.rejected++;
-          trace.reject(group, refusalReason(value));
+          trace.reject(group, objectiveResult.reason);
         } else {
+          // The legacy ranking: the highest number, the first of an equal one (MS06c2 activates the policy).
+          const value = objectiveValue(objectiveResult);
           if (best === null || value > bestObjective) {
             bestObjective = value;
             best = group;
@@ -1174,6 +1192,11 @@
     return { groups: 0, tried: 0, accepted: 0, rejected: 0, skipped: 0, oracleCalls: 0 };
   }
 
+  /** A target as the transport keeps it: a finite number (zero included) or null, never read from a score. */
+  function nullableTarget(value) {
+    return Number.isFinite(value) ? value : null;
+  }
+
   // Keeps the closest completely rated candidate a run meets besides its dig samples: a state of the downward
   // refinement or of the local search, accepted or not, a position of a variant's tuning, a layout of a
   // variant's structure search. Whoever offers a candidate guarantees that it is a valid puzzle whose clues
@@ -1185,7 +1208,9 @@
   // bug, reported as `digger.unsoundTechnique`). The final choice compares the kept candidate with the
   // samples. `budget` is checked during the counts. "Closest" is `qualityOf` of the candidate's rating for
   // the candidate's own model (`distance` is the quality of the best, 0 once it is exact); an equal quality
-  // keeps the candidate met first.
+  // keeps the candidate met first, whatever its target: the target never takes part in this comparison.
+  // A candidate may carry the `target` of the sample or search that met it (`keeperView`); the kept `best`
+  // stores that value as a scalar copy, null for none, and `keptPuzzle` hands it on.
   function createKeeper(spec, level, budget) {
     const keeper = {
       best: null,
@@ -1195,7 +1220,7 @@
       closer: function (rating, model) {
         return qualityOf(rating, spec, level, model) < keeper.distance;
       },
-      // Offers `{ model, givens, solution, rating, logOf, stats? }`; true when it is kept.
+      // Offers `{ model, givens, solution, rating, logOf, stats?, target? }`; true when it is kept.
       offer: function (candidate) {
         if (!candidate || !candidate.rating) return false;
         const distance = qualityOf(candidate.rating, spec, level, candidate.model);
@@ -1210,13 +1235,32 @@
         for (let c = 0; c < givens.length; c++) if (givens[c] !== 0) clues++;
         keeper.best = {
           model: candidate.model, givens: givens, solution: candidate.solution, clues: clues,
-          rating: candidate.rating, log: candidate.logOf(), stats: candidate.stats || zeroStats()
+          rating: candidate.rating, log: candidate.logOf(), stats: candidate.stats || zeroStats(),
+          target: nullableTarget(candidate.target)
         };
         keeper.distance = distance;
         return true;
       }
     };
     return keeper;
+  }
+
+  // The keeper as one sample or search sees it (difficulty v3, R7): the shared keeper itself, read through
+  // the prototype, so `best`, `distance`, `unsound` and the model-aware `closer` are always live, plus an
+  // `offer` that hands every candidate on with the target this context was started with. The target is a
+  // scalar captured here, never read from a variable that another context could change while this one is
+  // suspended (a cooperative yield). The offer goes to the original keeper with its own receiver: it holds
+  // the only state and the only uniqueness check, and a view keeps none. The candidate offered is copied, not
+  // changed. A structure search (the hook of a variant) is given the original keeper, so its candidates have
+  // no target and are kept with null. No keeper, no view.
+  function keeperView(keeper, target) {
+    if (keeper === null || keeper === undefined) return null;
+    const captured = nullableTarget(target);
+    const view = Object.create(keeper);
+    view.offer = function (candidate) {
+      return keeper.offer(Object.assign({}, candidate, { target: captured }));
+    };
+    return view;
   }
 
   /** A kept candidate in the form of a dig sample (`LevelPuzzle`). */
@@ -1233,7 +1277,8 @@
       exact: isExact(kept.rating, level, kept.model),
       unsound: false,
       stats: kept.stats,
-      log: kept.log
+      log: kept.log,
+      target: nullableTarget(kept.target)
     };
   }
 
@@ -1298,7 +1343,9 @@
   // (`rating.level`), rating, exact (`isExact`: a complete canonical proof whose level is the requested one,
   // so the score lies in the level's band, and that needs a technique of the level's tier), unsound (the
   // technique-bounded dig produced a puzzle that was not unique, so a technique has a bug; the returned
-  // puzzle comes from the DFS fallback and is unique), stats, log (the dig log of this sample) }
+  // puzzle comes from the DFS fallback and is unique), stats, log (the dig log of this sample), target (the
+  // target of the sample or search it comes from: a finite number or null, a copy; no normal caller gives
+  // one yet, so it is null) }
 
   // One attempt at a puzzle of the requested level from a given solution, as three pipeline steps: 'dig' (the
   // dig strategy, default `digStage`, then the safety net `secureUniqueness`), 'rate' (one deferred rating)
@@ -1310,6 +1357,9 @@
   // maxSamples }: the position in the restart loop, goes into the step start events), target (a number or
   // null; given to the strategy as it is, in its resolved options, only when the property is present: an
   // explicit null is not an absent target; no caller supplies one yet and nothing reads it in generation).
+  // The target of the call is captured once, as a scalar (null when absent or not a finite number): the
+  // keeper of the call is a view (`keeperView`) that offers every candidate of the sample with it, the
+  // `LevelPuzzle` carries it and a finite one goes into the `tune` event (`target`).
   // Throws 'difficulty.unknownLevel', 'difficulty.unsupportedLevel', 'digger.invalidSolution',
   // 'digger.invalidOption' or a budget error.
   function digLevel(model, solution, level, rng, options) {
@@ -1337,7 +1387,8 @@
       : SG.difficulty.levelIndex(level) >= GUIDED_FROM_LEVEL;
     const caps = options.caps || null;
     const proposal = options.proposal === true;
-    const keeper = options.keeper || null;
+    const target = nullableTarget(options.target);
+    const keeper = keeperView(options.keeper || null, target);
     const log = [];
     const resolved = {
       spec: spec,
@@ -1426,6 +1477,7 @@
         scoreMin: spec.min,
         scoreMax: spec.max === Infinity ? null : spec.max
       };
+      if (target !== null) band.target = target;
       if (exact) {
         band.hardestTechnique = rating.hardestTechnique;
         band.required = true;
@@ -1451,7 +1503,8 @@
       exact: exact,
       unsound: dug.unsound,
       stats: dug.stats,
-      log: log
+      log: log,
+      target: target
     };
   }
 
@@ -1741,7 +1794,8 @@
 
   // The target policy of difficulty v3 (R6/R7), as pure helpers: they rate nothing, keep no state and draw
   // only the one child stream 'target' of the rng they are given, which advances no parent stream. Generation
-  // does not call them yet (MS06b); only `digLevelSteps` forwards an explicit `options.target` to a strategy.
+  // does not call them yet (MS06b, MS06c1); `digLevelSteps` forwards an explicit `options.target` to a
+  // strategy and, with the keeper views, carries it as data (MS06c1), and nothing draws or reads one.
   // An objective is { kind: 'bounded', score, tierUsed }, { kind: 'proposal', priority } or
   // { kind: 'refused', reason }; two objectives are compared only when both are successful and of the same
   // kind, so a proposal is never read as a score and a refusal never wins. The caller starts a pool with its
@@ -1830,7 +1884,9 @@
   // a search entered in one, null for none), shallowRatings (the ratings after it: what the allowance
   // limits), shallowLimit (the allowance, null for Infinity), capHit (null; 'shallow' when the allowance
   // refused a rating, else the cap of the attempt that ended the search, 'ratings' or 'proposals'; null for
-  // an exact end) } }) }
+  // an exact end) } }), target (the target of the sample, search or kept candidate the returned puzzle comes
+  // from: a finite number or null. No normal caller gives one yet, so it is null; the target of an explicit
+  // `options.target` of `generate`, zero included, comes back as given) }
 
   // Generates a puzzle of the requested difficulty: the outer restart loop. Each attempt draws a fresh full
   // grid and digs up to `digTries` puzzles from it (a dig costs about a millisecond, a grid more, and one dig
@@ -2022,7 +2078,8 @@
         };
         const puzzle = yield* digLevelSteps(attemptBest.model, solution, level, rng.fork('search#' + attempt),
           Object.assign({}, digOptions, {
-            where: where, caps: caps, proposal: false, strategy: searchStrategy(attemptBest)
+            where: where, caps: caps, proposal: false, strategy: searchStrategy(attemptBest),
+            target: attemptBest.target
           }));
         unsound = unsound || puzzle.unsound;
         searched = puzzle;
@@ -2090,7 +2147,8 @@
       warnings: warnings,
       stats: best.stats,
       log: best.log,
-      work: copyWork(work)
+      work: copyWork(work),
+      target: nullableTarget(best.target)
     };
   }
 
@@ -2114,6 +2172,10 @@
     registerStrategy: registerStrategy,
     unregisterStrategy: unregisterStrategy,
     getStrategy: getStrategy,
-    targetPolicy: targetPolicy
+    targetPolicy: targetPolicy,
+    removalObjective: removalObjective,
+    createKeeper: createKeeper,
+    keeperView: keeperView,
+    keptPuzzle: keptPuzzle
   };
 })(typeof self !== 'undefined' ? self : globalThis);

@@ -113,6 +113,7 @@
     expect(a.warnings).toEqual(b.warnings);
     expect(a.model).toEqual(b.model);
     expect(a.work).toEqual(b.work);
+    expect(a.target).toBe(b.target);
     expect(Object.keys(a.timings)).toEqual(Object.keys(b.timings));
   }
 
@@ -699,6 +700,44 @@
         var restored = P.fromWire(structuredClone(P.toWire(made)));
         expectSameResult(restored, made);
       }, SLOW);
+
+    it('MS06c1-T01: the target crosses the wire as a number, zero or null; a wire from before it is null',
+      function () {
+        var made = P.run({ variantId: 'classic4', difficulty: 'veryEasy', seed: 5, trace: 'off' }, null);
+        function wireOf(result) { return structuredClone(P.toWire(result)); }
+        // no normal request has one: the result, its wire and the rebuilt result all say null
+        expect(made.target).toBe(null);
+        expect(wireOf(made).target).toBe(null);
+        expect(P.fromWire(wireOf(made)).target).toBe(null);
+        [812.5, 0, -3, null].forEach(function (value) {
+          var source = Object.assign({}, made, { target: value });
+          var wire = wireOf(source);
+          expect(wire.v).toBe(1);
+          expect(wire.target).toBe(value);
+          expect(P.fromWire(wire).target).toBe(value);
+          // a number is a copy: a later change of the source or of a rebuilt result reaches no other
+          source.target = 5;
+          var back = P.fromWire(wire);
+          back.target = 6;
+          expect(wire.target).toBe(value);
+          expect(P.fromWire(wire).target).toBe(value);
+        });
+        // a result without the field has none, never a midpoint of its band and never its score
+        var bare = Object.assign({}, made);
+        delete bare.target;
+        expect(wireOf(bare).target).toBe(null);
+        // a wire written before the field (a cached entry) and any value that is not a finite number: null
+        var old = wireOf(Object.assign({}, made, { target: 812.5 }));
+        delete old.target;
+        expect(P.fromWire(old).target).toBe(null);
+        [undefined, NaN, Infinity, -Infinity, '812', true, {}, []].forEach(function (odd, k) {
+          expect([k, P.fromWire(Object.assign({}, old, { target: odd })).target]).toEqual([k, null]);
+          expect([k, P.toWire(Object.assign({}, made, { target: odd })).target]).toEqual([k, null]);
+        });
+        var rebuilt = P.fromWire(old);
+        expect(rebuilt.target).not.toBe(rebuilt.rating.score);
+        expectSameResult(rebuilt, made);
+      });
 
     it('MS05b1-T05: a shallow fallback crosses the wire with exact false and its two warnings', function () {
       var made = P.run({ variantId: 'classic9', difficulty: 'nightmare', seed: 42, trace: 'off',

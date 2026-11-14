@@ -205,14 +205,14 @@ Return the inherited/new item list and current source/coverage identities.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (SA1 verdict: accept, no fix round) |
+| Start | 2026-11-14 18:54 (+07:00) |
+| End | 2026-11-14 19:57 developer; 20:00-20:25 SA1 implementation review (`claude-opus-5.5/13-review-of-ms06c1.md`); orchestrator acceptance and commit |
+| Duration | 63 min developer (GG check 567.0 s in two compounds; GR wires 76.0 s, analyses 90.1 s; final quick groups 653.7 s, Player 31.2 s); about 25 min review |
+| Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (SA1 review); claude-opus-5.5 (orchestrator) |
+| Token usage | 225 model calls; 83,960,390 input tokens (83,340,996 cache reads); 202,090 output tokens |
+| AI credits | about 1,190 (developer) |
+| Verification | Developer: nullable target fields, keeper views, optional tune-event transport, pipeline/wire/soak reporting and typed objectives with a behaviour-equivalent ranking adapter in `digger.js`/`pipeline.js`; tests 3,290 -> 3,323 (`digger-target` 28 -> 55, `pipeline` +2, `cache` +1, `difficulty-diagnostics` +2, `worker` +1); 29 guided passes with HEAD's digests (captured before the first engine edit); mutation checks (IR31 floor; a leaked current target). GG check-only: 104 shards, 520 keys, all 520 puzzles unchanged. GR: wires G09-G13 differ only by `target` (absent -> `null`), published and re-checked; analyses G01-G14 unchanged. Final quick runs on the final tree, one group per locked command: Generator 3,323/3,323 (`shared-small` 1,464, 59.9 s; `own-suites` 1,638, 165.4 s; `pipeline` 152, 287.4 s; `replay-player` 69, 141.0 s; shard sum 650.7 s; `d9e03806…`), Player 1,683/1,683 (`3873abea…`); `generator-suites.sh check` exit 0. SA1 recomputed the GG ledgers against the sources and fixture (520/520), both fingerprints and the wire diff. Orchestrator: locked focused re-run `--suite=digger-target,digger,worker,cache,difficulty-diagnostics,replay,steps` 663/663 (89.0 s); CI check 3,323 of 3,323 in exactly one shard |
+| Acceptance | MS06c1's criteria met: no draw and no finite target from a normal caller; typed objectives rank exactly as the old numbers; one target captured per sample or search by the keeper view; every hop keeps zero and maps a non-finite value to `null`; `greater-than.js` untouched and the `signs` spy (T03) kept (CV6-05: transported, not consumed). MS06b's binding items IR31, IR32, IR33, IR36 and optional IR35 applied. Evidence: `docs/difficulty-v3/evidence/MS06c1/`; scripts `generator/tests/artifacts/difficulty-v3/MS06c1/` |
+| Issues & resolutions | Accepted deviations (SA1: within scope): (1) `removalObjective`, `createKeeper`, `keeperView`, `keptPuzzle` exported on `SG.digger` as internal seams for the tests and MS06c2; (2) `tune` events omit a `null` target, per the `events.js` schema; (3) the search continuation passes `target: attemptBest.target`, an explicit `null` today that nothing reads (MS06c2's end state); (4) the focused command ran before the docs were final; the same suites are green in the final groups. SA1 findings: IR39 Minor (three kept tests expect an explicit `generate` target back; MS06c2's per-sample draw would override it -> SA2 settles in MS06c2's brief before dispatch); IR40-IR44 Info (HEAD digests only as test constants; design 13.13 API list; nested keeper views; doc statements false at activation, 13.9 to MS06c2's file list; the `GeneratedPuzzle.target` comment) |
+| Handoff | MS06c2: IR39 decision from SA2; IR41-IR44; IR34/IR38 (strict transport tests, override the caller's target with each sample's draw); CC02 (short Greater-Than Expert seed for T01; `digger-target` shard 1.15 s, bound 30 s). Items unchanged; S-AV08 standing cost 650.7 s |

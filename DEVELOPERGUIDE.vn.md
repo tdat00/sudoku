@@ -271,7 +271,13 @@ không có mục tiêu; bằng nhau là sai), còn `acceptReveal(current, next, 
 định từng lần trả lại số cho sẵn của bước tinh chỉnh đi xuống; bên gọi cho biết trên mô hình của từng ứng viên rằng
 điểm chấm có đúng mức hay không. Trong đường chạy thật chỉ có một dòng của chính sách này, ở `SG.digger.digLevel`:
 `options.target` tường minh (một số hoặc `null`) đến chiến lược đào đúng như đã cho, còn khi không có thì vẫn
-không có; các chiến lược dựng sẵn, kể cả `signs`, bỏ qua nó.
+không có; các chiến lược dựng sẵn, kể cả `signs`, bỏ qua nó. Mục tiêu còn được mang đi như dữ liệu mà chưa có gì đọc: các kết
+quả đánh giá của nhóm có hướng dẫn đã có kiểu (`refused`, `bounded` kèm `tierUsed`, `proposal`) nhưng nhóm vẫn xếp hạng theo
+con số cũ, và mỗi lần đào thử cũng như mỗi lần tìm kiếm đưa các ứng viên của mình cho bộ giữ chung qua một khung nhìn
+(`SG.digger.keeperView`) gán cho từng ứng viên mục tiêu của chính ngữ cảnh đó; ứng viên được giữ, `SG.digger.generate`,
+`PuzzleResult.target`, `toWire` / `fromWire` (dữ liệu truyền hoặc mục cache cũ cho `null`), các sự kiện `tune` (chỉ khi mục
+tiêu hữu hạn) và dòng của soak đều mang nó, là một số hữu hạn hoặc `null`, và mọi yêu cầu thông thường đều là `null` vì chưa
+có gì rút nó ra ([design.md](generator/design.md) §6.8).
 
 Giao diện không bao giờ làm thuật toán chậm đi để tạo hoạt ảnh, và phần phát lại cũng không đọc các sự kiện.
 Song song với các sự kiện, bộ đào ghi một **nhật ký đào** (dig log) gọn nhẹ cho lần đào thử đã trở thành đề
@@ -623,7 +629,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (51 suite, 3.290 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (51 suite, 3.323 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (59 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -634,7 +640,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 51 suite, 3.290 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 51 suite, 3.323 bài —
 35 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -683,7 +689,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 59 suite, trong đó 51 suite nhanh (3.290 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 59 suite, trong đó 51 suite nhanh (3.323 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ

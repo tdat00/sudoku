@@ -386,14 +386,16 @@ function main() {
 
   /**
    * One puzzle of a combination, in the shape the checks below read, with the work of its generation (`work`,
-   * undefined when the result has none). The same tag gives the same puzzle.
+   * undefined when the result has none) and the target of the selected result (`target`, as the result has it:
+   * null for none, never a draw of the soak). The same tag gives the same puzzle.
    */
   function generateOne(combo, tag) {
     if (!combo.viaPipeline) {
       const p = SG.digger.generate(combo.model, combo.level, base.fork(tag), {});
       return {
         model: p.model, givens: p.givens, solution: p.solution, clues: p.clues, achieved: p.achieved,
-        exact: p.exact === true, rating: p.rating, samples: p.samples, warnings: p.warnings, work: p.work
+        exact: p.exact === true, rating: p.rating, samples: p.samples, warnings: p.warnings, work: p.work,
+        target: p.target
       };
     }
     const r = SG.pipeline.run(
@@ -402,7 +404,8 @@ function main() {
     for (let c = 0; c < r.givens.length; c++) if (r.givens[c] !== 0) clues++;
     return {
       model: r.model, givens: r.givens, solution: r.solution, clues: clues, achieved: r.rating.level,
-      exact: r.exact === true, rating: r.rating, samples: r.attempts, warnings: r.warnings, work: r.work
+      exact: r.exact === true, rating: r.rating, samples: r.attempts, warnings: r.warnings, work: r.work,
+      target: r.target
     };
   }
 
@@ -589,7 +592,7 @@ function main() {
         const row = diagnostics.rowOf({
           variant: combo.id, requested: combo.level, index: i, tag: tag,
           pipelineSeed: combo.viaPipeline ? seedFor(tag) : null,
-          puzzle: { achieved: p.achieved, exact: p.exact, rating: p.rating, model: model },
+          puzzle: { achieved: p.achieved, exact: p.exact, rating: p.rating, model: model, target: p.target },
           unique: solutions === undefined ? undefined : solutions === 1,
           band: { min: spec.min, max: spec.max },
           tierWeights: spec.tierTechniques.map((id) => D.WEIGHTS[id]),

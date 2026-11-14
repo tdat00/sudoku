@@ -283,7 +283,13 @@ of a local search (the lower quality, then the nearer score, or the higher with 
 `acceptReveal(current, next, spec, target, currentIsExact, nextIsExact)` decides each reveal of the downward
 refinement; its caller says on each model whether a rating is exact. The one line of the policy in the production path
 is in `SG.digger.digLevel`: an explicit `options.target` (a number or `null`) reaches the dig strategy as it is, and an
-absent one stays absent; the built-in strategies, `signs` included, ignore it
+absent one stays absent; the built-in strategies, `signs` included, ignore it. The target is also carried as data that
+nothing reads yet: the objectives of the guided pass are typed (`refused`, `bounded` with `tierUsed`, `proposal`) but the
+pass still ranks by the old number, and every sample and search offers its candidates to the shared keeper through a
+keeper view (`SG.digger.keeperView`) that gives each one the target of its own context; the kept candidate,
+`SG.digger.generate`, `PuzzleResult.target`, `toWire` / `fromWire` (an old wire or cache entry gives `null`), the `tune`
+events (a finite target only) and the soak row carry it, a finite number or `null`, which every normal request has
+because nothing draws one
 ([design.md](generator/design.md) §6.8).
 
 The UI never slows the algorithm down to animate it, and its replay does not read the events. Next to them
@@ -868,7 +874,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (51 suites, 3,290 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (51 suites, 3,323 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (59 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -880,7 +886,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 51 suites,
-3,290 tests — the 35 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+3,323 tests — the 35 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -930,7 +936,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 59 suites, 51 of them quick (3,290 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 59 suites, 51 of them quick (3,323 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,

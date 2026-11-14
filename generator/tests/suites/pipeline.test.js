@@ -870,7 +870,20 @@
     it('has exactly the fields of the contract', function () {
       var out = run({ difficulty: 'easy', seed: 4 });
       expect(Object.keys(out.result).sort()).toEqual(['attempts', 'config', 'digLog', 'exact', 'givens',
-        'model', 'rating', 'seed', 'solution', 'timings', 'warnings', 'work']);
+        'model', 'rating', 'seed', 'solution', 'target', 'timings', 'warnings', 'work']);
+    });
+
+    it('MS06c1: the target of the result is null: no normal request draws one, and no event shows one', function () {
+      ['easy', 'normal'].forEach(function (level) {
+        var out = run({ difficulty: level, seed: 4 }, 'full');
+        expect(out.result.target).toBe(null);
+        expect(Object.prototype.hasOwnProperty.call(out.result, 'target')).toBe(true);
+        var verdicts = out.events.filter(function (e) { return /^tune\.(hit|miss|shallow)$/.test(e.i18nKey); });
+        expect(verdicts.length).toBeGreaterThan(0);
+        verdicts.forEach(function (e) {
+          expect(Object.prototype.hasOwnProperty.call(e.i18nArgs, 'target')).toBe(false);
+        });
+      });
     });
 
     it('holds a valid puzzle: invariants I1, I2, I3 and I6, and the model and rating', function () {
@@ -2388,6 +2401,22 @@
           expect(Object.prototype.hasOwnProperty.call(v.events[0].i18nArgs, 'target')).toBe(false);
         });
       });
+
+      it('MS06c1: a verdict carries the finite target of an explicit call, zero included; null and none leave ' +
+        'it out', function () {
+          [[REQUIRED, 'tune.hit'], [SHALLOW, 'tune.shallow'], [EASY, 'tune.miss']].forEach(function (c) {
+            [[812.5, true], [0, true], [null, false], [undefined, false], [Infinity, false]].forEach(function (t) {
+              var v = verdictOf(c[0], t[0] === undefined ? undefined : { target: t[0] });
+              expect(v.events).toHaveLength(1);
+              expect(v.events[0].i18nKey).toBe(c[1]);
+              var args = v.events[0].i18nArgs;
+              expect([c[1], t[0], Object.prototype.hasOwnProperty.call(args, 'target')])
+                .toEqual([c[1], t[0], t[1]]);
+              if (t[1]) expect(args.target).toBe(t[0]);
+              expect(E.eventProblems(v.events[0])).toEqual([]);
+            });
+          });
+        });
 
       it('MS05b1-T04: Very Easy stays vacuous: a real puzzle is a hit with required true', function () {
         var out = run({ difficulty: 'veryEasy', seed: 3 }, 'summary');
