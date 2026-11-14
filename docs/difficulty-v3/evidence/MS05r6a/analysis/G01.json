@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "c8601561a02f300cbf3fe333a5e63b84de44bc3feb96e6f410dfe1ff48d61e25",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+  "dirty": true,
+  "generatedAt": "2026-11-14T00:58:19.415Z",
+  "argv": ["--ids=G01","--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\analysis\\G01.json"],
+  "records": [
+    {"key":"G01","request":{"variantId":"classic9","difficulty":"expert","seed":"3275974478"},"value":{"id":"G01","request":{"variantId":"classic9","difficulty":"expert","seed":"3275974478"},"today":{"steps":21,"missing":10},"counts":{"compact":7,"details":33},"board":{"cells":81,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,7,"D/Dig",14,23,23,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,21,"nakedSingle","—","—","—"],[4,23,"G/Choose",45,551,507,"simpleColouring","Y","R1C2","—"],[5,26,"G/Choose",51,568,17,"simpleColouring","—","—","—"],[6,31,"X/Adjust",51,992,424,"xyzWing","—","—","N"],[7,31,"F/Final",51,992,0,"xyzWing","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,28,30,31,33,34,36,37,38,40,41,42,43,44,551,557,567,568,568,568,568,568,992,992],"alive":null,"folds":[],"jumps":[{"step":4,"from":44,"to":551,"before":{"P":1,"W":43,"R":1.364858,"V":41.445783,"E":43,"level":"veryEasy"},"after":{"P":360,"W":768.25,"R":148.321617,"V":42.352941,"E":45,"level":"hard"},"choice":{"chosen":551,"others":9,"nulls":0,"max":45,"at":42,"rated":15,"refused":5},"singles":[{"op":"remove","cell":"R1C2","score":550},{"op":"remove","cell":"R9C8","score":44}],"cause":"single-culprit","frame":"R1C2","firstUse":{"k":32,"n":47,"technique":"simpleColouring"},"key":"technique.simpleColouring.step","effects":"remove candidate 3@R5C2, 3@R8C3"}]},"ms":141,"overrides":[]}
+  ]
+}

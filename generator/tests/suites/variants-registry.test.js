@@ -96,6 +96,53 @@
       }));
       expect(SG.variants.get('fake-variant').digStrategy).toBe('signs');
     });
+
+    it('MS05r5p-T01: cellCountOf is digits squared unless the definition declares its cells', function () {
+      expect(SG.variants.cellCountOf('classic9')).toBe(81);
+      expect(SG.variants.cellCountOf(SG.variants.get('classic4'))).toBe(16);
+      var built = 0;
+      var fake = fakeDef({ digits: 12, build: function () { built++; return build('classic4'); } });
+      expect(SG.variants.cellCountOf(fake)).toBe(144);
+      expect(SG.variants.cellCountOf(fakeDef({ digits: 9, cellCount: 189 }))).toBe(189);
+      SG.variants.register(fakeDef({ digits: 9, cellCount: 288, build: fake.build }));
+      expect(SG.variants.cellCountOf('fake-variant')).toBe(288);
+      expect(built).toBe(0);
+      expectCode(function () { SG.variants.cellCountOf('nope'); }, 'variant.unknown');
+      expectCode(function () { SG.variants.cellCountOf(fakeDef({ digits: undefined })); }, 'variant.invalidDef');
+    });
+
+    it('MS05r5p-T01: a declared cellCount must be a whole number of at least digits', function () {
+      [0, 8, 9.5, -81, '144', NaN, null].forEach(function (cellCount) {
+        expectCode(function () {
+          SG.variants.register(fakeDef({ digits: 9, cellCount: cellCount }));
+        }, 'variant.invalidDef');
+      });
+      expect(SG.variants.has('fake-variant')).toBe(false);
+      SG.variants.register(fakeDef({ digits: 9, cellCount: 9 }));
+      expect(SG.variants.get('fake-variant').cellCount).toBe(9);
+    });
+  });
+
+  describe('variants: the size of every board (MS05r5p)', function () {
+    it('MS05r5p-T01: the declared size is the cell count of the model each variant builds', function () {
+      var cells = {};
+      SG.variants.list().forEach(function (def) {
+        var model = def.build(SG.variants.defaultOptions(def), SG.rng.create(1).fork('model'));
+        expect([def.id, SG.variants.cellCountOf(def)]).toEqual([def.id, model.cellCount]);
+        cells[def.id] = model.cellCount;
+      });
+      // The multi-grids are not square: their digits are 9 and their boards 144, 189, 288 and 369 cells.
+      expect([cells.butterfly, cells.flower, cells.sohei, cells.samurai]).toEqual([144, 189, 288, 369]);
+      ['butterfly', 'flower', 'sohei', 'samurai'].forEach(function (id) {
+        expect(SG.variants.get(id).digits).toBe(9);
+        expect(SG.variants.get(id).cellCount).toBe(cells[id]);
+      });
+      expect([cells.classic4, cells.classic6, cells.classic9, cells.mega12, cells.mega16])
+        .toEqual([16, 36, 81, 144, 256]);
+      ['classic4', 'classic6', 'classic9', 'mega12', 'mega16', 'killer', 'jigsaw9'].forEach(function (id) {
+        expect(SG.variants.get(id).cellCount).toBeUndefined();
+      });
+    });
   });
 
   describe('variants: classic4, classic6, classic9', function () {

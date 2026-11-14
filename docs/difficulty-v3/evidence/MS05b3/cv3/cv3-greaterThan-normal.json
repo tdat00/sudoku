@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "c3035e8032685c3ed4f5d92e0ffc0535062d460e6e6c45a908fa404ce4950bfa",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["variants"],"filter":"> variants: greaterThan > CV3 normal:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 11987.3,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 11808.5,
+    "tests": [
+      {"suite":"variants","name":"CV3 normal: puzzles at the supported level","fullName":"variants > variants: greaterThan > CV3 normal: puzzles at the supported level","status":"pass","ms":11807.515,"reason":"","error":null,"ordinal":142}
+    ],
+    "suites": [
+      {"name":"variants","total":1,"passed":1,"failed":0,"skipped":0,"ms":11808.425}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=variants","--filter=> variants: greaterThan > CV3 normal:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05b3\\cv3\\cv3-greaterThan-normal.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

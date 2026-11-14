@@ -1,0 +1,12 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   harness: 25 passed  (2.01 s)
+ok   help: 30 passed  (3.69 s)
+ok   ui-contract: 67 passed  (366 ms)
+
+Suites: 3
+Tests:  122 total, 122 passed, 0 failed, 0 skipped
+Time:   6.06 s running tests, 6.24 s total
+Results: docs/difficulty-v3/evidence/MS05r5/generator-tooling.json
+MS05r5 exit=0 seconds=7.033

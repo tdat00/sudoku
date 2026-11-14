@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "kind": "g13-closure",
+  "task": "MS05r4",
+  "complete": true,
+  "request": {
+    "variantId": "samurai",
+    "difficulty": "nightmare",
+    "seed": "42"
+  },
+  "config": {
+    "variantId": "samurai",
+    "difficulty": "nightmare",
+    "symbolMode": "digits",
+    "symmetry": "rotational180",
+    "digOrder": "random",
+    "maxAttempts": 2,
+    "variantOptions": {},
+    "seed": 42
+  },
+  "guardMs": 120000,
+  "identity": {
+    "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+    "loaderHash": "4877c0b5ce4340b1691f80ad6a041e7d0ca09b56efdfa1675e3a8b03be789a25",
+    "scriptHash": "eedeff26d9578ba3c1e3ed2d1d85683e52f498507829791221c8698358b538c4",
+    "script": "tests/artifacts/difficulty-v3/MS05r4/g13-closure.cjs",
+    "loaderFiles": [
+      "tests/replay-fixtures.js",
+      "tests/fixtures/replay-goldens.js"
+    ],
+    "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+    "dirty": true,
+    "node": "v26.13.0"
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "selectedDefault": {
+    "text": "256",
+    "shallowSearchRatings": 256
+  },
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\preflight\\G13.json"
+  ],
+  "startedAt": "2026-11-14T00:24:30.602Z",
+  "outcome": "ok",
+  "wallMs": 21871.748,
+  "error": null,
+  "result": {
+    "attempts": 2,
+    "exact": false,
+    "required": false,
+    "score": 1637,
+    "achieved": "nightmare",
+    "hardestTechnique": "forcingChain",
+    "solved": true,
+    "warnings": [
+      "difficulty.approximate",
+      "difficulty.shallow"
+    ],
+    "clues": 106,
+    "puzzleHash": "3c72d4b8d9622a3b67f08fde8a4b0e19baddeaea8fd22bfa27e9cb84c0292a04"
+  },
+  "work": [
+    {
+      "ratings": 275,
+      "proposals": 1885,
+      "maxRatings": 1024,
+      "maxProposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "proposals": 1885,
+          "firstShallowAt": 0,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 290,
+      "proposals": 1522,
+      "maxRatings": 1024,
+      "maxProposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "proposals": 1522,
+          "firstShallowAt": 0,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    }
+  ],
+  "workUnavailableReason": null
+}

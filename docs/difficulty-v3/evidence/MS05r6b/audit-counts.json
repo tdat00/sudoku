@@ -1,0 +1,340 @@
+{
+  "schema": 1,
+  "kind": "audit-counts",
+  "task": "MS05r6b",
+  "tags": {
+    "MS05b1-T01": {
+      "tests": 5,
+      "passed": 5,
+      "suites": {
+        "pipeline": 5
+      },
+      "keys": [
+        "generator/pipeline/97",
+        "generator/pipeline/98",
+        "generator/pipeline/99",
+        "generator/pipeline/100",
+        "generator/pipeline/101"
+      ]
+    },
+    "MS05b1-T02": {
+      "tests": 6,
+      "passed": 6,
+      "suites": {
+        "pipeline": 6
+      },
+      "keys": [
+        "generator/pipeline/102",
+        "generator/pipeline/103",
+        "generator/pipeline/104",
+        "generator/pipeline/105",
+        "generator/pipeline/106",
+        "generator/pipeline/107"
+      ]
+    },
+    "MS05b1-T03": {
+      "tests": 12,
+      "passed": 12,
+      "suites": {
+        "pipeline": 12
+      },
+      "keys": [
+        "generator/pipeline/108",
+        "generator/pipeline/109",
+        "generator/pipeline/110",
+        "generator/pipeline/111",
+        "generator/pipeline/112",
+        "generator/pipeline/113",
+        "generator/pipeline/114",
+        "generator/pipeline/115",
+        "generator/pipeline/116",
+        "generator/pipeline/117",
+        "generator/pipeline/118",
+        "generator/pipeline/119"
+      ]
+    },
+    "MS05b1-T04": {
+      "tests": 9,
+      "passed": 9,
+      "suites": {
+        "events": 1,
+        "i18n": 1,
+        "pipeline": 7
+      },
+      "keys": [
+        "generator/events/64",
+        "generator/i18n/57",
+        "generator/pipeline/120",
+        "generator/pipeline/121",
+        "generator/pipeline/122",
+        "generator/pipeline/123",
+        "generator/pipeline/124",
+        "generator/pipeline/125",
+        "generator/pipeline/126"
+      ]
+    },
+    "MS05b1-T05": {
+      "tests": 2,
+      "passed": 2,
+      "suites": {
+        "cache": 1,
+        "worker": 1
+      },
+      "keys": [
+        "generator/cache/19",
+        "generator/worker/54"
+      ]
+    },
+    "MS05r3": {
+      "tests": 20,
+      "passed": 20,
+      "suites": {
+        "cache": 1,
+        "recovery-profile": 1,
+        "worker": 2,
+        "pipeline": 16
+      },
+      "keys": [
+        "generator/cache/18",
+        "generator/recovery-profile/11",
+        "generator/worker/52",
+        "generator/worker/53",
+        "generator/pipeline/127",
+        "generator/pipeline/128",
+        "generator/pipeline/129",
+        "generator/pipeline/130",
+        "generator/pipeline/131",
+        "generator/pipeline/132",
+        "generator/pipeline/133",
+        "generator/pipeline/134",
+        "generator/pipeline/135",
+        "generator/pipeline/136",
+        "generator/pipeline/137",
+        "generator/pipeline/138",
+        "generator/pipeline/139",
+        "generator/pipeline/140",
+        "generator/pipeline/141",
+        "generator/pipeline/142"
+      ]
+    },
+    "MS05r5p": {
+      "tests": 45,
+      "passed": 45,
+      "suites": {
+        "cache": 4,
+        "controls": 4,
+        "difficulty-diagnostics": 2,
+        "export": 1,
+        "history": 4,
+        "store": 20,
+        "variants-registry": 3,
+        "pipeline": 7
+      },
+      "keys": [
+        "generator/cache/101",
+        "generator/cache/102",
+        "generator/cache/103",
+        "generator/cache/104",
+        "generator/controls/42",
+        "generator/controls/43",
+        "generator/controls/44",
+        "generator/controls/45",
+        "generator/difficulty-diagnostics/54",
+        "generator/difficulty-diagnostics/70",
+        "generator/export/77",
+        "generator/history/11",
+        "generator/history/12",
+        "generator/history/13",
+        "generator/history/14",
+        "generator/store/65",
+        "generator/store/66",
+        "generator/store/67",
+        "generator/store/68",
+        "generator/store/69",
+        "generator/store/70",
+        "generator/store/71",
+        "generator/store/72",
+        "generator/store/73",
+        "generator/store/74",
+        "generator/store/75",
+        "generator/store/76",
+        "generator/store/77",
+        "generator/store/78",
+        "generator/store/79",
+        "generator/store/80",
+        "generator/store/81",
+        "generator/store/82",
+        "generator/store/83",
+        "generator/store/84",
+        "generator/variants-registry/6",
+        "generator/variants-registry/7",
+        "generator/variants-registry/8",
+        "generator/pipeline/143",
+        "generator/pipeline/144",
+        "generator/pipeline/145",
+        "generator/pipeline/146",
+        "generator/pipeline/147",
+        "generator/pipeline/148",
+        "generator/pipeline/149"
+      ]
+    },
+    "MS05r5p-CV6-04": {
+      "tests": 6,
+      "passed": 6,
+      "suites": {
+        "store": 6
+      },
+      "keys": [
+        "generator/store/73",
+        "generator/store/74",
+        "generator/store/75",
+        "generator/store/76",
+        "generator/store/77",
+        "generator/store/78"
+      ]
+    },
+    "G13 saved-wire spy": {
+      "tests": 3,
+      "passed": 3,
+      "suites": {
+        "steps": 1,
+        "replay": 1,
+        "player": 1
+      },
+      "keys": [
+        "generator/steps/0",
+        "generator/replay/25",
+        "generator/player/0"
+      ]
+    }
+  },
+  "suites": {
+    "pipeline": {
+      "tests": 150,
+      "passed": 150,
+      "failed": []
+    },
+    "difficulty-diagnostics": {
+      "tests": 82,
+      "passed": 82,
+      "failed": []
+    },
+    "difficulty-floor": {
+      "tests": 48,
+      "passed": 48,
+      "failed": []
+    },
+    "recovery-profile": {
+      "tests": 27,
+      "passed": 27,
+      "failed": []
+    },
+    "digger": {
+      "tests": 64,
+      "passed": 64,
+      "failed": []
+    },
+    "events": {
+      "tests": 68,
+      "passed": 68,
+      "failed": []
+    },
+    "worker": {
+      "tests": 143,
+      "passed": 143,
+      "failed": []
+    },
+    "cache": {
+      "tests": 105,
+      "passed": 105,
+      "failed": []
+    },
+    "store": {
+      "tests": 85,
+      "passed": 85,
+      "failed": []
+    },
+    "controls": {
+      "tests": 46,
+      "passed": 46,
+      "failed": []
+    },
+    "history": {
+      "tests": 15,
+      "passed": 15,
+      "failed": []
+    },
+    "export": {
+      "tests": 78,
+      "passed": 78,
+      "failed": []
+    },
+    "variants-registry": {
+      "tests": 12,
+      "passed": 12,
+      "failed": []
+    },
+    "mega": {
+      "tests": 111,
+      "passed": 111,
+      "failed": []
+    },
+    "mega-contract": {
+      "tests": 37,
+      "passed": 37,
+      "failed": []
+    },
+    "manual-corpus": {
+      "tests": 46,
+      "passed": 46,
+      "failed": []
+    },
+    "harness": {
+      "tests": 25,
+      "passed": 25,
+      "failed": []
+    },
+    "replay-recorders": {
+      "tests": 39,
+      "passed": 39,
+      "failed": []
+    },
+    "perf-tooling": {
+      "tests": 31,
+      "passed": 31,
+      "failed": []
+    },
+    "steps": {
+      "tests": 57,
+      "passed": 57,
+      "failed": []
+    },
+    "replay": {
+      "tests": 153,
+      "passed": 153,
+      "failed": []
+    },
+    "player": {
+      "tests": 69,
+      "passed": 69,
+      "failed": []
+    },
+    "i18n": {
+      "tests": 83,
+      "passed": 82,
+      "failed": [
+        "generator/i18n/9"
+      ]
+    },
+    "help": {
+      "tests": 30,
+      "passed": 30,
+      "failed": []
+    },
+    "ui-contract": {
+      "tests": 67,
+      "passed": 67,
+      "failed": []
+    }
+  }
+}

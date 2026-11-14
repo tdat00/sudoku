@@ -1,0 +1,142 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+player
+  ok   player > player: the replay steps of a result > reads G13 from the saved wire and never regenerates it (a spy on the pipeline) (8 ms)
+  ok   player > player: the replay steps of a result > classic9 easy: both views start from the full solution and end on the puzzle, every step a visible change (590 ms)
+  ok   player > player: the replay steps of a result > classic9 normal: both views start from the full solution and end on the puzzle, every step a visible change (222 ms)
+  ok   player > player: the replay steps of a result > classic9 nightmare: both views start from the full solution and end on the puzzle, every step a visible change (4.41 s)
+  ok   player > player: the replay steps of a result > classic4 veryEasy: both views start from the full solution and end on the puzzle, every step a visible change (2 ms)
+  ok   player > player: the replay steps of a result > killer normal: both views start from the full solution and end on the puzzle, every step a visible change (420 ms)
+  ok   player > player: the replay steps of a result > greaterThan normal: both views start from the full solution and end on the puzzle, every step a visible change (67 ms)
+  ok   player > player: the replay steps of a result > jigsaw9 easy: both views start from the full solution and end on the puzzle, every step a visible change (17 ms)
+  ok   player > player: the replay steps of a result > wordoku easy: both views start from the full solution and end on the puzzle, every step a visible change (148 ms)
+  ok   player > player: the replay steps of a result > mega12 easy: both views start from the full solution and end on the puzzle, every step a visible change (10 ms)
+  ok   player > player: the replay steps of a result > has the 13 kinds of title, each with a title text, and every kind of the views is one of them (1.94 s)
+  ok   player > player: the replay steps of a result > frames what each dig step did (details view): removed cells are empty and were clues, put-back cells keep their value (1 ms)
+  ok   player > player: the replay steps of a result > counts the removals and refusals of the moves up to each step, as the metrics (details view) (5 ms)
+  ok   player > player: the replay steps of a result > the compact view never goes down, every step is scored and the last is the finished puzzle; the details view has one step per move (1 ms)
+  ok   player > player: the replay steps of a result > a guided step takes its rated and refused counts from the spans of its moves, in move order (61 ms)
+  ok   player > player: the replay steps of a result > random runs say how many cells were tried, cleared and put back, and why (0 ms)
+  ok   player > player: the replay steps of a result > an exchange step counts its moves, the cells it cleared and the clues it restored (gross) (0 ms)
+  ok   player > player: the replay steps of a result > Killer: the cages appear in the step after the solution (0 ms)
+  ok   player > player: the replay steps of a result > Greater-Than: every sign, then the starting clues, then the signs taken away one move at a time (4 ms)
+  ok   player > player: the replay steps of a result > Greater-Than, compact view: the sign frames follow the alive signs of the moves (33 ms)
+  ok   player > player: the replay steps of a result > without a dig log the replay is the solution, the structure and the puzzle; without a solution only the puzzle (22 ms)
+  ok   player > player: the replay steps of a result > is deterministic and plain data (the shared context is one frozen object per call) (4 ms)
+  ok   player > player: the replay steps of a result > one complete move per details step: no position shows half of an exchange (0 ms)
+  ok   player > player: the replay steps of a result > closes a batch of removals before the clues of a reveal come back (the removal shows its own board) (1 ms)
+  ok   player > player: the replay steps of a result > a guided accept without a candidate compared is a search move: it merges with the clues shown again right after it (an exchange) (6 ms)
+  ok   player > player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16, classic9) (120.37 s)
+  ok   player > player: the board at a position > is the empty grid at 0, the step after, clamped at both ends (0 ms)
+  ok   player > player: texts of the steps > describes every step of both views in English and Vietnamese with no placeholder left, naming the cells (the 14 goldens and real puzzles) (10.14 s)
+  ok   player > player: texts of the steps > the seven compact steps of the example read as specified, in English and Vietnamese (1 ms)
+  ok   player > player: texts of the steps > the example of the guides: Classic 9x9 easy, seed 3, replays in 7 steps (26 with every move shown) (0 ms)
+  ok   player > player: texts of the steps > tells what a compact step folds: the inner peak (above the level with clues restored, or plain) and nothing for a step that folds nothing (7 ms)
+  ok   player > player: texts of the steps > folds a restart into "Starting again": the abandoned peak and the moves are told in the compact step (1 ms)
+  ok   player > player: texts of the steps > a rebuilt Killer log says "Clear {removed}." and carries the note, under the title "Removing clues" (9 ms)
+  ok   player > player: texts of the steps > a dig order that is not random gets the order-neutral texts and the title "Removing clues" (4 ms)
+  ok   player > player: texts of the steps > has a title for every kind of step and a label for every control (0 ms)
+  ok   player > player: the table models > has a numerical model on every step of both views of the 14 goldens (15 ms)
+  ok   player > player: the table models > example: start at 0, zero for the solution, scored with change and before, final at the end (1 ms)
+  ok   player > player: the table models > a step that cannot be rated has a status and no score, no change, no "before"; the next step has no change (1 ms)
+  ok   player > player: the table models > tells a compact step that folds a position without a score, and only in the compact view (1 ms)
+  ok   player > player: the frame of the one clue or sign that causes a score jump > example: compact step 4 frames R1C2 as the cause, keeps R9C8 as removed, and the board gets the frame (1 ms)
+  ok   player > player: the frame of the one clue or sign that causes a score jump > Greater-Than: the sign that causes the jump keeps its removed mark and also gets the frame (3 ms)
+  ok   player > player: the frame of the one clue or sign that causes a score jump > frames exactly the jumps that one clue or one sign causes (the 14 goldens, both views) (8 ms)
+  ok   player > player: the frame of the one clue or sign that causes a score jump > a restored culprit is framed as causeRestore and leaves the revealed clues; an unavailable cause has no frame, and the removed cells stay as they were (2 ms)
+  ok   player > player: manual navigation > shows the finished puzzle at once after load, with every layer and no frame, and nothing to browse until the analysis comes (1 ms)
+  ok   player > player: manual navigation > moves step by step, by jumps and by position, and the board follows (both views) (1 ms)
+  ok   player > player: manual navigation > describes the position for the status line (0 ms)
+  ok   player > player: manual navigation > Greater-Than: draws every sign during the replay and the puzzle's own model at the end (3 ms)
+  ok   player > player: manual navigation > reset forgets the puzzle and tells the app; destroy lets go (0 ms)
+  ok   player > player: manual navigation > load(result, { analysis, position }) builds the views at once and starts where asked; a new load goes back to the compact view and forgets the steps (0 ms)
+  ok   player > player: the two views and the toggle > maps the place when the view changes (the example: compact step 4 is details step 24) (0 ms)
+  ok   player > player: the two views and the toggle > keeps the solution and the structure steps when the view changes, and the restart in the details (0 ms)
+  ok   player > player: the two views and the toggle > changing the view and navigating never rates anything, and neither does a change of language (1 ms)
+  ok   player > player: controls > wires first / previous / next / last and the slider, disabled while there are no views (2 ms)
+  ok   player > player: controls > the toggle "Show all moves" follows the view, switches it, and is disabled without views (0 ms)
+  ok   player > player: controls > shows the notice and the button while it waits for the user, the progress and the failures, and keeps browsing off until the tables are ready (1 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > worker mode: prepares by itself, only once ready() confirmed the worker, and publishes once (3 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > main mode: waits for the press (no replay call), and a press only counts in the consent state (31 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > a client that cannot tell, or whose ready() fails, counts as a main-thread client (32 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > a puzzle from the cache without its record waits for the record (worker mode): no replay, no consent event; the record starts the replay (32 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > a puzzle from the cache without its record (main mode): the press asks for the record once, and the replay then starts without a second press (47 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > an imported puzzle without a record shows the fallback (in main mode after the press), with a real fallback analysis (47 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > a failing replay shows the fallback with the reason "error"; any failure other than a cancellation is one (63 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > a replay that needs the page asks for the consent again; any other cancellation goes idle (47 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > a new puzzle cancels the replay on the client of the old one, and a late answer is ignored (79 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > cancel() stops the job on its client, forgets the consent and goes idle; nothing is published later (63 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > unavailable(result) is latched until the client is ready and, in main mode, until the press; for another result it does nothing (32 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > unavailable(result) while the replay runs stops it and shows the fallback (16 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > a client that turned out to run on the page after answering "worker" needs the consent again, also for a puzzle without a record (32 ms)
+  ok   player > player: the preparation of the score tables (fake clients) > callbacks that throw do not stop it, and a main-mode start, a language change and a navigation call neither the solver nor the analysis (32 ms)
+ok   player: 69 passed  (139.11 s)
+
+Suites: 1
+Tests:  69 total, 69 passed, 0 failed, 0 skipped
+Time:   139.11 s running tests, 139.29 s total
+Results: docs/difficulty-v3/evidence/MS05r6b/quick/generator-player.json

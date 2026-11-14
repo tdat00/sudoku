@@ -5,7 +5,7 @@
  * Recorder and checker of the Generation Steps golden data, tests/fixtures/replay-goldens.js: the 14 golden
  * requests (G01-G14, read from SG.fixtures.replayGoldens) are generated again with the route of the wire
  * recorder (SG.store.toConfig, SG.pipeline.run, a 120,000 ms budget), analysed with SG.replay.analyse, and
- * projected to the golden record (SG.fixtures.replayRecording.goldenOf). The wire data of G09-G12 is the
+ * projected to the golden record (SG.fixtures.replayRecording.goldenOf). The wire data of G09-G13 is the
  * business of tests/replay-fixtures.js.
  *
  *   node tests/replay-goldens.js                 the same as --check (this tool never writes by accident)

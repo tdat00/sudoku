@@ -1,0 +1,4 @@
+mutation applied: true
+real app.js | client got 8 | after replay classic9 8 false | after switch to mega16 2 false
+replay label changed | client got 8 | after replay classic9 8 true | after switch to mega16 8 true
+MS05r5p exit=0 seconds=0.182

@@ -1,0 +1,205 @@
+[
+  {
+    "label": "c3-exact-player-0",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=player",
+      "--exact=player > player: the replay steps of a result > reads G13 from the saved wire and never regenerates it (a spy on the pipeline)",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\player-0.json"
+    ]
+  },
+  {
+    "label": "c3-exact-player-29",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=player",
+      "--exact=player > player: texts of the steps > the example of the guides: Classic 9x9 easy, seed 3, replays in 7 steps (26 with every move shown)",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\player-29.json"
+    ]
+  },
+  {
+    "label": "c3-exact-player-30",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=player",
+      "--exact=player > player: texts of the steps > tells what a compact step folds: the inner peak (above the level with clues restored, or plain) and nothing for a step that folds nothing",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\player-30.json"
+    ]
+  },
+  {
+    "label": "c3-exact-player-41",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=player",
+      "--exact=player > player: the frame of the one clue or sign that causes a score jump > frames exactly the jumps that one clue or one sign causes (the 14 goldens, both views)",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\player-41.json"
+    ]
+  },
+  {
+    "label": "c3-exact-replay-25",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=replay",
+      "--exact=replay > replay: golden details > reads G13 from the saved wire and never regenerates it (a spy on the pipeline)",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\replay-25.json"
+    ]
+  },
+  {
+    "label": "c3-exact-replay-90",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=replay",
+      "--exact=replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G11, G12, G01)",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\replay-90.json"
+    ]
+  },
+  {
+    "label": "c3-exact-replay-91",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=replay",
+      "--exact=replay > replay: golden compact view and transitions > has 13 compact, 16 details and 18 distinct jump transitions in the 14 goldens",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\replay-91.json"
+    ]
+  },
+  {
+    "label": "c3-exact-replay-92",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=replay",
+      "--exact=replay > replay: golden compact view and transitions > labels a new hardest technique also at a flat or lower score (details: G13, G11)",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\replay-92.json"
+    ]
+  },
+  {
+    "label": "c3-exact-replay-143",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=replay",
+      "--exact=replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\replay-143.json"
+    ]
+  },
+  {
+    "label": "c3-exact-replay-144",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=replay",
+      "--exact=replay > replay: explaining the jumps > frames the details jumps too: G06 R8C4 and the four sign jumps of G11",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\replay-144.json"
+    ]
+  },
+  {
+    "label": "c3-exact-replay-145",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=replay",
+      "--exact=replay > replay: explaining the jumps > describes a jump over several moves by its first move with the new technique (G11, G12)",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\replay-145.json"
+    ]
+  },
+  {
+    "label": "c3-exact-steps-0",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=steps",
+      "--exact=steps > stepView: the description of the step on show > reads G13 from the saved wire and never regenerates it (a spy on the pipeline)",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\steps-0.json"
+    ]
+  },
+  {
+    "label": "c3-exact-steps-17",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=steps",
+      "--exact=steps > stepView: the tiers, the badge and the lines > marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\steps-17.json"
+    ]
+  },
+  {
+    "label": "c3-exact-steps-22",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=steps",
+      "--exact=steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\steps-22.json"
+    ]
+  },
+  {
+    "label": "c3-exact-steps-23",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=steps",
+      "--exact=steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\steps-23.json"
+    ]
+  },
+  {
+    "label": "a2-quick-mega-96",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=mega",
+      "--exact=mega > mega puzzles > mega12 nightmare: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\preflight\\quick\\mega-96.json"
+    ]
+  },
+  {
+    "label": "a2-quick-mega-97",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=mega",
+      "--exact=mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > the size default stops after two attempts with a truthful two-warning shallow fallback",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\preflight\\quick\\mega-97.json"
+    ]
+  },
+  {
+    "label": "a2-quick-mega-98",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=mega",
+      "--exact=mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > an explicit number of attempts wins over the size default",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\preflight\\quick\\mega-98.json"
+    ]
+  },
+  {
+    "label": "a2-quick-mega-99",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=mega",
+      "--exact=mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > a cancelled or exhausted budget propagates its error and never returns the best puzzle so far",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\preflight\\quick\\mega-99.json"
+    ]
+  },
+  {
+    "label": "a2-quick-mega-contract",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=mega-contract",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\preflight\\quick\\mega-contract.json"
+    ]
+  },
+  {
+    "label": "c3-suite-steps-run2",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=steps",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\steps-run2.json"
+    ]
+  },
+  {
+    "label": "c3-suite-replay-run2",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=replay",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\replay-run2.json"
+    ]
+  },
+  {
+    "label": "c3-suite-player-run2",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=player",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\player-run2.json"
+    ]
+  }
+]

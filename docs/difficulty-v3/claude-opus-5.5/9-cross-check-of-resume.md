@@ -201,3 +201,73 @@ before MS07c is dispatched. The Minor findings can be fixed in the same pass. Af
 text, MS05r5p's ownership list and its command block need a re-check.
 
 SUDOKU CROSS-CHECK DONE: 1 blocking, 1 major, 7 minor
+
+## 5. Verification of the fixes
+
+Checked on 2026-11-13 at 21:50 (+07:00) against commit `1ae831c` ("pack revision after PR-S1 and CV6-03 (S-OD4),
+SA1's cross-check"). The committed files were read with `git show`; nothing was run, because MS05r5p is running timed
+work in the tree. Its in-progress `store.js` and `controls.js` were read, not run, only for RS10.
+
+| Id | Severity | Status | Evidence at `1ae831c` |
+|---|---|---|---|
+| RS01 | Blocking | Fixed as intended | MS05r5p:57-58 (the `history.js`, `cache.js`, `app.js` and `export.js` anchors); 77-91 (the recorded-recipe rule, see below); 101-106 (`app.js`, `history.js`, `cache.js`, `export.js` only if needed; the `history`, `export` and `cache` suites); 119-120; 140 (T04); 152-164 (four tagged route regressions); 172-174; 216; check-list row 180 |
+| RS02 | Major | Fixed | MS07c:45-49: the sentence is whole again, and a quick test now rejects C=4 and C=6 shards in one merge |
+| RS03 | Minor | Fixed | MS05r5p:170-192: `difficulty-diagnostics`, the `history`, `export`, `cache`, `digger` and `worker` selections; a zero-test selection is no pass |
+| RS04 | Minor | Fixed | MS05r5p:109-111: design §6.8, §10.4, §14.2 and §14.3 |
+| RS05 | Minor | Fixed | MS05r6a:51-52 |
+| RS06 | Minor | Fixed | MS05r6a:61-63, and B.1 at 119-120 |
+| RS07 | Minor | Fixed | MS05b3:86 (`variants.test.js:487-498`) |
+| RS08 | Minor | Fixed | MS16:96, MS17b:120, MS18e:179 ("540-second process ceiling (check-list section 7)") |
+| RS09 | Minor | Fixed | MS18c:101; check-list:426 |
+
+The recorded-recipe rule of RS01 (MS05r5p:77-91):
+
+- History restore, stale-cache rebuild and export generate with the recorded number.
+- A store replay (`source: 'app'`) keeps the current intent when the number equals the replayed variant's size
+  default; any other number becomes explicit.
+- A replay never turns an explicit setting into default mode.
+- `toConfig` keeps a numeric override over `defaults()`.
+- Control edits, URL overrides and engine arguments are not reinterpreted.
+
+### RS10: clearing the attempts field (Major, new; MS05r5p)
+
+**What happens.** The fixed text names three sources of a number: a control edit, a URL override and a replay. One
+control action is no numeric choice: when the advanced field is left empty, the number widget commits
+`f.defaultValue` (`generator/js/ui/controls.js:629-631`). Under the task's rules, that commit becomes an explicit number
+equal to the current board's default:
+
+- "a deliberate numeric setting stays explicit";
+- "do not infer default intent from `value === currentDefault`".
+
+The in-progress store does exactly that: its `nextAttempts` treats a number named by a `controls` patch as explicit.
+
+**Why it matters.** Two examples:
+
+- A user who clears the field on mega16 gets an explicit 2, which then applies to classic9: two attempts instead of
+  eight.
+- Cleared on classic9, the field gives an explicit 8, which brings eight attempts back to mega16.
+
+That is the recurring silent override that B02 forbids. It also contradicts the new hint ("until you type a number it
+follows the board").
+
+**Fix.** The task is dispatched, so the fix is the addendum below. `controls.js` and `store.js` are already
+MS05r5p's files.
+
+**Addendum A1 to MS05r5p (binding; SA1, 2026-11-13).** Clearing the Maximum attempts field returns to default mode;
+it is no numeric choice. When the field is left empty, its commit (`generator/js/ui/controls.js:629-631`) must set the
+store's default intent, so that the number follows the selected variant through variant switches, reloads and links
+(no `attempts` parameter). In the current store work, that commit is a patch with `attemptsExplicit: false`, as
+`reset()` already sends.
+
+- A typed number stays explicit, including one equal to the current default. This rule is unchanged, and nothing is
+  inferred from the value.
+- Other number fields keep today's behavior.
+- Add tests tagged `MS05r5p-` in the existing `controls` and `store` suites:
+  1. Explicit 5 on mega16, then clear the field: default mode, effective 2. Switch to classic9: 8. Reload: still
+     default mode, and the URL has no `attempts`.
+  2. Type 2 on mega16: explicit 2. Switch to classic9: still 2.
+  3. `reset()` gives default mode.
+- The handoff names the representation.
+
+Result of the verification: RS01 to RS09 are fixed as intended. RS10 stays open until addendum A1 is applied in
+MS05r5p.

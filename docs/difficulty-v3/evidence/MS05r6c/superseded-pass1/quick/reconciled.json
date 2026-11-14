@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "kind": "quick-coverage",
+  "manifest": "docs/difficulty-v3/evidence/MS05r6c/quick/quick-manifest.json",
+  "apps": {
+    "generator": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r6c/generator-inventory.json",
+      "inventoryTests": 3262,
+      "sourceHash": "7949138f80923c7e10640f7086c71b538a7531034021ec58a6d5ff1f90962686",
+      "node": "v26.13.0",
+      "timeFactor": 2,
+      "verdict": "complete-green",
+      "counts": {
+        "total": 3262,
+        "passed": 3262,
+        "failed": 0,
+        "skipped": 0
+      },
+      "shards": [
+        {
+          "id": "core-shared",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6c/quick/generator-core-shared.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 1143,
+          "passed": 1143,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 24412.5,
+          "resultsMs": 24125.5,
+          "sourceHash": "7949138f80923c7e10640f7086c71b538a7531034021ec58a6d5ff1f90962686"
+        },
+        {
+          "id": "steps",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6c/quick/generator-steps.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 57,
+          "passed": 57,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 11444.7,
+          "resultsMs": 11239.4,
+          "sourceHash": "7949138f80923c7e10640f7086c71b538a7531034021ec58a6d5ff1f90962686"
+        },
+        {
+          "id": "replay",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6c/quick/generator-replay.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 153,
+          "passed": 153,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 10861.6,
+          "resultsMs": 10689.2,
+          "sourceHash": "7949138f80923c7e10640f7086c71b538a7531034021ec58a6d5ff1f90962686"
+        },
+        {
+          "id": "mega",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6c/quick/generator-mega.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 111,
+          "passed": 111,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 11185.3,
+          "resultsMs": 11011.9,
+          "sourceHash": "7949138f80923c7e10640f7086c71b538a7531034021ec58a6d5ff1f90962686"
+        },
+        {
+          "id": "own-fast",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6c/quick/generator-own-fast.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 1579,
+          "passed": 1579,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 164144.9,
+          "resultsMs": 163779.9,
+          "sourceHash": "7949138f80923c7e10640f7086c71b538a7531034021ec58a6d5ff1f90962686"
+        },
+        {
+          "id": "pipeline",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6c/quick/generator-pipeline.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 150,
+          "passed": 150,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 291748.8,
+          "resultsMs": 291552.3,
+          "sourceHash": "7949138f80923c7e10640f7086c71b538a7531034021ec58a6d5ff1f90962686"
+        },
+        {
+          "id": "player",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6c/quick/generator-player.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 69,
+          "passed": 69,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 139333.1,
+          "resultsMs": 139146.7,
+          "sourceHash": "7949138f80923c7e10640f7086c71b538a7531034021ec58a6d5ff1f90962686"
+        }
+      ],
+      "coverage": {
+        "missing": [],
+        "duplicates": [],
+        "unexpected": []
+      },
+      "failed": [],
+      "problems": []
+    },
+    "player": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r6c/player-inventory.json",
+      "inventoryTests": 1683,
+      "sourceHash": "fbb759b070bc3a775bc1d06f00a1f3db958ed83f93b705dc261227ab8626b4af",
+      "node": "v26.13.0",
+      "timeFactor": 2,
+      "verdict": "complete-green",
+      "counts": {
+        "total": 1683,
+        "passed": 1683,
+        "failed": 0,
+        "skipped": 0
+      },
+      "shards": [
+        {
+          "id": "all",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6c/quick/player-all.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 1683,
+          "passed": 1683,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 31556.9,
+          "resultsMs": 31301.4,
+          "sourceHash": "fbb759b070bc3a775bc1d06f00a1f3db958ed83f93b705dc261227ab8626b4af"
+        }
+      ],
+      "coverage": {
+        "missing": [],
+        "duplicates": [],
+        "unexpected": []
+      },
+      "failed": [],
+      "problems": []
+    }
+  },
+  "rule": "accepted shards only; key = (app, suite, ordinal) with the full name; every inventory key once"
+}

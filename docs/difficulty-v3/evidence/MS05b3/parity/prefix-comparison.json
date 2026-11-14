@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "kind": "manual-corpus-prefix-comparison",
+  "task": "MS05b3",
+  "node": "v26.13.0",
+  "keys": {
+    "classic4": {
+      "compared": true,
+      "variantId": "classic4",
+      "level": "veryEasy",
+      "requests": 3,
+      "identical": true,
+      "digestOfFullDigests": "30c6fe06d325f06c37564511757b1133d67178e0d5a95beda9b8796db782620f",
+      "differences": []
+    },
+    "classic6": {
+      "compared": true,
+      "variantId": "classic6",
+      "level": "veryEasy",
+      "requests": 3,
+      "identical": true,
+      "digestOfFullDigests": "7e828bd48bc79b2fb7bb169cdd4f2868f4450a83c087dc864b90f59353b91439",
+      "differences": []
+    },
+    "diagonalX": {
+      "compared": true,
+      "variantId": "diagonalX",
+      "level": "veryEasy",
+      "requests": 20,
+      "identical": true,
+      "digestOfFullDigests": "d19645d39d82ec476938a55720373b0187772ac36168b530f4398f9229988184",
+      "differences": []
+    },
+    "greaterThan": {
+      "compared": true,
+      "variantId": "greaterThan",
+      "level": "veryEasy",
+      "requests": 20,
+      "identical": true,
+      "digestOfFullDigests": "a0bca440da60be6874ee01f0393fbe9dcf8d52cad53348f0b236dfdf5442537b",
+      "differences": []
+    },
+    "hyper": {
+      "compared": true,
+      "variantId": "hyper",
+      "level": "veryEasy",
+      "requests": 20,
+      "identical": true,
+      "digestOfFullDigests": "0c9ad77e7ac1c37dbadab5b1fe550b330caae52a2e7fb303bc00fcb8f98a1fbe",
+      "differences": []
+    },
+    "jigsaw": {
+      "compared": true,
+      "variantId": "jigsaw9",
+      "level": "veryEasy",
+      "requests": 20,
+      "identical": true,
+      "digestOfFullDigests": "a30e6c370d5d3cebed3d95ea6cd5b74076617208e2f40a51a5f101c239779881",
+      "differences": []
+    },
+    "killer": {
+      "compared": true,
+      "variantId": "killer",
+      "level": "veryEasy",
+      "requests": 20,
+      "identical": true,
+      "digestOfFullDigests": "f19cc66a180d990eaf3e7138cbff1b9555f16baa9db7eeaea80981c514e5fc1f",
+      "differences": []
+    },
+    "wordoku": {
+      "compared": true,
+      "variantId": "wordoku",
+      "level": "veryEasy",
+      "requests": 20,
+      "identical": true,
+      "digestOfFullDigests": "4368e8325764be57f77659de2422b2cdadf1de96125d2d281f5a392e262d324e",
+      "differences": []
+    }
+  },
+  "identical": true
+}

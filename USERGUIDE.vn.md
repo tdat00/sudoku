@@ -214,13 +214,19 @@ Thanh địa chỉ luôn giữ trạng thái của trang, nên một liên kết
 | `sym` | `sym=mirrorH` | Kiểu đối xứng của các ô cho sẵn: `none`, `rotational180` (mặc định), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. |
 | `mode` | `mode=letters` | Bộ ký hiệu: `digits`, `letters`, `colors`, `shapes`, `word` (chỉ Sudoku Chữ). Mặc định: của biến thể. |
 | `order` | `order=snake` | Thứ tự thử bỏ số: `random` (mặc định), `rowByRow`, `snake`, `spiral`, `jumpOne`. |
-| `attempts` | `attempts=12` | Số lưới đầy đủ được thử trước khi chấp nhận đề gần nhất, 1–20. Mặc định 8. |
+| `attempts` | `attempts=12` | Số lưới đầy đủ được thử trước khi chấp nhận đề gần nhất, 1–20. Khi không có, số này theo cỡ bàn: 8 đến 81 ô, 4 đến 144 ô (Sudoku Khổng lồ 12×12, Cánh bướm), 2 với bàn lớn hơn (Bông hoa, Sohei, Samurai, Quái vật 16×16). Liên kết có `attempts` giữ đúng số đó, kể cả khi bằng mặc định. |
 | `sol` | `sol=1` | Hiện lời giải cạnh đề. |
 | `o.<id>` | `o.cageSize=2` | Một tùy chọn của biến thể đang chọn, ví dụ `o.compactness=0.8` (jigsaw9), `o.futoshiki=1` (greaterThan), `o.placement=row` (wordoku). |
 | `lang` | `lang=vi` | Ngôn ngữ: `en` hoặc `vi`. Mặc định: lựa chọn đã lưu, rồi ngôn ngữ của trình duyệt. |
 | `auto` | `auto=1` | Tạo đề ngay khi trang tải xong (liên kết có `seed` thì tự tạo đề cả khi không có tham số này). |
 
-`?v=classic9&d=master&seed=42&lang=vi&auto=1` luôn cho ra cùng một đề. Các thiết lập còn được lưu trong
+`?v=classic9&d=master&seed=42&lang=vi&auto=1` luôn cho ra cùng một đề. Tùy chọn **Số lần thử tối đa** (Tùy chọn nâng
+cao) chính là số `attempts`. Khi bạn chưa nhập số, nó theo bàn cờ bạn chọn; số bạn nhập được giữ cho mọi bàn, trên
+thanh địa chỉ và sau khi tải lại, còn xóa trống ô thì nó lại theo bàn cờ. Một đề được mở lại từ danh sách lịch sử,
+dựng lại từ bản sao trong cache hoặc xuất lại sẽ được tạo với đúng số lần thử lúc nó được làm ra, nên một đề cũ của
+bàn lớn đã làm với 8 lần thử sẽ lại được làm với 8, và ô khi đó hiện số ấy như số do bạn chọn. Các thiết lập do phiên
+bản cũ lưu mà giữ số 8 được hiểu là dùng mặc định vì không thể phân biệt với số 8 do người dùng chủ động chọn; nhập
+lại 8 sẽ giữ số đó như một lựa chọn tường minh, cho mọi bàn. Các thiết lập còn được lưu trong
 `localStorage` của trình duyệt, không bao giờ gửi đi đâu: `sg.prefs.v1` (ngôn ngữ, giao diện, cỡ chữ, giảm chuyển
 động, ký hiệu hỗ trợ người mù màu), `sg.lastConfig.v1` (các tùy chọn gần nhất), `sg.cache.v1` (tối đa 20 đề vừa
 tạo, để cùng một đề mở ra ngay), `sg.history.v1` (danh sách các đề đã tạo ở bên trái, tối đa 100). Liên kết có nêu
@@ -263,6 +269,13 @@ thông báo cảnh báo rằng một số ứng dụng và máy chủ cắt bớ
 - **Độ khó là một ước lượng**: trọng số của các kỹ thuật và khoảng điểm của các mức được chọn từ các phép đo trên
   đề do máy tạo, chưa phải từ thử nghiệm với người giải thật ([chi tiết](DEVELOPERGUIDE.vn.md#hạn-chế-kỹ-thuật-đã-biết)).
   Tổ hợp khó đạt (đối xứng chặt kèm mức rất cao) sẽ trả về đề gần nhất kèm thông báo thay vì đúng mức.
+- **Bàn lớn dừng sớm hơn**: một yêu cầu cho bàn lớn mặc định chỉ thử ít lưới hơn (4 cho Sudoku Khổng lồ 12×12 và Cánh
+  bướm, 2 cho Bông hoa, Sohei, Samurai và Quái vật 16×16, so với 8 của các bàn còn lại), vì một lần thử trên bàn như
+  vậy có thể mất từ vài giây đến khoảng một phút còn trang dừng một lần tạo đề sau 120 giây. Khi không lưới nào trong
+  số đó đạt đúng mức yêu cầu, bạn nhận được đề gần nhất kèm thông báo: đề vẫn hợp lệ và có một lời giải duy nhất,
+  nhưng mức của nó có thể khác, thường gặp nhất ở các mức khó nhất. Mức nào được cung cấp trên bàn lớn do bước kiểm
+  định quyết định, không phải do mặc định này; bạn có thể tăng số lần thử trong tùy chọn nâng cao, đổi lại phải chờ
+  lâu hơn.
 - **Không phải mức nào cũng có ở mọi nơi**: Sudoku Cổ điển 4×4 chỉ có mức rất dễ và Cổ điển 6×6 có rất dễ và
   khó; Sudoku Cổ điển 9×9 và Sudoku Chữ dừng ở mức địa ngục 1; mọi biến thể khác có đủ chín mức. Các mức mà một biến thể cung cấp
   là những mức nó vượt qua trong bước kiểm định ([docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md)).

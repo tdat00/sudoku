@@ -1,0 +1,10 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   help: 30 passed  (3.72 s)
+ok   ui-contract: 67 passed  (364 ms)
+
+Suites: 2
+Tests:  97 total, 97 passed, 0 failed, 0 skipped
+Time:   4.09 s running tests, 4.27 s total
+Results: docs/difficulty-v3/evidence/MS05r6a/focused/help-ui-contract.json

@@ -1,0 +1,25 @@
+#0 c3-exact-player-0 exit=0 node=0.385s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/player-0.json
+#1 c3-exact-player-29 exit=0 node=0.930s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/player-29.json
+#2 c3-exact-player-30 exit=0 node=1.805s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/player-30.json
+#3 c3-exact-player-41 exit=0 node=10.649s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/player-41.json
+#4 c3-exact-replay-25 exit=0 node=0.393s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/replay-25.json
+#5 c3-exact-replay-90 exit=0 node=0.630s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/replay-90.json
+#6 c3-exact-replay-91 exit=0 node=10.671s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/replay-91.json
+#7 c3-exact-replay-92 exit=0 node=0.542s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/replay-92.json
+#8 c3-exact-replay-143 exit=0 node=10.666s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/replay-143.json
+#9 c3-exact-replay-144 exit=0 node=1.749s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/replay-144.json
+#10 c3-exact-replay-145 exit=0 node=0.523s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/replay-145.json
+#11 c3-exact-steps-0 exit=0 node=0.384s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/steps-0.json
+#12 c3-exact-steps-17 exit=0 node=10.769s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/steps-17.json
+#13 c3-exact-steps-22 exit=0 node=6.658s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/steps-22.json
+#14 c3-exact-steps-23 exit=0 node=0.543s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/steps-23.json
+#15 a2-quick-mega-96 exit=0 node=5.580s: Results: docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-96.json
+#16 a2-quick-mega-97 exit=0 node=0.392s: Results: docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-97.json
+#17 a2-quick-mega-98 exit=0 node=0.400s: Results: docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-98.json
+#18 a2-quick-mega-99 exit=0 node=0.397s: Results: docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-99.json
+#19 a2-quick-mega-contract exit=0 node=1.972s: Results: docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-contract.json
+#20 c3-suite-steps-run2 exit=0 node=11.486s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/steps-run2.json
+#21 c3-suite-replay-run2 exit=0 node=11.141s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/replay-run2.json
+#22 c3-suite-player-run2 exit=0 node=139.069s: Results: docs/difficulty-v3/evidence/MS05r6a/pins/player-run2.json
+compound complete: 23 shard(s) in 227.8 s; next --from=23
+MS05r6a exit=0 seconds=227.858

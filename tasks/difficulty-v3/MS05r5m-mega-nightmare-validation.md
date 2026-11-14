@@ -210,14 +210,14 @@ r6c keeps the deep tool out of CI. Step evidence only; backups/logs/combined com
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Step evidence complete (S-OD2; no acceptance or commit of its own; the combined commit follows MS05r6b and MS05r6c) |
+| Start | 2026-11-14 00:18 (+07:00) |
+| End | 2026-11-14 01:52 developer; fix round 02:18-02:23 (IR01, IR03); 02:30 orchestrator review and backup ref |
+| Duration | 1 h 33 min developer + 5 min fix round (14 deep requests serial under the lock: mega12 24.0-25.7 s, mega16 80.9-118.1 s of Node time each; lock waits 15-260 s while Pentomino's MP12b1 held the slot); about 15 min review |
+| Model | claude-sonnet-5.5 (developer); analyst implementation review claude-opus-5.5 (SA1, `docs/difficulty-v3/claude-opus-5.5/10-review-of-recovery-steps.md`); orchestrator review claude-opus-5.5 |
+| Token usage | 251 model calls; 111,622,134 input tokens (110,340,698 cache reads); 315,153 output tokens |
+| AI credits | about 1,739 (developer) |
+| Verification | Developer (`evidence/MS05r5m/runs.jsonl`): 14 deep records, one locked process each, exit 0, no timeout; `--reconcile` exit 0 (all six relations pass); mega12 one-attempt smoke three runs, 5.19-5.21 s; `mega-contract,ui-contract,help` 134/134; the three scripted mega16 controls by `--exact`/`--results`, 3/3; manifest 3,207 of 3,207 Generator and 1,683 of 1,683 Player tests, 0 missing, duplicate or unexpected; the inventory diff against r5 removes exactly the four full-attempt Nightmare tests. Orchestrator re-runs under the lock: `mega-contract,ui-contract,help` 134/134 (6.0 s); `mega --filter=nightmare` 4/4 (5.3 s). SA1's implementation review: 0 blocking; IR01 and IR03 fixed in the fix round; IR02 resolved by Addendum B1 to MS05b3; IR04 routed to MS05r6a/MS05r6b (pack) |
+| Acceptance | MS05r5m-B01, B02 and T01..T06 met. Quick tier: the four full-attempt Nightmare tests replaced by a real `maxAttempts: 1` mega12 Nightmare request (seed 3, every old invariant and the exact/required/warning contract, smoke limit 15 s x factor) and three scripted mega16 size-default controls (Expert tier; two-attempt stop with the two shallow warnings, explicit-override precedence, cancellation and budget propagation). Deep tier: `generator/tests/mega-contract.js` (`--list`, `--request --record`, `--reconcile --json`) with the pure fixture and the `mega-contract` quick suite (37 tests); the fourteen original occurrences keyed independently (`<board>-invariant-1..4`, `-cv5-a`, `-cv5-b`, `-cv5-other`), engine source `fee8b8d6…`, allowance 256, budget 500 s: all `outcome: ok`, `correctness: pass`, 0 of 14 exact (shallow fallbacks with `difficulty.approximate` and `difficulty.shallow`); mega12 23.5-25.2 s at 4 attempts, mega16 80.4-117.0 s at 2 attempts; seed-3 puzzles equal MS05r5p's diagnostics. Reported guards only from the complete population: mega12 40 s, mega16 180 s. Documents: `generator/design.md`, both developer guides, `notes.md` |
+| Issues & resolutions | (1) SA1's review IR01: the scripted controls ran at the Expert tier under "nightmare" names; renamed "mega16 size-default controls (scripted, Expert tier)" with the reason and the covering evidence in a comment. (2) IR03: the 97.5 % of invariant-1 (116.95 s) was measured in Node, synchronously, with trace off; the app's 120 s guard is a worker run with trace on, so that request is at or over the app guard in practice (S-AV03 wording). (3) IR02: a runner-loaded suite cannot compute the record hashes, so MS05b3 checks the CV3 mega cells live (Addendum B1). (4) IR04: `--reconcile` exits 0 on stale records; MS05r6a/MS05r6b check `currentMatches` explicitly (pack amendment). (5) Not run by scope: the whole quick sets, `SG_DEEP`, heavy gates |
+| Handoff | MS05b3: Addendum B1 (live CV3 cells, `--reconcile` first and cite the r5m occurrence ids when `currentMatches`); MS05r6a/MS05r6b: the deep records and their identity, the quick manifest draft (3,207 Generator tests). Items: S-AV02 (mega12 Nightmare 0/7 exact, 23.5-25.2 s, inside 30 s) and S-AV03 (mega16 Nightmare 0/7 exact, 80.4-117.0 s, all over 30 s, one at the app guard) updated; S-AV04 and S-AV08 updated by count; S-AV01, S-AV05..S-AV07 carried. Open: CV6-04 |

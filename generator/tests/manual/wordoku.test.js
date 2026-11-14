@@ -109,13 +109,13 @@
   var runCache = null;
   function puzzleRun() {
     if (runCache === null) {
-      runCache = {};
-      LEVELS.forEach(function (level, li) {
-        runCache[level] = [];
+      runCache = SG.test.lazyCorpus(LEVELS, function (level, li) {
+        var puzzles = [];
         for (var i = 0; i < PUZZLES_PER_LEVEL; i++) {
-          runCache[level].push(generate(level, 100 * (li + 1) + i,
+          puzzles.push(generate(level, 100 * (li + 1) + i,
             { variantOptions: PLACEMENT_CYCLE[i % PLACEMENT_CYCLE.length] }));
         }
+        return puzzles;
       });
     }
     return runCache;

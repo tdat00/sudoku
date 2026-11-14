@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   replay: 153 passed  (10.69 s)
+
+Suites: 1
+Tests:  153 total, 153 passed, 0 failed, 0 skipped
+Time:   10.69 s running tests, 10.86 s total
+Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-replay.json

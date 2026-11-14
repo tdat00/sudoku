@@ -85,7 +85,7 @@
       ],
       'classic9/nightmare': [
         '86d1e172be618b9e', '7c81935f28cc9f0b', '03c94c54f91828d8', '486e7c2ec5568382',
-        '7c4a68aa064d1526', '12ef6c318fc0d53d', 'b1f7b262d7cb10ce', 'e6a777410136194d',
+        '345c0e526057fe6e', '12ef6c318fc0d53d', 'b1f7b262d7cb10ce', 'e6a777410136194d',
         '4164e7fe5f7fe0e2', 'a8f60dd9c9e86735', '0caa79518030700d', '5b51d9e075f3fe7c',
         'b457b0449e9a0ee8', '71afbd6714c77a53', 'd21fee25b9491269', '007dfd6ad95d9536',
         'e357e244ced63998', '333527f37c599ca7', '9f3bae9bcddae99f', 'e5675280f034fbac'
@@ -112,10 +112,10 @@
         '69ce6a82fd52539e', 'e9142c88dff360d4', 'd5f4aeb7c4373de3', 'e3bb09c54249a2c9'
       ],
       'diagonalX/nightmare': [
-        '2d590e59df31f175', 'e146de8f5fc95aeb', 'edfaf735dcebeb69', '223349ab943a3edf',
+        '2d590e59df31f175', 'e146de8f5fc95aeb', 'edfaf735dcebeb69', '5b8f8f4f3a25a82b',
         '30a81f93a7eab1f7', '863dc6f9375bbf65', 'fc8b5eca9ce169f6', 'd3b88366b7c46bea',
         'ede7d7d846a4fb74', '78167d96fc3b356a', '37f4fcd45964d318', '0086fe024b32105e',
-        '9107519cffd51390', '51d9d3e0d8c2b83c', '11904526120cfa2a', '14ba46aac1d27f96',
+        '9107519cffd51390', '51d9d3e0d8c2b83c', '11904526120cfa2a', 'd74675d99db28fa5',
         '9aa483a3ce170ef7', '009356628779619e', '0b042686411f1b3a', '4d80a44cf03bb140'
       ],
       'hyper/hard': [
@@ -169,10 +169,10 @@
       ],
       'samurai/easy': [
         '3ea367b0be1bbfa4', 'f0254bc2b6498f5e', 'da494bed4515f211', 'd048eebbad630007',
-        '41ccc16c132728f8', '1c56198290a5dc1e', '31f9218272d1ba4e', '4c04fa38a91e4b6c',
+        '7d34145019b7ac24', '1c56198290a5dc1e', '31f9218272d1ba4e', '4c04fa38a91e4b6c',
         '81e27dabfb6a1ef7', '2455925237c5b22e', 'da98d6c1e1b3c68d', '8ab9e40e78d74d72',
-        'f78a53f3504f318f', '232b9a6d6e02d281', '87f119dafa69c7a6', '926ded9dead3ca31',
-        '08f2027944590225', '3dbccc48460dd0ec', '320eaefbd19c5817', '7fd7aaedd17768d1'
+        'f78a53f3504f318f', '81bfcc4cbcf30118', '36644920ccde7f24', '926ded9dead3ca31',
+        '957046eee4d64972', '3dbccc48460dd0ec', '320eaefbd19c5817', '7fd7aaedd17768d1'
       ],
       'sohei/veryEasy': [
         'a0b73b38900c816c', '1f9632340b3289b0', '2d1421dfc3fd477b', 'b232e83338e13cc7',
@@ -185,8 +185,8 @@
         '6607059829e6df7c', 'ecc8408ffc38342b', '19fa48c21139b826', '69efd16ff1dd2d8b',
         'b01ee445bb9b59c9', 'b45089011ed8de0d', '3ba9f2026059a496', '9cc84cb3b0d9c977',
         'e02a01fd4779fdf1', 'a91195c46f34c300', 'ecc30f2f5eeaad5b', '6abd8b19b72a3e35',
-        '5b5c80220693f996', '35c5769f3f9f59eb', '63ba0bb96373c3e5', '0fa09fc26fea3856',
-        '81465f298bc85355', 'a341e7c88c314d3c', '86b1fe9677d0ab12', '75b1f9cd64ba6c51'
+        '5b5c80220693f996', '4598f71fc60f2bcb', '63ba0bb96373c3e5', '0fa09fc26fea3856',
+        '81465f298bc85355', 'a341e7c88c314d3c', '86b1fe9677d0ab12', 'e31222625c794c36'
       ],
       'flower/normal': [
         '29a1ca2796eb3c73', '116f1bf2e7b3ce2e', '621451872de5c3c3', '75c650cbed8d8d8f',

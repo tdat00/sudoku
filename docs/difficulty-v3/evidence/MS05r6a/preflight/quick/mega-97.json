@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["mega"],"filter":null,"exact":"mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > the size default stops after two attempts with a truthful two-warning shallow fallback","count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 190.2,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 20.9,
+    "tests": [
+      {"suite":"mega","name":"the size default stops after two attempts with a truthful two-warning shallow fallback","fullName":"mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > the size default stops after two attempts with a truthful two-warning shallow fallback","status":"pass","ms":20.518,"reason":"","error":null,"ordinal":97}
+    ],
+    "suites": [
+      {"name":"mega","total":1,"passed":1,"failed":0,"skipped":0,"ms":20.734}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=mega","--exact=mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > the size default stops after two attempts with a truthful two-warning shallow fallback","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\preflight\\quick\\mega-97.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

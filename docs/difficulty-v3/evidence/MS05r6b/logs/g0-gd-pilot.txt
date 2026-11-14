@@ -1,0 +1,10 @@
+veryEasy: 8 requests, mean 2.44 ms, median 1.215 ms, max 9.925 ms, exact 8
+easy: 8 requests, mean 171.204 ms, median 23.609 ms, max 1016.831 ms, exact 7
+normal: 8 requests, mean 212.574 ms, median 200.892 ms, max 682.189 ms, exact 7
+hard: 8 requests, mean 20.177 ms, median 21.739 ms, max 48.966 ms, exact 8
+expert: 8 requests, mean 24.963 ms, median 18.688 ms, max 104.461 ms, exact 8
+master: 8 requests, mean 67.739 ms, median 66.144 ms, max 116.843 ms, exact 8
+nightmare: 8 requests, mean 4128.292 ms, median 5064.633 ms, max 5841.107 ms, exact 3
+hell1: 8 requests, mean 382.861 ms, median 471.175 ms, max 684.593 ms, exact 8
+record: ..\docs\difficulty-v3\evidence\MS05r6b\gd\pilot.json
+MS05r6b exit=0 seconds=40.559

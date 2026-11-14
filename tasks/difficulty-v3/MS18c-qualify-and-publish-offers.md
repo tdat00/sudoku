@@ -46,6 +46,16 @@ Any proposal to retain an unqualified cell or raise a budget would change a reco
 An invalid/non-unique puzzle, unsound proof or wrong exact flag/warning is a correctness stop,
 not an availability miss that can be excused by hiding its cell.
 
+**PR-S2 remark — expected outcome under the existing rule, not a new decision.**
+Fable's answer (`92a7693`, `docs/difficulty-v3/clarifications-resolved.md`) confirms that cells
+missing the exact-hit threshold or their p95 budget are not offered: 36 of 40 exact hits, or
+90 of 100 where the existing protocol extends the cell, and p95 within the applicable budget.
+On the present numbers, non-offering is likely for **mega16 Nightmare** and possible for the other
+large-board Nightmare cells. This is an expectation, not a verdict assigned before final measurement:
+use the complete final qualification, keep the 40/100 protocol and do not prune early or grant a waiver.
+A hidden cell can be the honest v3 release outcome. The separately saved
+`docs/improve-generating/plan.md` is not authorized now and is not a prerequisite for publication.
+
 Reconcile all inherited availability items (including Killer Hard/Expert and large-grid Nightmare/
 hell1) with final verdicts. If a Killer calibration decision was requested at MS07e, apply only its
 recorded disposition; no weight change here. A hidden verdict needs no calibration to be legitimate.

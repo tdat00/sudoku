@@ -1,5 +1,22 @@
 name: Deploy GitHub Pages
 
+# The quick tier, then the deployment: the shared suites, the complete quick set of the generator (in the groups of
+# .github/scripts/generator-quick.json, which the first job checks: every quick suite and test in exactly one group,
+# none from tests/manual, and a suite added later fails the check until it has a group) and the complete quick set of
+# the player. The deployment waits for all of them.
+#
+# Not run here, and what replaces it (difficulty v3, MS05r6c; docs/difficulty-v3/evidence/MS05r6c/evidence.md):
+#  - The deep tier, generator/tests/mega-contract.js (14 requests of mega Nightmare, 6 relations): the reviewed records
+#    of MS05r5m (docs/difficulty-v3/evidence/MS05r5m/records), reconciled by MS05r6b (evidence/MS05r6b/deep); the live
+#    CV3 outcomes of MS05b3 (Addendum B1, evidence/MS05b3); the evidence of the later semantic tasks and MS18e on
+#    the current source.
+#  - The manual suites of generator/tests/manual and --all (variants, killer, greater-than, perf, difficulty,
+#    extra-regions, wordoku, jigsaw): GD of MS05r6b (evidence/MS05r6b/gd) and b3's manual corpora, E of MS05r6a
+#    (evidence/MS05r6a), and the final gates of MS07e (GD, GQ-first), MS17b, MS18c (qualification), MS18d (performance)
+#    and MS18e, which audits the final tree.
+#  - soak.js, perf.js and qualify.js are measuring tools. A suite added later has its group in generator-quick.json.
+# SG_TIME_FACTOR is not set (the harness uses 3 on CI), and every test job has a limit of at most 30 minutes.
+
 on:
   push:
     branches: [main]
@@ -20,6 +37,7 @@ jobs:
   test-core:
     name: Test core
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -35,21 +53,14 @@ jobs:
           suites=$(ls ../core/tests/suites | sed 's/\.test\.js$//' | paste -sd, -)
           node tests/node-runner.js --suite="$suites"
 
-  # The quick and the heavy suites together (--all), in parallel jobs of about 2 to 4 minutes each; the groups
-  # are in .github/scripts/generator-suites.sh (the group "rest" is every suite that no other group names).
-  test-generator:
-    name: Test generator (${{ matrix.name }})
-    needs: test-core
+  # The grouping of the quick tier is checked before any generator job starts, and the matrix comes from the same
+  # manifest the jobs run (so a group cannot be added to one and forgotten in the other).
+  plan-generator:
+    name: Plan generator tests
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - { group: sweep, name: variant sweep }
-          - { group: engine, name: techniques and killer }
-          - { group: rules, name: rule variants }
-          - { group: rating, name: rating, speed and pipeline }
-          - { group: rest, name: other suites }
+    timeout-minutes: 10
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -59,14 +70,43 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Run the generator tests
-        working-directory: generator
-        run: node tests/node-runner.js --suite="$(bash ../.github/scripts/generator-suites.sh ${{ matrix.group }})"
+      - name: Check the grouping of the quick tier
+        run: |
+          bash .github/scripts/generator-suites.sh selftest
+          bash .github/scripts/generator-suites.sh check
+
+      - name: Plan the generator jobs
+        id: plan
+        run: echo "matrix=$(bash .github/scripts/generator-suites.sh matrix)" >> "$GITHUB_OUTPUT"
+
+  test-generator:
+    name: Test generator (${{ matrix.name }})
+    needs: [test-core, plan-generator]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan-generator.outputs.matrix) }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      # The shards of the group, each its own node command; the step fails if any of them fails.
+      - name: Run the generator quick tests
+        env:
+          GROUP: ${{ matrix.group }}
+        run: bash .github/scripts/generator-suites.sh run "$GROUP"
 
   test-player:
     name: Test player
     needs: test-core
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Check out repository
         uses: actions/checkout@v7

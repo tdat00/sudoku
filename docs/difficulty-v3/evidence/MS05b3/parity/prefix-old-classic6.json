@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "kind": "manual-corpus-prefix",
+  "task": "MS05b3",
+  "side": "old",
+  "key": "classic6",
+  "suite": "variants",
+  "variantId": "classic6",
+  "level": "veryEasy",
+  "node": "v26.13.0",
+  "requests": 3,
+  "stoppedBySentinel": true,
+  "seconds": 0.02,
+  "source": {
+    "file": "variants.test.js",
+    "sha256": "8521a0ccc3876e5650652f68ec8ae50f676e85322a2cf0291c7f178323c16899"
+  },
+  "rows": [
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 1,
+        "trace": "off",
+        "variantId": "classic6"
+      },
+      "seed": 1,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 27,
+        "rawScore": 27,
+        "confidence": 0.8,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 18,
+        "techniqueCounts": {
+          "nakedSingle": 18
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,3,0,1,0,0,0,0,2,5,6,3,6,0,5,3,0,0,0,0,1,4,0,6,1,6,3,2,0,0,0,0,4,0,3,0],
+      "solution": [5,3,6,1,2,4,4,1,2,5,6,3,6,4,5,3,1,2,3,2,1,4,5,6,1,6,3,2,4,5,2,5,4,6,3,1],
+      "model": {
+        "variantId": "classic6",
+        "cellCount": 36,
+        "digits": 6
+      },
+      "digests": {
+        "model": {
+          "units": "f6f3b2ee3fe5dea1938981ba9846accf3ad708707a27dce9e03948102fba73bf",
+          "cellUnits": "2650da67a1a1755a237adac86f397930f00c014ef97752d60d35be3ecce2859e",
+          "peers": "e42bf801548243eec4fd49c3f56d82773f3f9d302fe2fe7450f7104f900a0dcf",
+          "unitMeta": "8dc309b2a04e6c4c076d4179fa0e6ad1368085bc17002907a03a7ec2a06466ae",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "e8153accddc42faacc38b5359c931995bf38e69ec15c2c6f1da10cf8b6fc149f",
+          "symbols": "f57cb12b75d05615ada55eedeac22bd951792f255976fbfc9ba7ae72bde00bab",
+          "fixedCells": "208fb33dee63dcc8993abaec57cfb5828ae928d8a1d2c9d1d911e4c3c1278045"
+        },
+        "digLog": "2457311fa5fcbd3281466f3042070825f73f55421f210f04e5b8cc24457cc18a",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "e733d941dd3816f3f1de075775dfd59f5b0f37c85ee368a4a15da2c0c36df580"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 2,
+        "trace": "off",
+        "variantId": "classic6"
+      },
+      "seed": 2,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 27,
+        "rawScore": 27,
+        "confidence": 0.8,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 18,
+        "techniqueCounts": {
+          "nakedSingle": 18
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,1,0,4,5,0,3,5,2,0,6,0,0,0,4,3,0,0,1,4,0,0,0,5,0,3,1,2,0,1,4,0,5,0,0],
+      "solution": [6,2,1,3,4,5,4,3,5,2,1,6,2,5,6,4,3,1,3,1,4,6,5,2,5,6,3,1,2,4,1,4,2,5,6,3],
+      "model": {
+        "variantId": "classic6",
+        "cellCount": 36,
+        "digits": 6
+      },
+      "digests": {
+        "model": {
+          "units": "f6f3b2ee3fe5dea1938981ba9846accf3ad708707a27dce9e03948102fba73bf",
+          "cellUnits": "2650da67a1a1755a237adac86f397930f00c014ef97752d60d35be3ecce2859e",
+          "peers": "e42bf801548243eec4fd49c3f56d82773f3f9d302fe2fe7450f7104f900a0dcf",
+          "unitMeta": "8dc309b2a04e6c4c076d4179fa0e6ad1368085bc17002907a03a7ec2a06466ae",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "e8153accddc42faacc38b5359c931995bf38e69ec15c2c6f1da10cf8b6fc149f",
+          "symbols": "f57cb12b75d05615ada55eedeac22bd951792f255976fbfc9ba7ae72bde00bab",
+          "fixedCells": "208fb33dee63dcc8993abaec57cfb5828ae928d8a1d2c9d1d911e4c3c1278045"
+        },
+        "digLog": "a2e07faea651314dbd59a63707efcfa03e13dda82de4c71d2261a6de42dca456",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "1c4378c48a12922b8be2b07636da64d7ac384ddc111fdd97a1b8a1bd6576259b"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 3,
+        "trace": "off",
+        "variantId": "classic6"
+      },
+      "seed": 3,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 27,
+        "rawScore": 27,
+        "confidence": 0.8,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 18,
+        "techniqueCounts": {
+          "nakedSingle": 18
+        },
+        "ratingVersion": 2
+      },
+      "givens": [5,0,1,6,0,0,0,0,6,5,2,0,0,3,0,1,0,4,1,0,4,0,6,0,0,6,3,2,0,0,0,0,5,4,0,6],
+      "solution": [5,2,1,6,4,3,3,4,6,5,2,1,6,3,2,1,5,4,1,5,4,3,6,2,4,6,3,2,1,5,2,1,5,4,3,6],
+      "model": {
+        "variantId": "classic6",
+        "cellCount": 36,
+        "digits": 6
+      },
+      "digests": {
+        "model": {
+          "units": "f6f3b2ee3fe5dea1938981ba9846accf3ad708707a27dce9e03948102fba73bf",
+          "cellUnits": "2650da67a1a1755a237adac86f397930f00c014ef97752d60d35be3ecce2859e",
+          "peers": "e42bf801548243eec4fd49c3f56d82773f3f9d302fe2fe7450f7104f900a0dcf",
+          "unitMeta": "8dc309b2a04e6c4c076d4179fa0e6ad1368085bc17002907a03a7ec2a06466ae",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "e8153accddc42faacc38b5359c931995bf38e69ec15c2c6f1da10cf8b6fc149f",
+          "symbols": "f57cb12b75d05615ada55eedeac22bd951792f255976fbfc9ba7ae72bde00bab",
+          "fixedCells": "208fb33dee63dcc8993abaec57cfb5828ae928d8a1d2c9d1d911e4c3c1278045"
+        },
+        "digLog": "f843c91922233f07f5121faca9c30bd21b0a60bda8d2685ffe7929e53465ae5a",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "11a78e628a255c7be456ba84a3a729a932f93f99dcbf1be4305f5a7c11f4b235"
+      }
+    }
+  ]
+}

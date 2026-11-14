@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "kind": "ir10-diagnostic",
+  "task": "MS05r6a",
+  "request": {
+    "variant": "butterfly",
+    "level": "normal",
+    "seed": 10946
+  },
+  "config": {
+    "allowance": 256,
+    "allowanceText": "256",
+    "maxAttempts": 8,
+    "attempts": "8",
+    "cellCount": 144,
+    "sizeDefaultAttempts": 4,
+    "sourceAllowance": 256
+  },
+  "argv": [
+    "--key=butterfly/normal",
+    "--seed=10946",
+    "--allowance=256",
+    "--attempts=8",
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\butterfly-normal-10946-a256-att8.json"
+  ],
+  "node": "v26.13.0",
+  "startedAt": "2026-11-14T02:48:38.270Z",
+  "hash": "e31222625c794c36",
+  "overrides": [],
+  "wallMs": 838.496,
+  "result": {
+    "attempts": 2,
+    "exact": true,
+    "required": true,
+    "score": 323,
+    "warnings": [],
+    "clues": 34,
+    "puzzleDigest": "1f7df007ac496468d6fd75d28554bed040fc23c78ca6ff93b1b62825bd764c66"
+  },
+  "work": [
+    {
+      "ratings": 268,
+      "proposals": 4154,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 71,
+      "proposals": 475,
+      "localSearches": [
+        {
+          "ratings": 59,
+          "shallowRatings": 59,
+          "shallowLimit": 256,
+          "capHit": null
+        }
+      ]
+    }
+  ]
+}

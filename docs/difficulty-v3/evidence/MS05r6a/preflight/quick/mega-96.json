@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["mega"],"filter":null,"exact":"mega > mega puzzles > mega12 nightmare: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit","count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 5379.3,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 5211.2,
+    "tests": [
+      {"suite":"mega","name":"mega12 nightmare: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit","fullName":"mega > mega puzzles > mega12 nightmare: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit","status":"pass","ms":5210.914,"reason":"","error":null,"ordinal":96}
+    ],
+    "suites": [
+      {"name":"mega","total":1,"passed":1,"failed":0,"skipped":0,"ms":5211.08}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=mega","--exact=mega > mega puzzles > mega12 nightmare: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\preflight\\quick\\mega-96.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

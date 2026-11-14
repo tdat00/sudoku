@@ -1,0 +1,28 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL steps: 54 passed, 3 failed  (11.17 s)
+
+Failures:
+  FAIL steps > stepView: the tiers, the badge and the lines > marks 12 compact and 15 details jumps over the 14 goldens, and one first rated puzzle per view
+       AssertionError: expected {compact: 13, details: 16} to equal {compact: 12, details: 15}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:849:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1045:24
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1044:18
+  FAIL steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1082:26
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1078:82)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  57 total, 54 passed, 3 failed, 0 skipped
+Time:   11.17 s running tests, 11.35 s total
+Results: docs/difficulty-v3/evidence/MS05r6a/pins/steps-run1.json

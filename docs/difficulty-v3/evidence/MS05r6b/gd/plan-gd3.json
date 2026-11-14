@@ -1,0 +1,240 @@
+[
+  {
+    "label": "gd-levels",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: levels",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\levels.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: pure computation on the level table); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\levels.json"
+  },
+  {
+    "label": "gd-spec9",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: spec(level, model) on a 9x9 board",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\spec9.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: pure computation on level specs); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\spec9.json"
+  },
+  {
+    "label": "gd-spec-other",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: spec on other boards, and difficultySupport",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\spec-other.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: pure computation on level specs); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\spec-other.json"
+  },
+  {
+    "label": "gd-qualification",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\qualification.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: fake workers, no real generation (check-list section 7: expected 1-15 seconds)); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\qualification.json"
+  },
+  {
+    "label": "gd-score-table",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: the Difficulty Score table (section 5.6)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\score-table.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: table lookups); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\score-table.json"
+  },
+  {
+    "label": "gd-score-v2",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: the score of rating v2",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\score-v2.json"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: rates fixed positions); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\score-v2.json"
+  },
+  {
+    "label": "gd-labelled",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: labelled puzzles (fixtures/rated.js)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\labelled.json"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: rates the labelled fixtures); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\labelled.json"
+  },
+  {
+    "label": "gd-removing",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\removing.json"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: two rating tests on fixed puzzles); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\removing.json"
+  },
+  {
+    "label": "gd-clue-floor",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: the clue floor of a variant (clueFloor)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\clue-floor.json"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: clue floors of every variant; builds models and may generate); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\clue-floor.json"
+  },
+  {
+    "label": "gd-oracle",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger: technique-bounded oracle",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\oracle.json"
+    ],
+    "projectionSeconds": 90,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: oracle runs on fixed puzzles); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\oracle.json"
+  },
+  {
+    "label": "gd-guarantees",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: guarantees",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\guarantees.json"
+    ],
+    "projectionSeconds": 120,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: generates several puzzles of normal, hard and nightmare (nightmare about 4-6 s each in the pilot)); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\guarantees.json"
+  },
+  {
+    "label": "gd-cap",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9))",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\cap.json"
+    ],
+    "projectionSeconds": 120,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: a few generations with a cap); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\cap.json"
+  },
+  {
+    "label": "gd-unreachable",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: when the level cannot be reached",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\unreachable.json"
+    ],
+    "projectionSeconds": 120,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: a few generations that end in a fallback); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\unreachable.json"
+  },
+  {
+    "label": "gd-safety",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: safety net against a technique bug (risk R3)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\safety.json"
+    ],
+    "projectionSeconds": 120,
+    "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: three generations with a faulty technique); the whole three-suite GD run of MS04 took 338 s",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\safety.json"
+  }
+]

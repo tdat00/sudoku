@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "kind": "ir10-diagnostic",
+  "task": "MS05r6a",
+  "request": {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "seed": 1597
+  },
+  "config": {
+    "allowance": null,
+    "allowanceText": "none",
+    "maxAttempts": null,
+    "attempts": "default",
+    "cellCount": 81,
+    "sizeDefaultAttempts": 8,
+    "sourceAllowance": 256
+  },
+  "argv": [
+    "--key=diagonalX/nightmare",
+    "--seed=1597",
+    "--allowance=none",
+    "--attempts=default",
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\diagonalX-nightmare-1597-noallow-default.json"
+  ],
+  "node": "v26.13.0",
+  "startedAt": "2026-11-14T02:48:28.691Z",
+  "hash": "14ba46aac1d27f96",
+  "overrides": [],
+  "wallMs": 4749.428,
+  "result": {
+    "attempts": 3,
+    "exact": true,
+    "required": true,
+    "score": 2323,
+    "warnings": [],
+    "clues": 22,
+    "puzzleDigest": "1a8f449839a4320006b93c27a3e89dc0fd5ca576cdd89a5e25e2babe56b39678"
+  },
+  "work": [
+    {
+      "ratings": 718,
+      "proposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 678,
+          "shallowRatings": 678,
+          "shallowLimit": null,
+          "capHit": "proposals"
+        }
+      ]
+    },
+    {
+      "ratings": 411,
+      "proposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 381,
+          "shallowRatings": 381,
+          "shallowLimit": null,
+          "capHit": "proposals"
+        }
+      ]
+    },
+    {
+      "ratings": 309,
+      "proposals": 1625,
+      "localSearches": [
+        {
+          "ratings": 273,
+          "shallowRatings": 273,
+          "shallowLimit": null,
+          "capHit": null
+        }
+      ]
+    }
+  ]
+}

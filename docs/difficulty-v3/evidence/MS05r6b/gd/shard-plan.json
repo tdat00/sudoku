@@ -1,0 +1,241 @@
+{
+  "schema": 1,
+  "note": "The classic9 GD shards of MS05r6b: every test of generator/tests/manual/difficulty.test.js (154) in exactly one shard, from the registration-only inventory gd/difficulty-inventory.json. Level shards use the filter prefix time) > <level> > (the anchored describe of the per-level group), the 14 non-batch groups the prefix difficulty > plus their literal name, and the confusion matrix, which reads every offered level, has its own selector. A shard whose projection exceeds 450 s is not launched: it stays an explicit outstanding population.",
+  "apps": {
+    "generator": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r6b/gd/difficulty-inventory.json",
+      "shards": [
+        {
+          "id": "classic9-nightmare",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=time) > nightmare >"
+          ],
+          "projectionSeconds": 449,
+          "projectionBasis": "MEASURED, pooled: the pilot (gd/pilot.json: 8 same-seed requests, mean 4,128 ms) and MS05r4 selection/256 (12 requests of classic9 nightmare at the same default attempts and allowance, mean 4,554 ms): 20 requests, mean 4.384 s x 100 requests = 438.4 s, plus 10 s for the checks of 100 puzzles and the start-up = 448.4 s, rounded up to 449 s, just under the 450 s limit, so launched alone under the unchanged 540 s ceiling"
+        },
+        {
+          "id": "classic9-veryEasy",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=time) > veryeasy >"
+          ],
+          "projectionSeconds": 11,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 2.44 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 10.5 s, rounded up"
+        },
+        {
+          "id": "classic9-easy",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=time) > easy >"
+          ],
+          "projectionSeconds": 45,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 171.2 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 44.2 s, rounded up"
+        },
+        {
+          "id": "classic9-normal",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=time) > normal >"
+          ],
+          "projectionSeconds": 53,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 212.6 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 52.5 s, rounded up"
+        },
+        {
+          "id": "classic9-hard",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=time) > hard >"
+          ],
+          "projectionSeconds": 15,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 20.2 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 14 s, rounded up"
+        },
+        {
+          "id": "classic9-expert",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=time) > expert >"
+          ],
+          "projectionSeconds": 16,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 25 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 15 s, rounded up"
+        },
+        {
+          "id": "classic9-master",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=time) > master >"
+          ],
+          "projectionSeconds": 24,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 67.7 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 23.5 s, rounded up"
+        },
+        {
+          "id": "classic9-hell1",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=time) > hell1 >"
+          ],
+          "projectionSeconds": 26,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 382.9 ms) x 20 requests x 2 + 10 s for the eight checks and the start-up = 25.3 s, rounded up"
+        },
+        {
+          "id": "levels",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > difficulty: levels"
+          ],
+          "projectionSeconds": 30,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: pure computation on the level table); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "spec9",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > difficulty: spec(level, model) on a 9x9 board"
+          ],
+          "projectionSeconds": 30,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: pure computation on level specs); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "spec-other",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > difficulty: spec on other boards, and difficultySupport"
+          ],
+          "projectionSeconds": 30,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: pure computation on level specs); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "qualification",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers)"
+          ],
+          "projectionSeconds": 30,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: fake workers, no real generation (check-list section 7: expected 1-15 seconds)); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "clue-floor",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > difficulty: the clue floor of a variant (clueFloor)"
+          ],
+          "projectionSeconds": 60,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: clue floors of every variant; builds models and may generate); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "score-v2",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > difficulty: the score of rating v2"
+          ],
+          "projectionSeconds": 60,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: rates fixed positions); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "score-table",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > difficulty: the Difficulty Score table (section 5.6)"
+          ],
+          "projectionSeconds": 30,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: table lookups); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "labelled",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > difficulty: labelled puzzles (fixtures/rated.js)"
+          ],
+          "projectionSeconds": 60,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: rates the labelled fixtures); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "removing",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)"
+          ],
+          "projectionSeconds": 60,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: two rating tests on fixed puzzles); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "oracle",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > digger: technique-bounded oracle"
+          ],
+          "projectionSeconds": 90,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: oracle runs on fixed puzzles); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "guarantees",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > digger.generate: guarantees"
+          ],
+          "projectionSeconds": 120,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: generates several puzzles of normal, hard and nightmare (nightmare about 4-6 s each in the pilot)); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "cap",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9))"
+          ],
+          "projectionSeconds": 120,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: a few generations with a cap); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "unreachable",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > digger.generate: when the level cannot be reached"
+          ],
+          "projectionSeconds": 120,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: a few generations that end in a fallback); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "safety",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=difficulty > digger.generate: safety net against a technique bug (risk R3)"
+          ],
+          "projectionSeconds": 120,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: three generations with a faulty technique); the whole three-suite GD run of MS04 took 338 s"
+        },
+        {
+          "id": "confusion-matrix",
+          "args": [
+            "tests/node-runner.js",
+            "--suite=difficulty",
+            "--filter=is a confusion matrix"
+          ],
+          "projectionSeconds": 500,
+          "projectionBasis": "projected from the pilot: the test reads the batches of all eight offered levels in one process: 413 s (nightmare, pilot mean 4.128 s x 100) to 455 s (MS05r4 mean 4.554 s x 100) plus about 58 s for the other seven levels (pilot means x counts) = 470-515 s, above 450 s: not launched"
+        }
+      ]
+    }
+  }
+}

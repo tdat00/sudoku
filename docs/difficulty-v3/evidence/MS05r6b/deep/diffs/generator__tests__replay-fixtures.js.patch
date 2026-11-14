@@ -1,0 +1,19 @@
+diff --git a/generator/tests/replay-fixtures.js b/generator/tests/replay-fixtures.js
+index e8a2db8..73e211c 100644
+--- a/generator/tests/replay-fixtures.js
++++ b/generator/tests/replay-fixtures.js
+@@ -5 +5 @@
+- * Regenerates tests/fixtures/replay-wire.js: the SG.replay.toPlainWire data of the four golden requests (G09
++ * Regenerates tests/fixtures/replay-wire.js: the SG.replay.toPlainWire data of the five golden requests (G09
+@@ -7,2 +7,4 @@
+- * 3115968914) that take about 23 seconds to generate, too slow for a quick suite. The replay suite reads
+- * these saved results instead of generating them.
++ * 3115968914, G13 Samurai Nightmare 42) that take 20 seconds or more to generate, too slow for a quick suite.
++ * The replay suite reads these saved results instead of generating them. G13 is saved since MS05r6a
++ * (S-OD3 (d)): its request and the 120,000 ms budget of this recorder are unchanged, and it uses the
++ * default attempts of its board (2 for the 369 cells of a Samurai).
+@@ -42,2 +44,2 @@ const HEADER = [
+-  ' * SG.fixtures.replayWire = { G09, G10, G11, G12 }: the SG.replay.toPlainWire data (timings removed) of four',
+-  ' * golden requests that are too slow to generate in a quick suite.',
++  ' * SG.fixtures.replayWire = { G09, G10, G11, G12, G13 }: the SG.replay.toPlainWire data (timings',
++  ' * removed) of five golden requests that are too slow to generate in a quick suite.',

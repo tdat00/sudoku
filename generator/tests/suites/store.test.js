@@ -68,6 +68,7 @@
       expect(d.symbolMode).toBe('digits');
       expect(d.digOrder).toBe('random');
       expect(d.maxAttempts).toBe(8);
+      expect(d.attemptsExplicit).toBe(false);
       expect(d.showSolution).toBe(false);
       expect(d.variantOptions).toEqual({});
       expect(d.auto).toBe(false);
@@ -836,8 +837,8 @@
       expect(prefs).toEqual({ lang: 'en', theme: 'high-contrast', fontSize: 'large',
         reducedMotion: true, colorAuxSymbol: false });
       var last = JSON.parse(storage.data['sg.lastConfig.v1']);
-      expect(Object.keys(last).sort()).toEqual(['difficulty', 'digOrder', 'maxAttempts', 'seed',
-        'showSolution', 'symbolMode', 'symmetry', 'variantId', 'variantOptions']);
+      expect(Object.keys(last).sort()).toEqual(['attemptsExplicit', 'difficulty', 'digOrder', 'maxAttempts',
+        'seed', 'showSolution', 'symbolMode', 'symmetry', 'variantId', 'variantOptions']);
       expect(last.variantId).toBe('killer');
       expect(last.difficulty).toBe('hard');
       expect(last.seed).toBe('31');
@@ -916,6 +917,482 @@
       var store = makeStore({ storage: storage });
       store.set({ seed: '1' }, { persist: false });
       expect(Object.keys(storage.data)).toEqual([]);
+    });
+  });
+
+  // The default number of attempts follows the board (SG.digger.defaultMaxAttempts); the state says whether
+  // the number is that default (`attemptsExplicit` false: it follows the variant) or a chosen one (true: it
+  // stays). MS05r5p, CV6-03 (c2).
+  describe('store: the default attempts by board size and the intent of the number (MS05r5p)', function () {
+    var CONTROLS = { source: 'controls' };
+    var REPLAY = { source: 'app' };
+    var LARGE = { mega12: 4, butterfly: 4, flower: 2, mega16: 2, sohei: 2, samurai: 2 };
+
+    function legacy(config) {
+      return memoryStorage({ 'sg.lastConfig.v1': JSON.stringify(Object.assign({ v: 1 }, config)) });
+    }
+
+    function saved(storage) {
+      return JSON.parse(storage.data['sg.lastConfig.v1']);
+    }
+
+    function loaded(storage, search) {
+      var store = makeStore({ storage: storage, env: env(search) });
+      store.load();
+      return store;
+    }
+
+    function shown(store) {
+      var s = store.get();
+      return [s.variantId, s.maxAttempts, s.attemptsExplicit];
+    }
+
+    it('MS05r5p-T01: the default of every board is the policy of its size, read from the definition', function () {
+      ready();
+      ids().forEach(function (id) {
+        var expected = LARGE[id] !== undefined ? LARGE[id] : 8;
+        var state = S.sanitize({ variantId: id });
+        expect([id, S.defaultAttempts(id)]).toEqual([id, expected]);
+        expect([id, state.maxAttempts, state.attemptsExplicit]).toEqual([id, expected, false]);
+        expect([id, S.toConfig({ variantId: id }).maxAttempts]).toEqual([id, expected]);
+      });
+      expect(S.defaultAttempts('nope')).toBe(8);
+      expect(S.defaultAttempts(undefined)).toBe(8);
+      expect(S.defaults().maxAttempts).toBe(8);
+      expect(S.MAX_ATTEMPTS).toEqual({ min: 1, max: 20 });
+    });
+
+    it('MS05r5p-T01: a board that declares its cells gets its policy without a model being built', function () {
+      ready();
+      var def = {
+        id: 'fakeBig', i18nKey: 'variant.fakeBig', group: 'test', digits: 9, cellCount: 150,
+        difficultySupport: ['easy'], defaultSymbolMode: 'digits', symbolModes: ['digits'], options: [],
+        build: function () { throw new Error('not built'); }
+      };
+      SG.variants.register(def);
+      try {
+        expect(S.defaultAttempts('fakeBig')).toBe(2);
+        var store = makeStore();
+        store.set({ variantId: 'fakeBig' });
+        expect(shown(store)).toEqual(['fakeBig', 2, false]);
+        expect(S.toConfig(store.get()).maxAttempts).toBe(2);
+      } finally {
+        SG.variants.unregister('fakeBig');
+      }
+    });
+
+    it('MS05r5p-T04: in default mode the number follows the board; a chosen number stays across variants',
+      function () {
+        ready();
+        var store = makeStore();
+        expect(shown(store)).toEqual(['classic9', 8, false]);
+        store.set({ variantId: 'mega16' }, CONTROLS);
+        expect(shown(store)).toEqual(['mega16', 2, false]);
+        store.set({ variantId: 'mega12' }, CONTROLS);
+        expect(shown(store)).toEqual(['mega12', 4, false]);
+        store.set({ variantId: 'killer' }, CONTROLS);
+        expect(shown(store)).toEqual(['killer', 8, false]);
+        store.set({ variantId: 'samurai' });
+        expect(shown(store)).toEqual(['samurai', 2, false]);
+
+        store.set({ maxAttempts: 5 }, CONTROLS);
+        expect(shown(store)).toEqual(['samurai', 5, true]);
+        store.set({ variantId: 'classic9' }, CONTROLS);
+        expect(shown(store)).toEqual(['classic9', 5, true]);
+        store.set({ variantId: 'mega12' }, CONTROLS);
+        expect(shown(store)).toEqual(['mega12', 5, true]);
+        store.set({ maxAttempts: 'x' }, CONTROLS);
+        expect(shown(store)).toEqual(['mega12', 5, true]);
+        store.set({ maxAttempts: 99 }, CONTROLS);
+        expect(shown(store)).toEqual(['mega12', 20, true]);
+      });
+
+    it('MS05r5p-T04: a number equal to the default of the board is still a chosen one, not a default',
+      function () {
+        ready();
+        [{}, CONTROLS, { source: 'a11y' }].forEach(function (meta) {
+          var store = makeStore();
+          store.set({ variantId: 'mega16' });
+          store.set({ maxAttempts: 2 }, meta);
+          expect(shown(store)).toEqual(['mega16', 2, true]);
+          store.set({ variantId: 'classic9' });
+          expect(shown(store)).toEqual(['classic9', 2, true]);
+        });
+        var eight = makeStore();
+        eight.set({ maxAttempts: 8 }, CONTROLS);
+        eight.set({ variantId: 'mega16' }, CONTROLS);
+        expect(shown(eight)).toEqual(['mega16', 8, true]);
+        eight.reset();
+        expect(shown(eight)).toEqual(['classic9', 8, false]);
+        eight.set({ variantId: 'mega12' });
+        expect(shown(eight)).toEqual(['mega12', 4, false]);
+      });
+
+    it('MS05r5p-T04: a link without attempts takes the default of its own variant; attempts is a chosen number',
+      function () {
+        ready();
+        var plain = S.parseUrl('?v=mega16&d=veryEasy');
+        expect([plain.maxAttempts, plain.attemptsExplicit]).toEqual([2, false]);
+        expect(S.toSearchString(plain)).toBe('?v=mega16&d=veryEasy');
+        expect(S.parseUrl(S.toSearchString(plain))).toEqual(plain);
+        expect(S.parseUrl('?v=samurai&attempts=abc').maxAttempts).toBe(2);
+        expect(S.parseUrl('?v=mega12&attempts=zz').attemptsExplicit).toBe(false);
+        expect(S.toUrlParams(S.defaults()).attempts).toBeUndefined();
+        ['?v=mega16&attempts=8', '?v=mega16&attempts=2', '?attempts=8&v=butterfly', '?v=classic9&attempts=8',
+          '?v=classic9&attempts=5'].forEach(function (search) {
+          var s = S.parseUrl(search);
+          expect([search, s.attemptsExplicit]).toEqual([search, true]);
+          expect([search, S.toUrlParams(s).attempts]).toEqual([search, String(s.maxAttempts)]);
+          expect(S.parseUrl(S.toSearchString(s))).toEqual(s);
+          expect(S.parseUrl(S.shareUrl(s, 'x'))).toEqual(s);
+          expect(S.toConfig(s).maxAttempts).toBe(s.maxAttempts);
+        });
+        expect(S.parseUrl('?v=mega16&attempts=8').maxAttempts).toBe(8);
+        expect(S.parseUrl('?v=classic9&attempts=8').attemptsExplicit).toBe(true);
+        var shared = S.shareUrl(S.parseUrl('?v=mega16&d=hard&seed=3'), 'https://example.org/');
+        expect(shared).toBe('https://example.org/?v=mega16&d=hard&seed=3&sym=rotational180&mode=digits');
+      });
+
+    it('MS05r5p-T04: the intent is saved with the configuration and survives a reload', function () {
+      ready();
+      var storage = memoryStorage();
+      var first = makeStore({ storage: storage });
+      first.set({ variantId: 'mega16' });
+      expect(saved(storage).maxAttempts).toBe(2);
+      expect(saved(storage).attemptsExplicit).toBe(false);
+      expect(shown(loaded(storage))).toEqual(['mega16', 2, false]);
+      first.set({ maxAttempts: 8 }, CONTROLS);
+      expect([saved(storage).maxAttempts, saved(storage).attemptsExplicit]).toEqual([8, true]);
+      var again = loaded(storage);
+      expect(shown(again)).toEqual(['mega16', 8, true]);
+      again.set({ variantId: 'mega12' });
+      expect(shown(again)).toEqual(['mega12', 8, true]);
+      expect(shown(loaded(storage))).toEqual(['mega12', 8, true]);
+    });
+
+    it('MS05r5p-T04: a record from before the size defaults moves a stored 8 of a larger board to the default, ' +
+      'once', function () {
+      ready();
+      [['mega16', 2], ['samurai', 2], ['sohei', 2], ['flower', 2], ['mega12', 4], ['butterfly', 4]]
+        .forEach(function (pair) {
+          var storage = legacy({ variantId: pair[0], difficulty: 'veryEasy', maxAttempts: 8 });
+          var store = loaded(storage);
+          expect([pair[0], shown(store)]).toEqual([pair[0], [pair[0], pair[1], false]]);
+          expect(S.toConfig(store.get()).maxAttempts).toBe(pair[1]);
+          // The next save writes the marker; reading it again changes nothing.
+          store.set({ seed: '1' });
+          expect([saved(storage).maxAttempts, saved(storage).attemptsExplicit]).toEqual([pair[1], false]);
+          expect(shown(loaded(storage))).toEqual([pair[0], pair[1], false]);
+        });
+      // Another stored number is the user's: kept, and chosen.
+      var five = legacy({ variantId: 'mega16', maxAttempts: 5 });
+      expect(shown(loaded(five))).toEqual(['mega16', 5, true]);
+      var twenty = legacy({ variantId: 'samurai', maxAttempts: '12' });
+      expect(shown(loaded(twenty))).toEqual(['samurai', 12, true]);
+      // A stored 8 is read as the default on every board, also where it is the board's own number: the record
+      // cannot tell a chosen 8 from the old default (CV6-04 (b)).
+      var small = legacy({ variantId: 'classic9', maxAttempts: 8 });
+      var kept = loaded(small);
+      expect(shown(kept)).toEqual(['classic9', 8, false]);
+      // No number, or a junk number, is a default.
+      expect(shown(loaded(legacy({ variantId: 'mega16' })))).toEqual(['mega16', 2, false]);
+      expect(shown(loaded(legacy({ variantId: 'mega12', maxAttempts: 'many' })))).toEqual(['mega12', 4, false]);
+    });
+
+    it('MS05r5p-T04: a saved explicit 8 on a larger board is not migrated again; a saved default follows ' +
+      'the policy', function () {
+      ready();
+      var explicit = legacy({ variantId: 'mega16', maxAttempts: 8, attemptsExplicit: true });
+      expect(shown(loaded(explicit))).toEqual(['mega16', 8, true]);
+      var store = makeStore({ storage: legacy({ variantId: 'mega16', maxAttempts: 8 }) });
+      store.load();
+      expect(shown(store)).toEqual(['mega16', 2, false]);
+      store.set({ maxAttempts: 8 }, CONTROLS);
+      expect(shown(store)).toEqual(['mega16', 8, true]);
+      var storage = memoryStorage({ 'sg.lastConfig.v1': JSON.stringify(Object.assign(
+        { v: 1 }, { variantId: 'mega16', maxAttempts: 8 }, { attemptsExplicit: false })) });
+      expect(shown(loaded(storage))).toEqual(['mega16', 2, false]);
+      var junkMarker = legacy({ variantId: 'mega16', maxAttempts: 8, attemptsExplicit: 'yes' });
+      expect(shown(loaded(junkMarker))).toEqual(['mega16', 2, false]);
+      var noNumber = legacy({ variantId: 'mega16', attemptsExplicit: true });
+      expect(shown(loaded(noNumber))).toEqual(['mega16', 2, false]);
+    });
+
+    it('MS05r5p-CV6-04: an unmarked legacy 8 on a small board is the default and follows every later switch',
+      function () {
+        ready();
+        var storage = legacy({ variantId: 'classic9', difficulty: 'veryEasy', maxAttempts: 8 });
+        var store = loaded(storage);
+        expect(shown(store)).toEqual(['classic9', 8, false]);
+        expect(S.toConfig(store.get()).maxAttempts).toBe(8);
+        store.set({ variantId: 'mega12' }, CONTROLS);
+        expect(shown(store)).toEqual(['mega12', 4, false]);
+        expect(S.toConfig(store.get()).maxAttempts).toBe(4);
+        store.set({ variantId: 'mega16' }, CONTROLS);
+        expect(shown(store)).toEqual(['mega16', 2, false]);
+        expect(S.toConfig(store.get()).maxAttempts).toBe(2);
+        store.set({ variantId: 'classic9' }, CONTROLS);
+        expect(shown(store)).toEqual(['classic9', 8, false]);
+        expect(S.toConfig(store.get()).maxAttempts).toBe(8);
+        // Every board is migrated the same way, whatever its own number is.
+        ids().forEach(function (id) {
+          var other = loaded(legacy({ variantId: id, maxAttempts: 8 }));
+          expect([id, shown(other)]).toEqual([id, [id, S.defaultAttempts(id), false]]);
+          other.set({ variantId: 'samurai' });
+          expect([id, shown(other)]).toEqual([id, ['samurai', 2, false]]);
+        });
+      });
+
+    it('MS05r5p-CV6-04: the migrated state is saved with the default marker, before and after a large-board switch',
+      function () {
+        ready();
+        var storage = legacy({ variantId: 'classic9', difficulty: 'veryEasy', maxAttempts: 8 });
+        var first = loaded(storage);
+        // Still on the small board with the number 8: the first save writes the marker.
+        first.set({ seed: '7' });
+        expect([saved(storage).maxAttempts, saved(storage).attemptsExplicit]).toEqual([8, false]);
+        var second = loaded(storage);
+        expect(shown(second)).toEqual(['classic9', 8, false]);
+        second.set({ variantId: 'mega12' }, CONTROLS);
+        expect(shown(second)).toEqual(['mega12', 4, false]);
+        expect([saved(storage).maxAttempts, saved(storage).attemptsExplicit]).toEqual([4, false]);
+        // After the switch: the saved marker keeps the next switch following the policy.
+        var third = loaded(storage);
+        expect(shown(third)).toEqual(['mega12', 4, false]);
+        third.set({ variantId: 'mega16' }, CONTROLS);
+        expect(shown(third)).toEqual(['mega16', 2, false]);
+        expect(shown(loaded(storage))).toEqual(['mega16', 2, false]);
+        var back = loaded(storage);
+        back.set({ variantId: 'classic9' }, CONTROLS);
+        expect(shown(back)).toEqual(['classic9', 8, false]);
+        expect(shown(loaded(storage))).toEqual(['classic9', 8, false]);
+      });
+
+    it('MS05r5p-CV6-04: a marked explicit 8 on a small board stays chosen across a switch and a reload',
+      function () {
+        ready();
+        var storage = legacy({ variantId: 'classic9', maxAttempts: 8, attemptsExplicit: true });
+        var store = loaded(storage);
+        expect(shown(store)).toEqual(['classic9', 8, true]);
+        store.set({ variantId: 'mega16' }, CONTROLS);
+        expect(shown(store)).toEqual(['mega16', 8, true]);
+        expect([saved(storage).maxAttempts, saved(storage).attemptsExplicit]).toEqual([8, true]);
+        var again = loaded(storage);
+        expect(shown(again)).toEqual(['mega16', 8, true]);
+        again.set({ variantId: 'mega12' }, CONTROLS);
+        expect(shown(again)).toEqual(['mega12', 8, true]);
+        again.set({ variantId: 'classic9' }, CONTROLS);
+        expect(shown(loaded(storage))).toEqual(['classic9', 8, true]);
+      });
+
+    it('MS05r5p-CV6-04: entering 8 after the migration is a chosen number that survives a reload', function () {
+      ready();
+      var small = legacy({ variantId: 'classic9', maxAttempts: 8 });
+      var store = loaded(small);
+      expect(shown(store)).toEqual(['classic9', 8, false]);
+      store.set({ maxAttempts: 8 }, CONTROLS);
+      expect(shown(store)).toEqual(['classic9', 8, true]);
+      expect([saved(small).maxAttempts, saved(small).attemptsExplicit]).toEqual([8, true]);
+      var reloaded = loaded(small);
+      expect(shown(reloaded)).toEqual(['classic9', 8, true]);
+      reloaded.set({ variantId: 'mega16' }, CONTROLS);
+      expect(shown(reloaded)).toEqual(['mega16', 8, true]);
+      expect(shown(loaded(small))).toEqual(['mega16', 8, true]);
+
+      // The same from a large board, where the migrated number was 2.
+      var large = legacy({ variantId: 'mega16', maxAttempts: 8 });
+      var other = loaded(large);
+      expect(shown(other)).toEqual(['mega16', 2, false]);
+      other.set({ maxAttempts: 8 }, CONTROLS);
+      expect(shown(loaded(large))).toEqual(['mega16', 8, true]);
+    });
+
+    it('MS05r5p-CV6-04: a legacy 8 with a missing or unknown variant loads as the default of the fallback variant',
+      function () {
+        ready();
+        var fallback = S.defaults().variantId;
+        [{}, { variantId: 'nope' }, { variantId: 42 }, { variantId: null }, { variantId: '' }]
+          .forEach(function (extra) {
+            var storage = legacy(Object.assign({ maxAttempts: 8 }, extra));
+            var store = loaded(storage);
+            var label = JSON.stringify(extra);
+            expect([label, shown(store)]).toEqual([label, [fallback, S.defaultAttempts(fallback), false]]);
+            expect([label, S.toConfig(store.get()).maxAttempts]).toEqual([label, S.defaultAttempts(fallback)]);
+            store.set({ variantId: 'mega16' }, CONTROLS);
+            expect([label, shown(store)]).toEqual([label, ['mega16', 2, false]]);
+          });
+      });
+
+    it('MS05r5p-CV6-04: loading the same unmarked legacy record twice, with no save between, gives the same state',
+      function () {
+        ready();
+        [{ variantId: 'classic9', maxAttempts: 8 }, { variantId: 'mega16', maxAttempts: 8 },
+          { variantId: 'mega12', maxAttempts: 5 }].forEach(function (record) {
+          var storage = legacy(record);
+          var before = storage.data['sg.lastConfig.v1'];
+          var first = loaded(storage);
+          var second = loaded(storage);
+          var label = JSON.stringify(record);
+          expect([label, second.get()]).toEqual([label, first.get()]);
+          // Nothing was written by loading: the record is still unmarked and is read the same way again.
+          expect([label, storage.data['sg.lastConfig.v1']]).toEqual([label, before]);
+          expect([label, loaded(storage).get()]).toEqual([label, first.get()]);
+          // The marker comes with the next ordinary save.
+          second.set({ seed: '3' });
+          expect([label, typeof saved(storage).attemptsExplicit]).toEqual([label, 'boolean']);
+          expect([label, shown(loaded(storage))]).toEqual([label, shown(first)]);
+        });
+      });
+
+    it('MS05r5p-T04: the URL outranks what is stored, and an attempts parameter is not migrated', function () {
+      ready();
+      var stored = legacy({ variantId: 'mega16', maxAttempts: 8 });
+      expect(shown(loaded(stored, '?lang=vi'))).toEqual(['mega16', 2, false]);
+      SG.i18n.setLocale('en');
+      expect(shown(loaded(stored, '?v=mega16&attempts=8'))).toEqual(['mega16', 8, true]);
+      expect(shown(loaded(stored, '?v=samurai'))).toEqual(['samurai', 2, false]);
+      var chosen = legacy({ variantId: 'mega16', maxAttempts: 5, attemptsExplicit: true });
+      expect(shown(loaded(chosen, '?v=mega12'))).toEqual(['mega12', 4, false]);
+      expect(shown(loaded(chosen, '?v=mega12&attempts=3'))).toEqual(['mega12', 3, true]);
+      expect(shown(loaded(chosen))).toEqual(['mega16', 5, true]);
+    });
+
+    it('MS05r5p-T04: blocked or full storage keeps the intent in memory, and an unwritten record migrates the ' +
+      'same way every time', function () {
+      ready();
+      var blocked = makeStore({ storage: blockedStorage() });
+      expect(function () { blocked.load(); }).not.toThrow();
+      blocked.set({ variantId: 'mega16' });
+      expect(shown(blocked)).toEqual(['mega16', 2, false]);
+      blocked.set({ maxAttempts: 8 }, CONTROLS);
+      blocked.load();
+      expect(shown(blocked)).toEqual(['mega16', 8, true]);
+      expect(blocked.persistent()).toBe(false);
+
+      var record = JSON.stringify({ v: 1, variantId: 'mega16', maxAttempts: 8 });
+      var readOnly = {
+        getItem: function (key) { return key === 'sg.lastConfig.v1' ? record : null; },
+        setItem: function () { throw new Error('QuotaExceededError'); },
+        removeItem: function () {}
+      };
+      var one = makeStore({ storage: readOnly });
+      one.load();
+      expect(shown(one)).toEqual(['mega16', 2, false]);
+      expect(function () { one.set({ difficulty: 'hard' }); }).not.toThrow();
+      expect(shown(one)).toEqual(['mega16', 2, false]);
+      var two = makeStore({ storage: readOnly });
+      two.load();
+      expect(shown(two)).toEqual(['mega16', 2, false]);
+    });
+
+    it('MS05r5p-T04: a replay (source app) keeps its recorded number and the intent it found', function () {
+      ready();
+      // Default mode: a classic9 entry at 8 equals the default of its board, so the mode stays default.
+      var a = makeStore();
+      a.set({ variantId: 'classic9', maxAttempts: 8, seed: '5' }, REPLAY);
+      expect(shown(a)).toEqual(['classic9', 8, false]);
+      a.set({ variantId: 'mega16' }, CONTROLS);
+      expect(shown(a)).toEqual(['mega16', 2, false]);
+      // An older mega16 entry at 8 is not the default of mega16: it runs 8 and is shown as a chosen 8.
+      a.set({ variantId: 'mega16', maxAttempts: 8 }, REPLAY);
+      expect(shown(a)).toEqual(['mega16', 8, true]);
+      expect(S.toConfig(a.get()).maxAttempts).toBe(8);
+      // Chosen mode: a number equal to the replayed board's default stays chosen, with that number.
+      var b = makeStore();
+      b.set({ maxAttempts: 5 }, CONTROLS);
+      b.set({ variantId: 'mega16', maxAttempts: 2 }, REPLAY);
+      expect(shown(b)).toEqual(['mega16', 2, true]);
+      b.set({ variantId: 'butterfly' }, CONTROLS);
+      expect(shown(b)).toEqual(['butterfly', 2, true]);
+      // A replay never turns a chosen number into a default.
+      var c = makeStore();
+      c.set({ variantId: 'mega16' });
+      c.set({ maxAttempts: 8 }, CONTROLS);
+      c.set({ variantId: 'classic9', maxAttempts: 8 }, REPLAY);
+      expect(shown(c)).toEqual(['classic9', 8, true]);
+      c.set({ variantId: 'mega16' }, CONTROLS);
+      expect(shown(c)).toEqual(['mega16', 8, true]);
+      // Default mode on a large board: a smaller board's entry at its own default keeps the mode.
+      var d = makeStore();
+      d.set({ variantId: 'mega12' });
+      d.set({ variantId: 'classic9', maxAttempts: 8 }, REPLAY);
+      expect(shown(d)).toEqual(['classic9', 8, false]);
+      d.set({ variantId: 'mega12' }, CONTROLS);
+      expect(shown(d)).toEqual(['mega12', 4, false]);
+      // Any other recorded number is a chosen one.
+      d.set({ variantId: 'mega12', maxAttempts: 3 }, REPLAY);
+      expect(shown(d)).toEqual(['mega12', 3, true]);
+      // A replay without a number leaves the intent alone; the same number from a control is a new choice.
+      var e = makeStore();
+      e.set({ variantId: 'samurai' });
+      e.set({ seed: '9' }, REPLAY);
+      expect(shown(e)).toEqual(['samurai', 2, false]);
+      e.set({ maxAttempts: 2 }, CONTROLS);
+      expect(shown(e)).toEqual(['samurai', 2, true]);
+    });
+
+    it('MS05r5p-T04: toConfig hands the pipeline the number, never the intent; a recorded number wins over ' +
+      'an inherited default', function () {
+      ready();
+      var inherited = Object.assign(S.defaults(), { variantId: 'mega16', maxAttempts: 8 });
+      expect(inherited.attemptsExplicit).toBe(false);
+      var config = S.toConfig(inherited);
+      expect(config.maxAttempts).toBe(8);
+      expect(Object.keys(config).sort()).toEqual(['difficulty', 'digOrder', 'maxAttempts', 'symbolMode',
+        'symmetry', 'variantId', 'variantOptions']);
+      expect(S.toConfig(Object.assign(S.defaults(), { variantId: 'mega16', maxAttempts: 2 })).maxAttempts)
+        .toBe(2);
+      expect(S.toConfig({ variantId: 'samurai' }).maxAttempts).toBe(2);
+      var store = makeStore();
+      store.set({ variantId: 'mega16' });
+      expect(S.toConfig(store.get()).maxAttempts).toBe(2);
+      store.set({ variantId: 'classic9' });
+      expect(S.toConfig(store.get()).maxAttempts).toBe(8);
+      expect(S.toSearchString(store.get())).toBe('');
+    });
+
+    it('MS05r5p-T04: a state that says default but carries another number than its board is a chosen number',
+      function () {
+        ready();
+        var inherited = Object.assign(S.defaults(), { maxAttempts: 3 });
+        expect(inherited.attemptsExplicit).toBe(false);
+        var state = S.sanitize(inherited);
+        expect([state.maxAttempts, state.attemptsExplicit]).toEqual([3, true]);
+        expect(S.toUrlParams(inherited).attempts).toBe('3');
+        expect(S.sanitize(state)).toEqual(state);
+        var onMega = S.sanitize(Object.assign(S.defaults(), { variantId: 'mega16', maxAttempts: 8 }));
+        expect([onMega.maxAttempts, onMega.attemptsExplicit]).toEqual([8, true]);
+        var atDefault = S.sanitize(Object.assign(S.defaults(), { variantId: 'mega16', maxAttempts: 2 }));
+        expect([atDefault.maxAttempts, atDefault.attemptsExplicit]).toEqual([2, false]);
+        expect(S.toUrlParams(atDefault).attempts).toBeUndefined();
+      });
+
+    it('MS05r5p-T04: a patch that names the default intent (what a cleared field sends) and reset() give default ' +
+      'mode', function () {
+      ready();
+      var storage = memoryStorage();
+      var store = makeStore({ storage: storage });
+      store.set({ variantId: 'mega16' });
+      store.set({ maxAttempts: 5 }, CONTROLS);
+      expect(shown(store)).toEqual(['mega16', 5, true]);
+      store.set({ attemptsExplicit: false }, CONTROLS);
+      expect(shown(store)).toEqual(['mega16', 2, false]);
+      expect([saved(storage).maxAttempts, saved(storage).attemptsExplicit]).toEqual([2, false]);
+      expect(S.toSearchString(store.get())).toBe('?v=mega16');
+      store.set({ variantId: 'classic9' }, CONTROLS);
+      expect(shown(store)).toEqual(['classic9', 8, false]);
+      // A patch with both the number and the default intent is the intent: the number is the board's.
+      store.set({ variantId: 'mega12', maxAttempts: 7, attemptsExplicit: false }, CONTROLS);
+      expect(shown(store)).toEqual(['mega12', 4, false]);
+
+      store.set({ variantId: 'samurai' });
+      store.set({ maxAttempts: 3 }, CONTROLS);
+      expect(shown(store)).toEqual(['samurai', 3, true]);
+      store.reset();
+      expect(shown(store)).toEqual(['classic9', 8, false]);
+      expect(saved(storage).attemptsExplicit).toBe(false);
+      store.set({ variantId: 'mega16' });
+      expect(shown(store)).toEqual(['mega16', 2, false]);
     });
   });
 })();

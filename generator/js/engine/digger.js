@@ -621,7 +621,22 @@
     return value === REFUSED_TOO_HARD ? 'tooHard' : 'ambiguous';
   }
 
-  const DEFAULT_MAX_ATTEMPTS = 8;
+  // The default number of full-grid attempts depends on the size of the board (difficulty v3, CV6-03 (c2)): a
+  // request that meets no required puzzle runs every attempt, and on a large board one attempt costs seconds
+  // to a minute, so more attempts only turn a miss into the application's time-out. Up to 81 cells: 8 (every
+  // board before the multi-grids), 82 to 144 cells: 4, more: 2. It is a count, never a time, so a seed gives
+  // the same puzzle on every machine, and it applies only when the caller names no `maxAttempts`.
+  const SMALL_BOARD_CELLS = 81;
+  const MEDIUM_BOARD_CELLS = 144;
+
+  function defaultMaxAttempts(cellCount) {
+    if (!(Number.isInteger(cellCount) && cellCount >= 1)) {
+      throw fail('digger.invalidOption', { option: 'cellCount', value: String(cellCount) });
+    }
+    if (cellCount <= SMALL_BOARD_CELLS) return 8;
+    return cellCount <= MEDIUM_BOARD_CELLS ? 4 : 2;
+  }
+
   const DEFAULT_DIG_TRIES = 12;
   /** Symmetries with groups of more than two cells dig in coarser steps and miss a level more often. */
   const DEFAULT_DIG_TRIES_COARSE = 30;
@@ -1761,8 +1776,9 @@
   // rated candidate of the whole run: a dig sample, or a candidate that the searches, the refinement or a
   // variant's strategy met on the way (`createKeeper`); when there is none at all, 'digger.noRatedPuzzle' is
   // thrown.
-  // Options: those of `digLevel`, and maxAttempts (default 8), digTries (dig samples per grid; default 12, or
-  // 30 when the symmetry has groups of more than two cells, which miss the level more often), maxRatings /
+  // Options: those of `digLevel`, and maxAttempts (default `defaultMaxAttempts(model.cellCount)`: 8, 4 or 2 by
+  // the size of the board; an explicit value is used as given), digTries (dig samples per grid; default 12,
+  // or 30 when the symmetry has groups of more than two cells, which miss the level more often), maxRatings /
   // maxProposals (lower the caps of an attempt; tests), postGenerate (the variant's hook, called once per
   // attempt after the full grid with `{ model, solution, rng, level, spec, attempt, budget, emit, variantId,
   // caps, symmetry, keeper }`; `keeper` is where to offer the completely rated candidates the hook meets).
@@ -1804,7 +1820,8 @@
     const coop = options.cooperative === true;
     const spec = SG.difficulty.spec(level, model);
     const symmetry = options.symmetry !== undefined ? options.symmetry : spec.symmetryDefault;
-    const maxAttempts = options.maxAttempts !== undefined ? options.maxAttempts : DEFAULT_MAX_ATTEMPTS;
+    const maxAttempts = options.maxAttempts !== undefined ? options.maxAttempts
+      : defaultMaxAttempts(model.cellCount);
     let digTries = options.digTries;
     if (digTries === undefined) {
       const coarse = SG.symmetry.groups(model, symmetry).some(function (g) { return g.length > 2; });
@@ -2000,6 +2017,8 @@
     ORDERS: ORDERS,
     CAP_RATINGS: CAP_RATINGS,
     SHALLOW_SEARCH_RATINGS: SHALLOW_SEARCH_DEFAULT,
+    SMALL_BOARD_CELLS: SMALL_BOARD_CELLS,
+    defaultMaxAttempts: defaultMaxAttempts,
     dig: dig,
     digSteps: digSteps,
     digStage: digStage,

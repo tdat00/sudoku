@@ -794,12 +794,12 @@
 
   function puzzleRun() {
     if (!cache.puzzles) {
-      cache.puzzles = {};
-      LEVELS.forEach(function (level, li) {
-        cache.puzzles[level] = [];
+      cache.puzzles = SG.test.lazyCorpus(LEVELS, function (level, li) {
+        var puzzles = [];
         for (var i = 0; i < countOf(level); i++) {
-          cache.puzzles[level].push(generatePuzzle(level, 700 + li * 100 + i));
+          puzzles.push(generatePuzzle(level, 700 + li * 100 + i));
         }
+        return puzzles;
       });
     }
     return cache.puzzles;

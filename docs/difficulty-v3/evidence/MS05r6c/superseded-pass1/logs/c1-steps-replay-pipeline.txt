@@ -1,0 +1,6 @@
+plan: 3 item(s), projections sum 420.0 s, budget 450 s, generic floor 60 s (it never replaces an item projection)
+#0 c1-steps exit=0 node=11.659s (projected 30 s, elapsed before 0.002 s): Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-steps.json
+#1 c1-replay exit=0 node=11.088s (projected 30 s, elapsed before 11.663 s): Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-replay.json
+#2 c1-pipeline exit=0 node=291.985s (projected 360 s, elapsed before 22.752 s): Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-pipeline.json
+compound complete: 3 item(s) in 314.739 s; next --from=3
+MS05r6c exit=0 seconds=314.842

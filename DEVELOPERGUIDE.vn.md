@@ -210,7 +210,8 @@ Ba bước `dig`, `rate` và `tune` lặp lại theo từng *lần đào thử* 
 đạt (`tune.miss`, hoặc `tune.shallow` khi điểm nằm trong dải đã chọn nhưng đề không cần kỹ thuật nào thuộc tầng của
 mức đó), lần đào kế tiếp được thực hiện trên cùng lưới (tối đa 12 lần mỗi lưới); khi không lần nào
 đạt, một bước tìm kiếm cục bộ bắt đầu từ đề gần mức nhất (thêm, bỏ hoặc đổi chỗ các nhóm số cho sẵn đối xứng),
-và chỉ khi đó `retry.difficulty` mới bắt đầu một lưới mới (tối đa `attempts` lần, mặc định 8). Các mức cao nhất
+và chỉ khi đó `retry.difficulty` mới bắt đầu một lưới mới (tối đa `attempts` lần, mặc định theo cỡ bàn cờ: xem bên
+dưới). Các mức cao nhất
 (ác mộng và địa ngục) còn đào nhanh những đề đề xuất chỉ dựa trên tính duy nhất, rồi trả lại số cho sẵn khi đề
 đề xuất còn quá khó. Mỗi lưới có giới hạn công việc cố định (số lần chấm điểm đầy đủ và số bước đề xuất, được
 đếm chứ không đo giờ), nên một seed cho cùng một đề trên mọi máy. Nếu dùng hết mọi lần thử, đề tốt nhất được trả
@@ -232,6 +233,28 @@ tính một lần đạt theo chính cờ này, không bao giờ so sánh tên m
 Độ khó của một đề là
 `SG.difficulty.rate(...)`, tính từ trọng số kỹ thuật `SG.difficulty.WEIGHTS`; hãy dùng `rating.score`, không
 dùng điểm thô của bộ giải.
+
+**Số lần thử mặc định theo cỡ bàn cờ.** `SG.digger.defaultMaxAttempts(cellCount)` là quy tắc duy nhất: 8 với bàn từ
+81 ô trở xuống, 4 với bàn từ 82 đến 144 ô (mega12, butterfly) và 2 với bàn lớn hơn (flower, mega16, sohei, samurai).
+Đó là một con số đếm chứ không bao giờ là thời gian, chỉ áp dụng khi không có `maxAttempts` (một số nguyên tường
+minh từ 1 luôn được dùng đúng như vậy), và không đụng tới hạn mức tìm kiếm nông, giới hạn công việc của một lưới
+hay các bàn từ 81 ô trở xuống. `SG.digger.generate` đọc `model.cellCount`; `SG.pipeline.normalizeConfig` đọc
+`SG.variants.cellCountOf(def)`, cỡ bàn lấy từ định nghĩa mà không dựng mô hình và không rút số ngẫu nhiên (bình
+phương số chữ số, trừ khi định nghĩa khai báo `cellCount`, như bốn biến thể nhiều lưới); kho trạng thái dùng cùng
+hàm đó (`SG.store.defaultAttempts`). `SG.pipeline.DEFAULT_MAX_ATTEMPTS` (8) chỉ là mốc của các bàn nhỏ, không bao
+giờ là mặc định của bàn khác. Soak và qualify không truyền `maxAttempts`, nên chúng đo đúng các mặc định này; kết quả
+dự phòng sau đó là một lần trượt, và chỉ lần kiểm định cuối cùng quyết định mức nào được cung cấp. Trong kho trạng
+thái, trạng thái giữ con số và `attemptsExplicit`: `false` khi con số là của bàn cờ (đổi biến thể thì nó đổi theo),
+`true` khi con số được gõ vào hoặc đến từ tham số `attempts` của liên kết (khi đó nó được giữ qua các biến thể và các
+lần tải lại, kể cả khi bằng mặc định); xóa trống ô thì quay về `false`. `sg.lastConfig.v1` lưu cả hai. Cấu hình gần
+nhất được lưu trước khi có mặc định theo cỡ bàn, chứa số 8 nhưng không có dấu ghi nhận lựa chọn, được hiểu là dùng
+mặc định vì không thể phân biệt với số 8 do người dùng chủ động chọn; nhập lại 8 sẽ giữ số đó như một lựa chọn
+tường minh (số khác đã lưu vẫn là số đã chọn). Một công thức được tạo lại — mục lịch sử được mở, mục cache đã lỗi
+thời (`app.generate(overrides)` ghi vào kho với `{ source: 'app' }`), phần xuất (`toConfig` trên `defaults()` cộng mục
+đó) — chạy với đúng số mà nó đã ghi; tạo lại không bao giờ biến số đã chọn thành mặc định, và số đã ghi mà không
+phải mặc định của bàn thì trở thành số đã chọn
+([design.md](generator/design.md) §6.8, §14.2, §14.3). Dấu này không bao giờ ra tới `GenerateConfig`, lịch sử, cache
+hay đề được xuất.
 
 Giao diện không bao giờ làm thuật toán chậm đi để tạo hoạt ảnh, và phần phát lại cũng không đọc các sự kiện.
 Song song với các sự kiện, bộ đào ghi một **nhật ký đào** (dig log) gọn nhẹ cho lần đào thử đã trở thành đề
@@ -293,8 +316,8 @@ Các con số của ví dụ là những con số của các bài kiểm thử. 
 có 32 vị trí và 33 bước khi hiện từng thay đổi; chế độ xem gọn của nó có 7 bước với điểm 0, 23, 44, 551, 568, 992 và
 992, và bước 44 → 551 (×12,5) là một bước tăng vọt do số cho sẵn ở R1C2 gây ra (bỏ riêng nó cho 550 điểm; lần bỏ còn
 lại của nước đi, R9C8, bỏ riêng cho 44), được đánh khung. Một đề Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại
-trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ, bốn bước xóa ngẫu nhiên (điểm 14, 24, 34 và 44), một
-bước đào có định hướng (46) và đề hoàn chỉnh với 34 số cho sẵn.
+trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ, ba bước xóa ngẫu nhiên (điểm 15, 26 và 44), hai
+bước đào có định hướng (46 và 100) và đề hoàn chỉnh với 34 số cho sẵn.
 
 **Chuẩn bị.** Trang yêu cầu bản phân tích sau khi đề đã hiện trên màn hình, qua `SG.player.createPreparation()` (một
 bộ điều khiển không có DOM: `start(result)`, `press()`, `unavailable(result)`, `cancel()`, `state()`; các trạng thái
@@ -441,7 +464,7 @@ các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, ki
 
 Xem [cây thư mục ở bản tiếng Anh](DEVELOPERGUIDE.md#directory-tree): `generator/` gồm `index.html`, `tests.html`, `css/`, `js/engine/`
 (bộ máy sinh đề, không DOM; `js/engine/replay.js` là phần phân tích việc phát lại ở thẻ Các bước tạo đề: nước đi, điểm số và các chế độ xem), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
-thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/replay-fixtures.js` và `tests/replay-goldens.js`: tạo lại và kiểm tra dữ liệu của suite `replay`; `tests/difficulty-recovery.js`: công cụ chẩn đoán đo một yêu cầu cố định của đợt phục hồi độ khó v3); phần dùng chung với trình chơi nằm
+thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/fixtures/manual-corpus.js`: các kho đề theo từng mức của các suite nặng; `tests/replay-fixtures.js` và `tests/replay-goldens.js`: tạo lại và kiểm tra dữ liệu của suite `replay`; `tests/difficulty-recovery.js`: công cụ chẩn đoán đo một yêu cầu cố định của đợt phục hồi độ khó v3; `tests/mega-contract.js`: tầng kiểm tra sâu cho các yêu cầu Nightmare của mega12 và mega16); phần dùng chung với trình chơi nằm
 ở `core/` (bộ máy giải, `exchange`, `wordbook`, `symbols`, `board-view`, css nền và từ điển), tài liệu ở `docs/`.
 
 ## Định dạng trao đổi
@@ -583,24 +606,57 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (48 suite, khoảng 2.900 bài), khoảng một phút
-node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
-node tests/node-runner.js --all                    # nhanh + thủ công (56 suite, khoảng 3.910 bài), khoảng chín phút
+node tests/node-runner.js                          # bộ nhanh (50 suite, 3.262 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
+node tests/node-runner.js --all                    # nhanh + thủ công (58 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
+node tests/node-runner.js --suite=help --exact="<tên đầy đủ>"   # chỉ các bài có đúng tên đầy đủ này
+node tests/node-runner.js --suite=help --list-tests=<tệp.json> # bản kiểm kê của phần đã chọn; không chạy bài nào
+node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và ghi kết quả của từng bài
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 48 suite, khoảng 2.900 bài,
-khoảng một phút — 32 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 50 suite, 3.262 bài —
+34 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
-`variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw`, tổng cộng khoảng
-tám phút — không thuộc lần chạy mặc định: chạy bằng `--manual` (chỉ các suite này) hoặc `--all` (nhanh và thủ công,
-khoảng chín phút), hay theo tên bằng `--suite=killer` (dùng được cho mọi suite). Khi đang phát triển, hãy chạy bộ
+`variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw` — không thuộc lần chạy mặc định: chạy bằng `--manual` (chỉ các suite này) hoặc
+`--all` (nhanh và thủ công), hay theo tên bằng `--suite=killer` (dùng được cho mọi suite). Khi đang phát triển, hãy chạy bộ
 nhanh, và chạy theo tên một suite nặng khi bạn đụng đến vùng của nó; chạy `--all` trước khi phát hành và mỗi khi
-đụng đến việc sinh đề, tính điểm hay một biến thể. Workflow CI chạy `node tests/node-runner.js --all` trước mỗi
-lần triển khai, và `.github/workflows/pull-request.yml` chạy nó (theo các nhóm song song) cho mọi pull request vào `main`, cùng với các suite của player và các script trình duyệt.
+đụng đến việc sinh đề, tính điểm hay một biến thể. CI không chạy `--all`: nó chỉ chạy tầng nhanh (xem “Tích hợp liên tục” bên dưới).
+
+**Phủ bộ nhanh theo từng đợt có giới hạn.** Một bộ nhanh đầy đủ có thể chạy lâu hơn thời gian một lệnh có giới hạn được
+phép: một lệnh thu thập bằng chứng bị dừng ở 540 giây. Khi một lệnh trọn bộ không vừa, hãy phủ bộ này bằng **các đợt rời
+nhau**: `node tests/node-runner.js --suite=<tên> --results=<tệp.json>`, và với một suite dài thì thêm bộ chọn theo khối mô
+tả hoặc tên đầy đủ (`--filter` hay `--exact`), mỗi lần chọn đều kiểm tra trước bằng `--list-tests`, để mọi bài trong
+bản kiểm kê chỉ-đăng-ký chạy đúng một lần. Không đợt nào dùng `--bail`, bỏ một bài chậm hay thêm bài bỏ qua, và một đợt
+đã cũ vì mã nguồn đổi thì chạy lại. Chi phí của một bộ nhanh đầy đủ là tổng của các đợt; giới hạn 540 giây áp dụng cho
+từng lệnh và không phải chi phí đó. Bộ nhanh đầy đủ của từng ứng dụng đo được bao lâu, trên một mã nguồn và một máy có
+tên (một báo cáo, không phải lời hứa), nằm trong
+[docs/difficulty-v3/recovery-quick-cost.md](docs/difficulty-v3/recovery-quick-cost.md).
+
+**Tích hợp liên tục.** Workflow của pull request (`.github/workflows/pull-request.yml`) và workflow triển khai
+(`.github/workflows/pages.yml`) chạy bộ nhanh đầy đủ của từng ứng dụng và không chạy gì nặng hơn: bộ nhanh của trình
+chơi trong một job (`node tests/node-runner.js`, gồm cả các suite dùng chung) và bộ nhanh của trình sinh đề trong các
+job song song, mỗi job một nhóm của `.github/scripts/generator-quick.json`. Một nhóm là danh sách các đợt gồm nguyên
+suite (chính các đợt rời nhau của phần phủ có giới hạn ở trên); các workflow lấy ma trận job từ tệp đó, và mỗi job chạy
+một nhóm bằng `.github/scripts/generator-suites.sh run <nhóm>`, từng đợt một, thất bại nếu có đợt nào thất bại. Một job
+đầu tiên chạy `generator-suites.sh check`: nó đăng ký các bộ nhanh bằng `--list-tests` (không chạy bài nào) và thất
+bại trừ khi mọi suite nhanh và mọi bài nằm trong đúng một đợt, không đợt nào gọi tên một suite thủ công hay suite
+không tồn tại hoặc không chọn bài nào, mọi suite của `tests/manual/` được khai báo là ngoài CI, và thời gian dự kiến
+của mỗi job (cận của các đợt nhân với hệ số CI của tệp, cộng chi phí cố định của job) nằm trong giới hạn 30 phút. Vì
+vậy một suite thêm sau này làm `check` thất bại cho đến khi tác giả cho nó một đợt kèm cận đã đo; nó không bao giờ bị
+nhặt vào một cách âm thầm, và không bao giờ từ `tests/manual/`. `selftest` chạy phép kiểm tra trên các kế hoạch giả
+(thiếu, trùng, suite lạ hay suite thủ công, đợt rỗng, lỗi đăng ký) và `run <nhóm> --dry-run` in các lệnh mà không
+chạy bài nào. Hệ số thời gian (3 trên CI, từ biến `CI`) và giới hạn của job không được nâng: hãy chia nhỏ nhóm. CI
+không chạy các suite thủ công, `--all`, tầng sâu (`tests/mega-contract.js`), `soak.js`, `perf.js` hay
+`qualify.js`; thứ thay thế chúng là bằng chứng ngoại tuyến, lưu trong `docs/difficulty-v3/evidence/` bởi các nhiệm
+vụ sở hữu chúng (14 yêu cầu mega Nightmare sâu và các quan hệ của chúng bằng các bản ghi của MS05r5m do MS05r6b đối
+chiếu, các kết quả CV3 chạy thật bằng MS05b3, các kho đề thủ công, GD, E, kiểm định và hiệu năng bằng MS05r6a, MS05r6b và
+các nhiệm vụ cổng sau này), và được liệt kê trong
+[docs/difficulty-v3/evidence/MS05r6c/evidence.md](docs/difficulty-v3/evidence/MS05r6c/evidence.md). Các script trình duyệt
+của trình chơi vẫn nằm trong workflow của pull request.
 
 Bộ chạy nạp `SOURCE_FILES` bằng `vm.runInThisContext`, tự tìm `../core/tests/fixtures/*.js`, `tests/fixtures/*.js`,
 `../core/tests/suites/*.test.js` và `tests/suites/*.test.js` (cùng `tests/manual/*.test.js` khi có `--manual` hoặc
@@ -610,11 +666,52 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm khoảng 3.910 bài trong 56 suite (khoảng 2.900 bài trong 48 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 58 suite, trong đó 50 suite nhanh (3.262 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
+**Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
+"suite > describe > bài", không phân biệt hoa thường). `--exact="<tên đầy đủ>"` chọn các bài có tên đầy đủ đúng bằng
+đó, phân biệt hoa thường và lấy mọi bài trùng tên, và loại trừ `--filter`. `--list-tests=<tệp.json>` đăng ký các
+suite đã chọn như khi chạy (nên phần chuẩn bị lúc nạp của chúng vẫn xảy ra) và ghi **bản kiểm kê** thay vì chạy gì
+cả: với mỗi bài đã chọn gồm suite, số thứ tự `ordinal` tính từ 0 trong tệp của nó và đếm trước mọi bộ lọc (nó phân
+biệt các tên trùng nhau và không đổi khi phần chọn đổi), tên đầy đủ, là bài kiểm tra hay benchmark, có bị bỏ qua
+không (kể cả qua `describe.skip`; việc bỏ qua quyết định lúc chạy thì không thể biết trước) và giới hạn thời gian,
+cùng `sourceHash` của mọi tệp mà các bài nhanh nạp, đọc hay khởi chạy (liệt kê trong tệp), phần chọn, thời gian đăng
+ký và mọi khối describe đã ném lỗi hay tệp nạp lỗi (khi đó `complete` là false). `--results=<tệp.json>` chạy như
+thường, giữ nguyên mã thoát, và ghi thêm kết quả của từng bài đã chọn với cùng `ordinal`; `complete` chỉ true khi mọi
+bài đã chọn đều chạy, không có `--bail` và mã nguồn không đổi. Một bài được liệt kê hay được ghi chưa phải là bài đã
+đạt: hãy đọc từng dòng. Cả hai tùy chọn nhận một đường dẫn `.json` mới, tương đối theo dự án, nằm trong kho mã
+(không bao giờ ghi đè, không bao giờ nằm trong các mã nguồn được lấy dấu, ví dụ thư mục bằng chứng của một nhiệm vụ),
+và loại trừ lẫn nhau. Mã nằm ở `core/tests/node-evidence.js` (chỉ dành cho Node, không ứng dụng nào biết đến) và
+`SG.test.list(options)` của harness, duyệt sổ đăng ký đúng như `SG.test.run` và không thực thi gì.
+
+**Các suite nặng, từng mức một.** Kho đề của `killer`, `jigsaw`, `greater-than`, `extra-regions` và `wordoku`, cùng kho
+đề của đợt quét `variants`, được dựng theo từng mức, ở lần đọc đầu tiên của mức đó
+(`SG.test.lazyCorpus`, `tests/fixtures/manual-corpus.js`): một bài chỉ đọc một mức thì chỉ sinh đúng mức đó, với seed,
+số lượng và tùy chọn của cả kho, còn các bài cần mọi mức (`corpus()`, `allPuzzles()`, các kiểm tra tổng hợp của đợt
+quét) vẫn dựng tất cả. Bộ lọc chỉ là một đoạn chuỗi của tên đầy đủ đã chuyển sang chữ thường, nên một bộ chọn bắt đầu
+ở ranh giới của một describe bằng `> ` và được đặt trong dấu nháy: `easy: 20 puzzles > I5:` cũng khớp với Very Easy,
+còn `> easy: 20 puzzles > I5:` thì không. Các bộ chọn:
+`> <mức>: <số lượng> puzzles > I5:` (và `… > CV6:`) cho `killer`, `jigsaw`, `greater-than` và `wordoku` (`killer` chỉ
+có bài I5 theo từng mức), `> <biến thể> <mức>: <số lượng> puzzles > I5:` cho `extra-regions`, và
+`> variants: <id> > CV3 <mức>:` cùng `> variants: <id> > CV3 unsupported:` cho đợt quét. Mỗi bộ chọn chọn đúng một bài,
+điều mà suite `manual-corpus` kiểm tra trên các đăng ký thật; hãy đọc tổng số đã chọn ở dòng tóm tắt, và liệt kê phần
+chọn trước (`--list-tests`) khi việc sinh đề lâu. Một bộ lọc cho cả biến thể, như `--filter=I5:`, không phải là một lệnh
+có giới hạn. Với biến môi trường `SG_CORPUS_TIMES=1`, một mức vừa được dựng sẽ in số mili giây của từng yêu cầu của nó
+trước kết quả của bài.
+
 ```text
-node tests/replay-fixtures.js            # tạo lại tests/fixtures/replay-wire.js (bốn đề chuẩn chạy chậm, ~23 giây)
+node tests/node-runner.js --suite=killer --filter="> normal: 20 puzzles > I5:" --list-tests=<tệp.json>
+node tests/node-runner.js --suite=killer --filter="> normal: 20 puzzles > I5:" --verbose --results=<tệp.json>
+node tests/node-runner.js --suite=extra-regions --filter="> diagonalX normal: 20 puzzles > I5:" --verbose
+node tests/node-runner.js --suite=variants --filter="> variants: classic9 > CV3 normal:" --verbose
+node tests/node-runner.js --suite=variants --filter="> variants: classic9 > CV3 unsupported:" --verbose
+```
+
+Hai script Node giữ dữ liệu của suite `replay`:
+
+```text
+node tests/replay-fixtures.js            # tạo lại tests/fixtures/replay-wire.js (năm đề chuẩn chạy chậm, mỗi đề từ 20 giây)
 node tests/replay-fixtures.js --check    # tạo lại trong bộ nhớ rồi so sánh; thoát với mã 1 nếu khác
 node tests/replay-goldens.js             # kiểm tra dữ liệu chuẩn của 14 yêu cầu (như --check; không bao giờ tự ghi)
 node tests/replay-goldens.js --write     # tạo lại tests/fixtures/replay-goldens.js từ các bản phân tích mới (đủ 14 yêu cầu)
@@ -624,8 +721,10 @@ node tests/replay-goldens.js --merge=<directory> --check      # trọn bộ các
 
 Suite `replay` kiểm thử bản phân tích (các nước đi, các lần chấm điểm và trạng thái của chúng, các chế độ xem, các bước
 tăng vọt được giải thích) theo các con số chuẩn của 14 yêu cầu (`tests/fixtures/replay-goldens.js`). Nó tạo ngay các đề
-chạy nhanh và đọc bốn đề chạy chậm từ các kết quả đã lưu (`tests/fixtures/replay-wire.js`), vì việc tạo chúng mất khoảng
-23 giây; chỉ tạo lại khi đầu ra của trình sinh đề thay đổi có chủ ý (khi đó các mã băm hồi quy cũng đổi theo). Cả hai
+chạy nhanh và đọc năm đề chạy chậm (G09 đến G13) từ các kết quả đã lưu (`tests/fixtures/replay-wire.js`), vì việc tạo
+mỗi đề mất từ 20 giây (G13, Samurai Nightmare với seed 42, cũng được lưu để ba suite không phải tạo lại nó; yêu cầu của
+nó và ngân sách 120.000 ms của công cụ ghi không đổi, và nó dùng số lần thử mặc định của bảng, tức 2); chỉ tạo lại khi
+đầu ra của trình sinh đề thay đổi có chủ ý (khi đó các mã băm hồi quy cũng đổi theo). Cả hai
 công cụ ghi có cùng các chế độ có giới hạn, để một thay đổi đầu ra làm mới được toàn bộ bằng chứng này một cách an
 toàn: `--check` so sánh mà không ghi và nêu yêu cầu cùng các trường khác nhau (chỉ kiểm các yêu cầu được chọn và nói rõ
 điều đó); `--write` ghi trọn fixture và từ chối một lựa chọn `--ids` chưa đủ; `--ids=G01,G02` chọn một phần của danh
@@ -705,7 +804,8 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   ```
 
   `--json` là một đường dẫn `.json` mới nằm trong kho mã (tệp đã có không bao giờ bị ghi đè).
-  `--mode=diagnostic --shallow-cap=64|128|256|none` giữ số lượt thường lệ và áp dụng một hạn mức: lệnh đặt
+  `--mode=diagnostic --shallow-cap=64|128|256|none` giữ số lần thử mặc định của bàn cờ (2, 4 và 2 cho ba trường hợp)
+  và áp dụng một hạn mức: lệnh đặt
   `SG.digger.SHALLOW_SEARCH_RATINGS` cho lần chạy (`none` là `Infinity`) rồi trả lại giá trị cũ; mã nguồn không có thiết
   lập này bị từ chối trước khi sinh bất cứ thứ gì. Một
   tiến trình chạy đúng một trường hợp, và bộ máy cùng các kiểm tra của đề trả về (số đã cho so với lời giải, một lần
@@ -716,12 +816,60 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   bản ghi), 1 là không thể lập được bản ghi đáng tin và đầy đủ, 2 là dùng sai. Các hàm trợ giúp là
   `SG.fixtures.recoveryProfile` (`tests/fixtures/recovery-profile.js`), do suite `recovery-profile` kiểm thử; các hồ
   sơ đầu tiên được báo cáo ở [docs/difficulty-v3/recovery-profile.md](docs/difficulty-v3/recovery-profile.md).
+- **Tầng kiểm tra sâu cho Nightmare của mega (độ khó v3)** — một yêu cầu Nightmare đủ số lần thử của mega12 (mặc định 4
+  lần) hoặc mega16 (2 lần) tốn từ vài giây đến vài phút và thường kết thúc bằng kết quả dự phòng nông nhưng trung
+  thực, nên nó không phải một bài kiểm tra nhanh, và suite `mega` nhanh không đòi một yêu cầu như vậy. Suite nhanh giữ
+  một yêu cầu mega12 thật với đúng một lần thử (seed 3, mọi bất biến cùng các kiểm tra về việc có cần bậc và về cảnh
+  báo ở dưới, trong một giới hạn kiểm tra nhanh có chặn là 15 s trước khi nhân hệ số thời gian, đo được 5,2 s, so với
+  ngân sách 60.000 ms không đổi của yêu cầu) và một kịch bản kiểm soát cho mega16 về việc dừng theo cỡ bàn, kết quả dự phòng nông
+  có đủ hai cảnh báo, một số lần thử nêu rõ và một lỗi hủy hay hết ngân sách được truyền đi. Mười bốn yêu cầu của các bài
+  cũ (mỗi bàn các seed 1 đến 4 và ba lần gọi CV5 độc lập với seed 3, 3 và 4) thuộc về một công cụ, không bao giờ thuộc
+  một suite được tự tìm thấy, CI hay `SG_DEEP`. Chạy từng lệnh một, qua khóa thời gian dùng chung khi người khác đang
+  dùng máy, vì một yêu cầu có thể mất vài phút:
+
+  ```text
+  node tests/mega-contract.js --list                                              # 14 yêu cầu và các quan hệ của chúng
+  node tests/mega-contract.js --request=mega12-invariant-1 --record=<id.json>     # một yêu cầu, đúng một lần, và các kiểm tra
+  node tests/mega-contract.js --reconcile=<records directory> --json=<file.json>  # không sinh gì cả
+  ```
+
+  Các mã là `<bàn>-invariant-<seed>`, `<bàn>-cv5-a`, `<bàn>-cv5-b` và `<bàn>-cv5-other`; hai lần gọi CV5 seed 3 là hai
+  lần sinh đề, không phải hai lần đọc một bản ghi. Một yêu cầu là Nightmare, không theo dõi và không có `maxAttempts`,
+  cùng các kiểm tra của nó dùng chung một ngân sách 500.000 ms, dưới giới hạn 540 giây của một lệnh có chặn. `--record`
+  là một tệp `<id>.json` mới nằm trong kho mã (tệp đã có, đường dẫn tuyệt đối hay nằm ngoài kho, một tùy chọn nêu hai
+  lần hay xung đột đều bị từ chối). Bản ghi gồm yêu cầu, cấu hình đã chuẩn hóa, số lần thử thực tế, hạn mức, định danh
+  của mã nguồn và công cụ, thời gian sinh và thời gian kiểm tra tách riêng, kết cục (một lỗi như `budget.exceeded` giữ
+  nguyên mã của nó và không bịa ra đề nào), từng kiểm tra là `true`, `false` hay `null` (chưa đánh giá), cùng mã băm và
+  dạng wire thuần của đề. Các kiểm tra là các bất biến của bài cũ (lời giải hợp lệ, đúng một lời giải, các số đã cho nằm
+  trong lời giải, sàn số gợi ý, dải và nhóm của điểm chuẩn, mọi phép điền và loại trừ logic đối chiếu với lời giải) và
+  hợp đồng về việc có cần bậc: `exact` đúng khi và chỉ khi một điểm chuẩn đầy đủ độc lập nằm đúng mức yêu cầu và cần một
+  kỹ thuật của bậc đó, `difficulty.approximate` có mặt khi và chỉ khi đề không exact, và `difficulty.shallow` khi và chỉ
+  khi đề không exact và điểm chuẩn nằm trong mức yêu cầu. Một kết quả dự phòng có thể hợp lệ, nhưng không bao giờ là
+  exact và không bao giờ miễn một kiểm tra nào. Một mức mà việc kiểm định đã ẩn chỉ được cung cấp cho lần chạy đó và
+  được ghi lại. `--reconcile` không sinh gì cả: mỗi trong 14 trường hợp phải có mặt đúng một lần, với một định danh duy
+  nhất về mã nguồn, công cụ, Node và cấu hình, một wire cùng các mã băm khớp với bản ghi, và các cờ được suy lại từ điểm
+  chuẩn của nó; các quan hệ của bài cũ (hai lần gọi seed 3: cùng số đã cho, lời giải và điểm; seed 4 so với seed 3: lời
+  giải khác) được đánh giá, hoặc để `unevaluated` khi một yêu cầu kết thúc bằng lỗi. Tài liệu kết quả giữ riêng các kết
+  luận về việc sinh, về tính đúng và về thời gian, và báo cho từng bàn một chốt chặn chỉ tính từ tập yêu cầu cố định đã
+  hoàn tất (1,5 lần thời gian sinh cộng kiểm tra lớn nhất, làm tròn lên theo bước 5 s, không bao giờ vượt ngân sách) kèm
+  biên độ của nó. Mã thoát của `--request`: 0 mọi kiểm tra đều đạt, 3 một lỗi hay các kiểm tra không thể xong (một kết
+  cục về khả năng cung cấp), 1 một kiểm tra thất bại, 2 dùng sai; của `--reconcile`: 0 cả mười bốn khớp nhau và đều đạt, 3
+  đáng tin nhưng chưa đủ, 1 một vấn đề về bằng chứng hay một kiểm tra hoặc quan hệ thất bại. Các hàm trợ giúp là
+  `SG.fixtures.megaContract` (`tests/fixtures/mega-contract.js`), do suite `mega-contract` kiểm thử trên các bản ghi tổng
+  hợp. Các kho đề CV3 của các tập kiểm thử thủ công không đọc các bản ghi này (một suite do bộ chạy nạp không tính được
+  các mã băm mà `SG.fixtures.megaContract.reuse(records, { variantId, level, seed }, { sourceHash, toolHash }, { sha256 })`
+  so sánh): hai ô Nightmare của mega trong CV3 được sinh trực tiếp, mỗi lệnh một mức (xem "Các suite nặng, từng mức
+  một"). Giao diện đó vẫn còn, như một bên đọc chỉ-đọc của một yêu cầu invariant (hoặc `reuse(directory, query)` của
+  công cụ): bản ghi phải khớp với mã nguồn bộ máy, công cụ, cấu hình đã chuẩn hóa, số lần thử mặc định và hạn mức hiện
+  tại, và các mã băm của nó phải đúng; bên gọi tự áp dụng các kiểm tra của riêng mình lên bản sao đã giải mã.
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
   cho phân vị 95) rồi in bảng và danh sách mức; `--variant`, `--level`, `--jobs`, `--json` và `--markdown` thu
   hẹp phạm vi hoặc lưu kết quả; `--probe=N` xem nhanh (N seed mỗi mức, không kết luận). Một yêu cầu chỉ là một lần
   đạt khi đề hợp lệ và duy nhất, có lời giải trọn vẹn đúng mức yêu cầu, không có cảnh báo approximate **và** cờ `exact`
-  của kết quả đúng là `true`, nên một kết quả nằm trong dải nhưng nông là một lần trượt. Lần chạy gần nhất nằm trong
+  của kết quả đúng là `true`, nên một kết quả nằm trong dải nhưng nông là một lần trượt. Một yêu cầu không bao giờ
+  nêu `maxAttempts`: mỗi bàn dùng số lần thử mặc định theo cỡ của nó (8, 4 hoặc 2), nên một bàn lớn không tìm được
+  đề đúng mức trong các lần đó sẽ kết thúc bằng kết quả dự phòng, tức là một lần trượt. Lần chạy gần nhất nằm trong
   [docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md).
 - **Hiệu năng** so với ngân sách ở [design.md](generator/design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. *Mã băm hồi quy* trong `tests/fixtures/regression.js` bảo
@@ -848,9 +996,15 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, khoảng 15 giây); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 1.683 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
+
+Bộ chạy có cùng các tùy chọn `--exact`, `--list-tests` và `--results` như của trình sinh đề (xem "Chọn chính xác,
+bản kiểm kê và kết quả" ở phần kiểm thử của Trình sinh đề Sudoku phía trên). Khi một lệnh trọn bộ nhanh của trình chơi
+không vừa một lệnh có giới hạn, hãy phủ nó như bộ nhanh của trình sinh đề (xem "Phủ bộ nhanh theo từng đợt có giới hạn"
+ở trên); chi phí đo được của từng ứng dụng nằm trong
+[docs/difficulty-v3/recovery-quick-cost.md](docs/difficulty-v3/recovery-quick-cost.md).
 
 Các kiểm thử Node này chạy nhanh và là bộ mặc định: lập trình viên và các tác tử lập trình chạy
 `node tests/node-runner.js` (hoặc vài bộ với `--suite=`) trong lúc phát triển, còn workflow triển khai chạy tất cả. Đó là 14
@@ -914,8 +1068,9 @@ diện qua giao thức DevTools, vài phút). Khi phát triển chúng chạy **
 ## Đưa lên GitHub Pages
 
 Chọn **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-[Workflow triển khai](.github/workflows/pages.yml) của kho mã chạy các kiểm thử Node 24 của cả hai ứng dụng (`node tests/node-runner.js`,
-không gồm các script trình duyệt) và xuất bản trình chơi, trình sinh đề và phần mã dùng chung sau mỗi
+[Workflow triển khai](.github/workflows/pages.yml) của kho mã chạy các kiểm thử nhanh Node 24 của cả hai ứng dụng (của trình sinh đề chạy
+theo các nhóm đã được kiểm tra của `.github/scripts/generator-quick.json`; không gồm các suite nặng và các script trình
+duyệt) và xuất bản trình chơi, trình sinh đề và phần mã dùng chung sau mỗi
 lần đẩy lên `main`; bạn cũng có thể chạy thủ công từ thẻ **Actions**. Chỉ các tệp ứng dụng và giấy phép được
 xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng trực tuyến tại
 **[tdat00.github.io/sudoku/player](https://tdat00.github.io/sudoku/player/)**. Nút “Chơi” của Trình

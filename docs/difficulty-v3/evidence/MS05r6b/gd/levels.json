@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > difficulty: levels","exact":null,"count":4},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 193.9,
+  "results": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 4.3,
+    "tests": [
+      {"suite":"difficulty","name":"lists the nine levels, easiest first, and rejects anything else","fullName":"difficulty > difficulty: levels > lists the nine levels, easiest first, and rejects anything else","status":"pass","ms":1.145,"reason":"","error":null,"ordinal":0},
+      {"suite":"difficulty","name":"agrees with the list that the variant registry validates difficultySupport against","fullName":"difficulty > difficulty: levels > agrees with the list that the variant registry validates difficultySupport against","status":"pass","ms":2.022,"reason":"","error":null,"ordinal":1},
+      {"suite":"difficulty","name":"has one band table: [min, max) bands that tile the scale from 0, with an open top","fullName":"difficulty > difficulty: levels > has one band table: [min, max) bands that tile the scale from 0, with an open top","status":"pass","ms":0.247,"reason":"","error":null,"ordinal":2},
+      {"suite":"difficulty","name":"gives every score exactly one level, edges included","fullName":"difficulty > difficulty: levels > gives every score exactly one level, edges included","status":"pass","ms":0.263,"reason":"","error":null,"ordinal":3}
+    ],
+    "suites": [
+      {"name":"difficulty","total":4,"passed":4,"failed":0,"skipped":0,"ms":4.195}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > difficulty: levels","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\levels.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

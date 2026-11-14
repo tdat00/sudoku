@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "task": "MS05b3",
+  "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+  "files": {
+    "generator/tests/manual/killer.test.js": {
+      "snapshot": "generator/tests/artifacts/difficulty-v3/MS05b3/old/killer.test.js.txt",
+      "gitBlob": "4c742f815e45dd4d8d72b49a754cc9de3712dd2c",
+      "sha256": "5d62bc8166dec8e6e98a8266cee58fceb1e75947e10a75b2da1b49738417888a",
+      "bytes": 90276
+    },
+    "generator/tests/manual/jigsaw.test.js": {
+      "snapshot": "generator/tests/artifacts/difficulty-v3/MS05b3/old/jigsaw.test.js.txt",
+      "gitBlob": "726578f4b772d64e25b1784dd7a6b1f4d742e32d",
+      "sha256": "b69fa5312db0c8175ef6703fc6d5a6fece3fbf5f9916853f2b5d31ce64f28b53",
+      "bytes": 46737
+    },
+    "generator/tests/manual/greater-than.test.js": {
+      "snapshot": "generator/tests/artifacts/difficulty-v3/MS05b3/old/greater-than.test.js.txt",
+      "gitBlob": "fe9103a80d76f3b7f9227de029bc3fc11fb1ec67",
+      "sha256": "82a43b40492815793affdf5c8171bd3f8a7109b65307481c1d557713f666a87e",
+      "bytes": 73138
+    },
+    "generator/tests/manual/extra-regions.test.js": {
+      "snapshot": "generator/tests/artifacts/difficulty-v3/MS05b3/old/extra-regions.test.js.txt",
+      "gitBlob": "3550e7cd5dd5a5471ee62a0f57100ca80e22b9b6",
+      "sha256": "88374d70916f2b883db3359150ec4b312d9a2bb1509928f8cabe79c9cb6cfa27",
+      "bytes": 43405
+    },
+    "generator/tests/manual/wordoku.test.js": {
+      "snapshot": "generator/tests/artifacts/difficulty-v3/MS05b3/old/wordoku.test.js.txt",
+      "gitBlob": "078a1aaf8df84109c3309880de6fa73826c7f2b9",
+      "sha256": "8389f6a47a7eea722ea31dc8466860b37e5cb4415d1eef13ad2dea3f7d43edb1",
+      "bytes": 65124
+    },
+    "generator/tests/manual/variants.test.js": {
+      "snapshot": "generator/tests/artifacts/difficulty-v3/MS05b3/old/variants.test.js.txt",
+      "gitBlob": "b204de5f39b28a90d1f32cd4b7924539df0dae6c",
+      "sha256": "8521a0ccc3876e5650652f68ec8ae50f676e85322a2cf0291c7f178323c16899",
+      "bytes": 34717
+    }
+  }
+}

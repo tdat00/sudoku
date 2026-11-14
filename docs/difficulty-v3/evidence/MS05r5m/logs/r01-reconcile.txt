@@ -1,0 +1,5 @@
+reconcile: 14 requests, 14 records, complete true, evidence sound true, generation 14 produced, correctness pass, relations 6 pass / 0 fail / 0 unevaluated
+  mega12: 7 of 7 produced, exact 0, fallbacks 7 (shallow 7), unavailable 0, generation min 23.520 s median 23.723 s max 25.243 s, over 120 s: 0, over 30 s: 0, guard 40.000 s (margin 14.741 s)
+  mega16: 7 of 7 produced, exact 0, fallbacks 7 (shallow 7), unavailable 0, generation min 80.394 s median 104.106 s max 116.951 s, over 120 s: 0, over 30 s: 7, guard 180.000 s (margin 63.018 s)
+json: docs/difficulty-v3/evidence/MS05r5m/reconciled.json
+MS05r5m exit=0 seconds=0.499

@@ -1,0 +1,5 @@
+mega16-nightmare diagnostic: outcome ok, exact false, required false, attempts 2, samples 24
+  generation 107.225 s, validation 0.004 s
+  ordinary samples 96.958 s (95 ratings), local continuation 10.252 s (512 ratings, 1720 proposals), other 0.008 s (0 ratings)
+record: ..\docs\difficulty-v3\evidence\MS05r5p\mega16-nightmare.json
+MS05r5p exit=0 seconds=107.7

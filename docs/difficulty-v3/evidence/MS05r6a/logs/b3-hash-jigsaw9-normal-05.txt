@@ -1,0 +1,2 @@
+  jigsaw9/normal: seeds 13, 21, 34, 55, 89 (0.2 s)
+recorded 5 of 520 keys (jigsaw9/normal, seed indexes 5-9 (seeds 13, 21, 34, 55, 89)) in docs/difficulty-v3/evidence/MS05r6a/hashes/jigsaw9-normal-05.json; a ledger is one shard, merge them all with --hash-merge

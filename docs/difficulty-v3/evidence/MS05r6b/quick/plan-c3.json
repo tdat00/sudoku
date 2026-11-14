@@ -1,0 +1,16 @@
+[
+  {
+    "label": "q-gen-mega",
+    "args": ["tests\\node-runner.js", "--suite=mega", "--verbose", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-mega.json"],
+    "projectionSeconds": 250,
+    "projectionBasis": "STALE ceiling kept: 246.3 s for the whole suite at MS05b1, which included the four full-attempt Nightmare tests that r5m removed; r5m's replacements measured 5.2 s and 0.1 s",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-mega.json"
+  },
+  {
+    "label": "q-gen-own-fast",
+    "args": ["tests\\node-runner.js", "--suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,perf-tooling,purity,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker", "--verbose", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-own-fast.json"],
+    "projectionSeconds": 240,
+    "projectionBasis": "STALE ceiling with MEASURED parts: 172.7 s for the first 26 of these suites at MS05b1; replay-recorders 8.0 s, perf-tooling 11.6 s, help + ui-contract 4.5 s, store + controls + history + cache 11.1 s, mega-contract 2.0 s (00345dc1), manual-corpus 2.3 s; about 25 s for the suites added since; rounded up to 240 s",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-own-fast.json"
+  }
+]

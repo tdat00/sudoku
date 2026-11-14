@@ -47,6 +47,32 @@ Anchors verified at `c9935cd`: `generator/tests/fixtures/perf-helper.js:47-53`
 `generator/tests/perf.js:455-476` (`if (plan.mode !== 'timing') return runHashes`).
 Find these quotes after later tooling changes.
 
+### PR-S2 remarks — performance evidence, unchanged scope
+
+Fable's answer (`92a7693`, `docs/difficulty-v3/clarifications-resolved.md`) leaves MS05e-MS18e
+unchanged. The following notes belong to the existing performance/item reporting; they add no
+new scope, cap, budget, performance target or generator change.
+
+- **S-AV11 stage profile:** when this task measures performance, obtain a stage profile of the
+  single recorded Jigsaw request (`jigsaw9`, Expert, seed 1111; 325.313 s in MS05b3).
+  Use the existing pipeline stage timings/recording facilities, retaining the request's trace/options
+  and the measured source identity. Keep this identified diagnostic separate from the unchanged
+  50-run GP populations, seeds, warmup and aggregate. Until the profile identifies its stage, do not
+  describe the historical 325 s as a dig cost. If the delay no longer reproduces, say so rather than
+  assigning a cause to the old run. Use the existing lock/projection/guard rules; no guard is raised
+  and no broad search for more outliers or new profiling tool is authorized by this remark.
+- **Existing request counters:** where per-request records are already written, retain the existing
+  `stats` counters, including `samples`, `attempts` and `oracleCalls`, with the source/request/default
+  metadata. Preserve their actual scope and available values; do not replace missing data with zero
+  or infer whole-request totals from a returned sample's counters. They are the baseline for the
+  later improvement feature, not a new telemetry or schema project in this task.
+- **S-AV03 wording:** on the source reviewed in PR-S2, mega16 Nightmare fails the 30 s qualification
+  budget by its work ceiling, not as a tail. Keep historical and final-source measurements distinct.
+
+The profile informs which unbounded piece might be guarded **later**; it authorizes no repair here.
+`docs/improve-generating/plan.md` is saved for a separately authorized future feature and must not
+be implemented as part of this performance task.
+
 ### Mandatory preflight before any GP invocation (FS23)
 
 The final GQ record already has raw `cells[].requests[].ms` for this candidate. First project

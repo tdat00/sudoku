@@ -421,9 +421,17 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 
 ## 10. Testing
 `node tests/node-runner.js` (30 suites: the 14 of `tests/suites/` and the 16 shared ones of `core/tests/suites/`;
-about 15 s; no install) is the default quick set: developers and coding
+1,683 tests; no install) is the default quick set: developers and coding
 agents run it (or a few suites with `--suite=`) while developing, and `.github/workflows/pages.yml` runs all of it
-before every deployment. `tests.html` runs the same suites in a browser (the suites that read
+before every deployment. When one command cannot hold the whole set, it is covered by disjoint shards as the
+generator's quick set is (`generator/design.md` section 15.1); the cost measured for each app, on a named source and
+machine (a report, not a promise), is in `docs/difficulty-v3/recovery-quick-cost.md`. The runner also takes `--filter=text` (a case-insensitive part of the full name
+"suite > describe > test"), `--exact="<full name>"` (every test of exactly that name; not with `--filter`),
+`--list-tests=<file.json>` (register the selected suites as a run does, write the inventory, run no test, hook or
+benchmark) and `--results=<file.json>` (run, and also write the result of every selected test); the two file
+options take a new project-relative `.json` path inside the repository, never overwritten, and are implemented by
+`../core/tests/node-evidence.js`, shared with the generator (rows `{ suite, ordinal, fullName, kind, skipped,
+timeoutMs }` with a source fingerprint; see `generator/design.md` section 15.1). `tests.html` runs the same suites in a browser (the suites that read
 `tests/fixtures/puzzles/*.json` need `http://`, they skip themselves on `file://`). The slow checks are the
 **browser scripts** of `tests/browser/` (last row of the table; `node tests/browser/run-all.js`, several minutes):
 they are **manual**, not part of CI, and are run only when a change touches the UI.

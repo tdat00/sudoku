@@ -265,6 +265,26 @@
   }
 
   describe('stepView: the description of the step on show', function () {
+    it('reads G13 from the saved wire and never regenerates it (a spy on the pipeline)', function () {
+      var saved = goldens.G13;
+      var run = SG.pipeline.run;
+      var calls = 0;
+      delete goldens.G13;
+      SG.pipeline.run = function () {
+        calls++;
+        throw new Error('G13 comes from SG.fixtures.replayWire, not from the pipeline');
+      };
+      try {
+        var res = golden('G13');
+        expect(calls).toBe(0);
+        expect(Object.keys(WIRE)).toContain('G13');
+        expect(SG.replay.toPlainWire(res)).toEqual(WIRE.G13);
+      } finally {
+        SG.pipeline.run = run;
+        if (saved) goldens.G13 = saved;
+      }
+    });
+
     it('shows nothing without steps, and a hint to use the replay controls at position 0', function () {
       var fx = panelFixture();
       inLocale('en', function () {
@@ -791,7 +811,7 @@
       });
     });
 
-    it('marks 12 compact and 15 details jumps over the 14 goldens, and one first rated puzzle per view',
+    it('marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view',
       function () {
         var jumps = { compact: 0, details: 0 };
         inLocale('en', function () {
@@ -826,7 +846,7 @@
             });
           });
         });
-        expect(jumps).toEqual({ compact: 12, details: 15 });
+        expect(jumps).toEqual({ compact: 13, details: 16 });
       }, 120000);
 
     it('the example: the first rated puzzle, the new hardest technique without a badge, an unchanged total',
@@ -1016,7 +1036,7 @@
 
     it('names the cause of a move per class, on the goldens', function () {
       var results = {};
-      ['G03', 'G05', 'G07', 'G11', 'G13'].forEach(function (id) { results[id] = golden(id); });
+      ['G03', 'G05', 'G09', 'G11', 'G13'].forEach(function (id) { results[id] = golden(id); });
       function third(id, position, view) {
         var res = results[id];
         var step = stepAt(viewsOf(res)[view || 'compact'].steps, position);
@@ -1031,7 +1051,7 @@
         .toBe('Removing each clue alone gives 45 and 44; removing the whole group gives 870.');
       expect(third('G05', 29).sentences[2])
         .toBe('The separate changes give 50, 50, 49 and 49; the combined change gives 2,010.');
-      expect(third('G07', 24).sentences[2]).toBe('Removing the clue at R1C4 alone gives 136, versus 252 for the ' +
+      expect(third('G09', 37).sentences[2]).toBe('Removing the clue at R3C5 alone gives 524, versus 562 for the ' +
         'whole symmetric group, which is always displayed as one complete change.');
       var sign = third('G11', 110, 'details');
       expect(sign.sentences[0]).toContain('After the sign between R2C4 and R1C4 is removed, ');
@@ -1055,7 +1075,7 @@
     }
 
     it('a jump over several moves says in which complete change the new technique first appears', function () {
-      [['G06', 31, 'compact'], ['G11', 111, 'compact'], ['G12', 103, 'compact']].forEach(function (c) {
+      [['G11', 111, 'compact'], ['G12', 103, 'compact']].forEach(function (c) {
         var res = golden(c[0]);
         var analysis = analysisOf(res);
         var step = stepAt(viewsOf(res)[c[2]].steps, c[1]);

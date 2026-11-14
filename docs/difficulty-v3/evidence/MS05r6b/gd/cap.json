@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9))","exact":null,"count":5},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 5194.4,
+  "results": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 5013.5,
+    "tests": [
+      {"suite":"difficulty","name":"counts every full rating at the default cap: classic9 top tier, Greater-Than, Killer","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > counts every full rating at the default cap: classic9 top tier, Greater-Than, Killer","status":"pass","ms":4754.074,"reason":"","error":null,"ordinal":141},
+      {"suite":"difficulty","name":"runs out inside the downward refinement without passing the cap","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside the downward refinement without passing the cap","status":"pass","ms":58.569,"reason":"","error":null,"ordinal":142},
+      {"suite":"difficulty","name":"runs out inside the local search, and hands on the rating it has instead of rating again","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside the local search, and hands on the rating it has instead of rating again","status":"pass","ms":3.794,"reason":"","error":null,"ordinal":143},
+      {"suite":"difficulty","name":"runs out inside a variant strategy: Greater-Than tuning and the Killer layout search","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside a variant strategy: Greater-Than tuning and the Killer layout search","status":"pass","ms":192.652,"reason":"","error":null,"ordinal":144},
+      {"suite":"difficulty","name":"a cap of nothing at all ends with the error path, never with an unrated puzzle","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > a cap of nothing at all ends with the error path, never with an unrated puzzle","status":"pass","ms":3.334,"reason":"","error":null,"ordinal":145}
+    ],
+    "suites": [
+      {"name":"difficulty","total":5,"passed":5,"failed":0,"skipped":0,"ms":5013.386}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9))","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\cap.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

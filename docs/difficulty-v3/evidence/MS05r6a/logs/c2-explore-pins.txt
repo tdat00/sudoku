@@ -1,0 +1,2 @@
+wrote ..\docs\difficulty-v3\evidence\MS05r6a\pins\explore.json (14 goldens and the example)
+MS05r6a exit=0 seconds=11.015

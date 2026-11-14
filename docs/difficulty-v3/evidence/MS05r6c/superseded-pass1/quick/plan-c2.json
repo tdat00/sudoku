@@ -1,0 +1,46 @@
+[
+  {
+    "label": "c2-player",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=player",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-player.json"
+    ],
+    "projectionSeconds": 180,
+    "projectionBasis": "MEASURED 139.399 s by MS05r6b (final run, locked, same code; only documents differ here), stated bound 180 s (1.3 times), from .github/scripts/generator-quick.json",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-player.json"
+  },
+  {
+    "label": "c2-core-shared",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-core-shared.json"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "MEASURED 24.61 s by MS05r6b (final run, locked, same code; only documents differ here), stated bound 60 s (2.4 times), from .github/scripts/generator-quick.json",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-core-shared.json"
+  },
+  {
+    "label": "c2-mega",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=mega",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-mega.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "MEASURED 11.4 s by MS05r6b (final run, locked, same code; only documents differ here), stated bound 30 s (2.6 times), from .github/scripts/generator-quick.json",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-mega.json"
+  },
+  {
+    "label": "c2-own-fast",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,perf-tooling,purity,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-own-fast.json"
+    ],
+    "projectionSeconds": 220,
+    "projectionBasis": "MEASURED 162.033 s by MS05r6b (final run, locked, same code; only documents differ here), stated bound 220 s (1.4 times), from .github/scripts/generator-quick.json",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-own-fast.json"
+  }
+]

@@ -232,4 +232,173 @@
       expect(guarded.list().length).toBe(1);
     });
   });
+
+  // A recorded recipe is generated again through the store as a replay (source 'app'), with the number of
+  // attempts it recorded, and the replay is not a new choice of the user (MS05r5p, CV6-03 (c2)). The tests run
+  // the real `SG.app.generate(overrides)`, which is what the history panel calls for an entry it opens
+  // (`app.generate(overridesOf(entry))`): a private copy of js/ui/app.js on a minimal fake document, with the
+  // real store, stand-ins for the views and a scripted client that records the configurations it is asked for.
+  describe('history: restoring a recorded recipe keeps its attempts (MS05r5p)', function () {
+    function recipe(variantId, level, seed, maxAttempts) {
+      return H.entryOf({
+        seed: seed, givens: [0, 1], rating: { level: level, score: 1500 },
+        config: { variantId: variantId, difficulty: level, symmetry: 'rotational180', digOrder: 'random',
+          maxAttempts: maxAttempts, variantOptions: {} }
+      });
+    }
+
+    /** `{ app, store, configs }`: the started private app; `destroy()` when done. */
+    function startApp() {
+      var node = SG.test.node;
+      if (!node) SG.test.skip('needs the file system (Node only)');
+      var noop = function () {};
+      function element() {
+        return {
+          nodeType: 1, hidden: false, disabled: false, textContent: '', className: '',
+          style: { setProperty: noop },
+          classList: { toggle: noop, contains: function () { return false; }, add: noop, remove: noop },
+          setAttribute: noop, getAttribute: function () { return null; }, removeAttribute: noop,
+          addEventListener: noop, removeEventListener: noop, appendChild: function (c) { return c; },
+          removeChild: noop, contains: function () { return false; }, querySelector: function () { return null; },
+          focus: noop
+        };
+      }
+      var byId = {};
+      ['board-svg', 'board-root', 'controls-root', 'controls-form', 'btn-generate', 'btn-regenerate',
+        'btn-cancel', 'btn-export', 'btn-drawer', 'steps-root', 'player-root', 'result-root', 'main']
+        .forEach(function (id) { byId[id] = element(); });
+      var doc = {
+        readyState: 'loading', title: '', body: element(), documentElement: element(), activeElement: null,
+        getElementById: function (id) { return byId[id] || null; },
+        querySelector: function () { return null; }, querySelectorAll: function () { return []; },
+        createElement: element, createElementNS: element, addEventListener: noop, removeEventListener: noop
+      };
+      var sg = Object.assign({}, SG);
+      // Its own fragment list: app.js registers its strings in it, and the host's list (read by the i18n suite,
+      // which allows no key defined twice) stays as it was.
+      sg.localeFragments = [];
+      var hostFragments = (SG.localeFragments || []).slice();
+      ['app', 'exportUi', 'a11y', 'theme', 'help', 'cache', 'history'].forEach(function (name) { delete sg[name]; });
+      var store = SG.store.create({ storage: null, location: null, history: null, navigator: { languages: [] } });
+      sg.store = Object.assign({}, SG.store, { instance: function () { return store; } });
+      sg.boardView = { create: function () { return new Proxy({}, { get: function () { return noop; } }); } };
+      sg.stepView = {
+        create: function () { return { clear: noop, setSteps: noop, setPosition: noop, destroy: noop }; }
+      };
+      sg.resultView = { create: function () { return { clear: noop, show: noop, refresh: noop, destroy: noop }; } };
+      sg.controls = { mount: function () { return { destroy: noop }; } };
+      sg.player = {
+        LAYER_NAMES: [],
+        create: function () {
+          return { reset: noop, load: noop, bindControls: noop, setPreparation: noop, setAnalysis: noop,
+            destroy: noop, state: function () { return { finished: false, loaded: false, position: 0, length: 0 }; } };
+        },
+        createPreparation: function () { return { start: noop, cancel: noop, press: noop }; }
+      };
+      var source = node.fs.readFileSync(node.path.join(node.root, 'js/ui/app.js'), 'utf8');
+      new Function('self', 'document', source)({ SG: sg, setTimeout: setTimeout, clearTimeout: clearTimeout }, doc);
+      // The private app registered its strings in its own list, and the host's list is untouched.
+      expect(sg.localeFragments.length).toBe(1);
+      var host = SG.localeFragments || [];
+      expect(host.length).toBe(hostFragments.length);
+      expect(host.every(function (f, i) { return f === hostFragments[i]; })).toBe(true);
+      var configs = [];
+      var client = {
+        mode: 'main', cancel: noop, cancelReplay: noop,
+        generate: function (config) { configs.push(config); return new Promise(noop); }
+      };
+      expect(sg.app.start()).toBe(true);
+      sg.app.setClient(client);
+      return { app: sg.app, store: store, configs: configs, destroy: function () { sg.app.destroy(); } };
+    }
+
+    function shown(store) {
+      var s = store.get();
+      return [s.variantId, s.maxAttempts, s.attemptsExplicit];
+    }
+
+    function restore(page, entry) {
+      page.app.generate(H.overridesOf(entry));
+      return page.configs[page.configs.length - 1];
+    }
+
+    function withPage(fn) {
+      var page = startApp();
+      try {
+        return fn(page);
+      } finally {
+        page.destroy();
+        SG.i18n.setLocale('en');
+      }
+    }
+
+    it('MS05r5p-T04: in default mode a classic9 entry at 8 replays with 8; the next mega16 request is back to ' +
+      'its default 2', function () {
+      ready();
+      withPage(function (page) {
+        expect(shown(page.store)).toEqual(['classic9', 8, false]);
+        var config = restore(page, recipe('classic9', 'hard', '71', 8));
+        expect([config.variantId, config.seed, config.maxAttempts]).toEqual(['classic9', 71, 8]);
+        expect(shown(page.store)).toEqual(['classic9', 8, false]);
+        page.store.set({ variantId: 'mega16' }, { source: 'controls' });
+        expect(shown(page.store)).toEqual(['mega16', 2, false]);
+        page.app.generate();
+        expect(page.configs).toHaveLength(2);
+        expect([page.configs[1].variantId, page.configs[1].maxAttempts]).toEqual(['mega16', 2]);
+      });
+    });
+
+    it('MS05r5p-T04: an older mega16 entry at 8 replays with 8, which the control shows as a chosen 8', function () {
+      ready();
+      withPage(function (page) {
+        var config = restore(page, recipe('mega16', 'nightmare', '3', 8));
+        expect([config.variantId, config.maxAttempts]).toEqual(['mega16', 8]);
+        expect(shown(page.store)).toEqual(['mega16', 8, true]);
+        var model = SG.controls.describe(page.store.get());
+        var field = model.fields.filter(function (f) { return f.id === 'maxAttempts'; })[0];
+        expect([field.value, field.defaultValue]).toEqual([8, 2]);
+        expect(Object.keys(config).indexOf('attemptsExplicit')).toBe(-1);
+      });
+      // An entry made with the new default is not a choice either: default mode stays default.
+      withPage(function (page) {
+        expect(restore(page, recipe('mega16', 'nightmare', '3', 2)).maxAttempts).toBe(2);
+        expect(shown(page.store)).toEqual(['mega16', 2, false]);
+      });
+    });
+
+    it('MS05r5p-T04: a number equal to the default of the replayed board keeps an explicit setting explicit, ' +
+      'and a replay never makes it a default', function () {
+      ready();
+      withPage(function (page) {
+        page.store.set({ maxAttempts: 5 }, { source: 'controls' });
+        expect(restore(page, recipe('mega16', 'hard', '12', 2)).maxAttempts).toBe(2);
+        expect(shown(page.store)).toEqual(['mega16', 2, true]);
+        page.store.set({ variantId: 'butterfly' }, { source: 'controls' });
+        expect(shown(page.store)).toEqual(['butterfly', 2, true]);
+        expect(restore(page, recipe('classic9', 'hard', '13', 8)).maxAttempts).toBe(8);
+        expect(shown(page.store)).toEqual(['classic9', 8, true]);
+        page.store.set({ variantId: 'mega16' }, { source: 'controls' });
+        expect(shown(page.store)).toEqual(['mega16', 8, true]);
+        page.app.generate();
+        expect(page.configs.map(function (c) { return c.maxAttempts; })).toEqual([2, 8, 8]);
+      });
+    });
+
+    it('MS05r5p-T04: a number that is not the default of its board is replayed and becomes a chosen one',
+      function () {
+        ready();
+        withPage(function (page) {
+          var config = restore(page, recipe('mega12', 'expert', '14', 3));
+          expect(config.maxAttempts).toBe(3);
+          expect(shown(page.store)).toEqual(['mega12', 3, true]);
+          expect(Object.keys(config).sort()).toEqual(['difficulty', 'digOrder', 'maxAttempts', 'seed',
+            'symbolMode', 'symmetry', 'variantId', 'variantOptions']);
+        });
+        // What a real result recorded is what the entry carries.
+        var r = realResult('classic4', 'veryEasy', 3);
+        var entry = H.entryOf(r);
+        expect(entry.maxAttempts).toBe(r.config.maxAttempts);
+        expect(H.overridesOf(entry).maxAttempts).toBe(8);
+      });
+  });
 })();

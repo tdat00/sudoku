@@ -1,0 +1,184 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+mega
+  ok   mega > mega definitions > mega12: is registered with the digits, group and presentation settings of its board (1 ms)
+  ok   mega > mega definitions > mega12: offers every level of the nine (measured by tests/qualify.js) (0 ms)
+  ok   mega > mega definitions > mega12: has a pre-fill and a restart threshold far below the generic default (2 ms)
+  ok   mega > mega definitions > mega12: describes the symbol set as a select option in the shape of the Killer and Jigsaw sliders (0 ms)
+  ok   mega > mega definitions > mega16: is registered with the digits, group and presentation settings of its board (0 ms)
+  ok   mega > mega definitions > mega16: offers every level of the nine (measured by tests/qualify.js) (0 ms)
+  ok   mega > mega definitions > mega16: has a pre-fill and a restart threshold far below the generic default (1 ms)
+  ok   mega > mega definitions > mega16: describes the symbol set as a select option in the shape of the Killer and Jigsaw sliders (0 ms)
+  ok   mega > mega definitions > is plain data: the option schema survives a JSON round trip (it is sent to the UI) (0 ms)
+  ok   mega > mega definitions > loading the file twice registers nothing twice and adds no second locale fragment (1 ms)
+  ok   mega > mega geometry > mega12: the model is valid (CV1) and has D x D cells and 3 x D units of D cells (6 ms)
+  ok   mega > mega geometry > mega12: units are the rows, then the columns, then the boxes (2 ms)
+  ok   mega > mega geometry > mega12: every box is 3 rows x 4 columns, read from cellRegion (1 ms)
+  ok   mega > mega geometry > mega12: the box units are exactly the cells of one region id (0 ms)
+  ok   mega > mega geometry > mega12: each cell sees 28 peers, and the relation is symmetric (37 ms)
+  ok   mega > mega geometry > mega12: the canvas is D x D and no two cells share a position (1 ms)
+  ok   mega > mega geometry > mega16: the model is valid (CV1) and has D x D cells and 3 x D units of D cells (5 ms)
+  ok   mega > mega geometry > mega16: units are the rows, then the columns, then the boxes (3 ms)
+  ok   mega > mega geometry > mega16: every box is 4 rows x 4 columns, read from cellRegion (2 ms)
+  ok   mega > mega geometry > mega16: the box units are exactly the cells of one region id (0 ms)
+  ok   mega > mega geometry > mega16: each cell sees 39 peers, and the relation is symmetric (71 ms)
+  ok   mega > mega geometry > mega16: the canvas is D x D and no two cells share a position (1 ms)
+  ok   mega > mega geometry > the peers of the mega12 corner cell are its row, its column and the rest of its 3 x 4 box (0 ms)
+  ok   mega > mega geometry > with 3 x 4 boxes, mega12 cell (1, 1) sees (0, 3) and (2, 3) by box but not (3, 3) (0 ms)
+  ok   mega > mega symbol sets > mega12: the "letters" set labels the values 1..12 as 1 2 3 4 5 6 7 8 9 A B C (1 ms)
+  ok   mega > mega symbol sets > mega12: the "numbers" set labels the values 1..12 as 1 2 3 4 5 6 7 8 9 10 11 12 (1 ms)
+  ok   mega > mega symbol sets > mega12: the default set is "letters" whether the option is missing, null or empty (4 ms)
+  ok   mega > mega symbol sets > mega12: refuses an unknown symbol set, a set of the other variant and a value of the wrong type (2 ms)
+  ok   mega > mega symbol sets > mega12: the set only changes the labels, never the units, peers or layout (1 ms)
+  ok   mega > mega symbol sets > mega12: the same seed gives the same puzzle in every set, and the result carries the chosen labels (54 ms)
+  ok   mega > mega symbol sets > mega16: the "hex" set labels the values 1..16 as 0 1 2 3 4 5 6 7 8 9 A B C D E F (1 ms)
+  ok   mega > mega symbol sets > mega16: the "letters" set labels the values 1..16 as 1 2 3 4 5 6 7 8 9 A B C D E F G (0 ms)
+  ok   mega > mega symbol sets > mega16: the default set is "hex" whether the option is missing, null or empty (2 ms)
+  ok   mega > mega symbol sets > mega16: refuses an unknown symbol set, a set of the other variant and a value of the wrong type (0 ms)
+  ok   mega > mega symbol sets > mega16: the set only changes the labels, never the units, peers or layout (1 ms)
+  ok   mega > mega symbol sets > mega16: the same seed gives the same puzzle in every set, and the result carries the chosen labels (38 ms)
+  ok   mega > mega symbol sets > the highest value of each set: 16 is F in hex, G in 1-9 A-G; 12 is C or "12" (0 ms)
+  ok   mega > mega symbol sets > hex starts at 0, which labels the value 1; no value is ever 0 in the core (7 ms)
+  ok   mega > mega bitmasks at the highest digit > mega12: a fresh state holds the full mask 4095 in every cell, none of them negative (0 ms)
+  ok   mega > mega bitmasks at the highest digit > mega12: assigning 12 clears bit 11 of the peers and nothing else (0 ms)
+  ok   mega > mega bitmasks at the highest digit > mega12: eliminate(12) clears only bit 11, never the last one (0 ms)
+  ok   mega > mega bitmasks at the highest digit > mega12: propagation places 12 as a naked single and removes it from the peers (0 ms)
+  ok   mega > mega bitmasks at the highest digit > mega12: propagation places 12 as a hidden single in a row (0 ms)
+  ok   mega > mega bitmasks at the highest digit > mega12: the solvers fill in every 12 that is left out of a grid (1 ms)
+  ok   mega > mega bitmasks at the highest digit > mega12: a single missing cell holding 12 is found by every solver (1 ms)
+  ok   mega > mega bitmasks at the highest digit > mega16: a fresh state holds the full mask 65535 in every cell, none of them negative (1 ms)
+  ok   mega > mega bitmasks at the highest digit > mega16: assigning 16 clears bit 15 of the peers and nothing else (0 ms)
+  ok   mega > mega bitmasks at the highest digit > mega16: eliminate(16) clears only bit 15, never the last one (0 ms)
+  ok   mega > mega bitmasks at the highest digit > mega16: propagation places 16 as a naked single and removes it from the peers (1 ms)
+  ok   mega > mega bitmasks at the highest digit > mega16: propagation places 16 as a hidden single in a row (0 ms)
+  ok   mega > mega bitmasks at the highest digit > mega16: the solvers fill in every 16 that is left out of a grid (1 ms)
+  ok   mega > mega bitmasks at the highest digit > mega16: a single missing cell holding 16 is found by every solver (1 ms)
+  ok   mega > mega full grids > mega12: 50 seeds give a valid grid, each digit once per row, column and box (CV2) (8 ms)
+  ok   mega > mega full grids > mega12: the same seed gives the same grid, whatever the symbol set (1 ms)
+  ok   mega > mega full grids > mega12: the pre-fill puts a random permutation into each of the 3 diagonal boxes, and only there (1 ms)
+  ok   mega > mega full grids > mega12: the pre-fill is deterministic per seed, varies with it and reports a clash (0 ms)
+  ok   mega > mega full grids > mega12: the generator uses the pre-fill, and can run without it (1 ms)
+  ok   mega > mega full grids > mega12: 50 seeds give a valid grid with the restartThreshold of the definition (6 ms)
+  ok   mega > mega full grids > mega12: a threshold of 0 restarts at the first dead end, and the search still ends in a valid grid (14 ms)
+  ok   mega > mega full grids > mega12: a cancelled or exhausted budget stops the search of the generator (0 ms)
+  ok   mega > mega full grids > mega16: 50 seeds give a valid grid, each digit once per row, column and box (CV2) (16 ms)
+  ok   mega > mega full grids > mega16: the same seed gives the same grid, whatever the symbol set (2 ms)
+  ok   mega > mega full grids > mega16: the pre-fill puts a random permutation into each of the 4 diagonal boxes, and only there (1 ms)
+  ok   mega > mega full grids > mega16: the pre-fill is deterministic per seed, varies with it and reports a clash (0 ms)
+  ok   mega > mega full grids > mega16: the generator uses the pre-fill, and can run without it (1 ms)
+  ok   mega > mega full grids > mega16: 50 seeds give a valid grid with the restartThreshold of the definition (14 ms)
+  ok   mega > mega full grids > mega16: a threshold of 0 restarts at the first dead end, and the search still ends in a valid grid (29 ms)
+  ok   mega > mega full grids > mega16: a cancelled or exhausted budget stops the search of the generator (0 ms)
+  ok   mega > mega puzzles > mega12 veryEasy: 4 puzzles are unique, valid and inside the 9.1 time budget (13 ms)
+  ok   mega > mega puzzles > mega12 veryEasy: the same seed gives the same puzzle (CV5) (8 ms)
+  ok   mega > mega puzzles > mega12 easy: 4 puzzles are unique, valid and inside the 9.1 time budget (26 ms)
+  ok   mega > mega puzzles > mega12 easy: the same seed gives the same puzzle (CV5) (16 ms)
+  ok   mega > mega puzzles > mega12 normal: 4 puzzles are unique, valid and inside the 9.1 time budget (72 ms)
+  ok   mega > mega puzzles > mega12 normal: the same seed gives the same puzzle (CV5) (53 ms)
+  ok   mega > mega puzzles > mega12 hard: 4 puzzles are unique, valid and inside the 9.1 time budget (133 ms)
+  ok   mega > mega puzzles > mega12 hard: the same seed gives the same puzzle (CV5) (131 ms)
+  ok   mega > mega puzzles > mega12 hell1: 4 puzzles are unique, valid and inside the 9.1 time budget (1.44 s)
+  ok   mega > mega puzzles > mega12 hell1: the same seed gives the same puzzle (CV5) (106 ms)
+  ok   mega > mega puzzles > mega12: puzzles hold the highest digit 12 as a given and as a deduction (11 ms)
+  ok   mega > mega puzzles > mega12: the clues are symmetric about the centre of the board (no centre cell) (3 ms)
+  ok   mega > mega puzzles > mega12: every symmetry of the digger keeps its clue pattern and the unique solution (20 ms)
+  ok   mega > mega puzzles > mega12: a budget that is too small or already cancelled stops the pipeline (1 ms)
+  ok   mega > mega puzzles > mega16 veryEasy: 4 puzzles are unique, valid and inside the 9.1 time budget (27 ms)
+  ok   mega > mega puzzles > mega16 veryEasy: the same seed gives the same puzzle (CV5) (18 ms)
+  ok   mega > mega puzzles > mega16 easy: 4 puzzles are unique, valid and inside the 9.1 time budget (70 ms)
+  ok   mega > mega puzzles > mega16 easy: the same seed gives the same puzzle (CV5) (51 ms)
+  ok   mega > mega puzzles > mega16 normal: 4 puzzles are unique, valid and inside the 9.1 time budget (186 ms)
+  ok   mega > mega puzzles > mega16 normal: the same seed gives the same puzzle (CV5) (90 ms)
+  ok   mega > mega puzzles > mega16 hard: 4 puzzles are unique, valid and inside the 9.1 time budget (634 ms)
+  ok   mega > mega puzzles > mega16 hard: the same seed gives the same puzzle (CV5) (438 ms)
+  ok   mega > mega puzzles > mega16 hell1: 4 puzzles are unique, valid and inside the 9.1 time budget (1.36 s)
+  ok   mega > mega puzzles > mega16 hell1: the same seed gives the same puzzle (CV5) (754 ms)
+  ok   mega > mega puzzles > mega16: puzzles hold the highest digit 16 as a given and as a deduction (25 ms)
+  ok   mega > mega puzzles > mega16: the clues are symmetric about the centre of the board (no centre cell) (7 ms)
+  ok   mega > mega puzzles > mega16: every symmetry of the digger keeps its clue pattern and the unique solution (51 ms)
+  ok   mega > mega puzzles > mega16: a budget that is too small or already cancelled stops the pipeline (1 ms)
+  ok   mega > mega puzzles > mega12 nightmare: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit (4.97 s)
+  ok   mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > the size default stops after two attempts with a truthful two-warning shallow fallback (5 ms)
+  ok   mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > an explicit number of attempts wins over the size default (9 ms)
+  ok   mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > a cancelled or exhausted budget propagates its error and never returns the best puzzle so far (6 ms)
+  ok   mega > mega puzzles > the step trace > mega12: a full trace of 144 cells is kept and replays to the puzzle (4 ms)
+  ok   mega > mega puzzles > the step trace > mega12: the buildModel step reports the size of the board (2 ms)
+  ok   mega > mega puzzles > the step trace > mega16: a full trace of 256 cells is kept and replays to the puzzle (8 ms)
+  ok   mega > mega puzzles > the step trace > mega16: the buildModel step reports the size of the board (6 ms)
+  ok   mega > mega locale fragment > is published once in SG.localeFragments with an en and a vi pack (0 ms)
+  ok   mega > mega locale fragment > names both variants, in the words of the design catalogue (0 ms)
+  ok   mega > mega locale fragment > has no vi text that is just the English text (0 ms)
+  ok   mega > mega renderer contract > mega12 draws thick lines after every 4th column and every 3rd row (0 ms)
+  ok   mega > mega renderer contract > mega16 draws thick lines after every 4th column and every 4th row (0 ms)
+  ok   mega > mega renderer contract > the labels are 1 character wide, except the 2 of "10".."12" in the numbers set (0 ms)
+  ok   mega > mega renderer contract > every digit of a grid has a label: labels[v - 1] exists for v in 1..D and nothing else (1 ms)
+ok   mega: 111 passed  (11.12 s)
+
+Suites: 1
+Tests:  111 total, 111 passed, 0 failed, 0 skipped
+Time:   11.12 s running tests, 11.30 s total
+Results: docs/difficulty-v3/evidence/MS05r6b/quick/generator-mega.json

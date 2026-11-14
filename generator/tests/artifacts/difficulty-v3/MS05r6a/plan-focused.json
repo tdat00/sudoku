@@ -1,0 +1,6 @@
+[
+  { "label": "d1-focused-replay-recorders", "args": ["tests\\node-runner.js", "--suite=replay-recorders", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\focused\\replay-recorders.json"] },
+  { "label": "d1-focused-perf-tooling", "args": ["tests\\node-runner.js", "--suite=perf-tooling", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\focused\\perf-tooling.json"] },
+  { "label": "d1-focused-help-ui-contract", "args": ["tests\\node-runner.js", "--suite=help,ui-contract", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\focused\\help-ui-contract.json"] },
+  { "label": "d1-focused-store-controls", "args": ["tests\\node-runner.js", "--suite=store,controls,history,cache", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\focused\\store-controls-history-cache.json"] }
+]

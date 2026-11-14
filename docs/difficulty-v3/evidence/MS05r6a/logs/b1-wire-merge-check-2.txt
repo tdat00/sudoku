@@ -1,0 +1,7 @@
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+G09: matches replay-wire.js
+G10: matches replay-wire.js
+G11: matches replay-wire.js
+G12: matches replay-wire.js
+G13: matches replay-wire.js
+replay-wire.js is up to date

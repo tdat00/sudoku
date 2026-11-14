@@ -1,0 +1,16 @@
+[
+  {
+    "label": "q-gen-pipeline",
+    "args": ["tests\\node-runner.js", "--suite=pipeline", "--verbose", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-pipeline.json"],
+    "projectionSeconds": 300,
+    "projectionBasis": "STALE ceiling: 294.8 s for 127 tests at MS05b1 (the suite now has 150; the 23 added tests were measured at under 4 s together). Large-board cases cost less since r5p (default 4 or 2 attempts)",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-pipeline.json"
+  },
+  {
+    "label": "q-gen-core-shared",
+    "args": ["tests\\node-runner.js", "--suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook", "--verbose", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-core-shared.json"],
+    "projectionSeconds": 150,
+    "projectionBasis": "UNMEASURED ceiling: the 16 shared suites in the Generator environment; the whole Generator quick set took 111 to 112 s at the baseline (report 2.1), shared suites included, plus 40 s for the v3 additions",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-core-shared.json"
+  }
+]

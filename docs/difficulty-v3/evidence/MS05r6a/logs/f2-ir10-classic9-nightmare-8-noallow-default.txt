@@ -1,0 +1,1 @@
+classic9/nightmare#8 allowance none, attempts default: hash 7c4a68aa064d1526, 7 attempt(s), exact true, 4450 ms; record ..\docs\difficulty-v3\evidence\MS05r6a\diagnostic\classic9-nightmare-8-noallow-default.json

@@ -4,8 +4,10 @@
 /*
  * Headless test runner (Node >= 18, built-in modules only).
  *
- *   node tests/node-runner.js [--all | --manual] [--suite=<name>[,<name>]] [--filter=<text>] [--bail]
- *                             [--verbose] [--help]
+ *   node tests/node-runner.js [--all | --manual] [--suite=<name>[,<name>]] [--filter=<text> | --exact=<full name>]
+ *                             [--bail] [--verbose] [--help]
+ *   node tests/node-runner.js [selection] --list-tests=<file.json>   write the inventory, run no test
+ *   node tests/node-runner.js [selection] --results=<file.json>      run, then write the result of every test
  *
  * Two sets of suites:
  *   tests/suites/  the quick set (default, about 60 s): what a developer or an agent runs after every change,
@@ -14,6 +16,12 @@
  *                  hashes). Run them with --all (CI does) or --manual, or by name with --suite=<name>.
  *
  * Exit code: 0 when every test passed, 1 on any failure, load error, unknown suite or when no test ran.
+ *
+ * --exact selects the tests whose full name ("suite > describe > test") equals the text, case-sensitive, instead
+ * of containing it; it excludes --filter. --list-tests and --results (mutually exclusive) take a new project-relative
+ * .json path inside the repository and never overwrite it; the evidence module is ../core/tests/node-evidence.js
+ * (the inventory and result shapes, the source fingerprint). --list-tests registers the selected suites exactly
+ * as a run does, so their set-up at load time still happens, but it runs no test, hook or benchmark.
  *
  * SOURCE_FILES lists every source file in dependency load order. It is the reference order: index.html,
  * js/worker/gen.worker.js (design.md 12.2) and tests.html repeat it, and the ui-contract suite checks that
@@ -97,14 +105,28 @@ const SOURCE_FILES = [
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
+const evidenceTools = require('../../core/tests/node-evidence.js');
 
 const ROOT = path.resolve(__dirname, '..');
+const REPO = path.resolve(ROOT, '..');
 const HARNESS_FILE = '../core/tests/harness.js';
 // The suites and fixtures shared with the other project (core/tests) come first, then the project's own.
 const FIXTURES_DIRS = ['../core/tests/fixtures', 'tests/fixtures'];
 const SUITES_DIRS = ['../core/tests/suites', 'tests/suites'];
 const MANUAL_DIR = 'tests/manual';
 const SUITE_SUFFIX = '.test.js';
+// What the source fingerprint of --list-tests and --results covers (repository-relative): everything a quick
+// test loads, reads or spawns, all discovered suites whatever the selection, and the manual suites only when one
+// is selected. Not the evidence, artifact or task folders.
+const EVIDENCE_INPUTS = {
+  files: ['AGENTS.md', 'README.md', 'USERGUIDE.md', 'USERGUIDE.vn.md', 'DEVELOPERGUIDE.md', 'DEVELOPERGUIDE.vn.md',
+    'core/tests/harness.js', 'core/tests/node-evidence.js', 'generator/design.md', 'generator/index.html',
+    'generator/tests.html'],
+  trees: ['core/js', 'core/css', 'core/assets', 'core/tests/fixtures', 'core/tests/suites', 'generator/js',
+    'generator/css', 'generator/assets', 'generator/tests/fixtures', 'generator/tests/suites',
+    { dir: 'generator/tests', recursive: false }],
+  manualTrees: ['generator/tests/manual']
+};
 
 const USE_COLOR = Boolean(process.stdout.isTTY) && !process.env.NO_COLOR;
 
@@ -126,6 +148,12 @@ const USAGE = [
   '  --manual                 run only the manual (heavy) suites',
   '  --suite=<name>[,<name>]  run only these suites, quick or manual (file name without ".test.js")',
   '  --filter=<text>          run only tests whose full name contains <text> (case-insensitive)',
+  '  --exact=<full name>      run only tests whose full name ("suite > describe > test") is exactly this',
+  '                           (case-sensitive, every test of that name); not with --filter',
+  '  --list-tests=<file.json> write the inventory of the selected tests (no test, hook or benchmark runs; the',
+  '                           suites still register as for a run); a new project-relative path in the repository',
+  '  --results=<file.json>    run, then also write the result of every selected test there (same path rules);',
+  '                           not with --list-tests',
   '  --bail                   stop after the first failing test',
   '  --verbose                print every test, skipped source files and benchmark timings',
   '  --help                   show this help'
@@ -133,11 +161,14 @@ const USAGE = [
 
 function parseArgs(argv) {
   const opts = {
-    suites: [], filter: null, bail: false, verbose: false, help: false, all: false, manual: false
+    suites: [], filter: null, bail: false, verbose: false, help: false, all: false, manual: false,
+    exact: null, listTests: null, results: null
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
-    if (arg === '--bail') opts.bail = true;
+    const taken = evidenceTools.parseOption(argv, i, opts);
+    if (taken >= 0) i = taken;
+    else if (arg === '--bail') opts.bail = true;
     else if (arg === '--all') opts.all = true;
     else if (arg === '--manual') opts.manual = true;
     else if (arg === '--verbose') opts.verbose = true;
@@ -154,6 +185,7 @@ function parseArgs(argv) {
       }
     }
   }
+  evidenceTools.checkOptions(opts);
   return opts;
 }
 
@@ -221,6 +253,17 @@ async function main() {
     return 0;
   }
 
+  const evidence = evidenceTools.create({ app: 'generator', repoRoot: REPO, inputs: EVIDENCE_INPUTS });
+  let target = null;
+  if (opts.listTests || opts.results) {
+    try {
+      target = evidence.outputTarget(opts.listTests ? '--list-tests' : '--results', opts.listTests || opts.results);
+    } catch (err) {
+      console.error(err.message + '\n\n' + USAGE);
+      return 1;
+    }
+  }
+
   const started = process.hrtime.bigint();
 
   runFile(HARNESS_FILE);
@@ -273,6 +316,13 @@ async function main() {
   else if (opts.manual) selected = manual;
   else selected = quick;
 
+  const manualSelected = selected.some((s) => manual.includes(s));
+  const identity = target ? evidence.fingerprint({ manual: manualSelected }) : null;
+  const selection = {
+    set: opts.suites.length > 0 ? 'suites' : opts.all ? 'all' : opts.manual ? 'manual' : 'quick',
+    suites: selected, filter: opts.filter, exact: opts.exact
+  };
+
   for (const name of selected) {
     SG.test.setSuite(name);
     try {
@@ -281,6 +331,14 @@ async function main() {
       SG.test.addLoadError(name, err);
     }
   }
+
+  if (opts.listTests) {
+    return evidence.listCommand({
+      SG: SG, target: target, selection: selection, identity: identity, argv: process.argv.slice(2),
+      registrationMs: Number(process.hrtime.bigint() - started) / 1e6
+    });
+  }
+  const listing = target ? SG.test.list({ suite: selected, filter: opts.filter, exact: opts.exact }) : null;
 
   console.log(bold('Sudoku Generator tests') + dim('  (node ' + process.version + ')'));
   console.log('Sources: ' + loaded.length + ' loaded, ' + missing.length + ' missing' +
@@ -298,6 +356,7 @@ async function main() {
   const results = await SG.test.run({
     suite: selected,
     filter: opts.filter,
+    exact: opts.exact,
     bail: opts.bail,
     onSuiteStart: opts.verbose ? (name) => console.log(bold(name)) : undefined,
     onTestEnd: opts.verbose ? printTest : undefined,
@@ -332,9 +391,19 @@ async function main() {
 
   if (results.total === 0) {
     console.log(red('No tests were run.'));
+    if (target) console.log('No result file was written.');
     return 1;
   }
-  return results.failed > 0 ? 1 : 0;
+  let code = results.failed > 0 ? 1 : 0;
+  if (target) {
+    const written = evidence.resultsCommand({
+      SG: SG, target: target, selection: selection, identity: identity, argv: process.argv.slice(2),
+      identityAfter: evidence.fingerprint({ manual: manualSelected }), expected: listing.tests.length,
+      registrationErrors: listing.registrationErrors, results: results, wallMs: wallMs
+    });
+    code = Math.max(code, written);
+  }
+  return code;
 }
 
 main().then(

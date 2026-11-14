@@ -1,0 +1,6 @@
+plan: 3 item(s), projections sum 90.0 s, budget 450 s, generic floor 60 s (it never replaces an item projection)
+#0 d-i18n-alone exit=0 node=0.523s (projected 30 s, elapsed before 0.002 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick/diag/i18n-alone.json
+#1 d-history-i18n exit=1 node=2.132s (projected 30 s, elapsed before 0.527 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick/diag/history-i18n.json
+#2 d-cache-i18n exit=1 node=9.569s (projected 30 s, elapsed before 2.66 s): (Use `node --trace-warnings ...` to show where the warning was created)
+compound complete: 3 item(s) in 12.231 s; next --from=3
+MS05r6b exit=0 seconds=12.323

@@ -96,10 +96,33 @@ One request per locked process, board-default attempts, same 500 s diagnostic ce
 source/config/guard identities and original relations. Fixed hidden requests are diagnostic only;
 use the established temporary support guard and restore the original array, never normalize to
 another level. Retain every outcome and all per-puzzle checks, not just a hit histogram.
-Run once after the final engine change; reuse compatible current-source records if they already
+Run once after the final engine change; retain compatible final-source deep records if they already
 exist, never stale recovery records or two aliases of one CV5 call. Reconcile without regeneration.
-If a current final CV3 mega cell matches, apply its own checks to those records and identify the reuse.
+Read both `identity.currentMatches.sourceHash` and `.toolHash` explicitly; exit 0 alone is not a
+current-identity match. Retaining deep records does not execute or satisfy a final CV3 cell.
 Record >240 s/timeouts as named availability/cost outcomes; wrong puzzles/flags/warnings still block.
+
+#### Final CV3 mega cells — live only (Addendum B1 route)
+
+Every mega12/mega16 CV3 cell in the final offered-level manifest runs live, including Nightmare
+and hell1 when offered. No record provider, Node replay entry point or in-runner deep-record reuse.
+
+1. Preflight each normal `--suite=variants` selector with `--list-tests`, using the quoted boundary
+   filter `'--filter=> variants: <id> > CV3 <level>:'`. Require selected total 1 and the intended full name.
+2. Run one locked `Invoke-Dv3Node -Task MS18e -AllowExit1` command per cell, with `--verbose` and a
+   fresh `--results` file under `docs/difficulty-v3/evidence/MS18e/cv3/`. Keep the original 2 requests
+   for mega16 or 3 for mega12, seeds 1..perLevel and the 240 s per-request guard.
+3. Keep all per-puzzle assertions before the aggregate hit check. Record actual final hit counts,
+   failures and times; B1's recovery zero-hit counts and timings are not final expectations or bounds.
+   Aggregate availability/time misses remain failed named final items, not green gates; per-puzzle
+   correctness/requiredness/warning failures stop.
+4. Label each manifest row `generation: live`. Cite matching final deep occurrence ids only as
+   cross-references; those records neither supply the CV3 puzzles nor replace its checks. Keep the
+   new live generation times separate from the deep times and do not double-count either.
+
+Apply the final-source projection/450 s launch rule below before each command. A blocked or
+unexecuted live cell remains unsatisfied, not replaced with deep records. Hidden levels keep
+their refusal coverage; do not enable them for CV3. Their fixed deep diagnostic obligations above remain.
 
 ## Acceptance criteria — Business
 
@@ -112,7 +135,7 @@ Record >240 s/timeouts as named availability/cost outcomes; wrong puzzles/flags/
 
 | ID | Criterion |
 |---|---|
-| MS18e-T01 | Final GD/quick correctness and actual performance verdicts are reconciled; no failed/incomplete gate is called green |
+| MS18e-T01 | Final GD/quick correctness, live mega CV3 outcomes and actual performance verdicts are reconciled; no failed/incomplete gate is called green |
 | MS18e-T02 | GS/GQ/GP/GG/GR/GH and 28 deep occurrences/relations have current compatible evidence or explicitly unsatisfied release status |
 | MS18e-T03 | Living EN/VI docs match the final code; no application/tuning/fixture/pack edit |
 | MS18e-T04 | Every S-OD4 item has an evidenced disposition or named outstanding owner; all six S3 groups remain |
@@ -168,7 +191,7 @@ Complete the difficulty suite through checklist section 7's disjoint offered-lev
 manifest after the first selected shard; never repeat it in a whole-suite command. Record a
 qualified-hidden Nightmare as absent from the offered manifest, not as a zero-test pass.
 GD jobs 1/no --jobs; prefer latest matching-source per-level measurements,
-including r6b's CV3/reuse outcomes and current Hell 1 evidence. Label older MS05b3
+including r6b's live CV3 outcomes (Addendum B1) and current Hell 1 evidence. Label older MS05b3
 measurements with their actual source/allowance; they are not proved upper bounds.
 Preflight every final CV3 cell before launching. A >450-second projection or missing credible
 bound stops that command and creates a named final item; no automatic new tooling task and no MS05b3 deferral as a

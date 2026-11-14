@@ -124,7 +124,7 @@
       ];
       var CORE_FIXTURE_FILES = ['classic', 'techniques-helper', 'techniques', 'testkit']
         .map(function (n) { return '../core/tests/fixtures/' + n + '.js'; });
-      var FIXTURE_FILES = CORE_FIXTURE_FILES.concat(['testkit-provider', 'rated', 'perf-helper', 'difficulty-diagnostics', 'regression', 'replay-goldens', 'replay-wire', 'tool-records', 'replay-recording', 'recovery-profile']
+      var FIXTURE_FILES = CORE_FIXTURE_FILES.concat(['testkit-provider', 'rated', 'perf-helper', 'difficulty-diagnostics', 'regression', 'replay-goldens', 'replay-wire', 'tool-records', 'replay-recording', 'recovery-profile', 'mega-contract', 'manual-corpus']
         .map(function (n) { return 'tests/fixtures/' + n + '.js'; }));
       var CORE_SUITE_FILES = [
         'bits', 'board-view', 'constraints', 'exchange', 'harness', 'logical-solver', 'model', 'solver',
@@ -133,10 +133,10 @@
       ];
       var SUITE_FILES = [
         'a11y', 'cache', 'controls', 'difficulty-diagnostics', 'difficulty-floor', 'digger', 'events',
-        'export', 'format', 'full-grid', 'help', 'history', 'i18n', 'mega', 'multigrid', 'perf-tooling',
-        'pipeline', 'player', 'purity', 'recovery-profile', 'replay', 'replay-recorders', 'result-view',
-        'rng', 'smoke', 'steps', 'store', 'technique-weights', 'theme', 'ui-contract', 'variants-registry',
-        'worker'
+        'export', 'format', 'full-grid', 'help', 'history', 'i18n', 'manual-corpus', 'mega', 'mega-contract',
+        'multigrid', 'perf-tooling', 'pipeline', 'player', 'purity', 'recovery-profile', 'replay',
+        'replay-recorders', 'result-view', 'rng', 'smoke', 'steps', 'store', 'technique-weights', 'theme',
+        'ui-contract', 'variants-registry', 'worker'
       ];
       var MANUAL_SUITE_FILES = [
         'difficulty', 'extra-regions', 'greater-than', 'jigsaw', 'killer', 'perf', 'variants', 'wordoku'

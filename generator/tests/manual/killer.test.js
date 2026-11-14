@@ -65,27 +65,33 @@
     return seen.length === cells.length;
   }
 
-  // The corpus: 20 puzzles per level through the real pipeline (generated once, on first use)
+  // The corpus: the puzzles of a level through the real pipeline (a level is generated once, on first use)
+
+  var levelRuns = SG.test.lazyCorpus(LEVELS, function (level) {
+    var puzzles = [];
+    for (var seed = 1; seed <= countOf(level); seed++) {
+      var t0 = now();
+      var result = generate(level, seed);
+      puzzles.push({ level: level, seed: seed, result: result, ms: now() - t0 });
+    }
+    return puzzles;
+  });
 
   var corpusCache = null;
 
-  /** @returns {Array<{level, seed, result, ms}>} */
+  /** Every level, in the order of LEVELS. @returns {Array<{level, seed, result, ms}>} */
   function corpus() {
     if (corpusCache === null) {
-      corpusCache = [];
-      LEVELS.forEach(function (level) {
-        for (var seed = 1; seed <= countOf(level); seed++) {
-          var t0 = now();
-          var result = generate(level, seed);
-          corpusCache.push({ level: level, seed: seed, result: result, ms: now() - t0 });
-        }
-      });
+      var all = [];
+      LEVELS.forEach(function (level) { all = all.concat(levelRuns[level]); });
+      corpusCache = all;
     }
     return corpusCache;
   }
 
+  /** Just this level: no other level is generated. */
   function corpusOf(level) {
-    return corpus().filter(function (p) { return p.level === level; });
+    return LEVELS.indexOf(level) === -1 ? [] : levelRuns[level];
   }
 
   describe('killer: combination table (P4)', function () {
@@ -1061,27 +1067,32 @@
           });
         });
 
-      it('I5: every puzzle has a complete proof; one rated as requested has its score in the band',
-        function () {
-          var hits = {};
-          corpus().forEach(function (p) {
-            var rating = p.result.rating;
-            var spec = SG.difficulty.spec(p.level, p.result.model);
-            expect(rating.solved).toBe(true);
-            if (p.result.exact === true) {
-              hits[p.level] = (hits[p.level] || 0) + 1;
-              expect(rating.level).toBe(p.level);
-              expect(rating.score).toBeGreaterThanOrEqual(spec.min);
-              expect(rating.score).toBeLessThan(spec.max);
-              expect(SG.difficulty.requiredOf(rating, p.level, p.result.model).required).toBe(true);
-              expect(p.result.warnings).not.toContain('difficulty.approximate');
-            } else {
-              expect(p.result.warnings).toContain('difficulty.approximate');
-              expect(p.result.warnings.indexOf('difficulty.shallow') !== -1).toBe(rating.level === p.level);
-            }
-          });
-          LEVELS.forEach(function (level) { expect(hits[level]).toBeGreaterThan(countOf(level) * 0.8); });
+      LEVELS.forEach(function (level) {
+        describe(level + ': ' + countOf(level) + ' puzzles', function () {
+          it('I5: every puzzle has a complete proof; one rated as requested has its score in the band',
+            function () {
+              var hits = 0;
+              corpusOf(level).forEach(function (p) {
+                var rating = p.result.rating;
+                var spec = SG.difficulty.spec(p.level, p.result.model);
+                expect(rating.solved).toBe(true);
+                if (p.result.exact === true) {
+                  hits++;
+                  expect(rating.level).toBe(p.level);
+                  expect(rating.score).toBeGreaterThanOrEqual(spec.min);
+                  expect(rating.score).toBeLessThan(spec.max);
+                  expect(SG.difficulty.requiredOf(rating, p.level, p.result.model).required).toBe(true);
+                  expect(p.result.warnings).not.toContain('difficulty.approximate');
+                } else {
+                  expect(p.result.warnings).toContain('difficulty.approximate');
+                  expect(p.result.warnings.indexOf('difficulty.shallow') !== -1)
+                    .toBe(rating.level === p.level);
+                }
+              });
+              expect(hits).toBeGreaterThan(countOf(level) * 0.8);
+            });
         });
+      });
 
       it('I6 (the clue floor of a Killer): very easy keeps 40 clues; the other levels dig down to a handful',
         function () {

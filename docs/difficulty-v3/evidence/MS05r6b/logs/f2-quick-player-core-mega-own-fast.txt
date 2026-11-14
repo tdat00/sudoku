@@ -1,0 +1,7 @@
+plan: 4 item(s), projections sum 490.0 s, budget 450 s, generic floor 60 s (it never replaces an item projection)
+#0 q2-gen-player exit=0 node=139.399s (projected 180 s, elapsed before 0.002 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick-final/generator-player.json
+#1 q2-gen-core-shared exit=0 node=24.610s (projected 60 s, elapsed before 139.403 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick-final/generator-core-shared.json
+#2 q2-gen-mega exit=0 node=11.400s (projected 30 s, elapsed before 164.015 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick-final/generator-mega.json
+#3 q2-gen-own-fast exit=0 node=162.033s (projected 220 s, elapsed before 175.417 s): (Use `node --trace-warnings ...` to show where the warning was created)
+compound complete: 4 item(s) in 337.453 s; next --from=4
+MS05r6b exit=0 seconds=337.556

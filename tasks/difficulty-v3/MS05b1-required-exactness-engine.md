@@ -216,14 +216,14 @@ CV6 remains separately owned by MS05e, which cannot start before the combined co
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted in the combined commit `difficulty-v3 MS05: required exactness with measured bounded recovery` (S-OD2: retained implementation closed by MS05r6b's audit and MS05r6c's CI closure) |
+| Start | 2026-11-12 18:57 (+07:00) |
+| End | 2026-11-12 about 22:10 developer (implementation retained by S-OD2); closure 2026-11-14 12:13 (MS05r6c), combined commit 12:26 |
+| Duration | about 2 h 45 min developer (the previous orchestrator session's record; not in the repository's logs); closed through the recovery steps MS05r1 to MS05r6c |
+| Model | claude-sonnet-5.5 (developer); closure reviewed by the analysts SA1 (claude-opus-5.5) and SA2 (gpt-6-astra); orchestrator claude-opus-5.5 |
+| Token usage | not recorded (previous orchestrator session) |
+| AI credits | not recorded |
+| Verification | MS05r6b's combined audit (`docs/difficulty-v3/evidence/MS05r6b/audit.md`): MS05b1 B01-B03 and T01-T05 met on the final source; complete quick sets green on the final tree (MS05r6c: Generator 3,262/3,262 `6b40d218…`, Player 1,683/1,683 `547e4a4e…`); E (520 hashes, five wires, fourteen analyses) recorded by MS05r6a; analyst implementation reviews IR01-IR22 (`docs/difficulty-v3/claude-opus-5.5/10-review-of-recovery-steps.md`) |
+| Acceptance | Requiredness active in the engine: a Hard-or-above puzzle is exact only when it needs a technique of its tier (`requiredOf`, the derived certificate); the keeper and the stops follow exactness; the shallow fallback carries `difficulty.approximate` and `difficulty.shallow`. With the recovery: the local-search allowance 256 (MS05r4), the size default 8/4/2 (MS05r5p, CV6-03 (c2), CV6-04 (b)), the bounded quick coverage and CI tiers (MS05r5, MS05r6c), the mega Nightmare deep contract (MS05r5m), the lazy manual corpora (MS05b3), G13 persisted with the complete E (MS05r6a) |
+| Issues & resolutions | Requiredness made the large-board and Killer cells slow or empty (CV6-02, CV6-03): the owner's S-OD2 to S-OD5 and the plan author's answers (PR-S1, CV6-03, CV6-04, PR-S2) set the recovery; availability findings are named items S-AV01 to S-AV15 routed to MS07e and MS18c/MS18d. The owner-ordered pause commit `a7f6660` was not green and was not acceptance |
+| Handoff | MS05e (guided sign dig, S-AV01) on the committed source; MS06a onward. The items S-AV01 to S-AV15 and MS05r6a-COV01 |

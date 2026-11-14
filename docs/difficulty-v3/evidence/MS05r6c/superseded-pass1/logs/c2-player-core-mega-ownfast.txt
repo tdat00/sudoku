@@ -1,0 +1,7 @@
+plan: 4 item(s), projections sum 490.0 s, budget 450 s, generic floor 60 s (it never replaces an item projection)
+#0 c2-player exit=0 node=139.552s (projected 180 s, elapsed before 0.002 s): Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-player.json
+#1 c2-core-shared exit=0 node=24.637s (projected 60 s, elapsed before 139.556 s): Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-core-shared.json
+#2 c2-mega exit=0 node=11.419s (projected 30 s, elapsed before 164.194 s): Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-mega.json
+#3 c2-own-fast exit=0 node=164.396s (projected 220 s, elapsed before 175.615 s): (Use `node --trace-warnings ...` to show where the warning was created)
+compound complete: 4 item(s) in 340.012 s; next --from=4
+MS05r6c exit=0 seconds=340.109

@@ -12,8 +12,8 @@
 
 [MS05r2](MS05r2-recovery-consumers.md) already delivered this scope as retained step evidence;
 do not redispatch it or this archived file. MS05b3 follows r5p/r5/r5m under S-OD3/S-OD4, not
-passed original mega limits. r6b reconciles its CV3 deep reuse and numerical item list; r6c
-closes CI before the combined commit/MS05e. Correctness remains mandatory; time-only findings continue.
+passed original mega limits. r6b reconciles b3's live CV3 outcomes (Addendum B1) and numerical item list;
+r6c closes CI before the combined commit/MS05e. Correctness remains mandatory; time-only findings continue.
 
 | Retained requirement | Current evidence owner |
 |---|---|

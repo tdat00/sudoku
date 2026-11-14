@@ -1,0 +1,289 @@
+{
+  "schema": 1,
+  "before": {
+    "path": "docs/difficulty-v3/evidence/MS05r5/generator-inventory.json",
+    "sourceHash": "dfc34b6710b5f4d2c3379fb4bb6630193548b85f0e4be080fefd70a6efce91ee",
+    "tests": 3170,
+    "suites": 48
+  },
+  "after": {
+    "path": "docs/difficulty-v3/evidence/MS05r5m/generator-inventory.json",
+    "sourceHash": "b0d11a5d16a499cd0117e6817666d38e78285924c1a68ec937ff47e436bc3cc4",
+    "tests": 3207,
+    "suites": 49
+  },
+  "removedIsExactlyTheFourNightmareTests": true,
+  "removed": [
+    {
+      "key": "generator/mega/76",
+      "fullName": "mega > mega puzzles > mega12 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget"
+    },
+    {
+      "key": "generator/mega/77",
+      "fullName": "mega > mega puzzles > mega12 nightmare: the same seed gives the same puzzle (CV5)"
+    },
+    {
+      "key": "generator/mega/92",
+      "fullName": "mega > mega puzzles > mega16 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget"
+    },
+    {
+      "key": "generator/mega/93",
+      "fullName": "mega > mega puzzles > mega16 nightmare: the same seed gives the same puzzle (CV5)"
+    }
+  ],
+  "added": [
+    {
+      "key": "generator/mega-contract/0",
+      "fullName": "mega-contract > mega deep tier: the frozen population > has the fourteen occurrences of the old Nightmare tests, each its own record, at the board defaults",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/1",
+      "fullName": "mega-contract > mega deep tier: the frozen population > keeps the relations of the CV5 test per board and one extra comparison that is not original",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/2",
+      "fullName": "mega-contract > mega deep tier: the frozen population > lists the old mapping and the relations without generating anything",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/3",
+      "fullName": "mega-contract > mega deep tier: the frozen population > normalises every fixed request to the default attempts of its board, trace off, no explicit number",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/4",
+      "fullName": "mega-contract > mega deep tier: the frozen population > has a manifest hash that follows the population",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/5",
+      "fullName": "mega-contract > mega deep tier: the command line > reads the three commands",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/6",
+      "fullName": "mega-contract > mega deep tier: the command line > refuses unknown, repeated, empty, conflicting and incomplete commands",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/7",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > records a returned puzzle with every check true and the generation and check time apart",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/8",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > offers a hidden level for the run only, records it and puts the original support array back",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/9",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > accepts a truthful fallback: valid and unique, not exact, with the warnings its rating needs",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/10",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > requires both warnings of a shallow fallback and refuses an exact flag on it",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/11",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > fails a wrong exact flag, a missing approximate warning and an unsound-technique warning",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/12",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > fails a wrong attempt count and one that did not use the board default",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/13",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > fails an invalid, non-unique or unsound puzzle however it is labelled",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/14",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > keeps a generation error with its identity, no puzzle and every check unevaluated",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/15",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > keeps a puzzle whose checks ran out of budget or were cancelled: a check error, not a result",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/16",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > refuses a source without the recovery allowance before anything is generated",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/17",
+      "fullName": "mega-contract > mega deep tier: one request and its independent checks > writes a record as CRLF text of plain finite data that parses back",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/18",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > reconciles seven honest records: every occurrence once, every relation evaluated",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/19",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > reports whether the records still match the current sources",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/20",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > refuses a missing, a duplicate and an unexpected occurrence and a stray file",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/21",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > does not accept one record read twice for two equal configurations",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/22",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > refuses mixed identities, another budget, another request and another manifest",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/23",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > refuses a tampered wire and a tampered digest, and leaves their relations unevaluated",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/24",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > derives the flags again: a wrong exact flag or warning with a consistent wire is still refused",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/25",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > reports a failed recorded check as a correctness failure, not as an evidence problem",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/26",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > keeps an unavailable request with its error: sound but incomplete, its relation unevaluated",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/27",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > fails a relation that does not hold: same-seed puzzles that differ, different seeds that agree",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/28",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > compares the score as well as the arrays: equal givens and solution with another score fail the relation",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/29",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > keeps a puzzle whose checks ran out of budget: sound but incomplete, its relations still evaluated",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/30",
+      "fullName": "mega-contract > mega deep tier: reconciling a directory of records > reports a guard only from a completed population, with its margin, and never above the budget",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/31",
+      "fullName": "mega-contract > mega deep tier: the read-only consumer of CV3 (MS05b3) > decodes a fresh copy of the invariant occurrence and leaves the records untouched",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/32",
+      "fullName": "mega-contract > mega deep tier: the read-only consumer of CV3 (MS05b3) > never takes a CV5 repeat, another seed, another level or another board",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/33",
+      "fullName": "mega-contract > mega deep tier: the read-only consumer of CV3 (MS05b3) > refuses other engine sources, another tool, configuration, allowance and checks version",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/34",
+      "fullName": "mega-contract > mega deep tier: the read-only consumer of CV3 (MS05b3) > refuses a tampered wire or digest and a wrong exact flag",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/35",
+      "fullName": "mega-contract > mega deep tier: the read-only consumer of CV3 (MS05b3) > returns an unavailable request as such and never another puzzle",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega-contract/36",
+      "fullName": "mega-contract > mega deep tier: the read-only consumer of CV3 (MS05b3) > hands over a puzzle whose recorded checks failed so that CV3 applies its own checks",
+      "timeoutMs": 5000
+    },
+    {
+      "key": "generator/mega/96",
+      "fullName": "mega > mega puzzles > mega12 nightmare: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit",
+      "timeoutMs": 120000
+    },
+    {
+      "key": "generator/mega/97",
+      "fullName": "mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > the size default stops after two attempts with a truthful two-warning shallow fallback",
+      "timeoutMs": 120000
+    },
+    {
+      "key": "generator/mega/98",
+      "fullName": "mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > an explicit number of attempts wins over the size default",
+      "timeoutMs": 120000
+    },
+    {
+      "key": "generator/mega/99",
+      "fullName": "mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > a cancelled or exhausted budget propagates its error and never returns the best puzzle so far",
+      "timeoutMs": 120000
+    }
+  ],
+  "newSuites": [
+    "mega-contract"
+  ],
+  "movedOnlyWithinSuites": [
+    "mega"
+  ],
+  "moved": 20,
+  "movedFirst": [
+    {
+      "fullName": "mega > mega puzzles > mega12 hell1: 4 puzzles are unique, valid and inside the 9.1 time budget",
+      "from": 78,
+      "to": 76,
+      "suite": "mega"
+    },
+    {
+      "fullName": "mega > mega puzzles > mega12 hell1: the same seed gives the same puzzle (CV5)",
+      "from": 79,
+      "to": 77,
+      "suite": "mega"
+    },
+    {
+      "fullName": "mega > mega puzzles > mega12: puzzles hold the highest digit 12 as a given and as a deduction",
+      "from": 80,
+      "to": 78,
+      "suite": "mega"
+    }
+  ],
+  "movedLast": [
+    {
+      "fullName": "mega > mega puzzles > mega16: the clues are symmetric about the centre of the board (no centre cell)",
+      "from": 97,
+      "to": 93,
+      "suite": "mega"
+    },
+    {
+      "fullName": "mega > mega puzzles > mega16: every symmetry of the digger keeps its clue pattern and the unique solution",
+      "from": 98,
+      "to": 94,
+      "suite": "mega"
+    },
+    {
+      "fullName": "mega > mega puzzles > mega16: a budget that is too small or already cancelled stops the pipeline",
+      "from": 99,
+      "to": 95,
+      "suite": "mega"
+    }
+  ],
+  "unchangedUnmoved": 3146
+}

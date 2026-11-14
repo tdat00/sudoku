@@ -1,0 +1,12 @@
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   harness: 25 passed  (1.80 s)
+ok   help: 27 passed  (956 ms)
+ok   ui-contract: 62 passed  (157 ms)
+
+Suites: 3
+Tests:  114 total, 114 passed, 0 failed, 0 skipped
+Time:   2.92 s running tests, 3.04 s total
+Results: docs/difficulty-v3/evidence/MS05r5/player-tooling.json
+MS05r5 exit=0 seconds=3.219

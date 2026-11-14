@@ -1,0 +1,2 @@
+mega Nightmare deep tier: 14 requests, manifest 758f5b0a1706..., budget 500000 ms, trace off, default attempts
+  mega12-invariant-1  mega12 nightmare seed 1  attempts 4  (was: mega12 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget, seed 1)

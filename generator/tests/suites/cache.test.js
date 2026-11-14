@@ -1881,4 +1881,157 @@
       keys.forEach(function (k) { expect(SG.i18n.has(k)).toBe(true); });
     });
   });
+
+  // A cached puzzle whose regenerated record differs is generated again through `app.generate(overrides)`, i.e.
+  // through the store as a replay: with the number of attempts it recorded, which is not a new choice of the user
+  // (MS05r5p, CV6-03 (c2)). The controller's `app.generate` is the real one: a private copy of js/ui/app.js on a
+  // minimal fake document, with the real store, stand-ins for the views and a scripted client that records the
+  // configurations it is asked for.
+  describe('cache: a stale entry is generated again with the attempts it recorded (MS05r5p)', function () {
+    const pages = [];
+
+    beforeEach(ready);
+
+    afterEach(function () {
+      pages.splice(0).forEach(function (page) { page.destroy(); });
+      SG.i18n.setLocale('en');
+    });
+
+    function shown(store) {
+      const s = store.get();
+      return [s.variantId, s.maxAttempts, s.attemptsExplicit];
+    }
+
+    /** `{ app, store, configs, destroy }`: the started private app, destroyed after the test. */
+    function startApp() {
+      const node = SG.test.node;
+      if (!node) SG.test.skip('needs the file system (Node only)');
+      const noop = function () {};
+      function element() {
+        return {
+          nodeType: 1, hidden: false, disabled: false, textContent: '', className: '',
+          style: { setProperty: noop },
+          classList: { toggle: noop, contains: function () { return false; }, add: noop, remove: noop },
+          setAttribute: noop, getAttribute: function () { return null; }, removeAttribute: noop,
+          addEventListener: noop, removeEventListener: noop, appendChild: function (c) { return c; },
+          removeChild: noop, contains: function () { return false; }, querySelector: function () { return null; },
+          focus: noop
+        };
+      }
+      const byId = {};
+      ['board-svg', 'board-root', 'controls-root', 'controls-form', 'btn-generate', 'btn-regenerate',
+        'btn-cancel', 'btn-export', 'btn-drawer', 'steps-root', 'player-root', 'result-root', 'main']
+        .forEach(function (id) { byId[id] = element(); });
+      const doc = {
+        readyState: 'loading', title: '', body: element(), documentElement: element(), activeElement: null,
+        getElementById: function (id) { return byId[id] || null; },
+        querySelector: function () { return null; }, querySelectorAll: function () { return []; },
+        createElement: element, createElementNS: element, addEventListener: noop, removeEventListener: noop
+      };
+      const sg = Object.assign({}, SG);
+      // Its own fragment list: app.js registers its strings in it, and the host's list (read by the i18n suite,
+      // which allows no key defined twice) stays as it was.
+      sg.localeFragments = [];
+      const hostFragments = (SG.localeFragments || []).slice();
+      ['app', 'exportUi', 'a11y', 'theme', 'help', 'cache', 'history'].forEach(function (name) { delete sg[name]; });
+      const store = SG.store.create({ storage: null, location: null, history: null, navigator: { languages: [] } });
+      sg.store = Object.assign({}, SG.store, { instance: function () { return store; } });
+      sg.boardView = { create: function () { return new Proxy({}, { get: function () { return noop; } }); } };
+      sg.stepView = {
+        create: function () { return { clear: noop, setSteps: noop, setPosition: noop, destroy: noop }; }
+      };
+      sg.resultView = { create: function () { return { clear: noop, show: noop, refresh: noop, destroy: noop }; } };
+      sg.controls = { mount: function () { return { destroy: noop }; } };
+      sg.player = {
+        LAYER_NAMES: [],
+        create: function () {
+          return { reset: noop, load: noop, bindControls: noop, setPreparation: noop, setAnalysis: noop,
+            destroy: noop, state: function () { return { finished: false, loaded: false, position: 0, length: 0 }; } };
+        },
+        createPreparation: function () { return { start: noop, cancel: noop, press: noop }; }
+      };
+      const source = node.fs.readFileSync(node.path.join(node.root, 'js/ui/app.js'), 'utf8');
+      new Function('self', 'document', source)({ SG: sg, setTimeout: setTimeout, clearTimeout: clearTimeout }, doc);
+      // The private app registered its strings in its own list, and the host's list is untouched.
+      expect(sg.localeFragments.length).toBe(1);
+      const host = SG.localeFragments || [];
+      expect(host.length).toBe(hostFragments.length);
+      expect(host.every(function (f, i) { return f === hostFragments[i]; })).toBe(true);
+      const configs = [];
+      expect(sg.app.start()).toBe(true);
+      sg.app.setClient({
+        mode: 'main', cancel: noop, cancelReplay: noop,
+        generate: function (config) { configs.push(config); return new Promise(noop); }
+      });
+      const page = { app: sg.app, store: store, configs: configs, destroy: function () { sg.app.destroy(); } };
+      pages.push(page);
+      return page;
+    }
+
+    /** A served puzzle whose regeneration differs, so the controller rebuilds it through the real app. */
+    async function staleRound(recorded, setup) {
+      const page = startApp();
+      if (setup) setup(page.store);
+      const env = makeEnv();
+      env.app.generate = function (overrides, options) {
+        env.app.generated.push(overrides);
+        return page.app.generate(overrides, options);
+      };
+      const hit = await env.client.generate(seeded(41, recorded), null).then(function () {
+        env.clock.advance(0);
+        return env.client.generate(seeded(41, recorded), null);
+      });
+      expect(hit.fromCache).toBe(true);
+      env.app.display(hit);
+      await flush();
+      env.bg.complete(P.run(seeded(42), null));
+      await flush();
+      expect(env.app.toasts).toEqual(['warning:cache.stale']);
+      expect(env.app.generated.length).toBe(1);
+      expect(page.configs.length).toBe(1);
+      return { store: page.store, config: page.configs[0], overrides: env.app.generated[0] };
+    }
+
+    it('MS05r5p-T04: a recorded number equal to the default of its board replays as recorded and keeps the ' +
+      'mode', async function () {
+      const round = await staleRound({ maxAttempts: 8 });
+      expect(round.overrides.maxAttempts).toBe(8);
+      expect(round.config.maxAttempts).toBe(8);
+      expect(shown(round.store)).toEqual(['classic9', 8, false]);
+      round.store.set({ variantId: 'mega16' }, { source: 'controls' });
+      expect(shown(round.store)).toEqual(['mega16', 2, false]);
+      expect(SG.store.toConfig(round.store.get()).maxAttempts).toBe(2);
+    });
+
+    it('MS05r5p-T04: a recorded number that is not the default replays as recorded and becomes a chosen one',
+      async function () {
+        const round = await staleRound({ maxAttempts: 3 });
+        expect(round.overrides.maxAttempts).toBe(3);
+        expect(round.config.maxAttempts).toBe(3);
+        expect(shown(round.store)).toEqual(['classic9', 3, true]);
+        round.store.set({ variantId: 'mega16' }, { source: 'controls' });
+        expect(shown(round.store)).toEqual(['mega16', 3, true]);
+      });
+
+    it('MS05r5p-T04: a chosen number stays chosen when the rebuilt entry records the default of its board',
+      async function () {
+        const round = await staleRound({ maxAttempts: 8 }, function (store) {
+          store.set({ maxAttempts: 5 }, { source: 'controls' });
+        });
+        expect(round.config.maxAttempts).toBe(8);
+        expect(shown(round.store)).toEqual(['classic9', 8, true]);
+        round.store.set({ variantId: 'mega16' }, { source: 'controls' });
+        expect(shown(round.store)).toEqual(['mega16', 8, true]);
+      });
+
+    it('MS05r5p-T04: nothing but the recipe crosses to the app, and no marker crosses to the pipeline',
+      async function () {
+        const round = await staleRound({ maxAttempts: 3 });
+        expect(Object.keys(round.overrides).sort()).toEqual(['difficulty', 'digOrder', 'maxAttempts', 'seed',
+          'symbolMode', 'symmetry', 'variantId', 'variantOptions']);
+        expect(Object.keys(round.config).sort()).toEqual(['difficulty', 'digOrder', 'maxAttempts', 'seed',
+          'symbolMode', 'symmetry', 'variantId', 'variantOptions']);
+        expect(JSON.stringify(round.config)).not.toContain('attemptsExplicit');
+      });
+  });
 })();

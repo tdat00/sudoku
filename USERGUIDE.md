@@ -215,13 +215,20 @@ included.
 | `sym` | `sym=mirrorH` | Symmetry of the given cells: `none`, `rotational180` (default), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. |
 | `mode` | `mode=letters` | Symbol set: `digits`, `letters`, `colors`, `shapes`, `word` (Wordoku only). Default: the variant's own. |
 | `order` | `order=snake` | Order in which clues are tried: `random` (default), `rowByRow`, `snake`, `spiral`, `jumpOne`. |
-| `attempts` | `attempts=12` | Full grids to try before settling for the closest puzzle, 1–20. Default 8. |
+| `attempts` | `attempts=12` | Full grids to try before settling for the closest puzzle, 1–20. Without it the number follows the board: 8 up to 81 cells, 4 up to 144 cells (Mega 12×12, Butterfly), 2 above (Flower, Sohei, Samurai, Monster 16×16). A link written with `attempts` keeps that number, also one equal to the default. |
 | `sol` | `sol=1` | Show the solution next to the puzzle. |
 | `o.<id>` | `o.cageSize=2` | An option of the chosen variant, for example `o.compactness=0.8` (jigsaw9), `o.futoshiki=1` (greaterThan), `o.placement=row` (wordoku). |
 | `lang` | `lang=vi` | Language: `en` or `vi`. Default: the stored choice, then the browser language. |
 | `auto` | `auto=1` | Generate as soon as the page loads (a link with a `seed` does so anyway). |
 
-`?v=classic9&d=master&seed=42&lang=vi&auto=1` always gives the same puzzle. Settings are also kept in the
+`?v=classic9&d=master&seed=42&lang=vi&auto=1` always gives the same puzzle. The **Maximum attempts** option
+(Advanced options) is the same number as `attempts`. Until you type one it follows the board you choose; a number
+you type is kept for every board, in the address bar and after a reload, and emptying the field makes it follow the
+board again. A puzzle that is opened again from the history list, rebuilt from a cached copy or exported again is
+generated with the number it was made with, so an older puzzle of a large board made with 8 attempts is made with 8
+again, and the field then shows that number as your own. Settings saved by an older version that hold 8 are read as
+the default, because they cannot be told from a deliberately chosen 8; entering 8 again makes it an explicit choice,
+kept for every board. Settings are also kept in the
 browser's `localStorage`, never sent anywhere: `sg.prefs.v1` (language, theme, text size, reduced motion, the
 colour-blind symbol), `sg.lastConfig.v1` (the last options), `sg.cache.v1` (up to 20 recently generated puzzles,
 so that the same puzzle opens at once), `sg.history.v1` (the list of generated puzzles on the left, up to 100). A
@@ -266,6 +273,13 @@ The format of the link, and how to point the button at another copy of the playe
   from measurements of generated puzzles, not from tests with human solvers
   ([details](DEVELOPERGUIDE.md#known-technical-limitations)). A combination that is hard to reach (a strict
   symmetry with a very high level) returns the closest puzzle with a notice instead of the exact level.
+- **Large boards stop sooner**: a request for a large board tries fewer grids by default (4 for Mega 12×12 and
+  Butterfly, 2 for Flower, Sohei, Samurai and Monster 16×16, against 8 for the others), because one attempt on
+  such a board can take from several seconds to about a minute and the page stops a generation after 120 seconds.
+  When none of those grids reaches the requested level exactly you get the closest puzzle with a notice: it is
+  valid and has one solution, but its level can differ, most often on the hardest levels. Which levels a large board
+  offers is decided by the qualification, not by this default; you can raise the number in the advanced options at
+  the price of longer waits.
 - **Not every level is offered everywhere**: Classic 4×4 offers only very easy and Classic 6×6 very easy and hard;
   Classic 9×9 and Wordoku stop at hell 1; every other variant offers all nine levels. The levels a variant
   offers are the ones it passed in the qualification ([docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md)).

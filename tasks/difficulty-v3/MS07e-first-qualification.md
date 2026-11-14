@@ -40,6 +40,23 @@ MS07d merge checks all metadata/requests; current offered lists do not restrict 
 Resume anchors at c9935cd: `qualify.js:143,186` (`child`, `hitOf`), `:223` (`decide`),
 `:320` (`certain`); MS07d adds the merger. Use stable symbols after it.
 
+### PR-S2 remarks — existing evidence, unchanged scope
+
+Fable's answer in `92a7693`, now in `docs/difficulty-v3/clarifications-resolved.md`, confirms the
+MS05e-MS18e route unchanged. `docs/improve-generating/plan.md` is a later, separately authorized
+feature, not work or a new prerequisite for this checkpoint. No new cap, budget or scope is added.
+
+- **Existing request counters:** where this task already writes per-request records, keep the
+  existing `stats` counters, including `samples`, `attempts` and `oracleCalls`, alongside the
+  request/source/default identities. Preserve available values through the existing recording/
+  merge/handoff path; do not strip them in favour of only times and hits. Keep their actual counting
+  scope and any unavailable value explicit, not zero or an invented whole-request total. This
+  retains existing telemetry for the later improvement baseline; it adds no instrumentation project.
+- **S-AV03 wording:** the reviewed mega16 Nightmare search fails the 30 s budget by its work ceiling,
+  not as a tail. Keep that finding source-qualified when comparing it with this checkpoint.
+- **S-AV11 attribution:** keep the Jigsaw 325 s request's stage/cause unassigned until MS18d's stage
+  profile. Do not describe it as a dig cost or add a new profiling run to this checkpoint.
+
 ### First checkpoint decisions and proposals (PR-S1 / S-OD4)
 
 Reconcile every inherited/new item, including S-AV01 CV6, large-board Nightmare/hell1,

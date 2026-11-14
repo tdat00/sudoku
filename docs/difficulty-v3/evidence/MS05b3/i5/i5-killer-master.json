@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "c3035e8032685c3ed4f5d92e0ffc0535062d460e6e6c45a908fa404ce4950bfa",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["killer"],"filter":"> master: 8 puzzles > I5:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 96739,
+  "results": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 96556.4,
+    "tests": [
+      {"suite":"killer","name":"I5: every puzzle has a complete proof; one rated as requested has its score in the band","fullName":"killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > master: 8 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band","status":"fail","ms":96555.179,"reason":"","error":{"name":"AssertionError","message":"expected 2 to be > 6.4","stack":"AssertionError: expected 2 to be > 6.4\n    at api.<computed> [as toBeGreaterThan] (<repo>\\core\\tests\\harness.js:286:17)\n    at Object.<anonymous> (<repo>\\generator\\tests\\manual\\killer.test.js:1092:28)\n    at invoke (<repo>\\core\\tests\\harness.js:416:18)\n    at runTest (<repo>\\core\\tests\\harness.js:457:18)\n    at Object.run (<repo>\\core\\tests\\harness.js:621:27)\n    at main (<repo>\\generator\\tests\\node-runner.js:356:33)\n    at Object.<anonymous> (<repo>\\generator\\tests\\node-runner.js:409:1)\n    at Module._compile (node:internal/modules/cjs/loader:1968:14)\n    at Object..js (node:internal/modules/cjs/loader:2108:10)\n    at Module.load (node:internal/modules/cjs/loader:1690:32)"},"ordinal":58}
+    ],
+    "suites": [
+      {"name":"killer","total":1,"passed":0,"failed":1,"skipped":0,"ms":96556.328}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=killer","--filter=> master: 8 puzzles > I5:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05b3\\i5\\i5-killer-master.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

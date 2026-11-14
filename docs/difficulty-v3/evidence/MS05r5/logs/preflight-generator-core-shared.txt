@@ -1,0 +1,2 @@
+Inventory: 1143 tests in 16 suites (0 skipped, 19 benchmarks), registration 0.3 s
+Written: docs/difficulty-v3/evidence/MS05r5/preflight/generator-core-shared.json

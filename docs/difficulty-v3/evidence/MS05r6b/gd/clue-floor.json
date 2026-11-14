@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > difficulty: the clue floor of a variant (clueFloor)","exact":null,"count":9},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 210.9,
+  "results": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 30.3,
+    "tests": [
+      {"suite":"difficulty","name":"without a declaration the floor is the classic9 floor scaled by cellCount / 81","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > without a declaration the floor is the classic9 floor scaled by cellCount / 81","status":"pass","ms":1.187,"reason":"","error":null,"ordinal":22},
+      {"suite":"difficulty","name":"a table gives absolute floors; a level that is missing has no floor (0)","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > a table gives absolute floors; a level that is missing has no floor (0)","status":"pass","ms":0.867,"reason":"","error":null,"ordinal":23},
+      {"suite":"difficulty","name":"a function gets (level, model, the derived floor) and may scale it; nonsense falls back","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > a function gets (level, model, the derived floor) and may scale it; nonsense falls back","status":"pass","ms":0.655,"reason":"","error":null,"ordinal":24},
+      {"suite":"difficulty","name":"spec(level, null) and boards of unregistered variants keep working","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > spec(level, null) and boards of unregistered variants keep working","status":"pass","ms":1.14,"reason":"","error":null,"ordinal":25},
+      {"suite":"difficulty","name":"Killer declares 40 clues for veryEasy and none for the levels above","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > Killer declares 40 clues for veryEasy and none for the levels above","status":"pass","ms":0.71,"reason":"","error":null,"ordinal":26},
+      {"suite":"difficulty","name":"Greater-Than and the 9x9 hybrids keep the derived floor of veryEasy and easy and scale the rest","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > Greater-Than and the 9x9 hybrids keep the derived floor of veryEasy and easy and scale the rest","status":"pass","ms":22.765,"reason":"","error":null,"ordinal":27},
+      {"suite":"difficulty","name":"a clueFloorScale multiplies the derived floor of its levels; a missing level keeps it","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > a clueFloorScale multiplies the derived floor of its levels; a missing level keeps it","status":"pass","ms":0.943,"reason":"","error":null,"ordinal":28},
+      {"suite":"difficulty","name":"clueFloor sees the scaled floor as the derived one, and has the last word","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > clueFloor sees the scaled floor as the derived one, and has the last word","status":"pass","ms":0.346,"reason":"","error":null,"ordinal":29},
+      {"suite":"difficulty","name":"a registration with a malformed clueFloor, clueFloorScale or restartThreshold is refused","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > a registration with a malformed clueFloor, clueFloorScale or restartThreshold is refused","status":"pass","ms":0.794,"reason":"","error":null,"ordinal":30}
+    ],
+    "suites": [
+      {"name":"difficulty","total":9,"passed":9,"failed":0,"skipped":0,"ms":30.23}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > difficulty: the clue floor of a variant (clueFloor)","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\clue-floor.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

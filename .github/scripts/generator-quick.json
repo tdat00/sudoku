@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "kind": "ci-generator-quick-groups",
+  "description": "The Generator quick tier as the CI jobs run it: disjoint whole-suite shards in explicit groups, one job per group. generator-quick.js checks it against the registration-only inventories of the runner (every quick suite and test in exactly one shard, no manual or unknown suite, no empty shard, every job inside its limit); both workflows plan their matrix from it.",
+  "provenance": {
+    "task": "MS05r6c",
+    "from": "MS05r6b final quick manifest: docs/difficulty-v3/evidence/MS05r6b/quick-final/final-manifest.json (the same seven whole-suite shards; reconciled 3,262 of 3,262 Generator tests, 1,683 of 1,683 Player tests)",
+    "measured": "local process seconds of one run on Windows x64, Node v26.13.0, 16 cores, time factor 2 (docs/difficulty-v3/recovery-quick-cost.md); a measurement of a named source and machine, not a promise and not a measurement of CI",
+    "counts": "tests and measuredSeconds are information, not checked; the grouping, the suites and the projections are"
+  },
+  "job": {
+    "timeoutMinutes": 30,
+    "ciSlowdownFactor": 3,
+    "jobOverheadSeconds": 180,
+    "rule": "projected job seconds = jobOverheadSeconds + ciSlowdownFactor x the sum of the projectionSeconds of its shards; it has to fit timeoutMinutes. The factor is a stated margin (the time factor the harness uses on CI), the overhead covers checkout, setup-node, registration and the check. Neither is raised to make a group fit: split the group instead."
+  },
+  "groups": [
+    {
+      "id": "shared-small",
+      "name": "shared and small suites",
+      "shards": [
+        {
+          "id": "core-shared",
+          "suites": ["bits", "board-view", "constraints", "exchange", "harness", "logical-solver", "model", "solver", "symbols", "tech-basic", "tech-chain", "tech-fish", "tech-subset", "tech-wing", "techniques", "wordbook"],
+          "tests": 1143,
+          "measuredSeconds": 24.61,
+          "projectionSeconds": 60
+        },
+        {
+          "id": "steps",
+          "suites": ["steps"],
+          "tests": 57,
+          "measuredSeconds": 11.507,
+          "projectionSeconds": 30
+        },
+        {
+          "id": "replay",
+          "suites": ["replay"],
+          "tests": 153,
+          "measuredSeconds": 11.062,
+          "projectionSeconds": 30
+        },
+        {
+          "id": "mega",
+          "suites": ["mega"],
+          "tests": 111,
+          "measuredSeconds": 11.4,
+          "projectionSeconds": 30
+        }
+      ]
+    },
+    {
+      "id": "own-suites",
+      "name": "own suites",
+      "shards": [
+        {
+          "id": "own-fast",
+          "suites": ["a11y", "cache", "controls", "difficulty-diagnostics", "difficulty-floor", "digger", "events", "export", "format", "full-grid", "help", "history", "i18n", "manual-corpus", "mega-contract", "multigrid", "perf-tooling", "purity", "recovery-profile", "replay-recorders", "result-view", "rng", "smoke", "store", "technique-weights", "theme", "ui-contract", "variants-registry", "worker"],
+          "tests": 1579,
+          "measuredSeconds": 162.033,
+          "projectionSeconds": 220
+        }
+      ]
+    },
+    {
+      "id": "pipeline",
+      "name": "pipeline",
+      "shards": [
+        {
+          "id": "pipeline",
+          "suites": ["pipeline"],
+          "tests": 150,
+          "measuredSeconds": 286.453,
+          "projectionSeconds": 360
+        }
+      ]
+    },
+    {
+      "id": "replay-player",
+      "name": "replay player",
+      "shards": [
+        {
+          "id": "player",
+          "suites": ["player"],
+          "tests": 69,
+          "measuredSeconds": 139.399,
+          "projectionSeconds": 180
+        }
+      ]
+    }
+  ],
+  "player": {
+    "command": "node tests/node-runner.js",
+    "tests": 1683,
+    "measuredSeconds": 31.828,
+    "projectionSeconds": 60,
+    "rule": "one job, no option: the complete Player quick set, including every suite of core/tests/suites in the Player environment"
+  },
+  "outOfCi": {
+    "note": "Not run by any workflow. The suites of generator/tests/manual are listed so that a new one is a decision, and the tools are listed so that they are not mistaken for suites. What replaces them is in the workflows and in docs/difficulty-v3/evidence/MS05r6c/evidence.md.",
+    "manualSuites": ["difficulty", "extra-regions", "greater-than", "jigsaw", "killer", "perf", "variants", "wordoku"],
+    "tools": ["generator/tests/mega-contract.js", "generator/tests/soak.js", "generator/tests/perf.js", "generator/tests/qualify.js"]
+  }
+}

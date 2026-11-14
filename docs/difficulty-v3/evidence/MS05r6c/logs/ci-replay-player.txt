@@ -1,0 +1,12 @@
+==== shard player (69 tests): node tests/node-runner.js --suite=player --results=..\docs\difficulty-v3\evidence\MS05r6c\quick\generator-player.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   player: 69 passed  (137.81 s)
+
+Suites: 1
+Tests:  69 total, 69 passed, 0 failed, 0 skipped
+Time:   137.81 s running tests, 137.98 s total
+Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-player.json
+shard player: exit 0, 138.2 s
+MS05r6c exit=0 seconds=138.538

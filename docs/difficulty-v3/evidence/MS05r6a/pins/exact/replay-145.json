@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["replay"],"filter":null,"exact":"replay > replay: explaining the jumps > describes a jump over several moves by its first move with the new technique (G11, G12)","count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 314.7,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 144.8,
+    "tests": [
+      {"suite":"replay","name":"describes a jump over several moves by its first move with the new technique (G11, G12)","fullName":"replay > replay: explaining the jumps > describes a jump over several moves by its first move with the new technique (G11, G12)","status":"pass","ms":144.371,"reason":"","error":null,"ordinal":145}
+    ],
+    "suites": [
+      {"name":"replay","total":1,"passed":1,"failed":0,"skipped":0,"ms":144.597}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=replay","--exact=replay > replay: explaining the jumps > describes a jump over several moves by its first move with the new technique (G11, G12)","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\replay-145.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

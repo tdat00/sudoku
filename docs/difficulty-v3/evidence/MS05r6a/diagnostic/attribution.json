@@ -1,0 +1,343 @@
+{
+  "kind": "ir10-attribution",
+  "task": "MS05r6a",
+  "keys": 9,
+  "rows": [
+    {
+      "key": "classic9/nightmare#8",
+      "cells": 81,
+      "sizeDefaultAttempts": 8,
+      "hashes": {
+        "base": "345c0e526057fe6e",
+        "interim": "7c4a68aa064d1526",
+        "now": "345c0e526057fe6e",
+        "noAllowanceSizeDefault": "7c4a68aa064d1526",
+        "allowance256Attempts8": null
+      },
+      "nowClass": "lost (the old puzzle returns)",
+      "configurations": {
+        "noAllowanceSizeDefault": {
+          "hash": "7c4a68aa064d1526",
+          "attempts": 7,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 4449.559,
+          "score": 2396
+        },
+        "allowance256Attempts8": null
+      },
+      "ms": {
+        "interim": 4257,
+        "now": 4651
+      },
+      "verdict": "allowance only",
+      "detail": "size default is 8, as the interim: (i) is the interim configuration and reproduces the interim hash, so nothing else changed"
+    },
+    {
+      "key": "diagonalX/nightmare#5",
+      "cells": 81,
+      "sizeDefaultAttempts": 8,
+      "hashes": {
+        "base": "5b8f8f4f3a25a82b",
+        "interim": "223349ab943a3edf",
+        "now": "5b8f8f4f3a25a82b",
+        "noAllowanceSizeDefault": "223349ab943a3edf",
+        "allowance256Attempts8": null
+      },
+      "nowClass": "lost (the old puzzle returns)",
+      "configurations": {
+        "noAllowanceSizeDefault": {
+          "hash": "223349ab943a3edf",
+          "attempts": 1,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 1893.237,
+          "score": 2383
+        },
+        "allowance256Attempts8": null
+      },
+      "ms": {
+        "interim": 1818,
+        "now": 11942
+      },
+      "verdict": "allowance only",
+      "detail": "size default is 8, as the interim: (i) is the interim configuration and reproduces the interim hash, so nothing else changed"
+    },
+    {
+      "key": "diagonalX/nightmare#1597",
+      "cells": 81,
+      "sizeDefaultAttempts": 8,
+      "hashes": {
+        "base": "12f1c00854df16d4",
+        "interim": "14ba46aac1d27f96",
+        "now": "d74675d99db28fa5",
+        "noAllowanceSizeDefault": "14ba46aac1d27f96",
+        "allowance256Attempts8": null
+      },
+      "nowClass": "third puzzle",
+      "configurations": {
+        "noAllowanceSizeDefault": {
+          "hash": "14ba46aac1d27f96",
+          "attempts": 3,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 4749.428,
+          "score": 2323
+        },
+        "allowance256Attempts8": null
+      },
+      "ms": {
+        "interim": 4807,
+        "now": 7741
+      },
+      "verdict": "allowance only",
+      "detail": "size default is 8, as the interim: (i) is the interim configuration and reproduces the interim hash, so nothing else changed"
+    },
+    {
+      "key": "samurai/easy#8",
+      "cells": 369,
+      "sizeDefaultAttempts": 2,
+      "hashes": {
+        "base": "7d34145019b7ac24",
+        "interim": "41ccc16c132728f8",
+        "now": "7d34145019b7ac24",
+        "noAllowanceSizeDefault": "41ccc16c132728f8",
+        "allowance256Attempts8": "f5518321b42ef42d"
+      },
+      "nowClass": "lost (the old puzzle returns)",
+      "configurations": {
+        "noAllowanceSizeDefault": {
+          "hash": "41ccc16c132728f8",
+          "attempts": 1,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 310.864,
+          "score": 138
+        },
+        "allowance256Attempts8": {
+          "hash": "f5518321b42ef42d",
+          "attempts": 3,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 580.534,
+          "score": 136
+        }
+      },
+      "ms": {
+        "interim": 262,
+        "now": 491
+      },
+      "verdict": "allowance (necessary); the size default decides which result",
+      "detail": "no allowance, size default gives the interim hash; 256 with 8 attempts gives a third hash; now gives MS04's puzzle"
+    },
+    {
+      "key": "samurai/easy#610",
+      "cells": 369,
+      "sizeDefaultAttempts": 2,
+      "hashes": {
+        "base": "1243006083b9fbd4",
+        "interim": "232b9a6d6e02d281",
+        "now": "81bfcc4cbcf30118",
+        "noAllowanceSizeDefault": "232b9a6d6e02d281",
+        "allowance256Attempts8": "81bfcc4cbcf30118"
+      },
+      "nowClass": "third puzzle",
+      "configurations": {
+        "noAllowanceSizeDefault": {
+          "hash": "232b9a6d6e02d281",
+          "attempts": 1,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 392.027,
+          "score": 155
+        },
+        "allowance256Attempts8": {
+          "hash": "81bfcc4cbcf30118",
+          "attempts": 2,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 389.849,
+          "score": 138
+        }
+      },
+      "ms": {
+        "interim": 311,
+        "now": 296
+      },
+      "verdict": "allowance only",
+      "detail": "the size default changes nothing at either allowance (no allowance: true, 256: true); the allowance alone gives now (true)"
+    },
+    {
+      "key": "samurai/easy#987",
+      "cells": 369,
+      "sizeDefaultAttempts": 2,
+      "hashes": {
+        "base": "36644920ccde7f24",
+        "interim": "87f119dafa69c7a6",
+        "now": "36644920ccde7f24",
+        "noAllowanceSizeDefault": "87f119dafa69c7a6",
+        "allowance256Attempts8": "46d7c3483273dc1c"
+      },
+      "nowClass": "lost (the old puzzle returns)",
+      "configurations": {
+        "noAllowanceSizeDefault": {
+          "hash": "87f119dafa69c7a6",
+          "attempts": 1,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 439.065,
+          "score": 138
+        },
+        "allowance256Attempts8": {
+          "hash": "46d7c3483273dc1c",
+          "attempts": 5,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 1097.596,
+          "score": 138
+        }
+      },
+      "ms": {
+        "interim": 353,
+        "now": 429
+      },
+      "verdict": "allowance (necessary); the size default decides which result",
+      "detail": "no allowance, size default gives the interim hash; 256 with 8 attempts gives a third hash; now gives MS04's puzzle"
+    },
+    {
+      "key": "samurai/easy#2584",
+      "cells": 369,
+      "sizeDefaultAttempts": 2,
+      "hashes": {
+        "base": "957046eee4d64972",
+        "interim": "08f2027944590225",
+        "now": "957046eee4d64972",
+        "noAllowanceSizeDefault": "957046eee4d64972",
+        "allowance256Attempts8": "08f2027944590225"
+      },
+      "nowClass": "lost (the old puzzle returns)",
+      "configurations": {
+        "noAllowanceSizeDefault": {
+          "hash": "957046eee4d64972",
+          "attempts": 2,
+          "exact": false,
+          "required": false,
+          "warnings": [
+            "difficulty.approximate",
+            "difficulty.shallow"
+          ],
+          "wallMs": 871.761,
+          "score": 72
+        },
+        "allowance256Attempts8": {
+          "hash": "08f2027944590225",
+          "attempts": 3,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 768.767,
+          "score": 138
+        }
+      },
+      "ms": {
+        "interim": 1062,
+        "now": 512
+      },
+      "verdict": "size default only",
+      "detail": "the allowance changes nothing at either attempts setting (8 attempts: true, size default: true); the size default alone gives now (true)"
+    },
+    {
+      "key": "butterfly/normal#610",
+      "cells": 144,
+      "sizeDefaultAttempts": 4,
+      "hashes": {
+        "base": "477255b88169272c",
+        "interim": "35c5769f3f9f59eb",
+        "now": "4598f71fc60f2bcb",
+        "noAllowanceSizeDefault": "35c5769f3f9f59eb",
+        "allowance256Attempts8": "4598f71fc60f2bcb"
+      },
+      "nowClass": "third puzzle",
+      "configurations": {
+        "noAllowanceSizeDefault": {
+          "hash": "35c5769f3f9f59eb",
+          "attempts": 1,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 714.212,
+          "score": 314
+        },
+        "allowance256Attempts8": {
+          "hash": "4598f71fc60f2bcb",
+          "attempts": 2,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 613.672,
+          "score": 340
+        }
+      },
+      "ms": {
+        "interim": 665,
+        "now": 554
+      },
+      "verdict": "allowance only",
+      "detail": "the size default changes nothing at either allowance (no allowance: true, 256: true); the allowance alone gives now (true)"
+    },
+    {
+      "key": "butterfly/normal#10946",
+      "cells": 144,
+      "sizeDefaultAttempts": 4,
+      "hashes": {
+        "base": "b4764a9ccfdb6fd8",
+        "interim": "75b1f9cd64ba6c51",
+        "now": "e31222625c794c36",
+        "noAllowanceSizeDefault": "75b1f9cd64ba6c51",
+        "allowance256Attempts8": "e31222625c794c36"
+      },
+      "nowClass": "third puzzle",
+      "configurations": {
+        "noAllowanceSizeDefault": {
+          "hash": "75b1f9cd64ba6c51",
+          "attempts": 1,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 653.94,
+          "score": 333
+        },
+        "allowance256Attempts8": {
+          "hash": "e31222625c794c36",
+          "attempts": 2,
+          "exact": true,
+          "required": true,
+          "warnings": [],
+          "wallMs": 838.496,
+          "score": 323
+        }
+      },
+      "ms": {
+        "interim": 583,
+        "now": 775
+      },
+      "verdict": "allowance only",
+      "detail": "the size default changes nothing at either allowance (no allowance: true, 256: true); the allowance alone gives now (true)"
+    }
+  ],
+  "summary": {
+    "allowance only": 6,
+    "allowance (necessary); the size default decides which result": 2,
+    "size default only": 1
+  },
+  "nothingElseOnTheSmallBoards": true
+}

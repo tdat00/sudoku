@@ -45,22 +45,22 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS04 | [MS04](MS04-orders-and-requiredness.md) | Orders, counter and derived certificate | MS03d | M, 45-60 min | Shared solver | M4 prefix invariant | 7 |
 | [ ] | MS05 | MS05a, recovery, MS05e | Required exactness and CV6 repair (parent) | MS04 | split | Generator | M5 | 8-11a |
 | [x] | MS05a | [MS05a](MS05a-exactness-transport-and-messages.md) | Exactness transport/messages | MS04 | M, 40-55 min | Generator UI | M5a | 8 |
-| [ ] | MS05b1 | [MS05b1](MS05b1-required-exactness-engine.md) | Preserve implemented engine; closure at r6b, not a redispatch | MS05a | retained | Generator engine/UI | M5b1 in recovery | — |
-| [ ] | MS05b2 | [MS05b2](MS05b2-required-exactness-consumers.md) | Absorbed consumer scope; not a dispatch | MS05r2/r6b | absorbed | Generator tools/tests | M5b2 in recovery | — |
-| [ ] | MS05c | [MS05c](MS05c-shallow-budget-instrumentation.md) | Absorbed allowance/work scope; not a dispatch | MS05r3/r6a/r6b | absorbed | Generator/tools | M5c in recovery | — |
-| [ ] | MS05d | [MS05d](MS05d-select-shallow-budget.md) | Absorbed selection/GD/closure; not a dispatch | MS05r4/r6a/r6b | absorbed | Evidence | M5 recovery | — |
-| [ ] | MS05r1 | [MS05r1](MS05r1-profile-active-recovery.md) | One-attempt work profiles on the preserved active tree | MS05a + retained MS05b1 | M, 45-60 min | Diagnostic tooling | step evidence complete, not accepted | 9r1 |
-| [ ] | MS05r2 | [MS05r2](MS05r2-recovery-consumers.md) | Correct measurement/manual consumers and prefixes | MS05r1 step evidence | M, 35-50 min | Generator tools/tests | step evidence complete, not accepted | 9r2 |
-| [ ] | MS05r3 | [MS05r3](MS05r3-recovery-allowance-instrumentation.md) | Allowance/work/shard instrumentation at Infinity | MS05r2 step evidence | M, 45-60 min | Generator/tools | step evidence complete, not accepted | 9r3 |
-| [ ] | MS05r4 | [MS05r4](MS05r4-select-recovery-allowance.md) | Fixed selection, quick-pin triage and original-limit preflights | MS05r3 step evidence | M, 45-60 min + GS/guards | Evidence/default literal | 256 selected; historical stop answered by S-OD3/S-OD4 | 9r4 |
-| [ ] | MS05r5p | [MS05r5p](MS05r5p-size-dependent-default-attempts.md) | Size-dependent default attempts | retained r4 selection + S-OD3/S-OD4 | S-M, 40-60 min + diagnostics | Generator engine/store | step evidence only | 9r4p |
-| [ ] | MS05r5 | [MS05r5](MS05r5-bounded-quick-coverage.md) | Inventory/results and bounded full-quick plan | MS05r5p + S-OD3/S-OD4 contracts | M, 40-60 min | Both test runners/harness | step evidence only | 9r5 |
-| [ ] | MS05r5m | [MS05r5m](MS05r5m-mega-nightmare-validation.md) | Mega Nightmare quick/deep contract | MS05r5 step evidence; r5p final engine | M, 1.5-2 h + deep records | Generator test tooling | step evidence only | 9r5m |
-| [ ] | MS05b3 | [MS05b3](MS05b3-bounded-manual-corpora.md) | Post-selection lazy corpora and early I5/CV3 | MS05r5m step evidence | M, 45-60 min + GD | Generator tests | step evidence only | 9r5b |
-| [ ] | MS05r6 | [MS05r6](MS05r6-combined-recovery-acceptance.md) | Closing recovery milestone; not a dispatch | MS05r6a/MS05r6b/MS05r6c | split | Evidence/CI | one combined boundary | — |
-| [ ] | MS05r6a | [MS05r6a](MS05r6a-final-evidence-and-pins.md) | Persist G13, final-source recheck, complete E and pins | MS05b3 + all earlier recovery evidence; S-OD3/S-OD4 | M code; 2-3 h operation + gates | Recorders/evidence/pins | step evidence only | 9r6a |
-| [ ] | MS05r6b | [MS05r6b](MS05r6b-quick-gd-and-combined-acceptance.md) | Full quick/GD, deep reconciliation, standing cost and audit | MS05r6a step evidence | 1.5-2.5 h operation + gates | Evidence/acceptance docs | combined audit; r6c still required | 9r6b |
-| [ ] | MS05r6c | [MS05r6c](MS05r6c-ci-test-tiers.md) | CI workflows for the v3 test tiers | MS05r6b evidence and final quick manifest | S-M, 30-50 min + checks | CI | inside combined commit | 9r6c |
+| [x] | MS05b1 | [MS05b1](MS05b1-required-exactness-engine.md) | Preserve implemented engine; closure at r6b, not a redispatch | MS05a | retained | Generator engine/UI | M5b1 in recovery | — |
+| [x] | MS05b2 | [MS05b2](MS05b2-required-exactness-consumers.md) | Absorbed consumer scope; not a dispatch | MS05r2/r6b | absorbed | Generator tools/tests | M5b2 in recovery | — |
+| [x] | MS05c | [MS05c](MS05c-shallow-budget-instrumentation.md) | Absorbed allowance/work scope; not a dispatch | MS05r3/r6a/r6b | absorbed | Generator/tools | M5c in recovery | — |
+| [x] | MS05d | [MS05d](MS05d-select-shallow-budget.md) | Absorbed selection/GD/closure; not a dispatch | MS05r4/r6a/r6b | absorbed | Evidence | M5 recovery | — |
+| [x] | MS05r1 | [MS05r1](MS05r1-profile-active-recovery.md) | One-attempt work profiles on the preserved active tree | MS05a + retained MS05b1 | M, 45-60 min | Diagnostic tooling | step evidence complete, not accepted | 9r1 |
+| [x] | MS05r2 | [MS05r2](MS05r2-recovery-consumers.md) | Correct measurement/manual consumers and prefixes | MS05r1 step evidence | M, 35-50 min | Generator tools/tests | step evidence complete, not accepted | 9r2 |
+| [x] | MS05r3 | [MS05r3](MS05r3-recovery-allowance-instrumentation.md) | Allowance/work/shard instrumentation at Infinity | MS05r2 step evidence | M, 45-60 min | Generator/tools | step evidence complete, not accepted | 9r3 |
+| [x] | MS05r4 | [MS05r4](MS05r4-select-recovery-allowance.md) | Fixed selection, quick-pin triage and original-limit preflights | MS05r3 step evidence | M, 45-60 min + GS/guards | Evidence/default literal | 256 selected; historical stop answered by S-OD3/S-OD4 | 9r4 |
+| [x] | MS05r5p | [MS05r5p](MS05r5p-size-dependent-default-attempts.md) | Size-dependent default attempts | retained r4 selection + S-OD3/S-OD4 | S-M, 40-60 min + diagnostics | Generator engine/store | step evidence only | 9r4p |
+| [x] | MS05r5 | [MS05r5](MS05r5-bounded-quick-coverage.md) | Inventory/results and bounded full-quick plan | MS05r5p + S-OD3/S-OD4 contracts | M, 40-60 min | Both test runners/harness | step evidence only | 9r5 |
+| [x] | MS05r5m | [MS05r5m](MS05r5m-mega-nightmare-validation.md) | Mega Nightmare quick/deep contract | MS05r5 step evidence; r5p final engine | M, 1.5-2 h + deep records | Generator test tooling | step evidence only | 9r5m |
+| [x] | MS05b3 | [MS05b3](MS05b3-bounded-manual-corpora.md) | Post-selection lazy corpora and early I5/CV3 | MS05r5m step evidence | M, 45-60 min + GD | Generator tests | step evidence only | 9r5b |
+| [x] | MS05r6 | [MS05r6](MS05r6-combined-recovery-acceptance.md) | Closing recovery milestone; not a dispatch | MS05r6a/MS05r6b/MS05r6c | split | Evidence/CI | one combined boundary | — |
+| [x] | MS05r6a | [MS05r6a](MS05r6a-final-evidence-and-pins.md) | Persist G13, final-source recheck, complete E and pins | MS05b3 + all earlier recovery evidence; S-OD3/S-OD4 | M code; 2-3 h operation + gates | Recorders/evidence/pins | step evidence only | 9r6a |
+| [x] | MS05r6b | [MS05r6b](MS05r6b-quick-gd-and-combined-acceptance.md) | Full quick/GD, deep reconciliation, standing cost and audit | MS05r6a step evidence | 1.5-2.5 h operation + gates | Evidence/acceptance docs | combined audit; r6c still required | 9r6b |
+| [x] | MS05r6c | [MS05r6c](MS05r6c-ci-test-tiers.md) | CI workflows for the v3 test tiers | MS05r6b evidence and final quick manifest | S-M, 30-50 min + checks | CI | inside combined commit | 9r6c |
 | [ ] | MS05e | [MS05e](MS05e-guided-sign-dig.md) | Guided sign dig; CV6 result and named findings | r6b/r6c combined commit | M, 50-60 min + gates | Greater-Than | M5e | 11a |
 | [ ] | MS06 | MS06a-MS06d | One target through all stages (parent) | MS05e | split | Generator | M6 | 12-15 |
 | [ ] | MS06a | [MS06a](MS06a-pre-target-evidence.md) | Isolated pre-target evidence | MS05e | S, 20-30 min | Evidence | M6a | 12 |
@@ -132,9 +132,13 @@ requiredness and messages in the preserved implementation. r1-r4 profiled, corre
 instrumented and selected 256. r4's failed original mega preflights remain historical evidence,
 not fictional passes. r5p installs 8/4/2 default attempts; r5 supplies inventory/results; r5m
 implements the approved quick/deep mega contract. b3 makes the five I5 corpora plus CV3 lazy,
-checks the mega16 Nightmare cell now, and may reuse matching deep puzzles with CV3's checks.
+checks both mega Nightmare CV3 cells live under binding Addendum B1, and cites the matching
+deep occurrence ids without supplying their puzzles to the runner.
 r6a persists G13 first, then rechecks the approved contracts and records complete 520/5/14 E/pins.
-r6b reconciles deep/manual/quick evidence and reports per-app standing cost. r6c closes CI before
+r6a/r6b explicitly inspect both deep `identity.currentMatches` fields; an exact-diff proof for
+non-generation-file changes permits retention, otherwise their named MEGA-REFRESH step replaces
+invalidated coverage. Exit 0 alone is not compatibility.
+r6b reconciles deep/live-CV3/manual/quick evidence and reports per-app standing cost. r6c closes CI before
 the one combined commit. MS05e then measures and implements the approved sign repair before
 MS06a captures before-data. A remaining CV6 timing miss is a named S-OD4 item, not an owner stop;
 changing its target, strategy or another recorded decision still needs the owner's answer.
@@ -187,7 +191,7 @@ The following are serial ownership transfers, not permission for parallel edits:
 | Selected-default quick assertion triage and pins | MS05r4 records genuine default-coupled pins; premise fixes return to r3; MS05r6a explicitly owns listed pins; r6b validates without weakening contracts |
 | Shared harness and both Node runners, inventory/result/exact-selection tooling | MS05r5; existing semantics/guards retained, r6a uses focused selections and r6b the complete manifest |
 | Mega Nightmare quick/deep contract | MS05r5m after r5p/r5; 14 independent default-attempt requests, original relations, quick replacements and reuse interface; MS07b applies the same authorized rule to non-vacuous mega hell1 |
-| Six manual corpus adapters; Killer I5; per-level/refusal CV3 registration and lazy helper/suite | MS05b3 after r5m; preserve aggregate sweep/eager corpus(); reuse matching mega deep records with CV3 checks; r6b reconciles; performance items go to MS07e/MS18c, not an owner stop |
+| Six manual corpus adapters; Killer I5; per-level/refusal CV3 registration and lazy helper/suite | MS05b3 after r5m; preserve aggregate sweep/eager corpus(); binding B1 checks mega CV3 live, one locked command per cell, with deep occurrence-id references and no reuse code; r6b reconciles; performance items go to MS07e/MS18c, not an owner stop |
 | Chain engine/proof suites | MS07a/b/c (c default only), MS12, MS13a/c |
 | Wing engine/uniqueness suites | MS10a/b, MS11a/b/c |
 | New ALS engine/suite | MS15a/b, MS16 |
@@ -259,12 +263,19 @@ Initial carried findings (historical numbers, not measurements of the resumed de
 |---|---|---|
 | S-AV01 Greater-Than Normal CV6 | 2035 ms p95 against 1400 ms scaled assertion, 700 ms design target; CV6-01 | MS05e repair/result, MS07e, MS18d |
 | S-AV02 mega12 Nightmare | r4 seed 1: 48.202 s against 6 s; seed 3: 47.1 s, shallow at 8 attempts | r5p/r5m update, MS07e, MS18c/MS18d |
-| S-AV03 mega16 Nightmare | r4 quick: 60 s timeouts; seed 3 diagnostic: 310.2 s, exact at attempt 6; app 120 s | r5p/r5m update, MS07e, MS18c/MS18d |
+| S-AV03 mega16 Nightmare | r4 quick: 60 s timeouts; seed 3 diagnostic: 310.2 s, exact at attempt 6; app 120 s. **PR-S2 remark:** on the reviewed size-default search, mega16 Nightmare fails the 30 s qualification budget by its work ceiling, not as a tail | r5p/r5m update, MS07e, MS18c/MS18d |
 | S-AV04 samurai Nightmare/G13 | r4: 104.712 s of 120 s, shallow at 8 attempts | r5p/r6a update, MS07e, MS18c/MS18d |
 | S-AV05 Killer Hard | 0/12 exact at every R5 setting; S3 is not expected to repair its weight problem | MS07e owner question if hidden, MS18c |
 | S-AV06 Killer Expert | 0/12 exact at every R5 setting; no weight change without the later answer | MS07e owner question if hidden, MS18c |
 | S-AV07 classic9 Nightmare | 2/12 exact at none and 256; S2.2 is expected to add the missing tier | MS07e, MS18c |
 | S-AV08 standing quick cost | b1 partial Generator chunks 713.8 s, not a complete baseline | r6b per-app measurement; MS07e proposal if Generator remains above about 5 minutes |
+
+**PR-S2 remark (Fable, `92a7693`, archived in `docs/difficulty-v3/clarifications-resolved.md`):** MS05e-MS18e
+continue as written. MS18d profiles the single S-AV11 Jigsaw request when doing its performance
+work; until then its stage/cause is unknown, not a dig cost. MS07e/MS18d retain the existing
+per-request `stats` counters (`samples`, `attempts`, `oracleCalls`) as the later feature's baseline.
+These are reporting/evidence notes, not new scope, caps or budgets.
+`docs/improve-generating/plan.md` is saved for later and is not authorized now.
 
 ### S-OD2 recovery boundary and dispatch estimates
 
@@ -461,11 +472,12 @@ No implementer chooses an alternative from the original reports.
 | CV6-01 / S-OD1, Part H; amended by S-OD4 | MS05e follows the r6b/r6c combined commit, before MS06a. Diagnose the trap, then technique-pass-only pool initially 8; at most one comparison each of 4/8/16. Keep R6 comparator, work and log semantics; no floors/caps/orders/weights/bands/exactness/CV6 change. A remaining timing miss is S-AV01 for MS07e/MS18d, not a stop. A different strategy or slower CV6/GP contract still needs the recorded fallback decision. MS06b forwards target; no inequality refinement. |
 | CV6-02 / S-OD2, Part H; historical stop rule superseded | Preserve active b1 and r1-r4 evidence, unchanged R5 selector and private backups. The pause commit is not acceptance. r6b audits the combined bundle, r6c closes CI, then one combined commit. No dark switch, provisional allowance or further checkpoint commit. S-OD3/S-OD4 below replace the former bans on G13 persistence/mega tier changes and performance-only stops. |
 | CV6-03 / S-OD3 | 256 retained. G13 persistence at r6a is allowed with its seed 42, Nightmare request and 120 s recorder guard unchanged. Full-attempt mega Nightmare leaves quick coverage (mega16 has only scripted quick stop control); a tool-based deep tier keeps all 14 original calls and every invariant/CV5 relation. Quick retains a real one-attempt mega12 request; SA1 conditions (i)-(iii) apply. |
-| CV6-03 / S-OD4 (c1), (c2) | Every offer follows final qualification; bounded fallbacks are misses. One exported defaultMaxAttempts(cellCount) gives 8/4/2 at <=81/82-144/>144; selected-variant store migration/default and explicit settings follow r5p. No interim pruning, browser-budget raise or R5 re-selection. |
+| CV6-03 / S-OD4 (c1), (c2) | Every offer follows final qualification; bounded fallbacks are misses. One exported defaultMaxAttempts(cellCount) gives 8/4/2 at <=81/82-144/>144. CV6-04 corrects (c2): a stored value equal to the old default 8 without the intent marker is read as default on every board; other stored numbers and marked explicit settings remain. The same-task [MS05r5p legacy-8 fix round](MS05r5p-legacy-8-fix-round.md) completes before r6b, with no engine change or new diagnostic/deep measurement. No interim pruning, browser-budget raise or R5 re-selection. |
 | PR-S1 / S-OD4 stop/evidence rule | Only correctness or changing a recorded decision stops for the owner. Performance/availability findings become numbered items with numbers and MS07e/MS18c/MS18d ownership; every task reports them and MS18e audits them. Continue within bounded commands; no new evidence class/tooling task for slow intermediate cells. |
 | PR-S1 / S-OD4 review/full-scope rule | All six S3 groups remain. Analyst reviews: remaining MS05, MS05e, MS06b-c2, MS07a-c, MS13a-c, MS15a, MS17b, MS18c; MS08a as template. Orchestrator template/generic-soundness/order checks for the other technique tasks. |
-| CV6-03 sub-questions (1)-(3) / S-OD4 | CV3 mega16 Nightmare is not deferred; matching r5m puzzles may be reused with CV3's checks. >240 s is an availability item, not a stop. Apply the same rule to mega hell1 at MS07b. r6c owns bounded quick CI before the combined commit; every later suite owner updates its group, and MS18e owns the final PR CI. |
-| FS22 implementation disposition, updated by S-OD3/S-OD4 | MS05r2 absorbed consumers; b3 follows r5p/r5/r5m under the approved contracts, not passed original mega limits. Lazy per-level I5/CV3 remains, including own checks of reused puzzles. Syntax is not GD evidence. MS14c stays corpus-free; final I5 remains per level. |
+| CV6-03 sub-questions (1)-(3) / S-OD4 | CV3 mega16 Nightmare is not deferred; matching r5m puzzles may be reused with CV3's checks. Implementation: B1 selects the live route for MS05b3 instead. >240 s is an availability item, not a stop. Apply the same authorized contract to mega hell1 at MS07b. r6c owns bounded quick CI before the combined commit; every later suite owner updates its group, and MS18e owns the final PR CI. |
+| FS22 implementation disposition, updated by S-OD3/S-OD4 and B1 | MS05r2 absorbed consumers; b3 follows r5p/r5/r5m under the approved contracts, not passed original mega limits. Lazy per-level I5/CV3 remains; the mega CV3 cells run live under B1 with their own checks. Syntax is not GD evidence. MS14c stays corpus-free; final I5 remains per level. |
+| SA1 IR02 / IR04, implementation review 2026-11-14 | Binding B1 is copied into MS05b3: live mega CV3, no record provider/replay entry point/reuse code or edits to the deep tool/fixture/SOURCE_FILES. r6a/r6b check both currentMatches hashes explicitly; retain only a proved exact-diff non-generation-file mismatch, else execute their named MEGA-REFRESH step. Original hashes/records remain untouched. |
 | FS12-FS16 / FS20 implementation dispositions | `acceptReveal` receives current/next exact flags. A cells guided winner refused by the apply table ends that pass; local acceptance retains `next.score < spec.max`. MS06c1 transports null/inert metadata with no production draw; MS06c2 draws once and activates all stages, including strategy `options.target` for signs. No sign-only intermediate policy, new RNG stream or post-exact polishing. |
 | FS17-FS19 implementation dispositions | Supplemental soundness inputs concatenate the complete existing seeded random population. MS07b keeps coupled registration/help and records a two-request non-vacuous Hell 1 pilot; MS07c owns the cutoff CLI/GP-cost and repeats the pilot only if C changes. GD/GQ planning uses these actuals without extending the 540-second ceiling. |
 | FS23, updated by S-OD4 | MS18d projects every final offered GP cell from GQ raw means before timing. A >450-second projection stops that command and becomes a named final-cost item; continue safe cells. No automatic tooling task, unsupported seed split, merged p95s, fewer requests or changed cold/warm protocol. Report an incomplete matrix honestly. |
@@ -547,7 +559,7 @@ Before a heavy gate, announce to the orchestrator: task/gate, exact shard/cases,
 output paths. Wait for the shared-machine slot before starting. Release the slot on completion/failure.
 No overlapping quick runs inside this checkout either.
 
-### Shared-machine lock protocol (all commands expected to exceed 10 seconds)
+### Shared-machine lock protocol (possibly >10-second work, including unknown generation projections)
 
 The orchestrator's slot and the file locks are both required. Wait until
 `$env:TEMP\dv3-timing.lock` is absent, create `$env:TEMP\dv3-sudoku.lock` exclusively, then recheck
@@ -560,8 +572,57 @@ leaves at least 15 seconds between releasing its lock and taking it again, so th
 5-second poll can take the slot. New helper copies wait up to 20 minutes for a timing slot: a Pentomino run can
 last 590 seconds, too close to the former 10-minute wait. Only the acquisition wait changes; the 540-second
 Node limit and the 15-second gap stay unchanged. MS05r4's dispatched helper copy remains frozen.
-Every sudoku command over 10 seconds goes through the helper below; an inline `node -e` that generates puzzles
-is such a command.
+
+**IR07 clarification (SA1, 2026-11-14):**
+
+> Without the lock, run only commands known to be short: registration-only listings (`--list-tests`),
+> `--reconcile`, parity or plan scripts that generate nothing, and commands measured under 10 s on the
+> same source. A command that generates puzzles and whose projection is above 10 s, or unknown, runs
+> under `Invoke-Dv3Node` from the start. A kill timer is no exemption: no unlocked trial runs.
+
+Apply this to the complete command, including setup/registration, and to inline `node -e` generation
+as well. A stopped ten-second probe is not a completed short-command measurement. The examples above
+are not flag-based exemptions for work whose short duration is unproved.
+**Later tasks must not reuse MS05b3's unlocked-trial path** in
+`generator/tests/artifacts/difficulty-v3/MS05b3/run-cells.ps1:72-82,153-171`. A task-owned sequencer
+must choose the locked route before starting any above-10-second or unknown generation command;
+it must not try unlocked first and escalate only after a timeout.
+
+**Recorded lock-protocol incident — MS05b3 / IR07, 2026-11-14 03:09-06:12 (+07:00).**
+134 cells finished unlocked (224.5 s of process time); another 25 unlocked attempts were stopped
+at ten seconds and repeated under the lock. Of the resulting 159 unlocked windows (474.5 s), 112
+overlapped Pentomino's MP12b1: **351.3 s (about 351 s)** across 22 cases. This was a deviation, not an authorized
+short-command exception. Source: `docs/difficulty-v3/claude-opus-5.5/10-review-of-recovery-steps.md`
+sections 7.2-7.3, based on the two projects' invocation logs.
+
+SA1 found that the correctness/availability evidence stands; stopped attempts supplied no accepted
+results and were completed again under the lock. Preserve the actual pass/failure statuses and the
+`slot: none` labels. The unlocked times are descriptive, **not slot-protected measurements**:
+MS07e, MS18c, MS18d and MS18e must not use them as protected measurements. Do not rerun or relabel
+the evidence merely to erase this incident. Pentomino's follow-up remains with its own evidence owner.
+
+**IR12 — compound drivers (SA1, 2026-11-14).** A compound is one locked `Invoke-Dv3Node`
+invocation running several independent items serially. A task-owned driver may be used or reused only if:
+
+- Every item carries its own finite projection: a measurement on the same source, otherwise a stated
+  conservative bound for that complete item, including process startup and registration.
+- Before starting each item, the driver requires
+  `elapsedSeconds + max(item.projectionSeconds, genericFloorSeconds) <= 450`.
+  Elapsed time is the actual time since the compound started, not the sum of earlier projections.
+- An item whose own projection exceeds 450 s runs alone, never inside a compound. This does not
+  waive its task's launch/request limits or the helper's unchanged 540 s process-tree ceiling.
+  An unknown, missing or non-finite projection is not zero or the generic floor and cannot enter a compound.
+- Items are independent; each has its own results or ledger, transcript, actual duration and exit code.
+  Do not compound a producer/publication step with a consumer that depends on its output.
+- The driver stops at the first unexpected exit. Any expected nonzero exit is declared per item and
+  keeps its actual failure/status; no automatic retries or skipped failure presented as success.
+
+Record the generic floor and its rule, but never let it replace an item's projection. MS05r6a's
+driver used `max(60 s, twice the slowest child so far)`; a known 139.1 s `player` item must not be
+admitted on 60 s merely because it has not yet run in this compound. If the next item does not fit,
+leave it explicitly unstarted for a later invocation; do not extend 450 s to finish the list.
+The 540 s helper limit covers driver and children together, and the 15 s fairness gap still applies
+between lock acquisitions. MS05r6a's completed compounds/evidence remain valid; this rule governs reuse.
 
 Use this PowerShell helper in the current app directory. It preserves arguments without shell
 re-quoting, limits each Node invocation to 540 seconds, and cleans up only its own mutex/processes.
@@ -650,13 +711,13 @@ S-OD2 **step evidence complete** handoff is reviewed for use inside the retained
 | GH | MS04 if affected; MS07b/c, all introducing/enhanced-proof tasks through MS16 | B bounded real sources, E write/check for every affected ID. No GH for inactive kernels; MS14c changes no finder. |
 | GQ-first | MS07e, merger prepared in MS07d | All Q135 cells, `--jobs=4`, per-cell JSON/markdown, checked complete merge; checkpoint-only report, no support changes. |
 | GD | MS04; MS05r6b; MS07e; MS17b; MS18e | Bounded difficulty coverage below; historical MS04 also ran killer/greater-than. MS05r2/MS07d use only fast fake-worker `--filter="qualification:"`. Post-selection b3 owns early I5/CV3/refusals; r6b closes its named outstanding CV3 list. MS18e reruns current-source selectors; MS14c is corpus-free. MS05e owns GD-CV6 separately. |
-| GD-I5/CV3 early | MS05b3 after r5p/r5/r5m; r6b reconciliation | Per-level I5 with `> <level>: <count> puzzles > I5:` (extra-regions includes variant); `> variants: <id> > CV3 <level>:` plus `> variants: <id> > CV3 unsupported:`. Selected total 1, same seeds/counts, jobs 1, locked <=540 s. Mega Nightmare may use matching deep puzzles with CV3 checks; >240 s is a named availability item. |
+| GD-I5/CV3 early | MS05b3 after r5p/r5/r5m; r6b reconciliation | Per-level I5 with `> <level>: <count> puzzles > I5:` (extra-regions includes variant); `> variants: <id> > CV3 <level>:` plus `> variants: <id> > CV3 unsupported:`. Selected total 1, same seeds/counts, jobs 1, locked <=540 s. B1 requires live mega Nightmare CV3, one locked command per cell, with deep occurrence-id references; >240 s is a named availability item. |
 | Recovery profiles | MS05r1 | G13, mega12 Nightmare seed 3, mega16 Nightmare seed 3; maxAttempts 1, actual per-attempt work and sample/local stage time; one bounded request/invocation. |
 | Recovery non-selecting diagnostics | MS05r4 | The same three requests at all 64/128/256/none, full normal attempts: 12 outcomes outside R5's matrix. Report all four even if none wins; do not change the selector. |
 | Recovery original-limit history | MS05r4, retained unchanged | G13 passed 120000 ms; original mega groups failed their 60000 ms guard/6 s or 20 s latency contract. S-OD3/S-OD4 replace that prerequisite; never rewrite those failures as passes. |
 | Recovery size diagnostics | MS05r5p | G13 seed 42, mega12/mega16 Nightmare seed 3, once each, current default attempts 2/4/2 and allowance 256; existing diagnostic driver/500 s budget, locked one request per process. No new R5 selection. |
 | Recovery mega contract | MS05r5m, reconciled by r6a/r6b | Tool, not a deep `*.test.js` suite; 14 independent default-attempt requests, seeds 1-4 plus CV5 calls 3/3/4 per board, original correctness/relations, 500 s diagnostic budget. Quick replacements have separate membership. No blanket SG_DEEP. |
-| Recovery final-source recheck | MS05r6a | Persist G13 first; fresh G13 recording still under 120000 ms, complete five wires/fourteen analyses. Compare relevant identities for r5m records, retain compatible evidence and reconcile relations rather than rerunning generation just for a new task ID. |
+| Recovery final-source recheck | MS05r6a; r6b revalidates | Persist G13 first; fresh G13 recording still under 120000 ms, complete five wires/fourteen analyses. Check deep identity.currentMatches.sourceHash and .toolHash explicitly. Retain a mismatch only with the exact-diff non-generation-file proof in r6a A/r6b B1; otherwise use MS05r6a-MEGA-REFRESH or MS05r6b-MEGA-REFRESH. No generation just for a new task ID. |
 | Recovery focused quick/pin triage | MS05r3, MS05r4; listed repairs MS05r6a | r3's schema/premise checks include all `MS05b1-` pipeline cases. r4 repeats the wider six-suite set and both pipeline filters at the chosen default, under the helper. Premise fixes return to r3; only explained genuine data pins await r6a. No contractual failure becomes a pin. |
 | Full quick manifest | MS05r5 tooling; r6b execution; later accepting owners reuse | Registration-only no-options inventory per app; disjoint <=450-second-projected suite/full-name shards, <=540 s/process. Machine-readable results reconcile every key once, same source/Node/factor, zero omissions/new skips. Listing is not executed coverage. |
 | Standing quick cost / FS30 | MS05r6b | Per-app measured process-wall sum/max and shard/test counts, fixed source/Node/factor and actual final coverage. Correct AGENTS/guides before freeze; fill report afterwards. If Generator stays above about 5 minutes, MS07e proposes named generation-heavy quick-to-manual moves; no automatic move. |
@@ -664,7 +725,7 @@ S-OD2 **step evidence complete** handoff is reviewed for use inside the retained
 | GP-cost | MS07c, MS08a/b/c, MS09a/b, MS10a/b, MS11a/b/c, MS12, MS13c, MS14b, MS15b, MS16 | `node tests\pattern-cost.js --ids=<owned-ids> --runs=20 --json=<owned-evidence>`; real positive/negative cases, work/cap/latency records, no timing assertion in quick tests. MS07c owns the split-ID recording moved from MS07b. |
 | GP | MS13c and MS15b affected cells; MS18d entire final offered matrix | `node tests\perf.js --variant=<id> --level=<level> --runs=50 --warmup=0 --seed=7000 --gate`; final aggregate >=90%, all misses visible. Project before launch. Unsafe commands become named cost items, not automatic new tooling tasks; continue other cells without claiming an incomplete matrix passed. |
 | GS cap | MS05r4 (absorbed MS05d), repeated MS18b | Six cells x 64/128/256/none, 12 requests each, seed 20260101: 288 primary requests. r4 selected 256; the final changed winner needs the recorded owner decision. Closure diagnostics never become selecting cells. |
-| Mega hell1 / final deep | MS07b extends r5m; MS18e final-source closure | MS07b preserves fourteen additional hell1 occurrences/relations under the same quick/deep rule. Final current-source inventory: 28 Nightmare/hell1 occurrences, one per locked request; compatible CV3 reuse permitted, no deep generation in CI or blanket per-technique deep rerun. |
+| Mega hell1 / final deep | MS07b extends r5m; MS18e final-source closure | MS07b preserves fourteen additional hell1 occurrences/relations under the same quick/deep rule. Final current-source inventory: 28 Nightmare/hell1 occurrences, one per locked request. MS18e's offered mega CV3 cells run live, one locked cell at a time as in B1, with deep occurrence ids only as cross-references; no CV3 record-provider/reuse route, deep generation in CI or blanket per-technique deep rerun. |
 | GS-CV6 / GD-CV6 | MS05e | Diagnosis first; literal Normal seeds 300-319/7000-7039, Easy/Hard/Expert 300-319, matched repeats per task; fixed pool from 4/8/16. After MS05b3 use `--suite=greater-than --filter="> <level>: <count> puzzles > CV6:"` and I5 equivalents: 18 existing assertions, selected total 1 each, unchanged seeds/counts/CV6. Keep the leading boundary. Announce, lock, jobs 1/no --jobs, 540-second shards; no whole-corpus invocation. |
 | GG/GR/GH-CV6 | MS05e | Task's exact Greater-Than recipe. Complete current-source publication envelopes, but only 40 Greater-Than hash records, G11/G12 wire/analysis and Greater-Than help IDs may change; all other entries are invariant controls. Publish wire before recording analysis. |
 | GS target | MS06a before / MS06d after | All 17 cells before/after MS06c1 transport + atomic MS06c2 activation; retain isolated comparison and report every hit loss. |
@@ -762,9 +823,29 @@ transcript. Zero, multiple or skipped tests are not a pass.
 Project all CV3 levels before launching: use current source/allowance evidence where available,
 label older estimates, and never infer zero cost from missing data or a completed timing bound
 from an aborted request. MS05b3 runs after r5p/r5m and does **not** defer mega16 Nightmare: match
-its seeds 1/2 to deep records and apply CV3's checks. Mega12 seeds 1/2/3 may use the same route.
-Record any request over 240 s as a named availability item; keep validity, uniqueness, requiredness
-and warning checks blocking. Reused generation is not a newly measured 240 s guarded request.
+its live seeds 1/2 to the deep occurrence ids; mega12's live seeds 1/2/3 follow the same binding B1.
+Run each normal CV3 cell in its own locked command, after a selected-total-1 `--list-tests`
+preflight, with `-AllowExit1`, `--verbose` and fresh `--results`. Current projections are about
+221 s for mega16 and 71 s for mega12 plus registration/checks. Keep every per-puzzle assertion
+before the aggregate `exact === 0` failure. Expected "none of N puzzles hit it" outcomes remain
+failed availability assertions S-AV03 (0 of 2) and S-AV02 (0 of 3); any other failing assertion is
+a correctness stop. A request over 240 s is a named availability item.
+
+First run B1's no-generation `mega-contract.js --reconcile` command (currently under a second;
+no lock required) and inspect `identity.currentMatches.sourceHash` and `.toolHash`, not just exit 0.
+When both are true, cite the deep records' additional checks; otherwise record the changed files
+for r6a/r6b's audit. B3 builds no reuse code and edits neither the tool/fixture nor `SOURCE_FILES`.
+Its CV3 manifest labels both cells `generation: live` and names the matching invariant occurrence ids;
+live times stay separate from the earlier deep measurements.
+
+r6a/r6b may retain mismatched deep source hashes only with an exact-diff proof that all changed
+source files are outside the normalization/generation path and have no effects on it, with the
+tool/check/request/default identities unchanged. A proven UI/store-only change can qualify;
+preserve the raw false match fields and old hashes. Otherwise the named MEGA-REFRESH step generates
+the affected coverage, one locked occurrence at a time; a changed common source/tool identity requires
+a coherent fourteen-record cohort, not a mixed old/new directory. This exception does not relax
+E publication or final quick result identities.
+
 Other unsafe/unexecuted commands stay explicit in `evidence/MS05b3/deferred-cv3.json` with their
 full request identities, projections, S-OD4 item IDs and MS07e/MS18c owners. r6b reconciles this list;
 no row is a passed deferral, no cap change is promised, and no new tooling class is authorized.
@@ -949,3 +1030,11 @@ empty until that review. The analyst reports are traceability, not additional de
 | MS05r2 | Step evidence complete (S-OD2; combined commit after MS05r6b) | 20 min developer + 2 min review | about 473 | (combined) |
 | MS05r3 | Step evidence complete (S-OD2; combined commit after MS05r6b) | 68 min developer + 3 min review | about 1,317 | (combined) |
 | MS05r4 | Stopped at S-OD2 stop point: 256 selected, mega preflights fail (CV6-03 to the owner) | 1 h 48 min developer (Node 61.5 min) + 3 min review | about 640 | (combined) |
+| MS05r5p | Step evidence complete (S-OD2; combined commit after MS05r6b and MS05r6c); Addendum A1; CV6-04 answered (b), legacy-8 fix round 2026-11-14 | 1 h 42 min developer in two rounds + 20 min review | about 1,747 | (combined) |
+| MS05r5 | Step evidence complete (S-OD2; combined commit after MS05r6b and MS05r6c) | 52 min developer + 12 min review | about 919 | (combined) |
+| MS05r5m | Step evidence complete (S-OD2; combined commit after MS05r6b and MS05r6c); 14 deep records, 0 exact (S-AV02, S-AV03); SA1 review IR01-IR04 | 1 h 38 min developer in two rounds + 15 min review | about 1,739 | (combined) |
+| MS05b3 | Step evidence complete (S-OD2; combined commit after MS05r6b and MS05r6c); 186 cells, 19 availability-only failures (S-AV02..S-AV13); incident IR07 (unlocked cells) | 3 h 45 min developer + 20 min review | about 1,828 | (combined) |
+| MS05r6a | Step evidence complete (S-OD2; combined commit after MS05r6b and MS05r6c); G13 persisted; complete E (520/5/14); 13 pins; COV01 for MS18e | 2 h 17 min developer in two rounds + 25 min review | about 1,748 | (combined) |
+| MS05r6b | Audit complete (S-OD2; combined commit with MS05r6c); quick sets green (Generator 3,262, Player 1,683); R6B-F01 fixed by MS05r5p; GD with S-AV07, S-AV14, S-AV15; standing cost measured (S-AV08) | 1 h 14 min developer in two runs + 15 min review | about 1,582 | (combined) |
+| MS05r6c | Accepted in the combined commit; CI groups over the bounded quick manifest; final quick runs green (Generator 3,262, Player 1,683); SA1's IR14/IR15/IR19 applied | 48 min developer + 15 min review | about 506 | `difficulty-v3 MS05` |
+| MS05 (combined) | Accepted: retained MS05b1, MS05r1-r4, MS05r5p, MS05r5, MS05r5m, MS05b3, MS05r6a, MS05r6b, MS05r6c in one commit (S-OD2); the pause commit `a7f6660` was not green and was not acceptance | recovery developers 2026-11-13/14 + reviews | about 13,400 (developers of MS05r1-MS05r6c and the fix rounds; MS05b1 not recorded) | `difficulty-v3 MS05: required exactness with measured bounded recovery` |

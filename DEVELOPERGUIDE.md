@@ -226,7 +226,8 @@ eight cells (`{ cells: [{ i, value, state }], highlight, unhighlight }`), never 
 count as reached (`tune.miss`, or `tune.shallow` when its score is in the requested band but it needs no technique
 of the level's tier), the next sample is dug from the same grid (up to 12 per grid); when none of
 them hits, a local search starts from the closest one (it adds, removes or swaps symmetric groups of clues), and
-only then does `retry.difficulty` start a new grid (up to `attempts`, default 8). The top levels (nightmare, hell 1 and
+only then does `retry.difficulty` start a new grid (up to `attempts`, by default the number for the size of the
+board: see below). The top levels (nightmare, hell 1 and
 hell 2) also dig fast, uniqueness-only proposals and put clues back while a proposal is too hard. Every grid
 has fixed work caps (full ratings and proposed moves, counted, never timed), so a seed gives the same puzzle on
 every machine. If every attempt is used, the best puzzle is returned with a notice instead of an error (only
@@ -246,6 +247,27 @@ kind that offers "Retry". The soak, the qualification and the manual suites coun
 comparing level names (an absent flag is a miss). The difficulty of a puzzle is
 `SG.difficulty.rate(...)`, from the technique weights `SG.difficulty.WEIGHTS`; use `rating.score`, never the
 solver's raw score.
+
+**The default number of attempts follows the board.** `SG.digger.defaultMaxAttempts(cellCount)` is the one rule: 8
+for 81 cells or fewer, 4 for 82 to 144 (mega12, butterfly) and 2 above (flower, mega16, sohei, samurai). It is a
+count and never a time, applies only when no `maxAttempts` is given (an explicit whole number from 1 always wins),
+and leaves the shallow allowance, the caps of an attempt and every board of up to 81 cells alone. `SG.digger.generate`
+reads `model.cellCount`; `SG.pipeline.normalizeConfig` reads `SG.variants.cellCountOf(def)`, the size taken from the
+definition with no model built and no random draw (digits squared, unless the definition declares `cellCount`, as
+the four multi-grids do); the store uses the same function (`SG.store.defaultAttempts`). `SG.pipeline.DEFAULT_MAX_ATTEMPTS`
+(8) is only the reference of the small boards, never the default of another one. The soak and the qualifier pass no
+`maxAttempts`, so they measure these defaults; a fallback after them is a miss, and only the final qualification
+decides what is offered. In the store the state holds the number and `attemptsExplicit`: `false` while the number
+is the board's (it follows a change of variant), `true` once it was typed or came in a link's `attempts` (it then
+stays across variants and reloads, also when it equals the default); an emptied field returns to `false`.
+`sg.lastConfig.v1` saves both. A last configuration saved before size-dependent defaults that holds 8 without an
+intent marker is read as the default because it cannot be distinguished from a deliberately chosen 8; entering 8
+again makes it an explicit choice (any other stored number stays chosen). A recipe generated again — a history
+entry, a stale cache entry (`app.generate(overrides)` sets the store with `{ source: 'app' }`), the export
+(`toConfig` over `defaults()` plus the entry) — runs with the number it recorded; a replay never turns a chosen
+number into a default, and a recorded number that is not its board's default becomes a chosen one
+([design.md](generator/design.md) §6.8, §14.2,
+§14.3). The marker never reaches `GenerateConfig`, the history, the cache or an exported puzzle.
 
 The UI never slows the algorithm down to animate it, and its replay does not read the events. Next to them
 the digger keeps a compact **dig log** of the sample that became the puzzle (`result.digLog`: entries `pass`,
@@ -307,8 +329,8 @@ The numbers of the examples are the ones of the tests. Classic 9×9 *expert* wit
 and 33 steps with every move shown; its compact view has 7 steps with the scores 0, 23, 44, 551, 568, 992 and
 992, and the step 44 → 551 (×12.5) is a jump caused by the clue at R1C2 (alone it gives 550; the other removal
 of the move, R9C8, alone gives 44), which is framed. A Classic 9×9 *easy* puzzle with seed 3 replays in 7 steps
-(26 with every move shown): the full solution, four steps of random removals (scores 14, 24, 34 and 44), one
-step of the guided dig (46) and the finished puzzle with 34 clues.
+(26 with every move shown): the full solution, three steps of random removals (scores 15, 26 and 44), two
+steps of the guided dig (46 and 100) and the finished puzzle with 34 clues.
 
 **Preparation.** The page asks for the analysis after the puzzle is on screen, through
 `SG.player.createPreparation()` (a controller without DOM: `start(result)`, `press()`, `unavailable(result)`,
@@ -475,7 +497,7 @@ and that the player loads too.
 
 ```
 sudoku/                     the repository (see "Layout" in the overview for the whole layout)
-├── .github/workflows/      pages.yml: tests, then publishes generator/, player/ and core/ · pull-request.yml: every test of a pull request to main
+├── .github/                workflows/pages.yml: the quick tier, then publishes generator/, player/ and core/ · workflows/pull-request.yml: the quick tier and the browser scripts of a pull request to main · scripts/: the CI groups of the generator quick set
 ├── LICENSE · .gitignore    the MIT licence · files ignored by git
 ├── docs/                   documents of both apps, by feature (the screenshots of the user guide are in
 │                           docs/screenshots/)
@@ -485,7 +507,7 @@ sudoku/                     the repository (see "Layout" in the overview for the
 │   ├── js/ui/              exchange · wordbook · symbols · board-view
 │   ├── css/                tokens.css · tokens-board.css · base.css · board.css
 │   ├── assets/wordbook/    words.en.js · words.vi.js   spelling, part of speech and meaning of each key word
-│   └── tests/              harness.js · fixtures/ · suites/   the suites of the shared code (16 suites)
+│   └── tests/              harness.js · node-evidence.js · fixtures/ · suites/   the suites of the shared code (16 suites)
 ├── player/                 the player
 └── generator/              this app
     ├── index.html          the page: every <script> tag, in dependency order; the sg-player-url meta tag
@@ -511,16 +533,18 @@ sudoku/                     the repository (see "Layout" in the overview for the
     │                       · help.js · app.js
     └── tests/
         ├── node-runner.js · soak.js · perf.js · qualify.js · replay-fixtures.js · replay-goldens.js
-        │   · difficulty-recovery.js
+        │   · difficulty-recovery.js · mega-contract.js
         ├── fixtures/       the fixtures of the generator (rated puzzles, the performance helper with the hash
         │                   corpus and its merge, the regression hashes in regression.js, generated, the
         │                   testkit provider, the pure
         │                   helpers of the soak diagnostics, and the data of the replay suite:
         │                   replay-goldens.js, replay-wire.js, generated, with the helpers of their
         │                   recorders, tool-records.js and replay-recording.js, and the pure helpers of the
-        │                   recovery profile driver, recovery-profile.js)
+        │                   recovery profile driver, recovery-profile.js, of the mega Nightmare deep
+        │                   tier, mega-contract.js, and the lazy per-level corpora of the heavy suites,
+        │                   manual-corpus.js)
         ├── suites/         the quick set, run by default together with ../core/tests/suites: one *.test.js per
-        │                   area, 32 of the generator's own (found automatically), smoke.test.js among them
+        │                   area, 34 of the generator's own (found automatically), smoke.test.js among them
         └── manual/         the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
                             extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
@@ -827,24 +851,58 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (48 suites, about 2,900 tests), about a minute
-node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8, about eight minutes)
-node tests/node-runner.js --all                    # quick + manual (56 suites, about 3,910 tests), about nine minutes
+node tests/node-runner.js                          # the quick set (50 suites, 3,262 tests), whole or in disjoint shards
+node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
+node tests/node-runner.js --all                    # quick + manual (58 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
+node tests/node-runner.js --suite=help --exact="<full name>"   # only the tests of exactly this full name
+node tests/node-runner.js --suite=help --list-tests=<file.json> # the inventory of the selection; no test runs
+node tests/node-runner.js --suite=help --results=<file.json>    # run, and write the result of every test
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 48 suites, about
-2,900 tests, about one minute — the 32 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 50 suites,
+3,262 tests — the 34 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
-`extra-regions`, `wordoku` and `jigsaw`, about eight minutes together — which are not part of the default run:
-run them with `--manual` (only these) or `--all` (quick and manual, about nine minutes), or by name with
+`extra-regions`, `wordoku` and `jigsaw` — which are not part of the default run:
+run them with `--manual` (only these) or `--all` (quick and manual), or by name with
 `--suite=killer`, which works for any suite. While developing, run the quick set, and a heavy suite by name when you
-touch its area; run `--all` before a release and whenever you touch generation, scoring or a variant. The CI
-workflow runs `node tests/node-runner.js --all` before every deploy, and .github/workflows/pull-request.yml runs it (in parallel groups) for every pull request to `main`, together with the player suites and the browser scripts.
+touch its area; run `--all` before a release and whenever you touch generation, scoring or a variant. CI does not run
+`--all`: it runs the quick tier only (see "Continuous integration" below).
+
+**Bounded coverage of the quick set.** A complete quick set can take longer than one bounded command may: an evidence
+command is stopped at 540 seconds. Where a whole command cannot fit, cover the set by **disjoint shards**:
+`node tests/node-runner.js --suite=<names> --results=<file.json>`, and for one long suite a describe or full-name
+selector (`--filter` or `--exact`), checking each selection with `--list-tests` first, so that every test of the
+registration-only inventory runs exactly once. No shard uses `--bail`, omits a slow test or adds a skip, and a shard
+made stale by a changed source is run again. The cost of a complete quick set is the sum of its shards; the
+540-second limit applies to each command and is not that cost. What each app's complete quick set measured, on a named
+source and machine (a report, not a promise), is in
+[docs/difficulty-v3/recovery-quick-cost.md](docs/difficulty-v3/recovery-quick-cost.md).
+
+**Continuous integration.** The pull-request workflow (`.github/workflows/pull-request.yml`) and the deployment
+workflow (`.github/workflows/pages.yml`) run the complete quick tier of each app, nothing heavier: the player's quick
+set in one job (`node tests/node-runner.js`, shared suites included) and the generator's in parallel jobs, one per
+group of `.github/scripts/generator-quick.json`. A group is a list of whole-suite shards (the disjoint shards of the
+bounded coverage above), the workflows take their job matrix from that file, and every job runs a group through
+`.github/scripts/generator-suites.sh run <group>`, shard by shard, failing if any shard fails. A first job runs
+`generator-suites.sh check`, which registers the quick sets with `--list-tests` (no test runs) and fails unless every
+quick suite and every test is in exactly one shard, no shard names a manual or an unknown suite or selects nothing,
+every suite of `tests/manual/` is declared as out of CI, and every job's projected time (the bounds of its shards
+times the CI factor of the file, plus the job overhead) fits its 30-minute limit. A suite added later therefore fails
+the check until its author gives it a shard with a measured bound; it is never picked up silently, and never from
+`tests/manual/`. `selftest` runs the check on synthetic plans (a gap, a duplicate, an unknown or a manual suite, an
+empty shard, a registration error) and `run <group> --dry-run` prints the commands without running a test. The time
+factor (3 on CI, from the variable `CI`) and the job limits are not raised: split a group instead. CI does not run the
+manual suites, `--all`, the deep tier (`tests/mega-contract.js`), `soak.js`, `perf.js` or `qualify.js`; what replaces
+them is offline evidence, kept in `docs/difficulty-v3/evidence/` by the tasks that own it (the 14 deep mega Nightmare
+requests and their relations by the records of MS05r5m reconciled by MS05r6b, the live CV3 outcomes by MS05b3, the
+manual corpora, GD, E, qualification and performance by MS05r6a, MS05r6b and the later gate tasks), and listed in
+[docs/difficulty-v3/evidence/MS05r6c/evidence.md](docs/difficulty-v3/evidence/MS05r6c/evidence.md). The browser scripts of
+the player stay in the pull-request workflow.
 
 The runner loads `SOURCE_FILES` with `vm.runInThisContext`, discovers `../core/tests/fixtures/*.js`,
 `tests/fixtures/*.js`, `../core/tests/suites/*.test.js` and `tests/suites/*.test.js` (and `tests/manual/*.test.js` with
@@ -855,12 +913,52 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts about 3,910 tests in 56 suites
-(about 2,900 in the 48 quick ones), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 58 suites, 50 of them quick (3,262 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
+**Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
+"suite > describe > test"). `--exact="<full name>"` selects the tests whose full name is exactly that, case-sensitive
+and every test of that name, and excludes `--filter`. `--list-tests=<file.json>` registers the selected suites as
+a run does (so their set-up at load time still happens) and writes the **inventory** instead of running anything: for
+every selected test its suite, its zero-based `ordinal` within its file counted before any filter (it tells equal
+names apart and does not move when the selection changes), the full name, whether it is a test or a benchmark, whether
+it is skipped (a `describe.skip` included; a skip decided while running cannot be known) and its time limit, plus a
+`sourceHash` over every file the quick tests load, read or spawn (listed in the file), the selection, the registration
+time and any describe block that threw or file that failed to load (`complete` is then false). `--results=<file.json>`
+runs as usual, keeps the exit code, and also writes the result of every selected test with the same `ordinal`; its
+`complete` is true only when every selected test ran, without `--bail` and with unchanged sources. A listed or
+written test is not a passed one: read the rows. Both options take a new project-relative `.json` path inside the
+repository (never overwritten, never inside the fingerprinted sources, for example the evidence folder of a task),
+and exclude each other. The code is `core/tests/node-evidence.js` (Node only, no application knows it) and
+`SG.test.list(options)` of the harness, which walks the registry exactly as `SG.test.run` does and executes nothing.
+
+**Heavy suites, one level at a time.** The corpus of `killer`, `jigsaw`, `greater-than`, `extra-regions` and `wordoku`
+and the corpus of the `variants` sweep are built level by level, on the first read of a level
+(`SG.test.lazyCorpus`, `tests/fixtures/manual-corpus.js`): a test that reads one level generates only that level, with
+the seeds, counts and options of the whole corpus, while the tests that need every level (`corpus()`, `allPuzzles()`,
+the aggregate checks of the sweep) still build all of them. The filter is a plain substring of the lower-cased full
+name, so a selector starts at a describe boundary with `> `, and goes in quotes: `easy: 20 puzzles > I5:` also matches
+Very Easy, `> easy: 20 puzzles > I5:` does not. The selectors:
+`> <level>: <count> puzzles > I5:` (and `… > CV6:`) for `killer`, `jigsaw`, `greater-than` and `wordoku` (`killer` has
+only the I5 one per level), `> <variant> <level>: <count> puzzles > I5:` for `extra-regions`, and
+`> variants: <id> > CV3 <level>:` and `> variants: <id> > CV3 unsupported:` for the sweep. Each selects one test, which
+the `manual-corpus` suite checks against the real registrations; read the selected total of the summary, and list the
+selection first (`--list-tests`) when the generation is long. A whole-variant filter such as `--filter=I5:` is not a
+bounded command. With the environment variable `SG_CORPUS_TIMES=1` a level that has just been built prints the
+milliseconds of each of its requests before the result of the test.
+
 ```text
-node tests/replay-fixtures.js            # regenerates tests/fixtures/replay-wire.js (four slow goldens, ~23 s)
+node tests/node-runner.js --suite=killer --filter="> normal: 20 puzzles > I5:" --list-tests=<file.json>
+node tests/node-runner.js --suite=killer --filter="> normal: 20 puzzles > I5:" --verbose --results=<file.json>
+node tests/node-runner.js --suite=extra-regions --filter="> diagonalX normal: 20 puzzles > I5:" --verbose
+node tests/node-runner.js --suite=variants --filter="> variants: classic9 > CV3 normal:" --verbose
+node tests/node-runner.js --suite=variants --filter="> variants: classic9 > CV3 unsupported:" --verbose
+```
+
+The two Node scripts that keep the data of the `replay` suite:
+
+```text
+node tests/replay-fixtures.js            # regenerates tests/fixtures/replay-wire.js (five slow goldens, 20 s or more each)
 node tests/replay-fixtures.js --check    # regenerates in memory and compares; exit 1 on a difference
 node tests/replay-goldens.js             # checks the golden data of the 14 requests (the same as --check; it never writes unasked)
 node tests/replay-goldens.js --write     # regenerates tests/fixtures/replay-goldens.js from fresh analyses (all 14 requests)
@@ -870,8 +968,10 @@ node tests/replay-goldens.js --merge=<directory> --check      # the complete set
 
 The `replay` suite tests the analysis (the moves, the ratings and their statuses, the views, the explained jumps)
 against the golden numbers of 14 requests (`tests/fixtures/replay-goldens.js`). It generates the fast ones live
-and reads the four slow ones from the saved results (`tests/fixtures/replay-wire.js`), because generating them
-takes about 23 seconds; regenerate them only when the generator's output changes on purpose (the regression
+and reads the five slow ones (G09 to G13) from the saved results (`tests/fixtures/replay-wire.js`), because
+generating each takes 20 seconds or more (G13, the Samurai Nightmare of seed 42, is saved too so that three suites
+do not generate it again; its request and the 120,000 ms budget of the recorder are unchanged, and it uses the default
+attempts of its board, 2); regenerate them only when the generator's output changes on purpose (the regression
 hashes change then too). Both recorders have the same bounded modes, so that a change of output can refresh all of
 this evidence safely: `--check` compares without writing and names the request and the fields that differ (it
 checks the selected requests only, and says so); `--write` writes the complete fixture and refuses a partial
@@ -954,7 +1054,8 @@ on the reference machine and measured by `node tests/perf.js`.
   ```
 
   `--json` is a new `.json` path inside the repository (an existing file is never overwritten).
-  `--mode=diagnostic --shallow-cap=64|128|256|none` keeps the normal attempts and applies an allowance: the command
+  `--mode=diagnostic --shallow-cap=64|128|256|none` keeps the default attempts of the board (2, 4 and 2 for the three
+  cases) and applies an allowance: the command
   sets `SG.digger.SHALLOW_SEARCH_RATINGS` for the run (`none` is `Infinity`) and puts the previous value back; a source
   without the setting is refused before anything is generated.
   One process runs one case, and the engine and the checks of the returned puzzle (givens against the solution, an
@@ -965,12 +1066,60 @@ on the reference machine and measured by `node tests/perf.js`.
   record too), 1 that no trustworthy complete record could be made, 2 an invalid use. The helpers are
   `SG.fixtures.recoveryProfile` (`tests/fixtures/recovery-profile.js`), tested by the `recovery-profile` suite; the
   first profiles are reported in [docs/difficulty-v3/recovery-profile.md](docs/difficulty-v3/recovery-profile.md).
+- **Mega Nightmare deep tier (difficulty v3)** — a full-attempt Nightmare request of mega12 (4 attempts by default) or
+  mega16 (2) costs from seconds to minutes and ends in a truthful shallow fallback more often than not, so it is not a
+  quick test, and the quick `mega` suite does not ask for one. It keeps a real one-attempt mega12 request (seed 3, all
+  the invariants and the requiredness and warning checks below, inside a bounded smoke limit of 15 s before the time
+  factor, measured at 5.2 s, against the unchanged 60,000 ms request budget) and a scripted mega16 control of the
+  size-default stop, the two-warning shallow fallback, an explicit number of attempts and a propagated cancellation or
+  budget error. The fourteen requests of the old tests (per board the seeds 1 to 4 and the three independent CV5 calls
+  with the seeds 3, 3 and 4) belong to a tool, never to a discovered suite, to CI or to `SG_DEEP`. Run one command at
+  a time, through the shared timing lock when others use the machine, since one request can take minutes:
+
+  ```text
+  node tests/mega-contract.js --list                                              # the 14 requests and their relations
+  node tests/mega-contract.js --request=mega12-invariant-1 --record=<id.json>     # one request, once, and its checks
+  node tests/mega-contract.js --reconcile=<records directory> --json=<file.json>  # no generation
+  ```
+
+  The ids are `<board>-invariant-<seed>`, `<board>-cv5-a`, `<board>-cv5-b` and `<board>-cv5-other`; the two seed-3
+  CV5 calls are two generations, not two reads of one record. A request is Nightmare with trace off and no
+  `maxAttempts`, and it and its checks share one 500,000 ms budget, below the 540-second limit of a bounded command.
+  `--record` is a new project-relative `<id>.json` (an existing file, an absolute or outside path, an option given
+  twice or a conflicting one are refused). The record holds the request, the normalised configuration, the effective
+  attempts, the allowance, the source and tool identities, the generation and the check time apart, the outcome (an
+  error such as `budget.exceeded` keeps its code and no puzzle is invented), each check as `true`, `false` or `null`
+  (not evaluated), and the digest and the plain wire of the puzzle. The checks are the invariants of the old test (a
+  valid solution, one solution, the givens inside the solution, the clue floor, the band and group of the rating,
+  every logical placement and elimination against the solution) and the requiredness contract: `exact` is true
+  exactly when an independent complete canonical rating lies in the requested level and needs a technique of its
+  tier, `difficulty.approximate` is present exactly when the puzzle is not exact and `difficulty.shallow` exactly when
+  it is not exact and the rating lies in the requested level. A fallback can be valid, but it is never exact and never
+  waives a check. A level that qualification has hidden is offered for the run only, and recorded.
+  `--reconcile` generates nothing: each of the 14 occurrences must be there exactly once, with one source,
+  tool, Node and configuration identity, a wire and digests that agree with the record, and flags derived again from
+  its rating; the relations of the old test (the two seed-3 calls: same givens, solution and score; seed 4 against
+  seed 3: a different solution) are evaluated, or left `unevaluated` when a request ended in an error. The document
+  keeps the generation, correctness and timing verdicts apart and reports, for each board, a guard computed from the
+  completed fixed population only (1.5 times the largest generation and check time, in steps of 5 s, never above the
+  budget) with its margin. Exit code of `--request`: 0 every check passed, 3 an error or checks that could not finish
+  (an availability outcome), 1 a failed check, 2 an invalid use; of `--reconcile`: 0 all fourteen reconcile and pass, 3
+  sound but incomplete, 1 an evidence problem or a failed check or relation. The helpers are
+  `SG.fixtures.megaContract` (`tests/fixtures/mega-contract.js`), tested on synthetic records by the `mega-contract`
+  suite. The CV3 corpora of the manual suites do not read these records (a suite loaded by the runner cannot compute the
+  hashes that `SG.fixtures.megaContract.reuse(records, { variantId, level, seed }, { sourceHash, toolHash }, { sha256 })`
+  compares): the two mega Nightmare cells of CV3 run live, one level per command (see "Heavy suites, one level at a
+  time"). The interface stays, as a read-only consumer of an invariant request (or `reuse(directory, query)` of the
+  tool): the record must match the engine sources, the tool, the normalised configuration, the default attempts and the
+  allowance now and its digests must hold; the caller applies its own checks to the decoded copy.
 - **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
   variant offers (40 fixed seeds per variant and level through the real pipeline, 60 more for a borderline level,
   a time budget on the 95th percentile) and prints the table and the support lists; `--variant`, `--level`,
   `--jobs`, `--json` and `--markdown` narrow it down or save it; `--probe=N` takes a quick look (N seeds per level,
   no verdict). A request is a hit only with a valid, unique puzzle, a complete proof in the requested level, no
   approximate warning **and** a strictly true `exact` flag of the result, so an in-band shallow result is a miss.
+  A request never names `maxAttempts`: each board takes the default of its size (8, 4 or 2), so a large board that
+  meets no exact puzzle in those attempts ends in the fallback, which is a miss.
   The last run is in
   [docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md).
 - **Performance** against the budgets of [design.md](generator/design.md) §9.1: `node tests/perf.js --quick`,
@@ -1101,9 +1250,14 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, about 15 seconds); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 1,683 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
+
+The runner has the same `--exact`, `--list-tests` and `--results` options as the generator's (see "Exact selection,
+inventory and results" in the Sudoku Generator tests above). A whole Player quick command is covered like the
+generator's quick set when it does not fit one bounded command (see "Bounded coverage of the quick set" above); the
+measured cost of each app is in [docs/difficulty-v3/recovery-quick-cost.md](docs/difficulty-v3/recovery-quick-cost.md).
 
 These Node tests are quick and are the default set: developers and coding agents run `node tests/node-runner.js`
 (or a few suites with `--suite=`) while developing, and the deployment workflow runs all of them. They are the 14
@@ -1167,8 +1321,9 @@ when a change touches the UI; the pull-request workflow runs them (Edge or Chrom
 ## Deploy on GitHub Pages
 
 Choose **Settings → Pages → Build and deployment → Source → GitHub Actions**. The
-[deployment workflow](.github/workflows/pages.yml) of the repository runs the Node 24 tests of both apps (`node tests/node-runner.js`,
-not the browser scripts) and publishes the player, the generator and the code they share after every
+[deployment workflow](.github/workflows/pages.yml) of the repository runs the Node 24 quick tests of both apps (the
+generator's in the checked groups of `.github/scripts/generator-quick.json`; not the heavy suites and not the browser
+scripts) and publishes the player, the generator and the code they share after every
 push to `main`; you can also run it manually from the **Actions** tab. Only the app files and licence are
 published, not the tests or working notes. The live app is at
 **[tdat00.github.io/sudoku/player](https://tdat00.github.io/sudoku/player/)**. Sudoku Generator's “Play”

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > digger.generate: guarantees","exact":null,"count":10},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 51947.1,
+  "results": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 51762.9,
+    "tests": [
+      {"suite":"difficulty","name":"I4: the same seed gives the same puzzle, another seed another one","fullName":"difficulty > digger.generate: guarantees > I4: the same seed gives the same puzzle, another seed another one","status":"pass","ms":15173.887,"reason":"","error":null,"ordinal":131},
+      {"suite":"difficulty","name":"is independent of the emit callback","fullName":"difficulty > digger.generate: guarantees > is independent of the emit callback","status":"pass","ms":12.319,"reason":"","error":null,"ordinal":132},
+      {"suite":"difficulty","name":"returns the documented fields","fullName":"difficulty > digger.generate: guarantees > returns the documented fields","status":"pass","ms":20.269,"reason":"","error":null,"ordinal":133},
+      {"suite":"difficulty","name":"honours minClues and the unit floor of the spec on every level","fullName":"difficulty > digger.generate: guarantees > honours minClues and the unit floor of the spec on every level","status":"pass","ms":16997.876,"reason":"","error":null,"ordinal":134},
+      {"suite":"difficulty","name":"works with other symmetries and with none","fullName":"difficulty > digger.generate: guarantees > works with other symmetries and with none","status":"pass","ms":326.68,"reason":"","error":null,"ordinal":135},
+      {"suite":"difficulty","name":"keeps the configured symmetry on the top tiers too (proposals and their refinement)","fullName":"difficulty > digger.generate: guarantees > keeps the configured symmetry on the top tiers too (proposals and their refinement)","status":"pass","ms":17169.432,"reason":"","error":null,"ordinal":136},
+      {"suite":"difficulty","name":"digLevel makes one attempt from a given solution and says whether it hit the level","fullName":"difficulty > digger.generate: guarantees > digLevel makes one attempt from a given solution and says whether it hit the level","status":"pass","ms":5.887,"reason":"","error":null,"ordinal":137},
+      {"suite":"difficulty","name":"works on the smaller boards for the levels they support","fullName":"difficulty > digger.generate: guarantees > works on the smaller boards for the levels they support","status":"pass","ms":2053.63,"reason":"","error":null,"ordinal":138},
+      {"suite":"difficulty","name":"rejects a level the variant does not support and options that make no sense","fullName":"difficulty > digger.generate: guarantees > rejects a level the variant does not support and options that make no sense","status":"pass","ms":0.867,"reason":"","error":null,"ordinal":139},
+      {"suite":"difficulty","name":"propagates a budget that runs out instead of swallowing it","fullName":"difficulty > digger.generate: guarantees > propagates a budget that runs out instead of swallowing it","status":"pass","ms":0.727,"reason":"","error":null,"ordinal":140}
+    ],
+    "suites": [
+      {"name":"difficulty","total":10,"passed":10,"failed":0,"skipped":0,"ms":51762.806}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > digger.generate: guarantees","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\guarantees.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

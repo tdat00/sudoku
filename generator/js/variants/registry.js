@@ -24,6 +24,9 @@
    * @property {string} i18nKey             Translation key of the variant name.
    * @property {string} group               Family used to group variants in the UI, e.g. 'classic'.
    * @property {number} digits              D, the number of values.
+   * @property {number} [cellCount]         Cells of the board when it is not digits squared (the multi-grids
+   *     declare their real 144, 189, 288 or 369); `cellCountOf` is how the size is read before any model is
+   *     built, e.g. for the default number of attempts. Not checked against `build` here, the tests do.
    * @property {string[]} difficultySupport Levels this variant can generate.
    * @property {string} defaultSymbolMode   One of `symbolModes`.
    * @property {string[]} symbolModes       Symbol sets the UI may offer.
@@ -132,6 +135,9 @@
     requireString(def, 'defaultSymbolMode');
     if (!(Number.isInteger(def.digits) && def.digits >= 1 && def.digits <= SG.MAX_DIGITS)) {
       throw invalid(def.id, 'digits must be an integer in 1..' + SG.MAX_DIGITS);
+    }
+    if (def.cellCount !== undefined && !(Number.isInteger(def.cellCount) && def.cellCount >= def.digits)) {
+      throw invalid(def.id, 'cellCount must be an integer of at least digits when present');
     }
     requireStringArray(def, 'difficultySupport');
     requireStringArray(def, 'symbolModes');
@@ -308,6 +314,20 @@
     return out;
   }
 
+  /**
+   * The number of cells of a variant's board, known without building a model (no seed, no random draw): the
+   * declared `cellCount`, else digits squared (every square board). `idOrDef` may be an unregistered
+   * definition.
+   * @throws {SG.errors.GenerationError} 'variant.unknown' for an unknown id, 'variant.invalidDef' when the
+   *         definition names no usable size.
+   */
+  function cellCountOf(idOrDef) {
+    const def = resolveDefinition(idOrDef);
+    const cells = def.cellCount !== undefined ? def.cellCount : def.digits * def.digits;
+    if (!(Number.isInteger(cells) && cells >= 1)) throw invalid(def.id, 'the definition has no usable size');
+    return cells;
+  }
+
   function decimalsOf(x) {
     const text = String(x);
     const dot = text.indexOf('.');
@@ -390,6 +410,7 @@
     unregister: unregister,
     optionsOf: optionsOf,
     defaultOptions: defaultOptions,
+    cellCountOf: cellCountOf,
     sanitizeOptions: sanitizeOptions
   };
 })(typeof self !== 'undefined' ? self : globalThis);

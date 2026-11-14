@@ -205,7 +205,9 @@
     field.min = SG.store.MAX_ATTEMPTS.min;
     field.max = SG.store.MAX_ATTEMPTS.max;
     field.step = 1;
-    field.defaultValue = SG.store.MAX_ATTEMPTS.default;
+    field.defaultValue = SG.store.defaultAttempts(s.variantId);
+    // Clearing the field gives the number back to the board: the commit sends this state key as false.
+    field.defaultIntentKey = 'attemptsExplicit';
     return field;
   }
 
@@ -282,8 +284,8 @@
    * @property {boolean} disabled    A select with a single choice.
    * @property {Array<Object>} warnings  Non-blocking `{ id, messageKey, argKeys }`.
    * Plus, by type: min / max / step / defaultValue / minLabelKey / maxLabelKey / defaultLabelKey (slider,
-   * number), maxLength / placeholderKey (text, seed), `groups` (variant), `preview` (symmetry), `seed` and
-   * `info` (seed).
+   * number), defaultIntentKey (the attempts: the state key that a cleared field sets to false), maxLength /
+   * placeholderKey (text, seed), `groups` (variant), `preview` (symmetry), `seed` and `info` (seed).
    */
 
   /**
@@ -627,7 +629,8 @@
       if (typed() !== null) commit(f, typed());
     });
     input.addEventListener('change', function () {
-      commit(f, typed() !== null ? typed() : f.defaultValue, true);
+      if (typed() !== null) commit(f, typed(), true);
+      else commit(f, f.defaultValue, true, true);
     });
     appendShell(shell, [input]);
     return {
@@ -793,9 +796,14 @@
       });
     }
 
-    function commit(f, value, resync) {
-      const patch = f.optionId !== null
-        ? { variantOptions: { [f.optionId]: value } } : { [f.stateKey]: value };
+    // `cleared`: a number field that was left empty. A field with a `defaultIntentKey` (the attempts) goes
+    // back to following the board, whatever number that is for the variant now; any other field takes its
+    // default value as it did before.
+    function commit(f, value, resync, cleared) {
+      let patch;
+      if (cleared === true && typeof f.defaultIntentKey === 'string') patch = { [f.defaultIntentKey]: false };
+      else if (f.optionId !== null) patch = { variantOptions: { [f.optionId]: value } };
+      else patch = { [f.stateKey]: value };
       store.set(patch, { source: 'controls' });
       if (resync) sync();
     }
@@ -987,7 +995,9 @@
       'controls.digOrder.hint': 'The order in which the generator tries to remove clues from the finished ' +
         'grid.',
       'controls.maxAttempts.label': 'Maximum attempts',
-      'controls.maxAttempts.hint': 'Full grids to try before settling for the closest puzzle (1–20).',
+      'controls.maxAttempts.hint': 'Full grids to try before settling for the closest puzzle (1–20). Until ' +
+        'you type a number it follows the board: 8 up to 81 cells, 4 up to 144 cells, 2 above. A number ' +
+        'you type is kept for every board; clear the field to follow the board again.',
       'controls.showSolution.label': 'Show the solution',
       'controls.showSolution.hint': 'Display the solved grid together with the puzzle.',
       'controls.warn.strictSymmetry': 'The symmetry “{symmetry}” together with “{difficulty}” is ' +
@@ -1023,7 +1033,9 @@
       'controls.digOrder.label': 'Thứ tự đào lỗ',
       'controls.digOrder.hint': 'Thứ tự trình sinh đề thử bỏ các số cho sẵn khỏi lưới đã điền đầy.',
       'controls.maxAttempts.label': 'Số lần thử tối đa',
-      'controls.maxAttempts.hint': 'Số lưới đầy đủ được thử trước khi chọn đề gần nhất (1–20).',
+      'controls.maxAttempts.hint': 'Số lưới đầy đủ được thử trước khi chọn đề gần nhất (1–20). Khi bạn ' +
+        'chưa nhập số, giá trị theo cỡ bàn: 8 đến 81 ô, 4 đến 144 ô, 2 với bàn lớn hơn. Số bạn nhập được ' +
+        'giữ cho mọi bàn; xóa trống ô để lại theo cỡ bàn.',
       'controls.showSolution.label': 'Hiện lời giải',
       'controls.showSolution.hint': 'Hiển thị cả lưới đã giải cùng với đề bài.',
       'controls.warn.strictSymmetry': 'Đối xứng “{symmetry}” kết hợp với mức “{difficulty}” khá khắt khe: ' +

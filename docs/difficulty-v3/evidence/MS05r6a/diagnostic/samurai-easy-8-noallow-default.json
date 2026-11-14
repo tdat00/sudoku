@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "kind": "ir10-diagnostic",
+  "task": "MS05r6a",
+  "request": {
+    "variant": "samurai",
+    "level": "easy",
+    "seed": 8
+  },
+  "config": {
+    "allowance": null,
+    "allowanceText": "none",
+    "maxAttempts": null,
+    "attempts": "default",
+    "cellCount": 369,
+    "sizeDefaultAttempts": 2,
+    "sourceAllowance": 256
+  },
+  "argv": [
+    "--key=samurai/easy",
+    "--seed=8",
+    "--allowance=none",
+    "--attempts=default",
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\samurai-easy-8-noallow-default.json"
+  ],
+  "node": "v26.13.0",
+  "startedAt": "2026-11-14T02:48:29.162Z",
+  "hash": "41ccc16c132728f8",
+  "overrides": [],
+  "wallMs": 310.864,
+  "result": {
+    "attempts": 1,
+    "exact": true,
+    "required": true,
+    "score": 138,
+    "warnings": [],
+    "clues": 154,
+    "puzzleDigest": "141cc9a601660fe92810f2827b56fcda40a16edd97970d5f38930c02b844a88a"
+  },
+  "work": [
+    {
+      "ratings": 297,
+      "proposals": 1232,
+      "localSearches": [
+        {
+          "ratings": 285,
+          "shallowRatings": 285,
+          "shallowLimit": null,
+          "capHit": null
+        }
+      ]
+    }
+  ]
+}

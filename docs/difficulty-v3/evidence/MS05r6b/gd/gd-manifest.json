@@ -1,0 +1,425 @@
+{
+  "schema": 1,
+  "status": "planned",
+  "plan": "docs/difficulty-v3/evidence/MS05r6b/gd/shard-plan.json",
+  "apps": {
+    "generator": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r6b/gd/difficulty-inventory.json",
+      "inventoryHash": "a922d36b013ae67c59d066a6eb7cf152bc8ce99586735dea7da5face84a129df",
+      "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+      "node": "v26.13.0",
+      "timeFactor": 2,
+      "shards": [
+        {
+          "id": "classic9-nightmare",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=time) > nightmare >"],
+          "projectionSeconds": 449,
+          "projectionBasis": "MEASURED, pooled: the pilot (gd/pilot.json: 8 same-seed requests, mean 4,128 ms) and MS05r4 selection/256 (12 requests of classic9 nightmare at the same default attempts and allowance, mean 4,554 ms): 20 requests, mean 4.384 s x 100 requests = 438.4 s, plus 10 s for the checks of 100 puzzles and the start-up = 448.4 s, rounded up to 449 s, just under the 450 s limit, so launched alone under the unchanged 540 s ceiling",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-nightmare.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/114","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > hits the requested level in at least 90 % of the puzzles"},
+            {"key":"generator/difficulty/115","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)"},
+            {"key":"generator/difficulty/116","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I2, I3, I6: givens belong to the solution they determine; at least minClues"},
+            {"key":"generator/difficulty/117","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I5: every puzzle has a complete proof; an exact one has its score in the band"},
+            {"key":"generator/difficulty/118","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)"},
+            {"key":"generator/difficulty/119","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I7: every deduction on the way to the solution is sound"},
+            {"key":"generator/difficulty/120","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > has the pattern of empty cells that the default symmetry asks for (rotational 180)"},
+            {"key":"generator/difficulty/121","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > is generated well inside the budget of design.md section 9.1 (median time)"}
+          ]
+        },
+        {
+          "id": "classic9-veryEasy",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=time) > veryeasy >"],
+          "projectionSeconds": 11,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 2.44 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 10.5 s, rounded up",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-veryEasy.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/66","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > hits the requested level in at least 90 % of the puzzles"},
+            {"key":"generator/difficulty/67","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)"},
+            {"key":"generator/difficulty/68","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > I2, I3, I6: givens belong to the solution they determine; at least minClues"},
+            {"key":"generator/difficulty/69","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > I5: every puzzle has a complete proof; an exact one has its score in the band"},
+            {"key":"generator/difficulty/70","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)"},
+            {"key":"generator/difficulty/71","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > I7: every deduction on the way to the solution is sound"},
+            {"key":"generator/difficulty/72","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > has the pattern of empty cells that the default symmetry asks for (rotational 180)"},
+            {"key":"generator/difficulty/73","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > is generated well inside the budget of design.md section 9.1 (median time)"}
+          ]
+        },
+        {
+          "id": "classic9-easy",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=time) > easy >"],
+          "projectionSeconds": 45,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 171.2 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 44.2 s, rounded up",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-easy.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/74","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > hits the requested level in at least 90 % of the puzzles"},
+            {"key":"generator/difficulty/75","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)"},
+            {"key":"generator/difficulty/76","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > I2, I3, I6: givens belong to the solution they determine; at least minClues"},
+            {"key":"generator/difficulty/77","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > I5: every puzzle has a complete proof; an exact one has its score in the band"},
+            {"key":"generator/difficulty/78","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)"},
+            {"key":"generator/difficulty/79","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > I7: every deduction on the way to the solution is sound"},
+            {"key":"generator/difficulty/80","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > has the pattern of empty cells that the default symmetry asks for (rotational 180)"},
+            {"key":"generator/difficulty/81","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > is generated well inside the budget of design.md section 9.1 (median time)"}
+          ]
+        },
+        {
+          "id": "classic9-normal",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=time) > normal >"],
+          "projectionSeconds": 53,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 212.6 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 52.5 s, rounded up",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-normal.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/82","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > hits the requested level in at least 90 % of the puzzles"},
+            {"key":"generator/difficulty/83","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)"},
+            {"key":"generator/difficulty/84","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I2, I3, I6: givens belong to the solution they determine; at least minClues"},
+            {"key":"generator/difficulty/85","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I5: every puzzle has a complete proof; an exact one has its score in the band"},
+            {"key":"generator/difficulty/86","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)"},
+            {"key":"generator/difficulty/87","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I7: every deduction on the way to the solution is sound"},
+            {"key":"generator/difficulty/88","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > has the pattern of empty cells that the default symmetry asks for (rotational 180)"},
+            {"key":"generator/difficulty/89","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > is generated well inside the budget of design.md section 9.1 (median time)"}
+          ]
+        },
+        {
+          "id": "classic9-hard",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=time) > hard >"],
+          "projectionSeconds": 15,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 20.2 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 14 s, rounded up",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-hard.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/90","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > hits the requested level in at least 90 % of the puzzles"},
+            {"key":"generator/difficulty/91","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)"},
+            {"key":"generator/difficulty/92","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > I2, I3, I6: givens belong to the solution they determine; at least minClues"},
+            {"key":"generator/difficulty/93","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > I5: every puzzle has a complete proof; an exact one has its score in the band"},
+            {"key":"generator/difficulty/94","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)"},
+            {"key":"generator/difficulty/95","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > I7: every deduction on the way to the solution is sound"},
+            {"key":"generator/difficulty/96","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > has the pattern of empty cells that the default symmetry asks for (rotational 180)"},
+            {"key":"generator/difficulty/97","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > is generated well inside the budget of design.md section 9.1 (median time)"}
+          ]
+        },
+        {
+          "id": "classic9-expert",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=time) > expert >"],
+          "projectionSeconds": 16,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 25 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 15 s, rounded up",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-expert.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/98","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > hits the requested level in at least 90 % of the puzzles"},
+            {"key":"generator/difficulty/99","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)"},
+            {"key":"generator/difficulty/100","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > I2, I3, I6: givens belong to the solution they determine; at least minClues"},
+            {"key":"generator/difficulty/101","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > I5: every puzzle has a complete proof; an exact one has its score in the band"},
+            {"key":"generator/difficulty/102","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)"},
+            {"key":"generator/difficulty/103","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > I7: every deduction on the way to the solution is sound"},
+            {"key":"generator/difficulty/104","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > has the pattern of empty cells that the default symmetry asks for (rotational 180)"},
+            {"key":"generator/difficulty/105","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > is generated well inside the budget of design.md section 9.1 (median time)"}
+          ]
+        },
+        {
+          "id": "classic9-master",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=time) > master >"],
+          "projectionSeconds": 24,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 67.7 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 23.5 s, rounded up",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-master.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/106","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > hits the requested level in at least 90 % of the puzzles"},
+            {"key":"generator/difficulty/107","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)"},
+            {"key":"generator/difficulty/108","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > I2, I3, I6: givens belong to the solution they determine; at least minClues"},
+            {"key":"generator/difficulty/109","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > I5: every puzzle has a complete proof; an exact one has its score in the band"},
+            {"key":"generator/difficulty/110","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)"},
+            {"key":"generator/difficulty/111","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > I7: every deduction on the way to the solution is sound"},
+            {"key":"generator/difficulty/112","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > has the pattern of empty cells that the default symmetry asks for (rotational 180)"},
+            {"key":"generator/difficulty/113","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > is generated well inside the budget of design.md section 9.1 (median time)"}
+          ]
+        },
+        {
+          "id": "classic9-hell1",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=time) > hell1 >"],
+          "projectionSeconds": 26,
+          "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 382.9 ms) x 20 requests x 2 + 10 s for the eight checks and the start-up = 25.3 s, rounded up",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-hell1.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/122","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > hits the requested level in at least 90 % of the puzzles"},
+            {"key":"generator/difficulty/123","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)"},
+            {"key":"generator/difficulty/124","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I2, I3, I6: givens belong to the solution they determine; at least minClues"},
+            {"key":"generator/difficulty/125","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I5: every puzzle has a complete proof; an exact one has its score in the band"},
+            {"key":"generator/difficulty/126","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)"},
+            {"key":"generator/difficulty/127","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I7: every deduction on the way to the solution is sound"},
+            {"key":"generator/difficulty/128","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > has the pattern of empty cells that the default symmetry asks for (rotational 180)"},
+            {"key":"generator/difficulty/129","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > is generated well inside the budget of design.md section 9.1 (median time)"}
+          ]
+        },
+        {
+          "id": "levels",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > difficulty: levels"],
+          "projectionSeconds": 30,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: pure computation on the level table); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/levels.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/0","fullName":"difficulty > difficulty: levels > lists the nine levels, easiest first, and rejects anything else"},
+            {"key":"generator/difficulty/1","fullName":"difficulty > difficulty: levels > agrees with the list that the variant registry validates difficultySupport against"},
+            {"key":"generator/difficulty/2","fullName":"difficulty > difficulty: levels > has one band table: [min, max) bands that tile the scale from 0, with an open top"},
+            {"key":"generator/difficulty/3","fullName":"difficulty > difficulty: levels > gives every score exactly one level, edges included"}
+          ]
+        },
+        {
+          "id": "spec9",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > difficulty: spec(level, model) on a 9x9 board"],
+          "projectionSeconds": 30,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: pure computation on level specs); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/spec9.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/4","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > returns the fields of design.md section 13.7"},
+            {"key":"generator/difficulty/5","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > has the bands of the table, not scaled"},
+            {"key":"generator/difficulty/6","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > keeps the clue ranges of section 5.7 (expert as hard, the hell levels as nightmare)"},
+            {"key":"generator/difficulty/7","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > allows exactly the techniques with 1.25 x weight below the band maximum, in ladder order"},
+            {"key":"generator/difficulty/8","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > derives the allowed groups from the allowed techniques; no group owns a level"},
+            {"key":"generator/difficulty/9","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > uses the technique oracle at every level and the proposal dig from nightmare on"},
+            {"key":"generator/difficulty/10","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > never offers a technique that is scoped to another variant"},
+            {"key":"generator/difficulty/11","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > asks for fewer clues per unit on boards with fewer digits, never for more"}
+          ]
+        },
+        {
+          "id": "spec-other",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > difficulty: spec on other boards, and difficultySupport"],
+          "projectionSeconds": 30,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: pure computation on level specs); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/spec-other.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/12","fullName":"difficulty > difficulty: spec on other boards, and difficultySupport > keeps the bands on every board and scales only the clue range by cellCount / 81"},
+            {"key":"generator/difficulty/13","fullName":"difficulty > difficulty: spec on other boards, and difficultySupport > throws for a level the variant does not support"},
+            {"key":"generator/difficulty/14","fullName":"difficulty > difficulty: spec on other boards, and difficultySupport > isSupported follows the variant definition; unknown variants support every level"},
+            {"key":"generator/difficulty/15","fullName":"difficulty > difficulty: spec on other boards, and difficultySupport > offers in every variant exactly the levels the qualification published (docs/difficulty-rating/qualification.md)"}
+          ]
+        },
+        {
+          "id": "qualification",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers)"],
+          "projectionSeconds": 30,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: fake workers, no real generation (check-list section 7: expected 1-15 seconds)); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/qualification.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/16","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > never offers a level on an incomplete round (39 or 99 outcomes)"},
+            {"key":"generator/difficulty/17","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > publishes a complete first round: 40 outcomes, offered"},
+            {"key":"generator/difficulty/18","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > decides a borderline level on exactly 100 outcomes"},
+            {"key":"generator/difficulty/19","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > fails the run when a worker dies on the last request of the first round"},
+            {"key":"generator/difficulty/20","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > fails the run when a worker dies on the last request of the second round"},
+            {"key":"generator/difficulty/21","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > fails the run on a clean exit with a request in flight, an IPC error or a stray answer"}
+          ]
+        },
+        {
+          "id": "clue-floor",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > difficulty: the clue floor of a variant (clueFloor)"],
+          "projectionSeconds": 60,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: clue floors of every variant; builds models and may generate); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/clue-floor.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/22","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > without a declaration the floor is the classic9 floor scaled by cellCount / 81"},
+            {"key":"generator/difficulty/23","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > a table gives absolute floors; a level that is missing has no floor (0)"},
+            {"key":"generator/difficulty/24","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > a function gets (level, model, the derived floor) and may scale it; nonsense falls back"},
+            {"key":"generator/difficulty/25","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > spec(level, null) and boards of unregistered variants keep working"},
+            {"key":"generator/difficulty/26","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > Killer declares 40 clues for veryEasy and none for the levels above"},
+            {"key":"generator/difficulty/27","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > Greater-Than and the 9x9 hybrids keep the derived floor of veryEasy and easy and scale the rest"},
+            {"key":"generator/difficulty/28","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > a clueFloorScale multiplies the derived floor of its levels; a missing level keeps it"},
+            {"key":"generator/difficulty/29","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > clueFloor sees the scaled floor as the derived one, and has the last word"},
+            {"key":"generator/difficulty/30","fullName":"difficulty > difficulty: the clue floor of a variant (clueFloor) > a registration with a malformed clueFloor, clueFloorScale or restartThreshold is refused"}
+          ]
+        },
+        {
+          "id": "score-v2",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > difficulty: the score of rating v2"],
+          "projectionSeconds": 60,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: rates fixed positions); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/score-v2.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/31","fullName":"difficulty > difficulty: the score of rating v2 > is round(80E/(E+40) + P + 0.25 P log2(1 + W/P)) with the weights of section 5.2"},
+            {"key":"generator/difficulty/32","fullName":"difficulty > difficulty: the score of rating v2 > has the weight table of section 5.2, and a technique without a weight is an error"},
+            {"key":"generator/difficulty/33","fullName":"difficulty > difficulty: the score of rating v2 > reproduces the worked examples: classic9 499 and Samurai 633"},
+            {"key":"generator/difficulty/34","fullName":"difficulty > difficulty: the score of rating v2 > is pure: the same empty cells and technique counts give the same score on every board"},
+            {"key":"generator/difficulty/35","fullName":"difficulty > difficulty: the score of rating v2 > never decreases when a count, the empty cells or the weight of the hardest technique grows"},
+            {"key":"generator/difficulty/36","fullName":"difficulty > difficulty: the score of rating v2 > does not depend on the order of the steps, only on how often each technique was used"},
+            {"key":"generator/difficulty/37","fullName":"difficulty > difficulty: the score of rating v2 > rates a puzzle that needs only singles by its empty cells: at most easy on any board"},
+            {"key":"generator/difficulty/38","fullName":"difficulty > difficulty: the score of rating v2 > counts one expensive step in full on any board (no technique floor, no size scaling)"},
+            {"key":"generator/difficulty/39","fullName":"difficulty > difficulty: the score of rating v2 > picks the hardest technique by weight, then by the larger registration order, then by id"},
+            {"key":"generator/difficulty/40","fullName":"difficulty > difficulty: the score of rating v2 > gives a puzzle without a complete proof no level and no score (it is never a hit)"},
+            {"key":"generator/difficulty/41","fullName":"difficulty > difficulty: the score of rating v2 > carries the metadata of section 5.4: rawScore = score, ratingVersion 2, the counts"},
+            {"key":"generator/difficulty/42","fullName":"difficulty > difficulty: the score of rating v2 > returns a confidence between 0 and 1: 0 on a band edge, high deep inside the band"},
+            {"key":"generator/difficulty/43","fullName":"difficulty > difficulty: the score of rating v2 > does not depend on whether the solver collected its steps"},
+            {"key":"generator/difficulty/44","fullName":"difficulty > difficulty: the score of rating v2 > rates the same report the same whichever way it is classified"},
+            {"key":"generator/difficulty/45","fullName":"difficulty > difficulty: the score of rating v2 > proves uniqueness only with a complete proof that assumes none"}
+          ]
+        },
+        {
+          "id": "score-table",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > difficulty: the Difficulty Score table (section 5.6)"],
+          "projectionSeconds": 30,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: table lookups); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/score-table.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/46","fullName":"difficulty > difficulty: the Difficulty Score table (section 5.6) > shares the score among the rows exactly: the hardest row also carries P, the empty cells V"},
+            {"key":"generator/difficulty/47","fullName":"difficulty > difficulty: the Difficulty Score table (section 5.6) > rounds the shares once, to whole numbers that add up to the score (the worked example)"},
+            {"key":"generator/difficulty/48","fullName":"difficulty > difficulty: the Difficulty Score table (section 5.6) > adds up to the score for any counts, also without empty cells or without techniques"},
+            {"key":"generator/difficulty/49","fullName":"difficulty > difficulty: the Difficulty Score table (section 5.6) > exposes the exact numbers behind every whole number of the table"}
+          ]
+        },
+        {
+          "id": "labelled",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > difficulty: labelled puzzles (fixtures/rated.js)"],
+          "projectionSeconds": 60,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: rates the labelled fixtures); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/labelled.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/50","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > has at least 20 labelled puzzles, each with exactly one solution"},
+            {"key":"generator/difficulty/51","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > classify matches every label within one level"},
+            {"key":"generator/difficulty/52","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > v3 reference: every entry carries its current expectation, and classify gives its level exactly"},
+            {"key":"generator/difficulty/53","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > v3 reference: the level is required (or vacuous) as expected, derived and by the current floor"},
+            {"key":"generator/difficulty/54","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > the v2 certificate of a constructed puzzle is about techniques, not a v3 floor"},
+            {"key":"generator/difficulty/55","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > v3 reference: rates the famous hardest puzzles hell2, with a Nishio step and a complete proof"},
+            {"key":"generator/difficulty/56","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > puts every label in order: harder labels never rate lower on average"}
+          ]
+        },
+        {
+          "id": "removing",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)"],
+          "projectionSeconds": 60,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: two rating tests on fixed puzzles); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/removing.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/57","fullName":"difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) > rarely lowers the score: at most 5 of 100 puzzles of 30 to 50 clues"},
+            {"key":"generator/difficulty/58","fullName":"difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) > rarely lowers the level, and never by more than one: 300 puzzles of 22 to 50 clues"}
+          ]
+        },
+        {
+          "id": "oracle",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > digger: technique-bounded oracle"],
+          "projectionSeconds": 90,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: oracle runs on fixed puzzles); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/oracle.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/59","fullName":"difficulty > digger: technique-bounded oracle > keeps the puzzle solvable with the allowed techniques only, which also makes it unique"},
+            {"key":"generator/difficulty/60","fullName":"difficulty > digger: technique-bounded oracle > stops at the upper edge of a band: no accepted removal takes the score to maxScore"},
+            {"key":"generator/difficulty/61","fullName":"difficulty > digger: technique-bounded oracle > digs less deep with fewer techniques: singles only never beats more techniques"},
+            {"key":"generator/difficulty/62","fullName":"difficulty > digger: technique-bounded oracle > never uses a technique that assumes uniqueness: it is listed, but the oracle skips it"},
+            {"key":"generator/difficulty/63","fullName":"difficulty > digger: technique-bounded oracle > reports the groups it removed, in order, and they account for every removed clue"},
+            {"key":"generator/difficulty/64","fullName":"difficulty > digger: technique-bounded oracle > continues a dug puzzle from startGivens without touching the clues that were kept"},
+            {"key":"generator/difficulty/65","fullName":"difficulty > digger: technique-bounded oracle > rejects options it cannot use"}
+          ]
+        },
+        {
+          "id": "guarantees",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > digger.generate: guarantees"],
+          "projectionSeconds": 120,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: generates several puzzles of normal, hard and nightmare (nightmare about 4-6 s each in the pilot)); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/guarantees.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/131","fullName":"difficulty > digger.generate: guarantees > I4: the same seed gives the same puzzle, another seed another one"},
+            {"key":"generator/difficulty/132","fullName":"difficulty > digger.generate: guarantees > is independent of the emit callback"},
+            {"key":"generator/difficulty/133","fullName":"difficulty > digger.generate: guarantees > returns the documented fields"},
+            {"key":"generator/difficulty/134","fullName":"difficulty > digger.generate: guarantees > honours minClues and the unit floor of the spec on every level"},
+            {"key":"generator/difficulty/135","fullName":"difficulty > digger.generate: guarantees > works with other symmetries and with none"},
+            {"key":"generator/difficulty/136","fullName":"difficulty > digger.generate: guarantees > keeps the configured symmetry on the top tiers too (proposals and their refinement)"},
+            {"key":"generator/difficulty/137","fullName":"difficulty > digger.generate: guarantees > digLevel makes one attempt from a given solution and says whether it hit the level"},
+            {"key":"generator/difficulty/138","fullName":"difficulty > digger.generate: guarantees > works on the smaller boards for the levels they support"},
+            {"key":"generator/difficulty/139","fullName":"difficulty > digger.generate: guarantees > rejects a level the variant does not support and options that make no sense"},
+            {"key":"generator/difficulty/140","fullName":"difficulty > digger.generate: guarantees > propagates a budget that runs out instead of swallowing it"}
+          ]
+        },
+        {
+          "id": "cap",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9))"],
+          "projectionSeconds": 120,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: a few generations with a cap); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/cap.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/141","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > counts every full rating at the default cap: classic9 top tier, Greater-Than, Killer"},
+            {"key":"generator/difficulty/142","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside the downward refinement without passing the cap"},
+            {"key":"generator/difficulty/143","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside the local search, and hands on the rating it has instead of rating again"},
+            {"key":"generator/difficulty/144","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside a variant strategy: Greater-Than tuning and the Killer layout search"},
+            {"key":"generator/difficulty/145","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > a cap of nothing at all ends with the error path, never with an unrated puzzle"}
+          ]
+        },
+        {
+          "id": "unreachable",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > digger.generate: when the level cannot be reached"],
+          "projectionSeconds": 120,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: a few generations that end in a fallback); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/unreachable.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/146","fullName":"difficulty > digger.generate: when the level cannot be reached > returns the closest completely rated puzzle with difficulty.approximate and does not throw"},
+            {"key":"generator/difficulty/147","fullName":"difficulty > digger.generate: when the level cannot be reached > prefers the closest result: a puzzle one level off beats one several levels off"},
+            {"key":"generator/difficulty/148","fullName":"difficulty > digger.generate: when the level cannot be reached > stops after maxAttempts x digTries dig samples and never more"},
+            {"key":"generator/difficulty/149","fullName":"difficulty > digger.generate: when the level cannot be reached > tries more dig samples per grid when the symmetry digs in groups of four"},
+            {"key":"generator/difficulty/150","fullName":"difficulty > digger.generate: when the level cannot be reached > throws digger.noRatedPuzzle when not one sample has a complete proof"}
+          ]
+        },
+        {
+          "id": "safety",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=difficulty > digger.generate: safety net against a technique bug (risk R3)"],
+          "projectionSeconds": 120,
+          "projectionBasis": "stated conservative bound for the complete group, start-up included (no measurement of this group on this source: three generations with a faulty technique); the whole three-suite GD run of MS04 took 338 s",
+          "outstanding": false,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/safety.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/151","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous puzzle, reports the bug and still delivers a unique puzzle"},
+            {"key":"generator/difficulty/152","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > digLevel marks the puzzle it had to replace"},
+            {"key":"generator/difficulty/153","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous candidate of a search either: the keeper counts before it keeps"}
+          ]
+        },
+        {
+          "id": "confusion-matrix",
+          "app": "generator",
+          "args": ["tests/node-runner.js","--suite=difficulty","--filter=is a confusion matrix"],
+          "projectionSeconds": 500,
+          "projectionBasis": "projected from the pilot: the test reads the batches of all eight offered levels in one process: 413 s (nightmare, pilot mean 4.128 s x 100) to 455 s (MS05r4 mean 4.554 s x 100) plus about 58 s for the other seven levels (pilot means x counts) = 470-515 s, above 450 s: not launched",
+          "outstanding": true,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/confusion-matrix.json",
+          "expectedTestKeys": [
+            {"key":"generator/difficulty/130","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > is a confusion matrix with its diagonal as the most common cell of every row"}
+          ]
+        }
+      ],
+      "coverage": {"missing":[],"duplicates":[],"unexpected":[]},
+      "status": "planned"
+    }
+  }
+}

@@ -29,7 +29,7 @@
   SG.fixtures = SG.fixtures || {};
 
   var NONE = '\u2014';
-  var WIRE_IDS = ['G09', 'G10', 'G11', 'G12'];
+  var WIRE_IDS = ['G09', 'G10', 'G11', 'G12', 'G13'];
   var FIELDS = ['id', 'request', 'today', 'counts', 'board', 'rows', 'details', 'alive', 'folds', 'jumps'];
   // What no comparison reads: the timings of a result and the work counts of the analysis.
   var EXCLUDED = ['timings', 'ratings[].checks', 'stats.checks'];
@@ -169,7 +169,7 @@
     ' * SG.fixtures.replayGoldens = [{ id, request, today, counts, board, rows, details, alive, folds, ' +
       'jumps }].',
     ' * rows: [step, m, phase, E, score, delta, hardest, J, culprit, line] of the compact view.',
-    ' * G09-G12 are read from SG.fixtures.replayWire (tests/fixtures/replay-wire.js); the others are ' +
+    ' * G09-G13 are read from SG.fixtures.replayWire (tests/fixtures/replay-wire.js); the others are ' +
       'generated.',
     ' * Only `id` and `request` (the recipe) and `today` are kept from the researchers. `today` is their',
     ' * historical annotation, not freshly verified output, and no suite reads it. Every other field is',

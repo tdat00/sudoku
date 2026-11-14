@@ -218,7 +218,10 @@
         { variantId: 'mega16', difficulty: 'nightmare', seed: 3, trace: 'off' });
     });
 
-    it('changes only maxAttempts in the profile, and nothing in the diagnostic, which keeps 8 attempts', function () {
+    it('changes only maxAttempts in the profile, and nothing in the diagnostic, which keeps the default attempts ' +
+      'of its board (2, 4 and 2)', function () {
+      var BOARD_DEFAULTS = { G13: 2, 'mega12-nightmare': 4, 'mega16-nightmare': 2 };
+      expect(F.CASE_IDS.slice().sort()).toEqual(Object.keys(BOARD_DEFAULTS).sort());
       F.CASE_IDS.forEach(function (id) {
         var base = F.caseOf(id).config;
         var profile = F.prepare({ mode: 'profile', caseId: id, shallowCap: null, json: 'x.json' });
@@ -229,8 +232,9 @@
         allowanceApi(true, function () {
           var diag = F.prepare({ mode: 'diagnostic', caseId: id, shallowCap: '64', json: 'x.json' });
           expect(diag.config).toEqual(base);
-          expect(diag.normalizedConfig.maxAttempts).toBe(SG.pipeline.DEFAULT_MAX_ATTEMPTS);
-          expect(diag.normalizedConfig.maxAttempts).toBe(8);
+          expect(diag.normalizedConfig.maxAttempts).toBe(BOARD_DEFAULTS[id]);
+          expect(diag.normalizedConfig.maxAttempts).toBe(
+            SG.digger.defaultMaxAttempts(SG.variants.cellCountOf(base.variantId)));
         });
         var normalized = SG.pipeline.normalizeConfig(Object.assign({}, base, { maxAttempts: 1 }));
         expect(Object.assign({}, profile.normalizedConfig)).toEqual(normalized);

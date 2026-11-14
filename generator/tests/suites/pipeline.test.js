@@ -2853,4 +2853,207 @@
       }, 60000);
     });
   });
+
+  // The default number of attempts follows the size of the board (MS05r5p, CV6-03 (c2)): 8 up to 81 cells, 4 up
+  // to 144, 2 above, in the pipeline and in the direct digger alike; an explicit number is used as given.
+  describe('pipeline: the default attempts by board size (MS05r5p)', function () {
+    var Z = SG.digger;
+    var SCRIPT = 'ms05r5pShallow';
+    // The six boards of more than 81 cells and what they get; every other board gets 8.
+    var LARGE = { mega12: 4, butterfly: 4, flower: 2, mega16: 2, sohei: 2, samurai: 2 };
+
+    function builtModel(id) {
+      var def = SG.variants.get(id);
+      return def.build(SG.variants.defaultOptions(def), SG.rng.create(1).fork('model'));
+    }
+
+    it('MS05r5p-T01: 8 up to 81 cells, 4 from 82 to 144, 2 above: the boundaries 81, 82, 144 and 145', function () {
+      expect([1, 16, 36, 81, 82, 100, 144, 145, 256, 369].map(Z.defaultMaxAttempts))
+        .toEqual([8, 8, 8, 8, 4, 4, 4, 2, 2, 2]);
+      [0, -1, 1.5, NaN, Infinity, '81', null, undefined].forEach(function (cells) {
+        var err = expectCode(function () { Z.defaultMaxAttempts(cells); }, 'digger.invalidOption');
+        expect(err.i18nArgs.option).toBe('cellCount');
+      });
+      expect(P.DEFAULT_MAX_ATTEMPTS).toBe(Z.defaultMaxAttempts(Z.SMALL_BOARD_CELLS));
+      expect(P.DEFAULT_MAX_ATTEMPTS).toBe(8);
+    });
+
+    it('MS05r5p-T01: the pipeline default is the policy of the native board, and the direct digger agrees',
+      function () {
+        SG.variants.list().forEach(function (def) {
+          var model = builtModel(def.id);
+          var level = def.difficultySupport[0];
+          var normal = P.normalizeConfig({ variantId: def.id, difficulty: level, seed: 1 });
+          var expected = LARGE[def.id] !== undefined ? LARGE[def.id] : 8;
+          expect([def.id, normal.maxAttempts]).toEqual([def.id, expected]);
+          expect([def.id, Z.defaultMaxAttempts(model.cellCount)]).toEqual([def.id, expected]);
+        });
+        expect(Object.keys(LARGE).every(function (id) { return SG.variants.has(id); })).toBe(true);
+      });
+
+    it('MS05r5p-T01: an explicit number wins and keeps its validation; the default is only for no number',
+      function () {
+        [[8, 'mega16'], [1, 'mega16'], [20, 'samurai'], [2, 'classic9'], [4, 'classic4']].forEach(function (c) {
+          expect(P.normalizeConfig({ variantId: c[1], difficulty: 'veryEasy', maxAttempts: c[0] }).maxAttempts)
+            .toBe(c[0]);
+        });
+        [0, -3, 2.5, '8', null, NaN].forEach(function (value) {
+          expectCode(function () {
+            P.normalizeConfig({ variantId: 'mega16', difficulty: 'veryEasy', maxAttempts: value });
+          }, 'digger.invalidOption');
+        });
+        // Whole numbers above the control's 1-20 range are the API's to accept, not the default's to clamp.
+        expect(P.normalizeConfig({ variantId: 'mega16', difficulty: 'veryEasy', maxAttempts: 25 }).maxAttempts)
+          .toBe(25);
+      });
+
+    it('MS05r5p-T01: the size is read without building a model or drawing a random number', function () {
+      var built = 0;
+      var originals = [];
+      var created = 0;
+      var randomCreate = SG.rng.create;
+      SG.variants.list().forEach(function (def) {
+        originals.push([def, def.build]);
+        def.build = function () { built++; throw new Error('the size must not need a model'); };
+      });
+      // normalizeConfig makes exactly the one generator that fixes the seed, as before the size policy.
+      SG.rng.create = function () { created++; return randomCreate.apply(this, arguments); };
+      var count = 0;
+      try {
+        SG.variants.list().forEach(function (def) {
+          var normal = P.normalizeConfig({ variantId: def.id, difficulty: def.difficultySupport[0], seed: 5 });
+          expect(normal.maxAttempts).toBe(LARGE[def.id] !== undefined ? LARGE[def.id] : 8);
+          count++;
+        });
+      } finally {
+        SG.rng.create = randomCreate;
+        originals.forEach(function (pair) { pair[0].build = pair[1]; });
+      }
+      expect(built).toBe(0);
+      expect(created).toBe(count);
+    });
+
+    // A shallow result: complete, in the requested level, and needing none of its tier's techniques.
+    function shallowRating(level, model) {
+      var score = D.spec(level, model).min + 1;
+      return {
+        level: level, score: score, rawScore: score, hardestTechnique: 'nakedSingle', hardestGroup: 'basic',
+        confidence: 1, solved: true, empties: 0, techniqueCounts: { nakedSingle: 40 },
+        ratingVersion: D.RATING_VERSION
+      };
+    }
+
+    // The strategy of the scripted runs: the whole solution as the puzzle (unique at once) with a shallow
+    // rating, so no sample is exact and nothing real is rated. Expert is below the proposal tiers, so every
+    // sample of an attempt is this one.
+    function scripted(model, solution, level) {
+      return {
+        givens: Int32Array.from(solution), clues: model.cellCount,
+        stats: { groups: 0, tried: 0, accepted: 0, rejected: 0, skipped: 0, oracleCalls: 0 },
+        rating: shallowRating(level, model)
+      };
+    }
+
+    function probeVariant(baseId) {
+      var base = SG.variants.get(baseId);
+      var id = baseId + 'Probe';
+      return Object.assign({}, base, {
+        id: id, digStrategy: SCRIPT,
+        build: function (options, rng) { return reModel(base.build(options, rng), id); }
+      });
+    }
+
+    /** Runs `fn(variantId)` with the scripted strategy, a variant of the board and no allowance to spend. */
+    function withScript(baseId, fn) {
+      var previous = Z.SHALLOW_SEARCH_RATINGS;
+      var realRate = D.rate;
+      var rated = { calls: 0 };
+      Z.SHALLOW_SEARCH_RATINGS = 0;
+      D.rate = function () {
+        rated.calls++;
+        return realRate.apply(this, arguments);
+      };
+      Z.registerStrategy(SCRIPT, scripted);
+      try {
+        return withVariant(probeVariant(baseId), function () { return fn(baseId + 'Probe', rated); });
+      } finally {
+        Z.unregisterStrategy(SCRIPT);
+        D.rate = realRate;
+        Z.SHALLOW_SEARCH_RATINGS = previous;
+      }
+    }
+
+    function scriptedRun(baseId, extra) {
+      return withScript(baseId, function (id, rated) {
+        var events = [];
+        var result = P.run(Object.assign({ variantId: id, difficulty: 'expert', seed: 3, trace: 'summary' },
+          extra), function (e) { events.push(e); });
+        return { result: result, events: events, rated: rated.calls };
+      });
+    }
+
+    function attemptsSeen(events) {
+      return events.filter(function (e) { return e.i18nKey === 'fullGrid.start'; });
+    }
+
+    it('MS05r5p-T02: a no-hit mega16 runs eight attempts with an explicit 8 and two by default', function () {
+      var explicit = scriptedRun('mega16', { maxAttempts: 8 });
+      var plain = scriptedRun('mega16');
+      expect([explicit.result.config.maxAttempts, explicit.result.attempts]).toEqual([8, 8]);
+      expect([plain.result.config.maxAttempts, plain.result.attempts]).toEqual([2, 2]);
+      expect(attemptsSeen(explicit.events).map(function (e) { return e.i18nArgs.attempt; }))
+        .toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+      expect(attemptsSeen(plain.events).map(function (e) { return e.i18nArgs; }))
+        .toEqual([{ attempt: 1, maxAttempts: 2 }, { attempt: 2, maxAttempts: 2 }]);
+      [explicit, plain].forEach(function (run) {
+        expect(run.rated).toBe(0);
+        expect(run.result.model.cellCount).toBe(256);
+        expect(run.result.exact).toBe(false);
+        expect(run.result.work).toHaveLength(run.result.attempts);
+      });
+    });
+
+    it('MS05r5p-T03: a mega12 that stays shallow ends after exactly four attempts, not exact, both warnings',
+      function () {
+        var run = scriptedRun('mega12');
+        var result = run.result;
+        expect([result.config.maxAttempts, result.attempts]).toEqual([4, 4]);
+        expect(attemptsSeen(run.events).map(function (e) { return e.i18nArgs.maxAttempts; }))
+          .toEqual([4, 4, 4, 4]);
+        expect(result.exact).toBe(false);
+        expect(result.warnings).toContain('difficulty.approximate');
+        expect(result.warnings).toContain('difficulty.shallow');
+        expect(result.rating.level).toBe('expert');
+        expect(D.requiredOf(result.rating, 'expert', result.model).required).toBe(false);
+        var done = run.events[run.events.length - 1];
+        expect([done.type, done.i18nArgs.exact, done.i18nArgs.attempts]).toEqual(['done', false, 4]);
+        expect(done.i18nArgs.warnings).toEqual(result.warnings);
+        expect(SG.dfs.countSolutions(result.model, result.givens, 2)).toBe(1);
+      });
+
+    it('MS05r5p-T01: the direct digger takes the default of its model, and an explicit number as given',
+      function () {
+        function attempts(id, options) {
+          var model = builtModel(id);
+          var seen = [];
+          var stage = function (stepId, args, body) {
+            if (stepId === 'fullGrid') seen.push(args);
+            return body({});
+          };
+          var original = Z.SHALLOW_SEARCH_RATINGS;
+          Z.SHALLOW_SEARCH_RATINGS = 0;
+          try {
+            var out = Z.generate(model, 'expert', SG.rng.create(3),
+              Object.assign({ strategy: scripted, stage: stage }, options));
+            return { attempts: out.attempts, announced: seen.map(function (a) { return a.maxAttempts; }) };
+          } finally {
+            Z.SHALLOW_SEARCH_RATINGS = original;
+          }
+        }
+        expect(attempts('mega16')).toEqual({ attempts: 2, announced: [2, 2] });
+        expect(attempts('mega12')).toEqual({ attempts: 4, announced: [4, 4, 4, 4] });
+        expect(attempts('mega16', { maxAttempts: 8 }).attempts).toBe(8);
+        expect(attempts('classic9', { maxAttempts: 3 }).attempts).toBe(3);
+      });
+  });
 })();

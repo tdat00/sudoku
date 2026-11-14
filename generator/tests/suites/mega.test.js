@@ -6,6 +6,13 @@
 // CV8 the generic variants suite, CV9 the renderer contract at the end). The default run stays light: a few
 // puzzles per level. Set the environment variable SG_DEEP=1 (Node) or SG.test.deep = true (browser) for 20
 // puzzles per level and their hit rates.
+//
+// Mega Nightmare (difficulty v3, MS05r5m; CV6-03, S-OD3 (a)) has no full-attempt request in this suite: one
+// request is seconds (mega12, 4 attempts) to minutes (mega16, 2 attempts) and ends in a truthful shallow fallback
+// more often than not. Its fourteen requests (seeds 1 to 4 and the CV5 calls 3, 3 and 4 of each board) and every
+// assertion and relation they carried are validated by the deep tier, `node tests/mega-contract.js` (a tool, never
+// run by this suite). The quick tier keeps a real one-attempt mega12 request and a scripted mega16 control of the
+// stop, fallback, override and cancellation paths.
 (function () {
   'use strict';
 
@@ -20,6 +27,19 @@
   var IDS = ['mega12', 'mega16'];
   /** The levels the puzzle tests sample (both boards offer all nine, see the definition test). */
   var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'nightmare', 'hell1'];
+  /**
+   * The levels whose full-attempt requests run in the quick tier: not Nightmare (see the header). The old 6 s and
+   * 20 s time assertions of the Nightmare requests are replaced quick contracts, not a changed design target.
+   */
+  var QUICK_LEVELS = LEVELS.filter(function (level) { return level !== 'nightmare'; });
+  /**
+   * The bounded smoke limit of the one-attempt mega12 Nightmare request, before the time factor: 15000 ms, so 30 s
+   * here (factor 2) and 45 s on CI (factor 3). Measured (MS05r5m, three runs on the development machine):
+   * 5.20, 5.19 and 5.21 s for the request and its checks, so about 5.8 times of margin here and 8.7 times on CI;
+   * both limits stay below the unchanged 60000 ms request budget of `generate`. It is a guard against a gross
+   * slowdown, not a performance target.
+   */
+  var SMOKE_MS = 15000;
 
   /**
    * What each board must look like, written down independently of the builder. `budgets` are the
@@ -689,7 +709,7 @@
     IDS.forEach(function (id) {
       var b = BOARDS[id];
 
-      LEVELS.forEach(function (level) {
+      QUICK_LEVELS.forEach(function (level) {
         it(id + ' ' + level + ': ' + SAMPLES + ' puzzles are unique, valid and inside the 9.1 time budget',
           function () {
             var limit = SG.test.timeLimit(b.budgets[level]);
@@ -760,6 +780,177 @@
         cancelled.cancel();
         expectCode(function () { SG.pipeline.run(cfg, null, cancelled); }, 'budget.cancelled');
       });
+    });
+
+    // ---------------------------------------------------------------------------------------------------------
+    // Mega Nightmare in the quick tier (MS05r5m): a real one-attempt mega12 request and a scripted mega16 control.
+    // The full-attempt requests (seeds 1 to 4 and the CV5 calls 3, 3 and 4 of each board) are the deep tier.
+    // ---------------------------------------------------------------------------------------------------------
+
+    /**
+     * The requiredness and warning contract of a returned puzzle, from an independent complete canonical rating:
+     * exact only when that rating lies in the requested level and needs a technique of its tier;
+     * 'difficulty.approximate' iff not exact; 'difficulty.shallow' iff not exact and the rating lies in the
+     * band; no other warning. Returns whether the puzzle is exact.
+     */
+    function checkTruthful(result, level) {
+      var rated = SG.difficulty.rate(result.model, result.givens);
+      var verdict = SG.difficulty.requiredOf(rated, level, result.model);
+      var complete = rated.solved === true && rated.level === level;
+      var exact = complete && verdict !== null && verdict.required === true;
+      expect(result.exact).toBe(exact);
+      expect(result.warnings.indexOf('difficulty.approximate') !== -1).toBe(!exact);
+      expect(result.warnings.indexOf('difficulty.shallow') !== -1).toBe(!exact && complete);
+      expect(result.warnings.filter(function (w) {
+        return w !== 'difficulty.approximate' && w !== 'difficulty.shallow';
+      })).toEqual([]);
+      return exact;
+    }
+
+    it('mega12 nightmare: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit',
+      function () {
+        var out = generate('mega12', 'nightmare', 3, { maxAttempts: 1 });
+        expect(out.result.config.maxAttempts).toBe(1);
+        expect(out.result.attempts).toBe(1);
+        checkInvariants('mega12', 'nightmare', out.result);
+        checkTruthful(out.result, 'nightmare');
+        expect(out.ms).toBeLessThan(SG.test.timeLimit(SMOKE_MS));
+      }, SLOW);
+
+    // The size-default controls of mega16 run the real pipeline and digger with a scripted dig strategy (the seams
+    // of MS05r5p): every sample returns the whole solution with a shallow rating, so no sample is exact and nothing
+    // real is rated. They run at the Expert tier, not at Nightmare, and their names say so: the Nightmare tier
+    // (`spec.proposal`) rates its proposal samples and refines them for real, which the scripted strategy would
+    // replace by a full-grid rating, so a scripted Nightmare run could not give the truthful shallow fallback.
+    // The policy they prove (the size-default attempt loop, the fallback and its warnings, the override, the
+    // cancellation) does not depend on the level. The Nightmare-tier proposal samples are covered by real
+    // evidence instead: the one-attempt mega12 request above and the seven mega16 Nightmare records of the deep
+    // tier (`tests/mega-contract.js`).
+    describe('mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation', function () {
+      var SCRIPT = 'megaSizeDefaultControl';
+      var control = { onSample: null };
+
+      function shallowRating(level, model) {
+        var score = SG.difficulty.spec(level, model).min + 1;
+        return {
+          level: level, score: score, rawScore: score, hardestTechnique: 'nakedSingle', hardestGroup: 'basic',
+          confidence: 1, solved: true, empties: 0, techniqueCounts: { nakedSingle: 40 },
+          ratingVersion: SG.difficulty.RATING_VERSION
+        };
+      }
+
+      function scripted(model, solution, level) {
+        if (control.onSample !== null) control.onSample();
+        return {
+          givens: Int32Array.from(solution), clues: model.cellCount,
+          stats: { groups: 0, tried: 0, accepted: 0, rejected: 0, skipped: 0, oracleCalls: 0 },
+          rating: shallowRating(level, model)
+        };
+      }
+
+      /** Runs `fn(variantId, rated)` on a mega16 that digs with the script and has no allowance to spend. */
+      function withControl(fn) {
+        var base = SG.variants.get('mega16');
+        var id = 'mega16Control';
+        var def = Object.assign({}, base, {
+          id: id, digStrategy: SCRIPT,
+          build: function (options, rng) {
+            var built = base.build(options, rng);
+            return SG.model.create({ variantId: id, digits: built.digits, units: built.units,
+              unitMeta: built.unitMeta, layout: built.layout });
+          }
+        });
+        var allowance = SG.digger.SHALLOW_SEARCH_RATINGS;
+        var realRate = SG.difficulty.rate;
+        var rated = { calls: 0 };
+        SG.digger.SHALLOW_SEARCH_RATINGS = 0;
+        SG.difficulty.rate = function () {
+          rated.calls++;
+          return realRate.apply(this, arguments);
+        };
+        SG.digger.registerStrategy(SCRIPT, scripted);
+        SG.variants.register(def);
+        try {
+          return fn(id, rated);
+        } finally {
+          SG.variants.unregister(id);
+          SG.digger.unregisterStrategy(SCRIPT);
+          SG.difficulty.rate = realRate;
+          SG.digger.SHALLOW_SEARCH_RATINGS = allowance;
+          control.onSample = null;
+        }
+      }
+
+      function run(id, extra, sink) {
+        return SG.pipeline.run(Object.assign({ variantId: id, difficulty: 'expert', seed: 3, trace: 'summary' },
+          extra), sink || null);
+      }
+
+      function attemptStarts(events) {
+        return events.filter(function (e) { return e.i18nKey === 'fullGrid.start'; })
+          .map(function (e) { return e.i18nArgs; });
+      }
+
+      it('the size default stops after two attempts with a truthful two-warning shallow fallback', function () {
+        withControl(function (id, rated) {
+          var events = [];
+          var result = run(id, {}, function (e) { events.push(e); });
+          expect(attemptStarts(events)).toEqual([{ attempt: 1, maxAttempts: 2 }, { attempt: 2, maxAttempts: 2 }]);
+          expect([result.config.maxAttempts, result.attempts]).toEqual([2, 2]);
+          expect(result.model.cellCount).toBe(256);
+          expect(result.exact).toBe(false);
+          expect(result.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+          expect(result.rating.level).toBe('expert');
+          expect(SG.difficulty.requiredOf(result.rating, 'expert', result.model).required).toBe(false);
+          expect(result.work).toHaveLength(2);
+          expect(rated.calls).toBe(0);
+          var done = events[events.length - 1];
+          expect([done.type, done.i18nArgs.exact, done.i18nArgs.attempts]).toEqual(['done', false, 2]);
+          expect(done.i18nArgs.warnings).toEqual(result.warnings);
+        });
+      }, SLOW);
+
+      it('an explicit number of attempts wins over the size default', function () {
+        withControl(function (id) {
+          [1, 3].forEach(function (n) {
+            var events = [];
+            var result = run(id, { maxAttempts: n }, function (e) { events.push(e); });
+            expect([result.config.maxAttempts, result.attempts]).toEqual([n, n]);
+            expect(attemptStarts(events)).toHaveLength(n);
+            expect(result.exact).toBe(false);
+            expect(result.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+          });
+        });
+      }, SLOW);
+
+      it('a cancelled or exhausted budget propagates its error and never returns the best puzzle so far',
+        function () {
+          withControl(function (id) {
+            var started = 0;
+            var sink = function (e) {
+              if (e.i18nKey === 'fullGrid.start') started = e.i18nArgs.attempt;
+            };
+            // The first attempt leaves a shallow candidate; the stop comes in the first sample of the second.
+            var budget = SG.budget.create({ ms: 60000 });
+            control.onSample = function () { if (started === 2) budget.cancel(); };
+            var cancelled = expectCode(function () { SG.pipeline.run({ variantId: id, difficulty: 'expert', seed: 3,
+              trace: 'summary' }, sink, budget); }, 'budget.cancelled');
+            expect([started, cancelled.i18nArgs.reason]).toEqual([2, 'cancelled']);
+
+            started = 0;
+            var clockNow = 0;
+            var timed = SG.budget.create({ ms: 1000, now: function () { return clockNow; } });
+            control.onSample = function () {
+              if (started === 2) {
+                clockNow += 5000;
+                timed.tick(5000);
+              }
+            };
+            var exceeded = expectCode(function () { SG.pipeline.run({ variantId: id, difficulty: 'expert', seed: 3,
+              trace: 'summary' }, sink, timed); }, 'budget.exceeded');
+            expect([started, exceeded.i18nArgs.reason]).toEqual([2, 'time']);
+          });
+        }, SLOW);
     });
 
     describe('the step trace', function () {

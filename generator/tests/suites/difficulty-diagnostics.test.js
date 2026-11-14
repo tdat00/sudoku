@@ -1017,6 +1017,31 @@
       expect(hitOf(noFlag, 'easy')).toBe(false);
     });
 
+    it('MS05r5p-T05: a request never names maxAttempts, so every board takes the default of its size',
+      function () {
+        var q = loadQualify();
+        var configs = [];
+        var good = {
+          model: { cellCount: 2 }, givens: [0, 2], solution: [1, 2], warnings: [], exact: true,
+          rating: { level: 'easy', score: 70, solved: true }
+        };
+        q.ctx.fakeSG = {
+          difficulty: { LEVELS: ['veryEasy', 'easy'] },
+          variants: { list: function () { return [{}]; } },
+          budget: { create: function () { return {}; } },
+          pipeline: { run: function (config) { configs.push(config); return good; } },
+          model: { isSolution: function () { return true; } },
+          dfs: { countSolutions: function () { return 1; } }
+        };
+        SG.test.node.vm.runInContext('loadSources = function () { return fakeSG; }; child();', q.ctx);
+        q.handlers[0]({ key: 'mega16/nightmare', index: 0, seed: 7, variant: 'mega16', level: 'nightmare' });
+        q.handlers[0]({ key: 'classic9/easy', index: 1, seed: 8, variant: 'classic9', level: 'easy' });
+        expect(configs).toHaveLength(2);
+        configs.forEach(function (config) {
+          expect(Object.keys(config).sort()).toEqual(['difficulty', 'seed', 'trace', 'variantId']);
+        });
+      });
+
     it('records the strict exact flag of the result and misses a shallow result in the requested level',
       function () {
         var q = loadQualify();
@@ -1416,6 +1441,33 @@
         expect(seen.every(function (value) { return value === original; })).toBe(true);
         expect(run.text).not.toContain('Shallow-search allowance');
       });
+
+      it('MS05r5p-T05: neither route passes maxAttempts, so each request takes the default of its board',
+        function () {
+          var seen = { direct: [], pipeline: [] };
+          [['classic4', 'direct'], ['killer', 'pipeline']].forEach(function (cell) {
+            var run = runSoak(['--variant=' + cell[0], '--level=veryEasy', '--count=1', '--seed=20260101',
+              '--no-gate'], function (sg) {
+              var generate = sg.digger.generate;
+              var pipelineRun = sg.pipeline.run;
+              sg.digger.generate = function (model, level, rng, options) {
+                seen.direct.push(options);
+                return generate.apply(this, arguments);
+              };
+              sg.pipeline.run = function (config) {
+                seen.pipeline.push(config);
+                return pipelineRun.apply(this, arguments);
+              };
+            });
+            expect([cell[0], run.thrown, run.code]).toEqual([cell[0], null, 0]);
+          });
+          expect(seen.direct.length).toBeGreaterThan(0);
+          expect(seen.pipeline.length).toBeGreaterThan(0);
+          seen.direct.forEach(function (options) { expect(Object.keys(options)).toEqual([]); });
+          seen.pipeline.forEach(function (config) {
+            expect(Object.keys(config).sort()).toEqual(['difficulty', 'seed', 'trace', 'variantId']);
+          });
+        });
 
       it('rejects a --shallow-cap that is not one of 64, 128, 256 and none, before any generation', function () {
         ['32', '0', 'Infinity', 'abc', ''].forEach(function (value) {

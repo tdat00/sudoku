@@ -905,4 +905,142 @@
       expect(function () { C.mount(createFakeDom().createElement('form'), null); }).toThrow();
     });
   });
+
+  // The attempts field shows the default of the selected board and follows it until a number is typed
+  // (MS05r5p, CV6-03 (c2)); clearing the field gives the number back to the board.
+  describe('controls: the attempts field and the size default (MS05r5p)', function () {
+    function persistentStore() {
+      var data = {};
+      var urls = [];
+      var env = {
+        data: data,
+        urls: urls,
+        storage: {
+          getItem: function (k) { return hasOwn(data, k) ? data[k] : null; },
+          setItem: function (k, v) { data[k] = String(v); },
+          removeItem: function (k) { delete data[k]; }
+        },
+        history: { state: null, replaceState: function (state, title, url) { urls.push(url); } },
+        again: function (search) {
+          var store = S.create({ storage: env.storage, history: env.history, navigator: { languages: [] },
+            location: { search: search || '', pathname: '/index.html', hash: '' } });
+          store.load();
+          return store;
+        }
+      };
+      env.options = { storage: env.storage, history: env.history,
+        location: { search: '', pathname: '/index.html', hash: '' } };
+      return env;
+    }
+
+    function shown(store) {
+      var s = store.get();
+      return [s.variantId, s.maxAttempts, s.attemptsExplicit];
+    }
+
+    function type(input, text) {
+      input.value = text;
+      input.fire('input');
+    }
+
+    function clear(input) {
+      input.value = '';
+      input.fire('input');
+      input.fire('change');
+    }
+
+    it('MS05r5p-T04: the form model shows the board default, and a chosen number next to it', function () {
+      ready();
+      var plain = field(model('?v=mega16'), 'maxAttempts');
+      expect([plain.value, plain.defaultValue, plain.min, plain.max]).toEqual([2, 2, 1, 20]);
+      var chosen = field(model('?v=mega16&attempts=8'), 'maxAttempts');
+      expect([chosen.value, chosen.defaultValue]).toEqual([8, 2]);
+      var equal = field(model('?v=mega16&attempts=2'), 'maxAttempts');
+      expect([equal.value, equal.defaultValue]).toEqual([2, 2]);
+      [['classic9', 8], ['mega12', 4], ['butterfly', 4], ['flower', 2], ['sohei', 2], ['samurai', 2],
+        ['killer', 8]].forEach(function (pair) {
+        var f = field(model('?v=' + pair[0]), 'maxAttempts');
+        expect([pair[0], f.value, f.defaultValue]).toEqual([pair[0], pair[1], pair[1]]);
+      });
+      // An older mega16 recipe replayed with 8 is shown as a chosen 8 beside the default 2.
+      var store = memoryStore();
+      store.set({ variantId: 'mega16', maxAttempts: 8 }, { source: 'app' });
+      var replayed = field(C.describe(store.get()), 'maxAttempts');
+      expect([replayed.value, replayed.defaultValue]).toEqual([8, 2]);
+      expect(store.get().attemptsExplicit).toBe(true);
+    });
+
+    it('MS05r5p-T04: the field follows the board in default mode and keeps a typed number', function () {
+      ready();
+      var fx = mountFixture();
+      var input = fx.byId('ctl-maxAttempts');
+      expect(input.value).toBe('8');
+      pick(fx.byId('ctl-variant'), 'mega16');
+      expect([input.value, fx.store.get().maxAttempts, fx.store.get().attemptsExplicit]).toEqual(['2', 2, false]);
+      pick(fx.byId('ctl-variant'), 'mega12');
+      expect(input.value).toBe('4');
+      pick(fx.byId('ctl-variant'), 'classic9');
+      expect(input.value).toBe('8');
+      pick(fx.byId('ctl-variant'), 'mega16');
+      type(input, '2');
+      expect([fx.store.get().maxAttempts, fx.store.get().attemptsExplicit]).toEqual([2, true]);
+      pick(fx.byId('ctl-variant'), 'classic9');
+      expect(input.value).toBe('2');
+      expect([fx.store.get().maxAttempts, fx.store.get().attemptsExplicit]).toEqual([2, true]);
+      pick(fx.byId('ctl-variant'), 'samurai');
+      expect(input.value).toBe('2');
+    });
+
+    it('MS05r5p-T04: clearing the field returns to default mode; it follows the variant and the reload, and the ' +
+      'URL names no attempts', function () {
+      ready();
+      var env = persistentStore();
+      var fx = mountFixture(env.options);
+      var input = fx.byId('ctl-maxAttempts');
+      pick(fx.byId('ctl-variant'), 'mega16');
+      type(input, '5');
+      expect(shown(fx.store)).toEqual(['mega16', 5, true]);
+      expect(env.urls[env.urls.length - 1]).toBe('/index.html?v=mega16&attempts=5');
+      clear(input);
+      expect(shown(fx.store)).toEqual(['mega16', 2, false]);
+      expect(input.value).toBe('2');
+      expect(env.urls[env.urls.length - 1]).toBe('/index.html?v=mega16');
+      expect(JSON.parse(env.data['sg.lastConfig.v1']).attemptsExplicit).toBe(false);
+      expect(shown(env.again())).toEqual(['mega16', 2, false]);
+      pick(fx.byId('ctl-variant'), 'classic9');
+      expect(shown(fx.store)).toEqual(['classic9', 8, false]);
+      expect(input.value).toBe('8');
+      expect(env.urls[env.urls.length - 1]).toBe('/index.html');
+      expect(shown(env.again())).toEqual(['classic9', 8, false]);
+      pick(fx.byId('ctl-variant'), 'mega12');
+      expect(input.value).toBe('4');
+      // A field that was never chosen is cleared the same way, and a typed value works again afterwards.
+      clear(input);
+      expect(shown(fx.store)).toEqual(['mega12', 4, false]);
+      type(input, '3');
+      expect(shown(fx.store)).toEqual(['mega12', 3, true]);
+    });
+
+    it('MS05r5p-T04: a typed number equal to the default is explicit, and reset() gives default mode', function () {
+      ready();
+      var env = persistentStore();
+      var fx = mountFixture(env.options);
+      var input = fx.byId('ctl-maxAttempts');
+      pick(fx.byId('ctl-variant'), 'mega16');
+      type(input, '2');
+      expect(shown(fx.store)).toEqual(['mega16', 2, true]);
+      expect(env.urls[env.urls.length - 1]).toBe('/index.html?v=mega16&attempts=2');
+      expect(shown(env.again())).toEqual(['mega16', 2, true]);
+      pick(fx.byId('ctl-variant'), 'classic9');
+      expect(shown(fx.store)).toEqual(['classic9', 2, true]);
+      expect(input.value).toBe('2');
+      fx.store.reset();
+      expect(shown(fx.store)).toEqual(['classic9', 8, false]);
+      expect(input.value).toBe('8');
+      expect(shown(env.again())).toEqual(['classic9', 8, false]);
+      pick(fx.byId('ctl-variant'), 'mega16');
+      expect(input.value).toBe('2');
+      expect(fx.store.get().attemptsExplicit).toBe(false);
+    });
+  });
 })();

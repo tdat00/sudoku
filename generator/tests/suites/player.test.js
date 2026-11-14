@@ -197,6 +197,26 @@
   }
 
   describe('player: the replay steps of a result', function () {
+    it('reads G13 from the saved wire and never regenerates it (a spy on the pipeline)', function () {
+      var saved = resultCache['golden/G13'];
+      var run = SG.pipeline.run;
+      var calls = 0;
+      delete resultCache['golden/G13'];
+      SG.pipeline.run = function () {
+        calls++;
+        throw new Error('G13 comes from SG.fixtures.replayWire, not from the pipeline');
+      };
+      try {
+        var result = goldenResult('G13');
+        expect(calls).toBe(0);
+        expect(Object.keys(WIRE)).toContain('G13');
+        expect(R.toPlainWire(result)).toEqual(WIRE.G13);
+      } finally {
+        SG.pipeline.run = run;
+        if (saved) resultCache['golden/G13'] = saved;
+      }
+    });
+
     var CASES = [['classic9', 'easy', 3], ['classic9', 'normal', 3], ['classic9', 'nightmare', 5],
       ['classic4', 'veryEasy', 2], ['killer', 'normal', 2], ['greaterThan', 'normal', 4],
       ['jigsaw9', 'easy', 6], ['wordoku', 'easy', 1], ['mega12', 'easy', 2]];
@@ -661,9 +681,9 @@
       function () {
         var views = viewsOf(realResult('classic9', 'easy', 3));
         expect(views.compact.steps.map(function (s) { return s.table.score; })).toEqual(
-          [0, 14, 24, 34, 44, 46, 46]);
+          [0, 15, 26, 44, 46, 100, 100]);
         expect(kinds(views.compact.steps)).toEqual(
-          ['solution', 'random', 'random', 'random', 'random', 'guided', 'final']);
+          ['solution', 'random', 'random', 'random', 'guided', 'guided', 'final']);
         expect(views.details.steps.length).toBe(26);
         expect(views.compact.steps[6].args.clues).toBe(34);
       });
@@ -671,7 +691,7 @@
     it('tells what a compact step folds: the inner peak (above the level with clues restored, or plain) ' +
       'and nothing for a step that folds nothing',
       function () {
-        [['G06', 5], ['G07', 7], ['G11', 2]].forEach(function (c) {
+        [['G11', 2]].forEach(function (c) {
           var step = compactOf(goldenResult(c[0]))[c[1]];
           var folded = step.parts[step.parts.length - 1];
           expect(folded.key).toBe('replay.folded.reveal');
@@ -680,12 +700,13 @@
               /the score reached [\d,]+, above the chosen level, and \d+ clues? were restored/);
           });
         });
-        var g06 = compactOf(goldenResult('G06'));
-        expect(g06[5].parts[g06[5].parts.length - 1].args.peak).toBe(2967);
-        inLocale('en', function () { expect(P.describeStep(g06[5])).toContain('the score reached 2,967'); });
+        var g11 = compactOf(goldenResult('G11'));
+        expect(g11[2].parts[g11[2].parts.length - 1].args.peak).toBe(1967);
+        inLocale('en', function () { expect(P.describeStep(g11[2])).toContain('the score reached 1,967'); });
         var plain = compactOf(goldenResult('G12'))[2];
         expect(plain.parts[plain.parts.length - 1].key).toBe('replay.folded.peak');
         expect(plain.parts[plain.parts.length - 1].args.peak).toBe(130);
+        var g06 = compactOf(goldenResult('G06'));
         g06.slice(0, 4).forEach(function (s) {
           s.parts.forEach(function (part) { expect(part.key).not.toMatch(/^replay\.folded/); });
         });
@@ -978,7 +999,7 @@
           });
         });
       });
-      expect(jumps).toBe(27);
+      expect(jumps).toBe(29);
       expect(framed).toBeGreaterThan(8);
       expect(framed).toBeLessThan(jumps);
     }, 120000);

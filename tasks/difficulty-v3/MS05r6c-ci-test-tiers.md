@@ -64,8 +64,8 @@ ordinary files/docs use CRLF, no BOM/trailing whitespace.
    ceilings. Adding an explicit <=30-minute Pages test timeout is a reduction of its implicit limit,
    not authorization to lengthen PR jobs. Do not mask failures with `continue-on-error` or a green wrapper.
 7. Keep `tests/mega-contract.js` deep generation outside CI. State in both workflows which reviewed
-   evidence replaces it: r5m's 14 requests/relations, b3's CV3 checks/reuse, r6b reconciliation, and
-   the current-source evidence owned by later semantic tasks/MS18e. Also identify the offline GD/E/
+   evidence replaces it: r5m's 14 requests/relations, b3's live CV3 outcomes (Addendum B1), r6b
+   reconciliation, and the current-source evidence owned by later semantic tasks/MS18e. Also identify the offline GD/E/
    qualification/performance owners replacing the former implicit whole-manual CI claim.
 8. Do not deploy the intermediate branch. A truthful named performance item is not a passing CI run.
    If CI itself exposes a time-only finding, record/reroute it under S-OD4 while continuing independent
@@ -154,14 +154,14 @@ Preserve required trailers, historical logs and backup safeguards. MS05e starts 
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted in the combined commit `difficulty-v3 MS05: required exactness with measured bounded recovery` (with MS05r6b's audit; S-OD2) |
+| Start | 2026-11-14 11:25 (+07:00) |
+| End | 2026-11-14 12:13 developer (with SA1's addendum IR14, IR15, IR19); 12:26 orchestrator review and combined commit |
+| Duration | 48 min developer (final quick runs: four locked Generator groups 652 s, Player 31.4 s); about 15 min review |
+| Model | claude-sonnet-5.5 (developer); analyst implementation review claude-opus-5.5 (SA1, `10-review-of-recovery-steps.md`); orchestrator review claude-opus-5.5 |
+| Token usage | 115 model calls; 26,139,695 input tokens (25,802,778 cache reads); 163,986 output tokens |
+| AI credits | about 506 (developer) |
+| Verification | Developer (`evidence/MS05r6c/`): `generator-suites.sh check` exit 0 (every one of the 3,262 Generator tests in exactly one shard; no manual or unknown suite; no empty shard); the self-test 50/50 synthetic checks (gap, duplicate, unknown, manual, empty, registration error, missing shared suite, over-limit job, exit semantics); `run nope` and the old group `sweep` exit 2; `actionlint` and a YAML parse of both workflows; `bash -n`; final quick runs on the final tree through the CI entry, one group per locked command: Generator 3,262/3,262 in 7 of 7 shards (`6b40d218…`), Player 1,683/1,683 (`547e4a4e…`), 0 missing, duplicate, unexpected or skipped. No remote CI run was made or claimed |
+| Acceptance | MS05r6c-B01..B02 and T01..T05 met locally; the remote run of the pull request is pending (owned by MS18e). Four Generator CI groups over MS05r6b's seven shards: `shared-small` (core-shared, steps, replay, mega; 1,464 tests), `own-suites` (1,579), `pipeline` (150), `replay-player` (69); projected jobs 630-1,260 s, each at most 1,800 s; the Player in one job (projected 360 s). `.github/scripts/generator-quick.json` with `generator-quick.js` and its self-test; the deep mega tier, the manual corpora and GD stay out of CI, and both workflow headers name the evidence that replaces them; no `SG_TIME_FACTOR` or timeout raised; Pages gains test timeouts. SA1's addendum: `AGENTS.md` no longer promises a heavy-tier duration or a CI `--all`; the stale durations of both developer guides and `generator/design.md` removed |
+| Issues & resolutions | (1) IR14's pointer: "Continuous integration" is a paragraph of "Running the tests", not a heading; the line names the real place. (2) R6C-I01: the `test-generator` job names changed from five to four (branch protection, if any, must follow). (3) R6C-I02: remote job durations unknown until the pull request runs. (4) R6C-I03: `docs/architecture.md`'s "five jobs of about 2 to 4 minutes" corrected by the orchestrator (not a fingerprinted file). (5) R6C-I04: `player/design.md:437` says the browser scripts are not part of CI although the PR workflow runs them (pre-existing; MS18e). (6) R6C-I05: each later suite-adding task adds its shard and bound, or `check` fails. (7) R6C-I06: MS05r6b's quick rows and the first pass are superseded by the final rows |
+| Handoff | MS05e and later: every new suite owns its CI shard and bound (R6C-I05); the heavy tiers stay offline. MS18e: the remote PR run and its durations, R6C-I01, R6C-I04. Items: S-AV01..S-AV15 and MS05r6a-COV01 carried; standing Generator cost 648.0 s |

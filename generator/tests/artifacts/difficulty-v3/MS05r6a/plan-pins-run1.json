@@ -1,0 +1,5 @@
+[
+  { "label": "c1-suite-steps", "args": ["tests\\node-runner.js", "--suite=steps", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\steps-run1.json"] },
+  { "label": "c1-suite-replay", "args": ["tests\\node-runner.js", "--suite=replay", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\replay-run1.json"] },
+  { "label": "c1-suite-player", "args": ["tests\\node-runner.js", "--suite=player", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\player-run1.json"] }
+]

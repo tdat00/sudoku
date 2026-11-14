@@ -171,17 +171,17 @@
   function seedOf(variantIndex, levelIndex, i) { return 10000 * (variantIndex + 1) + 100 * levelIndex + i; }
 
   var runCache = null;
-  /** runCache[variantId][level] = 20 results, the puzzles of CV3. */
+  /** runCache[variantId][level] = the puzzles of CV3 of that level, built on the first read of it. */
   function puzzleRun() {
     if (runCache === null) {
       runCache = {};
       VARIANT_IDS.forEach(function (id, vi) {
-        runCache[id] = {};
-        LEVELS.forEach(function (level, li) {
-          runCache[id][level] = [];
+        runCache[id] = SG.test.lazyCorpus(LEVELS, function (level, li) {
+          var puzzles = [];
           for (var i = 0; i < (PER_LEVEL[level] || PUZZLES_PER_LEVEL); i++) {
-            runCache[id][level].push(generate(id, level, seedOf(vi, li, i)));
+            puzzles.push(generate(id, level, seedOf(vi, li, i)));
           }
+          return puzzles;
         });
       });
     }

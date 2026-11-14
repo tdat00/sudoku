@@ -18,7 +18,10 @@
  *     level belongs to.
  * Variants with their own dig strategy or a postGenerate step (killer, greaterThan, wordoku) and those whose
  * board depends on the seed (jigsaw) are generated through SG.pipeline.run (one model per puzzle); the
- * others call SG.digger.generate on one model.
+ * others call SG.digger.generate on one model. Neither route passes `maxAttempts`: a request takes the default
+ * number of attempts of the size of its board (`SG.digger.defaultMaxAttempts`: 8 up to 81 cells, 4 up to 144,
+ * 2 above), from the model on the direct route and from the variant's size on the pipeline route; the ledger's
+ * `samples` of a request is the attempts it used, and a fallback after them is not a hit.
  * Invariant I5 (rating v3): every puzzle has a complete logical proof, and an exact one has its score in the
  * band of its level and needs a technique of that level's tier on its own model (`SG.difficulty.requiredOf`).
  * A hit is the generator's own `exact` flag (`p.exact === true` on the direct route, `r.exact === true` on

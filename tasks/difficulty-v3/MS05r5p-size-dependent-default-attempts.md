@@ -6,7 +6,7 @@
 | Size / active time | Small-Medium; 40-60 minutes plus focused checks/diagnostics |
 | Machine time | Approximately 5-15 minutes; replace estimates with actuals |
 | Acceptance | Step evidence complete only; r6b audit and r6c CI precede the combined commit |
-| Authority / review | CV6-03 (c2), PR-S1 / S-OD4; analyst cross-review |
+| Authority / review | CV6-03 (c2), corrected by CV6-04; PR-S1 / S-OD4; analyst cross-review |
 | Status | Not started |
 
 ## Goal & business context
@@ -14,6 +14,11 @@
 Bound the default number of large-board attempts by size, not elapsed time. The allowance of 256
 only bounds local continuation; it cannot remove the cost of ordinary samples. A bounded fallback
 is truthful but still a qualification miss. No level is hidden before final qualification.
+
+**Binding CV6-04 follow-up:** [MS05r5p legacy-8 migration fix round](MS05r5p-legacy-8-fix-round.md)
+implements Fable's 2026-11-14 wording correction: unmarked legacy 8 means default on every board.
+It is the same task, completed before MS05r6b; its focused checks replace this file's original
+verification/diagnostic list for that round only. Earlier measurements and the completed Execution log stay.
 
 ## Scope
 
@@ -67,8 +72,9 @@ sizes in existing registry/store tests, including non-square multigrids; no hard
 - Fresh/default state follows the selected variant; changing variants in default mode updates the effective
   number. A deliberate numeric setting stays explicit across variant switches and reloads.
 - Only an old stored configuration without the new default/explicit-intent marker is eligible for the
-  migration: stored 8 on a board over 81 cells is read once as default. Any other stored numeric value is
-  kept. Persist enough migration/intent information that a subsequently saved explicit 8 is not migrated again.
+  migration: stored 8 on any board is read as default (CV6-04). Any other stored numeric value is
+  kept. Repeated loads before a save are idempotent; the next save writes the marker so a subsequently
+  saved explicit 8 is not migrated again.
 - Keep storage keys and guarded/memory-only behavior. Do not migrate history recipes, exported puzzles,
   explicit pipeline/digger callers or `?attempts=8`; URL configuration still outranks stored configuration.
 - Missing attempts in a URL for a larger variant use that variant's default, not classic9's inherited 8.
@@ -222,14 +228,16 @@ The prior large-board times are historical, not deleted. No branch commit before
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Step evidence complete (S-OD2; no acceptance or commit of its own; the combined commit follows MS05r6b and MS05r6c) |
+| Start | 2026-11-13 21:29 (+07:00) |
+| End | 2026-11-13 22:58 developer (first pass); fix round 23:04-23:17; 23:20 orchestrator review and backup ref |
+| Duration | 1 h 29 min first pass + 13 min fix round (lock waits up to 305 s per command while Pentomino's MP12b1 held the slot); about 20 min review with the orchestrator's re-runs |
+| Model | claude-sonnet-5.5 (developer); analysts claude-opus-5.5 (Addendum A1, RS10) and gpt-6-astra (fix-round rulings); orchestrator review claude-opus-5.5 |
+| Token usage | 253 model calls; 113,957,084 input tokens (112,583,977 cache reads); 277,470 output tokens |
+| AI credits | about 1,747 (developer) |
+| Verification | Developer, every command through `Invoke-Dv3Node` (`evidence/MS05r5p/runs.jsonl`): `store,controls,variants-registry,recovery-profile` 164/164; `pipeline --filter=MS05r5p-` 7/7; `history`/`export`/`cache --filter=MS05r5p-` 4/4, 1/1, 4/4 (history and cache through the real `SG.app.generate` after the fix round); `difficulty-diagnostics` 82/82; `difficulty --filter=qualification:` 6/6; `help,ui-contract` 97/97; `digger` 64/64; `pipeline --filter=MS05b1-` 30/30; `smoke,multigrid` 228/228; a mutation check of the replay wiring (`source: 'app'` changed is rejected). Orchestrator re-runs under the lock: 12 suites (`store`, `controls`, `variants-registry`, `recovery-profile`, `pipeline`, `history`, `export`, `cache`, `help`, `ui-contract`, `digger`, `difficulty-diagnostics`) 756/756 (315 s, before the fix round); `history,cache,store,controls` 245/245 (11 s, after it). Script order checked: `digger.js` precedes `pipeline.js` in `index.html`, `tests.html`, `tests/node-runner.js` and `js/worker/gen.worker.js` |
+| Acceptance | MS05r5p-B01..B03 and T01..T06 met, with Addendum A1. `SG.digger.defaultMaxAttempts(cellCount)`: 8 up to 81 cells, 4 for 82-144, 2 above (81/82/144/145 give 8/4/4/2); `SG.variants.cellCountOf` reads the size without a model (multi-grids declare 144, 189, 288, 369); pipeline and direct digger agree; an explicit `maxAttempts` wins (explicit 8 on mega16 runs 8). Store intent `attemptsExplicit` with a once-only migration of a stored legacy 8 on a board above 81 cells; replays (history, stale cache, export) use the recorded number and keep the intent on equality with the replayed board's default; a cleared field returns to default mode (A1). Closure diagnostics at 256 (source `fee8b8d6…`), once each, valid, unique, `exact=false` with `difficulty.approximate` and `difficulty.shallow`: G13 2 attempts 21.6 s (r4: 104.6 s, the same puzzle); mega12 Nightmare seed 3 4 attempts 23.8 s (r4: 47.1 s, the same puzzle); mega16 Nightmare seed 3 2 attempts 107.2 s (r4: 310.2 s, exact at attempt 6, given up by design). Documents: `generator/design.md`, both developer and user guides, the hint string in English and Vietnamese, `notes.md`; soak and qualifier headers |
+| Issues & resolutions | (1) RS10 (SA1, Major): clearing the field committed a number; Addendum A1 made it default intent, with three tests. (2) The developer asked two questions: the legacy 8 on boards of at most 81 cells stays explicit by the literal (c2) rule (SA2's ruling); the plan author is asked in CV6-04 (pushed to `origin/clarifications`), non-blocking, with an "MS05r5p legacy-8 migration fix round" before MS05r6b if option (b) is chosen. A history test that only matched `app.js` source text was replaced by tests that run the real `SG.app.generate` on a minimal fake document (SA2's ruling). (3) An added rule: a state that says "default" but holds another number than its board's default is read as explicit (needed by the help suite's URL example). (4) Two development runs failed and were repeated after the fix (a fixture level, the help URL example); both kept in `runs.jsonl`. (5) Not run by scope: the full quick sets, GG, GR, GH and the heavy suites |
+| Legacy-8 fix round | 2026-11-14 06:23-06:42 developer (same agent), from `MS05r5p-legacy-8-fix-round.md` after the plan author's CV6-04 answer (b): `storedAttempts` reads an unmarked legacy 8 as default on every board (one condition; comments rewritten); six `MS05r5p-CV6-04` store cases (switches, persist and reload, marked explicit 8, re-entered 8, missing or unknown variant, idempotent load); the migration sentence in both developer and user guides and `generator/design.md` §14.3. Runs under the lock: `store` 85/85, `help,ui-contract` 97/97, a mutation run with the old condition (5 expected failures), `store` 85/85 on the restored file. No engine change: MS05r5m's records and the closure diagnostics stay valid; `store.js` is in `SOURCE_FILES`, so MS05r6a/r6b prove compatibility by the exact diff `evidence/MS05r5p/legacy-8-fix/store-diff.patch` against `refs/dv3-wip/MS05r5m-done-20261114-0230`. The orchestrator corrected the stale migration sentence of `notes.md`. Usage of the fix round: 49 model calls; 4,860,240 input tokens (4,743,351 cache reads); 39,391 output tokens; about 116 AI credits (developer) |
+| R6B-F01 returned fix round | 2026-11-14 11:00-11:03 developer (same agent), returned by MS05r6b (check-list §2, item 5; SA2's ruling, a correctness defect): the private `startApp()` helpers of the replay tests in `history.test.js` and `cache.test.js` shared the host's `SG.localeFragments`, so `app.js` registered its fragment twice and `generator/i18n/9` failed when `history` or `cache` ran before `i18n` in one process. Both helpers now give the private app its own `localeFragments` and assert that the host's list is unchanged. Runs under the lock: `history,cache,i18n` in one process 203/203; `store,controls,help,ui-contract` 228/228. Test files and evidence only (`evidence/MS05r5p/r6b-f01-fix/`) |
+| Handoff | MS05r5: the size defaults and the 39 `MS05r5p-` cases; MS05r5m: the diagnostics' identities and numbers (S-AV02 mega12 23.8 s, S-AV03 mega16 107.2 s, 89 % of the app guard, both shallow fallbacks); MS05r6a: G13 and G14 recorded requests name no attempts, so they regenerate at 2 (pins and large-board hashes may change). Items: S-AV02, S-AV03, S-AV04 updated; S-AV01, S-AV05..S-AV08 carried. Open: CV6-04 |

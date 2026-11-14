@@ -1,0 +1,1 @@
+butterfly/normal#610 allowance 256, attempts 8: hash 4598f71fc60f2bcb, 2 attempt(s), exact true, 614 ms; record ..\docs\difficulty-v3\evidence\MS05r6a\diagnostic\butterfly-normal-610-a256-att8.json

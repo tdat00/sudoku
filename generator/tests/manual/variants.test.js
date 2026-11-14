@@ -5,7 +5,8 @@
 //   CV0  the definition and its difficulty spec are sound (levels, symbol modes, options, clue floor)
 //   CV1  every model the variant builds passes SG.model.validate (default options and every option value)
 //   CV2  full grids are valid for N seeds
-//   CV3  puzzles at EVERY level of difficultySupport, and the other levels are refused
+//   CV3  puzzles at EVERY level of difficultySupport, and the other levels are refused (one registered test
+//        per supported level and one for the refusals, so that a level is generated alone)
 //   CV4  invariants I1-I7 (design.md section 15.3); I6 uses the variant's own floor (spec().minClues)
 //   CV5  the same seed gives the same puzzle
 //   CV6  soft only: no generation may hang (the milestones of design.md 9.1 are asserted by perf.test.js)
@@ -79,25 +80,39 @@
     return { level: level, seed: seed, result: result, ms: now() - started };
   }
 
-  /** Per-definition state of the sweep. `corpus()` generates perLevel puzzles for each supported level. */
+  /**
+   * Per-definition state of the sweep. `corpusOf(level)` generates perLevel puzzles of that level only;
+   * `corpus()` generates every supported level that is still missing, and returns the map of all of them.
+   */
   function contextOf(def) {
     var ctx = contexts.get(def);
     if (ctx !== undefined) return ctx;
     var volume = volumeOf(def);
-    var corpus = null;
+    var runs = null;
+    function levelRuns() {
+      if (runs === null) {
+        runs = SG.test.lazyCorpus(def.difficultySupport, function (level) {
+          var puzzles = [];
+          for (var seed = 1; seed <= volume.perLevel; seed++) {
+            puzzles.push(generate(def, level, seed));
+          }
+          return puzzles;
+        });
+      }
+      return runs;
+    }
     ctx = {
       volume: volume,
-      corpus: function () {
-        if (corpus === null) {
-          corpus = {};
-          def.difficultySupport.forEach(function (level) {
-            corpus[level] = [];
-            for (var seed = 1; seed <= volume.perLevel; seed++) {
-              corpus[level].push(generate(def, level, seed));
-            }
-          });
+      corpusOf: function (level) {
+        if (def.difficultySupport.indexOf(level) === -1) {
+          throw new Error(def.id + ' does not support ' + level + ': it has no corpus of that level');
         }
-        return corpus;
+        return levelRuns()[level];
+      },
+      corpus: function () {
+        var all = levelRuns();
+        def.difficultySupport.forEach(function (level) { ctx.corpusOf(level); });
+        return all;
       }
     };
     contexts.set(def, ctx);
@@ -186,33 +201,33 @@
     if (ctx.volume.gridSeeds >= 3 && def.digits >= 6) expect(Object.keys(seen).length).toBeGreaterThan(1);
   }
 
-  function checkLevels(def, ctx) {
-    var corpus = ctx.corpus();
-    def.difficultySupport.forEach(function (level) {
-      var puzzles = corpus[level];
-      expect(puzzles).toHaveLength(ctx.volume.perLevel);
-      var exact = 0;
-      puzzles.forEach(function (p) {
-        var r = p.result;
-        expect(r.config.difficulty).toBe(level);
-        expect(r.config.variantId).toBe(def.id);
-        expect(r.givens).toHaveLength(r.model.cellCount);
-        expect(r.solution).toHaveLength(r.model.cellCount);
-        expect(LEVELS).toContain(r.rating.level);
-        var hit = r.exact === true;
-        if (hit) exact++;
-        // A miss is never silent: the closest puzzle comes with 'difficulty.approximate', and one in the level
-        // that does not need its tier (shallow) also with 'difficulty.shallow'.
-        expect(r.warnings.indexOf('difficulty.approximate') !== -1).toBe(!hit);
-        expect(r.warnings.indexOf('difficulty.shallow') !== -1).toBe(!hit && r.rating.level === level);
-      });
-      if (exact === 0) {
-        throw new Error(def.id + ' ' + level + ': none of ' + puzzles.length + ' puzzles hit it');
-      }
-      if (DEEP) expect(exact / puzzles.length).toBeGreaterThanOrEqual(0.5);
+  /** CV3 of one supported level: its puzzles only, every per-puzzle check before the aggregate one. */
+  function checkSupportedLevel(def, ctx, level) {
+    var puzzles = ctx.corpusOf(level);
+    expect(puzzles).toHaveLength(ctx.volume.perLevel);
+    var exact = 0;
+    puzzles.forEach(function (p) {
+      var r = p.result;
+      expect(r.config.difficulty).toBe(level);
+      expect(r.config.variantId).toBe(def.id);
+      expect(r.givens).toHaveLength(r.model.cellCount);
+      expect(r.solution).toHaveLength(r.model.cellCount);
+      expect(LEVELS).toContain(r.rating.level);
+      var hit = r.exact === true;
+      if (hit) exact++;
+      // A miss is never silent: the closest puzzle comes with 'difficulty.approximate', and one in the level
+      // that does not need its tier (shallow) also with 'difficulty.shallow'.
+      expect(r.warnings.indexOf('difficulty.approximate') !== -1).toBe(!hit);
+      expect(r.warnings.indexOf('difficulty.shallow') !== -1).toBe(!hit && r.rating.level === level);
     });
+    if (exact === 0) {
+      throw new Error(def.id + ' ' + level + ': none of ' + puzzles.length + ' puzzles hit it');
+    }
+    if (DEEP) expect(exact / puzzles.length).toBeGreaterThanOrEqual(0.5);
+  }
 
-    // A level the variant does not list is refused up front.
+  /** CV3, the other half: a level the variant does not list is refused up front, with no corpus. */
+  function checkUnsupportedLevels(def) {
     LEVELS.forEach(function (level) {
       if (def.difficultySupport.indexOf(level) !== -1) return;
       var thrown = thrownBy(function () {
@@ -220,6 +235,11 @@
       });
       expect(isCode(thrown, 'difficulty.unsupportedLevel')).toBe(true);
     });
+  }
+
+  function checkLevels(def, ctx) {
+    def.difficultySupport.forEach(function (level) { checkSupportedLevel(def, ctx, level); });
+    checkUnsupportedLevels(def);
   }
 
   /** I7: every deduction the oracle's techniques make on this puzzle agrees with the solution. */
@@ -411,6 +431,18 @@
   variantsUnderTest().forEach(function (def) {
     describe('variants: ' + def.id, function () {
       CHECKS.forEach(function (check) {
+        if (check.id === 'CV3') {
+          // One test per supported level, so that a level is generated alone; the refusals need no corpus.
+          def.difficultySupport.forEach(function (level) {
+            it('CV3 ' + level + ': puzzles at the supported level', function () {
+              checkSupportedLevel(def, contextOf(def), level);
+            }, SLOW);
+          });
+          it('CV3 unsupported: other levels are refused', function () {
+            checkUnsupportedLevels(def);
+          }, SLOW);
+          return;
+        }
         it(check.id + ' ' + check.title, function () {
           check.run(def, contextOf(def));
         }, SLOW);

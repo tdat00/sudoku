@@ -1,0 +1,235 @@
+{
+  "schema": 1,
+  "kind": "manual-compatibility",
+  "task": "MS05r6b",
+  "rule": "IR08 exact-diff proof for the 186 manual results of MS05b3",
+  "originalFingerprint": "c3035e8032685c3ed4f5d92e0ffc0535062d460e6e6c45a908fa404ce4950bfa",
+  "currentFingerprint": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "fingerprintFiles": {
+    "before": 167,
+    "now": 167
+  },
+  "listings": {
+    "before": "docs/difficulty-v3/evidence/MS05b3/selectors/i5-killer-veryEasy.json",
+    "now": "docs/difficulty-v3/evidence/MS05r6b/gd/manual-current-listing.json"
+  },
+  "b3Results": {
+    "cells": 186,
+    "kinds": {
+      "i5": 53,
+      "cv3": 118,
+      "cv3-unsupported": 15
+    },
+    "statuses": {
+      "pass": 167,
+      "fail": 19
+    },
+    "identities": [
+      {
+        "sourceHash": "c3035e8032685c3ed4f5d92e0ffc0535062d460e6e6c45a908fa404ce4950bfa",
+        "node": "v26.13.0",
+        "timeFactor": 2,
+        "complete": "true",
+        "sourceStable": "true",
+        "cells": 186
+      }
+    ],
+    "manifest": "docs/difficulty-v3/evidence/MS05b3/manifest.json",
+    "outcomes": "docs/difficulty-v3/evidence/MS05b3/outcomes.json",
+    "deferred": "docs/difficulty-v3/evidence/MS05b3/deferred-cv3.json",
+    "resultsUnchanged": "preserved byte for byte; read, never written"
+  },
+  "changedFiles": {
+    "changed": 18,
+    "added": 0,
+    "removed": 0,
+    "byCategory": {
+      "document": 6,
+      "runtime-source": 1,
+      "published-data-fixture": 3,
+      "recorder-or-tool-script": 3,
+      "quick-suite": 5
+    },
+    "rows": [
+      {
+        "file": "AGENTS.md",
+        "status": "changed",
+        "category": "document",
+        "beforeHash": "6f6cba206dff257f56ad0036fc9ac5f9e4e73022682b4e26728b13ef6c8214fd",
+        "nowHash": "9e155bc157db024ea629e4c32dd49ac32b44a4ab84d3c38b7a50c1d36c7c6aef"
+      },
+      {
+        "file": "DEVELOPERGUIDE.md",
+        "status": "changed",
+        "category": "document",
+        "beforeHash": "a34606e5276749bacd07acb2d05e7fe4ff4c47ebde16c7877de36cbbaf90d85d",
+        "nowHash": "ef739937f5acff56c1debd99649765bc255ee092dc393a71f892adf46fa189b5"
+      },
+      {
+        "file": "DEVELOPERGUIDE.vn.md",
+        "status": "changed",
+        "category": "document",
+        "beforeHash": "70fd187ac30a602ba34def161243dbdf632108cbe2ca598dcd1afd44d88fe846",
+        "nowHash": "025c6738e2549eb71b2fccfff03e9a0035df45a6f7dc65e278ca1f800ac818df"
+      },
+      {
+        "file": "USERGUIDE.md",
+        "status": "changed",
+        "category": "document",
+        "beforeHash": "ee8941396b73e78875f9b9f4be6a6d8256c387f8e3015adf374bdca43eaa18cd",
+        "nowHash": "ffc743d516c49f5ff0bad748a6eac83af0289da19a3ba6adde6eeae423e70b50"
+      },
+      {
+        "file": "USERGUIDE.vn.md",
+        "status": "changed",
+        "category": "document",
+        "beforeHash": "4336e8daa921ee8250711dc8398ec7d1a75d44a1fa33e22125d41894c96f486d",
+        "nowHash": "296c906fbca87cdef898478d44a66b97d9911e2cb12125b087c71e5f9cf2de95"
+      },
+      {
+        "file": "generator/design.md",
+        "status": "changed",
+        "category": "document",
+        "beforeHash": "f6753c6f908560fbe715272d862a0d38e1b616693102b0ae2b752719e65cfe6b",
+        "nowHash": "b9564af401c53bac46d1d67fd4f06ca6f8eb3ad3919945d0eb0b3c8f19f47075"
+      },
+      {
+        "file": "generator/js/ui/store.js",
+        "status": "changed",
+        "category": "runtime-source",
+        "beforeHash": "e16452746339cc92cf5cb315a0509a6b7153b19861c251097c058c75550c6b56",
+        "nowHash": "6c798163555def6bfc826d30d26fc95c07917a2754e37756020052a4b73488cf"
+      },
+      {
+        "file": "generator/tests/fixtures/regression.js",
+        "status": "changed",
+        "category": "published-data-fixture",
+        "beforeHash": "f283fd07aab91199cd04ad6c2238cf0cc7876669c8eed1f2620b3aad3c3fa5f2",
+        "nowHash": "a309dcad47ffa043ada7f82b38da3daa4857b4b4322468948c0de68e6cf826d4"
+      },
+      {
+        "file": "generator/tests/fixtures/replay-goldens.js",
+        "status": "changed",
+        "category": "published-data-fixture",
+        "beforeHash": "21dcb97fab682343a86ca12f44e7721313b395eff4e9d316517ef02fe5697272",
+        "nowHash": "5859b95e1a87f46f2a638de6bafdd9c477a28d2ecb089e2e65ca175ca7c9c753"
+      },
+      {
+        "file": "generator/tests/fixtures/replay-recording.js",
+        "status": "changed",
+        "category": "recorder-or-tool-script",
+        "beforeHash": "14b1b94baf2609088036bd01bffc13cb561f7d065e1b07caf05ce40ccb030e2d",
+        "nowHash": "b0757cd78aed9371f19f54badae9be6e5c024563d97ddeb36b3400971f4f9e13"
+      },
+      {
+        "file": "generator/tests/fixtures/replay-wire.js",
+        "status": "changed",
+        "category": "published-data-fixture",
+        "beforeHash": "79d91ffc7eda3cc97f8562ee1590337b76ec8d096de570dff3a35da01f14e457",
+        "nowHash": "1aa5ad02cca5a8c90a299eca689adc0da3852a558225508e02b840dcf899b18b"
+      },
+      {
+        "file": "generator/tests/replay-fixtures.js",
+        "status": "changed",
+        "category": "recorder-or-tool-script",
+        "beforeHash": "18a8ae23e10cd9094c3f35c7eb036ada4a21d076536bb107ec623c1f1002efc0",
+        "nowHash": "ada7cb9404993fe4f4d3fd996bb7b1c8436069b2b4cafa1a1cd57899a0512f82"
+      },
+      {
+        "file": "generator/tests/replay-goldens.js",
+        "status": "changed",
+        "category": "recorder-or-tool-script",
+        "beforeHash": "dda24442ee32021fef78ac55b8f2c61723dab31f01110987e8d8df3603c0bb43",
+        "nowHash": "ab446d58f0eca01a3a59cfa9f4b2a13df833e4c13c4bd4d4f4f750ddc8fee8a2"
+      },
+      {
+        "file": "generator/tests/suites/player.test.js",
+        "status": "changed",
+        "category": "quick-suite",
+        "beforeHash": "7e8963ad688548f729c5b5d6a16c3d1dfc423de1f1b36388a9156df3bff2ab5d",
+        "nowHash": "67c8855172a8b67b0c8bf9594a62ec1fa4dd0a81ba9e292f1519826b5bdfbb7e"
+      },
+      {
+        "file": "generator/tests/suites/replay-recorders.test.js",
+        "status": "changed",
+        "category": "quick-suite",
+        "beforeHash": "18dcb61796e57465f539165709608f2af3644af214e6ea012036cb1ea12dbae0",
+        "nowHash": "08e53de7ea42603c0a6001763836f290e3f6ed4d251573c7831f146fa63127f2"
+      },
+      {
+        "file": "generator/tests/suites/replay.test.js",
+        "status": "changed",
+        "category": "quick-suite",
+        "beforeHash": "5fd98d072285b6754624fb0384dda06257900e7870117315e348a20de5343ea5",
+        "nowHash": "56cfcc8d7f889958fe5f36ce3ee2714e429c1c8b790a812e9e08ae0cdf555e0b"
+      },
+      {
+        "file": "generator/tests/suites/steps.test.js",
+        "status": "changed",
+        "category": "quick-suite",
+        "beforeHash": "b6681a0b180e3de11761552fb96baf2a7a2340e493ab3da048895552bd2fc1be",
+        "nowHash": "2e11b648a037b2ed6f85d402ee016b9231fb6819cd7bc3ac8fc630427413dd17"
+      },
+      {
+        "file": "generator/tests/suites/store.test.js",
+        "status": "changed",
+        "category": "quick-suite",
+        "beforeHash": "0d2aa62cf0094e584d34a29318fe95a67f1316deda792084fa55eff863abd164",
+        "nowHash": "0fc0066e2220238f33b8875d061d999cf6487aa97ca8502413ea87d4b10183c1"
+      }
+    ]
+  },
+  "runtimeFile": {
+    "path": "generator/js/ui/store.js",
+    "onlyChangedRuntimeSource": true,
+    "exactPatch": "docs/difficulty-v3/evidence/MS05r5p/legacy-8-fix/store-diff.patch",
+    "patchChangeLines": 14,
+    "snapshotDiff": "docs/difficulty-v3/evidence/MS05r6b/deep/snapshot-diff.json",
+    "sameChangeLinesAsSnapshotDiff": true,
+    "producerSnapshot": "refs/dv3-wip/MS05r5m-done-20261114-0230 (ad77fdf)",
+    "storeSha256Lf": "6c798163555def6bfc826d30d26fc95c07917a2754e37756020052a4b73488cf"
+  },
+  "executionScan": {
+    "directories": [
+      "generator/js/engine",
+      "generator/js/variants",
+      "core/js",
+      "generator/tests/fixtures/manual-corpus.js",
+      "generator/tests/manual (all but perf.test.js, not part of any b3 or GD selection)"
+    ],
+    "filesScanned": 49,
+    "tokens": [
+      "storedAttempts",
+      "SG.store",
+      "localStorage",
+      "SG.fixtures.regression",
+      "SG.fixtures.replayWire",
+      "SG.fixtures.replayGoldens",
+      "SG.fixtures.replayRecording",
+      "SG.fixtures.toolRecords"
+    ],
+    "hits": [
+      {
+        "file": "generator/tests/manual/wordoku.test.js",
+        "token": "localStorage"
+      }
+    ],
+    "hitsExplained": [
+      {
+        "file": "generator/tests/manual/wordoku.test.js",
+        "token": "localStorage",
+        "reason": "a list of forbidden tokens that the wordoku suite checks the variant source against"
+      }
+    ],
+    "unexplainedHits": []
+  },
+  "proof": [
+    "The 186 results carry one fingerprint (c3035e80), Node, time factor and stability, selected total 1 each.",
+    "The fingerprint files that differ now are listed with their category; none is a manual suite or manual helper, an engine, a variant or a core source.",
+    "The only changed runtime source is generator/js/ui/store.js, whose diff has the same +/- lines as store-diff.patch (storedAttempts: an unmarked legacy 8 is the default on every board).",
+    "No engine, variant, core, manual-suite or manual-helper code references SG.store, storedAttempts, localStorage or the changed data fixtures: SG.pipeline.run and the manual corpora do not read sg.lastConfig.v1.",
+    "The other changes are documents, quick suites, recorder and tool scripts and published data fixtures (E publication), which no selected manual suite executes or reads."
+  ],
+  "accounted": true,
+  "problems": []
+}

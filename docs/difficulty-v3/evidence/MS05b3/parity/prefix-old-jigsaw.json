@@ -1,0 +1,1005 @@
+{
+  "schema": 1,
+  "kind": "manual-corpus-prefix",
+  "task": "MS05b3",
+  "side": "old",
+  "key": "jigsaw",
+  "suite": "jigsaw",
+  "variantId": "jigsaw9",
+  "level": "veryEasy",
+  "node": "v26.13.0",
+  "requests": 20,
+  "stoppedBySentinel": true,
+  "seconds": 0.573,
+  "source": {
+    "file": "jigsaw.test.js",
+    "sha256": "b69fa5312db0c8175ef6703fc6d5a6fece3fbf5f9916853f2b5d31ce64f28b53"
+  },
+  "rows": [
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 700,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 700,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,4,0,0,7,8,0,3,0,0,1,3,0,0,9,4,0,0,0,7,0,0,0,5,9,2,0,0,0,4,5,9,3,0,1,4,1,0,7,0,3,0,5,8,8,0,2,9,6,5,0,0,0,1,5,3,0,0,0,7,0,0,0,9,6,0,0,8,4,0,0,7,0,5,8,0,0,2,0,0],
+      "solution": [9,2,4,5,1,7,8,6,3,5,6,1,3,8,2,9,4,7,3,8,7,6,4,1,5,9,2,6,7,8,4,5,9,3,2,1,4,1,9,7,2,3,6,5,8,8,3,2,9,6,5,1,7,4,1,5,3,2,9,4,7,8,6,2,9,6,1,7,8,4,3,5,7,4,5,8,3,6,2,1,9],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "c52a802de7da7536f3e3dfedc82e941615413f29b6c828dad5b872fa6f65c4c4",
+          "cellUnits": "9ff9266cc51f48c21318dcbf312d3ec82e2ab85415cb8e4fd57f0008441f5179",
+          "peers": "18ba3481a663e8fbadc7dbb380cf3bb14e5e859d16fb91c290f368b1349235f3",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "285606e1d7141b2dc931cd5d494f8cec3920fbd8e1174e09c61cba5b1bf6cc5c",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "1c17cf014d0ee23f57ca1ee68a1a3595ef0fe4cb237d4382d9a6475e785463c8",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "cd58e371225ca432c006751449affc5b8f2b3933dd521184e735b23d6491c959"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 701,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 701,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 42,
+        "rawScore": 42,
+        "confidence": 0.13333333333333333,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 40,
+        "techniqueCounts": {
+          "nakedSingle": 40
+        },
+        "ratingVersion": 2
+      },
+      "givens": [8,0,0,0,0,0,0,9,0,4,0,6,0,5,7,2,0,1,7,1,3,0,2,0,0,6,4,1,7,0,0,0,8,6,0,0,0,0,7,6,9,1,4,0,0,0,0,5,8,0,0,0,3,2,2,3,0,0,7,0,9,4,6,3,0,2,9,4,0,1,0,8,0,4,0,0,0,0,0,0,5],
+      "solution": [8,2,1,4,6,3,5,9,7,4,9,6,3,5,7,2,8,1,7,1,3,5,2,9,8,6,4,1,7,4,2,3,8,6,5,9,5,8,7,6,9,1,4,2,3,9,6,5,8,1,4,7,3,2,2,3,8,1,7,5,9,4,6,3,5,2,9,4,6,1,7,8,6,4,9,7,8,2,3,1,5],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4ce5972ea3a8da9b41176d991be42358552d5eb4d7a3e1d5c5566f0c5752b27d",
+          "cellUnits": "d5917f5ee731bd36ae454b2b7f2ddc7242dc0954a0ee67f0245f934bfd646f7f",
+          "peers": "d475c6a23e8929974455e786b42a4bdf33d82fefe5a6b6721fa7ad746c501d40",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3d1685dcd5dbf896af343dcdcafac19db51999ce7b3a8829c60c40d299bf4123",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "557f9a6079772ae8e0f23f5acfa1a9db18eaa7257ada9334c715e99b15966274",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "63674592582d5a30496711b5b27cb135f4e4bcac60ce16f05e8840b01a81a4a3"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 702,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 702,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "hiddenSingleBox",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 40,
+          "hiddenSingleBox": 1
+        },
+        "ratingVersion": 2
+      },
+      "givens": [9,0,1,0,0,0,7,0,0,0,6,0,7,1,9,2,0,0,0,0,0,0,7,2,1,9,0,7,0,0,0,0,5,8,6,1,0,4,9,5,0,1,3,8,0,1,8,3,6,0,0,0,0,5,0,9,7,1,2,0,0,0,0,0,0,5,9,8,3,0,1,0,0,0,2,0,0,0,6,0,9],
+      "solution": [9,2,1,4,3,8,7,5,6,5,6,8,7,1,9,2,4,3,3,5,6,8,7,2,1,9,4,7,3,4,2,9,5,8,6,1,2,4,9,5,6,1,3,8,7,1,8,3,6,4,7,9,2,5,4,9,7,1,2,6,5,3,8,6,7,5,9,8,3,4,1,2,8,1,2,3,5,4,6,7,9],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "9af73b86b1f57ef4a870a8e3aa4a44711b4ac8c9fbe4f3e6f1ea39d15b0d5e25",
+          "cellUnits": "61e1572eb58aa9b8556b5b29e8fbb541dd45098e2981579a659eb897ac28e8a9",
+          "peers": "43301d6b11ea4125b1ec9ae7c877340f43cfaa61ff2fc28e7b3f60cebed8f82e",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "e1b1613b30be6ae502c934cebaac3ef8c5fdf6262d1e1009c699766e45ebe1be",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "0cc377e458b12f92149cdb86adcea9db12c20c9e786f395bf756bf0e30fa7ead",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "e7dfed5db4314bdc698775e520d4e6c5310e7aaebaab2adedb94f0ecbe858853"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 703,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 703,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "hiddenSingleBox",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 40,
+          "hiddenSingleBox": 1
+        },
+        "ratingVersion": 2
+      },
+      "givens": [2,3,1,0,0,0,0,0,8,7,0,6,0,3,8,2,1,9,6,1,8,9,0,0,0,0,0,0,5,7,8,0,1,0,0,0,5,0,0,0,0,0,0,0,3,0,0,0,1,0,6,9,7,0,0,0,0,0,0,7,8,5,6,4,6,5,2,8,0,7,0,1,8,0,0,0,0,0,6,2,5],
+      "solution": [2,3,1,7,6,5,4,9,8,7,4,6,5,3,8,2,1,9,6,1,8,9,2,3,5,4,7,9,5,7,8,4,1,3,6,2,5,9,4,6,7,2,1,8,3,3,8,2,1,5,6,9,7,4,1,2,3,4,9,7,8,5,6,4,6,5,2,8,9,7,3,1,8,7,9,3,1,4,6,2,5],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "2688d15458f8442f95dbace35ccf3b43932cbf1d340cd479dd90ab25130b4cfc",
+          "cellUnits": "f1ffc9ae94c8fa204f3e3735127ace89608ed3a8eb544913fe5ed38a2e20e57e",
+          "peers": "3be084bdee1d30398c25e2df33ef8c9cd4c6df51078ee03f1201a9ebbbd0a560",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "135f293d731b89237e25a814fa6949e941f6295e9f8df2f10098ad8f7a17e8a1",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "3b10ee1462ef7b558498ba7c4115585f8b03272a2a8de143e86e6d229cd1f282",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "ec6622496474c39d533cdd5cb88bc7d77eb13cf4b682ffbcd5ea9bcbc1f4295d"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 704,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 704,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [8,5,0,0,0,0,0,0,4,6,9,0,4,8,0,0,3,0,7,2,4,0,0,9,0,5,1,4,0,5,7,0,0,9,0,8,0,0,2,0,0,0,3,0,0,3,0,9,0,0,2,7,0,5,5,4,0,1,0,0,8,7,2,0,6,0,0,5,8,0,1,9,1,0,0,0,0,0,0,6,3],
+      "solution": [8,5,3,2,7,6,1,9,4,6,9,1,4,8,5,2,3,7,7,2,4,8,3,9,6,5,1,4,3,5,7,6,1,9,2,8,9,1,2,5,4,7,3,8,6,3,8,9,6,1,2,7,4,5,5,4,6,1,9,3,8,7,2,2,6,7,3,5,8,4,1,9,1,7,8,9,2,4,5,6,3],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "db32f883102645bb4a8be26e2e07cee8f22e1d1ca3d7adc4b10cad8352be4ead",
+          "cellUnits": "39befcb59984cf0afbcc85ff08ba80d7b6e43e4b4822f3d0722559fe8c4a7543",
+          "peers": "618b00453c4d07533a797976653849ad27abba9ea08ddcaf0fe1e290b2c2ac8f",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "2137751d62182ad84e0d407fe42e4b5b57c3f171b721ba35311553f448e34bca",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "ce243191e1388d57f49b10fd16a98fde512d59e2d0fcaa19c2b16699e7f56d8a",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "b087382e9266c80c12d20cab0bfb71b9a3c957e5657f4038b69ff25ec0663e02"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 705,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 705,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [7,4,0,0,0,9,2,6,1,0,9,5,0,0,0,8,3,0,0,0,0,0,6,3,9,5,0,2,0,9,0,5,0,7,1,0,0,0,0,6,0,1,0,0,0,0,1,6,0,7,0,5,0,3,0,6,4,3,9,0,0,0,0,0,2,1,0,0,0,6,7,0,3,5,7,2,0,0,0,8,9],
+      "solution": [7,4,3,5,8,9,2,6,1,6,9,5,1,2,4,8,3,7,1,8,2,7,6,3,9,5,4,2,3,9,4,5,8,7,1,6,5,7,8,6,4,1,3,9,2,9,1,6,8,7,2,5,4,3,8,6,4,3,9,7,1,2,5,4,2,1,9,3,5,6,7,8,3,5,7,2,1,6,4,8,9],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "5c8363cf8624d5899e3ae1823c5c9762a029fd3296be57b6eb318af0f3a34c0b",
+          "cellUnits": "4222a2abf463cd452d93faa03de433c6619d2e16d5c24579087f2496fe0f1de4",
+          "peers": "86167dc453ad31cf2b8aede8e0026250aa7a276213420b15c8300140bc3578cd",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "9967e64895df65f7dd5c8e2d9f6cf6a7abc25159d76725199b8bc9e2bbabd429",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "ffe77aba65f2b7a969ca0cae344dc398d8ea20fc0e26ff3eea8b340d7b247ce7",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "12512bf09e4a5ce422049e261463de0be02d02ac855814d67b6d7a2347a3590c"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 706,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 706,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "hiddenSingleBox",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 40,
+          "hiddenSingleBox": 1
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,0,0,8,6,4,0,0,0,3,2,0,0,0,6,5,1,5,0,0,0,3,4,8,9,7,7,0,0,3,0,0,0,6,0,3,6,0,5,0,2,0,4,9,0,8,0,0,0,3,0,0,5,2,7,1,8,6,0,0,0,4,9,4,5,0,0,0,3,8,0,0,0,3,6,4,0,0,0,0],
+      "solution": [1,5,9,7,8,6,4,2,3,4,3,2,9,7,8,6,5,1,5,1,6,2,3,4,8,9,7,7,2,4,3,5,1,9,6,8,3,6,8,5,1,2,7,4,9,6,8,7,4,9,3,2,1,5,2,7,1,8,6,9,5,3,4,9,4,5,1,2,7,3,8,6,8,9,3,6,4,5,1,7,2],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "3d56678c3e9074bc6d553d77e9486574da3374a660ac9b0dfe462eb4a67b0b70",
+          "cellUnits": "5b33bcfd2e5bd7393c8137db8ba665a63dc8a09aec75c710761b6dd43370e085",
+          "peers": "9561dcb773b4bf686998d327bfda42f6d2861056e02f14ea626679a7f61c2958",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "e6e5d89095d43c2a46d578c7f288216edb09c8c532b2908ef4e3d26166f51f84",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "fc449f5b2df3c935a122c9131d1470b58df144c3ef854960f0be6c33e8b9fcd2",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "0589249da6620411251539c08fe6e91808abd3b2316d62e8243663bff3a9bb31"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 707,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 707,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 42,
+        "rawScore": 42,
+        "confidence": 0.13333333333333333,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 40,
+        "techniqueCounts": {
+          "nakedSingle": 40
+        },
+        "ratingVersion": 2
+      },
+      "givens": [9,8,0,5,7,0,1,0,0,0,4,7,9,5,3,0,8,0,0,0,8,0,0,0,0,5,6,5,0,0,0,8,0,9,0,4,0,1,4,0,9,0,5,3,0,7,0,1,0,4,0,0,0,9,6,5,0,0,0,0,4,0,0,0,3,0,1,6,2,8,9,0,0,0,6,0,3,9,0,1,5],
+      "solution": [9,8,2,5,7,6,1,4,3,1,4,7,9,5,3,6,8,2,3,9,8,2,1,4,7,5,6,5,6,3,7,8,1,9,2,4,2,1,4,6,9,7,5,3,8,7,2,1,8,4,5,3,6,9,6,5,9,3,2,8,4,7,1,4,3,5,1,6,2,8,9,7,8,7,6,4,3,9,2,1,5],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "ecf184a41996f931a828bb17fabe05f4881d56509e8a38bb07f53ce695f41c50",
+          "cellUnits": "a4cca508137018ce3a64984180bd63aff11ca98d97f63f6c1ef788a9882f7f46",
+          "peers": "0fc09711983c9b6498b37bfd4a057ef95fcd50832d9d994438e33e13d7ff5930",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "430c7dc8bea19826b257b7739ca46aabe8cd1e4b428792e70436b7f5b7336e8a",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "6fc6b6548e63df91dc2e1d6d2241a924230f175a84ae13904cc95c400744eace",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "41b7f849d2d4bdda8a2576c038e737f2b72ae10bff45c7e84a333d887c23c1a5"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 708,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 708,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [7,0,1,3,2,5,4,0,6,0,4,8,6,0,0,0,0,1,5,3,0,1,0,6,2,0,0,6,0,0,0,0,0,3,0,0,1,0,0,7,0,8,0,0,5,0,0,3,0,0,0,0,0,7,0,0,4,5,0,9,0,1,2,4,0,0,0,0,2,8,7,0,8,0,6,2,3,1,5,0,9],
+      "solution": [7,9,1,3,2,5,4,8,6,2,4,8,6,9,3,7,5,1,5,3,7,1,8,6,2,9,4,6,5,9,4,1,7,3,2,8,1,6,2,7,4,8,9,3,5,9,2,3,8,5,4,1,6,7,3,8,4,5,7,9,6,1,2,4,1,5,9,6,2,8,7,3,8,7,6,2,3,1,5,4,9],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "d1072452bb43829d7bf030a9b9c7d7605722450d4d19d69d5cb28f26aa35afc0",
+          "cellUnits": "dfd3c1eba1e1373d3784fe69f766e21892df748d6d614b6014e518832d54bb3e",
+          "peers": "662c44c7c7eae35c14e21c569b0d7c21fc6ae85b552f5bcdc7f047d1b36fa376",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "7b74fd5b6093e68a891ac421547ab1e866e2098cb987715fd63066b0f6cee605",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "e58b7dcb466866d4d8bf2a0d5f587d5ed85bc2158f4e0e2e7454c11b9bf0c870",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "4f6018669a04b65c929ec240f90a9b658792d4ddf0136a36612ee1a05c4bfec9"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 709,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 709,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,9,0,0,0,3,6,0,0,0,8,3,7,0,5,4,9,0,0,3,9,5,4,0,0,0,0,9,2,1,0,6,0,0,7,0,1,0,8,0,0,0,3,0,9,0,5,0,0,9,0,8,2,4,0,0,0,0,8,9,1,4,0,0,7,5,6,0,4,9,3,0,0,0,4,9,0,0,0,6,0],
+      "solution": [4,9,2,8,5,3,6,1,7,6,8,3,7,1,5,4,9,2,7,3,9,5,4,1,2,8,6,9,2,1,4,6,8,5,7,3,1,4,8,2,7,6,3,5,9,3,5,6,1,9,7,8,2,4,2,6,7,3,8,9,1,4,5,8,7,5,6,2,4,9,3,1,5,1,4,9,3,2,7,6,8],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "c261218f7e0adc0c5225ab9a876bc872ba6e73b83da2527aa30c5dfc1dca26bf",
+          "cellUnits": "fbc2679d02fd74f1a8a45474750799587e65db50a665849ade2a1376b09d16e3",
+          "peers": "0468b14f419c540fe3cac9cf7a5f3dcd884179ccdfd13d43ef21755efbbf4f8f",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "fddc72ce2f57778cea78b7843c62da5afc0fa748e1cba1a52204ff3fe4da5f09",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "8b123e99337ee9ebabe9ff89484cd43a350236828a113bc83a30801b3794df54",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "faff3b76cb0caea69c0dd4068ddbf0e42243cbeeed0ca7c17bc73fb904f23422"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 710,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 710,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,4,0,1,0,0,0,6,0,6,0,0,0,0,0,4,0,1,0,0,1,6,8,4,2,9,0,4,0,6,0,9,1,0,7,0,9,3,2,0,0,0,1,4,8,0,1,0,9,5,0,6,0,7,0,6,7,8,1,3,9,0,0,1,0,8,0,0,0,0,0,6,0,7,0,0,0,9,0,1,0],
+      "solution": [8,4,5,1,2,7,3,6,9,6,2,9,7,3,8,4,5,1,7,5,1,6,8,4,2,9,3,4,8,6,3,9,1,5,7,2,9,3,2,5,7,6,1,4,8,3,1,4,9,5,2,6,8,7,5,6,7,8,1,3,9,2,4,1,9,8,2,4,5,7,3,6,2,7,3,4,6,9,8,1,5],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "475d2dcda5ec3313ca8ef46cf661338cdecde8b5e2d99ad27d9eb9d6e6bc535f",
+          "cellUnits": "c9c66617644af30f3375ed1c3dde4a5923107dfd21181fa1ae1cdb36eb560485",
+          "peers": "5c8e08b7d060ac730bef8ceb7848c055c1d0c54f71cb49fa8798534e6dc4a725",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "c71583592802a4d4f4c888533e746a653630be7ead095ed723befed4533a1955",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "8a4ae2f27a9bc47030e76fd14b5f3111138ce23a90a361cc534c2b7b9b8ca594",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "df82f2749366b30169d394dfb630325729b84b38fbb4dda709d6b087c50259e8"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 711,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 711,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "hiddenSingleBox",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 40,
+          "hiddenSingleBox": 1
+        },
+        "ratingVersion": 2
+      },
+      "givens": [4,8,7,9,0,0,2,0,0,0,6,3,1,0,7,9,0,0,5,0,8,2,9,0,7,0,6,0,0,6,0,0,0,4,0,0,0,4,0,5,0,3,0,8,0,0,0,9,0,0,0,5,0,0,8,0,5,0,6,2,1,0,4,0,0,1,6,0,9,8,2,0,0,0,4,0,0,1,3,5,9],
+      "solution": [4,8,7,9,3,6,2,1,5,2,6,3,1,5,7,9,4,8,5,1,8,2,9,4,7,3,6,1,3,6,7,8,5,4,9,2,9,4,2,5,1,3,6,8,7,3,7,9,4,2,8,5,6,1,8,9,5,3,6,2,1,7,4,7,5,1,6,4,9,8,2,3,6,2,4,8,7,1,3,5,9],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "257828908df6413b90f3c7bb2067fb2f3978348026a0a4229e7961d67aff5438",
+          "cellUnits": "b6cc1182eeaef62775ca4f098217bc6b393258e57ffc50953a1836ab3781a29f",
+          "peers": "78af44b6a7eb2adf3ad074deb641d085302a5039e675b4ea4e402e93e29f7eae",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "88705306fe19c0a3f604910291897004491972f798d559b9e2914c42f8eae1c3",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "06c39edd257e47c60ccd280ac87b9c0b7b51be89003a17e586d2991d4778af8b",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "03cb635cf4d08a0e3be39cd8834869a2ab753af38af26e4b5fed3d27bf010ee2"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 712,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 712,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,3,0,0,0,2,0,9,0,9,0,0,0,0,5,0,3,0,3,0,9,1,2,0,6,0,0,0,0,6,5,9,3,8,0,7,0,5,4,8,0,9,3,2,0,8,0,7,3,6,4,1,0,0,0,0,1,0,5,6,9,0,3,0,8,0,2,0,0,0,0,9,0,7,0,9,0,0,0,6,0],
+      "solution": [1,3,5,6,7,2,4,9,8,9,6,2,4,8,5,7,3,1,3,4,9,1,2,8,6,7,5,2,1,6,5,9,3,8,4,7,7,5,4,8,1,9,3,2,6,8,9,7,3,6,4,1,5,2,4,2,1,7,5,6,9,8,3,6,8,3,2,4,7,5,1,9,5,7,8,9,3,1,2,6,4],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "e2c5165a7411164662f3d54d49dbd76a5717dc83ff8e5ddcdfc0fafb3734bcc3",
+          "cellUnits": "dca3909b7e50e148afceae54c3dcd78dc884ca5aa7169ce35e615151e690a8a7",
+          "peers": "72380ac194aaad77762c148b2dd75409acdb8b1b3008d225b384c75df6c586df",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3b1d2169a95885846ac664026efd0f135a0cb25133bbaa071149a8256643b679",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "5d9cbe716b08912a89f991923c3bd9a4521483d609c38d81b41448b12b580d67",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "87cec01ad731e26a5a7fb141cd647dcd5f95380ca9a605a6c6fe405fe7712b18"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 713,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 713,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 42,
+        "rawScore": 42,
+        "confidence": 0.13333333333333333,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 40,
+        "techniqueCounts": {
+          "nakedSingle": 40
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,5,0,7,0,0,3,8,0,3,8,0,0,2,6,0,0,9,0,0,4,3,0,7,2,1,5,7,0,9,0,0,0,1,6,0,0,1,0,0,4,0,0,9,0,0,2,7,0,0,0,4,0,8,5,4,6,1,0,8,9,0,0,4,0,0,2,3,0,0,5,1,0,9,3,0,0,1,0,4,0],
+      "solution": [1,5,2,7,9,4,3,8,6,3,8,1,4,2,6,5,7,9,9,6,4,3,8,7,2,1,5,7,3,9,8,5,2,1,6,4,8,1,5,6,4,3,7,9,2,6,2,7,9,1,5,4,3,8,5,4,6,1,7,8,9,2,3,4,7,8,2,3,9,6,5,1,2,9,3,5,6,1,8,4,7],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4c4a29494ee7988252eb35740d7066bab56760197b875ad547a6c16861e4f77a",
+          "cellUnits": "cd321e6d0e4415b38710d98df75c919c333640ada40524716343ae850aa4cad6",
+          "peers": "ffa07ba73352da03f9fe8d8bffdd13aa672c63430f6c857c1db6c347c246b66d",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "80c68cde5ea17d8aa34aace3b1da5a72be8f1a2a6a51de40de3658d5fbf0629e",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "af25db4af1c676a1cd6650f1f275368fabbfa93b5003221fcc8bf1d3e83e3e11",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "0a0ce9649add29efa9b0c594141657fa3eba811609e9c5240a4ada921735e90c"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 714,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 714,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,0,6,0,0,8,2,0,7,2,6,0,5,9,3,0,0,0,0,0,1,0,0,5,0,7,1,0,0,7,0,6,0,3,5,2,6,0,5,0,8,0,9,1,4,3,0,9,0,7,0,0,2,9,0,7,0,0,1,0,0,0,0,0,4,2,3,0,9,7,6,0,7,8,0,0,2,0,0,0],
+      "solution": [5,4,1,6,7,3,8,2,9,7,2,6,8,5,9,3,1,4,3,8,9,1,2,4,5,6,7,1,9,2,7,8,6,4,3,5,2,6,3,5,4,8,7,9,1,4,3,5,9,1,7,6,8,2,9,5,7,3,6,1,2,4,8,8,1,4,2,3,5,9,7,6,6,7,8,4,9,2,1,5,3],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "036f471e61369eb45916a7b9784d2cec145f88afff89a8a76aa59a8283e71be5",
+          "cellUnits": "4a2e5b29a7dce7e14abcb00b7b5f1ac5440bb683cf15ccc5669c9aba4c2824f0",
+          "peers": "44789ad14f17ec9014208a6556237a7be66c4d0a08f7b2ea0fa3e40629c0b3eb",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "0779db77461405c8feab90a8c807818f92501132661f7a184aaae16bb51c23e3",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "721e65fbe452b4c7663eb5d2b1a3742cb1522c7efd09e9f26df0e91551bfe958",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "5d05642808dd863182520b510f6fb6dfdca95480c9c910767b515de8c637a645"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 715,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 715,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,0,0,0,2,3,0,1,3,0,0,7,9,6,0,0,0,0,1,5,0,3,8,4,6,0,1,6,0,8,7,4,2,0,0,0,4,0,0,0,0,0,7,0,0,0,8,4,1,3,0,5,9,0,3,6,9,4,0,7,1,0,0,0,0,3,8,7,0,0,6,6,0,7,5,0,0,0,0,0],
+      "solution": [8,7,4,6,5,2,3,9,1,3,5,2,7,9,6,1,8,4,9,1,5,2,3,8,4,6,7,1,6,9,8,7,4,2,3,5,5,4,3,1,6,9,8,7,2,7,2,8,4,1,3,6,5,9,2,3,6,9,4,5,7,1,8,4,9,1,3,8,7,5,2,6,6,8,7,5,2,1,9,4,3],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "94081ca8f540cfff14a0421bc677dd8d4436f535ddd8659504cc974ee338ce27",
+          "cellUnits": "d1ad24e755017321b1ed568a36ff4d33a68e7e5fcb590c914516a18c9a071d40",
+          "peers": "c5a504268012e9bce9313771d4e47906fd124b4f41676ff0e650a1023706595b",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "a59d0b791f6ddab83fb8d94d0e784bb556e068e3d5e4bfd12f5628002478653a",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "e1e0367dafb624bc76ec1f49bb4a116a05a2771597a7804accdfc16cb0ecfad8",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "bf492ee2af03b2a1c338c467e809c695a9ab80d1d90a69ba957c06bb4878ab24"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 716,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 716,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [1,5,0,0,4,7,9,6,0,0,6,0,9,0,0,1,0,4,0,0,5,0,0,6,2,7,0,0,4,7,8,0,0,0,9,5,0,9,0,0,0,0,0,4,0,5,2,0,0,0,8,4,1,0,0,3,1,4,0,0,7,0,0,6,0,9,0,0,4,0,2,0,0,1,4,5,7,0,0,3,6],
+      "solution": [1,5,8,2,4,7,9,6,3,7,6,2,9,5,3,1,8,4,4,8,5,1,3,6,2,7,9,3,4,7,8,2,1,6,9,5,2,9,6,7,1,5,3,4,8,5,2,3,6,9,8,4,1,7,8,3,1,4,6,9,7,5,2,6,7,9,3,8,4,5,2,1,9,1,4,5,7,2,8,3,6],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "23ab44e0fc78f88cf937a53daf1e2a01b5dd0991c499e01b9850704a30c62371",
+          "cellUnits": "64ee4da0cc77c5a55b1d193969c2c537d905085bb732db9d7745329e0ffa11f0",
+          "peers": "3f4e8e0181d6f5cb3fd3222fb4ccd5cd18090eda53f5971e4877d90d41489f1a",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "8a7a9975ddc0831cfdb34a215112f71dd89b290ea1317aecb712f158360ce271",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "65e45fb49f6af58051dd86c63156549b80069332163ee24a2c81bebc54ac57ff",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "0b8d46c410604bacec8b405572c9f51e6c4ef33b3ee402f6d93b342d4627f33f"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 717,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 717,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,9,0,0,0,2,8,0,0,8,0,6,0,1,3,0,7,0,3,8,7,0,0,1,2,0,0,1,4,0,6,5,0,0,8,7,0,0,1,0,0,0,4,0,0,2,6,0,0,9,7,0,3,1,0,0,5,9,0,0,1,4,3,0,3,0,1,2,0,7,0,6,0,0,9,4,0,0,0,2,0],
+      "solution": [4,9,3,7,6,2,8,1,5,8,5,6,2,1,3,9,7,4,3,8,7,5,4,1,2,6,9,1,4,2,6,5,9,3,8,7,9,7,1,3,8,6,4,5,2,2,6,4,8,9,7,5,3,1,6,2,5,9,7,8,1,4,3,5,3,8,1,2,4,7,9,6,7,1,9,4,3,5,6,2,8],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "481e8fab352800790a61d3567a0bd7073acd9e4905b05b47db884a30792cfcca",
+          "cellUnits": "eaed9c61027667c7efc3111eaeacd9e407e750a659a42342370bb3572f10ff80",
+          "peers": "f21115ba6c659f596c1be285ea50a811b6384c623a09d7f41da5423d955ee8f5",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "c72182f71ad9fae23aafd8ae0a0db57033da47bddb268766fad422f50c176602",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "94bc9df2adb0be0b403e27f9094939ae6202fdada1fbace6c4fe536ee6b63a9b",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "b50021fae99c8e6513d4b8a05ace255f917c440b1274e4ea2ad6ade7854a50a4"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 718,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 718,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,6,0,9,0,5,0,2,0,1,2,0,7,0,3,4,6,0,0,0,4,6,0,0,0,0,7,0,1,2,3,0,8,0,9,5,8,0,0,0,0,0,1,7,6,0,5,0,1,2,9,0,4,0,0,0,0,8,7,0,0,0,4,2,8,0,5,0,7,9,0,1,0,3,0,4,0,2,0,0],
+      "solution": [8,4,6,3,9,1,5,7,2,9,1,2,5,7,8,3,4,6,2,9,7,4,6,5,1,3,8,7,6,1,2,3,4,8,5,9,5,8,4,9,2,3,6,1,7,6,3,5,7,1,2,9,8,4,3,5,9,6,8,7,4,2,1,4,2,8,1,5,6,7,9,3,1,7,3,8,4,9,2,6,5],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "df7651ec88f5199a87d324d950b1ed85a995c19f51e2d6c39b29c0cbdb0d90a6",
+          "cellUnits": "6d4e4add2c86ae0218ce8c6215f61ca091c7ef5a04cb3871326855173949f134",
+          "peers": "fb7efb7bf283cbd300fb4ae00bec43996f5e21ce975028a9537db2449df461e6",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "119c33ba675baf11c8cc1285a8e2b7465ec274b44243971584fb757ab561cc85",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "b02261f4c329b17fa9b55cb97761b0524ea033a7050bb03212a5135f165a950f",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "e4a8ed36aa4cb7bf868082edfd0e8759b86cc0ffa1738cb0a50c09dfa3579765"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 719,
+        "trace": "off",
+        "variantId": "jigsaw9"
+      },
+      "seed": 719,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "hiddenSingleBox",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 40,
+          "hiddenSingleBox": 1
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,2,0,9,6,0,7,0,0,7,0,2,5,0,9,4,3,0,9,3,0,0,0,8,2,0,0,1,0,5,0,0,6,3,9,0,0,0,9,0,4,0,0,0,4,5,9,0,0,2,0,6,0,0,2,7,0,0,0,5,1,0,9,4,5,0,1,3,0,8,0,0,3,0,8,7,0,4,0,0],
+      "solution": [3,8,2,4,9,6,1,7,5,6,7,1,2,5,8,9,4,3,5,9,3,7,6,1,8,2,4,2,1,4,5,8,7,6,3,9,7,6,8,9,2,4,3,5,1,4,5,9,1,3,2,7,6,8,8,2,7,3,4,9,5,1,6,9,4,5,6,1,3,2,8,7,1,3,6,8,7,5,4,9,2],
+      "model": {
+        "variantId": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "1ffb87098d06d196cd5ac44f489b8f93cb75251afa5e5eacd078219be620e3c4",
+          "cellUnits": "03f4d961ee365df59e1f7241d5635a7d89197f0565ed85a0c93f3102d102fb26",
+          "peers": "e3ed8b6ce93884d119c856c2cce465badf95b1bab3e00d1c18f72b3497a6de46",
+          "unitMeta": "92236faaa048a8d9eed08e241febbe5f32cfd3928b7f269bc517d632659b0f14",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "557646905956c9e89a217d3176310df5b924217f2c2f1ade5657d3aa4a8ea367",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "d88ab755f102fe3d6f215d5e309e33838c2ab60b8c19043092ad7d7bff7be1ea",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "dcdda1d2ba18b04c9bb1793f2240422cdc64c27273228794df13485e51511107"
+      }
+    }
+  ]
+}

@@ -611,6 +611,27 @@
   describe('replay: golden details', function () {
     var STATUSES = ['rated', 'zero', 'final'];
 
+    it('reads G13 from the saved wire and never regenerates it (a spy on the pipeline)', function () {
+      var saved = built.G13;
+      var run = SG.pipeline.run;
+      var calls = 0;
+      delete built.G13;
+      SG.pipeline.run = function () {
+        calls++;
+        throw new Error('G13 comes from SG.fixtures.replayWire, not from the pipeline');
+      };
+      try {
+        var e = entry('G13');
+        expect(calls).toBe(0);
+        expect(Object.keys(WIRE)).toContain('G13');
+        expect(e.wire).toEqual(WIRE.G13);
+        expect(e.result.model.cellCount).toBe(golden('G13').board.cells);
+      } finally {
+        SG.pipeline.run = run;
+        if (saved) built.G13 = saved;
+      }
+    });
+
     GOLDENS.forEach(function (g) {
       slow('golden ' + g.id + ' details', function () {
         var e = entry(g.id);
@@ -1148,9 +1169,8 @@
       });
     });
 
-    slow('has the same end position as a jump in one view and not in the other (G06, G11, G12, G01)', function () {
-      [['G06', 31, [138, 1678], [2967, 1678]], ['G11', 111, [119, 957], [962, 957]],
-        ['G12', 103, [130, 638], [642, 638]]].forEach(function (c) {
+    slow('has the same end position as a jump in one view and not in the other (G11, G12, G01)', function () {
+      [['G11', 111, [119, 957], [962, 957]], ['G12', 103, [130, 638], [642, 638]]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var compact = toPosition(analysis, 'compact', c[1]);
         var details = toPosition(analysis, 'details', c[1]);
@@ -1159,13 +1179,14 @@
         expect(details.tier).not.toBe('jump');
         expect(details.ratio).toBeNull();
       });
-      expect(toPosition(analysisOf('G06'), 'details', 31).change).toBe(-1289);
+      expect(toPosition(analysisOf('G11'), 'details', 111).change).toBe(-5);
+      expect(toPosition(analysisOf('G12'), 'details', 103).change).toBe(-4);
       var g01 = analysisOf('G01');
       expect(toPosition(g01, 'compact', 31).before.W).toBeCloseTo(906.5, 6);
       expect(toPosition(g01, 'details', 31).before.W).toBeCloseTo(906.75, 6);
     });
 
-    slow('has 12 compact, 15 details and 18 distinct jump transitions in the 14 goldens', function () {
+    slow('has 13 compact, 16 details and 18 distinct jump transitions in the 14 goldens', function () {
       var count = { compact: 0, details: 0 };
       var distinctJumps = {};
       GOLDENS.forEach(function (g) {
@@ -1175,13 +1196,13 @@
           distinctJumps[g.id + ':' + t.from + '>' + t.to + ':' + t.before.total + '>' + t.after.total] = true;
         });
       });
-      expect(count).toEqual({ compact: 12, details: 15 });
+      expect(count).toEqual({ compact: 13, details: 16 });
       expect(Object.keys(distinctJumps)).toHaveLength(18);
     });
 
-    slow('labels a new hardest technique also at a flat or lower score (details: G13, G11, G07)', function () {
+    slow('labels a new hardest technique also at a flat or lower score (details: G13, G11)', function () {
       [['G13', 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'],
-        ['G11', 104, 1967, 1264, 'wWing', 'forcingChain'], ['G07', 31, 2515, 1938, 'forcingChain', 'nishio']
+        ['G11', 104, 1967, 1264, 'wWing', 'forcingChain']
       ].forEach(function (c) {
         var t = toPosition(analysisOf(c[0]), 'details', c[1]);
         expect([t.before.total, t.after.total, t.change]).toEqual([c[2], c[3], c[3] - c[2]]);
@@ -1204,7 +1225,7 @@
   describe('replay: explaining the jumps', function () {
     var NONE = '\u2014';
     // The goldens whose jump has no candidates recorded by the generator, with the kind that says so.
-    var UNRECORDED = { 'G05:5': 'checked', 'G06:6': 'combined', 'G11:5': 'combined', 'G12:5': 'combined' };
+    var UNRECORDED = { 'G05:5': 'checked', 'G11:5': 'combined', 'G12:5': 'combined' };
 
     function labeller(id) {
       return function (cell) { return SG.model.cellLabel(entry(id).result.model, cell); };
@@ -1468,7 +1489,7 @@
       expect(guarded.ratings.every(function (r) { return r.status !== 'capped'; })).toBe(true);
     });
 
-    slow('has a cause, a choice and a proof for every jump of the goldens: 12 compact and 15 details', function () {
+    slow('has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details', function () {
       var count = { compact: 0, details: 0 };
       GOLDENS.forEach(function (g) {
         var analysis = analysisOf(g.id);
@@ -1491,23 +1512,23 @@
         });
         expect(Object.keys(analysis.proofs).map(Number)).toEqual(Object.keys(ends).map(Number));
       });
-      expect(count).toEqual({ compact: 12, details: 15 });
+      expect(count).toEqual({ compact: 13, details: 16 });
     });
 
-    slow('frames the details jumps too: G06 R4C6 and the four sign jumps of G11', function () {
+    slow('frames the details jumps too: G06 R8C4 and the four sign jumps of G11', function () {
       var g06 = analysisOf('G06');
-      var t = toPosition(g06, 'details', 29);
-      expect([t.before.total, t.after.total, t.cause.class]).toEqual([138, 1778, 'single-culprit']);
-      expect(frameLabel('G06', t.cause.frame)).toBe('R4C6');
-      expect(t.cause.culprit.otherScore).toBe(138);
+      var t = toPosition(g06, 'details', 27);
+      expect([t.before.total, t.after.total, t.cause.class]).toEqual([106, 1697, 'single-culprit']);
+      expect(frameLabel('G06', t.cause.frame)).toBe('R8C4');
+      expect(t.cause.culprit.otherScore).toBe(107);
       var g11 = jumpsOf(analysisOf('G11'), 'details');
       expect(g11.map(function (x) { return x.cause.frame; })).toEqual([
         { kind: 'sign', sign: 7 }, { kind: 'sign', sign: 43 }, { kind: 'sign', sign: 75 }, { kind: 'sign', sign: 6 }]);
       expect(g11.every(function (x) { return x.cause.changes.length === 0 && x.cause.sign !== null; })).toBe(true);
     });
 
-    slow('describes a jump over several moves by its first move with the new technique (G06, G11, G12)', function () {
-      [['G06', 5], ['G11', 4], ['G12', 4]].forEach(function (c) {
+    slow('describes a jump over several moves by its first move with the new technique (G11, G12)', function () {
+      [['G11', 4], ['G12', 4]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var t = into(analysis, 'compact', c[1]);
         var step = analysis.views.compact.steps[c[1]];

@@ -23,7 +23,9 @@
   const STEPS = ['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune'];
 
   const DEFAULT_DIFFICULTY = 'normal';
-  const DEFAULT_MAX_ATTEMPTS = 8;
+  // The attempts of a board of at most `SG.digger.SMALL_BOARD_CELLS` cells, the reference of the size policy
+  // `SG.digger.defaultMaxAttempts`; a request without `maxAttempts` takes the number of its own board.
+  const DEFAULT_MAX_ATTEMPTS = SG.digger.defaultMaxAttempts(SG.digger.SMALL_BOARD_CELLS);
   const DEFAULT_TRACE = 'summary';
 
   function fail(code, args) {
@@ -41,9 +43,10 @@
 
   // GenerateConfig: variantId, difficulty (default 'normal'; a level the variant supports), seed (default
   // random; uint32 once normalised), symbolMode (default: the variant's), symmetry (SG.symmetry.KINDS,
-  // default 'rotational180'), digOrder (SG.digger.ORDERS, default 'random'), maxAttempts (default 8: full
-  // grids tried before settling for the closest puzzle), trace ('off' | 'summary' | 'full', default
-  // 'summary'), variantOptions (plain data for variant.build).
+  // default 'rotational180'), digOrder (SG.digger.ORDERS, default 'random'), maxAttempts (full grids tried
+  // before settling for the closest puzzle; default by the size of the board: 8 up to 81 cells, 4 up to 144,
+  // 2 above, see `SG.digger.defaultMaxAttempts`; an explicit whole number from 1 is used as given), trace
+  // ('off' | 'summary' | 'full', default 'summary'), variantOptions (plain data for variant.build).
 
   // Normalises and validates a configuration (defaults filled, seed fixed) into plain data that goes into
   // PuzzleResult.config and survives postMessage. Throws GenerationError ('variant.unknown',
@@ -70,7 +73,8 @@
     if (SG.digger.ORDERS.indexOf(digOrder) === -1) {
       throw fail('digger.invalidOption', { option: 'digOrder', value: String(digOrder) });
     }
-    const maxAttempts = config.maxAttempts !== undefined ? config.maxAttempts : DEFAULT_MAX_ATTEMPTS;
+    const maxAttempts = config.maxAttempts !== undefined ? config.maxAttempts
+      : SG.digger.defaultMaxAttempts(SG.variants.cellCountOf(def));
     if (!(Number.isInteger(maxAttempts) && maxAttempts >= 1)) {
       throw fail('digger.invalidOption', { option: 'maxAttempts', value: String(maxAttempts) });
     }

@@ -1,0 +1,2 @@
+generator: 3207 tests in the inventory, 3207 claimed by 7 shards; missing 0, duplicates 0, unexpected 0; projected sum 1740 s, longest shard 300 s
+player: 1683 tests in the inventory, 1683 claimed by 1 shards; missing 0, duplicates 0, unexpected 0; projected sum 60 s, longest shard 60 s

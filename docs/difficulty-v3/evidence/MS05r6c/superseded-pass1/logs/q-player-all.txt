@@ -1,0 +1,41 @@
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   bits: 32 passed  (60 ms)
+ok   board-view: 37 passed  (80 ms)
+ok   constraints: 43 passed  (106 ms)
+ok   exchange: 20 passed  (219 ms)
+ok   harness: 25 passed  (1.82 s)
+ok   logical-solver: 100 passed  (286 ms)
+ok   model: 49 passed  (40 ms)
+ok   solver: 50 passed  (2.71 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.86 s)
+ok   tech-chain: 62 passed  (6.61 s)
+ok   tech-fish: 106 passed  (6.43 s)
+ok   tech-subset: 100 passed  (893 ms)
+ok   tech-wing: 168 passed  (1.61 s)
+ok   techniques: 165 passed  (2.04 s)
+ok   wordbook: 7 passed  (9 ms)
+ok   a11y: 24 passed  (18 ms)
+ok   app: 15 passed  (12 ms)
+ok   fixtures: 21 passed  (13 ms)
+ok   help-example-tools: 51 passed  (4.72 s)
+ok   help: 27 passed  (956 ms)
+ok   i18n: 66 passed  (68 ms)
+ok   importer: 88 passed  (330 ms)
+ok   model-aids: 7 passed  (2 ms)
+ok   play: 68 passed  (168 ms)
+ok   progress: 26 passed  (48 ms)
+ok   store: 17 passed  (3 ms)
+ok   text-boards: 14 passed  (14 ms)
+ok   theme: 54 passed  (37 ms)
+ok   ui-contract: 62 passed  (141 ms)
+
+Suites: 30
+Tests:  1683 total, 1683 passed, 0 failed, 0 skipped
+Time:   31.30 s running tests, 31.56 s total
+Results: docs/difficulty-v3/evidence/MS05r6c/quick/player-all.json
+(node:21136) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+MS05r6c exit=0 seconds=31.754

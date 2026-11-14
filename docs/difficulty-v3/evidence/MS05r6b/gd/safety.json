@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > digger.generate: safety net against a technique bug (risk R3)","exact":null,"count":3},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 4858.5,
+  "results": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 4680.2,
+    "tests": [
+      {"suite":"difficulty","name":"never returns an ambiguous puzzle, reports the bug and still delivers a unique puzzle","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous puzzle, reports the bug and still delivers a unique puzzle","status":"pass","ms":94.692,"reason":"","error":null,"ordinal":151},
+      {"suite":"difficulty","name":"digLevel marks the puzzle it had to replace","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > digLevel marks the puzzle it had to replace","status":"pass","ms":68.96,"reason":"","error":null,"ordinal":152},
+      {"suite":"difficulty","name":"never returns an ambiguous candidate of a search either: the keeper counts before it keeps","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous candidate of a search either: the keeper counts before it keeps","status":"pass","ms":4515.775,"reason":"","error":null,"ordinal":153}
+    ],
+    "suites": [
+      {"name":"difficulty","total":3,"passed":3,"failed":0,"skipped":0,"ms":4680.033}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > digger.generate: safety net against a technique bug (risk R3)","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\safety.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

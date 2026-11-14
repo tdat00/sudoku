@@ -1,0 +1,12 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   controls: 46 passed  (135 ms)
+ok   recovery-profile: 27 passed  (688 ms)
+ok   store: 79 passed  (131 ms)
+ok   variants-registry: 12 passed  (27 ms)
+
+Suites: 4
+Tests:  164 total, 164 passed, 0 failed, 0 skipped
+Time:   981 ms running tests, 1.07 s total
+MS05r5p exit=0 seconds=1.18

@@ -5,7 +5,7 @@
  * regenerate it with that tool when the generator changes on purpose, and check it with --check.
  * SG.fixtures.replayGoldens = [{ id, request, today, counts, board, rows, details, alive, folds, jumps }].
  * rows: [step, m, phase, E, score, delta, hardest, J, culprit, line] of the compact view.
- * G09-G12 are read from SG.fixtures.replayWire (tests/fixtures/replay-wire.js); the others are generated.
+ * G09-G13 are read from SG.fixtures.replayWire (tests/fixtures/replay-wire.js); the others are generated.
  * Only `id` and `request` (the recipe) and `today` are kept from the researchers. `today` is their
  * historical annotation, not freshly verified output, and no suite reads it. Every other field is
  * projected from the analysis of a freshly generated result; the fold fields removed, signs and
@@ -169,34 +169,32 @@
     },
     {
       id: 'G06', request: { variantId: 'jigsaw9', difficulty: 'nightmare', seed: '42' },
-      today: { steps: 16, missing: 2 }, counts: { compact: 7, details: 33 },
+      today: { steps: 16, missing: 2 }, counts: { compact: 7, details: 30 },
       board: { cells: 81, cages: 0, signsFrom: 0, signsTo: 0, log: 'normal' },
       // [#, m, phase, E, score, delta, hardest, J, culprit, line]
       rows: [
         [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
         [2, 8, 'D/Dig', 16, 25, 25, 'nakedSingle', '—', '—', 'F'],
         [3, 22, 'D/Dig', 43, 44, 19, 'nakedSingle', '—', '—', '—'],
-        [4, 27, 'G/Choose', 53, 49, 5, 'hiddenSingleBox', '—', '—', 'N'],
-        [5, 28, 'G/Choose', 55, 138, 89, 'boxLine', '—', '—', 'N'],
-        [6, 31, 'G+A/Mixed', 57, 1678, 1540, 'forcingChain', 'Y', '—', '—'],
-        [7, 31, 'F/Final', 57, 1678, 0, 'forcingChain', '—', '—', '—']
+        [4, 26, 'G/Choose', 51, 106, 62, 'pointing', '—', '—', 'N'],
+        [5, 27, 'G/Choose', 53, 1697, 1591, 'forcingChain', 'Y', 'R8C4', '—'],
+        [6, 28, 'G/Choose', 55, 2348, 651, 'nishio', '—', '—', 'N'],
+        [7, 28, 'F/Final', 55, 2348, 0, 'nishio', '—', '—', '—']
       ],
       details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
-        48, 49, 138, 1778, 2967, 1678, 1678],
+        106, 1697, 2348, 2348],
       alive: null,
-      folds: [
-        { step: 6, peak: 2967, end: 1678, removed: 4, restored: 2, signs: 0, opening: false }
-      ],
+      folds: [],
       jumps: [
         {
-          step: 6, from: 138, to: 1678,
-          before: { P: 50, W: 449.5, R: 41.506058, V: 46.315789, E: 55, level: 'easy' },
-          after: { P: 1100, W: 3099.25, R: 531.472743, V: 47.010309, E: 57, level: 'nightmare' },
-          choice: null,
-          singles: [],
-          cause: 'multi-move', frame: null,
-          firstUse: { k: 16, n: 71, technique: 'forcingChain' }, key: 'technique.forcingChain.step.endpoints',
-          effects: 'remove candidate 5@R7C5'
+          step: 5, from: 106, to: 1697,
+          before: { P: 40, W: 135.5, R: 21.333991, V: 44.835165, E: 51, level: 'easy' },
+          after: { P: 1100, W: 3317.25, R: 551.552365, V: 45.591398, E: 53, level: 'nightmare' },
+          choice: { chosen: 1697, others: 9, nulls: 0, max: 129, at: 96, rated: 10, refused: 0 },
+          singles: [{ op: 'remove', cell: 'R2C6', score: 107 }, { op: 'remove', cell: 'R8C4', score: 1697 }],
+          cause: 'single-culprit', frame: 'R8C4',
+          firstUse: { k: 24, n: 63, technique: 'forcingChain' }, key: 'technique.forcingChain.step.endpoints',
+          effects: 'remove candidate 4@R5C5, 4@R6C5, 4@R8C5, 4@R9C5'
         }
       ]
     },
@@ -207,31 +205,39 @@
       // [#, m, phase, E, score, delta, hardest, J, culprit, line]
       rows: [
         [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
-        [2, 8, 'D/Dig', 16, 25, 25, 'nakedSingle', '—', '—', 'F'],
-        [3, 21, 'D/Dig', 42, 43, 18, 'nakedSingle', '—', '—', '—'],
-        [4, 23, 'G/Choose', 46, 46, 3, 'hiddenSingleLine', '—', '—', 'N'],
-        [5, 24, 'G/Choose', 48, 252, 206, 'nakedPair', 'Y', '—', '—'],
-        [6, 28, 'G/Choose', 56, 666, 414, 'simpleColouring', '—', '—', 'N'],
-        [7, 29, 'G/Choose', 58, 1938, 1272, 'forcingChain', '—', '—', 'N'],
-        [8, 31, 'G+A/Mixed', 58, 1938, 0, 'forcingChain', '—', '—', '—'],
-        [9, 31, 'F/Final', 58, 1938, 0, 'forcingChain', '—', '—', '—']
+        [2, 9, 'D/Dig', 17, 26, 26, 'nakedSingle', '—', '—', 'F'],
+        [3, 22, 'D/Dig', 43, 44, 18, 'nakedSingle', '—', '—', '—'],
+        [4, 25, 'G/Choose', 49, 47, 3, 'hiddenSingleBox', '—', '—', 'N'],
+        [5, 26, 'G/Choose', 51, 511, 464, 'simpleColouring', 'Y', 'R9C4', '—'],
+        [6, 27, 'G/Choose', 53, 1582, 1071, 'forcingChain', 'Y', 'R6C3', '—'],
+        [7, 29, 'G/Choose', 57, 1589, 7, 'forcingChain', '—', '—', '—'],
+        [8, 31, 'X/Adjust', 57, 2340, 751, 'nishio', '—', '—', 'N'],
+        [9, 31, 'F/Final', 57, 2340, 0, 'nishio', '—', '—', '—']
       ],
-      details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 45, 46, 252,
-        288, 305, 591, 666, 1938, 2515, 1938, 1938],
+      details: [0, 5, 9, 12, 15, 18, 20, 22, 24, 26, 28, 30, 31, 33, 34, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47,
+        511, 1582, 1583, 1589, 1902, 2340, 2340],
       alive: null,
-      folds: [
-        { step: 8, peak: 2515, end: 1938, removed: 2, restored: 2, signs: 0, opening: false }
-      ],
+      folds: [],
       jumps: [
         {
-          step: 5, from: 46, to: 252,
-          before: { P: 1.5, W: 49, R: 1.902468, V: 42.790698, E: 46, level: 'easy' },
-          after: { P: 120, W: 798.75, R: 88.099138, V: 43.636364, E: 48, level: 'normal' },
-          choice: { chosen: 252, others: 12, nulls: 0, max: 47, at: 73, rated: 13, refused: 0 },
-          singles: [{ op: 'remove', cell: 'R1C4', score: 136 }, { op: 'remove', cell: 'R9C6', score: 47 }],
-          cause: 'mixed', frame: null,
-          firstUse: { k: 21, n: 63, technique: 'nakedPair' }, key: 'technique.nakedPair.step',
-          effects: 'remove candidate 3@R5C8'
+          step: 5, from: 47, to: 511,
+          before: { P: 1.25, W: 50.5, R: 1.678612, V: 44.044944, E: 49, level: 'easy' },
+          after: { P: 360, W: 455.5, R: 106.171917, V: 44.835165, E: 51, level: 'hard' },
+          choice: { chosen: 511, others: 8, nulls: 0, max: 48, at: 86, rated: 11, refused: 2 },
+          singles: [{ op: 'remove', cell: 'R1C6', score: 47 }, { op: 'remove', cell: 'R9C4', score: 510 }],
+          cause: 'single-culprit', frame: 'R9C4',
+          firstUse: { k: 28, n: 53, technique: 'simpleColouring' }, key: 'technique.simpleColouring.step',
+          effects: 'remove candidate 8@R3C2'
+        },
+        {
+          step: 6, from: 511, to: 1582,
+          before: { P: 360, W: 455.5, R: 106.171917, V: 44.835165, E: 51, level: 'hard' },
+          after: { P: 1100, W: 2207, R: 436.705368, V: 45.591398, E: 53, level: 'nightmare' },
+          choice: { chosen: null, others: 3, nulls: 0, max: 512, at: 95, rated: 8, refused: 4 },
+          singles: [{ op: 'remove', cell: 'R4C7', score: 512 }, { op: 'remove', cell: 'R6C3', score: 1582 }],
+          cause: 'single-culprit', frame: 'R6C3',
+          firstUse: { k: 29, n: 66, technique: 'forcingChain' }, key: 'technique.forcingChain.step.endpoints',
+          effects: 'remove candidate 4@R7C2'
         }
       ]
     },

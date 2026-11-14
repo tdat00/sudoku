@@ -1,0 +1,17 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   history: 15 passed  (1.62 s)
+FAIL i18n: 82 passed, 1 failed  (139 ms)
+
+Failures:
+  FAIL i18n > i18n: locale fragments > has no key defined twice (base pack against fragments, or two fragments)
+       AssertionError: expected Array(90)[{locale: "en", key: "app.heading.seed", fragment: 23}, {locale: "en", key: "app.status.cancelled", fragment: 23}, {locale: "en", key: "app.status.failed", fragment: 23}, {locale: "en", key: "app.announce.ready", fragment: 23}, {locale: "en", key: "app.announce.approximate", fragment: 23}, {locale: "en", key: "app.title.result", fragment: 23}, {locale: "en", key: "app.mode.worker", fragment: 23}, {locale: "en", key: "app.mode.main", fragment: 23}, {locale: "en", key: "app.action.unavailable", fragment: 23}, {locale: "vi", key: "app.heading.seed", fragment: 23}, {locale: "vi", key: "app.status.cancelled", fragment: 23}, {locale: "vi", key: "app.status.failed", fragment: 23}, ...] to equal Array(0)[]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\i18n.test.js:212:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 2
+Tests:  98 total, 97 passed, 1 failed, 0 skipped
+Time:   1.76 s running tests, 1.94 s total
+Results: docs/difficulty-v3/evidence/MS05r6b/quick/diag/history-i18n.json

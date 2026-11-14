@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "c3035e8032685c3ed4f5d92e0ffc0535062d460e6e6c45a908fa404ce4950bfa",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["extra-regions"],"filter":"> hyper hell2: 8 puzzles > I5:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 5605.9,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 5418,
+    "tests": [
+      {"suite":"extra-regions","name":"I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec","fullName":"extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper hell2: 8 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec","status":"pass","ms":5417.394,"reason":"","error":null,"ordinal":106}
+    ],
+    "suites": [
+      {"name":"extra-regions","total":1,"passed":1,"failed":0,"skipped":0,"ms":5417.862}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=extra-regions","--filter=> hyper hell2: 8 puzzles > I5:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05b3\\i5\\i5-extra-regions-hyper-hell2.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

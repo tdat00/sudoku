@@ -29,7 +29,7 @@ sudoku/
 | `core/js/ui/` | `exchange` (the puzzle link and token format between the two apps), `wordbook`, `symbols`, `board-view` (the SVG board) | both |
 | `core/css/` | `tokens.css` and `tokens-board.css` (the design tokens, three themes), `base.css`, `board.css` | both |
 | `core/assets/wordbook/` | `words.en.js`, `words.vi.js`: spelling and meaning of each Wordoku key word | both |
-| `core/tests/` | `harness.js` (the test harness), `fixtures/` (puzzles with known answers, the technique helper, `testkit.js`), `suites/` (16 suites: the engine, the technique ladder, the exchange format, the board view, the harness itself) | run by both apps' test runners |
+| `core/tests/` | `harness.js` (the test harness), `node-evidence.js` (Node only, in no source list: the runners' `--list-tests`, `--exact` and `--results` evidence files), `fixtures/` (puzzles with known answers, the technique helper, `testkit.js`), `suites/` (16 suites: the engine, the technique ladder, the exchange format, the board view, the harness itself) | run by both apps' test runners |
 
 `core` knows nothing about either app. It has no DOM access in `core/js/engine/` (it runs in a page, a Web Worker and
 Node), no variant names, and no URL or storage access outside functions called at run time.
@@ -82,7 +82,8 @@ The player's own share link is built from its page address, so a copied link wor
 ## Publishing
 
 `.github/workflows/pages.yml` runs the tests (core first, then the player and the generator in parallel, the generator
-in five jobs of about 2 to 4 minutes, grouped by `.github/scripts/generator-suites.sh`) and
+in four jobs that each run disjoint shards of the bounded quick manifest `.github/scripts/generator-quick.json`,
+grouped and checked by `.github/scripts/generator-suites.sh`; the manual and deep tiers do not run in CI) and
 publishes one site:
 
 ```

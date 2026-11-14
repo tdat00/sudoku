@@ -1,0 +1,169 @@
+{
+  "schema": 1,
+  "kind": "quick-coverage",
+  "manifest": "docs/difficulty-v3/evidence/MS05r6b/quick/quick-manifest.json",
+  "apps": {
+    "generator": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-inventory.json",
+      "inventoryTests": 3262,
+      "sourceHash": "bee132a83a35925cd37e4c1681ba8395103455781167b3733d4667ae019ff568",
+      "node": "v26.13.0",
+      "timeFactor": 2,
+      "verdict": "complete-with-failures",
+      "counts": {
+        "total": 3262,
+        "passed": 3261,
+        "failed": 1,
+        "skipped": 0
+      },
+      "shards": [
+        {
+          "id": "core-shared",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-core-shared.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 1143,
+          "passed": 1143,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 24639.1,
+          "resultsMs": 24349.3,
+          "sourceHash": "bee132a83a35925cd37e4c1681ba8395103455781167b3733d4667ae019ff568"
+        },
+        {
+          "id": "own-fast",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-own-fast.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 1579,
+          "passed": 1578,
+          "failed": 1,
+          "skipped": 0,
+          "wallMs": 166262.7,
+          "resultsMs": 165886.4,
+          "sourceHash": "bee132a83a35925cd37e4c1681ba8395103455781167b3733d4667ae019ff568"
+        },
+        {
+          "id": "pipeline",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-pipeline.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 150,
+          "passed": 150,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 295955.6,
+          "resultsMs": 295746.8,
+          "sourceHash": "bee132a83a35925cd37e4c1681ba8395103455781167b3733d4667ae019ff568"
+        },
+        {
+          "id": "mega",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-mega.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 111,
+          "passed": 111,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 11303.5,
+          "resultsMs": 11119,
+          "sourceHash": "bee132a83a35925cd37e4c1681ba8395103455781167b3733d4667ae019ff568"
+        },
+        {
+          "id": "steps",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-steps.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 57,
+          "passed": 57,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 11499.3,
+          "resultsMs": 11315.6,
+          "sourceHash": "bee132a83a35925cd37e4c1681ba8395103455781167b3733d4667ae019ff568"
+        },
+        {
+          "id": "replay",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-replay.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 153,
+          "passed": 153,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 10811,
+          "resultsMs": 10636.5,
+          "sourceHash": "bee132a83a35925cd37e4c1681ba8395103455781167b3733d4667ae019ff568"
+        },
+        {
+          "id": "player",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-player.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 69,
+          "passed": 69,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 139290.2,
+          "resultsMs": 139114.9,
+          "sourceHash": "bee132a83a35925cd37e4c1681ba8395103455781167b3733d4667ae019ff568"
+        }
+      ],
+      "coverage": {
+        "missing": [],
+        "duplicates": [],
+        "unexpected": []
+      },
+      "failed": [
+        {
+          "key": "generator/i18n/9",
+          "shard": "own-fast",
+          "fullName": "i18n > i18n: locale fragments > has no key defined twice (base pack against fragments, or two fragments)",
+          "error": {
+            "name": "AssertionError",
+            "message": "expected Array(162)[{locale: \"en\", key: \"app.heading.seed\", fragment: 23}, {locale: \"en\", key: \"app.status.cancelled\", fragment: 23}, {locale: \"en\", key: \"app.status.failed\", fragment: 23}, {locale: \"en\", key: \"app.announce.ready\", fragment: 23}, {locale: \"en\", key: \"app.announce.approximate\", fragment: 23}, {locale: \"en\", key: \"app.title.result\", fragment: 23}, {locale: \"en\", key: \"app.mode.worker\", fragment: 23}, {locale: \"en\", key: \"app.mode.main\", fragment: 23}, {locale: \"en\", key: \"app.action.unavailable\", fragment: 23}, {locale: \"vi\", key: \"app.heading.seed\", fragment: 23}, {locale: \"vi\", key: \"app.status.cancelled\", fragment: 23}, {locale: \"vi\", key: \"app.status.failed\", fragment: 23}, ...] to equal Array(0)[]",
+            "stack": "AssertionError: expected Array(162)[{locale: \"en\", key: \"app.heading.seed\", fragment: 23}, {locale: \"en\", key: \"app.status.cancelled\", fragment: 23}, {locale: \"en\", key: \"app.status.failed\", fragment: 23}, {locale: \"en\", key: \"app.announce.ready\", fragment: 23}, {locale: \"en\", key: \"app.announce.approximate\", fragment: 23}, {locale: \"en\", key: \"app.title.result\", fragment: 23}, {locale: \"en\", key: \"app.mode.worker\", fragment: 23}, {locale: \"en\", key: \"app.mode.main\", fragment: 23}, {locale: \"en\", key: \"app.action.unavailable\", fragment: 23}, {locale: \"vi\", key: \"app.heading.seed\", fragment: 23}, {locale: \"vi\", key: \"app.status.cancelled\", fragment: 23}, {locale: \"vi\", key: \"app.status.failed\", fragment: 23}, ...] to equal Array(0)[]\n    at api.<computed> [as toEqual] (<repo>\\core\\tests\\harness.js:286:17)\n    at Object.<anonymous> (<repo>\\generator\\tests\\suites\\i18n.test.js:212:27)\n    at invoke (<repo>\\core\\tests\\harness.js:416:18)\n    at runTest (<repo>\\core\\tests\\harness.js:457:18)\n    at Object.run (<repo>\\core\\tests\\harness.js:621:27)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async main (<repo>\\generator\\tests\\node-runner.js:356:19)"
+          }
+        }
+      ],
+      "problems": []
+    },
+    "player": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r6b/quick/player-inventory.json",
+      "inventoryTests": 1683,
+      "sourceHash": "1d0724c34f669fddf4b6d5f5739bb42cd2c9f41332202b60335fe890f02d1dfa",
+      "node": "v26.13.0",
+      "timeFactor": 2,
+      "verdict": "complete-green",
+      "counts": {
+        "total": 1683,
+        "passed": 1683,
+        "failed": 0,
+        "skipped": 0
+      },
+      "shards": [
+        {
+          "id": "all",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/player-all.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 1683,
+          "passed": 1683,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 31618.1,
+          "resultsMs": 31362.3,
+          "sourceHash": "1d0724c34f669fddf4b6d5f5739bb42cd2c9f41332202b60335fe890f02d1dfa"
+        }
+      ],
+      "coverage": {
+        "missing": [],
+        "duplicates": [],
+        "unexpected": []
+      },
+      "failed": [],
+      "problems": []
+    }
+  },
+  "rule": "accepted shards only; key = (app, suite, ordinal) with the full name; every inventory key once"
+}

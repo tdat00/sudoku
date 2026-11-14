@@ -1,0 +1,130 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+steps
+  ok   steps > stepView: the description of the step on show > reads G13 from the saved wire and never regenerates it (a spy on the pipeline) (8 ms)
+  ok   steps > stepView: the description of the step on show > shows nothing without steps, and a hint to use the replay controls at position 0 (280 ms)
+  ok   steps > stepView: the description of the step on show > shows the number, title, summary and sentence of the current step only (2 ms)
+  ok   steps > stepView: the description of the step on show > explains the frames it uses in a legend, and only those (91 ms)
+  ok   steps > stepView: the description of the step on show > follows the language and keeps the current step (468 ms)
+  ok   steps > stepView: the description of the step on show > has a table model for every step: start at 0, zero for the solution, the rating of the result at the end, "before" the counts of the step shown before (1 ms)
+  ok   steps > stepView: the description of the step on show > shows the techniques a step needs, with the uses and score each step added (21 ms)
+  ok   steps > stepView: the description of the step on show > shows the same total at the last step as the score of the summary, whatever its parts (3 ms)
+  ok   steps > stepView: the description of the step on show > builds its container when the page has none, and takes everything away on destroy (1 ms)
+  ok   steps > stepView: the score table of every step > draws the start, the steps before the first score, the scored steps and the final one (the example) (81 ms)
+  ok   steps > stepView: the score table of every step > has a table on every step of the details view, real decreases included (14 ms)
+  ok   steps > stepView: the score table of every step > writes the Total from the score and its change: none, unchanged, a rise or a fall (U+2212) (0 ms)
+  ok   steps > stepView: a board that cannot be rated > says why and lists what the solver attempted: no points, work, score, Total or tooltip (1 ms)
+  ok   steps > stepView: a board that cannot be rated > capped has one sentence and no rows; unverified, ambiguous and the others keep their rows (1 ms)
+  ok   steps > stepView: a board that cannot be rated > a missing final rating and a contradiction have their own sentences; the ambiguity is not repeated (1 ms)
+  ok   steps > stepView: a board that cannot be rated > never asks for a score table of partial counts, and a result without a rating runs no solver (2 ms)
+  ok   steps > stepView: the tiers, the badge and the lines > rounds the ratio of the badge down to one decimal, in the format of the language (1 ms)
+  ok   steps > stepView: the tiers, the badge and the lines > marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view (10.25 s)
+  ok   steps > stepView: the tiers, the badge and the lines > the example: the first rated puzzle, the new hardest technique without a badge, an unchanged total (1 ms)
+  ok   steps > stepView: the tiers, the badge and the lines > also tells a new hardest technique when the score is flat or falls (details view) (3 ms)
+  ok   steps > stepView: the tiers, the badge and the lines > a jump whose hardest technique was already used has no row label and highlights its Total (2 ms)
+  ok   steps > stepView: the callout of a score jump > the example (Classic 9x9 expert, step 4) reads as specified, in English and Vietnamese (1 ms)
+  ok   steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens (3 ms)
+  ok   steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears (3 ms)
+  ok   steps > stepView: the callout of a score jump > the sentences of every class of cause, with the variants of an exchange and a restore (1 ms)
+  ok   steps > stepView: the callout of a score jump > a work-only jump over several moves names no single cause; an unrated position qualifies the claim (0 ms)
+  ok   steps > stepView: the callout of a score jump > describes what the move did: signs, an exchange, clues restored, with the plural of the language (1 ms)
+  ok   steps > stepView: the callout of a score jump > says the work grew when the hardest technique did not change, and uses once / n times (0 ms)
+  ok   steps > stepView: "Why?" lines: the choice, the proof and the effects > tells what the log records about the candidates compared, by kind of choice (1 ms)
+  ok   steps > stepView: "Why?" lines: the choice, the proof and the effects > the goldens whose chosen removal the limited check could not finish say so (Samurai, Mega 16x16) (2 ms)
+  ok   steps > stepView: "Why?" lines: the choice, the proof and the effects > the lighter-techniques sentence only follows a stuck restricted check; the audit scope only ratedOnly (1 ms)
+  ok   steps > stepView: "Why?" lines: the choice, the proof and the effects > groups the effects of the first use by cell and candidates, then the digits placed (1 ms)
+  ok   steps > stepView: "Why?" lines: the choice, the proof and the effects > the first deductions of the goldens: Killer candidates 5, 6 and 8 in one cell, candidate 9 in another (1 ms)
+  ok   steps > stepView: no overclaim and no placeholder in the texts of the goldens > never says a puzzle "cannot be solved without" or "must use", and "at random" only for a random order (40 ms)
+  ok   steps > stepView: the callout, the badge and the legend on the page > puts the callout after the table; "Why?" is a closed details with a summary (5 ms)
+  ok   steps > stepView: the callout, the badge and the legend on the page > explains the frames of a jump in the legend only when the view uses them (2 ms)
+  ok   steps > stepView: the callout, the badge and the legend on the page > a restored culprit gets the restore legend and the restore sentence, never the removal legend (8 ms)
+  ok   steps > stepView: the callout, the badge and the legend on the page > has every new string in both languages with the same placeholders (1 ms)
+  ok   steps > stepView: placeTip > keeps the pop-up below the icon when it fits (0 ms)
+  ok   steps > stepView: placeTip > opens it above the icon when it does not fit below and there is more room above (0 ms)
+  ok   steps > stepView: placeTip > stays below when there is no more room above (a tall pop-up near the top) (0 ms)
+  ok   steps > stepView: placeTip > forgets an earlier choice when the room changes, and ignores a stand-in without layout (0 ms)
+  ok   steps > stepView: chartModel > orders the bars by the technique ladder, whatever the order of the counts (0 ms)
+  ok   steps > stepView: chartModel > draws the real counts of a puzzle, cage techniques included, simplest first (0 ms)
+  ok   steps > stepView: chartModel > scales the bars to the largest count, with a minimum width, inside the track (0 ms)
+  ok   steps > stepView: chartModel > lays the rows out one below the other, with the value at the right edge (0 ms)
+  ok   steps > stepView: chartModel > handles zero, negative, broken and missing counts as an empty chart (0 ms)
+  ok   steps > stepView: chartModel > puts techniques the registry does not know last, by id, and labels with the language or a function (0 ms)
+  ok   steps > stepView: chartModel > still names the seven pipeline steps for other modules (0 ms)
+  ok   steps > explainCard: viewModel > gives all seven steps their title, the three parts and the pseudocode, translated (1 ms)
+  ok   steps > explainCard: viewModel > highlights the line a replay step names, or the line of an event key (2 ms)
+  ok   steps > explainCard: viewModel > lets an explicit line label win over the event key, and null mean "none" (0 ms)
+  ok   steps > explainCard: viewModel > fills the status line from the metrics (zeros for missing ones), and has none without them (0 ms)
+  ok   steps > explainCard: viewModel > follows the language: new text at once, same structure and same highlighted line (0 ms)
+  ok   steps > steps panel and explanation card: texts and style > has every steps.* and explainCard.* key the two files use, in English and Vietnamese (2 ms)
+  ok   steps > steps panel and explanation card: texts and style > uses only colour and board tokens that the token files define in css/steps.css (1 ms)
+  ok   steps > steps panel and explanation card: texts and style > loads without a DOM and refuses to build on nothing (0 ms)
+ok   steps: 57 passed  (11.32 s)
+
+Suites: 1
+Tests:  57 total, 57 passed, 0 failed, 0 skipped
+Time:   11.32 s running tests, 11.50 s total
+Results: docs/difficulty-v3/evidence/MS05r6b/quick/generator-steps.json

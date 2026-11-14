@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 1 passed  (28 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   28 ms running tests, 202 ms total
+Results: docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-98.json

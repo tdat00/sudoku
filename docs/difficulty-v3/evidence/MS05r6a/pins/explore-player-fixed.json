@@ -1,0 +1,202 @@
+{
+ "requests": [
+  {
+   "request": {
+    "variantId": "classic9",
+    "difficulty": "normal",
+    "seed": 3
+   },
+   "generationMs": 263,
+   "positions": 27,
+   "compactSteps": 7,
+   "detailsSteps": 28,
+   "folds": [],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  },
+  {
+   "request": {
+    "variantId": "classic9",
+    "difficulty": "veryEasy",
+    "seed": 1
+   },
+   "generationMs": 2,
+   "positions": 22,
+   "compactSteps": 5,
+   "detailsSteps": 23,
+   "folds": [],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  },
+  {
+   "request": {
+    "variantId": "classic9",
+    "difficulty": "nightmare",
+    "seed": 5
+   },
+   "generationMs": 4419,
+   "positions": 28,
+   "compactSteps": 6,
+   "detailsSteps": 29,
+   "folds": [],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  },
+  {
+   "request": {
+    "variantId": "classic4",
+    "difficulty": "veryEasy",
+    "seed": 2
+   },
+   "generationMs": 1,
+   "positions": 5,
+   "compactSteps": 3,
+   "detailsSteps": 6,
+   "folds": [],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  },
+  {
+   "request": {
+    "variantId": "killer",
+    "difficulty": "easy",
+    "seed": 1
+   },
+   "generationMs": 29,
+   "positions": 41,
+   "compactSteps": 8,
+   "detailsSteps": 43,
+   "folds": [],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  },
+  {
+   "request": {
+    "variantId": "killer",
+    "difficulty": "normal",
+    "seed": 2
+   },
+   "generationMs": 418,
+   "positions": 38,
+   "compactSteps": 10,
+   "detailsSteps": 40,
+   "folds": [],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  },
+  {
+   "request": {
+    "variantId": "greaterThan",
+    "difficulty": "normal",
+    "seed": 4
+   },
+   "generationMs": 36,
+   "positions": 105,
+   "compactSteps": 6,
+   "detailsSteps": 107,
+   "folds": [
+    {
+     "i": 2,
+     "position": 69,
+     "kind": "mixed",
+     "score": 123,
+     "key": "replay.folded.peak",
+     "peak": 127,
+     "revealed": null,
+     "sentence": "Clear the grid, then show 28 clues. Try to remove 70 signs: 68 signs removed, 2 signs kept because without them the puzzle would have more than one solution. Within this step, the score reached 127."
+    },
+    {
+     "i": 3,
+     "position": 99,
+     "kind": "signDig",
+     "score": 148,
+     "key": "replay.folded.peak",
+     "peak": 149,
+     "revealed": null,
+     "sentence": "Try to remove 33 signs: 30 signs removed, 3 signs kept because the puzzle still needs them. Within this step, the score reached 149."
+    },
+    {
+     "i": 4,
+     "position": 104,
+     "kind": "signDig",
+     "score": 282,
+     "key": "replay.folded.peak",
+     "peak": 287,
+     "revealed": null,
+     "sentence": "Remove 5 signs: the puzzle can still be solved without them. Within this step, the score reached 287."
+    }
+   ],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  },
+  {
+   "request": {
+    "variantId": "jigsaw9",
+    "difficulty": "easy",
+    "seed": 6
+   },
+   "generationMs": 11,
+   "positions": 25,
+   "compactSteps": 7,
+   "detailsSteps": 26,
+   "folds": [],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  },
+  {
+   "request": {
+    "variantId": "wordoku",
+    "difficulty": "easy",
+    "seed": 1
+   },
+   "generationMs": 159,
+   "positions": 25,
+   "compactSteps": 7,
+   "detailsSteps": 26,
+   "folds": [],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  },
+  {
+   "request": {
+    "variantId": "mega12",
+    "difficulty": "easy",
+    "seed": 2
+   },
+   "generationMs": 5,
+   "positions": 43,
+   "compactSteps": 9,
+   "detailsSteps": 44,
+   "folds": [],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  },
+  {
+   "request": {
+    "variantId": "mega16",
+    "difficulty": "veryEasy",
+    "seed": 1
+   },
+   "generationMs": 7,
+   "positions": 23,
+   "compactSteps": 5,
+   "detailsSteps": 24,
+   "folds": [],
+   "multiMoveJumps": [],
+   "viewDependentJumps": [],
+   "newHardestFlatOrLower": []
+  }
+ ],
+ "reveal": [],
+ "firstReveal": null
+}

@@ -1,0 +1,5 @@
+mega12 cells 144 declared 144 fullGrid ms 4 len 144
+mega16 cells 256 declared 256 fullGrid ms 2 len 256
+butterfly cells 144 declared 144 fullGrid ms 2 len 144
+samurai cells 369 declared 369 fullGrid ms 2 len 369
+MS05r5p exit=0 seconds=0.192

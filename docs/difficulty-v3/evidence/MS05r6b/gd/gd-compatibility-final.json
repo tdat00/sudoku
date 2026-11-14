@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "kind": "manual-compatibility",
+  "task": "MS05r6b",
+  "rule": "test-only exact-diff proof for the classic9 GD results (22 executed shards of gd/gd-manifest.json)",
+  "mode": "gd",
+  "originalFingerprint": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "currentFingerprint": "549646eef22a61256c7b26d3840a40a5697025e00092a9ad2b75571c512ea18e",
+  "fingerprintFiles": {
+    "before": 167,
+    "now": 167
+  },
+  "listings": {
+    "before": "docs/difficulty-v3/evidence/MS05r6b/gd/manual-current-listing.json",
+    "now": "docs/difficulty-v3/evidence/MS05r6b/gd/manual-current-listing-final.json"
+  },
+  "b3Results": {
+    "cells": 22,
+    "kinds": {
+      "gd": 22
+    },
+    "statuses": {
+      "ran": 22
+    },
+    "identities": [
+      {
+        "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+        "node": "v26.13.0",
+        "timeFactor": 2,
+        "complete": "true",
+        "sourceStable": "true",
+        "cells": 22
+      }
+    ],
+    "manifest": "docs/difficulty-v3/evidence/MS05b3/manifest.json",
+    "outcomes": "docs/difficulty-v3/evidence/MS05b3/outcomes.json",
+    "deferred": "docs/difficulty-v3/evidence/MS05b3/deferred-cv3.json",
+    "resultsUnchanged": "preserved byte for byte; read, never written"
+  },
+  "changedFiles": {
+    "changed": 2,
+    "added": 0,
+    "removed": 0,
+    "byCategory": {
+      "quick-suite": 2
+    },
+    "rows": [
+      {
+        "file": "generator/tests/suites/cache.test.js",
+        "status": "changed",
+        "category": "quick-suite",
+        "beforeHash": "fe0721c4c63073ffadf0766dbb4fb22e0201aa60c078050e72338f83ea7e17f6",
+        "nowHash": "bf2728aaf5ec36d692ed866b2735d97c8b2246699af5641c763cf4d19735fa01"
+      },
+      {
+        "file": "generator/tests/suites/history.test.js",
+        "status": "changed",
+        "category": "quick-suite",
+        "beforeHash": "0bfa756cefc97ec3742f93aa9da32f11c22909180c697408f4019bba49d4afc7",
+        "nowHash": "809c8ff28d5cc798796593818e72b872f4cf53426b0793a9841b83f1bfcb8a8b"
+      }
+    ]
+  },
+  "runtimeFile": {
+    "path": "generator/js/ui/store.js",
+    "onlyChangedRuntimeSource": true,
+    "exactPatch": "docs/difficulty-v3/evidence/MS05r5p/legacy-8-fix/store-diff.patch",
+    "patchChangeLines": 14,
+    "snapshotDiff": "docs/difficulty-v3/evidence/MS05r6b/deep/snapshot-diff.json",
+    "sameChangeLinesAsSnapshotDiff": true,
+    "producerSnapshot": "refs/dv3-wip/MS05r5m-done-20261114-0230 (ad77fdf)",
+    "storeSha256Lf": "6c798163555def6bfc826d30d26fc95c07917a2754e37756020052a4b73488cf"
+  },
+  "executionScan": {
+    "directories": [
+      "generator/js/engine",
+      "generator/js/variants",
+      "core/js",
+      "generator/tests/fixtures/manual-corpus.js",
+      "generator/tests/manual (all but perf.test.js, not part of any b3 or GD selection)"
+    ],
+    "filesScanned": 49,
+    "tokens": [
+      "storedAttempts",
+      "SG.store",
+      "localStorage",
+      "SG.fixtures.regression",
+      "SG.fixtures.replayWire",
+      "SG.fixtures.replayGoldens",
+      "SG.fixtures.replayRecording",
+      "SG.fixtures.toolRecords"
+    ],
+    "hits": [
+      {
+        "file": "generator/tests/manual/wordoku.test.js",
+        "token": "localStorage"
+      }
+    ],
+    "hitsExplained": [
+      {
+        "file": "generator/tests/manual/wordoku.test.js",
+        "token": "localStorage",
+        "reason": "a list of forbidden tokens that the wordoku suite checks the variant source against"
+      }
+    ],
+    "unexplainedHits": []
+  },
+  "proof": [
+    "The 22 results carry one fingerprint (d33389ac), Node, time factor and stability.",
+    "The fingerprint files that differ now are listed with their category; none is a manual suite or manual helper, an engine, a variant or a core source.",
+    "The only changed runtime source is generator/js/ui/store.js, whose diff has the same +/- lines as store-diff.patch (storedAttempts: an unmarked legacy 8 is the default on every board).",
+    "No engine, variant, core, manual-suite or manual-helper code references SG.store, storedAttempts, localStorage or the changed data fixtures: SG.pipeline.run and the manual corpora do not read sg.lastConfig.v1.",
+    "The other changes are documents, quick suites, recorder and tool scripts and published data fixtures (E publication), which no selected manual suite executes or reads."
+  ],
+  "accounted": true,
+  "problems": []
+}

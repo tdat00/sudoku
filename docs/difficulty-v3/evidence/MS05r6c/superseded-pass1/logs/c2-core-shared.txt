@@ -1,0 +1,24 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (60 ms)
+ok   board-view: 37 passed  (78 ms)
+ok   constraints: 43 passed  (79 ms)
+ok   exchange: 20 passed  (226 ms)
+ok   harness: 25 passed  (2.06 s)
+ok   logical-solver: 100 passed  (287 ms)
+ok   model: 49 passed  (35 ms)
+ok   solver: 50 passed  (2.68 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.83 s)
+ok   tech-chain: 62 passed  (6.47 s)
+ok   tech-fish: 106 passed  (6.33 s)
+ok   tech-subset: 100 passed  (884 ms)
+ok   tech-wing: 168 passed  (1.60 s)
+ok   techniques: 165 passed  (1.49 s)
+ok   wordbook: 7 passed  (8 ms)
+
+Suites: 16
+Tests:  1143 total, 1143 passed, 0 failed, 0 skipped
+Time:   24.13 s running tests, 24.41 s total
+Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-core-shared.json

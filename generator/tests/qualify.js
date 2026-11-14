@@ -16,7 +16,11 @@
  * level is exactly the requested one, without the warning 'difficulty.approximate', and the result is `exact`
  * (rating v3: the proof also needs a technique of the tier of the level; an absent flag is a miss, a shallow
  * result in the band is not a hit). Timeouts, errors,
- * approximate and unrated results are misses, and every request counts, also in the time percentile.
+ * approximate and unrated results are misses, and every request counts, also in the time percentile. A request
+ * never passes `maxAttempts`: it takes the default number of attempts of the size of its board
+ * (`SG.digger.defaultMaxAttempts`: 8 up to 81 cells, 4 up to 144, 2 above), so a large board that meets no
+ * exact puzzle in those attempts ends in the fallback, which is a miss, and no level is hidden or offered before
+ * this qualification decides (difficulty v3, CV6-03).
  *  - 36 or more hits of 40, and p95 within the budget: the level is offered.
  *  - 30 to 35 hits: 60 more seeds; offered with at least 90 hits of the 100 and p95 (of all 100) within the
  *    budget.

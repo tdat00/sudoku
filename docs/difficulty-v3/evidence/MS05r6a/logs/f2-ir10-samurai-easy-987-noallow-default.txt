@@ -1,0 +1,1 @@
+samurai/easy#987 allowance none, attempts default: hash 87f119dafa69c7a6, 1 attempt(s), exact true, 439 ms; record ..\docs\difficulty-v3\evidence\MS05r6a\diagnostic\samurai-easy-987-noallow-default.json

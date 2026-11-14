@@ -1,0 +1,2 @@
+Inventory: 56 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05r5m/preflight/generator-steps.json

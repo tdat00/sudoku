@@ -1,0 +1,207 @@
+{
+  "rev": "HEAD",
+  "seedsSame": true,
+  "combinationsSame": true,
+  "totals": {
+    "keys": 520,
+    "changedVsHead": 9,
+    "b1Interim": 149
+  },
+  "rows": [
+    {
+      "key": "classic4/veryEasy",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 0,
+      "largeBoard": false
+    },
+    {
+      "key": "classic6/veryEasy",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 0,
+      "largeBoard": false
+    },
+    {
+      "key": "classic6/hard",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 0,
+      "largeBoard": false
+    },
+    {
+      "key": "classic9/veryEasy",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 0,
+      "largeBoard": false
+    },
+    {
+      "key": "classic9/easy",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 19,
+      "largeBoard": false
+    },
+    {
+      "key": "classic9/normal",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 13,
+      "largeBoard": false
+    },
+    {
+      "key": "classic9/hard",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 0,
+      "largeBoard": false
+    },
+    {
+      "key": "classic9/expert",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 0,
+      "largeBoard": false
+    },
+    {
+      "key": "classic9/master",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 7,
+      "largeBoard": false
+    },
+    {
+      "key": "classic9/nightmare",
+      "changed": 1,
+      "indexes": [
+        4
+      ],
+      "b1Changed": 6,
+      "largeBoard": false
+    },
+    {
+      "key": "mega12/normal",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 5,
+      "largeBoard": true
+    },
+    {
+      "key": "mega16/easy",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 1,
+      "largeBoard": true
+    },
+    {
+      "key": "diagonalX/easy",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 14,
+      "largeBoard": false
+    },
+    {
+      "key": "diagonalX/nightmare",
+      "changed": 2,
+      "indexes": [
+        3,
+        15
+      ],
+      "b1Changed": 11,
+      "largeBoard": false
+    },
+    {
+      "key": "hyper/hard",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 0,
+      "largeBoard": false
+    },
+    {
+      "key": "jigsaw9/normal",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 10,
+      "largeBoard": false
+    },
+    {
+      "key": "jigsaw9/master",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 8,
+      "largeBoard": false
+    },
+    {
+      "key": "killer/easy",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 0,
+      "largeBoard": false
+    },
+    {
+      "key": "killer/hard",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 0,
+      "largeBoard": false
+    },
+    {
+      "key": "greaterThan/normal",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 10,
+      "largeBoard": false
+    },
+    {
+      "key": "greaterThan/hard",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 2,
+      "largeBoard": false
+    },
+    {
+      "key": "samurai/easy",
+      "changed": 4,
+      "indexes": [
+        4,
+        13,
+        14,
+        16
+      ],
+      "b1Changed": 19,
+      "largeBoard": true
+    },
+    {
+      "key": "sohei/veryEasy",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 0,
+      "largeBoard": true
+    },
+    {
+      "key": "butterfly/normal",
+      "changed": 2,
+      "indexes": [
+        13,
+        19
+      ],
+      "b1Changed": 10,
+      "largeBoard": true
+    },
+    {
+      "key": "flower/normal",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 8,
+      "largeBoard": true
+    },
+    {
+      "key": "wordoku/normal",
+      "changed": 0,
+      "indexes": [],
+      "b1Changed": 6,
+      "largeBoard": false
+    }
+  ]
+}

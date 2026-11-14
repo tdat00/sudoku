@@ -18,7 +18,7 @@
   approximately 2-3 hands-on hours plus 20-45 machine minutes.
 - [MS05r6b](MS05r6b-quick-gd-and-combined-acceptance.md) owns every final quick/GD assertion,
   early-manual reconciliation, measured standing quick cost/AGENTS/guides and the **sole
-  combined audit**, including r5m's deep records and b3's own CV3 checks of reused puzzles.
+  combined audit**, including r5m's deep records and b3's live CV3 outcomes (Addendum B1).
   Approximately 1.5-2.5 hands-on hours plus 25-60 machine minutes.
 - [MS05r6c](MS05r6c-ci-test-tiers.md) closes bounded quick CI after r6b, inside the combined commit.
   Its body states that pause commit a7f6660 was not green and was not acceptance.

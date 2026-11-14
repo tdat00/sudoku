@@ -1,0 +1,2 @@
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+wrote generator/tests/fixtures/replay-wire.js (21 lines) from the merged ledgers

@@ -306,6 +306,7 @@
       i18nKey: 'variant.' + id,
       group: 'multigrid',
       digits: DIGITS,
+      cellCount: GEOMETRIES[id].cells,
       difficultySupport: levels,
       clueFloorScale: CLUE_FLOOR_SCALE,
       defaultSymbolMode: 'digits',

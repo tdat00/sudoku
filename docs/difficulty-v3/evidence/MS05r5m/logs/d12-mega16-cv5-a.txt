@@ -1,0 +1,4 @@
+mega16-cv5-a: outcome ok, correctness pass, exact false, attempts 2 of 2, warnings difficulty.approximate,difficulty.shallow
+  generation 107.753 s, checks 0.013 s, guard margin 392.234 s of 500.000 s, allowance 256
+record: docs/difficulty-v3/evidence/MS05r5m/records/mega16-cv5-a.json
+MS05r5m exit=0 seconds=108.245

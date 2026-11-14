@@ -1,0 +1,19 @@
+[
+  {
+    "label": "gd-classic9-nightmare",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > nightmare >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-nightmare.json"
+    ],
+    "projectionSeconds": 449,
+    "projectionBasis": "MEASURED, pooled: the pilot (gd/pilot.json: 8 same-seed requests, mean 4,128 ms) and MS05r4 selection/256 (12 requests of classic9 nightmare at the same default attempts and allowance, mean 4,554 ms): 20 requests, mean 4.384 s x 100 requests = 438.4 s, plus 10 s for the checks of 100 puzzles and the start-up = 448.4 s, rounded up to 449 s, just under the 450 s limit, so launched alone under the unchanged 540 s ceiling",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-nightmare.json"
+  }
+]

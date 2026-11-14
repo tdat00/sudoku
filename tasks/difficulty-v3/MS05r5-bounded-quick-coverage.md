@@ -220,14 +220,14 @@ the combined commit. No independent commit or backup/ref action.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Step evidence complete (S-OD2; no acceptance or commit of its own; the combined commit follows MS05r6b and MS05r6c) |
+| Start | 2026-11-13 23:19 (+07:00) |
+| End | 2026-11-14 00:11 developer; 00:25 orchestrator review and backup ref |
+| Duration | 52 min developer (lock waits up to 270 s per command while Pentomino's MP12b1 held the slot; the first pass of five records was redone after a later `harness.test.js` change); about 12 min review |
+| Model | claude-sonnet-5.5 (developer); orchestrator review claude-opus-5.5 |
+| Token usage | 166 model calls; 55,626,130 input tokens (55,121,856 cache reads); 241,845 output tokens |
+| AI credits | about 919 (developer) |
+| Verification | Developer (`evidence/MS05r5/runs.jsonl`): Generator tooling 122/122; Player tooling 114/114; Generator inventory 3,170 tests (48 suites, 28 benchmarks, registration 0.49 s); Player inventory 1,683 tests (30 suites, 19 benchmarks, 0.25 s); mega12 exact selection 2 tests; `manifest.js --check` 0 missing, 0 duplicate, 0 unexpected in both apps (a scratch run showed it catches each); identities Generator `dfc34b67…`, Player `0c9c78ce…`. Orchestrator re-runs under the lock: Generator `harness,help,ui-contract` 122/122 (6.5 s); Player `harness,help,ui-contract` 114/114 (4.7 s) |
+| Acceptance | MS05r5-B01, B02 and T01..T04 met. `SG.test.list` (the read-only twin of `run`, one shared walk; `ordinal` per file suite in every result row), `exact` selection, registration errors reported; `core/tests/node-evidence.js` (Node only, in no source list) gives both runners `--list-tests`, `--exact` and `--results` (project-relative new `.json` files, never overwritten, `complete` false after a bail, a registration error or a source change; a zero selection exits 1). Bounded full-quick plan: Generator seven shards (core-shared 1,143, own-fast 1,490, pipeline 150, mega 111, steps 56, replay 152, player 68), projected 1,740 s in all (four shards are unmeasured ceilings), Player one shard 1,683 (60 s, stale); every quick row in exactly one shard. No test, guard, seed, factor or skip changed. Documents: both developer guides, `generator/design.md`, `player/design.md`, `notes.md` |
+| Issues & resolutions | (1) The eight shard preflights (registration only, 0.27-0.47 s each) ran without the lock: accepted, under the 10-second rule of check-list §7. (2) `docs/architecture.md` did not name `core/tests/node-evidence.js` (outside the developer's file list): the orchestrator added it to the `core/tests/` row. (3) Five first-pass records were superseded by a later `harness.test.js` edit and redone; kept in `runs-pass1-superseded.jsonl`. (4) No quick suite beyond `harness`, `help` and `ui-contract` ran: nothing claims a quick-set pass (MS05r6b runs the shards) |
+| Handoff | MS05r5m: the mega Nightmare rows are `mega#76`/`#77` (mega12) and `#92`/`#93` (mega16), Hell 1 rows `#78`/`#79` and `#94`/`#95`; the exact/results flags are available. MS05r6b: the shard plan and the expensive registrations (315 Generator tests at 120 s, 69 at 60 s). Items: S-AV02, S-AV03 and S-AV08 updated (projections only); S-AV01, S-AV04..S-AV07 carried |

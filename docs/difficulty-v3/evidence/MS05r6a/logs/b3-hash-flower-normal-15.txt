@@ -1,0 +1,2 @@
+  flower/normal: seeds 1597, 2584, 4181, 6765, 10946 (0.7 s)
+recorded 5 of 520 keys (flower/normal, seed indexes 15-19 (seeds 1597, 2584, 4181, 6765, 10946)) in docs/difficulty-v3/evidence/MS05r6a/hashes/flower-normal-15.json; a ledger is one shard, merge them all with --hash-merge

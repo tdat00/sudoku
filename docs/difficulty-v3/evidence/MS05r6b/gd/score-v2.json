@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > difficulty: the score of rating v2","exact":null,"count":15},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 310.1,
+  "results": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 127.7,
+    "tests": [
+      {"suite":"difficulty","name":"is round(80E/(E+40) + P + 0.25 P log2(1 + W/P)) with the weights of section 5.2","fullName":"difficulty > difficulty: the score of rating v2 > is round(80E/(E+40) + P + 0.25 P log2(1 + W/P)) with the weights of section 5.2","status":"pass","ms":5.954,"reason":"","error":null,"ordinal":31},
+      {"suite":"difficulty","name":"has the weight table of section 5.2, and a technique without a weight is an error","fullName":"difficulty > difficulty: the score of rating v2 > has the weight table of section 5.2, and a technique without a weight is an error","status":"pass","ms":0.59,"reason":"","error":null,"ordinal":32},
+      {"suite":"difficulty","name":"reproduces the worked examples: classic9 499 and Samurai 633","fullName":"difficulty > difficulty: the score of rating v2 > reproduces the worked examples: classic9 499 and Samurai 633","status":"pass","ms":10.814,"reason":"","error":null,"ordinal":33},
+      {"suite":"difficulty","name":"is pure: the same empty cells and technique counts give the same score on every board","fullName":"difficulty > difficulty: the score of rating v2 > is pure: the same empty cells and technique counts give the same score on every board","status":"pass","ms":2.085,"reason":"","error":null,"ordinal":34},
+      {"suite":"difficulty","name":"never decreases when a count, the empty cells or the weight of the hardest technique grows","fullName":"difficulty > difficulty: the score of rating v2 > never decreases when a count, the empty cells or the weight of the hardest technique grows","status":"pass","ms":12.454,"reason":"","error":null,"ordinal":35},
+      {"suite":"difficulty","name":"does not depend on the order of the steps, only on how often each technique was used","fullName":"difficulty > difficulty: the score of rating v2 > does not depend on the order of the steps, only on how often each technique was used","status":"pass","ms":0.153,"reason":"","error":null,"ordinal":36},
+      {"suite":"difficulty","name":"rates a puzzle that needs only singles by its empty cells: at most easy on any board","fullName":"difficulty > difficulty: the score of rating v2 > rates a puzzle that needs only singles by its empty cells: at most easy on any board","status":"pass","ms":0.108,"reason":"","error":null,"ordinal":37},
+      {"suite":"difficulty","name":"counts one expensive step in full on any board (no technique floor, no size scaling)","fullName":"difficulty > difficulty: the score of rating v2 > counts one expensive step in full on any board (no technique floor, no size scaling)","status":"pass","ms":0.262,"reason":"","error":null,"ordinal":38},
+      {"suite":"difficulty","name":"picks the hardest technique by weight, then by the larger registration order, then by id","fullName":"difficulty > difficulty: the score of rating v2 > picks the hardest technique by weight, then by the larger registration order, then by id","status":"pass","ms":0.236,"reason":"","error":null,"ordinal":39},
+      {"suite":"difficulty","name":"gives a puzzle without a complete proof no level and no score (it is never a hit)","fullName":"difficulty > difficulty: the score of rating v2 > gives a puzzle without a complete proof no level and no score (it is never a hit)","status":"pass","ms":0.106,"reason":"","error":null,"ordinal":40},
+      {"suite":"difficulty","name":"carries the metadata of section 5.4: rawScore = score, ratingVersion 2, the counts","fullName":"difficulty > difficulty: the score of rating v2 > carries the metadata of section 5.4: rawScore = score, ratingVersion 2, the counts","status":"pass","ms":0.101,"reason":"","error":null,"ordinal":41},
+      {"suite":"difficulty","name":"returns a confidence between 0 and 1: 0 on a band edge, high deep inside the band","fullName":"difficulty > difficulty: the score of rating v2 > returns a confidence between 0 and 1: 0 on a band edge, high deep inside the band","status":"pass","ms":0.269,"reason":"","error":null,"ordinal":42},
+      {"suite":"difficulty","name":"does not depend on whether the solver collected its steps","fullName":"difficulty > difficulty: the score of rating v2 > does not depend on whether the solver collected its steps","status":"pass","ms":92.86,"reason":"","error":null,"ordinal":43},
+      {"suite":"difficulty","name":"rates the same report the same whichever way it is classified","fullName":"difficulty > difficulty: the score of rating v2 > rates the same report the same whichever way it is classified","status":"pass","ms":0.271,"reason":"","error":null,"ordinal":44},
+      {"suite":"difficulty","name":"proves uniqueness only with a complete proof that assumes none","fullName":"difficulty > difficulty: the score of rating v2 > proves uniqueness only with a complete proof that assumes none","status":"pass","ms":0.16,"reason":"","error":null,"ordinal":45}
+    ],
+    "suites": [
+      {"name":"difficulty","total":15,"passed":15,"failed":0,"skipped":0,"ms":127.63}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > difficulty: the score of rating v2","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\score-v2.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

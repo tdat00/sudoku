@@ -17,8 +17,8 @@ r5p changes only the size-dependent attempt policy; all six selection boards sti
 
 [MS05r6a](MS05r6a-final-evidence-and-pins.md) persists G13 first, then rechecks the approved
 contracts and records 520/5/14 E/pins. [MS05r6b](MS05r6b-quick-gd-and-combined-acceptance.md)
-reconciles r5m deep records, b3 CV3 reuse/items, classic9 GD and full quick evidence.
-r6c CI follows inside the same combined commit; MS05e waits for it. Performance-only stops in
+reconciles r5m deep records, b3's live CV3 outcomes (Addendum B1) and items, classic9 GD and full quick
+evidence. r6c CI follows inside the same combined commit; MS05e waits for it. Performance-only stops in
 the archived body below are superseded by S-OD4; a changed final choice at MS18b still needs a decision.
 
 | Retained requirement | Current evidence owner |

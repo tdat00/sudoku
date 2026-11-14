@@ -57,14 +57,15 @@
       GOLDENS.forEach(function (g) { expect(Object.keys(g.request)).toEqual(['variantId', 'difficulty', 'seed']); });
     });
 
-    it('keeps the four wire requests G09-G12 of the old recorder and the saved data of exactly those', function () {
-      expect(RR.WIRE_IDS).toEqual(['G09', 'G10', 'G11', 'G12']);
-      expect(Object.keys(WIRE)).toEqual(RR.WIRE_IDS);
-      expect(RR.WIRE_IDS.map(function (id) {
-        var r = golden(id).request;
-        return [id, r.variantId, r.difficulty, r.seed];
-      })).toEqual(REQUESTS.slice(8, 12));
-    });
+    it('keeps the five wire requests G09-G13 (G13 saved since MS05r6a) and the saved data of exactly those',
+      function () {
+        expect(RR.WIRE_IDS).toEqual(['G09', 'G10', 'G11', 'G12', 'G13']);
+        expect(Object.keys(WIRE)).toEqual(RR.WIRE_IDS);
+        expect(RR.WIRE_IDS.map(function (id) {
+          var r = golden(id).request;
+          return [id, r.variantId, r.difficulty, r.seed];
+        })).toEqual(REQUESTS.slice(8, 13));
+      });
 
     it('lists the fields of a golden record in the schema order of the fixture', function () {
       expect(RR.FIELDS).toEqual(['id', 'request', 'today', 'counts', 'board', 'rows', 'details', 'alive', 'folds',
@@ -425,7 +426,7 @@
       expect(RR.goldenOf(ENTRY, analysis, classic9()).board.log).toBe('mismatch');
     });
 
-    it('projects the analysis of the saved results G09-G12 to exactly their golden records', function () {
+    it('projects the analysis of the saved results G09-G13 to exactly their golden records', function () {
       RR.WIRE_IDS.forEach(function (id) {
         var result = R.fromPlainWire(WIRE[id]);
         var record = RR.goldenOf({ id: id, request: golden(id).request, today: golden(id).today },
@@ -819,16 +820,17 @@
       var goldens = identityOf('replay-goldens');
       var wire = identityOf('replay-fixtures');
       expect(goldens.out).toContain('tests/replay-goldens.js: 14 records, kind replay-goldens');
-      expect(wire.out).toContain('tests/replay-fixtures.js: 4 records, kind replay-wire');
+      expect(wire.out).toContain('tests/replay-fixtures.js: 5 records, kind replay-wire');
       expect(goldens.out).toContain('  G14 mega16 hell2 12');
       expect(wire.out).toContain('  G12 greaterThan hard 3115968914');
+      expect(wire.out).toContain('  G13 samurai nightmare 42');
       expect(goldens.source).toBe(wire.source);
       expect(goldens.manifest).not.toBe(wire.manifest);
       expect(tool('replay-goldens', ['--list']).out).toBe(goldens.out);
       var help = tool('replay-goldens', ['--help']);
       expect(help.code).toBe(0);
       expect(help.out).toContain('--merge=<directory>');
-      expect(tool('replay-fixtures', ['--help']).out).toContain('(no option)           generate the 4 requests');
+      expect(tool('replay-fixtures', ['--help']).out).toContain('(no option)           generate the 5 requests');
     });
 
     it('refuses conflicting options, bad paths and partial writes, and leaves the fixtures byte for byte', function () {
@@ -842,7 +844,7 @@
         ['replay-goldens', ['--record=' + absolute]], ['replay-goldens', ['--record=../../outside.json']],
         ['replay-goldens', ['--record=tests/artifacts/x.txt']], ['replay-goldens', ['--merge=tests/nonexistent']],
         ['replay-fixtures', ['--ids=G09']], ['replay-fixtures', ['--write', '--ids=G09,G10']],
-        ['replay-fixtures', ['--ids=G13', '--record=tests/artifacts/x.json']], ['replay-fixtures', ['--bogus']]
+        ['replay-fixtures', ['--ids=G14', '--record=tests/artifacts/x.json']], ['replay-fixtures', ['--bogus']]
       ].forEach(function (c) {
         var run = tool(c[0], c[1]);
         expect(run.code).toBe(1);
@@ -924,7 +926,7 @@
       });
     });
 
-    it('rebuilds the saved wire file byte for byte from its four records (wire)', function () {
+    it('rebuilds the saved wire file byte for byte from its five records (wire)', function () {
       inSandbox(function (host, dir) {
         var run = function (extra) { return tool('replay-fixtures', ['--merge=' + SANDBOX].concat(extra)); };
         host.fs.writeFileSync(host.path.join(dir, 'wire.json'), ledgerFor('replay-fixtures', RR.WIRE_IDS,

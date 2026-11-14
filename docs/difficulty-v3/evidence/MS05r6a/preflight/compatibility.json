@@ -1,0 +1,482 @@
+{
+  "schema": 1,
+  "kind": "final-source-compatibility",
+  "task": "MS05r6a",
+  "rows": [
+    {
+      "id": "g13-120s-guard",
+      "check": "G13 (samurai Nightmare seed 42) generated once under the 120,000 ms recorder guard, default attempts",
+      "priorEvidence": {
+        "path": "docs/difficulty-v3/evidence/MS05r4/preflight/G13.json",
+        "sha256": "35fc76bbdd3b67c84d326cec61bbb90d2d600412e00d317b2aa40bb1c5333792",
+        "task": "MS05r4",
+        "sourceHash": "9a833d9376381c6f9e2df4c5a79aba981bbd8a3dafce9e572ff2641bd61759ce",
+        "maxAttempts": 8,
+        "allowance": {
+          "text": "256",
+          "shallowSearchRatings": 256
+        },
+        "guardMs": 120000,
+        "node": "v26.13.0",
+        "outcome": "ok",
+        "wallMs": 104711.508,
+        "attempts": 8,
+        "score": 1637,
+        "scriptHash": "eedeff26d9578ba3c1e3ed2d1d85683e52f498507829791221c8698358b538c4"
+      },
+      "currentInputIdentities": {
+        "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+        "maxAttempts": 2,
+        "allowance": {
+          "text": "256",
+          "shallowSearchRatings": 256
+        },
+        "guardMs": 120000,
+        "node": "v26.13.0",
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": "42"
+        },
+        "scriptHash": "eedeff26d9578ba3c1e3ed2d1d85683e52f498507829791221c8698358b538c4",
+        "machine": {
+          "platform": "win32",
+          "arch": "x64",
+          "cpu": "AMD EPYC 7763 64-Core Processor",
+          "cores": 16,
+          "memoryGiB": 64
+        },
+        "sameMachine": true,
+        "sameScript": true,
+        "sameRequest": true
+      },
+      "compatible": false,
+      "reason": "the default attempts of a 369-cell board went from 8 to 2 (MS05r5p) and the engine and UI sources changed (sourceHash 9a833d93 to a073f9bd): the r4 eight-attempt preflight cannot stand for the current default",
+      "action": "rerun",
+      "effectiveEvidence": {
+        "path": "docs/difficulty-v3/evidence/MS05r6a/preflight/G13.json",
+        "sha256": "e90d832ee99573cc0082479268c5b3caf1050e1572bbaecd5b7036f9cbfa5b05",
+        "log": "docs/difficulty-v3/evidence/MS05r6a/logs/a01-g13-preflight.txt",
+        "run": {
+          "label": "a01-g13-preflight",
+          "task": "MS05r6a",
+          "nodeArgs": [
+            "tests\\artifacts\\difficulty-v3\\MS05r4\\g13-closure.cjs",
+            "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\preflight\\G13.json"
+          ],
+          "allowExit1": false,
+          "startedAt": "2026-11-14T00:23:25.0165850Z",
+          "exit": 0,
+          "nodeSeconds": 22.352,
+          "wallSeconds": 87.558,
+          "lockWaitSeconds": 65.206,
+          "failure": null
+        }
+      },
+      "outcome": "ok: 21.872 s of the 120 s guard (18.2 %), 2 attempts, score 1637, exact false, warnings difficulty.approximate + difficulty.shallow"
+    },
+    {
+      "id": "mega-deep-14-records",
+      "check": "the fourteen independent default-attempt mega Nightmare requests of MS05r5m (seeds 1-4 and CV5 3/3/4 per board)",
+      "priorEvidence": {
+        "directory": "docs/difficulty-v3/evidence/MS05r5m/records",
+        "records": 14,
+        "reconciliation": "docs/difficulty-v3/evidence/MS05r5m/reconciled.json",
+        "reconciliationSha256": "15aff736498543e461d3709865a7b212c8b85123ee4b5f2cd2be1ba6ade097a2",
+        "identity": {
+          "sourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "toolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "node": "v26.13.0",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "allowance": 256,
+          "budgetMs": 500000,
+          "checksVersion": 1,
+          "currentMatches": {
+            "sourceHash": true,
+            "toolHash": true
+          }
+        },
+        "recordDigests": [
+          {
+            "file": "mega12-cv5-a.json",
+            "sha256": "36576f35ff6fd58e173f8ac0f67504f4e97693694062d7d11a93eaeb3ac1be42"
+          },
+          {
+            "file": "mega12-cv5-b.json",
+            "sha256": "2d095e1d63dbbabdf2ab59762606c7773aaab505db5d17907388498a52b316b8"
+          },
+          {
+            "file": "mega12-cv5-other.json",
+            "sha256": "6578059010755e0a6f567d6c4441c1e7294da2987f6d653f9ae1ee403e7de0ac"
+          },
+          {
+            "file": "mega12-invariant-1.json",
+            "sha256": "05213ed4304f3c883dd4aecafb0ac7eec55b5ac938cd9ee13bc7ced9cd16d917"
+          },
+          {
+            "file": "mega12-invariant-2.json",
+            "sha256": "338480fc8dbdafba7a142a19bbed7a2c48e6be4176fb55abb7fbc37264f5b13b"
+          },
+          {
+            "file": "mega12-invariant-3.json",
+            "sha256": "4b1db5ce15fd268653ca7caf4fe0270860a055f0b5771e7d670b6546e326a36d"
+          },
+          {
+            "file": "mega12-invariant-4.json",
+            "sha256": "8fea109410c0869eb08c7b1189c104924cd20681f38c8078bd55a9be01ad2bed"
+          },
+          {
+            "file": "mega16-cv5-a.json",
+            "sha256": "3306bf5e66be7082af622fe8548835dd719334e34a19adcdf6daeaf48b650bcb"
+          },
+          {
+            "file": "mega16-cv5-b.json",
+            "sha256": "7bf8976def787c4645574d3f427c03e5bfb651f45a19c6bfabb3e1be95a32410"
+          },
+          {
+            "file": "mega16-cv5-other.json",
+            "sha256": "f3437cabf5efc08b2fcc9dbfb50babdbd9186db17bac253d67d97fe6d453250d"
+          },
+          {
+            "file": "mega16-invariant-1.json",
+            "sha256": "4a22b13a3f8690516ad0f2c5bb84c1f08e6bb7ef2889d7145777728c255c987f"
+          },
+          {
+            "file": "mega16-invariant-2.json",
+            "sha256": "ff1c3c2d70189a3c6f0e7c36a767103737d450e57116251e3a313905cd34bf58"
+          },
+          {
+            "file": "mega16-invariant-3.json",
+            "sha256": "70000b4ca675bd2a573dcc3ffbcd3ad4124e200b7eeeded9b4f712267167cf5a"
+          },
+          {
+            "file": "mega16-invariant-4.json",
+            "sha256": "acab29a2b4e58b47424acfc6350d449872c52476987909d95c164b16de380aac"
+          }
+        ]
+      },
+      "currentInputIdentities": {
+        "freshReconciliation": "docs/difficulty-v3/evidence/MS05r6a/preflight/mega-reconciled.json",
+        "identity": {
+          "sourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "toolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "node": "v26.13.0",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "allowance": 256,
+          "budgetMs": 500000,
+          "checksVersion": 1,
+          "currentMatches": {
+            "sourceHash": false,
+            "toolHash": true
+          }
+        },
+        "currentMatches": {
+          "sourceHash": false,
+          "toolHash": true
+        },
+        "currentSourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+        "producerSnapshotSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+        "producerSnapshot": {
+          "ref": "refs/dv3-wip/MS05r5m-done-20261114-0230",
+          "commit": "ad77fdf708fd8b7e41d2d8d0cbc66e53515ff3ba",
+          "tree": "522e3d92836d370950ca4050ed36810cbd01af00"
+        },
+        "sourceFilesListsEqual": true,
+        "changedSourceFiles": [
+          "generator/js/ui/store.js"
+        ],
+        "toolFilesChanged": [],
+        "loaderFunctionsIdentical": [
+          {
+            "function": "readSource",
+            "found": true,
+            "identical": true
+          },
+          {
+            "function": "sourceList",
+            "found": true,
+            "identical": true
+          },
+          {
+            "function": "loadFixtures",
+            "found": true,
+            "identical": true
+          },
+          {
+            "function": "inside",
+            "found": true,
+            "identical": true
+          },
+          {
+            "function": "gitState",
+            "found": true,
+            "identical": true
+          },
+          {
+            "function": "nodeEnv",
+            "found": true,
+            "identical": true
+          }
+        ],
+        "levelGuardIdentical": true,
+        "loadSetChanged": [
+          {
+            "path": "generator/js/ui/store.js",
+            "status": "changed",
+            "refBlob": "44e95fd91992eff82dbc4b53bb2f26b6f5d70893",
+            "workBlob": "d08428c6237c012be279b25b8203aa14c270fbf6"
+          },
+          {
+            "path": "generator/tests/replay-fixtures.js",
+            "status": "changed",
+            "refBlob": "e8a2db8298b2221d5c2cc736b6a9c1e7144830e9",
+            "workBlob": "73e211c0b0f1bfc21cb952aede3f5346d5f9e945"
+          }
+        ],
+        "patches": [
+          {
+            "path": "generator/js/ui/store.js",
+            "file": "generator__js__ui__store.js.patch",
+            "changeLines": 14
+          },
+          {
+            "path": "generator/tests/replay-fixtures.js",
+            "file": "generator__tests__replay-fixtures.js.patch",
+            "changeLines": 12
+          }
+        ],
+        "storePatchEqualsR5pPatch": {
+          "path": "generator/js/ui/store.js",
+          "patch": "..\\docs\\difficulty-v3\\evidence\\MS05r5p\\legacy-8-fix\\store-diff.patch",
+          "equal": true,
+          "changeLines": 14
+        },
+        "snapshotDiff": "docs/difficulty-v3/evidence/MS05r6a/preflight/snapshot-diff.json",
+        "requestConfigDefaultAllowance": {
+          "allowance": 256,
+          "budgetMs": 500000,
+          "checksVersion": 1,
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "node": "v26.13.0"
+        },
+        "completeness": {
+          "complete": true,
+          "evidenceSound": true,
+          "correctness": "pass",
+          "relations": {
+            "pass": 6,
+            "fail": 0,
+            "unevaluated": 0
+          },
+          "generation": {
+            "requested": 14,
+            "produced": 14,
+            "unavailable": [],
+            "checkErrors": []
+          },
+          "correctnessDetail": {
+            "passed": 14,
+            "failed": [],
+            "unevaluated": []
+          },
+          "requests": 14,
+          "problems": []
+        }
+      },
+      "compatible": true,
+      "reason": "sourceHash match false, toolHash match true. The only changed file of SOURCE_FILES is generator/js/ui/store.js (the legacy-8 migration of MS05r5p: one condition and comments in storedAttempts, same +/- lines as evidence/MS05r5p/legacy-8-fix/store-diff.patch), which SG.pipeline.normalizeConfig and SG.pipeline.run never execute: the deep tool builds its requests for SG.pipeline.run directly and never calls SG.store. The tool files and the level guard are unchanged, and loadFixtures and nodeEnv of replay-fixtures.js (the only other changed file of the load set; its diff is comments and the HEADER text of the wire fixture) are identical function for function. Records, hashes and times are untouched",
+      "action": "retain",
+      "effectiveEvidence": {
+        "directory": "docs/difficulty-v3/evidence/MS05r5m/records",
+        "records": 14,
+        "label": "retained by exact-diff compatibility (not \"current hashes match\" and not a new timing measurement)"
+      },
+      "outcome": "retained: 14 requests, 14 records, complete true, evidence sound true, correctness pass, relations 6 pass / 0 fail / 0 unevaluated, exact 0 of 14 (S-AV02, S-AV03)"
+    },
+    {
+      "id": "mega-quick-replacements",
+      "check": "the four quick mega tests that replaced the full-attempt Nightmare callbacks (mega#96-#99) and the 37 tests of mega-contract",
+      "priorEvidence": {
+        "directory": "docs/difficulty-v3/evidence/MS05r5m/quick",
+        "note": "taken at quick fingerprint b0d11a5d...; the replacement tests and the suite files mega.test.js and the mega-contract fixture/suite are unchanged since (snapshot-diff: not in the changed list)"
+      },
+      "currentInputIdentities": {
+        "quickFingerprint": "d06e8e54aea3233d9c62f44010907a5dcecf58570cbc400cf815b9bc7566d022",
+        "timeFactor": 2,
+        "node": "v26.13.0",
+        "listing": "docs/difficulty-v3/evidence/MS05r6a/preflight/mega-selection.json",
+        "megaSuiteTests": 111,
+        "megaContractSuiteTests": 37,
+        "runnerAndHarnessChanged": 0
+      },
+      "compatible": false,
+      "reason": "the quick fingerprint of the Generator covers every guide, design file, UI source and test suite; it changed (store.js, the replay/steps/player suites, the recorders and the documents), so the earlier results cannot be called current. They are cheap and generate at most one mega12 request: rerun them with --exact and fresh --results",
+      "action": "rerun",
+      "effectiveEvidence": [
+        {
+          "file": "docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-96.json",
+          "sha256": "872caf93c4cbb7028d7986d5ed7d831c0718ada6bd63cd80f4e91ae430bc62e6",
+          "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+          "complete": true,
+          "selected": {
+            "set": "suites",
+            "suites": [
+              "mega"
+            ],
+            "filter": null,
+            "exact": "mega > mega puzzles > mega12 nightmare: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit",
+            "count": 1
+          },
+          "totals": {
+            "total": 1,
+            "passed": 1,
+            "failed": 0,
+            "skipped": 0
+          },
+          "timeFactor": 2,
+          "node": "v26.13.0"
+        },
+        {
+          "file": "docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-97.json",
+          "sha256": "8b286d333e27dd94ffeee3b2354adecc245ba726236c72e3a90e883f1d6132de",
+          "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+          "complete": true,
+          "selected": {
+            "set": "suites",
+            "suites": [
+              "mega"
+            ],
+            "filter": null,
+            "exact": "mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > the size default stops after two attempts with a truthful two-warning shallow fallback",
+            "count": 1
+          },
+          "totals": {
+            "total": 1,
+            "passed": 1,
+            "failed": 0,
+            "skipped": 0
+          },
+          "timeFactor": 2,
+          "node": "v26.13.0"
+        },
+        {
+          "file": "docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-98.json",
+          "sha256": "827fcb23f9af8bfdbe138cf17f9f4d5e377dd33cf775b862493f2b81932757bf",
+          "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+          "complete": true,
+          "selected": {
+            "set": "suites",
+            "suites": [
+              "mega"
+            ],
+            "filter": null,
+            "exact": "mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > an explicit number of attempts wins over the size default",
+            "count": 1
+          },
+          "totals": {
+            "total": 1,
+            "passed": 1,
+            "failed": 0,
+            "skipped": 0
+          },
+          "timeFactor": 2,
+          "node": "v26.13.0"
+        },
+        {
+          "file": "docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-99.json",
+          "sha256": "3b9145d2a373ce76ae35fbf117917980787287d14a7d7500efd27751c3c88e7c",
+          "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+          "complete": true,
+          "selected": {
+            "set": "suites",
+            "suites": [
+              "mega"
+            ],
+            "filter": null,
+            "exact": "mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > a cancelled or exhausted budget propagates its error and never returns the best puzzle so far",
+            "count": 1
+          },
+          "totals": {
+            "total": 1,
+            "passed": 1,
+            "failed": 0,
+            "skipped": 0
+          },
+          "timeFactor": 2,
+          "node": "v26.13.0"
+        },
+        {
+          "file": "docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-contract.json",
+          "sha256": "d5f671c4c7104dd7b3ea953949236aaaa493f67b5244bca19ce416445779ec77",
+          "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+          "complete": true,
+          "selected": {
+            "set": "suites",
+            "suites": [
+              "mega-contract"
+            ],
+            "filter": null,
+            "exact": null,
+            "count": 37
+          },
+          "totals": {
+            "total": 37,
+            "passed": 37,
+            "failed": 0,
+            "skipped": 0
+          },
+          "timeFactor": 2,
+          "node": "v26.13.0"
+        }
+      ],
+      "outcome": "mega-96.json 1/1; mega-97.json 1/1; mega-98.json 1/1; mega-99.json 1/1; mega-contract.json 37/37"
+    },
+    {
+      "id": "mega-live-cv3-links",
+      "check": "MS05b3 live CV3 mega12 and mega16 Nightmare cells (Addendum B1: generation live, deep occurrence ids as references only)",
+      "priorEvidence": {
+        "files": [
+          {
+            "path": "docs/difficulty-v3/evidence/MS05b3/cv3/cv3-mega16-nightmare.json",
+            "sha256": "1b438cdb785a9c763ba4bfe37a5dd9ad58329d4509cc1799aad548948fd19d6f"
+          },
+          {
+            "path": "docs/difficulty-v3/evidence/MS05b3/cv3/cv3-mega12-nightmare.json",
+            "sha256": "02b52dc45643b1c78f02526570595eb838c52127c277019101b4509598463186"
+          },
+          {
+            "path": "docs/difficulty-v3/evidence/MS05b3/mega-reconciled.json",
+            "sha256": "15aff736498543e461d3709865a7b212c8b85123ee4b5f2cd2be1ba6ade097a2"
+          },
+          {
+            "path": "docs/difficulty-v3/evidence/MS05b3/mega-reconciled-after.json",
+            "sha256": "15aff736498543e461d3709865a7b212c8b85123ee4b5f2cd2be1ba6ade097a2"
+          }
+        ],
+        "reconciliationBefore": "docs/difficulty-v3/evidence/MS05b3/mega-reconciled.json",
+        "reconciliationAfter": "docs/difficulty-v3/evidence/MS05b3/mega-reconciled-after.json",
+        "deepMatchesBeforeTheLegacy8Round": {
+          "sourceHash": true,
+          "toolHash": true
+        }
+      },
+      "currentInputIdentities": {
+        "sourceHashOfTheCells": "c3035e8032685c3ed4f5d92e0ffc0535062d460e6e6c45a908fa404ce4950bfa",
+        "note": "the quick-fingerprint sourceHash of the 186 b3 cells; r6b C applies the same store-only exact-diff proof (evidence/MS05r5p/legacy-8-fix/store-diff.patch, IR08) to all of them",
+        "slot": "none for the unlocked cells (IR07): their timings are descriptive, not slot-protected measurements"
+      },
+      "compatible": true,
+      "reason": "these cells are manual-tier outcomes of live generation, not deep records: not rerun here (the brief and B1); their fingerprint changed only through the legacy-8 store edit and later documents, and r6b C reconciles them",
+      "action": "retain",
+      "effectiveEvidence": {
+        "files": [
+          "docs/difficulty-v3/evidence/MS05b3/cv3/cv3-mega16-nightmare.json",
+          "docs/difficulty-v3/evidence/MS05b3/cv3/cv3-mega12-nightmare.json",
+          "docs/difficulty-v3/evidence/MS05b3/mega-reconciled.json",
+          "docs/difficulty-v3/evidence/MS05b3/mega-reconciled-after.json"
+        ]
+      },
+      "outcome": "retained as recorded (mega16 Nightmare 0 of 2 puzzles hit, mega12 Nightmare 0 of 3: S-AV03, S-AV02)"
+    }
+  ]
+}

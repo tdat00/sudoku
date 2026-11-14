@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "kind": "live-cv3-reconciliation",
+  "task": "MS05r6b",
+  "rule": "Addendum B1: live CV3 cells, deep occurrence ids as references only",
+  "counts": {
+    "liveCv3Requests": 5,
+    "liveCv3Cells": 2,
+    "deepExecutions": 14,
+    "note": "the five live requests are not among, and are not counted as, the fourteen deep generations"
+  },
+  "deepIdentity": {
+    "sourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+    "toolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+    "node": "v26.13.0",
+    "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+    "allowance": 256,
+    "budgetMs": 500000,
+    "checksVersion": 1,
+    "currentMatches": {
+      "sourceHash": false,
+      "toolHash": true
+    }
+  },
+  "cells": [
+    {
+      "id": "cv3-mega16-nightmare",
+      "selector": "> variants: mega16 > CV3 nightmare:",
+      "fullName": "variants > variants: mega16 > CV3 nightmare: puzzles at the supported level",
+      "generation": "live",
+      "board": "mega16",
+      "level": "nightmare",
+      "requests": 2,
+      "seeds": [
+        1,
+        2
+      ],
+      "budgetMs": 240000,
+      "selectedTotal": 1,
+      "slot": "locked",
+      "exit": 1,
+      "status": "fail",
+      "class": "availability-none-hit",
+      "error": "mega16 nightmare: none of 2 puzzles hit it",
+      "assertionOrder": "every per-puzzle assertion first (all passed), then the aggregate exact === 0 failure: the aggregate is the failing one",
+      "processSeconds": 221.062,
+      "testMs": 220692.664,
+      "lockWaitSecondsInB3": 116.125,
+      "requestMs": [
+        116787,
+        103904
+      ],
+      "perRequestSeconds": 110.3463,
+      "results": "docs/difficulty-v3/evidence/MS05b3/cv3/cv3-mega16-nightmare.json",
+      "resultSourceHash": "c3035e8032685c3ed4f5d92e0ffc0535062d460e6e6c45a908fa404ce4950bfa",
+      "overRequestGuard": false,
+      "over240s": false,
+      "deepCrossReference": [
+        {
+          "seed": 1,
+          "liveMs": 116787,
+          "occurrence": "mega16-invariant-1",
+          "deepGenerationMs": 116951.43,
+          "liveOverDeep": 0.9986,
+          "deepExact": false,
+          "deepWarnings": [
+            "difficulty.approximate",
+            "difficulty.shallow"
+          ],
+          "deepCorrectness": "pass"
+        },
+        {
+          "seed": 2,
+          "liveMs": 103904,
+          "occurrence": "mega16-invariant-2",
+          "deepGenerationMs": 103605.89,
+          "liveOverDeep": 1.0029,
+          "deepExact": false,
+          "deepWarnings": [
+            "difficulty.approximate",
+            "difficulty.shallow"
+          ],
+          "deepCorrectness": "pass"
+        }
+      ]
+    },
+    {
+      "id": "cv3-mega12-nightmare",
+      "selector": "> variants: mega12 > CV3 nightmare:",
+      "fullName": "variants > variants: mega12 > CV3 nightmare: puzzles at the supported level",
+      "generation": "live",
+      "board": "mega12",
+      "level": "nightmare",
+      "requests": 3,
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "budgetMs": 240000,
+      "selectedTotal": 1,
+      "slot": "locked",
+      "exit": 1,
+      "status": "fail",
+      "class": "availability-none-hit",
+      "error": "mega12 nightmare: none of 3 puzzles hit it",
+      "assertionOrder": "every per-puzzle assertion first (all passed), then the aggregate exact === 0 failure: the aggregate is the failing one",
+      "processSeconds": 69.88,
+      "testMs": 69367.612,
+      "lockWaitSecondsInB3": 109.112,
+      "requestMs": [
+        23509,
+        23067,
+        22790
+      ],
+      "perRequestSeconds": 23.1225,
+      "results": "docs/difficulty-v3/evidence/MS05b3/cv3/cv3-mega12-nightmare.json",
+      "resultSourceHash": "c3035e8032685c3ed4f5d92e0ffc0535062d460e6e6c45a908fa404ce4950bfa",
+      "overRequestGuard": false,
+      "over240s": false,
+      "deepCrossReference": [
+        {
+          "seed": 1,
+          "liveMs": 23509,
+          "occurrence": "mega12-invariant-1",
+          "deepGenerationMs": 23721.49,
+          "liveOverDeep": 0.991,
+          "deepExact": false,
+          "deepWarnings": [
+            "difficulty.approximate",
+            "difficulty.shallow"
+          ],
+          "deepCorrectness": "pass"
+        },
+        {
+          "seed": 2,
+          "liveMs": 23067,
+          "occurrence": "mega12-invariant-2",
+          "deepGenerationMs": 23519.673,
+          "liveOverDeep": 0.9808,
+          "deepExact": false,
+          "deepWarnings": [
+            "difficulty.approximate",
+            "difficulty.shallow"
+          ],
+          "deepCorrectness": "pass"
+        },
+        {
+          "seed": 3,
+          "liveMs": 22790,
+          "occurrence": "mega12-invariant-3",
+          "deepGenerationMs": 23636.549,
+          "liveOverDeep": 0.9642,
+          "deepExact": false,
+          "deepWarnings": [
+            "difficulty.approximate",
+            "difficulty.shallow"
+          ],
+          "deepCorrectness": "pass"
+        }
+      ]
+    }
+  ],
+  "items": {
+    "S-AV03": "mega16 Nightmare: 0 of 2 exact live (116.787 s and 103.904 s, none over the 240 s request guard), the first 3.2 s under the 120 s application guard as a Node run with trace off",
+    "S-AV02": "mega12 Nightmare: 0 of 3 exact live (23.509, 23.067 and 22.790 s)"
+  },
+  "problems": [],
+  "reconciled": true
+}

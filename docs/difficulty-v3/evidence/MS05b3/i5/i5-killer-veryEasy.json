@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "c3035e8032685c3ed4f5d92e0ffc0535062d460e6e6c45a908fa404ce4950bfa",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["killer"],"filter":"> veryEasy: 20 puzzles > I5:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 279.6,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 70,
+    "tests": [
+      {"suite":"killer","name":"I5: every puzzle has a complete proof; one rated as requested has its score in the band","fullName":"killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > veryEasy: 20 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band","status":"pass","ms":69.392,"reason":"","error":null,"ordinal":53}
+    ],
+    "suites": [
+      {"name":"killer","total":1,"passed":1,"failed":0,"skipped":0,"ms":69.865}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=killer","--filter=> veryEasy: 20 puzzles > I5:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05b3\\i5\\i5-killer-veryEasy.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

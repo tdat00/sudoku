@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["steps"],"filter":null,"exact":"steps > stepView: the tiers, the badge and the lines > marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view","count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 10523.6,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 10344.3,
+    "tests": [
+      {"suite":"steps","name":"marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view","fullName":"steps > stepView: the tiers, the badge and the lines > marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view","status":"pass","ms":10344.016,"reason":"","error":null,"ordinal":17}
+    ],
+    "suites": [
+      {"name":"steps","total":1,"passed":1,"failed":0,"skipped":0,"ms":10344.142}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=steps","--exact=steps > stepView: the tiers, the badge and the lines > marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\steps-17.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

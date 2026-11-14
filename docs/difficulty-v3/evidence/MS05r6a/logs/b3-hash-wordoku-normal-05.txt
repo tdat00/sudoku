@@ -1,0 +1,2 @@
+  wordoku/normal: seeds 13, 21, 34, 55, 89 (0.7 s)
+recorded 5 of 520 keys (wordoku/normal, seed indexes 5-9 (seeds 13, 21, 34, 55, 89)) in docs/difficulty-v3/evidence/MS05r6a/hashes/wordoku-normal-05.json; a ledger is one shard, merge them all with --hash-merge

@@ -8,13 +8,16 @@
  *
  * The state is plain data (frozen when read):
  *   puzzle configuration   variantId, difficulty, seed (text, '' = random), symmetry, symbolMode, digOrder,
- *                          maxAttempts (1..20), showSolution,
+ *                          maxAttempts (1..20; the board's default, or the number the user chose),
+ *                          attemptsExplicit (true when the number was chosen: it then stays across variant
+ *                          changes and reloads; false = it follows the board, see `defaultAttempts`),
+ *                          showSolution,
  *                          variantOptions ({ optionId: value }, always complete for the variant)
  *   session                auto (URL only: generate on load)
  *   preferences            lang, theme ('auto'|'light'|'dark'|'high-contrast'), fontSize
  *                          ('small'|'normal'|'large'), reducedMotion, colorAuxSymbol
- * There is no trace verbosity or replay speed: `toConfig` leaves `trace` out. The store never touches the
- * DOM (theme.js / app.js apply the preferences) and never triggers a generation.
+ * There is no trace verbosity or replay speed: `toConfig` leaves `trace` and the intent marker out. The store
+ * never touches the DOM (theme.js / app.js apply the preferences) and never triggers a generation.
  *
  * URL parameters, seed hashing and the start-up priority (URL > stored values > defaults; a URL with any
  * puzzle parameter is the whole configuration): design.md 14.2. Storage (`sg.prefs.v1`,
@@ -32,7 +35,10 @@
 
   const DEFAULT_VARIANT = 'classic9';
   const DEFAULT_DIFFICULTY = 'normal';
-  const MAX_ATTEMPTS = Object.freeze({ min: 1, max: 20, default: 8 });
+  const MAX_ATTEMPTS = Object.freeze({ min: 1, max: 20 });
+  // The one default every board had before the size policy: a stored 8 without the intent marker is read as
+  // the default on every board (see `storedAttempts`).
+  const LEGACY_MAX_ATTEMPTS = 8;
   const SEED_MAX_LENGTH = 64;
   const UINT32_MAX = 4294967295;
 
@@ -41,7 +47,7 @@
   const FONT_SIZES = Object.freeze(['small', 'normal', 'large']);
 
   const CONFIG_KEYS = Object.freeze(['variantId', 'difficulty', 'seed', 'symmetry', 'symbolMode', 'digOrder',
-    'maxAttempts', 'showSolution', 'variantOptions']);
+    'maxAttempts', 'attemptsExplicit', 'showSolution', 'variantOptions']);
   const PREF_KEYS = Object.freeze(['lang', 'theme', 'fontSize', 'reducedMotion', 'colorAuxSymbol']);
   const STATE_KEYS = Object.freeze(CONFIG_KEYS.concat(['auto'], PREF_KEYS));
 
@@ -88,6 +94,15 @@
     if (SG.variants.has(DEFAULT_VARIANT)) return DEFAULT_VARIANT;
     const first = SG.variants.list()[0];
     return first ? first.id : DEFAULT_VARIANT;
+  }
+
+  /**
+   * The attempts a variant's board gets when nobody chose a number: `SG.digger.defaultMaxAttempts` of its
+   * size (8, 4 or 2), read without building a model. An unknown id gives the default variant's.
+   */
+  function defaultAttempts(variantId) {
+    const id = typeof variantId === 'string' && SG.variants.has(variantId) ? variantId : defaultVariantId();
+    return SG.digger.defaultMaxAttempts(SG.variants.cellCountOf(id));
   }
 
   /** Control characters out, at most `SEED_MAX_LENGTH` characters; NOT trimmed (the user is still typing). */
@@ -154,7 +169,8 @@
       symmetry: 'rotational180',
       symbolMode: def.defaultSymbolMode,
       digOrder: 'random',
-      maxAttempts: MAX_ATTEMPTS.default,
+      maxAttempts: defaultAttempts(variantId),
+      attemptsExplicit: false,
       showSolution: false,
       variantOptions: SG.variants.defaultOptions(def),
       auto: false,
@@ -225,8 +241,21 @@
       out.seed = cleanSeedText(String(raw.seed));
     } else out.seed = typeof fb.seed === 'string' ? fb.seed : '';
     out.digOrder = oneOf(raw.digOrder, SG.digger.ORDERS, fb.digOrder);
-    out.maxAttempts = toIntInRange(raw.maxAttempts, MAX_ATTEMPTS.min, MAX_ATTEMPTS.max,
-      toIntInRange(fb.maxAttempts, MAX_ATTEMPTS.min, MAX_ATTEMPTS.max, MAX_ATTEMPTS.default));
+    // A number that is present wins, so a recorded number survives (`toConfig` over `defaults()` plus the
+    // `maxAttempts` of a history entry): the callers that change the variant or read a record put the
+    // effective number there first (`set`, `applyUrlPatch`). A bare number is a chosen one; without a number
+    // the state follows the board unless the fallback holds a chosen number. A state that says "default" but
+    // carries another number than its board's (a marker inherited from `defaults()`) is a chosen number.
+    const attempts = toIntInRange(raw.maxAttempts, MAX_ATTEMPTS.min, MAX_ATTEMPTS.max, null);
+    out.attemptsExplicit = typeof raw.attemptsExplicit === 'boolean' ? raw.attemptsExplicit
+      : (attempts !== null || fb.attemptsExplicit === true);
+    if (attempts !== null) {
+      out.maxAttempts = attempts;
+      if (attempts !== defaultAttempts(out.variantId)) out.attemptsExplicit = true;
+    } else if (out.attemptsExplicit) {
+      out.maxAttempts = toIntInRange(fb.maxAttempts, MAX_ATTEMPTS.min, MAX_ATTEMPTS.max,
+        defaultAttempts(out.variantId));
+    } else out.maxAttempts = defaultAttempts(out.variantId);
     out.showSolution = toBool(raw.showSolution, fb.showSolution === true);
     out.variantOptions = normalizeOptions(def, raw.variantOptions);
 
@@ -335,12 +364,18 @@
     };
   }
 
-  /** A state from a URL patch on top of `base`; without `mode` the symbol set is the variant's default. */
+  /**
+   * A state from a URL patch on top of `base`; without `mode` the symbol set is the variant's default. An
+   * `attempts` parameter is a chosen number, whatever its value; without one the number follows the board of
+   * the variant the link names, never the one `base` had.
+   */
   function applyUrlPatch(base, patch) {
     const draft = Object.assign({}, base, patch);
     if (patch.variantId !== undefined && patch.symbolMode === undefined) {
       draft.symbolMode = SG.variants.get(patch.variantId).defaultSymbolMode;
     }
+    if (patch.maxAttempts !== undefined) draft.attemptsExplicit = true;
+    else if (draft.attemptsExplicit !== true) draft.maxAttempts = defaultAttempts(draft.variantId);
     return draft;
   }
 
@@ -372,7 +407,7 @@
     if (full || s.symmetry !== d.symmetry) p.sym = s.symmetry;
     if (full || s.symbolMode !== def.defaultSymbolMode) p.mode = s.symbolMode;
     if (s.digOrder !== d.digOrder) p.order = s.digOrder;
-    if (s.maxAttempts !== d.maxAttempts) p.attempts = String(s.maxAttempts);
+    if (s.attemptsExplicit) p.attempts = String(s.maxAttempts);
     if (s.showSolution) p.sol = '1';
     SG.variants.optionsOf(def).forEach(function (item) {
       const value = s.variantOptions[item.id];
@@ -459,6 +494,24 @@
     return out;
   }
 
+  /**
+   * The attempts of a stored configuration as `{ maxAttempts, attemptsExplicit }`. A record that has the
+   * marker is taken as it says. A record written before the size defaults has none, and its 8 is the old
+   * universal default: it is read as "default" on every board, because it cannot be told from a chosen 8
+   * (a chosen 8 is lost to the default; entering 8 again makes it a chosen number). Any other valid number
+   * is the user's and is kept as a chosen one. The decision reads the record only, so loading it again
+   * gives the same state until the next save writes the intent marker.
+   */
+  function storedAttempts(last) {
+    const number = toIntInRange(last.maxAttempts, MAX_ATTEMPTS.min, MAX_ATTEMPTS.max, null);
+    const id = typeof last.variantId === 'string' ? last.variantId : null;
+    let explicit = number !== null;
+    if (typeof last.attemptsExplicit === 'boolean') explicit = explicit && last.attemptsExplicit;
+    else if (number === LEGACY_MAX_ATTEMPTS) explicit = false;
+    return explicit ? { maxAttempts: number, attemptsExplicit: true }
+      : { maxAttempts: defaultAttempts(id), attemptsExplicit: false };
+  }
+
   /** Stored preferences, keeping only the fields that are valid by themselves. */
   function validPrefs(stored) {
     const out = {};
@@ -484,6 +537,27 @@
 
   function changedKeys(prev, next) {
     return STATE_KEYS.filter(function (key) { return !sameValue(prev[key], next[key]); });
+  }
+
+  /**
+   * The attempts of the state after `patch`, as `{ maxAttempts, attemptsExplicit }` (`variantId` is the
+   * variant the state will have). The default follows the board. A number the patch names is a chosen one,
+   * whatever its value, except in a store replay (`meta.source === 'app'`: a history entry or a rebuilt cache
+   * entry is generated again from the number it recorded, which is not a new choice): a recorded number equal
+   * to the default of the replayed variant keeps the intent as it was (default stays default, a chosen number
+   * stays chosen, now that number); any other recorded number becomes a chosen one. A replay never makes a
+   * chosen number a default. A patch that carries the marker itself (`reset`, a cleared field) is taken as it
+   * is: `false` is the board's default whatever number the patch names.
+   */
+  function nextAttempts(prev, patch, meta, variantId) {
+    const own = defaultAttempts(variantId);
+    const named = hasOwn.call(patch, 'maxAttempts')
+      ? toIntInRange(patch.maxAttempts, MAX_ATTEMPTS.min, MAX_ATTEMPTS.max, null) : null;
+    let explicit = prev.attemptsExplicit === true;
+    if (hasOwn.call(patch, 'attemptsExplicit')) explicit = toBool(patch.attemptsExplicit, explicit);
+    else if (named !== null && !(meta && meta.source === 'app' && named === own)) explicit = true;
+    if (!explicit) return { maxAttempts: own, attemptsExplicit: false };
+    return { maxAttempts: named !== null ? named : prev.maxAttempts, attemptsExplicit: true };
   }
 
   function freezeState(state) {
@@ -636,6 +710,8 @@
         const base = variantChanged ? {} : prev.variantOptions;
         draft.variantOptions = Object.assign({}, base, patch.variantOptions);
       }
+      const willBe = variantChanged ? patch.variantId : prev.variantId;
+      Object.assign(draft, nextAttempts(prev, patch, meta, willBe));
       const adjustments = [];
       const next = normalize(draft, adjustments, prev);
       const info = Object.assign({}, meta, { adjustments: adjustments });
@@ -653,7 +729,9 @@
       const stored = readStored();
       const url = readUrl(location ? location.search : '');
       let draft = defaults();
-      if (!url.hasConfig && stored.last) draft = Object.assign(draft, pick(stored.last, CONFIG_KEYS));
+      if (!url.hasConfig && stored.last) {
+        draft = Object.assign(draft, pick(stored.last, CONFIG_KEYS), storedAttempts(stored.last));
+      }
       draft = Object.assign(draft, stored.prefs);
       draft = applyUrlPatch(draft, url.patch);
       draft.auto = url.patch.auto === true;
@@ -711,6 +789,7 @@
     FONT_SIZES: FONT_SIZES,
     SEED_MAX_LENGTH: SEED_MAX_LENGTH,
     defaults: defaults,
+    defaultAttempts: defaultAttempts,
     sanitize: sanitize,
     sanitizeWithNotes: sanitizeWithNotes,
     isOptionVisible: isOptionVisible,
