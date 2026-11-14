@@ -3,7 +3,8 @@
 Moved from [clarifications.md](clarifications.md) on 2026-11-13 at the owner's request. Every question in this
 file is resolved: answered by the plan author or decided by the owner. Ids and part letters are unchanged, so a
 reference such as "clarifications.md Part H" in a task file or a record is found here. PR-S1 and CV6-03 were
-moved here unchanged after Fable's 2026-11-13 answers. The questions that still
+moved here unchanged after Fable's 2026-11-13 answers; CV6-04 followed unchanged after the 2026-11-14 answer.
+The questions that still
 need the plan author's answer are in [clarifications.md](clarifications.md); when one is answered, it moves here.
 
 ---
@@ -1229,6 +1230,11 @@ defaultMaxAttempts(cellCount) = 8   for cellCount <= 81    (classic4/6/9, diagon
 - *Documents.* `generator/design.md` (the pipeline options and §6.8), both developer guides, both user guides
   (the advanced control's default).
 
+**CV6-04 wording correction (Fable, 2026-11-14).** The sentence "a stored value equal to the old default 8
+on a larger board" above is superseded by the CV6-04 answer below and now reads "a stored value equal to
+the old default 8 without the intent marker". An unmarked legacy 8 is read as default on every board.
+This corrects (c2)'s wording, not its policy; the original answer above remains as historical text.
+
 **Sub-question (1), CV3's mega16 Nightmare cell.** The extension is still wanted, in the narrow form SA1
 proposed. With two attempts a mega16 Nightmare request projects at about 110 s, under the 240 s request guard, and
 the two-request cell at about 220 s, under the 450 s projection limit, so the cell should no longer be deferred. It
@@ -1269,6 +1275,165 @@ experiment, browser run, source change, fixture write, staging or commit was per
 
 ---
 
+## CV6-04: Meaning of legacy stored 8 on boards of at most 81 cells
+
+**Raised by SA2, 2026-11-13. Answer requested from Fable (plan author).**
+
+**Non-blocking.** MS05r5p continues under option (a), the literal rule, as the orchestrator has instructed.
+This question authorizes no change. Any approved change is a follow-up named **MS05r5p legacy-8 migration
+fix round**, to be completed before MS05r6b, not a reason to stop the present MS05r5p work. The separate
+replay-wiring test fix proceeds independently.
+
+### Context and current implementation
+
+[CV6-03 (c2)](clarifications-resolved.md), lines 1219-1224, says that the store's default becomes the
+size default of the selected variant, then specifies:
+
+> a stored value equal to the old default 8 on a larger board is read as "default" once and follows the new
+> default; any other stored value is kept.
+
+The attempt policy itself is settled: 8 for at most 81 cells, 4 for 82-144 cells, and 2 above 144 cells.
+An explicit value still wins. This question concerns only the once-only migration of legacy last settings,
+not the engine policy, allowance, budgets, or recorded recipes.
+
+- Before MS05r5p, `generator/js/ui/store.js` at `c9935cd:35,147-157` used the universal default 8.
+  The old `sg.lastConfig.v1` record had no default/explicit-intent marker: an untouched default 8 and
+  a deliberately chosen 8 were indistinguishable. A stored 8 alone cannot prove either intent.
+- The uncommitted MS05r5p implementation uses `attemptsExplicit`.
+  `generator/js/ui/store.js:503-510`, `storedAttempts`, migrates an unmarked 8 only when the stored
+  variant's size default is not 8. Line 508 is:
+
+  ```js
+  else if (number === LEGACY_MAX_ATTEMPTS && defaultAttempts(id) !== LEGACY_MAX_ATTEMPTS) explicit = false;
+  ```
+
+  Thus legacy `{ variantId: 'classic9', maxAttempts: 8 }` loads as 8 with `attemptsExplicit: true`.
+  A subsequent switch to mega12, mega16, sohei or samurai keeps 8 until the user clears the control.
+  A legacy 8 stored on those larger boards instead loads in default mode and follows the variant.
+- `generator/tests/suites/store.test.js:1073-1098` covers the current migration;
+  lines 1092-1095 explicitly expect `['classic9', 8, true]`.
+  [MS05r5p evidence](evidence/MS05r5p/evidence.md), "Decisions to confirm", item 1, records the consequence.
+
+### Exact question and consequences
+
+For an unmarked legacy last configuration with `maxAttempts: 8` and a board of at most 81 cells,
+which interpretation of (c2) is intended?
+
+**(a) Keep the literal rule.** Migrate legacy 8 only on a board above 81 cells; keep it as explicit
+on a smaller board.
+
+- Users: small-board generation still uses 8. After switching to a larger board, even a user who never
+  touched the control still uses 8, rather than the new default 4 or 2, until the field is cleared.
+  A deliberate legacy choice of 8 on a small board is preserved, but migration depends on the last
+  selected variant, not on recoverable user intent.
+- Tests: keep the current classic9 expectation and add the explicit small-board load -> large-board
+  switch -> persistence/reload case to document that 8 remains chosen. No production change is needed.
+
+**(b) Treat an unmarked legacy 8 on any board as default.** The current small-board number remains 8,
+but its intent is default; a later variant switch follows 8/4/2.
+
+- Users: old defaults behave consistently regardless of the variant selected before the upgrade.
+  Small-board generation is unchanged; switching to mega12/butterfly uses 4 and to the larger boards
+  uses 2. The unavoidable trade-off is that a deliberate legacy 8 on a small board is also treated as
+  default, because the old record cannot distinguish it. Re-entering 8 creates a marked explicit choice.
+- Tests: replace the small-board `true` expectation with `false` and verify switching, persistence and
+  explicit-value protection as listed below. Existing large-board migration expectations stay unchanged.
+
+Under either option, other valid stored numbers remain explicit. A saved `attemptsExplicit: true`,
+a deliberate control entry, `?attempts=8`, a direct engine argument and a recorded history/cache/export
+recipe are not eligible for this legacy migration; their explicit or recorded numbers remain intact.
+
+### Analyst's recommendation
+
+**SA2 recommends (b).** Whether an old default follows the new size policy should not depend on the
+last variant selected before the upgrade. This also avoids treating a value equal to the old universal
+default as evidence of a deliberate choice on small boards only. The loss of indistinguishable legacy
+intent must be stated, not denied. This is a recommendation for Fable to decide, not authorization to
+broaden the recorded migration rule.
+
+### Follow-up if (b) is approved
+
+In the **MS05r5p legacy-8 migration fix round**, before MS05r6b:
+
+1. Change only the migration condition in `storedAttempts` to:
+
+   ```js
+   else if (number === LEGACY_MAX_ATTEMPTS) explicit = false;
+   ```
+
+   Keep the preceding boolean-marker branch and numeric validation unchanged. Do not apply this
+   inference in normal store updates, `normalize`, `toConfig`, or recipe replay.
+2. Update the existing classic9 migration assertion to `['classic9', 8, false]`. Add a focused legacy
+   classic9 case that switches to mega12 (4), mega16 (2), and back to classic9 (8), all in default mode.
+3. Persist/reload the migrated state both while the small-board number is still 8 and after a large-board
+   switch; the saved false marker must preserve default intent on the next switch.
+4. Add the complementary marked-explicit classic9 8 case: switching to a large board and reloading
+   must keep explicit 8. Also cover entering 8 after migration and reloading, so migration is once-only.
+   Keep the existing other-number, storage-failure, explicit URL/control and recorded-recipe regressions;
+   none may be weakened to implement (b).
+5. Align the migration comments, affected design/EN/Vietnamese guide wording and step evidence with the
+   approved choice. Use focused scripted/store checks; this migration decision needs no generation or
+   timing experiment and does not reopen the size-default or R5 selection.
+
+Only code and existing records were read to raise this question; no tests or generation were run.
+
+**Plan-author answer (claude-fable-5-2, 2026-11-14): (b). An unmarked legacy 8 is read as "default" on every
+board.** SA2's recommendation is adopted, and the follow-up list above is approved as written, with the three
+additions below.
+
+*What (c2) meant.* The words "on a larger board" in (c2) described where the migration has a visible effect,
+not a condition on intent. (c2) was written before the `attemptsExplicit` marker existed; at that time a
+legacy 8 on a small board needed no rule, because 8 was also the new default there and nothing could be
+observed. The marker made the small-board case observable, and the literal reading then gives a result (c2)
+did not intend. The intent is: the old universal default follows the new size default; a number the user
+chose is kept. This is a correction of my wording in (c2), not a new policy.
+
+*Why (b).*
+
+1. It is the case (c2) exists for. The usual legacy record is `classic9` with an untouched 8. Under (a) that
+   user's first mega16 or samurai request after the upgrade runs eight attempts, which is the 120 s error
+   that (c2) replaces by the truthful fallback after two. (a) therefore leaves the old behaviour in place for
+   the largest group of users, and it stays until they clear a field most of them have never opened.
+2. Intent cannot be recovered from the record, so the rule must be chosen by the cost of being wrong. Wrong
+   under (b): a deliberate 8 on a small board still gives 8 on every small board; it is lost only after a
+   switch to a larger board, the control shows the effective number, and typing 8 once restores it for good.
+   Wrong under (a): an invisible setting causes failed requests on large boards with nothing on screen that
+   explains why. The first error is small and visible, the second is not.
+3. The outcome of a migration should not depend on which variant happened to be selected last before the
+   upgrade. Under (a) two users who never touched the control get different behaviour on mega16.
+
+*Scope: unchanged from what the question states.* Only the unmarked `sg.lastConfig.v1` record read at start-up
+through `storedAttempts` (`generator/js/ui/store.js:731`). A record with a boolean marker, any other stored
+number, a control entry, `?attempts=8`, a direct engine argument and a recorded history, cache or export
+recipe keep their numbers. The engine policy, the allowance, the budgets and R5 are not reopened.
+
+*Additions to the follow-up list.*
+
+- Item 1: the one-line condition is right and sufficient. I checked `normalize` (`store.js:249-258`): a state
+  with `attemptsExplicit: false` and the number 8 on a small board passes unchanged, since 8 is that board's
+  default, so no second change is needed there. Rewrite the doc comment of `storedAttempts`
+  (`store.js:497-502`) and the comment at `store.js:39-40` in the same edit; both still describe (a).
+- Item 2 or 4: add one case for a legacy record with `maxAttempts: 8` and a missing or unknown `variantId`.
+  It must load in default mode with the default of the variant the store falls back to. Under (b) the
+  decision no longer reads the variant, and this case fixes that.
+- Item 3: also assert that loading the legacy record twice without a save in between gives the same state.
+  "Once" is carried by the marker written at the next save; before that save the migration must be
+  idempotent, not a counter.
+
+*Documents.* Item 5 stands. State the trade-off in one sentence where the developer guides and `design.md`
+§14.3 describe the stored configuration: a last configuration saved before the size defaults that holds 8 is
+read as the default, because it cannot be told from a chosen 8; entering 8 again makes it a chosen number.
+The user guides need it only if they already describe the migration. Record in the resolved archive, next to
+CV6-03 (c2), that the sentence "a stored value equal to the old default 8 on a larger board" is superseded
+by this answer and now reads "a stored value equal to the old default 8 without the intent marker".
+
+*Sequence.* As proposed: the **MS05r5p legacy-8 migration fix round**, after the present MS05r5p work and
+before MS05r6b, with the focused `store` suite only. It changes no engine source, so MS05r5m's deep-tier
+records and the three closure diagnostics of MS05r5p stay valid and nothing is measured again. MS05r5p's
+evidence, "Decisions to confirm", item 1, is closed by this answer.
+
+---
+
 ## Owner decisions — current resume register
 
 This register is a navigation aid, not a rewrite of the questions or answers above. The later decision governs
@@ -1280,11 +1445,12 @@ where an earlier recovery/process rule conflicts. The pause commit is a historic
 | S-OD2 | Owner, 2026-11-13 06:45; Part H CV6-02. Preserve active requiredness and step evidence, with private backups owned only by the orchestrator and one combined acceptance. The owner later ordered the non-green pause commit. No further branch commit until r6b's audit and r6c's CI closure are accepted together. |
 | S-OD3 | Owner, 2026-11-13 14:25; CV6-03. Keep 256; (a) move full-attempt mega Nightmare out of quick coverage into a tool-based deep tier preserving every original request and relation, with SA1's conditions (i)-(iii); quick retains real one-attempt mega12 and scripted mega16 controls. (d) persist unchanged G13 at MS05r6a. Fable supplies (c), now answered by S-OD4. |
 | S-OD4 (c1) | PR-S1 and CV6-03, Fable with the owner's same-day approval. Final qualification determines every offer without exception: at least 36 exact hits of 40 or 90 of 100, and p95 within the board's budget (30 seconds above 81 cells). Bounded fallbacks and timeouts are misses. Failed cells are hidden at MS18c; stored requests move to the nearest offered level with the note; the pipeline refuses hidden requests. No interim pruning or browser-budget increase. |
-| S-OD4 (c2) | One exported `defaultMaxAttempts(cellCount)`: 8 for <=81 cells, 4 for 82-144, 2 above 144; pipeline and direct digger share it. The selected-variant store default follows it. Legacy stored 8 on a larger board is migrated once to default mode; other stored values and explicit values remain. The control keeps 1-20. MS05r5p owns implementation, tests, bilingual guides and three locked diagnostics; R5's 256 stands. |
+| S-OD4 (c2) | One exported `defaultMaxAttempts(cellCount)`: 8 for <=81 cells, 4 for 82-144, 2 above 144; pipeline and direct digger share it. The selected-variant store default follows it. CV6-04 corrects the wording: a stored value equal to the old default 8 without the intent marker is read once as default on every board; other stored numbers and marked explicit values remain. The control keeps 1-20. MS05r5p owns implementation, tests, bilingual guides and the three already recorded diagnostics; its legacy-8 fix round before r6b measures nothing again. R5's 256 stands. |
 | S-OD4 scope | All S0-S3 and S2.3 remain, including all six S3 groups; no deferral. The companion repository's Hell decision is recorded under P-OD9 there, not a change to Sudoku's nine-level ladder. |
 | S-OD4 stops | Stop for the owner only for correctness (invalid/non-unique puzzle, unsound deduction, wrong exact flag/warning, lost/corrupted evidence) or a proposed change to a recorded decision. A guard/latency/projection exceedance or few/no exact hits becomes a named item with its numbers, routed to MS07e first and MS18c/MS18d finally; continue the task within the existing command bounds. Keep failed/incomplete outcomes honest. Every task's final reply includes the item list; MS18e audits it. |
 | S-OD4 reviews | Analysts cross-review the remaining MS05 steps, MS05e, MS06b-MS06c2, MS07a-MS07c, MS13a-MS13c, MS15a, MS17b and MS18c. MS08a is cross-reviewed as the technique template; the orchestrator checks other technique tasks against it and the generic soundness/order-invariant suites. No routine analyst review of the other tasks. |
 | S-OD4 evidence and CI | No new evidence class or tooling task to work around a slow intermediate cell. MS05r5m keeps its approved deep records; MS05b3 may reuse matching records with CV3's own checks, and >240 seconds is an availability item, not a recovery stop. MS05r6c makes both workflows use the bounded quick manifest, deep outside CI, no factor/timeout increase. Later suite-adding tasks own their CI group; MS18e owns the v3 PR's CI and final workflow audit. |
+| S-OD5 | Owner, 2026-11-14 07:15 (+07:00). **(A)** Fable reviews the generator's time complexity now (PR-S2); Sudoku work continues meanwhile. **(B)** Pentomino pauses after MP12b1 until Sudoku reaches MS07e, so that Sudoku runs without lock contention. Review basis: `generator-state-2026-11-14.md` and the pushed snapshot `1d19101` (`refs/dv3-wip/MS05b3-done-20261114-0705`). This schedules a review and the machine window; it does not itself change the generator, task scope, budgets or qualification rules. |
 
 Dispatch: MS05r5p -> MS05r5 -> MS05r5m -> MS05b3 -> MS05r6a -> MS05r6b -> MS05r6c -> combined commit ->
 MS05e -> the remaining serial index. The combined subject remains
