@@ -225,7 +225,8 @@ chặt chẽ (phiên bản wire vẫn là 1; wire không có cờ này, chẳng 
 và không bao giờ được dựng lại từ việc hai tên mức độ trùng nhau, nên bảng kết quả hiển thị đúng điều cờ nói. Ba
 kết luận về dải điểm của bước `tune` (`tune.hit`, `tune.miss` và `tune.shallow`) mang `required` (`true` cho một
 lần đạt, `false` cho một đề nông, `null` cho mọi lần trượt khác, kể cả đề đã giải xong nhưng nằm ngoài dải) và có
-thể mang `target` (một số hữu hạn hoặc `null`; hiện chưa có gì chọn mục tiêu). Đề có lời giải trọn vẹn nằm trong
+thể mang `target` (một số hữu hạn, kể cả 0; bỏ qua khi là `null`: mọi lần đào thử trong dải hữu hạn đều rút một mục
+tiêu, nên kết luận của yêu cầu thông thường có nó). Đề có lời giải trọn vẹn nằm trong
 dải nhưng không cần kỹ thuật nào của tầng là đề *nông* (shallow): nó được giữ làm phương án dự phòng, không bao
 giờ là đúng mức, và việc tìm kiếm vẫn tiếp tục; nếu cuối cùng nó là đáp án thì kèm `difficulty.shallow` cạnh
 `difficulty.approximate`, một cảnh báo cùng loại, có nút “Thử lại”. Công cụ soak, qualify và các suite thủ công chỉ
@@ -256,28 +257,33 @@ phải mặc định của bàn thì trở thành số đã chọn
 ([design.md](generator/design.md) §6.8, §14.2, §14.3). Dấu này không bao giờ ra tới `GenerateConfig`, lịch sử, cache
 hay đề được xuất.
 
-**Chính sách mục tiêu (nội bộ, chưa được nối vào).** `SG.digger.targetPolicy` chứa các hàm thuần của chính sách mục
-tiêu thuộc difficulty v3. Chúng không chấm điểm gì, không giữ trạng thái và chưa có đoạn mã sinh đề nào gọi tới, nên
-một seed vẫn cho đúng đề cũ. `targetFor(spec, rng)` là `null` khi dải không có cận trên (`spec.max` là `Infinity`),
-còn lại là một điểm trong dải thô, `spec.min + rng.fork('target').next() × (spec.max − spec.min)`: chỉ luồng con đó
-được rút số, nên không luồng nào khác bị dịch chuyển. `preferObjective(candidate, incumbent, target)` và
-`applyBounded(current, winner, target)` xếp hạng và áp dụng các ứng viên của một nhóm có hướng dẫn (kết quả đánh giá một
-ứng viên là `{ kind: 'bounded', score, tierUsed }`, `{ kind: 'proposal', priority }` hoặc `{ kind: 'refused', reason }`):
-tầng kỹ thuật được xét trước khoảng cách tới mục tiêu hữu hạn (không có mục tiêu thì lấy điểm cao hơn), đề xuất tối đa hóa
-độ ưu tiên và không bao giờ bị so với một điểm số, một lần từ chối không bao giờ thắng, và giá trị bằng nhau thì giữ
-ứng viên đầu tiên. `preferRated(candidateQuality, candidateScore, currentQuality, currentScore, target)` so sánh các ứng
-viên đã chấm điểm của tìm kiếm cục bộ (chất lượng thấp hơn trước, rồi điểm gần mục tiêu hơn, hoặc điểm cao hơn khi
-không có mục tiêu; bằng nhau là sai), còn `acceptReveal(current, next, spec, target, currentIsExact, nextIsExact)` quyết
-định từng lần trả lại số cho sẵn của bước tinh chỉnh đi xuống; bên gọi cho biết trên mô hình của từng ứng viên rằng
-điểm chấm có đúng mức hay không. Trong đường chạy thật chỉ có một dòng của chính sách này, ở `SG.digger.digLevel`:
-`options.target` tường minh (một số hoặc `null`) đến chiến lược đào đúng như đã cho, còn khi không có thì vẫn
-không có; các chiến lược dựng sẵn, kể cả `signs`, bỏ qua nó. Mục tiêu còn được mang đi như dữ liệu mà chưa có gì đọc: các kết
-quả đánh giá của nhóm có hướng dẫn đã có kiểu (`refused`, `bounded` kèm `tierUsed`, `proposal`) nhưng nhóm vẫn xếp hạng theo
-con số cũ, và mỗi lần đào thử cũng như mỗi lần tìm kiếm đưa các ứng viên của mình cho bộ giữ chung qua một khung nhìn
-(`SG.digger.keeperView`) gán cho từng ứng viên mục tiêu của chính ngữ cảnh đó; ứng viên được giữ, `SG.digger.generate`,
-`PuzzleResult.target`, `toWire` / `fromWire` (dữ liệu truyền hoặc mục cache cũ cho `null`), các sự kiện `tune` (chỉ khi mục
-tiêu hữu hạn) và dòng của soak đều mang nó, là một số hữu hạn hoặc `null`, và mọi yêu cầu thông thường đều là `null` vì chưa
-có gì rút nó ra ([design.md](generator/design.md) §6.8).
+**Chính sách mục tiêu (nội bộ, đang hoạt động).** `SG.digger.targetPolicy` chứa các hàm thuần của chính sách mục
+tiêu thuộc difficulty v3; việc sinh đề gọi chúng, nên một seed cho đề khác với trước khi kích hoạt (520 mã băm hồi
+quy đã được làm mới cùng lúc). Chúng không chấm điểm gì và không giữ trạng thái. `targetFor(spec, rng)` là `null` khi
+dải không có cận trên (`spec.max` là `Infinity`), còn lại là một điểm trong dải thô,
+`spec.min + rng.fork('target').next() × (spec.max − spec.min)`: chỉ luồng con đó được rút số, nên không luồng nào khác
+bị dịch chuyển. `preferObjective(candidate, incumbent, target)` và `applyBounded(current, winner, target)` xếp hạng và
+áp dụng các ứng viên của một nhóm có hướng dẫn (kết quả đánh giá một ứng viên là `{ kind: 'bounded', score, tierUsed }`,
+`{ kind: 'proposal', priority }` hoặc `{ kind: 'refused', reason }`): tầng kỹ thuật được xét trước khoảng cách tới mục
+tiêu hữu hạn (không có mục tiêu thì lấy điểm cao hơn), đề xuất tối đa hóa độ ưu tiên và không bao giờ bị so với một
+điểm số, một lần từ chối không bao giờ thắng, và giá trị bằng nhau thì giữ ứng viên đầu tiên.
+`preferRated(candidateQuality, candidateScore, currentQuality, currentScore, target)` so sánh các ứng viên đã chấm điểm
+của tìm kiếm cục bộ (chất lượng thấp hơn trước, rồi điểm gần mục tiêu hơn, hoặc điểm cao hơn khi không có mục tiêu; bằng
+nhau là sai), còn `acceptReveal(current, next, spec, target, currentIsExact, nextIsExact)` quyết định từng lần trả lại
+số cho sẵn của bước tinh chỉnh đi xuống; bên gọi cho biết trên mô hình của từng ứng viên rằng điểm chấm có đúng mức hay
+không. Mỗi lần đào thử được vào của `SG.digger.generate` rút mục tiêu riêng của mình, một lần, từ luồng con của chính
+nó (`null` khi dải mở), và nó thay thế `options.target` của bên gọi ngoài cùng, vốn không lần đào thử nào dùng; còn
+`SG.digger.digLevel` ở mức thấp giữ nguyên thuộc tính `target` tường minh (một số, 0 hoặc `null`) và chỉ khởi tạo một
+mục tiêu còn thiếu, đúng một lần. Mục tiêu dẫn hướng nhóm có hướng dẫn của chiến lược `cells`, bước tinh chỉnh đi xuống
+và tìm kiếm cục bộ; chiến lược `signs` đã đăng ký của biến thể So sánh nhận nó mà không đọc (các ứng viên của nó mang
+nó theo, và nó chỉ có tác dụng ở tìm kiếm cục bộ và phần nối tiếp). Các kết quả đánh giá của nhóm có hướng dẫn có kiểu
+(`refused`, `bounded` kèm `tierUsed`, `proposal`), và mỗi lần đào thử cũng như mỗi lần tìm kiếm đưa các ứng viên của
+mình cho bộ giữ chung qua một khung nhìn (`SG.digger.keeperView`) gán cho từng ứng viên mục tiêu của chính ngữ cảnh đó.
+Ứng viên được giữ, `SG.digger.generate`, `PuzzleResult.target`, `toWire` / `fromWire` (dữ liệu truyền hoặc mục cache cũ
+cho `null`), các sự kiện `tune` (chỉ khi mục tiêu hữu hạn) và dòng của soak mang mục tiêu của lần đào thử, lần tìm kiếm
+hay ứng viên được giữ mà kết quả bắt nguồn từ đó, là một số hữu hạn hoặc `null` (dải mở, hoặc kết quả của bước tìm cấu
+trúc của một biến thể, vốn không có). `targetPolicy`, `removalObjective`, `createKeeper`, `keeperView` và `keptPuzzle`
+là các điểm nối nội bộ cho kiểm thử, không phải API ([design.md](generator/design.md) §6.8).
 
 Giao diện không bao giờ làm thuật toán chậm đi để tạo hoạt ảnh, và phần phát lại cũng không đọc các sự kiện.
 Song song với các sự kiện, bộ đào ghi một **nhật ký đào** (dig log) gọn nhẹ cho lần đào thử đã trở thành đề
@@ -336,9 +342,9 @@ Phần việc kỹ thuật (cấu hình, mô hình bàn cờ, các lần đào t
    `signs.cause`; `board.setSignMarks` nhận thêm danh sách `cause`).
 
 Các con số của ví dụ là những con số của các bài kiểm thử. Sudoku Cổ điển 9×9 mức *chuyên gia* với seed 3275974478
-có 32 vị trí và 33 bước khi hiện từng thay đổi; chế độ xem gọn của nó có 7 bước với điểm 0, 23, 44, 551, 568, 992 và
-992, và bước 44 → 551 (×12,5) là một bước tăng vọt do số cho sẵn ở R1C2 gây ra (bỏ riêng nó cho 550 điểm; lần bỏ còn
-lại của nước đi, R9C8, bỏ riêng cho 44), được đánh khung. Một đề Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại
+có 28 vị trí và 29 bước khi hiện từng thay đổi; chế độ xem gọn của nó có 7 bước với điểm 0, 23, 44, 47, 235, 969 và
+969, và bước 47 → 235 (×5,0) là một bước tăng vọt do số cho sẵn ở R6C1 gây ra (bỏ riêng nó cho 234 điểm; lần bỏ còn
+lại của nước đi, R4C9, bỏ riêng cho 47), được đánh khung. Một đề Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại
 trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ, ba bước xóa ngẫu nhiên (điểm 15, 26 và 44), hai
 bước đào có định hướng (46 và 100) và đề hoàn chỉnh với 34 số cho sẵn.
 
@@ -629,7 +635,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (51 suite, 3.323 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (51 suite, 3.346 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (59 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -640,7 +646,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 51 suite, 3.323 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 51 suite, 3.346 bài —
 35 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -689,7 +695,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 59 suite, trong đó 51 suite nhanh (3.323 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 59 suite, trong đó 51 suite nhanh (3.346 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ

@@ -240,7 +240,8 @@ Easy). It crosses the wire as a strict flag (the wire version stays 1; a wire wi
 entry, reads as `false`) and is never rebuilt from matching level names, so the result panel shows exactly what it
 says. The three band verdicts of the `tune` step (`tune.hit`, `tune.miss` and `tune.shallow`) carry `required`
 (`true` for a hit, `false` for a shallow result, `null` for every other miss, a solved one outside the band
-included) and may carry `target` (a finite number or `null`; nothing draws one yet). A complete result in the
+included) and may carry `target` (a finite number, zero included; left out for `null`: every sample of a finite
+band draws one, so a normal request's verdicts show it). A complete result in the
 band that needs no technique of the tier is *shallow*: it is kept as a fallback, never exact, and the search goes
 on; when it ends as the answer it carries `difficulty.shallow` next to `difficulty.approximate`, a warning of the
 kind that offers "Retry". The soak, the qualification and the manual suites count a hit by this flag alone, never by
@@ -269,28 +270,32 @@ number into a default, and a recorded number that is not its board's default bec
 ([design.md](generator/design.md) §6.8, §14.2,
 §14.3). The marker never reaches `GenerateConfig`, the history, the cache or an exported puzzle.
 
-**The target policy (internal, not wired yet).** `SG.digger.targetPolicy` holds the pure helpers of the
-difficulty-v3 target policy. They rate nothing, keep no state and are called by no generation code, so a seed still
-gives the same puzzle. `targetFor(spec, rng)` is `null` without an upper bound (`spec.max` is `Infinity`) and
-otherwise a point of the raw band, `spec.min + rng.fork('target').next() × (spec.max − spec.min)`: only that child
-stream is drawn, so no other stream moves. `preferObjective(candidate, incumbent, target)` and
-`applyBounded(current, winner, target)` order and apply the candidates of a guided pool (an objective is
-`{ kind: 'bounded', score, tierUsed }`, `{ kind: 'proposal', priority }` or `{ kind: 'refused', reason }`): the tier
-comes before the distance to a finite target (the higher score when there is none), a proposal maximises its priority
-and is never compared with a score, a refusal never wins, and an equal value keeps the first.
-`preferRated(candidateQuality, candidateScore, currentQuality, currentScore, target)` compares the rated candidates
-of a local search (the lower quality, then the nearer score, or the higher with no target; equal is false), and
-`acceptReveal(current, next, spec, target, currentIsExact, nextIsExact)` decides each reveal of the downward
-refinement; its caller says on each model whether a rating is exact. The one line of the policy in the production path
-is in `SG.digger.digLevel`: an explicit `options.target` (a number or `null`) reaches the dig strategy as it is, and an
-absent one stays absent; the built-in strategies, `signs` included, ignore it. The target is also carried as data that
-nothing reads yet: the objectives of the guided pass are typed (`refused`, `bounded` with `tierUsed`, `proposal`) but the
-pass still ranks by the old number, and every sample and search offers its candidates to the shared keeper through a
-keeper view (`SG.digger.keeperView`) that gives each one the target of its own context; the kept candidate,
-`SG.digger.generate`, `PuzzleResult.target`, `toWire` / `fromWire` (an old wire or cache entry gives `null`), the `tune`
-events (a finite target only) and the soak row carry it, a finite number or `null`, which every normal request has
-because nothing draws one
-([design.md](generator/design.md) §6.8).
+**The target policy (internal, active).** `SG.digger.targetPolicy` holds the pure helpers of the difficulty-v3
+target policy; generation calls them, so a seed gives a different puzzle than before the activation (the 520
+regression hashes were refreshed with it). They rate nothing and keep no state. `targetFor(spec, rng)` is `null`
+without an upper bound (`spec.max` is `Infinity`) and otherwise a point of the raw band,
+`spec.min + rng.fork('target').next() × (spec.max − spec.min)`: only that child stream is drawn, so no other stream
+moves. `preferObjective(candidate, incumbent, target)` and `applyBounded(current, winner, target)` order and apply
+the candidates of a guided pool (an objective is `{ kind: 'bounded', score, tierUsed }`,
+`{ kind: 'proposal', priority }` or `{ kind: 'refused', reason }`): the tier comes before the distance to a finite
+target (the higher score when there is none), a proposal maximises its priority and is never compared with a score,
+a refusal never wins, and an equal value keeps the first. `preferRated(candidateQuality, candidateScore,
+currentQuality, currentScore, target)` compares the rated candidates of a local search (the lower quality, then the
+nearer score, or the higher with no target; equal is false), and `acceptReveal(current, next, spec, target,
+currentIsExact, nextIsExact)` decides each reveal of the downward refinement; its caller says on each model whether a
+rating is exact. Every entered sample of `SG.digger.generate` draws its own target, once, from its own child stream
+(`null` for an open band), and it replaces an `options.target` of the outer caller, which no sample uses; the
+lower-level `SG.digger.digLevel` keeps an own `target` property as given (a number, zero or `null`) and initializes
+only an absent one, once. The target steers the guided pass of the `cells` strategy, the downward refinement and the
+local search; the registered `signs` strategy of Greater-Than receives it and does not read it (its candidates carry
+it, and it acts in the local search and the continuation only). The objectives of the guided pass are typed
+(`refused`, `bounded` with `tierUsed`, `proposal`), and every sample and search offers its candidates to the shared
+keeper through a keeper view (`SG.digger.keeperView`) that gives each one the target of its own context. The kept
+candidate, `SG.digger.generate`, `PuzzleResult.target`, `toWire` / `fromWire` (an old wire or cache entry gives
+`null`), the `tune` events (a finite target only) and the soak row carry the target of the sample, search or kept
+candidate the result comes from, a finite number or `null` (an open band, or a result of a variant's structure
+search, which has none). `targetPolicy`, `removalObjective`, `createKeeper`, `keeperView` and `keptPuzzle` are
+internal seams for the tests, not an API ([design.md](generator/design.md) §6.8).
 
 The UI never slows the algorithm down to animate it, and its replay does not read the events. Next to them
 the digger keeps a compact **dig log** of the sample that became the puzzle (`result.digLog`: entries `pass`,
@@ -348,10 +353,10 @@ never shown.
    exactly one clue or sign causes gets a frame on the board (`marks.cause`, `marks.causeRestore`,
    `signs.cause`; `board.setSignMarks` takes a `cause` list).
 
-The numbers of the examples are the ones of the tests. Classic 9×9 *expert* with seed 3275974478 has 32 positions
-and 33 steps with every move shown; its compact view has 7 steps with the scores 0, 23, 44, 551, 568, 992 and
-992, and the step 44 → 551 (×12.5) is a jump caused by the clue at R1C2 (alone it gives 550; the other removal
-of the move, R9C8, alone gives 44), which is framed. A Classic 9×9 *easy* puzzle with seed 3 replays in 7 steps
+The numbers of the examples are the ones of the tests. Classic 9×9 *expert* with seed 3275974478 has 28 positions
+and 29 steps with every move shown; its compact view has 7 steps with the scores 0, 23, 44, 47, 235, 969 and
+969, and the step 47 → 235 (×5.0) is a jump caused by the clue at R6C1 (alone it gives 234; the other removal
+of the move, R4C9, alone gives 47), which is framed. A Classic 9×9 *easy* puzzle with seed 3 replays in 7 steps
 (26 with every move shown): the full solution, three steps of random removals (scores 15, 26 and 44), two
 steps of the guided dig (46 and 100) and the finished puzzle with 34 clues.
 
@@ -874,7 +879,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (51 suites, 3,323 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (51 suites, 3,346 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (59 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -886,7 +891,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 51 suites,
-3,323 tests — the 35 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+3,346 tests — the 35 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -936,7 +941,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 59 suites, 51 of them quick (3,323 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 59 suites, 51 of them quick (3,346 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,

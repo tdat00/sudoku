@@ -205,3 +205,47 @@ design §6.8 and the tests say.
 **Fix (optional).** Add "unless the result is a structure-search candidate, which has none".
 
 MS06c1 REVIEWED: 0 blocking, 0 major, 1 minor (IR39, routed to MS06c2's brief), 5 info (IR40-IR44). Verdict: accept.
+
+## 7. Cross-check of the IR39 ruling in MS06c2 (SA2's request, 2026-11-14)
+
+**Basis.** I read `tasks/difficulty-v3/MS06c2-activate-target-policy.md:41-172`, with the implementation steps
+(`:328-345`), T01 (`:358`) and the test plan (`:365-392`). I checked them against IR39, IR42 and IR44 above, and
+against IR34 and IR38 of review 12. The orchestrator asked for a check of the IR39 decision, not a second broad
+review. No Git, test or run.
+
+**PASS.** The ruling is IR39(b): every entered sample draws its own target. It holds against R7 and against the
+accepted code:
+
+- **The override.** `Object.assign({}, digOptions, { ..., target: target })` overrides the copied caller value
+  without mutating either object (IR38).
+- **The draw leaves the dig unchanged.** It is made after the sample loop's early-stop and cap guards, from
+  `sampleRng.fork('target')`. Forking does not advance a stream (`rng.js`), so the sample's dig keeps
+  exactly its old random draws. An open band gives an own `null`, with no draw and no initialization downstream.
+- **Entry semantics.** The lower-level entry keeps an explicit own value (zero, `null`, invalid becoming `null`);
+  only absence initializes, once, before the view. The continuation keeps `target: attemptBest.target`, including
+  `null`, never a `search#` draw or a fallback to the caller or the last sample. The structure hook is built
+  without `digOptions` (`digger.js:2015-2028`), so its candidates stay `null`.
+- **IR42 and IR44.** IR42 is bound as an original-keeper-at-every-boundary rule, with a prototype check in the
+  tests. IR44 is carried into the documentation checklist.
+- **The three named cases and the coupled default-null cases** migrate without lost coverage:
+  - the caller inputs stay, with independent expected values and strict equality (IR34);
+  - a controlled multi-sample case with distinct targets is required;
+  - old wires compare against an expected result whose target alone is `null`, and `expectSameResult` stays
+    strict;
+  - the soak's post-return probes stay valid.
+- **The seed 319 route proof** still works under IR39(b): the first-allowed sign dig ignores the target, so the
+  samples, and the exact stop at sample 2, are unchanged.
+
+**Optional clarifications (no correction required).**
+
+1. **Direct `digStage` and `digStageSteps` calls.** Only tests and tools make them; production always enters
+   through `digLevelSteps`. One sentence would settle that they do not initialize an absent target (R6 says
+   "may"), so that "initialize only absent lower-level entries" (`:330`) is not read as including them. Either
+   reading is safe for production.
+2. **Wording.**
+   - In the IR39 table, the expected sample target is best written as `targetFor(spec, SG.rng.create(<generate
+     seed>).fork('dig#<attempt>.<sample>'))` on a test stream. `sampleRng.seed` reads like the production object.
+   - For worker and cache, round-trip equality plus finiteness is enough: the producer's value is proved in
+     `digger-target`, so "its real target" need not be derived again there.
+
+IR39 CROSS-CHECK: PASS (two optional wording clarifications).

@@ -103,7 +103,7 @@
     ['check', 1], // if the puzzle can still be solved with the allowed techniques:
     ['accept', 2], // keep the group removed
     ['reject', 2], // otherwise put the group back
-    ['deeper', 0], // then dig deeper: keep the removal that makes the puzzle hardest
+    ['deeper', 0], // then dig deeper: keep the removal that brings the puzzle nearest to its target score
     ['verify', 0] // verify that exactly one solution is left
   ], {
     'dig.restore': 'order',

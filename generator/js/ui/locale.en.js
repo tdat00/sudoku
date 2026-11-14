@@ -237,8 +237,11 @@
       'solution and must stay solvable with the techniques allowed for the level.',
     'explain.dig.how': 'Cells are removed in symmetric groups. After each removal the logical solver ' +
       'checks that the puzzle can still be solved with the allowed techniques, which also proves that the ' +
-      'solution is unique; if not, the group is put back. A second, guided pass then keeps the removals ' +
-      'that make the puzzle hardest. A last check confirms that exactly one solution is left.',
+      'solution is unique; if not, the group is put back. A second, guided pass then rates several ' +
+      'removals and takes the one that suits the puzzle\'s target score best: one whose solution uses a ' +
+      'technique of the level, with the score nearest the target inside the level\'s band (the highest ' +
+      'score where the level has no upper bound). Once the solution uses such a technique, the pass stops ' +
+      'when no removal brings the puzzle nearer. A last check confirms that exactly one solution is left.',
     'explain.dig.live': 'Tried {attempts} \u00b7 accepted {accepted} \u00b7 rejected {rejected} \u00b7 ' +
       '{clues} clues left',
     'explain.dig.code.order': 'order \u2190 shuffle(symmetric cell groups)',
@@ -248,7 +251,8 @@
     'explain.dig.code.check': 'if the puzzle can still be solved with the allowed techniques:',
     'explain.dig.code.accept': 'keep the group removed',
     'explain.dig.code.reject': 'otherwise put the group back',
-    'explain.dig.code.deeper': 'then dig deeper: keep the removal that makes the puzzle hardest',
+    'explain.dig.code.deeper': 'then dig deeper: keep the removal that brings the puzzle nearest to its ' +
+      'target score',
     'explain.dig.code.verify': 'verify that exactly one solution is left',
 
     'explain.rate.what': 'Measure how hard the puzzle is.',
@@ -488,7 +492,7 @@
     'dig.try': 'Try removing {cells}.',
     'dig.accept': 'Removed {cells}: the puzzle can still be solved with the allowed techniques.',
     'dig.reject': 'Put {cells} back: {reason}.',
-    'dig.keep': 'Keep the removal of {cells}, which makes the puzzle hardest (score {score}).',
+    'dig.keep': 'The removal of {cells} is possible (score {score}).',
     'dig.pass.end': 'End of the {pass} pass: {clues} clues left.',
     'dig.verify': 'Checking that the puzzle has exactly one solution.',
     'dig.verify.yes': 'Checked: the puzzle has exactly one solution.',

@@ -7,7 +7,7 @@
     "from": "MS05r6b final quick manifest: docs/difficulty-v3/evidence/MS05r6b/quick-final/final-manifest.json (the same seven whole-suite shards; reconciled 3,262 of 3,262 Generator tests, 1,683 of 1,683 Player tests)",
     "measured": "local process seconds of one run on Windows x64, Node v26.13.0, 16 cores, time factor 2 (docs/difficulty-v3/recovery-quick-cost.md); a measurement of a named source and machine, not a promise and not a measurement of CI",
     "counts": "tests and measuredSeconds are information, not checked; the grouping, the suites and the projections are",
-    "added": "MS06b: the shard digger-target (the new suite of the inert target policy); its seconds are one locked local run of that task, not part of MS05r6b's seven shards. MS06c1: no suite or shard is added; the tests of digger-target (28 to 55), pipeline (150 to 152), cache, difficulty-diagnostics and worker (own-fast, 1,579 to 1,583) are its new nullable-target and typed-objective cases, so the Generator quick set is 3,323 tests; the seconds of the other shards are not remeasured here"
+    "added": "MS06b: the shard digger-target (the new suite of the inert target policy); its seconds are one locked local run of that task, not part of MS05r6b's seven shards. MS06c1: no suite or shard is added; the tests of digger-target (28 to 55), pipeline (150 to 152), cache, difficulty-diagnostics and worker (own-fast, 1,579 to 1,583) are its new nullable-target and typed-objective cases, so the Generator quick set is 3,323 tests; the seconds of the other shards are not remeasured here. MS06c2: no suite or shard is added; the tests of digger-target (55 to 75), replay (153 to 154) and pipeline (152 to 154) are its activation cases and migrated pins, so the Generator quick set is 3,346 tests; the seconds of replay, digger-target, pipeline and player are those of the final locked run of that task (docs/difficulty-v3/evidence/MS06c2/quick, after its fix round), the other shards are not remeasured here"
   },
   "job": {
     "timeoutMinutes": 30,
@@ -37,8 +37,8 @@
         {
           "id": "replay",
           "suites": ["replay"],
-          "tests": 153,
-          "measuredSeconds": 11.062,
+          "tests": 154,
+          "measuredSeconds": 12.87,
           "projectionSeconds": 30
         },
         {
@@ -64,8 +64,8 @@
         {
           "id": "digger-target",
           "suites": ["digger-target"],
-          "tests": 55,
-          "measuredSeconds": 1.3,
+          "tests": 75,
+          "measuredSeconds": 1.18,
           "projectionSeconds": 30
         }
       ]
@@ -77,8 +77,8 @@
         {
           "id": "pipeline",
           "suites": ["pipeline"],
-          "tests": 152,
-          "measuredSeconds": 286.453,
+          "tests": 154,
+          "measuredSeconds": 322.37,
           "projectionSeconds": 360
         }
       ]
@@ -91,7 +91,7 @@
           "id": "player",
           "suites": ["player"],
           "tests": 69,
-          "measuredSeconds": 139.399,
+          "measuredSeconds": 132.26,
           "projectionSeconds": 180
         }
       ]

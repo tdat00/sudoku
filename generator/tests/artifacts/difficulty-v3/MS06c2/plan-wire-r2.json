@@ -1,0 +1,52 @@
+[
+  {
+    "label": "g-wire-G09-r2",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\wire\\G09.json"
+    ],
+    "projectionSeconds": 25,
+    "projectionBasis": "MS06c1 g-wire-G09 14.004 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-wire-G10-r2",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\wire\\G10.json"
+    ],
+    "projectionSeconds": 42,
+    "projectionBasis": "MS06c1 g-wire-G10 25.959 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-wire-G11-r2",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\wire\\G11.json"
+    ],
+    "projectionSeconds": 17,
+    "projectionBasis": "MS06c1 g-wire-G11 8.677 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-wire-G12-r2",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\wire\\G12.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS06c1 g-wire-G12 4.781 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-wire-G13-r2",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\wire\\G13.json"
+    ],
+    "projectionSeconds": 37,
+    "projectionBasis": "MS06c1 g-wire-G13 22.557 s before the activation; 1.5 x + 3 s"
+  }
+]

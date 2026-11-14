@@ -705,10 +705,11 @@
       function () {
         var made = P.run({ variantId: 'classic4', difficulty: 'veryEasy', seed: 5, trace: 'off' }, null);
         function wireOf(result) { return structuredClone(P.toWire(result)); }
-        // no normal request has one: the result, its wire and the rebuilt result all say null
-        expect(made.target).toBe(null);
-        expect(wireOf(made).target).toBe(null);
-        expect(P.fromWire(wireOf(made)).target).toBe(null);
+        // a fresh request in a finite band has the target its sample drew: the result, its wire and the rebuilt
+        // result all say the same finite number (the producer's draw and origin are proved in `digger-target`)
+        expect(Number.isFinite(made.target)).toBe(true);
+        expect(wireOf(made).target).toBe(made.target);
+        expect(P.fromWire(wireOf(made)).target).toBe(made.target);
         [812.5, 0, -3, null].forEach(function (value) {
           var source = Object.assign({}, made, { target: value });
           var wire = wireOf(source);
@@ -736,7 +737,8 @@
         });
         var rebuilt = P.fromWire(old);
         expect(rebuilt.target).not.toBe(rebuilt.rating.score);
-        expectSameResult(rebuilt, made);
+        // an old wire decodes to null for the target alone: everything else of the fresh result is the same
+        expectSameResult(rebuilt, Object.assign({}, made, { target: null }));
       });
 
     it('MS05b1-T05: a shallow fallback crosses the wire with exact false and its two warnings', function () {

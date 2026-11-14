@@ -873,18 +873,30 @@
         'model', 'rating', 'seed', 'solution', 'target', 'timings', 'warnings', 'work']);
     });
 
-    it('MS06c1: the target of the result is null: no normal request draws one, and no event shows one', function () {
-      ['easy', 'normal'].forEach(function (level) {
-        var out = run({ difficulty: level, seed: 4 }, 'full');
-        expect(out.result.target).toBe(null);
-        expect(Object.prototype.hasOwnProperty.call(out.result, 'target')).toBe(true);
-        var verdicts = out.events.filter(function (e) { return /^tune\.(hit|miss|shallow)$/.test(e.i18nKey); });
-        expect(verdicts.length).toBeGreaterThan(0);
-        verdicts.forEach(function (e) {
-          expect(Object.prototype.hasOwnProperty.call(e.i18nArgs, 'target')).toBe(false);
+    it('MS06c2: the result carries the target of the sample it comes from, and the verdict of that sample ' +
+      'shows the same value', function () {
+        ['easy', 'normal'].forEach(function (level) {
+          var out = run({ difficulty: level, seed: 4 }, 'full');
+          var spec = D.spec(level, out.result.model);
+          expect(Object.prototype.hasOwnProperty.call(out.result, 'target')).toBe(true);
+          expect(out.result.exact).toBe(true);
+          // the last dig that started is the sample of the exact result: its own draw, worked out on a test stream
+          var starts = out.events.filter(function (e) { return e.i18nKey === 'dig.start'; });
+          var at = starts[starts.length - 1].i18nArgs;
+          var expected = SG.digger.targetPolicy.targetFor(spec,
+            SG.rng.create(4).fork('dig#' + at.attempt + '.' + at.sample));
+          expect(out.result.target).toBe(expected);
+          expect(out.result.target).toBeGreaterThanOrEqual(spec.min);
+          expect(out.result.target).toBeLessThan(spec.max);
+          var verdicts = out.events.filter(function (e) { return /^tune\.(hit|miss|shallow)$/.test(e.i18nKey); });
+          expect(verdicts.length).toBeGreaterThan(0);
+          verdicts.forEach(function (e) {
+            expect(Number.isFinite(e.i18nArgs.target)).toBe(true);
+            expect(E.eventProblems(e)).toEqual([]);
+          });
+          expect(verdicts[verdicts.length - 1].i18nArgs.target).toBe(expected);
         });
       });
-    });
 
     it('holds a valid puzzle: invariants I1, I2, I3 and I6, and the model and rating', function () {
       ['veryEasy', 'easy', 'normal', 'hard', 'master', 'nightmare'].forEach(function (level, i) {
@@ -1695,6 +1707,8 @@
     var Z = SG.digger;
     var SEED = 11;
     var OFF = { maxProposals: 0 };
+    // The target of sample 1 of `gen`'s request, worked out on a test stream from its seed and fork path.
+    var TARGET_1 = Z.targetPolicy.targetFor(D.spec('normal', model9), SG.rng.create(SEED).fork('dig#1.1'));
 
     /** A complete canonical rating as `SG.difficulty.rate` reports it; the technique counts decide. */
     function rated(level, score, counts, hardest) {
@@ -2015,13 +2029,20 @@
       it('MS05b1-T02: removing a sign starts a new memo, so the same clues are rated again for the new signs',
         noExtraAllowance(function () {
           var greater = SG.variants.get('greaterThan');
+          var signs0 = 0;
           var strategy = function (model, solution, level, rng, o) {
             liveCaps = o.caps;
+            signs0 = model.inequalities.length;
             var dug = Z.dig(model, solution, rng.fork('base'), { minClues: 40 });
             o.log.push({ op: 'signs', signs: model.inequalities.map(function (s) { return [s.a, s.b]; }) });
             return { givens: dug.givens, clues: dug.clues, stats: dug.stats, rating: SHALLOW };
           };
-          withRater(function () { return SHALLOW; }, function (calls) {
+          // The path follows only a strictly better state (MS06c2): a state with one sign fewer scores a point
+          // more (at most 108 signs: below the band maximum), a clue move with the same signs scores the same as
+          // the state it came from and is not followed.
+          withRater(function (call) {
+            return rated('normal', 250 + signs0 - call.model.inequalities.length, BASIC);
+          }, function (calls) {
             var out = Z.generate(greater.build({}, SG.rng.create(1)), 'normal', SG.rng.create(SEED), {
               strategy: strategy, postGenerate: greater.postGenerate, maxAttempts: 1, digTries: 1,
               maxProposals: 400
@@ -2188,8 +2209,8 @@
         });
       });
 
-      it('MS05b1-T03: a required neighbour with a lower score is kept; the search ends with no further proposal',
-        function () {
+      it('MS06c2: a required neighbour with a lower score is followed (the quality comes first), kept, and ends ' +
+        'the search with no further proposal', function () {
           var neighbour = rated('normal', 200, plus({ hiddenPair: 1 }), 'hiddenPair');
           withRater(neverAfter(1, function () { return neighbour; }), function (calls) {
             var out = gen('normal', sampling(SHALLOW));
@@ -2202,11 +2223,46 @@
             expect(out.exact).toBe(true);
             expect(out.rating).toBe(neighbour);
             expect(Array.from(out.givens)).toEqual(Array.from(calls[0].givens));
-            // the path refused the move (its score is lower), and the keeper still has the puzzle
+            // the exact state (quality 0) beats the shallow one (0.5) whatever the scores, so the path followed it
             expect(out.stats.tried).toBe(1);
-            expect(out.stats.accepted).toBe(0);
-            expect(out.stats.rejected).toBe(1);
+            expect(out.stats.accepted).toBe(1);
+            expect(out.stats.rejected).toBe(0);
             expect(out.warnings).toEqual([]);
+          });
+        });
+
+      it('MS06c2: of equal quality the neighbour nearer the target of the search is followed; a farther one ' +
+        'and an equal score are not', function () {
+          expect(TARGET_1).toBeGreaterThan(SHALLOW.score);
+          expect(Math.abs(300 - TARGET_1)).toBeLessThan(Math.abs(SHALLOW.score - TARGET_1));
+          expect(Math.abs(340 - TARGET_1)).toBeLessThan(Math.abs(300 - TARGET_1));
+          expect(Math.abs(280 - TARGET_1)).toBeGreaterThan(Math.abs(300 - TARGET_1));
+          // 300 (nearer than 250: followed), 280 (farther than 300), 300 (equal: no), 340 (nearer: followed),
+          // then a required state at a lower score (quality 0: followed, and the search ends)
+          var seq = [rated('normal', 300, BASIC), rated('normal', 280, BASIC), rated('normal', 300, BASIC),
+            rated('normal', 340, BASIC), rated('normal', 210, plus({ hiddenPair: 1 }), 'hiddenPair')];
+          withRater(neverAfter(5, function (index) { return seq[index]; }), function (calls) {
+            var out = gen('normal', sampling(SHALLOW));
+            expect(calls).toHaveLength(5);
+            expect(out.exact).toBe(true);
+            expect(out.rating).toBe(seq[4]);
+            expect(out.stats.accepted).toBe(3);
+            expect(out.work[0].ratings).toBe(5);
+          });
+        });
+
+      it('MS06c2: a score at or above the band maximum is not followed even when its quality is better; the ' +
+        'keeper still takes it, so the result is that candidate and the search state never moved', function () {
+          // a sample two levels below the band (quality 2000+) and a neighbour above it (quality 1000+)
+          var VERY_EASY = rated('veryEasy', 30, BASIC);
+          withRater(function () { return ABOVE; }, function (calls) {
+            var out = gen('normal', sampling(VERY_EASY), { maxRatings: 1 });
+            expect(calls).toHaveLength(1);
+            expect(out.rating).toBe(ABOVE);
+            expect(out.exact).toBe(false);
+            expect(out.stats.accepted).toBe(0);
+            expect(out.stats.rejected).toBeGreaterThanOrEqual(1);
+            expect(out.warnings).toEqual(['difficulty.approximate']);
           });
         });
 
@@ -2347,7 +2403,7 @@
         expect(v.events).toHaveLength(1);
         expect(v.events[0].i18nKey).toBe('tune.hit');
         expect(v.events[0].i18nArgs).toEqual({
-          requested: 'normal', achieved: 'normal', score: 230, scoreMin: 180, scoreMax: 400,
+          requested: 'normal', achieved: 'normal', score: 230, scoreMin: 180, scoreMax: 400, target: TARGET_1,
           hardestTechnique: 'hiddenPair', required: true
         });
         expect(E.eventProblems(v.events[0])).toEqual([]);
@@ -2360,8 +2416,8 @@
         expect(v.events).toHaveLength(1);
         expect(v.events[0].i18nKey).toBe('tune.shallow');
         expect(v.events[0].i18nArgs).toEqual({
-          requested: 'normal', achieved: 'normal', score: 250, scoreMin: 180, scoreMax: 400, sample: 1,
-          maxSamples: 1, required: false
+          requested: 'normal', achieved: 'normal', score: 250, scoreMin: 180, scoreMax: 400, target: TARGET_1,
+          sample: 1, maxSamples: 1, required: false
         });
         expect(E.eventProblems(v.events[0])).toEqual([]);
         expect(v.out.exact).toBe(false);
@@ -2395,25 +2451,38 @@
           expect(misses[0].i18nArgs.required).toBe(null);
         });
 
-      it('MS05b1-T04: no event carries a target: nothing draws one yet', function () {
+      it('MS06c2: every verdict carries the target its sample drew, even over an outer caller\'s value', function () {
         [REQUIRED, SHALLOW, EASY].forEach(function (sample) {
-          var v = verdictOf(sample);
-          expect(Object.prototype.hasOwnProperty.call(v.events[0].i18nArgs, 'target')).toBe(false);
+          [undefined, { target: 812.5 }, { target: null }].forEach(function (extra) {
+            var v = verdictOf(sample, extra);
+            expect(v.events[0].i18nArgs.target).toBe(TARGET_1);
+            expect(E.eventProblems(v.events[0])).toEqual([]);
+          });
         });
       });
 
-      it('MS06c1: a verdict carries the finite target of an explicit call, zero included; null and none leave ' +
-        'it out', function () {
+      // The lower-level entry of the dig: its own `target` property is honoured as given, an absent one is
+      // initialized once in a finite band.
+      it('MS06c2: at the lower-level entry a verdict carries the finite target given, zero included; null and ' +
+        'a value that is not a finite number leave it out; an absent one draws', function () {
+          var spec = D.spec('normal', model9);
+          var solution = SG.fullGrid.generate(model9, SG.rng.create(SEED).fork('grid'), null);
+          var drawnHere = Z.targetPolicy.targetFor(spec, SG.rng.create(SEED));
           [[REQUIRED, 'tune.hit'], [SHALLOW, 'tune.shallow'], [EASY, 'tune.miss']].forEach(function (c) {
-            [[812.5, true], [0, true], [null, false], [undefined, false], [Infinity, false]].forEach(function (t) {
-              var v = verdictOf(c[0], t[0] === undefined ? undefined : { target: t[0] });
-              expect(v.events).toHaveLength(1);
-              expect(v.events[0].i18nKey).toBe(c[1]);
-              var args = v.events[0].i18nArgs;
+            [[812.5, true, 812.5], [0, true, 0], [null, false], [Infinity, false], [NaN, false],
+              [undefined, true, drawnHere]].forEach(function (t) {
+              var events = [];
+              var extra = { strategy: sampling(c[0]), emit: collecting(events) };
+              if (t[0] !== undefined) extra.target = t[0];
+              Z.digLevel(model9, solution, 'normal', SG.rng.create(SEED), extra);
+              var verdicts = tuneEvents(events);
+              expect(verdicts).toHaveLength(1);
+              expect(verdicts[0].i18nKey).toBe(c[1]);
+              var args = verdicts[0].i18nArgs;
               expect([c[1], t[0], Object.prototype.hasOwnProperty.call(args, 'target')])
                 .toEqual([c[1], t[0], t[1]]);
-              if (t[1]) expect(args.target).toBe(t[0]);
-              expect(E.eventProblems(v.events[0])).toEqual([]);
+              if (t[1]) expect(args.target).toBe(t[2]);
+              expect(E.eventProblems(verdicts[0])).toEqual([]);
             });
           });
         });
@@ -2831,9 +2900,12 @@
             .toEqual(shown(searchesOf(one)[0]));
         });
 
-      // A real 9x9 Master request whose local search meets shallow states and keeps going after them (a
-      // dozen seeds of the first 25 do): it shows the allowance on the real rater, not on a script.
-      var REAL = { level: 'master', seed: 1 };
+      // A real 9x9 Master request whose local search meets shallow states and keeps going after them: it shows
+      // the allowance on the real rater, not on a script. Under the active target policy (MS06c2) three seeds of
+      // the first 25 do (3, 5 and 25); seed 5 is the one whose search reaches its first shallow state after
+      // some ratings (27) and then goes on for 94 ratings, so the first shallow state is not the entry (the
+      // MS05r3 seed 1 ends 62 ratings after its first shallow state now: tests/artifacts/difficulty-v3/MS06c2/).
+      var REAL = { level: 'master', seed: 5 };
 
       function realRequest(allowance) {
         var out = null;

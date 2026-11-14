@@ -232,8 +232,11 @@
       'được bằng các kỹ thuật cho phép ở mức đó.',
     'explain.dig.how': 'Các ô được bỏ theo từng nhóm đối xứng. Sau mỗi lần bỏ, bộ giải logic kiểm tra đề ' +
       'còn giải được bằng các kỹ thuật cho phép hay không (điều này cũng chứng minh lời giải là duy nhất); ' +
-      'nếu không thì nhóm ô đó được trả lại. Một lượt thứ hai, có định hướng, giữ lại những lần bỏ làm đề ' +
-      'khó nhất. Cuối cùng là kiểm tra lần nữa rằng chỉ còn đúng một lời giải.',
+      'nếu không thì nhóm ô đó được trả lại. Một lượt thứ hai, có định hướng, chấm nhiều phương án bỏ số ' +
+      'rồi chọn phương án hợp nhất với điểm mục tiêu của đề: phương án mà lời giải dùng một kỹ thuật của ' +
+      'mức đó, với điểm gần mục tiêu nhất trong dải của mức (điểm cao nhất nếu mức đó không có cận trên). ' +
+      'Khi lời giải đã dùng một kỹ thuật như vậy, lượt này dừng khi không còn phương án nào đưa đề lại ' +
+      'gần hơn. Cuối cùng là kiểm tra lần nữa rằng chỉ còn đúng một lời giải.',
     'explain.dig.live': 'Đã thử {attempts} · chấp nhận {accepted} · từ chối {rejected} · còn {clues} ' +
       'số cho sẵn',
     'explain.dig.code.order': 'order ← shuffle(các nhóm ô đối xứng)',
@@ -243,7 +246,7 @@
     'explain.dig.code.check': 'nếu đề vẫn giải được bằng các kỹ thuật cho phép:',
     'explain.dig.code.accept': 'giữ group ở trạng thái đã bỏ',
     'explain.dig.code.reject': 'nếu không thì trả group về chỗ cũ',
-    'explain.dig.code.deeper': 'rồi đào sâu hơn: giữ lần bỏ làm đề khó nhất',
+    'explain.dig.code.deeper': 'rồi đào sâu hơn: giữ lần bỏ đưa đề gần nhất với điểm mục tiêu',
     'explain.dig.code.verify': 'xác minh rằng chỉ còn đúng một lời giải',
 
     'explain.rate.what': 'Đo xem đề khó đến đâu.',
@@ -471,7 +474,7 @@
     'dig.try': 'Thử bỏ {cells}.',
     'dig.accept': 'Đã bỏ {cells}: đề vẫn giải được bằng các kỹ thuật cho phép.',
     'dig.reject': 'Trả {cells} về chỗ cũ: {reason}.',
-    'dig.keep': 'Giữ lần bỏ {cells} vì làm đề khó nhất (điểm {score}).',
+    'dig.keep': 'Có thể bỏ {cells} (điểm {score}).',
     'dig.pass.end': 'Kết thúc lượt đào {pass}: còn {clues} số cho sẵn.',
     'dig.verify': 'Đang kiểm tra đề có đúng một lời giải.',
     'dig.verify.yes': 'Đã kiểm tra: đề có đúng một lời giải.',

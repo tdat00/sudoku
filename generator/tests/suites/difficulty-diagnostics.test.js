@@ -1585,13 +1585,35 @@
           [['classic4', 'veryEasy', 'direct'], ['killer', 'veryEasy', 'pipeline']].forEach(function (cell) {
             var args = ['--variant=' + cell[0], '--level=' + cell[1], '--count=2', '--from=0',
               '--seed=20260101', '--no-gate', JSON_ARG];
-            var plain = ledgerOf(runSoak(args));
+            var hostOf = function (sg) { return cell[2] === 'direct' ? sg.digger : sg.pipeline; };
+            var method = cell[2] === 'direct' ? 'generate' : 'run';
+            // what the producer of each selected result says, read where it returns, apart from the ledger
+            var produced = [];
+            var plain = ledgerOf(runSoak(args, function (sg) {
+              var host = hostOf(sg);
+              var real = host[method];
+              host[method] = function () {
+                var out = real.apply(this, arguments);
+                produced.push(out.target);
+                return out;
+              };
+            }));
             expect(plain.meta.manifest.cells[0].route).toBe(cell[2]);
-            expect(plain.rows.map(function (row) { return row.target; })).toEqual([null, null]);
+            // the soak generates its first puzzle once more to prove it deterministic: that result is the same
+            var targets = plain.rows.map(function (row) { return row.target; });
+            expect(targets).toHaveLength(2);
+            expect(produced.length).toBeGreaterThanOrEqual(2);
+            expect(produced[0]).toBe(targets[0]);
+            expect(produced[produced.length - 1]).toBe(targets[1]);
+            produced.forEach(function (target) { expect(targets).toContain(target); });
+            // an ordinary dig has its sample's target; only a genuine structure-search winner (Killer) has none
+            produced.forEach(function (target) {
+              expect([cell[0], target === null || Number.isFinite(target)]).toEqual([cell[0], true]);
+              if (cell[2] === 'direct') expect(Number.isFinite(target)).toBe(true);
+            });
             [812.5, 0].forEach(function (value) {
               var run = runSoak(args, function (sg) {
-                var host = cell[2] === 'direct' ? sg.digger : sg.pipeline;
-                var method = cell[2] === 'direct' ? 'generate' : 'run';
+                var host = hostOf(sg);
                 var real = host[method];
                 host[method] = function () {
                   return Object.assign({}, real.apply(this, arguments), { target: value });

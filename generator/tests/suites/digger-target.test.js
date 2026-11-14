@@ -1,10 +1,9 @@
-// The target policy of difficulty v3 (R6/R7): the pure helpers of `SG.digger.targetPolicy`, which no
-// generation code calls yet, the one inert production edit of MS06b, the forwarding of an explicit
-// `options.target` from `digLevelSteps` to its dig strategy (a number, null or absent: three cases), and the
-// nullable transport of MS06c1: the typed objectives of the guided pass with their legacy ranking, the keeper
-// views that give every candidate the target of its own sample or search, and the target of a result. Nothing
-// draws a target and nothing reads one yet; the cases marked "preparation phase" are replaced by the active
-// policy's tests in MS06c2, which keeps the transport ones.
+// The target policy of difficulty v3 (R6/R7), active since MS06c2: the pure helpers of `SG.digger.targetPolicy`
+// (MS06b), the target of every sample (one draw from its own child stream, overriding any caller value, and an
+// initialization of an absent target at the lower-level entry), its transport as data (MS06c1: the keeper views,
+// the sample, the search and the result) and the activated stages: the guided pass of the cells strategy
+// (initial state, first-success pools, the apply table), the downward refinement and the local search, and the
+// real first-allowed sign pass of Greater-Than, which receives the target and does not read it.
 (function () {
   'use strict';
 
@@ -27,6 +26,22 @@
   function proposal(priority) { return { kind: 'proposal', priority: priority }; }
   function refused(reason) { return { kind: 'refused', reason: reason }; }
   function rated(score) { return { solved: true, score: score }; }
+
+  /**
+   * The contract of the typed objective of a score-targeted removal, worked out apart from the digger: the
+   * restricted solve of the level's techniques, then refused 'techniques' (not solved) or 'tooHard' (the score
+   * reaches the maximum), else the score and whether the solve used a technique of the level's tier.
+   */
+  function boundedOf(model, spec, givens) {
+    var report = SG.logicalSolver.solve(model, givens, {
+      allowedTechniques: spec.allowedTechniques, collectSteps: false, assumeUniqueness: false, budget: null
+    });
+    if (!report.solved) return refused('techniques');
+    var score = D.classify(report, model).score;
+    if (score >= spec.max) return refused('tooHard');
+    var used = spec.tierTechniques.some(function (id) { return report.techniqueCounts[id] > 0; });
+    return bounded(score, D.levelIndex(spec.level) === 0 || spec.tierTechniques.length === 0 || used);
+  }
 
   /** A stand-in for the seeded stream: its `target` child returns `value`; the forks asked are kept. */
   function fakeRng(value) {
@@ -322,22 +337,48 @@
     });
   });
 
-  describe('digLevelSteps: an explicit options.target reaches the strategy and nothing else', function () {
+  /** The stream with every fork recorded by its path, so that a draw of the child "target" would show. */
+  function spied(rng, path, tags) {
+    return Object.assign({}, rng, {
+      fork: function (tag) {
+        var at = path + tag;
+        tags.push(at);
+        return spied(rng.fork(tag), at + '/', tags);
+      }
+    });
+  }
+
+  function targetForks(tags) {
+    return tags.filter(function (t) { return t.split('/').pop() === 'target'; });
+  }
+
+  describe('digLevelSteps: the target of a call is its own property, initialized once when absent', function () {
     var solution = SG.fullGrid.generate(model9, SG.rng.create(11).fork('grid'), null);
+    // A redundant puzzle: a strategy that returns it digs nothing, so an open band costs no search.
+    var redundant = Z.dig(model9, solution, SG.rng.create(11).fork('base'), { minClues: 58 });
+    // Hell 2, the only open band, is offered by the extra-region boards and not by classic9.
+    var modelX = SG.variants.get('diagonalX').build({}, null);
+    var solutionX = SG.fullGrid.generate(modelX, SG.rng.create(11).fork('grid'), null);
+    var redundantX = Z.dig(modelX, solutionX, SG.rng.create(11).fork('base'), { minClues: 58 });
 
     /** One digLevel through a strategy that records what it receives and then digs as the default one. */
-    function dig(extra) {
+    function dig(extra, level, stub) {
       var seen = [];
+      var tags = [];
       var cells = SG.digger.getStrategy('cells');
+      var open = stub === 'open';
       var options = Object.assign({
-        strategy: function (model, sol, level, rng, opts) {
+        strategy: function (model, sol, lvl, rng, opts) {
           seen.push([Object.prototype.hasOwnProperty.call(opts, 'target'), opts.target]);
-          return cells(model, sol, level, rng, opts);
+          var base = open ? redundantX : redundant;
+          return stub ? { givens: base.givens, clues: base.clues, stats: base.stats }
+            : cells(model, sol, lvl, rng, opts);
         }
       }, extra);
-      var rng = SG.rng.create(12);
-      var puzzle = SG.digger.digLevel(model9, solution, 'easy', rng, options);
-      return { seen: seen, puzzle: puzzle, next: rng.next() };
+      var rng = spied(SG.rng.create(12), '', tags);
+      var puzzle = open ? SG.digger.digLevel(modelX, solutionX, level, rng, options)
+        : SG.digger.digLevel(model9, solution, level || 'easy', rng, options);
+      return { seen: seen, puzzle: puzzle, tags: tags, next: rng.next() };
     }
 
     function outcome(run) {
@@ -348,128 +389,186 @@
       };
     }
 
-    it('gives the strategy the number, the null or the absence it was given, as three different things',
+    // The value the entry must have drawn: on a test stream of the same seed, never the production stream.
+    var EASY_TARGET = P.targetFor(D.spec('easy', model9), SG.rng.create(12));
+
+    it('gives the strategy an explicit number, zero or null as it was given, and draws nothing for them',
       function () {
-        var withNumber = dig({ target: 812 });
-        var withNull = dig({ target: null });
-        var without = dig({});
-        expect(withNumber.seen).toEqual([[true, 812]]);
-        expect(withNull.seen).toEqual([[true, null]]);
-        expect(without.seen).toEqual([[false, undefined]]);
-        expect(dig({ target: 0 }).seen).toEqual([[true, 0]]);
+        [[812, 812], [0, 0], [null, null]].forEach(function (pair) {
+          var run = dig({ target: pair[0] });
+          expect(run.seen).toEqual([[true, pair[1]]]);
+          expect(run.puzzle.target).toBe(pair[1]);
+          expect(targetForks(run.tags)).toEqual([]);
+        });
+        var invalid = dig({ target: NaN });
+        expect(invalid.seen).toHaveLength(1);
+        expect(invalid.seen[0][0]).toBe(true);
+        expect(Number.isNaN(invalid.seen[0][1])).toBe(true);
+        expect(invalid.puzzle.target).toBe(null);
+        expect(targetForks(invalid.tags)).toEqual([]);
       });
 
-    it('leaves the puzzle, rating, statistics, dig log and random streams as without it', function () {
-      var base = outcome(dig({}));
-      expect(base.clues).toBeGreaterThan(0);
-      expect(base.log.length).toBeGreaterThan(0);
-      expect(outcome(dig({ target: 812 }))).toEqual(base);
-      expect(outcome(dig({ target: null }))).toEqual(base);
-      expect(outcome(dig({ target: 0 }))).toEqual(base);
+    it('initializes an absent target once, from the entry\'s own stream: its draw, one child, no parent draw',
+      function () {
+        var run = dig({});
+        expect(EASY_TARGET).toBeGreaterThanOrEqual(D.spec('easy', model9).min);
+        expect(EASY_TARGET).toBeLessThan(D.spec('easy', model9).max);
+        expect(run.seen).toEqual([[true, EASY_TARGET]]);
+        expect(run.puzzle.target).toBe(EASY_TARGET);
+        expect(targetForks(run.tags)).toEqual(['target']);
+        expect(run.next).toBe(SG.rng.create(12).next());
+      });
+
+    it('an open band initializes to null without a draw, and the strategy still gets the property', function () {
+      var run = dig({}, 'hell2', 'open');
+      expect(run.seen).toEqual([[true, null]]);
+      expect(run.puzzle.target).toBe(null);
+      expect(targetForks(run.tags)).toEqual([]);
     });
 
-    it('is no draw: plain generation hands the strategy no target and calls no policy helper', function () {
-      var names = Object.keys(P).sort();
-      expect(names).toEqual(['acceptReveal', 'applyBounded', 'preferObjective', 'preferRated', 'targetFor']);
-      var called = [];
-      var original = {};
-      names.forEach(function (name) {
-        original[name] = P[name];
-        P[name] = function () {
-          called.push(name);
-          return original[name].apply(P, arguments);
-        };
+    it('an absent target is the value it would draw: the same puzzle, statistics, dig log and streams',
+      function () {
+        var base = outcome(dig({}));
+        expect(base.clues).toBeGreaterThan(0);
+        expect(base.log.length).toBeGreaterThan(0);
+        expect(outcome(dig({ target: EASY_TARGET }))).toEqual(base);
+        // a repeated call with the same explicit target is the same puzzle
+        expect(outcome(dig({ target: 812 }))).toEqual(outcome(dig({ target: 812 })));
       });
+
+    it('plain generation draws one target per entered sample from that sample\'s own child, and none ' +
+      'for an open band or a search', function () {
+        var names = Object.keys(P).sort();
+        expect(names).toEqual(['acceptReveal', 'applyBounded', 'preferObjective', 'preferRated', 'targetFor']);
+        var called = [];
+        var original = {};
+        names.forEach(function (name) {
+          original[name] = P[name];
+          P[name] = function () {
+            called.push(name);
+            return original[name].apply(P, arguments);
+          };
+        });
+        var seen = [];
+        var cells = SG.digger.getStrategy('cells');
+        var strategy = function (model, sol, level, rng, opts) {
+          seen.push([Object.prototype.hasOwnProperty.call(opts, 'target'), opts.target]);
+          return cells(model, sol, level, rng, opts);
+        };
+        var results = [];
+        var tags = [];
+        try {
+          ['easy', 'normal', 'expert'].forEach(function (level) {
+            var rng = spied(SG.rng.create(5), '', tags);
+            results.push(SG.digger.generate(model9, level, rng, { strategy: strategy, maxAttempts: 1, digTries: 3 }));
+          });
+        } finally {
+          names.forEach(function (name) { P[name] = original[name]; });
+        }
+        expect(results.every(function (r) { return r.rating.solved === true; })).toBe(true);
+        expect(seen.length).toBeGreaterThanOrEqual(3);
+        seen.forEach(function (one) { expect(one[0]).toBe(true); });
+        // the value of each sample, worked out on a test stream by the literal path of its fork
+        var expected = [];
+        ['easy', 'normal', 'expert'].forEach(function (level, i) {
+          for (var t = 1; t <= results[i].samples; t++) {
+            expected.push([true, P.targetFor(D.spec(level, model9), SG.rng.create(5).fork('dig#1.' + t))]);
+          }
+        });
+        expect(seen).toEqual(expected);
+        expect(called.filter(function (n) { return n === 'targetFor'; })).toHaveLength(expected.length);
+        expect(called.indexOf('preferObjective')).not.toBe(-1);
+        // the draw is the sample's own child, and none comes from the search stream
+        expect(targetForks(tags).every(function (t) { return /^dig#1\.\d+\/target$/.test(t); })).toBe(true);
+        expect(targetForks(tags)).toHaveLength(expected.length);
+      });
+
+    it('an open band gives every sample of generate an own null, with no draw', function () {
       var seen = [];
-      var cells = SG.digger.getStrategy('cells');
+      var tags = [];
       var strategy = function (model, sol, level, rng, opts) {
         seen.push([Object.prototype.hasOwnProperty.call(opts, 'target'), opts.target]);
-        return cells(model, sol, level, rng, opts);
+        return { givens: redundantX.givens, clues: redundantX.clues, stats: redundantX.stats };
       };
-      var results = [];
-      try {
-        ['easy', 'normal', 'expert'].forEach(function (level) {
-          results.push(SG.digger.generate(model9, level, SG.rng.create(5),
-            { strategy: strategy, maxAttempts: 1, digTries: 3 }));
-        });
-      } finally {
-        names.forEach(function (name) { P[name] = original[name]; });
-      }
-      expect(results.every(function (r) { return r.rating.solved === true; })).toBe(true);
-      expect(seen.length).toBeGreaterThanOrEqual(3);
-      seen.forEach(function (one) { expect(one).toEqual([false, undefined]); });
-      expect(called).toEqual([]);
+      var open = SG.digger.generate(modelX, 'hell2', spied(SG.rng.create(5), '', tags), { strategy: strategy,
+        maxAttempts: 1, digTries: 1, maxProposals: 0 });
+      expect(open.target).toBe(null);
+      expect(seen).toEqual([[true, null]]);
+      expect(targetForks(tags)).toEqual([]);
     });
   });
 
-  // Preparation-phase assertions of MS06c1: the guided pass ranks by the old numbers, and no helper is called.
-  // MS06c2 replaces the legacy ranking, and these digests with it. The digests were captured with
-  // tests/artifacts/difficulty-v3/MS06c1/characterize.cjs on HEAD 1d657b1, before `digger.js` was changed.
-  describe('digGuidedSteps: the typed objectives rank exactly as the old numbers did (MS06c1)', function () {
-    // The two-offset FNV-1a of tests/fixtures/perf-helper.js: no dependency, the same in a browser.
-    var OFFSETS = [0x811c9dc5, 0x2545f491];
-    function hash64(text) {
-      var out = '';
-      OFFSETS.forEach(function (offset) {
-        var h = offset >>> 0;
-        for (var i = 0; i < text.length; i++) {
-          h ^= text.charCodeAt(i);
-          h = Math.imul(h, 16777619) >>> 0;
-        }
-        out += ('00000000' + h.toString(16)).slice(-8);
-      });
-      return out;
-    }
-
-    // [variant, level, seed, proposal dig, digest of the pass]
+  // The guided pass of the cells strategy, checked against an independent replay of its own dig log: the board
+  // before the pass is rebuilt from the accepted removals of stage A, every candidate is evaluated again with
+  // the solver by the contract of the typed objective, the winner of each pool and the decision to apply it or
+  // to end the pass are worked out again from the table of the task (written out here, not read from
+  // `targetPolicy`), and the count of oracle calls, including the one evaluation of the pass's own board,
+  // is compared with what the log shows.
+  describe('digGuidedSteps: a real pass follows the policy, replayed from its dig log (MS06c2)', function () {
+    // [variant, level, seed, proposal dig, target as a fraction of the band (null: no target)]
     var CASES = [
-      ['classic4', 'veryEasy', 4, false, '5c37a73d25bbccd9'],
-      ['classic6', 'hard', 4, false, '1504b1338cf8631f'],
-      ['diagonalX', 'hard', 4, false, '02db479ba1e7f7af'],
-      ['classic9', 'veryEasy', 4, false, '36a778e7150f4a4b'],
-      ['classic9', 'veryEasy', 9, false, '46aaa99589659ee9'],
-      ['classic9', 'veryEasy', 14, false, 'b66d507ea2c41872'],
-      ['classic9', 'easy', 4, false, '90e4af6cdf6bae38'],
-      ['classic9', 'easy', 9, false, 'f30ef3804b7c94d4'],
-      ['classic9', 'easy', 14, false, 'c5db9a75ff374131'],
-      ['classic9', 'normal', 4, false, '9f11523d367c2081'],
-      ['classic9', 'normal', 9, false, '83843b5840a2f114'],
-      ['classic9', 'normal', 14, false, '37f83ed5ebdeb3d1'],
-      ['classic9', 'hard', 4, false, '9f11523d367c2081'],
-      ['classic9', 'hard', 9, false, '83843b5840a2f114'],
-      ['classic9', 'hard', 14, false, 'bcc8e8c04054459c'],
-      ['classic9', 'expert', 4, false, '9f11523d367c2081'],
-      ['classic9', 'expert', 9, false, '83843b5840a2f114'],
-      ['classic9', 'expert', 14, false, 'bcc8e8c04054459c'],
-      ['classic9', 'master', 4, false, '943f9768c67c2294'],
-      ['classic9', 'master', 9, false, 'e0628e8d53d813b9'],
-      ['classic9', 'master', 14, false, 'ec008c6cbe25b3f0'],
-      ['classic9', 'normal', 4, true, '1a0cbe1abecb6666'],
-      ['classic9', 'expert', 9, true, '8d259d8602d9466a'],
-      ['classic9', 'nightmare', 4, true, '755fa96fd20846c3'],
-      ['classic9', 'master', 7, true, 'fc7085a1aadb38ad'],
-      ['classic9', 'master', 16, true, '371ca4df1c54a09b'],
-      ['classic9', 'hell1', 11, true, 'f18ce018231eb9dc'],
-      ['classic9', 'hell1', 13, true, '600519c29d4abb7e'],
-      ['classic9', 'hell1', 30, true, '4e87d4adce919041']
+      ['classic4', 'veryEasy', 4, false, 0.5],
+      ['classic6', 'hard', 4, false, 0.25],
+      ['diagonalX', 'hard', 4, false, null],
+      ['classic9', 'veryEasy', 4, false, 0.5],
+      ['classic9', 'veryEasy', 9, false, null],
+      ['classic9', 'veryEasy', 14, false, 0.9],
+      ['classic9', 'easy', 4, false, 0.5],
+      ['classic9', 'easy', 9, false, 0.1],
+      ['classic9', 'easy', 14, false, null],
+      ['classic9', 'normal', 4, false, 0.5],
+      ['classic9', 'normal', 9, false, 0.9],
+      ['classic9', 'normal', 14, false, null],
+      ['classic9', 'hard', 4, false, 0.5],
+      ['classic9', 'hard', 9, false, 0.1],
+      ['classic9', 'hard', 14, false, null],
+      ['classic9', 'expert', 4, false, 0.5],
+      ['classic9', 'expert', 9, false, 0.9],
+      ['classic9', 'expert', 14, false, null],
+      ['classic9', 'master', 4, false, 0.5],
+      ['classic9', 'master', 9, false, 0.1],
+      ['classic9', 'master', 14, false, null],
+      ['classic9', 'normal', 4, true, null],
+      ['classic9', 'expert', 9, true, 0.5],
+      ['classic9', 'nightmare', 4, true, null],
+      ['classic9', 'master', 7, true, 0.5],
+      ['classic9', 'master', 16, true, null],
+      ['classic9', 'hell1', 11, true, null],
+      ['classic9', 'hell1', 13, true, null],
+      ['classic9', 'hell1', 30, true, null]
     ];
 
-    /** The pass of one case: a digest of what it decided, and its dig log. */
+    function finiteTarget(t) { return typeof t === 'number' && isFinite(t); }
+
+    /** Does a pool candidate beat the incumbent? The tier first, then the nearer score, else the higher one. */
+    function beats(c, w, target) {
+      if (c.kind === 'proposal') return c.priority > w.priority;
+      if (c.tierUsed !== w.tierUsed) return c.tierUsed;
+      return finiteTarget(target) ? Math.abs(c.score - target) < Math.abs(w.score - target) : c.score > w.score;
+    }
+
+    /** May the winner replace the current state? A shallower one never; a state without the tier takes any. */
+    function applies(current, winner, target) {
+      if (current.tierUsed !== winner.tierUsed) return winner.tierUsed;
+      if (!current.tierUsed) return true;
+      return finiteTarget(target) ? Math.abs(winner.score - target) < Math.abs(current.score - target) : true;
+    }
+
+    function sameCells(a, b) {
+      return a.length === b.length && a.every(function (c) { return b.indexOf(c) !== -1; });
+    }
+
+    /** The pass of one case, and everything its replay needs. */
     function pass(c) {
       var model = SG.variants.get(c[0]).build({}, null);
       var rng = SG.rng.create(c[2]);
       var solution = SG.fullGrid.generate(model, rng.fork('grid'), null);
+      var spec = D.spec(c[1], model);
+      var target = c[4] === null || spec.max === Infinity ? null : spec.min + c[4] * (spec.max - spec.min);
       var log = [];
-      var events = [];
-      var emit = SG.events.createEmitter('full', function (e) {
-        if (typeof e.i18nKey === 'string' && e.i18nKey.indexOf('dig.') === 0) events.push([e.i18nKey, e.i18nArgs]);
-      });
-      var dug = SG.digger.digStage(model, solution, c[1], rng.fork('dig'), { log: log, emit: emit, proposal: c[3] });
-      return {
-        log: log,
-        digest: hash64(JSON.stringify({ givens: Array.from(dug.givens), clues: dug.clues, stats: dug.stats,
-          log: log, events: events }))
-      };
+      var dug = SG.digger.digStage(model, solution, c[1], rng.fork('dig'),
+        { log: log, proposal: c[3], target: target });
+      return { model: model, solution: solution, spec: spec, target: target, log: log, dug: dug, proposal: c[3] };
     }
 
     var runs = null;
@@ -479,17 +578,95 @@
       return runs;
     }
 
-    it('keeps the givens, statistics, oracle calls, dig log and dig events of 29 passes, bounded and proposal',
-      function () {
-        var expected = {};
-        var actual = {};
-        CASES.forEach(function (c, i) {
-          var name = c.slice(0, 4).join(' ');
-          expected[name] = c[4];
-          actual[name] = allRuns()[i].digest;
-        });
-        expect(actual).toEqual(expected);
+    /** The replay of one pass; the counts it compares are returned for the aggregate checks. */
+    function replay(run) {
+      var model = run.model;
+      var spec = run.spec;
+      var givens = Int32Array.from(run.solution);
+      var proposalEvaluate = run.proposal ? Z.removalObjective(model, spec, true) : null;
+      function cleared(group) {
+        var out = Int32Array.from(givens);
+        group.forEach(function (c) { out[c] = 0; });
+        return out;
+      }
+      function objectiveOf(trial, group) {
+        return run.proposal ? proposalEvaluate(trial, run.solution, group, null, { oracleCalls: 0 })
+          : boundedOf(model, spec, trial);
+      }
+      var i = 0;
+      var stageA = 0;
+      var log = run.log;
+      while (!(log[i].op === 'pass' && log[i].pass === 'guided')) {
+        if (log[i].op === 'accept') log[i].cells.forEach(function (c) { givens[c] = 0; });
+        if (log[i].op === 'accept' || log[i].op === 'reject') stageA++;
+        i++;
+      }
+      var start = Int32Array.from(givens);
+      i++;
+      var current = run.proposal ? null : boundedOf(model, spec, givens);
+      expect(current === null || current.kind === 'bounded').toBe(true);
+      var pool = [];
+      var evaluated = 0;
+      var accepted = 0;
+      var winner;
+      function best() {
+        winner = pool[0];
+        for (var k = 1; k < pool.length; k++) if (beats(pool[k].objective, winner.objective, run.target)) winner = pool[k];
+        return winner;
+      }
+      for (; i < log.length; i++) {
+        var e = log[i];
+        var trial = cleared(e.cells);
+        var objective = objectiveOf(trial, e.cells);
+        if (e.op === 'reject') {
+          evaluated++;
+          expect(objective).toEqual(refused(e.reason));
+        } else if (e.op === 'keep') {
+          evaluated++;
+          expect(objective.kind).not.toBe('refused');
+          var shown = objective.kind === 'bounded' ? objective.score : objective.priority;
+          expect(e.score).toBe(shown >= STUCK ? null : Math.round(shown));
+          pool.push({ cells: e.cells, objective: objective });
+        } else if (e.op === 'accept') {
+          expect(sameCells(e.cells, best().cells)).toBe(true);
+          if (current !== null) {
+            expect(applies(current, winner.objective, run.target)).toBe(true);
+            current = winner.objective;
+          }
+          givens = trial;
+          accepted++;
+          pool = [];
+        }
+      }
+      var ended = null;
+      if (pool.length > 0) {
+        // the pass stopped on a pool whose winner the table does not allow: only a score-targeted pass can
+        expect(current).not.toBe(null);
+        expect(applies(current, best().objective, run.target)).toBe(false);
+        ended = 'policy';
+      }
+      expect(Array.from(run.dug.givens)).toEqual(Array.from(givens));
+      if (!run.proposal) {
+        // one evaluation of the pass's own board, then one solve per candidate; stage A made one per decision
+        expect(run.dug.stats.oracleCalls).toBe(stageA + 1 + evaluated);
+      }
+      return { accepted: accepted, ended: ended, start: start, evaluated: evaluated, current: current };
+    }
+
+    it('every candidate, winner and end of 29 passes (bounded with and without a target, and proposals) ' +
+      'is what the table says', function () {
+      var ends = { policy: 0 };
+      var applied = 0;
+      allRuns().forEach(function (run) {
+        var out = replay(run);
+        if (out.ended !== null) ends[out.ended]++;
+        applied += out.accepted;
       });
+      expect(applied).toBeGreaterThan(100);
+      // a pass that the table ends before the minimal puzzle needs a state that uses its tier, which these
+      // seeded passes rarely reach (the scripted pools below cover that end); where one does, the replay held
+      expect(ends.policy).toBeLessThan(CASES.length);
+    });
 
     it('those passes meet every kind of objective: each refusal reason, scores, and stuck proposals', function () {
       var reasons = {};
@@ -508,6 +685,283 @@
       expect(Object.keys(reasons).sort()).toEqual(['ambiguous', 'techniques', 'tooHard']);
       expect(scores).toBeGreaterThan(300);
       expect(stuck).toBeGreaterThan(30);
+    });
+  });
+
+  // The pools, the apply table and the end of the pass, with a scripted solver. Stage A runs on the real solver;
+  // from the start of the guided pass (its `dig.pass.start` event) `SG.logicalSolver.solve` and
+  // `SG.difficulty.classify` answer from the script: first the pass's own board, then every candidate of a
+  // pool in order (a pool ends with an applied removal). Each answer is `[score, tierUsed]` or 'stuck'. One
+  // solve is one rated candidate, so the number of scripted solves is checked against the pass's own trace.
+  describe('digGuidedSteps: pools, the apply table and the end of the pass, with a scripted solver (MS06c2)', function () {
+    var solution = SG.fullGrid.generate(model9, SG.rng.create(41).fork('grid'), null);
+    var SCRIPTED_LEVEL = 'normal';
+    var TIER = D.spec(SCRIPTED_LEVEL, model9).tierTechniques[0];
+    var TARGET = 300;
+    var BAD = [399, false];
+
+    /** A pool of the script: its first answers, then `rest` for every further candidate ('stuck' or BAD). */
+    function pool(entries, rest) { return { entries: entries, rest: rest === undefined ? BAD : rest }; }
+
+    function report(answer) {
+      if (answer === 'stuck') return { solved: false, techniqueCounts: {}, state: { unsolvedCount: 7 } };
+      var counts = { nakedSingle: 30 };
+      if (answer[1]) counts[TIER] = 1;
+      return { solved: true, techniqueCounts: counts, scripted: answer[0] };
+    }
+
+    /**
+     * One guided pass of Normal with no symmetry, scripted. `script`: { init (the answer for the pass's own
+     * board; none for a proposal pass), pools: [pool, ...] }; a pool beyond the script answers 'stuck'.
+     */
+    function scripted(script, options) {
+      var real = SG.logicalSolver.solve;
+      var realClassify = D.classify;
+      var on = false;
+      var initial = script.init !== undefined;
+      var calls = 0;
+      var poolIndex = 0;
+      var inPool = 0;
+      var tries = 0;
+      var keys = [];
+      var shuffles = 0;
+      var start = null;
+      SG.logicalSolver.solve = function () {
+        if (!on) return real.apply(this, arguments);
+        calls++;
+        var answer;
+        if (initial) {
+          initial = false;
+          answer = script.init;
+        } else {
+          var p = script.pools[poolIndex];
+          answer = p === undefined ? 'stuck' : p.entries[inPool] !== undefined ? p.entries[inPool] : p.rest;
+          inPool++;
+        }
+        if (answer === 'cancel') throw new SG.errors.GenerationError('budget.cancelled', {});
+        if (answer === 'loop') {
+          for (;;) arguments[2].budget.check();
+        }
+        return report(answer);
+      };
+      D.classify = function (rep) {
+        return rep.scripted !== undefined ? { score: rep.scripted } : realClassify.apply(this, arguments);
+      };
+      var emit = SG.events.createEmitter('full', function (e) {
+        keys.push(e.i18nKey + (e.i18nArgs && e.i18nArgs.pass ? ':' + e.i18nArgs.pass : ''));
+        if (e.i18nKey === 'dig.pass.start' && e.i18nArgs.pass === 'guided') on = true;
+        if (e.i18nKey === 'dig.try' && on) tries++;
+        if (e.i18nKey === 'dig.accept' && on) {
+          poolIndex++;
+          inPool = 0;
+        }
+      });
+      var rng = SG.rng.create(41);
+      var counting = Object.assign({}, rng, {
+        fork: function (tag) {
+          var child = rng.fork(tag);
+          if (tag === 'guided') {
+            var shuffle = child.shuffle;
+            child.shuffle = function (a) {
+              shuffles++;
+              return shuffle(a);
+            };
+          }
+          return child;
+        }
+      });
+      var log = [];
+      var caught = null;
+      var dug = null;
+      try {
+        dug = Z.digStage(model9, solution, SCRIPTED_LEVEL, counting, Object.assign({
+          symmetry: 'none', log: log, emit: emit, target: TARGET, proposal: script.init === undefined
+        }, options));
+      } catch (err) {
+        caught = err;
+      } finally {
+        SG.logicalSolver.solve = real;
+        D.classify = realClassify;
+      }
+      var givens = Int32Array.from(solution);
+      var stageA = 0;
+      var i = 0;
+      while (!(log[i].op === 'pass' && log[i].pass === 'guided')) {
+        if (log[i].op === 'accept') givens[log[i].cells[0]] = 0;
+        if (log[i].op === 'accept' || log[i].op === 'reject') stageA++;
+        i++;
+      }
+      start = givens;
+      var pass = log.slice(i + 1);
+      return {
+        dug: dug, error: caught, log: log, pass: pass, calls: calls, tries: tries, keys: keys, shuffles: shuffles,
+        start: start, stageA: stageA,
+        ops: function (op) { return pass.filter(function (e) { return e.op === op; }); },
+        ends: keys.filter(function (k) { return k === 'dig.pass.end:guided'; }).length
+      };
+    }
+
+    function removedBy(run, accepts) {
+      var givens = Int32Array.from(run.start);
+      accepts.forEach(function (e) { e.cells.forEach(function (c) { givens[c] = 0; }); });
+      return givens;
+    }
+
+    it('a winner the table does not allow ends the pass: no further rating, draw or end record', function () {
+      // the board needs the tier at 320; the nearest tier-using candidate (340) is no nearer, the tier-less
+      // 310 is nearer still but never trades for the tier
+      var run = scripted({ init: [320, true], pools: [pool([[340, true], [390, true], [310, false]])] });
+      expect(run.error).toBe(null);
+      expect(run.ops('accept')).toEqual([]);
+      expect(Array.from(run.dug.givens)).toEqual(Array.from(run.start));
+      expect(run.ops('keep').slice(0, 3).map(function (e) { return e.score; })).toEqual([340, 390, 310]);
+      expect(run.tries).toBeGreaterThan(3);
+      // one solve for the board and one per candidate: nothing after the refused winner
+      expect(run.calls).toBe(1 + run.tries);
+      expect(run.shuffles).toBe(1);
+      expect(run.ends).toBe(1);
+      expect(run.dug.stats.oracleCalls).toBe(run.stageA + 1 + run.tries);
+      // the losers are not rejected: only the unscripted candidates, which answered 399 here, stay too
+      expect(run.ops('reject')).toEqual([]);
+    });
+
+    it('applies a tier-using winner strictly nearer the target, then ends on the next that is not', function () {
+      var run = scripted({
+        init: [350, true],
+        pools: [pool([[320, true], [340, true]]), pool([[330, true]]), pool([[300, true]])]
+      });
+      expect(run.error).toBe(null);
+      var accepts = run.ops('accept');
+      // 320 is nearer than 350 and wins its pool; the next pool offers 330 (a distance of 30 against 20: no)
+      expect(accepts).toHaveLength(1);
+      var keeps = run.ops('keep');
+      expect(keeps[0].score).toBe(320);
+      expect(accepts[0].cells).toEqual(keeps[0].cells);
+      expect(Array.from(run.dug.givens)).toEqual(Array.from(removedBy(run, accepts)));
+      expect(run.shuffles).toBe(2);
+      expect(run.calls).toBe(1 + run.tries);
+      expect(run.ends).toBe(1);
+    });
+
+    it('a state without the tier takes any winner, farther ones too, and moves on when the tier is found',
+      function () {
+        var run = scripted({
+          init: [350, false],
+          pools: [pool([[390, false], [310, false], [330, false]]), pool([[370, false]]), pool([[305, true]]),
+            pool([[310, true]])]
+        });
+        expect(run.error).toBe(null);
+        var accepts = run.ops('accept');
+        var keeps = run.ops('keep');
+        function keepOf(score) {
+          return keeps.filter(function (e) { return e.score === score; })[0].cells;
+        }
+        // 310 is the nearest of the first pool, 370 the only success of the second (farther than 310: false and
+        // false stays allowed), 305 finds the tier, and 310 with the tier is no nearer than 305
+        expect(accepts.map(function (e) { return e.cells; }))
+          .toEqual([keepOf(310), keepOf(370), keepOf(305)]);
+        expect(run.calls).toBe(1 + run.tries);
+        expect(run.ends).toBe(1);
+      });
+
+    it('without a target the winner always applies once the tier is used: unbounded digging is kept', function () {
+      var run = scripted({
+        init: [320, true],
+        pools: [pool([[340, true], [310, true]]), pool([[395, true]]), pool([[100, true]])]
+      }, { target: null });
+      var accepts = run.ops('accept');
+      var keeps = run.ops('keep');
+      // the higher score wins without a target, and every tier-using winner applies, even a farther or lower one
+      expect(keeps[0].score).toBe(340);
+      expect(accepts[0].cells).toEqual(keeps[0].cells);
+      expect(accepts.length).toBeGreaterThanOrEqual(3);
+      expect(run.calls).toBe(1 + run.tries);
+    });
+
+    it('an all-refused pool goes on with the next one; its refusals stay marked; an empty pool ends', function () {
+      var run = scripted({
+        init: [350, true],
+        pools: [pool([], 'stuck'), pool([[320, true]], 'stuck')]
+      });
+      expect(run.error).toBe(null);
+      var rejects = run.ops('reject');
+      // the first pool of 32 candidates is refused as a whole, so the second one is drawn from the rest
+      expect(run.shuffles).toBeGreaterThanOrEqual(2);
+      expect(rejects.length).toBeGreaterThanOrEqual(32);
+      rejects.forEach(function (e) { expect(e.reason).toBe('techniques'); });
+      // no group is tried twice in the pass: a refusal is final
+      var tried = {};
+      run.pass.forEach(function (e) {
+        if (e.op === 'reject' || e.op === 'keep') {
+          expect(tried[e.cells.join(',')]).toBeUndefined();
+          tried[e.cells.join(',')] = true;
+        }
+      });
+      expect(run.calls).toBe(1 + run.tries);
+      expect(run.ends).toBe(1);
+    });
+
+    it('every candidate refused ends the pass on an empty pool, with the board it had', function () {
+      var run = scripted({ init: [350, true], pools: [pool([], 'stuck'), pool([], 'stuck'), pool([], 'stuck')] });
+      expect(run.error).toBe(null);
+      expect(run.ops('accept')).toEqual([]);
+      expect(run.ops('keep')).toEqual([]);
+      expect(Array.from(run.dug.givens)).toEqual(Array.from(run.start));
+      expect(run.calls).toBe(1 + run.tries);
+      expect(run.ops('reject')).toHaveLength(run.tries);
+      expect(run.ends).toBe(1);
+    });
+
+    it('rates its own board once, counted once; a board it cannot rate ends the pass on the board it got',
+      function () {
+        [['stuck', 'techniques'], [[420, true], 'tooHard'], ['loop', 'step guard']].forEach(function (c) {
+          var run = scripted({ init: c[0], pools: [pool([[320, true]])] });
+          expect([c[1], run.error]).toEqual([c[1], null]);
+          expect(run.calls).toBe(1);
+          expect(run.tries).toBe(0);
+          expect(run.pass).toEqual([]);
+          expect(Array.from(run.dug.givens)).toEqual(Array.from(run.start));
+          expect(run.dug.stats.oracleCalls).toBe(run.stageA + 1);
+          expect(run.ends).toBe(1);
+        });
+      });
+
+    it('a cancellation or an error of the evaluation of the board propagates unchanged', function () {
+      var run = scripted({ init: 'cancel', pools: [] });
+      expect(run.error).toBeInstanceOf(SG.errors.GenerationError);
+      expect(run.error.code).toBe('budget.cancelled');
+      expect(run.calls).toBe(1);
+      var inPool = scripted({ init: [350, true], pools: [pool(['cancel'])] });
+      expect(inPool.error.code).toBe('budget.cancelled');
+    });
+
+    it('a proposal pass has no state and no target: it applies the highest priority, stuck above every score',
+      function () {
+        var run = scripted({ pools: [pool([[500, true], 'stuck', [650, false]], 'stuck')] });
+        expect(run.error).toBe(null);
+        var keeps = run.ops('keep');
+        // a solved candidate keeps its score in the log, a stuck one shows null (its priority is above 1e9)
+        expect(keeps.slice(0, 3).map(function (e) { return e.score; })).toEqual([500, null, 650]);
+        var accepts = run.ops('accept');
+        expect(accepts[0].cells).toEqual(keeps[1].cells);
+        // no bounded state: the pass goes on after a lower or farther priority, and nothing was solved for it
+        expect(run.calls).toBe(run.ops('keep').length + run.ops('reject').filter(function (e) {
+          return e.reason !== 'ambiguous';
+        }).length);
+      });
+
+    it('is the same pass cooperatively as synchronously: givens, statistics, dig log and events', function () {
+      function once(cooperative) {
+        var log = [];
+        var keys = [];
+        var emit = SG.events.createEmitter('full', function (e) { keys.push([e.i18nKey, e.i18nArgs]); });
+        var rng = SG.rng.create(41);
+        var out = Z.digStage(model9, solution, 'expert', rng.fork('dig'),
+          { log: log, emit: emit, target: 850, cooperative: cooperative });
+        if (cooperative) out = SG.budget.drive(out);
+        return { givens: Array.from(out.givens), clues: out.clues, stats: out.stats, log: log, keys: keys };
+      }
+      expect(once(true)).toEqual(once(false));
     });
   });
 
@@ -756,6 +1210,8 @@
   // Normal asks for a technique of its tier (hiddenPair, nakedTriple ...): REQUIRED has one, SHALLOW has not.
   var SHALLOW = complete(250, BASIC);
   var SHALLOW_2 = complete(260, BASIC);
+  // A complete rating one level below Normal: the closest a sample can be without being in the band.
+  var EASY_RATING = Object.assign(complete(120, BASIC), { level: 'easy' });
   var REQUIRED = complete(230, Object.assign({ hiddenPair: 1 }, BASIC), 'hiddenPair');
   var REQUIRED_2 = complete(300, Object.assign({ nakedTriple: 1 }, BASIC), 'nakedTriple');
 
@@ -888,9 +1344,15 @@
     });
 
     describe('suspended contexts (cooperative yields) with different targets, one shared keeper', function () {
-      /** A dig strategy that follows `script`: offers to its keeper, or `'pause'` for a cooperative yield. */
-      function scripted(script, trace) {
+      /**
+       * A dig strategy that follows `script`: offers to its keeper, or `'pause'` for a cooperative yield. The
+       * keeper it is given is a view whose prototype is the one original keeper of the run, never another
+       * context's view.
+       */
+      function scripted(script, trace, original) {
         return function (model, sol, level, rng, o) {
+          expect(Object.getPrototypeOf(o.keeper)).toBe(original);
+          expect(Object.getPrototypeOf(Object.getPrototypeOf(o.keeper))).toBe(Object.prototype);
           return (function* () {
             for (var i = 0; i < script.length; i++) {
               if (script[i] === 'pause') {
@@ -907,7 +1369,7 @@
 
       function context(keeper, target, script, trace) {
         return Z.digLevelSteps(model9, solution, LEVEL, SG.rng.create(1), {
-          keeper: keeper, target: target, cooperative: true, strategy: scripted(script, trace)
+          keeper: keeper, target: target, cooperative: true, strategy: scripted(script, trace, keeper)
         });
       }
 
@@ -963,12 +1425,14 @@
     });
   });
 
-  describe('a sample, a search and a generation carry their target (MS06c1)', function () {
+  describe('a sample, a search and a generation carry their target (MS06c2)', function () {
     var solution = SG.fullGrid.generate(model9, SG.rng.create(11).fork('grid'), null);
     var base = Z.dig(model9, solution, SG.rng.create(11).fork('base'), { minClues: 58 });
     var CLUES = base.givens.reduce(function (n, v) { return n + (v === 0 ? 0 : 1); }, 0);
-    // [what the caller passes, the target that comes back]: an explicit zero and null are not an absent target
+    // What the outer caller passes to `generate`, and what an own `target` of a lower-level call comes back as.
+    // Under IR39(b) a caller value on `generate` reaches no sample: every sample draws its own.
     var TARGETS = [[812.5, 812.5], [0, 0], [null, null], [undefined, null], [NaN, null]];
+    var SEED = 7;
 
     function options(target, rest) {
       var out = Object.assign({}, rest);
@@ -976,43 +1440,87 @@
       return out;
     }
 
-    /** A dig strategy that returns the redundant puzzle with `rating`, after offering `offered` to its keeper. */
-    function strategy(rating, offered) {
+    /**
+     * The target that sample `t` of attempt 1 must have drawn, worked out on a test stream from the known
+     * seed of `generate` and the literal fork path of the sample, never from the production stream.
+     */
+    function drawn(t) {
+      return P.targetFor(NORMAL, SG.rng.create(SEED).fork('dig#1.' + t));
+    }
+
+    /**
+     * A dig strategy that returns the redundant puzzle. `plan[i]` is `{ rating, offered }` for its i-th call
+     * (the last entry repeats): the rating it hands back and what it offers to the keeper view it is given.
+     */
+    function planned(plan) {
+      var calls = 0;
       return function (model, sol, level, rng, o) {
-        if (offered) {
-          o.keeper.offer({ model: model, givens: base.givens, solution: sol, rating: offered,
+        var step = plan[Math.min(calls, plan.length - 1)];
+        calls++;
+        if (step.offered) {
+          o.keeper.offer({ model: model, givens: base.givens, solution: sol, rating: step.offered,
             logOf: function () { return []; } });
         }
-        return { givens: base.givens, clues: CLUES, stats: zeroStats(), rating: rating };
+        return { givens: base.givens, clues: CLUES, stats: zeroStats(), rating: step.rating };
       };
     }
 
-    function generate(target, rating, offered, rest) {
-      return Z.generate(model9, LEVEL, SG.rng.create(7),
-        options(target, Object.assign({ strategy: strategy(rating, offered), maxAttempts: 1, digTries: 1 }, rest)));
+    function generate(target, plan, rest, rng) {
+      return Z.generate(model9, LEVEL, rng || SG.rng.create(SEED),
+        options(target, Object.assign({ strategy: planned(plan), maxAttempts: 1, digTries: 1 }, rest)));
     }
 
-    it('digLevel returns the target of its call: a number, zero, null or none (null)', function () {
+    /** `value` is not one the caller could have meant: the drawn target of a sample is its own number. */
+    function ownDraw(out, t, pair) {
+      expect([pair[0], out.target]).toEqual([pair[0], drawn(t)]);
+      if (Number.isFinite(pair[0])) expect(out.target).not.toBe(pair[0]);
+    }
+
+    it('the draws of the controlled samples are distinct numbers of the band, one per sample', function () {
+      var all = [drawn(1), drawn(2), drawn(3)];
+      all.forEach(function (t) {
+        expect(t).toBeGreaterThanOrEqual(NORMAL.min);
+        expect(t).toBeLessThan(NORMAL.max);
+      });
+      expect(new Set(all).size).toBe(3);
+    });
+
+    it('digLevel returns the target of its call: a number, zero or null as given, an absent one initialized ' +
+      'once', function () {
       TARGETS.forEach(function (pair) {
         var puzzle = Z.digLevel(model9, solution, 'easy', SG.rng.create(12), options(pair[0]));
-        expect([pair[0], puzzle.target]).toEqual([pair[0], pair[1]]);
+        var expected = pair[0] === undefined ? P.targetFor(D.spec('easy', model9), SG.rng.create(12)) : pair[1];
+        expect([pair[0], puzzle.target]).toEqual([pair[0], expected]);
       });
     });
 
     it('generate returns the target of the sample that is the result', function () {
       TARGETS.forEach(function (pair) {
-        var out = generate(pair[0], REQUIRED, null);
+        // the only sample is exact: it is the result, with its own draw whatever the caller named
+        var out = generate(pair[0], [{ rating: REQUIRED }]);
         expect(out.exact).toBe(true);
-        expect([pair[0], out.target]).toEqual([pair[0], pair[1]]);
+        ownDraw(out, 1, pair);
+        // an earlier sample is the closest: the result is the second of three, not the last one drawn
+        var middle = generate(pair[0], [{ rating: EASY_RATING }, { rating: SHALLOW }, { rating: EASY_RATING }],
+          { digTries: 3, maxProposals: 3 });
+        expect(middle.exact).toBe(false);
+        expect(middle.rating).toBe(SHALLOW);
+        ownDraw(middle, 2, pair);
+        expect(middle.target).not.toBe(drawn(1));
+        expect(middle.target).not.toBe(drawn(3));
       });
     });
 
     it('generate returns the target of the kept candidate that beats its samples', function () {
       TARGETS.forEach(function (pair) {
-        var out = generate(pair[0], SHALLOW, REQUIRED);
+        // the first sample offers nothing; the second offers an exact candidate: its context's target is kept
+        var out = generate(pair[0], [{ rating: SHALLOW }, { rating: SHALLOW, offered: REQUIRED }],
+          { digTries: 3 });
         expect(out.exact).toBe(true);
         expect(out.rating).toBe(REQUIRED);
-        expect([pair[0], out.target]).toEqual([pair[0], pair[1]]);
+        expect(out.samples).toBe(2);
+        ownDraw(out, 2, pair);
+        expect(out.target).not.toBe(drawn(1));
       });
     });
 
@@ -1026,68 +1534,263 @@
       try {
         TARGETS.forEach(function (pair) {
           rated = 0;
-          var out = generate(pair[0], SHALLOW, null);
+          var tags = [];
+          // the closest sample is the middle one: the search continues it and inherits its target, never the
+          // last sample's, the caller's or a draw of the search stream
+          var out = generate(pair[0], [{ rating: EASY_RATING }, { rating: SHALLOW }, { rating: EASY_RATING }],
+            { digTries: 3 }, spied(SG.rng.create(SEED), '', tags));
           expect(rated).toBeGreaterThan(0);
           expect(out.exact).toBe(true);
-          expect([pair[0], out.target]).toEqual([pair[0], pair[1]]);
+          expect(out.rating).toBe(REQUIRED);
+          ownDraw(out, 2, pair);
+          expect(out.target).not.toBe(drawn(3));
+          expect(tags.filter(function (t) { return /^search#1\//.test(t); })).toEqual([]);
+          expect(targetForks(tags).sort()).toEqual(['dig#1.1/target', 'dig#1.2/target', 'dig#1.3/target']);
         });
       } finally {
         D.rate = real;
       }
     });
 
-    it('the pipeline result and its work stay what they were: a request has no target', function () {
-      var result = SG.pipeline.run({ variantId: 'classic9', difficulty: 'easy', seed: 3, trace: 'off' }, null);
-      expect(Object.prototype.hasOwnProperty.call(result, 'target')).toBe(true);
-      expect(result.target).toBe(null);
-      expect(SG.pipeline.toWire(result).target).toBe(null);
-    });
-  });
-
-  // Preparation-phase assertions of MS06c1: nothing draws a target and no normal caller sends one. MS06c2 draws
-  // one in every sample and replaces these with the active policy's tests, keeping the transport ones above.
-  describe('normal generation draws and sends no target (preparation phase of MS06c1)', function () {
-    /** The stream with every fork recorded by its path, so that a draw of the child "target" would show. */
-    function spied(rng, path, tags) {
-      return Object.assign({}, rng, {
-        fork: function (tag) {
-          var at = path + tag;
-          tags.push(at);
-          return spied(rng.fork(tag), at + '/', tags);
+    it('a structure-search winner has no target even when the samples of the run have finite ones', function () {
+      // the hook offers an exact candidate to the original keeper, as a variant's structure search does
+      var out = generate(null, [{ rating: SHALLOW }], {
+        digTries: 2,
+        postGenerate: function (ctx) {
+          ctx.keeper.offer({ model: ctx.model, givens: base.givens, solution: ctx.solution, rating: REQUIRED,
+            logOf: function () { return []; } });
         }
       });
-    }
-
-    it('no sample or search stream is asked for the child "target"', function () {
-      ['easy', 'normal', 'expert'].forEach(function (level) {
-        var tags = [];
-        var out = Z.generate(model9, level, spied(SG.rng.create(5), '', tags), { maxAttempts: 1, digTries: 3 });
-        expect(out.rating.solved).toBe(true);
-        expect(out.target).toBe(null);
-        expect(tags.some(function (t) { return /^dig#1\.1\//.test(t); })).toBe(true);
-        expect(tags.filter(function (t) { return t.split('/').pop() === 'target'; })).toEqual([]);
-      });
+      expect(out.exact).toBe(true);
+      expect(out.rating).toBe(REQUIRED);
+      expect(out.target).toBe(null);
     });
 
-    it('the registered signs strategy of Greater-Than gets no target option from a normal request', function () {
-      var original = Z.getStrategy('signs');
-      var seen = [];
-      Z.unregisterStrategy('signs');
-      Z.registerStrategy('signs', function (model, sol, level, rng, opts) {
-        seen.push([Object.prototype.hasOwnProperty.call(opts, 'target'), opts.target]);
-        return original.apply(this, arguments);
+    it('the pipeline result carries the target of the sample that is the result, and its wire the same value',
+      function () {
+        var events = [];
+        var result = SG.pipeline.run({ variantId: 'classic9', difficulty: 'easy', seed: 3, trace: 'summary' },
+          function (e) { events.push(e); });
+        var spec = D.spec('easy', model9);
+        // the last dig that started before the verdict is the sample the result comes from
+        var starts = events.filter(function (e) { return e.i18nKey === 'dig.start'; });
+        var at = starts[starts.length - 1].i18nArgs;
+        var verdict = events.filter(function (e) { return /^tune\.(hit|miss|shallow)$/.test(e.i18nKey); }).pop();
+        expect(result.exact).toBe(true);
+        var expected = P.targetFor(spec, SG.rng.create(3).fork('dig#' + at.attempt + '.' + at.sample));
+        expect(result.target).toBe(expected);
+        expect(verdict.i18nArgs.target).toBe(expected);
+        expect(SG.pipeline.toWire(result).target).toBe(expected);
       });
-      var result;
-      try {
-        result = SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'easy', seed: 2, trace: 'off' }, null);
-      } finally {
+  });
+
+  describe('the first-allowed sign pass of Greater-Than gets its sample\'s target and does not read it ' +
+    '(MS06c2, CC02)', function () {
+    // A real Greater-Than Expert request: seed 319 is exact in one attempt with two samples and no local
+    // search (docs/difficulty-v3/evidence/MS05e/before/expert-300-r1.json and -r2.json), so this is cheap.
+    var SPEC_OF = function (model) { return D.spec('expert', model); };
+
+    it('every invocation gets the own target of its sample; the result carries the one of its origin',
+      function () {
+        var original = Z.getStrategy('signs');
+        var calls = [];
+        var offers = [];
+        var instrumented = [];
+        var probes = [];
+
+        function instrument(keeper) {
+          if (instrumented.indexOf(keeper) !== -1) return;
+          instrumented.push(keeper);
+          var real = keeper.offer;
+          keeper.offer = function (candidate) {
+            offers.push({ givens: Int32Array.from(candidate.givens), signs: candidate.model.inequalities.length,
+              target: candidate.target });
+            return real.call(this, candidate);
+          };
+        }
+
         Z.unregisterStrategy('signs');
-        Z.registerStrategy('signs', original);
+        Z.registerStrategy('signs', function (model, sol, level, rng, opts) {
+          instrument(Object.getPrototypeOf(opts.keeper));
+          var call = {
+            has: Object.prototype.hasOwnProperty.call(opts, 'target'),
+            target: opts.target,
+            // the same stream again: the target child of a fresh stream of this stream's seed
+            expected: P.targetFor(opts.spec, SG.rng.create(rng.seed)),
+            original: Object.getPrototypeOf(opts.keeper)
+          };
+          calls.push(call);
+          var out = original.apply(this, arguments);
+          expect(SG.budget.isSteps(out)).toBe(false);
+          call.returned = { givens: Int32Array.from(out.givens), signs: out.model.inequalities.length };
+          // not consumed: the same dig with another target, or none, is the same puzzle
+          if (probes.length === 0) {
+            [null, 0, 1e9, 1].forEach(function (value) {
+              var again = original(model, sol, level, SG.rng.create(rng.seed),
+                Object.assign({}, opts, { target: value, keeper: null, caps: null, log: [], emit: null }));
+              probes.push([value, Array.from(again.givens), again.model.inequalities.length]);
+            });
+            probes.push(['first', Array.from(out.givens), out.model.inequalities.length]);
+          }
+          return out;
+        });
+        var result;
+        try {
+          result = SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'expert', seed: 319, trace: 'off' },
+            null);
+        } finally {
+          Z.unregisterStrategy('signs');
+          Z.registerStrategy('signs', original);
+        }
+        expect(Z.getStrategy('signs')).toBe(original);
+        expect(calls.length).toBeGreaterThan(0);
+        calls.forEach(function (call) {
+          expect(call.has).toBe(true);
+          expect(Number.isFinite(call.target)).toBe(true);
+          expect(call.target).toBe(call.expected);
+          expect(call.original).toBe(calls[0].original);
+        });
+        var spec = SPEC_OF(result.model);
+        calls.forEach(function (call) {
+          expect(call.target).toBeGreaterThanOrEqual(spec.min);
+          expect(call.target).toBeLessThan(spec.max);
+        });
+        expect(new Set(calls.map(function (c) { return c.target; })).size).toBe(calls.length);
+        // the sign pass does not read it: its puzzle is the same whatever the target
+        expect(probes).toHaveLength(5);
+        probes.slice(0, 4).forEach(function (p) { expect(p.slice(1)).toEqual(probes[4].slice(1)); });
+        // the result comes from one candidate that a sign invocation returned or its keeper view was offered
+        var origins = [];
+        function sameAsResult(c) {
+          return c.signs === result.model.inequalities.length &&
+            Array.from(c.givens).join(',') === Array.from(result.givens).join(',');
+        }
+        calls.forEach(function (call) {
+          if (sameAsResult(call.returned)) origins.push(['returned', call.target]);
+        });
+        offers.forEach(function (offer) {
+          if (sameAsResult(offer)) origins.push(['offered', offer.target]);
+        });
+        expect(origins.length).toBeGreaterThan(0);
+        expect(Number.isFinite(result.target)).toBe(true);
+        origins.forEach(function (origin) { expect(result.target).toBe(origin[1]); });
+        // and never the target of another invocation
+        var others = calls.map(function (c) { return c.target; }).filter(function (t) { return t !== result.target; });
+        expect(others.length).toBe(calls.length - 1);
+      });
+  });
+
+  // The downward refinement of an entered proposal, on scripted ratings: `D.rate` answers from the list, one
+  // rating for the proposal and then one per revealed group, and every answer after the list is above the band.
+  describe('refineDown: an entered refinement goes on to the target and no further (MS06c2)', function () {
+    var EXPERT_SPEC = D.spec('expert', model9);
+    var TIER = EXPERT_SPEC.tierTechniques[0];
+    var solution = SG.fullGrid.generate(model9, SG.rng.create(11).fork('grid'), null);
+    // A puzzle with many empty symmetry groups to reveal, unique: the proposal the strategy hands back.
+    var dug = Z.dig(model9, solution, SG.rng.create(11).fork('base'), { minClues: 30 });
+    var CLUES_DUG = dug.givens.reduce(function (n, v) { return n + (v === 0 ? 0 : 1); }, 0);
+
+    /** A rating at `score`: required (a technique of the tier) or shallow (singles only). */
+    function at(score, required) {
+      var counts = { nakedSingle: 40, hiddenSingleBox: 8 };
+      if (required) counts[TIER] = 1;
+      return {
+        level: score >= 1000 ? 'master' : score >= 700 ? 'expert' : 'hard', score: score, rawScore: score,
+        hardestTechnique: required ? TIER : 'nakedSingle', hardestGroup: 'basic', confidence: 1, solved: true,
+        empties: 50, techniqueCounts: counts, ratingVersion: D.RATING_VERSION
+      };
+    }
+
+    /** One entered proposal sample; `script` is a list of [score, required] answers, the first for the proposal. */
+    function refine(script, target) {
+      var real = D.rate;
+      var asked = 0;
+      var keeper = Z.createKeeper(EXPERT_SPEC, 'expert', null);
+      var offered = [];
+      var realOffer = keeper.offer;
+      keeper.offer = function (candidate) {
+        offered.push(candidate.rating.score);
+        return realOffer.call(this, candidate);
+      };
+      D.rate = function () {
+        var answer = script[asked] || [1100, false];
+        asked++;
+        return at(answer[0], answer[1]);
+      };
+      var options = { proposal: true, keeper: keeper, strategy: function () {
+        return { givens: dug.givens, clues: CLUES_DUG, stats: zeroStats() };
+      } };
+      if (target !== undefined) options.target = target;
+      var puzzle;
+      try {
+        puzzle = Z.digLevel(model9, solution, 'expert', SG.rng.create(3), options);
+      } finally {
+        D.rate = real;
       }
-      expect(Z.getStrategy('signs')).toBe(original);
-      expect(seen.length).toBeGreaterThan(0);
-      seen.forEach(function (one) { expect(one).toEqual([false, undefined]); });
-      expect(result.target).toBe(null);
+      return {
+        puzzle: puzzle, asked: asked, keeper: keeper, offered: offered,
+        reveals: puzzle.log.filter(function (e) { return e.op === 'reveal'; }).length
+      };
+    }
+
+    it('1100 to 920 required to 880 required; 900 is farther, 840 shallow and 690 below the band: undone',
+      function () {
+        var run = refine([[1100, false], [920, true], [880, true], [900, true], [840, false], [690, true]], 850);
+        expect(run.puzzle.rating.score).toBe(880);
+        expect(run.puzzle.exact).toBe(true);
+        expect(run.reveals).toBe(2);
+        // 920 passed the band edge and went on to 880: the refinement was entered, it is not a new search
+        var shown = 0;
+        run.puzzle.log.forEach(function (e) { if (e.op === 'reveal') shown += e.cells.length; });
+        expect(run.puzzle.clues).toBe(CLUES_DUG + shown);
+        // every completely rated state was offered, the undone ones too; the keeper holds the first exact one
+        expect(run.offered.slice(0, 6)).toEqual([1100, 920, 880, 900, 840, 690]);
+        expect(run.keeper.best.rating.score).toBe(920);
+        expect(run.puzzle.target).toBe(850);
+      });
+
+    it('an exact 920 in the band goes on while above the target, and stops once it is at or below it',
+      function () {
+        var run = refine([[1100, false], [1050, false], [690, true], [950, true], [880, true], [850, true],
+          [845, true]], 850);
+        expect(run.puzzle.rating.score).toBe(850);
+        expect(run.reveals).toBe(4);
+        // 850 is not above 850: no further rating is made, so the 845 that follows is never asked
+        expect(run.asked).toBe(6);
+      });
+
+    it('a required state at or below the target ends the refinement on the first reveal that gets there',
+      function () {
+        var run = refine([[1100, false], [800, true], [790, true]], 850);
+        expect(run.puzzle.rating.score).toBe(800);
+        expect(run.asked).toBe(2);
+        expect(run.reveals).toBe(1);
+      });
+
+    it('a shallow state inside the band ends it: the local search goes on from there, not the refinement',
+      function () {
+        var run = refine([[1100, false], [920, false], [880, true]], 850);
+        expect(run.puzzle.rating.score).toBe(920);
+        expect(run.puzzle.exact).toBe(false);
+        expect(run.asked).toBe(2);
+        expect(run.reveals).toBe(1);
+      });
+
+    it('without a finite target the first state inside the band ends it, as before (null or an open call)',
+      function () {
+        [null, NaN].forEach(function (target) {
+          var run = refine([[1100, false], [920, true], [880, true]], target);
+          expect(run.puzzle.rating.score).toBe(920);
+          expect(run.asked).toBe(2);
+          expect(run.reveals).toBe(1);
+        });
+      });
+
+    it('never starts from a state inside the band: only a proposal above it is refined', function () {
+      var run = refine([[920, true], [880, true]], 850);
+      expect(run.asked).toBe(1);
+      expect(run.reveals).toBe(0);
+      expect(run.puzzle.rating.score).toBe(920);
     });
   });
 })();

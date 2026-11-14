@@ -857,3 +857,39 @@ projections (`generator/tests/artifacts/difficulty-v3/MS06c1/`). Final quick set
 Generator 3,323 of 3,323 (3,290 + 33 new) in four groups (shard process-seconds sum 650.7 s; S-AV08 was 652.9 s), fingerprint `d9e03806...`; Player 1,683 of 1,683, `3873abea...`;
 `generator-suites.sh check` passes (3,323 of 3,323 in exactly one shard); no suite or shard was added. No S-OD4 item is new; the
 inherited list is unchanged (S-AV01-S-AV15, S-AV18-S-AV20, MS05r6a-COV01; S-AV16 and S-AV17 withdrawn).
+
+## MS06c2: one originating target in every search stage
+
+The policy of MS06b is active. Every sample that `generate` enters draws its own target from its own child stream
+(`rng.fork('dig#<attempt>.<t>')`) and passes it, over any caller value; a lower-level `digLevel` call keeps an explicit value and
+initialises an absent one once. The same target steers, in one change, the guided pass of the cells strategy (nearest the target inside
+the best tier; the apply table can end the pass with one end record and no further work; the pass evaluates its own board once),
+the downward refinement (from an exact state in the band it goes on while above the target, keeping only exact reveals strictly
+nearer it; same 64-rating allowance) and the local search (an exact tie is not followed; the keeper still sees every candidate
+first). Greater-Than transports the target and does not consume it
+(CV6-05); `greater-than.js` is not edited, and no weight, band, cap, floor or offer changes. A local search continues with the
+target of the candidate it started from, a structure-search winner keeps `null`, and every context gets the original keeper.
+`explain.dig.how`, `explain.dig.code.deeper` and `dig.keep` (English and Vietnamese), `design.md` 6.8, 7.2, 13.9, 13.13, 15.2 and
+15.3, both developer guides and the CI manifest state the active behaviour.
+
+**A seed gives another puzzle, by design.** Complete E (`docs/difficulty-v3/evidence/MS06c2/`, `evidence.md`): 194 of the 520
+regression hashes changed (20 of the 26 keys; the Very Easy keys and Greater-Than Normal and Hard are unchanged), published and
+re-checked; the five wires differ by `target` (null to a finite number) and, in G09, G10 and G13, by search work counters, with the
+puzzles unchanged, and G11 and G12 by `target` only; G01, G04, G05 and G06 changed among the 14 analyses (all four are new
+puzzles of the same seeds; G06 differs in its last guided removal), the other ten match. The GR ledgers carry the identity of
+the 63 engine and UI sources, so they were recorded again after the fix round's locale and help edits (fixtures unchanged).
+Pins of `replay`, `replay-recorders`, `steps` and `player` were re-derived from the refreshed goldens (exchanges now come from
+G07; a 4-part jump and the wrapped-singles layout use synthetic specimens, the restored culprit G07's exchange step with a
+made-up jump). `digger-target` has 75 tests; the real `signs` route (Greater-Than Expert, seed 319) takes 0.27 s inside a
+1.4 s shard.
+
+Final quick sets on the final tree of the fix round, one CI group per locked command: Generator 3,346 of 3,346 (`shared-small`
+1,465, 66.5 s; `own-suites` 1,658, 167.9 s; `pipeline` 154, 322.9 s; `replay-player` 69, 133.4 s; 690.7 s in all), fingerprint
+`6867bdb2...`; Player 1,683 of 1,683, `e764236e...`; `generator-suites.sh check` passes (3,346 of 3,346 in exactly one shard).
+
+Named item, S-AV08, for MS06d and MS07e: the four groups rise by 36.9 s (653.8 s at MS06c1 by the same sum). MS06c1's per-test
+times are recorded, so it is attributed: `pipeline` +35.8 s (286.6 to 322.4 s, 10 % below its 360 s projection), all of it in four
+puzzle-generating tests (the three instrumentation-cost tests 75 to 87 s each, +15 %, and "classic9, every level, several
+seeds" 18.2 to 22.0 s, +21 %; the other 144 tests -2.2 s); `mega` 11.0 to 15.4 s (+40 %); the 520 regression-hash requests got
+faster, 567 to 522 s. The first final run (SA1's review) had +40.2 s, +16 % to +21 % and +43 %. A mixed generation cost of the
+active policy, not a stop. No other S-OD4 item is new; the inherited list is unchanged.

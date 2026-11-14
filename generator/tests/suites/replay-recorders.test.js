@@ -479,12 +479,19 @@
       expect(saved).toBeGreaterThan(10);
       expect(lines[saved + 1]).toBe("      id: 'G01', request: { variantId: 'classic9', difficulty: 'expert', " +
         "seed: '3275974478' },");
-      expect(lines[saved + 2]).toBe('      today: { steps: 21, missing: 10 }, counts: { compact: 7, details: 33 },');
+      expect(lines[saved + 2]).toBe('      today: { steps: 21, missing: 10 }, counts: { compact: 7, details: 29 },');
       expect(lines[saved + 6]).toBe("        [1, 0, 'S/Sol', 0, 0, 0, '\u2014', '\u2014', '\u2014', '\u2014'],");
       var long = lines.filter(function (line) { return line.indexOf('      details: [') === 0; });
       expect(long).toHaveLength(14);
       expect(Math.max.apply(null, lines.map(function (line) { return line.length; }))).toBeLessThan(121);
-      expect(lines.filter(function (line) { return /^ {10}singles: \[$/.test(line); })).toHaveLength(1);
+      // two singles stay on one line; no golden has more any more, so a jump of four shows the wrapped layout
+      expect(lines.filter(function (line) { return /^ {10}singles: \[$/.test(line); })).toHaveLength(0);
+      var wide = records();
+      var jumps = wide[0].value.jumps.slice();
+      jumps[0] = Object.assign({}, jumps[0], { singles: jumps[0].singles.concat(jumps[0].singles) });
+      wide[0] = Object.assign({}, wide[0], { value: Object.assign({}, wide[0].value, { jumps: jumps }) });
+      var wrapped = RR.renderGoldens(wide).split('\r\n');
+      expect(wrapped.filter(function (line) { return /^ {10}singles: \[$/.test(line); })).toHaveLength(1);
     });
 
     it('refuses what it cannot write as plain data', function () {

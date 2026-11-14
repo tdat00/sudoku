@@ -15,11 +15,11 @@
  *
  * Stage B, `digLevel` (one attempt at a level) and `generate` (the restart loop), rating v2:
  *  - `digLevel` runs stage A down to about half the clues, then `digGuided`, which repeatedly takes the
- *    removal that makes the puzzle hardest without its score reaching the upper edge of the band, rates the
- *    result once and re-verifies it with `SG.dfs.countSolutions` (safety net against technique bugs). A
- *    sample is exact only with a complete logical proof whose level is the requested one that also needs a
- *    technique of the level's tier (`SG.difficulty.requiredOf`, see `isExact`); a complete proof in the band
- *    that does not is 'shallow'.
+ *    removal that suits the sample's target best (the hardest one without a target) without its score
+ *    reaching the upper edge of the band, rates the result once and re-verifies it with
+ *    `SG.dfs.countSolutions` (safety net against technique bugs). A sample is exact only with a complete
+ *    logical proof whose level is the requested one that also needs a technique of the level's tier
+ *    (`SG.difficulty.requiredOf`, see `isExact`); a complete proof in the band that does not is 'shallow'.
  *  - On the top tiers (nightmare, hell1, hell2) every other sample is the fast proposal dig (stage A with the
  *    uniqueness oracle, then the guided pass towards puzzles the techniques below 'nightmare' cannot finish;
  *    every uniqueness check of a removal is guarded at `UNIQUE_NODES` search nodes); a proposal above the
@@ -66,7 +66,8 @@
  * Dig log. Independently of the events, every dig records its decisions in a compact log (`options.log`, an
  * array the caller owns): `{ op: 'pass', pass, clues }` when a pass starts, `{ op: 'accept', cells }` for a
  * group that was removed, `{ op: 'reject', cells, reason }` for a group that had to go back, `{ op: 'keep',
- * cells, score }` for a candidate of the guided pass that could go but was not the hardest one,
+ * cells, score }` for a candidate of the guided pass that could go (the one the pass applies is followed by
+ * its `accept`; `score` is its score or, for a proposal, its priority, null when stuck),
  * `{ op: 'restart' }` when the safety net throws a dug puzzle away and digs again from the full grid, and
  * `{ op: 'reveal', cells }` for a group shown again (the downward refinement; the local search adds
  * `reason: 'search'`). A dig strategy that digs something else adds its own entries (Greater-Than: `signs`,
@@ -671,18 +672,20 @@
   // Stage B objective: how hard is the puzzle after the cells of `group` were removed (cleared in `givens` on
   // entry, as for the oracles)? Returns a typed objective (difficulty v3, R6): `{ kind: 'refused', reason }`
   // when the removal must be refused ('ambiguous', 'techniques' or 'tooHard'), `{ kind: 'bounded', score,
-  // tierUsed }` for a score-targeted dig, `{ kind: 'proposal', priority }` for a proposal dig. Until the
-  // target policy is activated (MS06c2) the guided stage keeps the highest number, `objectiveValue`.
+  // tierUsed }` for a score-targeted dig, `{ kind: 'proposal', priority }` for a proposal dig. The guided
+  // stage compares them with `targetPolicy` (`preferObjective` in a pool, `applyBounded` against the state it
+  // replaces) and never as bare numbers.
   // Score-targeted dig (every level): the bounded logical solve with the level's techniques is the oracle
   // (stuck = refused) and the objective at once, namely the score; a score at or above the band's upper bound
   // is refused, so digging never overshoots the band. `tierUsed` says whether that same restricted solve used
   // a technique of the level's tier (always true where the tier is vacuous: Very Easy, or an empty tier); it
-  // is not the requiredness of the puzzle and costs no solve. Proposal dig (the fast candidates of the top
-  // tiers): the removal must keep the solution unique (DFS); the priority is the score when the techniques
-  // below the chain group finish the puzzle, and above everything when they do not (the more cells they leave
-  // open the better), a proposal even when the solve finishes. Uniqueness is proven by the DFS here, so the
-  // solver may use the techniques that assume it. The proposal is rated afterwards and refined into the band
-  // when it is above.
+  // is not the requiredness of the puzzle and costs no solve. The bounded evaluator reads no group, so the
+  // guided stage also asks it, once, about the board it starts from (an empty group; no uniqueness check is
+  // involved). Proposal dig (the fast candidates of the top tiers): the removal must keep the solution unique
+  // (DFS); the priority is the score when the techniques below the chain group finish the puzzle, and above
+  // everything when they do not (the more cells they leave open the better), a proposal even when the solve
+  // finishes. Uniqueness is proven by the DFS here, so the solver may use the techniques that assume it. The
+  // proposal is rated afterwards and refined into the band when it is above.
   function removalObjective(model, spec, proposal) {
     if (proposal === true) {
       const below = spec.allowedTechniques.filter(function (id) {
@@ -744,31 +747,44 @@
     };
   }
 
-  /** The number the guided pass ranks by while the target policy is inactive: a score or a priority. */
-  function objectiveValue(objective) {
+  /** The number the trace shows for a successful objective: a score, or the priority of a proposal. */
+  function shownValue(objective) {
     return objective.kind === 'bounded' ? objective.score : objective.priority;
   }
 
-  // Stage B, "dig deeper": continues a dug puzzle by always taking the removal that makes it hardest. Each
-  // step rates the removal of every remaining group with `removalObjective` and applies the best one; a
-  // refused removal stays refused for the rest of the pass, and so do the refusals of stage A. That is a
-  // measured heuristic, not a property of the puzzles: only a lost uniqueness is final, while a removal
-  // refused as stuck or too hard can become acceptable after another removal changes the proof (the score is
-  // not monotone under clue removal). Looking at those refusals again after every accepted removal made the
-  // whole qualification 4.6 times slower and hid seven top levels for time, with the same share of exact hits
-  // (94.4 % against 94.5 % of the first 40 requests of every level), so the pruning stays. It stops when
-  // nothing can be removed any more: the level's own minimal puzzle.
+  // Stage B, "dig deeper": continues a dug puzzle by taking, step by step, the removal that suits the
+  // sample's target best (difficulty v3, R6). Each step rates the removal of every remaining group of a pool
+  // with `removalObjective`; a refused removal stays refused for the rest of the pass, and so do the refusals
+  // of stage A. That is a measured heuristic, not a property of the puzzles: only a lost uniqueness is final,
+  // while a removal refused as stuck or too hard can become acceptable after another removal changes the
+  // proof (the score is not monotone under clue removal). Looking at those refusals again after every
+  // accepted removal made the whole qualification 4.6 times slower and hid seven top levels for time, with
+  // the same share of exact hits (94.4 % against 94.5 % of the first 40 requests of every level), so the
+  // pruning stays.
+  // The target is the sample's (`ctx.target`: a number inside the raw band, or null for a level without an
+  // upper bound or a call that was given none). A score-targeted pass starts by rating its own board once
+  // (`current`: one guarded logical solve, counted once in `stats.oracleCalls`; a board that cannot be rated
+  // ends the pass on the board it got). Then every pool starts with its first successful objective as the
+  // incumbent, and `targetPolicy.preferObjective` decides between two successful ones (the tier first, then
+  // the nearer score to a finite target, else the higher one; the first of an equal pair stays); an
+  // all-refused pool goes on with the next one. The pool's winner replaces the current state only where
+  // `targetPolicy.applyBounded` allows it. When it does not, no other member of the pool would be allowed
+  // either, and the pass ends on the board it has: no further pool, rating or draw. A proposal pass has no
+  // state and no target and applies the highest priority. A pass also ends when nothing can be removed any
+  // more (the level's own minimal puzzle).
   // Why not keep digging in random order: random minimal puzzles need nothing beyond singles about three
   // times out of four, whatever technique set the oracle allows, because the clues left are the ones that
-  // uniqueness itself needs. Choosing the hardest removal each step finds the puzzles that need more.
-  // Events: each rated candidate is `dig.try`, then `dig.reject` (refused) or `dig.keep` (fine, not the
-  // best); the removal that wins the step is `dig.accept`. With `ctx.cooperative` it yields after every rated
-  // candidate (one solve).
+  // uniqueness itself needs. Choosing the removal that fits the target finds the puzzles that need more.
+  // Events: each rated candidate is `dig.try`, then `dig.reject` (refused) or `dig.keep` (fine, with its
+  // numeric score or priority); the removal the pass applies is `dig.accept`. With `ctx.cooperative` it
+  // yields after the rating of its own board and after every rated candidate (one solve).
   function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {
     const coop = ctx.cooperative === true;
     const n = model.cellCount;
     const givens = Int32Array.from(startGivens);
-    const objective = removalObjective(model, spec, ctx.proposal === true);
+    const proposal = ctx.proposal === true;
+    const objective = removalObjective(model, spec, proposal);
+    const target = nullableTarget(ctx.target);
     const groups = SG.symmetry.groups(model, ctx.symmetry);
     const unitClues = new Int32Array(model.units.length);
     const stats = ctx.stats;
@@ -787,7 +803,16 @@
     const trace = createTracer(ctx.emit, metrics, ctx.log);
     trace.pass('guided', 'start', clues);
 
-    for (;;) {
+    // The state a score-targeted pass compares every pool winner with; none for a proposal pass.
+    let current = null;
+    let going = true;
+    if (!proposal) {
+      current = objective(givens, solution, [], ctx.budget, stats);
+      if (current.kind !== 'bounded') going = false;
+      if (coop) yield;
+    }
+
+    while (going) {
       const candidates = [];
       for (let g = 0; g < groups.length; g++) {
         const present = Array.from(groups[g]).filter(function (c) { return givens[c] !== 0; });
@@ -804,7 +829,7 @@
       const pool = candidates.length > limit ? candidates.slice(0, limit) : candidates;
 
       let best = null;
-      let bestObjective = -Infinity;
+      let bestObjective = null;
       for (let p = 0; p < pool.length; p++) {
         const group = pool[p];
         let i;
@@ -818,17 +843,19 @@
           stats.rejected++;
           trace.reject(group, objectiveResult.reason);
         } else {
-          // The legacy ranking: the highest number, the first of an equal one (MS06c2 activates the policy).
-          const value = objectiveValue(objectiveResult);
-          if (best === null || value > bestObjective) {
-            bestObjective = value;
+          // The pool starts with its first success; two successes of one kind are compared by the policy.
+          if (bestObjective === null ||
+              targetPolicy.preferObjective(objectiveResult, bestObjective, target)) {
             best = group;
+            bestObjective = objectiveResult;
           }
-          trace.keep(group, value);
+          trace.keep(group, shownValue(objectiveResult));
         }
         if (coop) yield;
       }
       if (best === null) continue;
+      // A winner the policy does not allow ends the pass: the others of its pool would not be allowed either.
+      if (current !== null && !targetPolicy.applyBounded(current, bestObjective, target)) break;
 
       for (let i = 0; i < best.length; i++) {
         givens[best[i]] = 0;
@@ -836,6 +863,7 @@
         for (let k = 0; k < us.length; k++) unitClues[us[k]]--;
       }
       clues -= best.length;
+      if (current !== null) current = bestObjective;
       stats.accepted++;
       trace.accept(best);
     }
@@ -855,10 +883,11 @@
   // proposal (default false: dig the fast proposal of the top tiers instead, stage A with the DFS uniqueness
   // oracle and stage B with the "as stuck as possible" objective, no score bound; the caller rates it and
   // refines it into the band), rejected (cells the dig never removes, 1 = keep, as in `dig`: Killer keeps the
-  // clues its layout search rated inside the band), spec, budget, emit, log, cooperative (the caller can run
-  // the strategy in slices, see `digStageSteps`: the function then returns the generator instead of the
-  // result, and a strategy that wraps `digStage` (Killer) and forwards its options gets the same treatment
-  // without knowing it).
+  // clues its layout search rated inside the band), target (the number the guided stage steers towards, see
+  // `digGuidedSteps`; a number or null, absent: null. This direct entry draws none: `digLevelSteps` does),
+  // spec, budget, emit, log, cooperative (the caller can run the strategy in slices, see `digStageSteps`: the
+  // function then returns the generator instead of the result, and a strategy that wraps `digStage` (Killer)
+  // and forwards its options gets the same treatment without knowing it).
   function digStage(model, solution, level, rng, options) {
     const steps = digStageSteps(model, solution, level, rng, options);
     return options && options.cooperative === true ? steps : drive(steps);
@@ -921,6 +950,7 @@
           stats: stats,
           cooperative: coop,
           proposal: proposal,
+          target: nullableTarget(options.target),
           log: log
         });
       givens = second.givens;
@@ -934,12 +964,15 @@
 
   // Registers a dig strategy, e.g. 'signs' for Greater-Than. It has the signature of `digStage` and receives
   // the resolved options (`spec`, `symmetry`, `order`, `minClues`, `minCluesPerUnit`, `guided`, `budget`,
-  // `emit`, `cooperative`, `log`), plus `target` (a number or null) when the dig was given one (`digLevel`);
-  // the built-in strategies ignore it. It should emit its events through `emit` (a `SG.events` emitter) with
-  // `stepId` 'dig', keep the replay board in step (patches of at most 8 cells), append its decisions to the
-  // dig log `log` (see the file header) and return `{ givens, clues, stats }`, plus `model` when it removed
-  // structure from the model. It may ignore `cooperative` and return the result at once (the whole dig of a
-  // sample is then one piece of work for a scheduler) or, when `options.cooperative === true`, return an
+  // `emit`, `cooperative`, `log`), plus `target` (the target of the call, a number or null: an explicit
+  // property of `digLevel`'s options as it was given, else the one `digLevel` drew once for the call). The
+  // 'cells' strategy steers its guided stage by it; the first-allowed sign pass of Greater-Than receives it
+  // and ignores it (its keeper offers carry the sample's target all the same). It should emit its events
+  // through `emit` (a `SG.events` emitter) with `stepId` 'dig', keep the replay board in step (patches of at
+  // most 8 cells), append its decisions to the dig log `log` (see the file header) and return
+  // `{ givens, clues, stats }`, plus `model` when it removed structure from the model. It may ignore
+  // `cooperative` and return the result at once (the whole dig of a sample is then one piece of work for a
+  // scheduler) or, when `options.cooperative === true`, return an
   // iterator that yields at boundaries it chooses and returns that value (`digStageSteps` is the example).
   // Throws 'digger.invalidStrategy' for a bad id or function, or a duplicate id.
   function registerStrategy(id, fn) {
@@ -1283,13 +1316,18 @@
   }
 
   // Downward refinement of a candidate above the band: the empty symmetry groups of the solution are re-added
-  // one at a time in a seeded order, each addition fully rated. A completely rated addition is kept when its
-  // score is at least the band minimum; if the score is also below the band maximum it is accepted and the
-  // refinement stops, otherwise it continues. Additions that leave the proof incomplete or the score below
-  // the band minimum are undone. Each kept addition goes into the dig log as `{ op: 'reveal', cells }`. At
-  // most `REFINE_RATINGS` ratings, never more than the caps of the attempt allow. Every completely rated
-  // state it meets, the undone ones included, is offered to the keeper of the run (`ctx.keeper`), so a closer
-  // state is never lost.
+  // one at a time in a seeded order, each addition fully rated. While the state is above the band, a
+  // completely rated addition is kept when its score is at least the band minimum, and the refinement goes
+  // on until a kept state is inside the band. A kept state inside the band that is not exact (a shallow one)
+  // ends it; an exact one (a required proof in the band) goes on only while it is above the finite target of
+  // the sample (`ctx.target`) and keeps a further addition only when that is exact, inside the band and
+  // strictly nearer the target (`targetPolicy.acceptReveal`, the helper that holds the rule). Additions that
+  // leave the proof incomplete, the score below the band minimum, the tier unneeded or the target no nearer
+  // are undone.
+  // Each kept addition goes into the dig log as `{ op: 'reveal', cells }`. At most `REFINE_RATINGS` ratings
+  // in all, never more than the caps of the attempt allow. Every completely rated state it meets, the undone
+  // ones included, is offered to the keeper of the run (`ctx.keeper`), so a closer state is never lost; the
+  // exact state the keeper already holds does not stop an entered refinement, which is not a new search.
   function refineDown(model, solution, givens, rating, spec, rng, ctx) {
     const result = { givens: givens, clues: 0, rating: rating, ratings: 0 };
     for (let c = 0; c < givens.length; c++) if (givens[c] !== 0) result.clues++;
@@ -1299,15 +1337,17 @@
     const work = Int32Array.from(givens);
     const log = Array.isArray(ctx.log) ? ctx.log : null;
     const keeper = ctx.keeper || null;
+    const target = nullableTarget(ctx.target);
     const groups = SG.symmetry.groups(model, ctx.symmetry).filter(function (g) {
       for (let i = 0; i < g.length; i++) if (work[g[i]] !== 0) return false;
       return true;
     });
     rng.shuffle(groups);
     let current = rating;
+    let currentExact = false;
     let clues = result.clues;
     for (let k = 0; k < groups.length; k++) {
-      if (current.score < spec.max) break;
+      if (current.score < spec.max && !(currentExact && target !== null && current.score > target)) break;
       if (result.ratings >= REFINE_RATINGS || capsExhausted(ctx.caps)) break;
       const g = groups[k];
       for (let i = 0; i < g.length; i++) work[g[i]] = solution[g[i]];
@@ -1324,8 +1364,10 @@
           logOf: function () { return (log !== null ? log.slice() : []).concat([reveal]); }
         });
       }
-      if (next.solved && next.score >= spec.min) {
+      const nextExact = isExact(next, spec.level, model);
+      if (targetPolicy.acceptReveal(current, next, spec, target, currentExact, nextExact)) {
         current = next;
+        currentExact = nextExact;
         clues += g.length;
         if (log !== null) log.push(reveal);
       } else {
@@ -1344,8 +1386,8 @@
   // so the score lies in the level's band, and that needs a technique of the level's tier), unsound (the
   // technique-bounded dig produced a puzzle that was not unique, so a technique has a bug; the returned
   // puzzle comes from the DFS fallback and is unique), stats, log (the dig log of this sample), target (the
-  // target of the sample or search it comes from: a finite number or null, a copy; no normal caller gives
-  // one yet, so it is null) }
+  // target of the sample or search it comes from: a finite number or null, a copy; a sample of `generate`
+  // carries the one drawn for it, a search the one of the candidate it continues, null for an open band) }
 
   // One attempt at a puzzle of the requested level from a given solution, as three pipeline steps: 'dig' (the
   // dig strategy, default `digStage`, then the safety net `secureUniqueness`), 'rate' (one deferred rating)
@@ -1355,11 +1397,15 @@
   // steps never yield; default: a stepper stage that emits the step events), strategy (default `digStage`),
   // strategyId (default 'cells', for the 'dig.start' event), where ({ attempt, maxAttempts, sample,
   // maxSamples }: the position in the restart loop, goes into the step start events), target (a number or
-  // null; given to the strategy as it is, in its resolved options, only when the property is present: an
-  // explicit null is not an absent target; no caller supplies one yet and nothing reads it in generation).
-  // The target of the call is captured once, as a scalar (null when absent or not a finite number): the
-  // keeper of the call is a view (`keeperView`) that offers every candidate of the sample with it, the
-  // `LevelPuzzle` carries it and a finite one goes into the `tune` event (`target`).
+  // null: the call's own target). An own `target` property is honoured as it was given, zero and null
+  // included: an explicit null is not an absent target, and a value that is not a finite number acts as none.
+  // A missing property is initialized once, from this call's original stream (`targetPolicy.targetFor(spec,
+  // rng)`: null without an upper bound, else a point of the raw band drawn from the child 'target'), before
+  // the keeper view is made. The effective property is given to the strategy in its resolved options; the
+  // sample loop of `generate` supplies its own drawn property to every sample, so this entry draws no second
+  // one. The target of the call is captured once, as a scalar (null when not a finite number): the keeper of
+  // the call is a view (`keeperView`) that offers every candidate of the call with it, the `LevelPuzzle`
+  // carries it and a finite one, zero included, goes into the `tune` event (`target`).
   // Throws 'difficulty.unknownLevel', 'difficulty.unsupportedLevel', 'digger.invalidSolution',
   // 'digger.invalidOption' or a budget error.
   function digLevel(model, solution, level, rng, options) {
@@ -1387,7 +1433,8 @@
       : SG.difficulty.levelIndex(level) >= GUIDED_FROM_LEVEL;
     const caps = options.caps || null;
     const proposal = options.proposal === true;
-    const target = nullableTarget(options.target);
+    const given = Object.prototype.hasOwnProperty.call(options, 'target');
+    const target = given ? nullableTarget(options.target) : targetPolicy.targetFor(spec, rng);
     const keeper = keeperView(options.keeper || null, target);
     const log = [];
     const resolved = {
@@ -1403,9 +1450,9 @@
       budget: budget,
       emit: em,
       cooperative: coop,
-      log: log
+      log: log,
+      target: given ? options.target : target
     };
-    if (Object.prototype.hasOwnProperty.call(options, 'target')) resolved.target = options.target;
 
     const dug = yield* stage('dig', Object.assign({}, where, {
       level: level,
@@ -1509,18 +1556,23 @@
   }
 
   // Local search from the closest completely rated candidate of an attempt, run as the strategy of one more
-  // sample. A candidate above the band is refined downward (`refineDown`): an exact result or one still above
-  // the band is returned as it is, and a result inside the band that does not need the tier of the level (a
-  // shallow one) goes on with the search from the refined puzzle. Otherwise the search proposes
+  // sample. A candidate above the band is refined downward (`refineDown`, towards the target of the search):
+  // an exact result or one still above the band is returned as it is, and a result inside the band that does
+  // not need the tier of the level (a shallow one) goes on with the search from the refined puzzle. A
+  // candidate that is exact on entry has nothing to search and returns at once. Otherwise the search proposes
   // symmetry-preserving moves on clue groups (removal, swap of a full group for an empty one, addition) and,
-  // on Greater-Than, the removal of a sign; a move is kept iff the puzzle stays unique (`uniqueWithin`) with
-  // a complete proof, its score does not decrease and stays below the band maximum. The clue floor and the
-  // unit minimum of the level are kept. Where the signs were dug to a minimal set (Greater-Than) no clue is
-  // added, so the signs stay minimal. A candidate that comes up again is judged from a memo, not checked or
-  // rated twice (it still counts as a proposal). Every unique, completely rated candidate is offered to the
-  // keeper before the search decides whether it follows the move, so a required neighbour that the path
-  // rejects (its score is lower) is not lost. The search stops as soon as its own state or the keeper is
-  // exact, or when the caps of the attempt are used up; after that no proposal and no rating is made. The
+  // on Greater-Than, the removal of a sign; a move is followed iff the puzzle stays unique (`uniqueWithin`)
+  // with a complete proof, its score stays below the band maximum and `targetPolicy.preferRated` finds it
+  // better than the state the search is in: a lower `qualityOf` (0 exact, 0.5 shallow, else the distance of
+  // the level), then the nearer score to the finite target of the search, or the higher score without one; an
+  // equal pair is not followed. The target is the one of the candidate the search continues (`ctx.target`),
+  // never a draw of the search stream. The clue floor and the unit minimum of the level are kept. Where the
+  // signs were dug to a minimal set (Greater-Than) no clue is added, so the signs stay minimal. A candidate
+  // that comes up again is judged from a memo, not checked or rated twice (it still counts as a proposal).
+  // Every unique, completely rated candidate is offered to the keeper before the search decides whether it
+  // follows the move, so a required neighbour that the path rejects (a worse state, or above the band) is
+  // not lost. The search stops as soon as its own state or the keeper is exact, or when the caps of the
+  // attempt are used up; after that no proposal and no rating is made. The
   // candidate's dig log comes first in the log of the result, followed by the kept moves (`accept` for a
   // removed group or sign, `reveal` with `reason: 'search'` for an added group), so the Generation Steps
   // replay shows what happened. After its first shallow state the search may make
@@ -1557,6 +1609,7 @@
     const budget = ctx.budget;
     const em = ctx.emit;
     const keeper = ctx.keeper || null;
+    const target = nullableTarget(ctx.target);
     const log = Array.isArray(ctx.log) ? ctx.log : null;
     let model = candidate.model;
     let givens = Int32Array.from(candidate.givens);
@@ -1590,6 +1643,8 @@
 
     const groups = SG.symmetry.groups(model, ctx.symmetry);
     stats.groups = groups.length;
+    // The quality of the state the search is in (`qualityOf`, lower is better); it moves with the state.
+    let quality = qualityOf(rating, spec, spec.level, model);
     const unitClues = new Int32Array(model.units.length);
     for (let c = 0; c < givens.length; c++) {
       if (givens[c] === 0) continue;
@@ -1705,14 +1760,18 @@
       const next = seen.rating;
       const entries = entriesOf(removed, added, signPair, sign);
       // Every unique, completely rated candidate may be the closest of the run, kept or not (the path below
-      // may still refuse it: a lower score does not follow, but a required neighbour is kept).
+      // may still refuse it: a worse state or one above the band does not follow, but a required neighbour is
+      // kept).
       if (keeper !== null && next.solved && keeper.closer(next, candModel)) {
         keeper.offer({
           model: candModel, givens: cand, solution: solution, rating: next, stats: stats,
           logOf: function () { return (log !== null ? log.slice() : []).concat(entries); }
         });
       }
-      if (!next.solved || next.score < rating.score || next.score >= spec.max) {
+      const nextQuality = qualityOf(next, spec, spec.level, candModel);
+      const follows = next.solved === true && next.score < spec.max &&
+        targetPolicy.preferRated(nextQuality, next.score, quality, rating.score, target);
+      if (!follows) {
         stats.rejected++;
         if (coop) yield;
         continue;
@@ -1742,6 +1801,7 @@
       model = candModel;
       givens = cand;
       rating = next;
+      quality = nextQuality;
       if (em.wantsMicro) em.syncBoard('dig', 'dig.restore', {}, givens);
       if (coop) yield;
     }
@@ -1793,9 +1853,12 @@
   }
 
   // The target policy of difficulty v3 (R6/R7), as pure helpers: they rate nothing, keep no state and draw
-  // only the one child stream 'target' of the rng they are given, which advances no parent stream. Generation
-  // does not call them yet (MS06b, MS06c1); `digLevelSteps` forwards an explicit `options.target` to a
-  // strategy and, with the keeper views, carries it as data (MS06c1), and nothing draws or reads one.
+  // only the one child stream 'target' of the rng they are given, which advances no parent stream. They are
+  // active: the sample loop of `generate` draws every sample's target with `targetFor` (an absent target of a
+  // direct `digLevel` call is initialized the same way), the guided stage of the 'cells' strategy compares
+  // with `preferObjective` and `applyBounded`, the downward refinement with `acceptReveal` and the local
+  // search with `preferRated`. `targetPolicy`, `removalObjective`, `createKeeper`, `keeperView` and
+  // `keptPuzzle` are internal seams of `SG.digger`, exported for tests and tools, not a public API.
   // An objective is { kind: 'bounded', score, tierUsed }, { kind: 'proposal', priority } or
   // { kind: 'refused', reason }; two objectives are compared only when both are successful and of the same
   // kind, so a proposal is never read as a score and a refusal never wins. The caller starts a pool with its
@@ -1885,8 +1948,11 @@
   // limits), shallowLimit (the allowance, null for Infinity), capHit (null; 'shallow' when the allowance
   // refused a rating, else the cap of the attempt that ended the search, 'ratings' or 'proposals'; null for
   // an exact end) } }), target (the target of the sample, search or kept candidate the returned puzzle comes
-  // from: a finite number or null. No normal caller gives one yet, so it is null; the target of an explicit
-  // `options.target` of `generate`, zero included, comes back as given) }
+  // from: a finite number, zero included, or null. Every sample draws its own target in a finite band, even
+  // over an `options.target` of the caller, which `generate` does not use for a sample; a search carries the
+  // target of the candidate it continues and the kept candidate that of the context that offered it. It is
+  // null for an open band and for a candidate of a variant's structure search, which has none, even when the
+  // samples of the run had finite targets) }
 
   // Generates a puzzle of the requested difficulty: the outer restart loop. Each attempt draws a fresh full
   // grid and digs up to `digTries` puzzles from it (a dig costs about a millisecond, a grid more, and one dig
@@ -1896,7 +1962,12 @@
   // maxAttempts x digTries digs. Every returned puzzle has exactly one solution. Deterministic: the same
   // model, level, rng seed and options give the same puzzle, whatever the emitter and the stage runner do.
   // The random streams are `rng.fork('grid#A')` for the grid of attempt A, `rng.fork('extra#A')` for the
-  // variant hook and `rng.fork('dig#A.T')` for dig sample T of attempt A.
+  // variant hook and `rng.fork('dig#A.T')` for dig sample T of attempt A. Each entered sample draws its own
+  // target once, `targetPolicy.targetFor(spec, rng.fork('dig#A.T'))` (null without an upper bound), after the
+  // early-stop and cap guards of the sample loop; the draw is a child stream, so it moves no other stream,
+  // and it replaces any `options.target` of the caller, which is copied into the options of a sample and
+  // then overridden. The local search of the attempt takes the target of the candidate it continues and
+  // never draws from `search#A`.
   // Each attempt runs the steps 'fullGrid' and 'extraStructure', then per sample 'dig', 'rate' and 'tune'
   // (see `digLevel`), all through `options.stage`. After a missed attempt it emits `retry.difficulty`.
   // Rating v3: a sample is exact only with a complete canonical proof in the requested level that needs a
@@ -2053,9 +2124,11 @@
         const where = { attempt: attempt, maxAttempts: maxAttempts, sample: t, maxSamples: digTries };
         // Top tiers: odd samples are the fast proposal dig, even ones the score-targeted dig.
         const proposal = spec.proposal === true && t % 2 === 1;
-        const puzzle = yield* digLevelSteps(attemptModel, solution, level,
-          rng.fork('dig#' + attempt + '.' + t),
-          Object.assign({}, digOptions, { where: where, caps: caps, proposal: proposal }));
+        // The sample's own target, drawn once from its own child stream: it replaces the caller's copied one.
+        const sampleRng = rng.fork('dig#' + attempt + '.' + t);
+        const target = targetPolicy.targetFor(spec, sampleRng);
+        const puzzle = yield* digLevelSteps(attemptModel, solution, level, sampleRng,
+          Object.assign({}, digOptions, { where: where, caps: caps, proposal: proposal, target: target }));
         samples++;
         lastSample = t;
         unsound = unsound || puzzle.unsound;
@@ -2076,6 +2149,7 @@
         const where = {
           attempt: attempt, maxAttempts: maxAttempts, sample: lastSample, maxSamples: digTries
         };
+        // The search carries the target of the sample it continues, null included: no draw, no caller value.
         const puzzle = yield* digLevelSteps(attemptBest.model, solution, level, rng.fork('search#' + attempt),
           Object.assign({}, digOptions, {
             where: where, caps: caps, proposal: false, strategy: searchStrategy(attemptBest),

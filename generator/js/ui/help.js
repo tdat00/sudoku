@@ -1159,7 +1159,8 @@
         'maximum number of attempts in the advanced options.',
       'help.difficulty.guarantee.nightmare': 'For the highest levels the generator also digs quickly with only ' +
         'a uniqueness check, and when that puzzle comes out too hard it shows clues again until the score ' +
-        'falls into the band. Whatever the path, a puzzle is only accepted when the solver can finish it ' +
+        'falls into the band, and then goes on towards its target score for as long as the puzzle still ' +
+        'reaches the level. Whatever the path, a puzzle is only accepted when the solver can finish it ' +
         'by logic.',
       'help.difficulty.guarantee.verify': 'Whatever the level, a separate solver counts the solutions of ' +
         'every finished puzzle as a safety net. A puzzle with more than one solution never reaches you.',
@@ -1429,8 +1430,8 @@
         'thử trong phần tùy chọn nâng cao.',
       'help.difficulty.guarantee.nightmare': 'Với các mức cao nhất, trình sinh đề còn đào nhanh chỉ với ' +
         'phép kiểm tra lời giải duy nhất, và khi đề đó ra quá khó thì hiện lại số cho sẵn cho đến khi điểm ' +
-        'rơi vào dải. Dù theo cách nào, một đề chỉ được chấp nhận khi bộ giải giải hết được nó bằng suy ' +
-        'luận.',
+        'rơi vào dải, rồi tiếp tục tiến về điểm mục tiêu chừng nào đề còn đạt đúng mức. Dù theo cách nào, ' +
+        'một đề chỉ được chấp nhận khi bộ giải giải hết được nó bằng suy luận.',
       'help.difficulty.guarantee.verify': 'Ở mọi mức, một bộ giải riêng còn đếm số lời giải của từng đề ' +
         'hoàn chỉnh như một lớp bảo vệ. Một đề có nhiều hơn một lời giải sẽ không bao giờ đến tay bạn.',
       'help.difficulty.closest.title': 'Khi không đạt được mức độ yêu cầu',

@@ -517,7 +517,8 @@
     it('MS06c1-T01: keeps the target (a number, zero, null) of the result; an entry stored before it is null',
       function () {
         const made = P.run(CASES[0], null);
-        expect(made.target).toBe(null);
+        // a fresh request in a finite band has its sample's target, and the entry keeps it as it is
+        expect(Number.isFinite(made.target)).toBe(true);
         [812.5, 0, null].forEach(function (value) {
           const data = C.serialize(Object.assign({}, made, { target: value }));
           expect(data.target).toBe(value);
@@ -525,8 +526,8 @@
           expect(C.deserialize(JSON.stringify(data)).target).toBe(value);
         });
         const plain = C.serialize(made);
-        expect(plain.target).toBe(null);
-        expect(C.deserialize(JSON.parse(JSON.stringify(plain))).target).toBe(null);
+        expect(plain.target).toBe(made.target);
+        expect(C.deserialize(JSON.parse(JSON.stringify(plain))).target).toBe(made.target);
         // an entry stored before the field, and a value that is no finite number: no target, never a guess
         const before = JSON.parse(JSON.stringify(C.serialize(Object.assign({}, made, { target: 812.5 }))));
         delete before.target;

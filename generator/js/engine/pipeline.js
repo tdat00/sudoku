@@ -124,8 +124,10 @@
   // wire, and absent, never zero, when the result comes from a wire or cache entry written before it
   // existed), target (internal, not part of any exchange format: the target of the sample, search or kept
   // candidate the result comes from, `GeneratedPuzzle.target` of the digger: a finite number, zero included,
-  // or null. No normal caller gives one, so it is null; it crosses the wire, and a wire or cache entry
-  // written before the field decodes as null).
+  // or null. A sample of a finite band draws its own target, so a normal result carries one; it is null for
+  // an open band, for a result that comes from a variant's structure search (which has none, even when the
+  // samples of the request had targets) and for a wire or cache entry written before the field. It crosses
+  // the wire as it is).
 
   // `emit` is a sink function, an `SG.events` emitter (which decides the verbosity) or null; a sink gets an
   // emitter with verbosity `config.trace`. At 'off' only step start/end, `done` and `error` events are sent.
