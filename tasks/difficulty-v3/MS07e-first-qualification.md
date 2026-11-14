@@ -120,6 +120,16 @@ replies and MS18e's audit. No new evidence class/tooling task for a slow interme
 
 ## Test plan and gates
 
+**IR17 — classic9 GD Nightmare margin (recovery source `00647f9`).** The completed batch took
+430.5 s: about 96% of the 450 s planning budget and 80% of the 540 s process ceiling.
+Before any rerun, state a current-source projection and an explicit conservative margin for the
+whole command, including startup and variability. **449 s is not a bound to reuse** or a value to
+choose merely to fit below 450 s. If a credible projection with its margin cannot fit 450 s,
+treat the unchanged batch as a population above 450 s: do not launch it, record the named
+unexecuted-cost item and continue other evidence under S-OD4. Do not cut its request count or
+raise a guard. This is the classic9 GD batch, not a 40/100-request qualification cell; the
+accepted recovery run needs no retrospective redo.
+
 Generator, first cell, then every Q cell with its own file:
 
 ```powershell

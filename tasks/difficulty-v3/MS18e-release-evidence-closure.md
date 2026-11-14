@@ -82,6 +82,26 @@ minutes, unchanged time factor and no raised timeout. Preserve the PR's smaller 
 core/Player/browser jobs and Pages dependency/trigger rules. Workflow comments must point to the
 actual final offline deep/GD/E/GQ/GP evidence, not claim r5m's old source validates new techniques.
 
+#### Recovery items that must receive a final audit disposition
+
+Carry these named items from the combined MS05 source `00647f9` and SA1's recovery reviews.
+For each record its final-source evidence, resolved/pending status and owner; an earlier local
+pass or a corrected comment alone does not close a remote-CI obligation.
+
+| Item | Required audit |
+|---|---|
+| R6C-I01 | Generator CI changed from five jobs to four with new names. Have the orchestrator compare the repository's configured required checks with the actual final job contexts, including whether the new **Plan generator tests** job must be added. Record the disposition; do not assume old required-check names cover the new workflow or change branch-protection settings in this task. |
+| R6C-I02 | Remote job durations were unknown at recovery closure. Use actual PR-run timings, including startup, for the matching source and compare them with each job's existing timeout. Local sums/projections are not measured remote durations; absent run evidence stays pending. |
+| R6C-I04 | `player/design.md:437` at the recovery source says browser scripts are not in CI, although the PR workflow runs them. Recheck the final workflow and correct the living design's description; do not remove browser coverage to make the old text true. |
+| IR21 | The first PR run executes **Node 24 / Linux / SG_TIME_FACTOR=3**, whereas local recovery evidence used Node 26 / Windows / factor 2. Record that first platform result and any findings; local green is not that platform's pass. Classify/investigate failures without weakening assertions, raising factors or extending timeouts. Final sign-off still needs matching-head checks. |
+| IR22 | `generator/design.md:2073` (the Tests row in section 18) has stale suite/test counts, and `player/design.md:437` has the R6C-I04 browser-CI claim. Derive counts and facts from the final inventory/workflows, not copied recovery counts. The Player text may share one correction/evidence link with R6C-I04, but give both IDs a disposition. |
+| MS05r6a-COV01 | The reveal-fold branch retained one G11 specimen after the search of the 14 goldens, the guides' example and the player suite's 11 other fixed results found no replacement. Verify that the branch remains genuinely asserted on the final fixtures and record the coverage disposition. Do not silently drop it or close the item merely because the older test passed; any needed out-of-scope test/fixture repair goes to its assigned owner. |
+
+Both design files above are quick-fingerprint inputs. Make any still-needed documentation
+corrections during implementation step 2, **before** the final quick freeze/run; if corrected later,
+replace the complete affected app's quick coverage on the new fingerprint. This is the existing
+documentation/CI audit scope, not permission for new browser runs, fixture repairs or scope reductions.
+
 The orchestrator supplies the v3 PR/check-run identity and performs any required Git/PR actions.
 This task owns reading/checking the final-head results and investigating bounded CI grouping
 failures, forwarding application/correctness defects to their owner. Local success is not a

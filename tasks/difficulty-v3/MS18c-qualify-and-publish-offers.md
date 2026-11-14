@@ -56,6 +56,14 @@ use the complete final qualification, keep the 40/100 protocol and do not prune 
 A hidden cell can be the honest v3 release outcome. The separately saved
 `docs/improve-generating/plan.md` is not authorized now and is not a prerequisite for publication.
 
+**IR17 — GD timing handoff (recovery source `00647f9`).** The classic9 GD Nightmare batch took
+430.5 s, about 96% of the 450 s planning budget and 80% of the 540 s ceiling. Any rerun must
+state a current-source projection with an explicit conservative margin for the whole command;
+**449 s is not a reusable bound**. If no credible margin fits within 450 s, treat it as a
+population above 450 s and follow the existing named unexecuted-item rule, without changing
+counts or guards. Carry this warning and the current projection/margin to MS18e if Nightmare
+remains offered. This does not add a GD run to MS18c or replace GQ's separate 40/100 protocol.
+
 Reconcile all inherited availability items (including Killer Hard/Expert and large-grid Nightmare/
 hell1) with final verdicts. If a Killer calibration decision was requested at MS07e, apply only its
 recorded disposition; no weight change here. A hidden verdict needs no calibration to be legitimate.
