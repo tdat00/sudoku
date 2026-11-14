@@ -116,14 +116,14 @@ This evidence-only task verifies the unchanged quick baseline; it adds no suite 
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (evidence only) |
+| Start | 2026-11-14 17:44 (+07:00) |
+| End | 2026-11-14 18:10 developer (runs 17:46:52-18:02:17); orchestrator review and commit |
+| Duration | 26 min developer; 17 locked commands, 570.1 s helper time (longest killer Expert 150.7 s); no lock wait (Pentomino paused) |
+| Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (orchestrator review) |
+| Token usage | 62 model calls; 8,428,601 input tokens (8,202,729 cache reads); 81,017 output tokens |
+| AI credits | about 220 (developer) |
+| Verification | Developer: 17 cells, one locked `tests\soak.js --count=12 --seed=20260101 --no-gate --json` command each, all exit 0; every ledger complete with 12 rows, indexes 0-11: **204 outcomes**; 0 request errors, invariant failures, check, reference or final-path errors; nothing sharded. Identity: the 63-file source hash `a073f9bd…`, `greater-than.js` `24dbbe37…` and `digger.js` `3be14d5e…` equal MS05e's `before/` records on `f7be90f`; the ledgers record HEAD `ef8a9cc`, `dirty: false`; six cells reproduce MS05r4's counts exactly. Orchestrator: the tree changed only `docs/` (`git diff --quiet HEAD` over generator, core, player, the guides, `AGENTS.md`, `.github` exit 0), so MS05r6c's quick baseline applies by identity; locked re-runs of classic9 Hard and jigsaw9 Normal reproduce their ledgers row for row (puzzle hash, outcome, score, full ratings) |
+| Acceptance | MS06a-B01, B02, T01-T03 met. Before-record: `docs/difficulty-v3/target-scope-2026-11-14.md` (time, work, raw and adjusted positions with null reasons, per-cohort denominators, ledger SHA-256s) and `docs/difficulty-v3/evidence/MS06a/` (17 JSON ledgers, 17 transcripts). Totals 163 exact / 39 shallow / 2 miss, 454.6 s generation. The soak's own `RESULT: FAIL` for classic9 Normal/Nightmare and Killer Hard/Expert is recorded as measured under `--no-gate`, not hidden |
+| Issues & resolutions | (1) Two mistyped invocations before classic9 Nightmare exited 2 in 0.18 s with "nothing to do", generated nothing and wrote no ledger; their stray transcripts were deleted. (2) Trailing whitespace stripped from the 17 console transcripts (152 lines); the JSON ledgers are untouched. (3) New items S-AV18 (Greater-Than Expert requests 2 and 5 off-band in Master, as in MS02), S-AV19 (the informational `SLOW` flag in 9 of 17 cells), S-AV20 (jigsaw9 Expert 1/12 and diagonalX Nightmare 2/12 shallow), added to check-list section 2 by the orchestrator |
+| Handoff | MS06b/MS06d: the immutable before-record above; do not edit it after source changes. Items: S-AV01, S-AV05, S-AV06, S-AV07, S-AV14 carried with this record's numbers; S-AV02-S-AV04, S-AV08-S-AV13, S-AV15, MS05r6a-COV01 unchanged; S-AV16/S-AV17 withdrawn; S-AV18-S-AV20 new |

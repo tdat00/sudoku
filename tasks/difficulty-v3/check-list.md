@@ -66,7 +66,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS05r6c | [MS05r6c](MS05r6c-ci-test-tiers.md) | CI workflows for the v3 test tiers | MS05r6b evidence and final quick manifest | S-M, 30-50 min + checks | CI | inside combined commit | 9r6c |
 | [x] | MS05e | [MS05e](MS05e-guided-sign-dig.md) | Closed: guided sign dig measured, set aside (CV6-05) | r6b/r6c combined commit | M, 50-60 min + gates | Greater-Than | M5e | 11a |
 | [ ] | MS06 | MS06a-MS06d | One target through all stages (parent) | MS05e closed, set aside, identity proved | split | Generator | M6 | 12-15 |
-| [ ] | MS06a | [MS06a](MS06a-pre-target-evidence.md) | Isolated pre-target evidence | MS05e closed, set aside, identity proved | S, 20-30 min | Evidence | M6a | 12 |
+| [x] | MS06a | [MS06a](MS06a-pre-target-evidence.md) | Isolated pre-target evidence | MS05e closed, set aside, identity proved | S, 20-30 min | Evidence | M6a | 12 |
 | [ ] | MS06b | [MS06b](MS06b-target-policy-primitives.md) | Inactive target policy primitives | MS06a | M, 35-50 min | Generator engine | M6b | 13 |
 | [ ] | MS06c | MS06c1-MS06c2 below | Target transport and atomic activation (parent) | MS06b | split | Generator | M6c | 14a-14b |
 | [ ] | MS06c1 | [MS06c1](MS06c1-target-transport.md) | Nullable target transport; no policy activation | MS06b | M, 45-60 min + GG check/GR | Generator plumbing | M6c1 | 14a |
@@ -289,6 +289,9 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV08 standing quick cost | **648.0 s**, MS05r6c Generator quick baseline retained by the CV6-05 restoration/identity proof. Rejected pool: 726.2 s, historical only. Earlier b1's 713.8 s was partial, not a complete baseline | MS07e proposal if Generator remains above about 5 minutes; MS18d/MS18e |
 | S-AV16 Greater-Than Nightmare CV6 | **Withdrawn as a current-source item (CV6-05).** Rejected pool p95 40,396 ms against 20,000 ms remains historical evidence. Restored source returns to the observed 19,192 ms pass; see the margin note below | History retained; MS18e audit, not an open pool regression |
 | S-AV17 pool's neighbour and quick-cost regressions | **Withdrawn as a current-source item (CV6-05).** Preserve candidate Easy/Hard/Expert slowdowns and 726.2 s quick cost as measured history; do not describe them as the restored source | History retained; MS18e audit, not an open pool regression |
+| S-AV18 Greater-Than Expert off-band misses | MS06a (restored source, seeds 20260101): 10/12 exact; requests 2 and 5 end off-band in Master (scores 1013 and 1046, about 14 s each); the same two requests missed in MS02 | MS06d comparison, MS07e, MS18c |
+| S-AV19 design 9.1 p95 flags | MS06a: the soak's informational `SLOW` flag against the design section 9.1 p95 target fires in 9 of 17 cells at 12 samples each; not a gate | MS18d (GP decides), MS18e audit |
+| S-AV20 shallow results without an inherited item | MS06a: jigsaw9 Expert 1/12 shallow, diagonalX Nightmare 2/12 shallow | MS06d comparison, MS07e, MS18c |
 
 **CV6-05: S-AV01's three fixed endings.** Nobody now edits, skips or wraps the Normal CV6
 assertion. It is manual, outside the quick set and CI, and its honest red outcome blocks no
@@ -1077,4 +1080,5 @@ empty until that review. The analyst reports are traceability, not additional de
 | MS05r6b | Audit complete (S-OD2; combined commit with MS05r6c); quick sets green (Generator 3,262, Player 1,683); R6B-F01 fixed by MS05r5p; GD with S-AV07, S-AV14, S-AV15; standing cost measured (S-AV08) | 1 h 14 min developer in two runs + 15 min review | about 1,582 | (combined) |
 | MS05r6c | Accepted in the combined commit; CI groups over the bounded quick manifest; final quick runs green (Generator 3,262, Player 1,683); SA1's IR14/IR15/IR19 applied | 48 min developer + 15 min review | about 506 | `difficulty-v3 MS05` |
 | MS05e | Closed: measured, set aside (CV6-05, Q1(b) withdraw the pool, Q2(a) keep the contracts); runtime restored byte for byte to `f7be90f` with identity proof, no run; candidate kept as `candidate-pool-4.patch`; IR23 gate met and not taken | 2 h 51 min developer + about 25 min document rounds; SA1 review and cross-check | about 2,223 | `difficulty-v3 MS05e` |
+| MS06a | Accepted (evidence only): 17 cells, 204 outcomes on the restored source (163 exact / 39 shallow / 2 miss), identity with MS05e's before-records; S-AV18-S-AV20 new | 26 min developer + 10 min review | about 220 | `difficulty-v3 MS06a` |
 | MS05 (combined) | Accepted: retained MS05b1, MS05r1-r4, MS05r5p, MS05r5, MS05r5m, MS05b3, MS05r6a, MS05r6b, MS05r6c in one commit (S-OD2); the pause commit `a7f6660` was not green and was not acceptance | recovery developers 2026-11-13/14 + reviews | about 13,400 (developers of MS05r1-MS05r6c and the fix rounds; MS05b1 not recorded) | `difficulty-v3 MS05: required exactness with measured bounded recovery` |
