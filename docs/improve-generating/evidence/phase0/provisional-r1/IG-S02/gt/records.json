@@ -1,0 +1,2854 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S02",
+  "shard": "gt",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "a5acbdfb822ec317db53c2e8147e3a463e33ee4545c9170bb3f687cfc6d64fc7",
+  "records": [
+    {
+      "key": "IG-S02/gt/greaterThan:nightmare:1/native-w1",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "greaterThan:nightmare:1",
+      "gridCluster": null,
+      "requestSeed": 1,
+      "attempt": null,
+      "sample": null,
+      "variantId": "native-w1",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "greaterThan",
+        "difficulty": "nightmare",
+        "seed": 1,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "native-w1",
+      "poolWidth": 1,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 196114
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 926.8663,
+        "coldWallMs": 1013.2113,
+        "occupiedWallMs": 1045.6304,
+        "cpuToDecisionMs": 1500,
+        "cpuTotalMs": 1531,
+        "cpuReadyTotalMs": 1375,
+        "startupMs": 86.34500000000003,
+        "startupCpuMs": 156,
+        "cleanupMs": 32.41910000000007,
+        "readyOccupiedWallMs": 959.2854000000001,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 31
+      },
+      "validation": {
+        "wallMs": 105.73360000000002,
+        "cpuMs": 141,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": true,
+      "verifiedExact": true,
+      "required": true,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "nightmare",
+      "score": 2388,
+      "puzzleHash": "43209b9cdb1435d74a599787b90ba8a51b69dff73bc7872f6a86a72e054959d9",
+      "attemptsUsed": 1,
+      "samplesUsed": null,
+      "canonicalRatings": 18,
+      "localProposals": 0,
+      "localCapReasons": [],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [],
+      "error": null,
+      "arm": "reference",
+      "puzzleVariant": "greaterThan",
+      "blockKey": "IG-S02/gt/greaterThan:nightmare:1",
+      "shard": "gt",
+      "order": 0,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [],
+      "engineElapsedMs": 925.8818,
+      "digests": {
+        "structure": "b7aacaa20427cf37abfc4e35a47964f6c96517e1510989cced91bd48c8db7251",
+        "givens": "e9a099c18c7ff500f0f473dd12e78e928976e3ea7f9f720a19c6601c372720df",
+        "solution": "f86776d0c73c8787362a5a23a74a4f32a952ba01088a53876b235f25580bda5a",
+        "rating": "7fe0119aebbcf7c63eb95113f2da134bd4164294f5b2e26218f29c9eb9d11af0",
+        "config": "3237056ef2aec019cb1a091a03a3f13a581f45be7dd8d095c0da32e8f4cbbdc9",
+        "warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "log": "82864db95cf97dc40983b744fe5c5a6ae66df4fb170aba50ec61816e5d5768b5",
+        "work": "725cd665b78881cf791c5e0fcd5f6424fb1507f600021d06cd696484ec127a0c",
+        "scalars": "c8748c8bad71a37d0f3bf10a8e700950a20e7bc2be1a6e1bb3ba1ad2ceef7989",
+        "puzzle": "43209b9cdb1435d74a599787b90ba8a51b69dff73bc7872f6a86a72e054959d9",
+        "all": "a21aef370b17a6c4a37629be101c95086beb1f86587533360553331eb6a3a1d9"
+      },
+      "engineTimingsMs": {
+        "configure": 0.2965999999998985,
+        "buildModel": 1.6194999999999027,
+        "fullGrid": 2.328100000000063,
+        "extraStructure": 0.7730999999999995,
+        "dig": 918.9143000000001,
+        "rate": 0.09099999999978081,
+        "tune": 0.08409999999969386
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "puzzleFile": "provisional-r1/IG-S02/gt/puzzles/native-w1__greaterThan-1.json",
+      "puzzleFileSha256": "5587527f8752c6258dc8a558ba0d1819a48162c4c2badfa73b8906fd8c11e5dc"
+    },
+    {
+      "key": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "greaterThan:nightmare:1",
+      "gridCluster": null,
+      "requestSeed": 1,
+      "attempt": null,
+      "sample": null,
+      "variantId": "attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "greaterThan",
+        "difficulty": "nightmare",
+        "seed": 1,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "attempts-w4",
+      "poolWidth": 4,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 196114
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 1040.6086000000003,
+        "coldWallMs": 1155.7814000000003,
+        "occupiedWallMs": 1214.6698000000001,
+        "cpuToDecisionMs": 6156,
+        "cpuTotalMs": 6328,
+        "cpuReadyTotalMs": 5922,
+        "startupMs": 115.17280000000005,
+        "startupCpuMs": 406,
+        "cleanupMs": 58.88839999999982,
+        "readyOccupiedWallMs": 1099.497,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 172
+      },
+      "validation": {
+        "wallMs": 106.04610000000002,
+        "cpuMs": 155,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": true,
+      "verifiedExact": true,
+      "required": true,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "nightmare",
+      "score": 2388,
+      "puzzleHash": "43209b9cdb1435d74a599787b90ba8a51b69dff73bc7872f6a86a72e054959d9",
+      "attemptsUsed": 1,
+      "samplesUsed": null,
+      "canonicalRatings": 18,
+      "localProposals": 0,
+      "localCapReasons": [],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": "sample",
+      "firstExactOrdinal": 1,
+      "checkpointHashes": null,
+      "warnings": [],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "greaterThan",
+      "blockKey": "IG-S02/gt/greaterThan:nightmare:1",
+      "shard": "gt",
+      "order": 1,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "b7aacaa20427cf37abfc4e35a47964f6c96517e1510989cced91bd48c8db7251",
+        "givens": "e9a099c18c7ff500f0f473dd12e78e928976e3ea7f9f720a19c6601c372720df",
+        "solution": "f86776d0c73c8787362a5a23a74a4f32a952ba01088a53876b235f25580bda5a",
+        "rating": "7fe0119aebbcf7c63eb95113f2da134bd4164294f5b2e26218f29c9eb9d11af0",
+        "config": "3237056ef2aec019cb1a091a03a3f13a581f45be7dd8d095c0da32e8f4cbbdc9",
+        "warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "log": "82864db95cf97dc40983b744fe5c5a6ae66df4fb170aba50ec61816e5d5768b5",
+        "work": "725cd665b78881cf791c5e0fcd5f6424fb1507f600021d06cd696484ec127a0c",
+        "scalars": "c8748c8bad71a37d0f3bf10a8e700950a20e7bc2be1a6e1bb3ba1ad2ceef7989",
+        "puzzle": "43209b9cdb1435d74a599787b90ba8a51b69dff73bc7872f6a86a72e054959d9",
+        "all": "a21aef370b17a6c4a37629be101c95086beb1f86587533360553331eb6a3a1d9"
+      },
+      "engineTimingsMs": {
+        "configure": 0.3425999999999476,
+        "buildModel": 2.2756999999999152,
+        "fullGrid": 3.156600000000026,
+        "extraStructure": 0.9791000000000167,
+        "dig": 1026.9438000000005,
+        "rate": 0.11310000000003129,
+        "tune": 0.08920000000034634
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "pool": {
+        "width": 4,
+        "ceiling": 4,
+        "attemptsPlanned": 8,
+        "attemptsStarted": 5,
+        "attemptsConsumed": 1,
+        "attemptsSpeculative": 4,
+        "peakActive": 4,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 3.594,
+        "firstReadyMs": 115.173,
+        "allReadyMs": 118.976,
+        "decisionMs": 1155.781,
+        "decision": "merged",
+        "exact": true,
+        "firstExactOrigin": "sample",
+        "firstExactOrdinal": 1,
+        "resultOrigin": "sample",
+        "resultAttempt": 1,
+        "modelHashes": [
+          "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            2.276,
+            1.658
+          ],
+          "totalMs": 3.934,
+          "duplicatedMs": 1.658
+        },
+        "activity": [
+          [
+            115.173,
+            1
+          ],
+          [
+            115.805,
+            2
+          ],
+          [
+            118.88,
+            3
+          ],
+          [
+            118.976,
+            4
+          ],
+          [
+            1042.333,
+            3
+          ],
+          [
+            1042.333,
+            4
+          ],
+          [
+            1155.781,
+            3
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 4,
+              "acceptedOrdinal": 17,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0,
+            "keeperBefore": null,
+            "keeperAfter": 0
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4/a1",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 115.173,
+            "finishedMs": 1155.781,
+            "wallMs": 1040.609,
+            "engineElapsedMs": 1037.54,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 18,
+              "proposals": 0,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": []
+            },
+            "samples": 5,
+            "modelHash": "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d",
+            "buildModelMs": 2.276,
+            "candidates": {
+              "sample": {
+                "distance": 0,
+                "exact": true,
+                "digest": "ecef1a2b707f2fdc50f1cbf647a5a6dbe3d480e3a3aeb29ae0efb56a7b19b249"
+              },
+              "search": null,
+              "keeper": {
+                "ordinal": 17,
+                "distance": 0,
+                "exact": true,
+                "digest": "ecef1a2b707f2fdc50f1cbf647a5a6dbe3d480e3a3aeb29ae0efb56a7b19b249"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 18,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 1000.3341666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "42556492919d422eb3f92f3165fc9b7d73791254f2abb1969f7550daa9d3872e"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.26,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "7961e259668f4689e379dddff9d417371b7764c59d9b2b64c09f8c5b16101e30"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "7c8b4f6523ab375542bda8ae3e8f7336553101db3d2b0f4d789c9f2c1e0d9bff"
+                },
+                {
+                  "ordinal": 17,
+                  "distance": 0,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8505e6167dc167bd6954abbdbc555021880b9e8ad747d870c348d0a516d28c30"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4/a2",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 0,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "terminated-unfinished",
+            "completedBeforeDecision": false,
+            "startedMs": 115.805,
+            "finishedMs": null,
+            "wallMs": null,
+            "engineElapsedMs": null,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": null,
+            "samples": null,
+            "modelHash": null,
+            "buildModelMs": null,
+            "candidates": null,
+            "keeperLedger": null,
+            "sampleUnsound": null
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4/a3",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 3,
+            "serialOrdinal": 3,
+            "lane": 2,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "terminated-unfinished",
+            "completedBeforeDecision": false,
+            "startedMs": 118.88,
+            "finishedMs": null,
+            "wallMs": null,
+            "engineElapsedMs": null,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": null,
+            "samples": null,
+            "modelHash": null,
+            "buildModelMs": null,
+            "candidates": null,
+            "keeperLedger": null,
+            "sampleUnsound": null
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4/a4",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 4,
+            "serialOrdinal": 4,
+            "lane": 3,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 118.976,
+            "finishedMs": 1042.333,
+            "wallMs": 923.357,
+            "engineElapsedMs": 921.059,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 15,
+              "proposals": 0,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": []
+            },
+            "samples": 4,
+            "modelHash": "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d",
+            "buildModelMs": 1.658,
+            "candidates": {
+              "sample": {
+                "distance": 0,
+                "exact": true,
+                "digest": "555ce364920dc0c15802aad2dd788835874ee72d1c303e3b3d3fc9478588bae0"
+              },
+              "search": null,
+              "keeper": {
+                "ordinal": 15,
+                "distance": 0,
+                "exact": true,
+                "digest": "555ce364920dc0c15802aad2dd788835874ee72d1c303e3b3d3fc9478588bae0"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 15,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 1000.3333333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2f4cb28682136137a6278a498cfa7cb124d54f8a5e5f932eeb9043e3daa962c1"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.2379166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "35ece73ab15a84c15ad229a175d0a8dab3586d13b9f6f17c98d40da88d74a50c"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 1000.1958333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "cc21f938b3e8376ef2ecc2722379d1d2758e630abc2097ae34eb954fa2bae898"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "98df61f51ad2cbffe185f54cd2a593f0318027634320198067a1ade9c0239e9f"
+                },
+                {
+                  "ordinal": 15,
+                  "distance": 0,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "61c279947588ad311e33f3b7603d13fab47e2a74fccadd4fcab10fa39b7357ca"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4/a5",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:1/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 5,
+            "serialOrdinal": 5,
+            "lane": 3,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "terminated-unfinished",
+            "completedBeforeDecision": false,
+            "startedMs": 1042.333,
+            "finishedMs": null,
+            "wallMs": null,
+            "engineElapsedMs": null,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": null,
+            "samples": null,
+            "modelHash": null,
+            "buildModelMs": null,
+            "candidates": null,
+            "keeperLedger": null,
+            "sampleUnsound": null
+          }
+        ]
+      },
+      "puzzleFile": "provisional-r1/IG-S02/gt/puzzles/attempts-w4__greaterThan-1.json",
+      "puzzleFileSha256": "911414f0a37db5ec36142026fd365237d4c9636c1c7f4e3f5226f3728963542c"
+    },
+    {
+      "key": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "greaterThan:nightmare:2",
+      "gridCluster": null,
+      "requestSeed": 2,
+      "attempt": null,
+      "sample": null,
+      "variantId": "attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "greaterThan",
+        "difficulty": "nightmare",
+        "seed": 2,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "attempts-w4",
+      "poolWidth": 4,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 196114
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 6313.7736,
+        "coldWallMs": 6421.8893,
+        "occupiedWallMs": 6494.1958,
+        "cpuToDecisionMs": 31235,
+        "cpuTotalMs": 31376,
+        "cpuReadyTotalMs": 31031,
+        "startupMs": 108.11569999999983,
+        "startupCpuMs": 345,
+        "cleanupMs": 72.3065000000006,
+        "readyOccupiedWallMs": 6386.080100000001,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 141
+      },
+      "validation": {
+        "wallMs": 130.91630000000077,
+        "cpuMs": 140,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": true,
+      "verifiedExact": true,
+      "required": true,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "nightmare",
+      "score": 2301,
+      "puzzleHash": "eef4d6bf7ecd527e0ce83f9fdc21f378fddc394ccf7a6e88c1ac56927aafe0ae",
+      "attemptsUsed": 6,
+      "samplesUsed": null,
+      "canonicalRatings": 214,
+      "localProposals": 163840,
+      "localCapReasons": [
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": "sample",
+      "firstExactOrdinal": 6,
+      "checkpointHashes": null,
+      "warnings": [],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "greaterThan",
+      "blockKey": "IG-S02/gt/greaterThan:nightmare:2",
+      "shard": "gt",
+      "order": 2,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "c37a36534ffc717b2104aa7ff2580d9d9ec05d324ec8f1c58ae7da6ae087980c",
+        "givens": "d5793024358987d9d200febbea51bba1f7d7f2e98f081f8da165b31396b3902d",
+        "solution": "e907136c02fc3d5eae1c81b6afaad7b4d12f17b4de2faf45eb883e9a00caea81",
+        "rating": "c09fbf369ec440743d54492534fd204f41ea9671e9b70837654d7f0ff4b9eb5c",
+        "config": "55d5f950f36194f419f57a5c9a3c00a6e92566b8c28b274d34673ac35a26dc4f",
+        "warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "log": "da4e415c86a33898b75b814e1c360e68c0e8b0adf75c40a5b5ec288610d0dcd0",
+        "work": "fa7e8094deb8010d423b014be19fc5c51a5c0b1eda333b7f82b632c138b407bb",
+        "scalars": "c21a068060d633f3252dfd17af91ffbff97fb0b714448c6fde138f17fe28f631",
+        "puzzle": "eef4d6bf7ecd527e0ce83f9fdc21f378fddc394ccf7a6e88c1ac56927aafe0ae",
+        "all": "176853e01327994cde504323ace124788f7260cdfb739f31d580fba9c547c6f3"
+      },
+      "engineTimingsMs": {
+        "configure": 0.30189999999993233,
+        "buildModel": 1.6190000000001419,
+        "fullGrid": 13.371799999999894,
+        "extraStructure": 4.019200000000183,
+        "dig": 20846.889900000002,
+        "rate": 0.8746999999989384,
+        "tune": 0.7480999999975211
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "pool": {
+        "width": 4,
+        "ceiling": 4,
+        "attemptsPlanned": 8,
+        "attemptsStarted": 8,
+        "attemptsConsumed": 6,
+        "attemptsSpeculative": 2,
+        "peakActive": 4,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 3.619,
+        "firstReadyMs": 108.116,
+        "allReadyMs": 113.478,
+        "decisionMs": 6421.889,
+        "decision": "merged",
+        "exact": true,
+        "firstExactOrigin": "sample",
+        "firstExactOrdinal": 6,
+        "resultOrigin": "sample",
+        "resultAttempt": 6,
+        "modelHashes": [
+          "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            1.619,
+            1.558,
+            1.649,
+            2.052,
+            0.515,
+            0.511,
+            0.516
+          ],
+          "totalMs": 8.42,
+          "duplicatedMs": 6.801
+        },
+        "activity": [
+          [
+            108.116,
+            1
+          ],
+          [
+            109.159,
+            2
+          ],
+          [
+            113.24,
+            3
+          ],
+          [
+            113.478,
+            4
+          ],
+          [
+            3774.096,
+            3
+          ],
+          [
+            3774.096,
+            4
+          ],
+          [
+            3991.593,
+            3
+          ],
+          [
+            3991.593,
+            4
+          ],
+          [
+            4443.814,
+            3
+          ],
+          [
+            4443.814,
+            4
+          ],
+          [
+            4703.946,
+            3
+          ],
+          [
+            4703.946,
+            4
+          ],
+          [
+            5051.688,
+            3
+          ],
+          [
+            5787.275,
+            2
+          ],
+          [
+            6421.889,
+            1
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 5,
+              "acceptedOrdinal": 8,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0.5,
+            "keeperBefore": null,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 2,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 4,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 3,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 5,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 4,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 4,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 5,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 2,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 6,
+            "adopted": null,
+            "replay": {
+              "counted": 1,
+              "acceptedOrdinal": 16,
+              "speculative": 3,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4/a1",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 108.116,
+            "finishedMs": 4443.814,
+            "wallMs": 4335.698,
+            "engineElapsedMs": 4333.272,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 40,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 1,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 1,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d",
+            "buildModelMs": 1.619,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "344022bc66cfe6d5d942cbca7f68260be94588446eca9e60f5a62bd54f43f971"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "0fcbde7879477076b62cd867cab710bf2a9af2e71a400a10ce52512624881818"
+              },
+              "keeper": {
+                "ordinal": 8,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "344022bc66cfe6d5d942cbca7f68260be94588446eca9e60f5a62bd54f43f971"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 39,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.645,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e93c2b42aef2362f863cbabf8a77774c37afbd3a8683f4e3d8a772402463dcfa"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 2000.6275,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8b5c27006048e25e064229e3796bf7f34a198b5884921169e01e6412d8749ec0"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.4566666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d6779e7aac00a00fba43028d09fc33c8172ca395984827c4f2d5a5d95e2fe6d3"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 1000.3475,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8398120dfc30b71e4584c8c3be0f7b6534eeaf3230bbe5a61f09e4589fcc7594"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9006049e264c5f045429c2222ba20a18ffc4696897c4a4cbd76eab643fe7eacf"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4/a2",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 109.159,
+            "finishedMs": 3991.593,
+            "wallMs": 3882.434,
+            "engineElapsedMs": 3880.77,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 42,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 0,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d",
+            "buildModelMs": 1.558,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "053e444a9fa1a5da259cfdf4a1f1814d88036a89e8907c691d2df81ba3af6134"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "053e444a9fa1a5da259cfdf4a1f1814d88036a89e8907c691d2df81ba3af6134"
+              },
+              "keeper": {
+                "ordinal": 16,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "053e444a9fa1a5da259cfdf4a1f1814d88036a89e8907c691d2df81ba3af6134"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 42,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.51125,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "06483421807b04ef6f87f43c6fd235e500208aa5e10b17ae38d062cffd5d0f10"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.2116666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8c511e241d45a178a2b5cb27c630226d0a7781b500ddc7563ae88c72efb02c6d"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 1000.0358333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "238f6d4ddc12dcdc442f5c50e12be2bf61b1ec0688ba0e7dab4be698572cf769"
+                },
+                {
+                  "ordinal": 16,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "38f386d69f5171b2c0dcea04571995b3b1378dd2f8d459c8230ffc56f1788424"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4/a3",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 3,
+            "serialOrdinal": 3,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 113.24,
+            "finishedMs": 5787.275,
+            "wallMs": 5674.035,
+            "engineElapsedMs": 5671.25,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 47,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 0,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d",
+            "buildModelMs": 1.649,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c6173b989e1200923ba8aa37ca576898d22a6aa7504f8837c974476ee1f327e5"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c6173b989e1200923ba8aa37ca576898d22a6aa7504f8837c974476ee1f327e5"
+              },
+              "keeper": {
+                "ordinal": 14,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c6173b989e1200923ba8aa37ca576898d22a6aa7504f8837c974476ee1f327e5"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 47,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.545,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2fdf83972e7ef3680779aafcf9793bfaabba6578ce3c3d4df9f4e0bf4b1c3c02"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 1000.4425,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0d9f109a5de595552efb8789a2468cfb19224966cdc9587c81965bfa4818c79f"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 1000.4083333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1760ffe5bf19780158976f83e1c1dd13e6c657405d3f69a13118b91fa8a9b8be"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 1000.2129166666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9099674839af1eb7e5a8bd522ee5453a559cb34cc8369660bb8e4cf730846f01"
+                },
+                {
+                  "ordinal": 14,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c74127a91d25134d265d6e5e7f238753c1a4e4618d3d5616c6b7b8e71e3f1f73"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4/a4",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 4,
+            "serialOrdinal": 4,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 113.478,
+            "finishedMs": 3774.096,
+            "wallMs": 3660.618,
+            "engineElapsedMs": 3657.742,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 39,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 0,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d",
+            "buildModelMs": 2.052,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "413b7a2567965164c014c6a559a160200187315028a61c3f71f94fc067600fbc"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "413b7a2567965164c014c6a559a160200187315028a61c3f71f94fc067600fbc"
+              },
+              "keeper": {
+                "ordinal": 7,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "413b7a2567965164c014c6a559a160200187315028a61c3f71f94fc067600fbc"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 39,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 1000.0879166666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6513afa2cd97c500d4cc84b99c9549a7291f190dab60175d60c840a60119ff6e"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.08375,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "269ff1a7bd67e8d558c5fdff04d1dd2bc47fb0921bc22de86101d44e93b134d1"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.06,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0bbbb75b862338a000b7c903e9c26a36f80ab83f71051c25e621599773313e64"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f31d396d01da3104fb8bd95420cf98b3991f7eeebd468237a4ce53594b1227a0"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4/a5",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 5,
+            "serialOrdinal": 5,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 3774.096,
+            "finishedMs": 6421.889,
+            "wallMs": 2647.793,
+            "engineElapsedMs": 2641.988,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 30,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 1,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 1,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.515,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c04c110345f4e5d0509b2bc5ceb76cb89f75774f44768c53a9d5dd2a195625e0"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "8a0a8ba9bb953dc42f1946fe09d9c3f27e0e51d8a4516e9861ee783c302f36a6"
+              },
+              "keeper": {
+                "ordinal": 3,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c04c110345f4e5d0509b2bc5ceb76cb89f75774f44768c53a9d5dd2a195625e0"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 29,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.897333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9bce76faa2a31fa3150a39ae06c0da4bab1d324ba2d9cffa78e57daaa2ef56e4"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2e9ff19e3509baa748a30703025494970c7e220c45e78739e0b68e56a4e5fe8f"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4/a6",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 6,
+            "serialOrdinal": 6,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 3991.593,
+            "finishedMs": 4703.946,
+            "wallMs": 712.352,
+            "engineElapsedMs": 711.562,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 16,
+              "proposals": 0,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": []
+            },
+            "samples": 4,
+            "modelHash": null,
+            "buildModelMs": 0.511,
+            "candidates": {
+              "sample": {
+                "distance": 0,
+                "exact": true,
+                "digest": "41d354d640a5b53c64012e026c6de02db1a1dcaa97f6cbfb5e12fb7614b762f6"
+              },
+              "search": null,
+              "keeper": {
+                "ordinal": 16,
+                "distance": 0,
+                "exact": true,
+                "digest": "41d354d640a5b53c64012e026c6de02db1a1dcaa97f6cbfb5e12fb7614b762f6"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 16,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 1000.1520833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "abeb6f7cc0aaa6d1b7532446fed75c83bc475b3fe3fe3887686d9a9a6828e3f2"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.1120833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9943a078e85112b4dba528939c9339ff86a591986894246ad3a55968675ff206"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "346bb20bd6952649711c9ea3573de5a4981f75c628a161e287bce0f45302e07c"
+                },
+                {
+                  "ordinal": 16,
+                  "distance": 0,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "49cad0e746b5a9a303f64eb53d5ea069a5f0bd9c100c47cc8e9e3a9f2b25f26c"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4/a7",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 7,
+            "serialOrdinal": 7,
+            "lane": 0,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 4443.814,
+            "finishedMs": 5051.688,
+            "wallMs": 607.875,
+            "engineElapsedMs": 606.923,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 23,
+              "proposals": 0,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": []
+            },
+            "samples": 8,
+            "modelHash": null,
+            "buildModelMs": 0.516,
+            "candidates": {
+              "sample": {
+                "distance": 0,
+                "exact": true,
+                "digest": "f656cbd18a8df2e7132f6c8e4677e90e67b84eb8b2763f39b7699a2762b0eaeb"
+              },
+              "search": null,
+              "keeper": {
+                "ordinal": 23,
+                "distance": 0,
+                "exact": true,
+                "digest": "f656cbd18a8df2e7132f6c8e4677e90e67b84eb8b2763f39b7699a2762b0eaeb"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 23,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 1000.3795833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "460ca6e28aaccca2f2b35fe0a2f41d178358c42586c50e5dd8d8c57cee7df1e8"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 1000.26625,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "806717b295cff544159c0286a6e9de93293b74ce3e11108115ea0cf000499d2c"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 1000.21375,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "61283060c8d27331106c01ba3326509325bd690b8bb9cf4f272d1cafe632200f"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 1000.2125,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ee16790dfe694c5fe4721430f122b7c8428934621c5c1b6078534a45d4f6923e"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "83b82e6c417e8b20d92c98f151a9d00f5cc43fc9740ade7e52db049264e43fd9"
+                },
+                {
+                  "ordinal": 23,
+                  "distance": 0,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d6ff88aeac6d084fff34d279fef94b18fde0f6ca4664581541ffe46afb8adbbd"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4/a8",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:2/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 8,
+            "serialOrdinal": 8,
+            "lane": 1,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "terminated-unfinished",
+            "completedBeforeDecision": false,
+            "startedMs": 4703.946,
+            "finishedMs": null,
+            "wallMs": null,
+            "engineElapsedMs": null,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": null,
+            "samples": null,
+            "modelHash": null,
+            "buildModelMs": null,
+            "candidates": null,
+            "keeperLedger": null,
+            "sampleUnsound": null
+          }
+        ]
+      },
+      "puzzleFile": "provisional-r1/IG-S02/gt/puzzles/attempts-w4__greaterThan-2.json",
+      "puzzleFileSha256": "0b6cb5de7324f477e39bca94652f54008aa0a15834506a232a7aefa2fba7eba0"
+    },
+    {
+      "key": "IG-S02/gt/greaterThan:nightmare:2/native-w1",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "greaterThan:nightmare:2",
+      "gridCluster": null,
+      "requestSeed": 2,
+      "attempt": null,
+      "sample": null,
+      "variantId": "native-w1",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "greaterThan",
+        "difficulty": "nightmare",
+        "seed": 2,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "native-w1",
+      "poolWidth": 1,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 196114
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 19319.8998,
+        "coldWallMs": 19421.1339,
+        "occupiedWallMs": 19441.2627,
+        "cpuToDecisionMs": 25578,
+        "cpuTotalMs": 25594,
+        "cpuReadyTotalMs": 25500,
+        "startupMs": 101.23409999999967,
+        "startupCpuMs": 94,
+        "cleanupMs": 20.12879999999859,
+        "readyOccupiedWallMs": 19340.028599999998,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 16
+      },
+      "validation": {
+        "wallMs": 109.47890000000189,
+        "cpuMs": 156,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": true,
+      "verifiedExact": true,
+      "required": true,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "nightmare",
+      "score": 2301,
+      "puzzleHash": "eef4d6bf7ecd527e0ce83f9fdc21f378fddc394ccf7a6e88c1ac56927aafe0ae",
+      "attemptsUsed": 6,
+      "samplesUsed": null,
+      "canonicalRatings": 214,
+      "localProposals": 163840,
+      "localCapReasons": [
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [],
+      "error": null,
+      "arm": "reference",
+      "puzzleVariant": "greaterThan",
+      "blockKey": "IG-S02/gt/greaterThan:nightmare:2",
+      "shard": "gt",
+      "order": 3,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [],
+      "engineElapsedMs": 19318.9712,
+      "digests": {
+        "structure": "c37a36534ffc717b2104aa7ff2580d9d9ec05d324ec8f1c58ae7da6ae087980c",
+        "givens": "d5793024358987d9d200febbea51bba1f7d7f2e98f081f8da165b31396b3902d",
+        "solution": "e907136c02fc3d5eae1c81b6afaad7b4d12f17b4de2faf45eb883e9a00caea81",
+        "rating": "c09fbf369ec440743d54492534fd204f41ea9671e9b70837654d7f0ff4b9eb5c",
+        "config": "55d5f950f36194f419f57a5c9a3c00a6e92566b8c28b274d34673ac35a26dc4f",
+        "warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "log": "da4e415c86a33898b75b814e1c360e68c0e8b0adf75c40a5b5ec288610d0dcd0",
+        "work": "fa7e8094deb8010d423b014be19fc5c51a5c0b1eda333b7f82b632c138b407bb",
+        "scalars": "c21a068060d633f3252dfd17af91ffbff97fb0b714448c6fde138f17fe28f631",
+        "puzzle": "eef4d6bf7ecd527e0ce83f9fdc21f378fddc394ccf7a6e88c1ac56927aafe0ae",
+        "all": "176853e01327994cde504323ace124788f7260cdfb739f31d580fba9c547c6f3"
+      },
+      "engineTimingsMs": {
+        "configure": 0.34130000000004657,
+        "buildModel": 1.9109000000007654,
+        "fullGrid": 4.188299999999799,
+        "extraStructure": 1.7501999999949476,
+        "dig": 19304.821899999995,
+        "rate": 0.5470000000186701,
+        "tune": 0.3917999999866879
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "puzzleFile": "provisional-r1/IG-S02/gt/puzzles/native-w1__greaterThan-2.json",
+      "puzzleFileSha256": "90e58b059f9d3d6df3f1920fad6b2868b3f4625ae186faf4332bcac62728744f"
+    },
+    {
+      "key": "IG-S02/gt/greaterThan:nightmare:3/native-w1",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "greaterThan:nightmare:3",
+      "gridCluster": null,
+      "requestSeed": 3,
+      "attempt": null,
+      "sample": null,
+      "variantId": "native-w1",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "greaterThan",
+        "difficulty": "nightmare",
+        "seed": 3,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "native-w1",
+      "poolWidth": 1,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 196114
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 11565.7277,
+        "coldWallMs": 11653.897,
+        "occupiedWallMs": 11672.1246,
+        "cpuToDecisionMs": 15469,
+        "cpuTotalMs": 15500,
+        "cpuReadyTotalMs": 15422,
+        "startupMs": 88.16930000000139,
+        "startupCpuMs": 78,
+        "cleanupMs": 18.227599999998347,
+        "readyOccupiedWallMs": 11583.955299999998,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 31
+      },
+      "validation": {
+        "wallMs": 105.94050000000425,
+        "cpuMs": 94,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": true,
+      "verifiedExact": true,
+      "required": true,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "nightmare",
+      "score": 2361,
+      "puzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+      "attemptsUsed": 4,
+      "samplesUsed": null,
+      "canonicalRatings": 117,
+      "localProposals": 98304,
+      "localCapReasons": [
+        "proposals",
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [],
+      "error": null,
+      "arm": "reference",
+      "puzzleVariant": "greaterThan",
+      "blockKey": "IG-S02/gt/greaterThan:nightmare:3",
+      "shard": "gt",
+      "order": 4,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [],
+      "engineElapsedMs": 11564.798099999996,
+      "digests": {
+        "structure": "cc9ddbfecf96fa559e15a5b1dc3c495442e4230c3b1f07f3a28b8c79c159f872",
+        "givens": "ed8e9686cec423d0bf18a328d02f64a451bbbf5f3c56c4e787fc566bf1e2f625",
+        "solution": "52a7d008fdad6f2b1b51660647035a9e17ec3e4bdf6e089ce2ff3dd5128fe300",
+        "rating": "3ee470ab451a1f910d100824bb37ebeeef1d247e95e6563d040769f45c53e8b0",
+        "config": "0b01bb1d274f4566978ddd2d86cd257a4a78436aec030729c50c47d6fa663899",
+        "warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "log": "cd3275b65f614f44bdd8baadadbf489da908e83421338a62bfd8a02ebea04863",
+        "work": "afce789376923b26a749eed26c5163681aeefeff2f2950986e3e165ac408d3d7",
+        "scalars": "61d378dc7ded0db3585a99f9e6ff00752327b959b0a24dc46d6a4872fc6e9861",
+        "puzzle": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "all": "a75550bfe613914f81487b35f446a774b22899c6b09953870d5c25fe661b45e9"
+      },
+      "engineTimingsMs": {
+        "configure": 0.34130000000004657,
+        "buildModel": 1.5901000000012573,
+        "fullGrid": 3.23689999999624,
+        "extraStructure": 1.207799999992858,
+        "dig": 11554.297199999986,
+        "rate": 0.34869999999864376,
+        "tune": 0.2335999999741034
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "puzzleFile": "provisional-r1/IG-S02/gt/puzzles/native-w1__greaterThan-3.json",
+      "puzzleFileSha256": "e3483c81833c5849a0c171b1af3b9ca552c0512a0ff319e89838df4b52694252"
+    },
+    {
+      "key": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "greaterThan:nightmare:3",
+      "gridCluster": null,
+      "requestSeed": 3,
+      "attempt": null,
+      "sample": null,
+      "variantId": "attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "greaterThan",
+        "difficulty": "nightmare",
+        "seed": 3,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "attempts-w4",
+      "poolWidth": 4,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 196114
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 4408.431700000001,
+        "coldWallMs": 4516.464699999997,
+        "occupiedWallMs": 4764.804799999998,
+        "cpuToDecisionMs": 24156,
+        "cpuTotalMs": 24452,
+        "cpuReadyTotalMs": 24094,
+        "startupMs": 108.03299999999581,
+        "startupCpuMs": 358,
+        "cleanupMs": 248.34010000000126,
+        "readyOccupiedWallMs": 4656.771800000002,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 296
+      },
+      "validation": {
+        "wallMs": 114.18969999999536,
+        "cpuMs": 141,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": true,
+      "verifiedExact": true,
+      "required": true,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "nightmare",
+      "score": 2361,
+      "puzzleHash": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+      "attemptsUsed": 4,
+      "samplesUsed": null,
+      "canonicalRatings": 117,
+      "localProposals": 98304,
+      "localCapReasons": [
+        "proposals",
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": "sample",
+      "firstExactOrdinal": 4,
+      "checkpointHashes": null,
+      "warnings": [],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "greaterThan",
+      "blockKey": "IG-S02/gt/greaterThan:nightmare:3",
+      "shard": "gt",
+      "order": 5,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "cc9ddbfecf96fa559e15a5b1dc3c495442e4230c3b1f07f3a28b8c79c159f872",
+        "givens": "ed8e9686cec423d0bf18a328d02f64a451bbbf5f3c56c4e787fc566bf1e2f625",
+        "solution": "52a7d008fdad6f2b1b51660647035a9e17ec3e4bdf6e089ce2ff3dd5128fe300",
+        "rating": "3ee470ab451a1f910d100824bb37ebeeef1d247e95e6563d040769f45c53e8b0",
+        "config": "0b01bb1d274f4566978ddd2d86cd257a4a78436aec030729c50c47d6fa663899",
+        "warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "log": "cd3275b65f614f44bdd8baadadbf489da908e83421338a62bfd8a02ebea04863",
+        "work": "afce789376923b26a749eed26c5163681aeefeff2f2950986e3e165ac408d3d7",
+        "scalars": "61d378dc7ded0db3585a99f9e6ff00752327b959b0a24dc46d6a4872fc6e9861",
+        "puzzle": "cab90de52117228a5b8d93f65313701c5820a06b033ba596f32cbb19c2ecb46d",
+        "all": "a75550bfe613914f81487b35f446a774b22899c6b09953870d5c25fe661b45e9"
+      },
+      "engineTimingsMs": {
+        "configure": 0.49420000000100117,
+        "buildModel": 2.468300000000454,
+        "fullGrid": 10.960500000001048,
+        "extraStructure": 4.6991999999809195,
+        "dig": 12910.760499999975,
+        "rate": 0.6768999999767402,
+        "tune": 0.5071000000243657
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "pool": {
+        "width": 4,
+        "ceiling": 4,
+        "attemptsPlanned": 8,
+        "attemptsStarted": 8,
+        "attemptsConsumed": 4,
+        "attemptsSpeculative": 4,
+        "peakActive": 4,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 3.903,
+        "firstReadyMs": 108.033,
+        "allReadyMs": 110.01,
+        "decisionMs": 4516.465,
+        "decision": "merged",
+        "exact": true,
+        "firstExactOrigin": "sample",
+        "firstExactOrdinal": 4,
+        "resultOrigin": "sample",
+        "resultAttempt": 4,
+        "modelHashes": [
+          "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            2.468,
+            1.67,
+            2.48,
+            1.575,
+            0.463
+          ],
+          "totalMs": 8.656,
+          "duplicatedMs": 6.188
+        },
+        "activity": [
+          [
+            108.033,
+            1
+          ],
+          [
+            108.224,
+            2
+          ],
+          [
+            109.621,
+            3
+          ],
+          [
+            110.01,
+            4
+          ],
+          [
+            763.685,
+            3
+          ],
+          [
+            763.685,
+            4
+          ],
+          [
+            3997.839,
+            3
+          ],
+          [
+            3997.839,
+            4
+          ],
+          [
+            4013.695,
+            3
+          ],
+          [
+            4013.695,
+            4
+          ],
+          [
+            4126.593,
+            3
+          ],
+          [
+            4126.593,
+            4
+          ],
+          [
+            4516.465,
+            3
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 2,
+              "acceptedOrdinal": 2,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0.5,
+            "keeperBefore": null,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 2,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 3,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 3,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 1,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 4,
+            "adopted": null,
+            "replay": {
+              "counted": 1,
+              "acceptedOrdinal": 4,
+              "speculative": 2,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4/a1",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 108.033,
+            "finishedMs": 3997.839,
+            "wallMs": 3889.806,
+            "engineElapsedMs": 3886.962,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 38,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 0,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d",
+            "buildModelMs": 2.468,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "0261e5c33532631712331279000923370f557209916c80a9940e0f42f781b9f3"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "0261e5c33532631712331279000923370f557209916c80a9940e0f42f781b9f3"
+              },
+              "keeper": {
+                "ordinal": 2,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "0261e5c33532631712331279000923370f557209916c80a9940e0f42f781b9f3"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 38,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 1000.1383333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2dc1cd2ccaf5b539f93b79e58f58f6fb07eced41fc4ba1ec371f6650323e3969"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "80f38a057a2f0cd0d5d48c58e626e4666bf9efe8a83335f1e274fadfb04799c7"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4/a2",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 108.224,
+            "finishedMs": 4126.593,
+            "wallMs": 4018.369,
+            "engineElapsedMs": 4015.874,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 38,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 1,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 1,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d",
+            "buildModelMs": 1.67,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c69a2bae34f03bd5f18b5c1db36e370b18b7e5fc9537a4a64feb448d20e08668"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c69a2bae34f03bd5f18b5c1db36e370b18b7e5fc9537a4a64feb448d20e08668"
+              },
+              "keeper": {
+                "ordinal": 6,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c69a2bae34f03bd5f18b5c1db36e370b18b7e5fc9537a4a64feb448d20e08668"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 37,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.912666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6c44ad2612e1dfdfac6a9011833253453d90b56d39a4eb50e4a94dd14ab619fa"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.3454166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b6479b8791b6a4b402529a7e90f62d092f26e22444ca32eb69e67c56e7bcd947"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1b4cb79af2832148416e51b2fdc594d3a943e44746003ddfba485cb2128f8ac3"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4/a3",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 3,
+            "serialOrdinal": 3,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 109.621,
+            "finishedMs": 4516.465,
+            "wallMs": 4406.844,
+            "engineElapsedMs": 4404.947,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 36,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 0,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d",
+            "buildModelMs": 2.48,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "47084ee0d2134efad4a30011688d4bbc58c6ce925fa672f78e5e88a165aa7958"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "47084ee0d2134efad4a30011688d4bbc58c6ce925fa672f78e5e88a165aa7958"
+              },
+              "keeper": {
+                "ordinal": 1,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "47084ee0d2134efad4a30011688d4bbc58c6ce925fa672f78e5e88a165aa7958"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 36,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "edd89a1458e2884e7592c9424eab0be905c8b33ea4845a4df0fb88a88e92f678"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4/a4",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 4,
+            "serialOrdinal": 4,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 110.01,
+            "finishedMs": 763.685,
+            "wallMs": 653.675,
+            "engineElapsedMs": 651.847,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 5,
+              "proposals": 0,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": []
+            },
+            "samples": 1,
+            "modelHash": "219139bfe3d04b8761b94a4b6cd76f9ebda5b9de580c9fc34a810886be9d744d",
+            "buildModelMs": 1.575,
+            "candidates": {
+              "sample": {
+                "distance": 0,
+                "exact": true,
+                "digest": "7718365b219a4703aafeb16044d949422f7ed0a695fadd4a71d2f2e954d12d5c"
+              },
+              "search": null,
+              "keeper": {
+                "ordinal": 4,
+                "distance": 0,
+                "exact": true,
+                "digest": "7718365b219a4703aafeb16044d949422f7ed0a695fadd4a71d2f2e954d12d5c"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 5,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.6333333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "99a4790cadb977630006e869af4c3cd378e9800a06234540337823e2d44a6e23"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.36625,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6351507724180872d2cd7ab246963ef848421c47bf2bf0969a19cd6b22b60de2"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 0,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "80ea4087508b87aec689ccc4735eed7439752c283a084e224600662b40a2c609"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4/a5",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 5,
+            "serialOrdinal": 5,
+            "lane": 0,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 763.685,
+            "finishedMs": 4013.695,
+            "wallMs": 3250.01,
+            "engineElapsedMs": 3248.574,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 37,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 0,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.463,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "f3adb3ad1c739992975bf5e1241062405b973440083128c5bdb2118ceb65454c"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "f3adb3ad1c739992975bf5e1241062405b973440083128c5bdb2118ceb65454c"
+              },
+              "keeper": {
+                "ordinal": 14,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "f3adb3ad1c739992975bf5e1241062405b973440083128c5bdb2118ceb65454c"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 37,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 3000.577333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b39e3c2475100e0e4e9f02847f4a8701ea041a6a75db00809318ac7c3f513611"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 2000.525,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "5aa4e6fa41440590b20e88bf03163bf84e84581024d9eab2680a3ddf50b59d41"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 1000.4254166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "546bedcd4e9dd5f96d1170f7832bcdab60ad10fda0f9566904217201cdd1738e"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 1000.2025,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f47287d938be2ca70d5a011248b170abb54c21e46f083aa64cc975991730c18c"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 1000.1383333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "4db181e07338ee80371e5d2e7388cd5b9c5d430ea3ca57722527a623cc40690d"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 1000.0791666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "33c56e14bd505784bbb79624402e03d87b9c6258b8f9523c91e5424faccf44ff"
+                },
+                {
+                  "ordinal": 14,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c97c9c301c669fe068b1b75c02e57bc6d07c50cfcd60ee656a4603838cc77728"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4/a6",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 6,
+            "serialOrdinal": 6,
+            "lane": 1,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "terminated-unfinished",
+            "completedBeforeDecision": false,
+            "startedMs": 3997.839,
+            "finishedMs": null,
+            "wallMs": null,
+            "engineElapsedMs": null,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": null,
+            "samples": null,
+            "modelHash": null,
+            "buildModelMs": null,
+            "candidates": null,
+            "keeperLedger": null,
+            "sampleUnsound": null
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4/a7",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 7,
+            "serialOrdinal": 7,
+            "lane": 0,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "terminated-unfinished",
+            "completedBeforeDecision": false,
+            "startedMs": 4013.695,
+            "finishedMs": null,
+            "wallMs": null,
+            "engineElapsedMs": null,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": null,
+            "samples": null,
+            "modelHash": null,
+            "buildModelMs": null,
+            "candidates": null,
+            "keeperLedger": null,
+            "sampleUnsound": null
+          },
+          {
+            "key": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4/a8",
+            "parentKey": "IG-S02/gt/greaterThan:nightmare:3/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 8,
+            "serialOrdinal": 8,
+            "lane": 2,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "terminated-unfinished",
+            "completedBeforeDecision": false,
+            "startedMs": 4126.593,
+            "finishedMs": null,
+            "wallMs": null,
+            "engineElapsedMs": null,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": null,
+            "samples": null,
+            "modelHash": null,
+            "buildModelMs": null,
+            "candidates": null,
+            "keeperLedger": null,
+            "sampleUnsound": null
+          }
+        ]
+      },
+      "puzzleFile": "provisional-r1/IG-S02/gt/puzzles/attempts-w4__greaterThan-3.json",
+      "puzzleFileSha256": "eebd0be3287ab5e68a3bb310d255d5360752670fce93e4861aa35f29407f40b6"
+    }
+  ]
+}

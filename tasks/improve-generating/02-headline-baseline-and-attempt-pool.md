@@ -131,12 +131,12 @@ remain identical; a shared-driver change goes to Astra for compatibility or a ch
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start /end | |
-| Developer /model | |
-| Files /source identities | |
-| Verification /evidence | |
-| Machine charged /priority wait | |
-| Findings /author answers | |
-| Orchestrator review /acceptance | |
-| Handoff | |
+| Status | Accepted (pack author: IG-S02 ACCEPT after the Killer audit) |
+| Start /end | 2026-11-14 21:55 - 23:40 (+07:00) first pass (wrapped runs 22:27-23:34); 23:57-00:00 Killer re-audit; 00:05 author acceptance; orchestrator commit |
+| Developer /model | claude-sonnet-5.5; 168 model calls, 70,484,143 input tokens (69,146,119 cache reads), 411,040 output tokens, about 1,437 AI credits. Author review gpt-6-astra; orchestrator claude-opus-5.5 |
+| Files /source identities | New under `phase0/`: `attempt-pool.cjs`, `attempt-worker.cjs`, `adapters/attempt-pool.cjs`, `plans/ig-s02.cjs`, `ig02-run.cjs`, `pool-test.cjs`, `aggregate.cjs`, `killer-audit.cjs`, `ig02-killer-audit.cjs`, `killer-audit-test.cjs`; changed shared `loader.cjs` (strict `replace` transform), `worker.cjs` (job kinds; Killer-only `validate()` branch), `run.cjs` (hooks, `solverMode`, export), `README.md`. Runtime `36b2b832…b50a` unchanged; harness `dd759a22…` for the generation evidence, `c4f3a6e0…` accepted (reporting- and verification-only changes since) |
+| Verification /evidence | `docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/` (`summary.md`, reconciled `summary-r2.md`, saved puzzles, `killer/audit-a1/`). Paired native-w1 against attempt-pool-w4, n = 3 per cell: mega16 1.92x (report 1.7-1.8), mega12 3.22x (2.8-3.0), samurai 1.79x (1.7-1.8), classic9 3.22x (2.8-3.0), Greater-Than 2.62x and Killer 2.55x (2.8-3.0, estimate refuted on this cohort); CPU ratio pool/native 0.98-1.58; exact hits identical in both arms; pool slower when the first attempt is exact (0.89-0.91x); 18/18 pairs identity-ok after the Killer audit (6/6 verified, 8 tampered copies rejected); pool checked on 21 synthetic cases and a 1,500-scenario keeper-ledger property test |
+| Machine charged /priority wait | 1,399.9 s of the 1,500 s allocation over 11 commands; priority waits 3,000.0 s, not charged |
+| Findings /author answers | (1) Killer: the shared verifier compared `model.units` to the base model and rejected every Killer puzzle (cage units); author ruling (A): a Killer-only rule (cage partition, connectivity, `distinct`, sums; full wire against `SG.killer.modelFromCages`) and a re-audit of the six saved puzzles without regeneration, hash-linked sidecar, originals preserved. (2) A real pool bug (decision stamped at the wrong arrival) was found by the c9 shard, fixed, with a regression check; failed attempts a1/a2 preserved. (3) Order: c9 first as a plumbing check; per-attempt rows nested in the request record; one unmeasured catalogue-probe worker per command |
+| Orchestrator review /acceptance | Only harness and evidence folders added; no production, test, golden or difficulty-v3 file changed; formats checked |
+| Handoff | IG-S03: accepted foundation `c4f3a6e0…`; reuse of the `dd759a22…` generation baselines approved; use `summary-r2` with the Killer audit overlay; report serial S3, incremental S3 over the pool and the combined speed-up separately; keep CPU/speculation costs and early-exact regressions; n = 3 tails are descriptive; any further reference-generation or timing change needs review before baseline reuse |

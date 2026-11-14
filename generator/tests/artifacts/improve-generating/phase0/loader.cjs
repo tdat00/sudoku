@@ -211,7 +211,9 @@ function countOccurrences(text, needle) {
 function validateTransformShape(t) {
   const ok = t !== null && typeof t === 'object' && typeof t.id === 'string' && /^[a-z0-9][A-Za-z0-9._-]*$/.test(t.id) &&
     typeof t.file === 'string' && t.file !== '' && typeof t.anchor === 'string' && t.anchor.trim() !== '' &&
-    (t.position === 'before' || t.position === 'bodyStart') && typeof t.code === 'string' && t.code.trim() !== '';
+    (t.position === 'before' || t.position === 'bodyStart' || t.position === 'replace') &&
+    typeof t.code === 'string' && t.code.trim() !== '' &&
+    (t.position !== 'replace' || (typeof t.find === 'string' && t.find.trim() !== '' && !/[\r\n]/.test(t.find)));
   if (!ok) throw new HarnessError('transform-shape', 'malformed transform ' + (t && t.id ? t.id : '?'));
 }
 
@@ -246,6 +248,29 @@ function applyTransform(entry, text, t) {
   if (t.position === 'before') {
     const lines = t.code.split(/\r?\n/).map(function (line) { return indent + line; }).join(eol);
     patched = text.slice(0, lineStart) + lines + eol + text.slice(lineStart);
+  } else if (t.position === 'replace') {
+    // A statement inside the anchored function: one line that occurs exactly once in the source and lies between
+    // the anchor and the first later closing brace at the anchor's own indentation (the end of the function).
+    const found = countOccurrences(text, t.find);
+    if (found === 0) throw new HarnessError('anchor-missing', 'replaced text not found in ' + entry.rel + ': ' + t.id);
+    if (found > 1) {
+      throw new HarnessError('anchor-ambiguous', 'replaced text occurs ' + found + ' times in ' + entry.rel + ': ' +
+        t.id);
+    }
+    const findAt = text.indexOf(t.find);
+    const closing = new RegExp('^' + escapeRegExp(indent) + '\\}', 'm').exec(text.slice(at));
+    if (!closing || findAt < at || findAt >= at + closing.index) {
+      throw new HarnessError('anchor-position', 'the replaced text is not inside ' + header[1] + ': ' + t.id);
+    }
+    const findLine = text.lastIndexOf('\n', findAt - 1) + 1;
+    const findIndent = text.slice(findLine, findAt);
+    if (findIndent.trim() !== '') {
+      throw new HarnessError('anchor-position', 'the replaced text does not start its line in ' + entry.rel + ': ' +
+        t.id);
+    }
+    const lines = t.code.split(/\r?\n/).map(function (line, i) { return i === 0 ? line : findIndent + line; })
+      .join(eol);
+    patched = text.slice(0, findAt) + lines + text.slice(findAt + t.find.length);
   } else {
     if (!t.anchor.trimEnd().endsWith('{')) {
       throw new HarnessError('anchor-position', 'a bodyStart anchor must end with "{": ' + t.id);
@@ -266,6 +291,7 @@ function applyTransform(entry, text, t) {
       file: entry.rel,
       anchor: t.anchor.trim(),
       position: t.position,
+      find: t.position === 'replace' ? t.find : undefined,
       functionName: header[1],
       anchorOffset: at,
       transformHash: C.digestOf(t),

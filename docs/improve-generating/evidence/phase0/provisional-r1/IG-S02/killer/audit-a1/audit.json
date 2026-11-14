@@ -1,0 +1,633 @@
+{
+  "schema": "ig-s-audit/1",
+  "task": "IG-S02",
+  "round": "provisional-r1",
+  "shard": "killer",
+  "sourceAttempt": "a1",
+  "out": "audit-a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "purpose": "Delayed independent verification of the six saved Killer puzzles that the original audit rejected by a structure rule that cannot hold for Killer. Nothing was regenerated; the original records, timings and fingerprints are untouched; generation times are unaffected because the audit is outside every generation time.",
+  "rule": "cages partition the 81 cells once, each non-empty, connected, distinct, with the sum of its distinct saved solution digits; the model rebuilt with SG.killer.modelFromCages from the saved cages (saved order) has the same COMPLETE wire: 27 base units, one cage unit per cage of size >= 2, none for a singleton, no extra unit, same colours and layout; nothing repaired. Solution/givens, uniqueness, canonical rating and requiredness checks unchanged.",
+  "verifier": {
+    "harnessFingerprint": "c4f3a6e0694924f61a122f2390dbc47f0f2baf61f89c830a5bfeb20666871ec8",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "workerSha256": "e2d6800bc162151cfb7c39ba483062e98ec755a4230604f35cded01d5391b29d",
+    "killerAuditSha256": "2cc7d4c093c77026d29e986812e715b1d48127f73e0fefa45ef89663273e0911",
+    "auditScriptSha256": "0eba563bf402b3018d3a1877611d4db595fac4b4284c549336c1e592ebcb0507"
+  },
+  "source": {
+    "recordsFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/killer/records.json",
+    "commandFile": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/killer/command.json",
+    "commandStatus": "validation-failed",
+    "evidenceHarnessFingerprint": "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd",
+    "evidenceRuntimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "recordsFileSha256": "c0d97b6c7ab1e80108459009c1284ed69631af1149a1f851a06a0015879e55c9",
+    "commandFileSha256": "ccef9fa196fc35d8645a734b7297335ddfc87b29e204aaa2e764e720aeddcb34",
+    "sourceManifestFileSha256": "be9f93a5d4e7f71b2864fcb6eff5903028615538654efe55b1c5a18bb3b09db4"
+  },
+  "harnessComparison": {
+    "evidenceFingerprint": "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd",
+    "currentFingerprint": "c4f3a6e0694924f61a122f2390dbc47f0f2baf61f89c830a5bfeb20666871ec8",
+    "changed": [
+      "aggregate.cjs",
+      "ig02-run.cjs",
+      "worker.cjs"
+    ],
+    "added": [
+      "ig02-killer-audit.cjs",
+      "killer-audit-test.cjs",
+      "killer-audit.cjs"
+    ],
+    "removed": [],
+    "unchangedCount": 13,
+    "note": "ig02-run.cjs and aggregate.cjs changed after the evidence only in reporting (pair rows, cell summary, task summary); the generation hooks (prepare, execute, augmentRecord), attempt-pool.cjs, attempt-worker.cjs, the adapter, the plan, host.cjs, loader.cjs and run.cjs are those of the evidence. worker.cjs changed only in validate() (the Killer branch of the structure check) and killer-audit.cjs is new: verification only, no generation path."
+  },
+  "verifierTests": {
+    "passed": true,
+    "cases": [
+      {
+        "id": "remove-a-cage-unit",
+        "rejected": true,
+        "status": "ok",
+        "structureValid": false,
+        "firstErrors": [
+          "structure: killer: unitMeta: saved 52, rebuilt 53, first difference at 27 (missing saved entries); units: saved 52, rebuilt 53, first difference at 27 (missing saved entries)"
+        ],
+        "wallMs": 139.56539999999995
+      },
+      {
+        "id": "extra-cage-unit",
+        "rejected": true,
+        "status": "ok",
+        "structureValid": false,
+        "firstErrors": [
+          "structure: killer: unitMeta: saved 54, rebuilt 53, first difference at 53 (extra saved entries); units: saved 54, rebuilt 53, first difference at 53 (extra saved entries)"
+        ],
+        "wallMs": 131.16930000000002
+      },
+      {
+        "id": "wrong-cage-unit-cells",
+        "rejected": true,
+        "status": "ok",
+        "structureValid": false,
+        "firstErrors": [
+          "structure: killer: units: saved 53, rebuilt 53, first difference at 27",
+          "unique: solution count 0"
+        ],
+        "wallMs": 126.77080000000001
+      },
+      {
+        "id": "wrong-cage-sum",
+        "rejected": true,
+        "status": "ok",
+        "structureValid": false,
+        "firstErrors": [
+          "structure: killer: cage 0 has sum 23 but the solution digits give 22",
+          "unique: solution count 0"
+        ],
+        "wallMs": 111.27469999999994
+      },
+      {
+        "id": "cage-not-distinct",
+        "rejected": true,
+        "status": "ok",
+        "structureValid": false,
+        "firstErrors": [
+          "structure: killer: cage 0 is not distinct"
+        ],
+        "wallMs": 131.91049999999996
+      },
+      {
+        "id": "cell-in-two-cages",
+        "rejected": true,
+        "status": "ok",
+        "structureValid": false,
+        "firstErrors": [
+          "model.validate: V6: cell 3 belongs to cages 0 and 1",
+          "structure: killer: cage 0 repeats a solution digit; 1 cells are in several cages: 3"
+        ],
+        "wallMs": 96.98829999999998
+      },
+      {
+        "id": "cell-in-no-cage",
+        "rejected": true,
+        "status": "ok",
+        "structureValid": false,
+        "firstErrors": [
+          "structure: killer: cage 0 has sum 22 but the solution digits give 21; 1 cells are in no cage: 19",
+          "unique: solution count 0"
+        ],
+        "wallMs": 118.37469999999985
+      },
+      {
+        "id": "swapped-cage-order",
+        "rejected": true,
+        "status": "ok",
+        "structureValid": false,
+        "firstErrors": [
+          "structure: killer: units: saved 53, rebuilt 53, first difference at 27"
+        ],
+        "wallMs": 133.73250000000007
+      }
+    ]
+  },
+  "summary": {
+    "audited": 6,
+    "verified": 6,
+    "failed": 0,
+    "unknown": 0,
+    "falseExactFlags": 0,
+    "linksOk": 6
+  },
+  "entries": [
+    {
+      "key": "IG-S02/killer/killer:nightmare:1/native-w1",
+      "pairId": "killer:nightmare:1",
+      "arm": "reference",
+      "solverMode": "native-w1",
+      "requestSeed": 1,
+      "originalOutcome": "error",
+      "originalError": {
+        "code": "validation-failed",
+        "name": null,
+        "message": "the independent audit rejected the puzzle",
+        "details": [
+          "structure: the model differs from the variant rebuilt from the seed"
+        ]
+      },
+      "claimedExact": false,
+      "links": {
+        "recordDigest": "811ebe88cbd0a580258784c8cf84a540ad00aee3e305d28a790f24fa8370f9b5",
+        "recordsFileSha256": "c0d97b6c7ab1e80108459009c1284ed69631af1149a1f851a06a0015879e55c9",
+        "puzzleFile": "provisional-r1/IG-S02/killer/puzzles/native-w1__killer-1.json",
+        "puzzleFileSha256": "ae727f15f21f5761e5e7862bc8c544df095f7a7cf8f03a0a55c5947fc20fd483",
+        "puzzleFileMatchesRecord": true,
+        "digestsMatchRecord": true,
+        "puzzleHashMatchesRecord": true,
+        "savedKeyMatchesRecord": true
+      },
+      "audit": {
+        "status": "verified",
+        "verdict": {
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true,
+          "requirednessAgree": true,
+          "fresh": {
+            "solved": true,
+            "level": "nightmare",
+            "score": 1924,
+            "hardestTechnique": "forcingChain",
+            "required": false,
+            "vacuous": false,
+            "shallow": true
+          },
+          "errors": []
+        },
+        "wallMs": 139.52700000000004,
+        "cpuMs": 234,
+        "cpuResolutionStatus": "resolved",
+        "verifierStatus": "ok"
+      },
+      "reconciled": {
+        "outcome": "complete",
+        "verifiedExact": false,
+        "required": false,
+        "vacuous": false,
+        "shallow": true,
+        "validation": {
+          "wallMs": 139.52700000000004,
+          "cpuMs": 234,
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true
+        },
+        "validationDetail": {
+          "status": "verified",
+          "requirednessAgree": true,
+          "cpuResolutionStatus": "resolved",
+          "probe": {
+            "hooksPresent": false,
+            "exposed": [],
+            "normalizeConfigEqual": null
+          },
+          "errors": []
+        }
+      },
+      "falseExactFlag": false,
+      "linkHash": "fb57cb61b5da8d22423953c07e49c38b82eea30b5197eb203e90beaf71eac7f6"
+    },
+    {
+      "key": "IG-S02/killer/killer:nightmare:1/attempts-w4",
+      "pairId": "killer:nightmare:1",
+      "arm": "prototype",
+      "solverMode": "attempts-w4",
+      "requestSeed": 1,
+      "originalOutcome": "error",
+      "originalError": {
+        "code": "validation-failed",
+        "name": null,
+        "message": "the independent audit rejected the puzzle",
+        "details": [
+          "structure: the model differs from the variant rebuilt from the seed"
+        ]
+      },
+      "claimedExact": false,
+      "links": {
+        "recordDigest": "d5dbeba2874816068ab9527a2e7c28aa287d1f05b68b74bcacc311959794d73b",
+        "recordsFileSha256": "c0d97b6c7ab1e80108459009c1284ed69631af1149a1f851a06a0015879e55c9",
+        "puzzleFile": "provisional-r1/IG-S02/killer/puzzles/attempts-w4__killer-1.json",
+        "puzzleFileSha256": "b8ccfc4cf00f8d35e95c7c06d7c8ce64b85e1456122a7decea458cff542de072",
+        "puzzleFileMatchesRecord": true,
+        "digestsMatchRecord": true,
+        "puzzleHashMatchesRecord": true,
+        "savedKeyMatchesRecord": true
+      },
+      "audit": {
+        "status": "verified",
+        "verdict": {
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true,
+          "requirednessAgree": true,
+          "fresh": {
+            "solved": true,
+            "level": "nightmare",
+            "score": 1924,
+            "hardestTechnique": "forcingChain",
+            "required": false,
+            "vacuous": false,
+            "shallow": true
+          },
+          "errors": []
+        },
+        "wallMs": 149.89200000000005,
+        "cpuMs": 297,
+        "cpuResolutionStatus": "resolved",
+        "verifierStatus": "ok"
+      },
+      "reconciled": {
+        "outcome": "complete",
+        "verifiedExact": false,
+        "required": false,
+        "vacuous": false,
+        "shallow": true,
+        "validation": {
+          "wallMs": 149.89200000000005,
+          "cpuMs": 297,
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true
+        },
+        "validationDetail": {
+          "status": "verified",
+          "requirednessAgree": true,
+          "cpuResolutionStatus": "resolved",
+          "probe": {
+            "hooksPresent": false,
+            "exposed": [],
+            "normalizeConfigEqual": null
+          },
+          "errors": []
+        }
+      },
+      "falseExactFlag": false,
+      "linkHash": "f1250ccf64f073f8dd59acd7028813dec21058bf1159442f1920e0938c88eb93"
+    },
+    {
+      "key": "IG-S02/killer/killer:nightmare:2/attempts-w4",
+      "pairId": "killer:nightmare:2",
+      "arm": "prototype",
+      "solverMode": "attempts-w4",
+      "requestSeed": 2,
+      "originalOutcome": "error",
+      "originalError": {
+        "code": "validation-failed",
+        "name": null,
+        "message": "the independent audit rejected the puzzle",
+        "details": [
+          "structure: the model differs from the variant rebuilt from the seed"
+        ]
+      },
+      "claimedExact": false,
+      "links": {
+        "recordDigest": "448d1138125fc2e6c6c41ee44e67c260e59caf95f7b6c61f62ffd59979b620e5",
+        "recordsFileSha256": "c0d97b6c7ab1e80108459009c1284ed69631af1149a1f851a06a0015879e55c9",
+        "puzzleFile": "provisional-r1/IG-S02/killer/puzzles/attempts-w4__killer-2.json",
+        "puzzleFileSha256": "bdeff02e1a641d3c2e7e53bdcf346b744d41ca338b4a13034c2fc4b31b1f045e",
+        "puzzleFileMatchesRecord": true,
+        "digestsMatchRecord": true,
+        "puzzleHashMatchesRecord": true,
+        "savedKeyMatchesRecord": true
+      },
+      "audit": {
+        "status": "verified",
+        "verdict": {
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true,
+          "requirednessAgree": true,
+          "fresh": {
+            "solved": true,
+            "level": "nightmare",
+            "score": 1678,
+            "hardestTechnique": "forcingChain",
+            "required": false,
+            "vacuous": false,
+            "shallow": true
+          },
+          "errors": []
+        },
+        "wallMs": 139.85750000000007,
+        "cpuMs": 187,
+        "cpuResolutionStatus": "resolved",
+        "verifierStatus": "ok"
+      },
+      "reconciled": {
+        "outcome": "complete",
+        "verifiedExact": false,
+        "required": false,
+        "vacuous": false,
+        "shallow": true,
+        "validation": {
+          "wallMs": 139.85750000000007,
+          "cpuMs": 187,
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true
+        },
+        "validationDetail": {
+          "status": "verified",
+          "requirednessAgree": true,
+          "cpuResolutionStatus": "resolved",
+          "probe": {
+            "hooksPresent": false,
+            "exposed": [],
+            "normalizeConfigEqual": null
+          },
+          "errors": []
+        }
+      },
+      "falseExactFlag": false,
+      "linkHash": "3555ec29bcdc146217ac7445ed07612aaca3458150f0845e889cff433242a1ca"
+    },
+    {
+      "key": "IG-S02/killer/killer:nightmare:2/native-w1",
+      "pairId": "killer:nightmare:2",
+      "arm": "reference",
+      "solverMode": "native-w1",
+      "requestSeed": 2,
+      "originalOutcome": "error",
+      "originalError": {
+        "code": "validation-failed",
+        "name": null,
+        "message": "the independent audit rejected the puzzle",
+        "details": [
+          "structure: the model differs from the variant rebuilt from the seed"
+        ]
+      },
+      "claimedExact": false,
+      "links": {
+        "recordDigest": "71e8ddad826ce2d3e46ed45f8de6e90b978120785ff5ff8ba89fd06357c54c58",
+        "recordsFileSha256": "c0d97b6c7ab1e80108459009c1284ed69631af1149a1f851a06a0015879e55c9",
+        "puzzleFile": "provisional-r1/IG-S02/killer/puzzles/native-w1__killer-2.json",
+        "puzzleFileSha256": "468d7be35881a661bcfcdec40666ba1968c5c836f6495f3d1c44acc04254260a",
+        "puzzleFileMatchesRecord": true,
+        "digestsMatchRecord": true,
+        "puzzleHashMatchesRecord": true,
+        "savedKeyMatchesRecord": true
+      },
+      "audit": {
+        "status": "verified",
+        "verdict": {
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true,
+          "requirednessAgree": true,
+          "fresh": {
+            "solved": true,
+            "level": "nightmare",
+            "score": 1678,
+            "hardestTechnique": "forcingChain",
+            "required": false,
+            "vacuous": false,
+            "shallow": true
+          },
+          "errors": []
+        },
+        "wallMs": 145.01760000000013,
+        "cpuMs": 172,
+        "cpuResolutionStatus": "resolved",
+        "verifierStatus": "ok"
+      },
+      "reconciled": {
+        "outcome": "complete",
+        "verifiedExact": false,
+        "required": false,
+        "vacuous": false,
+        "shallow": true,
+        "validation": {
+          "wallMs": 145.01760000000013,
+          "cpuMs": 172,
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true
+        },
+        "validationDetail": {
+          "status": "verified",
+          "requirednessAgree": true,
+          "cpuResolutionStatus": "resolved",
+          "probe": {
+            "hooksPresent": false,
+            "exposed": [],
+            "normalizeConfigEqual": null
+          },
+          "errors": []
+        }
+      },
+      "falseExactFlag": false,
+      "linkHash": "fb056581b0e4c46583820ce484458daa7a32cbc4c94c73f6d6deee93577bd5e9"
+    },
+    {
+      "key": "IG-S02/killer/killer:nightmare:3/native-w1",
+      "pairId": "killer:nightmare:3",
+      "arm": "reference",
+      "solverMode": "native-w1",
+      "requestSeed": 3,
+      "originalOutcome": "error",
+      "originalError": {
+        "code": "validation-failed",
+        "name": null,
+        "message": "the independent audit rejected the puzzle",
+        "details": [
+          "structure: the model differs from the variant rebuilt from the seed"
+        ]
+      },
+      "claimedExact": false,
+      "links": {
+        "recordDigest": "9891fce4bf755329ffe403c618d74609c87eea2f147ccd1e9fd66487686551be",
+        "recordsFileSha256": "c0d97b6c7ab1e80108459009c1284ed69631af1149a1f851a06a0015879e55c9",
+        "puzzleFile": "provisional-r1/IG-S02/killer/puzzles/native-w1__killer-3.json",
+        "puzzleFileSha256": "d5744e0a7ac75a3f9e2f6e09f95817e688f8ca527f17376e036bd03260854c14",
+        "puzzleFileMatchesRecord": true,
+        "digestsMatchRecord": true,
+        "puzzleHashMatchesRecord": true,
+        "savedKeyMatchesRecord": true
+      },
+      "audit": {
+        "status": "verified",
+        "verdict": {
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true,
+          "requirednessAgree": true,
+          "fresh": {
+            "solved": true,
+            "level": "nightmare",
+            "score": 2009,
+            "hardestTechnique": "forcingChain",
+            "required": false,
+            "vacuous": false,
+            "shallow": true
+          },
+          "errors": []
+        },
+        "wallMs": 168.00960000000032,
+        "cpuMs": 203,
+        "cpuResolutionStatus": "resolved",
+        "verifierStatus": "ok"
+      },
+      "reconciled": {
+        "outcome": "complete",
+        "verifiedExact": false,
+        "required": false,
+        "vacuous": false,
+        "shallow": true,
+        "validation": {
+          "wallMs": 168.00960000000032,
+          "cpuMs": 203,
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true
+        },
+        "validationDetail": {
+          "status": "verified",
+          "requirednessAgree": true,
+          "cpuResolutionStatus": "resolved",
+          "probe": {
+            "hooksPresent": false,
+            "exposed": [],
+            "normalizeConfigEqual": null
+          },
+          "errors": []
+        }
+      },
+      "falseExactFlag": false,
+      "linkHash": "2a8d42cb4c2cd31d7b47e4edcc21b3084258111cbd37f0496a74f718332ae36d"
+    },
+    {
+      "key": "IG-S02/killer/killer:nightmare:3/attempts-w4",
+      "pairId": "killer:nightmare:3",
+      "arm": "prototype",
+      "solverMode": "attempts-w4",
+      "requestSeed": 3,
+      "originalOutcome": "error",
+      "originalError": {
+        "code": "validation-failed",
+        "name": null,
+        "message": "the independent audit rejected the puzzle",
+        "details": [
+          "structure: the model differs from the variant rebuilt from the seed"
+        ]
+      },
+      "claimedExact": false,
+      "links": {
+        "recordDigest": "cc39028698d8a1d4e18f22fa9483303fbeab4aef793934ec5d4e734de5db0f33",
+        "recordsFileSha256": "c0d97b6c7ab1e80108459009c1284ed69631af1149a1f851a06a0015879e55c9",
+        "puzzleFile": "provisional-r1/IG-S02/killer/puzzles/attempts-w4__killer-3.json",
+        "puzzleFileSha256": "0cf5d9bfd1ccd3d0a494b2e0d6d5356e25ba44420710a6484b965851e2237c31",
+        "puzzleFileMatchesRecord": true,
+        "digestsMatchRecord": true,
+        "puzzleHashMatchesRecord": true,
+        "savedKeyMatchesRecord": true
+      },
+      "audit": {
+        "status": "verified",
+        "verdict": {
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true,
+          "requirednessAgree": true,
+          "fresh": {
+            "solved": true,
+            "level": "nightmare",
+            "score": 2009,
+            "hardestTechnique": "forcingChain",
+            "required": false,
+            "vacuous": false,
+            "shallow": true
+          },
+          "errors": []
+        },
+        "wallMs": 148.33939999999984,
+        "cpuMs": 266,
+        "cpuResolutionStatus": "resolved",
+        "verifierStatus": "ok"
+      },
+      "reconciled": {
+        "outcome": "complete",
+        "verifiedExact": false,
+        "required": false,
+        "vacuous": false,
+        "shallow": true,
+        "validation": {
+          "wallMs": 148.33939999999984,
+          "cpuMs": 266,
+          "solutionValid": true,
+          "givensAgree": true,
+          "structureValid": true,
+          "unique": true,
+          "canonicalEqual": true
+        },
+        "validationDetail": {
+          "status": "verified",
+          "requirednessAgree": true,
+          "cpuResolutionStatus": "resolved",
+          "probe": {
+            "hooksPresent": false,
+            "exposed": [],
+            "normalizeConfigEqual": null
+          },
+          "errors": []
+        }
+      },
+      "falseExactFlag": false,
+      "linkHash": "8ad87991c43681140756678ee0c336e8e4d29a6d4f6c0a150d31421e8d7a6978"
+    }
+  ],
+  "status": "complete",
+  "error": null
+}

@@ -28,6 +28,13 @@ const HarnessError = C.HarnessError;
 const DEFAULT_RUNTIME_LABEL = '1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)';
 const SELF_TEST_ESTIMATE_MS = 15000;
 
+// Task glue loaded lazily: a task that runs its own kind of request (IG-S02: a pool) registers its module here.
+const TASK_HOOKS = { 'IG-S02': './ig02-run.cjs' };
+
+function taskHooks(task) {
+  return Object.prototype.hasOwnProperty.call(TASK_HOOKS, task) ? require(TASK_HOOKS[task]) : null;
+}
+
 function parseArgs(argv) {
   const opts = { task: null, round: null, shard: null, attempt: null, resume: null, deadlineMs: null,
     runtimeLabel: null, freezeReceipt: null, budgetReceipt: null, lockHelper: null, requestedAt: null,
@@ -245,7 +252,7 @@ function recordOfRequest(job, obs, validation, hostInfo) {
   rec.generation = obs.generation;
   rec.limits = { guardMs: obs.guard.guardMs, guardScope: obs.guard.scope, commandDeadlineMs: hostInfo.deadlineMs };
   rec.limitOrigin = 'research safety guard (' + obs.guard.scope + ')';
-  rec.solverMode = 'native';
+  rec.solverMode = job.solverMode || 'native';
   rec.poolWidth = 1;
   rec.error = obs.error;
   rec.terminateFailure = obs.terminateFailure || null;
@@ -622,6 +629,8 @@ async function runShard(opts, repoRoot) {
   let catalogue = null;
   let fatalError = null;
   let loopError = null;
+  let prepared = null;
+  const hooks = taskHooks(opts.task);
   const runtimeProblems = [];
   // A frozen run refuses the job the moment its worker reports a catalogue other than the one the receipt froze.
   const readyCheck = opts.round === C.ROUND_FROZEN ? function (ready) {
@@ -629,6 +638,16 @@ async function runShard(opts, repoRoot) {
     return { code: 'frozen-catalogue-mismatch', message: 'the loaded catalogue is not the one the freeze receipt names' };
   } : null;
   try {
+    if (hooks && hooks.prepare) {
+      // Task preparation under the same lock: the unmeasured catalogue probe and, in the first shard, its synthetic tests.
+      prepared = await hooks.prepare({ host: host, shard: shard, repoRoot: repoRoot, jobs: jobs,
+        runKeys: runKeys, readyCheck: readyCheck, round: opts.round });
+      if (prepared.catalogue && catalogue === null) catalogue = prepared.catalogue;
+      if (prepared.failure) {
+        fatalError = new HarnessError(prepared.failure.code, prepared.failure.message);
+        stop = 'task-prepare';
+      }
+    }
     for (const job of jobs) {
       if (!runKeys.has(job.key) || stop) continue;
       if (!host.canAdmit(job.estimateMs)) {
@@ -637,14 +656,20 @@ async function runShard(opts, repoRoot) {
         break;
       }
       journal.start(job.key);
-      const obs = await host.runRequest({ key: job.key, request: job.request, adapterIds: job.adapterIds,
-        guardScope: job.guardScope, wantCatalogue: catalogue === null, readyCheck: readyCheck });
+      const obs = hooks && hooks.execute && job.executor ? await hooks.execute({ host: host, job: job,
+        catalogue: catalogue, readyCheck: readyCheck }) : await host.runRequest({ key: job.key,
+        request: job.request, adapterIds: job.adapterIds, guardScope: job.guardScope,
+        wantCatalogue: catalogue === null, readyCheck: readyCheck });
       if (obs.ready && obs.ready.catalogue && catalogue === null) catalogue = obs.ready.catalogue;
       let validation = null;
       if (obs.outcome === 'complete' && !host.stopped) {
         validation = await host.runValidation(obs.wire, { level: job.level });
       }
       const rec = recordOfRequest(job, obs, validation, { deadlineMs: deadlineMs });
+      if (hooks && hooks.augmentRecord) {
+        hooks.augmentRecord(rec, job, obs, { repoRoot: repoRoot, attemptDir: att.dir, catalogue: catalogue,
+          evidenceRoot: evidenceRoot });
+      }
       journal.finish(job.key, rec);
       if (obs.fatal) {
         fatalError = new HarnessError(obs.fatal, obs.error.message);
@@ -688,9 +713,12 @@ async function runShard(opts, repoRoot) {
   const rerunKeys = chainInfo.rerunKeys;
   // Parity is decided over the whole chain: a pair whose mate has not run yet is deferred, not failed.
   const mergedByKey = new Map(merged.map(function (r) { return [r.key, r]; }));
-  const parity = shard.shard === 'loader-parity' ? parityReport(M.jobsOf(manifest, shard.jobKeys).map(function (j) {
+  const shardRecords = M.jobsOf(manifest, shard.jobKeys).map(function (j) {
     return mergedByKey.get(j.key);
-  }).filter(Boolean)) : null;
+  }).filter(Boolean);
+  let parity = null;
+  if (shard.shard === 'loader-parity') parity = parityReport(shardRecords);
+  else if (hooks && hooks.identity) parity = hooks.identity(shardRecords);
   const gate = R.evaluateGate({ round: opts.round, freezeReceipt: freezeReceipt, budgetReceipt: budgetReceipt,
     runtimeFingerprint: before.fingerprint, catalogueFingerprint: catalogue ? catalogue.fingerprint : null });
 
@@ -701,7 +729,7 @@ async function runShard(opts, repoRoot) {
   else if (stop === 'source-changed' || !stable.stable || harness.fingerprint !== harnessAfter.fingerprint) {
     status = 'source-changed';
   } else if (!fwDiff.clean) status = 'firewall-violation';
-  else if (stop === 'terminate-timeout' || stillOwned > 0) status = 'error';
+  else if (stop === 'terminate-timeout' || stop === 'task-prepare' || stillOwned > 0) status = 'error';
   else if (runtimeProblems.length > 0 || rerunKeys.length > 0) status = 'identity-violation';
   else if (recordProblems.length > 0) status = 'error';
   else if (records.some(function (r) { return r.outcome === 'error'; })) status = 'validation-failed';
@@ -736,12 +764,16 @@ async function runShard(opts, repoRoot) {
     firewallClean: fwDiff.clean, firewallDiff: { added: fwDiff.added, removed: fwDiff.removed,
       changed: fwDiff.changed }, resumeOf: resumeOf, chain: chainInfo, pause: pause, parity: parity,
     notes: [].concat(runtimeProblems, recordProblems, rerunKeys.map(function (k) { return 'started twice: ' + k; }),
-      stable.stable ? [] : ['sources changed: ' + stable.changed.concat(stable.added, stable.removed).join(', ')])
+      stable.stable ? [] : ['sources changed: ' + stable.changed.concat(stable.added, stable.removed).join(', ')],
+      prepared && prepared.notes ? prepared.notes : [])
   });
+  const taskSummary = hooks && hooks.summary ? hooks.summary({ command: command, records: records, parity: parity,
+    chainInfo: chainInfo, prepared: prepared, shard: shard.shard, mergedRecords: shardRecords }) : null;
   const summary = R.buildSummary({ command: command, records: records,
-    extra: parity ? { loaderParity: parity, chain: chainInfo } : null,
-    estimateVerdict: 'not applicable: IG-S01 is infrastructure only and confirms no speed estimate',
-    exclusions: ['correctness controls, not timing observations'] });
+    extra: taskSummary ? taskSummary.extra : (parity ? { loaderParity: parity, chain: chainInfo } : null),
+    estimateVerdict: taskSummary ? taskSummary.estimateVerdict :
+      'not applicable: IG-S01 is infrastructure only and confirms no speed estimate',
+    exclusions: taskSummary ? taskSummary.exclusions : ['correctness controls, not timing observations'] });
   writeFinalEvidence(repoRoot, att, { recordsDoc: { schema: C.SCHEMA, task: opts.task, shard: shard.shard,
     round: opts.round, attemptId: attemptId, evidenceStatus: command.evidenceStatus, manifestHash:
     manifest.manifestHash, records: records }, firewallAfter: Object.assign({}, fwAfter.snapshot, { diff: {
@@ -767,7 +799,7 @@ async function main(argv) {
 
 module.exports = { parseArgs, observeLock, assertLockOwned, assertFrozenReceipts, planOnly, runShard, resolveResume,
   mergeRecords, buildChainInfo, validationStatus, parityReport, assembleCommand, timingOf, writeFinalEvidence,
-  machineInfo, readLedger, evidenceRootOf, DEFAULT_RUNTIME_LABEL };
+  machineInfo, readLedger, evidenceRootOf, recordOfRequest, DEFAULT_RUNTIME_LABEL };
 
 if (require.main === module) {
   const finish = function (code) {

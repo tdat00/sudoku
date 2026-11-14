@@ -1,0 +1,805 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S02",
+  "shard": "sam",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 6,
+    "completed": 6,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "native-w1 and attempts-w4 share one request and the same default attempts; no override",
+      "the unmeasured catalogue probe and the independent audit are outside every generation time",
+      "a censored or unverified arm proves neither identity nor speed"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd",
+    "adapterIds": [
+      "attempt-pool"
+    ],
+    "adapterHashes": [
+      "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 73.95420000000001,
+      "changesSeen": 7,
+      "incrementsMs": [
+        16,
+        15,
+        15,
+        16,
+        16,
+        15
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 154984,
+    "processAgeAtHostMs": 599.7221
+  },
+  "pairedRows": [
+    {
+      "pairId": "samurai:nightmare:1",
+      "reference": {
+        "key": "IG-S02/sam/samurai:nightmare:1/native-w1",
+        "outcome": "complete",
+        "readyWallMs": 26528.6892,
+        "coldWallMs": 26615.370499999997,
+        "cpuTotalMs": 27141,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "f98f3e849c6aa099717fb2d5d7455b5777f03b0ccca5e56c65a7e137acf649f6"
+      },
+      "prototype": {
+        "key": "IG-S02/sam/samurai:nightmare:1/attempts-w4",
+        "outcome": "complete",
+        "readyWallMs": 14825.1244,
+        "coldWallMs": 14927.852900000002,
+        "cpuTotalMs": 28234,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "f98f3e849c6aa099717fb2d5d7455b5777f03b0ccca5e56c65a7e137acf649f6"
+      },
+      "cpuFactor": 1.040271176448915,
+      "readyWallFactor": 0.5588336569603296,
+      "coldWallFactor": 0.5608733832955661
+    },
+    {
+      "pairId": "samurai:nightmare:2",
+      "reference": {
+        "key": "IG-S02/sam/samurai:nightmare:2/native-w1",
+        "outcome": "complete",
+        "readyWallMs": 24933.6141,
+        "coldWallMs": 25020.234300000004,
+        "cpuTotalMs": 25561,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "b6231fc3ecf400a79990bd7f249fe22d4599f9ba8e0dc9ef6b0fdea381d37102"
+      },
+      "prototype": {
+        "key": "IG-S02/sam/samurai:nightmare:2/attempts-w4",
+        "outcome": "complete",
+        "readyWallMs": 13636.152700000006,
+        "coldWallMs": 13742.042100000006,
+        "cpuTotalMs": 26844,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "b6231fc3ecf400a79990bd7f249fe22d4599f9ba8e0dc9ef6b0fdea381d37102"
+      },
+      "cpuFactor": 1.050193654395368,
+      "readyWallFactor": 0.5468983615977279,
+      "coldWallFactor": 0.5492371468319944
+    },
+    {
+      "pairId": "samurai:nightmare:42",
+      "reference": {
+        "key": "IG-S02/sam/samurai:nightmare:42/native-w1",
+        "outcome": "complete",
+        "readyWallMs": 21697.037200000006,
+        "coldWallMs": 21781.642900000006,
+        "cpuTotalMs": 22391,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587"
+      },
+      "prototype": {
+        "key": "IG-S02/sam/samurai:nightmare:42/attempts-w4",
+        "outcome": "complete",
+        "readyWallMs": 12793.266300000003,
+        "coldWallMs": 12895.065500000012,
+        "cpuTotalMs": 22531,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587"
+      },
+      "cpuFactor": 1.0062525121700683,
+      "readyWallFactor": 0.5896319475361363,
+      "coldWallFactor": 0.5920152836588836
+    }
+  ],
+  "arms": {
+    "reference": {
+      "requests": 3,
+      "complete": 3,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 3,
+        "p50": 24933.6141,
+        "p95": 26528.6892,
+        "max": 26528.6892,
+        "upperMedian": 24933.6141,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 3,
+        "p50": 25020.234300000004,
+        "p95": 26615.370499999997,
+        "max": 26615.370499999997,
+        "upperMedian": 25020.234300000004,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 3,
+        "p50": 25561,
+        "p95": 27141,
+        "max": 27141,
+        "upperMedian": 25561,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 3,
+          "cpuMs": 75093,
+          "wallMs": 73426.64379999999
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 3,
+          "cpuMs": 75093,
+          "wallMs": 73426.64379999999
+        }
+      },
+      "cpuTotalAggregateMs": 75093,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 73426.64379999999,
+      "verifiedHits": 0,
+      "hitsPerCpuSecond": 0,
+      "hitsPerColdWallSecond": 0
+    },
+    "prototype": {
+      "requests": 3,
+      "complete": 3,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 3,
+        "p50": 13636.152700000006,
+        "p95": 14825.1244,
+        "max": 14825.1244,
+        "upperMedian": 13636.152700000006,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 3,
+        "p50": 13742.042100000006,
+        "p95": 14927.852900000002,
+        "max": 14927.852900000002,
+        "upperMedian": 13742.042100000006,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 3,
+        "p50": 26844,
+        "p95": 28234,
+        "max": 28234,
+        "upperMedian": 26844,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 3,
+          "cpuMs": 77609,
+          "wallMs": 41583.234500000006
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 3,
+          "cpuMs": 77609,
+          "wallMs": 41583.234500000006
+        }
+      },
+      "cpuTotalAggregateMs": 77609,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 41583.234500000006,
+      "verifiedHits": 0,
+      "hitsPerCpuSecond": 0,
+      "hitsPerColdWallSecond": 0
+    }
+  },
+  "estimateVerdict": "provisional; the S5a estimate is judged on the task summary across all six cells",
+  "extra": {
+    "arms": {
+      "reference": "native-w1 (full unmodified pipeline, one worker)",
+      "prototype": "attempts-w4 (S5a: one absolute attempt per worker, min(4, A) workers, consumed in native order)"
+    },
+    "identity": {
+      "pairs": [
+        {
+          "pairId": "samurai:nightmare:1",
+          "verdict": "identity-ok",
+          "problems": [],
+          "unproven": [],
+          "unverified": [],
+          "digestsEqual": true,
+          "differing": [],
+          "nativeDigest": "26f865482e18b243d16f11c690023463e50607597bb004d7b476749b2ab5241b",
+          "pooledDigest": "26f865482e18b243d16f11c690023463e50607597bb004d7b476749b2ab5241b",
+          "sections": [
+            "structure",
+            "givens",
+            "solution",
+            "rating",
+            "config",
+            "warnings",
+            "log",
+            "work",
+            "scalars",
+            "puzzle"
+          ],
+          "claimedExact": false,
+          "verifiedExact": false,
+          "puzzleHash": "f98f3e849c6aa099717fb2d5d7455b5777f03b0ccca5e56c65a7e137acf649f6"
+        },
+        {
+          "pairId": "samurai:nightmare:2",
+          "verdict": "identity-ok",
+          "problems": [],
+          "unproven": [],
+          "unverified": [],
+          "digestsEqual": true,
+          "differing": [],
+          "nativeDigest": "468ffd63d09093251fde79398b25a43d1019a4e928292ff54dcdb6c414ae56ff",
+          "pooledDigest": "468ffd63d09093251fde79398b25a43d1019a4e928292ff54dcdb6c414ae56ff",
+          "sections": [
+            "structure",
+            "givens",
+            "solution",
+            "rating",
+            "config",
+            "warnings",
+            "log",
+            "work",
+            "scalars",
+            "puzzle"
+          ],
+          "claimedExact": false,
+          "verifiedExact": false,
+          "puzzleHash": "b6231fc3ecf400a79990bd7f249fe22d4599f9ba8e0dc9ef6b0fdea381d37102"
+        },
+        {
+          "pairId": "samurai:nightmare:42",
+          "verdict": "identity-ok",
+          "problems": [],
+          "unproven": [],
+          "unverified": [],
+          "digestsEqual": true,
+          "differing": [],
+          "nativeDigest": "95955fe0e5d55620af7fe78d7227be736d2e0662eee3006ea1b331e112920821",
+          "pooledDigest": "95955fe0e5d55620af7fe78d7227be736d2e0662eee3006ea1b331e112920821",
+          "sections": [
+            "structure",
+            "givens",
+            "solution",
+            "rating",
+            "config",
+            "warnings",
+            "log",
+            "work",
+            "scalars",
+            "puzzle"
+          ],
+          "claimedExact": false,
+          "verifiedExact": false,
+          "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587"
+        }
+      ],
+      "failed": 0,
+      "ok": 3,
+      "notComparable": 0,
+      "deferred": 0,
+      "complete": true
+    },
+    "pairs": [
+      {
+        "pairId": "samurai:nightmare:1",
+        "cell": "samurai",
+        "seed": 1,
+        "firstArm": "native-w1",
+        "bothComplete": true,
+        "native": {
+          "outcome": "complete",
+          "timeoutScope": null,
+          "readyWallMs": 26528.6892,
+          "coldWallMs": 26615.370499999997,
+          "occupiedWallMs": 26618.493199999997,
+          "cpuTotalMs": 27141,
+          "cpuToDecisionMs": 27141,
+          "cpuResolutionStatus": "resolved",
+          "startupMs": 86.68129999999996,
+          "cleanupMs": 3.1226999999998952,
+          "claimedExact": false,
+          "verifiedExact": false,
+          "validation": "verified",
+          "attemptsUsed": 2,
+          "attemptsPlanned": 2,
+          "puzzleHash": "f98f3e849c6aa099717fb2d5d7455b5777f03b0ccca5e56c65a7e137acf649f6",
+          "above120s": {
+            "readyWall": false,
+            "coldWall": false,
+            "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+          },
+          "pool": null
+        },
+        "pooled": {
+          "outcome": "complete",
+          "timeoutScope": null,
+          "readyWallMs": 14825.1244,
+          "coldWallMs": 14927.852900000002,
+          "occupiedWallMs": 14934.064199999997,
+          "cpuTotalMs": 28234,
+          "cpuToDecisionMs": 28234,
+          "cpuResolutionStatus": "resolved",
+          "startupMs": 102.72850000000108,
+          "cleanupMs": 6.21129999999539,
+          "claimedExact": false,
+          "verifiedExact": false,
+          "validation": "verified",
+          "attemptsUsed": 2,
+          "attemptsPlanned": 2,
+          "puzzleHash": "f98f3e849c6aa099717fb2d5d7455b5777f03b0ccca5e56c65a7e137acf649f6",
+          "above120s": {
+            "readyWall": false,
+            "coldWall": false,
+            "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+          },
+          "pool": {
+            "width": 2,
+            "peakActive": 2,
+            "meanBusyLanes": 1.816,
+            "attemptsStarted": 2,
+            "attemptsConsumed": 2,
+            "attemptsSpeculative": 0,
+            "firstExactOrigin": null,
+            "firstExactOrdinal": null,
+            "resultOrigin": "sample",
+            "firstReadyMs": 102.729,
+            "allReadyMs": 103.178,
+            "duplicatedModelBuildMs": 3.011,
+            "modelHashesEqual": true,
+            "keeperUnsoundConsumed": false,
+            "speculativeCompleted": 0
+          }
+        },
+        "readySpeedup": 1.7894412541995264,
+        "coldSpeedup": 1.7829335992452064,
+        "occupiedSpeedup": 1.7824011497151595,
+        "cpuRatio": 1.040271176448915,
+        "identity": "identity-ok"
+      },
+      {
+        "pairId": "samurai:nightmare:2",
+        "cell": "samurai",
+        "seed": 2,
+        "firstArm": "attempts-w4",
+        "bothComplete": true,
+        "native": {
+          "outcome": "complete",
+          "timeoutScope": null,
+          "readyWallMs": 24933.6141,
+          "coldWallMs": 25020.234300000004,
+          "occupiedWallMs": 25023.510199999997,
+          "cpuTotalMs": 25561,
+          "cpuToDecisionMs": 25561,
+          "cpuResolutionStatus": "resolved",
+          "startupMs": 86.62020000000484,
+          "cleanupMs": 3.275899999993271,
+          "claimedExact": false,
+          "verifiedExact": false,
+          "validation": "verified",
+          "attemptsUsed": 2,
+          "attemptsPlanned": 2,
+          "puzzleHash": "b6231fc3ecf400a79990bd7f249fe22d4599f9ba8e0dc9ef6b0fdea381d37102",
+          "above120s": {
+            "readyWall": false,
+            "coldWall": false,
+            "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+          },
+          "pool": null
+        },
+        "pooled": {
+          "outcome": "complete",
+          "timeoutScope": null,
+          "readyWallMs": 13636.152700000006,
+          "coldWallMs": 13742.042100000006,
+          "occupiedWallMs": 13747.5314,
+          "cpuTotalMs": 26844,
+          "cpuToDecisionMs": 26828,
+          "cpuResolutionStatus": "resolved",
+          "startupMs": 105.88940000000002,
+          "cleanupMs": 5.489299999993818,
+          "claimedExact": false,
+          "verifiedExact": false,
+          "validation": "verified",
+          "attemptsUsed": 2,
+          "attemptsPlanned": 2,
+          "puzzleHash": "b6231fc3ecf400a79990bd7f249fe22d4599f9ba8e0dc9ef6b0fdea381d37102",
+          "above120s": {
+            "readyWall": false,
+            "coldWall": false,
+            "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+          },
+          "pool": {
+            "width": 2,
+            "peakActive": 2,
+            "meanBusyLanes": 1.869,
+            "attemptsStarted": 2,
+            "attemptsConsumed": 2,
+            "attemptsSpeculative": 0,
+            "firstExactOrigin": null,
+            "firstExactOrdinal": null,
+            "resultOrigin": "sample",
+            "firstReadyMs": 105.889,
+            "allReadyMs": 106.361,
+            "duplicatedModelBuildMs": 3.104,
+            "modelHashesEqual": true,
+            "keeperUnsoundConsumed": false,
+            "speculativeCompleted": 0
+          }
+        },
+        "readySpeedup": 1.828493318353643,
+        "coldSpeedup": 1.820707149485446,
+        "occupiedSpeedup": 1.8202184429998827,
+        "cpuRatio": 1.050193654395368,
+        "identity": "identity-ok"
+      },
+      {
+        "pairId": "samurai:nightmare:42",
+        "cell": "samurai",
+        "seed": 42,
+        "firstArm": "native-w1",
+        "bothComplete": true,
+        "native": {
+          "outcome": "complete",
+          "timeoutScope": null,
+          "readyWallMs": 21697.037200000006,
+          "coldWallMs": 21781.642900000006,
+          "occupiedWallMs": 21784.640400000004,
+          "cpuTotalMs": 22391,
+          "cpuToDecisionMs": 22391,
+          "cpuResolutionStatus": "resolved",
+          "startupMs": 84.60570000000007,
+          "cleanupMs": 2.9974999999976717,
+          "claimedExact": false,
+          "verifiedExact": false,
+          "validation": "verified",
+          "attemptsUsed": 2,
+          "attemptsPlanned": 2,
+          "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587",
+          "above120s": {
+            "readyWall": false,
+            "coldWall": false,
+            "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+          },
+          "pool": null
+        },
+        "pooled": {
+          "outcome": "complete",
+          "timeoutScope": null,
+          "readyWallMs": 12793.266300000003,
+          "coldWallMs": 12895.065500000012,
+          "occupiedWallMs": 12901.638900000005,
+          "cpuTotalMs": 22531,
+          "cpuToDecisionMs": 22531,
+          "cpuResolutionStatus": "resolved",
+          "startupMs": 101.79920000000857,
+          "cleanupMs": 6.573399999993853,
+          "claimedExact": false,
+          "verifiedExact": false,
+          "validation": "verified",
+          "attemptsUsed": 2,
+          "attemptsPlanned": 2,
+          "puzzleHash": "a79c68ee57d91e728c84a001b5de18b4d95db170f2b3461c92afad9c909bb587",
+          "above120s": {
+            "readyWall": false,
+            "coldWall": false,
+            "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+          },
+          "pool": {
+            "width": 2,
+            "peakActive": 2,
+            "meanBusyLanes": 1.669,
+            "attemptsStarted": 2,
+            "attemptsConsumed": 2,
+            "attemptsSpeculative": 0,
+            "firstExactOrigin": null,
+            "firstExactOrdinal": null,
+            "resultOrigin": "sample",
+            "firstReadyMs": 101.799,
+            "allReadyMs": 102.144,
+            "duplicatedModelBuildMs": 2.982,
+            "modelHashesEqual": true,
+            "keeperUnsoundConsumed": false,
+            "speculativeCompleted": 0
+          }
+        },
+        "readySpeedup": 1.69597323241837,
+        "coldSpeedup": 1.6891455805323352,
+        "occupiedSpeedup": 1.6885172937214972,
+        "cpuRatio": 1.0062525121700683,
+        "identity": "identity-ok"
+      }
+    ],
+    "cells": [
+      {
+        "cell": "samurai",
+        "attemptsPlanned": 2,
+        "pairs": 3,
+        "completePairs": 3,
+        "identity": {
+          "ok": 3,
+          "failed": 0,
+          "notComparable": 0,
+          "deferred": 0
+        },
+        "native": {
+          "requests": 3,
+          "complete": 3,
+          "censored": 0,
+          "errors": 0,
+          "validationUnknown": 0,
+          "verifiedExact": 0,
+          "readyWallS": {
+            "n": 3,
+            "p50": 24.93,
+            "p95": 26.53,
+            "max": 26.53,
+            "upperMedian": 24.93,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "coldWallS": {
+            "n": 3,
+            "p50": 25.02,
+            "p95": 26.62,
+            "max": 26.62,
+            "upperMedian": 25.02,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "cpuTotalS": {
+            "n": 3,
+            "p50": 25.56,
+            "p95": 27.14,
+            "max": 27.14,
+            "upperMedian": 25.56,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          }
+        },
+        "pooled": {
+          "requests": 3,
+          "complete": 3,
+          "censored": 0,
+          "errors": 0,
+          "validationUnknown": 0,
+          "verifiedExact": 0,
+          "readyWallS": {
+            "n": 3,
+            "p50": 13.64,
+            "p95": 14.83,
+            "max": 14.83,
+            "upperMedian": 13.64,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "coldWallS": {
+            "n": 3,
+            "p50": 13.74,
+            "p95": 14.93,
+            "max": 14.93,
+            "upperMedian": 13.74,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "cpuTotalS": {
+            "n": 3,
+            "p50": 26.84,
+            "p95": 28.23,
+            "max": 28.23,
+            "upperMedian": 26.84,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          }
+        },
+        "readySpeedup": {
+          "n": 3,
+          "p50": 1.7894412541995264,
+          "p95": 1.828493318353643,
+          "max": 1.828493318353643,
+          "upperMedian": 1.7894412541995264,
+          "note": "p95 is the observed maximum, not a production-tail estimate"
+        },
+        "readySpeedupMin": 1.69597323241837,
+        "coldSpeedup": {
+          "n": 3,
+          "p50": 1.7829335992452064,
+          "p95": 1.820707149485446,
+          "max": 1.820707149485446,
+          "upperMedian": 1.7829335992452064,
+          "note": "p95 is the observed maximum, not a production-tail estimate"
+        },
+        "cpuRatio": {
+          "n": 3,
+          "p50": 1.040271176448915,
+          "p95": 1.050193654395368,
+          "max": 1.050193654395368,
+          "upperMedian": 1.040271176448915,
+          "note": "p95 is the observed maximum, not a production-tail estimate"
+        },
+        "pool": {
+          "width": 2,
+          "peakActive": 2,
+          "meanBusyLanes": {
+            "n": 3,
+            "p50": 1.816,
+            "p95": 1.869,
+            "max": 1.869,
+            "upperMedian": 1.816,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "attemptsConsumed": [
+            2,
+            2,
+            2
+          ],
+          "attemptsStarted": [
+            2,
+            2,
+            2
+          ],
+          "speculativeCompleted": 0,
+          "firstExactOrigins": [
+            null,
+            null,
+            null
+          ],
+          "firstExactOrdinals": [
+            null,
+            null,
+            null
+          ],
+          "duplicatedModelBuildMs": [
+            3.011,
+            3.104,
+            2.982
+          ]
+        },
+        "above120s": {
+          "native": 0,
+          "pooled": 0
+        },
+        "report": {
+          "attempts": 2,
+          "today": [
+            26.7,
+            null
+          ],
+          "s5a": [
+            1.7,
+            1.8
+          ],
+          "afterFirstPhases": [
+            10.3,
+            11.6
+          ]
+        },
+        "verdict": "estimate-supported (median ready-wall speed-up >= 1.7)",
+        "verdictNote": "descriptive, n = 3 pairs; with n2/n3 the p95 is the observed maximum; provisional (pre-freeze); no availability, default or qualification decision follows"
+      }
+    ],
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S02/sam/samurai:nightmare:1/native-w1",
+        "IG-S02/sam/samurai:nightmare:1/attempts-w4",
+        "IG-S02/sam/samurai:nightmare:2/attempts-w4",
+        "IG-S02/sam/samurai:nightmare:2/native-w1",
+        "IG-S02/sam/samurai:nightmare:42/native-w1",
+        "IG-S02/sam/samurai:nightmare:42/attempts-w4"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": []
+    },
+    "catalogueProbe": {
+      "wallMs": 106.29629999999997,
+      "cpuMs": 125,
+      "note": "unmeasured: loads the engine once per command so neither arm carries the catalogue discovery"
+    },
+    "syntheticPoolTests": null
+  },
+  "notes": []
+}

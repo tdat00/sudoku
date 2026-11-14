@@ -1,0 +1,628 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S02",
+  "shard": "m16-1",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "a5acbdfb822ec317db53c2e8147e3a463e33ee4545c9170bb3f687cfc6d64fc7",
+  "records": [
+    {
+      "key": "IG-S02/m16-1/mega16:nightmare:1/native-w1",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "mega16:nightmare:1",
+      "gridCluster": null,
+      "requestSeed": 1,
+      "attempt": null,
+      "sample": null,
+      "variantId": "native-w1",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "mega16",
+        "difficulty": "nightmare",
+        "seed": 1,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "native-w1",
+      "poolWidth": 1,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 116041.10789999999,
+        "coldWallMs": 116132.04879999999,
+        "occupiedWallMs": 116137.24829999999,
+        "cpuToDecisionMs": 116188,
+        "cpuTotalMs": 116188,
+        "cpuReadyTotalMs": 116094,
+        "startupMs": 90.94089999999994,
+        "startupCpuMs": 94,
+        "cleanupMs": 5.199500000002445,
+        "readyOccupiedWallMs": 116046.30739999999,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 173.8417999999947,
+        "cpuMs": 281,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 2149,
+      "puzzleHash": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+      "attemptsUsed": 2,
+      "samplesUsed": null,
+      "canonicalRatings": 589,
+      "localProposals": 1998,
+      "localCapReasons": [
+        "shallow",
+        "shallow"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "reference",
+      "puzzleVariant": "mega16",
+      "blockKey": "IG-S02/m16-1/mega16:nightmare:1",
+      "shard": "m16-1",
+      "order": 0,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [],
+      "engineElapsedMs": 116040.0527,
+      "digests": {
+        "structure": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+        "givens": "850a59f235f4ed07c714c11c147769a811782c6c3d5ac3427c1d37ddd06b8f15",
+        "solution": "2b9c36fc65fbac5d885070706457ea9b9c27815bda67054e814f6d652b903241",
+        "rating": "64098cbf201cba5bc03bb1a8665681d3d48cbd9835fec1235937566bb4ed0de5",
+        "config": "66172f3a18c87d4967e28c81d3ec1740594ff9b06b6b08f2de24e26304cf4290",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "46ff82aa5619ee667a952918365528feee3d5f9a840d3a6479017890f705c220",
+        "work": "f16c5ac56005bc63c02eaa1934f287e4e9ce8463c17000fd42440665821c1b60",
+        "scalars": "1a753e4b7da462529dd25709362a125cc0ce3d0ba752db108364b1fcee654e2d",
+        "puzzle": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+        "all": "e15e5b9a87cc1b1f473811b6bfac991e88ad08653d534292a780d9be4ca43559"
+      },
+      "engineTimingsMs": {
+        "configure": 0.3369000000000142,
+        "buildModel": 2.722099999999955,
+        "fullGrid": 6.668100000005893,
+        "extraStructure": 0.12899999999331158,
+        "dig": 115784.64970000001,
+        "rate": 241.37960000001317,
+        "tune": 0.38520000000221444
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 2,
+      "puzzleFile": "provisional-r1/IG-S02/m16-1/puzzles/native-w1__mega16-1.json",
+      "puzzleFileSha256": "0ee52a63079fc1d7f91e654be88b72910c8ee4e98c89f08517dfd22c126f1c3f"
+    },
+    {
+      "key": "IG-S02/m16-1/mega16:nightmare:1/attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "mega16:nightmare:1",
+      "gridCluster": null,
+      "requestSeed": 1,
+      "attempt": null,
+      "sample": null,
+      "variantId": "attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "mega16",
+        "difficulty": "nightmare",
+        "seed": 1,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "attempts-w4",
+      "poolWidth": 2,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 69960.87089999998,
+        "coldWallMs": 70066.20659999999,
+        "occupiedWallMs": 70072.2706,
+        "cpuToDecisionMs": 115219,
+        "cpuTotalMs": 115219,
+        "cpuReadyTotalMs": 114985,
+        "startupMs": 105.33570000001055,
+        "startupCpuMs": 234,
+        "cleanupMs": 6.0640000000130385,
+        "readyOccupiedWallMs": 69966.9349,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 177.70410000000265,
+        "cpuMs": 329,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 2149,
+      "puzzleHash": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+      "attemptsUsed": 2,
+      "samplesUsed": null,
+      "canonicalRatings": 589,
+      "localProposals": 1998,
+      "localCapReasons": [
+        "shallow",
+        "shallow"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "mega16",
+      "blockKey": "IG-S02/m16-1/mega16:nightmare:1",
+      "shard": "m16-1",
+      "order": 1,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+        "givens": "850a59f235f4ed07c714c11c147769a811782c6c3d5ac3427c1d37ddd06b8f15",
+        "solution": "2b9c36fc65fbac5d885070706457ea9b9c27815bda67054e814f6d652b903241",
+        "rating": "64098cbf201cba5bc03bb1a8665681d3d48cbd9835fec1235937566bb4ed0de5",
+        "config": "66172f3a18c87d4967e28c81d3ec1740594ff9b06b6b08f2de24e26304cf4290",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "46ff82aa5619ee667a952918365528feee3d5f9a840d3a6479017890f705c220",
+        "work": "f16c5ac56005bc63c02eaa1934f287e4e9ce8463c17000fd42440665821c1b60",
+        "scalars": "1a753e4b7da462529dd25709362a125cc0ce3d0ba752db108364b1fcee654e2d",
+        "puzzle": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+        "all": "e15e5b9a87cc1b1f473811b6bfac991e88ad08653d534292a780d9be4ca43559"
+      },
+      "engineTimingsMs": {
+        "configure": 0.3168000000005122,
+        "buildModel": 2.6873999999952503,
+        "fullGrid": 11.97829999998794,
+        "extraStructure": 0.2216000000044005,
+        "dig": 114600.00679999997,
+        "rate": 243.3514999999461,
+        "tune": 0.34509999994770624
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 2,
+      "pool": {
+        "width": 2,
+        "ceiling": 2,
+        "attemptsPlanned": 2,
+        "attemptsStarted": 2,
+        "attemptsConsumed": 2,
+        "attemptsSpeculative": 0,
+        "peakActive": 2,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 1.64,
+        "firstReadyMs": 105.336,
+        "allReadyMs": 105.807,
+        "decisionMs": 70066.207,
+        "decision": "merged",
+        "exact": false,
+        "firstExactOrigin": null,
+        "firstExactOrdinal": null,
+        "resultOrigin": "sample",
+        "resultAttempt": 1,
+        "modelHashes": [
+          "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            2.687,
+            2.587
+          ],
+          "totalMs": 5.274,
+          "duplicatedMs": 2.587
+        },
+        "activity": [
+          [
+            105.336,
+            1
+          ],
+          [
+            105.807,
+            2
+          ],
+          [
+            45023.355,
+            1
+          ],
+          [
+            70066.207,
+            0
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 4,
+              "acceptedOrdinal": 5,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0.5,
+            "keeperBefore": null,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 2,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 4,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S02/m16-1/mega16:nightmare:1/attempts-w4/a1",
+            "parentKey": "IG-S02/m16-1/mega16:nightmare:1/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 105.336,
+            "finishedMs": 70066.207,
+            "wallMs": 69960.871,
+            "engineElapsedMs": 69958.133,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 294,
+              "proposals": 1107,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 1107,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+            "buildModelMs": 2.687,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "03eb14313eb8c3cd143c8870a74cf386d55685ca2bbc6c69cf1aa5368e7ea219"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "11ea7d9ba97060fd0dc1fd31ec04e23ef03557ba40beb04ff28e232a86550f85"
+              },
+              "keeper": {
+                "ordinal": 5,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "03eb14313eb8c3cd143c8870a74cf386d55685ca2bbc6c69cf1aa5368e7ea219"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 32,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.7858333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "333285d3a7893f031228cb43918e27892f300b8b940ac922d98e1eedbbf5b142"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 2000.6795833333333,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "b4a9da842b17b4ebbe999afe2b558c52b5b256e188164747c12d098d957e9f60"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 2000.5170833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b6dd0b29a21bd79034657bd9d0d5529f346a0843a40479648dbcc0d7b5d83ddd"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "20ec2725b44ca9663c9b40f2b99dfe824444c87b80d4527e366821040d62b6e4"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S02/m16-1/mega16:nightmare:1/attempts-w4/a2",
+            "parentKey": "IG-S02/m16-1/mega16:nightmare:1/attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 105.807,
+            "finishedMs": 45023.355,
+            "wallMs": 44917.548,
+            "engineElapsedMs": 44914.666,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 295,
+              "proposals": 891,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 891,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+            "buildModelMs": 2.587,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "513e59e04945c1cf2f9b94cdba64a8cabd732dbb2b8aa151a275f9f62162090b"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "dd094c762c21d559a80cd43d87c406826eaabb0a109cae8c627f66abc8b6f0fd"
+              },
+              "keeper": {
+                "ordinal": 10,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "513e59e04945c1cf2f9b94cdba64a8cabd732dbb2b8aa151a275f9f62162090b"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 33,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.7758333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1459edac3b2e528c5071e247c86e9ada4e05ce276e82b8758d678f2882ad9524"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.0920833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ceaf7c4c3a7479ba5eefbeb26a049c57d03dc7f68e25a47541b37cd512dc3ffc"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.0354166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "60d5624a795a4dbd1a70bc2f23deb197d48d87653d182b48815f2bc18630a68b"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "49387b2798549680f32fa2b4d7776db91c0060942a285acadd486d1ec546e948"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          }
+        ]
+      },
+      "puzzleFile": "provisional-r1/IG-S02/m16-1/puzzles/attempts-w4__mega16-1.json",
+      "puzzleFileSha256": "eac3ee791f7a3e2d824f32702a13ce87640bf9d50ef1f201171f9ae001a86b60"
+    }
+  ]
+}
