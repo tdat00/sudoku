@@ -1,0 +1,2019 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S03",
+  "shard": "sc-m16",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "38862b3141574728056c2289c25bd8aeeb724fa4ddae47a0825ce7289801e22f",
+  "records": [
+    {
+      "key": "IG-S03/sc-m16/mega16:nightmare:1/scoped-attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "mega16:nightmare:1",
+      "gridCluster": null,
+      "requestSeed": 1,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "mega16",
+        "difficulty": "nightmare",
+        "seed": 1,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-attempts-w4",
+      "poolWidth": 2,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 69917.9216,
+        "coldWallMs": 70035.7834,
+        "occupiedWallMs": 70045.8943,
+        "cpuToDecisionMs": 114438,
+        "cpuTotalMs": 114453,
+        "cpuReadyTotalMs": 114218,
+        "startupMs": 117.8617999999999,
+        "startupCpuMs": 235,
+        "cleanupMs": 10.110899999999674,
+        "readyOccupiedWallMs": 69928.0325,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 15
+      },
+      "validation": {
+        "wallMs": 184.3695999999909,
+        "cpuMs": 360,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 2149,
+      "puzzleHash": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+      "attemptsUsed": 2,
+      "samplesUsed": null,
+      "canonicalRatings": 589,
+      "localProposals": 1998,
+      "localCapReasons": [
+        "shallow",
+        "shallow"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "mega16",
+      "blockKey": "IG-S03/sc-m16/mega16:nightmare:1",
+      "shard": "sc-m16",
+      "order": 0,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool",
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        },
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+        "givens": "850a59f235f4ed07c714c11c147769a811782c6c3d5ac3427c1d37ddd06b8f15",
+        "solution": "2b9c36fc65fbac5d885070706457ea9b9c27815bda67054e814f6d652b903241",
+        "rating": "64098cbf201cba5bc03bb1a8665681d3d48cbd9835fec1235937566bb4ed0de5",
+        "config": "66172f3a18c87d4967e28c81d3ec1740594ff9b06b6b08f2de24e26304cf4290",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "46ff82aa5619ee667a952918365528feee3d5f9a840d3a6479017890f705c220",
+        "work": "f16c5ac56005bc63c02eaa1934f287e4e9ce8463c17000fd42440665821c1b60",
+        "scalars": "1a753e4b7da462529dd25709362a125cc0ce3d0ba752db108364b1fcee654e2d",
+        "puzzle": "2509df221d72b84e59f7d334d2dd2ea29572e1723490634a054a5e117d098be6",
+        "all": "e15e5b9a87cc1b1f473811b6bfac991e88ad08653d534292a780d9be4ca43559"
+      },
+      "engineTimingsMs": {
+        "configure": 0.30939999999998236,
+        "buildModel": 2.570500000000038,
+        "fullGrid": 12.259799999999927,
+        "extraStructure": 0.24750000000005912,
+        "dig": 113355.035,
+        "rate": 236.42099999999232,
+        "tune": 0.3393999999927928
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 2,
+      "pool": {
+        "width": 2,
+        "ceiling": 2,
+        "attemptsPlanned": 2,
+        "attemptsStarted": 2,
+        "attemptsConsumed": 2,
+        "attemptsSpeculative": 0,
+        "peakActive": 2,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 1.622,
+        "firstReadyMs": 117.862,
+        "allReadyMs": 118.27,
+        "decisionMs": 70035.783,
+        "decision": "merged",
+        "exact": false,
+        "firstExactOrigin": null,
+        "firstExactOrdinal": null,
+        "resultOrigin": "sample",
+        "resultAttempt": 1,
+        "modelHashes": [
+          "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            2.571,
+            2.602
+          ],
+          "totalMs": 5.173,
+          "duplicatedMs": 2.602
+        },
+        "activity": [
+          [
+            117.862,
+            1
+          ],
+          [
+            118.27,
+            2
+          ],
+          [
+            43825.989,
+            1
+          ],
+          [
+            70035.783,
+            0
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 4,
+              "acceptedOrdinal": 5,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0.5,
+            "keeperBefore": null,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 2,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 4,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S03/sc-m16/mega16:nightmare:1/scoped-attempts-w4/a1",
+            "parentKey": "IG-S03/sc-m16/mega16:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 117.862,
+            "finishedMs": 70035.783,
+            "wallMs": 69917.922,
+            "engineElapsedMs": 69915.803,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 294,
+              "proposals": 1107,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 1107,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+            "buildModelMs": 2.571,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "03eb14313eb8c3cd143c8870a74cf386d55685ca2bbc6c69cf1aa5368e7ea219"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "11ea7d9ba97060fd0dc1fd31ec04e23ef03557ba40beb04ff28e232a86550f85"
+              },
+              "keeper": {
+                "ordinal": 5,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "03eb14313eb8c3cd143c8870a74cf386d55685ca2bbc6c69cf1aa5368e7ea219"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 32,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.7858333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "333285d3a7893f031228cb43918e27892f300b8b940ac922d98e1eedbbf5b142"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 2000.6795833333333,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "b4a9da842b17b4ebbe999afe2b558c52b5b256e188164747c12d098d957e9f60"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 2000.5170833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b6dd0b29a21bd79034657bd9d0d5529f346a0843a40479648dbcc0d7b5d83ddd"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "20ec2725b44ca9663c9b40f2b99dfe824444c87b80d4527e366821040d62b6e4"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-m16/mega16:nightmare:1/scoped-attempts-w4/a2",
+            "parentKey": "IG-S03/sc-m16/mega16:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 118.27,
+            "finishedMs": 43825.989,
+            "wallMs": 43707.719,
+            "engineElapsedMs": 43705.823,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 295,
+              "proposals": 891,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 891,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+            "buildModelMs": 2.602,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "513e59e04945c1cf2f9b94cdba64a8cabd732dbb2b8aa151a275f9f62162090b"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "dd094c762c21d559a80cd43d87c406826eaabb0a109cae8c627f66abc8b6f0fd"
+              },
+              "keeper": {
+                "ordinal": 10,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "513e59e04945c1cf2f9b94cdba64a8cabd732dbb2b8aa151a275f9f62162090b"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 33,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.7758333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1459edac3b2e528c5071e247c86e9ada4e05ce276e82b8758d678f2882ad9524"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.0920833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ceaf7c4c3a7479ba5eefbeb26a049c57d03dc7f68e25a47541b37cd512dc3ffc"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.0354166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "60d5624a795a4dbd1a70bc2f23deb197d48d87653d182b48815f2bc18630a68b"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "49387b2798549680f32fa2b4d7776db91c0060942a285acadd486d1ec546e948"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          }
+        ]
+      },
+      "scoped": {
+        "messages": 2,
+        "solve": {
+          "solvesBegun": 2826,
+          "stepsApplied": 360339,
+          "cellsInvalidated": 11711066,
+          "unitsInvalidated": 11562544,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 361092,
+            "scopesVisited": 65982772,
+            "realScopes": 9339765,
+            "negativeRecorded": 9130984,
+            "positiveScopes": 208781,
+            "skippedScopes": 56643007,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 152311,
+            "scopesVisited": 1948517,
+            "realScopes": 592397,
+            "negativeRecorded": 527823,
+            "positiveScopes": 64574,
+            "skippedScopes": 1356120,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 87737,
+            "scopesVisited": 2558008,
+            "realScopes": 860601,
+            "negativeRecorded": 844961,
+            "positiveScopes": 15640,
+            "skippedScopes": 1697407,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 44282,
+            "scopesVisited": 2013497,
+            "realScopes": 616419,
+            "negativeRecorded": 612530,
+            "positiveScopes": 3889,
+            "skippedScopes": 1397076,
+            "enumNodesReal": 2092396,
+            "enumNodesSkipped": 5062326,
+            "realEntryChecks": 616419,
+            "virtualEntryChecks": 1397076,
+            "realNodeChecks": 1536,
+            "virtualNodeChecks": 5812,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 40391,
+            "scopesVisited": 1837320,
+            "realScopes": 555265,
+            "negativeRecorded": 551850,
+            "positiveScopes": 3415,
+            "skippedScopes": 1282054,
+            "enumNodesReal": 2513162,
+            "enumNodesSkipped": 5908194,
+            "realEntryChecks": 555265,
+            "virtualEntryChecks": 1282054,
+            "realNodeChecks": 2723,
+            "virtualNodeChecks": 9119,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 36975,
+            "scopesVisited": 1743825,
+            "realScopes": 522144,
+            "negativeRecorded": 520970,
+            "positiveScopes": 1174,
+            "skippedScopes": 1221680,
+            "enumNodesReal": 4484773,
+            "enumNodesSkipped": 10177726,
+            "realEntryChecks": 522144,
+            "virtualEntryChecks": 1221680,
+            "realNodeChecks": 10993,
+            "virtualNodeChecks": 27691,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 35800,
+            "scopesVisited": 1700211,
+            "realScopes": 508073,
+            "negativeRecorded": 507348,
+            "positiveScopes": 725,
+            "skippedScopes": 1192137,
+            "enumNodesReal": 4641790,
+            "enumNodesSkipped": 10565668,
+            "realEntryChecks": 508073,
+            "virtualEntryChecks": 1192137,
+            "realNodeChecks": 11843,
+            "virtualNodeChecks": 29353,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 35074,
+            "scopesVisited": 1672708,
+            "realScopes": 498358,
+            "negativeRecorded": 497886,
+            "positiveScopes": 472,
+            "skippedScopes": 1174350,
+            "enumNodesReal": 7683091,
+            "enumNodesSkipped": 16761977,
+            "realEntryChecks": 498358,
+            "virtualEntryChecks": 1174350,
+            "realNodeChecks": 23814,
+            "virtualNodeChecks": 54421,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 34602,
+            "scopesVisited": 1658203,
+            "realScopes": 493779,
+            "negativeRecorded": 493623,
+            "positiveScopes": 156,
+            "skippedScopes": 1164424,
+            "enumNodesReal": 7043477,
+            "enumNodesSkipped": 15488024,
+            "realEntryChecks": 493779,
+            "virtualEntryChecks": 1164424,
+            "realNodeChecks": 21344,
+            "virtualNodeChecks": 49522,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+    },
+    {
+      "key": "IG-S03/sc-m16/mega16:nightmare:2/scoped-attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "mega16:nightmare:2",
+      "gridCluster": null,
+      "requestSeed": 2,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "mega16",
+        "difficulty": "nightmare",
+        "seed": 2,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-attempts-w4",
+      "poolWidth": 2,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 51790.308099999995,
+        "coldWallMs": 51908.6722,
+        "occupiedWallMs": 51918.42610000001,
+        "cpuToDecisionMs": 102969,
+        "cpuTotalMs": 102969,
+        "cpuReadyTotalMs": 102750,
+        "startupMs": 118.36410000000615,
+        "startupCpuMs": 219,
+        "cleanupMs": 9.753900000010617,
+        "readyOccupiedWallMs": 51800.062000000005,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 170.15409999999974,
+        "cpuMs": 297,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 2124,
+      "puzzleHash": "cc87297a51b08ef12f3da5b982af5e27ac2352443e3588ed0c39f0d6a56a826d",
+      "attemptsUsed": 2,
+      "samplesUsed": null,
+      "canonicalRatings": 596,
+      "localProposals": 1345,
+      "localCapReasons": [
+        "shallow",
+        "shallow"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "mega16",
+      "blockKey": "IG-S03/sc-m16/mega16:nightmare:2",
+      "shard": "sc-m16",
+      "order": 2,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool",
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        },
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+        "givens": "aa9704b3bb1bdbb9e52a835484ad5e160a23dd11b32e98cb9a5c603e10c42f07",
+        "solution": "ae948783c70c84dddde9355be887a49ef7a6231b9aa4a28f7f969c8bb4e7c474",
+        "rating": "2dbc8436033262acb4d597f5a109b813586ef29999d198efe7bcdd60da268bc3",
+        "config": "b096e30847d416583de2f58176c15d2ff874d6f607cd42f114ecf5e91ad1203a",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "25476c65b3246bcbfe0bd47895d3845bcc222ca9cd04f922c2a25622704ed6aa",
+        "work": "c9a09fc99790ba9d3e7efa23e4adc2b19d35d200f86d71cc22cd4eec00e1acd0",
+        "scalars": "1508188fb3c1c146384f66db6a90e32d2042e4ce62d564cc2948477ecfe864c2",
+        "puzzle": "cc87297a51b08ef12f3da5b982af5e27ac2352443e3588ed0c39f0d6a56a826d",
+        "all": "e86d509bfad1fface7431f32ec491db77aba8723a4fb575740931f6541297060"
+      },
+      "engineTimingsMs": {
+        "configure": 0.3122000000003027,
+        "buildModel": 3.1418999999877997,
+        "fullGrid": 15.77479999998468,
+        "extraStructure": 0.20309999999881256,
+        "dig": 101752.55310000002,
+        "rate": 187.0462999999727,
+        "tune": 0.3625999999785563
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 2,
+      "pool": {
+        "width": 2,
+        "ceiling": 2,
+        "attemptsPlanned": 2,
+        "attemptsStarted": 2,
+        "attemptsConsumed": 2,
+        "attemptsSpeculative": 0,
+        "peakActive": 2,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 1.965,
+        "firstReadyMs": 118.364,
+        "allReadyMs": 118.616,
+        "decisionMs": 51908.672,
+        "decision": "merged",
+        "exact": false,
+        "firstExactOrigin": null,
+        "firstExactOrdinal": null,
+        "resultOrigin": "sample",
+        "resultAttempt": 1,
+        "modelHashes": [
+          "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            3.142,
+            3.6
+          ],
+          "totalMs": 6.742,
+          "duplicatedMs": 3.6
+        },
+        "activity": [
+          [
+            118.364,
+            1
+          ],
+          [
+            118.616,
+            2
+          ],
+          [
+            50308.239,
+            1
+          ],
+          [
+            51908.672,
+            0
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 5,
+              "acceptedOrdinal": 8,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0.5,
+            "keeperBefore": null,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 2,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 5,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S03/sc-m16/mega16:nightmare:2/scoped-attempts-w4/a1",
+            "parentKey": "IG-S03/sc-m16/mega16:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 118.364,
+            "finishedMs": 50308.239,
+            "wallMs": 50189.874,
+            "engineElapsedMs": 50187.822,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 295,
+              "proposals": 778,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 778,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+            "buildModelMs": 3.142,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "8da5970b9d22376e3c13295f32cc0b254577d4e9b9f6654f40067879a7ae482b"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "3fd0d4c50d06bbc0deb2827fd441001ef6f000028a70cf50d443b9960f736505"
+              },
+              "keeper": {
+                "ordinal": 8,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "8da5970b9d22376e3c13295f32cc0b254577d4e9b9f6654f40067879a7ae482b"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 33,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.68625,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "01149b2d59a180288c6faed452aef0ee9a219731191825298a2b3fe347e18844"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 2000.6370833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c97f90e998c72369792ceb687efc23977ba7ab9cc08a352bb1b7003c52560e40"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.3745833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "778cd4349420175a46019795235936f99b551be1d97cf879c4df8c456f8fb9f8"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 1000.36,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "53b262f72cfdcada2321ead324ec5e9095234be5f9c6366065bf190195215022"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "600f472b21170b1daaf617e67b33b1603386c806eef2c59f3b66f75ec177d920"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-m16/mega16:nightmare:2/scoped-attempts-w4/a2",
+            "parentKey": "IG-S03/sc-m16/mega16:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 118.616,
+            "finishedMs": 51908.672,
+            "wallMs": 51790.056,
+            "engineElapsedMs": 51788.083,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 301,
+              "proposals": 567,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 567,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+            "buildModelMs": 3.6,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "eaab2bd8886a01b7c41b947bcac97b7319fb8cf371a3f729ea613c34ce417db5"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "e297787aea83e05f0ef676c79f70240b2b15cc1a73da98a8cc3983159c599d92"
+              },
+              "keeper": {
+                "ordinal": 9,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "eaab2bd8886a01b7c41b947bcac97b7319fb8cf371a3f729ea613c34ce417db5"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 39,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.82,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "a20b23ec3c2b17d100dcf4c5fc790598034a7f9173b836976e8d45da08ea9536"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 2000.775,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "93d890a198a842680eac80545116a883f2fc58601b10efc481f8125f7c862efd"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 2000.7245833333334,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "083b2a575356a669944c8a1f94020c69695a859da0c5a68c77b8d36c0ca23b7e"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 1000.45625,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "4144028f4f361ec5502a2c75d45b2f7be61d2beb1522f8345d6d059adb85330a"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "5c0e7789ded0a99e0d0e868cb0f559e56a000ea22a8dbe52010252e48bcf088f"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          }
+        ]
+      },
+      "scoped": {
+        "messages": 2,
+        "solve": {
+          "solvesBegun": 2851,
+          "stepsApplied": 365163,
+          "cellsInvalidated": 11915694,
+          "unitsInvalidated": 11762413,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 365862,
+            "scopesVisited": 66751556,
+            "realScopes": 9538939,
+            "negativeRecorded": 9326398,
+            "positiveScopes": 212541,
+            "skippedScopes": 57212617,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 153321,
+            "scopesVisited": 1949019,
+            "realScopes": 595296,
+            "negativeRecorded": 529432,
+            "positiveScopes": 65864,
+            "skippedScopes": 1353723,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 87457,
+            "scopesVisited": 2545725,
+            "realScopes": 864045,
+            "negativeRecorded": 848238,
+            "positiveScopes": 15807,
+            "skippedScopes": 1681680,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 41861,
+            "scopesVisited": 1885944,
+            "realScopes": 622034,
+            "negativeRecorded": 617594,
+            "positiveScopes": 4440,
+            "skippedScopes": 1263909,
+            "enumNodesReal": 2084741,
+            "enumNodesSkipped": 4688129,
+            "realEntryChecks": 622034,
+            "virtualEntryChecks": 1263909,
+            "realNodeChecks": 1373,
+            "virtualNodeChecks": 5209,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 37420,
+            "scopesVisited": 1707452,
+            "realScopes": 555820,
+            "negativeRecorded": 552692,
+            "positiveScopes": 3128,
+            "skippedScopes": 1151632,
+            "enumNodesReal": 2445448,
+            "enumNodesSkipped": 5331966,
+            "realEntryChecks": 555820,
+            "virtualEntryChecks": 1151632,
+            "realNodeChecks": 2211,
+            "virtualNodeChecks": 7520,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 34292,
+            "scopesVisited": 1612529,
+            "realScopes": 521707,
+            "negativeRecorded": 520415,
+            "positiveScopes": 1292,
+            "skippedScopes": 1090822,
+            "enumNodesReal": 4446531,
+            "enumNodesSkipped": 9370876,
+            "realEntryChecks": 521707,
+            "virtualEntryChecks": 1090822,
+            "realNodeChecks": 11037,
+            "virtualNodeChecks": 26076,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 33000,
+            "scopesVisited": 1565388,
+            "realScopes": 506557,
+            "negativeRecorded": 505881,
+            "positiveScopes": 676,
+            "skippedScopes": 1058830,
+            "enumNodesReal": 4528496,
+            "enumNodesSkipped": 9460672,
+            "realEntryChecks": 506557,
+            "virtualEntryChecks": 1058830,
+            "realNodeChecks": 11492,
+            "virtualNodeChecks": 26862,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 32323,
+            "scopesVisited": 1543951,
+            "realScopes": 499390,
+            "negativeRecorded": 499031,
+            "positiveScopes": 359,
+            "skippedScopes": 1044561,
+            "enumNodesReal": 7452907,
+            "enumNodesSkipped": 14941589,
+            "realEntryChecks": 499390,
+            "virtualEntryChecks": 1044561,
+            "realNodeChecks": 22839,
+            "virtualNodeChecks": 48695,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 31964,
+            "scopesVisited": 1531874,
+            "realScopes": 494646,
+            "negativeRecorded": 494537,
+            "positiveScopes": 109,
+            "skippedScopes": 1037227,
+            "enumNodesReal": 6825846,
+            "enumNodesSkipped": 13676701,
+            "realEntryChecks": 494646,
+            "virtualEntryChecks": 1037227,
+            "realNodeChecks": 20552,
+            "virtualNodeChecks": 43617,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+    },
+    {
+      "key": "IG-S03/sc-m16/mega16:nightmare:3/scoped-attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "mega16:nightmare:3",
+      "gridCluster": null,
+      "requestSeed": 3,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "mega16",
+        "difficulty": "nightmare",
+        "seed": 3,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 2,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-attempts-w4",
+      "poolWidth": 2,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 54658.6489,
+        "coldWallMs": 54768.4415,
+        "occupiedWallMs": 54779.21990000001,
+        "cpuToDecisionMs": 103593,
+        "cpuTotalMs": 103593,
+        "cpuReadyTotalMs": 103390,
+        "startupMs": 109.79260000000068,
+        "startupCpuMs": 203,
+        "cleanupMs": 10.778400000010151,
+        "readyOccupiedWallMs": 54669.42730000001,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 154.13529999999446,
+        "cpuMs": 251,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 1925,
+      "puzzleHash": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+      "attemptsUsed": 2,
+      "samplesUsed": null,
+      "canonicalRatings": 607,
+      "localProposals": 1720,
+      "localCapReasons": [
+        "shallow",
+        "shallow"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "mega16",
+      "blockKey": "IG-S03/sc-m16/mega16:nightmare:3",
+      "shard": "sc-m16",
+      "order": 4,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool",
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        },
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+        "givens": "acca2d3d683d29a971b90d46427972926a534991a400d20acb329589e6ea5dfa",
+        "solution": "4929b62cfe38210809f8b7e4c244e8ef834802b9a3bc988179b2237095182d26",
+        "rating": "bf854f709d413092af4de373ec52eef4984b33d5db18a983f477672c989d4ad9",
+        "config": "49f54fe6b9e69ae44893a18378288ab91fc58581f707ca72741471f459fc3d3f",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "edaaae609c531146bcf6e7d71c4575ff722fd033a0329197b013601beb294227",
+        "work": "cdb6b491883a34fff481c63abbf5835973b51b921b1afb7406319e234673aabb",
+        "scalars": "55b5e400b25617900c4a11c3e9f28aaca7d8df9d55cca6f3257b7392e160ad3e",
+        "puzzle": "baeff12be70797abc8393e4b5641ab843d5f919f82af8d3eea937b0ca28eade7",
+        "all": "969eb86ca7b4705c1fd99bf9194818c41153f8e49d4a2b90babca56169ad8d19"
+      },
+      "engineTimingsMs": {
+        "configure": 0.3043000000034226,
+        "buildModel": 2.596900000004098,
+        "fullGrid": 11.60910000000149,
+        "extraStructure": 0.19130000000586733,
+        "dig": 102565.52229999998,
+        "rate": 203.62260000000242,
+        "tune": 0.3326999999117106
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 2,
+      "pool": {
+        "width": 2,
+        "ceiling": 2,
+        "attemptsPlanned": 2,
+        "attemptsStarted": 2,
+        "attemptsConsumed": 2,
+        "attemptsSpeculative": 0,
+        "peakActive": 2,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 1.877,
+        "firstReadyMs": 109.793,
+        "allReadyMs": 109.964,
+        "decisionMs": 54768.442,
+        "decision": "merged",
+        "exact": false,
+        "firstExactOrigin": null,
+        "firstExactOrdinal": null,
+        "resultOrigin": "sample",
+        "resultAttempt": 1,
+        "modelHashes": [
+          "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            2.597,
+            2.47
+          ],
+          "totalMs": 5.067,
+          "duplicatedMs": 2.47
+        },
+        "activity": [
+          [
+            109.793,
+            1
+          ],
+          [
+            109.964,
+            2
+          ],
+          [
+            48253.591,
+            1
+          ],
+          [
+            54768.442,
+            0
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 5,
+              "acceptedOrdinal": 8,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0.5,
+            "keeperBefore": null,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 2,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 2,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S03/sc-m16/mega16:nightmare:3/scoped-attempts-w4/a1",
+            "parentKey": "IG-S03/sc-m16/mega16:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 109.793,
+            "finishedMs": 54768.442,
+            "wallMs": 54658.649,
+            "engineElapsedMs": 54656.74,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 295,
+              "proposals": 532,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 532,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+            "buildModelMs": 2.597,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "a724e9703bb2f36ced4a85146cd51153b0f95a0228dd2f27f46595d36b19f433"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "4f9364bd00733fa6db834efba454fa5b4f06ca603c27e419c5091ded003040a2"
+              },
+              "keeper": {
+                "ordinal": 8,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "a724e9703bb2f36ced4a85146cd51153b0f95a0228dd2f27f46595d36b19f433"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 33,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.7833333333333,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "7d5d76f288dbc3af3dae661e703dddc1f12ea651fa5b3c8649e664897781a6fa"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 2000.6220833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "38c53092ac0e955faf2f3419f7e4e1bc0ec5996717266dab7c639b8020db9693"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.02625,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "92925efb3298a32f6089acc8f6c4f4666dfce1a3b6a55ed0cdac93c963c9a20b"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 1000.0125,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d4414563ca6477b83ebcf5dcd9d9f4f0180272ed4baad4a5f9b2f26800555205"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ccf18401570bc1353f93a6deeeed77e422b6d81c93c17606100ffe7b6c1ca4d3"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-m16/mega16:nightmare:3/scoped-attempts-w4/a2",
+            "parentKey": "IG-S03/sc-m16/mega16:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 109.964,
+            "finishedMs": 48253.591,
+            "wallMs": 48143.626,
+            "engineElapsedMs": 48141.863,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 312,
+              "proposals": 1188,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 1188,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "a56cd60b389f0847f31409fe42ee89a965f681b2a2b8260b784719a46a1a074b",
+            "buildModelMs": 2.47,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "a2db53c5258f9d656864fd078e107edf3b330ce79bb597fb3700eece7680e9cc"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "6ec47edab1bddfb703305f1c8bed7661d06e411002ff0d3e8d5556eb0728d194"
+              },
+              "keeper": {
+                "ordinal": 3,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "a2db53c5258f9d656864fd078e107edf3b330ce79bb597fb3700eece7680e9cc"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 50,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.5658333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "efeb5ea52a7eb9e327e9de1be994578acaa442d67d91f718ce43ccc9a53ec78b"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8ae4bf22bf33d865e43b66df347b06a235717ad9647bd4a0b6fc9171e5f323b5"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          }
+        ]
+      },
+      "scoped": {
+        "messages": 2,
+        "solve": {
+          "solvesBegun": 2814,
+          "stepsApplied": 356700,
+          "cellsInvalidated": 11728424,
+          "unitsInvalidated": 11570146,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 357432,
+            "scopesVisited": 65641531,
+            "realScopes": 9421384,
+            "negativeRecorded": 9217241,
+            "positiveScopes": 204143,
+            "skippedScopes": 56220147,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 153289,
+            "scopesVisited": 1933316,
+            "realScopes": 603474,
+            "negativeRecorded": 534856,
+            "positiveScopes": 68618,
+            "skippedScopes": 1329842,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 84671,
+            "scopesVisited": 2442166,
+            "realScopes": 829918,
+            "negativeRecorded": 813110,
+            "positiveScopes": 16808,
+            "skippedScopes": 1612248,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 42180,
+            "scopesVisited": 1915961,
+            "realScopes": 594050,
+            "negativeRecorded": 590497,
+            "positiveScopes": 3553,
+            "skippedScopes": 1321909,
+            "enumNodesReal": 2117648,
+            "enumNodesSkipped": 4994410,
+            "realEntryChecks": 594050,
+            "virtualEntryChecks": 1321909,
+            "realNodeChecks": 1641,
+            "virtualNodeChecks": 6566,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 38625,
+            "scopesVisited": 1741186,
+            "realScopes": 538391,
+            "negativeRecorded": 534648,
+            "positiveScopes": 3743,
+            "skippedScopes": 1202795,
+            "enumNodesReal": 2449679,
+            "enumNodesSkipped": 5585484,
+            "realEntryChecks": 538391,
+            "virtualEntryChecks": 1202795,
+            "realNodeChecks": 2516,
+            "virtualNodeChecks": 8513,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 34882,
+            "scopesVisited": 1651448,
+            "realScopes": 509279,
+            "negativeRecorded": 508327,
+            "positiveScopes": 952,
+            "skippedScopes": 1142166,
+            "enumNodesReal": 4386304,
+            "enumNodesSkipped": 9802627,
+            "realEntryChecks": 509279,
+            "virtualEntryChecks": 1142166,
+            "realNodeChecks": 10925,
+            "virtualNodeChecks": 27273,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 33927,
+            "scopesVisited": 1610009,
+            "realScopes": 495832,
+            "negativeRecorded": 495009,
+            "positiveScopes": 823,
+            "skippedScopes": 1114176,
+            "enumNodesReal": 4388111,
+            "enumNodesSkipped": 9812604,
+            "realEntryChecks": 495832,
+            "virtualEntryChecks": 1114176,
+            "realNodeChecks": 11456,
+            "virtualNodeChecks": 27334,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 33103,
+            "scopesVisited": 1584088,
+            "realScopes": 484270,
+            "negativeRecorded": 484036,
+            "positiveScopes": 234,
+            "skippedScopes": 1099816,
+            "enumNodesReal": 7136544,
+            "enumNodesSkipped": 15623959,
+            "realEntryChecks": 484270,
+            "virtualEntryChecks": 1099816,
+            "realNodeChecks": 22076,
+            "virtualNodeChecks": 50330,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 32867,
+            "scopesVisited": 1573230,
+            "realScopes": 481423,
+            "negativeRecorded": 481201,
+            "positiveScopes": 222,
+            "skippedScopes": 1091807,
+            "enumNodesReal": 6563524,
+            "enumNodesSkipped": 14439306,
+            "realEntryChecks": 481423,
+            "virtualEntryChecks": 1091807,
+            "realNodeChecks": 19780,
+            "virtualNodeChecks": 46074,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+    }
+  ]
+}

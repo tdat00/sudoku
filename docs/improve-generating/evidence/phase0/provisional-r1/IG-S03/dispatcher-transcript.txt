@@ -1,0 +1,88 @@
+IG-S03 dispatcher console transcripts (provisional (pre-freeze)); the output of Invoke-IgTask.ps1 as captured, times +07:00.
+Run 1 = first dispatch (audit-1 attempt a1 failed, see the findings); Run 2 = audit-1 attempt a2; Run 3 = the remaining shards.
+The wrapper's own lines ("IG <task> exit=.. seconds=..") are those of Invoke-IgNode.
+
+=== Run 1: 2026-11-15T00:37:29.729 .. 00:44:10.071 ===
+IG IG-S03 provisional-r1: runtime 36b2b8327f34, manifest 38862b314157, gate not-evaluable-pre-freeze, projected machine time 1,469 s
+  shard audit-1 [pipeline] not-run: 10 keys, 10 unstarted, projected 189 s
+  shard audit-2 [pipeline] not-run: 9 keys, 9 unstarted, projected 255 s
+  shard sc-c9 [pipeline] not-run: 3 keys, 3 unstarted, projected 60 s
+  shard sc-gt [pipeline] not-run: 3 keys, 3 unstarted, projected 75 s
+  shard sc-killer [pipeline] not-run: 3 keys, 3 unstarted, projected 87 s
+  shard sc-m12 [pipeline] not-run: 3 keys, 3 unstarted, projected 90 s
+  shard sc-sam [pipeline] not-run: 3 keys, 3 unstarted, projected 117 s
+  shard sc-m16 [pipeline] not-run: 3 keys, 3 unstarted, projected 210 s
+  shard ser-small [pipeline] not-run: 3 keys, 3 unstarted, projected 108 s
+  shard ser-m12-sam [pipeline] not-run: 2 keys, 2 unstarted, projected 113 s
+  shard ser-m16 [pipeline] not-run: 1 keys, 1 unstarted, projected 165 s
+  shard audit-1 attempt a1: wrapper command (deadline 270000 ms)
+{"ig":"command","task":"IG-S03","shard":"audit-1","attemptId":"a1","status":"parity-failed","exit":1,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/audit-1"}
+IG IG-S03/audit-1 exit=1 seconds=264.093
+{"ig":"dispatch","task":"IG-S03","round":"provisional-r1","status":"stopped","evidenceStatus":"provisional (pre-freeze)","detail":{"reason":"wrapper command failed: IG IG-S03/audit-1 command failed: 1","shard":"audit-1"}}
+dispatcher exit=1
+
+=== Run 2: 2026-11-15T00:49:11.985 .. 00:50:00.104 (-Shard audit-1 -Attempt a2) ===
+IG IG-S03 provisional-r1: runtime 36b2b8327f34, manifest 38862b314157, gate not-evaluable-pre-freeze, projected machine time 1,423 s
+  shard audit-1 [pipeline] failed: 10 keys, 7 unstarted, projected 143 s
+  shard audit-2 [pipeline] not-run: 9 keys, 9 unstarted, projected 255 s
+  shard sc-c9 [pipeline] not-run: 3 keys, 3 unstarted, projected 60 s
+  shard sc-gt [pipeline] not-run: 3 keys, 3 unstarted, projected 75 s
+  shard sc-killer [pipeline] not-run: 3 keys, 3 unstarted, projected 87 s
+  shard sc-m12 [pipeline] not-run: 3 keys, 3 unstarted, projected 90 s
+  shard sc-sam [pipeline] not-run: 3 keys, 3 unstarted, projected 117 s
+  shard sc-m16 [pipeline] not-run: 3 keys, 3 unstarted, projected 210 s
+  shard ser-small [pipeline] not-run: 3 keys, 3 unstarted, projected 108 s
+  shard ser-m12-sam [pipeline] not-run: 2 keys, 2 unstarted, projected 113 s
+  shard ser-m16 [pipeline] not-run: 1 keys, 1 unstarted, projected 165 s
+  shard audit-1 attempt a2: wrapper command (deadline 270000 ms)
+{"ig":"command","task":"IG-S03","shard":"audit-1","attemptId":"a2","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/audit-1/a2"}
+IG IG-S03/audit-1 exit=0 seconds=2.141
+{"ig":"dispatch","task":"IG-S03","round":"provisional-r1","status":"complete","evidenceStatus":"provisional (pre-freeze)","detail":{"shards":[{"shard":"audit-1","attemptId":"a2","status":"complete"}]}}
+dispatcher exit=0
+
+=== Run 3: 2026-11-15T00:50:56.879 .. stopped by the developer at 01:17 (waiting behind difficulty-v3 for ser-m16) ===
+IG IG-S03 provisional-r1: runtime 36b2b8327f34, manifest 38862b314157, gate not-evaluable-pre-freeze, projected machine time 1,280 s
+  shard audit-1 [pipeline] recorded: 10 keys, 0 unstarted, projected 0 s
+  shard audit-2 [pipeline] not-run: 9 keys, 9 unstarted, projected 255 s
+  shard sc-c9 [pipeline] not-run: 3 keys, 3 unstarted, projected 60 s
+  shard sc-gt [pipeline] not-run: 3 keys, 3 unstarted, projected 75 s
+  shard sc-killer [pipeline] not-run: 3 keys, 3 unstarted, projected 87 s
+  shard sc-m12 [pipeline] not-run: 3 keys, 3 unstarted, projected 90 s
+  shard sc-sam [pipeline] not-run: 3 keys, 3 unstarted, projected 117 s
+  shard sc-m16 [pipeline] not-run: 3 keys, 3 unstarted, projected 210 s
+  shard ser-small [pipeline] not-run: 3 keys, 3 unstarted, projected 108 s
+  shard ser-m12-sam [pipeline] not-run: 2 keys, 2 unstarted, projected 113 s
+  shard ser-m16 [pipeline] not-run: 1 keys, 1 unstarted, projected 165 s
+  shard audit-1 already recorded: not rerun
+  shard audit-2 attempt a1: wrapper command (deadline 270000 ms)
+{"ig":"command","task":"IG-S03","shard":"audit-2","attemptId":"a1","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/audit-2"}
+IG IG-S03/audit-2 exit=0 seconds=4.054
+  shard sc-c9 attempt a1: wrapper command (deadline 270000 ms)
+{"ig":"command","task":"IG-S03","shard":"sc-c9","attemptId":"a1","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/sc-c9"}
+IG IG-S03/sc-c9 exit=0 seconds=6.504
+  shard sc-gt attempt a1: wrapper command (deadline 270000 ms)
+{"ig":"command","task":"IG-S03","shard":"sc-gt","attemptId":"a1","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/sc-gt"}
+IG IG-S03/sc-gt exit=0 seconds=15.443
+  shard sc-killer attempt a1: wrapper command (deadline 270000 ms)
+{"ig":"command","task":"IG-S03","shard":"sc-killer","attemptId":"a1","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/sc-killer"}
+IG IG-S03/sc-killer exit=0 seconds=33.046
+  shard sc-m12 attempt a1: wrapper command (deadline 270000 ms)
+{"ig":"command","task":"IG-S03","shard":"sc-m12","attemptId":"a1","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/sc-m12"}
+IG IG-S03/sc-m12 exit=0 seconds=23.674
+  shard sc-sam attempt a1: wrapper command (deadline 270000 ms)
+{"ig":"command","task":"IG-S03","shard":"sc-sam","attemptId":"a1","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/sc-sam"}
+IG IG-S03/sc-sam exit=0 seconds=43.263
+  shard sc-m16 attempt a1: wrapper command (deadline 270000 ms)
+{"ig":"command","task":"IG-S03","shard":"sc-m16","attemptId":"a1","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/sc-m16"}
+IG IG-S03/sc-m16 exit=0 seconds=178.822
+  shard ser-small attempt a1: wrapper command (deadline 270000 ms)
+{"ig":"command","task":"IG-S03","shard":"ser-small","attemptId":"a1","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/ser-small"}
+IG IG-S03/ser-small exit=0 seconds=41.767
+  shard ser-m12-sam attempt a1: wrapper command (deadline 212192 ms)
+{"ig":"command","task":"IG-S03","shard":"ser-m12-sam","attemptId":"a1","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/ser-m12-sam"}
+IG IG-S03/ser-m12-sam exit=0 seconds=47.068
+  shard ser-m16 attempt a1: wrapper command (deadline 120124 ms)
+(no further output: the command was still waiting for a quiet timing slot behind difficulty-v3 ("MS07a quick replay-player")
+when the developer stopped the dispatcher. The wait had not ended, so the wrapper had not admitted the command: no lock was
+held, no node process of this task had started, no evidence folder for ser-m16 exists and nothing is charged for it. The
+admission window of that command (120,124 ms deadline, 108 s usable) was in any case smaller than the 120 s request estimate.)

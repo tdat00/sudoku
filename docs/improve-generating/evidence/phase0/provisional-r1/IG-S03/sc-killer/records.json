@@ -1,0 +1,5083 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S03",
+  "shard": "sc-killer",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "38862b3141574728056c2289c25bd8aeeb724fa4ddae47a0825ce7289801e22f",
+  "records": [
+    {
+      "key": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "killer:nightmare:1",
+      "gridCluster": null,
+      "requestSeed": 1,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "killer",
+        "difficulty": "nightmare",
+        "seed": 1,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-attempts-w4",
+      "poolWidth": 4,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 7205.6033,
+        "coldWallMs": 7338.3487,
+        "occupiedWallMs": 7375.5751,
+        "cpuToDecisionMs": 24751,
+        "cpuTotalMs": 24798,
+        "cpuReadyTotalMs": 24267,
+        "startupMs": 132.74540000000002,
+        "startupCpuMs": 531,
+        "cleanupMs": 37.22640000000047,
+        "readyOccupiedWallMs": 7242.8297,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 47
+      },
+      "validation": {
+        "wallMs": 131.97519999999986,
+        "cpuMs": 172,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 1924,
+      "puzzleHash": "4e092605feea23c59789f6a9e8345157e241f675523d07614c7512f554ade73b",
+      "attemptsUsed": 8,
+      "samplesUsed": null,
+      "canonicalRatings": 2437,
+      "localProposals": 226909,
+      "localCapReasons": [
+        null,
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "killer",
+      "blockKey": "IG-S03/sc-killer/killer:nightmare:1",
+      "shard": "sc-killer",
+      "order": 0,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool",
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        },
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "fa8e0a6bb04c83361b31240b896bbe90a63ad5991c25a29ad0fc549acd68f291",
+        "givens": "71e34afaeec0a38ae8fa5ce7c9b2472d6225642ff224fd4b8710ebb75407694d",
+        "solution": "579e21f3cdb65b0bdd94309611a3f1a5895f4ebe3bd0ba9c205e4facd2bf8d36",
+        "rating": "de0e6a168c4d10cd8922309ea96aafcdab0b6e28d5edb62a09add784d7adc8b7",
+        "config": "c54798c9e73bb87f1308ee197cbad00b206b10adab9f7a8df7c07b3f3d52b92e",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "d2d30afff25de1189cfba1ebb8b770de356f5fde18c64a139c31c017e7af7e24",
+        "work": "235acc4fcb8af1c709ca9eb9348f2215d86ef72150a5fdd64c64e1ed6b70a217",
+        "scalars": "99a9cd0f5da45db5b79172e203ca49dd7c0326e19464f301f16ab4f86d947dd8",
+        "puzzle": "4e092605feea23c59789f6a9e8345157e241f675523d07614c7512f554ade73b",
+        "all": "435f77ceb9b0ad742b7ffd468b42fe065c1146312359b43974e4b72c26d53506"
+      },
+      "engineTimingsMs": {
+        "configure": 0.44479999999998654,
+        "buildModel": 2.18769999999995,
+        "fullGrid": 11.03140000000053,
+        "extraStructure": 6335.2917,
+        "dig": 14451.443199999996,
+        "rate": 69.22110000000066,
+        "tune": 0.9726999999963937
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "pool": {
+        "width": 4,
+        "ceiling": 4,
+        "attemptsPlanned": 8,
+        "attemptsStarted": 8,
+        "attemptsConsumed": 8,
+        "attemptsSpeculative": 0,
+        "peakActive": 4,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 2.851,
+        "firstReadyMs": 132.745,
+        "allReadyMs": 134.18,
+        "decisionMs": 7338.349,
+        "decision": "merged",
+        "exact": false,
+        "firstExactOrigin": null,
+        "firstExactOrdinal": null,
+        "resultOrigin": "sample",
+        "resultAttempt": 3,
+        "modelHashes": [
+          "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            2.188,
+            1.679,
+            1.579,
+            1.59,
+            0.386,
+            0.282,
+            0.239,
+            0.41
+          ],
+          "totalMs": 8.353,
+          "duplicatedMs": 6.165
+        },
+        "activity": [
+          [
+            132.745,
+            1
+          ],
+          [
+            133.217,
+            2
+          ],
+          [
+            133.815,
+            3
+          ],
+          [
+            134.18,
+            4
+          ],
+          [
+            2140.805,
+            3
+          ],
+          [
+            2140.805,
+            4
+          ],
+          [
+            2204.104,
+            3
+          ],
+          [
+            2204.104,
+            4
+          ],
+          [
+            2763.204,
+            3
+          ],
+          [
+            2763.204,
+            4
+          ],
+          [
+            3025.777,
+            3
+          ],
+          [
+            3025.777,
+            4
+          ],
+          [
+            4070.516,
+            3
+          ],
+          [
+            4966.585,
+            2
+          ],
+          [
+            5079.587,
+            1
+          ],
+          [
+            7338.349,
+            0
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 16,
+              "acceptedOrdinal": 56,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 1000.1545833333333,
+            "keeperBefore": null,
+            "keeperAfter": 1000.1545833333333
+          },
+          {
+            "attempt": 2,
+            "adopted": "keeper",
+            "replay": {
+              "counted": 2,
+              "acceptedOrdinal": 7,
+              "speculative": 5,
+              "unsoundSet": false
+            },
+            "bestBefore": 1000.1545833333333,
+            "bestAfter": 1000.0266666666666,
+            "keeperBefore": 1000.1545833333333,
+            "keeperAfter": 1000.0266666666666
+          },
+          {
+            "attempt": 3,
+            "adopted": null,
+            "replay": {
+              "counted": 1,
+              "acceptedOrdinal": 255,
+              "speculative": 6,
+              "unsoundSet": false
+            },
+            "bestBefore": 1000.0266666666666,
+            "bestAfter": 0.5,
+            "keeperBefore": 1000.0266666666666,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 4,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 6,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 5,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 9,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 6,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 6,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 7,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 14,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 8,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 4,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4/a1",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 132.745,
+            "finishedMs": 2140.805,
+            "wallMs": 2008.06,
+            "engineElapsedMs": 2005.434,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 384,
+              "proposals": 641,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 36,
+                  "proposals": 0,
+                  "firstShallowAt": null,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": null
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 2.188,
+            "candidates": {
+              "sample": {
+                "distance": 1000.1545833333333,
+                "exact": false,
+                "digest": "02daec303484c6a8815ad822007580c1cbdb184088224e6977e00c7e5b1655b7"
+              },
+              "search": {
+                "distance": 1000.1545833333333,
+                "exact": false,
+                "digest": "02daec303484c6a8815ad822007580c1cbdb184088224e6977e00c7e5b1655b7"
+              },
+              "keeper": {
+                "ordinal": 56,
+                "distance": 1000.1545833333333,
+                "exact": false,
+                "digest": "02daec303484c6a8815ad822007580c1cbdb184088224e6977e00c7e5b1655b7"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 137,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.902666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "64c6ceb0786109d26f525f79b7f0d277eff1d7f51dbadd78a0be3f358e02c78d"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.901333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "212d07a8718e23395dced6304800bfe942d72a37901e28142d6bde1d8d856ee9"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 5000.9,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2f34645b133511bb2685b95918dd81dd24c14a21038cc6c895749c3cf5224efb"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 3000.632666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "423c578a317f1fa5099f6619d8e19113340cc2baf65624c722fb5c65b8e7a3d8"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 3000.626,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c0d97fb290824859db6524fa0fff938a51886635953076d734d4731f4c6a8486"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 3000.61,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "79657a6cef44f9b12953ef906ea8d592d58aa55fd2a8596f8edf791016f4afa6"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 3000.6086666666665,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "7614482398e0654db49f5e601daeabdc4b5dbfb87334fb3a6f890082ceb48919"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 3000.595333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "bc37f17aa79a857a4b07bd61b8c801bc43faa5b94ea74de1a37c73c602ee43c9"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 3000.5933333333332,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "05c3a77f05ffa3f1ac68a31956cb087e9909f63edb4a88a68b9a8599b44e2b00"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 3000.5913333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6f34ef7155ef022f4b4cc02e001ce1d2c80c5817646d61e7033246771e9e2543"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 3000.5873333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "22603b2e1a8f879ed1c29139a62fabf36bc081aff779a8e7273bd03d9abe4fa1"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 1000.254,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "725d6f89a439cbbed76d4207c589235389b10d41469e818d351bfa3616b2f952"
+                },
+                {
+                  "ordinal": 13,
+                  "distance": 1000.2304166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "33c102a75dc318b051941d6c6fe5f5ba4eb60e507a853eda79545084bc70a9e8"
+                },
+                {
+                  "ordinal": 14,
+                  "distance": 1000.1916666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b3436e50c1d1513050a7f2725ba61c0838dce867855d39c750d00f8644d121e8"
+                },
+                {
+                  "ordinal": 15,
+                  "distance": 1000.18,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "747e426959eefd72b4261f1d55c506c7300be84fadb640d6223a832d2cf22b0c"
+                },
+                {
+                  "ordinal": 56,
+                  "distance": 1000.1545833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9f74a33ead11d12c8b0466146e3abe2b54c805db652b9e7d37f5d4f84670c527"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4/a2",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 133.217,
+            "finishedMs": 2763.204,
+            "wallMs": 2629.987,
+            "engineElapsedMs": 2627.641,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 559,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 291,
+                  "proposals": 31480,
+                  "firstShallowAt": null,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 1.679,
+            "candidates": {
+              "sample": {
+                "distance": 3000.62,
+                "exact": false,
+                "digest": "ca1e2e9b39151ced1fa3b0ef43449ac64ecc96155d95a444a3595bb74f8e1585"
+              },
+              "search": {
+                "distance": 1000.0426666666667,
+                "exact": false,
+                "digest": "0e72fed40f4699ebd8d91950de167cc7e369143f000b4befc7bae1343641f0ff"
+              },
+              "keeper": {
+                "ordinal": 7,
+                "distance": 1000.0266666666666,
+                "exact": false,
+                "digest": "98800662ab34152b74b12a4774d7b0ddc67fd4553e3e04d6a6824b59acdcc9c6"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 13,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.905333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d5cb2f57320ac4485024a4fd77a0e07af2bec5c33062e6828d54a2a7fdd75cfc"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.904,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0cd047630b4d3054aa7c644e7a94f79ce3bdffed4eee70a61ef0ce770be3285e"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 5000.903333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "4de6b784672c25505a5e55ad2160a881689b6f1631af4072d67981e152222b27"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 5000.902,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6eabbfb3d85e1ef09a88a703a6bc5c919a8a9a7d987ddbb82702bf7c51486437"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 5000.901333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "89e858d21407a0923db7a01c40d52dcd6e60e6616c389b72b3c463d0a7324d28"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 1000.0404166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ebc75c781be685f69aade50c9a7edfeea81015a83976f44825f761e007acd085"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 1000.0266666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "fdcbe3da8d77346d5f5e4d74915923b7df7993ffdef5a2bdbb3957a59f4dc406"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4/a3",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 3,
+            "serialOrdinal": 3,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 133.815,
+            "finishedMs": 3025.777,
+            "wallMs": 2891.962,
+            "engineElapsedMs": 2889.759,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 403,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 144,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 144,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 1.579,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "b07fef4398e8bb2ee205eadcc31a823fbca414b81d4c67e359e530b17115641c"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "6dd7639f04da69da38fc1d7cabef156780e0aecfc67f4c0cc1f1d20fcd75db15"
+              },
+              "keeper": {
+                "ordinal": 255,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "6dd7639f04da69da38fc1d7cabef156780e0aecfc67f4c0cc1f1d20fcd75db15"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 255,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 1000.42125,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a113d79f47fcfd3e8da456df57514cf242a4747683b33408be17c046d7bb8e1b"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.2175,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "eeff938eb01a742e37dac69754f535e66a8865223a2dfaf0cb622a215b72d6d8"
+                },
+                {
+                  "ordinal": 48,
+                  "distance": 1000.1695833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b445fa5e9271f593ae72b498f17bcfeb88403d3b16eca58c8931559b4088510f"
+                },
+                {
+                  "ordinal": 95,
+                  "distance": 1000.1345833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "55da945929021fff14dfe680908e2d429237976a0392837780c2a8ef1fd14db2"
+                },
+                {
+                  "ordinal": 120,
+                  "distance": 1000.1325,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "51e00f13692c19a8898107ab2311470d9be7d005bb78d2d63ce4b814bb0d7122"
+                },
+                {
+                  "ordinal": 254,
+                  "distance": 1000.1083333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ef5c1f8106d7e9eb4825a90e8b26b1b584c50f4811de245b596eb74acd262e2b"
+                },
+                {
+                  "ordinal": 255,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "cadd6bfc124d21de7e6f916e5e7cd6687df3e2028ff0be781a3d2595e7500724"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4/a4",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 4,
+            "serialOrdinal": 4,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 134.18,
+            "finishedMs": 2204.104,
+            "wallMs": 2069.924,
+            "engineElapsedMs": 2067.813,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 129,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 41,
+                  "proposals": 32596,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 41,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 1.59,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "873dbc5e164ef2c9f70a96555a5f70fba505d80aaba61d44f46dc09f23454b4f"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "873dbc5e164ef2c9f70a96555a5f70fba505d80aaba61d44f46dc09f23454b4f"
+              },
+              "keeper": {
+                "ordinal": 6,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "a137b1f375cf31be8c6a62fb6c1a791f4664489afb414642401b4f608cab8f5f"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 12,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 3000.5893333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f6359e59720e34db9ed698b927289422f3b85830cd3304c41560bdadbec23b79"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.24,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "cfbae336ed6971c21d018f95956b28a52862159b879d032d08ac21fb1c2b7302"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.225,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "bcb6316c30bb1377af8905a2e241ed005a4026d0dd1ae096395fbcb28a00aa8e"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 1000.1775,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "542bf4118d6c1a24ab48349673055beca8da0c78749f1bf4ac4d0ee45c28ecf7"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 1000.1704166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "32e11398e50cebc6a86d039d190d98246bb2e385994272c6b01f08c48ccb7809"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c800c17a5c4643c5ff05cd70446f12048beb4243ac3a0d0934e5e43c98f5786e"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4/a5",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 5,
+            "serialOrdinal": 5,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 2140.805,
+            "finishedMs": 5079.587,
+            "wallMs": 2938.781,
+            "engineElapsedMs": 2937.545,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 175,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 41,
+                  "proposals": 32492,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 41,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.386,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "155fbb32634c04294cfb160fe7b99529db810f81e671a5b3b2b24deacbae68f1"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "155fbb32634c04294cfb160fe7b99529db810f81e671a5b3b2b24deacbae68f1"
+              },
+              "keeper": {
+                "ordinal": 9,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "7ab6c6a4695f6a3c9f0fab59652f6eee9c28130a6bd260b921bb6b1295d4818f"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 15,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 3000.592,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1fc4b2161639a80f1983ebb488ce8694befa8ecfdfafb6058e9852ef933a7049"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.2866666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "44de5ff86aa5178eba2ac42a569d1e7cd56d0b8f1ff364441235fe6a612d666f"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.2570833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b9e96bc426a17425d659b2d53a3339c17338b9524fdaa51b767e14a932e2e9cc"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 1000.24875,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "fe5523edab891b949ea866af2989aa1508e5c0725c15bf90d1e8709c9ea31a16"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 1000.2486666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8f2d469de5a8d79fbe53cc9a87fef1b7c5d127af49509ef622fbacf04bc2e543"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 1000.2266666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f0173d34183c1fb9f2441faaa4a625eda83d41d9d4c1d9d086f0c1ae41b8a4c7"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 1000.226,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "837081766804a6d7b144704c19418e66035bae8186a5f0a838c4020a897508ac"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 1000.2193333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b0d4344ec041694bcc2d96f0daf7fabcf6f48160fc1f26a1098e1521718e45f2"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "5f3695f46aa3fe312801e5d00ade329ed9bd301f0940bf762ad44192184197f1"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4/a6",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 6,
+            "serialOrdinal": 6,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 2204.104,
+            "finishedMs": 7338.349,
+            "wallMs": 5134.244,
+            "engineElapsedMs": 5133.432,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 353,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 340,
+                  "proposals": 32768,
+                  "firstShallowAt": null,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.282,
+            "candidates": {
+              "sample": {
+                "distance": 3000.6,
+                "exact": false,
+                "digest": "80f6e4ee8dc53134956d51f92a29564657728dcab5524bd944a31d7406cf46c1"
+              },
+              "search": {
+                "distance": 3000.5726666666665,
+                "exact": false,
+                "digest": "998c89dd66214b3b9e7f6f2df24c43302df2577cf272cbe4b5995daa028c0e50"
+              },
+              "keeper": {
+                "ordinal": 6,
+                "distance": 1000.0758333333333,
+                "exact": false,
+                "digest": "99d6dcf703a1c7b88dda7fef2fcb4e8f5038c1f798073f212226da4413990f79"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 6,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.6804166666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "67379831a77f85c24a4c9484f419ed23dd08732cc21ff9a80ed0fef787ad3e38"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.1729166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0a0f68bb99671e3b685824f97a5d2fedd7f8e113c065112419cd45d58d78835d"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.1691666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ac063a2c92856890380091bfca872e6cfb2a9b515d9b39a86f7400a83713bfa9"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 1000.1329166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "13bcf5ea63f0b232776cc430d6013e6822836517e51d641b0b03cb9448816abb"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 1000.0895833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c8ea7beb20df3f00cd40c15c6a4e4dcbc8ab04d9eddee194c541667ec3f2d779"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 1000.0758333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1ba25d860f92a25bb54630b7199a032e2dea6411e28f80800bc1cbe99159a886"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4/a7",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 7,
+            "serialOrdinal": 7,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 2763.204,
+            "finishedMs": 4966.585,
+            "wallMs": 2203.381,
+            "engineElapsedMs": 2202.406,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 309,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 41,
+                  "proposals": 32104,
+                  "firstShallowAt": null,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.239,
+            "candidates": {
+              "sample": {
+                "distance": 3000.556666666667,
+                "exact": false,
+                "digest": "43cfcc65892db60f3fb62d69ea1f1e5ca640b91e999de704ed01065728ba421d"
+              },
+              "search": {
+                "distance": 3000.556666666667,
+                "exact": false,
+                "digest": "43cfcc65892db60f3fb62d69ea1f1e5ca640b91e999de704ed01065728ba421d"
+              },
+              "keeper": {
+                "ordinal": 14,
+                "distance": 1000.1858333333333,
+                "exact": false,
+                "digest": "a71d790983d0ed83dea2f7f2d817d673a8b162831c7ac12954298c75de962c2a"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 20,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 3000.6486666666665,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e52dc7f25412a46b9e2eb9ef8901cf5152adb7fd978f8e15e27bee308fab2876"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 3000.6453333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9ded8e7950fdf5ce244670240dcc11a0caf288b04857836e3de4a27b665f8095"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 3000.6393333333335,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d4ecce4608a42bfdb9dcdd7ea7ac0073af63cef624033df43b9a85bdd0c9651b"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 3000.638,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "fc36b527c5b6c708ef2b97601b52e338f0268ff5cc5272d324b13cae90f78c15"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 3000.614,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "eb746e4b43d19d1033efe3d63e6741e866259adcab0ebe2e4c8c7fd09c00df52"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 3000.6093333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6f18457aa905e875a5745f88f96e53e348b3f2c5872f8193172c4b866cbace56"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 3000.597333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e9ff5d2b779e78307342a7dfbbb6a00996872c12a9eed38dad380316666a4d20"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 3000.5913333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "3e5e1b5854f65a42acc2465cf0bab38e2b5333cba9fba5171fd9a565cd6c8f3b"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 3000.582,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "af87bef65cffe64942ecb14cbc46fe7f937a5b60a23b9bb51a0e4f74c613df11"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 3000.574,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c77013716017af7631e5d9310c4b5a49e65d2588bade9836bd9cccb689493a80"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 3000.5706666666665,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c6120be34ad319bf64cc7cb255cb5b9c9f60458adee65e452aeebf9d7c16c452"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 3000.57,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9d99d5df84211d83fa4073ef755fe8f7456762641427efc77aac3f1c15915f5b"
+                },
+                {
+                  "ordinal": 13,
+                  "distance": 3000.5686666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "eb698c9043760c250cef60d256d9659eb035bc8fa67fe524d0b03a7c34325957"
+                },
+                {
+                  "ordinal": 14,
+                  "distance": 1000.1858333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9d0dbe6c639ecdc640a3968d99dd855deb341a66fcaf9c775ce16619986d0e6b"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4/a8",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 8,
+            "serialOrdinal": 8,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 3025.777,
+            "finishedMs": 4070.516,
+            "wallMs": 1044.74,
+            "engineElapsedMs": 1043.683,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 125,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 83,
+                  "proposals": 32701,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 83,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.41,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "991516866d6359d7f5bee28ebdb157e37bafff5006022f11728ca83e472a99a4"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "44612252cce4c3675420d8d07c48eca8b3f58b5b7e6490b6d81403c8128e60b3"
+              },
+              "keeper": {
+                "ordinal": 4,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "811bcd64d32d933a754fdabb2ffc120be79e45823b2bb65d3430ef2501affcff"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 10,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 4000.7646666666665,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6f5c7d8aba2fb081009877c0497ab1f719aa763e51c3025caa2508b046733f4d"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 3000.6193333333335,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "076f96d52bd22c308b51a5821d102313b7c77ebcb300f2604f7f788c8593f0d3"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.2058333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "28d0ebbc4f700601579cfa980abc50174e5baf065b911afaef49c284dc6e1241"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "4408820d84a00ff644c4a916de5a7c8bb9248a4573adfb751b003aabd0b83827"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          }
+        ]
+      },
+      "scoped": {
+        "messages": 8,
+        "solve": {
+          "solvesBegun": 21092,
+          "stepsApplied": 1533092,
+          "cellsInvalidated": 27271057,
+          "unitsInvalidated": 42567759,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 1533419,
+            "scopesVisited": 91105182,
+            "realScopes": 22191108,
+            "negativeRecorded": 21354289,
+            "positiveScopes": 836819,
+            "skippedScopes": 68914074,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 696600,
+            "scopesVisited": 17629064,
+            "realScopes": 6639694,
+            "negativeRecorded": 6460937,
+            "positiveScopes": 178757,
+            "skippedScopes": 10989370,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 517843,
+            "scopesVisited": 8957651,
+            "realScopes": 4881894,
+            "negativeRecorded": 4843247,
+            "positiveScopes": 38647,
+            "skippedScopes": 4075757,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 38032,
+            "scopesVisited": 1808382,
+            "realScopes": 586432,
+            "negativeRecorded": 583937,
+            "positiveScopes": 2495,
+            "skippedScopes": 1221950,
+            "enumNodesReal": 478124,
+            "enumNodesSkipped": 933690,
+            "realEntryChecks": 586432,
+            "virtualEntryChecks": 1221950,
+            "realNodeChecks": 5,
+            "virtualNodeChecks": 13,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 35537,
+            "scopesVisited": 1748745,
+            "realScopes": 572579,
+            "negativeRecorded": 571733,
+            "positiveScopes": 846,
+            "skippedScopes": 1176166,
+            "enumNodesReal": 390548,
+            "enumNodesSkipped": 738644,
+            "realEntryChecks": 572579,
+            "virtualEntryChecks": 1176166,
+            "realNodeChecks": 2,
+            "virtualNodeChecks": 2,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 34691,
+            "scopesVisited": 1715146,
+            "realScopes": 564911,
+            "negativeRecorded": 564206,
+            "positiveScopes": 705,
+            "skippedScopes": 1150235,
+            "enumNodesReal": 699167,
+            "enumNodesSkipped": 1280116,
+            "realEntryChecks": 564911,
+            "virtualEntryChecks": 1150235,
+            "realNodeChecks": 168,
+            "virtualNodeChecks": 352,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 33986,
+            "scopesVisited": 1694069,
+            "realScopes": 559577,
+            "negativeRecorded": 559279,
+            "positiveScopes": 298,
+            "skippedScopes": 1134492,
+            "enumNodesReal": 649059,
+            "enumNodesSkipped": 1156525,
+            "realEntryChecks": 559577,
+            "virtualEntryChecks": 1134492,
+            "realNodeChecks": 69,
+            "virtualNodeChecks": 46,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 3944,
+            "scopesVisited": 191905,
+            "realScopes": 84850,
+            "negativeRecorded": 84798,
+            "positiveScopes": 52,
+            "skippedScopes": 107055,
+            "enumNodesReal": 196521,
+            "enumNodesSkipped": 195144,
+            "realEntryChecks": 84850,
+            "virtualEntryChecks": 107055,
+            "realNodeChecks": 164,
+            "virtualNodeChecks": 294,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 3892,
+            "scopesVisited": 191312,
+            "realScopes": 84573,
+            "negativeRecorded": 84572,
+            "positiveScopes": 1,
+            "skippedScopes": 106739,
+            "enumNodesReal": 183532,
+            "enumNodesSkipped": 182446,
+            "realEntryChecks": 84573,
+            "virtualEntryChecks": 106739,
+            "realNodeChecks": 128,
+            "virtualNodeChecks": 207,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+    },
+    {
+      "key": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "killer:nightmare:2",
+      "gridCluster": null,
+      "requestSeed": 2,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "killer",
+        "difficulty": "nightmare",
+        "seed": 2,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-attempts-w4",
+      "poolWidth": 4,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 15097.582299999998,
+        "coldWallMs": 15221.0026,
+        "occupiedWallMs": 15239.4284,
+        "cpuToDecisionMs": 36671,
+        "cpuTotalMs": 36733,
+        "cpuReadyTotalMs": 36312,
+        "startupMs": 123.42030000000159,
+        "startupCpuMs": 421,
+        "cleanupMs": 18.42580000000089,
+        "readyOccupiedWallMs": 15116.0081,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 62
+      },
+      "validation": {
+        "wallMs": 123.73749999999927,
+        "cpuMs": 125,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 1678,
+      "puzzleHash": "a8fc1719429a1c83d575dace65473bcac17c47e5d1a72ab5c101b2a77eab1cd4",
+      "attemptsUsed": 8,
+      "samplesUsed": null,
+      "canonicalRatings": 3119,
+      "localProposals": 224950,
+      "localCapReasons": [
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        null,
+        "proposals",
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "killer",
+      "blockKey": "IG-S03/sc-killer/killer:nightmare:2",
+      "shard": "sc-killer",
+      "order": 2,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool",
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        },
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "bd594d3ee25b188e60af887f9544ae5f25c0a3754cb37092bf8d2e4528790688",
+        "givens": "3d76b31d5463893ae740463c02c0a6fc7cda25d9ef75a15d5dec34244af54db5",
+        "solution": "a2b24cbed7b0fa584f4624ac2025d167c09af0666b8cce9fc08072d32ecd03ac",
+        "rating": "3d1d01571bfb69c65b2694555a076e3e37ab08e79d61534cb480cfb4cda33325",
+        "config": "43ba354b1738fa608f55ecfb9ee2908f499b7f6a8c86cb3dc714ff006c54f16e",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "ce5b1a74dc5046d5a83e279b449d3649cdabc12b453741e46471ccb90691909f",
+        "work": "b96b69cfb28921b7ffad9d6e4660f52c112be59c93ca25ae9b9f094f4c0aca7d",
+        "scalars": "5ae10b9ea6000e5816e02e34bfbebd216a66089ba00b508ef0d4ee43d8c1ccf4",
+        "puzzle": "a8fc1719429a1c83d575dace65473bcac17c47e5d1a72ab5c101b2a77eab1cd4",
+        "all": "0aa50b0bd457348d467c40ffb76808213a975776c3244eef8cd25c76d785c3ee"
+      },
+      "engineTimingsMs": {
+        "configure": 0.3135000000002037,
+        "buildModel": 1.5362999999997555,
+        "fullGrid": 10.712499999997817,
+        "extraStructure": 4032.4002,
+        "dig": 29196.488299999997,
+        "rate": 63.33830000001399,
+        "tune": 0.8757000000114203
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "pool": {
+        "width": 4,
+        "ceiling": 4,
+        "attemptsPlanned": 8,
+        "attemptsStarted": 8,
+        "attemptsConsumed": 8,
+        "attemptsSpeculative": 0,
+        "peakActive": 4,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 2.192,
+        "firstReadyMs": 123.42,
+        "allReadyMs": 124.624,
+        "decisionMs": 15221.003,
+        "decision": "merged",
+        "exact": false,
+        "firstExactOrigin": null,
+        "firstExactOrdinal": null,
+        "resultOrigin": "sample",
+        "resultAttempt": 1,
+        "modelHashes": [
+          "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            1.536,
+            1.534,
+            1.504,
+            1.515,
+            0.438,
+            0.437,
+            0.22,
+            0.175
+          ],
+          "totalMs": 7.359,
+          "duplicatedMs": 5.823
+        },
+        "activity": [
+          [
+            123.42,
+            1
+          ],
+          [
+            123.931,
+            2
+          ],
+          [
+            124.053,
+            3
+          ],
+          [
+            124.624,
+            4
+          ],
+          [
+            1370.519,
+            3
+          ],
+          [
+            1370.519,
+            4
+          ],
+          [
+            1449.124,
+            3
+          ],
+          [
+            1449.124,
+            4
+          ],
+          [
+            3246.156,
+            3
+          ],
+          [
+            3246.156,
+            4
+          ],
+          [
+            3564.75,
+            3
+          ],
+          [
+            3564.75,
+            4
+          ],
+          [
+            3808.018,
+            3
+          ],
+          [
+            6921.834,
+            2
+          ],
+          [
+            7903.227,
+            1
+          ],
+          [
+            15221.003,
+            0
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 16,
+              "acceptedOrdinal": 16,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0.5,
+            "keeperBefore": null,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 2,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 12,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 3,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 12,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 4,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 7,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 5,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 5,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 6,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 11,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 7,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 12,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 8,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 7,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4/a1",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 123.42,
+            "finishedMs": 1449.124,
+            "wallMs": 1325.704,
+            "engineElapsedMs": 1322.958,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 407,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 214,
+                  "proposals": 32166,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 214,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 1.536,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "3aebbccaa708c1ea06ee3a538b4f2cdc249601b107eefad7b18c7a9eb5b3e2e3"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "059366b8066dd7bf33394a15083cd7060ac23873ce481be9ddf6099532433186"
+              },
+              "keeper": {
+                "ordinal": 16,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "d036890f861eb7c04ca5e1097cffd5c859cea894a2e240a8e3f7b842f69411f5"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 22,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.908666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c82435f1bf967e80018a53c8397215d94c0a62d51e59a90a8ae9911ba7ec4665"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.908,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "275f9c6db208a47bf8c026cf3cec0a4d3b83a10b6c7cf9faaf1c4fa4599d1db3"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 5000.907333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "597ca409f1e0d0c84d4dd5e056c600f5f15b0a6775204ec31656160cda9df51a"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 5000.906,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "7cdb1e6bbbace6b7a4383de63e0d620f993f8da6e829481f550c77c10a08f9b1"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 5000.905333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9a379914fc4ec655ffb93fdb2690fe2246a3b90af46f7845ae9f5886a3edbaf3"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 5000.904666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ec9cbd0165598b5d50bddf46defff1715c3f30276ee77121c30a1593df2021c4"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 5000.903333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "42741aa1241697f1f13c261bf103be2053f9716e17228beb695966bdceb2065f"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 4000.8106666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c051af829af3ea0a235174f0a987e67733de7b3043c849e26796059f98d40941"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 4000.81,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8a0939ce4d316c4f91eec4725019afdd67b1bd3aba0c183141923917bcdc8d2e"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 4000.808666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "211a54230d9d3595686ac31fecb4f8455a8395473321c8b2b51bd2378d9f6ee6"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 4000.807333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "63710e190b6d8cb30f4e7e02ce2decbaf5b27fdea7f5db2d05ae88fc758303a7"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 3000.666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b45e84547fde1b610ac1ed1b4e50ae8efb3d09d135aec3716a73faed5b31d2c3"
+                },
+                {
+                  "ordinal": 13,
+                  "distance": 1000.2946666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "67a48c666ac443d2ea97951bdbf321ca99f6446897f80d032ed04614d1cc8560"
+                },
+                {
+                  "ordinal": 14,
+                  "distance": 1000.2886666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ccf171d1904b579c482e0f1c4459b511b94afc9d26fdcefd45a4809ae6955500"
+                },
+                {
+                  "ordinal": 15,
+                  "distance": 1000.2826666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "483459f3ae51d5e2e2bb9449a98f3c13a8190098e87d8b01c25bc9f168f5b932"
+                },
+                {
+                  "ordinal": 16,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2941ba09ffd99314a5ba83192148f3e7ae08adb3a26d5f5805bef3dd0be9c272"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4/a2",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 123.931,
+            "finishedMs": 7903.227,
+            "wallMs": 7779.296,
+            "engineElapsedMs": 7777.222,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 491,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 232,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 232,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 1.534,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "d3c2d0410e4de2b1e7320f731ec4a24d3961ed2566a6f0a4b070d4ae2dae8c37"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "f28e3022241d466ec2d948f78a283bafa601b0d0f7b6eb01bf6e6d9adaf8d82e"
+              },
+              "keeper": {
+                "ordinal": 253,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "661e631e5342e745d7f822316afb5c5b48f74938e01ea9e3384a084fdf7a6542"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 253,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.9216666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "3fc8ed42f8a9feec4c706413ec6c16f5d592f6e051e2f818bf0976dc33842cab"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 2000.54625,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "96c10a79973ce22fb2eee7234477e1b582188c953c5df3c4154636bb7ee10bfe"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.2966666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "3fabe5e35de9bc51571c2171ea5fd9ad616eb427611a4da0259f4de2086a5af4"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 1000.2679166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "7280f465f7c1807c4d4e9a3c7a65dc098393e3d6ce4ea18ac48512fd355f260f"
+                },
+                {
+                  "ordinal": 20,
+                  "distance": 1000.2470833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "63b2177dcdf5880fece6c764c81756c27bb9ac4dee44bd12793cab99c9b5af97"
+                },
+                {
+                  "ordinal": 51,
+                  "distance": 1000.2154166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d142533cb53023db7b07e15f407d2c21d7e21bb18d35db00b02fa21bf5aa84e2"
+                },
+                {
+                  "ordinal": 76,
+                  "distance": 1000.1745833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8c0fced57c0b8ac09aeabeef8d8be9992fa1b9a8a919898072857b0f2e75f022"
+                },
+                {
+                  "ordinal": 90,
+                  "distance": 1000.1691666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f7ac529258add56850dc10214987b2fea562a77831714487f3197f9e5e980a52"
+                },
+                {
+                  "ordinal": 111,
+                  "distance": 1000.1658333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "04e5d55320915fcdd0c0bacfc2af4fd53545775b3324571443c044ffcaeb6ffe"
+                },
+                {
+                  "ordinal": 181,
+                  "distance": 1000.1541666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "193686774b3125be578ea26f80c4cb62c8ad4dac64c8a93b1fc3d624c1b370f9"
+                },
+                {
+                  "ordinal": 223,
+                  "distance": 1000.1370833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "dd36a06c3f2637625d085872ecf0f1e2b1ad06acf7809cf475883aeec7a300e0"
+                },
+                {
+                  "ordinal": 253,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "fbfcd7984807d6badf5001bad1d8105be9e808bb52881aa046c99e67e3267900"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4/a3",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 3,
+            "serialOrdinal": 3,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 124.053,
+            "finishedMs": 3808.018,
+            "wallMs": 3683.964,
+            "engineElapsedMs": 3681.489,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 175,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 52,
+                  "proposals": 32297,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 52,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 1.504,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "6ee0e3f6aa5ff0af40f6d1783e971ab2e7fb40004ede2223857f4eb77c585638"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "beaff25c208f67ae78226a8f4fe9d2447573d5fe97ee833e9f16046bd1760cea"
+              },
+              "keeper": {
+                "ordinal": 12,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "4d760139b5c34c37c931bdbdce9a73e9dfba9ceac4e24adfd0775a8eab359b8e"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 18,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.908,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8ffea1deb76312b74136e7786ddb71828b189867a9e861f5c1b77a62c57a961b"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.907333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6f634061d44b729b496202fea2e0d506fe306d6f958fd127a289ccaa8ef6ff09"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 5000.906666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e41bb0b39919993a2136ad294626635973601e71b0ca6461bb03ad06514b05b0"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 5000.906,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "7d8071ec21aa1c7c046287ef838b2576a57f2cb46dbc9c8660b18d4badf78c6f"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 3000.6626666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "129e5f825f9e41434f95739ebb8d6a62e9a66fa8dc7992c02569d65aa70c25a1"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 3000.6593333333335,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1f75db1b6b9315a7a8e77c8abf888055f04b6d75b2dece3ebef81a2f736ec6e1"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 3000.6566666666668,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8d666361286b4ab3c0ed6d20317e2526f97371736ab2a57c96fe39ebe4303878"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 3000.656,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8b5700611d5f1ced91bde2f711efb662ead4fbb137e6e506a4ee15c003c16724"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 3000.650666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8657867239b40f965b78c75c832224f1b533a72eea087877349ec566c31ce7cd"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 2000.5146666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d9e6397744a9b943b1f9b05cab0d6162b088902761b1d79119282a875be90dd1"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 2000.514,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b6be09c264349946f4af9435b21499cc2f89870a90353a1637750d3b29393f2b"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "5ca8a58688ec715226c3783b215de670ea32e15490f2ab708eb3d52661401a70"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4/a4",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 4,
+            "serialOrdinal": 4,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 124.624,
+            "finishedMs": 1370.519,
+            "wallMs": 1245.895,
+            "engineElapsedMs": 1243.863,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 416,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 148,
+                  "proposals": 31414,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 148,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 1.515,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "b3f31278e41ef2fd46d3dd4691aa5505604e2b5237615299d1fde90026f9ffd1"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "bdd4375710bb1aed5a49d875283582439a5d27af4ec2bdab07e25c4f8ca623b9"
+              },
+              "keeper": {
+                "ordinal": 8,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "b3f31278e41ef2fd46d3dd4691aa5505604e2b5237615299d1fde90026f9ffd1"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 11,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.912,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9e796c93c5f18681dcd8b051c09c0aff4c258b64df1b0d6f717d5dcfc83ce9a8"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.9113333333335,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9dd426e35595bf96a39c83f5edd7a5cafc49334dff4722529684a4caa33ebe52"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 5000.910666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "fd61eb1d8ceb9cdc4cb853ea93fb9577ad3f63aa27699348acbe0abd55d1fcd4"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 5000.91,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d287eb3b1f3cc6eca765593c96f65dc08320722af37721ab6faa2566e67487d0"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 5000.909333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "70500870bc890009c620596eca9fe2098b39b74ffcf358f5c67055a23e7817ad"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 3000.62,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "94f746c2f0bae0ab9a0299e2b84af1f61a1bc4a86d4cae4c9e6ccd352bf39d31"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "de9731ac77a4511c945cecce0b5a479d74b638db6870d4885e7a888e26dd4b21"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4/a5",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 5,
+            "serialOrdinal": 5,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 1370.519,
+            "finishedMs": 3246.156,
+            "wallMs": 1875.637,
+            "engineElapsedMs": 1874.713,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 294,
+              "proposals": 0,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 35,
+                  "proposals": 0,
+                  "firstShallowAt": null,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": null
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.438,
+            "candidates": {
+              "sample": {
+                "distance": 1000.1504166666666,
+                "exact": false,
+                "digest": "d1348666f5327abcf029c80c08df01cecee3d687cef019c8735261c1243ba693"
+              },
+              "search": {
+                "distance": 1000.1504166666666,
+                "exact": false,
+                "digest": "d1348666f5327abcf029c80c08df01cecee3d687cef019c8735261c1243ba693"
+              },
+              "keeper": {
+                "ordinal": 17,
+                "distance": 1000.14,
+                "exact": false,
+                "digest": "b8204e5a5e0152a7f0613f637fd8d6ae38d0619336397de5b9f8e01e289f2ee7"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 288,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 1000.2154166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "889be44d4d52cdb3749876e880fb7271af444f9347ce17830658f2bbe4c672db"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 1000.1941666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b0c71b090918e5b6ab8026092ad93621e22ea9c4687824b478870a774382ad1e"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 1000.1770833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "bb7699c3020dde8fdfe6b8b1816f88a92d487478e8e5a5803dfb6127870aff58"
+                },
+                {
+                  "ordinal": 15,
+                  "distance": 1000.1629166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "eb73b657097199368a803e966f91c00be83554e302d4c667cc09f258cb79583f"
+                },
+                {
+                  "ordinal": 17,
+                  "distance": 1000.14,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "13c9e1dfbd0221fbc421b3bd3485142ee18aa1b9c42e09d1002cc9433f6f18e6"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4/a6",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 6,
+            "serialOrdinal": 6,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 1449.124,
+            "finishedMs": 3564.75,
+            "wallMs": 2115.626,
+            "engineElapsedMs": 2114.821,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 633,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 125,
+                  "proposals": 31959,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 125,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.437,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "4de624f9fab3ff532172d00c0ac965ff951d3f7ef10d40034de7d9faa2f0f2be"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "abb0fc12e698a564b4cca1a608a457aa9a4a952e207909a6c28a5435433d22a1"
+              },
+              "keeper": {
+                "ordinal": 256,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "abb0fc12e698a564b4cca1a608a457aa9a4a952e207909a6c28a5435433d22a1"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 256,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.903333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "78334804dd8165035298637a8f30b1f221f7d030d7fae09ce465e709686604d0"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.902666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f36648e661edad77e711fa2898f33b9c8c368235485c86de4d0793e16d9c6a1b"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 3000.635333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2cf1621b75ab37cb18860a09c899cf796b7e1c850a9a1aaa577961572c67dd42"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 3000.6186666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e12cccbbb22ff013ea7dbb11bbf7fdc800ce566987077c00c7f933bde9295322"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 3000.612666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "aae0e719b879d5b04c08688946ca78563e9747b4298d82de0710f9cf1bdd3453"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 1000.29,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "24115e394117344f7dce404532be3807f116e0ddf88fd324762752a30d356813"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 1000.1808333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "53de40000ef555b9187167eb54373a97719348a492a814e170743767340ad502"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 1000.1720833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0fd234fb275c2ff5b2687757af6e008f82e236b7ad7d21e63eb6eab2234bcf80"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 1000.1620833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ae016d7b5dd5b5361231efa33e4bcb3f4aa8ae50fbf3aba200edc03dfafe586f"
+                },
+                {
+                  "ordinal": 102,
+                  "distance": 1000.1354166666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a3d2faca640d3ceeb1cd4b7afdef846122f06e4bce4f0407fab77df5557ff013"
+                },
+                {
+                  "ordinal": 256,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a0d54b41bcbe9d440db2d4a3cf0a7b2481efd3e8f6c06c540f9043016958f544"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4/a7",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 7,
+            "serialOrdinal": 7,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 3246.156,
+            "finishedMs": 6921.834,
+            "wallMs": 3675.678,
+            "engineElapsedMs": 3674.843,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 141,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 41,
+                  "proposals": 32560,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 41,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.22,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "22d44b6bb44e3a86a7859a2d5a14b4b0de9c347ad07974e9d21bf004f6abf3e4"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "22d44b6bb44e3a86a7859a2d5a14b4b0de9c347ad07974e9d21bf004f6abf3e4"
+              },
+              "keeper": {
+                "ordinal": 12,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "25efe455ae728327cdc54f2dccb267cf27e6f5aad313aa3c1f5cabb648732d65"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 18,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 3000.6053333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9454f00fc23e1b91207573c9f2f22370946f9828f89886aec2f87c304e71d45e"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 3000.5986666666668,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e515700b27f4c48a3189d213a06ecfa99eb0ec9b60d0778a6471c4fe94009d34"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 3000.5853333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "55f04c39f320aa5540b0b75104803d4b24fe5889245f33f2ee90640a103629f4"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 3000.5833333333335,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "fe6181353caa913503cb907bd344dd6ea7eb8bb296492434fd90f73239fa8c7e"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 3000.5813333333335,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0a859148f778adace13324845d4e3175521b82bc5a30b6b164ce095be08854a7"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 3000.58,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "bc5f7e1c97ea91d8a61764a7c3dee265556d28ddd062d0cf2121122b6c23ca3e"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 3000.577333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "81c8d0898807547a662fafcb04104a35ab517e8a8d86744006dc845434e0fedb"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 1000.2195833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a7b999ad31266b2bf43d5a99ddc4d3ebda74e6b8ca9e958980e4ba548cbc45a3"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 1000.1858333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2bb74b4e98e3ee9c1f5c2b2a4050fc7905d1a787d39d698360bec4a5ff311e57"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 1000.1729166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c534f24397eb2c7c9a5c8c77a84a745ccd8f55b09377f71756a94c44284c65f2"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 1000.1604166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "756d23a1ccf73804b5d23f17b55fb713f68ac5ca554f70b5c0cbe1cd189987d8"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6786e8145447b928819e8bb93356bc8004859c7d8060215f77362ad0650a71b9"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4/a8",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 8,
+            "serialOrdinal": 8,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 3564.75,
+            "finishedMs": 15221.003,
+            "wallMs": 11656.253,
+            "engineElapsedMs": 11655.553,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 562,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 176,
+                  "proposals": 31786,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 176,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.175,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "4c260ee8343330b8328b2a4472d47b766bde963f64764d5ae7bf3da502a8590d"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "fb82452a2610e734d6e6219066dc21904ff2d5ffc18076e9c05f39935c0df990"
+              },
+              "keeper": {
+                "ordinal": 7,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "4c260ee8343330b8328b2a4472d47b766bde963f64764d5ae7bf3da502a8590d"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 129,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.912,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "29b2e9cc1d5a99b4a918cf9666fb83b4adace71ef39fa30e62a0c1b8cdfaa9f3"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.9113333333335,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1e57276e8098344b8615f0c6286c69e663a6f349d21a7ee1d1e1810a2caad483"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 5000.910666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "319c495d384026e436169d18ef8735e900d759f64b977cf3033187eda1267a71"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 5000.91,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "cc9fa5421226994a02e83a50fc4933d0c00e06948b280bf0b080b3483fb13605"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 5000.908,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ffabf8bb68c8c8a09f0a74056f95a68627e9059f4f1fa17d2dfa7d8e4795a52b"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 2000.512,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "36cdf688a51fcd04e53ab57cc55cf8c0ede4c9e7234f53e39c7cada7e3db8d71"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b6f578d2877d3996cef861bd1252164b5da6c168a198e071bc4f2982d516c5e7"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          }
+        ]
+      },
+      "scoped": {
+        "messages": 8,
+        "solve": {
+          "solvesBegun": 19136,
+          "stepsApplied": 1341937,
+          "cellsInvalidated": 24198082,
+          "unitsInvalidated": 37356463,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 1342223,
+            "scopesVisited": 79544643,
+            "realScopes": 19712553,
+            "negativeRecorded": 18966729,
+            "positiveScopes": 745824,
+            "skippedScopes": 59832090,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 596399,
+            "scopesVisited": 14274071,
+            "realScopes": 5488265,
+            "negativeRecorded": 5318022,
+            "positiveScopes": 170243,
+            "skippedScopes": 8785806,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 426156,
+            "scopesVisited": 7360443,
+            "realScopes": 4035608,
+            "negativeRecorded": 4002302,
+            "positiveScopes": 33306,
+            "skippedScopes": 3324835,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 28278,
+            "scopesVisited": 1337467,
+            "realScopes": 448383,
+            "negativeRecorded": 446819,
+            "positiveScopes": 1564,
+            "skippedScopes": 889084,
+            "enumNodesReal": 317200,
+            "enumNodesSkipped": 481511,
+            "realEntryChecks": 448383,
+            "virtualEntryChecks": 889084,
+            "realNodeChecks": 9,
+            "virtualNodeChecks": 15,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 26714,
+            "scopesVisited": 1290297,
+            "realScopes": 433416,
+            "negativeRecorded": 432555,
+            "positiveScopes": 861,
+            "skippedScopes": 856881,
+            "enumNodesReal": 282231,
+            "enumNodesSkipped": 415035,
+            "realEntryChecks": 433416,
+            "virtualEntryChecks": 856881,
+            "realNodeChecks": 3,
+            "virtualNodeChecks": 7,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 25853,
+            "scopesVisited": 1262945,
+            "realScopes": 426752,
+            "negativeRecorded": 426160,
+            "positiveScopes": 592,
+            "skippedScopes": 836192,
+            "enumNodesReal": 535079,
+            "enumNodesSkipped": 726913,
+            "realEntryChecks": 426752,
+            "virtualEntryChecks": 836192,
+            "realNodeChecks": 79,
+            "virtualNodeChecks": 123,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 25260,
+            "scopesVisited": 1244115,
+            "realScopes": 422777,
+            "negativeRecorded": 422519,
+            "positiveScopes": 258,
+            "skippedScopes": 821338,
+            "enumNodesReal": 500304,
+            "enumNodesSkipped": 656936,
+            "realEntryChecks": 422777,
+            "virtualEntryChecks": 821338,
+            "realNodeChecks": 32,
+            "virtualNodeChecks": 64,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 3831,
+            "scopesVisited": 186303,
+            "realScopes": 71102,
+            "negativeRecorded": 71095,
+            "positiveScopes": 7,
+            "skippedScopes": 115201,
+            "enumNodesReal": 247650,
+            "enumNodesSkipped": 226114,
+            "realEntryChecks": 71102,
+            "virtualEntryChecks": 115201,
+            "realNodeChecks": 213,
+            "virtualNodeChecks": 300,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 3824,
+            "scopesVisited": 186136,
+            "realScopes": 71074,
+            "negativeRecorded": 71072,
+            "positiveScopes": 2,
+            "skippedScopes": 115062,
+            "enumNodesReal": 219885,
+            "enumNodesSkipped": 203023,
+            "realEntryChecks": 71074,
+            "virtualEntryChecks": 115062,
+            "realNodeChecks": 98,
+            "virtualNodeChecks": 178,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+    },
+    {
+      "key": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "killer:nightmare:3",
+      "gridCluster": null,
+      "requestSeed": 3,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "killer",
+        "difficulty": "nightmare",
+        "seed": 3,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-attempts-w4",
+      "poolWidth": 4,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 8458.3265,
+        "coldWallMs": 8577.457300000002,
+        "occupiedWallMs": 8602.069900000002,
+        "cpuToDecisionMs": 27751,
+        "cpuTotalMs": 27766,
+        "cpuReadyTotalMs": 27391,
+        "startupMs": 119.13080000000264,
+        "startupCpuMs": 375,
+        "cleanupMs": 24.612600000000384,
+        "readyOccupiedWallMs": 8482.9391,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 15
+      },
+      "validation": {
+        "wallMs": 131.95230000000083,
+        "cpuMs": 187,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 2009,
+      "puzzleHash": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+      "attemptsUsed": 8,
+      "samplesUsed": null,
+      "canonicalRatings": 3632,
+      "localProposals": 201404,
+      "localCapReasons": [
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "shallow",
+        "proposals",
+        "proposals",
+        "shallow"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "killer",
+      "blockKey": "IG-S03/sc-killer/killer:nightmare:3",
+      "shard": "sc-killer",
+      "order": 4,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool",
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        },
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "72f05cae46b4680ba26428c64f97ba7ef56b480405f1a96ffe8ecfef346015fa",
+        "givens": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb",
+        "solution": "bef0c5faf8b7731c32b9568521704cef54941b23f034de7185467fce2331d68c",
+        "rating": "d8dabd22509f62824ec7f06e4c4c87dafbb342d74bb5b0e0919338ec0afc3d34",
+        "config": "d798b2417912f4999658b47a31e7519f2a98a0e3f9116891c5119a3587b5e3c2",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "ef28f986908f9d2280a7c2e91ca8fb3be4183950148a043f703d37f85acf8772",
+        "work": "5f17aef6714ce54a25935b96801e970dcee7b5ba7da839ced9f6e0716aeeba25",
+        "scalars": "4b50d9b96770b6c059f37ac9975810e18737267280dcbd0a8cb78346975ad143",
+        "puzzle": "e21169d335afd1a76cb75a1ccee1e9ab6fb3acca7f788c16dadc650667cf0a6f",
+        "all": "2c38999202a0010d9bce1d172af1074aae83c2727736c0f1100fdc1f59dfa191"
+      },
+      "engineTimingsMs": {
+        "configure": 0.4452000000019325,
+        "buildModel": 2.1077000000004773,
+        "fullGrid": 11.377700000000914,
+        "extraStructure": 5644.399799999996,
+        "dig": 18146.891800000005,
+        "rate": 56.581000000027416,
+        "tune": 0.9955000000081782
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "pool": {
+        "width": 4,
+        "ceiling": 4,
+        "attemptsPlanned": 8,
+        "attemptsStarted": 8,
+        "attemptsConsumed": 8,
+        "attemptsSpeculative": 0,
+        "peakActive": 4,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 2.788,
+        "firstReadyMs": 119.131,
+        "allReadyMs": 122.777,
+        "decisionMs": 8577.457,
+        "decision": "merged",
+        "exact": false,
+        "firstExactOrigin": null,
+        "firstExactOrdinal": null,
+        "resultOrigin": "sample",
+        "resultAttempt": 1,
+        "modelHashes": [
+          "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            2.108,
+            1.638,
+            1.813,
+            1.715,
+            0.315,
+            0.341,
+            0.447,
+            0.461
+          ],
+          "totalMs": 8.838,
+          "duplicatedMs": 6.73
+        },
+        "activity": [
+          [
+            119.131,
+            1
+          ],
+          [
+            119.273,
+            2
+          ],
+          [
+            121.786,
+            3
+          ],
+          [
+            122.777,
+            4
+          ],
+          [
+            1258.444,
+            3
+          ],
+          [
+            1258.444,
+            4
+          ],
+          [
+            2077.725,
+            3
+          ],
+          [
+            2077.725,
+            4
+          ],
+          [
+            2394.277,
+            3
+          ],
+          [
+            2394.277,
+            4
+          ],
+          [
+            2476.276,
+            3
+          ],
+          [
+            2476.276,
+            4
+          ],
+          [
+            4875.582,
+            3
+          ],
+          [
+            5175.045,
+            2
+          ],
+          [
+            5768.699,
+            1
+          ],
+          [
+            8577.457,
+            0
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 3,
+              "acceptedOrdinal": 3,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0.5,
+            "keeperBefore": null,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 2,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 4,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 3,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 6,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 4,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 14,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 5,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 17,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 6,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 13,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 7,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 13,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 8,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 18,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4/a1",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 119.131,
+            "finishedMs": 1258.444,
+            "wallMs": 1139.313,
+            "engineElapsedMs": 1136.323,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 74,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 41,
+                  "proposals": 32728,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 41,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 2.108,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "cf6b17556b2d943e0e8fb92413d1deb7064c8a50b730f05f59042fe2713b631b"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "cf6b17556b2d943e0e8fb92413d1deb7064c8a50b730f05f59042fe2713b631b"
+              },
+              "keeper": {
+                "ordinal": 3,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "f94c2c8ddab583333db10913dbee3938c23d5e7a634de2c2cb35a7c4a1a69fe4"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 9,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 3000.62,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "cdce681c9bbca9cd10a2274c9e6ad6d03ce45d085c91dbef1210d728135c0c28"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.16625,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "99c674fab17cf1aabb0bece5de9afe92257dd7f2ea25cc67f4f462493337be89"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b31ae8f442d91e9f042e1b993b3d8045ea56813e712d8c537004771f0d99e4cd"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4/a2",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 119.273,
+            "finishedMs": 2476.276,
+            "wallMs": 2357.003,
+            "engineElapsedMs": 2354.417,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 424,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 178,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 178,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 1.638,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c30c18c478ae46b30a27fa8df45d021fa765a19ccb60b486e98f41ec305fcb09"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "f65507d2d40366cc20c861f1e4df4c4246dca38adce28aa0ce7c6b29f3fe5a63"
+              },
+              "keeper": {
+                "ordinal": 29,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c30c18c478ae46b30a27fa8df45d021fa765a19ccb60b486e98f41ec305fcb09"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 239,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.5983333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "11adde22f049f85daa9ca136664d27924e5cb8e8eeaf14772d144e57b7289fd6"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.2853333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "61b75075eaddafeb192e7b60440e2f56ee61afcaee02eecd00dbdfa100f8f562"
+                },
+                {
+                  "ordinal": 16,
+                  "distance": 1000.1420833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0058363ca062fcc43019bfb82fa312065dd6c6e915b490e71e160f0de4c097d9"
+                },
+                {
+                  "ordinal": 29,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1082c5829ce699707f79e3be4f9335915aab49c2a672ea57578a0ac44d9fb4f0"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4/a3",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 3,
+            "serialOrdinal": 3,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 121.786,
+            "finishedMs": 2394.277,
+            "wallMs": 2272.491,
+            "engineElapsedMs": 2270.256,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 420,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 240,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 240,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 1.813,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "0bc14bde1f4a012c903588ee38a9077de8178a969c1bc52dcdfcb646a54763e5"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "a686612ac7762e8678397abe69e009879e3adfec1bdaf4fdf79ee3f872cd8fae"
+              },
+              "keeper": {
+                "ordinal": 87,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "0bc14bde1f4a012c903588ee38a9077de8178a969c1bc52dcdfcb646a54763e5"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 174,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.5304166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d3f9902f0a648a55da8e792c214ec704f15164badbf0a6bfec8f4f5f426d98d0"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 1000.195,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "687730c60e129de8e13bb5d38fd660c63334012341cc20afcfcd9a02a338b80e"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 1000.1945833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1a8dfa21ace9093dd49f36602f1ff27a251d8c6ec91e2fde4419bfb42b28c004"
+                },
+                {
+                  "ordinal": 45,
+                  "distance": 1000.1791666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a0776dd19279cfd54cf416968f80ad448e81e6e764a7dfa2414ece9b5cd05b4f"
+                },
+                {
+                  "ordinal": 54,
+                  "distance": 1000.1654166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8bf312635550b727dd4980600dd250a4f88f5171b81d4e8cf3ecd19b3239b6d8"
+                },
+                {
+                  "ordinal": 87,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "af0731cc41d776b13acc2a26b7ae7420b320f3949e85dc8d1e377232a0136fcf"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4/a4",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 4,
+            "serialOrdinal": 4,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 122.777,
+            "finishedMs": 2077.725,
+            "wallMs": 1954.948,
+            "engineElapsedMs": 1952.912,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 664,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 247,
+                  "proposals": 31888,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 247,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "27ab0f05c173702ee837dc7f6c98321281bb643f5bd8c77b58391cedbd481b93",
+            "buildModelMs": 1.715,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "83fcf849375504edeb1181838433443e97a3f089872f2b53e17cbe7fdcc9feab"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "21de23b756caa1035eb1a76a72908f305eec72e277bcb0732a29cbe9e378e598"
+              },
+              "keeper": {
+                "ordinal": 14,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "83fcf849375504edeb1181838433443e97a3f089872f2b53e17cbe7fdcc9feab"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 168,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.907333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "522e2d0af36c90c6d354ca23a9884f580fb19ef8b715a18001e9cbec6ba87797"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.906666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "160c38c868603e4a357c3adad03374ad9d6dafdefe2f9340a10be7e23bed4037"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 5000.906,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2e202d0090d981e03d5652c312d446c6bf2b21ed003b9a6da2ef8fcd9f968946"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 5000.905333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "30c3cd28d80ace7d8b316b08cb9b6b118c52dbb0a658cc0ced0bad4d80a1b6ac"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 5000.904666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "7f129dcc37c037e67c002b34ac7f0a0ebcab36e2081f7a707a7724b066b6f11e"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 5000.904,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "24cc14c776af7671f0f6d20b56c719614c1c91408e9d96bd38d608af5353d6b9"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 5000.903333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "499d1e0f87bb8987a501fef9a2fe6f4a6df73c4e240e7821dc1fd25a223dd96d"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 4000.806666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "70e6f7e6882f0e50f14cef251395091cab51c79652d5c0c03fbb8b17ac57a1c9"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 3000.652666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "017c5e321634ca48315b1aebbf14ed27b4f4f61e76f2ff2e6640a6883ae1401a"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 3000.6513333333332,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e75ec86eda1339fe7eca056a71482e733434f0f9967efc6bcdac9d630b21addb"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 3000.632,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6d7979d33c660ad523de7e4046d875f800351f4b6dcb1154c47f3bdceff44106"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 1000.185,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "89f5f8b0f4f4dc7c09de5f4e44168de0d859d3b95161120a5b8b3a9e1acb5e60"
+                },
+                {
+                  "ordinal": 13,
+                  "distance": 1000.0479166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e2c35b6cacd12061fa63f5aa3e2431bf018ac1fd928fe006824c373454844631"
+                },
+                {
+                  "ordinal": 14,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ea8b3500d018cde951b56732cbebbb7004d50b49862758a99144e530eb671848"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4/a5",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 5,
+            "serialOrdinal": 5,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 1258.444,
+            "finishedMs": 8577.457,
+            "wallMs": 7319.013,
+            "engineElapsedMs": 7318.303,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 654,
+              "proposals": 7251,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 6197,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.315,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "db4ff8a094c4630acbec78390ef698a5a4f8e86f544df341d7b03a242c711be9"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "998c421f9d5e286cc13cf996ffe9870a39ab5e08efdf4caf8d0b2e0aef591354"
+              },
+              "keeper": {
+                "ordinal": 97,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "db4ff8a094c4630acbec78390ef698a5a4f8e86f544df341d7b03a242c711be9"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 148,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.907333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9d872cd6cb94e646bec5266343c3828fbb27118a3b34d82dcb9f8c30356b929f"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.906666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e278d07e8495e18a0599741fb73fc051704938e09c899c7e755a01499a14ca26"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 5000.906,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "17d5977a7d3512b9396b9e1e54f7e4373ac35e57bc369c7aa6df09610f6c975a"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 5000.905333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2652a7564c70dd100abc3a513bff49955b88c72af53b795030b9637f0a129e9d"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 5000.904666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "be916b05e52fb4691e0473c7e13ca43c580088f4dc380c5b63a0e381a4ab070e"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 5000.904,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "afdf30750f5418322b2d1dc343650bda67e865bcfb116758dffcdd86ecd05a2e"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 5000.890666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ca21a63b4c34193f80b7efeed2afe3ed6e4a2c745fe2d82677d969f6a874965e"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 3000.648,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d53a134d9c13620aba4e86f29ee649e6331c13e9e05c22d986a1e820d1bd0fdf"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 3000.6473333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9cacc80273577c60af186eb6bf84cd6dbc0deb3614777f779eb65251b5d680d8"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 3000.636,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c7c85083dbbba394208d360151248acbaff6a5d070bdb41900101c36ec205069"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 3000.6026666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "96c9338aa33a2e6376ef0eac9a68c76052b0682f5476f26e4c6163a3b60f9ba1"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 1000.3206666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d6a6b2724fea9e1b84905b06e263560233943eb4afe539fbf5a1319dab5844e2"
+                },
+                {
+                  "ordinal": 16,
+                  "distance": 1000.1691666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f8f29388c6d970e9f8fc70c32f6a063bab249a2f3e86989fa7494a995533da68"
+                },
+                {
+                  "ordinal": 23,
+                  "distance": 1000.1308333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "38f4912ba5da507cbcb60cb95828665ed2c41cfda72ffab4ead08bdfd301fef1"
+                },
+                {
+                  "ordinal": 24,
+                  "distance": 1000.1295833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "45b6bb34f1fb5ea65f6ec4dc86f7b34e45063dc842052e6f254d1e3af445127a"
+                },
+                {
+                  "ordinal": 39,
+                  "distance": 1000.12875,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "97cae3c69d8748e43f81ebac634f17421c5acb371bce16f6f21c7ebc295c2a43"
+                },
+                {
+                  "ordinal": 97,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6f0d68ecf3078c7c88c7d92385e35ab98a810c96fa2a4aaa02982a047f319b84"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4/a6",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 6,
+            "serialOrdinal": 6,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 2077.725,
+            "finishedMs": 5175.045,
+            "wallMs": 3097.319,
+            "engineElapsedMs": 3096.564,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 401,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 133,
+                  "proposals": 31899,
+                  "firstShallowAt": 47,
+                  "shallowRatings": 86,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.341,
+            "candidates": {
+              "sample": {
+                "distance": 2000.3393333333333,
+                "exact": false,
+                "digest": "add753581bc2c0c22deee10d900a4d7679e74afd37b989b785f3df2c1e3abb2a"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "e4c5f7489af0dd2d697b23fc787b30a9e6c3c5f2bb6e9340542e7577dc36bb88"
+              },
+              "keeper": {
+                "ordinal": 19,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "ce67bfbfa937b9104552c5c2afec9a15368ae68815597601dbe6922b4b12f3dc"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 19,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.903333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1f850cb08527c7a80dfeb0413592e59ccb735b8a7ac9dd89fce1e1081722c2bc"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.902666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b17aec247925d0670f2a7945577b5d6beef190ed4ab202cde90535e1a6d2d687"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 5000.902,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8ec75d0ba018e497cb65b8e8fa1501812cab30e8fc0719168cbbe5c9a1dc1393"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 5000.900666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a584d612fc23c5156080e3120d52610a12d057eb2fc2ad115c65a219f4f88bb1"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 5000.888666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "bef2ea7044eaa91d18c9e9d3dcc9a05f00adda7914b8b312500b45d66acb7a14"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 5000.888,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "841e00d3acca8ebb3c1c0ce1bd248011b1cabe9b7909023af5bd0d5f848e66e8"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 3000.6466666666665,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "34c5c67043c83fd0afc74b201f51cf68a4818395a4871f790b4ad3fb42c822a8"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 3000.6426666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2b661ae27bc9c595072ca765e8a5a7a8c96909bebff945790c4c86015c3b43e2"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 3000.624,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "21585a37c1fc0873e3a3704423080809cf16294b1adafe680dd83cebce4f5ba4"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 3000.616,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e8cbf96bcaf7e91c2393985441f23422223eb1fb9735f9203eaff6187182d3ce"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 1000.1870833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "609301b807766f502af6b2f5c30d30e9c9031b529b77705efcfd4fbdd474333f"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 1000.0908333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0ad5fc665c7b05e92690123f5ef241bcb79c5b3421ab05f8e292c389530edf5c"
+                },
+                {
+                  "ordinal": 19,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "329d9fd5115f853d84e270db7c9a0228889e15eb0bb2fb0abc302538794bd417"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4/a7",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 7,
+            "serialOrdinal": 7,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 2394.277,
+            "finishedMs": 4875.582,
+            "wallMs": 2481.304,
+            "engineElapsedMs": 2480.345,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 309,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 41,
+                  "proposals": 32021,
+                  "firstShallowAt": null,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.447,
+            "candidates": {
+              "sample": {
+                "distance": 2000.4206666666666,
+                "exact": false,
+                "digest": "422c8ffbda294255e486aac6cc388f95c5cb4ae6b0e3ef387a61e920aac800ce"
+              },
+              "search": {
+                "distance": 2000.4206666666666,
+                "exact": false,
+                "digest": "422c8ffbda294255e486aac6cc388f95c5cb4ae6b0e3ef387a61e920aac800ce"
+              },
+              "keeper": {
+                "ordinal": 13,
+                "distance": 1000.20875,
+                "exact": false,
+                "digest": "9c82f96ba9aecd1351d5f7c6860c115d3dff4647eed4c025a2f055b956868918"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 19,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.897333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "4776600beaba6cf20cd2dd482f6ab42133280e37b15eed4319e05bc3d9b1b302"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 3000.64,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "39af2efd291074058445b3660395fbb3c4e9d72014bb13d5013f2b55f27b7f6e"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 3000.614666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f66849311fd77b6ab181f4e9b24ff50ce0430885358acb236737a73688b2fec2"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 3000.6133333333332,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "43daf373bd6112a6dd04cf71f4d29666389eb43b09b7aab3c8de0a525e3ef1a4"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 3000.6106666666665,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "ca2ac27ab7e7ce4eacb963d5022b57af640a4c9ba7911acec39d169d26af7a5a"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 3000.5906666666665,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a0a69fa24c5699a015280e1ae2c52d0a51f1081c0155c65cefcf0b48c4c1c076"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 3000.59,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6f75a72f4085e0b9b0446b0b268c36bc622fcd60d3ca87303cb03a18b23f5b13"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 3000.5866666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "27010fc53691032a2a0900640e0a7e5729e771bf270d496cdbb511f8cad75b99"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 3000.5853333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "5021be817d09d6bcc56a751eee63f6717205e5781001f9be30095b38d7eed094"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 3000.582,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "bf60657b8a128f5dcc047ac2f30fda80181ada91b5f94ad0c77eb9a9a930acae"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 1000.2270833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "1ab7842337a2bf012fe5ba550245392c3895f6d614fb682623def2318c240650"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 1000.2129166666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "01ac959dafd3f7888ba21bd5b32ed8da5dc5e8fd80a6029d944817eaa1409350"
+                },
+                {
+                  "ordinal": 13,
+                  "distance": 1000.20875,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e88463b7ed7b49be3536ed6db954ac835298fcccb44572dfd417106c273f1eaf"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4/a8",
+            "parentKey": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 8,
+            "serialOrdinal": 8,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 2476.276,
+            "finishedMs": 5768.699,
+            "wallMs": 3292.423,
+            "engineElapsedMs": 3291.723,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 686,
+              "proposals": 2682,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 1135,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.461,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "7db03e0f8b7dcf9fcde381aad77f248143620718a7acd7634f0df8e4375139d9"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "4af58582b94c7c44e498ba43e33fab81c6ca82238ea9b088b81d768cacd4273e"
+              },
+              "keeper": {
+                "ordinal": 96,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "7db03e0f8b7dcf9fcde381aad77f248143620718a7acd7634f0df8e4375139d9"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 179,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.908,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "db659c88dbbb54d2c23d10a9a54f67d7b02191f0ac1e6950d96e94f8d96a6343"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 5000.906666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0f55da2228e9a4ebd33fdd3f67a4f1ff769de546fe4bcaaff553618018845de4"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 5000.906,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "bfe858df0f24da86bcede2bf81286579f4bba818841a07c5ce9949198d0fa5f9"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 5000.905333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "562f7a22724046261567648b8f81c1f3ae9f30922288a8f2c801da6807f2dfd6"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 5000.904666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "129dcee6597c40e0bdd555af98b7e359ff5289b3659ae02ffb3c650866b081b4"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 5000.904,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6b82524c72040124fca41fcf44f68bcf3036b9cf3970acc10b0f3068d113791e"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 5000.903333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f04d31bd3bd45dff8b176df61aee96ccc38002bbcb68a245fb2ff9d3b902122a"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 3000.658,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "adbd3f90958708eb0a550ad2c86d2dfd98810c7a72689700793a6d525c01b117"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 3000.6573333333336,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "7cb5907e7b643b867e111eaf2fef9105eba982767f371d2f2edfd32e69b1831c"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 3000.6486666666665,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b1079e5cdd22f3145f27ea2539cb60aff9e88b692347070c2481d223a14393c9"
+                },
+                {
+                  "ordinal": 11,
+                  "distance": 1000.1904166666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f6c5e4128c4f297bd4dcd17559fbcba9a4f96099f1f86d848e2dc6cd85f8a333"
+                },
+                {
+                  "ordinal": 12,
+                  "distance": 1000.1345833333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2685b22d0c1c86977c19a377530303f2e008f9f9c74403bff74a62348c7bac05"
+                },
+                {
+                  "ordinal": 19,
+                  "distance": 1000.12375,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a2fa15f5ae840e1af99a0a593302483d6f1e204820ece37ad4d3932d1ea3e22b"
+                },
+                {
+                  "ordinal": 26,
+                  "distance": 1000.05,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b842b543a1a50457c9622612ce7324dda2eaae9e5db1db1beb105b56ff39e29d"
+                },
+                {
+                  "ordinal": 28,
+                  "distance": 1000.0245833333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a8fdd12d0d19047dae247348fb95c8890050ea1ca8777f5c7c707fb5d1526217"
+                },
+                {
+                  "ordinal": 30,
+                  "distance": 1000.01625,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f482999f9fbb3c1bb76eee09eb6d0d447b3b404832ab7f1e434c1cf1c0094cb5"
+                },
+                {
+                  "ordinal": 31,
+                  "distance": 1000.0154166666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "3030d2b258ed16cf7ee0b1993aac5d1768455f2d679a0284c7363d793c658b3f"
+                },
+                {
+                  "ordinal": 96,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b05001d61cdc829d196aad98101cc1866796c15e3a5d250b3f86e6e396b7247a"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          }
+        ]
+      },
+      "scoped": {
+        "messages": 8,
+        "solve": {
+          "solvesBegun": 21334,
+          "stepsApplied": 1519786,
+          "cellsInvalidated": 27242580,
+          "unitsInvalidated": 42014498,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 1520308,
+            "scopesVisited": 89840257,
+            "realScopes": 22071571,
+            "negativeRecorded": 21230607,
+            "positiveScopes": 840964,
+            "skippedScopes": 67768686,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 679344,
+            "scopesVisited": 16319983,
+            "realScopes": 6264036,
+            "negativeRecorded": 6080554,
+            "positiveScopes": 183482,
+            "skippedScopes": 10055947,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 495862,
+            "scopesVisited": 8596165,
+            "realScopes": 4698833,
+            "negativeRecorded": 4662115,
+            "positiveScopes": 36718,
+            "skippedScopes": 3897332,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 37010,
+            "scopesVisited": 1708732,
+            "realScopes": 569446,
+            "negativeRecorded": 567024,
+            "positiveScopes": 2422,
+            "skippedScopes": 1139285,
+            "enumNodesReal": 451549,
+            "enumNodesSkipped": 894589,
+            "realEntryChecks": 569446,
+            "virtualEntryChecks": 1139285,
+            "realNodeChecks": 9,
+            "virtualNodeChecks": 29,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 34587,
+            "scopesVisited": 1650814,
+            "realScopes": 550971,
+            "negativeRecorded": 550081,
+            "positiveScopes": 890,
+            "skippedScopes": 1099842,
+            "enumNodesReal": 381797,
+            "enumNodesSkipped": 763230,
+            "realEntryChecks": 550971,
+            "virtualEntryChecks": 1099842,
+            "realNodeChecks": 4,
+            "virtualNodeChecks": 13,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 33696,
+            "scopesVisited": 1616122,
+            "realScopes": 541670,
+            "negativeRecorded": 540963,
+            "positiveScopes": 707,
+            "skippedScopes": 1074448,
+            "enumNodesReal": 819075,
+            "enumNodesSkipped": 1521435,
+            "realEntryChecks": 541670,
+            "virtualEntryChecks": 1074448,
+            "realNodeChecks": 377,
+            "virtualNodeChecks": 888,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 32985,
+            "scopesVisited": 1596114,
+            "realScopes": 537050,
+            "negativeRecorded": 536721,
+            "positiveScopes": 329,
+            "skippedScopes": 1059062,
+            "enumNodesReal": 742547,
+            "enumNodesSkipped": 1354837,
+            "realEntryChecks": 537050,
+            "virtualEntryChecks": 1059062,
+            "realNodeChecks": 146,
+            "virtualNodeChecks": 493,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 6453,
+            "scopesVisited": 303492,
+            "realScopes": 125818,
+            "negativeRecorded": 125754,
+            "positiveScopes": 64,
+            "skippedScopes": 177674,
+            "enumNodesReal": 390375,
+            "enumNodesSkipped": 432339,
+            "realEntryChecks": 125818,
+            "virtualEntryChecks": 177674,
+            "realNodeChecks": 408,
+            "virtualNodeChecks": 612,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 6389,
+            "scopesVisited": 302083,
+            "realScopes": 125233,
+            "negativeRecorded": 125206,
+            "positiveScopes": 27,
+            "skippedScopes": 176850,
+            "enumNodesReal": 364552,
+            "enumNodesSkipped": 412647,
+            "realEntryChecks": 125233,
+            "virtualEntryChecks": 176850,
+            "realNodeChecks": 315,
+            "virtualNodeChecks": 551,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+    }
+  ]
+}

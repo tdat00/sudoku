@@ -1,0 +1,2177 @@
+{
+  "manifest": {
+    "schema": "ig-s-phase0/1",
+    "task": "IG-S03",
+    "round": "provisional-r1",
+    "evidenceStatus": "provisional (pre-freeze)",
+    "guards": {
+      "commandMs": 270000,
+      "requestMs": 180000,
+      "sampleMs": 45000,
+      "jigsawMs": 240000,
+      "validationMs": 60000,
+      "wrapperLimitMs": 300000,
+      "graceMs": 45000,
+      "finalizeReserveMs": 8000,
+      "startMarginMs": 2000,
+      "minWindowMs": 15000
+    },
+    "pairOrder": [
+      {
+        "pairId": "classic9:nightmare:1",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "classic9:nightmare:2",
+        "seedIndex": 1,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "classic9:nightmare:3",
+        "seedIndex": 2,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:1",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:2",
+        "seedIndex": 1,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:3",
+        "seedIndex": 2,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "killer:nightmare:1",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "killer:nightmare:2",
+        "seedIndex": 1,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "killer:nightmare:3",
+        "seedIndex": 2,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "mega12:nightmare:1",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "mega12:nightmare:2",
+        "seedIndex": 1,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "mega12:nightmare:3",
+        "seedIndex": 2,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "samurai:nightmare:1",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "samurai:nightmare:2",
+        "seedIndex": 1,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "samurai:nightmare:42",
+        "seedIndex": 2,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "mega16:nightmare:1",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "mega16:nightmare:2",
+        "seedIndex": 1,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "mega16:nightmare:3",
+        "seedIndex": 2,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      }
+    ],
+    "shards": [
+      {
+        "shard": "audit-1",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/audit-1/synthetic",
+          "IG-S03/audit-1/classic9:nightmare:1",
+          "IG-S03/audit-1/classic9:nightmare:2",
+          "IG-S03/audit-1/classic9:nightmare:3",
+          "IG-S03/audit-1/killer:nightmare:1",
+          "IG-S03/audit-1/killer:nightmare:2",
+          "IG-S03/audit-1/killer:nightmare:3",
+          "IG-S03/audit-1/greaterThan:nightmare:1",
+          "IG-S03/audit-1/greaterThan:nightmare:2",
+          "IG-S03/audit-1/greaterThan:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S03/audit-1/synthetic/audit",
+          "IG-S03/audit-1/classic9:nightmare:1/audit",
+          "IG-S03/audit-1/classic9:nightmare:2/audit",
+          "IG-S03/audit-1/classic9:nightmare:3/audit",
+          "IG-S03/audit-1/killer:nightmare:1/audit",
+          "IG-S03/audit-1/killer:nightmare:2/audit",
+          "IG-S03/audit-1/killer:nightmare:3/audit",
+          "IG-S03/audit-1/greaterThan:nightmare:1/audit",
+          "IG-S03/audit-1/greaterThan:nightmare:2/audit",
+          "IG-S03/audit-1/greaterThan:nightmare:3/audit"
+        ]
+      },
+      {
+        "shard": "audit-2",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/audit-2/samurai:nightmare:1",
+          "IG-S03/audit-2/samurai:nightmare:2",
+          "IG-S03/audit-2/samurai:nightmare:42",
+          "IG-S03/audit-2/mega12:nightmare:1",
+          "IG-S03/audit-2/mega12:nightmare:2",
+          "IG-S03/audit-2/mega12:nightmare:3",
+          "IG-S03/audit-2/mega16:nightmare:1",
+          "IG-S03/audit-2/mega16:nightmare:2",
+          "IG-S03/audit-2/mega16:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S03/audit-2/samurai:nightmare:1/audit",
+          "IG-S03/audit-2/samurai:nightmare:2/audit",
+          "IG-S03/audit-2/samurai:nightmare:42/audit",
+          "IG-S03/audit-2/mega12:nightmare:1/audit",
+          "IG-S03/audit-2/mega12:nightmare:2/audit",
+          "IG-S03/audit-2/mega12:nightmare:3/audit",
+          "IG-S03/audit-2/mega16:nightmare:1/audit",
+          "IG-S03/audit-2/mega16:nightmare:2/audit",
+          "IG-S03/audit-2/mega16:nightmare:3/audit"
+        ]
+      },
+      {
+        "shard": "sc-c9",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/sc-c9/classic9:nightmare:1",
+          "IG-S03/sc-c9/classic9:nightmare:2",
+          "IG-S03/sc-c9/classic9:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+          "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+          "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4"
+        ]
+      },
+      {
+        "shard": "sc-gt",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/sc-gt/greaterThan:nightmare:1",
+          "IG-S03/sc-gt/greaterThan:nightmare:2",
+          "IG-S03/sc-gt/greaterThan:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S03/sc-gt/greaterThan:nightmare:1/scoped-attempts-w4",
+          "IG-S03/sc-gt/greaterThan:nightmare:2/scoped-attempts-w4",
+          "IG-S03/sc-gt/greaterThan:nightmare:3/scoped-attempts-w4"
+        ]
+      },
+      {
+        "shard": "sc-killer",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/sc-killer/killer:nightmare:1",
+          "IG-S03/sc-killer/killer:nightmare:2",
+          "IG-S03/sc-killer/killer:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+          "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+          "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4"
+        ]
+      },
+      {
+        "shard": "sc-m12",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/sc-m12/mega12:nightmare:1",
+          "IG-S03/sc-m12/mega12:nightmare:2",
+          "IG-S03/sc-m12/mega12:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S03/sc-m12/mega12:nightmare:1/scoped-attempts-w4",
+          "IG-S03/sc-m12/mega12:nightmare:2/scoped-attempts-w4",
+          "IG-S03/sc-m12/mega12:nightmare:3/scoped-attempts-w4"
+        ]
+      },
+      {
+        "shard": "sc-sam",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/sc-sam/samurai:nightmare:1",
+          "IG-S03/sc-sam/samurai:nightmare:2",
+          "IG-S03/sc-sam/samurai:nightmare:42"
+        ],
+        "jobKeys": [
+          "IG-S03/sc-sam/samurai:nightmare:1/scoped-attempts-w4",
+          "IG-S03/sc-sam/samurai:nightmare:2/scoped-attempts-w4",
+          "IG-S03/sc-sam/samurai:nightmare:42/scoped-attempts-w4"
+        ]
+      },
+      {
+        "shard": "sc-m16",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/sc-m16/mega16:nightmare:1",
+          "IG-S03/sc-m16/mega16:nightmare:2",
+          "IG-S03/sc-m16/mega16:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S03/sc-m16/mega16:nightmare:1/scoped-attempts-w4",
+          "IG-S03/sc-m16/mega16:nightmare:2/scoped-attempts-w4",
+          "IG-S03/sc-m16/mega16:nightmare:3/scoped-attempts-w4"
+        ]
+      },
+      {
+        "shard": "ser-small",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/ser-small/classic9:nightmare:3",
+          "IG-S03/ser-small/killer:nightmare:3",
+          "IG-S03/ser-small/greaterThan:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S03/ser-small/classic9:nightmare:3/scoped-native-w1",
+          "IG-S03/ser-small/killer:nightmare:3/scoped-native-w1",
+          "IG-S03/ser-small/greaterThan:nightmare:3/scoped-native-w1"
+        ]
+      },
+      {
+        "shard": "ser-m12-sam",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/ser-m12-sam/mega12:nightmare:3",
+          "IG-S03/ser-m12-sam/samurai:nightmare:42"
+        ],
+        "jobKeys": [
+          "IG-S03/ser-m12-sam/mega12:nightmare:3/scoped-native-w1",
+          "IG-S03/ser-m12-sam/samurai:nightmare:42/scoped-native-w1"
+        ]
+      },
+      {
+        "shard": "ser-m16",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S03/ser-m16/mega16:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S03/ser-m16/mega16:nightmare:3/scoped-native-w1"
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "blockKey": "IG-S03/audit-1/synthetic",
+        "shard": "audit-1",
+        "jobKeys": [
+          "IG-S03/audit-1/synthetic/audit"
+        ],
+        "estimateMs": 30000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/classic9:nightmare:1",
+        "shard": "audit-1",
+        "jobKeys": [
+          "IG-S03/audit-1/classic9:nightmare:1/audit"
+        ],
+        "estimateMs": 8000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/classic9:nightmare:2",
+        "shard": "audit-1",
+        "jobKeys": [
+          "IG-S03/audit-1/classic9:nightmare:2/audit"
+        ],
+        "estimateMs": 8000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/classic9:nightmare:3",
+        "shard": "audit-1",
+        "jobKeys": [
+          "IG-S03/audit-1/classic9:nightmare:3/audit"
+        ],
+        "estimateMs": 8000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/killer:nightmare:1",
+        "shard": "audit-1",
+        "jobKeys": [
+          "IG-S03/audit-1/killer:nightmare:1/audit"
+        ],
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/killer:nightmare:2",
+        "shard": "audit-1",
+        "jobKeys": [
+          "IG-S03/audit-1/killer:nightmare:2/audit"
+        ],
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/killer:nightmare:3",
+        "shard": "audit-1",
+        "jobKeys": [
+          "IG-S03/audit-1/killer:nightmare:3/audit"
+        ],
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/greaterThan:nightmare:1",
+        "shard": "audit-1",
+        "jobKeys": [
+          "IG-S03/audit-1/greaterThan:nightmare:1/audit"
+        ],
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/greaterThan:nightmare:2",
+        "shard": "audit-1",
+        "jobKeys": [
+          "IG-S03/audit-1/greaterThan:nightmare:2/audit"
+        ],
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/greaterThan:nightmare:3",
+        "shard": "audit-1",
+        "jobKeys": [
+          "IG-S03/audit-1/greaterThan:nightmare:3/audit"
+        ],
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/samurai:nightmare:1",
+        "shard": "audit-2",
+        "jobKeys": [
+          "IG-S03/audit-2/samurai:nightmare:1/audit"
+        ],
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/samurai:nightmare:2",
+        "shard": "audit-2",
+        "jobKeys": [
+          "IG-S03/audit-2/samurai:nightmare:2/audit"
+        ],
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/samurai:nightmare:42",
+        "shard": "audit-2",
+        "jobKeys": [
+          "IG-S03/audit-2/samurai:nightmare:42/audit"
+        ],
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega12:nightmare:1",
+        "shard": "audit-2",
+        "jobKeys": [
+          "IG-S03/audit-2/mega12:nightmare:1/audit"
+        ],
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega12:nightmare:2",
+        "shard": "audit-2",
+        "jobKeys": [
+          "IG-S03/audit-2/mega12:nightmare:2/audit"
+        ],
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega12:nightmare:3",
+        "shard": "audit-2",
+        "jobKeys": [
+          "IG-S03/audit-2/mega12:nightmare:3/audit"
+        ],
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega16:nightmare:1",
+        "shard": "audit-2",
+        "jobKeys": [
+          "IG-S03/audit-2/mega16:nightmare:1/audit"
+        ],
+        "estimateMs": 30000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega16:nightmare:2",
+        "shard": "audit-2",
+        "jobKeys": [
+          "IG-S03/audit-2/mega16:nightmare:2/audit"
+        ],
+        "estimateMs": 30000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega16:nightmare:3",
+        "shard": "audit-2",
+        "jobKeys": [
+          "IG-S03/audit-2/mega16:nightmare:3/audit"
+        ],
+        "estimateMs": 30000
+      },
+      {
+        "blockKey": "IG-S03/sc-c9/classic9:nightmare:1",
+        "shard": "sc-c9",
+        "jobKeys": [
+          "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4"
+        ],
+        "estimateMs": 5000
+      },
+      {
+        "blockKey": "IG-S03/sc-c9/classic9:nightmare:2",
+        "shard": "sc-c9",
+        "jobKeys": [
+          "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4"
+        ],
+        "estimateMs": 5000
+      },
+      {
+        "blockKey": "IG-S03/sc-c9/classic9:nightmare:3",
+        "shard": "sc-c9",
+        "jobKeys": [
+          "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4"
+        ],
+        "estimateMs": 5000
+      },
+      {
+        "blockKey": "IG-S03/sc-gt/greaterThan:nightmare:1",
+        "shard": "sc-gt",
+        "jobKeys": [
+          "IG-S03/sc-gt/greaterThan:nightmare:1/scoped-attempts-w4"
+        ],
+        "estimateMs": 10000
+      },
+      {
+        "blockKey": "IG-S03/sc-gt/greaterThan:nightmare:2",
+        "shard": "sc-gt",
+        "jobKeys": [
+          "IG-S03/sc-gt/greaterThan:nightmare:2/scoped-attempts-w4"
+        ],
+        "estimateMs": 10000
+      },
+      {
+        "blockKey": "IG-S03/sc-gt/greaterThan:nightmare:3",
+        "shard": "sc-gt",
+        "jobKeys": [
+          "IG-S03/sc-gt/greaterThan:nightmare:3/scoped-attempts-w4"
+        ],
+        "estimateMs": 10000
+      },
+      {
+        "blockKey": "IG-S03/sc-killer/killer:nightmare:1",
+        "shard": "sc-killer",
+        "jobKeys": [
+          "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4"
+        ],
+        "estimateMs": 14000
+      },
+      {
+        "blockKey": "IG-S03/sc-killer/killer:nightmare:2",
+        "shard": "sc-killer",
+        "jobKeys": [
+          "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4"
+        ],
+        "estimateMs": 14000
+      },
+      {
+        "blockKey": "IG-S03/sc-killer/killer:nightmare:3",
+        "shard": "sc-killer",
+        "jobKeys": [
+          "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4"
+        ],
+        "estimateMs": 14000
+      },
+      {
+        "blockKey": "IG-S03/sc-m12/mega12:nightmare:1",
+        "shard": "sc-m12",
+        "jobKeys": [
+          "IG-S03/sc-m12/mega12:nightmare:1/scoped-attempts-w4"
+        ],
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/sc-m12/mega12:nightmare:2",
+        "shard": "sc-m12",
+        "jobKeys": [
+          "IG-S03/sc-m12/mega12:nightmare:2/scoped-attempts-w4"
+        ],
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/sc-m12/mega12:nightmare:3",
+        "shard": "sc-m12",
+        "jobKeys": [
+          "IG-S03/sc-m12/mega12:nightmare:3/scoped-attempts-w4"
+        ],
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/sc-sam/samurai:nightmare:1",
+        "shard": "sc-sam",
+        "jobKeys": [
+          "IG-S03/sc-sam/samurai:nightmare:1/scoped-attempts-w4"
+        ],
+        "estimateMs": 24000
+      },
+      {
+        "blockKey": "IG-S03/sc-sam/samurai:nightmare:2",
+        "shard": "sc-sam",
+        "jobKeys": [
+          "IG-S03/sc-sam/samurai:nightmare:2/scoped-attempts-w4"
+        ],
+        "estimateMs": 24000
+      },
+      {
+        "blockKey": "IG-S03/sc-sam/samurai:nightmare:42",
+        "shard": "sc-sam",
+        "jobKeys": [
+          "IG-S03/sc-sam/samurai:nightmare:42/scoped-attempts-w4"
+        ],
+        "estimateMs": 24000
+      },
+      {
+        "blockKey": "IG-S03/sc-m16/mega16:nightmare:1",
+        "shard": "sc-m16",
+        "jobKeys": [
+          "IG-S03/sc-m16/mega16:nightmare:1/scoped-attempts-w4"
+        ],
+        "estimateMs": 55000
+      },
+      {
+        "blockKey": "IG-S03/sc-m16/mega16:nightmare:2",
+        "shard": "sc-m16",
+        "jobKeys": [
+          "IG-S03/sc-m16/mega16:nightmare:2/scoped-attempts-w4"
+        ],
+        "estimateMs": 55000
+      },
+      {
+        "blockKey": "IG-S03/sc-m16/mega16:nightmare:3",
+        "shard": "sc-m16",
+        "jobKeys": [
+          "IG-S03/sc-m16/mega16:nightmare:3/scoped-attempts-w4"
+        ],
+        "estimateMs": 55000
+      },
+      {
+        "blockKey": "IG-S03/ser-small/classic9:nightmare:3",
+        "shard": "ser-small",
+        "jobKeys": [
+          "IG-S03/ser-small/classic9:nightmare:3/scoped-native-w1"
+        ],
+        "estimateMs": 9000
+      },
+      {
+        "blockKey": "IG-S03/ser-small/killer:nightmare:3",
+        "shard": "ser-small",
+        "jobKeys": [
+          "IG-S03/ser-small/killer:nightmare:3/scoped-native-w1"
+        ],
+        "estimateMs": 32000
+      },
+      {
+        "blockKey": "IG-S03/ser-small/greaterThan:nightmare:3",
+        "shard": "ser-small",
+        "jobKeys": [
+          "IG-S03/ser-small/greaterThan:nightmare:3/scoped-native-w1"
+        ],
+        "estimateMs": 22000
+      },
+      {
+        "blockKey": "IG-S03/ser-m12-sam/mega12:nightmare:3",
+        "shard": "ser-m12-sam",
+        "jobKeys": [
+          "IG-S03/ser-m12-sam/mega12:nightmare:3/scoped-native-w1"
+        ],
+        "estimateMs": 32000
+      },
+      {
+        "blockKey": "IG-S03/ser-m12-sam/samurai:nightmare:42",
+        "shard": "ser-m12-sam",
+        "jobKeys": [
+          "IG-S03/ser-m12-sam/samurai:nightmare:42/scoped-native-w1"
+        ],
+        "estimateMs": 36000
+      },
+      {
+        "blockKey": "IG-S03/ser-m16/mega16:nightmare:3",
+        "shard": "ser-m16",
+        "jobKeys": [
+          "IG-S03/ser-m16/mega16:nightmare:3/scoped-native-w1"
+        ],
+        "estimateMs": 120000
+      }
+    ],
+    "jobs": [
+      {
+        "blockKey": "IG-S03/audit-1/synthetic",
+        "shard": "audit-1",
+        "order": 0,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-1/synthetic/audit",
+        "pairId": null,
+        "requestSeed": 0,
+        "variantId": "solver-audit",
+        "puzzleVariant": "synthetic",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "synthetic",
+          "scenarios": [
+            {
+              "id": "syn-m16-1",
+              "variantId": "mega16",
+              "cells": 256,
+              "digits": 16,
+              "seed": 20261114,
+              "rounds": 6,
+              "mutations": 4,
+              "placeShare": 0.4,
+              "initialStateHash": "adbb3afd4a912819c52682192d99a75311dc3fbb5e5353d7345d4c8fa9cc8bce"
+            },
+            {
+              "id": "syn-m16-2",
+              "variantId": "mega16",
+              "cells": 256,
+              "digits": 16,
+              "seed": 20261115,
+              "rounds": 6,
+              "mutations": 4,
+              "placeShare": 0.4,
+              "initialStateHash": "2806481bbfadd06562917d333034fe3bed4afd77264e452b84eb85a7855f7f1d"
+            },
+            {
+              "id": "syn-m16-3",
+              "variantId": "mega16",
+              "cells": 256,
+              "digits": 16,
+              "seed": 20261116,
+              "rounds": 6,
+              "mutations": 4,
+              "placeShare": 0.4,
+              "initialStateHash": "fd6c6b101ad6a4066898f2f0ce06a6dcd21ebe63e40832e802ec43eba4bd4aa1"
+            },
+            {
+              "id": "syn-m16-4",
+              "variantId": "mega16",
+              "cells": 256,
+              "digits": 16,
+              "seed": 20261117,
+              "rounds": 6,
+              "mutations": 4,
+              "placeShare": 0.4,
+              "initialStateHash": "80de16b075376a03f1ba5452a059b307cce59090404f100605bb99e8e6c4fa63"
+            },
+            {
+              "id": "syn-m16-5",
+              "variantId": "mega16",
+              "cells": 256,
+              "digits": 16,
+              "seed": 20261118,
+              "rounds": 6,
+              "mutations": 4,
+              "placeShare": 0.4,
+              "initialStateHash": "cd4bbec734f86094e0e10c49c07cd73364be89d01c0431702552b042a7c1ddc0"
+            },
+            {
+              "id": "syn-m16-6",
+              "variantId": "mega16",
+              "cells": 256,
+              "digits": 16,
+              "seed": 20261119,
+              "rounds": 6,
+              "mutations": 4,
+              "placeShare": 0.4,
+              "initialStateHash": "9e50cc96c0cc43f4c04c0d7f9294c5c77b356c9a16cbf0c31562f4ba2bca54e0"
+            },
+            {
+              "id": "syn-m12-1",
+              "variantId": "mega12",
+              "cells": 144,
+              "digits": 12,
+              "seed": 20261214,
+              "rounds": 6,
+              "mutations": 4,
+              "placeShare": 0.4,
+              "initialStateHash": "fc5b47326a6481d08f9beb69b9c4167ed734b254839ca0665afc811839d342ae"
+            },
+            {
+              "id": "syn-m12-2",
+              "variantId": "mega12",
+              "cells": 144,
+              "digits": 12,
+              "seed": 20261215,
+              "rounds": 6,
+              "mutations": 4,
+              "placeShare": 0.4,
+              "initialStateHash": "259e131d41216195aba4f7fb853822e5cec85a1a98e11666f112ecd4ea27fd00"
+            },
+            {
+              "id": "syn-m12-3",
+              "variantId": "mega12",
+              "cells": 144,
+              "digits": 12,
+              "seed": 20261216,
+              "rounds": 6,
+              "mutations": 4,
+              "placeShare": 0.4,
+              "initialStateHash": "1787479550f9b3e94193e2ed5ced15b64c0c6d5ec7bc53f39da3ba04595ed476"
+            }
+          ],
+          "mutationPuzzle": {
+            "cell": "classic9",
+            "seed": 1,
+            "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-1.json",
+            "sha256": "070d126175156af47578e855cf11041d00728df43e14131a2cbab209251a9267"
+          }
+        },
+        "estimateMs": 30000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/classic9:nightmare:1",
+        "shard": "audit-1",
+        "order": 2,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-1/classic9:nightmare:1/audit",
+        "pairId": null,
+        "requestSeed": 1,
+        "variantId": "solver-audit",
+        "puzzleVariant": "classic9",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "classic9",
+          "seed": 1,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-1.json",
+          "sha256": "070d126175156af47578e855cf11041d00728df43e14131a2cbab209251a9267"
+        },
+        "estimateMs": 8000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/classic9:nightmare:2",
+        "shard": "audit-1",
+        "order": 4,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-1/classic9:nightmare:2/audit",
+        "pairId": null,
+        "requestSeed": 2,
+        "variantId": "solver-audit",
+        "puzzleVariant": "classic9",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "classic9",
+          "seed": 2,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-2.json",
+          "sha256": "feccda67327c42c937a4c003f0e761544591b9194935a77494507a0eb423b088"
+        },
+        "estimateMs": 8000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/classic9:nightmare:3",
+        "shard": "audit-1",
+        "order": 6,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-1/classic9:nightmare:3/audit",
+        "pairId": null,
+        "requestSeed": 3,
+        "variantId": "solver-audit",
+        "puzzleVariant": "classic9",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "classic9",
+          "seed": 3,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-3.json",
+          "sha256": "9cc47b23f0d6b5d93abc1ad1b176a0af7733c434ab4d7ba5da4941f593792fe6"
+        },
+        "estimateMs": 8000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/killer:nightmare:1",
+        "shard": "audit-1",
+        "order": 8,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-1/killer:nightmare:1/audit",
+        "pairId": null,
+        "requestSeed": 1,
+        "variantId": "solver-audit",
+        "puzzleVariant": "killer",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "killer",
+          "seed": 1,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/killer/puzzles/native-w1__killer-1.json",
+          "sha256": "ae727f15f21f5761e5e7862bc8c544df095f7a7cf8f03a0a55c5947fc20fd483"
+        },
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/killer:nightmare:2",
+        "shard": "audit-1",
+        "order": 10,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-1/killer:nightmare:2/audit",
+        "pairId": null,
+        "requestSeed": 2,
+        "variantId": "solver-audit",
+        "puzzleVariant": "killer",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "killer",
+          "seed": 2,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/killer/puzzles/native-w1__killer-2.json",
+          "sha256": "468d7be35881a661bcfcdec40666ba1968c5c836f6495f3d1c44acc04254260a"
+        },
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/killer:nightmare:3",
+        "shard": "audit-1",
+        "order": 12,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-1/killer:nightmare:3/audit",
+        "pairId": null,
+        "requestSeed": 3,
+        "variantId": "solver-audit",
+        "puzzleVariant": "killer",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "killer",
+          "seed": 3,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/killer/puzzles/native-w1__killer-3.json",
+          "sha256": "d5744e0a7ac75a3f9e2f6e09f95817e688f8ca527f17376e036bd03260854c14"
+        },
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/greaterThan:nightmare:1",
+        "shard": "audit-1",
+        "order": 14,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-1/greaterThan:nightmare:1/audit",
+        "pairId": null,
+        "requestSeed": 1,
+        "variantId": "solver-audit",
+        "puzzleVariant": "greaterThan",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "greaterThan",
+          "seed": 1,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/gt/puzzles/native-w1__greaterThan-1.json",
+          "sha256": "5587527f8752c6258dc8a558ba0d1819a48162c4c2badfa73b8906fd8c11e5dc"
+        },
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/greaterThan:nightmare:2",
+        "shard": "audit-1",
+        "order": 16,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-1/greaterThan:nightmare:2/audit",
+        "pairId": null,
+        "requestSeed": 2,
+        "variantId": "solver-audit",
+        "puzzleVariant": "greaterThan",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "greaterThan",
+          "seed": 2,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/gt/puzzles/native-w1__greaterThan-2.json",
+          "sha256": "90e58b059f9d3d6df3f1920fad6b2868b3f4625ae186faf4332bcac62728744f"
+        },
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-1/greaterThan:nightmare:3",
+        "shard": "audit-1",
+        "order": 18,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-1/greaterThan:nightmare:3/audit",
+        "pairId": null,
+        "requestSeed": 3,
+        "variantId": "solver-audit",
+        "puzzleVariant": "greaterThan",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "greaterThan",
+          "seed": 3,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/gt/puzzles/native-w1__greaterThan-3.json",
+          "sha256": "e3483c81833c5849a0c171b1af3b9ca552c0512a0ff319e89838df4b52694252"
+        },
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/samurai:nightmare:1",
+        "shard": "audit-2",
+        "order": 0,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-2/samurai:nightmare:1/audit",
+        "pairId": null,
+        "requestSeed": 1,
+        "variantId": "solver-audit",
+        "puzzleVariant": "samurai",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "samurai",
+          "seed": 1,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/sam/puzzles/native-w1__samurai-1.json",
+          "sha256": "bb6ba2c365a401df5ec64ec1f80db9666868d605eae8b26c6411df18f39853f6"
+        },
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/samurai:nightmare:2",
+        "shard": "audit-2",
+        "order": 2,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-2/samurai:nightmare:2/audit",
+        "pairId": null,
+        "requestSeed": 2,
+        "variantId": "solver-audit",
+        "puzzleVariant": "samurai",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "samurai",
+          "seed": 2,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/sam/puzzles/native-w1__samurai-2.json",
+          "sha256": "80a1306fdd97a332df3431421b347bd6dc807a3c67ad9e2ae3417a8d1090d995"
+        },
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/samurai:nightmare:42",
+        "shard": "audit-2",
+        "order": 4,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-2/samurai:nightmare:42/audit",
+        "pairId": null,
+        "requestSeed": 42,
+        "variantId": "solver-audit",
+        "puzzleVariant": "samurai",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "samurai",
+          "seed": 42,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/sam/puzzles/native-w1__samurai-42.json",
+          "sha256": "5757ed7c4691f6202c1430a35c922b7e3772e5da75f99be1be5b45962afa03eb"
+        },
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega12:nightmare:1",
+        "shard": "audit-2",
+        "order": 6,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-2/mega12:nightmare:1/audit",
+        "pairId": null,
+        "requestSeed": 1,
+        "variantId": "solver-audit",
+        "puzzleVariant": "mega12",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "mega12",
+          "seed": 1,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m12/puzzles/native-w1__mega12-1.json",
+          "sha256": "6fb88ac87e2321d0b9ac05e554768f5d301585c7d95e767a38d4d6e696082af1"
+        },
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega12:nightmare:2",
+        "shard": "audit-2",
+        "order": 8,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-2/mega12:nightmare:2/audit",
+        "pairId": null,
+        "requestSeed": 2,
+        "variantId": "solver-audit",
+        "puzzleVariant": "mega12",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "mega12",
+          "seed": 2,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m12/puzzles/native-w1__mega12-2.json",
+          "sha256": "d069c2645b8f307cc6166e45b26f84b7d351f29f821fa0462c6381163c68115f"
+        },
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega12:nightmare:3",
+        "shard": "audit-2",
+        "order": 10,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-2/mega12:nightmare:3/audit",
+        "pairId": null,
+        "requestSeed": 3,
+        "variantId": "solver-audit",
+        "puzzleVariant": "mega12",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "mega12",
+          "seed": 3,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m12/puzzles/native-w1__mega12-3.json",
+          "sha256": "f4ea1b42f7f0200461edcab81073df147e22bf08de86f5655ae375383a79e292"
+        },
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega16:nightmare:1",
+        "shard": "audit-2",
+        "order": 12,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-2/mega16:nightmare:1/audit",
+        "pairId": null,
+        "requestSeed": 1,
+        "variantId": "solver-audit",
+        "puzzleVariant": "mega16",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "mega16",
+          "seed": 1,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m16-1/puzzles/native-w1__mega16-1.json",
+          "sha256": "0ee52a63079fc1d7f91e654be88b72910c8ee4e98c89f08517dfd22c126f1c3f"
+        },
+        "estimateMs": 30000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega16:nightmare:2",
+        "shard": "audit-2",
+        "order": 14,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-2/mega16:nightmare:2/audit",
+        "pairId": null,
+        "requestSeed": 2,
+        "variantId": "solver-audit",
+        "puzzleVariant": "mega16",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "mega16",
+          "seed": 2,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m16-2/puzzles/native-w1__mega16-2.json",
+          "sha256": "de1f87ae54f277f0e9022796027c1708658013243fa9a82f07bcfad3bdbdca73"
+        },
+        "estimateMs": 30000
+      },
+      {
+        "blockKey": "IG-S03/audit-2/mega16:nightmare:3",
+        "shard": "audit-2",
+        "order": 16,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/audit-2/mega16:nightmare:3/audit",
+        "pairId": null,
+        "requestSeed": 3,
+        "variantId": "solver-audit",
+        "puzzleVariant": "mega16",
+        "arm": "audit",
+        "solverMode": "scoped-audit",
+        "executor": "solver-audit",
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "request": null,
+        "audit": {
+          "kind": "puzzle",
+          "cell": "mega16",
+          "seed": 3,
+          "file": "docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/m16-3/puzzles/native-w1__mega16-3.json",
+          "sha256": "6133ce80dfecabe6af91a3a002ede4f6fd0040d620891604bbec1dad635fd3d2"
+        },
+        "estimateMs": 30000
+      },
+      {
+        "blockKey": "IG-S03/sc-c9/classic9:nightmare:1",
+        "shard": "sc-c9",
+        "order": 0,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+        "pairId": "classic9:nightmare:1",
+        "requestSeed": 1,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "classic9",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 1,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 5000
+      },
+      {
+        "blockKey": "IG-S03/sc-c9/classic9:nightmare:2",
+        "shard": "sc-c9",
+        "order": 2,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+        "pairId": "classic9:nightmare:2",
+        "requestSeed": 2,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "classic9",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 2,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 5000
+      },
+      {
+        "blockKey": "IG-S03/sc-c9/classic9:nightmare:3",
+        "shard": "sc-c9",
+        "order": 4,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+        "pairId": "classic9:nightmare:3",
+        "requestSeed": 3,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "classic9",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 5000
+      },
+      {
+        "blockKey": "IG-S03/sc-gt/greaterThan:nightmare:1",
+        "shard": "sc-gt",
+        "order": 0,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-gt/greaterThan:nightmare:1/scoped-attempts-w4",
+        "pairId": "greaterThan:nightmare:1",
+        "requestSeed": 1,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "greaterThan",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 1,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 10000
+      },
+      {
+        "blockKey": "IG-S03/sc-gt/greaterThan:nightmare:2",
+        "shard": "sc-gt",
+        "order": 2,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-gt/greaterThan:nightmare:2/scoped-attempts-w4",
+        "pairId": "greaterThan:nightmare:2",
+        "requestSeed": 2,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "greaterThan",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 2,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 10000
+      },
+      {
+        "blockKey": "IG-S03/sc-gt/greaterThan:nightmare:3",
+        "shard": "sc-gt",
+        "order": 4,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-gt/greaterThan:nightmare:3/scoped-attempts-w4",
+        "pairId": "greaterThan:nightmare:3",
+        "requestSeed": 3,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "greaterThan",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 10000
+      },
+      {
+        "blockKey": "IG-S03/sc-killer/killer:nightmare:1",
+        "shard": "sc-killer",
+        "order": 0,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-killer/killer:nightmare:1/scoped-attempts-w4",
+        "pairId": "killer:nightmare:1",
+        "requestSeed": 1,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "killer",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "killer",
+          "difficulty": "nightmare",
+          "seed": 1,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 14000
+      },
+      {
+        "blockKey": "IG-S03/sc-killer/killer:nightmare:2",
+        "shard": "sc-killer",
+        "order": 2,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-killer/killer:nightmare:2/scoped-attempts-w4",
+        "pairId": "killer:nightmare:2",
+        "requestSeed": 2,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "killer",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "killer",
+          "difficulty": "nightmare",
+          "seed": 2,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 14000
+      },
+      {
+        "blockKey": "IG-S03/sc-killer/killer:nightmare:3",
+        "shard": "sc-killer",
+        "order": 4,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-killer/killer:nightmare:3/scoped-attempts-w4",
+        "pairId": "killer:nightmare:3",
+        "requestSeed": 3,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "killer",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "killer",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 14000
+      },
+      {
+        "blockKey": "IG-S03/sc-m12/mega12:nightmare:1",
+        "shard": "sc-m12",
+        "order": 0,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-m12/mega12:nightmare:1/scoped-attempts-w4",
+        "pairId": "mega12:nightmare:1",
+        "requestSeed": 1,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "mega12",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 1,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/sc-m12/mega12:nightmare:2",
+        "shard": "sc-m12",
+        "order": 2,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-m12/mega12:nightmare:2/scoped-attempts-w4",
+        "pairId": "mega12:nightmare:2",
+        "requestSeed": 2,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "mega12",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 2,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/sc-m12/mega12:nightmare:3",
+        "shard": "sc-m12",
+        "order": 4,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-m12/mega12:nightmare:3/scoped-attempts-w4",
+        "pairId": "mega12:nightmare:3",
+        "requestSeed": 3,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "mega12",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 15000
+      },
+      {
+        "blockKey": "IG-S03/sc-sam/samurai:nightmare:1",
+        "shard": "sc-sam",
+        "order": 0,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-sam/samurai:nightmare:1/scoped-attempts-w4",
+        "pairId": "samurai:nightmare:1",
+        "requestSeed": 1,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "samurai",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 1,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 24000
+      },
+      {
+        "blockKey": "IG-S03/sc-sam/samurai:nightmare:2",
+        "shard": "sc-sam",
+        "order": 2,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-sam/samurai:nightmare:2/scoped-attempts-w4",
+        "pairId": "samurai:nightmare:2",
+        "requestSeed": 2,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "samurai",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 2,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 24000
+      },
+      {
+        "blockKey": "IG-S03/sc-sam/samurai:nightmare:42",
+        "shard": "sc-sam",
+        "order": 4,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-sam/samurai:nightmare:42/scoped-attempts-w4",
+        "pairId": "samurai:nightmare:42",
+        "requestSeed": 42,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "samurai",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 42,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 24000
+      },
+      {
+        "blockKey": "IG-S03/sc-m16/mega16:nightmare:1",
+        "shard": "sc-m16",
+        "order": 0,
+        "seedIndex": 0,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-m16/mega16:nightmare:1/scoped-attempts-w4",
+        "pairId": "mega16:nightmare:1",
+        "requestSeed": 1,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "mega16",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 1,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 55000
+      },
+      {
+        "blockKey": "IG-S03/sc-m16/mega16:nightmare:2",
+        "shard": "sc-m16",
+        "order": 2,
+        "seedIndex": 1,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-m16/mega16:nightmare:2/scoped-attempts-w4",
+        "pairId": "mega16:nightmare:2",
+        "requestSeed": 2,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "mega16",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 2,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 55000
+      },
+      {
+        "blockKey": "IG-S03/sc-m16/mega16:nightmare:3",
+        "shard": "sc-m16",
+        "order": 4,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/sc-m16/mega16:nightmare:3/scoped-attempts-w4",
+        "pairId": "mega16:nightmare:3",
+        "requestSeed": 3,
+        "variantId": "scoped-attempts-w4",
+        "puzzleVariant": "mega16",
+        "arm": "prototype",
+        "solverMode": "scoped-attempts-w4",
+        "executor": "scoped-pool",
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 55000
+      },
+      {
+        "blockKey": "IG-S03/ser-small/classic9:nightmare:3",
+        "shard": "ser-small",
+        "order": 0,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/ser-small/classic9:nightmare:3/scoped-native-w1",
+        "pairId": "classic9:nightmare:3",
+        "requestSeed": 3,
+        "variantId": "scoped-native-w1",
+        "puzzleVariant": "classic9",
+        "arm": "prototype",
+        "solverMode": "scoped-native-w1",
+        "executor": "scoped-native",
+        "adapterIds": [
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 9000
+      },
+      {
+        "blockKey": "IG-S03/ser-small/killer:nightmare:3",
+        "shard": "ser-small",
+        "order": 2,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/ser-small/killer:nightmare:3/scoped-native-w1",
+        "pairId": "killer:nightmare:3",
+        "requestSeed": 3,
+        "variantId": "scoped-native-w1",
+        "puzzleVariant": "killer",
+        "arm": "prototype",
+        "solverMode": "scoped-native-w1",
+        "executor": "scoped-native",
+        "adapterIds": [
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "killer",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 32000
+      },
+      {
+        "blockKey": "IG-S03/ser-small/greaterThan:nightmare:3",
+        "shard": "ser-small",
+        "order": 4,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/ser-small/greaterThan:nightmare:3/scoped-native-w1",
+        "pairId": "greaterThan:nightmare:3",
+        "requestSeed": 3,
+        "variantId": "scoped-native-w1",
+        "puzzleVariant": "greaterThan",
+        "arm": "prototype",
+        "solverMode": "scoped-native-w1",
+        "executor": "scoped-native",
+        "adapterIds": [
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 22000
+      },
+      {
+        "blockKey": "IG-S03/ser-m12-sam/mega12:nightmare:3",
+        "shard": "ser-m12-sam",
+        "order": 0,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/ser-m12-sam/mega12:nightmare:3/scoped-native-w1",
+        "pairId": "mega12:nightmare:3",
+        "requestSeed": 3,
+        "variantId": "scoped-native-w1",
+        "puzzleVariant": "mega12",
+        "arm": "prototype",
+        "solverMode": "scoped-native-w1",
+        "executor": "scoped-native",
+        "adapterIds": [
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 32000
+      },
+      {
+        "blockKey": "IG-S03/ser-m12-sam/samurai:nightmare:42",
+        "shard": "ser-m12-sam",
+        "order": 2,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/ser-m12-sam/samurai:nightmare:42/scoped-native-w1",
+        "pairId": "samurai:nightmare:42",
+        "requestSeed": 42,
+        "variantId": "scoped-native-w1",
+        "puzzleVariant": "samurai",
+        "arm": "prototype",
+        "solverMode": "scoped-native-w1",
+        "executor": "scoped-native",
+        "adapterIds": [
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 42,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 36000
+      },
+      {
+        "blockKey": "IG-S03/ser-m16/mega16:nightmare:3",
+        "shard": "ser-m16",
+        "order": 0,
+        "seedIndex": 2,
+        "gridCluster": null,
+        "level": "nightmare",
+        "mode": "native",
+        "guardScope": "request",
+        "key": "IG-S03/ser-m16/mega16:nightmare:3/scoped-native-w1",
+        "pairId": "mega16:nightmare:3",
+        "requestSeed": 3,
+        "variantId": "scoped-native-w1",
+        "puzzleVariant": "mega16",
+        "arm": "prototype",
+        "solverMode": "scoped-native-w1",
+        "executor": "scoped-native",
+        "adapterIds": [
+          "scoped-solver"
+        ],
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 120000
+      }
+    ],
+    "manifestHash": "38862b3141574728056c2289c25bd8aeeb724fa4ddae47a0825ce7289801e22f"
+  },
+  "attemptKeys": [
+    "IG-S03/audit-2/samurai:nightmare:1/audit",
+    "IG-S03/audit-2/samurai:nightmare:2/audit",
+    "IG-S03/audit-2/samurai:nightmare:42/audit",
+    "IG-S03/audit-2/mega12:nightmare:1/audit",
+    "IG-S03/audit-2/mega12:nightmare:2/audit",
+    "IG-S03/audit-2/mega12:nightmare:3/audit",
+    "IG-S03/audit-2/mega16:nightmare:1/audit",
+    "IG-S03/audit-2/mega16:nightmare:2/audit",
+    "IG-S03/audit-2/mega16:nightmare:3/audit"
+  ],
+  "runKeys": [
+    "IG-S03/audit-2/samurai:nightmare:1/audit",
+    "IG-S03/audit-2/samurai:nightmare:2/audit",
+    "IG-S03/audit-2/samurai:nightmare:42/audit",
+    "IG-S03/audit-2/mega12:nightmare:1/audit",
+    "IG-S03/audit-2/mega12:nightmare:2/audit",
+    "IG-S03/audit-2/mega12:nightmare:3/audit",
+    "IG-S03/audit-2/mega16:nightmare:1/audit",
+    "IG-S03/audit-2/mega16:nightmare:2/audit",
+    "IG-S03/audit-2/mega16:nightmare:3/audit"
+  ],
+  "physicalPlan": {
+    "windowMs": 258000,
+    "commands": [
+      {
+        "index": 0,
+        "blockKeys": [
+          "IG-S03/audit-2/samurai:nightmare:1",
+          "IG-S03/audit-2/samurai:nightmare:2",
+          "IG-S03/audit-2/samurai:nightmare:42",
+          "IG-S03/audit-2/mega12:nightmare:1",
+          "IG-S03/audit-2/mega12:nightmare:2",
+          "IG-S03/audit-2/mega12:nightmare:3",
+          "IG-S03/audit-2/mega16:nightmare:1",
+          "IG-S03/audit-2/mega16:nightmare:2",
+          "IG-S03/audit-2/mega16:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S03/audit-2/samurai:nightmare:1/audit",
+          "IG-S03/audit-2/samurai:nightmare:2/audit",
+          "IG-S03/audit-2/samurai:nightmare:42/audit",
+          "IG-S03/audit-2/mega12:nightmare:1/audit",
+          "IG-S03/audit-2/mega12:nightmare:2/audit",
+          "IG-S03/audit-2/mega12:nightmare:3/audit",
+          "IG-S03/audit-2/mega16:nightmare:1/audit",
+          "IG-S03/audit-2/mega16:nightmare:2/audit",
+          "IG-S03/audit-2/mega16:nightmare:3/audit"
+        ],
+        "estimateMs": 210000,
+        "split": false
+      }
+    ],
+    "oversize": [],
+    "hash": "6fd01e533dcef2a8cf6a1ba643ff0ff6c9ff058420a9d19e2a2d78af71231128"
+  }
+}

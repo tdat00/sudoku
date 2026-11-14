@@ -1,0 +1,542 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S03",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "implemented": [
+    "nakedSingle",
+    "hiddenSingleBox",
+    "hiddenSingleLine",
+    "nakedPair",
+    "hiddenPair",
+    "nakedTriple",
+    "hiddenTriple",
+    "nakedQuad",
+    "hiddenQuad"
+  ],
+  "families": [
+    {
+      "id": "nakedSingle",
+      "family": "singles",
+      "scope": "cell",
+      "implemented": true,
+      "nonzeroCheckFamily": false,
+      "proofObligation1": "no ctx.check() call at all; the result depends only on the value and candidates of the cell",
+      "proofObligation2": "not applicable: the finder makes no check, so no budget error can interrupt it",
+      "status": "proved + exercised (skipped scopes under audit)",
+      "fallbackToFullScan": false,
+      "audit": {
+        "calls": 8687,
+        "scopesVisited": 1420519,
+        "realScopes": 152331,
+        "negativeScopesRecorded": 147494,
+        "positiveScopes": 4837,
+        "skippedScopes": 1268188,
+        "enumNodesReal": 0,
+        "enumNodesSkipped": 0,
+        "realEntryChecks": 0,
+        "virtualEntryChecks": 0,
+        "realNodeChecks": 0,
+        "virtualNodeChecks": 0,
+        "nativeFallbackCalls": 0
+      },
+      "timing": {
+        "calls": 16938940,
+        "scopesVisited": 2042505375,
+        "realScopes": 269227904,
+        "negativeScopesRecorded": 257789758,
+        "positiveScopes": 11438146,
+        "skippedScopes": 1773277471,
+        "enumNodesReal": 0,
+        "enumNodesSkipped": 0,
+        "realEntryChecks": 0,
+        "virtualEntryChecks": 0,
+        "realNodeChecks": 0,
+        "virtualNodeChecks": 0,
+        "nativeFallbackCalls": 0
+      }
+    },
+    {
+      "id": "hiddenSingleBox",
+      "family": "singles",
+      "scope": "unit",
+      "implemented": true,
+      "nonzeroCheckFamily": false,
+      "proofObligation1": "no ctx.check() call at all; the result depends only on the values and candidates of the unit cells and completeUnits[u] (fixed for a solve)",
+      "proofObligation2": "not applicable: the finder makes no check, so no budget error can interrupt it",
+      "status": "proved + exercised (skipped scopes under audit)",
+      "fallbackToFullScan": false,
+      "audit": {
+        "calls": 3850,
+        "scopesVisited": 80169,
+        "realScopes": 17544,
+        "negativeScopesRecorded": 16098,
+        "positiveScopes": 1446,
+        "skippedScopes": 62625,
+        "enumNodesReal": 0,
+        "enumNodesSkipped": 0,
+        "realEntryChecks": 0,
+        "virtualEntryChecks": 0,
+        "realNodeChecks": 0,
+        "virtualNodeChecks": 0,
+        "nativeFallbackCalls": 0
+      },
+      "timing": {
+        "calls": 5500794,
+        "scopesVisited": 106479047,
+        "realScopes": 35103931,
+        "negativeScopesRecorded": 33104358,
+        "positiveScopes": 1999573,
+        "skippedScopes": 71375116,
+        "enumNodesReal": 0,
+        "enumNodesSkipped": 0,
+        "realEntryChecks": 0,
+        "virtualEntryChecks": 0,
+        "realNodeChecks": 0,
+        "virtualNodeChecks": 0,
+        "nativeFallbackCalls": 0
+      }
+    },
+    {
+      "id": "hiddenSingleLine",
+      "family": "singles",
+      "scope": "unit",
+      "implemented": true,
+      "nonzeroCheckFamily": false,
+      "proofObligation1": "no ctx.check() call at all; the result depends only on the values and candidates of the unit cells and completeUnits[u] (fixed for a solve)",
+      "proofObligation2": "not applicable: the finder makes no check, so no budget error can interrupt it",
+      "status": "proved + exercised (skipped scopes under audit)",
+      "fallbackToFullScan": false,
+      "audit": {
+        "calls": 2404,
+        "scopesVisited": 84670,
+        "realScopes": 22128,
+        "negativeScopesRecorded": 21778,
+        "positiveScopes": 350,
+        "skippedScopes": 62542,
+        "enumNodesReal": 0,
+        "enumNodesSkipped": 0,
+        "realEntryChecks": 0,
+        "virtualEntryChecks": 0,
+        "realNodeChecks": 0,
+        "virtualNodeChecks": 0,
+        "nativeFallbackCalls": 0
+      },
+      "timing": {
+        "calls": 3501221,
+        "scopesVisited": 82925274,
+        "realScopes": 32251884,
+        "negativeScopesRecorded": 31849085,
+        "positiveScopes": 402799,
+        "skippedScopes": 50673390,
+        "enumNodesReal": 0,
+        "enumNodesSkipped": 0,
+        "realEntryChecks": 0,
+        "virtualEntryChecks": 0,
+        "realNodeChecks": 0,
+        "virtualNodeChecks": 0,
+        "nativeFallbackCalls": 0
+      }
+    },
+    {
+      "id": "nakedPair",
+      "family": "subset",
+      "scope": "unit",
+      "implemented": true,
+      "nonzeroCheckFamily": true,
+      "proofObligation1": "one entry check per unit plus one per CHECK_EVERY nodes of a counter that spans the units: the check count of a scope is NOT a function of its footprint alone, but its node increment is; the checks are replayed from the cached increment and the incoming residue (floor((r+inc)/CHECK_EVERY) - floor(r/CHECK_EVERY))",
+      "proofObligation2": "nothing reads the scratch of an interrupted scan (tech-subset.js re-initialises it by every find and unit, and no handler wraps a subset finder: the only handler that swallows budget.exceeded is tech-chain.js, inside its own find); a negative is recorded only after a completed scan, never when a check threw",
+      "status": "proved + exercised (skipped scopes under audit)",
+      "fallbackToFullScan": false,
+      "audit": {
+        "calls": 763,
+        "scopesVisited": 44429,
+        "realScopes": 13847,
+        "negativeScopesRecorded": 13739,
+        "positiveScopes": 108,
+        "skippedScopes": 30582,
+        "enumNodesReal": 32236,
+        "enumNodesSkipped": 61903,
+        "realEntryChecks": 13847,
+        "virtualEntryChecks": 30582,
+        "realNodeChecks": 25,
+        "virtualNodeChecks": 63,
+        "nativeFallbackCalls": 0
+      },
+      "timing": {
+        "calls": 555013,
+        "scopesVisited": 29411787,
+        "realScopes": 8900175,
+        "negativeScopesRecorded": 8841658,
+        "positiveScopes": 58517,
+        "skippedScopes": 20511604,
+        "enumNodesReal": 18768129,
+        "enumNodesSkipped": 41426593,
+        "realEntryChecks": 8900175,
+        "virtualEntryChecks": 20511604,
+        "realNodeChecks": 11384,
+        "virtualNodeChecks": 46178,
+        "nativeFallbackCalls": 0
+      }
+    },
+    {
+      "id": "hiddenPair",
+      "family": "subset",
+      "scope": "unit",
+      "implemented": true,
+      "nonzeroCheckFamily": true,
+      "proofObligation1": "one entry check per unit plus one per CHECK_EVERY nodes of a counter that spans the units: the check count of a scope is NOT a function of its footprint alone, but its node increment is; the checks are replayed from the cached increment and the incoming residue (floor((r+inc)/CHECK_EVERY) - floor(r/CHECK_EVERY))",
+      "proofObligation2": "nothing reads the scratch of an interrupted scan (tech-subset.js re-initialises it by every find and unit, and no handler wraps a subset finder: the only handler that swallows budget.exceeded is tech-chain.js, inside its own find); a negative is recorded only after a completed scan, never when a check threw",
+      "status": "proved + exercised (skipped scopes under audit)",
+      "fallbackToFullScan": false,
+      "audit": {
+        "calls": 655,
+        "scopesVisited": 36804,
+        "realScopes": 12222,
+        "negativeScopesRecorded": 12109,
+        "positiveScopes": 113,
+        "skippedScopes": 24582,
+        "enumNodesReal": 35062,
+        "enumNodesSkipped": 61403,
+        "realEntryChecks": 12222,
+        "virtualEntryChecks": 24582,
+        "realNodeChecks": 34,
+        "virtualNodeChecks": 76,
+        "nativeFallbackCalls": 0
+      },
+      "timing": {
+        "calls": 496488,
+        "scopesVisited": 26581066,
+        "realScopes": 8309499,
+        "negativeScopesRecorded": 8274543,
+        "positiveScopes": 34956,
+        "skippedScopes": 18271561,
+        "enumNodesReal": 20415904,
+        "enumNodesSkipped": 43088799,
+        "realEntryChecks": 8309499,
+        "virtualEntryChecks": 18271561,
+        "realNodeChecks": 16695,
+        "virtualNodeChecks": 56823,
+        "nativeFallbackCalls": 0
+      }
+    },
+    {
+      "id": "nakedTriple",
+      "family": "subset",
+      "scope": "unit",
+      "implemented": true,
+      "nonzeroCheckFamily": true,
+      "proofObligation1": "one entry check per unit plus one per CHECK_EVERY nodes of a counter that spans the units: the check count of a scope is NOT a function of its footprint alone, but its node increment is; the checks are replayed from the cached increment and the incoming residue (floor((r+inc)/CHECK_EVERY) - floor(r/CHECK_EVERY))",
+      "proofObligation2": "nothing reads the scratch of an interrupted scan (tech-subset.js re-initialises it by every find and unit, and no handler wraps a subset finder: the only handler that swallows budget.exceeded is tech-chain.js, inside its own find); a negative is recorded only after a completed scan, never when a check threw",
+      "status": "proved + exercised (skipped scopes under audit)",
+      "fallbackToFullScan": false,
+      "audit": {
+        "calls": 542,
+        "scopesVisited": 31270,
+        "realScopes": 11048,
+        "negativeScopesRecorded": 11007,
+        "positiveScopes": 41,
+        "skippedScopes": 20222,
+        "enumNodesReal": 60295,
+        "enumNodesSkipped": 95723,
+        "realEntryChecks": 11048,
+        "virtualEntryChecks": 20222,
+        "realNodeChecks": 144,
+        "virtualNodeChecks": 226,
+        "nativeFallbackCalls": 0
+      },
+      "timing": {
+        "calls": 461526,
+        "scopesVisited": 25205047,
+        "realScopes": 8010862,
+        "negativeScopesRecorded": 7998455,
+        "positiveScopes": 12407,
+        "skippedScopes": 17194170,
+        "enumNodesReal": 34318212,
+        "enumNodesSkipped": 69925847,
+        "realEntryChecks": 8010862,
+        "virtualEntryChecks": 17194170,
+        "realNodeChecks": 57799,
+        "virtualNodeChecks": 160547,
+        "nativeFallbackCalls": 0
+      }
+    },
+    {
+      "id": "hiddenTriple",
+      "family": "subset",
+      "scope": "unit",
+      "implemented": true,
+      "nonzeroCheckFamily": true,
+      "proofObligation1": "one entry check per unit plus one per CHECK_EVERY nodes of a counter that spans the units: the check count of a scope is NOT a function of its footprint alone, but its node increment is; the checks are replayed from the cached increment and the incoming residue (floor((r+inc)/CHECK_EVERY) - floor(r/CHECK_EVERY))",
+      "proofObligation2": "nothing reads the scratch of an interrupted scan (tech-subset.js re-initialises it by every find and unit, and no handler wraps a subset finder: the only handler that swallows budget.exceeded is tech-chain.js, inside its own find); a negative is recorded only after a completed scan, never when a check threw",
+      "status": "proved + exercised (skipped scopes under audit)",
+      "fallbackToFullScan": false,
+      "audit": {
+        "calls": 501,
+        "scopesVisited": 29675,
+        "realScopes": 10842,
+        "negativeScopesRecorded": 10834,
+        "positiveScopes": 8,
+        "skippedScopes": 18833,
+        "enumNodesReal": 55132,
+        "enumNodesSkipped": 82237,
+        "realEntryChecks": 10842,
+        "virtualEntryChecks": 18833,
+        "realNodeChecks": 126,
+        "virtualNodeChecks": 170,
+        "nativeFallbackCalls": 0
+      },
+      "timing": {
+        "calls": 444652,
+        "scopesVisited": 24593217,
+        "realScopes": 7871924,
+        "negativeScopesRecorded": 7866685,
+        "positiveScopes": 5239,
+        "skippedScopes": 16721282,
+        "enumNodesReal": 33393351,
+        "enumNodesSkipped": 67699514,
+        "realEntryChecks": 7871924,
+        "virtualEntryChecks": 16721282,
+        "realNodeChecks": 55941,
+        "virtualNodeChecks": 154209,
+        "nativeFallbackCalls": 0
+      }
+    },
+    {
+      "id": "nakedQuad",
+      "family": "subset",
+      "scope": "unit",
+      "implemented": true,
+      "nonzeroCheckFamily": true,
+      "proofObligation1": "one entry check per unit plus one per CHECK_EVERY nodes of a counter that spans the units: the check count of a scope is NOT a function of its footprint alone, but its node increment is; the checks are replayed from the cached increment and the incoming residue (floor((r+inc)/CHECK_EVERY) - floor(r/CHECK_EVERY))",
+      "proofObligation2": "nothing reads the scratch of an interrupted scan (tech-subset.js re-initialises it by every find and unit, and no handler wraps a subset finder: the only handler that swallows budget.exceeded is tech-chain.js, inside its own find); a negative is recorded only after a completed scan, never when a check threw",
+      "status": "proved + exercised (skipped scopes under audit)",
+      "fallbackToFullScan": false,
+      "audit": {
+        "calls": 381,
+        "scopesVisited": 23689,
+        "realScopes": 8837,
+        "negativeScopesRecorded": 8830,
+        "positiveScopes": 7,
+        "skippedScopes": 14852,
+        "enumNodesReal": 83052,
+        "enumNodesSkipped": 108506,
+        "realEntryChecks": 8837,
+        "virtualEntryChecks": 14852,
+        "realNodeChecks": 227,
+        "virtualNodeChecks": 321,
+        "nativeFallbackCalls": 0
+      },
+      "timing": {
+        "calls": 336085,
+        "scopesVisited": 19318320,
+        "realScopes": 6184380,
+        "negativeScopesRecorded": 6182803,
+        "positiveScopes": 1577,
+        "skippedScopes": 13133936,
+        "enumNodesReal": 45761300,
+        "enumNodesSkipped": 90648562,
+        "realEntryChecks": 6184380,
+        "virtualEntryChecks": 13133936,
+        "realNodeChecks": 110733,
+        "virtualNodeChecks": 261555,
+        "nativeFallbackCalls": 0
+      }
+    },
+    {
+      "id": "hiddenQuad",
+      "family": "subset",
+      "scope": "unit",
+      "implemented": true,
+      "nonzeroCheckFamily": true,
+      "proofObligation1": "one entry check per unit plus one per CHECK_EVERY nodes of a counter that spans the units: the check count of a scope is NOT a function of its footprint alone, but its node increment is; the checks are replayed from the cached increment and the incoming residue (floor((r+inc)/CHECK_EVERY) - floor(r/CHECK_EVERY))",
+      "proofObligation2": "nothing reads the scratch of an interrupted scan (tech-subset.js re-initialises it by every find and unit, and no handler wraps a subset finder: the only handler that swallows budget.exceeded is tech-chain.js, inside its own find); a negative is recorded only after a completed scan, never when a check threw",
+      "status": "proved + exercised (skipped scopes under audit)",
+      "fallbackToFullScan": false,
+      "audit": {
+        "calls": 374,
+        "scopesVisited": 23467,
+        "realScopes": 8788,
+        "negativeScopesRecorded": 8784,
+        "positiveScopes": 4,
+        "skippedScopes": 14679,
+        "enumNodesReal": 73827,
+        "enumNodesSkipped": 95668,
+        "realEntryChecks": 8788,
+        "virtualEntryChecks": 14679,
+        "realNodeChecks": 201,
+        "virtualNodeChecks": 284,
+        "nativeFallbackCalls": 0
+      },
+      "timing": {
+        "calls": 334504,
+        "scopesVisited": 19270107,
+        "realScopes": 6168653,
+        "negativeScopesRecorded": 6168093,
+        "positiveScopes": 560,
+        "skippedScopes": 13101451,
+        "enumNodesReal": 41270489,
+        "enumNodesSkipped": 81789598,
+        "realEntryChecks": 6168653,
+        "virtualEntryChecks": 13101451,
+        "realNodeChecks": 94156,
+        "virtualNodeChecks": 228757,
+        "nativeFallbackCalls": 0
+      }
+    }
+  ],
+  "nativeFullScan": [
+    {
+      "id": "pointing",
+      "group": "locked",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design (item 1 lists singles and the six subset finders); no ctx.check() site, a negative cache is provable but not part of this prototype"
+    },
+    {
+      "id": "cageCombo",
+      "group": "cage",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites, no proof attempted"
+    },
+    {
+      "id": "ineqChain",
+      "group": "ineq",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites, no proof attempted"
+    },
+    {
+      "id": "boxLine",
+      "group": "locked",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design (item 1 lists singles and the six subset finders); no ctx.check() site, a negative cache is provable but not part of this prototype"
+    },
+    {
+      "id": "minMaxForcing",
+      "group": "ineq",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites, no proof attempted"
+    },
+    {
+      "id": "ruleOf45",
+      "group": "cage",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites, no proof attempted"
+    },
+    {
+      "id": "xWing",
+      "group": "fish",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites, no proof attempted"
+    },
+    {
+      "id": "simpleColouring",
+      "group": "fish",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites, no proof attempted"
+    },
+    {
+      "id": "swordfish",
+      "group": "fish",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites, no proof attempted"
+    },
+    {
+      "id": "cageSplit",
+      "group": "cage",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites, no proof attempted"
+    },
+    {
+      "id": "jellyfish",
+      "group": "fish",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites, no proof attempted"
+    },
+    {
+      "id": "xyWing",
+      "group": "wing",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites on counters that are not unit-local, no proof attempted"
+    },
+    {
+      "id": "xyzWing",
+      "group": "wing",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites on counters that are not unit-local, no proof attempted"
+    },
+    {
+      "id": "wWing",
+      "group": "wing",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites on counters that are not unit-local, no proof attempted"
+    },
+    {
+      "id": "uniqueRectangle",
+      "group": "wing",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; has ctx.check() sites on counters that are not unit-local, no proof attempted"
+    },
+    {
+      "id": "forcingChain",
+      "group": "chain",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; its find swallows budget.exceeded (obligation 2 would need a proof about its trial state), no proof attempted"
+    },
+    {
+      "id": "nishio",
+      "group": "chain",
+      "implemented": false,
+      "fallbackToFullScan": true,
+      "fallbackReason": "outside the fixed design; its find swallows budget.exceeded (obligation 2 would need a proof about its trial state), no proof attempted"
+    }
+  ],
+  "runtimeFallbacks": {
+    "audit": {},
+    "timing": {}
+  },
+  "invalidations": {
+    "audit": {
+      "cellsInvalidated": 185206,
+      "unitsInvalidated": 220564,
+      "solves": 72,
+      "steps": 8665
+    },
+    "timing": {
+      "cellsInvalidated": 348268718,
+      "unitsInvalidated": 452144193,
+      "solves": 178719,
+      "steps": 16924619
+    }
+  },
+  "virtualCheckCharges": {
+    "audit": {
+      "virtualEntryChecks": 123750,
+      "virtualNodeChecks": 1140
+    },
+    "timing": {
+      "virtualEntryChecks": 98934004,
+      "virtualNodeChecks": 908069
+    }
+  },
+  "scopeAuditViolations": {
+    "audit": 0,
+    "timing": 0
+  },
+  "note": "a family without a proof stays a native full scan; a family that has a proof but whose skipped scopes were not exercised is named as such. Raw enumeration visits are enumeration nodes (the unit of tech-subset.js `nodes`).",
+  "auditPuzzles": 18
+}

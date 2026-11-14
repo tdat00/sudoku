@@ -1,0 +1,25 @@
+IG-S03 dispatcher console transcript, run 4 (provisional (pre-freeze)); the output of Invoke-IgTask.ps1 as captured, times +07:00.
+After the orchestrator's approval of 90,000 ms (ledger approvals, 2026-11-15 01:25): only the missing request,
+`-Shard ser-m16`. The earlier transcripts are in dispatcher-transcript.txt (runs 1 to 3, unchanged).
+
+=== Run 4: 2026-11-15T01:22:53.284 .. 01:29:21.252 (-Shard ser-m16) ===
+IG IG-S03 provisional-r1: runtime 36b2b8327f34, manifest 38862b314157, gate not-evaluable-pre-freeze, projected machine time 165 s
+  shard audit-1 [pipeline] recorded: 10 keys, 0 unstarted, projected 0 s
+  shard audit-2 [pipeline] recorded: 9 keys, 0 unstarted, projected 0 s
+  shard sc-c9 [pipeline] recorded: 3 keys, 0 unstarted, projected 0 s
+  shard sc-gt [pipeline] recorded: 3 keys, 0 unstarted, projected 0 s
+  shard sc-killer [pipeline] recorded: 3 keys, 0 unstarted, projected 0 s
+  shard sc-m12 [pipeline] recorded: 3 keys, 0 unstarted, projected 0 s
+  shard sc-sam [pipeline] recorded: 3 keys, 0 unstarted, projected 0 s
+  shard sc-m16 [pipeline] recorded: 3 keys, 0 unstarted, projected 0 s
+  shard ser-small [pipeline] recorded: 3 keys, 0 unstarted, projected 0 s
+  shard ser-m12-sam [pipeline] recorded: 2 keys, 0 unstarted, projected 0 s
+  shard ser-m16 [pipeline] not-run: 1 keys, 1 unstarted, projected 165 s
+  shard ser-m16 attempt a1: wrapper command (deadline 210124 ms)
+{"ig":"command","task":"IG-S03","shard":"ser-m16","attemptId":"a1","status":"complete","exit":0,"evidence":"docs/improve-generating/evidence/phase0/provisional-r1/IG-S03/ser-m16"}
+IG IG-S03/ser-m16 exit=0 seconds=107.354
+{"ig":"dispatch","task":"IG-S03","round":"provisional-r1","status":"complete","evidenceStatus":"provisional (pre-freeze)","detail":{"shards":[{"shard":"ser-m16","status":"complete","attemptId":"a1"}]}}
+dispatcher exit=0
+
+Next: node ig03-aggregate.cjs --task=IG-S03 --round=provisional-r1 --out=summary-r2 wrote parity-r2.json,
+check-sequences-r2.json, coverage-r2.json, summary-r2.json and summary-r2.md; the files of the first revision are untouched.

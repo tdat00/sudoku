@@ -1,0 +1,210 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S03",
+  "shard": "audit-2",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 9,
+    "completed": 9,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "the baselines are IG-S02's records (not rerun here)",
+      "audited wall time is not a speed measurement",
+      "the unmeasured catalogue probe and the independent audit are outside every generation time",
+      "a censored or unverified arm proves neither identity nor speed"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "baeb9ea2c1ae6477e2b9a83efc57d73975a204b450b95f7b80e76f1706a20944",
+    "adapterIds": [
+      "scoped-solver",
+      "scoped-audit"
+    ],
+    "adapterHashes": [
+      "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f",
+      "df76326083d5e98de7e55bea3d8a2c45106c8a62ae46f30481adbd25b5b20d8f"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 81.50599999999997,
+      "changesSeen": 7,
+      "incrementsMs": [
+        16,
+        15,
+        16,
+        16,
+        15,
+        16
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 9390,
+    "processAgeAtHostMs": 549.1283
+  },
+  "pairedRows": [],
+  "arms": {},
+  "estimateVerdict": "provisional; judged in the task summary against IG-S02's matched baselines",
+  "extra": {
+    "arms": {
+      "prototype": "S3 prototype (scoped negative scans of singles and subsets) with the harness paths of IG-S02",
+      "audit": "three engine instances: plain native, native with audit annotations, scoped with audit annotations"
+    },
+    "identity": {
+      "pairs": [
+        {
+          "pairId": "IG-S03/audit-2/samurai:nightmare:1/audit",
+          "verdict": "identity-ok",
+          "problems": []
+        },
+        {
+          "pairId": "IG-S03/audit-2/samurai:nightmare:2/audit",
+          "verdict": "identity-ok",
+          "problems": []
+        },
+        {
+          "pairId": "IG-S03/audit-2/samurai:nightmare:42/audit",
+          "verdict": "identity-ok",
+          "problems": []
+        },
+        {
+          "pairId": "IG-S03/audit-2/mega12:nightmare:1/audit",
+          "verdict": "identity-ok",
+          "problems": []
+        },
+        {
+          "pairId": "IG-S03/audit-2/mega12:nightmare:2/audit",
+          "verdict": "identity-ok",
+          "problems": []
+        },
+        {
+          "pairId": "IG-S03/audit-2/mega12:nightmare:3/audit",
+          "verdict": "identity-ok",
+          "problems": []
+        },
+        {
+          "pairId": "IG-S03/audit-2/mega16:nightmare:1/audit",
+          "verdict": "identity-ok",
+          "problems": []
+        },
+        {
+          "pairId": "IG-S03/audit-2/mega16:nightmare:2/audit",
+          "verdict": "identity-ok",
+          "problems": []
+        },
+        {
+          "pairId": "IG-S03/audit-2/mega16:nightmare:3/audit",
+          "verdict": "identity-ok",
+          "problems": []
+        }
+      ],
+      "failed": 0,
+      "ok": 9,
+      "notComparable": 0,
+      "deferred": 0,
+      "complete": true
+    },
+    "scoped": [],
+    "audits": [
+      {
+        "key": "IG-S03/audit-2/samurai:nightmare:1/audit",
+        "kind": "puzzle",
+        "verdict": "parity-ok",
+        "problems": []
+      },
+      {
+        "key": "IG-S03/audit-2/samurai:nightmare:2/audit",
+        "kind": "puzzle",
+        "verdict": "parity-ok",
+        "problems": []
+      },
+      {
+        "key": "IG-S03/audit-2/samurai:nightmare:42/audit",
+        "kind": "puzzle",
+        "verdict": "parity-ok",
+        "problems": []
+      },
+      {
+        "key": "IG-S03/audit-2/mega12:nightmare:1/audit",
+        "kind": "puzzle",
+        "verdict": "parity-ok",
+        "problems": []
+      },
+      {
+        "key": "IG-S03/audit-2/mega12:nightmare:2/audit",
+        "kind": "puzzle",
+        "verdict": "parity-ok",
+        "problems": []
+      },
+      {
+        "key": "IG-S03/audit-2/mega12:nightmare:3/audit",
+        "kind": "puzzle",
+        "verdict": "parity-ok",
+        "problems": []
+      },
+      {
+        "key": "IG-S03/audit-2/mega16:nightmare:1/audit",
+        "kind": "puzzle",
+        "verdict": "parity-ok",
+        "problems": []
+      },
+      {
+        "key": "IG-S03/audit-2/mega16:nightmare:2/audit",
+        "kind": "puzzle",
+        "verdict": "parity-ok",
+        "problems": []
+      },
+      {
+        "key": "IG-S03/audit-2/mega16:nightmare:3/audit",
+        "kind": "puzzle",
+        "verdict": "parity-ok",
+        "problems": []
+      }
+    ],
+    "catalogueProbe": {
+      "wallMs": 102.4026,
+      "cpuMs": 109,
+      "note": "unmeasured: loads the engine once per command so no arm carries the catalogue discovery"
+    },
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S03/audit-2/samurai:nightmare:1/audit",
+        "IG-S03/audit-2/samurai:nightmare:2/audit",
+        "IG-S03/audit-2/samurai:nightmare:42/audit",
+        "IG-S03/audit-2/mega12:nightmare:1/audit",
+        "IG-S03/audit-2/mega12:nightmare:2/audit",
+        "IG-S03/audit-2/mega12:nightmare:3/audit",
+        "IG-S03/audit-2/mega16:nightmare:1/audit",
+        "IG-S03/audit-2/mega16:nightmare:2/audit",
+        "IG-S03/audit-2/mega16:nightmare:3/audit"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": []
+    }
+  },
+  "notes": []
+}

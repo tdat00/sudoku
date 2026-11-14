@@ -1,0 +1,726 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S03",
+  "shard": "sc-c9",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 3,
+    "completed": 3,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "the baselines are IG-S02's records (not rerun here)",
+      "audited wall time is not a speed measurement",
+      "the unmeasured catalogue probe and the independent audit are outside every generation time",
+      "a censored or unverified arm proves neither identity nor speed"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "baeb9ea2c1ae6477e2b9a83efc57d73975a204b450b95f7b80e76f1706a20944",
+    "adapterIds": [
+      "attempt-pool",
+      "scoped-solver"
+    ],
+    "adapterHashes": [
+      "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06",
+      "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 51.08770000000004,
+      "changesSeen": 7,
+      "incrementsMs": [
+        16,
+        15,
+        15,
+        16,
+        16,
+        15
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 23891,
+    "processAgeAtHostMs": 538.6449
+  },
+  "pairedRows": [
+    {
+      "pairId": "classic9:nightmare:1",
+      "reference": null,
+      "prototype": {
+        "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+        "outcome": "complete",
+        "readyWallMs": 1708.3875999999998,
+        "coldWallMs": 1837.2471999999998,
+        "cpuTotalMs": 9234,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "9667bc7b9b8e771acb4c2ff056f1aa76ac0bc054054a6a5b691800c6efdd38c1"
+      },
+      "cpuFactor": null,
+      "readyWallFactor": null,
+      "coldWallFactor": null
+    },
+    {
+      "pairId": "classic9:nightmare:2",
+      "reference": null,
+      "prototype": {
+        "key": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+        "outcome": "complete",
+        "readyWallMs": 791.4769999999999,
+        "coldWallMs": 907.5913,
+        "cpuTotalMs": 5063,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "1701c0ee3bb8dc23245541f235b95384045bfd539e299480660f360eab945f45"
+      },
+      "cpuFactor": null,
+      "readyWallFactor": null,
+      "coldWallFactor": null
+    },
+    {
+      "pairId": "classic9:nightmare:3",
+      "reference": null,
+      "prototype": {
+        "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+        "outcome": "complete",
+        "readyWallMs": 1763.0155,
+        "coldWallMs": 1878.9261000000001,
+        "cpuTotalMs": 8578,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93"
+      },
+      "cpuFactor": null,
+      "readyWallFactor": null,
+      "coldWallFactor": null
+    }
+  ],
+  "arms": {
+    "prototype": {
+      "requests": 3,
+      "complete": 3,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 3,
+        "p50": 1708.3875999999998,
+        "p95": 1763.0155,
+        "max": 1763.0155,
+        "upperMedian": 1708.3875999999998,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 3,
+        "p50": 1837.2471999999998,
+        "p95": 1878.9261000000001,
+        "max": 1878.9261000000001,
+        "upperMedian": 1837.2471999999998,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 3,
+        "p50": 8578,
+        "p95": 9234,
+        "max": 9234,
+        "upperMedian": 8578,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 3,
+          "cpuMs": 22875,
+          "wallMs": 4664.9908000000005
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 3,
+          "cpuMs": 22875,
+          "wallMs": 4664.9908000000005
+        }
+      },
+      "cpuTotalAggregateMs": 22875,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 4664.9908000000005,
+      "verifiedHits": 1,
+      "hitsPerCpuSecond": 0.04371584699453552,
+      "hitsPerColdWallSecond": 0.21436269499181004
+    }
+  },
+  "estimateVerdict": "provisional; judged in the task summary against IG-S02's matched baselines",
+  "extra": {
+    "arms": {
+      "prototype": "S3 prototype (scoped negative scans of singles and subsets) with the harness paths of IG-S02",
+      "audit": "three engine instances: plain native, native with audit annotations, scoped with audit annotations"
+    },
+    "identity": {
+      "pairs": [
+        {
+          "pairId": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+          "baselineKey": "IG-S02/c9/classic9:nightmare:1/native-w1",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "puzzleHash": "9667bc7b9b8e771acb4c2ff056f1aa76ac0bc054054a6a5b691800c6efdd38c1",
+          "baselinePuzzleHash": "9667bc7b9b8e771acb4c2ff056f1aa76ac0bc054054a6a5b691800c6efdd38c1",
+          "scopedDigest": "ef4fe4477e17601ede46f08024353faed819ced8d6a85a315a5d63577b1609ec",
+          "baselineDigest": "ef4fe4477e17601ede46f08024353faed819ced8d6a85a315a5d63577b1609ec"
+        },
+        {
+          "pairId": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+          "baselineKey": "IG-S02/c9/classic9:nightmare:2/native-w1",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "puzzleHash": "1701c0ee3bb8dc23245541f235b95384045bfd539e299480660f360eab945f45",
+          "baselinePuzzleHash": "1701c0ee3bb8dc23245541f235b95384045bfd539e299480660f360eab945f45",
+          "scopedDigest": "e8f3ebe2ab9eb99b5e118813728d922512645066f38dec36968b41ffbc2aced3",
+          "baselineDigest": "e8f3ebe2ab9eb99b5e118813728d922512645066f38dec36968b41ffbc2aced3"
+        },
+        {
+          "pairId": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+          "baselineKey": "IG-S02/c9/classic9:nightmare:3/native-w1",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "puzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+          "baselinePuzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+          "scopedDigest": "48a2dddbebec707b86a85a349352e08efd710f836c0d6a95aa0444b8f9ab9d49",
+          "baselineDigest": "48a2dddbebec707b86a85a349352e08efd710f836c0d6a95aa0444b8f9ab9d49"
+        }
+      ],
+      "failed": 0,
+      "ok": 3,
+      "notComparable": 0,
+      "deferred": 0,
+      "complete": true
+    },
+    "scoped": [
+      {
+        "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+        "stats": {
+          "messages": 8,
+          "solve": {
+            "solvesBegun": 6223,
+            "stepsApplied": 271677,
+            "cellsInvalidated": 5520841,
+            "unitsInvalidated": 6066176,
+            "applyCalls": 0
+          },
+          "finders": {
+            "nakedSingle": {
+              "calls": 272390,
+              "scopesVisited": 12656922,
+              "realScopes": 3913481,
+              "negativeRecorded": 3676604,
+              "positiveScopes": 236877,
+              "skippedScopes": 8743441,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenSingleBox": {
+              "calls": 35513,
+              "scopesVisited": 223116,
+              "realScopes": 116070,
+              "negativeRecorded": 93792,
+              "positiveScopes": 22278,
+              "skippedScopes": 107046,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenSingleLine": {
+              "calls": 13235,
+              "scopesVisited": 212726,
+              "realScopes": 97851,
+              "negativeRecorded": 94998,
+              "positiveScopes": 2853,
+              "skippedScopes": 114875,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "nakedPair": {
+              "calls": 6831,
+              "scopesVisited": 172305,
+              "realScopes": 85850,
+              "negativeRecorded": 85159,
+              "positiveScopes": 691,
+              "skippedScopes": 86455,
+              "enumNodesReal": 228446,
+              "enumNodesSkipped": 249390,
+              "realEntryChecks": 85850,
+              "virtualEntryChecks": 86455,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 1,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenPair": {
+              "calls": 6140,
+              "scopesVisited": 158462,
+              "realScopes": 81717,
+              "negativeRecorded": 81259,
+              "positiveScopes": 458,
+              "skippedScopes": 76745,
+              "enumNodesReal": 250425,
+              "enumNodesSkipped": 249694,
+              "realEntryChecks": 81717,
+              "virtualEntryChecks": 76745,
+              "realNodeChecks": 1,
+              "virtualNodeChecks": 1,
+              "nativeFallbackCalls": 0
+            },
+            "nakedTriple": {
+              "calls": 5682,
+              "scopesVisited": 152823,
+              "realScopes": 80174,
+              "negativeRecorded": 80130,
+              "positiveScopes": 44,
+              "skippedScopes": 72649,
+              "enumNodesReal": 368169,
+              "enumNodesSkipped": 362084,
+              "realEntryChecks": 80174,
+              "virtualEntryChecks": 72649,
+              "realNodeChecks": 67,
+              "virtualNodeChecks": 146,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenTriple": {
+              "calls": 5638,
+              "scopesVisited": 152187,
+              "realScopes": 79945,
+              "negativeRecorded": 79943,
+              "positiveScopes": 2,
+              "skippedScopes": 72242,
+              "enumNodesReal": 337526,
+              "enumNodesSkipped": 335281,
+              "realEntryChecks": 79945,
+              "virtualEntryChecks": 72242,
+              "realNodeChecks": 49,
+              "virtualNodeChecks": 102,
+              "nativeFallbackCalls": 0
+            },
+            "nakedQuad": {
+              "calls": 5636,
+              "scopesVisited": 152150,
+              "realScopes": 79918,
+              "negativeRecorded": 79912,
+              "positiveScopes": 6,
+              "skippedScopes": 72232,
+              "enumNodesReal": 354837,
+              "enumNodesSkipped": 345512,
+              "realEntryChecks": 79918,
+              "virtualEntryChecks": 72232,
+              "realNodeChecks": 174,
+              "virtualNodeChecks": 291,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenQuad": {
+              "calls": 5630,
+              "scopesVisited": 152010,
+              "realScopes": 79828,
+              "negativeRecorded": 79828,
+              "positiveScopes": 0,
+              "skippedScopes": 72182,
+              "enumNodesReal": 315832,
+              "enumNodesSkipped": 305337,
+              "realEntryChecks": 79828,
+              "virtualEntryChecks": 72182,
+              "realNodeChecks": 69,
+              "virtualNodeChecks": 161,
+              "nativeFallbackCalls": 0
+            }
+          },
+          "fallbackReasons": {},
+          "violations": 0
+        },
+        "note": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+      },
+      {
+        "key": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+        "stats": {
+          "messages": 2,
+          "solve": {
+            "solvesBegun": 1719,
+            "stepsApplied": 76187,
+            "cellsInvalidated": 1543630,
+            "unitsInvalidated": 1696647,
+            "applyCalls": 0
+          },
+          "finders": {
+            "nakedSingle": {
+              "calls": 76362,
+              "scopesVisited": 3574489,
+              "realScopes": 1097344,
+              "negativeRecorded": 1031524,
+              "positiveScopes": 65820,
+              "skippedScopes": 2477145,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenSingleBox": {
+              "calls": 10542,
+              "scopesVisited": 66433,
+              "realScopes": 34480,
+              "negativeRecorded": 28008,
+              "positiveScopes": 6472,
+              "skippedScopes": 31953,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenSingleLine": {
+              "calls": 4070,
+              "scopesVisited": 65055,
+              "realScopes": 30331,
+              "negativeRecorded": 29385,
+              "positiveScopes": 946,
+              "skippedScopes": 34724,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "nakedPair": {
+              "calls": 2218,
+              "scopesVisited": 54660,
+              "realScopes": 27269,
+              "negativeRecorded": 27006,
+              "positiveScopes": 263,
+              "skippedScopes": 27391,
+              "enumNodesReal": 79922,
+              "enumNodesSkipped": 81462,
+              "realEntryChecks": 27269,
+              "virtualEntryChecks": 27391,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 3,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenPair": {
+              "calls": 1955,
+              "scopesVisited": 51528,
+              "realScopes": 26336,
+              "negativeRecorded": 26239,
+              "positiveScopes": 97,
+              "skippedScopes": 25192,
+              "enumNodesReal": 85650,
+              "enumNodesSkipped": 82665,
+              "realEntryChecks": 26336,
+              "virtualEntryChecks": 25192,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 3,
+              "nativeFallbackCalls": 0
+            },
+            "nakedTriple": {
+              "calls": 1858,
+              "scopesVisited": 49912,
+              "realScopes": 25886,
+              "negativeRecorded": 25865,
+              "positiveScopes": 21,
+              "skippedScopes": 24026,
+              "enumNodesReal": 126622,
+              "enumNodesSkipped": 120957,
+              "realEntryChecks": 25886,
+              "virtualEntryChecks": 24026,
+              "realNodeChecks": 14,
+              "virtualNodeChecks": 32,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenTriple": {
+              "calls": 1837,
+              "scopesVisited": 49511,
+              "realScopes": 25736,
+              "negativeRecorded": 25727,
+              "positiveScopes": 9,
+              "skippedScopes": 23775,
+              "enumNodesReal": 119762,
+              "enumNodesSkipped": 112649,
+              "realEntryChecks": 25736,
+              "virtualEntryChecks": 23775,
+              "realNodeChecks": 4,
+              "virtualNodeChecks": 24,
+              "nativeFallbackCalls": 0
+            },
+            "nakedQuad": {
+              "calls": 1828,
+              "scopesVisited": 49318,
+              "realScopes": 25682,
+              "negativeRecorded": 25680,
+              "positiveScopes": 2,
+              "skippedScopes": 23636,
+              "enumNodesReal": 121313,
+              "enumNodesSkipped": 109417,
+              "realEntryChecks": 25682,
+              "virtualEntryChecks": 23636,
+              "realNodeChecks": 15,
+              "virtualNodeChecks": 50,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenQuad": {
+              "calls": 1826,
+              "scopesVisited": 49302,
+              "realScopes": 25680,
+              "negativeRecorded": 25680,
+              "positiveScopes": 0,
+              "skippedScopes": 23622,
+              "enumNodesReal": 109013,
+              "enumNodesSkipped": 97897,
+              "realEntryChecks": 25680,
+              "virtualEntryChecks": 23622,
+              "realNodeChecks": 12,
+              "virtualNodeChecks": 22,
+              "nativeFallbackCalls": 0
+            }
+          },
+          "fallbackReasons": {},
+          "violations": 0
+        },
+        "note": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+      },
+      {
+        "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+        "stats": {
+          "messages": 8,
+          "solve": {
+            "solvesBegun": 6364,
+            "stepsApplied": 279244,
+            "cellsInvalidated": 5659683,
+            "unitsInvalidated": 6220019,
+            "applyCalls": 0
+          },
+          "finders": {
+            "nakedSingle": {
+              "calls": 279933,
+              "scopesVisited": 13106657,
+              "realScopes": 4025990,
+              "negativeRecorded": 3784270,
+              "positiveScopes": 241720,
+              "skippedScopes": 9080667,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenSingleBox": {
+              "calls": 38213,
+              "scopesVisited": 236633,
+              "realScopes": 121722,
+              "negativeRecorded": 98027,
+              "positiveScopes": 23695,
+              "skippedScopes": 114911,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenSingleLine": {
+              "calls": 14518,
+              "scopesVisited": 237039,
+              "realScopes": 107473,
+              "negativeRecorded": 104405,
+              "positiveScopes": 3068,
+              "skippedScopes": 129566,
+              "enumNodesReal": 0,
+              "enumNodesSkipped": 0,
+              "realEntryChecks": 0,
+              "virtualEntryChecks": 0,
+              "realNodeChecks": 0,
+              "virtualNodeChecks": 0,
+              "nativeFallbackCalls": 0
+            },
+            "nakedPair": {
+              "calls": 7739,
+              "scopesVisited": 192396,
+              "realScopes": 90100,
+              "negativeRecorded": 89096,
+              "positiveScopes": 1004,
+              "skippedScopes": 102296,
+              "enumNodesReal": 245497,
+              "enumNodesSkipped": 303409,
+              "realEntryChecks": 90100,
+              "virtualEntryChecks": 102296,
+              "realNodeChecks": 1,
+              "virtualNodeChecks": 6,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenPair": {
+              "calls": 6735,
+              "scopesVisited": 174241,
+              "realScopes": 83469,
+              "negativeRecorded": 82975,
+              "positiveScopes": 494,
+              "skippedScopes": 90772,
+              "enumNodesReal": 263912,
+              "enumNodesSkipped": 312788,
+              "realEntryChecks": 83469,
+              "virtualEntryChecks": 90772,
+              "realNodeChecks": 1,
+              "virtualNodeChecks": 5,
+              "nativeFallbackCalls": 0
+            },
+            "nakedTriple": {
+              "calls": 6241,
+              "scopesVisited": 166973,
+              "realScopes": 80192,
+              "negativeRecorded": 80039,
+              "positiveScopes": 153,
+              "skippedScopes": 86781,
+              "enumNodesReal": 386752,
+              "enumNodesSkipped": 463708,
+              "realEntryChecks": 80192,
+              "virtualEntryChecks": 86781,
+              "realNodeChecks": 120,
+              "virtualNodeChecks": 271,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenTriple": {
+              "calls": 6088,
+              "scopesVisited": 164229,
+              "realScopes": 79080,
+              "negativeRecorded": 79072,
+              "positiveScopes": 8,
+              "skippedScopes": 85149,
+              "enumNodesReal": 355105,
+              "enumNodesSkipped": 419446,
+              "realEntryChecks": 79080,
+              "virtualEntryChecks": 85149,
+              "realNodeChecks": 48,
+              "virtualNodeChecks": 156,
+              "nativeFallbackCalls": 0
+            },
+            "nakedQuad": {
+              "calls": 6080,
+              "scopesVisited": 164160,
+              "realScopes": 79040,
+              "negativeRecorded": 79040,
+              "positiveScopes": 0,
+              "skippedScopes": 85120,
+              "enumNodesReal": 386962,
+              "enumNodesSkipped": 447710,
+              "realEntryChecks": 79040,
+              "virtualEntryChecks": 85120,
+              "realNodeChecks": 178,
+              "virtualNodeChecks": 376,
+              "nativeFallbackCalls": 0
+            },
+            "hiddenQuad": {
+              "calls": 6080,
+              "scopesVisited": 164160,
+              "realScopes": 79040,
+              "negativeRecorded": 79040,
+              "positiveScopes": 0,
+              "skippedScopes": 85120,
+              "enumNodesReal": 336438,
+              "enumNodesSkipped": 386889,
+              "realEntryChecks": 79040,
+              "virtualEntryChecks": 85120,
+              "realNodeChecks": 87,
+              "virtualNodeChecks": 234,
+              "nativeFallbackCalls": 0
+            }
+          },
+          "fallbackReasons": {},
+          "violations": 0
+        },
+        "note": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+      }
+    ],
+    "audits": [],
+    "catalogueProbe": {
+      "wallMs": 104.74459999999999,
+      "cpuMs": 110,
+      "note": "unmeasured: loads the engine once per command so no arm carries the catalogue discovery"
+    },
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+        "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+        "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": []
+    }
+  },
+  "notes": []
+}

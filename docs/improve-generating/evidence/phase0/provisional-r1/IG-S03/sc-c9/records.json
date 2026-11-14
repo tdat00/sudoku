@@ -1,0 +1,3317 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S03",
+  "shard": "sc-c9",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "38862b3141574728056c2289c25bd8aeeb724fa4ddae47a0825ce7289801e22f",
+  "records": [
+    {
+      "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "classic9:nightmare:1",
+      "gridCluster": null,
+      "requestSeed": 1,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "classic9",
+        "difficulty": "nightmare",
+        "seed": 1,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-attempts-w4",
+      "poolWidth": 4,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 1708.3875999999998,
+        "coldWallMs": 1837.2471999999998,
+        "occupiedWallMs": 1849.0931,
+        "cpuToDecisionMs": 9219,
+        "cpuTotalMs": 9234,
+        "cpuReadyTotalMs": 8766,
+        "startupMs": 128.8596,
+        "startupCpuMs": 468,
+        "cleanupMs": 11.845900000000256,
+        "readyOccupiedWallMs": 1720.2335,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 15
+      },
+      "validation": {
+        "wallMs": 115.65079999999989,
+        "cpuMs": 156,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 1840,
+      "puzzleHash": "9667bc7b9b8e771acb4c2ff056f1aa76ac0bc054054a6a5b691800c6efdd38c1",
+      "attemptsUsed": 8,
+      "samplesUsed": null,
+      "canonicalRatings": 1307,
+      "localProposals": 231540,
+      "localCapReasons": [
+        "proposals",
+        "shallow",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "classic9",
+      "blockKey": "IG-S03/sc-c9/classic9:nightmare:1",
+      "shard": "sc-c9",
+      "order": 0,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool",
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        },
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+        "givens": "c24241455c9d63a60111161499167e09376c8c8b44244a3ccc2f5882c5c75650",
+        "solution": "91df0b7bf939893e30800094cdee5139a9494261eac1e6d7f27cc0535d24c997",
+        "rating": "47047484ce3cf7a5408bd7369d20117ab28358024ebab7fa5c71c2cef1dc7441",
+        "config": "1c746ed97fc957cf5195f1fb01ea29c483342367076195a725fb1da4a7b12fd4",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "6bf9aaf17d3378b946cacf19fdc3178d30f457ab3d6820308c8f26c5cbee29dc",
+        "work": "31f38d50cf9c83a2afc255f01347c4a8b75418fe225af54f9781020cb2a0d3a1",
+        "scalars": "99a9cd0f5da45db5b79172e203ca49dd7c0326e19464f301f16ab4f86d947dd8",
+        "puzzle": "9667bc7b9b8e771acb4c2ff056f1aa76ac0bc054054a6a5b691800c6efdd38c1",
+        "all": "ef4fe4477e17601ede46f08024353faed819ced8d6a85a315a5d63577b1609ec"
+      },
+      "engineTimingsMs": {
+        "configure": 0.7470000000000709,
+        "buildModel": 2.150700000000029,
+        "fullGrid": 14.464000000000055,
+        "extraStructure": 1.1504000000001042,
+        "dig": 6298.593900000001,
+        "rate": 77.75369999999839,
+        "tune": 0.9187000000022181
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "pool": {
+        "width": 4,
+        "ceiling": 4,
+        "attemptsPlanned": 8,
+        "attemptsStarted": 8,
+        "attemptsConsumed": 8,
+        "attemptsSpeculative": 0,
+        "peakActive": 4,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 3.509,
+        "firstReadyMs": 128.86,
+        "allReadyMs": 141.056,
+        "decisionMs": 1837.247,
+        "decision": "merged",
+        "exact": false,
+        "firstExactOrigin": null,
+        "firstExactOrdinal": null,
+        "resultOrigin": "sample",
+        "resultAttempt": 1,
+        "modelHashes": [
+          "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            2.151,
+            1.775,
+            1.896,
+            1.812,
+            0.77,
+            0.743,
+            0.431,
+            0.436
+          ],
+          "totalMs": 10.014,
+          "duplicatedMs": 7.863
+        },
+        "activity": [
+          [
+            128.86,
+            1
+          ],
+          [
+            133.515,
+            2
+          ],
+          [
+            134.647,
+            3
+          ],
+          [
+            141.056,
+            4
+          ],
+          [
+            901.649,
+            3
+          ],
+          [
+            901.649,
+            4
+          ],
+          [
+            948.084,
+            3
+          ],
+          [
+            948.084,
+            4
+          ],
+          [
+            965.972,
+            3
+          ],
+          [
+            965.972,
+            4
+          ],
+          [
+            1128.267,
+            3
+          ],
+          [
+            1128.267,
+            4
+          ],
+          [
+            1600.225,
+            3
+          ],
+          [
+            1737.998,
+            2
+          ],
+          [
+            1809.238,
+            1
+          ],
+          [
+            1837.247,
+            0
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 3,
+              "acceptedOrdinal": 6,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0.5,
+            "keeperBefore": null,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 2,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 3,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 3,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 3,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 4,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 4,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 5,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 1,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 6,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 1,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 7,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 4,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 8,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 1,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4/a1",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 128.86,
+            "finishedMs": 1128.267,
+            "wallMs": 999.408,
+            "engineElapsedMs": 995.711,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 169,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 157,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 157,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+            "buildModelMs": 2.151,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "11b80f33c8d238a5ec885ddfaec9404d01997161fa3c68f22c96cea9d2a29cba"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c07431c4e050b315f685fcc600ded1ab422d7614ce963df733d9838bb9b05ecd"
+              },
+              "keeper": {
+                "ordinal": 6,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "12c432fbf85a78bd1f0bb857ce8f8fc2bc04cb1425c4e0c4e8960a5df866cc1c"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 6,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.967333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c31a58ae77ea32541c36c7347fc3a7cdaace448c6fe4ffdb41e58226371bd692"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 3000.6313333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "548957af967e3ed453dab352f97b5b7ecb81bb78135f9fb44282296213de664a"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "9dd4ad8ebce9809c66eb0f71404715ee88c4a351ddcfeb976bd66711ad7cbc5f"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4/a2",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 133.515,
+            "finishedMs": 948.084,
+            "wallMs": 814.569,
+            "engineElapsedMs": 812.787,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 268,
+              "proposals": 2164,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 2164,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+            "buildModelMs": 1.775,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "99a94021b0058a7ac8fafd85c6e3e9a959f00024e05d5532746494c4c1601621"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "b909e10ec94e9dd68bf04226ffc39bfb18baaf5eb0eac7e03e7587c4601cbb1a"
+              },
+              "keeper": {
+                "ordinal": 7,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "e5154a0fe193c5882296cc299c92d232e97cdb5ccd64ac8694830900b5bdeea6"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 7,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 3000.6206666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c76267d27c5895470c3611bb5554af1c26bc5e13f2294c70548403e0ebb4dca2"
+                },
+                {
+                  "ordinal": 6,
+                  "distance": 1000.1633333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8b2e2751ba2ff6a3d22720250f72f266564448c9878f0de21073a53ef5556cfe"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "84dca39373fdc38378f96cb5c6d1f5540b510be920bf34f973ed519765409a60"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4/a3",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 3,
+            "serialOrdinal": 3,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 134.647,
+            "finishedMs": 901.649,
+            "wallMs": 767.003,
+            "engineElapsedMs": 765.16,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 175,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 163,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 163,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+            "buildModelMs": 1.896,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "6ef45a316a849b8b192094145a0d14caad1b5055b851c90ae30a726919cbed8d"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "4081486ae48bdea023b8b592b398abd883dd13133bf26f23f43b780952f8b05d"
+              },
+              "keeper": {
+                "ordinal": 7,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "16fc2f2286741a2df1f0909da6975cba5e5838c2fdfee225a77eff173785bebd"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 7,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.924666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "7476fefe639e4c84e4f318db0100467b73afd18027584e5b0deabcbc609059cc"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 2000.3553333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "950e54e34ffbd02b9184af2ba406eff43391a3b40618197b6af7d2b2f3e9b250"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8a8fdeb7fdd0a1f257554770e74dfc2a582a5987fc804d7c0c47d598ef97e9b2"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4/a4",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 4,
+            "serialOrdinal": 4,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 141.056,
+            "finishedMs": 965.972,
+            "wallMs": 824.917,
+            "engineElapsedMs": 821.41,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 232,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 220,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 220,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+            "buildModelMs": 1.812,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "7ba7b16fa190b57fafd0ac0058aceee70c55d33753be549fb228635b8e3ab224"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "7905285fb0d4c8d725f9bf42206420abfe2e2e2b4b0986c463731d8859bfa0a0"
+              },
+              "keeper": {
+                "ordinal": 8,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "517153a687d9baf0c20eaeb5d6afa3bd32a6bd68b47100310af2b1f88b70923e"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 8,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.966666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d1dad6c50087a3dad4f04a8b35dd76bcbdaf5a8c09bdfafc0bb61ae6ef6346ea"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.2033333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "05bcf0561e227dbdd892db607f90ab90c42c927adc99f8aaa8df4d487ba7dab2"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 1000.1873333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "17da45101d2e1228c79dbea9a818f05c12b16d464288154189045bce2b855bbf"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a3f49f8c87b9271fbda1f8d42fd3f4ad1d74aee95359e8b992599d50b1d0eb6f"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4/a5",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 5,
+            "serialOrdinal": 5,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 901.649,
+            "finishedMs": 1809.238,
+            "wallMs": 907.589,
+            "engineElapsedMs": 906.939,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 120,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 99,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 99,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.77,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "e256f27b7d24b9d954a60516265a924693765bc8f1e8953d6d9458465440b5f5"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "8cadf71a04794cfb98f14c24b264d5e10f90d9bfba77af84f4ecc0ab7a9171f8"
+              },
+              "keeper": {
+                "ordinal": 1,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "e256f27b7d24b9d954a60516265a924693765bc8f1e8953d6d9458465440b5f5"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 15,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d39ab1737130088fc179dd6596a12ed00309eca4dc0adcdd3d63aaf5c919224a"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4/a6",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 6,
+            "serialOrdinal": 6,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 948.084,
+            "finishedMs": 1737.998,
+            "wallMs": 789.914,
+            "engineElapsedMs": 789.332,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 193,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 181,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 181,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.743,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "750f53cf1b2038cfb793d904d83ca1d62326dc65ef210bbe3bbded42d96d22b0"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "f27fb024584154a39ac9ea1bdbae74deb4d006a94e2c3c9790b038a252c83297"
+              },
+              "keeper": {
+                "ordinal": 1,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "750f53cf1b2038cfb793d904d83ca1d62326dc65ef210bbe3bbded42d96d22b0"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 6,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0840e06feb1a7253645579b9a446ed2053b3d363fc35ecaa14133108912b9072"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4/a7",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 7,
+            "serialOrdinal": 7,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 965.972,
+            "finishedMs": 1600.225,
+            "wallMs": 634.253,
+            "engineElapsedMs": 633.754,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 87,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 75,
+                  "proposals": 32768,
+                  "firstShallowAt": null,
+                  "shallowRatings": 0,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.431,
+            "candidates": {
+              "sample": {
+                "distance": 1000.0746666666666,
+                "exact": false,
+                "digest": "f3755f65d8d42b532349995a52c68c5c03ef7b66fcda60320e045428ce0fe0ea"
+              },
+              "search": {
+                "distance": 1000.07,
+                "exact": false,
+                "digest": "69da5579a1ed56f84e6708dcc4c5cae3301080fd56e547160ef3f5cc399293bb"
+              },
+              "keeper": {
+                "ordinal": 9,
+                "distance": 1000.07,
+                "exact": false,
+                "digest": "69da5579a1ed56f84e6708dcc4c5cae3301080fd56e547160ef3f5cc399293bb"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 9,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 1000.248,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a40343109e0de83e24dda9e0ef79de508535406773cdb158a87e0ae65ed0fde6"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 1000.0753333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "51f90ac82319a54cda2e0a496df859bb9a2b14df413eda91db26e9bd1f42bfed"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 1000.0706666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "e57097f27f25449d5256bb34ba9fef962e04b0af59ca02a957fa04132851b97c"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 1000.07,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "63c45eba719d964065a26729e38b884e5e31317e6e25ae16467be1cc6a161d8a"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4/a8",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:1/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 8,
+            "serialOrdinal": 8,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 1128.267,
+            "finishedMs": 1837.247,
+            "wallMs": 708.98,
+            "engineElapsedMs": 707.804,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 63,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 51,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 51,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.436,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "bf0a4cfc40f3b9441a9ba33c82bc86e66cd1ab9a41df0f93f0bc73ba97eee9e2"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "bf0a4cfc40f3b9441a9ba33c82bc86e66cd1ab9a41df0f93f0bc73ba97eee9e2"
+              },
+              "keeper": {
+                "ordinal": 1,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "bf0a4cfc40f3b9441a9ba33c82bc86e66cd1ab9a41df0f93f0bc73ba97eee9e2"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 6,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "142d53d4686dbd13524cbb577a4a4b3f48d615aa707817833bbc96e0dcd04b45"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          }
+        ]
+      },
+      "scoped": {
+        "messages": 8,
+        "solve": {
+          "solvesBegun": 6223,
+          "stepsApplied": 271677,
+          "cellsInvalidated": 5520841,
+          "unitsInvalidated": 6066176,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 272390,
+            "scopesVisited": 12656922,
+            "realScopes": 3913481,
+            "negativeRecorded": 3676604,
+            "positiveScopes": 236877,
+            "skippedScopes": 8743441,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 35513,
+            "scopesVisited": 223116,
+            "realScopes": 116070,
+            "negativeRecorded": 93792,
+            "positiveScopes": 22278,
+            "skippedScopes": 107046,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 13235,
+            "scopesVisited": 212726,
+            "realScopes": 97851,
+            "negativeRecorded": 94998,
+            "positiveScopes": 2853,
+            "skippedScopes": 114875,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 6831,
+            "scopesVisited": 172305,
+            "realScopes": 85850,
+            "negativeRecorded": 85159,
+            "positiveScopes": 691,
+            "skippedScopes": 86455,
+            "enumNodesReal": 228446,
+            "enumNodesSkipped": 249390,
+            "realEntryChecks": 85850,
+            "virtualEntryChecks": 86455,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 1,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 6140,
+            "scopesVisited": 158462,
+            "realScopes": 81717,
+            "negativeRecorded": 81259,
+            "positiveScopes": 458,
+            "skippedScopes": 76745,
+            "enumNodesReal": 250425,
+            "enumNodesSkipped": 249694,
+            "realEntryChecks": 81717,
+            "virtualEntryChecks": 76745,
+            "realNodeChecks": 1,
+            "virtualNodeChecks": 1,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 5682,
+            "scopesVisited": 152823,
+            "realScopes": 80174,
+            "negativeRecorded": 80130,
+            "positiveScopes": 44,
+            "skippedScopes": 72649,
+            "enumNodesReal": 368169,
+            "enumNodesSkipped": 362084,
+            "realEntryChecks": 80174,
+            "virtualEntryChecks": 72649,
+            "realNodeChecks": 67,
+            "virtualNodeChecks": 146,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 5638,
+            "scopesVisited": 152187,
+            "realScopes": 79945,
+            "negativeRecorded": 79943,
+            "positiveScopes": 2,
+            "skippedScopes": 72242,
+            "enumNodesReal": 337526,
+            "enumNodesSkipped": 335281,
+            "realEntryChecks": 79945,
+            "virtualEntryChecks": 72242,
+            "realNodeChecks": 49,
+            "virtualNodeChecks": 102,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 5636,
+            "scopesVisited": 152150,
+            "realScopes": 79918,
+            "negativeRecorded": 79912,
+            "positiveScopes": 6,
+            "skippedScopes": 72232,
+            "enumNodesReal": 354837,
+            "enumNodesSkipped": 345512,
+            "realEntryChecks": 79918,
+            "virtualEntryChecks": 72232,
+            "realNodeChecks": 174,
+            "virtualNodeChecks": 291,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 5630,
+            "scopesVisited": 152010,
+            "realScopes": 79828,
+            "negativeRecorded": 79828,
+            "positiveScopes": 0,
+            "skippedScopes": 72182,
+            "enumNodesReal": 315832,
+            "enumNodesSkipped": 305337,
+            "realEntryChecks": 79828,
+            "virtualEntryChecks": 72182,
+            "realNodeChecks": 69,
+            "virtualNodeChecks": 161,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+    },
+    {
+      "key": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "classic9:nightmare:2",
+      "gridCluster": null,
+      "requestSeed": 2,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "classic9",
+        "difficulty": "nightmare",
+        "seed": 2,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-attempts-w4",
+      "poolWidth": 4,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 791.4769999999999,
+        "coldWallMs": 907.5913,
+        "occupiedWallMs": 924.7696000000001,
+        "cpuToDecisionMs": 4953,
+        "cpuTotalMs": 5063,
+        "cpuReadyTotalMs": 4593,
+        "startupMs": 116.11430000000018,
+        "startupCpuMs": 470,
+        "cleanupMs": 17.178300000000036,
+        "readyOccupiedWallMs": 808.6552999999999,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 110
+      },
+      "validation": {
+        "wallMs": 108.36089999999967,
+        "cpuMs": 110,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": true,
+      "verifiedExact": true,
+      "required": true,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "nightmare",
+      "score": 2382,
+      "puzzleHash": "1701c0ee3bb8dc23245541f235b95384045bfd539e299480660f360eab945f45",
+      "attemptsUsed": 1,
+      "samplesUsed": null,
+      "canonicalRatings": 105,
+      "localProposals": 816,
+      "localCapReasons": [
+        null
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": "keeper",
+      "firstExactOrdinal": 1,
+      "checkpointHashes": null,
+      "warnings": [],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "classic9",
+      "blockKey": "IG-S03/sc-c9/classic9:nightmare:2",
+      "shard": "sc-c9",
+      "order": 2,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool",
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        },
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+        "givens": "7a2879b1853eb867a4827aaf40101087baf3594fd444b86c2ceaddab6281c467",
+        "solution": "a2b24cbed7b0fa584f4624ac2025d167c09af0666b8cce9fc08072d32ecd03ac",
+        "rating": "deb61787b93891afd956aab9bb1d9817fffbf36d389d365bd687a6c2f3605099",
+        "config": "eee3febd0dd7fd266bdea6374504380644280bb31f9abe58a5e8fff2e3830c87",
+        "warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "log": "6938cbb59f8740f3e222633b7948ece2e0d43a202aeaa0eb3ddbf23f46b761f5",
+        "work": "18b3d9c0d9cf03637118ad5f222b92a5bae1c9b7476febd8a0e2ccd7e5ee1bb1",
+        "scalars": "b8491d075beb82108c3f19982ff1f24891b9aeb5ca30f3342757d5d7054909f0",
+        "puzzle": "1701c0ee3bb8dc23245541f235b95384045bfd539e299480660f360eab945f45",
+        "all": "e8f3ebe2ab9eb99b5e118813728d922512645066f38dec36968b41ffbc2aced3"
+      },
+      "engineTimingsMs": {
+        "configure": 0.34819999999990614,
+        "buildModel": 2.3445999999999003,
+        "fullGrid": 2.284400000000005,
+        "extraStructure": 0.1491000000000895,
+        "dig": 771.3955000000005,
+        "rate": 7.6580000000003565,
+        "tune": 0.1334999999999127
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "pool": {
+        "width": 4,
+        "ceiling": 4,
+        "attemptsPlanned": 8,
+        "attemptsStarted": 5,
+        "attemptsConsumed": 1,
+        "attemptsSpeculative": 4,
+        "peakActive": 4,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 3.475,
+        "firstReadyMs": 116.114,
+        "allReadyMs": 121.447,
+        "decisionMs": 907.591,
+        "decision": "merged",
+        "exact": true,
+        "firstExactOrigin": "keeper",
+        "firstExactOrdinal": 1,
+        "resultOrigin": "keeper",
+        "resultAttempt": 1,
+        "modelHashes": [
+          "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            2.345,
+            1.76
+          ],
+          "totalMs": 4.105,
+          "duplicatedMs": 1.76
+        },
+        "activity": [
+          [
+            116.114,
+            1
+          ],
+          [
+            118.7,
+            2
+          ],
+          [
+            120.401,
+            3
+          ],
+          [
+            121.447,
+            4
+          ],
+          [
+            874.128,
+            3
+          ],
+          [
+            874.128,
+            4
+          ],
+          [
+            907.591,
+            3
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": "keeper",
+            "replay": {
+              "counted": 3,
+              "acceptedOrdinal": 7,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0,
+            "keeperBefore": null,
+            "keeperAfter": 0
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4/a1",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 116.114,
+            "finishedMs": 907.591,
+            "wallMs": 791.477,
+            "engineElapsedMs": 789.236,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "keeper",
+            "error": null,
+            "work": {
+              "ratings": 105,
+              "proposals": 816,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 93,
+                  "proposals": 816,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 93,
+                  "shallowLimit": 256,
+                  "capHit": null
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+            "buildModelMs": 2.345,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "88bb7e33e828330389d4c6e24888486745711124cdd319c054fb173a7e4aa15e"
+              },
+              "search": {
+                "distance": 0,
+                "exact": true,
+                "digest": "bdc0d8d545dc3fe0b774754898b2361d134dcece1c3afdfb0b8d3350bc4502b8"
+              },
+              "keeper": {
+                "ordinal": 7,
+                "distance": 0,
+                "exact": true,
+                "digest": "bdc0d8d545dc3fe0b774754898b2361d134dcece1c3afdfb0b8d3350bc4502b8"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 7,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.967333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "34d4c5acd12ea75ffcab99eaa61d3a0cb0cb04f791dcf490006658f1a3d43730"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "bb528057d2ebd8f4c1b4715868409e3bc27bac8ef36c65ffde028f33a28854fc"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 0,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b2e171778386f8e8f0a73716b0f02013a2ed09caa303bfc40be74cfe459dc3bf"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4/a2",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 3,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "terminated-unfinished",
+            "completedBeforeDecision": false,
+            "startedMs": 118.7,
+            "finishedMs": null,
+            "wallMs": null,
+            "engineElapsedMs": null,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": null,
+            "samples": null,
+            "modelHash": null,
+            "buildModelMs": null,
+            "candidates": null,
+            "keeperLedger": null,
+            "sampleUnsound": null
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4/a3",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 3,
+            "serialOrdinal": 3,
+            "lane": 1,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 120.401,
+            "finishedMs": 874.128,
+            "wallMs": 753.727,
+            "engineElapsedMs": 752.2,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 268,
+              "proposals": 2755,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 2755,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+            "buildModelMs": 1.76,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "98048ef7ef2743e8f72ce8093962525d297234f9994f977c77b8c62c09c8fd1e"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "3250bc6aeaf7391620cd9412d1a7e54e61d555db8e778095da4890c7c6f4cf7e"
+              },
+              "keeper": {
+                "ordinal": 4,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "c18a1babb7d4d9da9ac41409b5bde84c7cdde7daba64dc40ea3b01678e810b07"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 6,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 4000.8633333333332,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "05d87525f72f558608c0b37d8855c217c50e29807e3782bbd47d50a3364fe99a"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 4000.809333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "cbfe4adfdd80e68b9495a033ca5393d54338d5f5fe00cd942be0d10f87ba109a"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d1b10e81692896b09312b0516d58d347d899cc1a4340764d75bcc337ad334860"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4/a4",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 4,
+            "serialOrdinal": 4,
+            "lane": 2,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "terminated-unfinished",
+            "completedBeforeDecision": false,
+            "startedMs": 121.447,
+            "finishedMs": null,
+            "wallMs": null,
+            "engineElapsedMs": null,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": null,
+            "samples": null,
+            "modelHash": null,
+            "buildModelMs": null,
+            "candidates": null,
+            "keeperLedger": null,
+            "sampleUnsound": null
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4/a5",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:2/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 5,
+            "serialOrdinal": 5,
+            "lane": 1,
+            "consumed": false,
+            "speculative": true,
+            "outcome": "terminated-unfinished",
+            "completedBeforeDecision": false,
+            "startedMs": 874.128,
+            "finishedMs": null,
+            "wallMs": null,
+            "engineElapsedMs": null,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": null,
+            "samples": null,
+            "modelHash": null,
+            "buildModelMs": null,
+            "candidates": null,
+            "keeperLedger": null,
+            "sampleUnsound": null
+          }
+        ]
+      },
+      "scoped": {
+        "messages": 2,
+        "solve": {
+          "solvesBegun": 1719,
+          "stepsApplied": 76187,
+          "cellsInvalidated": 1543630,
+          "unitsInvalidated": 1696647,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 76362,
+            "scopesVisited": 3574489,
+            "realScopes": 1097344,
+            "negativeRecorded": 1031524,
+            "positiveScopes": 65820,
+            "skippedScopes": 2477145,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 10542,
+            "scopesVisited": 66433,
+            "realScopes": 34480,
+            "negativeRecorded": 28008,
+            "positiveScopes": 6472,
+            "skippedScopes": 31953,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 4070,
+            "scopesVisited": 65055,
+            "realScopes": 30331,
+            "negativeRecorded": 29385,
+            "positiveScopes": 946,
+            "skippedScopes": 34724,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 2218,
+            "scopesVisited": 54660,
+            "realScopes": 27269,
+            "negativeRecorded": 27006,
+            "positiveScopes": 263,
+            "skippedScopes": 27391,
+            "enumNodesReal": 79922,
+            "enumNodesSkipped": 81462,
+            "realEntryChecks": 27269,
+            "virtualEntryChecks": 27391,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 3,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 1955,
+            "scopesVisited": 51528,
+            "realScopes": 26336,
+            "negativeRecorded": 26239,
+            "positiveScopes": 97,
+            "skippedScopes": 25192,
+            "enumNodesReal": 85650,
+            "enumNodesSkipped": 82665,
+            "realEntryChecks": 26336,
+            "virtualEntryChecks": 25192,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 3,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 1858,
+            "scopesVisited": 49912,
+            "realScopes": 25886,
+            "negativeRecorded": 25865,
+            "positiveScopes": 21,
+            "skippedScopes": 24026,
+            "enumNodesReal": 126622,
+            "enumNodesSkipped": 120957,
+            "realEntryChecks": 25886,
+            "virtualEntryChecks": 24026,
+            "realNodeChecks": 14,
+            "virtualNodeChecks": 32,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 1837,
+            "scopesVisited": 49511,
+            "realScopes": 25736,
+            "negativeRecorded": 25727,
+            "positiveScopes": 9,
+            "skippedScopes": 23775,
+            "enumNodesReal": 119762,
+            "enumNodesSkipped": 112649,
+            "realEntryChecks": 25736,
+            "virtualEntryChecks": 23775,
+            "realNodeChecks": 4,
+            "virtualNodeChecks": 24,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 1828,
+            "scopesVisited": 49318,
+            "realScopes": 25682,
+            "negativeRecorded": 25680,
+            "positiveScopes": 2,
+            "skippedScopes": 23636,
+            "enumNodesReal": 121313,
+            "enumNodesSkipped": 109417,
+            "realEntryChecks": 25682,
+            "virtualEntryChecks": 23636,
+            "realNodeChecks": 15,
+            "virtualNodeChecks": 50,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 1826,
+            "scopesVisited": 49302,
+            "realScopes": 25680,
+            "negativeRecorded": 25680,
+            "positiveScopes": 0,
+            "skippedScopes": 23622,
+            "enumNodesReal": 109013,
+            "enumNodesSkipped": 97897,
+            "realEntryChecks": 25680,
+            "virtualEntryChecks": 23622,
+            "realNodeChecks": 12,
+            "virtualNodeChecks": 22,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+    },
+    {
+      "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "classic9:nightmare:3",
+      "gridCluster": null,
+      "requestSeed": 3,
+      "attempt": null,
+      "sample": null,
+      "variantId": "scoped-attempts-w4",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "classic9",
+        "difficulty": "nightmare",
+        "seed": 3,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "scoped-attempts-w4",
+      "poolWidth": 4,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); neither arm uses the 120 s application active-time guard",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 1763.0155,
+        "coldWallMs": 1878.9261000000001,
+        "occupiedWallMs": 1891.1281000000004,
+        "cpuToDecisionMs": 8546,
+        "cpuTotalMs": 8578,
+        "cpuReadyTotalMs": 8173,
+        "startupMs": 115.91060000000016,
+        "startupCpuMs": 405,
+        "cleanupMs": 12.202000000000226,
+        "readyOccupiedWallMs": 1775.2175000000002,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 32
+      },
+      "validation": {
+        "wallMs": 136.36300000000028,
+        "cpuMs": 203,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 2288,
+      "puzzleHash": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+      "attemptsUsed": 8,
+      "samplesUsed": null,
+      "canonicalRatings": 1143,
+      "localProposals": 231588,
+      "localCapReasons": [
+        "proposals",
+        "proposals",
+        "shallow",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "classic9",
+      "blockKey": "IG-S03/sc-c9/classic9:nightmare:3",
+      "shard": "sc-c9",
+      "order": 4,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "attempt-pool",
+        "scoped-solver"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "attempt-pool.attempt-loop",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6"
+        },
+        {
+          "id": "attempt-pool.keeper-ledger",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "3db78bd084641f0ce992c1511680bef960bddf4bb77fd1e2b818e1ebe3a853f6",
+          "afterTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae"
+        },
+        {
+          "id": "attempt-pool.offer-met",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8fbc362e135d80cfdeb0419a71c74a234f0b8065669c0335e34d08284684d1ae",
+          "afterTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710"
+        },
+        {
+          "id": "attempt-pool.offer-counted",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "edcca4cdf7728229098861f4954cf96473e72a73d4065e0496153e467f17b710",
+          "afterTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53"
+        },
+        {
+          "id": "attempt-pool.capture",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "20ef7255fc7e7a53653a48d5ee5ef3fafda2f55e202d04c1e66b687096a11d53",
+          "afterTextHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+        },
+        {
+          "id": "scoped-solver.boot",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9"
+        },
+        {
+          "id": "scoped-solver.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "de94b88c638bc060b3f4a0d34ee12c68f0174c0805c22abf7dee0055d46a64a9",
+          "afterTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c"
+        },
+        {
+          "id": "scoped-solver.iterate-applied",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "8e80ebfbf97778fe1c92fe058828159e7c45a589b2c25a98bf062d3cea5f506c",
+          "afterTextHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+        },
+        {
+          "id": "scoped-solver.basic-kit",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+          "afterTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d"
+        },
+        {
+          "id": "scoped-solver.naked-single",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "6816b3e199029ada37bcf254c8af7d86e52f9f6eaf43ab5346fb3fab7cf8e72d",
+          "afterTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de"
+        },
+        {
+          "id": "scoped-solver.hidden-single-box",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "e0b05a0857a11762a76a83c4b95849baee1877373c1c12d5dadfb37d92ea83de",
+          "afterTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b"
+        },
+        {
+          "id": "scoped-solver.hidden-single-line",
+          "file": "../core/js/engine/tech-basic.js",
+          "beforeTextHash": "129132a1609ef05ad0167d99501392ca05639d308c032882bc996e17125e5b1b",
+          "afterTextHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+        },
+        {
+          "id": "scoped-solver.subset-kit",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+          "afterTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086"
+        },
+        {
+          "id": "scoped-solver.subset-find",
+          "file": "../core/js/engine/tech-subset.js",
+          "beforeTextHash": "e4fec6303182c315295e45e9ea97574113b7e3dd597289cf3a3b7e0afb42a086",
+          "afterTextHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+        },
+        {
+          "id": "scoped-solver.run-flush",
+          "file": "js/engine/pipeline.js",
+          "beforeTextHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+          "afterTextHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+        }
+      ],
+      "engineElapsedMs": null,
+      "digests": {
+        "structure": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+        "givens": "2f118325c6f13660477b79b18247cf362205a62a6f72c959e759c7cac7853cd5",
+        "solution": "bef0c5faf8b7731c32b9568521704cef54941b23f034de7185467fce2331d68c",
+        "rating": "fc783d30401c2b1cd7539e65934b8e125638eaff7b32788d51efdcf7db862b1b",
+        "config": "dcb3136df0094bb40e6e3e5dd050e7a91e6531a4c879011e4a34b950607be58b",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "6ca9f8aecb49a5a2cd073824778518658dcbc6aa5a60604455d8b820ee48e9da",
+        "work": "a4254d1be8ec34d38c17813b22fbbac4fafb24ef2cbf5c8f939919bfcfb8b6a4",
+        "scalars": "4b50d9b96770b6c059f37ac9975810e18737267280dcbd0a8cb78346975ad143",
+        "puzzle": "bf9e4ae7ba99b8f7312c31d43c85a282c966f691730fe75d5c0f25d665f4fb93",
+        "all": "48a2dddbebec707b86a85a349352e08efd710f836c0d6a95aa0444b8f9ab9d49"
+      },
+      "engineTimingsMs": {
+        "configure": 0.31730000000015934,
+        "buildModel": 1.6802000000002408,
+        "fullGrid": 9.472000000001117,
+        "extraStructure": 0.5048999999994521,
+        "dig": 6411.520400000002,
+        "rate": 65.41110000000162,
+        "tune": 0.8548999999984517
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "above120s": {
+        "readyWall": false,
+        "coldWall": false,
+        "note": "recorded only: not proof of an application pass under the old active-time or the proposed wall-time guard"
+      },
+      "attemptsPlanned": 8,
+      "pool": {
+        "width": 4,
+        "ceiling": 4,
+        "attemptsPlanned": 8,
+        "attemptsStarted": 8,
+        "attemptsConsumed": 8,
+        "attemptsSpeculative": 0,
+        "peakActive": 4,
+        "peakWithinCeiling": true,
+        "meanBusyLanes": 3.477,
+        "firstReadyMs": 115.911,
+        "allReadyMs": 118.182,
+        "decisionMs": 1878.926,
+        "decision": "merged",
+        "exact": false,
+        "firstExactOrigin": null,
+        "firstExactOrdinal": null,
+        "resultOrigin": "sample",
+        "resultAttempt": 1,
+        "modelHashes": [
+          "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0"
+        ],
+        "modelHashesEqual": true,
+        "duplicatedModelBuild": {
+          "perAttemptMs": [
+            1.68,
+            1.726,
+            1.581,
+            1.507,
+            0.704,
+            0.755,
+            0.433,
+            0.526
+          ],
+          "totalMs": 8.912,
+          "duplicatedMs": 7.232
+        },
+        "activity": [
+          [
+            115.911,
+            1
+          ],
+          [
+            116.089,
+            2
+          ],
+          [
+            116.974,
+            3
+          ],
+          [
+            118.182,
+            4
+          ],
+          [
+            779.522,
+            3
+          ],
+          [
+            779.522,
+            4
+          ],
+          [
+            1017.535,
+            3
+          ],
+          [
+            1017.535,
+            4
+          ],
+          [
+            1059.55,
+            3
+          ],
+          [
+            1059.55,
+            4
+          ],
+          [
+            1125.998,
+            3
+          ],
+          [
+            1125.998,
+            4
+          ],
+          [
+            1568.376,
+            3
+          ],
+          [
+            1725.953,
+            2
+          ],
+          [
+            1827.037,
+            1
+          ],
+          [
+            1878.926,
+            0
+          ]
+        ],
+        "mergeSteps": [
+          {
+            "attempt": 1,
+            "adopted": null,
+            "replay": {
+              "counted": 3,
+              "acceptedOrdinal": 7,
+              "speculative": 0,
+              "unsoundSet": false
+            },
+            "bestBefore": null,
+            "bestAfter": 0.5,
+            "keeperBefore": null,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 2,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 7,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 3,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 2,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 4,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 3,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 5,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 3,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 6,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 4,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 7,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 2,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          },
+          {
+            "attempt": 8,
+            "adopted": null,
+            "replay": {
+              "counted": 0,
+              "acceptedOrdinal": null,
+              "speculative": 1,
+              "unsoundSet": false
+            },
+            "bestBefore": 0.5,
+            "bestAfter": 0.5,
+            "keeperBefore": 0.5,
+            "keeperAfter": 0.5
+          }
+        ],
+        "keeperUnsoundConsumed": false,
+        "sampleUnsoundConsumed": false,
+        "attempts": [
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4/a1",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 1,
+            "serialOrdinal": 1,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 115.911,
+            "finishedMs": 1125.998,
+            "wallMs": 1010.087,
+            "engineElapsedMs": 1007.815,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": "sample",
+            "error": null,
+            "work": {
+              "ratings": 104,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 92,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 92,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+            "buildModelMs": 1.68,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "e60d185b3dd54f4f4c0322a0b18b173e708f9927d5e190dca7825dc4d547a286"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "14e1b3404b0cb1a33eac4deb0be8e4b0693b3c23681b249e1ae4c1beb495c816"
+              },
+              "keeper": {
+                "ordinal": 7,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "8f650332a69beade3fdb91361b85a84edf3f631e1ed5dcf6920fdfcaf2fe16ae"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 7,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 2000.3653333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "2c644937b13b0fbc50d2a3810b7c26f8e67dcb8856d485632037648dfc7d6ee9"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.1133333333333,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "09ba59333fa6f6f091f16a9647d62c759ff8fcec8c21d2321fd31e7f8005ad01"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "c01410340d36eeede7f223de5e646fcb9c16a5bf5c146960d03660c59b2c470f"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4/a2",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 2,
+            "serialOrdinal": 2,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 116.089,
+            "finishedMs": 1017.535,
+            "wallMs": 901.446,
+            "engineElapsedMs": 899.321,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 124,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 112,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 112,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+            "buildModelMs": 1.726,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "8ccdf3e030f41df04c23f734f77b8f7ec2650e6f0fe4138da18b0cb2907567a0"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "2e24a89b16233bd8450d3e4a67d8ec3142a8875d85ae37168bad94cab444ff1b"
+              },
+              "keeper": {
+                "ordinal": 10,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "e57edbdd0ee5ef4b00a5b8287e86c10304abb2a742af2dacb1ee81d987f030be"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 10,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.967333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a2986b26a6199765965722055bae858a138299f84e8a56e39c29f226568883d7"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 3000.6586666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "be72b25d0847198ab4841fc2cb4ca2d48173fbb8d633643862d80897eb9a4c7a"
+                },
+                {
+                  "ordinal": 5,
+                  "distance": 3000.646,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "05752804280aaeea84e7cb979084a0b82868bc9c6f5a3316cfe2e6f5893a24ce"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 3000.6133333333332,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b39d16234abc40701504cd20b2372ff9b5105ad3c9c0c9059cabd0d371fe04df"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 1000.1246666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "04ad68bb597efd6798ac673bb0f4cefcfca06f5001fad04382b75a23427b1630"
+                },
+                {
+                  "ordinal": 9,
+                  "distance": 1000.074,
+                  "count": 1,
+                  "provesUniqueness": false,
+                  "digest": "2651a67597d11f9346d83ccba0546d10c910980801ff089758088f85d1254aa3"
+                },
+                {
+                  "ordinal": 10,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "f5f19ddad791e9c567f152ad4650cdf73bcbb74f7657d1a88efd2aae331983c4"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4/a3",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 3,
+            "serialOrdinal": 3,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 116.974,
+            "finishedMs": 779.522,
+            "wallMs": 662.548,
+            "engineElapsedMs": 660.894,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 268,
+              "proposals": 2212,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 256,
+                  "proposals": 2212,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 256,
+                  "shallowLimit": 256,
+                  "capHit": "shallow"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+            "buildModelMs": 1.581,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "532bef32b04d47ac6be9be9d7c4047571f6d03ad0789276e74cedfe6473d07c6"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "e3132e18964f79b691bd14bbd7282949feb83faa60fc310705e7db32d8281bf2"
+              },
+              "keeper": {
+                "ordinal": 3,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "532bef32b04d47ac6be9be9d7c4047571f6d03ad0789276e74cedfe6473d07c6"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 6,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 1000.0006666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "a5ed9108dc640b7ce1d37634757a9af37c18d0adef5aa5842f32023d20a2753e"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d5b2ef5154c21b5c934c70d6d562462161ec75958c40a87d2e06410f92bfdf7e"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4/a4",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 4,
+            "serialOrdinal": 4,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 118.182,
+            "finishedMs": 1059.55,
+            "wallMs": 941.367,
+            "engineElapsedMs": 939.677,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 100,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 88,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 88,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": "52654d7fa052ec1a9da7686cf9f4bf8c5a6041e8183fdc9d0d8e7765a41bb1e0",
+            "buildModelMs": 1.507,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "02b90ea10349b22f484cadede09b9060a8002d0eb9de56304cbef75632506d0f"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "750f605cca5a57d1251a94d8b9c3d75ff73b76b259b460ccd1ed89aa999cbe38"
+              },
+              "keeper": {
+                "ordinal": 4,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "672bab09f91fe5c038703438eaf89e08ad5d8b83c87fe3b2144e3764016a8f1d"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 6,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 3000.6446666666666,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "d5d120f3158ece7eba290673bdaad14a80a9e67bd4fffd6d5aa6e191f2bad2a9"
+                },
+                {
+                  "ordinal": 3,
+                  "distance": 1000.126,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "cfe66fc1274274ad92b4443dec7b481936d9236cb84aae511ef6720b426af72f"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "b2220e6a88423f93a6fe2febd6eaee2deaf7ea4824552378000e32ec36f70be2"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4/a5",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 5,
+            "serialOrdinal": 5,
+            "lane": 0,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 779.522,
+            "finishedMs": 1878.926,
+            "wallMs": 1099.404,
+            "engineElapsedMs": 1098.716,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 219,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 207,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 207,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.704,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "4321709b5b4df44bbe79acf194cc8b1df86cb1165fe649b6b91bff7c39a70b05"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "08365c42c360fc726cc3cce2e91194bb855dfcd08cb945b995199b5b9c5dc8b7"
+              },
+              "keeper": {
+                "ordinal": 4,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "d2f1469238d9be6a7468c965f857401cb5481bc3a2a37d906dd81acd26a5dce5"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 6,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.967333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "502896f36d0e4c7fa9e6a4db4f93ceb5dd29d9b9705bdb5fce407413dee34661"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 4000.8533333333335,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "be86750136ab8c9ba3dd60d1c6064bb87fb1885959353198623067e3cf523691"
+                },
+                {
+                  "ordinal": 4,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "310b5771d3eb4befb7cfb8d63b2d25c5a0e225e288b7c130271a4214c05b7af2"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4/a6",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 6,
+            "serialOrdinal": 6,
+            "lane": 3,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 1017.535,
+            "finishedMs": 1827.037,
+            "wallMs": 809.502,
+            "engineElapsedMs": 808.915,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 149,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 137,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 137,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.755,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "7774478e5cd4dff30731d427f877134f79079adcabf7a675e0381e4a072a3e01"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "4564a9a5d59e5e12e57c31f76cde4f62ccc49472e8da9e469a041ee2570e84ea"
+              },
+              "keeper": {
+                "ordinal": 8,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "f3ce4aa3f7a6bfec1bd7459f6c5ec2b68e2ab1a4fa6be51947721e4d6aa5cabd"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 8,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.967333333333,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0b2c2ed736c5a4d2ca33f6a92a8dd51d35b52dda6269d6a45a817acc545e5893"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 1000.3193333333334,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "326edad1f98888d1b01007f57afa2267782e09e72eb8c1313ef12b249e5afe5f"
+                },
+                {
+                  "ordinal": 7,
+                  "distance": 1000.18,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "0afb5eacbf57cf13fecf38321643052d36144455096fdaec0622e08f72dbb4c7"
+                },
+                {
+                  "ordinal": 8,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "de50bedcac392b0b233138a3cb06422b2d211f889f1672bf5c4380ace0593563"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4/a7",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 7,
+            "serialOrdinal": 7,
+            "lane": 1,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 1059.55,
+            "finishedMs": 1568.376,
+            "wallMs": 508.827,
+            "engineElapsedMs": 508.321,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 90,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 78,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 78,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.433,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "df95941846ccac35adc6761f676596075ce42efcb0b9c7431d67db0fda4890aa"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "935837ae33298483f588bc8ab0de0c17f1ecfb99b9a57311b0be8163283a74c1"
+              },
+              "keeper": {
+                "ordinal": 2,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "df95941846ccac35adc6761f676596075ce42efcb0b9c7431d67db0fda4890aa"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 6,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 5000.930666666667,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "8099bae13974125625bf6aa64709db242a1594f0cfcb273fe871103dcdf65178"
+                },
+                {
+                  "ordinal": 2,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "6164a6e89e70d62086a5ccb53e6883cac584ae6a12452028eeb14bad8138ff72"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          },
+          {
+            "key": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4/a8",
+            "parentKey": "IG-S03/sc-c9/classic9:nightmare:3/scoped-attempts-w4",
+            "recordKind": "attempt",
+            "attempt": 8,
+            "serialOrdinal": 8,
+            "lane": 2,
+            "consumed": true,
+            "speculative": false,
+            "outcome": "complete",
+            "completedBeforeDecision": true,
+            "startedMs": 1125.998,
+            "finishedMs": 1725.953,
+            "wallMs": 599.955,
+            "engineElapsedMs": 599.328,
+            "cpuAvailability": "unavailable per attempt: process.cpuUsage is read once at the host",
+            "origin": null,
+            "error": null,
+            "work": {
+              "ratings": 89,
+              "proposals": 32768,
+              "maxRatings": 1024,
+              "maxProposals": 32768,
+              "localSearches": [
+                {
+                  "ratings": 77,
+                  "proposals": 32768,
+                  "firstShallowAt": 0,
+                  "shallowRatings": 77,
+                  "shallowLimit": 256,
+                  "capHit": "proposals"
+                }
+              ]
+            },
+            "samples": 12,
+            "modelHash": null,
+            "buildModelMs": 0.526,
+            "candidates": {
+              "sample": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "b5f13140f44c62ae0fd0d1bd33ae05ddf42201d012d7c538479599ac09ee5690"
+              },
+              "search": {
+                "distance": 0.5,
+                "exact": false,
+                "digest": "55d37a322583034111927a9493759c037027609775dafe8d42b473928b400c4d"
+              },
+              "keeper": {
+                "ordinal": 1,
+                "distance": 0.5,
+                "exact": false,
+                "digest": "b5f13140f44c62ae0fd0d1bd33ae05ddf42201d012d7c538479599ac09ee5690"
+              }
+            },
+            "keeperLedger": {
+              "offersMet": 6,
+              "counted": [
+                {
+                  "ordinal": 1,
+                  "distance": 0.5,
+                  "count": 1,
+                  "provesUniqueness": true,
+                  "digest": "68509325d9568239cf3e1debec1f2f78bbb4338ee82a3d713d5f3054ca63fed0"
+                }
+              ],
+              "localUnsound": false
+            },
+            "sampleUnsound": false
+          }
+        ]
+      },
+      "scoped": {
+        "messages": 8,
+        "solve": {
+          "solvesBegun": 6364,
+          "stepsApplied": 279244,
+          "cellsInvalidated": 5659683,
+          "unitsInvalidated": 6220019,
+          "applyCalls": 0
+        },
+        "finders": {
+          "nakedSingle": {
+            "calls": 279933,
+            "scopesVisited": 13106657,
+            "realScopes": 4025990,
+            "negativeRecorded": 3784270,
+            "positiveScopes": 241720,
+            "skippedScopes": 9080667,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleBox": {
+            "calls": 38213,
+            "scopesVisited": 236633,
+            "realScopes": 121722,
+            "negativeRecorded": 98027,
+            "positiveScopes": 23695,
+            "skippedScopes": 114911,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenSingleLine": {
+            "calls": 14518,
+            "scopesVisited": 237039,
+            "realScopes": 107473,
+            "negativeRecorded": 104405,
+            "positiveScopes": 3068,
+            "skippedScopes": 129566,
+            "enumNodesReal": 0,
+            "enumNodesSkipped": 0,
+            "realEntryChecks": 0,
+            "virtualEntryChecks": 0,
+            "realNodeChecks": 0,
+            "virtualNodeChecks": 0,
+            "nativeFallbackCalls": 0
+          },
+          "nakedPair": {
+            "calls": 7739,
+            "scopesVisited": 192396,
+            "realScopes": 90100,
+            "negativeRecorded": 89096,
+            "positiveScopes": 1004,
+            "skippedScopes": 102296,
+            "enumNodesReal": 245497,
+            "enumNodesSkipped": 303409,
+            "realEntryChecks": 90100,
+            "virtualEntryChecks": 102296,
+            "realNodeChecks": 1,
+            "virtualNodeChecks": 6,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenPair": {
+            "calls": 6735,
+            "scopesVisited": 174241,
+            "realScopes": 83469,
+            "negativeRecorded": 82975,
+            "positiveScopes": 494,
+            "skippedScopes": 90772,
+            "enumNodesReal": 263912,
+            "enumNodesSkipped": 312788,
+            "realEntryChecks": 83469,
+            "virtualEntryChecks": 90772,
+            "realNodeChecks": 1,
+            "virtualNodeChecks": 5,
+            "nativeFallbackCalls": 0
+          },
+          "nakedTriple": {
+            "calls": 6241,
+            "scopesVisited": 166973,
+            "realScopes": 80192,
+            "negativeRecorded": 80039,
+            "positiveScopes": 153,
+            "skippedScopes": 86781,
+            "enumNodesReal": 386752,
+            "enumNodesSkipped": 463708,
+            "realEntryChecks": 80192,
+            "virtualEntryChecks": 86781,
+            "realNodeChecks": 120,
+            "virtualNodeChecks": 271,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenTriple": {
+            "calls": 6088,
+            "scopesVisited": 164229,
+            "realScopes": 79080,
+            "negativeRecorded": 79072,
+            "positiveScopes": 8,
+            "skippedScopes": 85149,
+            "enumNodesReal": 355105,
+            "enumNodesSkipped": 419446,
+            "realEntryChecks": 79080,
+            "virtualEntryChecks": 85149,
+            "realNodeChecks": 48,
+            "virtualNodeChecks": 156,
+            "nativeFallbackCalls": 0
+          },
+          "nakedQuad": {
+            "calls": 6080,
+            "scopesVisited": 164160,
+            "realScopes": 79040,
+            "negativeRecorded": 79040,
+            "positiveScopes": 0,
+            "skippedScopes": 85120,
+            "enumNodesReal": 386962,
+            "enumNodesSkipped": 447710,
+            "realEntryChecks": 79040,
+            "virtualEntryChecks": 85120,
+            "realNodeChecks": 178,
+            "virtualNodeChecks": 376,
+            "nativeFallbackCalls": 0
+          },
+          "hiddenQuad": {
+            "calls": 6080,
+            "scopesVisited": 164160,
+            "realScopes": 79040,
+            "negativeRecorded": 79040,
+            "positiveScopes": 0,
+            "skippedScopes": 85120,
+            "enumNodesReal": 336438,
+            "enumNodesSkipped": 386889,
+            "realEntryChecks": 79040,
+            "virtualEntryChecks": 85120,
+            "realNodeChecks": 87,
+            "virtualNodeChecks": 234,
+            "nativeFallbackCalls": 0
+          }
+        },
+        "fallbackReasons": {},
+        "violations": 0
+      },
+      "scopedStatsNote": "summed over the pipeline runs that finished in the pool workers (consumed and speculative completed attempts); an attempt terminated before its end reports none"
+    }
+  ]
+}
