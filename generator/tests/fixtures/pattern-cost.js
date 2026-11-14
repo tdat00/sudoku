@@ -61,7 +61,8 @@
     'No puzzle is generated and no suite runs. The caller budget is 480000 ms (the process limit is 540 s):',
     'run it through `Invoke-Dv3Node`. Exit code: 0 a complete record; 1 an incomplete or inconsistent one',
     '(a spent budget, a Finding or work record that changed between runs, a state that was written, a missing',
-    'case); 2 an invalid command line, an unknown or scoped id, missing fixtures or an empty selection.'
+    'case, an outcome that is not the fixture\'s); 2 an invalid command line, an unknown or scoped id, missing',
+    'fixtures or an empty selection.'
   ].join('\n');
 
   // ---------------------------------------------------------------------------------------------
@@ -376,7 +377,9 @@
 
   /**
    * The problems of a record against its own plan: a case without a record or with fewer runs, runs that
-   * disagreed, a work record that cannot be read. An empty list means the record is complete.
+   * disagreed, an outcome that is not the one the fixture records (the measured Finding and numbers stay in the
+   * record, but it is no evidence for a consumer), a work record that cannot be read. An empty list means the
+   * record is complete.
    */
   function problemsOf(document) {
     var problems = [];
@@ -393,6 +396,11 @@
         problems.push(key + ': ' + record.runs + ' runs of ' + document.config.runs);
       }
       if (record.deterministic !== true) problems.push(key + ': the runs disagree');
+      // A deterministic wrong answer is still wrong: the record keeps what was measured, but it is no evidence
+      if (record.matchesFixture === false) {
+        problems.push(key + ': the outcome is not the fixture\'s (' + record.outcome + ' where the fixture records ' +
+          (record.kind === 'negative' ? 'nothing' : 'a deduction') + ')');
+      }
       record.work.forEach(function (r) {
         var okLimit = r.limit === null || (typeof r.limit === 'number' && r.limit >= 0);
         if (typeof r.work !== 'number' || !(r.work >= 0) || !okLimit || [null, 'work', 'records', 'nodes']

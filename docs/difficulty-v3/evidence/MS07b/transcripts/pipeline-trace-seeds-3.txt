@@ -1,0 +1,8 @@
+$ node tests\artifacts\difficulty-v3\MS07b\explore-trace.js master 21 26
+{"level":"master","seed":21,"total":219,"nonMicro":31,"capped":219,"attempts":1,"exact":true,"score":1312,"ms":55}
+{"level":"master","seed":22,"total":525,"nonMicro":55,"capped":525,"attempts":1,"exact":true,"score":1203,"ms":48}
+{"level":"master","seed":23,"total":400,"nonMicro":45,"capped":400,"attempts":1,"exact":true,"score":1196,"ms":24}
+{"level":"master","seed":24,"total":1533,"nonMicro":116,"capped":1533,"attempts":1,"exact":true,"score":1254,"ms":99}
+{"level":"master","seed":25,"total":3326,"nonMicro":249,"capped":1990,"attempts":2,"exact":true,"score":1434,"ms":417}
+{"level":"master","seed":26,"total":213,"nonMicro":34,"capped":213,"attempts":1,"exact":true,"score":1371,"ms":23}
+exit=0 seconds=0.839

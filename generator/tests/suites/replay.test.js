@@ -1076,12 +1076,13 @@
         expect(analysis.views.details.steps).toHaveLength(g.counts.details);
         expect(g.rows).toHaveLength(steps.length);
         // every audit is complete; a jump stays unless a bridge of recorded positions avoids it, which only G04 has
+        // and, since the chain windows of MS07b (the depth-2 step is now nishioDeep, after a nishio step of 3603), G14
         var audit = analysis.views.compact.audit;
         var avoided = audit.filter(function (edge) { return edge.inserted.length > 0; });
         expect(audit.every(function (edge) { return edge.scope === 'complete'; })).toBe(true);
         expect(avoided.every(function (edge) { return !edge.remaining; })).toBe(true);
         expect(audit.every(function (edge) { return edge.inserted.length > 0 || edge.remaining; })).toBe(true);
-        expect(avoided).toHaveLength(g.id === 'G04' ? 1 : 0);
+        expect(avoided).toHaveLength(g.id === 'G04' || g.id === 'G14' ? 1 : 0);
         g.rows.forEach(function (row, i) {
           var step = steps[i];
           var rating = analysis.ratings[step.position];

@@ -450,21 +450,23 @@
     },
     {
       id: 'G14', request: { variantId: 'mega16', difficulty: 'hell2', seed: '12' },
-      today: { steps: 11, missing: 1 }, counts: { compact: 6, details: 79 },
+      today: { steps: 11, missing: 1 }, counts: { compact: 8, details: 79 },
       board: { cells: 256, cages: 0, signsFrom: 0, signsTo: 0, log: 'normal' },
       // [#, m, phase, E, score, delta, hardest, J, culprit, line]
       rows: [
         [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
-        [2, 10, 'D/Dig', 20, 29, 29, 'nakedSingle', '—', '—', 'F'],
-        [3, 68, 'D/Dig', 136, 65, 36, 'hiddenSingleBox', '—', '—', 'N'],
+        [2, 11, 'D/Dig', 22, 31, 31, 'nakedSingle', '—', '—', 'F'],
+        [3, 68, 'D/Dig', 136, 65, 34, 'hiddenSingleBox', '—', '—', 'N'],
         [4, 69, 'G/Choose', 138, 1646, 1581, 'forcingChain', 'Y', 'R8C4', '—'],
-        [5, 77, 'G/Choose', 154, 4476, 2830, 'nishio', '—', '—', 'N'],
-        [6, 77, 'F/Final', 154, 4476, 0, 'nishio', '—', '—', '—']
+        [5, 72, 'G/Choose', 144, 3603, 1957, 'nishio', '—', '—', 'N'],
+        [6, 76, 'G/Choose', 152, 6408, 2805, 'nishioDeep', '—', '—', 'N'],
+        [7, 77, 'G/Choose', 154, 6453, 45, 'nishioDeep', '—', '—', '—'],
+        [8, 77, 'F/Final', 154, 6453, 0, 'nishioDeep', '—', '—', '—']
       ],
       details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
         48, 48, 49, 50, 50, 51, 52, 52, 53, 53, 54, 54, 55, 55, 56, 56, 57, 57, 58, 58, 58, 59, 59, 59, 60, 60, 60,
-        61, 61, 61, 62, 62, 62, 62, 63, 64, 64, 64, 64, 65, 65, 65, 65, 1646, 1660, 2111, 3587, 3853, 4225, 4375,
-        4458, 4476, 4476],
+        61, 61, 61, 62, 62, 62, 62, 63, 64, 64, 64, 64, 65, 65, 65, 65, 1646, 1660, 2111, 3603, 3874, 4236, 4387,
+        6408, 6453, 6453],
       alive: null,
       folds: [],
       jumps: [

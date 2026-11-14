@@ -102,21 +102,29 @@
         expect(F.positionOf(expert({ vacuous: true })).reason).toBe('vacuous-tier');
       });
 
-    it('has a raw position but no adjusted one for veryEasy (vacuous) and Hell 1 (empty tier here)',
-      function () {
-        var easy = D.spec('veryEasy', model9);
-        expect(easy.tierTechniques.length).toBeGreaterThan(0);
-        var p = F.positionOf({ score: 20, solved: true, V: 30, min: easy.min, max: easy.max,
-          tierWeights: easy.tierTechniques.map(function (id) { return D.WEIGHTS[id]; }), vacuous: true });
-        expect(p.reason).toBe('vacuous-tier');
-        expect(p.raw).toBe(20 / 45);
-        expect(p.lower).toBeNull();
-        var hell = D.spec('hell1', model9);
-        expect(hell.tierTechniques).toEqual([]);
-        var q = F.positionOf({ score: 3000, solved: true, V: 30, min: hell.min, max: hell.max,
-          tierWeights: [], vacuous: true });
-        expect(q).toEqual({ raw: 600 / 1200, adjusted: null, lower: null, reason: 'empty-tier' });
-      });
+    it('has a raw position but no adjusted one for veryEasy (vacuous) and for an empty tier', function () {
+      var easy = D.spec('veryEasy', model9);
+      expect(easy.tierTechniques.length).toBeGreaterThan(0);
+      var p = F.positionOf({ score: 20, solved: true, V: 30, min: easy.min, max: easy.max,
+        tierWeights: easy.tierTechniques.map(function (id) { return D.WEIGHTS[id]; }), vacuous: true });
+      expect(p.reason).toBe('vacuous-tier');
+      expect(p.raw).toBe(20 / 45);
+      expect(p.lower).toBeNull();
+      var hell = D.spec('hell1', model9);
+      var q = F.positionOf({ score: 3000, solved: true, V: 30, min: hell.min, max: hell.max,
+        tierWeights: [], vacuous: true });
+      expect(q).toEqual({ raw: 600 / 1200, adjusted: null, lower: null, reason: 'empty-tier' });
+    });
+
+    it('MS07b: Hell 1 has a tier (nishioDeep), so its position has an adjusted value', function () {
+      var hell = D.spec('hell1', model9);
+      expect(hell.tierTechniques).toEqual(['nishioDeep']);
+      var lower = 1.25 * D.WEIGHTS.nishioDeep + 30; // 3250 + V: the least a puzzle of the tier can score
+      var p = F.positionOf({ score: 3300, solved: true, V: 30, min: hell.min, max: hell.max,
+        tierWeights: hell.tierTechniques.map(function (id) { return D.WEIGHTS[id]; }), vacuous: false });
+      expect(p).toEqual({ raw: 900 / 1200, adjusted: (3300 - lower) / (3600 - lower), lower: lower,
+        reason: null });
+    });
   });
 
   describe('difficulty diagnostics: statistics', function () {
@@ -178,17 +186,19 @@
 
   /**
    * A ledger row of a fabricated request of `level`; opts: score, solved, exact, error, achieved, shallow
-   * (the counts need no technique of the tier), unique, work (default: one attempt with one rating, which
-   * agrees with the one call counted) and workReason.
+   * (the counts need no technique of the tier), counts (explicit technique counts), emptyTier (a fabricated
+   * vacuous level with an empty tier: Hell 1 had one before MS07b gave it nishioDeep), unique, work (default:
+   * one attempt with one rating, which agrees with the one call counted) and workReason.
    */
   function rowFor(level, opts) {
     opts = opts || {};
     var b = bandOf(level);
+    if (opts.emptyTier) b = { band: b.band, tierWeights: [], vacuous: true };
     var index = made++;
     var puzzle = opts.error ? null : {
       achieved: opts.achieved === undefined ? level : opts.achieved,
       exact: opts.exact !== false,
-      rating: ratingOf(opts.score, opts.solved, opts.shallow ? FLOOR_ONLY : undefined),
+      rating: ratingOf(opts.score, opts.solved, opts.counts || (opts.shallow ? FLOOR_ONLY : undefined)),
       model: model9,
       target: opts.target
     };
@@ -289,8 +299,14 @@
       var shallow = rowFor('hard', { score: 520, shallow: true, exact: false });
       expect([shallow.required, shallow.qualifiedHit, shallow.shallow, shallow.referenceStatus])
         .toEqual([false, false, true, 'not-run']);
-      var vacuous = rowFor('hell1', { score: 2500 });
+      var vacuous = rowFor('veryEasy', { score: 30 });
       expect([vacuous.required, vacuous.qualifiedHit, vacuous.shallow]).toEqual([true, true, false]);
+      // MS07b: the real Hell 1 needs nishioDeep (tier weight 2600), so a rating without it is shallow
+      var withDeep = rowFor('hell1', { score: 3300, counts: { nakedSingle: 30, nishioDeep: 1 } });
+      expect([withDeep.required, withDeep.qualifiedHit, withDeep.shallow]).toEqual([true, true, false]);
+      var withoutDeep = rowFor('hell1', { score: 2500, shallow: true });
+      expect([withoutDeep.required, withoutDeep.qualifiedHit, withoutDeep.shallow])
+        .toEqual([false, false, true]);
       var offBand = rowFor('hard', { score: 800, exact: false, achieved: 'expert' });
       expect([offBand.required, offBand.qualifiedHit, offBand.shallow]).toEqual([true, false, null]);
       var unrated = rowFor('hard', { solved: false, achieved: null, exact: false });
@@ -426,7 +442,7 @@
       var shallow = diagnosed(rowFor('hard', { score: 520, shallow: true, exact: false }), STUCK);
       expect([shallow.referenceStatus, shallow.referenceRequired, shallow.required, shallow.qualifiedHit,
         shallow.shallow]).toEqual(['ok', true, false, false, true]);
-      var vacuous = diagnosed(rowFor('hell1', { score: 2500 }), VACUOUS);
+      var vacuous = diagnosed(rowFor('veryEasy', { score: 30 }), VACUOUS);
       expect([vacuous.referenceStatus, vacuous.referenceRequired, vacuous.required, vacuous.qualifiedHit,
         vacuous.shallow]).toEqual(['vacuous', true, true, true, false]);
       var offBand = diagnosed(rowFor('hard', { score: 800, exact: false, achieved: 'expert' }), STUCK);
@@ -695,7 +711,11 @@
     });
 
     it('has the raw spread but no adjusted one for a vacuous or empty tier, with its reason', function () {
-      var rows = [rowFor('hell1', { score: 2500 }), rowFor('hell1', { score: 3000 })];
+      // Hell 1 has a tier since MS07b, so its empty tier is fabricated here (the position inputs only); the
+      // derived verdict is the real one, and these ratings use nishioDeep
+      var DEEP = { nakedSingle: 30, nishioDeep: 1 };
+      var rows = [rowFor('hell1', { score: 2500, emptyTier: true, counts: DEEP }),
+        rowFor('hell1', { score: 3000, emptyTier: true, counts: DEEP })];
       rows.forEach(function (row) { diagnosed(row, VACUOUS); });
       var s = F.summaryOf(rows);
       expect(s.cohorts.exact.raw.n).toBe(2);

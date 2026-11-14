@@ -1,0 +1,63 @@
+$ node ..\.github\scripts\generator-quick.js run own-suites --results-dir=..\docs\difficulty-v3\evidence\MS07b\quick-first-pass
+==== shard own-fast (1623 tests): node tests/node-runner.js --suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,pattern-cost-tools,perf-tooling,purity,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker --results=..\docs\difficulty-v3\evidence\MS07b\quick-first-pass\generator-own-fast.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   a11y: 31 passed  (76 ms)
+ok   cache: 106 passed  (8.93 s)
+(node:6532) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   controls: 46 passed  (94 ms)
+ok   difficulty-diagnostics: 85 passed  (11.76 s)
+ok   difficulty-floor: 48 passed  (26.48 s)
+ok   digger: 64 passed  (986 ms)
+ok   events: 68 passed  (572 ms)
+ok   export: 78 passed  (5.68 s)
+ok   format: 18 passed  (195 ms)
+ok   full-grid: 42 passed  (2.44 s)
+ok   help: 30 passed  (4.24 s)
+ok   history: 15 passed  (1.46 s)
+ok   i18n: 83 passed  (902 ms)
+ok   manual-corpus: 46 passed  (2.34 s)
+ok   mega-contract: 44 passed  (1.74 s)
+ok   multigrid: 184 passed  (18.47 s)
+ok   pattern-cost-tools: 32 passed  (2.50 s)
+ok   perf-tooling: 31 passed  (11.20 s)
+FAIL purity: 40 passed, 1 failed  (24 ms)
+ok   recovery-profile: 27 passed  (536 ms)
+ok   replay-recorders: 39 passed  (7.64 s)
+ok   result-view: 22 passed  (3.46 s)
+ok   rng: 28 passed  (28 ms)
+ok   smoke: 44 passed  (5.29 s)
+ok   store: 85 passed  (99 ms)
+ok   technique-weights: 6 passed  (1 ms)
+ok   theme: 57 passed  (32 ms)
+ok   ui-contract: 67 passed  (329 ms)
+ok   variants-registry: 12 passed  (10 ms)
+ok   worker: 144 passed  (48.80 s)
+
+Failures:
+  FAIL purity > source purity (core/js/engine, js/engine, js/variants) > ../core/js/engine/tech-chain.js has none of: document. window. localStorage alert( import  export  require(
+       AssertionError: expected Array(2)["../core/js/engine/tech-chain.js:3 contains \"window.\"", "../core/js/engine/tech-chain.js:618 contains \"window.\""] to equal Array(0)[]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\purity.test.js:95:46)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 30
+Tests:  1623 total, 1622 passed, 1 failed, 0 skipped
+Time:   166.31 s running tests, 166.68 s total
+Results: docs/difficulty-v3/evidence/MS07b/quick-first-pass/generator-own-fast.json
+==== shard digger-target (75 tests): node tests/node-runner.js --suite=digger-target --results=..\docs\difficulty-v3\evidence\MS07b\quick-first-pass\generator-digger-target.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   digger-target: 75 passed  (1.45 s)
+
+Suites: 1
+Tests:  75 total, 75 passed, 0 failed, 0 skipped
+Time:   1.45 s running tests, 1.64 s total
+Results: docs/difficulty-v3/evidence/MS07b/quick-first-pass/generator-digger-target.json
+shard own-fast: exit 1, 166.9 s
+shard digger-target: exit 0, 1.8 s
+FAILED: own-fast
+exit=1 seconds=169.703

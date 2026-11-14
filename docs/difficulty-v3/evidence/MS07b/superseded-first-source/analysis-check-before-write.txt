@@ -1,0 +1,43 @@
+$ node tests\replay-goldens.js --merge=..\docs\difficulty-v3\evidence\MS07b\analysis --check
+merged 14 ledgers: all 14 keys exactly once, recorded from the current sources
+G01: matches replay-goldens.js
+G02: matches replay-goldens.js
+G03: matches replay-goldens.js
+G04: matches replay-goldens.js
+G05: matches replay-goldens.js
+G06: matches replay-goldens.js
+G07: matches replay-goldens.js
+G08: matches replay-goldens.js
+G09: matches replay-goldens.js
+G10: matches replay-goldens.js
+G11: matches replay-goldens.js
+G12: matches replay-goldens.js
+G13: matches replay-goldens.js
+G14: 25 fields differ from replay-goldens.js
+  counts.compact: saved 6, fresh 8
+  rows.length: saved 6, fresh 8
+  rows[1][1]: saved 10, fresh 11
+  rows[1][3]: saved 20, fresh 22
+  rows[1][4]: saved 29, fresh 31
+  rows[1][5]: saved 29, fresh 31
+  rows[2][5]: saved 36, fresh 34
+  rows[4][1]: saved 77, fresh 72
+  rows[4][3]: saved 154, fresh 144
+  rows[4][4]: saved 4476, fresh 3603
+  rows[4][5]: saved 2830, fresh 1957
+  rows[5][1]: saved 77, fresh 76
+  rows[5][2]: saved "F/Final", fresh "G/Choose"
+  rows[5][3]: saved 154, fresh 152
+  rows[5][4]: saved 4476, fresh 6408
+  rows[5][5]: saved 0, fresh 2805
+  rows[5][6]: saved "nishio", fresh "nishioDeep"
+  rows[5][9]: saved "—", fresh "N"
+  details[72]: saved 3587, fresh 3603
+  details[73]: saved 3853, fresh 3874
+  details[74]: saved 4225, fresh 4236
+  details[75]: saved 4375, fresh 4387
+  details[76]: saved 4458, fresh 6408
+  details[77]: saved 4476, fresh 6453
+  details[78]: saved 4476, fresh 6453
+replay-goldens.js differs; regenerate it with node tests/replay-goldens.js --write only if the generator changed on purpose
+exit=1 seconds=0.442

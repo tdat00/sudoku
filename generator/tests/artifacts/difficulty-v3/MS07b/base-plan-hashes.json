@@ -1,0 +1,1250 @@
+[
+  {
+    "label": "g-hash-classic4-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic4-veryEasy-00.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic4-veryEasy-00 0.512 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic4-veryEasy-05.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic4-veryEasy-05 0.508 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic4-veryEasy-10.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic4-veryEasy-10 0.543 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic4-veryEasy-15.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic4-veryEasy-15 0.524 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic6-veryEasy-00.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic6-veryEasy-00 0.517 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic6-veryEasy-05.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic6-veryEasy-05 0.5 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic6-veryEasy-10.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic6-veryEasy-10 0.498 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic6-veryEasy-15.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic6-veryEasy-15 0.504 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic6-hard-00.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-classic6-hard-00 0.891 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic6-hard-05.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-classic6-hard-05 0.951 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic6-hard-10.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-classic6-hard-10 1.034 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic6-hard-15.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-classic6-hard-15 1.169 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-veryEasy-00.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic9-veryEasy-00 0.507 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-veryEasy-05.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic9-veryEasy-05 0.505 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-veryEasy-10.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic9-veryEasy-10 0.494 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-veryEasy-15.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic9-veryEasy-15 0.49 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-easy-00.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-classic9-easy-00 1.566 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-easy-05.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-classic9-easy-05 1.556 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-easy-10.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-classic9-easy-10 1.705 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-easy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c1 g-hash-classic9-easy-15 2.581 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-normal-00.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-classic9-normal-00 1.464 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-normal-05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c1 g-hash-classic9-normal-05 3.289 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-normal-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c1 g-hash-classic9-normal-10 2.174 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-normal-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c1 g-hash-classic9-normal-15 2.45 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-hard-00.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic9-hard-00 0.604 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-hard-05.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic9-hard-05 0.617 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-hard-10.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic9-hard-10 0.666 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-hard-15.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-classic9-hard-15 0.58 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-expert-00.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-classic9-expert-00 0.837 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-expert-05.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-classic9-expert-05 0.908 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-expert-10.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-classic9-expert-10 0.774 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-expert-15.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-classic9-expert-15 0.934 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-master-00.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-classic9-master-00 1.581 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-master-05.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-classic9-master-05 0.84 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-master-10.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-classic9-master-10 1.412 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-master-15.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-classic9-master-15 0.893 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-nightmare-00.json"
+    ],
+    "projectionSeconds": 35,
+    "projectionBasis": "MS06c1 g-hash-classic9-nightmare-00 21.116 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-nightmare-05.json"
+    ],
+    "projectionSeconds": 39,
+    "projectionBasis": "MS06c1 g-hash-classic9-nightmare-05 23.439 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-nightmare-10.json"
+    ],
+    "projectionSeconds": 47,
+    "projectionBasis": "MS06c1 g-hash-classic9-nightmare-10 28.753 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\classic9-nightmare-15.json"
+    ],
+    "projectionSeconds": 35,
+    "projectionBasis": "MS06c1 g-hash-classic9-nightmare-15 20.702 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\mega12-normal-00.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-mega12-normal-00 0.603 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\mega12-normal-05.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-mega12-normal-05 0.619 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\mega12-normal-10.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-mega12-normal-10 0.588 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\mega12-normal-15.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-mega12-normal-15 0.583 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\mega16-easy-00.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-mega16-easy-00 0.616 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\mega16-easy-05.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-mega16-easy-05 0.626 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\mega16-easy-10.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-mega16-easy-10 0.634 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\mega16-easy-15.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-mega16-easy-15 0.638 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\diagonalX-easy-00.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c1 g-hash-diagonalX-easy-00 3.92 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\diagonalX-easy-05.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c1 g-hash-diagonalX-easy-05 3.421 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\diagonalX-easy-10.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-diagonalX-easy-10 1.562 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\diagonalX-easy-15.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c1 g-hash-diagonalX-easy-15 3.044 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\diagonalX-nightmare-00.json"
+    ],
+    "projectionSeconds": 72,
+    "projectionBasis": "MS06c1 g-hash-diagonalX-nightmare-00 45.486 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\diagonalX-nightmare-05.json"
+    ],
+    "projectionSeconds": 76,
+    "projectionBasis": "MS06c1 g-hash-diagonalX-nightmare-05 48.631 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\diagonalX-nightmare-10.json"
+    ],
+    "projectionSeconds": 87,
+    "projectionBasis": "MS06c1 g-hash-diagonalX-nightmare-10 55.768 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\diagonalX-nightmare-15.json"
+    ],
+    "projectionSeconds": 52,
+    "projectionBasis": "MS06c1 g-hash-diagonalX-nightmare-15 32.474 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\hyper-hard-00.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-hyper-hard-00 0.575 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\hyper-hard-05.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-hyper-hard-05 0.564 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\hyper-hard-10.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-hyper-hard-10 0.57 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\hyper-hard-15.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-hyper-hard-15 0.589 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\jigsaw9-normal-00.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-jigsaw9-normal-00 1.438 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\jigsaw9-normal-05.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-jigsaw9-normal-05 0.687 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\jigsaw9-normal-10.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-jigsaw9-normal-10 0.906 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\jigsaw9-normal-15.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-jigsaw9-normal-15 0.951 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\jigsaw9-master-00.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-jigsaw9-master-00 0.809 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\jigsaw9-master-05.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-jigsaw9-master-05 1.402 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\jigsaw9-master-10.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-jigsaw9-master-10 0.934 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\jigsaw9-master-15.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-jigsaw9-master-15 0.957 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-killer-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\killer-easy-00.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-killer-easy-00 0.606 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-killer-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\killer-easy-05.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-killer-easy-05 0.614 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-killer-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\killer-easy-10.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-killer-easy-10 0.603 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-killer-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\killer-easy-15.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-killer-easy-15 0.599 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-killer-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\killer-hard-00.json"
+    ],
+    "projectionSeconds": 43,
+    "projectionBasis": "MS06c1 g-hash-killer-hard-00 26.044 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-killer-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\killer-hard-05.json"
+    ],
+    "projectionSeconds": 45,
+    "projectionBasis": "MS06c1 g-hash-killer-hard-05 27.806 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-killer-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\killer-hard-10.json"
+    ],
+    "projectionSeconds": 43,
+    "projectionBasis": "MS06c1 g-hash-killer-hard-10 26.612 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-killer-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\killer-hard-15.json"
+    ],
+    "projectionSeconds": 43,
+    "projectionBasis": "MS06c1 g-hash-killer-hard-15 26.129 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\greaterThan-normal-00.json"
+    ],
+    "projectionSeconds": 22,
+    "projectionBasis": "MS06c1 g-hash-greaterThan-normal-00 12.175 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\greaterThan-normal-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MS06c1 g-hash-greaterThan-normal-05 11.064 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\greaterThan-normal-10.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-greaterThan-normal-10 1.213 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\greaterThan-normal-15.json"
+    ],
+    "projectionSeconds": 23,
+    "projectionBasis": "MS06c1 g-hash-greaterThan-normal-15 12.675 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\greaterThan-hard-00.json"
+    ],
+    "projectionSeconds": 19,
+    "projectionBasis": "MS06c1 g-hash-greaterThan-hard-00 10.641 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\greaterThan-hard-05.json"
+    ],
+    "projectionSeconds": 33,
+    "projectionBasis": "MS06c1 g-hash-greaterThan-hard-05 19.429 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\greaterThan-hard-10.json"
+    ],
+    "projectionSeconds": 18,
+    "projectionBasis": "MS06c1 g-hash-greaterThan-hard-10 9.901 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\greaterThan-hard-15.json"
+    ],
+    "projectionSeconds": 21,
+    "projectionBasis": "MS06c1 g-hash-greaterThan-hard-15 11.43 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\samurai-easy-00.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-samurai-easy-00 1.686 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\samurai-easy-05.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-samurai-easy-05 1.931 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\samurai-easy-10.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-samurai-easy-10 1.883 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\samurai-easy-15.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-samurai-easy-15 1.784 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\sohei-veryEasy-00.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-sohei-veryEasy-00 0.566 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\sohei-veryEasy-05.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-sohei-veryEasy-05 0.564 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\sohei-veryEasy-10.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-sohei-veryEasy-10 0.565 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\sohei-veryEasy-15.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-hash-sohei-veryEasy-15 0.568 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\butterfly-normal-00.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-butterfly-normal-00 1.303 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\butterfly-normal-05.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-butterfly-normal-05 0.991 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\butterfly-normal-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c1 g-hash-butterfly-normal-10 2.013 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\butterfly-normal-15.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-butterfly-normal-15 1.928 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-flower-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\flower-normal-00.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-flower-normal-00 1.893 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-flower-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\flower-normal-05.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-flower-normal-05 1.07 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-flower-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\flower-normal-10.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-flower-normal-10 1.151 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-flower-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\flower-normal-15.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-flower-normal-15 1.215 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\wordoku-normal-00.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-wordoku-normal-00 1.885 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\wordoku-normal-05.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-hash-wordoku-normal-05 1.279 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\wordoku-normal-10.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-hash-wordoku-normal-10 1.509 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\hashes\\wordoku-normal-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c1 g-hash-wordoku-normal-15 2.5 s before the activation; 1.5 x + 3 s"
+  }
+]

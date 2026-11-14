@@ -13,10 +13,18 @@
  * relations of the old test stay: the two seed-3 calls give the same givens, solution and score, and seed 4 a
  * different solution than seed 3; one extra, not original, relation compares invariant seed 3 with them.
  *
- *  - MANIFEST, RELATIONS, BOARDS, makeManifest(boards, level), manifestHash(sha256), listText(sha256)
+ * Hell 1 (MS07b, S-OD4 / CV6-03 (1)): once `nishioDeep` made the Hell 1 tier real, its full-attempt requests left
+ * the quick tier like the Nightmare ones. The same fourteen-occurrence population of each board is a second,
+ * level-selected manifest (`MANIFESTS.hell1`, `--level=hell1`) with level-qualified ids
+ * (`<board>-hell1-invariant-<seed>`, `<board>-hell1-cv5-a`, ...) and its own manifest hash, record kind and
+ * reconciliation; the Nightmare ids, manifest and hash are unchanged. A level-selected reconciliation is that
+ * level's fourteen calls only, never the complete population of both levels.
+ *
+ *  - MANIFEST, RELATIONS, BOARDS, LEVELS, MANIFESTS, makeManifest(boards, level, options), manifestHash(sha256),
+ *    manifestOfId(id), listText(sha256)
  *  - parseArgs(argv)                 { mode: 'list' } | { mode: 'request', id, record } |
- *                                    { mode: 'reconcile', directory, json }; a bad command line throws an Error
- *                                    whose `code` is 'usage' (exit code 2)
+ *                                    { mode: 'reconcile', directory, json }, with `level` added when --level is
+ *                                    given; a bad command line throws an Error whose `code` is 'usage' (exit 2)
  *  - execute(entry, env)             one request once, then its checks: { run, result }; never throws for a failed
  *                                    generation or check. env: clock(), sha256(text), budgetMs (default 500000),
  *                                    budget, produce(request, budget)
@@ -45,6 +53,8 @@
   // The meaning of the checks below; a change of the set or of a check needs fresh records.
   var CHECKS_VERSION = 1;
   var LEVEL = 'nightmare';
+  // The levels of the deep tier: the default population (Nightmare, historical ids) and the level-selected Hell 1.
+  var LEVELS = ['nightmare', 'hell1'];
   var BUDGET_MS = 500000;
   var PROCESS_LIMIT_MS = 540000;
   var APPLICATION_GUARD_MS = 120000;
@@ -66,15 +76,18 @@
   };
 
   var USAGE = [
-    'Usage: node tests/mega-contract.js --list',
+    'Usage: node tests/mega-contract.js --list [--level=nightmare|hell1]',
     '       node tests/mega-contract.js --request=<id> --record=<new.json>',
-    '       node tests/mega-contract.js --reconcile=<records directory> --json=<new.json>',
+    '       node tests/mega-contract.js --reconcile=<records directory> --json=<new.json> [--level=nightmare|hell1]',
     '',
-    '  --list              the fixed manifest of 14 requests and their relations; generates nothing',
+    '  --list              the fixed manifest of 14 requests of one level and their relations; generates nothing',
     '  --request=<id>      one fixed request, once, with its checks; with --record, a new project-relative .json',
-    '                      file named <id>.json (an existing file is refused)',
+    '                      file named <id>.json (an existing file is refused); the ids of Hell 1 are',
+    '                      <board>-hell1-<role>, those of Nightmare <board>-<role>',
     '  --reconcile=<dir>   validate the records of that directory and their relations, no generation; with',
     '                      --json, a new project-relative .json file outside that directory',
+    '  --level=<level>     the level-selected population of --list and --reconcile (default nightmare): a',
+    '                      reconciliation is that level\'s fourteen requests, never both levels at once',
     '',
     'One request per process, inside one 500000 ms budget (the process limit is 540 s).',
     'Exit code of --request: 0 a record with every check passed; 3 a record whose request ended in an error or',
@@ -204,9 +217,13 @@
 
   /**
    * The occurrences and relations of a population: per board four invariant seeds and the three CV5 calls.
-   * `boards` is { id: { digits, boxRows, boxCols, attempts } }, `level` the one requested level.
+   * `boards` is { id: { digits, boxRows, boxCols, attempts } }, `level` the one requested level. With
+   * `options.qualifyIds` (the level-selected populations other than the historical Nightmare one) the ids and the
+   * relation ids carry the level (`mega12-hell1-invariant-1`), and the records and the reconciliation of that
+   * manifest have their own kind; without it the ids are `<board>-<role>` as they always were.
    */
-  function makeManifest(boards, level) {
+  function makeManifest(boards, level, options) {
+    var qualify = !!(options && options.qualifyIds);
     var entries = [];
     var relations = [];
     Object.keys(boards).forEach(function (board) {
@@ -214,12 +231,15 @@
       var geometry = Object.freeze({ digits: spec.digits, boxRows: spec.boxRows, boxCols: spec.boxCols });
       var invariantTest = board + ' ' + level + ': 4 puzzles are unique, valid and inside the 9.1 time budget';
       var cv5Test = board + ' ' + level + ': the same seed gives the same puzzle (CV5)';
+      var base = qualify ? board + '-' + level : board;
       var add = function (role, group, seed, origin) {
-        entries.push(Object.freeze({
-          id: board + '-' + role, board: board, group: group, role: role, seed: seed,
+        var entry = {
+          id: base + '-' + role, board: board, group: group, role: role, seed: seed,
           request: Object.freeze({ variantId: board, difficulty: level, seed: seed, trace: 'off' }),
           expectedAttempts: spec.attempts, geometry: geometry, origin: origin
-        }));
+        };
+        if (qualify) entry.kind = 'mega-' + level + '-record';
+        entries.push(Object.freeze(entry));
       };
       [1, 2, 3, 4].forEach(function (seed) {
         add('invariant-' + seed, 'invariant', seed, invariantTest + ', seed ' + seed);
@@ -228,25 +248,39 @@
       add('cv5-b', 'cv5', 3, cv5Test + ', second seed-3 call (c)');
       add('cv5-other', 'cv5', 4, cv5Test + ', seed-4 call (other)');
       relations.push(Object.freeze({
-        id: board + '-cv5-same-seed', board: board, kind: 'same-seed', original: true,
-        a: board + '-cv5-a', b: board + '-cv5-b', compare: ['givens', 'solution', 'score']
+        id: base + '-cv5-same-seed', board: board, kind: 'same-seed', original: true,
+        a: base + '-cv5-a', b: base + '-cv5-b', compare: ['givens', 'solution', 'score']
       }));
       relations.push(Object.freeze({
-        id: board + '-cv5-other-seed', board: board, kind: 'different-seed', original: true,
-        a: board + '-cv5-other', b: board + '-cv5-a', compare: ['solution']
+        id: base + '-cv5-other-seed', board: board, kind: 'different-seed', original: true,
+        a: base + '-cv5-other', b: base + '-cv5-a', compare: ['solution']
       }));
       relations.push(Object.freeze({
-        id: board + '-invariant-3-same-seed', board: board, kind: 'same-seed', original: false,
-        a: board + '-invariant-3', b: board + '-cv5-a', compare: ['givens', 'solution', 'score']
+        id: base + '-invariant-3-same-seed', board: board, kind: 'same-seed', original: false,
+        a: base + '-invariant-3', b: base + '-cv5-a', compare: ['givens', 'solution', 'score']
       }));
     });
-    return Object.freeze({ entries: Object.freeze(entries), relations: Object.freeze(relations) });
+    var manifest = { entries: Object.freeze(entries), relations: Object.freeze(relations) };
+    if (qualify) {
+      manifest.level = level;
+      manifest.reconciledKind = 'mega-' + level + '-reconciliation';
+    }
+    return Object.freeze(manifest);
   }
 
   var DEFAULT = makeManifest(BOARDS, LEVEL);
+  var HELL1 = makeManifest(BOARDS, 'hell1', { qualifyIds: true });
+  var MANIFESTS = Object.freeze({ nightmare: DEFAULT, hell1: HELL1 });
 
   function manifestOf(options) {
     return options && options.manifest ? options.manifest : DEFAULT;
+  }
+
+  /** The level-selected manifest that has the occurrence `id`, or undefined (the ids of the levels are distinct). */
+  function manifestOfId(id) {
+    return LEVELS.map(function (level) { return MANIFESTS[level]; }).filter(function (m) {
+      return m.entries.some(function (e) { return e.id === id; });
+    })[0];
   }
 
   function manifestHash(sha256, manifest) {
@@ -267,8 +301,9 @@
   /** The text of `--list`: every fixed request with its attempts and old origin, then the relations. */
   function listText(sha256, manifest) {
     var m = manifest || DEFAULT;
-    var lines = ['mega Nightmare deep tier: ' + m.entries.length + ' requests, manifest ' +
-      manifestHash(sha256, m).slice(0, 12) + '..., budget ' + BUDGET_MS + ' ms, trace off, default attempts'];
+    var lines = [(m.level ? 'mega ' + m.level : 'mega Nightmare') + ' deep tier: ' + m.entries.length +
+      ' requests, manifest ' + manifestHash(sha256, m).slice(0, 12) + '..., budget ' + BUDGET_MS +
+      ' ms, trace off, default attempts'];
     m.entries.forEach(function (e) {
       lines.push('  ' + e.id + '  ' + e.request.variantId + ' ' + e.request.difficulty + ' seed ' + e.seed +
         '  attempts ' + e.expectedAttempts + '  (was: ' + e.origin + ')');
@@ -286,10 +321,14 @@
   // The command line
   // ---------------------------------------------------------------------------------------------
 
-  /** The command of an argument list; unknown, repeated, empty or conflicting options throw a 'usage' error. */
+  /**
+   * The command of an argument list; unknown, repeated, empty or conflicting options throw a 'usage' error.
+   * `--request=<id>` is looked up in the manifest given or, by default, in the manifest of every level (the ids
+   * carry their level, so they are distinct); `--level=<level>` selects the population of `--list` and `--reconcile`
+   * and is only added to the result when it is given.
+   */
   function parseArgs(argv, manifest) {
-    var m = manifest || DEFAULT;
-    var flags = ['list', 'request', 'record', 'reconcile', 'json'];
+    var flags = ['list', 'request', 'record', 'reconcile', 'json', 'level'];
     var given = {};
     (argv || []).forEach(function (arg) {
       var parts = /^--([a-z]+)(?:=([\s\S]*))?$/.exec(String(arg));
@@ -302,27 +341,39 @@
       if (has(given, parts[1])) throw usageError('--' + parts[1] + ' is given twice');
       given[parts[1]] = parts[2] === undefined ? true : parts[2];
     });
-    var names = Object.keys(given);
+    var names = Object.keys(given).filter(function (name) { return name !== 'level'; });
+    if (has(given, 'level') && LEVELS.indexOf(given.level) === -1) {
+      throw usageError('--level=' + given.level + ' is not one of ' + LEVELS.join(', '));
+    }
+    var withLevel = function (command) {
+      if (has(given, 'level')) command.level = given.level;
+      return command;
+    };
     if (names.length === 0) throw usageError('one of --list, --request or --reconcile is required');
     if (has(given, 'list')) {
       if (names.length > 1) throw usageError('--list cannot be combined with another option');
-      return { mode: 'list' };
+      return withLevel({ mode: 'list' });
     }
     if (has(given, 'request') || has(given, 'record')) {
       if (has(given, 'reconcile') || has(given, 'json')) {
         throw usageError('--request/--record and --reconcile/--json are different commands: give one of them');
       }
+      if (has(given, 'level')) {
+        throw usageError('--level is for --list and --reconcile: the id of a request names its level');
+      }
       if (!has(given, 'request')) throw usageError('--record needs --request=<id>');
       if (!has(given, 'record')) throw usageError('--request needs --record=<new.json>');
-      if (!entryOf(m, given.request)) {
-        throw usageError('--request=' + given.request + ' is not one of ' +
-          m.entries.map(function (e) { return e.id; }).join(', '));
+      var searched = manifest ? [manifest] : LEVELS.map(function (level) { return MANIFESTS[level]; });
+      if (!searched.some(function (m) { return entryOf(m, given.request); })) {
+        throw usageError('--request=' + given.request + ' is not one of ' + searched.map(function (m) {
+          return m.entries.map(function (e) { return e.id; }).join(', ');
+        }).join(', '));
       }
       return { mode: 'request', id: given.request, record: given.record };
     }
     if (!has(given, 'reconcile')) throw usageError('--json needs --reconcile=<records directory>');
     if (!has(given, 'json')) throw usageError('--reconcile needs --json=<new.json>');
-    return { mode: 'reconcile', directory: given.reconcile, json: given.json };
+    return withLevel({ mode: 'reconcile', directory: given.reconcile, json: given.json });
   }
 
   // ---------------------------------------------------------------------------------------------
@@ -595,7 +646,7 @@
     var config = run.normalizedConfig;
     return {
       schema: SCHEMA,
-      kind: KIND,
+      kind: entry.kind || KIND,
       id: entry.id,
       board: entry.board,
       group: entry.group,
@@ -710,7 +761,8 @@
       return out;
     }
     if (record.schema !== SCHEMA) bad('schema ' + JSON.stringify(record.schema) + ' is not ' + SCHEMA);
-    if (record.kind !== KIND) bad('kind ' + JSON.stringify(record.kind) + ' is not ' + KIND);
+    var kind = entry.kind || KIND;
+    if (record.kind !== kind) bad('kind ' + JSON.stringify(record.kind) + ' is not ' + kind);
     if (record.id !== entry.id) bad('id ' + JSON.stringify(record.id) + ' is not ' + entry.id);
     if (!same(record.request, entry.request)) bad('the request is not the manifest\'s');
     ['board', 'group', 'role'].forEach(function (name) {
@@ -1011,7 +1063,7 @@
     }
     return {
       schema: SCHEMA,
-      kind: RECONCILED_KIND,
+      kind: manifest.reconciledKind || RECONCILED_KIND,
       manifestHash: hash,
       requests: manifest.entries.length,
       complete: present.length === rows.length,
@@ -1155,7 +1207,7 @@
    */
   function reuse(records, query, current, options) {
     var opts = options || {};
-    var manifest = manifestOf(opts);
+    var manifest = opts.manifest || (query && MANIFESTS[query.level]) || DEFAULT;
     var out = { ok: false, id: null, reasons: [], unavailable: null, recorded: null, generation: 'reused',
       result: null };
     var refuse = function (text) { out.reasons.push(text); };
@@ -1215,6 +1267,7 @@
     CHECKS_VERSION: CHECKS_VERSION,
     CHECKS: CHECKS,
     LEVEL: LEVEL,
+    LEVELS: LEVELS,
     BUDGET_MS: BUDGET_MS,
     PROCESS_LIMIT_MS: PROCESS_LIMIT_MS,
     APPLICATION_GUARD_MS: APPLICATION_GUARD_MS,
@@ -1223,7 +1276,9 @@
     USAGE: USAGE,
     MANIFEST: DEFAULT.entries,
     RELATIONS: DEFAULT.relations,
+    MANIFESTS: MANIFESTS,
     makeManifest: makeManifest,
+    manifestOfId: manifestOfId,
     manifestHash: manifestHash,
     listText: listText,
     parseArgs: parseArgs,

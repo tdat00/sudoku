@@ -1,0 +1,52 @@
+[
+  {
+    "label": "g-wire-G09",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\wire\\G09.json"
+    ],
+    "projectionSeconds": 33,
+    "projectionBasis": "MS06c2 g-wire-G09 13.828 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G10",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\wire\\G10.json"
+    ],
+    "projectionSeconds": 56,
+    "projectionBasis": "MS06c2 g-wire-G10 25.016 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G11",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\wire\\G11.json"
+    ],
+    "projectionSeconds": 22,
+    "projectionBasis": "MS06c2 g-wire-G11 8.468 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G12",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\wire\\G12.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS06c2 g-wire-G12 4.326 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G13",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\wire\\G13.json"
+    ],
+    "projectionSeconds": 45,
+    "projectionBasis": "MS06c2 g-wire-G13 19.661 s before the chain windows; 2 x + 5 s"
+  }
+]

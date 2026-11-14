@@ -1,0 +1,14 @@
+$ node tests\artifacts\difficulty-v3\MS07b\explore-trace.js hell1 21 32
+{"level":"hell1","seed":21,"total":18544,"nonMicro":1623,"attempts":8,"exact":false,"score":3054,"ms":6343}
+{"level":"hell1","seed":22,"total":18661,"nonMicro":1599,"attempts":8,"exact":false,"score":2838,"ms":6533}
+{"level":"hell1","seed":23,"total":18650,"nonMicro":1597,"attempts":8,"exact":false,"score":3143,"ms":5458}
+{"level":"hell1","seed":24,"total":18631,"nonMicro":1629,"attempts":8,"exact":false,"score":3116,"ms":6397}
+{"level":"hell1","seed":25,"total":18797,"nonMicro":1618,"attempts":8,"exact":false,"score":2699,"ms":5671}
+{"level":"hell1","seed":26,"total":18444,"nonMicro":1540,"attempts":8,"exact":false,"score":2844,"ms":5074}
+{"level":"hell1","seed":27,"total":18742,"nonMicro":1606,"attempts":8,"exact":false,"score":2930,"ms":5701}
+{"level":"hell1","seed":28,"total":18522,"nonMicro":1578,"attempts":8,"exact":false,"score":3372,"ms":5291}
+{"level":"hell1","seed":29,"total":18423,"nonMicro":1602,"attempts":8,"exact":false,"score":2919,"ms":5448}
+{"level":"hell1","seed":30,"total":18684,"nonMicro":1572,"attempts":8,"exact":false,"score":2981,"ms":4231}
+{"level":"hell1","seed":31,"total":18172,"nonMicro":1579,"attempts":8,"exact":false,"score":3048,"ms":5509}
+{"level":"hell1","seed":32,"total":18059,"nonMicro":1585,"attempts":8,"exact":false,"score":3242,"ms":6204}
+exit=0 seconds=68.046

@@ -588,15 +588,20 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    làm đổi trạng thái; không dùng ngẫu nhiên; làm việc với mọi hình dạng nhóm qua `model.units` (không giả định
    hàng và khối); gọi `ctx.check()` trong các vòng lặp dài. Một phép tìm kiếm có giới hạn báo công việc của nó qua bộ
    quan sát tùy chọn `ctx.options.onPatternWork(record)` (`{ id, work, limit, capHit, retained }`, mỗi lần gọi một bản
-   ghi mới và nó không bao giờ chọn kết quả). Các phép tìm chuỗi được viết một lần thành các lõi chưa đăng ký
+   ghi mới và nó không bao giờ chọn kết quả). Các phép tìm chuỗi được viết một lần thành các lõi
    `SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit })` và
    `SG.chainSearch.nishio(model, state, ctx, { id, minDepth, maxDepth, workLimit })` (`core/js/engine/tech-chain.js`):
    khoảng đóng áp dụng cho chứng minh **ngắn nhất** của toàn bộ phép tìm (cực tiểu nhỏ hơn `min` cho `null`, nên một
    kỹ thuật dài hơn không bao giờ gắn lại nhãn cho chứng minh ngắn hơn), `length` đếm số cạnh (chuỗi dài hơn của một
-   chứng minh hai chuỗi, không phải tổng), `workLimit` là 50.000 khi vắng mặt và `null` nghĩa là không giới hạn, và khi
-   hết giới hạn thì trả `null`, không bao giờ trả chứng minh tốt nhất đã có. Lớp bao đã đăng ký lấy giao của khoảng của
-   nó với cực đại tường minh của người gọi; `forcingChain` và `nishio` đã đăng ký gọi các lõi với giá trị mặc định cũ
-   cho đến khi một nhiệm vụ đăng ký thêm.
+   chứng minh hai chuỗi, không phải tổng), `workLimit` là 50.000 khi vắng mặt và `null` (hoặc `Infinity`) nghĩa là
+   không giới hạn, và khi hết giới hạn thì trả `null`, không bao giờ trả chứng minh tốt nhất đã có. Một lần gọi có
+   giới hạn không bao giờ để quá 256 đơn vị công việc trôi qua giữa hai lần kiểm tra ngân sách cha (nó chia một lần mở
+   rộng lớn hơn thành các đoạn tối đa 256 cạnh; lần gọi không giới hạn giữ nhịp cũ). Bốn kỹ thuật chuỗi đã đăng ký là
+   các lớp bao truyền id, cả hai cận và giới hạn công việc của mình một cách tường minh, nên mỗi chứng minh thuộc đúng
+   một id: `forcingChain` từ 1 đến C cạnh và `nishio` độ sâu 1 (cả hai không giới hạn), `forcingChainLong` từ C + 1 đến
+   12 cạnh và `nishioDeep` độ sâu 2 (tối đa 3; cả hai ở mức 50.000). C là `SG.chainSearch.SHORT_MAX` (tạm là 6), đọc ở
+   mỗi lần gọi. Tùy chọn `maxChainLength` và `maxNishioDepth` của người gọi chỉ có thể thu hẹp một khoảng, không bao
+   giờ mở rộng, và lớp bao lấy giao của khoảng của nó với tùy chọn đó.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -650,7 +655,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (52 suite, 3.405 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (52 suite, 3.449 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (60 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -661,7 +666,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 52 suite, 3.405 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 52 suite, 3.449 bài —
 36 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -710,7 +715,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 60 suite, trong đó 52 suite nhanh (3.405 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 60 suite, trong đó 52 suite nhanh (3.449 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -860,25 +865,31 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   bản ghi), 1 là không thể lập được bản ghi đáng tin và đầy đủ, 2 là dùng sai. Các hàm trợ giúp là
   `SG.fixtures.recoveryProfile` (`tests/fixtures/recovery-profile.js`), do suite `recovery-profile` kiểm thử; các hồ
   sơ đầu tiên được báo cáo ở [docs/difficulty-v3/recovery-profile.md](docs/difficulty-v3/recovery-profile.md).
-- **Tầng kiểm tra sâu cho Nightmare của mega (độ khó v3)** — một yêu cầu Nightmare đủ số lần thử của mega12 (mặc định 4
-  lần) hoặc mega16 (2 lần) tốn từ vài giây đến vài phút và thường kết thúc bằng kết quả dự phòng nông nhưng trung
-  thực, nên nó không phải một bài kiểm tra nhanh, và suite `mega` nhanh không đòi một yêu cầu như vậy. Suite nhanh giữ
-  một yêu cầu mega12 thật với đúng một lần thử (seed 3, mọi bất biến cùng các kiểm tra về việc có cần bậc và về cảnh
-  báo ở dưới, trong một giới hạn kiểm tra nhanh có chặn là 15 s trước khi nhân hệ số thời gian, đo được 5,2 s, so với
+- **Tầng kiểm tra sâu cho Nightmare và Hell 1 của mega (độ khó v3)** — một yêu cầu Nightmare đủ số lần thử của mega12
+  (mặc định 4 lần) hoặc mega16 (2 lần) tốn từ vài giây đến vài phút và thường kết thúc bằng kết quả dự phòng nông nhưng
+  trung thực, nên nó không phải một bài kiểm tra nhanh, và suite `mega` nhanh không đòi một yêu cầu như vậy; từ MS07b,
+  khi `nishioDeep` làm cho bậc Hell 1 trở nên thật, điều đó cũng đúng với các yêu cầu Hell 1 của cả hai bàn (mỗi yêu
+  cầu mega12 khoảng 30 s; xem dưới). Suite nhanh giữ
+  một yêu cầu mega12 thật với đúng một lần thử cho mỗi mức (seed 3, mọi bất biến cùng các kiểm tra về việc có cần bậc
+  và về cảnh báo ở dưới, trong một giới hạn kiểm tra nhanh có chặn là 15 s (Nightmare, đo được 5,2 s) hoặc 18 s
+  (Hell 1, đo được 7,7 s) trước khi nhân hệ số thời gian, so với
   ngân sách 60.000 ms không đổi của yêu cầu) và một kịch bản kiểm soát cho mega16 về việc dừng theo cỡ bàn, kết quả dự phòng nông
   có đủ hai cảnh báo, một số lần thử nêu rõ và một lỗi hủy hay hết ngân sách được truyền đi. Mười bốn yêu cầu của các bài
   cũ (mỗi bàn các seed 1 đến 4 và ba lần gọi CV5 độc lập với seed 3, 3 và 4) thuộc về một công cụ, không bao giờ thuộc
-  một suite được tự tìm thấy, CI hay `SG_DEEP`. Chạy từng lệnh một, qua khóa thời gian dùng chung khi người khác đang
-  dùng máy, vì một yêu cầu có thể mất vài phút:
+  một suite được tự tìm thấy, CI hay `SG_DEEP`, mỗi mức một lần. Chạy từng lệnh một, qua khóa thời gian dùng chung khi
+  người khác đang dùng máy, vì một yêu cầu có thể mất vài phút:
 
   ```text
-  node tests/mega-contract.js --list                                              # 14 yêu cầu và các quan hệ của chúng
+  node tests/mega-contract.js --list [--level=hell1]                              # 14 yêu cầu của một mức và các quan hệ của chúng
   node tests/mega-contract.js --request=mega12-invariant-1 --record=<id.json>     # một yêu cầu, đúng một lần, và các kiểm tra
-  node tests/mega-contract.js --reconcile=<records directory> --json=<file.json>  # không sinh gì cả
+  node tests/mega-contract.js --reconcile=<records directory> --json=<file.json> [--level=hell1]   # không sinh gì cả
   ```
 
-  Các mã là `<bàn>-invariant-<seed>`, `<bàn>-cv5-a`, `<bàn>-cv5-b` và `<bàn>-cv5-other`; hai lần gọi CV5 seed 3 là hai
-  lần sinh đề, không phải hai lần đọc một bản ghi. Một yêu cầu là Nightmare, không theo dõi và không có `maxAttempts`,
+  Các mã Nightmare là `<bàn>-invariant-<seed>`, `<bàn>-cv5-a`, `<bàn>-cv5-b` và `<bàn>-cv5-other`; các mã Hell 1 mang
+  tên mức (`mega12-hell1-invariant-1`, `mega16-hell1-cv5-b`, ...) và tập đó có bản kê, loại bản ghi và phép đối chiếu
+  riêng, chọn bằng `--level` (mặc định là Nightmare, không đổi); một phép đối chiếu là mười bốn yêu cầu của một mức,
+  không bao giờ cả hai mức cùng lúc. Hai lần gọi CV5 seed 3 là hai
+  lần sinh đề, không phải hai lần đọc một bản ghi. Một yêu cầu mang mức của nó, không theo dõi và không có `maxAttempts`,
   cùng các kiểm tra của nó dùng chung một ngân sách 500.000 ms, dưới giới hạn 540 giây của một lệnh có chặn. `--record`
   là một tệp `<id>.json` mới nằm trong kho mã (tệp đã có, đường dẫn tuyệt đối hay nằm ngoài kho, một tùy chọn nêu hai
   lần hay xung đột đều bị từ chối). Bản ghi gồm yêu cầu, cấu hình đã chuẩn hóa, số lần thử thực tế, hạn mức, định danh
@@ -928,12 +939,19 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   thái được so sánh sau mỗi lần chạy. Bản ghi chứa SHA-256 của các nguồn bộ máy, của các mẫu đã nạp và của hai tệp công
   cụ, Node, máy, cấu hình và, cho từng ca, Finding cùng mã băm của nó, các bản ghi công việc, lần chạm giới hạn và
   min / p50 / p95 / max / trung bình của thời gian tính bằng mili giây; mọi thứ trừ số đo đồng hồ đều tất định, và một
-  Finding hay bản ghi công việc đổi giữa các lần chạy làm bản ghi không đầy đủ (mã thoát 1). Một ngân sách của người
+  Finding hay bản ghi công việc đổi giữa các lần chạy làm bản ghi không đầy đủ (mã thoát 1). Một mẫu không khớp cũng
+  vậy: một ca có Finding không phải cái mà mẫu của nó ghi, hoặc một mẫu sai mà lại tìm ra điều gì đó, vẫn nằm trong bản
+  ghi cùng các số đo nhưng làm bản ghi không đầy đủ (`complete` là false, một vấn đề gắn với ca đó) và công cụ thoát với
+  mã 1, kể cả khi mọi lần chạy đều giống nhau và kể cả khi bản ghi tự khẳng định `complete: true`; bản ghi khớp vẫn
+  đạt và ca mà mẫu không ghi kỳ vọng vẫn là chưa biết. Một ngân sách của người
   gọi là 480.000 ms, dưới giới hạn 540 giây của một lệnh có giới hạn, dùng chung cho mọi lần tìm và được kiểm tra lại
   sau từng lần, vì một bộ tìm có thể biến ngân sách đã cạn thành “không tìm thấy gì”: ngân sách cạn kết thúc đợt chạy
   với các ca đã đo và một vấn đề, không bao giờ với một mẫu ngắn. Các hàm trợ giúp là `SG.fixtures.patternCost`
   (`tests/fixtures/pattern-cost.js`), do suite `pattern-cost-tools` kiểm thử trên các quan sát giả, đồng hồ giả, các
-  mẫu thật của `forcingChain` và `nishio` và chính công cụ.
+  mẫu thật của các kỹ thuật chuỗi và chính công cụ; đầu ra thử nghiệm của nó nằm trong một thư mục riêng cho mỗi lần
+  gọi (`.scratch-pattern-cost-tools/<pid-thời-gian-ngẫu-nhiên>/` ở gốc kho mã, bị git bỏ qua) và chỉ thư mục đó bị xóa.
+  Các mẫu đang dùng bao gồm `forcingChain`, `forcingChainLong`, `nishio` và `nishioDeep` bằng các thế cờ thật (bộ
+  chuyển đổi có phạm vi `lawOfLeftovers` thuộc MS14b).
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
   cho phân vị 95) rồi in bảng và danh sách mức; `--variant`, `--level`, `--jobs`, `--json` và `--markdown` thu
@@ -1018,7 +1036,7 @@ Các hạn chế mà người dùng nhận thấy được liệt kê trong hư�
   giờ là điều mọi người giải đều cần, và số đếm công việc `checks` của một lần chấm điểm chỉ để chẩn đoán: nó có thể
   lệch vài đơn vị giữa hai lần chạy (các kỹ thuật tập con cách quãng các lần kiểm tra ngân sách bằng một bộ đếm sống
   qua nhiều lần giải), nên các bài kiểm thử bỏ qua nó.
-- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 26 kỹ thuật
+- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 28 kỹ thuật
   và chín khoảng điểm được chọn từ các phép đo trên đề do máy tạo
   ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); trọng số Sát thủ của `ruleOf45` và
   `cageSplit` là những ứng viên đầu tiên cần hiệu chỉnh với người chơi thật.
@@ -1068,7 +1086,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 1.714 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 1.749 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

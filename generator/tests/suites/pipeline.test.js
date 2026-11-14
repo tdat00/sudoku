@@ -588,8 +588,13 @@
       });
     }, 60000);
 
+    // The request is Nightmare, seed 26 (exact on the fourth attempt: 8,348 events, 670 of them steps). Since the chain
+    // windows of MS07b, a classic9 Hell 1 request needs nishioDeep and spends all eight attempts (seeds 21 to 32 give
+    // 1,540 to 1,630 step events and 18,000 events in all), so even the minimal capped trace, the step events and
+    // the micro events that carry what the dropped ones changed, is longer than 2000: seed 21 of Hell 1, the old
+    // request of this test, gives 2,225.
     it('a real trace, capped to 2000 events, replays to the same board (step events all kept)', function () {
-      var out = run({ difficulty: 'hell1', seed: 21 }, 'full');
+      var out = run({ difficulty: 'nightmare', seed: 26 }, 'full');
       expect(out.events.length).toBeGreaterThan(2000);
       var capped = E.capTrace(out.events, 2000);
       expect(capped.length).toBeLessThan(2001);

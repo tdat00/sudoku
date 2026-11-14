@@ -7,7 +7,7 @@
     "from": "MS05r6b final quick manifest: docs/difficulty-v3/evidence/MS05r6b/quick-final/final-manifest.json (the same seven whole-suite shards; reconciled 3,262 of 3,262 Generator tests, 1,683 of 1,683 Player tests)",
     "measured": "local process seconds of one run on Windows x64, Node v26.13.0, 16 cores, time factor 2 (docs/difficulty-v3/recovery-quick-cost.md); a measurement of a named source and machine, not a promise and not a measurement of CI",
     "counts": "tests and measuredSeconds are information, not checked; the grouping, the suites and the projections are",
-    "added": "MS06b: the shard digger-target (the new suite of the inert target policy); its seconds are one locked local run of that task, not part of MS05r6b's seven shards. MS06c1: no suite or shard is added; the tests of digger-target (28 to 55), pipeline (150 to 152), cache, difficulty-diagnostics and worker (own-fast, 1,579 to 1,583) are its new nullable-target and typed-objective cases, so the Generator quick set is 3,323 tests; the seconds of the other shards are not remeasured here. MS06c2: no suite or shard is added; the tests of digger-target (55 to 75), replay (153 to 154) and pipeline (152 to 154) are its activation cases and migrated pins, so the Generator quick set is 3,346 tests; the seconds of replay, digger-target, pipeline and player are those of the final locked run of that task (docs/difficulty-v3/evidence/MS06c2/quick, after its fix round), the other shards are not remeasured here. MS07a: the new suite pattern-cost-tools (28 tests) joins the shard own-fast (1,583 to 1,611) and its tool generator/tests/pattern-cost.js is listed out of CI; the tests of tech-chain (62 to 89) and techniques (165 to 169) are its seam and supplement cases (core-shared 1,143 to 1,174, and the Player's 1,683 to 1,714, which runs the same shared suites), so the Generator quick set is 3,405 tests; the seconds of core-shared, own-fast and the Player are those of the final locked runs of that task (docs/difficulty-v3/evidence/MS07a/quick), the other shards are not remeasured here"
+    "added": "MS06b: the shard digger-target (the new suite of the inert target policy); its seconds are one locked local run of that task, not part of MS05r6b's seven shards. MS06c1: no suite or shard is added; the tests of digger-target (28 to 55), pipeline (150 to 152), cache, difficulty-diagnostics and worker (own-fast, 1,579 to 1,583) are its new nullable-target and typed-objective cases, so the Generator quick set is 3,323 tests; the seconds of the other shards are not remeasured here. MS06c2: no suite or shard is added; the tests of digger-target (55 to 75), replay (153 to 154) and pipeline (152 to 154) are its activation cases and migrated pins, so the Generator quick set is 3,346 tests; the seconds of replay, digger-target, pipeline and player are those of the final locked run of that task (docs/difficulty-v3/evidence/MS06c2/quick, after its fix round), the other shards are not remeasured here. MS07a: the new suite pattern-cost-tools (28 tests) joins the shard own-fast (1,583 to 1,611) and its tool generator/tests/pattern-cost.js is listed out of CI; the tests of tech-chain (62 to 89) and techniques (165 to 169) are its seam and supplement cases (core-shared 1,143 to 1,174, and the Player's 1,683 to 1,714, which runs the same shared suites), so the Generator quick set is 3,405 tests; the seconds of core-shared, own-fast and the Player are those of the final locked runs of that task (docs/difficulty-v3/evidence/MS07a/quick), the other shards are not remeasured here. MS07b: no suite or shard is added; the tests of tech-chain (89 to 107) and techniques (169 to 186) are its window, strict-gate and registry cases (core-shared 1,174 to 1,209, and the Player's 1,714 to 1,749, which runs the same shared suites); difficulty-diagnostics (84 to 85), pattern-cost-tools (28 to 32) and mega-contract (37 to 44, the level-selected Hell 1 manifest) are in own-fast (1,611 to 1,623); mega goes from 111 to 108 tests (the four full-attempt Hell 1 tests leave with the fourteen Hell 1 requests, which are the deep tier of tests/mega-contract.js --level=hell1, and one real one-attempt mega12 Hell 1 smoke joins), so the Generator quick set is 3,449 tests; every shard's seconds are those of the final locked runs of that task (docs/difficulty-v3/evidence/MS07b/quick; steps, replay and player rise by the cost of the G14 golden, which now rates nishioDeep positions)"
   },
   "job": {
     "timeoutMinutes": 30,
@@ -23,29 +23,29 @@
         {
           "id": "core-shared",
           "suites": ["bits", "board-view", "constraints", "exchange", "harness", "logical-solver", "model", "solver", "symbols", "tech-basic", "tech-chain", "tech-fish", "tech-subset", "tech-wing", "techniques", "wordbook"],
-          "tests": 1174,
-          "measuredSeconds": 25.0,
+          "tests": 1209,
+          "measuredSeconds": 26.005,
           "projectionSeconds": 60
         },
         {
           "id": "steps",
           "suites": ["steps"],
           "tests": 57,
-          "measuredSeconds": 11.507,
+          "measuredSeconds": 18.691,
           "projectionSeconds": 30
         },
         {
           "id": "replay",
           "suites": ["replay"],
           "tests": 154,
-          "measuredSeconds": 12.87,
+          "measuredSeconds": 18.099,
           "projectionSeconds": 30
         },
         {
           "id": "mega",
           "suites": ["mega"],
-          "tests": 111,
-          "measuredSeconds": 11.4,
+          "tests": 108,
+          "measuredSeconds": 12.804,
           "projectionSeconds": 30
         }
       ]
@@ -57,15 +57,15 @@
         {
           "id": "own-fast",
           "suites": ["a11y", "cache", "controls", "difficulty-diagnostics", "difficulty-floor", "digger", "events", "export", "format", "full-grid", "help", "history", "i18n", "manual-corpus", "mega-contract", "multigrid", "pattern-cost-tools", "perf-tooling", "purity", "recovery-profile", "replay-recorders", "result-view", "rng", "smoke", "store", "technique-weights", "theme", "ui-contract", "variants-registry", "worker"],
-          "tests": 1611,
-          "measuredSeconds": 167.063,
+          "tests": 1623,
+          "measuredSeconds": 165.264,
           "projectionSeconds": 220
         },
         {
           "id": "digger-target",
           "suites": ["digger-target"],
           "tests": 75,
-          "measuredSeconds": 1.18,
+          "measuredSeconds": 1.44,
           "projectionSeconds": 30
         }
       ]
@@ -78,7 +78,7 @@
           "id": "pipeline",
           "suites": ["pipeline"],
           "tests": 154,
-          "measuredSeconds": 322.37,
+          "measuredSeconds": 327.551,
           "projectionSeconds": 360
         }
       ]
@@ -91,7 +91,7 @@
           "id": "player",
           "suites": ["player"],
           "tests": 69,
-          "measuredSeconds": 132.26,
+          "measuredSeconds": 162.37,
           "projectionSeconds": 180
         }
       ]
@@ -99,8 +99,8 @@
   ],
   "player": {
     "command": "node tests/node-runner.js",
-    "tests": 1714,
-    "measuredSeconds": 31.6,
+    "tests": 1749,
+    "measuredSeconds": 33.046,
     "projectionSeconds": 60,
     "rule": "one job, no option: the complete Player quick set, including every suite of core/tests/suites in the Player environment"
   },

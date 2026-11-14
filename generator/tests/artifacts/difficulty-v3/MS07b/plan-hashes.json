@@ -1,0 +1,1250 @@
+[
+  {
+    "label": "g-hash-classic4-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic4-veryEasy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic4-veryEasy-00 0.543 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic4-veryEasy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic4-veryEasy-05 0.52 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic4-veryEasy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic4-veryEasy-10 0.515 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic4-veryEasy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic4-veryEasy-15 0.532 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic6-veryEasy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic6-veryEasy-00 0.515 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic6-veryEasy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic6-veryEasy-05 0.517 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic6-veryEasy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic6-veryEasy-10 0.51 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic6-veryEasy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic6-veryEasy-15 0.512 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic6-hard-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic6-hard-00 0.9 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic6-hard-05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-classic6-hard-05 1.008 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic6-hard-10.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-classic6-hard-10 1.075 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic6-hard-15.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-classic6-hard-15 1.251 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-veryEasy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-veryEasy-00 0.521 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-veryEasy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-veryEasy-05 0.53 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-veryEasy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-veryEasy-10 0.533 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-veryEasy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-veryEasy-15 0.523 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-easy-00.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c2 g-hash-classic9-easy-00 1.651 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-easy-05.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c2 g-hash-classic9-easy-05 1.644 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-easy-10.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c2 g-hash-classic9-easy-10 1.681 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-easy-15.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS06c2 g-hash-classic9-easy-15 2.738 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-normal-00.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS06c2 g-hash-classic9-normal-00 2.244 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-normal-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS06c2 g-hash-classic9-normal-05 3.349 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-normal-10.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS06c2 g-hash-classic9-normal-10 2.36 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-normal-15.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS06c2 g-hash-classic9-normal-15 2.168 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-hard-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-hard-00 0.632 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-hard-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-hard-05 0.633 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-hard-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-hard-10 0.739 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-hard-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-hard-15 0.592 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-expert-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-expert-00 0.89 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-expert-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-expert-05 0.894 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-expert-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-expert-10 0.829 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-expert-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-expert-15 0.766 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-master-00.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c2 g-hash-classic9-master-00 1.995 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-master-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-master-05 0.886 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-master-10.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-classic9-master-10 1.457 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-master-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-classic9-master-15 0.922 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-nightmare-00.json"
+    ],
+    "projectionSeconds": 55,
+    "projectionBasis": "MS06c2 g-hash-classic9-nightmare-00 24.603 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-nightmare-05.json"
+    ],
+    "projectionSeconds": 48,
+    "projectionBasis": "MS06c2 g-hash-classic9-nightmare-05 21.105 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-nightmare-10.json"
+    ],
+    "projectionSeconds": 57,
+    "projectionBasis": "MS06c2 g-hash-classic9-nightmare-10 25.824 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\classic9-nightmare-15.json"
+    ],
+    "projectionSeconds": 44,
+    "projectionBasis": "MS06c2 g-hash-classic9-nightmare-15 19.332 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\mega12-normal-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-mega12-normal-00 0.588 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\mega12-normal-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-mega12-normal-05 0.607 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\mega12-normal-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-mega12-normal-10 0.581 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\mega12-normal-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-mega12-normal-15 0.576 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\mega16-easy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-mega16-easy-00 0.577 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\mega16-easy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-mega16-easy-05 0.575 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\mega16-easy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-mega16-easy-10 0.607 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\mega16-easy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-mega16-easy-15 0.59 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\diagonalX-easy-00.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS06c2 g-hash-diagonalX-easy-00 4.086 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\diagonalX-easy-05.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS06c2 g-hash-diagonalX-easy-05 3.687 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\diagonalX-easy-10.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c2 g-hash-diagonalX-easy-10 1.643 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\diagonalX-easy-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS06c2 g-hash-diagonalX-easy-15 3.171 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\diagonalX-nightmare-00.json"
+    ],
+    "projectionSeconds": 67,
+    "projectionBasis": "MS06c2 g-hash-diagonalX-nightmare-00 30.733 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\diagonalX-nightmare-05.json"
+    ],
+    "projectionSeconds": 67,
+    "projectionBasis": "MS06c2 g-hash-diagonalX-nightmare-05 30.758 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\diagonalX-nightmare-10.json"
+    ],
+    "projectionSeconds": 90,
+    "projectionBasis": "MS06c2 g-hash-diagonalX-nightmare-10 42.015 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\diagonalX-nightmare-15.json"
+    ],
+    "projectionSeconds": 67,
+    "projectionBasis": "MS06c2 g-hash-diagonalX-nightmare-15 30.957 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\hyper-hard-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-hyper-hard-00 0.605 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\hyper-hard-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-hyper-hard-05 0.566 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\hyper-hard-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-hyper-hard-10 0.59 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\hyper-hard-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-hyper-hard-15 0.606 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\jigsaw9-normal-00.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-jigsaw9-normal-00 1.404 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\jigsaw9-normal-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-jigsaw9-normal-05 0.708 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\jigsaw9-normal-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-jigsaw9-normal-10 0.951 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\jigsaw9-normal-15.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-jigsaw9-normal-15 1.189 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\jigsaw9-master-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-jigsaw9-master-00 0.819 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\jigsaw9-master-05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-jigsaw9-master-05 1.126 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\jigsaw9-master-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-jigsaw9-master-10 0.94 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\jigsaw9-master-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-jigsaw9-master-15 0.972 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\killer-easy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-killer-easy-00 0.561 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\killer-easy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-killer-easy-05 0.574 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\killer-easy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-killer-easy-10 0.564 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\killer-easy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-killer-easy-15 0.591 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\killer-hard-00.json"
+    ],
+    "projectionSeconds": 57,
+    "projectionBasis": "MS06c2 g-hash-killer-hard-00 25.53 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\killer-hard-05.json"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "MS06c2 g-hash-killer-hard-05 27.484 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\killer-hard-10.json"
+    ],
+    "projectionSeconds": 58,
+    "projectionBasis": "MS06c2 g-hash-killer-hard-10 26.291 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\killer-hard-15.json"
+    ],
+    "projectionSeconds": 58,
+    "projectionBasis": "MS06c2 g-hash-killer-hard-15 26.114 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\greaterThan-normal-00.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "MS06c2 g-hash-greaterThan-normal-00 12.262 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\greaterThan-normal-05.json"
+    ],
+    "projectionSeconds": 28,
+    "projectionBasis": "MS06c2 g-hash-greaterThan-normal-05 11.229 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\greaterThan-normal-10.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-greaterThan-normal-10 1.27 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\greaterThan-normal-15.json"
+    ],
+    "projectionSeconds": 31,
+    "projectionBasis": "MS06c2 g-hash-greaterThan-normal-15 12.719 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\greaterThan-hard-00.json"
+    ],
+    "projectionSeconds": 27,
+    "projectionBasis": "MS06c2 g-hash-greaterThan-hard-00 10.689 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\greaterThan-hard-05.json"
+    ],
+    "projectionSeconds": 44,
+    "projectionBasis": "MS06c2 g-hash-greaterThan-hard-05 19.239 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\greaterThan-hard-10.json"
+    ],
+    "projectionSeconds": 24,
+    "projectionBasis": "MS06c2 g-hash-greaterThan-hard-10 9.016 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\greaterThan-hard-15.json"
+    ],
+    "projectionSeconds": 29,
+    "projectionBasis": "MS06c2 g-hash-greaterThan-hard-15 11.543 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\samurai-easy-00.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS06c2 g-hash-samurai-easy-00 2.686 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\samurai-easy-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS06c2 g-hash-samurai-easy-05 3.378 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\samurai-easy-10.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS06c2 g-hash-samurai-easy-10 2.847 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\samurai-easy-15.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS06c2 g-hash-samurai-easy-15 2.373 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\sohei-veryEasy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-sohei-veryEasy-00 0.547 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\sohei-veryEasy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-sohei-veryEasy-05 0.559 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\sohei-veryEasy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-sohei-veryEasy-10 0.542 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\sohei-veryEasy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-sohei-veryEasy-15 0.545 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\butterfly-normal-00.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-butterfly-normal-00 1.273 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\butterfly-normal-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-hash-butterfly-normal-05 0.956 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\butterfly-normal-10.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-butterfly-normal-10 1.47 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\butterfly-normal-15.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS06c2 g-hash-butterfly-normal-15 2.201 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-flower-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\flower-normal-00.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS06c2 g-hash-flower-normal-00 2.259 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-flower-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\flower-normal-05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-flower-normal-05 1.008 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-flower-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\flower-normal-10.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-flower-normal-10 1.305 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-flower-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\flower-normal-15.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS06c2 g-hash-flower-normal-15 2.159 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\wordoku-normal-00.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c2 g-hash-wordoku-normal-00 1.935 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\wordoku-normal-05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-hash-wordoku-normal-05 1.17 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\wordoku-normal-10.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS06c2 g-hash-wordoku-normal-10 2.003 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\wordoku-normal-15.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS06c2 g-hash-wordoku-normal-15 2.414 s before the chain windows; 2 x + 5 s"
+  }
+]

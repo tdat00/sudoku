@@ -213,9 +213,16 @@
     'technique.forcingChain': 'Chuỗi suy luận (Forcing Chain)',
     'technique.forcingChain.desc': 'Chuỗi các suy luận kiểu “nếu thế này thì thế kia”, chứng minh một ứng ' +
       'viên là sai (hoặc một chữ số là đúng).',
+    'technique.forcingChainLong': 'Chuỗi suy luận dài (Long Forcing Chain)',
+    'technique.forcingChainLong.desc': 'Cùng loại chuỗi với Chuỗi suy luận nhưng quá dài so với nó: chuỗi ' +
+      'ngắn nhất dùng được có nhiều liên kết hơn mức Chuỗi suy luận thường cho phép (tối đa 12 liên kết).',
     'technique.nishio': 'Nishio (thử–sai)',
     'technique.nishio.desc': 'Thử–sai có giới hạn: giả sử một ứng viên là đúng; nếu các suy luận đơn giản ' +
       'sau đó dẫn đến mâu thuẫn thì ứng viên ấy là sai.',
+    'technique.nishioDeep': 'Nishio sâu (thử–sai trong thử–sai)',
+    'technique.nishioDeep.desc': 'Thử–sai hai tầng: giả sử một ứng viên là đúng; nếu các suy luận đơn giản, ' +
+      'cùng với thêm một phép thử–sai nữa bên trong giả thiết đó, dẫn đến mâu thuẫn thì ứng viên ấy là ' +
+      'sai. Chỉ dùng khi một phép thử đơn không đủ.',
     'technique.cageCombo.desc': 'Các chữ số trong một lồng đều khác nhau và cộng lại bằng tổng của lồng, ' +
       'nên thường chỉ còn vài tổ hợp khả dĩ.',
     'technique.ruleOf45.desc': 'Mỗi hàng, cột và khối có tổng bằng 45, nhiều nhóm cùng loại gộp lại thì ' +
@@ -290,6 +297,18 @@
       'đúng và được điền vào.',
     'technique.nishio.step': 'Thử–sai (độ sâu {depth}): nếu {label} là {digit} thì các suy luận đơn giản ' +
       'sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.',
+    'technique.forcingChainLong.step.endpoints': 'Chuỗi suy luận dài hơn thường, {length} liên kết: ' +
+      '{chains}. Nếu ứng viên đầu tiên sai thì ứng viên cuối đúng, nên ít nhất một đầu của chuỗi là đúng. ' +
+      'Các ứng viên nhìn thấy cả hai đầu bị loại.',
+    'technique.forcingChainLong.step.contradiction': 'Chuỗi suy luận dài hơn thường, {length} liên kết: ' +
+      '{chains}. Nếu ứng viên đầu tiên đúng thì sẽ có một ứng viên vừa đúng vừa sai, điều không thể xảy ' +
+      'ra. Vậy ứng viên đầu tiên sai và bị loại.',
+    'technique.forcingChainLong.step.forced': 'Chuỗi suy luận dài hơn thường, {length} liên kết: {chains}. ' +
+      'Nếu ứng viên đầu tiên sai thì sẽ có một ứng viên vừa đúng vừa sai, điều không thể xảy ra. Vậy ứng ' +
+      'viên đầu tiên đúng và được điền vào.',
+    'technique.nishioDeep.step': 'Thử–sai sâu (độ sâu {depth}): nếu {label} là {digit} thì các suy luận ' +
+      'đơn giản, cùng một phép thử thứ hai bên trong giả thiết đó, sẽ dẫn đến mâu thuẫn. Vậy {digit} bị ' +
+      'loại khỏi {label}.',
     'technique.cageCombo': 'Tổ hợp tổng lồng',
     'technique.cageCombo.step': 'Lồng có tổng {sum} gồm {size} ô ({cells}) chỉ có thể viết bằng các chữ số ' +
       '{digits}. Mọi ứng viên khác trong lồng đều không thể xảy ra. Chữ số mà mọi tổ hợp đều cần ' +

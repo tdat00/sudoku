@@ -84,11 +84,11 @@
         '40fb1b94a17744c8', '5b90d5565d7fb11a', '29347bf7614c9de3', '0653c5d7dc8f5133'
       ],
       'classic9/nightmare': [
-        '86d1e172be618b9e', 'b2617ee032a4016c', '9eb005df27ca67fb', '486e7c2ec5568382',
+        '86d1e172be618b9e', '7c21f405e81ddad9', '014f55fe64c7b982', '486e7c2ec5568382',
         '345c0e526057fe6e', '12ef6c318fc0d53d', 'b1f7b262d7cb10ce', 'e6a777410136194d',
         '4164e7fe5f7fe0e2', '85547b3b71a3ee0f', '0caa79518030700d', '5b51d9e075f3fe7c',
         'b457b0449e9a0ee8', '71afbd6714c77a53', 'd21fee25b9491269', '1e3ed1b29371764e',
-        '41ea89e94ebb3c95', '333527f37c599ca7', '9f3bae9bcddae99f', '7e5d71552b14f449'
+        '41ea89e94ebb3c95', '333527f37c599ca7', '6609cbc059d1792c', '7e5d71552b14f449'
       ],
       'mega12/normal': [
         '97897abcb3ad1978', '880378cbd0717e4f', '8db24fe4df2928a0', 'f7a01ff67ea68312',
@@ -114,8 +114,8 @@
       'diagonalX/nightmare': [
         '2d590e59df31f175', 'e146de8f5fc95aeb', 'edfaf735dcebeb69', '36a7770b4c58994f',
         '30a81f93a7eab1f7', '863dc6f9375bbf65', '1f1a13a4b5e716e8', 'd3b88366b7c46bea',
-        'c569190b688625cf', '3ab1a0aa31fed606', '37f4fcd45964d318', '0086fe024b32105e',
-        'cdac43e9b03d91e5', '51d9d3e0d8c2b83c', 'd560e6c98ee86185', 'd74675d99db28fa5',
+        'c569190b688625cf', '2664a77a0835c0e6', '37f4fcd45964d318', '0086fe024b32105e',
+        'a7dd044fac63df4b', 'eab7817ac72f1b96', 'd560e6c98ee86185', 'd74675d99db28fa5',
         'c2a515b84ef8b804', '5410290818e10de4', '0b042686411f1b3a', '4d80a44cf03bb140'
       ],
       'hyper/hard': [

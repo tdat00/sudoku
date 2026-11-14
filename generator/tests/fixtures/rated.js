@@ -210,7 +210,7 @@
     'constructed-expert-2': ['expert', true],
     'constructed-expert-3': ['expert', true],
     'constructed-nightmare-1': ['nightmare', false],
-    'constructed-nightmare-2': ['nightmare', false],
+    'constructed-nightmare-2': ['hell1', false],
     'constructed-nightmare-3': ['nightmare', false]
   };
 

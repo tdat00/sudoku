@@ -275,3 +275,42 @@ Prefer the strict gate, which matches R10's text; then adjust the `1 + 1 + 2` ca
   `0fa564f3...`, fixtures `635a036d...` and tool `7dc2e09d...`.
 
 MS07a REVIEW DONE
+
+## 5. Cross-check of the IR54 ruling in MS07b (2026-11-15)
+
+Requested by SA2 before MS07b is dispatched. I read `tasks/difficulty-v3/MS07b-register-chain-windows.md`, lines
+1-150 and the IR55 block, against R9, R10 and IR52-IR55 above, and checked it against the MS07a source. I ran no
+Git, test, generation or timing.
+
+**Verdict: PASS. No correction is needed to the IR54 ruling.**
+
+- **Windows.** The table matches R9 for all four IDs:
+  - `forcingChain` [1, C] and `forcingChainLong` [C+1, 12], with C read from `SG.chainSearch.SHORT_MAX` per call;
+  - `nishio` [1, 1];
+  - `nishioDeep` [2, 2] by default, with a numeric caller value clamped to 3 (Infinity included).
+- **Caller values.** The maximum is the minimum of the window's maximum and the floored caller value. Absent,
+  non-number or NaN takes the ID's default. A value of 0 or less, or one below the window's minimum, leaves an empty
+  window and `null`, so an override never enlarges a window beyond R9 (deep's 3 is R9's own explicit maximum).
+  Every wrapper passes its id, both bounds and `workLimit` explicitly, so the seam's defaults cannot stand in.
+- **Work limits.**
+  - `null` for `forcingChain` and `nishio` keeps their accepted policy. R10 approves 50,000 for new pattern finders
+    only.
+  - Their windowed scans stay finite and deterministic: a breadth-first search at most C edges deep, and depth-1
+    trials at most cells x digits. So this is not an "unbounded scan" in R10's sense.
+  - The parent budget and cancellation still apply.
+  - 50,000 for the two new IDs is R10's approved starting value, and any later change still needs R10's once-only
+    measured record.
+- **The private-spec note is right and needed.** In the MS07a source, `forcingWith`/`nishioWith` treat only
+  `limit === Infinity` as unbounded. A private spec with `limit: null` would be bounded with nothing left to spend:
+  `null - 0` is 0, so the first forcing expansion is cut and the first Nishio trial throws the cap. Either route
+  (the public seam with `null`, or the private spec with `Infinity`) is correct as the brief states.
+- **The rest is consistent with IR52-IR55:**
+  - "Generated output may change"; the brief claims no MS07a parity;
+  - a swallowed `budget.exceeded` with `capHit: null` is not completion;
+  - the supplements stay unscoped-only until MS14b;
+  - IR52's strict gate and the IR55 items.
+
+Optional, outside IR54: the anchor `:690-712` (registrations) ends at 711, the last line of the file. The brief
+says to use symbols after edits anyway.
+
+IR54 CROSS-CHECK: PASS.

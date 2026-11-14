@@ -1,0 +1,11 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=nishioDeep --sources=tests\artifacts\difficulty-v3\MS07b\deep-fixtures-in.json --max-puzzles=16 --max-hints=400 --record-sources=tests\artifacts\difficulty-v3\MS07b\deep.json
+selected 1 technique ID(s); mode record
+replaying 6 puzzle(s) for 1 ID(s) (--max-puzzles=16, --max-hints=400)
+puzzle 1/6 classic9 Hell 2 escargot -> 113 hint(s), solved; wanted found: nishioDeep
+puzzle 2/6 classic9 Hell 2 worlds-hardest-2012 -> 122 hint(s), solved; wanted found: nishioDeep
+puzzle 3/6 classic9 Hell 2 hard-platinum -> 120 hint(s), solved; wanted found: nishioDeep
+puzzle 4/6 classic9 Hell 2 hard-nugget -> 87 hint(s), solved; wanted found: nishioDeep
+puzzle 5/6 classic9 Hell 2 hard-b -> 95 hint(s), solved; wanted found: nishioDeep
+puzzle 6/6 classic9 Hell 2 hard-c -> 82 hint(s), solved; wanted found: nishioDeep
+recorded 1 source(s) into player/tests/artifacts/difficulty-v3/MS07b/deep.json
+exit=0 seconds=1.270

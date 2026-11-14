@@ -189,7 +189,8 @@
       expect(lad.levels[last].maxScore).toBe(Infinity);
       expect(lad.levels[0].minScore).toBe(0);
       expect(lad.levels[0].groups).toEqual(['basic']);
-      expect(lad.levels[7].techniques).toEqual([]);
+      // Hell 1 lists nishioDeep since MS07b (1.25 x 2600 = 3250 < 3600); Hell 2 still lists none
+      expect(lad.levels[7].techniques.map(function (x) { return x.id; })).toEqual(['nishioDeep']);
       expect(lad.levels[8].techniques).toEqual([]);
     });
 

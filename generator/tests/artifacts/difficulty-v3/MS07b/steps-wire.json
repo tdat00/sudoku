@@ -1,0 +1,14 @@
+[
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\wire-check-before-write.txt",
+    "args": ["tests\\replay-fixtures.js", "--merge=..\\docs\\difficulty-v3\\evidence\\MS07b\\wire", "--check"]
+  },
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\wire-write.txt",
+    "args": ["tests\\replay-fixtures.js", "--merge=..\\docs\\difficulty-v3\\evidence\\MS07b\\wire", "--write"]
+  },
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\wire-check.txt",
+    "args": ["tests\\replay-fixtures.js", "--merge=..\\docs\\difficulty-v3\\evidence\\MS07b\\wire", "--check"]
+  }
+]

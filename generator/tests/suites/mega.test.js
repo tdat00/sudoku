@@ -7,12 +7,14 @@
 // puzzles per level. Set the environment variable SG_DEEP=1 (Node) or SG.test.deep = true (browser) for 20
 // puzzles per level and their hit rates.
 //
-// Mega Nightmare (difficulty v3, MS05r5m; CV6-03, S-OD3 (a)) has no full-attempt request in this suite: one
-// request is seconds (mega12, 4 attempts) to minutes (mega16, 2 attempts) and ends in a truthful shallow fallback
-// more often than not. Its fourteen requests (seeds 1 to 4 and the CV5 calls 3, 3 and 4 of each board) and every
-// assertion and relation they carried are validated by the deep tier, `node tests/mega-contract.js` (a tool, never
-// run by this suite). The quick tier keeps a real one-attempt mega12 request and a scripted mega16 control of the
-// stop, fallback, override and cancellation paths.
+// Mega Nightmare (difficulty v3, MS05r5m; CV6-03, S-OD3 (a)) and mega Hell 1 (MS07b; S-OD4 / CV6-03 (1)) have no
+// full-attempt request in this suite: one request is seconds (mega12, 4 attempts) to minutes (mega16, 2 attempts)
+// and ends in a truthful shallow fallback more often than not. Hell 1 joined the Nightmare treatment when
+// `nishioDeep` made its tier real. The fourteen requests of each level (seeds 1 to 4 and the CV5 calls 3, 3 and 4 of
+// each board) and every assertion and relation they carried are validated by the deep tier,
+// `node tests/mega-contract.js` (`--level=hell1` for Hell 1; a tool, never run by this suite). The quick tier keeps
+// a real one-attempt mega12 request of each level and a scripted mega16 control of the stop, fallback, override and
+// cancellation paths.
 (function () {
   'use strict';
 
@@ -28,10 +30,11 @@
   /** The levels the puzzle tests sample (both boards offer all nine, see the definition test). */
   var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'nightmare', 'hell1'];
   /**
-   * The levels whose full-attempt requests run in the quick tier: not Nightmare (see the header). The old 6 s and
-   * 20 s time assertions of the Nightmare requests are replaced quick contracts, not a changed design target.
+   * The levels whose full-attempt requests run in the quick tier: neither Nightmare nor Hell 1 (see the header). The
+   * old 6 s and 20 s time assertions of the Nightmare requests, and the 9 s and 20 s ones of Hell 1, are replaced
+   * quick contracts, not a changed design target.
    */
-  var QUICK_LEVELS = LEVELS.filter(function (level) { return level !== 'nightmare'; });
+  var QUICK_LEVELS = LEVELS.filter(function (level) { return level !== 'nightmare' && level !== 'hell1'; });
   /**
    * The bounded smoke limit of the one-attempt mega12 Nightmare request, before the time factor: 15000 ms, so 30 s
    * here (factor 2) and 45 s on CI (factor 3). Measured (MS05r5m, three runs on the development machine):
@@ -40,6 +43,14 @@
    * slowdown, not a performance target.
    */
   var SMOKE_MS = 15000;
+  /**
+   * The bounded smoke limit of the one-attempt mega12 Hell 1 request (MS07b), before the time factor: 18000 ms, so 36 s
+   * here (factor 2) and 54 s on CI (factor 3). Measured (MS07b, three locked runs on the development machine):
+   * 7.74, 7.75 and 7.74 s for the request and its checks, so about 4.7 times of margin here and 7.0 times on CI;
+   * both limits stay below the unchanged 60000 ms request budget of `generate`. A guard against a gross slowdown,
+   * not a performance target.
+   */
+  var SMOKE_HELL1_MS = 18000;
 
   /**
    * What each board must look like, written down independently of the builder. `budgets` are the
@@ -783,8 +794,9 @@
     });
 
     // ---------------------------------------------------------------------------------------------------------
-    // Mega Nightmare in the quick tier (MS05r5m): a real one-attempt mega12 request and a scripted mega16 control.
-    // The full-attempt requests (seeds 1 to 4 and the CV5 calls 3, 3 and 4 of each board) are the deep tier.
+    // Mega Nightmare and Hell 1 in the quick tier (MS05r5m, MS07b): a real one-attempt mega12 request of each level and
+    // a scripted mega16 control. The full-attempt requests (seeds 1 to 4 and the CV5 calls 3, 3 and 4 of each board and
+    // level) are the deep tier.
     // ---------------------------------------------------------------------------------------------------------
 
     /**
@@ -817,15 +829,27 @@
         expect(out.ms).toBeLessThan(SG.test.timeLimit(SMOKE_MS));
       }, SLOW);
 
+    // Hell 1 (MS07b) follows the same rule: one real attempt of mega12, the other requests are the deep tier's.
+    it('mega12 hell1: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit',
+      function () {
+        var out = generate('mega12', 'hell1', 3, { maxAttempts: 1 });
+        expect(out.result.config.maxAttempts).toBe(1);
+        expect(out.result.attempts).toBe(1);
+        checkInvariants('mega12', 'hell1', out.result);
+        checkTruthful(out.result, 'hell1');
+        expect(out.ms).toBeLessThan(SG.test.timeLimit(SMOKE_HELL1_MS));
+      }, SLOW);
+
     // The size-default controls of mega16 run the real pipeline and digger with a scripted dig strategy (the seams
     // of MS05r5p): every sample returns the whole solution with a shallow rating, so no sample is exact and nothing
-    // real is rated. They run at the Expert tier, not at Nightmare, and their names say so: the Nightmare tier
-    // (`spec.proposal`) rates its proposal samples and refines them for real, which the scripted strategy would
-    // replace by a full-grid rating, so a scripted Nightmare run could not give the truthful shallow fallback.
-    // The policy they prove (the size-default attempt loop, the fallback and its warnings, the override, the
-    // cancellation) does not depend on the level. The Nightmare-tier proposal samples are covered by real
-    // evidence instead: the one-attempt mega12 request above and the seven mega16 Nightmare records of the deep
-    // tier (`tests/mega-contract.js`).
+    // real is rated. They run at the Expert tier, not at Nightmare or Hell 1, and their names say so: those tiers
+    // (`spec.proposal`, from Nightmare up) rate their proposal samples and refine them for real, which the scripted
+    // strategy would replace by a full-grid rating, so a scripted Nightmare or Hell 1 run could not give the truthful
+    // shallow fallback. The policy they prove (the size-default attempt loop, the fallback and its warnings, the
+    // override, the cancellation) does not depend on the level, so they are the stop/fallback control of mega16
+    // Hell 1 as of Nightmare. The proposal samples of those tiers are covered by real evidence instead: the
+    // one-attempt mega12 requests above and the mega16 Nightmare and Hell 1 records of the deep tier
+    // (`tests/mega-contract.js`, seven requests per board and level).
     describe('mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation', function () {
       var SCRIPT = 'megaSizeDefaultControl';
       var control = { onSample: null };

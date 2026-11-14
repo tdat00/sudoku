@@ -1,11 +1,17 @@
 /**
- * Chain techniques (group `chain`): Forcing Chain / X-Cycle and Nishio. The most expensive techniques, so
- * both honour `ctx.check()` and turn a `budget.exceeded` into "nothing found" (other errors, e.g.
- * `budget.cancelled`, propagate).
+ * Chain techniques (group `chain`): Forcing Chain / X-Cycle and Nishio, each in a short and a long (shallow
+ * and deep) window; these are the most expensive techniques, so all honour `ctx.check()` and turn a
+ * `budget.exceeded` into "nothing found" (other errors, e.g. `budget.cancelled`, propagate).
  *
- *   id            baseCost  order
- *   forcingChain      90     190
- *   nishio           140     200
+ *   id                baseCost  order  window of the shortest proof
+ *   forcingChain          90     190   1 .. C links (C = SG.chainSearch.SHORT_MAX, 6)
+ *   forcingChainLong     118     198   C + 1 .. 12 links
+ *   nishio               140     200   depth 1
+ *   nishioDeep           210     202   depth 2 (default maximum) .. 3 (explicit maximum)
+ *
+ * Difficulty v3 (R9): every window is applied to the SHORTEST proof of the whole search, so a proof belongs
+ * to exactly one ID and a longer or deeper technique called alone never relabels a proof that a shorter one
+ * owns. The registered finders are thin wrappers of the parameterised seam described below.
  *
  * forcingChain: alternating inference chains over a strong / weak link graph.
  * A node is a candidate (cell, digit) of an open cell. Links, defined on the current state:
@@ -22,10 +28,10 @@
  * just a path. Implications compose, so a path "A => B" is a proof whatever nodes it revisits (soundness
  * never depends on the chain being simple).
  *
- * Search: breadth first from every literal, at most `maxChainLength` links deep (default 12,
- * `ctx.options.maxChainLength`). Every literal is visited once per search (so it terminates on cyclic
- * graphs). The search from a start literal stops at its first proof, and the whole scan keeps the SHORTEST
- * proof found (ties: first in scan order).
+ * Search: breadth first from every literal, at most as many links deep as the window allows (12 at most; the
+ * caller's `ctx.options.maxChainLength` can only narrow it). Every literal is visited once per search (so it
+ * terminates on cyclic graphs). The search from a start literal stops at its first proof, and the whole scan
+ * keeps the SHORTEST proof found (ties: first in scan order).
  *   endpoints      Start "s is false", reach "t is true": at least one of s, t is true, so every candidate
  *                  weakly linked to both is eliminated. Covers X-chains, alternating inference chains, W-wing
  *                  like patterns and every elimination of a continuous nice loop.
@@ -38,23 +44,34 @@
  * `forced` two, ending in both polarities of the same node. `length` counts edges; for the two chains of a
  * `contradiction` or `forced` proof it is the longer one, not the sum (their lengths differ by an odd number:
  * the literals of one node have opposite polarity, and every edge changes the polarity).
- * i18nKey: 'technique.forcingChain.step.' + kind, with kind 'endpoints' | 'contradiction' | 'forced'.
+ * i18nKey: 'technique.forcingChain.step.' + kind and 'technique.forcingChainLong.step.' + kind, with kind
+ * 'endpoints' | 'contradiction' | 'forced'.
  *
  * nishio: controlled trial and error. For every open cell (fewest candidates first) and each of its
  * candidates, assume it true on a COPY of the state and run `SG.constraints.place` (peer elimination,
  * singles, registered extensions); a contradiction eliminates the candidate. The first one found is returned;
  * the state passed to find() is never written. The guess is bounded, which keeps it a technique and not a
- * search: `ctx.options.maxNishioDepth` (default 2, at most 3) is the deepest nesting. Depth 2 also lets the
- * trial refute candidates of its cells with at most 3 candidates by a depth 1 trial of their own, remove them
- * from the COPY, propagate and repeat; a contradiction anywhere refutes the assumption (limiting nested
- * guesses to such cells keeps 12x12 and 16x16 boards below a second). The scan runs level by level, so a
- * deduction never needs a deeper guess than necessary. Everything derived inside a trial holds under its
- * assumption only and only the final contradiction leaves it, so nesting is sound. `maxChainLength` does not
- * apply. Finding: i18nKey 'technique.nishio.step', i18nArgs { cell, label, digit, depth } (the nesting of the
- * guess needed).
+ * search: the window gives the deepest nesting (nishio 1; nishioDeep 2 by default and 3 at most, only when
+ * the caller's `ctx.options.maxNishioDepth` asks for it). Depth 2 also lets the trial refute candidates of
+ * its cells with at most 3 candidates by a depth 1 trial of their own, remove them from the COPY, propagate
+ * and repeat; a contradiction anywhere refutes the assumption (limiting nested guesses to such cells keeps
+ * 12x12 and 16x16 boards below a second). The scan runs level by level, so a deduction never needs a deeper
+ * guess than necessary. Everything derived inside a trial holds under its assumption only and only the final
+ * contradiction leaves it, so nesting is sound. `maxChainLength` does not apply. Finding: i18nKey
+ * 'technique.nishio.step' ('technique.nishioDeep.step' for nishioDeep), i18nArgs { cell, label, digit,
+ * depth } (the nesting of the guess needed).
  *
- * The two searches are also a parameterised seam that no registered technique uses yet (difficulty v3, MS07a;
- * the registered finders above call it with their old defaults):
+ * The caller's options. `ctx.options.maxChainLength` (forcingChain, forcingChainLong) and
+ * `ctx.options.maxNishioDepth` (nishio, nishioDeep) only narrow the window of an ID: absent, not a number or
+ * NaN is the ID's own default maximum; a number is floored and clamped to the ID's ceiling (C, 12, 1 and 3,
+ * so Infinity reaches the ceiling and not the default 2 of nishioDeep); 0 or less, or a maximum below the
+ * ID's minimum, is an empty window (null, never a raised maximum). C is read from `SG.chainSearch.SHORT_MAX`
+ * at every call. Every registered finder hands the seam below its ID, both bounds and its work limit
+ * explicitly: forcingChain and nishio none (their accepted unbounded work policy; the parent budget and
+ * cancellation still apply), the two new IDs 50000 (R10's starting limit of a new pattern finder,
+ * `NEW_FINDER_WORK_LIMIT`).
+ *
+ * The seam. The two searches are also a parameterised, unregistered seam (difficulty v3, MS07a):
  *
  *   SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit })
  *   SG.chainSearch.nishio(model, state, ctx, { id, minDepth, maxDepth, workLimit })
@@ -63,19 +80,25 @@
  * inclusive range [min, max] is applied to the SHORTEST proof of the whole search: the search always starts
  * at length (depth) 1 and runs up to max, and a minimum below min is rejected (null), so a longer or deeper
  * technique called alone never relabels a proof that a shorter one owns. Nothing is clamped here (the seam
- * serves tests of chains longer than 12 edges); a registered wrapper intersects its own range with the
- * explicit maximum of its caller. Defaults: min 1, max 12 edges / depth 2. The tie order and the iterative
- * deepening are those of the registered finders.
+ * serves tests of chains longer than 12 edges). Defaults of the seam only: min 1, max 12 edges / depth 2.
+ * The tie order and the iterative deepening are those of the registered finders.
  *
  * Work. A forcing unit is one edge expansion of the breadth first search, a nishio unit one trial (one
  * assumption entered on a copy). `workLimit` is a whole number: absent = DEFAULT_WORK_LIMIT (50000, R10),
- * null = unbounded (what the registered finders use). The counter is reset per call; a bounded call checks
- * the parent budget at entry and at least every 256 units (a nishio trial always checks). A spent limit ends
- * the call with null, never with the best proof so far: a proof is published only when its minimum is
- * established. A spent budget ('budget.exceeded') is "nothing found" as for the registered finders;
- * cancellation and every other error propagate. An optional `ctx.options.onPatternWork(record)` observes the
- * call and never selects its result: record = { id, work, limit (null = unbounded), capHit (null | 'work'),
- * retained (null) }, a fresh object per call.
+ * null = unbounded. The counter is reset per call. A bounded call checks the parent budget at entry and
+ * before every root of a forcing scan, and so often between that no more than 256 work units pass between
+ * two checks (R10): the run remembers its work at the last check (`checkedAt`) and checks again before a
+ * batch of edges that would carry the gap over 256, splitting an expansion of more than 256 edges into
+ * pieces of at most 256 (every edge is visited and counted once, in the order of the search, also for a
+ * Finding in the middle of a piece, a cut by the work limit or a budget that runs out). A nishio trial
+ * always checks, bounded or not. The unbounded legacy calls of forcingChain and nishio keep their accepted
+ * cadence: no entry check and no periodic check (the root checks of forcingChain and the trial checks of
+ * nishio were always there). A spent limit ends the call with null, never with the best proof so far: a
+ * proof is published only when its minimum is established. A spent budget ('budget.exceeded') is "nothing
+ * found" as for the registered finders (so the record of such a call has capHit null, like a complete scan:
+ * a consumer checks its own budget after the call); cancellation and every other error propagate. An
+ * optional `ctx.options.onPatternWork(record)` observes the call and never selects its result: record =
+ * { id, work, limit (null = unbounded), capHit (null | 'work'), retained (null) }, a fresh object per call.
  */
 (function (root) {
   'use strict';
@@ -83,20 +106,36 @@
   const SG = root.SG = root.SG || {};
 
   // Keep the first registration on repeated loads.
-  if (SG.techniques.has('forcingChain') || SG.techniques.has('nishio')) return;
+  if (['forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'].some(function (id) {
+    return SG.techniques.has(id);
+  })) return;
 
-  const DEFAULT_MAX_CHAIN_LENGTH = 12;
+  // R9: the short window of forcingChain is 1..C links (C is `SG.chainSearch.SHORT_MAX`, read at every call,
+  // initially 6) and forcingChainLong takes C + 1 up to the old ceiling of 12.
+  const INITIAL_SHORT_MAX = 6;
+  const LONG_MAX_CHAIN_LENGTH = 12;
 
-  // Default and ceiling of `ctx.options.maxNishioDepth`; every level multiplies the work.
-  const DEFAULT_MAX_NISHIO_DEPTH = 2;
+  // Windows of nishio (depth 1) and nishioDeep (from 2, default maximum 2, explicit maximum at most 3);
+  // every level multiplies the work.
+  const SHALLOW_NISHIO_DEPTH = 1;
+  const DEEP_NISHIO_MIN_DEPTH = 2;
+  const DEFAULT_DEEP_NISHIO_DEPTH = 2;
   const NISHIO_DEPTH_CEILING = 3;
 
   /** A nested guess is only tried in cells that have at most this many candidates left. */
   const NESTED_MAX_CANDIDATES = 3;
 
   // R10: the work units one call of a bounded kernel may spend, and how often it checks its parent budget.
+  // DEFAULT_WORK_LIMIT is only the default of the seam; the registered finders never rely on it:
+  // NEW_FINDER_WORK_LIMIT is the starting limit of the two new IDs, and forcingChain and nishio pass none.
   const DEFAULT_WORK_LIMIT = 50000;
+  const NEW_FINDER_WORK_LIMIT = 50000;
+  const NO_WORK_LIMIT = Infinity;
   const WORK_CHECK_UNITS = 256;
+
+  // The seam's own default of the longest chain and of the deepest nesting.
+  const SEAM_DEFAULT_MAX_CHAIN_LENGTH = 12;
+  const SEAM_DEFAULT_MAX_NISHIO_DEPTH = 2;
 
   const ID_PATTERN = /^[A-Za-z][A-Za-z0-9_]*$/;
 
@@ -147,20 +186,24 @@
     return s;
   }
 
-  // Chain length limit: ctx.options.maxChainLength when it is a number (Infinity and values below 1
-  // included), else the default.
-  function chainLimit(ctx) {
-    const raw = ctx.options ? ctx.options.maxChainLength : undefined;
-    if (typeof raw !== 'number' || Number.isNaN(raw)) return DEFAULT_MAX_CHAIN_LENGTH;
-    return raw === Infinity ? Infinity : Math.floor(raw);
+  // The caller's maximum, `ctx.options[key]`: a number (floored; Infinity and values below 1 included), or
+  // `fallback` (the default maximum of the ID) when it is absent, not a number or NaN.
+  function callerMax(ctx, key, fallback) {
+    const raw = ctx.options ? ctx.options[key] : undefined;
+    if (typeof raw !== 'number' || Number.isNaN(raw)) return fallback;
+    return Math.floor(raw);
   }
 
-  // Nishio depth: ctx.options.maxNishioDepth as a whole number in 0..3 (0 or less turns the technique off),
-  // else the default.
-  function nishioDepth(ctx) {
-    const raw = ctx.options ? ctx.options.maxNishioDepth : undefined;
-    if (typeof raw !== 'number' || Number.isNaN(raw)) return DEFAULT_MAX_NISHIO_DEPTH;
-    return Math.min(Math.floor(raw), NISHIO_DEPTH_CEILING);
+  // C, the longest chain of forcingChain and one below the shortest of forcingChainLong: read from
+  // `SG.chainSearch.SHORT_MAX` at every call.
+  function shortMax() {
+    const value = SG.chainSearch.SHORT_MAX;
+    if (typeof value !== 'number' || Number.isNaN(value)) {
+      const err = new SG.errors.GenerationError('solver.invalidOption', { option: 'chainSearch.SHORT_MAX' });
+      err.message = 'solver.invalidOption: chainSearch.SHORT_MAX must be a number';
+      throw err;
+    }
+    return Math.floor(value);
   }
 
   function invalidOption(seam, key, reason) {
@@ -223,11 +266,14 @@
     return found;
   }
 
-  // A bounded call checks its parent budget before an expansion of `n` edges that carries its work over a
-  // multiple of 256, so that no more than 256 units pass between two checks.
+  // A bounded call checks its parent budget before a batch of `n` edges that would carry the work done since
+  // its last check (`checkedAt`: the entry check, a root check or the previous gate check) over 256 units, so
+  // that no more than 256 units pass between two checks, whatever the sizes of the expansions are.
   function gate(run, n) {
-    const reached = Math.floor((run.work + n) / WORK_CHECK_UNITS);
-    if (reached !== Math.floor(run.work / WORK_CHECK_UNITS)) run.ctx.check();
+    if (run.work + n - run.checkedAt > WORK_CHECK_UNITS) {
+      run.ctx.check();
+      run.checkedAt = run.work;
+    }
   }
 
   // Collects the strong links of `state` as pairs of nodes and lays them out as adjacency lists (`sStart` /
@@ -401,6 +447,35 @@
     return false;
   }
 
+  // Visits the edges of one expansion in order: the first `count` of `edges` from `first`, as literals of
+  // polarity `tbit`, reached from `lit` after `nd` links. Returns true when an edge proves something (the
+  // search ends). Every visited edge is counted once, also the one that proves something; a bounded call
+  // visits no more than its work limit still allows (a cut sets `capped`) and goes in pieces of at most 256
+  // edges, each behind the gate, so that an oversized expansion cannot exceed the gap between two checks.
+  function expand(r, lit, nd, edges, first, count) {
+    let todo = count;
+    if (r.bounded && r.workLimit - r.work < count) todo = r.workLimit - r.work;
+    const tbit = (lit & 1) ^ 1;
+    let i = 0;
+    while (i < todo) {
+      let end = todo;
+      if (r.bounded) {
+        end = Math.min(todo, i + WORK_CHECK_UNITS);
+        gate(r, end - i);
+      }
+      const from = i;
+      for (; i < end; i++) {
+        if (visit(r, edges[first + i] * 2 + tbit, lit, nd)) {
+          r.work += i - from + 1;
+          return true;
+        }
+      }
+      r.work += end - from;
+    }
+    if (todo < count) r.capped = true;
+    return false;
+  }
+
   function search(r, startNode, startTruth, limit) {
     const s = r.s;
     s.stampId++;
@@ -421,45 +496,14 @@
       const d = s.dist[lit];
       if (d >= limit) return;
       const node = lit >> 1;
+      // A true literal follows its weak links (to false ones), a false literal its strong links (to true).
       if ((lit & 1) === 1) {
-        const count = collectWeak(r, node, expanded);
-        // The edges this expansion may still spend (all of them without a limit); a cut ends the search.
-        let todo = count;
-        if (r.bounded) {
-          if (r.workLimit - r.work < count) todo = r.workLimit - r.work;
-          gate(r, todo);
-        }
-        for (let i = 0; i < todo; i++) {
-          if (visit(r, expanded[i] * 2, lit, d + 1)) {
-            r.work += i + 1;
-            return;
-          }
-        }
-        r.work += todo;
-        if (todo < count) {
-          r.capped = true;
-          return;
-        }
+        if (expand(r, lit, d + 1, expanded, 0, collectWeak(r, node, expanded))) return;
       } else {
         const first = s.sStart[node];
-        const count = s.sStart[node + 1] - first;
-        let todo = count;
-        if (r.bounded) {
-          if (r.workLimit - r.work < count) todo = r.workLimit - r.work;
-          gate(r, todo);
-        }
-        for (let i = 0; i < todo; i++) {
-          if (visit(r, s.sTo[first + i] * 2 + 1, lit, d + 1)) {
-            r.work += i + 1;
-            return;
-          }
-        }
-        r.work += todo;
-        if (todo < count) {
-          r.capped = true;
-          return;
-        }
+        if (expand(r, lit, d + 1, s.sTo, first, s.sStart[node + 1] - first)) return;
       }
+      if (r.capped) return;
     }
   }
 
@@ -527,6 +571,7 @@
         const limit = Math.min(maxLength, r.bestLength - 1);
         if (limit < 1) return buildChainFinding(model, r.best, spec.id);
         ctx.check();
+        r.checkedAt = r.work;
         search(r, node, truth, limit);
         if (r.capped) return null;
         // The minimum can only fall from here, so a proof below the window is the answer: nothing.
@@ -551,6 +596,7 @@
       bounded: spec.limit !== Infinity,
       work: 0,
       workLimit: spec.limit,
+      checkedAt: 0,
       capped: false,
       stampId: 0,
       startNode: 0,
@@ -565,13 +611,29 @@
 
   function chainForcing(model, state, ctx, opts) {
     return forcingWith(model, state, ctx,
-      seamOptions('forcing', opts, 'minLength', 'maxLength', DEFAULT_MAX_CHAIN_LENGTH));
+      seamOptions('forcing', opts, 'minLength', 'maxLength', SEAM_DEFAULT_MAX_CHAIN_LENGTH));
   }
 
-  // The registered finder: every length from 1 to the caller's limit, no work limit.
+  // forcingChain: the shortest proof when it has 1 to C links; no work limit (its accepted policy, the parent
+  // budget and cancellation still apply). The caller's maxChainLength can only narrow the range of links.
   function findForcingChain(model, state, ctx) {
-    const spec = { id: 'forcingChain', min: 1, max: chainLimit(ctx), limit: Infinity };
-    return forcingWith(model, state, ctx, spec);
+    const c = shortMax();
+    return forcingWith(model, state, ctx, {
+      id: 'forcingChain',
+      min: 1,
+      max: Math.min(c, callerMax(ctx, 'maxChainLength', c)),
+      limit: NO_WORK_LIMIT
+    });
+  }
+
+  // forcingChainLong: the shortest proof when it has C + 1 to 12 links, R10's work limit of a new finder.
+  function findForcingChainLong(model, state, ctx) {
+    return forcingWith(model, state, ctx, {
+      id: 'forcingChainLong',
+      min: shortMax() + 1,
+      max: Math.min(LONG_MAX_CHAIN_LENGTH, callerMax(ctx, 'maxChainLength', LONG_MAX_CHAIN_LENGTH)),
+      limit: NEW_FINDER_WORK_LIMIT
+    });
   }
 
   // Whether assuming `digit` in `cell` on top of `base` (not modified) leads to a contradiction; with `depth`
@@ -677,15 +739,32 @@
 
   function chainNishio(model, state, ctx, opts) {
     return nishioWith(model, state, ctx,
-      seamOptions('nishio', opts, 'minDepth', 'maxDepth', DEFAULT_MAX_NISHIO_DEPTH));
+      seamOptions('nishio', opts, 'minDepth', 'maxDepth', SEAM_DEFAULT_MAX_NISHIO_DEPTH));
   }
 
-  // The registered finder: depths 1 to the caller's limit, no work limit.
+  // nishio: the first refutation when its depth is 1; no work limit (its accepted policy, the parent budget
+  // and cancellation still apply). The caller's maxNishioDepth can only narrow the window (0 or less: off).
   function findNishio(model, state, ctx) {
-    return nishioWith(model, state, ctx, { id: 'nishio', min: 1, max: nishioDepth(ctx), limit: Infinity });
+    return nishioWith(model, state, ctx, {
+      id: 'nishio',
+      min: SHALLOW_NISHIO_DEPTH,
+      max: Math.min(SHALLOW_NISHIO_DEPTH, callerMax(ctx, 'maxNishioDepth', SHALLOW_NISHIO_DEPTH)),
+      limit: NO_WORK_LIMIT
+    });
   }
 
-  SG.chainSearch = { forcing: chainForcing, nishio: chainNishio };
+  // nishioDeep: the first refutation when its depth is at least 2, by default at most 2 and, when the
+  // caller's maxNishioDepth asks for it, at most 3; R10's work limit of a new finder.
+  function findNishioDeep(model, state, ctx) {
+    return nishioWith(model, state, ctx, {
+      id: 'nishioDeep',
+      min: DEEP_NISHIO_MIN_DEPTH,
+      max: Math.min(NISHIO_DEPTH_CEILING, callerMax(ctx, 'maxNishioDepth', DEFAULT_DEEP_NISHIO_DEPTH)),
+      limit: NEW_FINDER_WORK_LIMIT
+    });
+  }
+
+  SG.chainSearch = { forcing: chainForcing, nishio: chainNishio, SHORT_MAX: INITIAL_SHORT_MAX };
 
   SG.techniques.register({
     id: 'forcingChain',
@@ -699,6 +778,17 @@
   });
 
   SG.techniques.register({
+    id: 'forcingChainLong',
+    group: 'chain',
+    baseCost: 118,
+    order: 198,
+    i18nKey: 'technique.forcingChainLong',
+    variantScope: null,
+    assumesUniqueness: false,
+    find: findForcingChainLong
+  });
+
+  SG.techniques.register({
     id: 'nishio',
     group: 'chain',
     baseCost: 140,
@@ -707,5 +797,16 @@
     variantScope: null,
     assumesUniqueness: false,
     find: findNishio
+  });
+
+  SG.techniques.register({
+    id: 'nishioDeep',
+    group: 'chain',
+    baseCost: 210,
+    order: 202,
+    i18nKey: 'technique.nishioDeep',
+    variantScope: null,
+    assumesUniqueness: false,
+    find: findNishioDeep
   });
 })(typeof self !== 'undefined' ? self : globalThis);

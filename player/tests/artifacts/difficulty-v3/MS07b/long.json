@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sources": {
+    "forcingChainLong": [
+      {"variantId":"classic9","level":"nightmare","seed":"3","text":"#1,Classic Sudoku 9x9,Nightmare,3\n....3....\n...4.27..\n9.58..34.\n.8..6...5\n..97.14..\n4...5..1.\n.34..75.2\n..65.9...\n....4...."}
+    ]
+  }
+}

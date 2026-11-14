@@ -2,21 +2,26 @@
 'use strict';
 
 /*
- * The mega Nightmare deep tier (difficulty v3, MS05r5m; CV6-03, S-OD3 (a)). Node >= 18, built-in modules only.
- * It is a tool, not a discovered `*.test.js` suite, not a CI step and not product qualification: the full-attempt
- * Nightmare requests of mega12 and mega16 left the quick tier because one of them costs from seconds to minutes.
+ * The mega Nightmare deep tier (difficulty v3, MS05r5m; CV6-03, S-OD3 (a)), and its level-selected Hell 1 population
+ * (MS07b, S-OD4 / CV6-03 (1)). Node >= 18, built-in modules only. It is a tool, not a discovered `*.test.js` suite,
+ * not a CI step and not product qualification: the full-attempt Nightmare requests of mega12 and mega16 left the
+ * quick tier because one of them costs from seconds to minutes, and the Hell 1 ones followed when `nishioDeep` made
+ * that tier real.
  *
- *   node tests/mega-contract.js --list
+ *   node tests/mega-contract.js --list [--level=nightmare|hell1]
  *   node tests/mega-contract.js --request=<id> --record=<new.json>
- *   node tests/mega-contract.js --reconcile=<records directory> --json=<new.json>
+ *   node tests/mega-contract.js --reconcile=<records directory> --json=<new.json> [--level=nightmare|hell1]
  *
- *   --list                the 14 fixed requests (per board the invariant seeds 1 to 4 and the three independent
- *                         CV5 calls 3, 3 and 4, each at the default attempts of its board) and their relations
+ *   --list                the 14 fixed requests of a level (per board the invariant seeds 1 to 4 and the three
+ *                         independent CV5 calls 3, 3 and 4, each at the default attempts of its board) and their
+ *                         relations; the default level is nightmare (ids <board>-<role>), hell1 has the ids
+ *                         <board>-hell1-<role>
  *   --request=<id>        exactly one fixed request once, in its own process, and the independent checks of the
  *                         puzzle it returns; --record is a new project-relative <id>.json file (never overwritten)
- *   --reconcile=<dir>     no generation: every record of the directory against the manifest (each occurrence
- *                         exactly once, one identity, wires and digests, flags derived again) and the relations;
- *                         --json is a new project-relative .json file outside that directory
+ *   --reconcile=<dir>     no generation: every record of the directory against the manifest of the level (each
+ *                         occurrence exactly once, one identity, wires and digests, flags derived again) and the
+ *                         relations; --json is a new project-relative .json file outside that directory. A
+ *                         level-selected reconciliation is that level's fourteen requests, never both levels
  *
  * A request and its checks share one 500000 ms budget, below the 540 s limit of a bounded command (run it through
  * `Invoke-Dv3Node`, one request per locked command). The record holds the request, the normalised configuration,
@@ -157,10 +162,11 @@ function runRequest(M, env, args, argv) {
     if (path.basename(target.abs) !== args.id + '.json') {
       throw new Error('--record=' + args.record + ': the file must be named ' + args.id + '.json');
     }
-    entry = M.MANIFEST.filter((e) => e.id === args.id)[0];
+    const manifest = M.manifestOfId(args.id);
+    entry = manifest.entries.filter((e) => e.id === args.id)[0];
     env.engine();
     const source = env.identity([]);
-    hash = M.manifestHash(sha256);
+    hash = M.manifestHash(sha256, manifest);
     identity = {
       sourceHash: source.sourceHash, toolHash: toolHash(), commit: source.commit, dirty: source.dirty,
       node: source.node, machine: machine(), argv: argv.slice(), startedAt: env.now()
@@ -211,7 +217,9 @@ function runReconcile(M, env, args) {
   let doc;
   try {
     const current = { sourceHash: env.identity([]).sourceHash, toolHash: toolHash() };
-    doc = M.reconcile(readFiles(directory), { sha256: sha256, current: current });
+    doc = M.reconcile(readFiles(directory), {
+      sha256: sha256, current: current, manifest: M.MANIFESTS[args.level || M.LEVEL]
+    });
     evidence.write(target, evidence.scrub(M.renderRecord(doc)));
   } catch (err) {
     console.error('no reconciliation: ' + (err && err.stack ? err.stack : String(err)));
@@ -237,7 +245,7 @@ function main(argv) {
     return 2;
   }
   if (args.mode === 'list') {
-    console.log(M.listText(sha256));
+    console.log(M.listText(sha256, M.MANIFESTS[args.level || M.LEVEL]));
     return 0;
   }
   return args.mode === 'request' ? runRequest(M, env, args, argv) : runReconcile(M, env, args);

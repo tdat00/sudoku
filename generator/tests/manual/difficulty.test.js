@@ -193,7 +193,7 @@
         // The edges of the pruning rule: 1.25 x weight against the band maximum.
         var firsts = { easy: ['pointing', 'boxLine', 'nakedPair'], normal: ['hiddenPair', 'hiddenQuad'],
           hard: ['xWing', 'jellyfish'], expert: ['xyWing', 'xyzWing'], master: ['wWing', 'forcingChain'],
-          nightmare: ['nishio'] };
+          nightmare: ['forcingChainLong', 'nishio'], hell1: ['nishioDeep'] };
         Object.keys(firsts).forEach(function (level) {
           var i = idx(level);
           firsts[level].forEach(function (id) {
@@ -617,8 +617,8 @@
         nakedSingle: 1, hiddenSingleBox: 1.25, hiddenSingleLine: 1.5, pointing: 40, boxLine: 50,
         nakedPair: 120, hiddenPair: 145, nakedTriple: 180, hiddenTriple: 220, nakedQuad: 260, hiddenQuad: 300,
         xWing: 320, simpleColouring: 360, swordfish: 420, jellyfish: 520, xyWing: 650, xyzWing: 750,
-        wWing: 850, uniqueRectangle: 900, forcingChain: 1100, nishio: 1700, cageCombo: 40, ruleOf45: 260,
-        cageSplit: 520, ineqChain: 40, minMaxForcing: 180
+        wWing: 850, uniqueRectangle: 900, forcingChain: 1100, forcingChainLong: 1400, nishio: 1700,
+        nishioDeep: 2600, cageCombo: 40, ruleOf45: 260, cageSplit: 520, ineqChain: 40, minMaxForcing: 180
       });
       SG.techniques.list().forEach(function (t) { expect(D.weightOf(t.id)).toBe(D.WEIGHTS[t.id]); });
       expectCode(function () { D.weightOf('noSuchTechnique'); }, 'difficulty.unknownTechnique');
@@ -720,7 +720,8 @@
 
     it('counts one expensive step in full on any board (no technique floor, no size scaling)', function () {
       [['pointing', 'easy'], ['nakedPair', 'easy'], ['xWing', 'hard'], ['xyWing', 'expert'],
-        ['forcingChain', 'master'], ['nishio', 'nightmare']].forEach(function (c) {
+        ['forcingChain', 'master'], ['forcingChainLong', 'nightmare'], ['nishio', 'nightmare'],
+        ['nishioDeep', 'hell1']].forEach(function (c) {
         var counts = { nakedSingle: 3 };
         counts[c[0]] = 1;
         var rating = D.classify(fakeReport(counts, 4), model9);
@@ -996,13 +997,13 @@
       expect(stuck('nightmare', sets.wings)).toBe(true);
     });
 
-    it('v3 reference: rates the famous hardest puzzles hell2, with a Nishio step and a complete proof',
+    it('v3 reference: rates the famous hardest puzzles hell2, with a deep Nishio step and a complete proof',
       function () {
         ['escargot', 'worlds-hardest-2012', 'platinum-blonde', 'golden-nugget'].forEach(function (name) {
           var entry = entries.filter(function (e) { return e.name === name; })[0];
           var rating = D.rate(model9, parse(entry.puzzle));
           expect(rating.level).toBe('hell2');
-          expect(rating.hardestTechnique).toBe('nishio');
+          expect(rating.hardestTechnique).toBe('nishioDeep');
           expect(rating.solved).toBe(true);
           expect(entry.v3Expected).toEqual({ level: 'hell2', required: true });
         });

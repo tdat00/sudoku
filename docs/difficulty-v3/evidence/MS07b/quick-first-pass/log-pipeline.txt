@@ -1,0 +1,21 @@
+$ node ..\.github\scripts\generator-quick.js run pipeline --results-dir=..\docs\difficulty-v3\evidence\MS07b\quick-first-pass
+==== shard pipeline (154 tests): node tests/node-runner.js --suite=pipeline --results=..\docs\difficulty-v3\evidence\MS07b\quick-first-pass\generator-pipeline.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL pipeline: 153 passed, 1 failed  (335.97 s)
+
+Failures:
+  FAIL pipeline > instrumented generators: applying every patch in order rebuilds the board exactly > a real trace, capped to 2000 events, replays to the same board (step events all kept)
+       AssertionError: expected 2225 to be < 2001
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\pipeline.test.js:595:29)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  154 total, 153 passed, 1 failed, 0 skipped
+Time:   335.97 s running tests, 336.17 s total
+Results: docs/difficulty-v3/evidence/MS07b/quick-first-pass/generator-pipeline.json
+shard pipeline: exit 1, 336.4 s
+FAILED: pipeline
+exit=1 seconds=336.776

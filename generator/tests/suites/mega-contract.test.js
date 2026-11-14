@@ -3,7 +3,9 @@
 // the independent checks of a returned puzzle (valid, unique, sound, exact and warnings), the record of a request
 // that returns a puzzle, ends in an error or cannot finish its checks, and the strict reconciliation of a
 // directory of records and the CV3 reuse consumer, all on synthetic records made from a small real board and
-// scripted producers. Nothing here generates a mega puzzle or runs the deep population.
+// scripted producers. MS07b adds the level-selected Hell 1 population (the same fourteen occurrences under
+// level-qualified ids, its own manifest, record kind and reconciliation). Nothing here generates a mega puzzle or
+// runs the deep population.
 (function () {
   'use strict';
 
@@ -801,6 +803,132 @@
       expect(taken.ok).toBe(true);
       expect(taken.recorded.correctness).toBe('fail');
       expect(taken.recorded.failedChecks).toContain('shallowWarning');
+    });
+  });
+
+  // MS07b (S-OD4 / CV6-03 (1)): the Hell 1 population is a second, level-selected manifest of the same tool.
+  describe('mega deep tier: the level-selected Hell 1 population (MS07b)', function () {
+    var HELL1 = M.MANIFESTS.hell1;
+    var NIGHTMARE_HASH = 'c843a0d652e4a6078fbc099cc676d3153943d8e29e4054a321aeb2c8c67829d1';
+    // The small population of the other describes under level-qualified ids (a real board, honest records).
+    var QUALIFIED = M.makeManifest({ classic6: { digits: 6, boxRows: 2, boxCols: 3, attempts: 8 } }, LEVEL,
+      { qualifyIds: true });
+
+    function qualifiedRecords() {
+      var all = population();
+      return QUALIFIED.entries.map(function (entry) {
+        var plain = SMALL.entries.filter(function (e) { return e.role === entry.role; })[0];
+        return clone(recordOf(entry, all[plain.id], QUALIFIED));
+      });
+    }
+
+    it('has the fourteen occurrences of each board at hell1 under level-qualified ids and its own relations',
+      function () {
+        expect(HELL1.entries.map(function (e) { return e.id; })).toEqual([
+          'mega12-hell1-invariant-1', 'mega12-hell1-invariant-2', 'mega12-hell1-invariant-3',
+          'mega12-hell1-invariant-4', 'mega12-hell1-cv5-a', 'mega12-hell1-cv5-b', 'mega12-hell1-cv5-other',
+          'mega16-hell1-invariant-1', 'mega16-hell1-invariant-2', 'mega16-hell1-invariant-3',
+          'mega16-hell1-invariant-4', 'mega16-hell1-cv5-a', 'mega16-hell1-cv5-b', 'mega16-hell1-cv5-other'
+        ]);
+        expect(HELL1.entries.map(function (e) { return e.seed; }))
+          .toEqual(M.MANIFEST.map(function (e) { return e.seed; }));
+        expect(HELL1.entries.map(function (e) { return e.expectedAttempts; }))
+          .toEqual([4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 2, 2]);
+        HELL1.entries.forEach(function (e) {
+          expect(e.request).toEqual({ variantId: e.board, difficulty: 'hell1', seed: e.seed, trace: 'off' });
+          expect(e.origin.indexOf(e.board + ' hell1:')).toBe(0);
+          expect(e.kind).toBe('mega-hell1-record');
+        });
+        expect(HELL1.relations.map(function (r) { return [r.id, r.a, r.b]; }).slice(3)).toEqual([
+          ['mega16-hell1-cv5-same-seed', 'mega16-hell1-cv5-a', 'mega16-hell1-cv5-b'],
+          ['mega16-hell1-cv5-other-seed', 'mega16-hell1-cv5-other', 'mega16-hell1-cv5-a'],
+          ['mega16-hell1-invariant-3-same-seed', 'mega16-hell1-invariant-3', 'mega16-hell1-cv5-a']
+        ]);
+      });
+
+    it('leaves the Nightmare manifest, its ids and its hash exactly as they were', function () {
+      expect(M.MANIFESTS.nightmare.entries).toBe(M.MANIFEST);
+      expect(M.MANIFEST).toHaveLength(14);
+      M.MANIFEST.forEach(function (e) { expect(e.kind).toBeUndefined(); });
+      expect(M.manifestHash(digest)).toBe(NIGHTMARE_HASH);
+      expect(M.manifestHash(digest, HELL1)).not.toBe(NIGHTMARE_HASH);
+      var ids = M.MANIFEST.concat(HELL1.entries).map(function (e) { return e.id; });
+      expect(ids.filter(function (id, i) { return ids.indexOf(id) === i; })).toHaveLength(28);
+      expect(M.manifestOfId('mega12-cv5-b')).toBe(M.MANIFESTS.nightmare);
+      expect(M.manifestOfId('mega12-hell1-cv5-b')).toBe(HELL1);
+      expect(M.manifestOfId('mega12-hell1-invariant-9')).toBeUndefined();
+      expect(M.LEVELS).toEqual(['nightmare', 'hell1']);
+    });
+
+    it('lists a level under its own title and keeps the Nightmare listing', function () {
+      var text = M.listText(digest, HELL1);
+      expect(text).toContain('mega hell1 deep tier: 14 requests');
+      expect(text).toContain('mega12-hell1-cv5-b  mega12 hell1 seed 3  attempts 4  (was: mega12 hell1: the same ' +
+        'seed gives the same puzzle (CV5), second seed-3 call (c))');
+      expect(M.listText(digest)).toContain('mega Nightmare deep tier: 14 requests');
+    });
+
+    it('selects the level of --list and --reconcile, and finds a request by its level-qualified id', function () {
+      expect(M.parseArgs(['--list', '--level=hell1'])).toEqual({ mode: 'list', level: 'hell1' });
+      expect(M.parseArgs(['--level=nightmare', '--list'])).toEqual({ mode: 'list', level: 'nightmare' });
+      expect(M.parseArgs(['--reconcile=dir', '--json=out.json', '--level=hell1']))
+        .toEqual({ mode: 'reconcile', directory: 'dir', json: 'out.json', level: 'hell1' });
+      expect(M.parseArgs(['--request=mega16-hell1-cv5-b', '--record=..\\a\\mega16-hell1-cv5-b.json']))
+        .toEqual({ mode: 'request', id: 'mega16-hell1-cv5-b', record: '..\\a\\mega16-hell1-cv5-b.json' });
+      var refused = function (argv) {
+        var thrown = null;
+        try { M.parseArgs(argv); } catch (e) { thrown = e; }
+        expect(thrown && thrown.code).toBe('usage');
+        return thrown.message;
+      };
+      expect(refused(['--list', '--level=hell2'])).toContain('is not one of nightmare, hell1');
+      expect(refused(['--list', '--level=hell1', '--level=nightmare'])).toContain('given twice');
+      expect(refused(['--level=hell1'])).toContain('required');
+      expect(refused(['--request=mega12-hell1-invariant-1', '--record=a.json', '--level=hell1']))
+        .toContain('the id of a request names its level');
+      expect(refused(['--request=mega12-hell1-invariant-9', '--record=a.json'])).toContain('mega12-hell1-cv5-a');
+    });
+
+    it('stamps its records and its reconciliation with the kind of its level and reconciles them', function () {
+      var list = qualifiedRecords();
+      list.forEach(function (r) { expect(r.kind).toBe('mega-hard-record'); });
+      var doc = M.reconcile(filesOf(list), { manifest: QUALIFIED, sha256: digest });
+      expect(doc.problems).toEqual([]);
+      expect([doc.kind, doc.complete, doc.correctness]).toEqual(['mega-hard-reconciliation', true, 'pass']);
+      expect(doc.manifestHash).toBe(M.manifestHash(digest, QUALIFIED));
+      expect(doc.manifestHash).not.toBe(M.manifestHash(digest, SMALL));
+      expect(doc.relations.map(function (r) { return r.id; })).toEqual(['classic6-hard-cv5-same-seed',
+        'classic6-hard-cv5-other-seed', 'classic6-hard-invariant-3-same-seed']);
+      expect(M.exitCodeOfReconciliation(doc)).toBe(0);
+      expect(reconciled(records()).kind).toBe(M.RECONCILED_KIND);
+    });
+
+    it('does not take a record of one level for an occurrence of the other', function () {
+      var qualified = qualifiedRecords();
+      var plain = records();
+      var asPlain = M.reconcile(filesOf(qualified), { manifest: SMALL, sha256: digest });
+      expect(problemsOf(asPlain)).toContain('not an occurrence of the manifest');
+      expect(asPlain.complete).toBe(false);
+      var asQualified = M.reconcile(filesOf(plain), { manifest: QUALIFIED, sha256: digest });
+      expect(problemsOf(asQualified)).toContain('not an occurrence of the manifest');
+      var wrongKind = qualifiedRecords();
+      byId(wrongKind, 'classic6-hard-invariant-1').kind = M.KIND;
+      expect(problemsOf(M.reconcile(filesOf(wrongKind), { manifest: QUALIFIED, sha256: digest })))
+        .toContain('kind "mega-nightmare-record" is not mega-hard-record');
+    });
+
+    it('answers a CV3 query of a level from the manifest of that level', function () {
+      var list = qualifiedRecords();
+      var NOW = { sourceHash: HEX, toolHash: TOOL };
+      var taken = M.reuse(list, { variantId: BOARD, level: LEVEL, seed: 3 }, NOW,
+        { manifest: QUALIFIED, sha256: digest });
+      expect(taken.ok).toBe(true);
+      expect(taken.id).toBe('classic6-hard-invariant-3');
+      var hell1 = M.reuse([], { variantId: 'mega12', level: 'hell1', seed: 3 }, NOW, { sha256: digest });
+      expect(hell1.id).toBe('mega12-hell1-invariant-3');
+      expect(hell1.reasons).toEqual(['no record of mega12-hell1-invariant-3']);
+      var nightmare = M.reuse([], { variantId: 'mega12', level: 'nightmare', seed: 3 }, NOW, { sha256: digest });
+      expect(nightmare.id).toBe('mega12-invariant-3');
     });
   });
 })();

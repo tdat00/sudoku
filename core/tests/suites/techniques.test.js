@@ -59,21 +59,29 @@
   }
 
   describe('techniques: registry', function () {
-    it('has the 21 techniques of the classic ladder registered, in the current registry order', function () {
+    it('has the 23 techniques of the classic ladder registered, in the current registry order', function () {
       expect(classic.map(function (t) { return t.id; })).toEqual(F.registryOrder);
+      expect(F.registryOrder.length).toBe(23);
     });
 
-    it('keeps the v2 ladder as history, apart from the current order: only jellyfish moved', function () {
-      function without(list) {
-        return list.filter(function (id) { return id !== 'jellyfish'; });
-      }
-      expect(F.historyV2.ladder).toEqual(F.ladder);
-      expect(F.ladder.slice().sort()).toEqual(F.registryOrder.slice().sort());
-      expect(F.ladder.indexOf('jellyfish')).toBeGreaterThan(F.ladder.indexOf('xyzWing'));
-      expect(F.registryOrder.indexOf('jellyfish')).toBeGreaterThan(F.registryOrder.indexOf('swordfish'));
-      expect(F.registryOrder.indexOf('jellyfish')).toBeLessThan(F.registryOrder.indexOf('xyWing'));
-      expect(without(F.registryOrder)).toEqual(without(F.ladder));
-    });
+    it('keeps the v2 ladder as history: the old ids keep their relative order in the expanded registry, ' +
+      'jellyfish apart', function () {
+        var added = ['forcingChainLong', 'nishioDeep'];
+        function oldIds(list) {
+          return list.filter(function (id) { return id !== 'jellyfish' && added.indexOf(id) === -1; });
+        }
+        expect(F.historyV2.ladder).toEqual(F.ladder);
+        expect(F.ladder.length).toBe(21);
+        // the frozen ladder is a subset of the expanded registry, and the registry adds exactly the new ids
+        F.ladder.forEach(function (id) { expect(F.registryOrder).toContain(id); });
+        expect(F.registryOrder.filter(function (id) { return F.ladder.indexOf(id) === -1; })).toEqual(added);
+        expect(F.ladder.indexOf('jellyfish')).toBeGreaterThan(F.ladder.indexOf('xyzWing'));
+        expect(F.registryOrder.indexOf('jellyfish')).toBeGreaterThan(F.registryOrder.indexOf('swordfish'));
+        expect(F.registryOrder.indexOf('jellyfish')).toBeLessThan(F.registryOrder.indexOf('xyWing'));
+        // the old ids in the old relative order, and the new ones inside the chain group at their R9 places
+        expect(oldIds(F.registryOrder)).toEqual(oldIds(F.ladder));
+        expect(F.registryOrder.slice(-4)).toEqual(['forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep']);
+      });
 
     it('lists techniques cheapest first: orders ascend and ids are unique', function () {
       var seen = {};
@@ -116,6 +124,19 @@
       expect(missing).toEqual([]);
       expect(stale).toEqual([]);
     });
+
+    it('puts the positive positions of a replaced entry where its id is reached in the registry (MS07b)',
+      function () {
+        var replaced = F.ids.filter(function (id) { return F.byId[id] !== F.historyV2.byId[id]; });
+        expect(replaced.sort()).toEqual(['forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep']);
+        replaced.forEach(function (id) {
+          var below = F.registryOrder.slice(0, F.registryOrder.indexOf(id));
+          F.byId[id].positive.forEach(function (fixture) {
+            // an explicit list of the ids before it (or the first position of a real puzzle), never its own id
+            if (fixture.after !== null) expect(fixture.after.slice().sort()).toEqual(below.slice().sort());
+          });
+        });
+      });
 
     classic.forEach(function (tech) {
       var entry = F.byId[tech.id];

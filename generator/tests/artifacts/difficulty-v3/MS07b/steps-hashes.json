@@ -1,0 +1,14 @@
+[
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\hash-check-before-write.txt",
+    "args": ["tests\\perf.js", "--hash-merge=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes", "--check-hashes"]
+  },
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\hash-write.txt",
+    "args": ["tests\\perf.js", "--hash-merge=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes", "--update-hashes"]
+  },
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\hash-check.txt",
+    "args": ["tests\\perf.js", "--hash-merge=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes", "--check-hashes"]
+  }
+]

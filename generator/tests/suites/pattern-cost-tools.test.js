@@ -304,6 +304,45 @@
       expect(documentFor(bad).problems).toEqual([]);
     });
 
+    it('fails a record whose outcome is not the fixture\'s, keeping what was measured (MS07b, IR55)',
+      function () {
+        // every run finished and agreed: a deterministic wrong answer, positive and negative
+        var wrong = complete();
+        wrong[0] = recordFor('alpha:positive:1', 3, { outcome: 'none', matchesFixture: false, workUnits: 99 });
+        wrong[1] = recordFor('alpha:negative:1', 3, { kind: 'negative', outcome: 'found', matchesFixture: false });
+        var doc = documentFor(wrong);
+        expect(doc.complete).toBe(false);
+        expect(doc.stopped).toBe(false);
+        expect(doc.problems).toEqual([
+          'alpha:positive:1: the outcome is not the fixture\'s (none where the fixture records a deduction)',
+          'alpha:negative:1: the outcome is not the fixture\'s (found where the fixture records nothing)']);
+        expect(P.exitCodeOf(doc)).toBe(1);
+        expect(P.problemsOf(doc)).toEqual(doc.problems);
+        expect(doc.summary.mismatches).toBe(2);
+        // the record is not rewritten to the expectation: the measured outcome, work and runs stay
+        expect(doc.cases[0].outcome).toBe('none');
+        expect(doc.cases[0].matchesFixture).toBe(false);
+        expect(doc.cases[0].workUnits).toBe(99);
+        expect(doc.cases[0].runs).toBe(3);
+        expect(doc.cases[0].deterministic).toBe(true);
+        // a misleading complete flag, or a record that was written complete before this rule, is still refused
+        doc.complete = true;
+        doc.problems = [];
+        expect(P.exitCodeOf(doc)).toBe(1);
+        expect(P.problemsOf(doc)).toHaveLength(2);
+      });
+
+    it('still passes a matching record, and a case whose fixture records no expectation', function () {
+      var records = complete();
+      records[0].matchesFixture = null; // "no fixture expectation": unknown, not a mismatch and not a match
+      var doc = documentFor(records);
+      expect(doc.complete).toBe(true);
+      expect(doc.problems).toEqual([]);
+      expect(P.exitCodeOf(doc)).toBe(0);
+      expect(doc.summary.mismatches).toBe(0);
+      expect(doc.cases[0].matchesFixture).toBeNull();
+    });
+
     it('is deterministic apart from time: two runs differ only in the clock readings', function () {
       var a = documentFor(complete());
       var slower = complete();
@@ -364,7 +403,7 @@
         expect(run.problems).toEqual([]);
         expect(run.records.map(function (r) { return r.key; })).toEqual([
           'forcingChain:positive:1', 'forcingChain:positive:2', 'forcingChain:negative:1',
-          'nishio:positive:1', 'nishio:positive:2', 'nishio:negative:1']);
+          'nishio:positive:1', 'nishio:positive:2', 'nishio:negative:1', 'nishio:negative:2']);
         run.records.forEach(function (r) {
           expect(r.runs).toBe(3);
           expect(r.samplesMs).toHaveLength(3);
@@ -384,6 +423,7 @@
         expect(positive.findingDigest).toBe('digest:' + P.canonical(positive.finding).length);
         expect(run.records[2].outcome).toBe('none');
         expect(run.records[5].outcome).toBe('none');
+        expect(run.records[6].outcome).toBe('none');
       });
 
     it('measures identical work and Findings in two runs: only the time may differ', function () {
@@ -464,13 +504,45 @@
       }
     });
 
+    it('fails a real finder whose answer differs from the fixture, with the measured numbers kept', function () {
+      // The probe never finds anything where the fixture records a deduction: every run agrees, so the record
+      // is deterministic and finished, and still no evidence.
+      var c = probe(function (model, state, ctx) {
+        ctx.options.onPatternWork({ id: 'patternCostProbe', work: 41, limit: 50000, capHit: null, retained: null });
+        return null;
+      });
+      try {
+        var run = P.measure([c], { runs: 3, budgetMs: 1e9 }, fakeEnv());
+        expect(run.stopped).toBe(false);
+        expect(run.problems).toEqual([]);
+        expect(run.records[0].deterministic).toBe(true);
+        expect(run.records[0].matchesFixture).toBe(false);
+        var doc = P.documentOf({ argv: [], identity: {}, machine: {}, config: { ids: ['patternCostProbe'],
+          caseText: null, runs: 3, budgetMs: 1e9 }, cases: [c], startedAt: 'a', endedAt: 'b', measured: run });
+        expect(doc.complete).toBe(false);
+        expect(doc.problems).toEqual(['patternCostProbe:positive:1: the outcome is not the fixture\'s (none where ' +
+          'the fixture records a deduction)']);
+        expect(P.exitCodeOf(doc)).toBe(1);
+        expect(doc.cases[0].outcome).toBe('none');
+        expect(doc.cases[0].finding).toBeNull();
+        expect(doc.cases[0].workUnits).toBe(41);
+        expect(doc.cases[0].runs).toBe(3);
+      } finally {
+        SG.techniques.unregister('patternCostProbe');
+      }
+    });
+
     it('leaves the registry as it found it', function () {
       expect(SG.techniques.has('patternCostProbe')).toBe(false);
     });
   });
 
   describe('pattern cost: tests/pattern-cost.js (Node only)', function () {
-    var SANDBOX = 'tests/artifacts/difficulty-v3/MS07a/sandbox-pattern-cost';
+    // Every file these tests write goes to a folder of its own under the repository's ignored `.scratch-*/` rule:
+    // `.scratch-pattern-cost-tools/<unique run>/` at the repository root (never the task evidence, never a folder
+    // that a fingerprint reads, never a system temporary directory). Only the folder of the run is removed, never
+    // the shared base or the files of another run; a killed run leaves ignored scratch only.
+    var SCRATCH_BASE = '.scratch-pattern-cost-tools';
 
     function node() {
       var host = SG.test.node;
@@ -478,6 +550,17 @@
         process.getBuiltinModule('child_process') : null;
       if (!host || !host.fs || !spawn) SG.test.skip('needs Node (fs and child_process); skipped in the browser');
       return { host: host, spawn: spawn };
+    }
+
+    /** A new, unique folder of this run: its absolute path, and its path as the tool (cwd: generator) sees it. */
+    function ownScratch(n) {
+      var repo = n.host.path.resolve(n.host.root, '..');
+      var base = n.host.path.join(repo, SCRATCH_BASE);
+      var unique = process.pid + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+      var dir = n.host.path.join(base, unique);
+      n.host.fs.mkdirSync(base, { recursive: true });
+      n.host.fs.mkdirSync(dir); // not recursive: it must be new
+      return { dir: dir, relative: '../' + SCRATCH_BASE + '/' + unique, shown: SCRATCH_BASE + '/' + unique };
     }
 
     function tool(args) {
@@ -493,11 +576,11 @@
       expect(help.out).toContain('Usage: node tests/pattern-cost.js --ids=<id>[,<id>] --json=<new.json>');
       var list = tool(['--ids=forcingChain,nishio', '--list']);
       expect(list.code).toBe(0);
-      expect(list.out.split('\n').filter(function (line) { return line.indexOf(':') !== -1; })).toHaveLength(6);
-      expect(list.out).toContain('forcingChain:positive:1  first forcingChain on puzzle 1');
+      expect(list.out.split('\n').filter(function (line) { return line.indexOf(':') !== -1; })).toHaveLength(7);
+      expect(list.out).toContain('forcingChain:positive:1  forcingChain contradiction of 4 links on puzzle 2');
       expect(list.out).toContain('nishio:negative:1');
       var one = tool(['--ids=nishio', '--list', '--case=positive:2']);
-      expect(one.out.trim()).toBe('nishio:positive:2  first nishio on puzzle 2');
+      expect(one.out.trim()).toBe('nishio:positive:2  nishio depth 1 on puzzle 2');
     });
 
     it('refuses a bad command line, an unknown id, a scoped id and an empty selection with code 2', function () {
@@ -521,16 +604,16 @@
     it('writes one complete record of two cases, never over an existing file, and refuses folders of sources',
       function () {
         var n = node();
-        var dir = n.host.path.join(n.host.root, SANDBOX);
-        n.host.fs.rmSync(dir, { recursive: true, force: true });
-        n.host.fs.mkdirSync(dir, { recursive: true });
+        var own = ownScratch(n);
         try {
-          var file = SANDBOX + '/record.json';
+          var file = own.relative + '/record.json';
           var run = tool(['--ids=nishio', '--runs=2', '--case=positive', '--json=' + file]);
           expect(run.code).toBe(0);
           expect(run.out).toContain('pattern-cost: 2 of 2 cases x 2 runs (4 finds), complete true');
-          expect(run.out).toContain('record: generator/' + file);
-          var text = n.host.fs.readFileSync(n.host.path.join(n.host.root, file), 'utf8');
+          expect(run.out).toContain('record: ' + own.shown + '/record.json');
+          var written = n.host.path.join(own.dir, 'record.json');
+          var text = n.host.fs.readFileSync(written, 'utf8');
+          expect(n.host.fs.readdirSync(own.dir)).toEqual(['record.json']);
           expect(text.indexOf('\uFEFF')).toBe(-1);
           expect(/(?<!\r)\n/.test(text)).toBe(false);
           expect(text.endsWith('\r\n')).toBe(true);
@@ -552,14 +635,37 @@
           var again = tool(['--ids=nishio', '--runs=2', '--json=' + file]);
           expect(again.code).toBe(2);
           expect(again.err).toContain('the file exists already');
-          expect(n.host.fs.readFileSync(n.host.path.join(n.host.root, file), 'utf8')).toBe(text);
+          expect(n.host.fs.readFileSync(written, 'utf8')).toBe(text);
+          // a protected path is refused and nothing is written there
+          var protectedFile = n.host.path.join(n.host.root, 'tests/fixtures/pattern-cost-record.json');
           var inSources = tool(['--ids=nishio', '--runs=2', '--json=tests/fixtures/pattern-cost-record.json']);
           expect(inSources.code).toBe(2);
-          expect(n.host.fs.existsSync(n.host.path.join(n.host.root, 'tests/fixtures/pattern-cost-record.json')))
-            .toBe(false);
+          expect(n.host.fs.existsSync(protectedFile)).toBe(false);
+          expect(n.host.fs.readdirSync(own.dir)).toEqual(['record.json']);
         } finally {
-          n.host.fs.rmSync(dir, { recursive: true, force: true });
+          n.host.fs.rmSync(own.dir, { recursive: true, force: true });
         }
+        expect(n.host.fs.existsSync(own.dir)).toBe(false);
       });
+
+    it('gives every invocation a folder of its own and leaves the shared base and other runs alone', function () {
+      var n = node();
+      var first = ownScratch(n);
+      var second = ownScratch(n);
+      try {
+        expect(first.dir).not.toBe(second.dir);
+        n.host.fs.writeFileSync(n.host.path.join(first.dir, 'kept.txt'), 'x');
+        n.host.fs.rmSync(second.dir, { recursive: true, force: true });
+        expect(n.host.fs.existsSync(n.host.path.join(first.dir, 'kept.txt'))).toBe(true);
+        expect(n.host.fs.existsSync(n.host.path.dirname(first.dir))).toBe(true);
+        // the rule that keeps it out of the repository: the folder lies under the ignored `.scratch-*/` pattern
+        var ignore = n.host.fs.readFileSync(n.host.path.join(n.host.root, '..', '.gitignore'), 'utf8');
+        expect(/^\.scratch-\*\/\s*$/m.test(ignore)).toBe(true);
+        expect(n.host.path.basename(n.host.path.dirname(first.dir))).toBe(SCRATCH_BASE);
+      } finally {
+        n.host.fs.rmSync(first.dir, { recursive: true, force: true });
+        n.host.fs.rmSync(second.dir, { recursive: true, force: true });
+      }
+    });
   });
 })();

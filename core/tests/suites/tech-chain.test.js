@@ -1,4 +1,5 @@
-// Chain techniques: Forcing Chain / X-Cycle (`forcingChain`) and Nishio (`nishio`).
+// Chain techniques: Forcing Chain / X-Cycle (`forcingChain` 1..C links, `forcingChainLong` C + 1..12 links) and
+// Nishio (`nishio` depth 1, `nishioDeep` depth 2 and 3): the windows of rating v3 over the shortest proof.
 //
 // Soundness matters most here: an unsound chain silently produces puzzles without a solution (risk R3). So
 // besides the shared invariant I7 check (SG.techHelper.assertSound) the suite
@@ -18,7 +19,10 @@
   var model9 = H.model('classic9');
   var model6 = H.model('classic6');
   var model4 = H.model('classic4');
-  var CHAIN_IDS = ['forcingChain', 'nishio'];
+  var CHAIN_IDS = ['forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'];
+  // The ids whose bulk loops may run on a position where nothing can be refuted: a second level of nishio costs
+  // the whole search space there, so nishioDeep has its own small tests.
+  var BULK_IDS = ['forcingChain', 'forcingChainLong', 'nishio'];
   var EVIL = ['escargot', 'worlds-hardest-2012', 'hard-platinum', 'hard-nugget', 'hard-b', 'hard-c'];
 
   function fail(message) {
@@ -426,6 +430,51 @@
   }
 
   /**
+   * A hub cell (cell 0) in a pair unit with each of `spokes` other cells: every expansion from a literal of the hub
+   * has `spokes` + 1 edges, one more than a Samurai board could ever give. Two digits, so it has two solutions and
+   * no proof at all.
+   */
+  var stars = {};
+  function starModel(spokes) {
+    if (!stars[spokes]) {
+      var units = [];
+      var cellRow = [];
+      var cellCol = [];
+      for (var i = 1; i <= spokes; i++) units.push([0, i]);
+      for (var c = 0; c <= spokes; c++) {
+        cellRow.push(0);
+        cellCol.push(c);
+      }
+      stars[spokes] = SG.model.create({ variantId: 'chain-star-' + spokes, digits: 2, units: units,
+        layout: { rows: 1, cols: spokes + 1, cellRow: cellRow, cellCol: cellCol } });
+    }
+    return stars[spokes];
+  }
+
+  /**
+   * The same hub, but its last two spokes (cells `spokes` - 1 and `spokes`) also form a triangle with it: three
+   * cells that must all differ over two digits. The first proof (a chain of 1 link, eliminating the last cell's
+   * 1) is met at the 300th edge of the first expansion when there are 300 spokes, inside its second piece.
+   */
+  var hubs = {};
+  function hubModel(spokes) {
+    if (!hubs[spokes]) {
+      var units = [];
+      var cellRow = [];
+      var cellCol = [];
+      for (var i = 1; i <= spokes - 2; i++) units.push([0, i]);
+      units.push([0, spokes - 1], [spokes - 1, spokes], [spokes, 0]);
+      for (var c = 0; c <= spokes; c++) {
+        cellRow.push(0);
+        cellCol.push(c);
+      }
+      hubs[spokes] = SG.model.create({ variantId: 'chain-hub-' + spokes, digits: 2, units: units,
+        layout: { rows: 1, cols: spokes + 1, cellRow: cellRow, cellCol: cellCol } });
+    }
+    return hubs[spokes];
+  }
+
+  /**
    * Positions where the lower technique groups are stuck, typed in as published candidate grids (so they do
    * not depend on how the lower techniques are implemented): the givens and the candidates of the 81 cells,
    * row by row. `kind`, `length`, `eliminations` / `placements` and `cells` are what forcingChain reports.
@@ -532,18 +581,59 @@
     return H.makeState(model9, fx.puzzle, { candidates: candidates });
   }
 
+  /**
+   * Real minimal puzzles (one solution each) that the techniques below the chain group and forcingChain get stuck
+   * on, and where the shortest chain has 7 or 8 links: dug by SG.testkit.dig from the seeded stream 161 (fork
+   * 'minimal.<i>', the index in the comment), found by scanning 3000 of them in MS07b. Under any short cutoff
+   * C of 4 or 6 these positions belong to forcingChainLong.
+   */
+  var LONG_CHAIN_PUZZLES = [
+    '..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.', // #24: 7 links
+    '...5....94.....31....39.6....7.......6...35...8..6.9...4....86..1.28.......6.9.7.', // #29: 7 links
+    '...284.....51..83.....53....9.........8.....6.6..351.437.....6....4.2..88.......7', // #155: 7 links
+    '.754.3...9.....1.....5....7.8..6....6.3.78..1..........3.......5.48...6.1....7.53', // #192: 7 links
+    '......4..4..8...15.5...7....8...19....23.8.......64.7........8614.........9.2...3', // #379: 8 links
+    '.32.....5.......4..1.6.8..2.......2.5.1...8...6...239.....739...9...1....8..2...3', // #452: 7 links
+    '.....5..3..7....16...23....2.....8....5.4....4...1...2.9..875..8..1..6.9...3.....', // #521: 7 links
+    '...5.94...4...2..82.71.....7.....26...3.....7.1.6...95...........92.5..1.36......', // #530: 7 links
+    '2.6..7..4....3..1.45.......6........8329...7..4..2.3.....4.9...1......6...8.1..9.', // #713: 7 links
+    '..79.....2..4...7....15..9......16..726.....4..1..48.73.5.2..8......8....1......6', // #725: 8 links
+    '.2......6..892.7..1...8..3...6.74...2..5.6.........1..95......76..3..9...84.....5', // #1003: 7 links
+    '..41..98.5..4.........9..7.....1...9..7..52..49...2..8...2.3.1.........261....5..' // #1024: 7 links
+  ];
+
+  /** The position where the solver, allowed only the ids of `ids`, is stuck, as a soundness state. */
+  function stuckItem(text, ids) {
+    var givens = H.parsePuzzle(model9, text);
+    return { state: H.stateAfter(model9, text, ids), solution: SG.dfs.solve(model9, givens), givens: givens,
+      kind: 'stuck' };
+  }
+
+  /** The ids tried before `id` in the registry: every other technique of the classic ladder below it. */
+  function idsBefore(id) {
+    var below = [];
+    SG.techniques.list().forEach(function (t) {
+      if (t.variantScope === null && SG.techniques.get(id).order > t.order) below.push(t.id);
+    });
+    return below;
+  }
+
   describe('chain group: registration', function () {
-    it('registers forcingChain and nishio with the ladder values of design.md 6.6', function () {
-      var fc = SG.techniques.get('forcingChain');
-      expect(fc.group).toBe('chain');
-      expect(fc.baseCost).toBe(90);
-      expect(fc.order).toBe(190);
-      expect(fc.i18nKey).toBe('technique.forcingChain');
-      var ni = SG.techniques.get('nishio');
-      expect(ni.group).toBe('chain');
-      expect(ni.baseCost).toBe(140);
-      expect(ni.order).toBe(200);
-      expect(ni.i18nKey).toBe('technique.nishio');
+    // R9 (difficulty v3): id, order, baseCost; the weights (1100, 1400, 1700, 2600) are those of the Generator's
+    // technique-weights suite.
+    var TABLE = [
+      ['forcingChain', 190, 90], ['forcingChainLong', 198, 118], ['nishio', 200, 140], ['nishioDeep', 202, 210]
+    ];
+
+    it('registers the four chain ids with the values of design.md 6.6 (R9)', function () {
+      TABLE.forEach(function (row) {
+        var t = SG.techniques.get(row[0]);
+        expect([row[0], t.group, t.order, t.baseCost, t.i18nKey]).toEqual([row[0], 'chain', row[1], row[2],
+          'technique.' + row[0]]);
+      });
+      expect(SG.techniques.list().filter(function (t) { return t.group === 'chain'; }).map(function (t) {
+        return t.id;
+      })).toEqual(['forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep']);
     });
 
     it('applies to every variant and does not rely on a unique solution', function () {
@@ -559,6 +649,10 @@
         if (t.group !== 'chain') expect(t.order).toBeLessThan(190);
       });
     });
+
+    it('exposes the short window C, 6 to begin with, at SG.chainSearch.SHORT_MAX', function () {
+      expect(SG.chainSearch.SHORT_MAX).toBe(6);
+    });
   });
 
   describe('chain group: soundness (I7)', function () {
@@ -570,7 +664,31 @@
       H.assertSound(SG.test, 'nishio', { count: 300, minFirings: 3 });
     });
 
-    it('forcingChain is sound on positions with many wrong candidates left (long chains)', function () {
+    it('forcingChainLong never removes a solution candidate on real positions where only a long chain is left',
+      function () {
+        var below = idsBefore('forcingChainLong');
+        expect(below).toContain('forcingChain');
+        var states = LONG_CHAIN_PUZZLES.map(function (text) { return stuckItem(text, below); });
+        var stats = H.assertSound(SG.test, 'forcingChainLong',
+          { model: model9, states: states, minFirings: states.length });
+        expect(stats.eliminations).toBeGreaterThanOrEqual(states.length);
+      });
+
+    it('nishioDeep never removes a solution candidate on the stuck positions of the famous puzzles',
+      function () {
+        var below = idsBefore('nishioDeep');
+        expect(below).toContain('nishio');
+        var states = EVIL.map(function (name) {
+          var item = stuckItem(fixture(name).puzzle, below);
+          expect(item.solution).toEqual(F.parse(fixture(name).solution));
+          return item;
+        });
+        var stats = H.assertSound(SG.test, 'nishioDeep',
+          { model: model9, states: states, minFirings: states.length });
+        expect(stats.eliminations).toBeGreaterThanOrEqual(states.length);
+      });
+
+    it('forcingChain is sound on positions with many wrong candidates left (chains up to C links)', function () {
       var m = model9;
       var states = prunedStates(m, SG.testkit.rng.create(31), 150, function (r) { return 0.05 + 0.4 * r.next(); });
       var stats = H.assertSound(SG.test, 'forcingChain', { model: m, states: states, minFirings: 100 });
@@ -624,7 +742,7 @@
       // The oracle enumerates, so this holds for puzzles that are NOT unique, where "the" solution is no
       // reference. classic6 keeps the oracle cheap; the classic9 cases are sparse.
       var rng = SG.testkit.rng.create(101);
-      var firings = { forcingChain: 0, nishio: 0 };
+      var firings = { forcingChain: 0, forcingChainLong: 0, nishio: 0, nishioDeep: 0 };
       for (var i = 0; i < 60; i++) {
         var r = rng.fork('multi.' + i);
         var solution = randomSolution(model6, r.fork('grid'));
@@ -651,9 +769,11 @@
 
   // Twin solution positions: every candidate is part of a solution, so nothing may be found
   describe('chain group: positions without any valid deduction', function () {
-    // forcingChain gets no length limit. nishio stays at depth 1 in the bulk loops (a nested trial of a
-    // position where nothing can be refuted costs the whole search space) and has its own depth 2 test.
-    var OPTIONS = { forcingChain: { maxChainLength: Infinity }, nishio: { maxNishioDepth: 1 } };
+    // The chain ids get no length limit. nishio stays at depth 1 in the bulk loops (a nested trial of a
+    // position where nothing can be refuted costs the whole search space) and nishioDeep, whose window starts
+    // at depth 2, has its own small tests.
+    var OPTIONS = { forcingChain: { maxChainLength: Infinity }, forcingChainLong: { maxChainLength: Infinity },
+      nishio: { maxNishioDepth: 1 } };
 
     it('finds nothing when every candidate belongs to one of 2-4 solutions of a classic9 grid', function () {
       var rng = SG.testkit.rng.create(111);
@@ -663,7 +783,7 @@
         var solutions = [base];
         for (var k = 1; k < 2 + (i % 3); k++) solutions.push(symmetric9(base, r.fork('sym.' + k)));
         var state = twinState(model9, solutions);
-        CHAIN_IDS.forEach(function (id) {
+        BULK_IDS.forEach(function (id) {
           var finding = run(id, model9, state, OPTIONS[id]);
           if (finding !== null) {
             fail(id + ' found something in twin position #' + i + ': ' + JSON.stringify(finding));
@@ -672,12 +792,13 @@
       }
     });
 
-    it('nishio finds nothing at depth 2 either, where every guess is a solution', function () {
+    it('nishioDeep finds nothing at depth 2 and 3 either, where every guess is a solution', function () {
       var rng = SG.testkit.rng.create(113);
       for (var i = 0; i < 3; i++) {
         var base = randomSolution(model9, rng.fork('grid.' + i));
         var state = twinState(model9, [base, symmetric9(base, rng.fork('sym.' + i))]);
-        expect(run('nishio', model9, state, { maxNishioDepth: 2 })).toBeNull();
+        expect(run('nishioDeep', model9, state, { maxNishioDepth: 2 })).toBeNull();
+        if (i === 0) expect(run('nishioDeep', model9, state, { maxNishioDepth: 3 })).toBeNull();
       }
     });
 
@@ -686,7 +807,7 @@
       var perms = [[2, 3, 1, 5, 6, 4, 8, 9, 7], [2, 1, 4, 3, 6, 5, 8, 7, 9], [9, 1, 2, 3, 4, 5, 6, 7, 8]];
       perms.forEach(function (perm) {
         var state = twinState(model9, [base, relabel(base, perm)]);
-        CHAIN_IDS.forEach(function (id) {
+        BULK_IDS.forEach(function (id) {
           expect(run(id, model9, state, OPTIONS[id])).toBeNull();
         });
       });
@@ -714,7 +835,7 @@
           var solutions = [base, relabel(base, randomPerm(r.fork('p.' + i), m.digits))];
           if (i % 2 === 1) solutions.push(relabel(base, randomPerm(r.fork('q.' + i), m.digits)));
           var state = twinState(m, solutions);
-          CHAIN_IDS.forEach(function (id) {
+          BULK_IDS.forEach(function (id) {
             var finding = run(id, m, state, id === 'nishio' ? OPTIONS.nishio : { maxChainLength: 16 });
             if (finding !== null) fail(id + ' found something in a twin ' + m.variantId + ' position');
           });
@@ -732,8 +853,10 @@
       expect(deadly.unsolvedCount).toBe(4);
       [empty, solved, deadly].forEach(function (state) {
         H.expectNoFinding(SG.test, 'forcingChain', state);
-        // depth 1 only for the empty grid: its nested trials never end early and cost the whole space
-        H.expectNoFinding(SG.test, 'nishio', state, { solver: { maxNishioDepth: state === empty ? 1 : 2 } });
+        H.expectNoFinding(SG.test, 'forcingChainLong', state);
+        H.expectNoFinding(SG.test, 'nishio', state);
+        // not the empty grid: its nested trials never end early and cost the whole space
+        if (state !== empty) H.expectNoFinding(SG.test, 'nishioDeep', state);
       });
     });
 
@@ -753,6 +876,9 @@
           { eliminations: [tc.decoy], args: tc.chain }, { model: model9 });
         H.expectFinding(SG.test, 'nishio', state,
           { eliminations: [tc.decoy], args: { digit: tc.decoy[1], depth: 1 } }, { model: model9 });
+        // the shortest proof (a chain of at most 4 links, a guess of depth 1) is not theirs to take
+        H.expectNoFinding(SG.test, 'forcingChainLong', state, { model: model9 });
+        H.expectNoFinding(SG.test, 'nishioDeep', state, { model: model9 });
         var found = run('forcingChain', model9, state);
         expect(chainProblems(model9, state, found)).toEqual([]);
       });
@@ -823,10 +949,12 @@
       });
     });
 
-    it('finds nothing on the stuck positions of the famous puzzles at a chain length of 12', function () {
+    it('finds nothing, in either chain window, on the stuck positions of the famous puzzles', function () {
       var stuck = ['escargot', 'worlds-hardest-2012', 'hard-platinum', 'hard-nugget'];
       stuck.forEach(function (name) {
-        H.expectNoFinding(SG.test, 'forcingChain', H.makeState(model9, fixture(name).puzzle));
+        var state = H.makeState(model9, fixture(name).puzzle);
+        H.expectNoFinding(SG.test, 'forcingChain', state);
+        expect(run('forcingChainLong', model9, state, { maxChainLength: 12 })).toBeNull();
       });
     });
 
@@ -850,7 +978,7 @@
       return states;
     }
 
-    it('reports the shortest chain, and nothing at all below its length', function () {
+    it('reports the shortest chain up to C links, and nothing at all below its length', function () {
       var longest = 0;
       positions().forEach(function (state, i) {
         var base = run('forcingChain', model9, state, { maxChainLength: 12 });
@@ -871,6 +999,7 @@
         if (base !== null) longest = Math.max(longest, base.i18nArgs.length);
       });
       expect(longest).toBeGreaterThan(4);
+      expect(longest).toBeLessThanOrEqual(SG.chainSearch.SHORT_MAX);
     });
 
     it('treats the fixtures as exact: one link less and the chain is out of reach', function () {
@@ -882,35 +1011,16 @@
       });
     });
 
-    it('defaults to 12 links: a ring needing 12 is solved, one needing 13 only with more', function () {
-      // On an odd ring of n pair units the shortest proof is a forced chain of (n + 1) / 2 links.
-      var near = ringModel(23);
-      var far = ringModel(25);
-      var nearState = SG.model.initState(near);
-      var farState = SG.model.initState(far);
-      var byDefault = run('forcingChain', near, nearState);
-      expect(byDefault.i18nArgs.kind).toBe('forced');
-      expect(byDefault.i18nArgs.length).toBe(12);
-      expect(chainProblems(near, nearState, byDefault)).toEqual([]);
-      expect(run('forcingChain', near, nearState, { maxChainLength: 11 })).toBeNull();
-
-      expect(run('forcingChain', far, farState)).toBeNull();
-      expect(run('forcingChain', far, farState, { maxChainLength: 12 })).toBeNull();
-      [13, 14, 100, Infinity].forEach(function (limit) {
-        var found = run('forcingChain', far, farState, { maxChainLength: limit });
-        expect(found.i18nArgs.length).toBe(13);
-        expect(chainProblems(far, farState, found)).toEqual([]);
+    it('treats a limit above C alike: the default, 12 and no limit agree, and never lengthen a chain',
+      function () {
+        positions().forEach(function (state) {
+          var byDefault = run('forcingChain', model9, state);
+          expect(byDefault).toEqual(run('forcingChain', model9, state, { maxChainLength: 12 }));
+          var unlimited = run('forcingChain', model9, state, { maxChainLength: Infinity });
+          expect(unlimited).toEqual(byDefault);
+          if (byDefault !== null) expect(byDefault.i18nArgs.length).toBeLessThanOrEqual(SG.chainSearch.SHORT_MAX);
+        });
       });
-    });
-
-    it('treats the limit alike everywhere: default and 12 agree, unlimited never shortens', function () {
-      positions().forEach(function (state) {
-        var byDefault = run('forcingChain', model9, state);
-        expect(byDefault).toEqual(run('forcingChain', model9, state, { maxChainLength: 12 }));
-        var unlimited = run('forcingChain', model9, state, { maxChainLength: Infinity });
-        if (byDefault !== null) expect(unlimited).toEqual(byDefault);
-      });
-    });
 
     it('ignores a nonsensical limit and switches off for a limit below one link', function () {
       var state = fixtureState(CHAIN_FIXTURES[0]);
@@ -961,8 +1071,14 @@
       });
       var odd = ringModel(201);
       var state = SG.model.initState(odd);
-      expect(run('forcingChain', odd, state, { maxChainLength: 12 })).toBeNull();
-      var found = run('forcingChain', odd, state, { maxChainLength: Infinity });
+      // the ids stop at their windows, whatever the caller asks for; the unregistered seam does not
+      ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+        [{}, { maxChainLength: 12 }, { maxChainLength: Infinity }].forEach(function (options) {
+          expect(run(id, odd, state, options)).toBeNull();
+        });
+      });
+      var found = SG.chainSearch.forcing(odd, state, ctxFor(odd),
+        { id: 'x', minLength: 1, maxLength: Infinity, workLimit: null });
       expect(found.i18nArgs.length).toBe(101);
       expect(chainProblems(odd, state, found)).toEqual([]);
     });
@@ -1001,13 +1117,15 @@
       return twinState(model9, [base, relabel(base, [2, 3, 1, 5, 6, 4, 8, 9, 7])], [[63, 7]]);
     })();
     var deepState = H.makeState(model9, fixture('hard-platinum').puzzle);
+    var near = ringModel(13); // the shortest proof of the ring of 13 pair units has 7 links: forcingChainLong's
 
     it('returns null instead of throwing when the node budget runs out', function () {
-      [['forcingChain', decoyState], ['nishio', decoyState], ['nishio', deepState]].forEach(function (tc) {
-        expect(run(tc[0], model9, tc[1])).toBeTruthy();
+      [['forcingChain', model9, decoyState], ['nishio', model9, decoyState], ['nishioDeep', model9, deepState],
+        ['forcingChainLong', near, SG.model.initState(near)]].forEach(function (tc) {
+        expect(run(tc[0], tc[1], tc[2])).toBeTruthy();
         var budget = SG.budget.create({ nodes: 3 });
         var finding = 'not run';
-        var err = caught(function () { finding = run(tc[0], model9, tc[1], { budget: budget }); });
+        var err = caught(function () { finding = run(tc[0], tc[1], tc[2], { budget: budget }); });
         expect(err).toBeNull();
         expect(finding).toBeNull();
         expect(budget.nodes).toBeGreaterThan(3);
@@ -1016,11 +1134,11 @@
 
     it('returns null when the time budget runs out', function () {
       // the budget looks at the clock every 1024 ticks; this search needs about ten thousand
-      expect(run('nishio', model9, deepState)).toBeTruthy();
+      expect(run('nishioDeep', model9, deepState)).toBeTruthy();
       var clock = 0;
       var budget = SG.budget.create({ ms: 1, now: function () { clock += 1; return clock; } });
       var finding = 'not run';
-      var err = caught(function () { finding = run('nishio', model9, deepState, { budget: budget }); });
+      var err = caught(function () { finding = run('nishioDeep', model9, deepState, { budget: budget }); });
       expect(err).toBeNull();
       expect(finding).toBeNull();
       expect(budget.nodes).toBeGreaterThan(1000);
@@ -1065,18 +1183,22 @@
       expect(finding.placements).toEqual([]);
     });
 
-    it('needs a nested guess on the famous puzzles that a plain trial cannot crack', function () {
-      var cases = [['worlds-hardest-2012', 21, 3], ['hard-platinum', 23, 8], ['hard-nugget', 27, 5],
-        ['hard-c', 4, 5]];
-      cases.forEach(function (tc) {
-        var state = H.makeState(model9, fixture(tc[0]).puzzle);
-        H.expectNoFinding(SG.test, 'nishio', state, { solver: { maxNishioDepth: 1 } });
-        H.expectFinding(SG.test, 'nishio', state,
-          { eliminations: [[tc[1], tc[2]]], args: { depth: 2 } });
+    it('needs a nested guess on the famous puzzles that a plain trial cannot crack: nishioDeep owns them',
+      function () {
+        var cases = [['worlds-hardest-2012', 21, 3], ['hard-platinum', 23, 8], ['hard-nugget', 27, 5],
+          ['hard-c', 4, 5]];
+        cases.forEach(function (tc) {
+          var state = H.makeState(model9, fixture(tc[0]).puzzle);
+          H.expectNoFinding(SG.test, 'nishio', state);
+          H.expectNoFinding(SG.test, 'nishioDeep', state, { solver: { maxNishioDepth: 1 } });
+          var finding = H.expectFinding(SG.test, 'nishioDeep', state,
+            { eliminations: [[tc[1], tc[2]]], args: { depth: 2 } });
+          expect(finding.i18nKey).toBe('technique.nishioDeep.step');
+          expect(finding.technique).toBe('nishioDeep');
+        });
       });
-    });
 
-    it('tries shallow guesses first: a depth 1 result is also the result at every larger depth', function () {
+    it('leaves a depth 1 result to nishio at every depth: nishioDeep never relabels it', function () {
       var rng = SG.testkit.rng.create(151);
       var checked = 0;
       prunedStates(model9, rng, 60, function (r) { return 0.05 + 0.3 * r.next(); }).forEach(function (item) {
@@ -1086,42 +1208,77 @@
         expect(one.i18nArgs.depth).toBe(1);
         expect(run('nishio', model9, item.state, { maxNishioDepth: 2 })).toEqual(one);
         expect(run('nishio', model9, item.state)).toEqual(one);
+        expect(run('nishioDeep', model9, item.state)).toBeNull();
+        expect(run('nishioDeep', model9, item.state, { maxNishioDepth: 3 })).toBeNull();
       });
       expect(checked).toBeGreaterThan(10);
     });
 
-    it('reads maxNishioDepth: default 2, off below 1, capped at 3, nonsense means the default', function () {
-      var state = H.makeState(model9, fixture('hard-platinum').puzzle);
-      var byDefault = run('nishio', model9, state);
-      expect(byDefault.i18nArgs.depth).toBe(2);
-      expect(run('nishio', model9, state, { maxNishioDepth: 2 })).toEqual(byDefault);
-      ['2', NaN, null, undefined, {}].forEach(function (bad) {
-        expect(run('nishio', model9, state, { maxNishioDepth: bad })).toEqual(byDefault);
+    it('reads maxNishioDepth for nishio: depth 1 whatever is asked, off below 1, nonsense is the default',
+      function () {
+        var escargot = H.makeState(model9, fixture('escargot').puzzle);
+        var byDefault = run('nishio', model9, escargot);
+        expect(byDefault.i18nArgs.depth).toBe(1);
+        [1, 2, 3, 1e9, Infinity, 1.9].forEach(function (asked) {
+          expect(run('nishio', model9, escargot, { maxNishioDepth: asked })).toEqual(byDefault);
+        });
+        ['2', NaN, null, undefined, {}].forEach(function (bad) {
+          expect(run('nishio', model9, escargot, { maxNishioDepth: bad })).toEqual(byDefault);
+        });
+        [0, -1, 0.9, -Infinity].forEach(function (off) {
+          expect(run('nishio', model9, escargot, { maxNishioDepth: off })).toBeNull();
+        });
+        // a position whose shortest refutation has depth 2 stays out of reach, whatever is asked
+        var platinum = H.makeState(model9, fixture('hard-platinum').puzzle);
+        [undefined, 1, 2, 3, Infinity].forEach(function (asked) {
+          expect(run('nishio', model9, platinum, { maxNishioDepth: asked })).toBeNull();
+        });
       });
-      [0, -1, 0.9, -Infinity].forEach(function (off) {
-        expect(run('nishio', model9, state, { maxNishioDepth: off })).toBeNull();
-      });
-      expect(run('nishio', model9, state, { maxNishioDepth: 1 })).toBeNull();
-      expect(run('nishio', model9, state, { maxNishioDepth: 1e9 })).toEqual(byDefault);
-      expect(run('nishio', model9, state, { maxNishioDepth: Infinity })).toEqual(byDefault);
-    });
 
-    it('never nests more than 3 guesses (the budget shows the work on an uncrackable position)', function () {
-      // On the even ring a trial settles the whole ring, so each level costs exactly one tick per candidate.
-      var m = ringModel(6);
-      var state = SG.model.initState(m);
-      function ticks(depth) {
-        var budget = SG.budget.create({});
-        expect(run('nishio', m, state, { budget: budget, maxNishioDepth: depth })).toBeNull();
-        return budget.nodes;
-      }
-      expect(ticks(1)).toBe(12);
-      expect(ticks(2)).toBe(24);
-      expect(ticks(3)).toBe(36);
-      expect(ticks(4)).toBe(36);
-      expect(ticks(1e9)).toBe(36);
-      expect(ticks(Infinity)).toBe(36);
-    });
+    it('reads maxNishioDepth for nishioDeep: default 2, at most 3, never 1, off below 1, nonsense is the default',
+      function () {
+        var state = H.makeState(model9, fixture('hard-platinum').puzzle);
+        var byDefault = run('nishioDeep', model9, state);
+        expect(byDefault.i18nArgs.depth).toBe(2);
+        [2, 3, 4, 1e9, Infinity, 2.9, 3.9].forEach(function (asked) {
+          expect(run('nishioDeep', model9, state, { maxNishioDepth: asked })).toEqual(byDefault);
+        });
+        ['2', NaN, null, undefined, {}].forEach(function (bad) {
+          expect(run('nishioDeep', model9, state, { maxNishioDepth: bad })).toEqual(byDefault);
+        });
+        // below its minimum of 2 the window is empty: the maximum is not raised to make the id fire
+        [1, 1.9, 0, -1, 0.9, -Infinity].forEach(function (off) {
+          expect(run('nishioDeep', model9, state, { maxNishioDepth: off })).toBeNull();
+        });
+      });
+
+    it('stops at depth 1 for nishio and at depth 3 for nishioDeep (the work shows it on an uncrackable ring)',
+      function () {
+        // On the even ring a trial settles the whole ring, so each level costs exactly one unit per candidate.
+        var m = ringModel(6);
+        var state = SG.model.initState(m);
+        function work(id, depth) {
+          var records = [];
+          var options = { onPatternWork: function (r) { records.push(r); } };
+          if (depth !== undefined) options.maxNishioDepth = depth;
+          expect(run(id, m, state, options)).toBeNull();
+          expect(records.length).toBe(1);
+          return records[0].work;
+        }
+        expect(work('nishio')).toBe(12);
+        [0, 1, 2, 3, 4, 1e9, Infinity].forEach(function (depth) {
+          expect([depth, work('nishio', depth)]).toEqual([depth, depth < 1 ? 0 : 12]);
+        });
+        expect(work('nishioDeep')).toBe(24);
+        expect(work('nishioDeep', 2)).toBe(24);
+        // only an explicit maximum reaches the ceiling 3, and nothing goes beyond it
+        [3, 4, 1e9, Infinity].forEach(function (depth) {
+          expect([depth, work('nishioDeep', depth)]).toEqual([depth, 36]);
+        });
+        [1, 0].forEach(function (depth) {
+          expect([depth, work('nishioDeep', depth)]).toEqual([depth, 0]);
+        });
+      });
 
     it('is sound at depth 1, 2 and 3 on the famous puzzles, at every step until they are done', function () {
       [1, 2, 3].forEach(function (depth) {
@@ -1130,10 +1287,13 @@
           var solution = F.parse(fx.solution);
           var state = H.makeState(model9, fx.puzzle);
           for (var step = 0; step < 90 && state.unsolvedCount > 0; step++) {
-            var finding = run('nishio', model9, state, { maxNishioDepth: depth });
+            // nishio takes what is shallow; nishioDeep what needs the deeper window asked for
+            var finding = run('nishio', model9, state, { maxNishioDepth: depth }) ||
+              run('nishioDeep', model9, state, { maxNishioDepth: depth });
             if (finding === null) break;
-            expect(H.findingProblems(model9, state, finding, { technique: 'nishio', solution: solution }))
-              .toEqual([]);
+            expect(depth >= 2 || finding.technique === 'nishio').toBe(true);
+            expect(H.findingProblems(model9, state, finding, { technique: finding.technique,
+              solution: solution })).toEqual([]);
             expect(applyFinding(model9, state, finding)).toBe(true);
           }
           if (depth >= 2) expect(state.unsolvedCount).toBe(0);
@@ -1145,8 +1305,7 @@
       EVIL.forEach(function (name) {
         var state = H.makeState(model9, fixture(name).puzzle);
         var before = SG.model.cloneState(state);
-        run('nishio', model9, state);
-        run('forcingChain', model9, state);
+        CHAIN_IDS.forEach(function (id) { run(id, model9, state); });
         expect(state.candidates).toEqual(before.candidates);
         expect(state.value).toEqual(before.value);
         expect(state.unsolvedCount).toBe(before.unsolvedCount);
@@ -1185,13 +1344,16 @@
         var finding = run('nishio', m, SG.model.initState(m));
         expect(finding.eliminations).toEqual([[0, 1]]);
         expect(finding.i18nArgs.depth).toBe(1);
+        // the refutation has depth 1: it is nishio's, not nishioDeep's
+        expect(run('nishioDeep', m, SG.model.initState(m))).toBeNull();
       });
       expect(run('nishio', ringModel(24), SG.model.initState(ringModel(24)))).toBeNull();
+      expect(run('nishioDeep', ringModel(24), SG.model.initState(ringModel(24)))).toBeNull();
     });
   });
 
   // The parameterised search seam (difficulty v3, MS07a): windows, minimum, work and the pattern-work report.
-  // No registered technique uses it yet; the registered finders call it with their old defaults.
+  // The registered ids are its wrappers (MS07b); the seam itself stays available for other ids and windows.
   describe('chain search seam: windows over the shortest proof', function () {
     var CS = SG.chainSearch;
 
@@ -1222,28 +1384,44 @@
       return states;
     }
 
-    it('adds no registered technique: the seam stays inactive', function () {
+    it('adds no registered technique by itself: it serves ids of its own, registered or not', function () {
       var before = SG.techniques.list().map(function (t) { return t.id; });
       expect(typeof CS.forcing).toBe('function');
       expect(typeof CS.nishio).toBe('function');
-      forcing(model9, fixtureState(CHAIN_FIXTURES[0]), between('forcingChainLong', 5, 12));
-      nishio(model9, H.makeState(model9, fixture('escargot').puzzle), { id: 'nishioDeep', minDepth: 2 });
+      forcing(model9, fixtureState(CHAIN_FIXTURES[0]), between('probeChain', 5, 12));
+      nishio(model9, H.makeState(model9, fixture('escargot').puzzle), { id: 'probeDeep', minDepth: 2 });
       expect(SG.techniques.list().map(function (t) { return t.id; })).toEqual(before);
-      expect(SG.techniques.has('forcingChainLong')).toBe(false);
-      expect(SG.techniques.has('nishioDeep')).toBe(false);
+      expect(SG.techniques.has('probeChain')).toBe(false);
+      expect(SG.techniques.has('probeDeep')).toBe(false);
     });
 
-    it('the registered finders are the seam at their old defaults (no work limit)', function () {
-      positions().forEach(function (state, i) {
-        var seam = forcing(model9, state, { id: 'forcingChain', minLength: 1, maxLength: 12, workLimit: null });
-        if (!same(seam, run('forcingChain', model9, state))) fail('forcingChain differs on state #' + i);
+    it('is what every registered finder asks for: its id, both bounds of its window and its work limit',
+      function () {
+        var c = SG.chainSearch.SHORT_MAX;
+        var long = LONG_CHAIN_PUZZLES.map(function (text) {
+          return stuckItem(text, idsBefore('forcingChainLong')).state;
+        });
+        var chains = {
+          forcingChain: { minLength: 1, maxLength: c, workLimit: null },
+          forcingChainLong: { minLength: c + 1, maxLength: 12, workLimit: 50000 }
+        };
+        Object.keys(chains).forEach(function (id) {
+          positions().concat(long).forEach(function (state, i) {
+            var seam = forcing(model9, state, Object.assign({ id: id }, chains[id]));
+            if (!same(seam, run(id, model9, state))) fail(id + ' differs from the seam on state #' + i);
+          });
+        });
+        var depths = {
+          nishio: { minDepth: 1, maxDepth: 1, workLimit: null },
+          nishioDeep: { minDepth: 2, maxDepth: 2, workLimit: 50000 }
+        };
+        Object.keys(depths).forEach(function (id) {
+          EVIL.forEach(function (name) {
+            var state = H.makeState(model9, fixture(name).puzzle);
+            expect(nishio(model9, state, Object.assign({ id: id }, depths[id]))).toEqual(run(id, model9, state));
+          });
+        });
       });
-      EVIL.forEach(function (name) {
-        var state = H.makeState(model9, fixture(name).puzzle);
-        expect(nishio(model9, state, { id: 'nishio', minDepth: 1, maxDepth: 2, workLimit: null }))
-          .toEqual(run('nishio', model9, state));
-      });
-    });
 
     it('takes the id for Finding.technique and the i18n key, and nothing else from it', function () {
       var state = fixtureState(CHAIN_FIXTURES[0]);
@@ -1314,10 +1492,11 @@
     it('keeps the tie order of the scan: the first root of the shortest length wins', function () {
       var m = ringModel(13);
       var state = SG.model.initState(m);
-      var found = forcing(m, state, between('forcingChain', 7, 7));
+      var found = forcing(m, state, between('forcingChainLong', 7, 7));
       expect(found.i18nArgs.chains[0][0]).toEqual([0, 1, 0]); // the first literal of the scan
-      expect(found).toEqual(forcing(m, state, between('forcingChain', 1, 12)));
-      expect(found).toEqual(run('forcingChain', m, state));
+      expect(found).toEqual(forcing(m, state, between('forcingChainLong', 1, 12)));
+      expect(found).toEqual(run('forcingChainLong', m, state));
+      expect(run('forcingChain', m, state)).toBeNull(); // 7 links are beyond the short window
     });
 
     it('gives the registered answer in any window that holds the minimum and nothing outside it', function () {
@@ -1423,7 +1602,7 @@
       var state = H.makeState(model9, fixture('hard-platinum').puzzle); // needs a nested guess
       var deep = nishio(state, depths('x', 2, 2));
       expect(deep.i18nArgs.depth).toBe(2);
-      var registered = run('nishio', model9, state);
+      var registered = run('nishioDeep', model9, state);
       expect(deep).toEqual(Object.assign({}, registered, { technique: 'x', i18nKey: 'technique.x.step' }));
       [[2, 3], [1, 2], [1, 3], [2, 100]].forEach(function (w) {
         expect(nishio(state, depths('x', w[0], w[1]))).toEqual(deep);
@@ -1599,11 +1778,14 @@
     it('reports a spent budget as nothing found, without a cap, and lets cancellation through', function () {
       [['forcing', union, unionState, { id: 'x', minLength: 1, maxLength: 12 }],
         ['nishio', model9, deepState, { id: 'x', minDepth: 1, maxDepth: 2 }]].forEach(function (tc) {
-        var spent = observed(tc[0], tc[1], tc[2], tc[3], { budget: SG.budget.create({ nodes: 3 }) });
+        var parent = SG.budget.create({ nodes: 3 });
+        var spent = observed(tc[0], tc[1], tc[2], tc[3], { budget: parent });
         expect(spent.finding).toBeNull();
         expect(spent.records.length).toBe(1);
         expect(spent.record.capHit).toBeNull();
         expect(spent.record.limit).toBe(50000);
+        // capHit null is no proof of a complete scan: the caller's own budget still fails after the call
+        expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
 
         var budget = SG.budget.create({});
         budget.cancel();
@@ -1623,32 +1805,165 @@
       });
     });
 
-    it('checks the parent budget at entry and every 256 work units when there is a work limit', function () {
-      function counting(m) {
-        var ctx = Object.assign({}, ctxFor(m), { check: function () { ctx.checks++; } });
-        ctx.checks = 0;
-        return ctx;
+    /**
+     * The work counted at each parent-budget check of a seam call: a context whose k-th check throws a spent
+     * budget lets the pattern-work record of the swallowed call tell the work done at that check, so nothing is
+     * instrumented in production. `works` lists the checks in order; `gaps` the work between two of them (from
+     * the start of the call to the first one, to the end of the call from the last one).
+     */
+    function checkWorks(kind, m, state, opts) {
+      var base = ctxFor(m);
+      function attempt(target) {
+        var k = 0;
+        var record = null;
+        var ctx = Object.assign({}, base, {
+          options: { onPatternWork: function (r) { record = r; } },
+          check: function () {
+            k++;
+            if (k === target) throw new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+          }
+        });
+        var finding = CS[kind](m, state, ctx, opts);
+        return { checks: k, record: record, finding: finding };
       }
-      var solved = H.makeState(model9, F.unique[0].solution, { propagate: false });
-      var ctx = counting(model9);
-      expect(CS.forcing(model9, solved, ctx, { id: 'x' })).toBeNull();
-      expect(ctx.checks).toBe(1); // the entry check; the registered finders (no limit) have none
-      ctx = counting(model9);
-      expect(CS.forcing(model9, solved, ctx, { id: 'x', workLimit: null })).toBeNull();
-      expect(ctx.checks).toBe(0);
-      ctx = counting(model9);
-      expect(CS.nishio(model9, solved, ctx, { id: 'x' })).toBeNull();
-      expect(ctx.checks).toBe(1);
-      ctx = counting(model9);
-      expect(CS.nishio(model9, solved, ctx, { id: 'x', workLimit: null })).toBeNull();
-      expect(ctx.checks).toBe(0);
+      var free = attempt(0);
+      var works = [];
+      for (var target = 1; target <= free.checks; target++) {
+        var spent = attempt(target);
+        expect(spent.finding).toBeNull();
+        expect(spent.record.capHit).toBeNull();
+        works.push(spent.record.work);
+      }
+      var gaps = works.map(function (w, i) { return w - (i === 0 ? 0 : works[i - 1]); });
+      gaps.push(free.record.work - (works.length === 0 ? 0 : works[works.length - 1]));
+      return { works: works, gaps: gaps, max: Math.max.apply(null, gaps), record: free.record,
+        finding: free.finding };
+    }
 
-      // One long search: entry, the check before the first search, then at work 256 and 512.
+    it('checks the parent budget at entry, and not at all on the unbounded path, of a solved position',
+      function () {
+        function counting(m) {
+          var ctx = Object.assign({}, ctxFor(m), { check: function () { ctx.checks++; } });
+          ctx.checks = 0;
+          return ctx;
+        }
+        var solved = H.makeState(model9, F.unique[0].solution, { propagate: false });
+        var ctx = counting(model9);
+        expect(CS.forcing(model9, solved, ctx, { id: 'x' })).toBeNull();
+        expect(ctx.checks).toBe(1); // the entry check; the registered finders of the old ids (no limit) have none
+        ctx = counting(model9);
+        expect(CS.forcing(model9, solved, ctx, { id: 'x', workLimit: null })).toBeNull();
+        expect(ctx.checks).toBe(0);
+        ctx = counting(model9);
+        expect(CS.nishio(model9, solved, ctx, { id: 'x' })).toBeNull();
+        expect(ctx.checks).toBe(1);
+        ctx = counting(model9);
+        expect(CS.nishio(model9, solved, ctx, { id: 'x', workLimit: null })).toBeNull();
+        expect(ctx.checks).toBe(0);
+        // the two ids with a limit check at entry, the two without do not, as before
+        [['forcingChain', 0], ['forcingChainLong', 1], ['nishio', 0], ['nishioDeep', 1]].forEach(function (row) {
+          var own = counting(model9);
+          SG.techniques.get(row[0]).find(model9, solved, own);
+          expect([row[0], own.checks]).toEqual([row[0], row[1]]);
+        });
+      });
+
+    it('lets no more than 256 work units pass between two checks, uneven expansions and tail included',
+      function () {
+        // Hubs of 100, 250 and 300 spokes: expansions of 1 or 2 edges next to ones of 101, 251 and 301. The
+        // modulo gate of MS07a let up to 255 plus the size of the crossing expansion pass (330, 293, 553 here).
+        [40, 100, 250, 300].forEach(function (spokes) {
+          var m = starModel(spokes);
+          var seen = checkWorks('forcing', m, SG.model.initState(m),
+            { id: 'x', minLength: 1, maxLength: Infinity, workLimit: 3000 });
+          var where = 'star of ' + spokes + ' spokes';
+          expect([where, seen.record.work, seen.record.capHit]).toEqual([where, 3000, 'work']);
+          expect([where, seen.works[0], seen.works[1]]).toEqual([where, 0, 0]); // the entry, the first root
+          expect([where, seen.max <= 256]).toEqual([where, true]);
+          // the gate takes the whole gap: it is not a check at every 128 units
+          if (spokes >= 100) expect([where, seen.max]).toEqual([where, 256]);
+          seen.gaps.forEach(function (gap) { expect(gap).toBeLessThan(257); });
+        });
+      });
+
+    it('checks at an exact boundary of 256 when the next edge would pass it, and not before', function () {
+      // A ring of 201 pair units: one long search of 600 units, expansions of 2 edges. The gate checks when
+      // 255 units have passed (255 + 2 would pass 256), the root check before it is at 0.
       var long = ringModel(201);
-      ctx = counting(long);
-      expect(CS.forcing(long, SG.model.initState(long), ctx,
-        { id: 'x', minLength: 1, maxLength: Infinity, workLimit: 600 })).toBeNull();
-      expect(ctx.checks).toBe(1 + 1 + 2);
+      var seen = checkWorks('forcing', long, SG.model.initState(long),
+        { id: 'x', minLength: 1, maxLength: Infinity, workLimit: 600 });
+      expect(seen.works).toEqual([0, 0, 255, 510]);
+      expect(seen.gaps).toEqual([0, 0, 255, 255, 90]);
+    });
+
+    it('splits an expansion of more than 256 edges into pieces, each behind the gate', function () {
+      var m = starModel(300); // the hub literal has 301 edges
+      var seen = checkWorks('forcing', m, SG.model.initState(m),
+        { id: 'x', minLength: 1, maxLength: Infinity, workLimit: 3000 });
+      // entry, first root, then a piece of 256 edges, the 45 that are left of it and 256 more
+      expect(seen.works.slice(0, 5)).toEqual([0, 0, 256, 301, 557]);
+      expect(seen.max).toBe(256);
+      // the same positions with every work limit around a piece: each edge counted once, the cut at the limit
+      [255, 256, 257, 300, 301, 302].forEach(function (limit) {
+        var out = observed('forcing', m, SG.model.initState(m),
+          { id: 'x', minLength: 1, maxLength: Infinity, workLimit: limit });
+        expect([limit, out.finding, out.record.work, out.record.capHit]).toEqual([limit, null, limit, 'work']);
+      });
+    });
+
+    it('counts a Finding in the middle of a piece, a cut and a spent budget exactly, edge by edge', function () {
+      // 300 spokes: the proof is the 300th edge of the first expansion, in its second piece
+      var m = hubModel(300);
+      var state = SG.model.initState(m);
+      var bounded = observed('forcing', m, state, { id: 'x', minLength: 1, maxLength: 12 });
+      var unbounded = observed('forcing', m, state, { id: 'x', minLength: 1, maxLength: 12, workLimit: null });
+      expect(bounded.finding).toEqual(unbounded.finding);
+      expect(bounded.finding.i18nArgs.length).toBe(1);
+      expect(bounded.finding.eliminations).toEqual([[300, 1]]);
+      expect([bounded.record.work, unbounded.record.work]).toEqual([300, 300]);
+      expect(bounded.record.capHit).toBeNull();
+      var seen = checkWorks('forcing', m, state, { id: 'x', minLength: 1, maxLength: 12 });
+      expect(seen.works).toEqual([0, 0, 256]); // entry, root, the gate before the second piece
+      expect(seen.gaps).toEqual([0, 0, 256, 44]);
+      // the limit: 300 reaches the proof, 299 stops one edge before it, 256 at the end of the first piece
+      [[300, true], [301, true], [299, false], [256, false], [255, false]].forEach(function (row) {
+        var out = observed('forcing', m, state, { id: 'x', minLength: 1, maxLength: 12, workLimit: row[0] });
+        expect([row[0], out.finding !== null, out.record.work, out.record.capHit]).toEqual(row[1]
+          ? [row[0], true, 300, null] : [row[0], false, row[0], 'work']);
+      });
+      // a budget that runs out at the gate before the second piece: the 256 edges of the first are counted
+      var spent = observed('forcing', m, state, { id: 'x', minLength: 1, maxLength: 12 },
+        { budget: SG.budget.create({ nodes: 2 }) });
+      expect(spent.finding).toBeNull();
+      expect([spent.record.work, spent.record.capHit]).toEqual([256, null]);
+    });
+
+    it('keeps the legacy cadence on the unbounded path: a check at each root, none in between', function () {
+      // 300 spokes: the first root search (301 edges, the proof at the 300th) is the whole call
+      var m = hubModel(300);
+      var state = SG.model.initState(m);
+      var window = { id: 'x', minLength: 1, maxLength: 12 };
+      var bounded = checkWorks('forcing', m, state, Object.assign({}, window));
+      var unbounded = checkWorks('forcing', m, state, Object.assign({ workLimit: null }, window));
+      expect(unbounded.finding).toEqual(bounded.finding);
+      expect(unbounded.record.work).toBe(300);
+      expect(unbounded.works).toEqual([0]); // the root check only: no entry check, no periodic check
+      expect(unbounded.gaps).toEqual([0, 300]);
+      expect(unbounded.max).toBeGreaterThan(256); // a whole root search passes without a check
+      expect(bounded.works).toEqual([0, 0, 256]); // entry, root and the gate before the second piece
+      expect(bounded.max).toBeLessThan(257);
+    });
+
+    it('checks every nishio trial, bounded or not, and the bounded call once more at entry', function () {
+      var m = ringModel(6);
+      var state = SG.model.initState(m);
+      var unbounded = checkWorks('nishio', m, state, { id: 'x', minDepth: 1, maxDepth: 2, workLimit: null });
+      var bounded = checkWorks('nishio', m, state, { id: 'x', minDepth: 1, maxDepth: 2 });
+      var trials = [];
+      for (var i = 0; i < 24; i++) trials.push(i);
+      expect(unbounded.works).toEqual(trials);
+      expect(bounded.works).toEqual([0].concat(trials));
+      expect(bounded.max).toBe(1);
     });
 
     it('never writes to the state, whatever the window, the limit or the outcome', function () {
@@ -1713,12 +2028,256 @@
     });
   });
 
+  // MS07b: what each registered id does on its own, with the options a caller can pass (R9, IR54).
+  describe('chain windows: the four registered ids on their own', function () {
+    var CS = SG.chainSearch;
+    var MAX_LONG = 12;
+
+    function withShortMax(c, fn) {
+      var before = CS.SHORT_MAX;
+      CS.SHORT_MAX = c;
+      try {
+        return fn();
+      } finally {
+        CS.SHORT_MAX = before;
+      }
+    }
+
+    /** The odd ring whose shortest proof is a forced chain of exactly `links` links: (n + 1) / 2 = links. */
+    function ringNeeding(links) {
+      return ringModel(2 * links - 1);
+    }
+
+    function relabelled(finding, id) {
+      return Object.assign({}, finding, { technique: id, i18nKey: 'technique.' + id + '.step.' +
+        finding.i18nArgs.kind });
+    }
+
+    /** The seam with no window and no work limit: the shortest proof of the whole scan up to 12 links. */
+    function shortest(m, state) {
+      return CS.forcing(m, state, ctxFor(m), { id: 'x', minLength: 1, maxLength: MAX_LONG, workLimit: null });
+    }
+
+    it('splits the proofs at C: C links are forcingChain\'s, C + 1 to 12 forcingChainLong\'s, 13 nobody\'s',
+      function () {
+        [4, 6].forEach(function (c) {
+          withShortMax(c, function () {
+            [[c, 'forcingChain'], [c + 1, 'forcingChainLong'], [MAX_LONG, 'forcingChainLong'],
+              [MAX_LONG + 1, null]].forEach(function (row) {
+              var m = ringNeeding(row[0]);
+              var state = SG.model.initState(m);
+              ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+                var label = 'C = ' + c + ', a ring needing ' + row[0] + ' links, ' + id;
+                var found = run(id, m, state);
+                if (id !== row[1]) {
+                  expect([label, found]).toEqual([label, null]);
+                  return;
+                }
+                expect([label, found.technique, found.i18nArgs.length]).toEqual([label, id, row[0]]);
+                expect(found.i18nKey).toBe('technique.' + id + '.step.forced');
+                expect(chainProblems(m, state, found)).toEqual([]);
+              });
+            });
+          });
+        });
+      });
+
+    it('reads C at every call, not once: the same position changes owner as SHORT_MAX changes', function () {
+      var m = ringNeeding(6);
+      var state = SG.model.initState(m);
+      function owner() {
+        var short = run('forcingChain', m, state);
+        var long = run('forcingChainLong', m, state);
+        expect([short === null, long === null].filter(function (isNull) { return !isNull; }).length).toBe(1);
+        return short !== null ? 'forcingChain' : 'forcingChainLong';
+      }
+      expect(CS.SHORT_MAX).toBe(6);
+      expect(owner()).toBe('forcingChain');
+      withShortMax(4, function () { expect(owner()).toBe('forcingChainLong'); });
+      withShortMax(5, function () { expect(owner()).toBe('forcingChainLong'); });
+      expect(owner()).toBe('forcingChain'); // restored, and still read afresh
+      withShortMax(12, function () { expect(owner()).toBe('forcingChain'); });
+      // a real position with a chain of 5 links (fixture 'contradiction chain of 5 links')
+      var five = fixtureState(CHAIN_FIXTURES[4]);
+      expect(run('forcingChain', model9, five).i18nArgs.length).toBe(5);
+      expect(run('forcingChainLong', model9, five)).toBeNull();
+      withShortMax(4, function () {
+        expect(run('forcingChain', model9, five)).toBeNull();
+        var long = run('forcingChainLong', model9, five);
+        expect([long.technique, long.i18nArgs.length]).toEqual(['forcingChainLong', 5]);
+        expect(chainProblems(model9, five, long)).toEqual([]);
+      });
+    });
+
+    it('refuses a SHORT_MAX that is not a number instead of guessing a window', function () {
+      var state = fixtureState(CHAIN_FIXTURES[0]);
+      [undefined, NaN, '6', null].forEach(function (bad) {
+        withShortMax(bad, function () {
+          ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+            var err = caught(function () { run(id, model9, state); });
+            if (!err || err.code !== 'solver.invalidOption') fail(id + ' accepted SHORT_MAX ' + String(bad));
+          });
+        });
+      });
+      expect(CS.SHORT_MAX).toBe(6);
+    });
+
+    it('narrows its window with maxChainLength and never widens it, nor raises a maximum to make it fire',
+      function () {
+        var short = fixtureState(CHAIN_FIXTURES[0]); // a chain of 3 links
+        var base = run('forcingChain', model9, short);
+        [3, 4, 6, 12, 1e9, Infinity, 3.9, '2', NaN, null, undefined, {}].forEach(function (asked) {
+          expect(run('forcingChain', model9, short, { maxChainLength: asked })).toEqual(base);
+        });
+        [2, 1, 0, -3, 0.5, 2.9, -Infinity].forEach(function (asked) {
+          expect(run('forcingChain', model9, short, { maxChainLength: asked })).toBeNull();
+        });
+        // the long window holds a chain of 7 links; 12 is its ceiling, whatever is asked
+        var near = ringNeeding(7);
+        var nearState = SG.model.initState(near);
+        var long = run('forcingChainLong', near, nearState);
+        expect(long.i18nArgs.length).toBe(7);
+        [12, 1e9, Infinity, 7, 7.9, 8, '1', NaN, null, undefined, {}].forEach(function (asked) {
+          expect(run('forcingChainLong', near, nearState, { maxChainLength: asked })).toEqual(long);
+        });
+        // a maximum below C + 1 leaves an empty window, and it is not raised: not a search that fails
+        var records = [];
+        [6, 6.9, 5, 3, 1, 0, -3, 0.5, -Infinity].forEach(function (asked) {
+          var out = run('forcingChainLong', near, nearState, { maxChainLength: asked,
+            onPatternWork: function (r) { records.push(r); } });
+          expect([asked, out]).toEqual([asked, null]);
+        });
+        records.forEach(function (r) { expect([r.work, r.capHit]).toEqual([0, null]); });
+        expect(records.length).toBe(9);
+        // Infinity reaches the ceiling and not beyond: a chain of 13 links stays out of reach
+        var far = ringNeeding(MAX_LONG + 1);
+        expect(run('forcingChainLong', far, SG.model.initState(far), { maxChainLength: Infinity })).toBeNull();
+        // the short position is forcingChain's, in every window of the long id
+        [undefined, 12, Infinity].forEach(function (asked) {
+          expect(run('forcingChainLong', model9, short, { maxChainLength: asked })).toBeNull();
+        });
+      });
+
+    it('owns every shortest proof exactly once, for C = 4 and C = 6: the windows partition the scan',
+      function () {
+        var below = idsBefore('forcingChainLong');
+        var positions = prunedStates(model9, SG.testkit.rng.create(171), 60,
+          function (r) { return 0.03 + 0.3 * r.next(); }).map(function (item) { return item.state; });
+        CHAIN_FIXTURES.forEach(function (fx) { positions.push(fixtureState(fx)); });
+        LONG_CHAIN_PUZZLES.forEach(function (text) { positions.push(stuckItem(text, below).state); });
+        var counts = { forcingChain: 0, forcingChainLong: 0, none: 0 };
+        [4, 6].forEach(function (c) {
+          withShortMax(c, function () {
+            positions.forEach(function (state, i) {
+              var seam = shortest(model9, state);
+              var short = run('forcingChain', model9, state);
+              var long = run('forcingChainLong', model9, state);
+              var at = 'C = ' + c + ', state #' + i;
+              if (seam === null) {
+                expect([at, short, long]).toEqual([at, null, null]);
+                counts.none++;
+              } else if (seam.i18nArgs.length <= c) {
+                expect([at, long]).toEqual([at, null]);
+                expect(same(short, relabelled(seam, 'forcingChain'))).toBe(true);
+                counts.forcingChain++;
+              } else {
+                expect([at, short]).toEqual([at, null]);
+                expect(same(long, relabelled(seam, 'forcingChainLong'))).toBe(true);
+                counts.forcingChainLong++;
+              }
+            });
+          });
+        });
+        expect(counts.forcingChain).toBeGreaterThan(50);
+        expect(counts.forcingChainLong).toBeGreaterThan(20);
+        expect(counts.none).toBeGreaterThan(0);
+      });
+
+    it('lies in the window of its id at every step of a full solve, alone or mixed with the others',
+      function () {
+        var ladder = lowerIds().concat(CHAIN_IDS);
+        var puzzles = EVIL.map(function (name) { return fixture(name).puzzle; })
+          .concat(LONG_CHAIN_PUZZLES.slice(0, 3));
+        var seen = { forcingChain: 0, forcingChainLong: 0, nishio: 0, nishioDeep: 0 };
+        puzzles.forEach(function (text, i) {
+          var report = SG.logicalSolver.solve(model9, H.parsePuzzle(model9, text),
+            { allowedTechniques: ladder, collectSteps: true });
+          expect([i, report.status]).toEqual([i, 'solved']);
+          report.steps.forEach(function (step) {
+            var args = step.i18nArgs;
+            if (step.technique === 'forcingChain') expect(args.length).toBeLessThan(CS.SHORT_MAX + 1);
+            if (step.technique === 'forcingChainLong') {
+              expect(args.length).toBeGreaterThan(CS.SHORT_MAX);
+              expect(args.length).toBeLessThan(MAX_LONG + 1);
+            }
+            if (step.technique === 'nishio') expect(args.depth).toBe(1);
+            if (step.technique === 'nishioDeep') expect(args.depth).toBe(2);
+            if (seen[step.technique] !== undefined) seen[step.technique]++;
+          });
+        });
+        CHAIN_IDS.forEach(function (id) { expect([id, seen[id] > 0]).toEqual([id, true]); });
+      });
+
+    it('has the work policy of IR54: forcingChain and nishio unbounded, forcingChainLong and nishioDeep 50000',
+      function () {
+        function limitOf(id, m, state, options) {
+          var records = [];
+          run(id, m, state, Object.assign({ onPatternWork: function (r) { records.push(r); } }, options));
+          expect(records.length).toBe(1);
+          expect(records[0].id).toBe(id);
+          return records[0].limit;
+        }
+        var near = ringNeeding(7);
+        var platinum = H.makeState(model9, fixture('hard-platinum').puzzle);
+        var escargot = H.makeState(model9, fixture('escargot').puzzle);
+        expect(limitOf('forcingChain', model9, fixtureState(CHAIN_FIXTURES[0]))).toBeNull();
+        expect(limitOf('forcingChainLong', near, SG.model.initState(near))).toBe(50000);
+        expect(limitOf('nishio', model9, escargot)).toBeNull();
+        expect(limitOf('nishioDeep', model9, platinum)).toBe(50000);
+        // also for a window that is empty or a position with nothing to find
+        expect(limitOf('forcingChain', model9, platinum, { maxChainLength: 0 })).toBeNull();
+        expect(limitOf('forcingChainLong', model9, platinum, { maxChainLength: 0 })).toBe(50000);
+        expect(limitOf('nishio', model9, platinum, { maxNishioDepth: 0 })).toBeNull();
+        expect(limitOf('nishioDeep', model9, platinum, { maxNishioDepth: 1 })).toBe(50000);
+      });
+
+    it('keeps forcingChain unbounded where an accidental limit of 50000 would stop it, and bounds the long id',
+      function () {
+        // An odd ring of 2001 pair units (no proof of 6 links, about 120000 edges to see) and then a ring of 5
+        // (a proof of 3 links): the short id must reach it, the long id (R10's limit) is cut before.
+        var m = ringsModel([2001, 5]);
+        var state = SG.model.initState(m);
+        var short = [];
+        var found = run('forcingChain', m, state, { onPatternWork: function (r) { short.push(r); } });
+        expect(found.i18nArgs.length).toBe(3);
+        expect(found.cells.every(function (c) { return c >= 2001; })).toBe(true);
+        expect(short[0].limit).toBeNull();
+        expect(short[0].capHit).toBeNull();
+        expect(short[0].work).toBeGreaterThan(50000);
+        // what a wrapper that forgot its limit would do: the seam default 50000 ends the scan with nothing
+        var accidental = observedBy(m, state, { id: 'forcingChain', minLength: 1, maxLength: 6 });
+        expect(accidental.finding).toBeNull();
+        expect([accidental.record.limit, accidental.record.work, accidental.record.capHit])
+          .toEqual([50000, 50000, 'work']);
+        var long = [];
+        expect(run('forcingChainLong', m, state, { onPatternWork: function (r) { long.push(r); } })).toBeNull();
+        expect([long[0].limit, long[0].capHit]).toEqual([50000, 'work']);
+      });
+
+    /** One seam call with its pattern-work record. */
+    function observedBy(m, state, opts) {
+      var records = [];
+      var finding = CS.forcing(m, state, ctxFor(m, { onPatternWork: function (r) { records.push(r); } }), opts);
+      return { finding: finding, record: records[0] };
+    }
+  });
+
   // Acceptance: nightmare puzzles that the lower technique groups cannot finish
   describe('chain group: nightmare puzzles', function () {
-    /** Applies forcingChain and nishio (and the singles they unlock) until neither finds anything. */
+    /** Applies the four chain ids (and the singles they unlock) until none finds anything. */
     function chainOnly(start, solution) {
       var state = SG.model.cloneState(start);
-      var used = { forcingChain: 0, nishio: 0 };
+      var used = { forcingChain: 0, forcingChainLong: 0, nishio: 0, nishioDeep: 0 };
       for (var step = 0; step < 200 && state.unsolvedCount > 0; step++) {
         var finding = null;
         for (var i = 0; i < CHAIN_IDS.length && finding === null; i++) {
@@ -1777,7 +2336,7 @@
       expect(shallow.status).toBe('stuck');
       var deep = SG.logicalSolver.solve(model9, givens, { allowedTechniques: ladder, collectSteps: true });
       expect(deep.solved).toBe(true);
-      expect(deep.steps.some(function (s) { return s.technique === 'nishio' && s.i18nArgs.depth === 2; }))
+      expect(deep.steps.some(function (s) { return s.technique === 'nishioDeep' && s.i18nArgs.depth === 2; }))
         .toBe(true);
     });
 
@@ -1804,6 +2363,27 @@
         }
       });
     });
+
+    it('honours maxChainLength given to the solver for the long window too: 7 and 8 links need that much',
+      function () {
+        // Lower techniques and the two chain ids, no nishio: puzzle #155 of the long-chain list is solved
+        // with chains of 7 links, #379 with chains of 8; a smaller limit leaves both stuck, a larger one
+        // changes nothing (the solver's option only narrows the windows).
+        var ids = lowerIds().concat(['forcingChain', 'forcingChainLong']);
+        [[LONG_CHAIN_PUZZLES[2], 7], [LONG_CHAIN_PUZZLES[4], 8]].forEach(function (tc) {
+          for (var limit = 1; limit <= 12; limit++) {
+            var report = SG.logicalSolver.solve(model9, H.parsePuzzle(model9, tc[0]),
+              { allowedTechniques: ids, collectSteps: true, maxChainLength: limit });
+            expect([tc[1], limit, report.solved]).toEqual([tc[1], limit, limit >= tc[1]]);
+            report.steps.forEach(function (s) {
+              if (s.technique === 'forcingChainLong') {
+                expect(s.i18nArgs.length).toBeGreaterThan(SG.chainSearch.SHORT_MAX);
+                expect(s.i18nArgs.length).toBeLessThanOrEqual(limit);
+              }
+            });
+          }
+        });
+      });
 
     it('does not trip the solver\'s state-mutation guard (SG.DEBUG) while solving them', function () {
       var before = SG.DEBUG;

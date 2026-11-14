@@ -833,14 +833,19 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    the state; no randomness; work on any unit shape through `model.units` (never assume rows and boxes); call
    `ctx.check()` in long loops. A bounded search reports its work through the optional observer
    `ctx.options.onPatternWork(record)` (`{ id, work, limit, capHit, retained }`, a fresh record per call that never
-   selects a result). The chain searches are written once as the unregistered kernels
+   selects a result). The chain searches are written once as the kernels
    `SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit })` and
    `SG.chainSearch.nishio(model, state, ctx, { id, minDepth, maxDepth, workLimit })` (`core/js/engine/tech-chain.js`):
    the inclusive range applies to the **shortest** proof of the whole search (a minimum below `min` gives `null`, so a
    longer technique never relabels a shorter proof), `length` counts edges (the longer chain of a two-chain proof,
-   not the sum), `workLimit` is 50,000 when absent and `null` for unbounded, and a spent limit gives `null`, never the
-   best proof so far. A registered wrapper intersects its own range with the explicit maximum of its caller; the
-   registered `forcingChain` and `nishio` call the kernels with their old defaults until a task registers more.
+   not the sum), `workLimit` is 50,000 when absent and `null` (or `Infinity`) for unbounded, and a spent limit gives
+   `null`, never the best proof so far. A bounded call never lets more than 256 work units pass between two checks of
+   the parent budget (it splits a larger expansion into pieces of at most 256 edges; an unbounded call keeps its
+   old cadence). The four registered chain techniques are wrappers that pass their id, both bounds and their work
+   limit explicitly, so every proof belongs to exactly one id: `forcingChain` 1 to C links and `nishio` depth 1 (both
+   unbounded), `forcingChainLong` C + 1 to 12 links and `nishioDeep` depth 2 (at most 3; both at 50,000). C is
+   `SG.chainSearch.SHORT_MAX` (6 provisionally), read at every call. A caller's `maxChainLength` and
+   `maxNishioDepth` option can only narrow a window, never widen it, and a wrapper intersects its own range with it.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -879,7 +884,8 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    that belongs to the true solution — needs no code of yours: `techniques.test.js` runs it for every registered
    technique. A rare pattern that the seeded random states seldom reach gets deterministic real positions in the
    `SUPPLEMENTS` of that fixture file (`{ name, puzzle, after, propagate }` with an explicit `after` array, a puzzle
-   with one solution): the sweep runs the complete random population of its call site first, never fewer states
+   with one solution; `forcingChainLong` and `nishioDeep` have three real positions each): the sweep runs the
+   complete random population of its call site first, never fewer states
    and never a lower firing minimum, and the supplements after it. What a finder costs on its fixtures is measured
    with `tests/pattern-cost.js` (see "Pattern cost" below); a finder reports its work through
    `ctx.options.onPatternWork` (`SG.chainSearch` in `core/js/engine/tech-chain.js` is the model).
@@ -893,7 +899,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (52 suites, 3,405 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (52 suites, 3,449 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (60 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -905,7 +911,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 52 suites,
-3,405 tests — the 36 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+3,449 tests — the 36 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -955,7 +961,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 60 suites, 52 of them quick (3,405 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 60 suites, 52 of them quick (3,449 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1108,24 +1114,31 @@ on the reference machine and measured by `node tests/perf.js`.
   record too), 1 that no trustworthy complete record could be made, 2 an invalid use. The helpers are
   `SG.fixtures.recoveryProfile` (`tests/fixtures/recovery-profile.js`), tested by the `recovery-profile` suite; the
   first profiles are reported in [docs/difficulty-v3/recovery-profile.md](docs/difficulty-v3/recovery-profile.md).
-- **Mega Nightmare deep tier (difficulty v3)** — a full-attempt Nightmare request of mega12 (4 attempts by default) or
-  mega16 (2) costs from seconds to minutes and ends in a truthful shallow fallback more often than not, so it is not a
-  quick test, and the quick `mega` suite does not ask for one. It keeps a real one-attempt mega12 request (seed 3, all
-  the invariants and the requiredness and warning checks below, inside a bounded smoke limit of 15 s before the time
-  factor, measured at 5.2 s, against the unchanged 60,000 ms request budget) and a scripted mega16 control of the
+- **Mega Nightmare and Hell 1 deep tier (difficulty v3)** — a full-attempt Nightmare request of mega12 (4 attempts by
+  default) or mega16 (2) costs from seconds to minutes and ends in a truthful shallow fallback more often than not,
+  so it is not a quick test, and the quick `mega` suite does not ask for one; since MS07b, when `nishioDeep` made the
+  Hell 1 tier real, the same holds for the Hell 1 requests of both boards (each about 30 s on mega12; see below). The
+  quick suite keeps a real one-attempt mega12 request of each level (seed 3, all
+  the invariants and the requiredness and warning checks below, inside a bounded smoke limit of 15 s (Nightmare,
+  measured at 5.2 s) or 18 s (Hell 1, measured at 7.7 s) before the time
+  factor, against the unchanged 60,000 ms request budget) and a scripted mega16 control of the
   size-default stop, the two-warning shallow fallback, an explicit number of attempts and a propagated cancellation or
   budget error. The fourteen requests of the old tests (per board the seeds 1 to 4 and the three independent CV5 calls
-  with the seeds 3, 3 and 4) belong to a tool, never to a discovered suite, to CI or to `SG_DEEP`. Run one command at
-  a time, through the shared timing lock when others use the machine, since one request can take minutes:
+  with the seeds 3, 3 and 4) belong to a tool, never to a discovered suite, to CI or to `SG_DEEP`, once per level. Run
+  one command at a time, through the shared timing lock when others use the machine, since one request can take
+  minutes:
 
   ```text
-  node tests/mega-contract.js --list                                              # the 14 requests and their relations
+  node tests/mega-contract.js --list [--level=hell1]                              # the 14 requests of a level and their relations
   node tests/mega-contract.js --request=mega12-invariant-1 --record=<id.json>     # one request, once, and its checks
-  node tests/mega-contract.js --reconcile=<records directory> --json=<file.json>  # no generation
+  node tests/mega-contract.js --reconcile=<records directory> --json=<file.json> [--level=hell1]   # no generation
   ```
 
-  The ids are `<board>-invariant-<seed>`, `<board>-cv5-a`, `<board>-cv5-b` and `<board>-cv5-other`; the two seed-3
-  CV5 calls are two generations, not two reads of one record. A request is Nightmare with trace off and no
+  The Nightmare ids are `<board>-invariant-<seed>`, `<board>-cv5-a`, `<board>-cv5-b` and `<board>-cv5-other`; the Hell 1
+  ids carry their level (`mega12-hell1-invariant-1`, `mega16-hell1-cv5-b`, ...) and that population has its own
+  manifest, record kind and reconciliation, selected by `--level` (the default is Nightmare, unchanged); a
+  reconciliation is one level's fourteen requests, never both levels at once. The two seed-3
+  CV5 calls are two generations, not two reads of one record. A request has its level with trace off and no
   `maxAttempts`, and it and its checks share one 500,000 ms budget, below the 540-second limit of a bounded command.
   `--record` is a new project-relative `<id>.json` (an existing file, an absolute or outside path, an option given
   twice or a conflicting one are refused). The record holds the request, the normalised configuration, the effective
@@ -1177,11 +1190,18 @@ on the reference machine and measured by `node tests/perf.js`.
   tool files, Node, the machine, the configuration and, per case, the Finding with its digest, the work records, the
   cap hit and min / p50 / p95 / max / mean of the time in milliseconds; everything but the clock readings is
   deterministic, and a Finding or a work record that changes between runs makes the record incomplete (exit code 1).
+  So does a fixture mismatch: a case whose Finding is not the one its fixture records, or a negative fixture that
+  finds something, stays in the record with its measurements but makes it incomplete (`complete` false, a problem
+  keyed to the case) and the tool exits with 1, even when every run agrees and even when the record claims
+  `complete: true`; a matching record passes and a case whose fixture records no expectation stays unknown.
   One caller budget of 480,000 ms, below the 540-second limit of a bounded command, is shared by every find and is
   checked again after each one, because a finder may turn a spent budget into "nothing found": a spent budget ends the
   run with the cases measured so far and a problem, never with a short sample. The helpers are
   `SG.fixtures.patternCost` (`tests/fixtures/pattern-cost.js`), tested on fake observations, fake clocks, the real
-  fixtures of `forcingChain` and `nishio` and the tool itself by the `pattern-cost-tools` suite.
+  fixtures of the chain techniques and the tool itself by the `pattern-cost-tools` suite; its test output goes to a
+  folder of its own for each invocation (`.scratch-pattern-cost-tools/<pid-time-random>/` in the repository root,
+  ignored by git) and only that folder is removed. The active fixtures cover `forcingChain`, `forcingChainLong`,
+  `nishio` and `nishioDeep` with real positions (the scoped `lawOfLeftovers` adapter is MS14b's).
 - **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
   variant offers (40 fixed seeds per variant and level through the real pipeline, 60 more for a borderline level,
   a time budget on the 95th percentile) and prints the table and the support lists; `--variant`, `--level`,
@@ -1269,7 +1289,7 @@ these are the technical details behind some of them.
   The explanation of a jump describes the generator's own solution and its limited check, never what every solver
   needs, and the work count `checks` of a rating is diagnostic only: it can differ by a few between two runs (the
   subset techniques space their budget checks with a counter that lives across solves), so the tests ignore it.
-- **Difficulty weights are engineering priors**, not measurements of human solvers: the weights of the 26
+- **Difficulty weights are engineering priors**, not measurements of human solvers: the weights of the 28
   techniques and the nine score bands were chosen from measurements of generated puzzles
   ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); the Killer weights of `ruleOf45` and
   `cageSplit` are the first candidates for a calibration with people.
@@ -1320,7 +1340,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 1,714 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 1,749 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

@@ -924,3 +924,78 @@ Named items (S-OD4, none a stop): new **S-AV21** jigsaw9 Expert exact loss (11 t
 losses, four gains), **S-AV23** jigsaw9 Nightmare and Expert cost; S-AV01, S-AV05-S-AV08, S-AV14, S-AV18-S-AV20 re-measured (S-AV08's
 690.7 s is a quick-suite figure, not measured by the 204 requests, which show no rise); the rest unchanged. Routes: MS07e, then MS18c
 (availability) and MS18d (cost).
+
+## MS07b: the four chain windows, the strict check gate, the mega Hell 1 contract
+
+`forcingChain`, `forcingChainLong`, `nishio` and `nishioDeep` are registered (28 techniques, 23 classic), each a wrapper of the MS07a seam that
+hands it its ID, both bounds and its work limit explicitly: `forcingChain` 1 to C links and `nishio` depth 1, both unbounded (their
+accepted policy; the parent budget and cancellation still apply, and the private spec says `Infinity`, never `null`), `forcingChainLong`
+C + 1 to 12 links and `nishioDeep` depth 2 (3 only when the caller asks), both at 50,000. C is `SG.chainSearch.SHORT_MAX`, 6 provisionally and
+read at every call; the cutoff is MS07c's to select. The weights are 1400 and 2600 (orders 198 and 202, baseCosts 118 and 210); Hell 1 has a
+tier for the first time (`nishioDeep`, in its help), so it is no longer a vacuous exactness case. A caller's `maxChainLength` and
+`maxNishioDepth` only narrow a window. Bounded scans now keep **at most 256 work units between two parent-budget checks** (IR52: the
+checkpoint is the work at the last check, an oversized expansion is split into pieces of at most 256 edges, every edge visited and
+counted once); the unbounded legacy cadence is unchanged. A budget swallowed by a finder is still found by the caller's own check.
+Two real positives and at least one negative per ID (long chains of 7 and 8 links, short ones of 3 and 4, depth-2 deep proofs and depth-1
+shallow ones), locales and help in both apps, and `forcingChainLong` and `nishioDeep` examples from real puzzles (28 examples).
+
+**Output differences and what caused each.** E (`docs/difficulty-v3/evidence/MS07b/`): **6 of the 520 regression hashes changed**, all
+Nightmare (classic9 seeds 2, 3 and 6765, diagonalX seeds 89, 377 and 610). MS07b's source causes all six (the accepted MS07a source reproduces the
+old hashes exactly), but it changes a dig in four ways, not one: (1) labels and weights (a 7- to 12-link proof is a Nightmare-tier
+`forcingChainLong` where it was a Master `forcingChain`; a depth-2 proof is a Hell 1-tier `nishioDeep` where it was `nishio`); (2) the allowed sets of
+the oracles (Nightmare's lost depth-2 Nishio, Master's lost 7- to 12-link chains); (3) the number of budget checks (IR59 below); (4) the
+50,000 limit of the two new IDs, which hardly binds on 9x9 (a complete negative scan of the long window costs about 4,600 to 4,900 units on the
+stuck positions of three famous puzzles). Attribution only as far as the records support it: classic9 seeds 2, 3 and 6765 and diagonalX 89 and 610
+have a `forcingChainLong` step in the new result, so the probable cause is (1) with (2): an earlier candidate of the same seed is now exact (3, 5, 5
+and 3 attempts against 8, 8, 8 and 5), or, where both runs use eight attempts (610), the fallback ranks another candidate first. **diagonalX 377
+does not fit that**: its new result (exact at attempt 4, one depth-1 `nishio`) has no `forcingChainLong` or `nishioDeep` step and would be exact under
+the old registry too, so its dig itself changed, most likely through (2); it is not attributed to one mechanism. "Nothing else in the 520
+changed" is a count (24 of 26 keys), not evidence of a single cause. The five wires G09 to G13 and 13 of the 14 analyses are unchanged;
+**G14** (mega16 Hell 2,
+seed 12) has two more compact steps: its former last `nishio` step is `nishio` at 3,603 and `nishioDeep` at 6,408 and 6,453, and the compact audit
+bridges the jump by position 72. Pins: `replay` (G14's avoided jump), `pipeline` (the capped-trace request is Nightmare seed 26: a
+classic9 Hell 1 request now spends all eight attempts, 2,225 events minimum against a cap of 2000), `purity`, Player `help` (28).
+
+**Reclassification of a published reference.** `constructed-nightmare-2` (two 7-link steps) scores 2,632 and is a **Hell 1**, `required` still
+false, where it was a Nightmare; `V3_EXPECTED` and the labelled floor row were re-derived from the registry, not fitted. The famous
+puzzles stay Hell 2 and their requiredness stays vacuous (Hell 2's tier is empty, as before); their hardest technique is now `nishioDeep`.
+
+**Hell 1 pilot** (classic9, seed 20260101, two requests, C = 6): 5,354.2 and 4,930.8 ms generation, both in band and shallow (no step
+beyond a 6-link chain or depth 1); projected GD (20 requests) 102.8 s and GQ (first 40, serial) 205.7 s as `20 x` and `40 x` the mean
+(155 s and 310 s with the soak's own reference checks). Named item: both requests are over the section 9.1 budget of 2,500 ms.
+
+**Mega Hell 1** is now deep like mega Nightmare (S-OD4, CV6-03 (1)): the same fourteen occurrences per level in `tests/mega-contract.js`
+(`--level=hell1`, ids `<board>-hell1-<role>`, its own manifest hash and record kind; the Nightmare ids and hash are unchanged), recorded once
+on the final source: 14 of 14 correct, 6 of 6 relations pass, 0 of 14 exact (every request a truthful shallow fallback), mega12 29.3 to 34.4 s,
+mega16 99.9 to 123.3 s (one request over the 120 s application guard, none over 240 s). The quick `mega` suite has a real one-attempt mega12 Hell 1 request (7.74 s measured, limit 18 s before the
+time factor) and the existing scripted mega16 control.
+
+**Evidence provenance and the cost tool (IR55).** The original of MS07a's differential is `9dfc9a3:core/js/engine/tech-chain.js` (blob
+`efa8a1fe...`, SHA-256 `40bda8ed...`), the accepted MS07a source is `959aae0` (blob `1bfa557a...`, `f8985bd2...`); the candidate of the first
+MS07a differential was not recorded (`evidence/MS07b/evidence.md` section 2). A fixture mismatch now fails a cost record and the CLI (exit 1)
+and the test sandbox is a per-run folder under the ignored `.scratch-pattern-cost-tools/`. **Wrapper cost, historical:** MS07a's final
+wrapper measured 428.7 against 417.8 ms find-only (+2.6 %) on its mostly-short-find corpus, with the standing quick set unchanged (690.2 against
+690.7 s): `docs/difficulty-v3/evidence/MS07a/evidence.md` section 4 and `transcripts.txt`; a microbenchmark of that source, not a
+generator-wide slowdown and not an S-AV item (MS18d can find it there).
+
+**Verified here, and what is not.** The final quick sets on the final tree (after the fix round's user-guide edits): Generator 3,449 of 3,449 (744.9 s over the four CI groups, fingerprint
+`f752e35b...5e0e44`), Player 1,749 of 1,749 (`f0749637...6fe2b6`), `generator-suites.sh check` exit 0; complete E on the final source (5 wires, 14
+analyses, 520 hashes), the fourteen Hell 1 deep records reconciled (14 of 14 correct, 6 relations), the pilot and the real help examples.
+Not verified: any selection of C (MS07c), the pilot's 20- and 40-request projections
+(estimates), the manual `difficulty` suite (its contracts were checked on a scratch script, not run), and a real human reading of the new help
+texts. Handoffs: the soak `--chain-window` override, the cost records and the diagnostics of the new IDs (`difficulty-diagnostics.js` counts
+chain lengths and depths of `forcingChain` and `nishio` only) to MS07c; the scoped `lawOfLeftovers` supplements and the scoped cost-tool adapter to
+MS14b; the final-source rerun of the complete Nightmare and Hell 1 deep population to MS18e. **IR59 (MS07c, MS07e):** the dig's objective guard
+(`OBJECTIVE_STEPS` = 100,000 budget checks, then the removal is refused) counts every finder check, and from Nightmare up MS07b adds the entry and
+gate checks of the new IDs and a second scan of the roots or depth-1 trials by each window (about twice the chain-scan work on the stuck positions of
+famous puzzles, plus about 19 gate checks); the guard's margin was measured on the old cadence and larger boards are the likelier place to meet it;
+count it among the possible causes of any availability or cost movement (an S-OD4 item if it shows, not a stop). **IR60 (MS07c owns the
+setter):** `SHORT_MAX` is only checked to be a number: C of 0 or less, 12 or more or `Infinity` is accepted, though R9 allows 4 or 6 only; no production
+path sets C. Named items (S-OD4, none a stop; numbers proposed): S-AV08
+re-measured, the standing quick cost 744.9 s against 690.2 s (+54.7 s, +7.9 %; 739.2 s in the run before the guide fix; the G14 golden now rating `nishioDeep` positions); new **S-AV24** mega Hell 1
+request time (against the 120 s application guard: mega16 median 116.7 s, max 123.3 s, one request of 7 over it; against the 30 s qualification
+figure: mega12 median 34.2 s, 6 of 7 over it, mega16 7 of 7), **S-AV25** no exact Hell 1 puzzle in the
+deep population or the pilot (0 of 14, 0 of 2) and no depth-2 step in 12 more Hell 1 puzzles of the discovery (none in 28 Hell 1 generations on this
+source): **the classic9 Hell 1 GD batch at MS07e (at least 90 % exact of 20) is expected to fail**, an availability result, not a regression,
+**S-AV26** classic9 Hell 1 requests 4.9 to 5.4 s against the 2.5 s budget (an indication: two requests, not section 9.1's p95; related to S-AV19);
+routes MS07e, then MS18c and MS18d.

@@ -1,0 +1,10 @@
+$ node tests\node-runner.js --suite=help
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   help: 27 passed  (1.09 s)
+
+Suites: 1
+Tests:  27 total, 27 passed, 0 failed, 0 skipped
+Time:   1.09 s running tests, 1.14 s total
+exit=0 seconds=1.240

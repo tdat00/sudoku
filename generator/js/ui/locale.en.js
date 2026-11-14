@@ -351,9 +351,17 @@
     'technique.forcingChain': 'Forcing Chain',
     'technique.forcingChain.desc': 'A chain of "if this, then that" deductions that proves a candidate ' +
       'false (or a digit true).',
+    'technique.forcingChainLong': 'Long Forcing Chain',
+    'technique.forcingChainLong.desc': 'The same kind of chain as the Forcing Chain, but one that is too ' +
+      'long for it: the shortest chain that works has more links than the plain Forcing Chain allows (up ' +
+      'to 12 links).',
     'technique.nishio': 'Nishio (trial and error)',
     'technique.nishio.desc': 'Trial and error with a limit: assume a candidate is true; when simple ' +
       'deductions then lead to a contradiction, the candidate is false.',
+    'technique.nishioDeep': 'Deep Nishio (a guess inside a guess)',
+    'technique.nishioDeep.desc': 'Trial and error on two levels: assume a candidate is true; when simple ' +
+      'deductions, helped by one more trial inside that assumption, lead to a contradiction, the ' +
+      'candidate is false. It is only used when a plain trial is not enough.',
     'technique.cageCombo.desc': 'The digits of a cage are all different and add up to its sum, which often ' +
       'leaves only a few possible combinations.',
     'technique.ruleOf45.desc': 'Every row, column and box adds up to 45, and so do several of them together ' +
@@ -440,7 +448,19 @@
       'candidate were false, some candidate would be both true and false, which is impossible. So the ' +
       'first candidate is true and is placed.',
     'technique.nishio.step': 'Trial and error (depth {depth}): if {label} were {digit}, simple deductions ' +
-      'would end in a contradiction. So {digit} is removed from {label}.'
+      'would end in a contradiction. So {digit} is removed from {label}.',
+    'technique.forcingChainLong.step.endpoints': 'Long forcing chain of {length} links: {chains}. If the ' +
+      'first candidate is false, the last one is true, so at least one end of the chain is true. ' +
+      'Candidates that see both ends are removed.',
+    'technique.forcingChainLong.step.contradiction': 'Long forcing chain of {length} links: {chains}. If ' +
+      'the first candidate were true, some candidate would be both true and false, which is impossible. ' +
+      'So the first candidate is false and is removed.',
+    'technique.forcingChainLong.step.forced': 'Long forcing chain of {length} links: {chains}. If the ' +
+      'first candidate were false, some candidate would be both true and false, which is impossible. So ' +
+      'the first candidate is true and is placed.',
+    'technique.nishioDeep.step': 'Deep trial and error (depth {depth}): if {label} were {digit}, simple ' +
+      'deductions together with a second trial inside that assumption would end in a contradiction. So ' +
+      '{digit} is removed from {label}.'
   });
 
   // Event log lines, one per key of SG.events.vocabularyKeys() (killer, wordoku, jigsaw and multigrid add

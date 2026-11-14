@@ -108,7 +108,7 @@ changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-a
 - **15 variants** — classic 4×4, 6×6 and 9×9; Mega 12×12 and Monster 16×16; Diagonal (X); Hyper (Windoku);
   Jigsaw; Killer; Greater-Than; Samurai, Sohei, Butterfly and Flower (overlapping grids); Wordoku.
 - **Nine difficulty levels** — very easy, easy, normal, hard, expert, master, nightmare, hell 1 and
-  hell 2 — scored from 21 human solving techniques (singles, locked candidates, subsets, fish, wings,
+  hell 2 — scored from 23 human solving techniques (singles, locked candidates, subsets, fish, wings,
   chains) plus 3 cage and 2 inequality techniques; every variant offers the levels it reaches reliably.
 - **Step-by-step replay** of the generation, moved by hand (first, previous, next and last step, or a slider
   with a notch for every step), in two views of the same changes: by default a few steps chosen so that the score
@@ -341,7 +341,7 @@ account, nothing to install. **Open it: [tdat00.github.io/sudoku/player](https:/
   on-screen number pad; notes (`N`); erase; undo / redo (`Ctrl+Z`, `Ctrl+Y`).
 - Error checking: off, rule conflicts (repeats, cage sums, signs) or every wrong entry as you type.
 - **Hints** in three steps (the technique and where to look, the cells, the move) that are always correct and
-  name one of 26 techniques, with a translated name and description.
+  name one of 28 techniques, with a translated name and description.
 - Symbol modes: digits, letters, colours (always with a shape), shapes and the Wordoku word; a solved Wordoku
   shows its key word and, when the built-in word book knows the word, its meaning.
 - A timer that pauses when you leave the tab, completion detection and reveal-a-cell.
@@ -356,7 +356,7 @@ account, nothing to install. **Open it: [tdat00.github.io/sudoku/player](https:/
   keys next to it; on a small screen the tools and the pad are fixed to the bottom and the buttons are icons.
 - Settings (language, theme, text size, reduced motion, colour symbol, check mode, notes behaviour,
   coordinates), and a **guide** (`help.html`, opened by the Help button in a new tab): the basics of playing, how
-  the hints work, the techniques that solve harder puzzles with a real example for each of the 26, and the
+  the hints work, the techniques that solve harder puzzles with a real example for each of the 28, and the
   keyboard shortcuts.
 - Accessible: skip link, an ARIA grid with spoken cell labels, live announcements, focus kept in dialogs,
   contrast checked from the design tokens, forced-colours and reduced-motion support.

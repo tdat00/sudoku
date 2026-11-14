@@ -27,7 +27,8 @@
  * current order is its own list, `registryOrder`, which the registry test compares with the real registry.
  * `byId` (and `ids`) is the ACTIVE map: the historical one plus the explicit `CURRENT` entries, which replace
  * an ID's fixtures from now on without touching a v2 position. A later technique adds its entry to CURRENT,
- * built from explicit `after` lists or an initial real puzzle state.
+ * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
+ * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way.
  */
 (function () {
   'use strict';
@@ -44,13 +45,15 @@
   ];
 
   /**
-   * The 21 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER only in the place of jellyfish.
+   * The 23 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the two chain
+   * windows added by MS07b (forcingChainLong, nishioDeep).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'simpleColouring', 'swordfish',
-    'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle', 'forcingChain', 'nishio'
+    'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle', 'forcingChain', 'forcingChainLong', 'nishio',
+    'nishioDeep'
   ];
 
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
@@ -743,19 +746,206 @@
     { name: 'the empty board', puzzle: new Array(82).join('.'), after: null, propagate: false }
   ];
 
-  /** Current fixtures that replace a historical entry (none yet), in the shape of the entries of the map. */
-  var CURRENT = {};
+  /**
+   * Explicit positions of the chain IDs under rating v3 (MS07b). The arrays are copied lists of registered ids,
+   * so that a technique registered later cannot move a position: the techniques below the chain group (in the
+   * order of the registry), then forcingChain, forcingChainLong and nishio, one after the other. Each position
+   * is where the solver, allowed only the ids of its list, gets stuck, which is where the next ID is reached.
+   */
+  var BELOW_CHAINS = [
+    'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
+    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'simpleColouring', 'swordfish',
+    'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle'
+  ];
+  var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
+  var THROUGH_LONG_CHAIN = THROUGH_SHORT_CHAIN.concat(['forcingChainLong']);
+  var THROUGH_NISHIO = THROUGH_LONG_CHAIN.concat(['nishio']);
+
+  // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
+  // puzzles of tests/fixtures/classic.js; the last two are minimal puzzles dug by SG.testkit.dig from the
+  // seeded stream 161 (fork 'minimal.<i>'), the ones whose first long chain has 7 and 8 links.
+  var V2_PUZZLE_1 = '2.6...8.......357...59....1...2..41..5..8.3..1...4...6.2..157...8..........7...6.';
+  var V2_PUZZLE_2 = '.6125...3..5.......9...81.....8...469....672.....3..8..7.3......5....6..6.....234';
+  var ESCARGOT = '1....7.9..3..2...8..96..5....53..9...1..8...26....4...3......1..4......7..7...3..';
+  var HARD_B = '..53.....8......2..7..1.5..4....53...1..7...6..32...8..6.5....9..4....3......97..';
+  var PLATINUM = '.......12........3..23..4....18....5.6..7.8.......9.....85.....9...4.5..47...6...';
+  var WORLDS_HARDEST = '8..........36......7..9.2...5...7.......457.....1...3...1....68..85...1..9....4..';
+  var NUGGET = '.......39.....1..5..3.5.8....8.9...6.7...2...1..4.......9.8..5..2....6..4..7.....';
+  var LONG_7 = '..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.';
+  var LONG_8 = '......4..4..8...15.5...7....8...19....23.8.......64.7........8614.........9.2...3';
+  var LONG_7B = '...284.....51..83.....53....9.........8.....6.6..351.437.....6....4.2..88.......7';
 
   /**
-   * Supplemental soundness positions per technique id (rating v3, MS07a; none yet). The sweep of
-   * techniques.test.js always runs the complete seeded random population of its call site first (120 states for
-   * the chain group, 300 for the others, seed 20260101, minFirings 3) and these positions after it, so that a
-   * rare pattern gets real positions without weakening or replacing the random ones. An entry is a list of
-   * positions in the shape of the positive fixtures above ({ name, puzzle, after, propagate }): a real puzzle
-   * with exactly one solution, and an explicit `after` array of registered ids (or null), never the
-   * `before(id)` / `through(id)` of an id that is not in LADDER.
+   * Current fixtures that replace a historical entry, in the shape of the entries of the map. The short chain
+   * fixtures have at most 4 links and the long ones at least 7, so that a cutoff of C = 4 or C = 6 (R9) keeps
+   * every one of them in its ID. The negatives include a position where a shorter ID owns the proof.
    */
-  var SUPPLEMENTS = {};
+  var CURRENT = {
+    forcingChain: {
+      positive: [
+        {
+          name: 'forcingChain contradiction of 4 links on puzzle 2',
+          puzzle: V2_PUZZLE_2,
+          after: BELOW_CHAINS,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[12, 7]]
+          }
+        },
+        {
+          name: 'forcingChain contradiction of 3 links on the first position of hard-b',
+          puzzle: HARD_B,
+          after: null,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[29, 2]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'forcingChain has nothing left to do once the techniques through it are exhausted',
+          puzzle: V2_PUZZLE_1,
+          after: THROUGH_SHORT_CHAIN,
+          propagate: true
+        }
+      ]
+    },
+    forcingChainLong: {
+      positive: [
+        {
+          name: 'forcingChainLong contradiction of 7 links on a dug puzzle',
+          puzzle: LONG_7,
+          after: THROUGH_SHORT_CHAIN,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[48, 3]]
+          }
+        },
+        {
+          name: 'forcingChainLong contradiction of 8 links on a dug puzzle',
+          puzzle: LONG_8,
+          after: THROUGH_SHORT_CHAIN,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[1, 9]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'forcingChainLong finds nothing on the stuck position of hard-platinum (no chain at all)',
+          puzzle: PLATINUM,
+          after: THROUGH_SHORT_CHAIN,
+          propagate: true
+        },
+        {
+          name: 'forcingChainLong leaves a chain of 4 links to forcingChain (the shortest proof is not its own)',
+          puzzle: V2_PUZZLE_2,
+          after: BELOW_CHAINS,
+          propagate: true
+        }
+      ]
+    },
+    nishio: {
+      positive: [
+        {
+          name: 'nishio depth 1 on puzzle 1',
+          puzzle: V2_PUZZLE_1,
+          after: THROUGH_LONG_CHAIN,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[4, 7]]
+          }
+        },
+        {
+          name: 'nishio depth 1 on puzzle 2',
+          puzzle: V2_PUZZLE_2,
+          after: THROUGH_LONG_CHAIN,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[6, 4]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'nishio finds nothing on a board where every candidate is still possible (the empty board)',
+          puzzle: '.................................................................................',
+          after: null,
+          propagate: false
+        },
+        {
+          name: 'nishio leaves the refutation of hard-platinum, which needs a guess inside a guess, to nishioDeep',
+          puzzle: PLATINUM,
+          after: THROUGH_LONG_CHAIN,
+          propagate: true
+        }
+      ]
+    },
+    nishioDeep: {
+      positive: [
+        {
+          name: 'nishioDeep depth 2 on hard-platinum',
+          puzzle: PLATINUM,
+          after: THROUGH_NISHIO,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[23, 8]]
+          }
+        },
+        {
+          name: 'nishioDeep depth 2 on the 2012 puzzle',
+          puzzle: WORLDS_HARDEST,
+          after: THROUGH_NISHIO,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[21, 3]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'nishioDeep leaves the depth 1 refutation of escargot to nishio (the shortest proof is not its own)',
+          puzzle: ESCARGOT,
+          after: THROUGH_LONG_CHAIN,
+          propagate: true
+        }
+      ]
+    }
+  };
+
+  /**
+   * Supplemental soundness positions per technique id (rating v3, MS07a). The sweep of techniques.test.js always
+   * runs the complete seeded random population of its call site first (120 states for the chain group, 300 for
+   * the others, seed 20260101, minFirings 3) and these positions after it, so that a rare pattern gets real
+   * positions without weakening or replacing the random ones. An entry is a list of positions in the shape of
+   * the positive fixtures above ({ name, puzzle, after, propagate }): a real puzzle with exactly one solution,
+   * and an explicit `after` array of registered ids (or null), never the `before(id)` / `through(id)` of an id
+   * that is not in LADDER. MS07b: the random population never reaches a chain of 7 or more links nor a guess
+   * inside a guess (0 firings in 120 states), so the two new chain IDs get three real positions each.
+   */
+  var SUPPLEMENTS = {
+    forcingChainLong: [
+      { name: 'a long chain of 7 links (dug puzzle)', puzzle: LONG_7, after: THROUGH_SHORT_CHAIN, propagate: true },
+      { name: 'a long chain of 8 links (dug puzzle)', puzzle: LONG_8, after: THROUGH_SHORT_CHAIN, propagate: true },
+      { name: 'a second chain of 7 links (dug puzzle)', puzzle: LONG_7B, after: THROUGH_SHORT_CHAIN,
+        propagate: true }
+    ],
+    nishioDeep: [
+      { name: 'depth 2 on hard-platinum', puzzle: PLATINUM, after: THROUGH_NISHIO, propagate: true },
+      { name: 'depth 2 on the 2012 puzzle', puzzle: WORLDS_HARDEST, after: THROUGH_NISHIO, propagate: true },
+      { name: 'depth 2 on golden nugget', puzzle: NUGGET, after: THROUGH_NISHIO, propagate: true }
+    ]
+  };
 
   var BY_ID = Object.assign({}, HISTORY_BY_ID, CURRENT);
 
