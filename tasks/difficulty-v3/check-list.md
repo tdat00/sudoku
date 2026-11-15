@@ -227,11 +227,12 @@ The following are serial ownership transfers, not permission for parallel edits:
 | Qualification-authorized performance targets | MS18d under the existing rule; CV6-05's conditional final Normal contract is decided through MS18c and implemented in one assigned step before MS18d timing, never after GP |
 | Regression/replay fixtures and `player/js/ui/help-examples.js` | behavior owner using its gate; recovery final GG/GR/pins exclusively MS05r6a, r6b checks current merges; no recovery GH or separate fixture writer |
 | Standing quick cost, AGENTS quick comments and both developer-guide testing paragraphs | MS05r6b before final quick freeze; actual cost data afterwards in the separate report, acknowledged with combined acceptance. MS07f owns S-OD8's before/after per-app costs and guide/design tier descriptions; no unrelated AGENTS edit |
-| `.github/scripts/generator-suites.sh`, both workflows and bounded CI manifest | MS05r6c first; each later suite-adding task owns its group/membership update; MS07f owns S-OD8's current inventory/count/projection update after MS08a without changing job IDs, factor or timeouts; MS18e owns the final-tree audit and v3 PR CI |
+| `.github/scripts/generator-suites.sh`, both workflows and bounded CI manifest | MS05r6c first; each later suite-adding task owns its group/membership update; MS07f owns S-OD8's tier move. From MS10a, every remaining task that owns quick verification also owns bounded timing/projection metadata maintenance under "Maintaining CI quick projections" below, even without adding a suite; no other ownership expands. MS18e owns the final-tree audit and v3 PR CI |
 | Living guides/designs and test HTML lists | the current task only, for the facts/files it changes |
 
-The task's detailed file list controls. An unlisted file needs orchestrator assignment; report a defect
-outside the scope rather than quietly taking another task's work.
+The task's detailed file list controls, with the explicit timing-metadata exception below. Any other
+unlisted file needs orchestrator assignment; report a defect outside the scope rather than quietly
+taking another task's work.
 
 ### Per-task protocol and commits
 
@@ -254,6 +255,77 @@ outside the scope rather than quietly taking another task's work.
 6. A rejected task gets a bounded fix round. An unexpected baseline failure is reported, not hidden by
    rewriting assertions. A later source change invalidating evidence requires replacement evidence.
 7. Each split parent is marked done after all its suffixes are accepted; no additional parent commit.
+
+### Maintaining CI quick projections — SA2 ruling, 2026-11-16
+
+**Decision (a), starting with the active MS10a task.** Maintain planning estimates in the task
+that changes the quick workload; neither a new quick-tier task now nor deferral of stale estimates
+to MS18e is required. This supersedes IR72 I1's "projections only when it adds a suite" restriction
+for timing/projection metadata only, and the MS10a dispatch instruction to stop with `QUESTION:`
+solely because a measured shard exceeds its projection. It adds no test run or generation gate.
+
+**Scope.** Every remaining task that already owns quick verification may edit
+`.github/scripts/generator-quick.json`'s Generator-shard and Player `projectionSeconds`, together
+with the already-owned counts, measured seconds and provenance. This permission applies even
+when the task adds no suite and its file list names no manifest. It does not authorize changing
+group/job/shard IDs, suite membership, commands, test tiers, `outOfCi`, assertions, test timeouts,
+`SG_TIME_FACTOR`, the CI slowdown factor, job overhead or workflow timeouts. Separately assigned
+suite additions keep their existing ownership; do not use that route merely to hide a slowdown.
+
+**Rule, raises only.** Let `m` be the largest already-recorded process-wall duration in seconds
+from successful complete-coverage runs of the same shard selection on the relevant source and
+normal settings, excluding lock wait and inter-command gaps. For the Player use its whole
+quick-process wall time. Do not substitute a Generator group total, runner body time or a
+per-test percentile for a shard's process time.
+Keep the timing conventions explicit when the existing informational fields use another clock.
+
+```text
+newProjectionSeconds = max(oldProjectionSeconds, 10 * ceil(1.5 * m / 10))
+```
+
+Apply the 1.5 planning margin, rounded up to ten seconds, proactively when the old projection
+lacks that margin, not only after it is exceeded. Never lower a projection under this permission.
+Before the first run, the latest accepted predecessor's comparable measurement may supply a
+labelled provisional basis; after final-source quick verification, recompute using that source's
+completed measurements. Do not run a benchmark campaign, rerun a valid check merely for a
+projection edit, choose the fastest repeat or change test settings to make the estimate fit.
+The margin is an estimate, not a statistical guarantee or a test-performance assertion.
+For example, MS09b's Player process wall of 56.3 s would raise 60 to 90 s; MS10a must use its
+own final measurements for its final revision, not relabel this historical example as current.
+
+**Admission and fixed ceilings.** Each projection must remain <=450 s (the manifest's existing
+per-shard ceiling). With the unchanged overhead 180 s and slowdown factor 3, each Generator
+group must satisfy `180 + 3 * sum(projectionSeconds) <= 1800`. Check the actual workflow limits
+as well: **both Player jobs are 15 minutes, so `180 + 3 * player.projectionSeconds <= 900`**.
+The helper currently prints/checks the Player against the generic 1800 s manifest ceiling;
+that is not permission to use 30 minutes for the Player. Preserve all smaller workflow limits.
+Run the existing registration/group CI check and record the additional actual-workflow arithmetic.
+
+If the formula would exceed a shard or actual job ceiling, do not clamp it, lower the margin,
+write an invalid manifest or raise a ceiling. Report the measured/proposed values and the
+unsatisfied constraint with `QUESTION:` for an orchestrator-assigned bounded regrouping or other
+approved action. Continue independent safe work under S-OD4, but leave CI-cost readiness unresolved.
+No new test move, assertion change or timeout increase is authorized by this ruling.
+
+**Estimation misses are not failed assertions.** Retain the actual duration/outcome and record
+the projection revision with `old projection | m | source/command/machine/time factor | calculation |
+new projection | affected job total/actual limit | CI check`. Carry actual quick-cost growth in
+S-AV08 and the task's item list; raising a forecast does not reduce or resolve that cost.
+A completed green run above its old estimate stays a measured green run, not a timing-contract
+failure. A real timeout, failed assertion, incomplete coverage or stale fingerprint stays failed
+or incomplete; no metadata edit repairs it.
+
+**IR72 G/J stay intact.** CI projections do not replace IR12's recorder-item projections or its
+450 s admission rule, and they never raise the 540 s process ceiling, lock/gap rules, individual
+test limits or any GD/GQ/GP/CV6 contract. Re-plan before a later command if its bound is no longer
+credible. Use existing authorized disjoint quick shards when a whole group is unsafe; this is
+local execution planning, not permission to change CI membership or omit a test.
+
+The manifest is outside both current quick fingerprints: a timing-metadata-only edit after a
+valid final quick run needs the CI check and fingerprint confirmation, not another quick run.
+If fingerprinted code, fixtures, guides or runner inputs change, replace the affected evidence
+as usual. MS18e audits every revision, the final margin and actual workflow limits, plus the
+matching-head remote durations; a local projection or registration check is not a remote-CI pass.
 
 ### S-OD4 stop, item and review protocol
 
@@ -557,6 +629,7 @@ No implementer chooses an alternative from the original reports.
 | Q-MS07e-1 / S-OD7 | Owner, 2026-11-15 14:42, `ask_user` and email: Killer Hard (0/14) and Expert (1/14) stay **hidden until later calibration**; no Killer weight recalibration inside v3. MS18c preserves both cells' raw final qualification and separately records the owner-directed withholding, even if a raw cell later qualifies; MS18e audits S-AV05/S-AV06. This narrows the product offer, never offers an unqualified cell or reduces the 135-cell protocol. No interim live-list change is assigned. |
 | MS07e section 9 / S-OD8 | Owner, same time/channel, approves the three `pipeline` generation-cost ratios moving to manual `perf`, plus the replay split: classic9 Hell 1 seed 3 stays quick; mega16 Nightmare seed 478576959 and Hell 1 seed 2422420669 move to manual `variants`. Requests/seeds/assertions/limits remain byte for byte; the loss of their PR-CI coverage is accepted. Dispatch MS07f after MS08a and before MS08b; update r6c CI manifest/group metadata, both developer guides/design and measured before/after per-app quick cost. No other tier move, asserted saving or five-minute guarantee is approved. |
 | Q-MS07e-2 / SA2 implementation ruling | No projection-rule change or speculative one-off launch; the six named unexecuted cells and their projections in section 2 route to MS18c. Final-source bounds, including the serial second round, must credibly fit <=450 s under the unchanged 540 s ceiling. No early-stop credit, scheduler fix, changed jobs or new tooling/evidence class is authorized. Incomplete final qualification still cannot be published. |
+| IR72 I1/G/J / CI projection maintenance, SA2 2026-11-16 | From MS10a, tasks owning quick verification may raise manifest timing projections without adding a suite: `max(old, 10 * ceil(1.5 * measured process seconds / 10))`, with source-qualified before/after evidence and the section 2 guards. A projection miss alone is not a stop. Each shard stays <=450 s; unchanged CI arithmetic must fit actual workflow limits (Generator 1800 s, Player 900 s). No tier/membership, factor, overhead, timeout or test-contract change; no change to IR12/GQ/GP planning rules. MS18e audits final projections and actual remote durations. |
 | FS22 implementation disposition, updated by S-OD3/S-OD4 and B1 | MS05r2 absorbed consumers; b3 follows r5p/r5/r5m under the approved contracts, not passed original mega limits. Lazy per-level I5/CV3 remains; the mega CV3 cells run live under B1 with their own checks. Syntax is not GD evidence. MS14c stays corpus-free; final I5 remains per level. |
 | SA1 IR02 / IR04, implementation review 2026-11-14 | Binding B1 is copied into MS05b3: live mega CV3, no record provider/replay entry point/reuse code or edits to the deep tool/fixture/SOURCE_FILES. r6a/r6b check both currentMatches hashes explicitly; retain only a proved exact-diff non-generation-file mismatch, else execute their named MEGA-REFRESH step. Original hashes/records remain untouched. |
 | FS12-FS16 / FS20 implementation dispositions; CV6-05 sign handoff | `acceptReveal` receives current/next exact flags. A cells guided winner refused by the apply table ends that pass; local acceptance retains `next.score < spec.max`. MS06c1 transports null/inert metadata with no production draw; MS06c2 draws once and activates all candidate-comparing stages. The real `signs` strategy receives but ignores `options.target`; `digger-target` proves its originating target reaches the selected result. No partial intermediate policy, sign comparator, new RNG stream or post-exact polishing. |

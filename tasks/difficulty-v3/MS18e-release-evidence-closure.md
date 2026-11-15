@@ -118,6 +118,15 @@ minutes, unchanged time factor and no raised timeout. Preserve the PR's smaller 
 core/Player/browser jobs and Pages dependency/trigger rules. Workflow comments must point to the
 actual final offline deep/GD/E/GQ/GP evidence, not claim r5m's old source validates new techniques.
 
+Apply check-list section 2's "Maintaining CI quick projections" rule to the final measurements:
+audit the recorded before/after revisions, the 1.5 process-wall margin rounded up to ten seconds,
+the authority for any membership/tier change, and the unchanged factors and ceilings.
+In both current workflows the Player job has **15 minutes (900 s)**, although the helper reports
+its generic 30-minute manifest ceiling.
+Verify `180 + 3 * player.projectionSeconds <= 900` explicitly; a helper pass against 1800 s is
+insufficient. No estimate revision turns a timeout or missing remote result into a pass.
+The final helper/workflow audit must account for this difference without raising the Player timeout.
+
 #### Recovery items that must receive a final audit disposition
 
 Carry these named items from the combined MS05 source `00647f9` and SA1's recovery reviews.

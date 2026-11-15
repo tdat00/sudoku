@@ -18,6 +18,12 @@ an inconsistent odd cycle.
 In: remotePairs plus full B. Out: WXYZ, uniqueness or general chain changes.
 AGENTS/checklist, no Git/pack/log writes, CRLF, EN+VI, complete task-owned evidence.
 
+**Quick projections (SA2, 2026-11-16):** check-list section 2, "Maintaining CI quick projections",
+applies now and supersedes a `QUESTION:` solely for exceeding an old shard estimate. This task
+may raise timing projections under that fixed rule even without adding a suite. It may not
+move tests, change grouping or increase any timeout/factor. A proposed projection that cannot
+fit the fixed shard/actual-workflow ceilings still needs orchestrator assignment.
+
 ## Inputs & context
 
 R13, verbatim:
@@ -45,13 +51,17 @@ Baseline `core/js/engine/tech-wing.js:130-187` (`function findXyWing`);
 ## Files to create/modify
 
 - Wing engine/suite; full B and E; applicable Generator/Player design and both guide languages.
+- `.github/scripts/generator-quick.json`: timing/projection and informational metadata only,
+  under check-list section 2's rule; no membership, job-limit or test-tier change.
 
 ## Implementation steps
 
 1. Build per-mask peer components and deterministic colouring/path witnesses.
 2. Validate parity/minimum and both-digit removals; add real exact-Finding fixtures.
 3. Add weight/registration/locale/help/current reference data atomically.
-4. Measure bounds, refresh E/GH and finish quick sets.
+4. Measure bounds, refresh E/GH and finish quick sets. Reconcile CI projection margins from the
+   recorded process times, retain the before/after calculations and run the CI check; verify
+   the Player's actual 900 s workflow budget, not the helper's generic 1800 s display.
 
 ## Acceptance criteria — Business
 
@@ -66,7 +76,7 @@ Baseline `core/js/engine/tech-wing.js:130-187` (`function findXyWing`);
 |---|---|
 | MS10a-T01 | Odd/even, shortest nontrivial witness and inconsistent-component rejection pass |
 | MS10a-T02 | Actual peers, state purity, cancellation/caps and full B pass |
-| MS10a-T03 | E/GH/cost and both quick sets pass |
+| MS10a-T03 | E/GH/cost and both quick sets pass; CI projection revisions follow check-list section 2 and fit the unchanged actual workflow limits |
 
 ## Test plan and gates
 
