@@ -593,3 +593,21 @@ Decisions D1-D10 and applicable approvals A1-A8 remain pending. D9/A7 adds the m
 and restricted-floor probes; D10/A8 adds frozen-source preparation, repairs, reproof and recalibration.
 Apart from the separately authorised compatibility smoke, no new measurements, IG-S06,
 Nightmare 706-709 catch-up or frozen round are authorised. The gate remains `not-evaluable-pre-freeze`.
+
+## Plan version 2 (plan author, 2026-11-15)
+
+`plan.md` is revised to version 2 from the provisional round and the r3 report, as "Next actions" 4 asked. Its
+section 0 gives the estimate against the measurement and the changes; errata E1 to E10 are taken into it. It
+authorises no run and changes no gate: the gate remains `not-evaluable-pre-freeze`.
+
+- **As estimated:** S5a (x1.8 to 3.2 on the wall clock, the same puzzles). **Below the estimate:** the first
+  phases as built (1.3 to 2.1 times short of the report's figures), because the partial S3 added nothing.
+  **No evidence either way:** S1's hit rate (no exact puzzle in any mode, controls included). **No saving:** S2.
+- **Changed:** phase 1 is the version field, history v2 and S5a only; S3 is re-scoped to the chain kernels and
+  gated by the frozen SM1; S1 and S2 get a stop rule at the frozen SM2 screen; S5b is promoted and decoupled
+  from S1; S7 targets the full-grid search first; the "1,296 solves per sample" and "10 times fewer solves"
+  premises are withdrawn.
+- **Positions on D1 to D10:** plan section 5. They are proposals for the pack author and the owner, not
+  approvals; A1 to A8 stay pending.
+- **Owner decisions:** plan section 7 (new: OD-S5, the pool's CPU cost; the harness repair on the frozen source
+  before the frozen budget is set).

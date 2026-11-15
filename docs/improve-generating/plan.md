@@ -1,11 +1,17 @@
 # Improve generating (Sudoku): a faster generator for the upper levels
 
-> **Reviewed 2026-11-14.** The joint analysis in [report.md](report.md) and the plan-author answers and revised phase
-> order in [clarifications.md](clarifications.md) supersede this plan where they differ. In particular §4's
-> projections, S1 as a speed item, the "byte-identical" claim of S3 and OD-S1's "stored puzzle" wording are withdrawn.
+> **Version 2 (2026-11-15), revised after the provisional phase-0 round.** Version 1 is this file at commit
+> `1437774`. Version 2 folds in the joint analysis ([report.md](report.md)), the plan-author answers IG-S-Q01 to
+> IG-S-Q16 ([clarifications.md](clarifications.md)) and the provisional measurements
+> ([evidence/phase0/provisional-r1/report-r3.md](evidence/phase0/provisional-r1/report-r3.md), with its errata E1
+> to E10). Section 0 lists what changed and why. **Every measured number is provisional and stale:** the
+> MS05e-era runtime (`f7be90f`) on the rating-version-2 catalogue, Node, three paired seeds per cell (eight grid
+> clusters for SM2), no browser run. Rating v3 (MS06, MS07) has since changed tiers, weights and the chain
+> kernels. The formal gate is `not-evaluable-pre-freeze`; nothing here is a gate result or an offer.
 
-Plan author: claude-fable-5-2, 2026-11-14. Written with the answer to **PR-S2**
-([clarifications.md](../difficulty-v3/clarifications.md)). Status: **proposal, nothing implemented**.
+Plan author: claude-fable-5-2, 2026-11-14; version 2 on 2026-11-15. Written with the answer to **PR-S2**
+([clarifications.md](../difficulty-v3/clarifications.md)). Status: **proposal; nothing implemented in production**;
+the prototypes are test-side harnesses under `generator/tests/artifacts/improve-generating/`.
 It is the input of a later feature ("improve-generating"); architects turn it into a design and a task pack.
 
 Inputs read: [generator-state-2026-11-14.md](../difficulty-v3/generator-state-2026-11-14.md) (pipeline, cost
@@ -14,8 +20,68 @@ model, every recorded timing) and the code of the snapshot `1d19101` (`generator
 `generator/js/worker/worker-client.js`, `gen.worker.js`).
 
 Labels, as in the state report: **Fact** (measured or read from the code), **Analysis** (derived, derivation
-given), **Projection** (expected, not measured). **No generation, test or timing was run for this plan.** Every
-speed-up below is a projection until the measurement phase (section 5) confirms it; each proposal has a gate.
+given), **Projection** (expected, not measured), and from version 2 **Measured (provisional)**: a row of
+`report-r3.md`. Version 1 ran nothing; version 2 ran nothing either and only reads the records of the prototype
+pack. Each proposal keeps a gate.
+
+## 0. What version 2 changes
+
+### 0.1 Estimate against provisional measurement
+
+Nightmare at the default work, ready wall time in Node, median of three paired seeds, trace off. "First phases"
+is the report's estimate for full S3 x S4 x S5a. Only S5a and a partial S3 (singles and subsets) were built.
+
+| Cell (attempts) | Today, report | Today, re-measured | Report: after the first phases | Measured: S5a at width 4 | S5a factor: estimated; measured (range) | Exact, before and after |
+|---|---|---|---|---|---|---|
+| mega16 (2) | 104.1 s | 107.5 s | 39 s | 55.9 s | 1.7 to 1.8; 1.92 (1.66 to 1.96) | 0 of 3; 0 of 3 |
+| mega12 (4) | 23.7 s | 23.4 s | 5.4 s | 7.1 s | 2.8 to 3.0; 3.22 (3.04 to 3.43) | 0 of 3; 0 of 3 |
+| samurai (2) | 26.7 s (the larger of two) | 24.9 s | 10.3 s | 13.6 s | 1.7 to 1.8; 1.79 (1.70 to 1.83) | 0 of 3; 0 of 3 |
+| classic9 (8) | 4.91 s | 4.98 s | 1.17 s | 1.55 s | 2.8 to 3.0; 3.22 (0.91 to 3.25) | 1 of 3; 1 of 3 |
+| Killer (8) | 17.8 s | 21.1 s | 4.5 s | 8.0 s | 2.8 to 3.0; 2.55 (2.07 to 2.65) | 0 of 3; 0 of 3 |
+| Greater-Than (8) | 9.3 s | 11.6 s | 2.2 s | 4.4 s | 2.8 to 3.0; 2.62 (0.89 to 3.06) | 3 of 3; 3 of 3 |
+
+| Item | Plan v1 | Report | Measured (provisional) | Against the estimate |
+|---|---|---|---|---|
+| S5a pool | up to min(P, A) times | x2.8 to 3.0, x1.7 to 1.8 on two-attempt boards | the table above; the same puzzles on 18 of 18 pairs; CPU x0.98 to 1.58 of the serial run; x0.89 to 0.91 on requests whose first attempt is exact | as estimated on four cells; below on Killer; mixed on Greater-Than |
+| S3 | 3 to 10 times on the non-chain part of a solve | x1.3 to 1.65 on solve work | partial S3: x0.91 to 1.04 over the pool, x0.94 to 1.03 serially; check-sequence parity holds (770 injected failures equal) | no gain in the scope built; the full S3 is untested |
+| Where a solve's time is | unknown (SM1) | chains suspected | the covered finders are 3.9 to 12.7 % of a Nightmare request; `nishio` and `forcingChain` are 53 to 81 % on classic9, mega12, mega16 and samurai, 17 to 24 % on Killer and Greater-Than (n 1 per cell) | the non-chain part is small: S3 as planned aims at the wrong part |
+| S1 frontier dig | 10 times fewer solves per sample; more exact puzzles | time per sample divided by 1 to 3; hit rate unmeasured | a frontier sample costs 0.12 to 0.38 of the native sample mix, but **0 verified exact puzzles in 192 frontier trials** and 0 in the 64 native control trials; 45 of the 64 F1 samples ended on an empty frontier, and mega16's candidates lay above the band | cheap because it fails; no yield shown, none refuted |
+| S2 early exit | "a few deductions, not a solve" | inside S1's divisor | 85 to 96 % of accepted removals are decided by re-derivation, yet sample CPU is x1.01 to 1.12 of the same dig without it; 0 correctness problems | no CPU saving on this cohort |
+| Solves per sample | about 1,296 on every board | about 25 to 185 rating equivalents | 74 to 331 solves per ordinary sample (SM1) | the plan's figure is withdrawn as a cost (E6) |
+| S7, Jigsaw seed 1111 | stage unknown | unknown | censored at 240 s; 99.5 % of the time in the full-grid search | the stage is found; no ceiling sized |
+| Greater-Than, solve first | not in the plan | a diagnostic (IG-S-Q16) | x1.03 on Normal, x0.17 on Nightmare (six pairs) | not adopted |
+
+Not measured: the full S3, S4, S5b, a whole request with S1 (IG-S06, deferred), the pool at widths 1, 2 and 4
+(SM5), the restricted-floor probes, and the cells wordoku, sohei, flower and butterfly.
+
+**Verdict.** The measured improvement is the pool's and it is what the analysts estimated, not more: 1.8 to 3.2
+times on the wall clock for the same puzzles, at up to 1.6 times the CPU. The first phases as built reach 54.7,
+6.8, 13.4, 1.7, 8.5 and 4.7 s on the six cells against 39, 5.4, 10.3, 1.17, 4.5 and 2.2 s estimated, 1.3 to 2.1
+times short, because S3 has added nothing yet. Nothing measured supports version 1's larger projections, and
+no cell gained an exact puzzle: speed is not what keeps mega12, mega16 and the multigrids from Nightmare.
+
+### 0.2 The baseline has moved under the measurements
+
+Rating v3 (`8b70875`: MS06a-d, MS07a-d) changed 11 runtime files, split the chain techniques
+(`forcingChainLong`, `nishioDeep`) and widened the Nightmare window from about 220 to about 590 points. MS07c
+reports classic9 Nightmare at 12 of 12 exact with a p50 of 0.15 s, samurai seed 42 exact at the first attempt
+and a non-vacuous Hell 1. Those are another source, cohort and cap, not paired with this round. They mean that
+(1) the list of failing cells in section 1 must be re-derived on the frozen catalogue before any item is
+justified by it, and (2) the rating change may move the hit rate more than any search item here. Three of the
+eight harness adapters no longer apply to that source; repairing them is uncosted (decision D10).
+
+### 0.3 Changes to the plan
+
+1. **Phase 1 is the version field, history v2 and S5a only.** S5a is the one measured, rating-independent gain.
+2. **S3 leaves phase 1 and is re-scoped** to the chain kernels, behind a frozen profile (section 3, S3).
+3. **S1 and S2 are no longer the plan's centre.** They stay undecided until the frozen SM2 screen, with a stop
+   rule (section 3, S1).
+4. **S5b is promoted and decoupled from S1**: samples are 57 to 90 % of a Nightmare request, and on the
+   two-attempt boards S5a cannot use more than two workers.
+5. **S7 targets the full-grid search first.**
+6. The cost premises "1,296 solves per sample" and "10 times fewer solves" are withdrawn (section 2.2).
+7. Availability on the large boards is expected from the rating v3 window and, failing that, from the bank
+   (S9), not from search speed.
 
 ## 1. Goal, non-goals and constraints
 
@@ -89,22 +155,42 @@ The expected time to a hit is `c / p` (c: cost of one sample, p: probability tha
 p per sample is **not recorded** anywhere (only hits per request). It is the first number the measurement phase
 must produce.
 
+### 2.3 What the provisional round confirmed and corrected (Measured, provisional)
+
+- **The "1,296 solves per sample" of 2.2 is withdrawn as a cost** (erratum E6). SM1 counted 74 to 331 solves
+  per ordinary sample on classic9, mega12, mega16 and samurai. `G * B(N)` stays only as a loose upper bound;
+  the "10 times fewer solves" built on it in S1 and section 4 goes with it.
+- **Where the time is** (one profiled request per cell). Samples are 90.5 % of the mega16 request, 83.5 % of
+  mega12, 72.8 % of samurai, 60.3 % of classic9 and 57 to 58 % of Killer and Greater-Than; the local search is
+  the rest, up to 43 % on Greater-Than. Killer spends 45 % in the DFS.
+- **Inside the solver, the chains.** `nishio` and `forcingChain` take 81 % of the mega16 request, 77 % of mega12,
+  55 % of classic9 and 53 % of samurai. The cheap finders that an event-driven ladder serves best (singles and
+  subsets) take 3.9 to 12.7 %. That is consistent with cause 2 of 2.2 (hardness is paid in every later solve),
+  and it puts the remedy in the chain finders, not in the scans of the cheap ones.
+- **p is still unknown.** The SM2 screen found no exact puzzle in any mode, the native controls included, on
+  eight grids per cell. That says the cohort was too small to measure p on these cells, not that p is zero.
+- **Cause 1 of 2.2 (the search is blind to requiredness) is neither confirmed nor refuted.** The frontier
+  mostly found nothing to cross: after the floor descent every remaining removal broke uniqueness in 45 of 64
+  samples.
+
 ## 3. Proposals
 
-Summary. "Identical" means: the same puzzles as today for the same request.
+Summary. "Identical" means: the same puzzles as today for the same request. The effect column is version 2's:
+Measured (provisional) where `report-r3.md` has a row, otherwise a Projection.
 
-| Id | Proposal | Acts on | Result | Projected effect | Confidence |
+| Id | Proposal | Acts on | Result | Effect (version 2) | Status |
 |---|---|---|---|---|---|
-| S1 | Frontier dig: floor descent, then cross the requiredness frontier | p and c | new algorithm version | 10x fewer solves per sample; failures become cheap | medium, gated by SM2 |
-| S2 | Re-derivation early exit of removal tests | c | new version (heuristic) | a removal test costs a few deductions, not a solve | medium-high |
-| S3 | Event-driven ladder (dirty scopes, negative cache) | c | identical | 3-10x on the non-chain part of a solve, more on large boards | high for correctness, gain gated by SM1 |
-| S4 | Monotone-score early exit in bounded oracles | c | identical | saves the tail of every "too hard" solve | high, small |
-| S5 | Worker pool, deterministic ordered consumption | wall time | S5a identical, S5b new version | up to P times (P = workers) on failed and late-hit requests | high |
-| S6 | Anytime result at the time guard | availability | behaviour change | no empty answer after 120 s | high |
-| S7 | Bound the unbounded pieces | tail | new version | removes tails like the 325 s Jigsaw request | high, cause gated by SM3 |
-| S8 | Idle pre-generation and a local stock | perceived time | identical | next puzzle of the same settings is instant | high |
-| S9 | Seed bank with validity-preserving transformations | availability | product decision | one rating per puzzle for the rarest cells | high, needs the owner |
-| S10 | WebAssembly kernels (DFS, chain search) | c | identical | 1.5-3x on those kernels | low priority, gated by SM1 |
+| S1 | Frontier dig: floor descent, then cross the requiredness frontier | p | new algorithm version | samples at 0.12 to 0.38 of today's cost, with no exact puzzle in 192 trials | undecided; a hit-rate item only; stop rule below |
+| S2 | Re-derivation early exit of removal tests | c | new version (heuristic) | no CPU saving measured (x1.01 to 1.12) | only as part of S1; no speed claim |
+| S3 | Event-driven ladder | c | identical only with check parity | cheap finders: x0.91 to 1.04. Chain kernels: unmeasured | cheap-finder part dropped as a speed item; chain part gated by the frozen SM1 |
+| S4 | Monotone-score early exit in bounded oracles | c | new version (the log changes) | x1.0 to 1.1 on bounded oracles (Projection) | with the version (IG-S-Q04) |
+| S5a | Attempts on a worker pool, ordered merge | wall time | identical | x1.8 to 3.2 measured, at x1.0 to 1.6 the CPU | **go: phase 1** |
+| S5b | Samples on the pool, per-sample quotas | wall time | new version | mega16 about 29 s, samurai about 8 s (Projection, ideal scaling) | promoted; independent of S1 |
+| S6 | Anytime result at the time guard | availability | behaviour change | no empty answer after 120 s | with the version; stored as IG-S-Q13 says |
+| S7 | Bound the unbounded pieces | tail | new version | the Jigsaw tail is the full-grid search (99.5 %) | with the version; full grid first |
+| S8 | Idle pre-generation, as an extension of `SG.cache` | perceived time | identical | next seedless puzzle of the same settings is instant | late, low priority |
+| S9 | Seed bank with validity-preserving transformations | availability | product decision | one rating per puzzle for the rarest cells | the fallback for the large boards; needs the owner |
+| S10 | WebAssembly kernels (DFS, chain search) | c | identical only with equal check and node order | 1.2 to 2 times on the kernel share (Projection) | after the frozen SM1; the chain share makes it eligible |
 
 ### S1. Frontier dig
 
@@ -182,6 +268,30 @@ symmetry groups larger than two cells; the Greater-Than sign dig and Killer cage
 frontier prototype against the current samples. Go when `p / c` improves by at least 3 times in every measured cell
 and by 10 times in mega16 Nightmare.
 
+**Version 2: status and stop rule.**
+
+- The ratio gate above is withdrawn (IG-S-Q05): it is undefined over zero hits. The gate is verified exact
+  puzzles per CPU second and per wall second on paired grids, against each current sample kind and a
+  proposal-only control, with uncertainty clustered by grid.
+- Measured (provisional, SM2; six variants F0, F1, FC, FM, FU, FS on classic9, mega12, mega16 and samurai, eight
+  grids each, two samples per trial): **no verified exact puzzle in any of 192 frontier trials, nor in the 64
+  native control trials.** A frontier sample is cheap (0.38, 0.28, 0.12 and 0.23 of the native sample mix), but
+  the cheap work is failure: classic9 16 of 16 samples and samurai 15 of 16 ended on an empty frontier; mega12
+  12 of 16, with 7 candidates above the band; mega16 had 24 candidates above the band and 2 count-budget stops.
+  No candidate was exact, shallow or below the band.
+- What that does to the idea. "Exact puzzles sit just past the floor frontier" was not observed: on 81 and 144
+  cells the floor-minimal puzzle usually has nothing left to cross, and on mega16 crossing overshoots the band.
+  The observation is on the rating-v2 window (about 220 points); the v3 window is about 590 points and the floors
+  change, so the frozen screen may differ. It is not a refutation, and it is not support.
+- **S1 is a hit-rate item only.** No speed is claimed for it; the cost per exact puzzle is unknown until one is
+  found.
+- **Stop rule.** The frozen SM2 screen (40 grids per cell) decides. If no frontier variant has a verified exact
+  puzzle, or none beats the native kinds at the gate of IG-S-Q05, S1 and S2 are dropped for that cell, the
+  whole-request composition (IG-S06) is not built for it, and its route is the rating v3 window as measured,
+  then S9. No design work on S1 before that screen. This is the plan author's answer to decision D2.
+- The allowlist of IG-S-Q11 stands: S1 can only ever be switched on for (variant, board, level) cells that
+  passed; Hard to Master, Killer, Greater-Than and Jigsaw keep today's path.
+
 ### S2. Re-derivation early exit
 
 **Fact.** A removal test solves P - g from the givens to the end.
@@ -198,6 +308,13 @@ the same techniques solve.
 
 **Complexity.** A successful test costs the deductions needed to recover g (typically local), not the d
 deductions of a whole solve. A refused test still runs to its fixpoint.
+
+**Version 2.** Measured in isolation (provisional; the same 16 samples per cell with and without the early
+exit): 85 to 96 % of the accepted removals are decided by re-derivation, the decisions are identical, the audit
+found no correctness problem in 120 removals, and the sample CPU is x1.07, 1.12, 1.01 and 1.06 of the dig without
+it on classic9, mega12, mega16 and samurai. So the deductions saved do not show as time on this cohort: the
+refused tests, the uniqueness checks and the state handling carry the cost. S2 keeps its correctness argument
+and loses its speed claim; it is built only if S1 survives, and then measured again on whole requests.
 
 ### S3. Event-driven ladder
 
@@ -232,6 +349,31 @@ A negative cache for the chain finders (a literal whose bounded search visited n
 chain" answer) is a possible extension; its hit rate is unknown and it is only worth designing if SM1 shows chains
 above half of the solve time.
 
+**Version 2: re-scoped.**
+
+- *Identity.* "Byte-identical" covered the step trace only. Finders call `ctx.check()` inside their scans, and
+  `OBJECTIVE_STEPS` and Killer's `ANALYSIS_NODES` count those calls, so a skipped scope must charge the checks
+  its last scan made (IG-S-Q03). The prototype did that for nine finders (the naked and hidden singles and the
+  six naked and hidden pair, triple and quad finders): 18 saved puzzles on four solver sets and 770 injected
+  failures agree in ordinal, site and error. The mechanism works. Scopes that charge two or more virtual node
+  checks are covered by engine-free tests only, and no naturally binding ceiling was captured.
+- *Gain.* None in that scope: x0.91 to 1.04 per request over the pool and x0.94 to 1.03 serially; on the
+  81-cell boards it is a small loss. The covered finders are 3.9 to 12.7 % of a Nightmare request, so even at
+  zero cost they would give x1.04 to 1.15.
+- *Consequence.* The dirty scopes of the cheap finders are **dropped as a speed item** and leave phase 1. They
+  are not worth a parity proof per finder family for a few per cent.
+- *What remains of S3 is the chain part.* The condition above is met on the old catalogue: `nishio` and
+  `forcingChain` are 53 to 81 % of the request on classic9, mega12, mega16 and samurai. In the profile, the calls
+  of the remaining finders that found nothing are 40 to 58 % of those requests; removing them entirely would
+  give x1.7 to 2.4, and x1.09 to 1.30 without the chain group. Those are conditional zero-cost figures of one
+  run, not what a cache achieves: a cache pays for lookups and invalidation, and neither is measured.
+- *Gate for the chain part.* The frozen SM1 must split the v3 chain families (`forcingChain`,
+  `forcingChainLong`, `nishio`, `nishioDeep`) and record, per call, what was scanned and what invalidated it.
+  The chain propagation checks bypass `ctx.check`, so their budget accounting must be settled first. Only then
+  is a negative cache or an incremental chain search designed, as its own item, with S10 as the alternative for
+  the same kernel. The v3 chain kernels are already windowed (`SHORT_MAX` = 4), which may have changed the share.
+- The report's x1.3 to 1.65 for a full S3 is neither confirmed nor refuted; no plan number rests on it any more.
+
 ### S4. Monotone-score early exit
 
 **Fact.** The score is `empty + peak + 0.25 * peak * log2(1 + work / peak)` over the technique counts
@@ -240,6 +382,11 @@ solve to the end and then compare with `spec.max`.
 
 **Idea.** Give the solver an optional score bound and stop with "too hard" when the running score reaches it.
 The answer of the oracle is identical; the remaining deductions are saved. Small and safe; do it with S3.
+
+**Version 2.** S4 keeps every puzzle but turns some `techniques` refusals into `tooHard` in the dig log, the
+Generation Steps and wires G09 to G13, so it ships under the generator version, not with the equal-result phase
+(IG-S-Q04). It was not built or measured; the report's x1.0 to 1.1 on bounded removal oracles stands as a
+Projection.
 
 ### S5. Worker pool
 
@@ -268,6 +415,28 @@ samples are short and uniform, which suits this. Gain: up to P on every board.
 - Events and the Generation Steps trace: only the consumed tasks' events are forwarded, in canonical order;
   speculative work is not shown.
 
+**Version 2.**
+
+- *S5a, measured (provisional):* x1.92 on mega16, x3.22 on mega12, x1.79 on samurai, x3.22 on classic9, x2.55
+  on Killer and x2.62 on Greater-Than (ready wall, median of three pairs), with identical puzzles on 18 of 18
+  pairs and the two-attempt ceiling respected. This is the plan's one confirmed gain, and it does not depend
+  on the rating. S5a goes into phase 1.
+- *Its costs.* CPU is x0.98 to 1.58 of the serial run (speculative attempts and startup). A request whose first
+  attempt is exact gets slower: x0.91 on classic9 and x0.89 on Greater-Than, one pair each. Design points for
+  the architect: keep the pool warm between requests, and for cells that usually hit in the first attempt (Hard
+  to Master, Jigsaw, Greater-Than) start the later attempts only after a short head start of attempt 1. Both
+  keep the result identical; the serial figure stays the regression control (IG-S-Q02).
+- *Not measured:* the widths 1, 2 and 4 on classic9 and mega12 (SM5), which the pool design needs; it joins the
+  frozen round (decision D9).
+- *S5b is promoted.* It was tied to S1 ("with S1, samples are short and uniform"); it does not need S1. On the
+  two-attempt boards S5a can use two workers, while the samples are 90.5 % (mega16) and 72.8 % (samurai) of the
+  request. Projection, with samples at width 4, the local search at width 2 and ideal scaling:
+  mega16 107.5 x (0.905 / 4 + 0.095 / 2) = about 29 s against 55.9 s with S5a; samurai 24.9 x (0.728 / 4 +
+  0.272 / 2) = about 8 s against 13.6 s. It needs the per-sample quotas (a new version) and the deferred
+  composition measurement, run with today's sample kinds rather than frontier samples.
+- *The guard* is the wall time of the request from its start (owner, IG-S-Q02); qualification is read on a pool
+  of width 4, with the serial figure beside it.
+
 ### S6. Anytime result
 
 At the time guard, return the best complete, unique candidate held by `best` or the keeper with the existing
@@ -285,6 +454,14 @@ unknown.
 **Idea.** A node ceiling for each, with a deterministic reaction: the full grid restarts on the next fork
 `grid#a.k`; a safety check over its ceiling rejects the sample; a sign whose check exceeds its ceiling stays.
 SM3 first attributes the 325 s request to a stage, so that the right piece is bounded.
+
+**Version 2.** SM3 ran once, instrumented, and was censored by the 240 s guard: 99.5 % of the time was in the
+full-grid search, in its unlimited last search after the 50th restart (at least 238 s), while three finished
+full-grid stages took 0.32 s together. `buildJigsaw`, the safety count, the rating and the local search were not
+the cause. So the first ceiling is the one on the **total** work of the full-grid search, restarts included,
+with an explicit "unknown" outcome, under the version (IG-S-Q07). One censored request sizes no ceiling: the
+design needs the distribution of nodes per successful full-grid attempt on the frozen catalogue. The other
+ceilings of this section follow in the same version at lower priority.
 
 ### S8. Idle pre-generation and a local stock
 
@@ -315,6 +492,13 @@ Cost per request: one transformation and one or a few ratings. This is a product
 shipped seeds rather than generated from nothing), OD-S3. A variant without shipped content is the same bank
 filled locally by S8.
 
+**Version 2.** The table above is wrong for Killer and Greater-Than: row and band permutations break connected
+cages and adjacent signs, and digit relabelling changes cage sums. For those two only the board's geometric
+symmetries are used, and every puzzle served from the bank is rated canonically and structure-checked first
+(IG-S-Q15). After the provisional round the bank matters more, not less: no search item has yet produced an
+exact Nightmare puzzle on mega12, mega16 or samurai. It is still designed only for cells that stay below 90 %
+on the frozen rating v3 catalogue, since the wider v3 window may make it unnecessary.
+
 ### S10. WebAssembly kernels
 
 Only if SM1 shows one kernel (DFS uniqueness, the chain search) above half of the remaining time after S1 to S5.
@@ -332,80 +516,135 @@ factor only.
 - **Changing weights or bands to widen the target**: a rating change, out of scope here (the Killer weights are
   MS07e's question).
 
-## 4. Complexity after the change (Analysis, counts)
+## 4. Cost after the change (version 2)
+
+Version 1's count model (about 1,300 full-set solves per sample falling to K_F) and its projection for mega16
+(a 97 s sample batch falling to about 1.6 s) are withdrawn: the first was not what SM1 counted (74 to 331 solves
+per ordinary sample), and the second left out refused floor tests, uniqueness checks and the cheap proposal
+samples that S1 replaces. What replaces them is a model of two parts with measured shares.
 
 ```text
-today     per request  <=  A * S * (G + 1,296) full-set solves, each d * sum F_i (whole-grid scans)
-                           + A * 1,024 canonical ratings                                  on 1 worker
-proposed  per request  <=  A * S' * ( G floor tests of d_g * local scopes
-                                      + G uniqueness checks
-                                      + K_F full-set solves of d * (local scopes + whole-grid finders) )
-                           + canonical ratings of the candidates only                     on P workers
+request  =  samples (57 to 90 % of a Nightmare request)  +  local search (the rest, one per attempt)
+S5a      :  both parts divide by min(4, attempts)                       measured: x1.8 to 3.2
+S5b      :  the samples divide by the pool width; the local search by min(4, attempts)   not measured
+chain kernel work (S3's chain part, S10): acts on 53 to 81 % of the request on the large boards   not measured
 ```
 
-d_g is the number of deductions that recover one removed group (far below d for an accepted removal). The number
-of full-set solves per sample falls from about 1,300 to K_F (8 to 16). Wall time divides by up to P.
+| Cell (attempts) | Today, re-measured | With S5a (Measured, provisional) | With S5b as well (Projection, ideal scaling at width 4) | Qualification p95 budget |
+|---|---|---|---|---|
+| mega16 Nightmare (2) | 107.5 s | 55.9 s | about 29 s | 30 s |
+| samurai Nightmare (2) | 24.9 s | 13.6 s | about 8 s | 30 s |
+| mega12 Nightmare (4) | 23.4 s | 7.1 s | about the same: four attempts already fill the pool | 30 s |
+| classic9 Nightmare (8) | 4.98 s | 1.55 s | the same | 10 s |
+| Killer Nightmare (8) | 21.1 s | 8.0 s | the same | 10 s |
+| Greater-Than Nightmare (8) | 11.6 s | 4.4 s | the same | 10 s |
 
-**Projection for the worst measured cell, mega16 Nightmare** (4.0 s per sample today): about 10 times fewer
-full-set solves (S1), a further factor on each solve (S2, S3, S4), and 4 workers. If the three factors are 10, 2
-and 3 (two attempts cannot use more than their samples allow under S5b), a sample batch that takes 97 s today
-takes about 1.6 s, and the remaining budget buys roughly 15 times more samples within 30 s. Whether that reaches
-90 % exact hits depends on p, which only SM2 can give. If it does not, S9 is the guarantee.
+Reading, all on the old catalogue and with medians of three seeds, so none of it is a qualification result:
 
-## 5. Measurement phase (before any design is fixed)
+- **Time.** With S5a alone the medians of mega12, samurai and the 81-cell boards are inside their budgets;
+  mega16 is not, and S5b alone would bring its median only to the edge of 30 s. mega16 needs the chain kernel
+  work as well, or it stays outside. A p95 does not exist for any cell.
+- **Exact hits.** Unchanged by every item measured: 0 of 3 on mega12, mega16, samurai and Killer before and
+  after. Speed makes a failed request shorter; it does not make the cell offerable. On the frozen catalogue the
+  hit rate comes first from rating v3 itself (section 0.2), then from more attempts on 81 cells (OD-S4), then
+  from S1 where the frozen screen supports it, and otherwise from the bank (S9).
+- **CPU.** The pool spends up to 1.6 times the serial CPU. On phones with two to four slow cores the wall-clock
+  gain will be smaller; only browser runs say how much.
 
-All runs are Node, under the machine lock, with the request budgets of the existing deep tools. Evidence goes to
-`docs/improve-generating/evidence/<id>/` as JSON with the source hash.
+## 5. Measurements: done, and what the frozen round must add
 
-| Id | Measurement | Output | Decides |
-|---|---|---|---|
-| SM1 | Profile of one request per cell, trace off, with new counters behind a diagnostics flag: time and calls per stage; per technique: `find` calls, hits and time; oracle solves by kind (Stage A, objective, proposal) with their time; DFS nodes; per sample: outcome (exact, shallow, stuck, too hard, not unique) | Cells: classic9, wordoku, mega12, mega16, samurai Nightmare; killer Hard and Expert; greaterThan Normal and Nightmare | the split oracle / rating / DFS; the share of chain finders (S3 extension, S10); p and c per sample (baseline of S1) |
-| SM2 | Prototype of S1 + S2 as a diagnostics strategy (not registered for the app), same cells, 40 requests each | p per sample, time per sample, frontier size, share of frontier entries solved with the tier, in-band share | go / no-go of S1; K_F |
-| SM3 | The Jigsaw Expert request of seed 1111 with the stage profile, under a 400 s budget | the stage and counter that hold the 325 s | which piece S7 bounds |
-| SM4 | Trace equality of an S3 prototype on the regression corpus and the soundness suites; time per solve before and after on 81, 144 and 256 cells | equality, speed-up per board | go / no-go and priority of S3 |
-| SM5 | S5a in Node `worker_threads` with 1, 2, 4 workers on mega12 and classic9 Nightmare | identical puzzles; wall time | pool design, message cost |
+**Done in the provisional round** (IG-S01 to IG-S10 without IG-S06; 6,610 s of machine time of 10,800 s; the
+records under `evidence/phase0/provisional-r1/`, the reconciliation in `report-r3.md`):
 
-## 6. Phases, tests and gates
+| Id | What ran | Result |
+|---|---|---|
+| SM5, in part (IG-S02) | serial against the pool at width min(4, attempts), six Nightmare cells, three seeds | S5a's factors; identical puzzles |
+| SM4, in part (IG-S03) | check-sequence parity and timing of a partial S3 (nine finders) | parity holds; no gain |
+| SM2 screen (IG-S04, IG-S05) | six frontier variants and two native controls, four cells, eight grids, two samples | no exact puzzle in any mode; sample costs; S2 isolated |
+| SM1 (IG-S07) | stage and finder profiles of nine requests, one per cell | the shares of section 2.3 |
+| SM3 (IG-S08) | Jigsaw Expert seed 1111 under a 240 s guard | censored; the full-grid search |
+| Greater-Than (IG-S09) | the miss split on Normal 300 to 319 and Nightmare 700 to 705; the solve-first order | 22.1 % of Normal misses end at the clue floor (as MS05e); solve-first x1.03 on Normal, x0.17 on Nightmare |
+
+Never measured: the full S3, S4, S5b, the whole-request composition with S1 (IG-S06), the pool at widths 1, 2
+and 4 on classic9 and mega12, the restricted-floor probes, and the cells wordoku, sohei, flower and butterfly.
+
+**The frozen round** needs the freeze of difficulty-v3 (MS17b, MS18e), a freeze receipt and its own budget
+(approvals A1 to A8 of `report-r3.md`), and first the repair of the harness on the frozen source: three of
+eight adapters fail on rating v3 today, and that work is uncosted (D10). The plan author's positions on the
+open decisions D1 to D10, for the pack author and the owner to confirm:
+
+| Decision | Position |
+|---|---|
+| D1, order | (1) the baseline of every candidate cell on the frozen catalogue, with exact hits, before anything else: it re-derives the list of failing cells; (2) S5a again (IG-S02); (3) SM1 with the v3 chain families split and per-call scan data; (4) the SM2 screen at 40 grids, only on cells that still fail; (5) the rest |
+| D2, composition (IG-S06) | not built for a cell whose frozen screen shows no exact frontier puzzle (the stop rule of S1). A composition of S5b with today's sample kinds is wanted instead, on mega16 and samurai |
+| D3, projection assumptions and the non-inferiority margin | deferred until the frozen baseline shows which cells have a positive rate; no assumption set is approved on the old catalogue |
+| D4, wordoku, sohei, flower, butterfly | their frozen baseline only (step 1 of D1); no SM2 population for them unless S1 passes on classic9 or samurai |
+| D5, Greater-Than Nightmare 706 to 709 | drop the solve-first arm at Nightmare: x0.17 on six pairs is enough to end it. The pack author decides |
+| D6, per-finder frontier profile | not wanted before S1 passes its screen; the chain-family split of SM1 is wanted now |
+| D7, S7 | the total-work ceiling of the full-grid search, designed in phase 2 from a node distribution measured on the frozen catalogue |
+| D8, carried points | the multi-check virtual charges need an engine test before any S3 scope ships; they matter only if the chain part goes ahead |
+| D9, the two gaps | the width sweep (SM5) joins the frozen round, since phase 1's pool design rests on it; the restricted-floor probes only if S1 passes its screen |
+| D10, source preparation | approve as a separate, costed task before the frozen budget is set |
+
+## 6. Phases, tests and gates (version 2)
 
 | Phase | Content | Version | Gate to continue |
 |---|---|---|---|
-| 0 | SM1, SM3 (measurement only, counters behind a flag) | none | profiles recorded |
-| 1 | S3, S4, S7 ceilings that never trigger on the corpus | identical puzzles; S7 as a guard | SM4 equality; quick suites and regression hashes unchanged |
-| 2 | S5a, S6 | identical puzzles; S6 behaviour change | pool-size invariance test (1, 2, 4 workers give the same puzzle on a seed list); time guard test |
-| 3 | SM2, then S1 + S2 + S5b under the new algorithm version | new version | SM2 gate; soak and qualification of every offered cell on the new version |
-| 4 | S8; S9 if the owner agrees and phase 3 leaves cells below 90 % | new storage / content | qualification of the cells S9 serves |
-| 5 | S10 only if SM1 after phase 3 justifies it | identical | trace equality, measured gain at least 1.5x on a whole request |
+| 0. Frozen round | section 5; no runtime change | none | the failing cells named on the frozen catalogue; S5a confirmed; the S1 screen decided per cell; the chain share known |
+| 1. Equal results | the `generatorVersion` field, history v2 and wire v2 (IG-S-Q01); S5a | identical puzzles | regression hashes unchanged; pool-size invariance (1, 2, 4 workers and the main-thread mode give the same puzzle); serial time not slower; pooled and serial times reported (IG-S-Q02) |
+| 1b. Attempts | a sweep of 16, 32 and 64 attempts on classic9 and wordoku Nightmare, only if they still fail on the frozen catalogue (IG-S-Q12) | none | the owner decides OD-S4 |
+| 2. Generator version 2 | S5b with per-sample quotas; S7 (the full-grid ceiling first); S6; S4; S1 with S2 only on allowlisted cells that passed the frozen screen | new version | qualification of every changed cell on the pool; the time-guard tests |
+| 3. Solver kernel | the chain part of S3, or S10 for the same kernel, if the frozen SM1 keeps the chain share above half | identical, with check parity | step and check-sequence equality on guard-binding cases; at least 1.5 times on a whole request |
+| 4. Fallbacks and comfort | S9 for cells still below 90 %; S8 | content, storage | qualification of the cells S9 serves |
+
+Phase 1 does not depend on phase 0 and may be designed now: the version field, history v2 and S5a are
+independent of the rating and of every open measurement.
 
 Tests that every phase must keep or add:
 
-- **Trace equality** (S3, S4, S10): for a corpus of puzzles per variant, the collected steps of the new solver
-  equal the old ones exactly; kept permanently by leaving the reference scan reachable under `SG.DEBUG`.
+- **Check-sequence equality** (S3's chain part, S10): for a corpus of puzzles per variant the steps, the
+  sequence of budget checks and the failure boundary under injected ceilings equal the reference; the reference
+  scan stays reachable under `SG.DEBUG`.
 - **Soundness**: every accepted puzzle has one solution (DFS) and the canonical rating claimed; the existing
   generic soundness and order-invariant suites run unchanged.
-- **Pool invariance** (S5): the puzzle of a request is the same for every pool size and for the main-thread mode.
-- **Version**: old recipes replay on the old search path, or are stored with their puzzle; the architect chooses
-  and states which.
-- Regression hashes, help examples and qualification lists are regenerated once, in phase 3, by their own task.
+- **Pool invariance** (S5): the puzzle of a request is the same for every pool size and for the main-thread
+  mode.
+- **Version** (IG-S-Q01): a history v2 entry shows its stored puzzle and never regenerates; a v1 entry
+  regenerates on the current path with a notice; a timed result is never cached or exported as its seed's
+  canonical result.
+- Regression hashes, help examples and qualification lists are regenerated once, in phase 2, by their own task.
 
 ## 7. Decisions for the owner
 
-| Id | Decision | Default proposed |
+| Id | Decision | State and the plan author's proposal |
 |---|---|---|
-| OD-S1 | A new generator-algorithm version after rating v3 is frozen; old seeds give other puzzles | yes; old recipes keep their stored puzzle |
-| OD-S2 | At the time guard, return the best valid puzzle with a warning (S6) | yes |
-| OD-S3 | A shipped seed bank for the rarest cells (S9) | only for cells below 90 % after phase 3 |
-| OD-S4 | Whether the default attempts by size (8 / 4 / 2) rise when samples are cheap and parallel | decide with phase 3's numbers |
+| IG-S-Q01 | `generatorVersion` and history v2 in phase 1; v1 entries regenerate with a notice | **confirmed** (2026-11-14). OD-S1's "old recipes keep their stored puzzle" is replaced by it |
+| IG-S-Q02 | With a pool, the 120 s guard is the wall time of the request | **confirmed** (2026-11-14) |
+| OD-S1 | A new generator-algorithm version after rating v3 is frozen; old seeds give other puzzles | yes, for phase 2 |
+| OD-S2 | At the time guard, return the best valid puzzle with a warning (S6) | yes; stored with `timed: true`, never as the seed's canonical result (IG-S-Q13) |
+| OD-S3 | A shipped seed bank for the rarest cells (S9) | only for cells below 90 % on the frozen catalogue after phase 2; at least 200 distinct roots per option set as the first proposal |
+| OD-S4 | More attempts by default when attempts are cheap and parallel | decide with the sweep of phase 1b, if it is still needed |
+| OD-S5 (new) | S5a's CPU cost: up to 1.6 times the serial CPU for 1.8 to 3.2 times less waiting | proposal: accept; the pool width stays at most 4 and one lane on `file://` |
+| Frozen round | its budget, and the harness repair on the frozen source (D10) | proposal: approve the repair as its own task first; the round's budget after it |
 
 ## 8. Risks
 
-- **p stays low after S1** for some cells (the frontier is empty or the tier cannot finish the puzzle). Then the
-  feature makes failure cheap but not success common; S9 covers those cells. SM2 shows this before the build.
-- **Monotonicity is not exact** for some technique (uniqueness-based ones are the candidates). It costs wasted
-  candidates. SM2 counts the cases where the early exit of S2 said "solvable" and the full floor solve disagrees.
-- **Footprints of S3 wrong for one finder**: caught by trace equality; a finder without a proved footprint keeps
-  the whole-grid footprint and loses nothing.
-- **Variants with their own strategies** (Killer structure search, Greater-Than sign dig) gain from S3 to S5 but
-  not from S1 until their strategies are ported; Killer Hard and Expert may be a calibration matter that no
-  search fixes (MS07e).
-- **Browser against Node**: every number here is Node. The pool removes the cooperative slicing cost from the
-  workers, but phones have 2 to 4 slow cores; the browser gates decide what is offered there.
+- **The measurements are stale and small.** They describe the old runtime and catalogue, three seeds or eight
+  grids per cell, one request per profile. Every factor here is to be re-measured on the frozen source; only
+  S5a's mechanism (attempts are independent) makes its factor likely to transfer.
+- **No search item has produced an exact puzzle on the large boards.** If the v3 window does not raise the hit
+  rate there and the frozen S1 screen is empty again, the bank (S9) is the only route, and it is a product
+  decision.
+- **S1's premise may be wrong**, not just unmeasured: the frontier was empty in most samples on 81 and 144
+  cells. The stop rule bounds what is spent on it.
+- **The chain part of S3 may not pay.** A negative cache has lookup and invalidation costs, the chain checks
+  bypass the budget counter today, and v3 already windows the chain kernels. Its gate is a whole-request factor
+  of at least 1.5, not a kernel figure.
+- **The pool's cost on weak devices**: more CPU for the same puzzle, and a slower answer when the first attempt
+  hits. The head start for early-hit cells and the serial regression control address it; browser runs decide.
+- **Variants with their own strategies** (Killer structure search, Greater-Than sign dig) gain from S5 only.
+  Killer's S5a factor was below the estimate on all three pairs, and its misses may be a calibration matter
+  that no search fixes (MS07e).
+- **The harness no longer fits the source.** Three adapters fail on rating v3 and MS08 to MS16 add about 14
+  finders before the freeze; the frozen round's cost is open until the repair is scoped.
+- **Browser against Node**: every number here is Node. The browser gates decide what is offered there.
