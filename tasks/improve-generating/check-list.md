@@ -50,7 +50,7 @@ is separate. No silent retries or new seed searches may spend the reserve.
 | [x] | IG-S05 | [05](05-paired-frontier-screen.md) | Prioritised paired SM2 screen and yield rates | IG-S04 accepted | 45-75 min | 48 min | Native kinds/F1 first; extensions only within allocation |
 | [ ] | IG-S06 | [06](06-composed-request-confirmation.md) | DEFERRED this pre-freeze round: held-out requests and sample lanes | Reschedule after frozen SM2 review | 90-150 min | 24 min (deferred) | Full-request composition remains unmeasured, not passed or refuted |
 | [x] | IG-S07 | [07](07-sm1-profiles.md) | SM1 stage/finder profiles and overhead | IG-S05 reporting/accounting closure; IG-S02/03 baselines; IG-S06 waived | 60-90 min | 12 min | Sample/local/finder shares behind the time factors |
-| [ ] | IG-S08 | [08](08-sm3-jigsaw-attribution.md) | Bounded SM3 Jigsaw tail attribution | IG-S07 accepted | 30-60 min | 6 min | Jigsaw Expert seed1111, not a guessed tail fix |
+| [x] | IG-S08 | [08](08-sm3-jigsaw-attribution.md) | Bounded SM3 Jigsaw tail attribution | IG-S07 accepted | 30-60 min | 6 min | Jigsaw Expert seed1111, not a guessed tail fix |
 | [ ] | IG-S09 | [09](09-greater-than-diagnostic.md) | Greater-Than miss split and solve-first diagnostic | IG-S08 accepted | 60-90 min | 15 min | Q16; S-AV01; sign-pass and local-work assumptions |
 | [ ] | IG-S10 | [10](10-reconcile-and-freeze-handoff.md) | Results reconciliation and frozen-rerun handoff | IG-S09 accepted | 30-60 min | 4 min | Every estimate versus its measured scope; provisional gate report |
 | | Reserve | author/orchestrator approval only | Splitting unstarted work or investigated failures | explicit approval | | 8 min | Never an automatic rerun allowance |
@@ -418,6 +418,6 @@ pause exit handling for the supplied wrapper. No measurements or production chan
 | IG-S05 | Accepted (inconclusive) | harness `58c583c2…` (screen), `f297ca31…` (closure); `IG-S05/summary-r2` | 841.3 s of 2,880 s /about 4,810 s waits | 256/256 trials, 0 hits in every mode; degenerate intervals labelled; IG-S06 deferred | M3 screen |
 | IG-S06 | Deferred (pre-freeze) | 2026-11-15 scheduling decision above; no IG-S06 measurements | Not run | No winning frontier variant; not passed or refuted | M4 deferred |
 | IG-S07 | Accepted | runs `0feb1ea57bd4`, r2 `5027a528f03a`; `IG-S07/summary-r2` | 710.6 s of 720 s (+12 s admission) /1,185 s waits | chains 77-81 % of mega profiles; conditional scenarios; loop check 13/13 | M4 SM1 |
-| IG-S08 | | | | | |
+| IG-S08 | Accepted | runs `fe2bae1efce6`, r3 `82b623923934`; `IG-S08/summary-r3` | 336.4 s of 360 s /90.3 s waits | seed 1111 censored at 240.015 s; full-grid DFS 99.5 % (attempt 4, after restart 50); Q07(b); no ceiling changed | SM3 (no milestone) |
 | IG-S09 | | | | | |
 | IG-S10 | | | | | |

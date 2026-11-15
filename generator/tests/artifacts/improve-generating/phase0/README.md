@@ -61,6 +61,13 @@ catalogue (`-Round frozen-gate`, with a freeze receipt and a budget receipt).
 | `ig07-run.cjs` | IG-S07 glue for `run.cjs`: probe, reference compatibility, calibration and engine checks (`prepare`; for the shard `lc` only the loop-check comparison), the profiled request (`execute`), record additions, identity against the comparator, shard summary. |
 | `ig07-aggregate.cjs` | IG-S07 documents from evidence only: `stage-profile.json`, `finder-profile.json`, `overhead.json`, `frontier-phase-a.json`, `summary.json/md`; a revision writes `-r2` files (`--suffix=-r2 --revision=<text> [--write=stage,finder]`). |
 | `ig07-test.cjs` | IG-S07 tests: pure cases (fake clock, transforms on the real sources, the patched solver on a fake of the engine pieces, plan, glue, aggregator; `node ig07-test.cjs`, no engine), the engine checks of the first command and the loop-check comparison of the revision r2. |
+| `jigsaw-profile.cjs` | IG-S08: the stage beacon of the bounded SM3 attribution (counters and exclusive wall time per context x sub in a SharedArrayBuffer, durable stage markers, install and restore of the engine-entry wrappers) and the pure readers: snapshot, attribution, journal parse and reconcile. |
+| `adapters/jigsaw-profile.cjs` | IG-S08: the 32 in-memory transforms of `jigsaw.js`, `full-grid.js`, `dfs-solver.js`, `logical-solver.js` and `digger.js` that call the beacon (observation only; the native code when `SG.__igJig` is absent). |
+| `plans/ig-s08.cjs` | IG-S08: the two shards (`control` seed 1100, `tail` seed 1111) and three requests. |
+| `ig08-worker.cjs` | IG-S08 worker side (every job kind `ig08-`, one line in `worker.cjs`): the observed request, the engine checks, the calibration and the synthetic busy worker of the journal recovery test. |
+| `ig08-run.cjs` | IG-S08 glue for `run.cjs` (`attemptDir` is passed to `prepare` and `execute`): the host-side recorder that journals stage markers and heartbeats of a worker (`stage-journal.jsonl`), probe, calibration, engine checks and the synthetic recovery test (`prepare`), the observed request (`execute`), the record additions reconciled from the journal alone, identity against the native control and the shard summary. |
+| `ig08-aggregate.cjs` | IG-S08 documents from evidence only: `tail-attribution.json`, `summary.json/md` (`--suffix=-r2 --revision=<text>` for a revision). |
+| `ig08-test.cjs` | IG-S08 tests: pure cases (beacon on a fake clock, transforms on the real sources, the patched layout and stage runner on a fake of the engine pieces, the recorder on fake workers, plan, glue, aggregator; `node ig08-test.cjs`, no engine, no thread) and the engine checks of the first command. |
 
 ## Commands
 
@@ -560,3 +567,58 @@ node generator\tests\artifacts\improve-generating\phase0\ig07-test.cjs
   arithmetic, not a forecast and not a ceiling of a full S3: a call that returns a Finding can also skip cached negative scopes (so a full S3 can
   save more than the negative calls) and a cache costs lookups and invalidation (so it saves less). Only the two family-time scenarios limit a
   change confined to those finders' calls. The bias-adjusted column of r1 is dropped.
+
+## IG-S08: bounded SM3 attribution of Jigsaw Expert seed 1111 (pre-MS07)
+
+Test side only; every number is provisional (pre-freeze) and labelled **pre-MS07**. Two fixed shards, three requests, all native `jigsaw9`, Expert,
+trace off, rotational180, random order, default options and attempts: `control` (seed 1100: one unobserved native request, then one observed
+request; in its first command also the unmeasured probe, the calibration of the instrument, its engine checks and the synthetic short-timeout
+journal recovery test) and `tail` (seed 1111: one observed request under the 240 s Jigsaw diagnostic guard, or the command window if that is
+smaller, whichever the allocation leaves: the limit actually applied is recorded). The unobserved historical total (325.313 s, I5) is never
+remeasured to completion: that would need a 400 s command and the wrapper stops at 300 s.
+
+```powershell
+# the plan (no engine, nothing timed, nothing written)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S08 -Round provisional-r1 -PlanOnly
+# the two shards in order
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S08 -Round provisional-r1
+# the task documents (evidence only, no engine, written once; --suffix=-r2 --revision=<text> for a revision)
+node generator\tests\artifacts\improve-generating\phase0\ig08-aggregate.cjs --task=IG-S08 --round=provisional-r1
+# development only, no engine, no thread, nothing written: the pure cases
+node generator\tests\artifacts\improve-generating\phase0\ig08-test.cjs
+```
+
+- **The instrument.** The adapter `jigsaw-profile` (32 transforms; hashes in `command.json` and every record) calls `SG.__igJig`, which exists only
+  between `install` and `uninstall` of one request (`ig08-worker.cjs`, a `finally`); the engine entry points that need no source change are wrapped
+  and restored as in IG-S07. Without the beacon the patched sources are the native code; the inserted lines draw no random number and change no limit,
+  restart rule or branch (a pure test checks the inserted text). Nothing about the algorithm is bounded, restarted or optimised.
+- **Why shared memory.** The request is one synchronous call in a worker that the host terminates without a word at the guard. The counters
+  therefore live in a `SharedArrayBuffer` that the responsive host reads every 5 s (a heartbeat) and once more after the worker ended; every stage
+  entry is also posted to the host as a message *before* the synchronous work starts (the pipeline steps, each layout attempt, the unlimited last
+  full-grid search, the safety count, the proposal rating and the refinements; the hot inner contexts post none). The host writes everything to
+  `stage-journal.jsonl` (one JSON line each, CRLF, flushed at each heartbeat); the attribution is computed **from that journal alone**, so it survives a
+  worker that never answers. A counter only grows, so every read is a lower bound.
+- **What is measured.** Wall time booked once, by segments, to a cell of *context* (configure, buildModel, layout growth, layout solvability check,
+  layout plain-search check, fullGrid, extraStructure, dig, the stage A oracle, the stage B objective, the final count of the random dig, the safety
+  count, the keeper count, the proposal rating, the refinement, rate, tune, and the local continuation with its own uniqueness counts, ratings and
+  refinement) x *sub* (own code, one registered finder, the logical solver's own code, the rating's own code, the depth-first search, the full-grid
+  generator); calls and finder hits per cell; layout attempts, growth backtracks, open levels, feasibility calls and outcomes; full-grid searches,
+  restarts and backtracks and the entry of the unlimited last search; depth-first nodes, node checks and backtracks, booked to the current context.
+  The time since the last booked segment is added to the cell that was running when the host ended the observation (a lower bound).
+- **What is unknown, never zero** (`unknownCounters`): the totals of the solver's budget checks (**not instrumented** here: the request passes no
+  external budget, but the digger's own internal budgets, such as the stage B objective step guard and the uniqueness-count node slices, issue
+  checks this instrument does not count; the IG-S07 limitation that chain propagation checks bypass `ctx.check` stays), the operations inside
+  constraint propagation, the time of applying a Finding (part of the solver's own code) and per-call times inside a context. The guards themselves
+  are untouched. Counter scope: the depth-first counters are live (they include a search that is still running); the full-grid counters (searches,
+  restarts, backtracks) are booked when a search returns, so they count completed searches only; all counters are cumulative over the request, per
+  context, never per attempt (per-attempt node and backtrack counts are unknown: no snapshot is taken at a stage entry).
+- **A censored request** is recorded as `request-timeout` with `timeoutScope` request or command, a `censoredLowerBound` (wall, CPU to the timeout) and
+  the limit actually applied; it has no puzzle, no exactness and no check result, and it is never a completed latency, a pass, or evidence that a
+  specific S7 ceiling is safe. A completed request is validated by the unpatched verifier after the timed interval like every other task.
+- **Control and overhead.** The control compares the observed request with the native one (digests of every deterministic section; a mismatch stops
+  the pack) and reports one ratio (n = 1, time-separated) beside the calibrated unit costs times the operations the beacon counted: an estimate,
+  never a correction. An observed request is an attribution run, never a timing run.
+- **The synthetic recovery test** (first command, test-only host, a busy worker that publishes stages and counters through the real beacon and never
+  answers, a 1.5 s Jigsaw guard): the host records the timeout and no result, the journal holds the stage markers, heartbeats whose counters move while
+  the worker is blocked and the post-mortem read; the attribution is also recomputed from the last heartbeat (the host died before the final read) and
+  from a journal whose last line was cut short. The same judge runs on fake workers in the pure tests.

@@ -1,0 +1,201 @@
+{
+  "manifest": {
+    "schema": "ig-s-phase0/1",
+    "task": "IG-S08",
+    "round": "provisional-r1",
+    "evidenceStatus": "provisional (pre-freeze)",
+    "guards": {
+      "commandMs": 270000,
+      "requestMs": 180000,
+      "sampleMs": 45000,
+      "jigsawMs": 240000,
+      "validationMs": 60000,
+      "wrapperLimitMs": 300000,
+      "graceMs": 45000,
+      "finalizeReserveMs": 8000,
+      "startMarginMs": 2000,
+      "minWindowMs": 15000
+    },
+    "pairOrder": [
+      {
+        "pairId": "jigsaw9:expert:1100",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "jigsaw9:expert:1111",
+        "seedIndex": 1,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      }
+    ],
+    "shards": [
+      {
+        "shard": "control",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S08/control/jigsaw9:expert:1100"
+        ],
+        "jobKeys": [
+          "IG-S08/control/jigsaw9:expert:1100/unprofiled",
+          "IG-S08/control/jigsaw9:expert:1100/profiled"
+        ]
+      },
+      {
+        "shard": "tail",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S08/tail/jigsaw9:expert:1111"
+        ],
+        "jobKeys": [
+          "IG-S08/tail/jigsaw9:expert:1111/profiled"
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "blockKey": "IG-S08/control/jigsaw9:expert:1100",
+        "shard": "control",
+        "jobKeys": [
+          "IG-S08/control/jigsaw9:expert:1100/unprofiled",
+          "IG-S08/control/jigsaw9:expert:1100/profiled"
+        ],
+        "estimateMs": 12000
+      },
+      {
+        "blockKey": "IG-S08/tail/jigsaw9:expert:1111",
+        "shard": "tail",
+        "jobKeys": [
+          "IG-S08/tail/jigsaw9:expert:1111/profiled"
+        ],
+        "estimateMs": 180000
+      }
+    ],
+    "jobs": [
+      {
+        "key": "IG-S08/control/jigsaw9:expert:1100/unprofiled",
+        "blockKey": "IG-S08/control/jigsaw9:expert:1100",
+        "shard": "control",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "jigsaw9:expert:1100",
+        "gridCluster": null,
+        "requestSeed": 1100,
+        "variantId": "unprofiled",
+        "puzzleVariant": "jigsaw9",
+        "level": "expert",
+        "mode": "native",
+        "arm": "reference",
+        "solverMode": "native-w1",
+        "executor": null,
+        "adapterIds": [],
+        "cellKind": "control",
+        "request": {
+          "variantId": "jigsaw9",
+          "difficulty": "expert",
+          "seed": 1100,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 5000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S08/control/jigsaw9:expert:1100/profiled",
+        "blockKey": "IG-S08/control/jigsaw9:expert:1100",
+        "shard": "control",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": "jigsaw9:expert:1100",
+        "gridCluster": null,
+        "requestSeed": 1100,
+        "variantId": "profiled",
+        "puzzleVariant": "jigsaw9",
+        "level": "expert",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "beacon",
+        "executor": "jigsaw",
+        "adapterIds": [
+          "jigsaw-profile"
+        ],
+        "cellKind": "control",
+        "request": {
+          "variantId": "jigsaw9",
+          "difficulty": "expert",
+          "seed": 1100,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 7000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S08/tail/jigsaw9:expert:1111/profiled",
+        "blockKey": "IG-S08/tail/jigsaw9:expert:1111",
+        "shard": "tail",
+        "order": 0,
+        "seedIndex": 1,
+        "pairId": "jigsaw9:expert:1111",
+        "gridCluster": null,
+        "requestSeed": 1111,
+        "variantId": "profiled",
+        "puzzleVariant": "jigsaw9",
+        "level": "expert",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "beacon",
+        "executor": "jigsaw",
+        "adapterIds": [
+          "jigsaw-profile"
+        ],
+        "cellKind": "tail",
+        "request": {
+          "variantId": "jigsaw9",
+          "difficulty": "expert",
+          "seed": 1111,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 180000,
+        "guardScope": "jigsaw"
+      }
+    ],
+    "manifestHash": "909ad60160328f6759f6e72042ea239a066b27e5eb2ba8972c624c3448eedc54"
+  },
+  "attemptKeys": [
+    "IG-S08/control/jigsaw9:expert:1100/unprofiled",
+    "IG-S08/control/jigsaw9:expert:1100/profiled"
+  ],
+  "runKeys": [
+    "IG-S08/control/jigsaw9:expert:1100/unprofiled",
+    "IG-S08/control/jigsaw9:expert:1100/profiled"
+  ],
+  "physicalPlan": {
+    "windowMs": 258000,
+    "commands": [
+      {
+        "index": 0,
+        "blockKeys": [
+          "IG-S08/control/jigsaw9:expert:1100"
+        ],
+        "jobKeys": [
+          "IG-S08/control/jigsaw9:expert:1100/unprofiled",
+          "IG-S08/control/jigsaw9:expert:1100/profiled"
+        ],
+        "estimateMs": 12000,
+        "split": false
+      }
+    ],
+    "oversize": [],
+    "hash": "7d49bba6253ebeb632c8d86f12b3ece9ac1fecbe81e2e73124a8523e850b49d0"
+  }
+}

@@ -1,0 +1,2513 @@
+{
+  "schema": "ig-s08-summary/1",
+  "task": "IG-S08",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "label": "pre-MS07: the catalogue, floors and search may change when difficulty-v3 freezes (MS07); every number here is provisional (pre-freeze) and a frozen rerun with the same seeds and bound is the confirmatory one",
+  "preMs07": true,
+  "revision": "r3 (pack-author review, reporting only): F1 labels cumulative versus open-stage full-grid figures and completed versus active searches (the fullGrid row and the 238.78 s, 84,717,442 nodes and 176,221,059 backtracks span all four full-grid stage entries, not attempt 4 alone; grid searches, restarts and backtracks count completed searches only, the running search is in none of them; per-attempt counts stay unknown); F2 says solver-check totals were not instrumented instead of claiming the request had no budget (the digger has internal budgets); F3 removes the unconditional application and native-speed claims. Reporting code only: the two commands ran under harness fe2bae1efce6, the r2 documents were written by acd724186e2d and the r3 documents by 82b623923934; r1 and r2 and every record, journal and command file are kept as written (they contain the earlier wording).",
+  "notice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default. Pre-MS07: the catalogue, floors and search may change when difficulty-v3 freezes.",
+  "formalGate": "not-evaluable-pre-freeze (a diagnostic task, not a latency gate)",
+  "provenance": {
+    "harnessBase": "5027a528f03a (IG-S07 r2 writer; this task adds files and one line each to run.cjs and worker.cjs, so the harness fingerprint of its commands differs and is recorded in each command.json)",
+    "loopTestProvenance": "062742c330eb (the IG-S07 loop-check command: the budget-check counts of the logical solver loop)",
+    "counterLimitation": "chain propagation checks that bypass ctx.check are not counted (IG-S07 limitation carried forward); the totals of the solver's budget checks were not instrumented in this task (the request passes no external budget, but the digger's own internal budgets issue checks that are not counted), so they are recorded as unknown, never zero"
+  },
+  "historical": {
+    "totalSeconds": 325.313,
+    "population": "I5 (n = 20 Jigsaw Expert requests in the report)",
+    "note": "a separate, uninstrumented historical measurement whose machine and source version are not re-established here; the request was not retained and is not remeasured to completion (a 400 s command would break the 300 s ceiling); the other 19 requests took at most 2.438 s"
+  },
+  "thisRun": {
+    "key": "IG-S08/tail/jigsaw9:expert:1111/profiled",
+    "outcome": "request-timeout",
+    "censored": true,
+    "completedRequest": false,
+    "completedColdWallMs": null,
+    "completedReadyWallMs": null,
+    "censoredLowerBoundWallMs": 240014.5519,
+    "censoredLowerBoundCpuToTimeoutMs": 238547,
+    "cpuTotalMs": 238562,
+    "cpuResolutionStatus": "resolved",
+    "startupMs": 135.3465,
+    "cleanupMs": 7.767099999997299,
+    "timeoutScope": "request",
+    "limitAppliedMs": 240000,
+    "guardMs": 240000,
+    "guardScope": "jigsaw",
+    "commandDeadlineMs": 265022,
+    "commandWindowRemainingAtSpawnMs": 256342.158,
+    "verifiedExact": null,
+    "claimedExact": null,
+    "puzzleHash": null,
+    "validation": {
+      "wallMs": null,
+      "cpuMs": null,
+      "solutionValid": null,
+      "givensAgree": null,
+      "structureValid": null,
+      "unique": null,
+      "canonicalEqual": null
+    },
+    "attemptsUsed": null,
+    "note": "censored lower bound at the limit actually applied: not a completed latency, not a pass, not evidence that a specific S7 ceiling is safe"
+  },
+  "comparison": {
+    "historicalSeconds": 325.313,
+    "thisRunCompletedSeconds": null,
+    "thisRunCensoredLowerBoundSeconds": 240.0145519,
+    "note": "the historical figure and this run are different measurements; a censored lower bound is never compared as if it were a latency"
+  },
+  "attributionSource": "final",
+  "stageLowerBounds": [
+    {
+      "stage": "outside",
+      "wallMsLowerBound": 5.413086,
+      "share": 0.00002256608288693637,
+      "contexts": [
+        "outside"
+      ],
+      "counters": {
+        "dfsNodes": 0,
+        "dfsChecks": 0,
+        "dfsBacktracks": 0,
+        "gridSearches": 0,
+        "gridRestarts": 0,
+        "gridBacktracks": 0
+      }
+    },
+    {
+      "stage": "configure",
+      "wallMsLowerBound": 0.388916,
+      "share": 0.0000016213137371280902,
+      "contexts": [
+        "configure"
+      ],
+      "counters": {
+        "dfsNodes": 0,
+        "dfsChecks": 0,
+        "dfsBacktracks": 0,
+        "gridSearches": 0,
+        "gridRestarts": 0,
+        "gridBacktracks": 0
+      }
+    },
+    {
+      "stage": "buildModel",
+      "wallMsLowerBound": 37.738282,
+      "share": 0.0001573234195101609,
+      "contexts": [
+        "layout.solvable",
+        "layout.plain",
+        "layout.growth",
+        "buildModel"
+      ],
+      "counters": {
+        "dfsNodes": 7255,
+        "dfsChecks": 7253,
+        "dfsBacktracks": 13444,
+        "gridSearches": 27,
+        "gridRestarts": 26,
+        "gridBacktracks": 5252
+      }
+    },
+    {
+      "stage": "fullGrid",
+      "wallMsLowerBound": 238776.6374509375,
+      "share": 0.9954124859981553,
+      "contexts": [
+        "fullGrid"
+      ],
+      "counters": {
+        "dfsNodes": 84717442,
+        "dfsChecks": 84717439,
+        "dfsBacktracks": 176221059,
+        "gridSearches": 111,
+        "gridRestarts": 108,
+        "gridBacktracks": 440433
+      }
+    },
+    {
+      "stage": "extraStructure",
+      "wallMsLowerBound": 0.203857,
+      "share": 8.498394370756696e-7,
+      "contexts": [
+        "extraStructure"
+      ],
+      "counters": {
+        "dfsNodes": 0,
+        "dfsChecks": 0,
+        "dfsBacktracks": 0,
+        "gridSearches": 0,
+        "gridRestarts": 0,
+        "gridBacktracks": 0
+      }
+    },
+    {
+      "stage": "dig",
+      "wallMsLowerBound": 270.27075099999996,
+      "share": 0.0011267052045691756,
+      "contexts": [
+        "dig.objective(stageB)",
+        "dig.oracle(stageA)",
+        "dig",
+        "dig.safetyCount",
+        "dig.keeperCount"
+      ],
+      "counters": {
+        "dfsNodes": 800,
+        "dfsChecks": 753,
+        "dfsBacktracks": 1511,
+        "gridSearches": 0,
+        "gridRestarts": 0,
+        "gridBacktracks": 0
+      }
+    },
+    {
+      "stage": "rate",
+      "wallMsLowerBound": 11.164792000000002,
+      "share": 0.000046543805453562745,
+      "contexts": [
+        "rate"
+      ],
+      "counters": {
+        "dfsNodes": 0,
+        "dfsChecks": 0,
+        "dfsBacktracks": 0,
+        "gridSearches": 0,
+        "gridRestarts": 0,
+        "gridBacktracks": 0
+      }
+    },
+    {
+      "stage": "tune",
+      "wallMsLowerBound": 0.478271,
+      "share": 0.000001993817025707322,
+      "contexts": [
+        "tune"
+      ],
+      "counters": {
+        "dfsNodes": 0,
+        "dfsChecks": 0,
+        "dfsBacktracks": 0,
+        "gridSearches": 0,
+        "gridRestarts": 0,
+        "gridBacktracks": 0
+      }
+    },
+    {
+      "stage": "local",
+      "wallMsLowerBound": 774.7814939999998,
+      "share": 0.0032299105192247807,
+      "contexts": [
+        "local.rating",
+        "local",
+        "local.unique"
+      ],
+      "counters": {
+        "dfsNodes": 13173,
+        "dfsChecks": 12016,
+        "dfsBacktracks": 19121,
+        "gridSearches": 0,
+        "gridRestarts": 0,
+        "gridBacktracks": 0
+      }
+    }
+  ],
+  "fullGridScope": {
+    "scopeNote": "cumulative figures span every full-grid stage entry of the request (finished and open) and, for the full-grid counters, count completed searches only (a search is booked when it returns, so the running search is in none of them); the depth-first counters are live and include the running search; per-attempt counts of nodes, backtracks and restarts are unknown",
+    "cumulativeOverAllFullGridStageEntries": {
+      "stageEntries": 4,
+      "finishedEntries": 3,
+      "openEntries": 1,
+      "wallMsLowerBound": 238776.6374509375,
+      "completedSearches": 111,
+      "completedRestarts": 108,
+      "backtracksOfReturnedSearches": 440433,
+      "liveDfsNodes": 84717442,
+      "liveDfsChecks": 84717439,
+      "liveDfsBacktracks": 176221059
+    },
+    "finishedStages": {
+      "count": 3,
+      "wallMs": 320.91625999999997,
+      "maxWallMs": 195.973145
+    },
+    "openStage": {
+      "attempt": 4,
+      "openedAtEpochMs": 1794706904533.791,
+      "wallMsObserved": 238455.71997070312,
+      "wallSource": "stage-open marker to the host's timeout instant",
+      "residualMsOfCumulativeWall": 0.001
+    },
+    "unlimitedLastSearch": [
+      {
+        "context": "fullGrid",
+        "searchIndexInItsGenerateCall": 50,
+        "atEpochMs": 1794706904808.1,
+        "msAfterTheOpenStageOpened": 274.30908203125,
+        "inTheOpenStage": true,
+        "runningAtLeastMs": 238181.41088867188
+      }
+    ],
+    "completedSearchesUnchanged": {
+      "completedSearches": 138,
+      "scope": "all contexts (the layout solvability check's searches included)",
+      "fromHeartbeat": 1,
+      "atMs": 5007.312,
+      "toHeartbeat": 47,
+      "note": "no search returned between this heartbeat and the end of the observation (the unlimited-entry marker, when present, dates the start of the running search)"
+    },
+    "perAttemptCounts": {
+      "searches": null,
+      "restarts": null,
+      "backtracks": null,
+      "dfsNodes": null,
+      "dfsBacktracks": null,
+      "why": "unknown: the counters are cumulative per context and no snapshot is taken at a stage entry; for the open stage only its wall time, the unlimited-entry marker and the heartbeat observation above were recorded"
+    }
+  },
+  "counterScopeNote": "stage rows are cumulative over the whole request: the fullGrid row spans every full-grid stage entry. The grid searches/restarts/backtracks columns count COMPLETED searches (booked when a search returns); the dfs columns are LIVE and include a running search. Per-attempt counts are unknown.",
+  "finderFamilies": [
+    {
+      "group": "chain",
+      "ms": 147.277343,
+      "calls": 811,
+      "hits": 573
+    },
+    {
+      "group": "fish",
+      "ms": 118.72900200000001,
+      "calls": 7168,
+      "hits": 1661
+    },
+    {
+      "group": "basic",
+      "ms": 96.570067,
+      "calls": 264921,
+      "hits": 185818
+    },
+    {
+      "group": "subset",
+      "ms": 84.139649,
+      "calls": 17416,
+      "hits": 936
+    },
+    {
+      "group": "locked",
+      "ms": 32.623047,
+      "calls": 20942,
+      "hits": 10813
+    },
+    {
+      "group": "wing",
+      "ms": 19.80664,
+      "calls": 3141,
+      "hits": 94
+    }
+  ],
+  "layout": {
+    "layoutAttempts": 1,
+    "layoutGrowthBacktracks": 6,
+    "layoutLevels": 78,
+    "layoutFeasibility": 273,
+    "layoutUnsolvable": 0,
+    "layoutHard": 0,
+    "layoutAccepted": 1,
+    "gridUnlimitedEntered": 1,
+    "samples": 39
+  },
+  "counters": {
+    "dfsNodes": 84738670,
+    "dfsChecks": 84737461,
+    "dfsBacktracks": 176255135,
+    "gridSearches": 138,
+    "gridRestarts": 134,
+    "gridBacktracks": 445685
+  },
+  "unknownCounters": [
+    {
+      "counter": "solverBudgetChecks",
+      "why": "not instrumented: the totals of the solver's budget checks are not counted (the request passes no external budget, but the digger's internal budgets, such as the stage B objective step guard and the uniqueness-count node slices, issue checks); the propagation checks of the chain finders bypass ctx.check in any case (IG-S07 limitation)"
+    },
+    {
+      "counter": "constraintPropagationOperations",
+      "why": "no counter exists in the private source; the time is part of the cell of the caller (the logical solver's own code, a finder or the depth-first search)"
+    },
+    {
+      "counter": "findingApplicationTime",
+      "why": "part of the logical solver's own code (sub solver), not separated from the ladder loop"
+    },
+    {
+      "counter": "perCallTimeOfOracleObjectiveKeeperLocal",
+      "why": "wall time and call counts are kept per context, not per individual call"
+    }
+  ],
+  "readout": [
+    "Dominant stage by wall lower bound: fullGrid (238.78 s, 99.5 % of the 239.88 s observed from engine start of the request).",
+    "Dominant context: fullGrid (238.78 s); largest part inside it: dfs 238.78 s.",
+    "When the observation ended the request was in fullGrid / fullGrid (pipeline step fullGrid, attempt 4), inside the dfs, for at least 238.18 s since its last accounted segment.",
+    "Before the stage that was still open, 125 stage entries ran to the end and took 1.42 s in total; the 3 finished full-grid stage(s) took 0.32 s in total, the longest 0.20 s.",
+    "Layout (buildModel): 1 growth attempt(s), 6 growth backtrack(s), 78 open level(s), 273 feasibility call(s); 0 dropped as unsolvable, 0 as too hard for the plain search; a layout was accepted.",
+    "Full-grid counters, cumulative over all 4 full-grid stage entries (3 finished, 1 open): wall lower bound 238.78 s; COMPLETED searches 111 (108 restarts, 440433 backtracks of returned searches; the running search is in none of these three); LIVE depth-first counters, which include the running search: 84717442 nodes, 176221059 backtracks. Per-attempt counts are unknown.",
+    "Open full-grid stage (attempt 4) alone: wall observed >= 238.46 s (stage-open marker to the host's timeout instant); the 3 finished full-grid stage(s) account for 0.32 s of the cumulative wall. Its unlimited last search was entered 0.27 s after the stage opened (marker: search index 50 of its generate call) and was still running, for at least 238.18 s.",
+    "Completed searches (all contexts: the layout solvability check's searches included) stayed at 138 from the heartbeat at 5.01 s (no. 1) to the end of the observation.",
+    "Largest finder family by time: chain (0.15 s, 811 calls, 573 hits); all finders 0.50 s of 239.88 s.",
+    "Heartbeats: counters still moving in the last heartbeat interval."
+  ],
+  "impliesForS7": [
+    "Context fullGrid points at the full-grid search (generate: unlimited last search after the 50th restart; restarts keep forking `grid#a.k`): the ceiling on total restarts or work of IG-S-Q07 option (b).",
+    "What this one request offers for sizing a count-based full-grid ceiling, with its scope: 3 finished full-grid stage(s) took 0.32 s in total (the longest 0.20 s); the open stage alone was observed for at least 238.46 s, its unlimited last search for at least 238.18 s; the depth-first counts (84717442 nodes, 176221059 backtracks) are cumulative over ALL 4 full-grid stage entries and come from the instrumented search, and 111 searches had COMPLETED (the running one is not counted); no per-attempt node, backtrack or restart count exists. A single request gives no distribution per successful full-grid attempt, so no ceiling can be sized from it.",
+    "The instrumented observation ran past 120 s without finishing. That does not establish this source's uninstrumented latency: the observation's overhead was measured once, on a different request (seed 1100, n = 1), and estimated from a micro-benchmark, and the tail's uninstrumented throughput was not measured. The historical uninstrumented 325.313 s (I5) is a separate risk statement, not re-established here. What either implies for the application's 120 s guard is not decided by this run.",
+    "The request was censored at 240.00 s (request): this is a lower bound. It does not show how long the request takes, that the observed stage is the only expensive one, or that any particular S7 ceiling is safe or sufficient.",
+    "No ceiling is chosen or tested here. A ceiling and its reaction need the separately designed experiment the task file names, after the frozen catalogue (MS07)."
+  ],
+  "control": {
+    "attemptId": "a1",
+    "status": "complete",
+    "native": {
+      "key": "IG-S08/control/jigsaw9:expert:1100/unprofiled",
+      "outcome": "complete",
+      "readyWallMs": 510.7363,
+      "coldWallMs": 611.1814999999997,
+      "cpuTotalMs": 984,
+      "cpuResolutionStatus": "resolved",
+      "puzzleHash": "6b2c35d92da1ce29fee1b6bb917a8a6a095c4d886924e993fe0a4ddf65028423",
+      "claimedExact": true,
+      "verifiedExact": true,
+      "achieved": "expert",
+      "attemptsUsed": 3,
+      "validation": {
+        "wallMs": 111.14319999999998,
+        "cpuMs": 126,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "validationStatus": "verified"
+    },
+    "observed": {
+      "key": "IG-S08/control/jigsaw9:expert:1100/profiled",
+      "outcome": "complete",
+      "readyWallMs": 591.9542999999994,
+      "coldWallMs": 722.0924999999997,
+      "cpuTotalMs": 1109,
+      "cpuResolutionStatus": "resolved",
+      "puzzleHash": "6b2c35d92da1ce29fee1b6bb917a8a6a095c4d886924e993fe0a4ddf65028423",
+      "claimedExact": true,
+      "verifiedExact": true,
+      "achieved": "expert",
+      "attemptsUsed": 3,
+      "validation": {
+        "wallMs": 112.78129999999965,
+        "cpuMs": 203,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "validationStatus": "verified"
+    },
+    "identity": {
+      "pairs": [
+        {
+          "pairId": "IG-S08/control/jigsaw9:expert:1100/profiled",
+          "comparator": "IG-S08/control/jigsaw9:expert:1100/unprofiled",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "puzzleHash": "6b2c35d92da1ce29fee1b6bb917a8a6a095c4d886924e993fe0a4ddf65028423",
+          "comparatorPuzzleHash": "6b2c35d92da1ce29fee1b6bb917a8a6a095c4d886924e993fe0a4ddf65028423",
+          "observedDigest": "144eb8e83b273d1297d5eed1df3a8cd82a7c5806fe3e8b1954da0f0033a7f92f",
+          "comparatorDigest": "144eb8e83b273d1297d5eed1df3a8cd82a7c5806fe3e8b1954da0f0033a7f92f"
+        }
+      ],
+      "failed": 0,
+      "ok": 1,
+      "notComparable": 0,
+      "deferred": 0,
+      "complete": true
+    },
+    "overhead": {
+      "n": 1,
+      "readyWallFactor": 1.159021397147607,
+      "coldWallFactor": 1.1814698252483102,
+      "cpuFactor": 1.1270325203252032,
+      "note": "one pair of requests, time-separated: a single ratio, not a distribution; the profiled request is an attribution run, never a timing run",
+      "estimate": {
+        "spans": 230594,
+        "counterIncrements": 15255,
+        "markersPosted": 268,
+        "estimatedMs": 47.789360742999584,
+        "shareOfObservedWall": 0.08120981785996588,
+        "note": "calibrated unit costs times the operations the beacon counted: an estimate, never a correction"
+      }
+    },
+    "calibration": {
+      "wallMs": 106.49609999999996,
+      "cpuMs": 156,
+      "enterLeavePairNs": 206.51999999999816,
+      "epochReadNs": 90.87999999999964,
+      "counterIncrementNs": 6.738600000000133,
+      "markerPostNs": 239.8900000000026,
+      "iterations": 50000,
+      "repeats": 3,
+      "markersPosted": 60002
+    },
+    "engineChecks": {
+      "passed": 28,
+      "total": 28,
+      "results": [
+        {
+          "id": "engine.hooks-absent-at-start.classic4-veryEasy-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.same-puzzle.classic4-veryEasy-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.same-budget-checks.classic4-veryEasy-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.restored.classic4-veryEasy-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.stage-markers-balanced.classic4-veryEasy-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.time-accounting.classic4-veryEasy-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.counters-observed.classic4-veryEasy-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.budget-error-unwinds.classic4-veryEasy-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.abandoned-generator-unwinds.classic4-veryEasy-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.hooks-absent-at-start.classic9-hard-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.same-puzzle.classic9-hard-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.same-budget-checks.classic9-hard-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.restored.classic9-hard-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.stage-markers-balanced.classic9-hard-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.time-accounting.classic9-hard-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.counters-observed.classic9-hard-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.layout-same-regions.layout-1100",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.layout-counters-equal-stats.layout-1100",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.layout-restored.layout-1100",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.layout-same-regions.layout-9",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.layout-counters-equal-stats.layout-9",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.layout-restored.layout-9",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.grid-same-grid.grid-classic4-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.grid-counters-equal-stats.grid-classic4-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.grid-restored.grid-classic4-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.grid-same-grid.grid-classic9-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.grid-counters-equal-stats.grid-classic9-1",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "engine.grid-restored.grid-classic9-1",
+          "ok": true,
+          "detail": null
+        }
+      ]
+    },
+    "syntheticRecovery": {
+      "ok": true,
+      "checks": [
+        {
+          "id": "recovery.timeout-recorded",
+          "ok": true,
+          "detail": {
+            "outcome": "request-timeout",
+            "scope": "request"
+          }
+        },
+        {
+          "id": "recovery.no-invented-result",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "recovery.host-stayed-responsive",
+          "ok": true,
+          "detail": {
+            "coldWallMs": 1510.0187999999998,
+            "guardMs": 1500
+          }
+        },
+        {
+          "id": "recovery.worker-terminated",
+          "ok": true,
+          "detail": null
+        },
+        {
+          "id": "recovery.journal-wellformed",
+          "ok": true,
+          "detail": {
+            "bad": [],
+            "problems": []
+          }
+        },
+        {
+          "id": "recovery.stage-markers-survive",
+          "ok": true,
+          "detail": [
+            "configure",
+            "buildModel",
+            "fullGrid(open)"
+          ]
+        },
+        {
+          "id": "recovery.layout-markers",
+          "ok": true,
+          "detail": 4
+        },
+        {
+          "id": "recovery.heartbeats-while-busy",
+          "ok": true,
+          "detail": {
+            "heartbeats": 3
+          }
+        },
+        {
+          "id": "recovery.counters-move-while-worker-blocked",
+          "ok": true,
+          "detail": [
+            98110742,
+            203900363,
+            311582749
+          ]
+        },
+        {
+          "id": "recovery.final-read",
+          "ok": true,
+          "detail": "running"
+        },
+        {
+          "id": "recovery.last-stage-from-shared-memory",
+          "ok": true,
+          "detail": {
+            "ctx": 6,
+            "ctxName": "fullGrid",
+            "sub": 0,
+            "part": {
+              "kind": "own",
+              "id": null,
+              "group": null
+            },
+            "stage": "fullGrid",
+            "step": "fullGrid",
+            "attempt": 2,
+            "sample": 0,
+            "kind": "none",
+            "inProgressMs": 1478.037109375,
+            "depth": 1
+          }
+        },
+        {
+          "id": "recovery.marker-and-memory-agree",
+          "ok": true,
+          "detail": "agree"
+        },
+        {
+          "id": "recovery.final-counters-cover-last-heartbeat",
+          "ok": true,
+          "detail": {
+            "dfsNodes": 382906999,
+            "dfsChecks": 382906999,
+            "dfsBacktracks": 0,
+            "gridSearches": 0,
+            "gridRestarts": 1461,
+            "gridBacktracks": 0
+          }
+        },
+        {
+          "id": "recovery.fallback-last-heartbeat",
+          "ok": true,
+          "detail": "last-heartbeat"
+        },
+        {
+          "id": "recovery.truncated-last-line-tolerated",
+          "ok": true,
+          "detail": {
+            "truncated": true
+          }
+        }
+      ],
+      "summary": {
+        "heartbeats": 3,
+        "markers": 10,
+        "stages": 3,
+        "source": "final",
+        "coldWallMs": 1510.0187999999998
+      },
+      "journal": "stage-journal-synthetic.jsonl",
+      "journalSha256": "d68334227a6a0fe356c98c15b9fce1b2602ae049ae8329d19d3524eafac782ad",
+      "guardMs": 1500,
+      "heartbeatMs": 400
+    },
+    "firewallClean": true,
+    "sourceStable": true,
+    "harnessFingerprint": "fe2bae1efce6bf8df07ff7020a0ca422c10e9b4d3579378387cc6cc2ae743fce",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "adapterHashes": [
+      "69890fe8acaef852f6c19acb10985041a335e8ac55e3f6551bca1b4f6b6e2c62"
+    ],
+    "timing": {
+      "requestedAt": "2026-11-15T01:40:06.3888816Z",
+      "admittedAt": "2026-11-15T01:40:51.644Z",
+      "endedAt": "2026-11-15T01:40:56.529Z",
+      "occupiedMs": 4885,
+      "chargedGraceMs": 45000,
+      "priorityWaitMs": 45256
+    },
+    "observedAttribution": {
+      "state": "finished",
+      "current": null,
+      "beaconObservedMs": 588.4677740000002,
+      "inProgressMs": 0,
+      "stages": [
+        {
+          "stage": "outside",
+          "wallMsLowerBound": 5.236084,
+          "share": 0.008897826238484893,
+          "contexts": [
+            "outside"
+          ],
+          "counters": {
+            "dfsNodes": 0,
+            "dfsChecks": 0,
+            "dfsBacktracks": 0,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          }
+        },
+        {
+          "stage": "configure",
+          "wallMsLowerBound": 0.397461,
+          "share": 0.0006754167646230359,
+          "contexts": [
+            "configure"
+          ],
+          "counters": {
+            "dfsNodes": 0,
+            "dfsChecks": 0,
+            "dfsBacktracks": 0,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          }
+        },
+        {
+          "stage": "buildModel",
+          "wallMsLowerBound": 10.347167,
+          "share": 0.017583234727820453,
+          "contexts": [
+            "layout.growth",
+            "layout.solvable",
+            "buildModel",
+            "layout.plain"
+          ],
+          "counters": {
+            "dfsNodes": 83,
+            "dfsChecks": 81,
+            "dfsBacktracks": 18,
+            "gridSearches": 1,
+            "gridRestarts": 0,
+            "gridBacktracks": 12
+          }
+        },
+        {
+          "stage": "fullGrid",
+          "wallMsLowerBound": 0.922363,
+          "share": 0.0015673976396879121,
+          "contexts": [
+            "fullGrid"
+          ],
+          "counters": {
+            "dfsNodes": 120,
+            "dfsChecks": 117,
+            "dfsBacktracks": 39,
+            "gridSearches": 3,
+            "gridRestarts": 0,
+            "gridBacktracks": 39
+          }
+        },
+        {
+          "stage": "extraStructure",
+          "wallMsLowerBound": 0.71167,
+          "share": 0.0012093610414085306,
+          "contexts": [
+            "extraStructure"
+          ],
+          "counters": {
+            "dfsNodes": 0,
+            "dfsChecks": 0,
+            "dfsBacktracks": 0,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          }
+        },
+        {
+          "stage": "dig",
+          "wallMsLowerBound": 231.458495,
+          "share": 0.393323993643193,
+          "contexts": [
+            "dig.objective(stageB)",
+            "dig.oracle(stageA)",
+            "dig",
+            "dig.safetyCount",
+            "dig.keeperCount"
+          ],
+          "counters": {
+            "dfsNodes": 485,
+            "dfsChecks": 451,
+            "dfsBacktracks": 914,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          }
+        },
+        {
+          "stage": "rate",
+          "wallMsLowerBound": 8.941650000000001,
+          "share": 0.01519479977505106,
+          "contexts": [
+            "rate"
+          ],
+          "counters": {
+            "dfsNodes": 0,
+            "dfsChecks": 0,
+            "dfsBacktracks": 0,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          }
+        },
+        {
+          "stage": "tune",
+          "wallMsLowerBound": 0.417969,
+          "share": 0.0007102665914208581,
+          "contexts": [
+            "tune"
+          ],
+          "counters": {
+            "dfsNodes": 0,
+            "dfsChecks": 0,
+            "dfsBacktracks": 0,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          }
+        },
+        {
+          "stage": "local",
+          "wallMsLowerBound": 330.034915,
+          "share": 0.56083770357831,
+          "contexts": [
+            "local",
+            "local.rating",
+            "local.unique"
+          ],
+          "counters": {
+            "dfsNodes": 4286,
+            "dfsChecks": 3584,
+            "dfsBacktracks": 5073,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          }
+        }
+      ],
+      "contexts": [
+        {
+          "ctx": 18,
+          "name": "local",
+          "stage": "local",
+          "ms": 215.286133,
+          "entries": 2,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 215.286133,
+              "calls": 2,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 10,
+          "name": "dig.objective(stageB)",
+          "stage": "dig",
+          "ms": 190.44921800000003,
+          "entries": 2304,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 8.288574,
+              "calls": 2304,
+              "hits": 0
+            },
+            {
+              "sub": 1,
+              "kind": "finder",
+              "id": "nakedSingle",
+              "group": "basic",
+              "ms": 33.539551,
+              "calls": 115386,
+              "hits": 92293
+            },
+            {
+              "sub": 2,
+              "kind": "finder",
+              "id": "hiddenSingleBox",
+              "group": "basic",
+              "ms": 13.212646,
+              "calls": 23093,
+              "hits": 14250
+            },
+            {
+              "sub": 3,
+              "kind": "finder",
+              "id": "hiddenSingleLine",
+              "group": "basic",
+              "ms": 7.130615,
+              "calls": 8843,
+              "hits": 3264
+            },
+            {
+              "sub": 4,
+              "kind": "finder",
+              "id": "pointing",
+              "group": "locked",
+              "ms": 7.960449,
+              "calls": 5579,
+              "hits": 3116
+            },
+            {
+              "sub": 7,
+              "kind": "finder",
+              "id": "boxLine",
+              "group": "locked",
+              "ms": 3.243896,
+              "calls": 2463,
+              "hits": 1490
+            },
+            {
+              "sub": 8,
+              "kind": "finder",
+              "id": "nakedPair",
+              "group": "subset",
+              "ms": 3.760742,
+              "calls": 973,
+              "hits": 106
+            },
+            {
+              "sub": 9,
+              "kind": "finder",
+              "id": "hiddenPair",
+              "group": "subset",
+              "ms": 5.206543,
+              "calls": 867,
+              "hits": 73
+            },
+            {
+              "sub": 10,
+              "kind": "finder",
+              "id": "nakedTriple",
+              "group": "subset",
+              "ms": 3.074219,
+              "calls": 794,
+              "hits": 23
+            },
+            {
+              "sub": 12,
+              "kind": "finder",
+              "id": "hiddenTriple",
+              "group": "subset",
+              "ms": 4.47583,
+              "calls": 771,
+              "hits": 10
+            },
+            {
+              "sub": 14,
+              "kind": "finder",
+              "id": "nakedQuad",
+              "group": "subset",
+              "ms": 3.247559,
+              "calls": 761,
+              "hits": 0
+            },
+            {
+              "sub": 15,
+              "kind": "finder",
+              "id": "hiddenQuad",
+              "group": "subset",
+              "ms": 4.20459,
+              "calls": 761,
+              "hits": 0
+            },
+            {
+              "sub": 16,
+              "kind": "finder",
+              "id": "xWing",
+              "group": "fish",
+              "ms": 10.620605,
+              "calls": 761,
+              "hits": 51
+            },
+            {
+              "sub": 17,
+              "kind": "finder",
+              "id": "simpleColouring",
+              "group": "fish",
+              "ms": 16.807129,
+              "calls": 710,
+              "hits": 423
+            },
+            {
+              "sub": 18,
+              "kind": "finder",
+              "id": "swordfish",
+              "group": "fish",
+              "ms": 3.510986,
+              "calls": 287,
+              "hits": 17
+            },
+            {
+              "sub": 20,
+              "kind": "finder",
+              "id": "jellyfish",
+              "group": "fish",
+              "ms": 3.197266,
+              "calls": 270,
+              "hits": 0
+            },
+            {
+              "sub": 21,
+              "kind": "finder",
+              "id": "xyWing",
+              "group": "wing",
+              "ms": 1.771973,
+              "calls": 270,
+              "hits": 16
+            },
+            {
+              "sub": 22,
+              "kind": "finder",
+              "id": "xyzWing",
+              "group": "wing",
+              "ms": 1.174561,
+              "calls": 254,
+              "hits": 15
+            },
+            {
+              "sub": 43,
+              "kind": "solver",
+              "id": null,
+              "group": null,
+              "ms": 56.021484,
+              "calls": 2304,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 20,
+          "name": "local.rating",
+          "stage": "local",
+          "ms": 86.47387900000001,
+          "entries": 246,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 0.245117,
+              "calls": 246,
+              "hits": 0
+            },
+            {
+              "sub": 1,
+              "kind": "finder",
+              "id": "nakedSingle",
+              "group": "basic",
+              "ms": 4.992188,
+              "calls": 17496,
+              "hits": 9310
+            },
+            {
+              "sub": 2,
+              "kind": "finder",
+              "id": "hiddenSingleBox",
+              "group": "basic",
+              "ms": 4.000244,
+              "calls": 8186,
+              "hits": 3733
+            },
+            {
+              "sub": 3,
+              "kind": "finder",
+              "id": "hiddenSingleLine",
+              "group": "basic",
+              "ms": 3.336426,
+              "calls": 4453,
+              "hits": 1292
+            },
+            {
+              "sub": 4,
+              "kind": "finder",
+              "id": "pointing",
+              "group": "locked",
+              "ms": 4.120605,
+              "calls": 3161,
+              "hits": 1577
+            },
+            {
+              "sub": 7,
+              "kind": "finder",
+              "id": "boxLine",
+              "group": "locked",
+              "ms": 1.934326,
+              "calls": 1584,
+              "hits": 924
+            },
+            {
+              "sub": 8,
+              "kind": "finder",
+              "id": "nakedPair",
+              "group": "subset",
+              "ms": 2.177979,
+              "calls": 660,
+              "hits": 84
+            },
+            {
+              "sub": 9,
+              "kind": "finder",
+              "id": "hiddenPair",
+              "group": "subset",
+              "ms": 3.339844,
+              "calls": 576,
+              "hits": 76
+            },
+            {
+              "sub": 10,
+              "kind": "finder",
+              "id": "nakedTriple",
+              "group": "subset",
+              "ms": 2.267334,
+              "calls": 500,
+              "hits": 41
+            },
+            {
+              "sub": 12,
+              "kind": "finder",
+              "id": "hiddenTriple",
+              "group": "subset",
+              "ms": 2.961182,
+              "calls": 459,
+              "hits": 4
+            },
+            {
+              "sub": 14,
+              "kind": "finder",
+              "id": "nakedQuad",
+              "group": "subset",
+              "ms": 2.334229,
+              "calls": 455,
+              "hits": 0
+            },
+            {
+              "sub": 15,
+              "kind": "finder",
+              "id": "hiddenQuad",
+              "group": "subset",
+              "ms": 2.874756,
+              "calls": 455,
+              "hits": 0
+            },
+            {
+              "sub": 16,
+              "kind": "finder",
+              "id": "xWing",
+              "group": "fish",
+              "ms": 6.118408,
+              "calls": 455,
+              "hits": 118
+            },
+            {
+              "sub": 17,
+              "kind": "finder",
+              "id": "simpleColouring",
+              "group": "fish",
+              "ms": 7.70166,
+              "calls": 337,
+              "hits": 238
+            },
+            {
+              "sub": 18,
+              "kind": "finder",
+              "id": "swordfish",
+              "group": "fish",
+              "ms": 1.718262,
+              "calls": 99,
+              "hits": 12
+            },
+            {
+              "sub": 20,
+              "kind": "finder",
+              "id": "jellyfish",
+              "group": "fish",
+              "ms": 1.539551,
+              "calls": 87,
+              "hits": 0
+            },
+            {
+              "sub": 21,
+              "kind": "finder",
+              "id": "xyWing",
+              "group": "wing",
+              "ms": 0.507813,
+              "calls": 87,
+              "hits": 8
+            },
+            {
+              "sub": 22,
+              "kind": "finder",
+              "id": "xyzWing",
+              "group": "wing",
+              "ms": 0.602783,
+              "calls": 79,
+              "hits": 5
+            },
+            {
+              "sub": 23,
+              "kind": "finder",
+              "id": "wWing",
+              "group": "wing",
+              "ms": 1.4104,
+              "calls": 74,
+              "hits": 9
+            },
+            {
+              "sub": 24,
+              "kind": "finder",
+              "id": "uniqueRectangle",
+              "group": "wing",
+              "ms": 3.276123,
+              "calls": 65,
+              "hits": 0
+            },
+            {
+              "sub": 25,
+              "kind": "finder",
+              "id": "forcingChain",
+              "group": "chain",
+              "ms": 18.22583,
+              "calls": 65,
+              "hits": 48
+            },
+            {
+              "sub": 26,
+              "kind": "finder",
+              "id": "nishio",
+              "group": "chain",
+              "ms": 0.648682,
+              "calls": 17,
+              "hits": 17
+            },
+            {
+              "sub": 43,
+              "kind": "solver",
+              "id": null,
+              "group": null,
+              "ms": 8.557129,
+              "calls": 246,
+              "hits": 0
+            },
+            {
+              "sub": 44,
+              "kind": "rating",
+              "id": null,
+              "group": null,
+              "ms": 1.583008,
+              "calls": 246,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 19,
+          "name": "local.unique",
+          "stage": "local",
+          "ms": 28.274903,
+          "entries": 417,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 0.428223,
+              "calls": 417,
+              "hits": 0
+            },
+            {
+              "sub": 45,
+              "kind": "dfs",
+              "id": null,
+              "group": null,
+              "ms": 27.84668,
+              "calls": 417,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 9,
+          "name": "dig.oracle(stageA)",
+          "stage": "dig",
+          "ms": 20.803711,
+          "entries": 656,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 2.008545,
+              "calls": 656,
+              "hits": 0
+            },
+            {
+              "sub": 1,
+              "kind": "finder",
+              "id": "nakedSingle",
+              "group": "basic",
+              "ms": 5.226074,
+              "calls": 15046,
+              "hits": 15019
+            },
+            {
+              "sub": 2,
+              "kind": "finder",
+              "id": "hiddenSingleBox",
+              "group": "basic",
+              "ms": 0.024658,
+              "calls": 27,
+              "hits": 7
+            },
+            {
+              "sub": 3,
+              "kind": "finder",
+              "id": "hiddenSingleLine",
+              "group": "basic",
+              "ms": 0.022705,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 4,
+              "kind": "finder",
+              "id": "pointing",
+              "group": "locked",
+              "ms": 0.034912,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 7,
+              "kind": "finder",
+              "id": "boxLine",
+              "group": "locked",
+              "ms": 0.023438,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 8,
+              "kind": "finder",
+              "id": "nakedPair",
+              "group": "subset",
+              "ms": 0.040283,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 9,
+              "kind": "finder",
+              "id": "hiddenPair",
+              "group": "subset",
+              "ms": 0.061279,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 10,
+              "kind": "finder",
+              "id": "nakedTriple",
+              "group": "subset",
+              "ms": 0.0271,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 12,
+              "kind": "finder",
+              "id": "hiddenTriple",
+              "group": "subset",
+              "ms": 0.049316,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 14,
+              "kind": "finder",
+              "id": "nakedQuad",
+              "group": "subset",
+              "ms": 0.024414,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 15,
+              "kind": "finder",
+              "id": "hiddenQuad",
+              "group": "subset",
+              "ms": 0.04541,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 16,
+              "kind": "finder",
+              "id": "xWing",
+              "group": "fish",
+              "ms": 0.228271,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 17,
+              "kind": "finder",
+              "id": "simpleColouring",
+              "group": "fish",
+              "ms": 0.267578,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 18,
+              "kind": "finder",
+              "id": "swordfish",
+              "group": "fish",
+              "ms": 0.150391,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 20,
+              "kind": "finder",
+              "id": "jellyfish",
+              "group": "fish",
+              "ms": 0.132813,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 21,
+              "kind": "finder",
+              "id": "xyWing",
+              "group": "wing",
+              "ms": 0.080811,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 22,
+              "kind": "finder",
+              "id": "xyzWing",
+              "group": "wing",
+              "ms": 0.076416,
+              "calls": 20,
+              "hits": 0
+            },
+            {
+              "sub": 43,
+              "kind": "solver",
+              "id": null,
+              "group": null,
+              "ms": 12.279297,
+              "calls": 656,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 8,
+          "name": "dig",
+          "stage": "dig",
+          "ms": 14.610596,
+          "entries": 29,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 14.610596,
+              "calls": 29,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 16,
+          "name": "rate",
+          "stage": "rate",
+          "ms": 8.941650000000001,
+          "entries": 31,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 0.711426,
+              "calls": 31,
+              "hits": 0
+            },
+            {
+              "sub": 1,
+              "kind": "finder",
+              "id": "nakedSingle",
+              "group": "basic",
+              "ms": 0.63916,
+              "calls": 2228,
+              "hits": 1077
+            },
+            {
+              "sub": 2,
+              "kind": "finder",
+              "id": "hiddenSingleBox",
+              "group": "basic",
+              "ms": 0.58374,
+              "calls": 1151,
+              "hits": 439
+            },
+            {
+              "sub": 3,
+              "kind": "finder",
+              "id": "hiddenSingleLine",
+              "group": "basic",
+              "ms": 0.648682,
+              "calls": 712,
+              "hits": 195
+            },
+            {
+              "sub": 4,
+              "kind": "finder",
+              "id": "pointing",
+              "group": "locked",
+              "ms": 0.699707,
+              "calls": 517,
+              "hits": 272
+            },
+            {
+              "sub": 7,
+              "kind": "finder",
+              "id": "boxLine",
+              "group": "locked",
+              "ms": 0.332275,
+              "calls": 245,
+              "hits": 167
+            },
+            {
+              "sub": 8,
+              "kind": "finder",
+              "id": "nakedPair",
+              "group": "subset",
+              "ms": 0.296631,
+              "calls": 78,
+              "hits": 11
+            },
+            {
+              "sub": 9,
+              "kind": "finder",
+              "id": "hiddenPair",
+              "group": "subset",
+              "ms": 0.40332,
+              "calls": 67,
+              "hits": 11
+            },
+            {
+              "sub": 10,
+              "kind": "finder",
+              "id": "nakedTriple",
+              "group": "subset",
+              "ms": 0.252441,
+              "calls": 56,
+              "hits": 6
+            },
+            {
+              "sub": 12,
+              "kind": "finder",
+              "id": "hiddenTriple",
+              "group": "subset",
+              "ms": 0.373779,
+              "calls": 50,
+              "hits": 1
+            },
+            {
+              "sub": 14,
+              "kind": "finder",
+              "id": "nakedQuad",
+              "group": "subset",
+              "ms": 0.244629,
+              "calls": 49,
+              "hits": 0
+            },
+            {
+              "sub": 15,
+              "kind": "finder",
+              "id": "hiddenQuad",
+              "group": "subset",
+              "ms": 0.334961,
+              "calls": 49,
+              "hits": 0
+            },
+            {
+              "sub": 16,
+              "kind": "finder",
+              "id": "xWing",
+              "group": "fish",
+              "ms": 0.642334,
+              "calls": 49,
+              "hits": 7
+            },
+            {
+              "sub": 17,
+              "kind": "finder",
+              "id": "simpleColouring",
+              "group": "fish",
+              "ms": 1.064453,
+              "calls": 42,
+              "hits": 40
+            },
+            {
+              "sub": 18,
+              "kind": "finder",
+              "id": "swordfish",
+              "group": "fish",
+              "ms": 0.023193,
+              "calls": 2,
+              "hits": 1
+            },
+            {
+              "sub": 20,
+              "kind": "finder",
+              "id": "jellyfish",
+              "group": "fish",
+              "ms": 0.013672,
+              "calls": 1,
+              "hits": 0
+            },
+            {
+              "sub": 21,
+              "kind": "finder",
+              "id": "xyWing",
+              "group": "wing",
+              "ms": 0.002686,
+              "calls": 1,
+              "hits": 1
+            },
+            {
+              "sub": 43,
+              "kind": "solver",
+              "id": null,
+              "group": null,
+              "ms": 1.381836,
+              "calls": 29,
+              "hits": 0
+            },
+            {
+              "sub": 44,
+              "kind": "rating",
+              "id": null,
+              "group": null,
+              "ms": 0.292725,
+              "calls": 29,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 12,
+          "name": "dig.safetyCount",
+          "stage": "dig",
+          "ms": 5.417235999999999,
+          "entries": 31,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 1.056396,
+              "calls": 31,
+              "hits": 0
+            },
+            {
+              "sub": 45,
+              "kind": "dfs",
+              "id": null,
+              "group": null,
+              "ms": 4.36084,
+              "calls": 31,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 0,
+          "name": "outside",
+          "stage": "outside",
+          "ms": 5.236084,
+          "entries": 0,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 5.236084,
+              "calls": 0,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 3,
+          "name": "layout.growth",
+          "stage": "buildModel",
+          "ms": 4.7229,
+          "entries": 1,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 4.7229,
+              "calls": 1,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 4,
+          "name": "layout.solvable",
+          "stage": "buildModel",
+          "ms": 2.648193,
+          "entries": 1,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 0.113281,
+              "calls": 1,
+              "hits": 0
+            },
+            {
+              "sub": 45,
+              "kind": "dfs",
+              "id": null,
+              "group": null,
+              "ms": 1.709717,
+              "calls": 1,
+              "hits": 0
+            },
+            {
+              "sub": 46,
+              "kind": "gridGenerator",
+              "id": null,
+              "group": null,
+              "ms": 0.825195,
+              "calls": 1,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 2,
+          "name": "buildModel",
+          "stage": "buildModel",
+          "ms": 2.605713,
+          "entries": 1,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 2.605713,
+              "calls": 1,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 6,
+          "name": "fullGrid",
+          "stage": "fullGrid",
+          "ms": 0.922363,
+          "entries": 3,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 0.133789,
+              "calls": 3,
+              "hits": 0
+            },
+            {
+              "sub": 45,
+              "kind": "dfs",
+              "id": null,
+              "group": null,
+              "ms": 0.637695,
+              "calls": 3,
+              "hits": 0
+            },
+            {
+              "sub": 46,
+              "kind": "gridGenerator",
+              "id": null,
+              "group": null,
+              "ms": 0.150879,
+              "calls": 3,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 7,
+          "name": "extraStructure",
+          "stage": "extraStructure",
+          "ms": 0.71167,
+          "entries": 3,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 0.71167,
+              "calls": 3,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 17,
+          "name": "tune",
+          "stage": "tune",
+          "ms": 0.417969,
+          "entries": 31,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 0.417969,
+              "calls": 31,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 1,
+          "name": "configure",
+          "stage": "configure",
+          "ms": 0.397461,
+          "entries": 1,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 0.397461,
+              "calls": 1,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 5,
+          "name": "layout.plain",
+          "stage": "buildModel",
+          "ms": 0.370361,
+          "entries": 1,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 0.071533,
+              "calls": 1,
+              "hits": 0
+            },
+            {
+              "sub": 45,
+              "kind": "dfs",
+              "id": null,
+              "group": null,
+              "ms": 0.298828,
+              "calls": 1,
+              "hits": 0
+            }
+          ]
+        },
+        {
+          "ctx": 13,
+          "name": "dig.keeperCount",
+          "stage": "dig",
+          "ms": 0.177734,
+          "entries": 3,
+          "bySub": [
+            {
+              "sub": 0,
+              "kind": "own",
+              "id": null,
+              "group": null,
+              "ms": 0.007324,
+              "calls": 3,
+              "hits": 0
+            },
+            {
+              "sub": 45,
+              "kind": "dfs",
+              "id": null,
+              "group": null,
+              "ms": 0.17041,
+              "calls": 3,
+              "hits": 0
+            }
+          ]
+        }
+      ],
+      "finderGroups": [
+        {
+          "group": "basic",
+          "ms": 73.356689,
+          "calls": 196641,
+          "hits": 140879
+        },
+        {
+          "group": "fish",
+          "ms": 53.736572,
+          "calls": 3180,
+          "hits": 907
+        },
+        {
+          "group": "subset",
+          "ms": 42.07837,
+          "calls": 8501,
+          "hits": 446
+        },
+        {
+          "group": "chain",
+          "ms": 18.874512,
+          "calls": 82,
+          "hits": 65
+        },
+        {
+          "group": "locked",
+          "ms": 18.349607999999996,
+          "calls": 13589,
+          "hits": 7546
+        },
+        {
+          "group": "wing",
+          "ms": 8.903566000000001,
+          "calls": 870,
+          "hits": 54
+        }
+      ],
+      "finders": [
+        {
+          "id": "nakedSingle",
+          "group": "basic",
+          "ms": 44.396972999999996,
+          "calls": 150156,
+          "hits": 117699
+        },
+        {
+          "id": "simpleColouring",
+          "group": "fish",
+          "ms": 25.84082,
+          "calls": 1109,
+          "hits": 701
+        },
+        {
+          "id": "forcingChain",
+          "group": "chain",
+          "ms": 18.22583,
+          "calls": 65,
+          "hits": 48
+        },
+        {
+          "id": "hiddenSingleBox",
+          "group": "basic",
+          "ms": 17.821288000000003,
+          "calls": 32457,
+          "hits": 18429
+        },
+        {
+          "id": "xWing",
+          "group": "fish",
+          "ms": 17.609617999999998,
+          "calls": 1285,
+          "hits": 176
+        },
+        {
+          "id": "pointing",
+          "group": "locked",
+          "ms": 12.815673,
+          "calls": 9277,
+          "hits": 4965
+        },
+        {
+          "id": "hiddenSingleLine",
+          "group": "basic",
+          "ms": 11.138428,
+          "calls": 14028,
+          "hits": 4751
+        },
+        {
+          "id": "hiddenPair",
+          "group": "subset",
+          "ms": 9.010985999999999,
+          "calls": 1530,
+          "hits": 160
+        },
+        {
+          "id": "hiddenTriple",
+          "group": "subset",
+          "ms": 7.860107,
+          "calls": 1300,
+          "hits": 15
+        },
+        {
+          "id": "hiddenQuad",
+          "group": "subset",
+          "ms": 7.4597169999999995,
+          "calls": 1285,
+          "hits": 0
+        },
+        {
+          "id": "nakedPair",
+          "group": "subset",
+          "ms": 6.275634999999999,
+          "calls": 1731,
+          "hits": 201
+        },
+        {
+          "id": "nakedQuad",
+          "group": "subset",
+          "ms": 5.850831,
+          "calls": 1285,
+          "hits": 0
+        },
+        {
+          "id": "nakedTriple",
+          "group": "subset",
+          "ms": 5.621093999999999,
+          "calls": 1370,
+          "hits": 70
+        },
+        {
+          "id": "boxLine",
+          "group": "locked",
+          "ms": 5.533935,
+          "calls": 4312,
+          "hits": 2581
+        },
+        {
+          "id": "swordfish",
+          "group": "fish",
+          "ms": 5.402832,
+          "calls": 408,
+          "hits": 30
+        },
+        {
+          "id": "jellyfish",
+          "group": "fish",
+          "ms": 4.8833020000000005,
+          "calls": 378,
+          "hits": 0
+        },
+        {
+          "id": "uniqueRectangle",
+          "group": "wing",
+          "ms": 3.276123,
+          "calls": 65,
+          "hits": 0
+        },
+        {
+          "id": "xyWing",
+          "group": "wing",
+          "ms": 2.363283,
+          "calls": 378,
+          "hits": 25
+        },
+        {
+          "id": "xyzWing",
+          "group": "wing",
+          "ms": 1.8537599999999999,
+          "calls": 353,
+          "hits": 20
+        },
+        {
+          "id": "wWing",
+          "group": "wing",
+          "ms": 1.4104,
+          "calls": 74,
+          "hits": 9
+        },
+        {
+          "id": "nishio",
+          "group": "chain",
+          "ms": 0.648682,
+          "calls": 17,
+          "hits": 17
+        }
+      ],
+      "finderByStage": [
+        {
+          "stage": "dig",
+          "group": "basic",
+          "ms": 59.156249,
+          "calls": 162415,
+          "hits": 124833
+        },
+        {
+          "stage": "dig",
+          "group": "fish",
+          "ms": 34.915039,
+          "calls": 2108,
+          "hits": 491
+        },
+        {
+          "stage": "dig",
+          "group": "subset",
+          "ms": 24.217284999999997,
+          "calls": 5047,
+          "hits": 212
+        },
+        {
+          "stage": "local",
+          "group": "chain",
+          "ms": 18.874512,
+          "calls": 82,
+          "hits": 65
+        },
+        {
+          "stage": "local",
+          "group": "fish",
+          "ms": 17.077880999999998,
+          "calls": 978,
+          "hits": 368
+        },
+        {
+          "stage": "local",
+          "group": "subset",
+          "ms": 15.955324,
+          "calls": 3105,
+          "hits": 205
+        },
+        {
+          "stage": "local",
+          "group": "basic",
+          "ms": 12.328858,
+          "calls": 30135,
+          "hits": 14335
+        },
+        {
+          "stage": "dig",
+          "group": "locked",
+          "ms": 11.262694999999999,
+          "calls": 8082,
+          "hits": 4606
+        },
+        {
+          "stage": "local",
+          "group": "locked",
+          "ms": 6.054931,
+          "calls": 4745,
+          "hits": 2501
+        },
+        {
+          "stage": "local",
+          "group": "wing",
+          "ms": 5.797119,
+          "calls": 305,
+          "hits": 22
+        },
+        {
+          "stage": "dig",
+          "group": "wing",
+          "ms": 3.103761,
+          "calls": 564,
+          "hits": 31
+        },
+        {
+          "stage": "rate",
+          "group": "subset",
+          "ms": 1.905761,
+          "calls": 349,
+          "hits": 29
+        },
+        {
+          "stage": "rate",
+          "group": "basic",
+          "ms": 1.871582,
+          "calls": 4091,
+          "hits": 1711
+        },
+        {
+          "stage": "rate",
+          "group": "fish",
+          "ms": 1.743652,
+          "calls": 94,
+          "hits": 48
+        },
+        {
+          "stage": "rate",
+          "group": "locked",
+          "ms": 1.031982,
+          "calls": 762,
+          "hits": 439
+        },
+        {
+          "stage": "rate",
+          "group": "wing",
+          "ms": 0.002686,
+          "calls": 1,
+          "hits": 1
+        }
+      ],
+      "nonFinderWallMs": {
+        "solver": 78.23974600000001,
+        "rating": 1.8757329999999999,
+        "dfs": 35.02417,
+        "gridGenerator": 0.976074,
+        "own": 257.052734
+      },
+      "layout": {
+        "layoutAttempts": 1,
+        "layoutGrowthBacktracks": 0,
+        "layoutLevels": 72,
+        "layoutFeasibility": 247,
+        "layoutUnsolvable": 0,
+        "layoutHard": 0,
+        "layoutAccepted": 1,
+        "gridUnlimitedEntered": 0,
+        "samples": 31
+      },
+      "counters": {
+        "totals": {
+          "dfsNodes": 4974,
+          "dfsChecks": 4233,
+          "dfsBacktracks": 6044,
+          "gridSearches": 4,
+          "gridRestarts": 0,
+          "gridBacktracks": 51
+        },
+        "byContext": [
+          {
+            "ctx": 4,
+            "name": "layout.solvable",
+            "stage": "buildModel",
+            "dfsNodes": 43,
+            "dfsChecks": 42,
+            "dfsBacktracks": 12,
+            "gridSearches": 1,
+            "gridRestarts": 0,
+            "gridBacktracks": 12
+          },
+          {
+            "ctx": 5,
+            "name": "layout.plain",
+            "stage": "buildModel",
+            "dfsNodes": 40,
+            "dfsChecks": 39,
+            "dfsBacktracks": 6,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          },
+          {
+            "ctx": 6,
+            "name": "fullGrid",
+            "stage": "fullGrid",
+            "dfsNodes": 120,
+            "dfsChecks": 117,
+            "dfsBacktracks": 39,
+            "gridSearches": 3,
+            "gridRestarts": 0,
+            "gridBacktracks": 39
+          },
+          {
+            "ctx": 12,
+            "name": "dig.safetyCount",
+            "stage": "dig",
+            "dfsNodes": 463,
+            "dfsChecks": 432,
+            "dfsBacktracks": 876,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          },
+          {
+            "ctx": 13,
+            "name": "dig.keeperCount",
+            "stage": "dig",
+            "dfsNodes": 22,
+            "dfsChecks": 19,
+            "dfsBacktracks": 38,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          },
+          {
+            "ctx": 19,
+            "name": "local.unique",
+            "stage": "local",
+            "dfsNodes": 4286,
+            "dfsChecks": 3584,
+            "dfsBacktracks": 5073,
+            "gridSearches": 0,
+            "gridRestarts": 0,
+            "gridBacktracks": 0
+          }
+        ]
+      },
+      "samples": 31,
+      "markers": {
+        "posted": 268,
+        "dropped": 0
+      }
+    }
+  },
+  "machine": {
+    "entries": [
+      {
+        "seq": 61,
+        "shard": "control",
+        "attemptId": "a1",
+        "occupiedMs": 4978,
+        "chargedGraceMs": 45000,
+        "chargedMs": 49978,
+        "priorityWaitMs": 45214,
+        "wrapperExit": 0,
+        "wrapperSeconds": 4.978,
+        "status": "complete",
+        "requestedAt": "2026-11-15T01:40:06.3888816Z",
+        "endedAt": "2026-11-15T01:40:56.5812972Z"
+      },
+      {
+        "seq": 62,
+        "shard": "tail",
+        "attemptId": "a1",
+        "occupiedMs": 241416,
+        "chargedGraceMs": 45000,
+        "chargedMs": 286416,
+        "priorityWaitMs": 45132,
+        "wrapperExit": 0,
+        "wrapperSeconds": 241.416,
+        "status": "complete",
+        "requestedAt": "2026-11-15T01:40:56.9302084Z",
+        "endedAt": "2026-11-15T01:45:43.4781483Z"
+      }
+    ],
+    "occupiedMs": 246394,
+    "chargedMs": 336394,
+    "allocationMs": 360000,
+    "approvedExtraMs": 0,
+    "remainingMs": 23606,
+    "priorityWaitMs": 90346,
+    "commands": 2
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "harnessFingerprint": "fe2bae1efce6bf8df07ff7020a0ca422c10e9b4d3579378387cc6cc2ae743fce",
+    "adapterIds": [
+      "jigsaw-profile"
+    ],
+    "adapterHashes": [
+      "69890fe8acaef852f6c19acb10985041a335e8ac55e3f6551bca1b4f6b6e2c62"
+    ],
+    "sourceStable": true,
+    "firewallClean": true,
+    "node": "v26.13.0",
+    "cpuModel": "AMD EPYC 7763 64-Core Processor",
+    "logicalProcessors": 16,
+    "platform": "win32 10.0.26300 x64"
+  },
+  "criteria": [
+    {
+      "id": "B01",
+      "status": "met",
+      "evidence": "the tail is attributed to observed stages (see the table); source final"
+    },
+    {
+      "id": "B02",
+      "status": "met",
+      "evidence": "the request is recorded as a censored lower bound; summary.md and tail-attribution.json say it is not a pass, not a completed latency and not evidence for a specific ceiling"
+    },
+    {
+      "id": "B03",
+      "status": "met",
+      "evidence": "every command ran through the supplied low-priority wrapper (exit 0, at most 300 s); the production/test firewall was clean: true; priority waits are excluded from the charge"
+    },
+    {
+      "id": "T01",
+      "status": "met",
+      "evidence": "the synthetic busy-worker recovery test and the real journal (markers 333, heartbeats 47, source final)"
+    },
+    {
+      "id": "T02",
+      "status": "met",
+      "evidence": "control digests: 1 identical, 0 different; no production restart, guard or RNG change (patched sources are private in-memory copies; hooks draw nothing)"
+    },
+    {
+      "id": "T03",
+      "status": "met",
+      "evidence": "timeout: no puzzle, no check result was invented (puzzle hash null, exactness null)"
+    },
+    {
+      "id": "T04",
+      "status": "met",
+      "evidence": "wall, CPU and counter lower bounds, the source identities and the unknown counters are listed in tail-attribution.json"
+    }
+  ],
+  "deviations": [
+    "Harness edits beyond new files: run.cjs registers the IG-S08 task glue and passes attemptDir to prepare and execute (the stage journal lives beside the other evidence of the attempt); worker.cjs gets one dispatch line for the job kinds ig08-. No production code, test, golden or difficulty-v3 document was changed.",
+    "Development ran unwrapped, as the harness README allows for pure work: the pure cases of ig08-test.cjs (32/32 after the review) and ig07-test.cjs (31/31) (no engine, no worker thread; the fake-worker recorder cases wait about two seconds of idle timers), a source-only dry run of the 32 transforms, the dispatcher plan-only and the evidence-only aggregator. Every engine, worker-thread and generation run (the engine checks, the calibration, the synthetic recovery test and the three requests) went through the dispatcher and the supplied wrapper.",
+    "No wrapped dev-check, no rerun and no retry: two wrapped commands (control a1, tail a1), recorded in ledger.json; no approval was requested or used; the review fixes ran no engine and no measurement.",
+    "The tail guard of 240 s was the binding limit (the command window left 256 s at spawn): the request is a censored lower bound at 240 s, not a command-scope cut.",
+    "The beacon header keeps attempt, sample and kind of the previous sample until the next stage of that kind opens, so the raw journal, records and the r1 documents show a stale sample and kind for a full-grid entry; the r2 and r3 documents suppress them for steps that are not part of a sample.",
+    "Depth-first counts are counts of the instrumented search: the observation overhead was calibrated (a micro-benchmark), estimated from the counted operations and measured once on seed 1100 (n = 1); the tail uninstrumented throughput was not measured.",
+    "Wording corrected in r3 and left as written in the immutable evidence: the records, command.json notes, summary files and the r1/r2 documents say that the request has no budget so ctx.check is a no-op (r3: solver-check totals were not instrumented; the digger has internal budgets, for example the stage B objective step guard and the uniqueness-count node slices; the guards are unchanged), attribute the cumulative full-grid counters to the open stage, and (r2) state that the application would end the request by its 120 s guard and that the native search is faster per node."
+  ]
+}
