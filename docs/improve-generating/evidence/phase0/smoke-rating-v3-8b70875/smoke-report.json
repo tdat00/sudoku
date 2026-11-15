@@ -1,0 +1,2383 @@
+{
+  "schema": "ig-smoke-report/1",
+  "round": "smoke-rating-v3-8b70875",
+  "generatedAt": "2026-11-15T07:19:40.923Z",
+  "evidenceStatus": "provisional (pre-freeze); compatibility smoke, not a pack round",
+  "overall": {
+    "oneLine": "smoke smoke-rating-v3-8b70875 (rating-v3@8b70875): 5 of 8 adapters apply textually (gt-diagnostic fails at js/engine/digger.js [anchor-missing]; jigsaw-profile fails at js/engine/digger.js [anchor-missing]; profile fails at js/engine/digger.js [anchor-missing]); pure tests 2 passed / 5 failed / 2 unstarted or timed out; self-test passed 36/36; loader-parity 1/4 rows; charged 144472/180000 ms in 3 admission(s)",
+    "status": "findings"
+  },
+  "identity": {
+    "targetCommit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "smokeWorktree": "Q:\\git\\sudoku.ig-smoke-8b70875",
+    "headAtStart": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "headAtEnd": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "referenceWorktreeHead": "93b1bdcbbc08ab82bcdcb21a51b0cd5e2e099875",
+    "rootBelongsToSmokeWorktree": true,
+    "loadedFilesOutsideRoot": [],
+    "loadedFilesInForbiddenRoots": [],
+    "runtime": {
+      "fingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+      "files": 63,
+      "runnerSha256": "e14e1bd179d7481a162982be65fc3aebd5c94c5179a4ebc13e8af2e006fae8e4"
+    },
+    "runtimeOfReferenceWorktree": {
+      "fingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+      "sameAsSmoke": false,
+      "changedInSmoke": [
+        "../core/js/engine/tech-chain.js",
+        "js/engine/difficulty.js",
+        "js/engine/digger.js",
+        "js/engine/explain-data.js",
+        "js/engine/pipeline.js",
+        "js/ui/locale.en.js",
+        "js/ui/locale.vi.js",
+        "js/ui/help.js"
+      ],
+      "addedInSmoke": [],
+      "removedInSmoke": []
+    },
+    "harness": {
+      "dir": "Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0",
+      "packFilesOnlyFingerprint": "8f0018b5c36db04a16707d44fd3c3f011ff3a75321c6d9c81e539beb283bd901",
+      "fingerprintWithSmokeFiles": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+      "smokeFiles": [
+        {
+          "rel": "Invoke-IgSmoke.ps1",
+          "sha256": "90d608873a96186f18e80dcbc62fc7d7fec00043c4b217ceed4536141579c666",
+          "bytes": 24561
+        },
+        {
+          "rel": "smoke-inventory.cjs",
+          "sha256": "ac4bcd241533345e9488acb19940267eb25fe9526373865e1b6f8b19962dd977",
+          "bytes": 4792
+        },
+        {
+          "rel": "smoke-lib.cjs",
+          "sha256": "fe14bb322431308995c198a093ae7e9c8b3bd8632219411ee21b1c6dbd1a27c8",
+          "bytes": 15960
+        },
+        {
+          "rel": "smoke-probe.cjs",
+          "sha256": "910be7225b09c7da7084c64d8867ab2b151380e15fdd1b40ffe51844f9e79a5d",
+          "bytes": 16518
+        },
+        {
+          "rel": "smoke-report.cjs",
+          "sha256": "34bc747668c2a35d165670edd3ad0e139ce7bdf1aa7e018c3051d9a2380c19ce",
+          "bytes": 31823
+        },
+        {
+          "rel": "smoke-supervise.cjs",
+          "sha256": "63460fcfd3fc584e17d35b631764e4fb210baee97f93d4e67e3169bb94c81b12",
+          "bytes": 2968
+        }
+      ],
+      "referenceHarness": {
+        "dir": "Q:\\git\\sudoku.improve-generating\\generator\\tests\\artifacts\\improve-generating\\phase0",
+        "fileCount": 80,
+        "harnessFingerprint": "53e7acbc62e6fd45bde6999f30c9861455065e2980267d9c437e659466f59372",
+        "identicalToPackFilesOfCopy": false,
+        "differing": [
+          "README.md",
+          "frozen-plan.cjs",
+          "ig10-run.cjs",
+          "ig10-test.cjs",
+          "reconcile-build.cjs",
+          "reconcile-render.cjs",
+          "reconcile-report.cjs",
+          "reconcile.cjs"
+        ],
+        "onlyInReference": [
+          "reconcile-errata.cjs"
+        ],
+        "onlyInCopy": []
+      }
+    }
+  },
+  "labelCheck": {
+    "defaultRuntimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "selfTestRecord": {
+      "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+      "runtimeFingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+      "harnessFingerprint": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+      "sourceStable": true
+    },
+    "loaderParityRecord": {
+      "runtimeLabel": "rating-v3@8b70875e1839d7f2753d20853a4a0c9226cf2035",
+      "runtimeFingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+      "harnessFingerprint": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+      "sourceStable": true
+    },
+    "selfTestFingerprintIsSmoke": true,
+    "loaderParityFingerprintIsSmoke": true,
+    "selfTestRuntimeFilesMatchInspection": true,
+    "loaderParityRuntimeFilesMatchInspection": true,
+    "selfTestHarnessFingerprintIsInspected": true,
+    "loaderParityHarnessFingerprintIsInspected": true,
+    "explanation": "self-test.cjs has no --runtime-label option and always records RUN.DEFAULT_RUNTIME_LABEL, a constant of run.cjs naming the older pack runtime (1c042ad / f7be90f); a stale human-readable label in an unchanged self-test record is not source authority. The identity of the loaded source is its runtimeFingerprint and the per-file SHA-256 of command.json.runtimeFiles, compared here with the inspection of the smoke worktree."
+  },
+  "charges": {
+    "budgetMs": 180000,
+    "admissions": 3,
+    "maxAdmissions": 3,
+    "chargedMs": 144472,
+    "occupiedMs": 9472,
+    "graceMs": 135000,
+    "remainingMs": 35528,
+    "priorityWaitMsExcluded": 439099,
+    "entries": [
+      {
+        "phase": "smoke-inventory",
+        "wrapperTask": "IG-S01/smoke-inventory",
+        "requestedAt": "2026-11-15T07:07:28.9201634Z",
+        "admittedAt": "2026-11-15T07:13:17.8740000Z",
+        "endedAt": "2026-11-15T07:13:21.9144351Z",
+        "receipt": "IG IG-S01/smoke-inventory exit=0 seconds=4.079",
+        "occupiedMs": 4079,
+        "occupiedSource": "wrapper receipt",
+        "chargedMs": 49079,
+        "payloadDeadlineMs": 4000,
+        "priorityWaitMs": 348915,
+        "priorityWaitToAdmissionMs": 348954,
+        "status": "ok",
+        "commandJson": null
+      },
+      {
+        "phase": "self-test",
+        "wrapperTask": "IG-S01/self-test",
+        "requestedAt": "2026-11-15T07:13:22.0651808Z",
+        "admittedAt": "2026-11-15T07:14:07.3570000Z",
+        "endedAt": "2026-11-15T07:14:10.7652590Z",
+        "receipt": "IG IG-S01/self-test exit=0 seconds=3.621",
+        "occupiedMs": 3621,
+        "occupiedSource": "wrapper receipt",
+        "chargedMs": 48621,
+        "payloadDeadlineMs": 15921,
+        "priorityWaitMs": 45079,
+        "priorityWaitToAdmissionMs": 45292,
+        "status": "ok",
+        "commandJson": "IG-S01/self-test/command.json"
+      },
+      {
+        "phase": "loader-parity",
+        "wrapperTask": "IG-S01/loader-parity",
+        "requestedAt": "2026-11-15T07:14:10.8335756Z",
+        "admittedAt": "2026-11-15T07:14:56.2160000Z",
+        "endedAt": "2026-11-15T07:14:57.7103595Z",
+        "receipt": "IG IG-S01/loader-parity exit=0 seconds=1.772",
+        "occupiedMs": 1772,
+        "occupiedSource": "wrapper receipt",
+        "chargedMs": 46772,
+        "payloadDeadlineMs": 25000,
+        "priorityWaitMs": 45105,
+        "priorityWaitToAdmissionMs": 45382,
+        "status": "ok",
+        "commandJson": "IG-S01/loader-parity/command.json"
+      }
+    ],
+    "skipped": []
+  },
+  "textualApplicability": {
+    "adapters": [
+      {
+        "id": "noop-expose",
+        "source": "builtin (loader.cjs)",
+        "hash": "f73aa49991cc0141ef7f9bfe34fc0df39d936e122d600ed2ddf2a59a8f2a2c85",
+        "usedByTasks": [
+          "IG-S01"
+        ],
+        "loadError": null,
+        "transforms": 1,
+        "files": [
+          "js/engine/pipeline.js"
+        ],
+        "independentApplicable": 1,
+        "independentFailures": [],
+        "sequentialOk": true,
+        "sequentialApplied": 1,
+        "firstFailure": null,
+        "loaderAgreesWithReplica": true
+      },
+      {
+        "id": "attempt-pool",
+        "source": "adapters/attempt-pool.cjs",
+        "hash": "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06",
+        "usedByTasks": [
+          "IG-S02",
+          "IG-S03"
+        ],
+        "loadError": null,
+        "transforms": 5,
+        "files": [
+          "js/engine/digger.js"
+        ],
+        "independentApplicable": 5,
+        "independentFailures": [],
+        "sequentialOk": true,
+        "sequentialApplied": 5,
+        "firstFailure": null,
+        "loaderAgreesWithReplica": true
+      },
+      {
+        "id": "frontier-hooks",
+        "source": "adapters/frontier-hooks.cjs",
+        "hash": "424efd29f49f1c93001074a760b1d898acb3f2eee9aaa791477a32ec68b98143",
+        "usedByTasks": [
+          "IG-S04",
+          "IG-S05"
+        ],
+        "loadError": null,
+        "transforms": 5,
+        "files": [
+          "../core/js/engine/logical-solver.js",
+          "../core/js/engine/dfs-solver.js",
+          "js/engine/digger.js"
+        ],
+        "independentApplicable": 5,
+        "independentFailures": [],
+        "sequentialOk": true,
+        "sequentialApplied": 5,
+        "firstFailure": null,
+        "loaderAgreesWithReplica": true
+      },
+      {
+        "id": "gt-diagnostic",
+        "source": "adapters/gt-diagnostic.cjs",
+        "hash": "d5fd6349b824de98223eecbbb001327e08b6ece223d95fb1b5d33842e465eaae",
+        "usedByTasks": [
+          "IG-S09"
+        ],
+        "loadError": null,
+        "transforms": 23,
+        "files": [
+          "js/variants/greater-than.js",
+          "js/engine/digger.js",
+          "../core/js/engine/dfs-solver.js"
+        ],
+        "independentApplicable": 22,
+        "independentFailures": [
+          {
+            "id": "dig.guided-entry",
+            "file": "js/engine/digger.js",
+            "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+            "code": "anchor-missing",
+            "message": "replaced text not found in js/engine/digger.js: dig.guided-entry"
+          }
+        ],
+        "sequentialOk": false,
+        "sequentialApplied": 20,
+        "firstFailure": {
+          "adapterId": "gt-diagnostic",
+          "transformId": "dig.guided-entry",
+          "file": "js/engine/digger.js",
+          "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+          "position": "replace",
+          "find": "const objective = removalObjective(model, spec, ctx.proposal === true);",
+          "code": "anchor-missing",
+          "message": "replaced text not found in js/engine/digger.js: dig.guided-entry"
+        },
+        "loaderAgreesWithReplica": true
+      },
+      {
+        "id": "jigsaw-profile",
+        "source": "adapters/jigsaw-profile.cjs",
+        "hash": "69890fe8acaef852f6c19acb10985041a335e8ac55e3f6551bca1b4f6b6e2c62",
+        "usedByTasks": [
+          "IG-S08"
+        ],
+        "loadError": null,
+        "transforms": 32,
+        "files": [
+          "js/variants/jigsaw.js",
+          "js/engine/full-grid.js",
+          "../core/js/engine/dfs-solver.js",
+          "../core/js/engine/logical-solver.js",
+          "js/engine/digger.js"
+        ],
+        "independentApplicable": 31,
+        "independentFailures": [
+          {
+            "id": "dig.objective",
+            "file": "js/engine/digger.js",
+            "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+            "code": "anchor-missing",
+            "message": "replaced text not found in js/engine/digger.js: dig.objective"
+          }
+        ],
+        "sequentialOk": false,
+        "sequentialApplied": 22,
+        "firstFailure": {
+          "adapterId": "jigsaw-profile",
+          "transformId": "dig.objective",
+          "file": "js/engine/digger.js",
+          "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+          "position": "replace",
+          "find": "const value = objective(givens, solution, group, ctx.budget, stats);",
+          "code": "anchor-missing",
+          "message": "replaced text not found in js/engine/digger.js: dig.objective"
+        },
+        "loaderAgreesWithReplica": true
+      },
+      {
+        "id": "profile",
+        "source": "adapters/profile.cjs",
+        "hash": "4d409f0ef2e0297511a4c1100462f8f1042b7fc6a871f63ebeebe2d503eef169",
+        "usedByTasks": [
+          "IG-S07"
+        ],
+        "loadError": null,
+        "transforms": 27,
+        "files": [
+          "../core/js/engine/logical-solver.js",
+          "../core/js/engine/techniques.js",
+          "../core/js/engine/dfs-solver.js",
+          "js/engine/digger.js"
+        ],
+        "independentApplicable": 25,
+        "independentFailures": [
+          {
+            "id": "profile.objective",
+            "file": "js/engine/digger.js",
+            "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+            "code": "anchor-missing",
+            "message": "replaced text not found in js/engine/digger.js: profile.objective"
+          },
+          {
+            "id": "profile.refusal",
+            "file": "js/engine/digger.js",
+            "anchor": "function refusalReason(value) {",
+            "code": "anchor-missing",
+            "message": "anchor not found in js/engine/digger.js: profile.refusal"
+          }
+        ],
+        "sequentialOk": false,
+        "sequentialApplied": 12,
+        "firstFailure": {
+          "adapterId": "profile",
+          "transformId": "profile.objective",
+          "file": "js/engine/digger.js",
+          "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+          "position": "replace",
+          "find": "const value = objective(givens, solution, group, ctx.budget, stats);",
+          "code": "anchor-missing",
+          "message": "replaced text not found in js/engine/digger.js: profile.objective"
+        },
+        "loaderAgreesWithReplica": true
+      },
+      {
+        "id": "scoped-audit",
+        "source": "adapters/scoped-audit.cjs",
+        "hash": "df76326083d5e98de7e55bea3d8a2c45106c8a62ae46f30481adbd25b5b20d8f",
+        "usedByTasks": [
+          "IG-S03"
+        ],
+        "loadError": null,
+        "transforms": 6,
+        "files": [
+          "../core/js/engine/logical-solver.js",
+          "../core/js/engine/tech-subset.js"
+        ],
+        "independentApplicable": 6,
+        "independentFailures": [],
+        "sequentialOk": true,
+        "sequentialApplied": 6,
+        "firstFailure": null,
+        "loaderAgreesWithReplica": true
+      },
+      {
+        "id": "scoped-solver",
+        "source": "adapters/scoped-solver.cjs",
+        "hash": "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f",
+        "usedByTasks": [
+          "IG-S03"
+        ],
+        "loadError": null,
+        "transforms": 10,
+        "files": [
+          "../core/js/engine/logical-solver.js",
+          "../core/js/engine/tech-basic.js",
+          "../core/js/engine/tech-subset.js",
+          "js/engine/pipeline.js"
+        ],
+        "independentApplicable": 10,
+        "independentFailures": [],
+        "sequentialOk": true,
+        "sequentialApplied": 10,
+        "firstFailure": null,
+        "loaderAgreesWithReplica": true
+      }
+    ],
+    "combinations": [
+      {
+        "adapterIds": [],
+        "usedBy": [
+          "IG-S01",
+          "IG-S02",
+          "IG-S07",
+          "IG-S08",
+          "IG-S09",
+          "IG-S10"
+        ],
+        "origins": [
+          "manifest"
+        ],
+        "native": true,
+        "ok": true,
+        "applied": 0,
+        "firstFailure": null
+      },
+      {
+        "adapterIds": [
+          "noop-expose"
+        ],
+        "usedBy": [
+          "IG-S01"
+        ],
+        "origins": [
+          "manifest"
+        ],
+        "native": false,
+        "ok": true,
+        "applied": 1,
+        "firstFailure": null
+      },
+      {
+        "adapterIds": [
+          "attempt-pool"
+        ],
+        "usedBy": [
+          "IG-S02"
+        ],
+        "origins": [
+          "manifest"
+        ],
+        "native": false,
+        "ok": true,
+        "applied": 5,
+        "firstFailure": null
+      },
+      {
+        "adapterIds": [
+          "attempt-pool",
+          "scoped-solver"
+        ],
+        "usedBy": [
+          "IG-S03"
+        ],
+        "origins": [
+          "static (manifest not buildable here)"
+        ],
+        "native": false,
+        "ok": true,
+        "applied": 15,
+        "firstFailure": null
+      },
+      {
+        "adapterIds": [
+          "scoped-solver"
+        ],
+        "usedBy": [
+          "IG-S03"
+        ],
+        "origins": [
+          "static (manifest not buildable here)"
+        ],
+        "native": false,
+        "ok": true,
+        "applied": 10,
+        "firstFailure": null
+      },
+      {
+        "adapterIds": [
+          "scoped-solver",
+          "scoped-audit"
+        ],
+        "usedBy": [
+          "IG-S03"
+        ],
+        "origins": [
+          "static (manifest not buildable here)"
+        ],
+        "native": false,
+        "ok": true,
+        "applied": 16,
+        "firstFailure": null
+      },
+      {
+        "adapterIds": [
+          "frontier-hooks"
+        ],
+        "usedBy": [
+          "IG-S04",
+          "IG-S05"
+        ],
+        "origins": [
+          "manifest",
+          "static (manifest not buildable here)"
+        ],
+        "native": false,
+        "ok": true,
+        "applied": 5,
+        "firstFailure": null
+      },
+      {
+        "adapterIds": [
+          "profile"
+        ],
+        "usedBy": [
+          "IG-S07"
+        ],
+        "origins": [
+          "manifest"
+        ],
+        "native": false,
+        "ok": false,
+        "applied": 12,
+        "firstFailure": {
+          "adapterId": "profile",
+          "transformId": "profile.objective",
+          "file": "js/engine/digger.js",
+          "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+          "position": "replace",
+          "find": "const value = objective(givens, solution, group, ctx.budget, stats);",
+          "code": "anchor-missing",
+          "message": "replaced text not found in js/engine/digger.js: profile.objective"
+        }
+      },
+      {
+        "adapterIds": [
+          "jigsaw-profile"
+        ],
+        "usedBy": [
+          "IG-S08"
+        ],
+        "origins": [
+          "manifest"
+        ],
+        "native": false,
+        "ok": false,
+        "applied": 22,
+        "firstFailure": {
+          "adapterId": "jigsaw-profile",
+          "transformId": "dig.objective",
+          "file": "js/engine/digger.js",
+          "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+          "position": "replace",
+          "find": "const value = objective(givens, solution, group, ctx.budget, stats);",
+          "code": "anchor-missing",
+          "message": "replaced text not found in js/engine/digger.js: dig.objective"
+        }
+      },
+      {
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "usedBy": [
+          "IG-S09"
+        ],
+        "origins": [
+          "manifest"
+        ],
+        "native": false,
+        "ok": false,
+        "applied": 20,
+        "firstFailure": {
+          "adapterId": "gt-diagnostic",
+          "transformId": "dig.guided-entry",
+          "file": "js/engine/digger.js",
+          "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+          "position": "replace",
+          "find": "const objective = removalObjective(model, spec, ctx.proposal === true);",
+          "code": "anchor-missing",
+          "message": "replaced text not found in js/engine/digger.js: dig.guided-entry"
+        }
+      }
+    ],
+    "sourceDrift": [
+      {
+        "adapter": "gt-diagnostic",
+        "transformId": "dig.guided-entry",
+        "file": "js/engine/digger.js",
+        "code": "anchor-missing",
+        "position": "replace",
+        "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+        "find": "const objective = removalObjective(model, spec, ctx.proposal === true);",
+        "anchorOccurrencesInOlderRuntime": 1,
+        "anchorOccurrencesInSmokeRuntime": 1,
+        "findPresentInOlderRuntime": true,
+        "findPresentInSmokeRuntime": false,
+        "candidateLinesInSmokeRuntime": [
+          {
+            "line": 689,
+            "text": "function removalObjective(model, spec, proposal) {"
+          },
+          {
+            "line": 786,
+            "text": "const objective = removalObjective(model, spec, proposal);"
+          }
+        ],
+        "candidateNeedle": "removalObjective("
+      },
+      {
+        "adapter": "jigsaw-profile",
+        "transformId": "dig.objective",
+        "file": "js/engine/digger.js",
+        "code": "anchor-missing",
+        "position": "replace",
+        "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+        "find": "const value = objective(givens, solution, group, ctx.budget, stats);",
+        "anchorOccurrencesInOlderRuntime": 1,
+        "anchorOccurrencesInSmokeRuntime": 1,
+        "findPresentInOlderRuntime": true,
+        "findPresentInSmokeRuntime": false,
+        "candidateLinesInSmokeRuntime": [
+          {
+            "line": 839,
+            "text": "const objectiveResult = objective(givens, solution, group, ctx.budget, stats);"
+          }
+        ],
+        "candidateNeedle": "objective(givens, solution, group, ctx.budget, stats)"
+      },
+      {
+        "adapter": "profile",
+        "transformId": "profile.objective",
+        "file": "js/engine/digger.js",
+        "code": "anchor-missing",
+        "position": "replace",
+        "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+        "find": "const value = objective(givens, solution, group, ctx.budget, stats);",
+        "anchorOccurrencesInOlderRuntime": 1,
+        "anchorOccurrencesInSmokeRuntime": 1,
+        "findPresentInOlderRuntime": true,
+        "findPresentInSmokeRuntime": false,
+        "candidateLinesInSmokeRuntime": [
+          {
+            "line": 839,
+            "text": "const objectiveResult = objective(givens, solution, group, ctx.budget, stats);"
+          }
+        ],
+        "candidateNeedle": "objective(givens, solution, group, ctx.budget, stats)"
+      },
+      {
+        "adapter": "profile",
+        "transformId": "profile.refusal",
+        "file": "js/engine/digger.js",
+        "code": "anchor-missing",
+        "position": "bodyStart",
+        "anchor": "function refusalReason(value) {",
+        "find": null,
+        "anchorOccurrencesInOlderRuntime": 1,
+        "anchorOccurrencesInSmokeRuntime": 0
+      }
+    ],
+    "exposedIdentifiers": [
+      {
+        "adapter": "frontier-hooks",
+        "name": "CAP_RATINGS",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "CAP_PROPOSALS",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "REFINE_RATINGS",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "UNIQUE_NODES",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "UNIQUE_GUARD_CODE",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "OBJECTIVE_STEPS",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "OBJECTIVE_GUARD_CODE",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "GUIDED_CANDIDATES",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "GUIDED_MIN_CANDIDATES",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "GUIDED_START",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "STUCK_SCORE",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "REFUSED_TECHNIQUES",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "REFUSED_TOO_HARD",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "REFUSED_AMBIGUOUS",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "SHALLOW_QUALITY",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "DEFAULT_DIG_TRIES",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "DEFAULT_DIG_TRIES_COARSE",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "countWithin",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "uniqueWithin",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "rateCounted",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "removalObjective",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "unitsStayFilled",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "qualityOf",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "isExact",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "isComplete",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "isShallow",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "createKeeper",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "keptPuzzle",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "newCaps",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "capsExhausted",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "cellSequence",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "groupSequence",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "refusalReason",
+        "inSmokeSources": false,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "copyWork",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      },
+      {
+        "adapter": "frontier-hooks",
+        "name": "distanceToLevel",
+        "inSmokeSources": true,
+        "inOlderSources": true
+      }
+    ]
+  },
+  "perTask": [
+    {
+      "task": "IG-S01",
+      "adapterCombos": [
+        "(native)",
+        "noop-expose"
+      ],
+      "comboOrigin": "manifest",
+      "textual": "applies",
+      "firstFailing": null,
+      "planOnly": "ok",
+      "planOnlyDetail": null,
+      "shards": "self-test:0 loader-parity:4",
+      "pureTests": []
+    },
+    {
+      "task": "IG-S02",
+      "adapterCombos": [
+        "(native)",
+        "attempt-pool"
+      ],
+      "comboOrigin": "manifest",
+      "textual": "applies",
+      "firstFailing": null,
+      "planOnly": "ok",
+      "planOnlyDetail": null,
+      "shards": "m16-1:2 m16-2:2 m16-3:2 m12:6 sam:6 c9:6 killer:6 gt:6",
+      "pureTests": [
+        "pool-test.pure",
+        "killer-audit-test.pure"
+      ]
+    },
+    {
+      "task": "IG-S03",
+      "adapterCombos": [
+        "attempt-pool+scoped-solver",
+        "scoped-solver",
+        "scoped-solver+scoped-audit"
+      ],
+      "comboOrigin": "static (manifest not buildable here)",
+      "textual": "applies",
+      "firstFailing": null,
+      "planOnly": "prerequisite-evidence-absent",
+      "planOnlyDetail": {
+        "code": "plan-missing",
+        "message": "the saved IG-S02 puzzle is missing: docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-1.json"
+      },
+      "shards": null,
+      "pureTests": [
+        "scoped-test.pure"
+      ]
+    },
+    {
+      "task": "IG-S04",
+      "adapterCombos": [
+        "frontier-hooks"
+      ],
+      "comboOrigin": "manifest",
+      "textual": "applies",
+      "firstFailing": null,
+      "planOnly": "ok",
+      "planOnlyDetail": null,
+      "shards": "s1-large-controls:6 s2-small-all:32 s3-large-native-f1:6 s4-large-floors:8 s5-large-reference:8 s6-large-s2-control:4",
+      "pureTests": [
+        "frontier-test.pure"
+      ]
+    },
+    {
+      "task": "IG-S05",
+      "adapterCombos": [
+        "frontier-hooks"
+      ],
+      "comboOrigin": "static (manifest not buildable here)",
+      "textual": "applies",
+      "firstFailing": null,
+      "planOnly": "prerequisite-evidence-absent",
+      "planOnlyDetail": {
+        "code": "plan-missing",
+        "message": "the frozen budgets are missing: docs/improve-generating/evidence/phase0/provisional-r1/IG-S04/budgets-r2.json"
+      },
+      "shards": null,
+      "pureTests": [
+        "ig05-test.pure"
+      ]
+    },
+    {
+      "task": "IG-S06",
+      "adapterCombos": [],
+      "comboOrigin": "static (manifest not buildable here)",
+      "textual": "no adapter",
+      "firstFailing": null,
+      "planOnly": "expected-no-plan-file",
+      "planOnlyDetail": {
+        "code": "plan-missing",
+        "message": "IG-S06 has no plan in this harness yet (plans/ig-s06.cjs is added by that task)"
+      },
+      "shards": null,
+      "pureTests": []
+    },
+    {
+      "task": "IG-S07",
+      "adapterCombos": [
+        "profile",
+        "(native)"
+      ],
+      "comboOrigin": "manifest",
+      "textual": "DOES NOT APPLY",
+      "firstFailing": {
+        "adapterId": "profile",
+        "transformId": "profile.objective",
+        "file": "js/engine/digger.js",
+        "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+        "position": "replace",
+        "find": "const value = objective(givens, solution, group, ctx.budget, stats);",
+        "code": "anchor-missing",
+        "message": "replaced text not found in js/engine/digger.js: profile.objective"
+      },
+      "planOnly": "ok",
+      "planOnlyDetail": null,
+      "shards": "c9:1 m16:1 m12:1 sam:1 killer-n:1 gt-n:1 killer-h:2 killer-e:2 gt-normal:2 lc:0",
+      "pureTests": [
+        "ig07-test.pure"
+      ]
+    },
+    {
+      "task": "IG-S08",
+      "adapterCombos": [
+        "(native)",
+        "jigsaw-profile"
+      ],
+      "comboOrigin": "manifest",
+      "textual": "DOES NOT APPLY",
+      "firstFailing": {
+        "adapterId": "jigsaw-profile",
+        "transformId": "dig.objective",
+        "file": "js/engine/digger.js",
+        "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+        "position": "replace",
+        "find": "const value = objective(givens, solution, group, ctx.budget, stats);",
+        "code": "anchor-missing",
+        "message": "replaced text not found in js/engine/digger.js: dig.objective"
+      },
+      "planOnly": "ok",
+      "planOnlyDetail": null,
+      "shards": "control:2 tail:1",
+      "pureTests": [
+        "ig08-test.pure"
+      ]
+    },
+    {
+      "task": "IG-S09",
+      "adapterCombos": [
+        "gt-diagnostic",
+        "(native)"
+      ],
+      "comboOrigin": "manifest",
+      "textual": "DOES NOT APPLY",
+      "firstFailing": {
+        "adapterId": "gt-diagnostic",
+        "transformId": "dig.guided-entry",
+        "file": "js/engine/digger.js",
+        "anchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+        "position": "replace",
+        "find": "const objective = removalObjective(model, spec, ctx.proposal === true);",
+        "code": "anchor-missing",
+        "message": "replaced text not found in js/engine/digger.js: dig.guided-entry"
+      },
+      "planOnly": "ok",
+      "planOnlyDetail": null,
+      "shards": "normal-300-304:10 normal-305-309:10 normal-310-314:10 normal-315-319:10 nightmare-700-701:4 nightmare-702-703:4 nightmare-704-705:4 nightmare-706-707:4 nightmare-708-709:4 observer-control:2",
+      "pureTests": [
+        "ig09-test.pure"
+      ]
+    },
+    {
+      "task": "IG-S10",
+      "adapterCombos": [
+        "(native)"
+      ],
+      "comboOrigin": "manifest",
+      "textual": "no adapter",
+      "firstFailing": null,
+      "planOnly": "ok",
+      "planOnlyDetail": null,
+      "shards": "reconcile:1",
+      "pureTests": [
+        "ig10-test.gate"
+      ]
+    }
+  ],
+  "pureTests": [
+    {
+      "id": "ig07-test.pure",
+      "task": "IG-S07",
+      "status": "failed",
+      "reason": "exit 1",
+      "exitCode": 1,
+      "wallMs": 1005,
+      "okLines": 0,
+      "failLines": 0,
+      "summaryLine": null,
+      "firstFailingCase": null,
+      "causes": [],
+      "failedCases": [],
+      "crash": {
+        "message": "HarnessError: replaced text not found in js/engine/digger.js: profile.objective",
+        "code": "anchor-missing",
+        "firstFrame": "loader.cjs:255:28",
+        "stderrFile": "ig07-test.pure.stderr.txt"
+      },
+      "firstFailure": "HarnessError: replaced text not found in js/engine/digger.js: profile.objective",
+      "errorCode": "anchor-missing",
+      "failures": [],
+      "termination": null
+    },
+    {
+      "id": "ig09-test.pure",
+      "task": "IG-S09",
+      "status": "failed",
+      "reason": "exit 1",
+      "exitCode": 1,
+      "wallMs": 1253.5,
+      "okLines": 16,
+      "failLines": 20,
+      "summaryLine": "16/36 passed",
+      "firstFailingCase": "dig.patched-source-without-runtime-is-native",
+      "causes": [
+        {
+          "message": "HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry",
+          "count": 20,
+          "firstCase": "dig.patched-source-without-runtime-is-native",
+          "code": "anchor-missing"
+        }
+      ],
+      "failedCases": [
+        "dig.patched-source-without-runtime-is-native",
+        "dig.g0-capture-observes-without-changing-anything",
+        "dig.g1-identity-and-physical-work",
+        "dig.g1-stops-on-solver-failures",
+        "dig.g1-never-swallows-a-count-failure",
+        "dig.shared-count-guard-binds-differently",
+        "dig.compare-arms-mismatch-kinds",
+        "adapter.transforms-apply-to-the-real-sources",
+        "glue.identity-pairs-and-controls",
+        "glue.capture-consistency",
+        "glue.unexpected-failure-is-a-violation-and-a-guard-is-not",
+        "aggregate.documents-on-captures",
+        "aggregate.unconfirmed-and-unknown-stay-visible",
+        "aggregate.stage-split-and-local-share",
+        "aggregate.local-share-by-cohort-and-arm",
+        "aggregate.ratios-are-g0-over-g1-and-unknown-stays-unknown",
+        "aggregate.probes-executed-versus-reused",
+        "aggregate.machine-wait-provenance-and-charge-reconciliation",
+        "aggregate.t01-never-met-with-stops-and-counter-units",
+        "aggregate.partial-coverage-and-criteria"
+      ],
+      "crash": null,
+      "firstFailure": "HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry",
+      "errorCode": "anchor-missing",
+      "failures": [
+        "FAIL dig.patched-source-without-runtime-is-native (84 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32",
+        "FAIL dig.g0-capture-observes-without-changing-anything (54 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32",
+        "FAIL dig.g1-identity-and-physical-work (60 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32",
+        "FAIL dig.g1-stops-on-solver-failures (56 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32",
+        "FAIL dig.g1-never-swallows-a-count-failure (49 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32",
+        "FAIL dig.shared-count-guard-binds-differently (52 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32",
+        "FAIL dig.compare-arms-mismatch-kinds (57 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32",
+        "FAIL adapter.transforms-apply-to-the-real-sources (53 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32"
+      ],
+      "termination": null
+    },
+    {
+      "id": "ig08-test.pure",
+      "task": "IG-S08",
+      "status": "failed",
+      "reason": "exit 1",
+      "exitCode": 1,
+      "wallMs": 2439.6,
+      "okLines": 29,
+      "failLines": 3,
+      "summaryLine": "29/32 passed",
+      "firstFailingCase": "adapter.transforms-apply",
+      "causes": [
+        {
+          "message": "HarnessError: replaced text not found in js/engine/digger.js: dig.objective",
+          "count": 3,
+          "firstCase": "adapter.transforms-apply",
+          "code": "anchor-missing"
+        }
+      ],
+      "failedCases": [
+        "adapter.transforms-apply",
+        "jigsaw.patched-layout-on-a-fake-engine",
+        "digger.patched-stage-runner-on-a-fake-engine"
+      ],
+      "crash": null,
+      "firstFailure": "HarnessError: replaced text not found in js/engine/digger.js: dig.objective",
+      "errorCode": "anchor-missing",
+      "failures": [
+        "FAIL adapter.transforms-apply (73 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.objective |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32",
+        "FAIL jigsaw.patched-layout-on-a-fake-engine (58 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.objective |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32",
+        "FAIL digger.patched-stage-runner-on-a-fake-engine (55 ms) | HarnessError: replaced text not found in js/engine/digger.js: dig.objective |     at applyTransform (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:255:28) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\loader.cjs:314:32"
+      ],
+      "termination": null
+    },
+    {
+      "id": "scoped-test.pure",
+      "task": "IG-S03",
+      "status": "failed",
+      "reason": "exit 1",
+      "exitCode": 1,
+      "wallMs": 1375.6,
+      "okLines": 16,
+      "failLines": 1,
+      "summaryLine": "16/17 passed",
+      "firstFailingCase": "P09",
+      "causes": [
+        {
+          "message": "the saved IG-S02 puzzle is missing: docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-1.json",
+          "count": 1,
+          "firstCase": "P09",
+          "code": "prerequisite-evidence-absent"
+        }
+      ],
+      "failedCases": [
+        "P09"
+      ],
+      "crash": null,
+      "firstFailure": "the saved IG-S02 puzzle is missing: docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-1.json",
+      "errorCode": "prerequisite-evidence-absent",
+      "failures": [
+        "FAIL P09 the plan is fixed: 18 audit puzzles, 18 pooled and 6 serial observations, hashes in the manifest (3 ms) :: the saved IG-S02 puzzle is missing: docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-1.json"
+      ],
+      "termination": null
+    },
+    {
+      "id": "frontier-test.pure",
+      "task": "IG-S04",
+      "status": "failed",
+      "reason": "exit 1",
+      "exitCode": 1,
+      "wallMs": 573.2,
+      "okLines": 40,
+      "failLines": 1,
+      "summaryLine": "40/41 passed",
+      "firstFailingCase": "adapter.anchors",
+      "causes": [
+        {
+          "message": "Error: digger.js declares refusalReason",
+          "count": 1,
+          "firstCase": "adapter.anchors",
+          "code": null
+        }
+      ],
+      "failedCases": [
+        "adapter.anchors"
+      ],
+      "crash": null,
+      "firstFailure": "Error: digger.js declares refusalReason",
+      "errorCode": null,
+      "failures": [
+        "FAIL adapter.anchors (53 ms) | Error: digger.js declares refusalReason |     at check (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\frontier-test.cjs:35:25) |     at Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\frontier-test.cjs:984:5 |     at Array.forEach (<anonymous>) |     at Object.fn (Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\frontier-test.cjs:983:17)"
+      ],
+      "termination": null
+    },
+    {
+      "id": "pool-test.pure",
+      "task": "IG-S02",
+      "status": "passed",
+      "reason": null,
+      "exitCode": 0,
+      "wallMs": 563,
+      "okLines": 17,
+      "failLines": 0,
+      "summaryLine": "pure pool cases: 17 passed, 0 failed",
+      "firstFailingCase": null,
+      "causes": [],
+      "failedCases": [],
+      "crash": null,
+      "firstFailure": null,
+      "errorCode": null,
+      "failures": [],
+      "termination": null
+    },
+    {
+      "id": "ig05-test.pure",
+      "task": "IG-S05",
+      "status": "timeout",
+      "reason": "terminated at the payload deadline",
+      "exitCode": null,
+      "wallMs": 1956.1,
+      "okLines": 0,
+      "failLines": 0,
+      "summaryLine": null,
+      "firstFailingCase": null,
+      "causes": [],
+      "failedCases": [],
+      "crash": null,
+      "firstFailure": null,
+      "errorCode": null,
+      "failures": [],
+      "termination": {
+        "pid": 5076,
+        "requestedAtMs": 4000.7,
+        "methods": [
+          "child.kill(SIGKILL) [TerminateProcess on pid 5076]"
+        ],
+        "exited": true,
+        "verifiedGone": true,
+        "ms": 7.9
+      }
+    },
+    {
+      "id": "killer-audit-test.pure",
+      "task": "IG-S02 (Killer re-audit)",
+      "status": "passed",
+      "reason": null,
+      "exitCode": 0,
+      "wallMs": 156.9,
+      "okLines": 10,
+      "failLines": 0,
+      "summaryLine": "killer audit cases: 10 passed, 0 failed",
+      "firstFailingCase": null,
+      "causes": [],
+      "failedCases": [],
+      "crash": null,
+      "firstFailure": null,
+      "errorCode": null,
+      "failures": [],
+      "termination": null
+    },
+    {
+      "id": "ig10-test.gate",
+      "task": "IG-S10",
+      "status": "timeout",
+      "reason": "terminated at the payload deadline",
+      "exitCode": null,
+      "wallMs": 1616.2,
+      "okLines": 0,
+      "failLines": 0,
+      "summaryLine": null,
+      "firstFailingCase": null,
+      "causes": [],
+      "failedCases": [],
+      "crash": null,
+      "firstFailure": null,
+      "errorCode": null,
+      "failures": [],
+      "termination": {
+        "pid": 5300,
+        "requestedAtMs": 4001.2,
+        "methods": [
+          "child.kill(SIGKILL) [TerminateProcess on pid 5300]"
+        ],
+        "exited": true,
+        "verifiedGone": true,
+        "ms": 7.7
+      }
+    }
+  ],
+  "planOnly": [
+    {
+      "task": "IG-S01",
+      "ok": true,
+      "mode": "plan-only (no engine loaded, nothing timed, nothing written)",
+      "runtimeFingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+      "harnessFingerprint": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+      "manifestHash": "227e9bb11a663e209986eba9b4db36ffd93e7c174fbf95c786ec0454cd0cf772",
+      "gate": "not-evaluable-pre-freeze",
+      "adapters": [
+        {
+          "id": "noop-expose",
+          "hash": "f73aa49991cc0141ef7f9bfe34fc0df39d936e122d600ed2ddf2a59a8f2a2c85"
+        }
+      ],
+      "projectedMachineMs": 145000,
+      "budget": {
+        "allocationMs": 240000,
+        "remainingTaskMs": 240000,
+        "effectiveDeadlineMs": 195000,
+        "canAdmit": true
+      },
+      "shards": [
+        {
+          "shard": "self-test",
+          "kind": "synthetic",
+          "status": "not-run",
+          "keys": 0,
+          "unstarted": 0,
+          "projectedMachineMs": 60000
+        },
+        {
+          "shard": "loader-parity",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 4,
+          "unstarted": 4,
+          "projectedMachineMs": 85000
+        }
+      ]
+    },
+    {
+      "task": "IG-S02",
+      "ok": true,
+      "mode": "plan-only (no engine loaded, nothing timed, nothing written)",
+      "runtimeFingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+      "harnessFingerprint": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+      "manifestHash": "50840df58bb5df5cafa335301700b4f2c8e3de7749773190c0368853f256feca",
+      "gate": "not-evaluable-pre-freeze",
+      "adapters": [
+        {
+          "id": "attempt-pool",
+          "hash": "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06"
+        }
+      ],
+      "projectedMachineMs": 1482000,
+      "budget": {
+        "allocationMs": 1500000,
+        "remainingTaskMs": 1500000,
+        "effectiveDeadlineMs": 270000,
+        "canAdmit": true
+      },
+      "shards": [
+        {
+          "shard": "m16-1",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 2,
+          "unstarted": 2,
+          "projectedMachineMs": 220000
+        },
+        {
+          "shard": "m16-2",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 2,
+          "unstarted": 2,
+          "projectedMachineMs": 220000
+        },
+        {
+          "shard": "m16-3",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 2,
+          "unstarted": 2,
+          "projectedMachineMs": 220000
+        },
+        {
+          "shard": "m12",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 6,
+          "unstarted": 6,
+          "projectedMachineMs": 186000
+        },
+        {
+          "shard": "sam",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 6,
+          "unstarted": 6,
+          "projectedMachineMs": 225000
+        },
+        {
+          "shard": "c9",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 6,
+          "unstarted": 6,
+          "projectedMachineMs": 87000
+        },
+        {
+          "shard": "killer",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 6,
+          "unstarted": 6,
+          "projectedMachineMs": 183000
+        },
+        {
+          "shard": "gt",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 6,
+          "unstarted": 6,
+          "projectedMachineMs": 141000
+        }
+      ]
+    },
+    {
+      "task": "IG-S03",
+      "ok": false,
+      "error": {
+        "code": "plan-missing",
+        "message": "the saved IG-S02 puzzle is missing: docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-1.json"
+      },
+      "classification": "prerequisite-evidence-absent"
+    },
+    {
+      "task": "IG-S04",
+      "ok": true,
+      "mode": "plan-only (no engine loaded, nothing timed, nothing written)",
+      "runtimeFingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+      "harnessFingerprint": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+      "manifestHash": "01b5ddba118d8c7d52ea0fa7e835aee389847e752ef21c6d18a54bbd8e1601da",
+      "gate": "not-evaluable-pre-freeze",
+      "adapters": [
+        {
+          "id": "frontier-hooks",
+          "hash": "424efd29f49f1c93001074a760b1d898acb3f2eee9aaa791477a32ec68b98143"
+        }
+      ],
+      "projectedMachineMs": 2740000,
+      "budget": {
+        "allocationMs": 720000,
+        "remainingTaskMs": 720000,
+        "effectiveDeadlineMs": 270000,
+        "canAdmit": true
+      },
+      "shards": [
+        {
+          "shard": "s1-large-controls",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 6,
+          "unstarted": 6,
+          "projectedMachineMs": 261000
+        },
+        {
+          "shard": "s2-small-all",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 32,
+          "unstarted": 32,
+          "projectedMachineMs": 753000
+        },
+        {
+          "shard": "s3-large-native-f1",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 6,
+          "unstarted": 6,
+          "projectedMachineMs": 261000
+        },
+        {
+          "shard": "s4-large-floors",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 8,
+          "unstarted": 8,
+          "projectedMachineMs": 586000
+        },
+        {
+          "shard": "s5-large-reference",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 8,
+          "unstarted": 8,
+          "projectedMachineMs": 586000
+        },
+        {
+          "shard": "s6-large-s2-control",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 4,
+          "unstarted": 4,
+          "projectedMachineMs": 293000
+        }
+      ]
+    },
+    {
+      "task": "IG-S05",
+      "ok": false,
+      "error": {
+        "code": "plan-missing",
+        "message": "the frozen budgets are missing: docs/improve-generating/evidence/phase0/provisional-r1/IG-S04/budgets-r2.json"
+      },
+      "classification": "prerequisite-evidence-absent"
+    },
+    {
+      "task": "IG-S06",
+      "ok": false,
+      "error": {
+        "code": "plan-missing",
+        "message": "IG-S06 has no plan in this harness yet (plans/ig-s06.cjs is added by that task)"
+      },
+      "classification": "expected-no-plan-file"
+    },
+    {
+      "task": "IG-S07",
+      "ok": true,
+      "mode": "plan-only (no engine loaded, nothing timed, nothing written)",
+      "runtimeFingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+      "harnessFingerprint": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+      "manifestHash": "47fec5d6e82c5af6412c78ede648e55b543e1e159dd9b4e7fd7b931f84980ab7",
+      "gate": "not-evaluable-pre-freeze",
+      "adapters": [
+        {
+          "id": "profile",
+          "hash": "4d409f0ef2e0297511a4c1100462f8f1042b7fc6a871f63ebeebe2d503eef169"
+        }
+      ],
+      "projectedMachineMs": 740000,
+      "budget": {
+        "allocationMs": 720000,
+        "remainingTaskMs": 720000,
+        "effectiveDeadlineMs": 270000,
+        "canAdmit": true
+      },
+      "shards": [
+        {
+          "shard": "c9",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 1,
+          "unstarted": 1,
+          "projectedMachineMs": 59000
+        },
+        {
+          "shard": "m16",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 1,
+          "unstarted": 1,
+          "projectedMachineMs": 180000
+        },
+        {
+          "shard": "m12",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 1,
+          "unstarted": 1,
+          "projectedMachineMs": 78000
+        },
+        {
+          "shard": "sam",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 1,
+          "unstarted": 1,
+          "projectedMachineMs": 77000
+        },
+        {
+          "shard": "killer-n",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 1,
+          "unstarted": 1,
+          "projectedMachineMs": 76000
+        },
+        {
+          "shard": "gt-n",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 1,
+          "unstarted": 1,
+          "projectedMachineMs": 65000
+        },
+        {
+          "shard": "killer-h",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 2,
+          "unstarted": 2,
+          "projectedMachineMs": 69000
+        },
+        {
+          "shard": "killer-e",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 2,
+          "unstarted": 2,
+          "projectedMachineMs": 75000
+        },
+        {
+          "shard": "gt-normal",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 2,
+          "unstarted": 2,
+          "projectedMachineMs": 61000
+        },
+        {
+          "shard": "lc",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 0,
+          "unstarted": 0,
+          "projectedMachineMs": 0
+        }
+      ]
+    },
+    {
+      "task": "IG-S08",
+      "ok": true,
+      "mode": "plan-only (no engine loaded, nothing timed, nothing written)",
+      "runtimeFingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+      "harnessFingerprint": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+      "manifestHash": "7d4e3790b37ac9cdfd9d20312afda72c15a9a6a56a110c07f3d29dab8fc3dc53",
+      "gate": "not-evaluable-pre-freeze",
+      "adapters": [
+        {
+          "id": "jigsaw-profile",
+          "hash": "69890fe8acaef852f6c19acb10985041a335e8ac55e3f6551bca1b4f6b6e2c62"
+        }
+      ],
+      "projectedMachineMs": 282000,
+      "budget": {
+        "allocationMs": 360000,
+        "remainingTaskMs": 360000,
+        "effectiveDeadlineMs": 270000,
+        "canAdmit": true
+      },
+      "shards": [
+        {
+          "shard": "control",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 2,
+          "unstarted": 2,
+          "projectedMachineMs": 57000
+        },
+        {
+          "shard": "tail",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 1,
+          "unstarted": 1,
+          "projectedMachineMs": 225000
+        }
+      ]
+    },
+    {
+      "task": "IG-S09",
+      "ok": true,
+      "mode": "plan-only (no engine loaded, nothing timed, nothing written)",
+      "runtimeFingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+      "harnessFingerprint": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+      "manifestHash": "bc645c874af03a0932393fb92263f83bb25fcccf25ce8d8b93d39f2682d98cdc",
+      "gate": "not-evaluable-pre-freeze",
+      "adapters": [
+        {
+          "id": "gt-diagnostic",
+          "hash": "d5fd6349b824de98223eecbbb001327e08b6ece223d95fb1b5d33842e465eaae"
+        }
+      ],
+      "projectedMachineMs": 1282000,
+      "budget": {
+        "allocationMs": 900000,
+        "remainingTaskMs": 900000,
+        "effectiveDeadlineMs": 270000,
+        "canAdmit": true
+      },
+      "shards": [
+        {
+          "shard": "normal-300-304",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 10,
+          "unstarted": 10,
+          "projectedMachineMs": 125000
+        },
+        {
+          "shard": "normal-305-309",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 10,
+          "unstarted": 10,
+          "projectedMachineMs": 125000
+        },
+        {
+          "shard": "normal-310-314",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 10,
+          "unstarted": 10,
+          "projectedMachineMs": 125000
+        },
+        {
+          "shard": "normal-315-319",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 10,
+          "unstarted": 10,
+          "projectedMachineMs": 125000
+        },
+        {
+          "shard": "nightmare-700-701",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 4,
+          "unstarted": 4,
+          "projectedMachineMs": 141000
+        },
+        {
+          "shard": "nightmare-702-703",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 4,
+          "unstarted": 4,
+          "projectedMachineMs": 141000
+        },
+        {
+          "shard": "nightmare-704-705",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 4,
+          "unstarted": 4,
+          "projectedMachineMs": 141000
+        },
+        {
+          "shard": "nightmare-706-707",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 4,
+          "unstarted": 4,
+          "projectedMachineMs": 141000
+        },
+        {
+          "shard": "nightmare-708-709",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 4,
+          "unstarted": 4,
+          "projectedMachineMs": 141000
+        },
+        {
+          "shard": "observer-control",
+          "kind": "pipeline",
+          "status": "not-run",
+          "keys": 2,
+          "unstarted": 2,
+          "projectedMachineMs": 77000
+        }
+      ]
+    },
+    {
+      "task": "IG-S10",
+      "ok": true,
+      "mode": "plan-only (no engine loaded, nothing timed, nothing written)",
+      "runtimeFingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+      "harnessFingerprint": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+      "manifestHash": "c17ef34f3fd918e11f2f9e1e5d17dc68b0df838619be83c40560157cee469e53",
+      "gate": "not-evaluable-pre-freeze",
+      "adapters": [],
+      "projectedMachineMs": 225000,
+      "budget": {
+        "allocationMs": 240000,
+        "remainingTaskMs": 240000,
+        "effectiveDeadlineMs": 195000,
+        "canAdmit": true
+      },
+      "shards": [
+        {
+          "shard": "reconcile",
+          "kind": "analysis",
+          "status": "not-run",
+          "keys": 1,
+          "unstarted": 1,
+          "projectedMachineMs": 225000
+        }
+      ]
+    }
+  ],
+  "canaries": {
+    "selfTest": {
+      "ran": true,
+      "childStatus": "passed",
+      "exitCode": 0,
+      "wallMs": 3349.8,
+      "commandStatus": "complete",
+      "selfTestPassed": true,
+      "casesPassed": 36,
+      "casesFailed": 0,
+      "cases": [
+        {
+          "id": "source-list-corruption",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "source-path-escape-and-missing",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "duplicate-key-and-output",
+          "ok": true,
+          "ms": 9
+        },
+        {
+          "id": "incompatible-hashes",
+          "ok": true,
+          "ms": 0
+        },
+        {
+          "id": "missing-and-unstarted-row",
+          "ok": true,
+          "ms": 0
+        },
+        {
+          "id": "started-timeout-children-not-resumable",
+          "ok": true,
+          "ms": 0
+        },
+        {
+          "id": "immutable-attempt-output",
+          "ok": true,
+          "ms": 42
+        },
+        {
+          "id": "productive-pause-exit0-incomplete",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "zero-or-quantised-cpu-never-infinite",
+          "ok": true,
+          "ms": 2
+        },
+        {
+          "id": "cold-ready-separation",
+          "ok": true,
+          "ms": 0
+        },
+        {
+          "id": "logical-block-packing-and-deadline",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "one-sided-lower-bound-edges",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "cluster-resampling-keeps-pairs",
+          "ok": true,
+          "ms": 7
+        },
+        {
+          "id": "transform-validation",
+          "ok": true,
+          "ms": 36
+        },
+        {
+          "id": "source-change-detected",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "gate-states",
+          "ok": true,
+          "ms": 0
+        },
+        {
+          "id": "receipts-validated-before-frozen-generation",
+          "ok": true,
+          "ms": 138
+        },
+        {
+          "id": "lock-owner-must-be-proved",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "rates-charge-all-spent-work",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "host-deadline-late-decision-and-termination",
+          "ok": true,
+          "ms": 72
+        },
+        {
+          "id": "parity-defers-and-resume-chain-reconciles",
+          "ok": true,
+          "ms": 16
+        },
+        {
+          "id": "dispatcher-uses-only-the-wrapper",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "test-only-cannot-leak",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "harness-text-format",
+          "ok": true,
+          "ms": 42
+        },
+        {
+          "id": "descriptive-statistics",
+          "ok": true,
+          "ms": 0
+        },
+        {
+          "id": "firewall-detects-changes",
+          "ok": true,
+          "ms": 3
+        },
+        {
+          "id": "normalised-digest-includes-structure",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "record-schema-unknown-is-null",
+          "ok": true,
+          "ms": 1
+        },
+        {
+          "id": "ledger-charges-and-shard-status",
+          "ok": true,
+          "ms": 14
+        },
+        {
+          "id": "plan-only-loads-no-engine",
+          "ok": true,
+          "ms": 79
+        },
+        {
+          "id": "busy-worker-request-timeout",
+          "ok": true,
+          "ms": 304
+        },
+        {
+          "id": "busy-worker-command-timeout",
+          "ok": true,
+          "ms": 458
+        },
+        {
+          "id": "real-worker-cold-ready-intervals",
+          "ok": true,
+          "ms": 81
+        },
+        {
+          "id": "worker-fails-closed",
+          "ok": true,
+          "ms": 144
+        },
+        {
+          "id": "engine-loads-and-discovers-catalogue",
+          "ok": true,
+          "ms": 190
+        },
+        {
+          "id": "verifier-audits-a-handmade-puzzle",
+          "ok": true,
+          "ms": 478
+        }
+      ],
+      "firewallClean": true,
+      "sourceStable": true,
+      "lockObserved": {
+        "file": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+        "content": "11244|IG IG-S01/self-test|2026-11-15T07:14:07.1406476Z",
+        "expectedOwner": "IG IG-S01/self-test",
+        "ownerMatches": true
+      },
+      "engineCases": [
+        "plan-only-loads-no-engine:ok",
+        "busy-worker-request-timeout:ok",
+        "busy-worker-command-timeout:ok",
+        "real-worker-cold-ready-intervals:ok",
+        "worker-fails-closed:ok",
+        "engine-loads-and-discovers-catalogue:ok",
+        "verifier-audits-a-handmade-puzzle:ok"
+      ],
+      "timing": {
+        "requestedAt": null,
+        "admittedAt": "2026-11-15T07:14:07.472Z",
+        "endedAt": "2026-11-15T07:14:10.724Z",
+        "occupiedMs": 3252,
+        "chargedGraceMs": 45000,
+        "priorityWaitMs": null
+      }
+    },
+    "loaderParity": {
+      "ran": true,
+      "childStatus": "passed",
+      "exitCode": 0,
+      "wallMs": 1438.4,
+      "commandStatus": "paused-unstarted",
+      "plannedKeys": [
+        "IG-S01/loader-parity/classic4:veryEasy:1/native",
+        "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+        "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+        "IG-S01/loader-parity/classic9:hard:1/native"
+      ],
+      "completedKeys": [
+        "IG-S01/loader-parity/classic4:veryEasy:1/native"
+      ],
+      "unstartedKeys": [
+        "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+        "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+        "IG-S01/loader-parity/classic9:hard:1/native"
+      ],
+      "pause": {
+        "reason": "next-physical-command",
+        "remainingMs": 15666,
+        "nextKey": "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose"
+      },
+      "parity": {
+        "pairs": [
+          {
+            "pairId": "classic4:veryEasy:1",
+            "verdict": "deferred",
+            "waitingFor": "prototype",
+            "arm": "reference"
+          },
+          {
+            "pairId": "classic9:hard:1",
+            "verdict": "not-started"
+          }
+        ],
+        "failed": 0,
+        "ok": 0,
+        "deferred": 2,
+        "complete": false
+      },
+      "rows": [
+        {
+          "key": "IG-S01/loader-parity/classic4:veryEasy:1/native",
+          "outcome": "complete",
+          "claimedExact": true,
+          "verifiedExact": true,
+          "puzzleHash": "357db3ddfa704c2a",
+          "validation": "verified",
+          "coldWallMs": 109.06269999999995,
+          "error": null
+        },
+        {
+          "key": "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+          "outcome": "unstarted",
+          "claimedExact": null,
+          "verifiedExact": null,
+          "puzzleHash": null,
+          "validation": null,
+          "coldWallMs": null,
+          "error": null
+        },
+        {
+          "key": "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+          "outcome": "unstarted",
+          "claimedExact": null,
+          "verifiedExact": null,
+          "puzzleHash": null,
+          "validation": null,
+          "coldWallMs": null,
+          "error": null
+        },
+        {
+          "key": "IG-S01/loader-parity/classic9:hard:1/native",
+          "outcome": "unstarted",
+          "claimedExact": null,
+          "verifiedExact": null,
+          "puzzleHash": null,
+          "validation": null,
+          "coldWallMs": null,
+          "error": null
+        }
+      ],
+      "predictedBeforeRun": {
+        "plannedKeys": [
+          "IG-S01/loader-parity/classic4:veryEasy:1/native",
+          "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+          "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+          "IG-S01/loader-parity/classic9:hard:1/native"
+        ],
+        "jobEstimateMs": [
+          10000,
+          10000,
+          10000,
+          10000
+        ],
+        "at25000": {
+          "deadlineMs": 25000,
+          "windowMs": 13000,
+          "commands": 4,
+          "firstCommandKeys": [
+            "IG-S01/loader-parity/classic4:veryEasy:1/native"
+          ],
+          "oversize": []
+        },
+        "minDeadlineMsForOnePair": 32000,
+        "minDeadlineMsForAllRows": 52000,
+        "note": "static packing arithmetic of manifest.cjs: only the first physical command is run by one run.cjs call"
+      },
+      "firewallClean": true,
+      "sourceStable": true,
+      "deadlineMsGiven": "--deadline-ms=25000",
+      "timing": {
+        "requestedAt": "2026-11-15T07:14:10.8335756Z",
+        "admittedAt": "2026-11-15T07:14:56.335Z",
+        "endedAt": "2026-11-15T07:14:57.669Z",
+        "occupiedMs": 1333,
+        "chargedGraceMs": 45000,
+        "priorityWaitMs": 45502
+      },
+      "error": null
+    }
+  },
+  "failures": [
+    {
+      "where": "adapter gt-diagnostic (used by IG-S09)",
+      "kind": "textual-applicability",
+      "firstFailingFile": "js/engine/digger.js",
+      "firstFailingAnchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+      "transform": "dig.guided-entry",
+      "code": "anchor-missing",
+      "detail": "replaced text not found in js/engine/digger.js: dig.guided-entry"
+    },
+    {
+      "where": "adapter jigsaw-profile (used by IG-S08)",
+      "kind": "textual-applicability",
+      "firstFailingFile": "js/engine/digger.js",
+      "firstFailingAnchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+      "transform": "dig.objective",
+      "code": "anchor-missing",
+      "detail": "replaced text not found in js/engine/digger.js: dig.objective"
+    },
+    {
+      "where": "adapter profile (used by IG-S07)",
+      "kind": "textual-applicability",
+      "firstFailingFile": "js/engine/digger.js",
+      "firstFailingAnchor": "function* digGuidedSteps(model, solution, startGivens, rejected, spec, rng, ctx) {",
+      "transform": "profile.objective",
+      "code": "anchor-missing",
+      "detail": "replaced text not found in js/engine/digger.js: profile.objective"
+    },
+    {
+      "where": "ig07-test.pure (IG-S07)",
+      "kind": "pure-test (crashed before its summary)",
+      "firstFailingCase": null,
+      "causes": [],
+      "failedCases": 0,
+      "code": "anchor-missing",
+      "detail": "HarnessError: replaced text not found in js/engine/digger.js: profile.objective"
+    },
+    {
+      "where": "ig09-test.pure (IG-S09)",
+      "kind": "pure-test",
+      "firstFailingCase": "dig.patched-source-without-runtime-is-native",
+      "causes": [
+        {
+          "message": "HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry",
+          "count": 20,
+          "firstCase": "dig.patched-source-without-runtime-is-native",
+          "code": "anchor-missing"
+        }
+      ],
+      "failedCases": 20,
+      "code": "anchor-missing",
+      "detail": "HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry"
+    },
+    {
+      "where": "ig08-test.pure (IG-S08)",
+      "kind": "pure-test",
+      "firstFailingCase": "adapter.transforms-apply",
+      "causes": [
+        {
+          "message": "HarnessError: replaced text not found in js/engine/digger.js: dig.objective",
+          "count": 3,
+          "firstCase": "adapter.transforms-apply",
+          "code": "anchor-missing"
+        }
+      ],
+      "failedCases": 3,
+      "code": "anchor-missing",
+      "detail": "HarnessError: replaced text not found in js/engine/digger.js: dig.objective"
+    },
+    {
+      "where": "scoped-test.pure (IG-S03)",
+      "kind": "pure-test",
+      "firstFailingCase": "P09",
+      "causes": [
+        {
+          "message": "the saved IG-S02 puzzle is missing: docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-1.json",
+          "count": 1,
+          "firstCase": "P09",
+          "code": "prerequisite-evidence-absent"
+        }
+      ],
+      "failedCases": 1,
+      "code": "prerequisite-evidence-absent",
+      "detail": "the saved IG-S02 puzzle is missing: docs/improve-generating/evidence/phase0/provisional-r1/IG-S02/c9/a3/puzzles/native-w1__classic9-1.json"
+    },
+    {
+      "where": "frontier-test.pure (IG-S04)",
+      "kind": "pure-test",
+      "firstFailingCase": "adapter.anchors",
+      "causes": [
+        {
+          "message": "Error: digger.js declares refusalReason",
+          "count": 1,
+          "firstCase": "adapter.anchors",
+          "code": null
+        }
+      ],
+      "failedCases": 1,
+      "code": "exit 1",
+      "detail": "Error: digger.js declares refusalReason"
+    }
+  ],
+  "unstartedOrTimedOut": [
+    {
+      "what": "ig05-test.pure",
+      "kind": "timeout",
+      "reason": "terminated at the payload deadline (it had run 1956.1 ms; these files write their output only at the end)"
+    },
+    {
+      "what": "ig10-test.gate",
+      "kind": "timeout",
+      "reason": "terminated at the payload deadline (it had run 1616.2 ms; these files write their output only at the end)"
+    },
+    {
+      "what": "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+      "kind": "unstarted row",
+      "reason": "next-physical-command"
+    },
+    {
+      "what": "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+      "kind": "unstarted row",
+      "reason": "next-physical-command"
+    },
+    {
+      "what": "IG-S01/loader-parity/classic9:hard:1/native",
+      "kind": "unstarted row",
+      "reason": "next-physical-command"
+    }
+  ],
+  "notTested": [
+    "semantic parity: that a patched (adapter) instance returns the same puzzles, ratings, checks and work as the native engine on the rating-v3 runtime is NOT tested; only the existing no-op hook (noop-expose) is exercised by the loader-parity rows that ran",
+    "textual applicability of an adapter means its private string transforms find unique anchors and the patched text compiles (vm.Script); it does not run the patched code",
+    "the engine-free tests that ran use fakes and the real source text; none of them generates a puzzle, and the groups that need accepted evidence (reconcile, the historical IG-S10 cases) were not run",
+    "no performance, timing, throughput or pool-width figure was measured or is meaningful here; all numbers are provisional compatibility observations",
+    "IG-S06, rows 706-709 and every frozen-gate run are out of scope; IG-S03 and IG-S05 plan-only is blocked by prerequisite evidence of provisional-r1 that this worktree does not hold"
+  ],
+  "git": {
+    "headAtEnd": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "trackedChangesAfter": [],
+    "untrackedAfter": [
+      "?? docs/improve-generating/evidence/",
+      "?? generator/tests/artifacts/improve-generating/"
+    ],
+    "statusShortAfter": [
+      "?? docs/improve-generating/evidence/",
+      "?? generator/tests/artifacts/improve-generating/"
+    ],
+    "trackedFilesUnchanged": true
+  },
+  "driver": {
+    "asRun": [
+      {
+        "file": "Invoke-IgSmoke.ps1",
+        "sha256": "90d608873a96186f18e80dcbc62fc7d7fec00043c4b217ceed4536141579c666"
+      },
+      {
+        "file": "smoke-inventory.cjs",
+        "sha256": "ac4bcd241533345e9488acb19940267eb25fe9526373865e1b6f8b19962dd977"
+      },
+      {
+        "file": "smoke-lib.cjs",
+        "sha256": "fe14bb322431308995c198a093ae7e9c8b3bd8632219411ee21b1c6dbd1a27c8"
+      },
+      {
+        "file": "smoke-probe.cjs",
+        "sha256": "910be7225b09c7da7084c64d8867ab2b151380e15fdd1b40ffe51844f9e79a5d"
+      },
+      {
+        "file": "smoke-report.cjs",
+        "sha256": "34bc747668c2a35d165670edd3ad0e139ce7bdf1aa7e018c3051d9a2380c19ce"
+      },
+      {
+        "file": "smoke-supervise.cjs",
+        "sha256": "63460fcfd3fc584e17d35b631764e4fb210baee97f93d4e67e3169bb94c81b12"
+      }
+    ],
+    "revisedAfterTheRun": [
+      {
+        "file": "Invoke-IgSmokeFinalize.ps1",
+        "sha256": "8fb88a391e82f6a3f142c77769f9c0dd27c7c380ead231e158ec331f92d1f5db"
+      },
+      {
+        "file": "smoke-report.cjs",
+        "sha256": "1a62aaebb2bb4da5ad77b8fb9b9edfc1a4584f4cfc542d4f7005d0d6571a8e50"
+      }
+    ],
+    "note": "asRun are the hashes recorded before the first admission (copies in driver/); a file listed as revised was changed after the run (report writer, finalize mode) and its copy is in driver/revised/; the wrapper-phase scripts smoke-lib, smoke-supervise, smoke-probe and smoke-inventory are the ones that ran"
+  },
+  "fatal": null
+}

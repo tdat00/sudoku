@@ -1,0 +1,303 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S01",
+  "shard": "loader-parity",
+  "round": "smoke-rating-v3-8b70875",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "paused-unstarted",
+  "exit": 0,
+  "coverage": {
+    "planned": 4,
+    "completed": 1,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 3,
+    "complete": false,
+    "exclusions": [
+      "correctness controls, not timing observations"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "rating-v3@8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "runtimeFingerprint": "bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1",
+    "files": 63,
+    "harnessFingerprint": "c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171",
+    "adapterIds": [
+      "noop-expose"
+    ],
+    "adapterHashes": [
+      "f73aa49991cc0141ef7f9bfe34fc0df39d936e122d600ed2ddf2a59a8f2a2c85"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 85.90120000000002,
+      "changesSeen": 7,
+      "incrementsMs": [
+        16,
+        16,
+        15,
+        15,
+        16,
+        16
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 828,
+    "processAgeAtHostMs": 548.5606
+  },
+  "pairedRows": [
+    {
+      "pairId": "classic4:veryEasy:1",
+      "reference": {
+        "key": "IG-S01/loader-parity/classic4:veryEasy:1/native",
+        "outcome": "complete",
+        "readyWallMs": 7.920099999999934,
+        "coldWallMs": 109.06269999999995,
+        "cpuTotalMs": 188,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "357db3ddfa704c2a616d7c32359952ee3773f59393283ad93808e4856f6b153e"
+      },
+      "prototype": {
+        "key": "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+        "outcome": "unstarted",
+        "readyWallMs": null,
+        "coldWallMs": null,
+        "cpuTotalMs": null,
+        "cpuResolutionStatus": null,
+        "claimedExact": null,
+        "verifiedExact": null,
+        "puzzleHash": null
+      },
+      "cpuFactor": null,
+      "readyWallFactor": null,
+      "coldWallFactor": null
+    },
+    {
+      "pairId": "classic9:hard:1",
+      "reference": {
+        "key": "IG-S01/loader-parity/classic9:hard:1/native",
+        "outcome": "unstarted",
+        "readyWallMs": null,
+        "coldWallMs": null,
+        "cpuTotalMs": null,
+        "cpuResolutionStatus": null,
+        "claimedExact": null,
+        "verifiedExact": null,
+        "puzzleHash": null
+      },
+      "prototype": {
+        "key": "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+        "outcome": "unstarted",
+        "readyWallMs": null,
+        "coldWallMs": null,
+        "cpuTotalMs": null,
+        "cpuResolutionStatus": null,
+        "claimedExact": null,
+        "verifiedExact": null,
+        "puzzleHash": null
+      },
+      "cpuFactor": null,
+      "readyWallFactor": null,
+      "coldWallFactor": null
+    }
+  ],
+  "arms": {
+    "reference": {
+      "requests": 2,
+      "complete": 1,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 1,
+      "readyWallMs": {
+        "n": 1,
+        "p50": 7.920099999999934,
+        "p95": 7.920099999999934,
+        "max": 7.920099999999934,
+        "upperMedian": 7.920099999999934,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 1,
+        "p50": 109.06269999999995,
+        "p95": 109.06269999999995,
+        "max": 109.06269999999995,
+        "upperMedian": 109.06269999999995,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 1,
+        "p50": 188,
+        "p95": 188,
+        "max": 188,
+        "upperMedian": 188,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 1,
+          "cpuMs": 188,
+          "wallMs": 111.82449999999994
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 1,
+          "cpuMs": 188,
+          "wallMs": 111.82449999999994
+        }
+      },
+      "cpuTotalAggregateMs": 188,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 111.82449999999994,
+      "verifiedHits": 1,
+      "hitsPerCpuSecond": 5.319148936170213,
+      "hitsPerColdWallSecond": 8.942584138538518
+    },
+    "prototype": {
+      "requests": 2,
+      "complete": 0,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 2,
+      "readyWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "coldWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "cpuTotalMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        }
+      },
+      "cpuTotalAggregateMs": 0,
+      "cpuAggregateStatus": "unresolved",
+      "wallChargedMs": 0,
+      "verifiedHits": 0,
+      "hitsPerCpuSecond": null,
+      "hitsPerColdWallSecond": null
+    }
+  },
+  "estimateVerdict": "not applicable: IG-S01 is infrastructure only and confirms no speed estimate",
+  "extra": {
+    "loaderParity": {
+      "pairs": [
+        {
+          "pairId": "classic4:veryEasy:1",
+          "verdict": "deferred",
+          "waitingFor": "prototype",
+          "arm": "reference"
+        },
+        {
+          "pairId": "classic9:hard:1",
+          "verdict": "not-started"
+        }
+      ],
+      "failed": 0,
+      "ok": 0,
+      "deferred": 2,
+      "complete": false
+    },
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S01/loader-parity/classic4:veryEasy:1/native"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": [
+        "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+        "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+        "IG-S01/loader-parity/classic9:hard:1/native"
+      ]
+    }
+  },
+  "notes": []
+}

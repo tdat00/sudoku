@@ -465,7 +465,7 @@ function buildCoverage(input) {
     const t = a.command && a.command.timing ? a.command.timing : {};
     return { rel: attemptRel(roundDir, a), task: 'IG-S10', shard: 'reconcile', attemptId: a.attemptId,
       status: a.command ? a.command.status : 'no-command-json', occupiedMs: t.occupiedMs === undefined ? null : t.occupiedMs,
-      role: 'the one wrapped reconciliation command of this task (r1); the r2 documents are an unwrapped read-only aggregation' };
+      role: 'the one wrapped reconciliation command of this task (r1); the r2 and r3 documents are unwrapped read-only aggregations' };
   });
   const scanned = R.scanRoundCommands(roundDir);
   const auxiliary = scanned.filter(function (s) { return !attemptRels.has(s.rel); }).map(function (s) {
@@ -642,7 +642,7 @@ function buildBudgetSummary(input) {
       chargedMs: ig10Charged, unusedOfAllocationMs: M.ALLOCATIONS_MS['IG-S10'] - ig10Charged,
       ledgerSeq: ig10Wrapped.length ? ig10Wrapped[0].seq : null,
       status: ig10Wrapped.length ? 'the one reconciliation command is complete and charged (ledger entry ' + ig10Wrapped[0].seq +
-        '); the r2 documents are written by an unwrapped read-only aggregation (no engine, no worker, not charged)' :
+        '); the later revisions (r2, r3) are written by unwrapped read-only aggregations (no engine, no worker, not charged)' :
         'in flight when this document is written: its own charge (occupied time plus 45 s) is entered in ledger.json by ' +
         'the dispatcher after the command ends and is not in the totals above' },
     commands: commands,
@@ -672,9 +672,9 @@ function disclosedUnwrapped() {
     { task: 'IG-S09', text: 'pure tests, -PlanOnly and the aggregator unwrapped; three dev-check requests; symmetric proof reuse on ' +
       'identical full inputs; the catalogue from the ready message' },
     { task: 'IG-S10', text: 'pure tests, source-only dry runs and -PlanOnly (no engine, no worker, no generation) ran unwrapped ' +
-      'during development; the one reconciliation shard ran through the wrapper; the r2 documents were written by an unwrapped, ' +
-      'read-only aggregation (ig10-run.cjs --write-r2: no engine, no worker, no wrapper, local CPU only, not charged) after the pack ' +
-      'author\'s review of r1; no second wrapped command was run' }
+      'during development; the one reconciliation shard ran through the wrapper; the r2 and r3 documents were written by unwrapped, ' +
+      'read-only aggregations (ig10-run.cjs --write-r2 and --write-r3: no engine, no worker, no wrapper, local CPU only, not charged) after the pack ' +
+      'author\'s review of r1 and its report-only rulings after the audit; no second wrapped command was run' }
   ];
 }
 

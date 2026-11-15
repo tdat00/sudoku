@@ -28,6 +28,7 @@ const RP = require('./reconcile-report.cjs');
 const RB = require('./reconcile-build.cjs');
 const FP = require('./frozen-plan.cjs');
 const RR = require('./reconcile-render.cjs');
+const ER = require('./reconcile-errata.cjs');
 const PLAN = require('./plans/ig-s10.cjs');
 
 const HarnessError = C.HarnessError;
@@ -185,6 +186,9 @@ function buildAll(opts) {
     machine: Object.assign(RB.machineBlock(budget), { reference: docName('budget-summary') }),
     frozen: null,
     decisions: RP.decisionsForAuthor(ctx),
+    errata: opts.errata === false ? null : ER.locateErrata(repoRoot),
+    staleness: ER.staleness(),
+    withdrawnPremises: null,
     crossChecks: checks.list,
     tests: { reconcile: tests.reconcile, gate: tests.gate, cases: tests.results },
     deviations: [],
@@ -192,26 +196,36 @@ function buildAll(opts) {
     outputs: []
   };
   report.estimateTable = RB.estimateTable(ctx);
+  report.withdrawnPremises = {
+    status: 'withdrawn as representative costing and speed-up premises',
+    premises: ['the plan\'s "about 1,296 solves per sample for every board" (G x B(N), plan.md:67)', 'the plan\'s "10x fewer solves per sample" from S1 ' +
+      '(plan.md:98) and the 10 / 2 / 3 factors of the mega16 projection (plan.md:350)'],
+    observed: ctx.sm1.solvesPerOrdinarySample,
+    boundReading: 'A lower observed count does not refute a mathematical upper bound: G x B(N) may be kept only as a separately justified loose bound, not ' +
+      'as typical work and not as an empirical 10x prediction.',
+    passages: (report.errata ? report.errata.find(function (e) { return e.id === 'E6'; }).passages : [])
+  };
   report.frozen = frozenBlock(frozenPlan);
   report.frozen.reference = docName('frozen-rerun-plan');
   report.deviations = revision ? [
-    'Revision ' + revision.id + ': the r1 command ran through the supplied low-priority wrapper once (one analysis shard, ledger entry ' +
-      '71); the ' + revision.id + ' documents were written by an unwrapped, read-only aggregation (`ig10-run.cjs --write-r2`: no engine, ' +
-      'no worker, no generation, no wrapper, no second wrapped command, local CPU only, not charged). The pure tests, the source-only ' +
-      'dry runs and -PlanOnly ran directly during development and are disclosed in ' + docName('budget-summary') + '.',
-    'The r1 documents stay unchanged beside the ' + revision.id + ' ones (hashes in `revision.supersedes`). Three identities are kept ' +
+    'Revision ' + revision.id + ' (after r1 and r2): the r1 command ran through the supplied low-priority wrapper once (one analysis shard, ledger ' +
+      'entry 71); the r2 and ' + revision.id + ' documents were written by unwrapped, read-only aggregations (`ig10-run.cjs --write-r2`, `--write-' +
+      revision.id + '`: no engine, no worker, no generation, no wrapper, no second wrapped command, local CPU only, not charged). The pure tests, ' +
+      'the source-only dry runs and -PlanOnly ran directly during development and are disclosed in ' + docName('budget-summary') + '.',
+    'The r1 and r2 documents stay unchanged beside the ' + revision.id + ' ones (hashes in `revision.supersedes`). Three identities are kept ' +
       'apart: the wrapped r1 command\'s harness fingerprint, the ' + revision.id + ' writer\'s harness fingerprint (the corrected ' +
-      'reporting and gate code; not engine-run, there is nothing to run) and the measurement fingerprints of the nine tasks.',
-    docName('budget-summary') + ' includes IG-S10\'s own wrapped charge (ledger entry 71, occupied time plus 45 s grace) which the r1 ' +
-      'summary could not contain, and the 0.470 s IG-S07 pre-check debit, once, without admission grace, listed apart from the wrapped ' +
-      'command counts.',
+      'reporting code; not engine-run, there is nothing to run) and the measurement fingerprints of the nine tasks.',
+    'Revision ' + revision.id + ' applies the pack author\'s report-only rulings (errata table, section 0): no measured record, coverage figure, ' +
+      'accounting figure or gate state changed; statistic labels, wording, three new rows (the isolated S2 comparison and two unmeasured ' +
+      'measurements), the frozen-rerun prerequisites and the staleness section did.',
+    docName('budget-summary') + ' includes IG-S10\'s own wrapped charge (ledger entry 71, occupied time plus 45 s grace) and the 0.470 s ' +
+      'IG-S07 pre-check debit, once, without admission grace, listed apart from the wrapped command counts (as in r2).',
     'No numeric verdict threshold is used (the r1 thresholds were the report writer\'s and are removed); the pack names none.',
     'IG-S02 Killer rows are counted as completed by the hash-linked audit overlay; the stored records stay `error` and the harness shard ' +
       'status stays `failed` (historical).',
     'IG-S09 recorded `counts.dfsEntries` are countSolutions calls (erratum applied everywhere in this report); node entries are not instrumented.',
     'The frozen closure (round frozen-gate) is implemented and tested on synthetic inputs only: no frozen evidence exists, so its readers have ' +
-      'never run on real frozen records. It now rejects a claimed-exact request whose verification failed and non-distinct seed ' +
-      'populations.',
+      'never run on real frozen records. It rejects a claimed-exact request whose verification failed and non-distinct seed populations.',
     'The corrections after the measurements (IG-S04 98016f2c, IG-S05 f297ca31, IG-S07 r2, IG-S08 r3, IG-S09 r2 and the F2 follow-up) were not ' +
       'engine-rerun; their report-writer and corrected-harness fingerprints are listed beside the measurement fingerprints.'
   ] : [
@@ -275,21 +289,22 @@ function frozenBlock(plan) {
     extensions: { combined: plan.extensions.combinedChargedMs, combinedBand: plan.extensions.combinedScenarioBandMs,
       minimumCommandsCentral: plan.extensions.minimumCommandsCentral, rows: plan.extensions.cells.map(function (e) {
         const sc = e.projection.scenarios;
-        return { cell: e.cell, proxy: e.proxy, proxyScale: e.proxyScale, chargedMs: e.projection.chargedMs,
+        return { cell: e.cell, proxy: e.proxy, proxyScale: e.proxyScale, proxyStatistics: e.proxyStatistics, chargedMs: e.projection.chargedMs,
           band: { low: e.projection.scenarioBand.lowChargedMs, high: e.projection.scenarioBand.highChargedMs },
           commands: { low: sc.low.commands, central: sc.central.commands, high: sc.high.commands },
           commandsByPhase: e.projection.commandsByPhase };
       }) },
+    prerequisites: plan.prerequisites, gaps: plan.gaps,
     approvals: plan.approvalsNeeded, reference: 'frozen-rerun-plan.json'
   };
 }
 
 function acceptanceOf(report, coverage, gate, plan, tests, problems) {
-  const rowsOk = report.estimateTable.length === 13 && report.estimateTable.every(function (r) { return r.verdict && r.scope; });
+  const rowsOk = report.estimateTable.length === 16 && report.estimateTable.every(function (r) { return r.verdict && r.scope; });
   const t = tests;
   const pass = function (b) { return b ? 'pass' : 'FAIL'; };
   return [
-    { id: 'B01', status: pass(rowsOk), evidence: 'the report, section 3: 13 rows, each with a verdict and an explicit scope (measured, partial or named unanswered: IG-S06 composition)' },
+    { id: 'B01', status: pass(rowsOk), evidence: 'the report, section 3: 16 rows (the check-list\'s 13, the isolated S2 comparison and the two unmeasured rows), each with a verdict and an explicit scope (measured, partial or named unanswered: IG-S06 composition, SM5 sweep, restricted-floor probes)' },
     { id: 'B02', status: pass(gate.state === 'not-evaluable-pre-freeze' && gate.formalGateEnabled === false), evidence: 'the gate document: state ' + gate.state +
       '; formalVerdict null; no production, default or offer change' },
     { id: 'B03', status: pass(plan.steps.length === 10 && plan.approvalsNeeded.length >= 5), evidence: 'the frozen-rerun plan: ' + plan.steps.length +
@@ -563,8 +578,28 @@ function runFrozenClosure(input) {
 }
 
 const R1_FILES = Object.freeze(['report.json', 'report.md', 'coverage.json', 'budget-summary.json', 'gate.json', 'frozen-rerun-plan.json']);
-const R2_OUTPUTS = Object.freeze(['coverage-r2.json', 'budget-summary-r2.json', 'gate-r2.json', 'frozen-rerun-plan-r2.json',
-  'report-r2.json', 'report-r2.md']);
+const R2_FILES = Object.freeze(['coverage-r2.json', 'budget-summary-r2.json', 'gate-r2.json', 'frozen-rerun-plan-r2.json', 'report-r2.json', 'report-r2.md']);
+const REVISIONS = Object.freeze({
+  r3: { suffix: '-r3', reason: 'pack-author report-only rulings after the owner\'s audit (statistic labels, S1/S2 cost and yield, first-phase formula, ' +
+    'withdrawn costing premises, two unmeasured rows, source preparation, Killer and Greater-Than wording, staleness)' }
+});
+
+function revisionOutputs(suffix) {
+  return ['coverage', 'budget-summary', 'gate', 'frozen-rerun-plan', 'report'].map(function (b) { return b + suffix + '.json'; })
+    .concat(['report' + suffix + '.md']);
+}
+
+function hashFiles(roundDir, entries, revisionTag) {
+  return entries.map(function (f) {
+    const bytes = fs.readFileSync(f.path);
+    const out = { revision: revisionTag, file: f.file, sha256: C.sha256(bytes), bytes: bytes.length };
+    if (f.command) {
+      out.status = f.command.status;
+      out.harnessFingerprint = f.command.harnessFingerprint;
+    }
+    return out;
+  });
+}
 
 /** The r1 files a revision supersedes, by hash: the six round documents and the r1 command that wrote them. */
 function r1Snapshot(roundDir) {
@@ -574,25 +609,37 @@ function r1Snapshot(roundDir) {
     files.push({ file: C.toPosix(path.relative(roundDir, path.join(attempt.dir, 'command.json'))), path: path.join(attempt.dir, 'command.json'),
       command: attempt.command });
   }
-  return files.map(function (f) {
-    const bytes = fs.readFileSync(f.path);
-    const out = { file: f.file, sha256: C.sha256(bytes), bytes: bytes.length };
-    if (f.command) {
-      out.status = f.command.status;
-      out.harnessFingerprint = f.command.harnessFingerprint;
-    }
-    return out;
-  });
+  return hashFiles(roundDir, files, 'r1');
+}
+
+/** The r2 files a later revision supersedes, by hash, and the harness fingerprint of the r2 writer (read from report-r2.json). */
+function r2Snapshot(roundDir) {
+  const hashes = hashFiles(roundDir, R2_FILES.map(function (n) { return { file: n, path: path.join(roundDir, n) }; }), 'r2');
+  const report = C.readJson(path.join(roundDir, 'report-r2.json'));
+  return { files: hashes, writerHarnessFingerprint: report.revision ? report.revision.writerHarnessFingerprint : null };
+}
+
+/** A document without the fields that legitimately differ between revisions (the revision header, test counts, disclosures). */
+function comparable(name, doc) {
+  const d = JSON.parse(JSON.stringify(doc));
+  delete d.revision;
+  if (name === 'gate') delete d.syntheticTests;
+  if (name === 'budget-summary') { delete d.disclosures; delete d.ig10; }
+  if (name === 'coverage') delete d.ownCommands;
+  return C.canonicalJson(d);
 }
 
 /**
- * The r2 revision of the round documents (the pack author's review of r1): an unwrapped, read-only aggregation. No engine, no
- * worker, no generation, no ledger entry; the six r2 files are written once beside the unchanged r1 files.
+ * A later revision of the round documents (a pack-author ruling): an unwrapped, read-only aggregation. No engine, no worker, no
+ * generation, no ledger entry; the six files of the revision are written once beside the unchanged r1 and r2 files.
  */
-function writeR2(repoRoot) {
+function writeRevision(repoRoot, id) {
+  const spec = REVISIONS[id];
+  if (!spec) throw new HarnessError('unknown-revision', 'no such revision: ' + id);
   const evidenceRoot = RUN.evidenceRootOf(repoRoot);
   const roundDir = path.join(evidenceRoot, RC.ROUND);
-  R2_OUTPUTS.forEach(function (n) {
+  const outputs = revisionOutputs(spec.suffix);
+  outputs.forEach(function (n) {
     if (fs.existsSync(path.join(roundDir, n))) throw new HarnessError('output-exists', n + ' already exists in the round folder');
   });
   const tests = runTests();
@@ -600,41 +647,55 @@ function writeR2(repoRoot) {
     throw new HarnessError('selftest-failed', tests.results.filter(function (r) { return !r.ok; }).map(function (r) {
       return r.id + ': ' + r.error; }).join('; '));
   }
-  const supersedes = r1Snapshot(roundDir);
-  const r1Command = supersedes.find(function (s) { return s.harnessFingerprint !== undefined; });
+  const r1 = r1Snapshot(roundDir);
+  const r2 = r2Snapshot(roundDir);
+  const r1Command = r1.find(function (s) { return s.harnessFingerprint !== undefined; });
   const writer = C.harnessFingerprint().fingerprint;
-  const revision = { id: 'r2', reason: 'pack-author review of r1 (ACCEPT WITH FIXES: F1 verdict scope and statistics, F2 final accounting, ' +
-    'F3 projection packing, F4 invalid frozen inputs)',
-  supersedes: supersedes, r1CommandHarnessFingerprint: r1Command ? r1Command.harnessFingerprint : null, writerHarnessFingerprint: writer,
-  writerRole: 'the r2 aggregation (ig10-run.cjs --write-r2): unwrapped, read-only, no engine, no worker, no generation, not charged' };
-  const built = buildAll({ repoRoot: repoRoot, evidenceRoot: evidenceRoot, harnessFingerprint: writer, tests: tests, suffix: '-r2',
-    revision: revision, firewall: 'the r1 command checked the production firewall (command.json firewallClean); the r2 aggregation ' +
-      'reads the evidence and writes only the six r2 files in the round folder' });
+  const revision = { id: id, reason: spec.reason, supersedes: r1.concat(r2.files),
+    r1CommandHarnessFingerprint: r1Command ? r1Command.harnessFingerprint : null, r2WriterHarnessFingerprint: r2.writerHarnessFingerprint,
+    writerHarnessFingerprint: writer,
+    writerRole: 'the ' + id + ' aggregation (ig10-run.cjs --write-' + id + '): unwrapped, read-only, no engine, no worker, no generation, not charged' };
+  const firewall = 'the r1 command checked the production firewall (command.json firewallClean); the ' + id + ' aggregation reads the evidence and ' +
+    'writes only the six ' + id + ' files in the round folder';
+  const opts = { repoRoot: repoRoot, evidenceRoot: evidenceRoot, harnessFingerprint: writer, tests: tests, suffix: spec.suffix, revision: revision,
+    firewall: firewall };
+  // a first build to compare each document with its r2 counterpart, a second one that carries the comparison
+  const first = buildAll(opts);
+  const pairs = [['coverage', first.coverage], ['budget-summary', first.budget], ['gate', first.gate], ['frozen-rerun-plan', first.frozenPlan]];
+  revision.comparisonToR2 = pairs.map(function (p) {
+    const before = C.readJson(path.join(roundDir, p[0] + '-r2.json'));
+    return { file: p[0] + spec.suffix + '.json', comparedWith: p[0] + '-r2.json', materiallyEqual: comparable(p[0], before) === comparable(p[0], p[1]),
+      ignoredFields: { coverage: ['revision', 'ownCommands'], 'budget-summary': ['revision', 'disclosures', 'ig10'], gate: ['revision', 'syntheticTests'],
+        'frozen-rerun-plan': ['revision'] }[p[0]] };
+  });
+  const built = buildAll(opts);
   if (built.problems.length > 0) throw new HarnessError('reconciliation-problems', built.problems.join('; '));
   const written = [];
-  writeOnce(repoRoot, roundDir, 'coverage-r2.json', built.coverage, written, evidenceRoot);
-  writeOnce(repoRoot, roundDir, 'budget-summary-r2.json', built.budget, written, evidenceRoot);
-  writeOnce(repoRoot, roundDir, 'gate-r2.json', built.gate, written, evidenceRoot);
-  writeOnce(repoRoot, roundDir, 'frozen-rerun-plan-r2.json', built.frozenPlan, written, evidenceRoot);
-  writeOnce(repoRoot, roundDir, 'report-r2.json', built.report, written, evidenceRoot);
-  writeOnce(repoRoot, roundDir, 'report-r2.md', built.markdown, written, evidenceRoot);
-  const bad = formatProblems(R2_OUTPUTS.map(function (n) { return path.join(roundDir, n); }));
+  writeOnce(repoRoot, roundDir, 'coverage' + spec.suffix + '.json', built.coverage, written, evidenceRoot);
+  writeOnce(repoRoot, roundDir, 'budget-summary' + spec.suffix + '.json', built.budget, written, evidenceRoot);
+  writeOnce(repoRoot, roundDir, 'gate' + spec.suffix + '.json', built.gate, written, evidenceRoot);
+  writeOnce(repoRoot, roundDir, 'frozen-rerun-plan' + spec.suffix + '.json', built.frozenPlan, written, evidenceRoot);
+  writeOnce(repoRoot, roundDir, 'report' + spec.suffix + '.json', built.report, written, evidenceRoot);
+  writeOnce(repoRoot, roundDir, 'report' + spec.suffix + '.md', built.markdown, written, evidenceRoot);
+  const bad = formatProblems(outputs.map(function (n) { return path.join(roundDir, n); }));
   return { written: written, writer: writer, formatProblems: bad, tests: { reconcile: tests.reconcile, gate: tests.gate },
-    coverage: built.coverage.summary, gate: built.gate.state, charged: built.budget.roundTotals };
+    coverage: built.coverage.summary, gate: built.gate.state, charged: built.budget.roundTotals, comparisonToR2: revision.comparisonToR2,
+    errataLocated: built.report.errata.map(function (e) { return e.id + ':' + (e.located ? 'ok' : 'MISSING'); }) };
 }
 
-module.exports = { TASK, OUTPUTS, R2_OUTPUTS, VERDICT_RULES, buildAll, runAnalysis, runTests, observedLimitsOf, runFrozenClosure, formatProblems,
-  s3Section, frozenBlock, acceptanceOf, r1Snapshot, writeR2 };
+module.exports = { TASK, OUTPUTS, REVISIONS, VERDICT_RULES, buildAll, runAnalysis, runTests, observedLimitsOf, runFrozenClosure, formatProblems,
+  s3Section, frozenBlock, acceptanceOf, r1Snapshot, r2Snapshot, revisionOutputs, comparable, writeRevision };
 
 if (require.main === module) {
   const args = process.argv.slice(2);
-  if (args.indexOf('--write-r2') >= 0) {
-    const out = writeR2(C.DEFAULT_REPO_ROOT);
+  const writeArg = args.find(function (a) { return /^--write-r\d+$/.test(a); });
+  if (writeArg) {
+    const out = writeRevision(C.DEFAULT_REPO_ROOT, writeArg.slice('--write-'.length));
     process.stdout.write(JSON.stringify(out, null, 1) + '\n');
     process.exit(out.formatProblems.length === 0 ? 0 : 1);
   }
   if (args.indexOf('--dry-run') < 0) {
-    process.stderr.write('ig10-run.cjs is run by run.cjs inside the wrapper; --dry-run builds everything in memory; --write-r2 writes the r2 revision\n');
+    process.stderr.write('ig10-run.cjs is run by run.cjs inside the wrapper; --dry-run builds everything in memory; --write-r3 writes the r3 revision\n');
     process.exit(2);
   }
   const t0 = Date.now();

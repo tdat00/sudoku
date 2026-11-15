@@ -34,10 +34,12 @@ function renderReport(rep) {
   add('# IG-S10: estimates against measurements, and the frozen-rerun handoff (' + rep.round + (rep.revision ? ', revision ' + rep.revision.id : '') + ')', '');
   add('**' + rep.provisionalNotice + '**', '');
   if (rep.revision) {
-    add('**Revision ' + rep.revision.id + '** (' + rep.revision.reason + '). It supersedes the r1 documents, which stay unchanged beside it ' +
-      '(sha-256 first 16: ' + rep.revision.supersedes.map(function (s) { return s.file + ' ' + s.sha256.slice(0, 16); }).join('; ') + '). ' +
-      rep.revision.writerRole + '. Writer harness fingerprint ' + rep.revision.writerHarnessFingerprint + ' (the wrapped r1 command ran harness ' +
-      short(rep.revision.r1CommandHarnessFingerprint, 16) + '...).', '');
+    add('**Revision ' + rep.revision.id + '** (' + rep.revision.reason + '). It supersedes the r1 and r2 documents, which stay unchanged beside it ' +
+      '(sha-256 first 16: ' + rep.revision.supersedes.map(function (s) { return (s.revision ? s.revision + ' ' : '') + s.file + ' ' + s.sha256.slice(0, 16); }).join('; ') + '). ' +
+      rep.revision.writerRole + '. Writer harness fingerprint ' + rep.revision.writerHarnessFingerprint + ' (the r2 writer ran harness ' +
+      short(rep.revision.r2WriterHarnessFingerprint, 16) + '...; the wrapped r1 command ran harness ' + short(rep.revision.r1CommandHarnessFingerprint, 16) + '...). ' +
+      (rep.revision.comparisonToR2 ? 'Against r2 (revision header, test counts and disclosures ignored): ' + rep.revision.comparisonToR2.map(function (c) {
+        return c.file + (c.materiallyEqual ? ' equals ' : ' differs from ') + c.comparedWith; }).join('; ') + '.' : ''), '');
   }
   add('Evidence status: **' + rep.evidenceStatus + '**. Formal gate: **' + rep.formalGate + '** (see ' + rep.gate.reference + '). Pre-MS07 ' +
     'catalogue and runtime; every number below is a provisional measurement of a prototype, never a production result. ' +
@@ -45,6 +47,14 @@ function renderReport(rep) {
   add('Scope of this document: the reconciliation of IG-S01 to IG-S09 (IG-S06 deferred), the estimate-versus-measured table of ' +
     'the check-list, the provisional gate report, the machine accounting and the frozen-rerun proposal. It generated no ' +
     'puzzle, started no engine and no worker, and changed no production source.', '');
+  if (rep.errata) {
+    add('## 0. Errata to the joint report, the plan and the earlier IG-S10 reports', '');
+    add('The pack author\'s report-only rulings correct the passages below. The originals (`report.md`, `plan.md`, `clarifications.md` and the r1 / r2 ' +
+      'reports) are not edited; line numbers are located in the files as they are now. Measured records and accounting figures are unchanged.', '');
+    add(table(['#', 'ruling', 'subject', 'affected passage (document: lines)', 'what was wrong', 'correction (this revision)'], rep.errata.map(function (e) {
+      return [e.id, e.ruling, e.subject, e.passages.map(function (p) { return p.document + ': ' + (p.linesText || 'n/a'); }).join('; '), e.problem, e.correction];
+    })), '');
+  }
 
   // --- 1. sources -----------------------------------------------------------------------------------------------------------
   add('## 1. Sources and identities', '');
@@ -54,7 +64,8 @@ function renderReport(rep) {
     ['runtime label (supplied)', p.runtime.label], ['runtime files', p.runtime.files],
     ['catalogue fingerprint', p.catalogue.fingerprint], ['catalogue', 'rating version ' + p.catalogue.ratingVersion + ', ' +
       p.catalogue.variants + ' variants, ' + p.catalogue.techniques + ' techniques'],
-    ['harness fingerprint of this ' + (rep.revision ? 'r2 report writer (unwrapped aggregation)' : 'IG-S10 run'), p.harness.atIgS10Run],
+    ['harness fingerprint of this ' + (rep.revision ? rep.revision.id + ' report writer (unwrapped aggregation)' : 'IG-S10 run'), p.harness.atIgS10Run],
+    ['harness fingerprint of the r2 report writer', rep.revision && rep.revision.r2WriterHarnessFingerprint ? rep.revision.r2WriterHarnessFingerprint : 'n/a'],
     ['harness fingerprint of the wrapped r1 command', rep.revision ? rep.revision.r1CommandHarnessFingerprint : p.harness.atIgS10Run],
     ['harness fingerprint before the IG-S10 edits (= the IG-S09 F2 follow-up)', p.harness.beforeIgS10.fingerprint],
     ['source stability and firewall', rep.sourceChecks.summary]]), '');
@@ -203,6 +214,34 @@ function renderReport(rep) {
       ' (' + r.label + '). Selection: ' + c.selection.selected + ' (' + (c.selection.winner ? 'winner' : 'explicitly non-winning diagnostic default, ' +
       c.selection.reason) + '). Finding: ' + c.finding, '');
   });
+  add('**S1: sample cost and yield, kept apart.** Cost: F1 sample CPU over the equal-weight native mix of the same grids is ' +
+    rep.sm2.cells.map(function (c) { return c.cell + ' x' + f2(c.s1CostVsYield.cost.f1OverEqualWeightMix); }).join(', ') + '. The planning expectation was a near-' +
+    'constant per-sample cost (report.md:35-36, 108); it was not observed for this prototype and cohort. The cheap work is attributable to unsuccessful, ' +
+    'empty or above-band outcomes; yield is a separate question and remains inconclusive.', '');
+  add(table(['cell', 'F1 mean sample CPU ms', 'equal-weight mix ms', 'F1 / mix', 'planning expectation (divisor)', 'samples', 'empty unique frontier', 'exact / shallow / below candidates',
+    'above-band candidates', 'count-budget stops', 'verified hits (F1 / all modes)', 'cost per verified exact puzzle'], rep.sm2.cells.map(function (c) {
+    const s = c.s1CostVsYield;
+    const o = s.outcomesOfTheCheapWork;
+    return [c.cell, f2(s.cost.f1MeanSampleCpuMs), f2(s.cost.equalWeightMixMeanSampleCpuMs), f2(s.cost.f1OverEqualWeightMix),
+      s.cost.planningDivisor, o.samples, o.emptyUniqueFrontier,
+      o.candidatesExact + ' / ' + o.candidatesShallow + ' / ' + o.candidatesBelow, o.candidatesAboveBand, o.budgetStopSamples,
+      s.yield.f1VerifiedHits + ' / ' + s.yield.allModesVerifiedHits, 'unestablished (no verified hit)'];
+  })), '');
+  add('Native sample mix: ' + rep.sm2.cells[0].f1SampleCostVsNative.label + '. Observed in the profiled SM1 requests (ordinary / proposal samples): ' +
+    rep.sm2.sampleMixInSm1.map(function (m) { return m.key.split('/')[2] + ' ' + m.ordinarySamples + ' / ' + m.proposalSamples; }).join('; ') + '.', '');
+  const s2Ratios = rep.sm2.cells.map(function (c) { return c.s2Isolated.f1OverF0MeanSampleCpu; });
+  add('**S2 isolated: F0 versus F1.** Statistic: the ratio of the mean sample CPU of F1 over F0 on the same samples; paired population: ' +
+    rep.sm2.cells[0].s2Isolated.pairedPopulation + '. F1/F0 CPU is ' + f2(Math.min.apply(null, s2Ratios)) + '-' + f2(Math.max.apply(null, s2Ratios)) +
+    ': no CPU saving on this cohort. Correctness and deduction-saving evidence is reported separately and the result is not generalised to "S2 never helps".', '');
+  add(table(['cell', 'F0 mean sample CPU ms', 'F1 mean sample CPU ms', 'F1 / F0 (mean sample CPU)', 'F1 / F0 (ready CPU, cluster totals)', 'paired per-cluster ready-CPU ratio: median (min-max)',
+    'same decisions in F0 and F1', 'F1 accepted by re-derivation / all accepted', 'F0 accepted by full proof'], rep.sm2.cells.map(function (c) {
+    const s = c.s2Isolated;
+    const d = s.deductionSaving;
+    return [c.cell, f2(s.f0MeanSampleCpuMs), f2(s.f1MeanSampleCpuMs), f3(s.f1OverF0MeanSampleCpu), f3(s.f1OverF0ReadyCpuOfClusterTotals),
+      f2(s.pairedClusterReadyCpuRatio.median) + ' (' + f2(s.pairedClusterReadyCpuRatio.min) + '-' + f2(s.pairedClusterReadyCpuRatio.max) + ')', s.sameDecisions,
+      d.f1AcceptedByRederivation + ' / ' + (d.f1AcceptedByRederivation + d.f1AcceptedByFullProof) + ' (' + pct(d.rederivationShareOfF1Accepted) + ')',
+      d.f0AcceptedByFullProof];
+  })), '');
   add('Outcomes over ' + rep.sm2.trialsObserved + ' trials: ' + JSON.stringify(rep.sm2.outcomes) + '; verified hits ' + rep.sm2.verifiedHits + '. Intervals: ' +
     rep.sm2.intervals.reading + ' (' + rep.sm2.intervals.degenerate + ' of ' + rep.sm2.intervals.rows + ' rows). S2 audit (pilot): ' + JSON.stringify(rep.sm2.s2Audit) +
     '. Held-out: ' + rep.sm2.heldOut + '.', '');
@@ -232,6 +271,12 @@ function renderReport(rep) {
     rep.sm1.counterLimitation + '.', '');
   rep.sm1.reading.forEach(function (x) { add('- ' + x); });
   add('');
+  const wp = rep.withdrawnPremises;
+  add('**Costing premises withdrawn** (' + wp.status + '): ' + wp.premises.join('; ') + '. SM1 observed (mean solves per ordinary sample, the four SM1 requests): ' +
+    rep.sm1.solvesPerOrdinarySample.rows.filter(function (m) { return m.fourSm1Request; }).map(function (m) {
+      return m.key.split('/')[2] + ' ' + f2(m.ordinaryMeanSolves); }).join(', ') + ' (about ' + rep.sm1.solvesPerOrdinarySample.min + '-' +
+    rep.sm1.solvesPerOrdinarySample.max + '; source ' + rep.sm1.solvesPerOrdinarySample.source + '). ' + wp.boundReading + ' Affected passages: ' +
+    wp.passages.map(function (p) { return p.document + ' ' + p.linesText; }).join('; ') + '.', '');
 
   // --- 8. SM3 -----------------------------------------------------------------------------------------------------------------
   const m3 = rep.sm3;
@@ -256,7 +301,8 @@ function renderReport(rep) {
   add(gt.scope, '');
   ['normal', 'nightmare'].forEach(function (lv) {
     const c = gt.cohorts[lv];
-    add('### ' + lv + ' (' + c.pairs + ' of ' + c.pairsPlanned + ' pairs)', '');
+    add('### ' + lv + ' (' + c.pairs + ' of ' + c.pairsPlanned + ' pairs' + (c.pairs < c.pairsPlanned ? '; a partial, budget-limited cohort: the recorded requests completed, ' +
+      (c.pairsPlanned - c.pairs) * 2 + ' rows were unstarted' : '') + ')', '');
     add(table(['seed', 'G0 ready s', 'G1 ready s', 'G0 CPU s', 'G1 CPU s', 'ready G0/G1', 'CPU G0/G1', 'exact G0/G1'], c.rows.map(function (r) {
       return [r.seed, f2(r.g0ReadyS), f2(r.g1ReadyS), f2(r.g0CpuS), f2(r.g1CpuS), f3(r.readyRatioG0OverG1), f3(r.cpuRatioG0OverG1),
         (r.g0VerifiedExact ? 'yes' : 'no') + ' / ' + (r.g1VerifiedExact ? 'yes' : 'no')];
@@ -334,6 +380,13 @@ function renderReport(rep) {
   const fz = rep.frozen;
   add('## 12. The frozen rerun: proposal and the approvals it needs', '');
   add(fz.status, '');
+  const pre = fz.prerequisites;
+  add('**Prerequisite of every frozen command, before the table below (uncosted):** ' + pre.status + '.', '');
+  pre.steps.forEach(function (x) { add(x.order + '. ' + x.what); });
+  add('', pre.neverFallBack + '. Uncosted, approval-dependent work: ' + pre.uncostedApprovalDependentWork.join('; ') + '. ' + pre.costing + '.', '');
+  add('Measurements the first round never made (explicit unmeasured rows of the estimate table; no run authorised):', '');
+  fz.gaps.forEach(function (g) { add('- **' + g.id + '**: ' + g.what + '. Not the same as: ' + g.notTheSame + '. ' + g.status + '.'); });
+  add('');
   add(table(['order', 'task', 'depends on', 'population', 'frozen keys', 'first round charged s', 'planning scenario charged s (low - admission plan / guard scenario)', 'commands (low - admission plan / guard scenario)'],
     fz.steps.map(function (s) {
       return [s.order, s.task, s.dependsOn.join('; ') || 'none', s.population, s.frozenKeys, s.firstRound, s.charged, s.commands];
@@ -350,8 +403,8 @@ function renderReport(rep) {
     fz.ig06.commandsByPhase.low.diagnostic + ', central ' + fz.ig06.commandsByPhase.central.confirmatory + ' + ' + fz.ig06.commandsByPhase.central.diagnostic + '.', '');
   add('The extension phases (pilot, SM2 screen, requests) cannot share an invocation across their dependency boundaries: each phase is at least one wrapped command ' +
     '(45 s grace each) and the counts are recomputed for every scenario (minimum central total ' + fz.extensions.minimumCommandsCentral.total + ' commands).', '');
-  add(table(['extension (UNAPPROVED)', 'proxy (scale)', 'pilot 11,12 trials', 'SM2 101-140 trials', 'requests 201-240', 'commands low / central / high', 'central commands pilot + SM2 + requests', 'planning scenario charged s: central (low-high)'], fz.extensions.rows.map(function (e) {
-    return [e.cell, e.proxy + ' (x' + e.proxyScale + ')', 16, 320, 80, e.commands.low + ' / ' + e.commands.central + ' / ' + e.commands.high,
+  add(table(['extension (UNAPPROVED)', 'proxy (scale; statistic)', 'pilot 11,12 trials', 'SM2 101-140 trials', 'requests 201-240', 'commands low / central / high', 'central commands pilot + SM2 + requests', 'planning scenario charged s: central (low-high)'], fz.extensions.rows.map(function (e) {
+    return [e.cell, e.proxy + ' (x' + e.proxyScale + '; ' + e.proxyStatistics + ')', 16, 320, 80, e.commands.low + ' / ' + e.commands.central + ' / ' + e.commands.high,
       e.commandsByPhase.pilot + ' + ' + e.commandsByPhase.sm2 + ' + ' + e.commandsByPhase.requests,
       Math.round(e.chargedMs / 1000) + ' (' + Math.round(e.band.low / 1000) + '-' + Math.round(e.band.high / 1000) + ')'];
   })), '');
@@ -374,6 +427,11 @@ function renderReport(rep) {
   add('');
   add('Acceptance (self-assessed from the facts above; the orchestrator reviews):', '');
   add(table(['id', 'status', 'evidence'], rep.acceptance.map(function (a) { return [a.id, a.status, a.evidence]; })), '');
+  if (rep.staleness) {
+    add('## 15. ' + rep.staleness.title, '');
+    rep.staleness.facts.forEach(function (x) { add('- ' + x); });
+    add('', rep.staleness.reading, '', rep.staleness.compatibilitySmoke, '');
+  }
   return C.normaliseText(L.join('\n'));
 }
 

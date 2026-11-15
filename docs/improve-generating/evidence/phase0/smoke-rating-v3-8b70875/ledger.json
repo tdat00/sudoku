@@ -1,0 +1,170 @@
+{
+  "schema": "ig-s-ledger/1",
+  "round": "smoke-rating-v3-8b70875",
+  "kind": "compatibility smoke (not a pack round); no entry or charge belongs to provisional-r1",
+  "targetCommit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+  "budgetMs": 180000,
+  "graceMsPerAdmission": 45000,
+  "maxAdmissions": 3,
+  "maxPayloadMs": 25000,
+  "cleanupReserveMs": 1000,
+  "entries": [
+    {
+      "seq": 1,
+      "task": "IG-S01",
+      "round": "smoke-rating-v3-8b70875",
+      "shard": "smoke-inventory",
+      "attemptId": "a1",
+      "wrapperTask": "IG-S01/smoke-inventory",
+      "requestedAt": "2026-11-15T07:07:28.9201634Z",
+      "admittedAt": "2026-11-15T07:13:17.8740000Z",
+      "endedAt": "2026-11-15T07:13:21.9144351Z",
+      "wrapperReceipt": "IG IG-S01/smoke-inventory exit=0 seconds=4.079",
+      "wrapperExit": 0,
+      "wrapperSeconds": 4.079,
+      "occupiedMs": 4079,
+      "occupiedSource": "wrapper receipt",
+      "chargedGraceMs": 45000,
+      "chargedMs": 49079,
+      "priorityWaitMs": 348915,
+      "priorityWaitToAdmissionMs": 348954,
+      "payloadDeadlineMs": 4000,
+      "reservation": {
+        "phase": "smoke-inventory",
+        "remainingBeforeMs": 180000,
+        "graceMs": 45000,
+        "cleanupReserveMs": 1000,
+        "laterPhasesReservedMs": 130000,
+        "availablePayloadMs": 4000,
+        "maxPayloadMs": 25000,
+        "payloadMs": 4000,
+        "minPayloadMs": 2000,
+        "canAdmit": true
+      },
+      "status": "ok",
+      "commandJson": null,
+      "supervisorResult": "smoke/smoke-inventory/supervisor.json",
+      "verdict": {
+        "ok": true,
+        "unverifiedTermination": false,
+        "detail": {
+          "planned": 11,
+          "passed": 4,
+          "failed": 5,
+          "timedOut": 2,
+          "unstarted": 0,
+          "spawnErrors": 0,
+          "terminations": 2,
+          "terminationsVerified": 2
+        }
+      },
+      "note": null
+    },
+    {
+      "seq": 2,
+      "task": "IG-S01",
+      "round": "smoke-rating-v3-8b70875",
+      "shard": "self-test",
+      "attemptId": "a1",
+      "wrapperTask": "IG-S01/self-test",
+      "requestedAt": "2026-11-15T07:13:22.0651808Z",
+      "admittedAt": "2026-11-15T07:14:07.3570000Z",
+      "endedAt": "2026-11-15T07:14:10.7652590Z",
+      "wrapperReceipt": "IG IG-S01/self-test exit=0 seconds=3.621",
+      "wrapperExit": 0,
+      "wrapperSeconds": 3.621,
+      "occupiedMs": 3621,
+      "occupiedSource": "wrapper receipt",
+      "chargedGraceMs": 45000,
+      "chargedMs": 48621,
+      "priorityWaitMs": 45079,
+      "priorityWaitToAdmissionMs": 45292,
+      "payloadDeadlineMs": 15921,
+      "reservation": {
+        "phase": "self-test",
+        "remainingBeforeMs": 130921,
+        "graceMs": 45000,
+        "cleanupReserveMs": 1000,
+        "laterPhasesReservedMs": 69000,
+        "availablePayloadMs": 15921,
+        "maxPayloadMs": 25000,
+        "payloadMs": 15921,
+        "minPayloadMs": 15000,
+        "canAdmit": true
+      },
+      "status": "ok",
+      "commandJson": "IG-S01/self-test/command.json",
+      "supervisorResult": "smoke/self-test/supervisor.json",
+      "verdict": {
+        "ok": true,
+        "unverifiedTermination": false,
+        "detail": {
+          "childStatus": "passed",
+          "commandStatus": "complete"
+        }
+      },
+      "note": null
+    },
+    {
+      "seq": 3,
+      "task": "IG-S01",
+      "round": "smoke-rating-v3-8b70875",
+      "shard": "loader-parity",
+      "attemptId": "a1",
+      "wrapperTask": "IG-S01/loader-parity",
+      "requestedAt": "2026-11-15T07:14:10.8335756Z",
+      "admittedAt": "2026-11-15T07:14:56.2160000Z",
+      "endedAt": "2026-11-15T07:14:57.7103595Z",
+      "wrapperReceipt": "IG IG-S01/loader-parity exit=0 seconds=1.772",
+      "wrapperExit": 0,
+      "wrapperSeconds": 1.772,
+      "occupiedMs": 1772,
+      "occupiedSource": "wrapper receipt",
+      "chargedGraceMs": 45000,
+      "chargedMs": 46772,
+      "priorityWaitMs": 45105,
+      "priorityWaitToAdmissionMs": 45382,
+      "payloadDeadlineMs": 25000,
+      "reservation": {
+        "phase": "loader-parity",
+        "remainingBeforeMs": 82300,
+        "graceMs": 45000,
+        "cleanupReserveMs": 1000,
+        "laterPhasesReservedMs": 0,
+        "availablePayloadMs": 36300,
+        "maxPayloadMs": 25000,
+        "payloadMs": 25000,
+        "minPayloadMs": 23000,
+        "canAdmit": true
+      },
+      "status": "ok",
+      "commandJson": "IG-S01/loader-parity/command.json",
+      "supervisorResult": "smoke/loader-parity/supervisor.json",
+      "verdict": {
+        "ok": true,
+        "unverifiedTermination": false,
+        "detail": {
+          "childStatus": "passed",
+          "commandStatus": "paused-unstarted",
+          "unstartedKeys": [
+            "IG-S01/loader-parity/classic4:veryEasy:1/noop-expose",
+            "IG-S01/loader-parity/classic9:hard:1/noop-expose",
+            "IG-S01/loader-parity/classic9:hard:1/native"
+          ]
+        }
+      },
+      "note": null
+    }
+  ],
+  "approvals": [],
+  "skipped": [],
+  "totals": {
+    "admissions": 3,
+    "occupiedMs": 9472,
+    "chargedGraceMs": 135000,
+    "chargedMs": 144472,
+    "remainingMs": 35528,
+    "overrun": false,
+    "priorityWaitMsExcluded": 439099
+  }
+}

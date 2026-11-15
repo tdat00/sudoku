@@ -1,0 +1,57 @@
+FAIL dig.patched-source-without-runtime-is-native (84 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL dig.g0-capture-observes-without-changing-anything (54 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL dig.g1-identity-and-physical-work (60 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL dig.g1-stops-on-solver-failures (56 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+ok   dig.g1-audits-the-technique-count-map-before-skipping (2 ms)
+FAIL dig.g1-never-swallows-a-count-failure (49 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL dig.shared-count-guard-binds-differently (52 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL dig.compare-arms-mismatch-kinds (57 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+ok   classify.floor-clause-and-tune-reveals (0 ms)
+ok   classify.missing-minimality-proof-never-makes-a-trap (0 ms)
+ok   classify.miss-split-numbers (1 ms)
+ok   classify.judge-minimality (0 ms)
+ok   worker.cheap-clause-short-circuit (5 ms)
+ok   worker.exhausted-budget-leaves-unstarted-rows (0 ms)
+ok   reuse.same-digest-reuses-and-a-changed-input-does-not (2 ms)
+ok   reuse.unstarted-rows-stay-unconfirmed (0 ms)
+ok   diag.allowance-is-thirty-seconds-from-the-start-and-bounded-by-the-command (1 ms)
+ok   diag.timeout-keeps-rows-and-tells-unfinished-from-unstarted (1 ms)
+ok   devcheck.unknown-wait-is-not-zero (4 ms)
+ok   probe.rule-block-and-groups (0 ms)
+ok   plan.cohorts-shards-and-arm-order (3 ms)
+FAIL adapter.transforms-apply-to-the-real-sources (53 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+ok   adapter.runtime-names-exist-and-hooks-observe-only (1 ms)
+FAIL glue.identity-pairs-and-controls (53 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL glue.capture-consistency (55 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL glue.unexpected-failure-is-a-violation-and-a-guard-is-not (51 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+ok   classify.encodings (0 ms)
+FAIL aggregate.documents-on-captures (50 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL aggregate.unconfirmed-and-unknown-stay-visible (53 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL aggregate.stage-split-and-local-share (46 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL aggregate.local-share-by-cohort-and-arm (54 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL aggregate.ratios-are-g0-over-g1-and-unknown-stays-unknown (46 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL aggregate.probes-executed-versus-reused (46 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL aggregate.machine-wait-provenance-and-charge-reconciliation (56 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL aggregate.t01-never-met-with-stops-and-counter-units (58 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+FAIL aggregate.partial-coverage-and-criteria (48 ms)
+     HarnessError: replaced text not found in js/engine/digger.js: dig.guided-entry |     at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19 |     at Array.forEach (<anonymous>) |     at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+16/36 passed

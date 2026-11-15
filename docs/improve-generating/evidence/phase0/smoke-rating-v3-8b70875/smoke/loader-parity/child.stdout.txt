@@ -1,0 +1,1 @@
+{"ig":"command","task":"IG-S01","shard":"loader-parity","attemptId":"a1","status":"paused-unstarted","exit":0,"evidence":"docs/improve-generating/evidence/phase0/smoke-rating-v3-8b70875/IG-S01/loader-parity"}

@@ -1,0 +1,11 @@
+ok   well-formed-layouts-are-accepted (5 ms)
+ok   malformed-cages-are-rejected (4 ms)
+ok   malformed-units-are-rejected (11 ms)
+ok   tampered-copies-are-all-rejected (5 ms)
+ok   the-rule-never-throws (1 ms)
+ok   a-malformed-layout-is-not-rebuilt (0 ms)
+ok   saved-killer-puzzles-match-an-independent-reconstruction (0 ms)
+ok   reconciliation-needs-every-link (15 ms)
+ok   audit-outcome-follows-the-recorded-derivation (1 ms)
+ok   audit-command-dry-run (0 ms)
+killer audit cases: 10 passed, 0 failed

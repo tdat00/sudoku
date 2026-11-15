@@ -1,0 +1,22 @@
+{
+  "schema": "ig-smoke-finalize/1",
+  "round": "smoke-rating-v3-8b70875",
+  "finalizedAt": "2026-11-15T07:19:40.7360637Z",
+  "admissions": 0,
+  "charged": 0,
+  "note": "finalize step after the run: pure report and manifest regeneration; no wrapper command, no charge",
+  "revisedDriverFiles": [
+    "Invoke-IgSmokeFinalize.ps1",
+    "smoke-report.cjs"
+  ],
+  "git": {
+    "smokeWorktreeHead": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "headIsTarget": true,
+    "statusShort": [
+      "?? docs/improve-generating/evidence/",
+      "?? generator/tests/artifacts/improve-generating/"
+    ],
+    "trackedChanges": [],
+    "trackedFilesUnchanged": true
+  }
+}

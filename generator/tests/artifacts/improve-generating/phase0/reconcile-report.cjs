@@ -24,18 +24,24 @@ const HARNESS_BEFORE_IG_S10 = 'bbd5db2da6cd55bb1cbb93aab2d76777e855a8b5ece6b2ade
 // The joint report's anchors, labelled P (Measured today where the report says so; Derived or Projection otherwise).
 const CELLS = Object.freeze(['mega16', 'mega12', 'samurai', 'classic9', 'killer', 'greaterThan']);
 const ANCHORS = Object.freeze({
-  mega16: { label: 'mega16 Nightmare', attempts: 2, today: { median: 104.11, p95: 116.95 }, first: { median: 39, p95: 50 },
-    all: { median: 11, p95: 14, envelope: [3.3, 44] }, s5a: [1.7, 1.8], checklist: 'Today 104/117; all-phase scenarios roughly 10-12 s median' },
-  mega12: { label: 'mega12 Nightmare', attempts: 4, today: { median: 23.72, p95: 25.24 }, first: { median: 5.4, p95: 7.2 },
-    all: { median: 4.6, p95: 5.9, envelope: [1.0, 15] }, s5a: [2.8, 3.0], checklist: 'Today 24/25; after roughly 4-5 s' },
-  samurai: { label: 'samurai Nightmare', attempts: 2, today: { median: 26.74, p95: null }, first: { median: 10.3, p95: 11.6 },
-    all: { median: 5.6, p95: 6.5, envelope: [1.9, 19] }, s5a: [1.7, 1.8], checklist: 'Today 27; after roughly 5-6 s' },
-  classic9: { label: 'classic9 Nightmare', attempts: 8, today: { median: 4.91, p95: 5.72 }, first: { median: 1.17, p95: 1.7 },
-    all: { median: 1.2, p95: 1.7, envelope: [0.38, 3.2] }, s5a: [2.8, 3.0], checklist: 'Today 4.9/5.7; after roughly 1.2 s' },
-  killer: { label: 'Killer Nightmare', attempts: 8, today: { median: 17.82, p95: 29.98 }, first: { median: 4.5, p95: 9.8 },
-    all: { median: 4.5, p95: 9.8, envelope: [2.8, 17.9] }, s5a: [2.8, 3.0], checklist: 'Today 17.8/30; roughly 4-5 s, no S1' },
-  greaterThan: { label: 'Greater-Than Nightmare', attempts: 8, today: { median: 9.30, p95: 19.19 }, first: { median: 2.2, p95: 6.0 },
-    all: { median: 2.2, p95: 6.0, envelope: [1.2, 9.4] }, s5a: [2.8, 3.0], checklist: 'Today 9.3/19.2; roughly 2-3 s, no cell frontier' }
+  mega16: { label: 'mega16 Nightmare', attempts: 2, today: { value: 104.11, p95: 116.95, statistic: 'median / p95',
+    basis: 'deep requests, MS05r5m, n = 7' }, first: { median: 39, p95: 50 },
+  all: { median: 11, p95: 14, envelope: [3.3, 44] }, s5a: [1.7, 1.8], checklist: 'Today 104/117; all-phase scenarios roughly 10-12 s median' },
+  mega12: { label: 'mega12 Nightmare', attempts: 4, today: { value: 23.72, p95: 25.24, statistic: 'median / p95',
+    basis: 'deep requests, MS05r5m, n = 7' }, first: { median: 5.4, p95: 7.2 },
+  all: { median: 4.6, p95: 5.9, envelope: [1.0, 15] }, s5a: [2.8, 3.0], checklist: 'Today 24/25; after roughly 4-5 s' },
+  samurai: { label: 'samurai Nightmare', attempts: 2, today: { value: 26.74, p95: null, statistic: 'maximum of two requests',
+    basis: 'CV3, MS05b3: the larger of two requests, not a median' }, first: { median: 10.3, p95: 11.6 },
+  all: { median: 5.6, p95: 6.5, envelope: [1.9, 19] }, s5a: [1.7, 1.8], checklist: 'Today 27; after roughly 5-6 s' },
+  classic9: { label: 'classic9 Nightmare', attempts: 8, today: { value: 4.91, p95: 5.72, statistic: 'median / p95',
+    basis: 'R5 cell, MS05r4, n = 12' }, first: { median: 1.17, p95: 1.7 },
+  all: { median: 1.2, p95: 1.7, envelope: [0.38, 3.2] }, s5a: [2.8, 3.0], checklist: 'Today 4.9/5.7; after roughly 1.2 s' },
+  killer: { label: 'Killer Nightmare', attempts: 8, today: { value: 17.82, p95: 29.98, statistic: 'median / p95',
+    basis: 'I5 per-request results, MS05b3' }, first: { median: 4.5, p95: 9.8 },
+  all: { median: 4.5, p95: 9.8, envelope: [2.8, 17.9] }, s5a: [2.8, 3.0], checklist: 'Today 17.8/30; roughly 4-5 s, no S1' },
+  greaterThan: { label: 'Greater-Than Nightmare', attempts: 8, today: { value: 9.30, p95: 19.19, statistic: 'median / p95',
+    basis: 'I5 per-request results, MS05b3' }, first: { median: 2.2, p95: 6.0 },
+  all: { median: 2.2, p95: 6.0, envelope: [1.2, 9.4] }, s5a: [2.8, 3.0], checklist: 'Today 9.3/19.2; roughly 2-3 s, no cell frontier' }
 });
 const S3_RANGE = [1.3, 1.65];
 const SM2_CELLS = Object.freeze(['classic9', 'mega12', 'mega16', 'samurai']);
@@ -219,7 +225,7 @@ function s5aVerdict(factors, low) {
   const f = factors.s5aReady;
   if (f.n === 0) return 'inconclusive';
   if (f.p50 >= low) return 'supported';
-  return f.max < low ? 'planning-factor-refuted-on-these-pairs' : 'inconclusive';
+  return f.max < low ? 'below-planning-range-on-all-observed-pairs' : 'inconclusive';
 }
 
 /** Percentage-point difference of a measured share to the report's share (descriptive; no threshold). */
@@ -228,6 +234,19 @@ function pointsDifference(measuredShare, anchorShare) {
 }
 
 // --- SM2: the frontier screen (IG-S05, grid trials) and the pilot (IG-S04) ----------------------------------------------------
+
+/** The ordinary / proposal sample counts and the mean solves per ordinary sample of the profiled headline requests (IG-S07). */
+function sm1SampleMix(ctx) {
+  const four = /classic9:nightmare:3|mega16:nightmare:3|mega12:nightmare:3|samurai:nightmare:42/;
+  return get(ctx.evidence.s07Summary.doc, 'cells', []).filter(function (c) {
+    return c.kind === 'headline' && get(c, 'sampleKinds.ordinary');
+  }).map(function (c) {
+    const o = c.sampleKinds.ordinary;
+    const p = c.sampleKinds.proposal || null;
+    return { key: c.key, fourSm1Request: four.test(c.key), ordinarySamples: o.samples, proposalSamples: p ? p.samples : null,
+      equalCounts: p ? p.samples === o.samples : false, ordinaryMeanSolves: o.solves.mean, ordinaryMedianSolves: o.solves.median };
+  });
+}
 
 function sm2Section(ctx) {
   const rates = ctx.evidence.s05Rates.doc;
@@ -272,14 +291,60 @@ function sm2Section(ctx) {
     const prop = modes.find(function (m) { return m.mode === 'proposal-only'; });
     const ord = modes.find(function (m) { return m.mode === 'ordinary-only'; });
     const meanMix = (prop.meanSampleCpuMs + ord.meanSampleCpuMs) / 2;
+    const f0 = modes.find(function (m) { return m.mode === 'F0'; });
+    // S2 isolated: F0 (frontier without the re-derivation) against F1 (with it), the same grids and the same samples
+    const cpuByCluster = function (mode) {
+      const map = new Map();
+      recs.filter(function (r) { return r.puzzleVariant === cell && r.mode === mode && r.generation &&
+        num(r.generation.cpuReadyTotalMs) !== null; }).forEach(function (r) { map.set(r.requestSeed, r.generation.cpuReadyTotalMs); });
+      return map;
+    };
+    const c0 = cpuByCluster('F0');
+    const c1 = cpuByCluster('F1');
+    const pairedSeeds = Array.from(c1.keys()).filter(function (s) { return c0.has(s); }).sort(function (a, b) { return a - b; });
+    const pairedRatios = pairedSeeds.map(function (s) { return ratio(c1.get(s), c0.get(s)); }).filter(num);
+    const tot0 = pairedSeeds.reduce(function (n, s) { return n + c0.get(s); }, 0);
+    const tot1 = pairedSeeds.reduce(function (n, s) { return n + c1.get(s); }, 0);
+    const sameJson = function (a, b) { return C.canonicalJson(a) === C.canonicalJson(b); };
+    const accepted = f1.funnel.acceptedByFullProof + f1.funnel.acceptedByRederivation;
+    const planningDivisor = { classic9: '1 (81 cells)', mega12: '1.2 (144 cells)', samurai: '1.5-2 (multigrids)', mega16: '3 (mega16)' }[cell];
     return {
       cell: cell, clusters: 8, modes: modes,
       selection: { selected: selection.selected, winner: selection.winner, reason: selection.reason },
       f1SampleCostVsNative: { f1MeanSampleCpuMs: f1.meanSampleCpuMs, proposalMeanSampleCpuMs: prop.meanSampleCpuMs,
         ordinaryMeanSampleCpuMs: ord.meanSampleCpuMs, f1OverOrdinary: ratio(f1.meanSampleCpuMs, ord.meanSampleCpuMs),
         f1OverProposal: ratio(f1.meanSampleCpuMs, prop.meanSampleCpuMs), f1OverEqualWeightMix: ratio(f1.meanSampleCpuMs, meanMix),
-        label: 'Derived: ratios of the mean sample CPU of the same grids; the equal-weight mix is NOT the native request ' +
-          'mix (unknown here)' },
+        label: 'Derived: ratios of the mean sample CPU of the same grids. Equal weighting of the ordinary and the proposal sample ' +
+          'matches the observed ordinary/proposal counts of the four SM1 requests (IG-S07/summary-r2.md lines 78-88); it remains a ' +
+          'sample-cost comparator, not whole-request throughput, and early stopping can change the realised mix' },
+      s1CostVsYield: {
+        cost: { f1MeanSampleCpuMs: f1.meanSampleCpuMs, equalWeightMixMeanSampleCpuMs: meanMix, f1OverEqualWeightMix: ratio(f1.meanSampleCpuMs, meanMix),
+          planningExpectation: 'a near-constant per-sample cost: time per sample divided by about ' + planningDivisor +
+            ' (report.md:35-36, 108)', planningDivisor: planningDivisor,
+          observed: 'F1 costs ' + round(ratio(f1.meanSampleCpuMs, meanMix), 2) + ' of the equal-weight native mix' },
+        outcomesOfTheCheapWork: { samples: f1.funnel.samples, emptyUniqueFrontier: f1.funnel.emptyFrontierSamples,
+          candidatesExact: f1.funnel.candidates.exact, candidatesShallow: f1.funnel.candidates.shallow, candidatesBelow: f1.funnel.candidates.below,
+          candidatesAboveBand: f1.funnel.candidates.above, budgetStopSamples: f1.funnel.budgetStopSamples },
+        yield: { f1VerifiedHits: f1.verifiedHits, allModesVerifiedHits: modes.reduce(function (n, m) { return n + m.verifiedHits; }, 0),
+          costPerVerifiedExactPuzzle: null, status: 'unestablished: no verified hit in any mode, native controls included; yield inconclusive' }
+      },
+      s2Isolated: {
+        pairedPopulation: '8 grid clusters (grid seeds 101-108), at most two samples per grid, the same grids and samples in F0 and F1, ' +
+          'reference solver, width 1 (n = ' + f1.samplesObserved + ' samples per mode)',
+        f0MeanSampleCpuMs: f0.meanSampleCpuMs, f1MeanSampleCpuMs: f1.meanSampleCpuMs,
+        f1OverF0MeanSampleCpu: ratio(f1.meanSampleCpuMs, f0.meanSampleCpuMs),
+        f1OverF0ReadyCpuOfClusterTotals: ratio(tot1, tot0),
+        pairedClusterReadyCpuRatio: Object.assign({ n: pairedRatios.length }, (function () {
+          const sorted = sortedCopy(pairedRatios);
+          const mid = sorted.length >> 1;
+          return { median: sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2, min: sorted[0], max: sorted[sorted.length - 1] };
+        })()),
+        sameDecisions: sameJson({ ft: f0.funnel.floorTests, c: f0.funnel.candidates, o: f0.outcomes, e: f0.funnel.emptyFrontierSamples },
+          { ft: f1.funnel.floorTests, c: f1.funnel.candidates, o: f1.outcomes, e: f1.funnel.emptyFrontierSamples }),
+        deductionSaving: { f0AcceptedByFullProof: f0.funnel.acceptedByFullProof, f0AcceptedByRederivation: f0.funnel.acceptedByRederivation,
+          f1AcceptedByFullProof: f1.funnel.acceptedByFullProof, f1AcceptedByRederivation: f1.funnel.acceptedByRederivation,
+          rederivationShareOfF1Accepted: accepted > 0 ? f1.funnel.acceptedByRederivation / accepted : null }
+      },
       finding: get(ctx.evidence.s05Summary.doc, 'cells', []).filter(function (x) { return x.cell === cell; }).map(function (x) {
         return x.finding; })[0] || null
     };
@@ -308,6 +373,7 @@ function sm2Section(ctx) {
     verdict: get(ctx.evidence.s05Summary.doc, 'verdict'),
     selection: { rule: sel.rule, handoff: sel.handoff, perCell: cells.map(function (c) { return { cell: c.cell, ...c.selection }; }) },
     heldOut: 'unmeasured: IG-S06 (held-out request seeds 201/202, native versus the selected frontier) is deferred',
+    sampleMixInSm1: sm1SampleMix(ctx),
     s2Audit: get(sum4, 's2Audit'), pilot: { scope: 'IG-S04 pilot: grid seeds 11 and 12, one sample per trial, 64 trials, the dataset that ' +
       'fitted the count budgets; kept apart from the screen', trials: get(sum4, 'coverage.planned'), rows: pilot,
     budgets: get(sum4, 'budgets', []).map(function (b) { return { cell: b.cell, status: b.status, limits: b.limits }; }),
@@ -344,6 +410,12 @@ function sm1Section(ctx) {
     cells: cells, registry: get(sum7, 'registry'), frontierPhaseA: get(sum7, 'frontier'),
     counterLimitation: 'solver-check totals are inexact (loop-check boundaries; chain propagation checks bypass ctx.check); ' +
       'the loop check on the real engine passed 13/13', loopCheck: get(sum7, 'loopCheck'),
+    solvesPerOrdinarySample: (function () {
+      const mix = sm1SampleMix(ctx);
+      const four = mix.filter(function (m) { return m.fourSm1Request; }).map(function (m) { return Math.round(m.ordinaryMeanSolves); });
+      return { rows: mix, fourSm1RequestsRounded: four, min: Math.min.apply(null, four), max: Math.max.apply(null, four),
+        source: 'IG-S07/summary-r2.md lines 78-88 (mean solves per ordinary sample, the four SM1 requests)' };
+    })(),
     reading: get(sum7, 'scenarioReading', [])
   };
 }
@@ -475,7 +547,17 @@ function decisionsForAuthor(ctx) {
       'this run.' },
     { id: 'D8', to: FA, text: 'Adapter, guard and footprint points carried forward: scoped S3 skipped scopes charging two or more ' +
       'virtual node checks are covered only by engine-free tests; the 120 s application guard is not what the research guards ' +
-      '(180/45/240 s) measure; solver-check totals are inexact in IG-S07; Killer needed a Killer-only verifier rule.' }
+      '(180/45/240 s) measure; solver-check totals are inexact in IG-S07; Killer needed a Killer-only verifier rule.' },
+    { id: 'D9', to: FA, text: 'Two measurements the first round never made (explicit unmeasured rows of the estimate table, no run ' +
+      'authorised): the SM5 sweep of the pool at width 1, 2 and 4 on classic9 and mega12 Nightmare (plan.md:366; the IG-S02 ' +
+      'width-4 pool and the effective two-worker operation on two-attempt boards are not that sweep) and the restricted-floor ' +
+      'performance probes (an accepted floor test, a refused floor test at each floor level, a DFS uniqueness check, a full ' +
+      'solve; the existing floor parity is not that experiment). Decide whether they join the frozen scope and with what ' +
+      'budget.' },
+    { id: 'D10', to: FA, text: 'Source preparation for the frozen rerun (prerequisite of every frozen command): a dedicated worktree ' +
+      'at the attested frozen commit, a pinned harness installed and fingerprinted there, a capability inventory. Adapter repairs and ' +
+      'their reproof and any recalibration are uncosted, approval-dependent work that no runtime projection in this report ' +
+      'includes; the harness never falls back to the old engine.' }
   ];
 }
 
