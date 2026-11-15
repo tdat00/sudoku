@@ -8,6 +8,8 @@ PR-S2 followed unchanged from Fable's answer in commit `92a7693`; it confirms th
 does not authorize the separately saved improvement feature.
 CV6-05 followed unchanged with Fable's answer under S-OD6: MS05e is measured and set aside,
 the sign target is transported rather than consumed, and the Normal contracts stay unchanged.
+RP-01 followed unchanged with Fable's 2026-11-16 answer and the owner's confirmation next to it (S-OD9):
+Remote Pairs moves to order 116, weight 350, base cost 35, behind a reachability gate before MS10a's E.
 The questions that still
 need the plan author's answer are in [clarifications.md](clarifications.md); when one is answered, it moves here.
 
@@ -1951,6 +1953,306 @@ measured again for this answer.
 
 ---
 
+## RP-01: MS10a — Remote Pairs priority and the mandatory normal-hint help example (S-AV32)
+
+**Raised by SA2 for the orchestrator, 2026-11-16. Decision requested from Fable (plan author).**
+
+**Decision needed:** reconcile Remote Pairs' fixed position in R13 with bundle B's requirement for a real
+Player help example reproduced by normal hints. Please choose A, B, C or an explicit alternative below,
+including the exact registration and GH acceptance contract. This is not a request to waive a failed
+test, increase a search allowance or treat a missing example as a performance-only item.
+
+### Context and current state
+
+- The accepted R13/task contract is `remotePairs`, group `wing`, order **132**, weight **440**,
+  base cost **44**, unscoped, no uniqueness assumption. It follows Simple Colouring (120) and
+  Swordfish (130), and precedes Finned Swordfish (134). Its weight puts it in Hard.
+- `tasks/difficulty-v3/MS10a-remote-pairs.md` requires full B/E/GH. Bundle B in check-list section 2
+  and IR72 H1 require one real example per ID, checked against the Player's own normal hint replay.
+  The discovery ceiling is four distinct batches of twelve requests, at most 400 hints per puzzle;
+  it is a ceiling, not an obligation to exhaust a search known not to supply an example.
+- The main worktree has `c160bb4` plus **uncommitted, pre-E MS10a work**. This question branch starts
+  at `c160bb4`; the new finder itself is not part of that committed base. The evidence below describes
+  the candidate, not a replay of the bare base commit. No implementation change is made by this question.
+- SA2 accepted the detector's real-peer graph, consistent two-colouring, odd shortest witness of at
+  least three edges, sorted witness-path Finding and 50,000 work limit. The ambiguous minimum-path
+  wording means the shortest path between the **selected visible endpoints**, not a minimum over
+  every other pair the target sees. An adjacent pair alone is not Remote Pairs; an additional adjacent
+  justification does not invalidate a genuine longer witness. These implementation rulings are not
+  being reopened here.
+- The developer has two real, unique positive fixtures at `after: null, propagate: true`, as permitted
+  for initial-position fixtures. The focused checks are green apart from Player help's missing
+  `remotePairs` catalogue entry. The 26 reference puzzles have no rating or level change so far.
+  Hard's derived `allowedGroups` gains `wing`; no inference that all generated outputs are unchanged
+  follows from the reference result.
+- **S-AV32, "remotePairs reachability", is reserved now**, for this decision and the final MS18e audit.
+  The default work cap is not the cause: its structural maximum on the registered models is 16,384,
+  below 50,000. Raising it would not resolve the priority conflict.
+
+### Evidence: a working detector, but no normal-ladder occurrence
+
+These are seeded test-kit dug-puzzle/solver diagnostics, not successful GH discovery or generation
+qualification. The two position scans use different preprocessing, which must not be conflated.
+
+| Population and preprocessing | Result | Recorded output under `docs/difficulty-v3/evidence/MS10a/` |
+|---|---|---|
+| classic9, seed 4242, 30,000 dug puzzles; position after exhausting the unscoped techniques with order below 132, through Swordfish | **0/30,000** positions with a Remote Pairs Finding | `logs/explore-dug-4242-30000.txt` |
+| classic9, seed 4242, 20,000 complete logical solves with the current registry | **20,000 solved; 0/20,000** solves with a Remote Pairs step | `logs/explore-solves-4242-20000.txt` |
+| classic9, seed 777, 3,000 first positions, with ordinary propagation/singles but without exhausting the earlier technique ladder (`propagated` mode) | **67/3,000** positions with a direct Remote Pairs Finding | `logs/explore-dug-777-3000-prop.txt` |
+| Same seed 777 and 3,000 puzzles, but after the earlier technique prefix | **0/3,000** | `logs/explore-dug-777-3000.txt` |
+
+`logs/fixture-data-1.txt` records the real positive fixtures and uniqueness checks:
+
+- Corpus puzzle **#12** (`RP_FIRST`): pair {4,6}, the three-edge chain R5C2–R5C3–R9C3–R9C6;
+  R5C6 loses 4 (6 is already absent).
+- Corpus puzzle **#512** (`RP_LONG`): pair {6,7}, a five-edge chain from R3C7 to R7C4;
+  R7C7 loses both digits.
+
+Their puzzle strings and Findings are in the propagated-position log. `after: null` is an honest
+direct-finder fixture, not a claim that the normal Player would select that Finding at that position.
+It cannot on its own replace the required GH replay.
+
+### The classic9 peer-graph argument
+
+The zero counts alone would not prove impossibility. The current priority and implementations give a
+structural explanation on a valid classic9 state:
+
+1. Each edge of a consistent Remote Pairs component joins two peer cells with the identical pair {x,y}.
+   They share a complete all-different unit. A third cell with that same pair in the unit would make
+   an odd triangle, which Remote Pairs rejects.
+2. Before order 132 is reached, Naked Pair (order 60) has no deduction left. Therefore the unit of
+   each such edge has no other candidate x or y: otherwise Naked Pair would remove it. Each edge
+   is consequently a strong link for x and also for y.
+3. Simple Colouring's strong-link graph for each digit contains the Remote Pairs component. A target
+   seeing opposite-coloured ends is covered by its trap rule, or by wrap if it belongs to the larger
+   colouring component. A valid state cannot make the genuine strong-link graph inconsistent.
+4. Simple Colouring is at order 120. The solver takes the first applicable technique and restarts the
+   ladder after a deduction. It therefore consumes the opportunity, or changes the state, before
+   Remote Pairs can be the selected step. Player hints replay this same ordered solver.
+
+The relevant existing code is `tech-subset.js::findSubset` (Naked Pair),
+`tech-fish.js::findStrongLinks`, `colourDigit`, `wrapTargets` and `trapTargets`,
+`logical-solver.js::iterate` (all under `core/js/engine/`), and
+`player/js/ui/play.js::runSolver`. The GH tool's
+`player/tests/fixtures/help-example-tools.js::replayPuzzle` calls the actual `game.hint()`;
+it does not ask a selected technique's finder directly.
+
+The argument extends to models whose peer edges have the same complete-unit support and whose normal
+ladder enables both earlier techniques. It is not a claim about arbitrary test models with partial
+units or deliberately restricted technique lists. The proposed classic9 Hard/Expert/Master discovery
+cannot escape these premises merely by changing seeds or requested levels.
+
+### Options and their consequences
+
+**(A) Change the normal priority: move Remote Pairs before Simple Colouring.**
+
+- Please specify an exact new order in place of 132, compatible with the tier/prefix rules; a slot
+  between Two-String Kite (114) and Simple Colouring (120) is a candidate for review, not an applied
+  decision. Naked Pair remains earlier. A priority change must still demonstrate actual reachability
+  with a bounded real-source check; moving before Colouring alone is not a recorded successful GH run.
+- Proposed weight/base-cost disposition: retain **440/44**, group `wing`, Hard, unscoped and no
+  uniqueness. This changes precedence within the tier: a 440-weight proof may be selected before
+  cheaper Colouring/rectangle/fish proofs. Scores and generated puzzles can change even with the
+  weights unchanged. If a different weight, cost or tier is intended, please decide it explicitly;
+  no prior is fitted to old labels or changed merely to obtain an example.
+- Amend R13/the task and current registry/order expectations. Recheck order, allowed sets, floor/
+  requiredness and the 26 references, recording any reclassification under R20.
+- Keep GH's normal-hint contract. After finalizing the source, MS10a owns complete E: five G09–G13
+  wires, fourteen G01–G14 analyses and all 520 hashes; affected current pins, all affected earlier
+  technique help examples, the complete GH check and both quick sets/CI must follow the new source.
+  Earlier tasks' accepted evidence remains history for their source, not validation of the new order.
+  Do not reopen or rewrite their historical logs, v2 fixtures or results.
+
+**(B) Keep order 132 and revise GH for this shadowed technique.**
+
+- Retain 132/440/44, the tier and the normal solver/hint behavior. Explicitly acknowledge that
+  Remote Pairs is a sound registered finder but is not normally selected on classic9 under this
+  ladder; do not claim new normal-hint coverage there.
+- Replace its missing normal-hint entry with **one explicitly labelled real-puzzle technique
+  demonstration**, not a synthetic diagram or a fabricated hint step. Use a uniquely solvable real
+  source such as the two fixtures above, its unchanged givens and a reproducibly reconstructed state
+  (documented ordinary candidate construction/propagation, not hand-edited notes).
+- The replacement check reconstructs that state, calls the real `remotePairs` finder, compares the
+  exact Finding and verifies its eliminations and completion independently. It must not pretend
+  `game.hint()` selected Remote Pairs, invent a normal hint-step number, suppress earlier techniques
+  just for the catalogue, or copy a snapshot whose provenance cannot be checked.
+- This requires an explicit catalogue/source discriminator for a demonstration, EN/VI disclosure
+  that it is not the next normal hint, and owned changes to the help-example recorder/checker,
+  viewer and their tests. Preserve the normal-hint check for every other ID. Keep one verified
+  entry for Remote Pairs instead of lowering the catalogue count or skipping its assertion.
+  Please assign this additional scope (within MS10a or an inserted serial step before its closure).
+- This is a **change to the GH contract**, not an already authorized fallback. Normal priorities/
+  weights remain unchanged; MS10a's complete E and final quick checks are still required. Its
+  allowed-set/metadata changes and changed source identity cannot be waived because 26 references
+  happened to retain their ratings. The new demonstration must not be reported as a normal GH pass.
+
+**(C) Keep order 132 and normal GH, using a different existing supported variant.**
+
+This is viable only if an actual supported variant defeats a premise of the argument above and a
+normal Player hint replay reaches Remote Pairs there. First identify the precise exception and its
+real source; then use the existing bounded acquisition route. Merely switching to Jigsaw, Diagonal,
+Hyper or a multigrid is not an explanation: their relevant row/column/box/region/extra units are
+complete. Killer cages and inequalities add no edge beyond `model.peers` in the accepted finder.
+No supported partial-unit escape has been demonstrated. A test-only model, disabled earlier
+techniques or a forced finder call would not satisfy this option's normal-hint contract.
+Registration, weights, tiers and all existing E/GH obligations remain unchanged under C.
+
+Removing the ID, deferring it out of v3, silently omitting its example or making a missing-example
+test green is **not authorized** by S-OD4's full-scope rule. Any such alternative needs an explicit
+recorded decision, not just an S-AV disposition.
+
+### Recommendation, answer requested and current block
+
+**SA2 recommends reviewing A first**, retaining the priors unless you explicitly decide otherwise:
+it preserves the normal-hint GH contract and avoids a new demonstration mode. Its scoring/precedence
+effect must be accepted and its reachability checked, not assumed. If the existing priority is to
+stay, B is the honest explicit alternative. C needs a concrete premise-breaking supported variant,
+not more zero-result classic9 sampling.
+
+Please state the chosen option (or bounded alternative), exact order/weight/base cost/tier to retain
+or change, what constitutes the required help entry and its verification, and the task/file ownership
+and validation required before resuming. In particular, say whether R13 or GH/IR72 is amended.
+
+**Blocked meanwhile:** MS10a may finish the already accepted corrections, then waits. There is
+**no further discovery and no E** until this decision is recorded and incorporated into the pack.
+The missing normal-hint example is not waived by S-AV32. **MS10a's E/GH/acceptance and every task
+after MS10a (MS10b through MS18e) are blocked**, because the Sudoku chain is strictly sequential.
+No later task is dispatched over the uncommitted candidate.
+
+### Evidence files to accompany the question
+
+The following existing files are in the main worktree under
+`Q:\git\sudoku\docs\difficulty-v3\evidence\MS10a\`. The orchestrator will copy them to the same
+repository-relative locations on `clarifications`; this question does not copy or change them.
+
+- `logs\explore-dug-4242-30000.txt`
+- `logs\explore-solves-4242-20000.txt`
+- `logs\explore-dug-777-3000-prop.txt`
+- `logs\explore-dug-777-3000.txt` (the same-seed prefix comparison)
+- `logs\fixture-data-1.txt`
+- `structural-max.txt` (why the default work limit is not the cause)
+
+**Plan-author answer (claude-fable-5-2, 2026-11-16): (A), with a corrected prior. Register `remotePairs` at
+order 116, weight 350, base cost 35; group `wing`, Hard tier, unscoped, no uniqueness assumption. R13 and the
+R10 cost table are amended; GH and IR72 are not. A measured reachability gate comes before E.** Because this
+changes a recorded prior, the owner confirms it before the pack changes (see "Authority" below).
+
+I read the question and checked its argument against the committed source at `c160bb4`. I did not run
+anything, and I have not seen the uncommitted finder.
+
+*The argument is right, and it shows an error in my plan.* I checked the four steps:
+
+- `findSubset` scans every unit for naked subsets and skips only hidden subsets on incomplete units
+  (`tech-subset.js:206`), so step 2 holds for every unit two chain cells share.
+- `findStrongLinks` takes every complete unit with exactly two open cells of the digit
+  (`tech-fish.js:1201-1231`), so each chain edge in a complete unit is a strong link for both digits.
+- `colourDigit` applies wrap to a target inside the component and trap to one outside it
+  (`tech-fish.js:1350-1377`). A valid state has no inconsistent component and no double wrap.
+- So whenever the ladder gets past order 120 on a board whose peer edges all come from complete units, no
+  Remote Pairs Finding exists. The zero counts are the expected result, not bad luck.
+
+The consequence is larger than a missing help example. At 132 the technique can never score a step and never
+be a hint on those boards, so it adds nothing to rating v3. The cause is the prior. After Naked Pair, Remote
+Pairs is a special case of Simple Colouring: the same cells, coloured for two digits at once, and easier to
+see because the cells are identical bivalue cells. I gave the special case 440 and the general technique has
+360. The registry order follows the weights (`technique-weights.test.js`, "the order of the registry follows
+the weights"), so a weight above 360 puts it behind Colouring and makes it unreachable. 440 was a wing-style
+guess made without checking this. Correcting it is not fitting a weight to labels or to an example: the
+order "special case first, at no higher weight" follows from the logic alone.
+
+*Why not the other options.*
+
+- (A) with 440 kept is not available. An order before 120 with weight 440 breaks the order-follows-weight
+  rule that the floor prefixes depend on, and it would rate a colouring-solvable step at 440.
+- (B) ships a technique that normal play never selects and that never affects a rating, and it adds a
+  demonstration format, a discriminator, viewer text and a second checker to explain that. This is the
+  synthetic-format route that SA2-Q-S11 declined, with real givens. I do not approve it.
+- (C) has one real case, and the question's text on it needs a correction. Killer cages are units with
+  `partial: true` (`generator/js/variants/killer.js:417`), and `model.peers` is built from all units
+  (`model.js:108-125`). So two cage-mates that share no row, column or box are peers, Naked Pair applies in the
+  cage, but the cage gives no strong link. A chain with such an edge is not covered by Simple Colouring, and
+  there the finder has power of its own at any order. That is no basis for the help example: it would keep
+  the technique dead on every other board, and Killer Hard and Expert are hidden (S-OD7). Record it under
+  S-AV32 as the known exception to the peer-graph argument.
+
+*Registration.*
+
+| Field | Old (R13) | New |
+|---|---|---|
+| order | 132 | **116** (after twoStringKite 114, before simpleColouring 120) |
+| weight | 440 | **350** (between 340 and 360) |
+| base cost | 44 | **35** (between 34 and 36) |
+| group / tier / scope / uniqueness | wing / Hard / unscoped / none | unchanged |
+
+The R13 proof contract, the Finding arguments, the 50,000 work limit and SA2's implementation rulings
+(shortest witness between the selected endpoints, no adjacent-pair-only justification) are unchanged.
+I chose 116 and not a slot before xWing so that the accepted behaviour of xWing, skyscraper and
+twoStringKite does not move. Only steps that today go to Simple Colouring or later can change name.
+
+*Why 116 should be reachable, and why that is still measured.* The three earlier fish do not cover every
+chain. MS10a's own vector (A=R1C1, B=R2C2, C=R2C5, D=R5C5, target R5C1) has a box-only link at one end:
+`skyscraperOf` needs two parallel lines, and `kiteOf` rejects a row pair and a column pair that share a cell
+(`tech-fish.js:642-646`). Only Empty Rectangle (124) or Colouring (120) would take it, and both now come
+later. Chains of five edges are not covered either. How often such a state survives the earlier ladder in
+real puzzles I do not know, so:
+
+1. **Gate, before any E.** With the candidate at 116/350/35, rerun the two classic9 scans of the evidence
+   table with the same seeds and counts (seed 4242: 30,000 positions after the prefix below 116, and 20,000
+   complete solves). Record both logs under `evidence/MS10a/logs/`. The gate passes when at least one
+   complete solve contains a `remotePairs` step. Report the count; it becomes S-AV32's number.
+2. **Help example.** GH is unchanged: one real puzzle whose normal `game.hint()` replay selects Remote
+   Pairs. Take the lowest-index puzzles of the solve scan that contain the step (at most 8), write them in
+   the Generator export-text format with seed and index as provenance into the task's `sources.json`, and
+   run the task's two existing commands (`--write`, then `--check`). These are curated sources under
+   SA2-Q-S11 (a). They do not use the four discovery batches, which stay available as the task file states.
+3. **If the gate fails** (0 of 20,000), stop before E and report. Do not try other orders or weights. The
+   remaining choices are then (B) or removing the ID from v3; both change S-OD4's scope or the GH contract,
+   so that question goes to the owner, not to me.
+
+*Work that follows, all inside MS10a.*
+
+- Engine and tests: the registration above; a placement case in `technique-weights` like the kite's
+  ("between twoStringKite and simpleColouring: order 116, weight 350"); the current registry/order lists,
+  allowed sets, floor and requiredness expectations.
+- One added soundness test on a Killer model for a chain with a cage-only edge (a constructed state is
+  enough; it is a finder test, not a help example). Cage-mates cannot repeat a digit, so the alternation
+  holds; the test fixes that the finder uses the real peers there and removes nothing from proving cells.
+- R20: recheck the 26 reference puzzles and record every changed rating with its cause. A Remote Pairs step
+  replaces one or two Colouring steps at 360, or later steps, so small downward changes are the expected
+  direction. A level change is recorded, not prevented.
+- E in full, as the question lists under (A): five G09-G13 wires, fourteen G01-G14 analyses, all 520 hashes,
+  affected pins, every affected earlier help example (simpleColouring, emptyRectangle and the finned fish
+  are the likely ones), the complete GH check, both quick sets and CI. Earlier tasks' evidence stays as
+  history of their source.
+- Documents, by the pack author: R13 (order and weight), the R10 table and the SA2-Q-S08 answer (base cost
+  44 becomes 35), the Hard row of the tier table (remotePairs moves between twoStringKite and
+  simpleColouring), `plan.md` S3 row 3, the "Register remotePairs" line of `MS10a-remote-pairs.md`, both
+  guides and `design.md`. Add one sentence where the technique is described: after the naked pairs are done,
+  every Remote Pairs deduction on a standard board is also a Simple Colouring deduction, and the ladder
+  names the simpler pattern first.
+
+*S-AV32* stays open for MS18e with the measured rate at 116, the Killer exception above, and the superseded
+132/440/44 as history. The four logs of the question stay as they are; they are the evidence for this
+change.
+
+*Authority.* GH, IR72 H1, bundle B, the discovery ceiling and SA2-Q-S11 are confirmed, not amended. R13's
+order and weight and one row of the R10 cost table are amended. That is a change to a recorded prior, which
+S-OD4 routes to the owner. I state the decision as plan author; the orchestrator records the owner's
+confirmation next to this answer before the pack is changed. If the owner keeps 440, the consequence is
+(B) or removal, because (A) at 440 contradicts the order rule and the technique stays unreachable at 132.
+
+*Resume.* After the confirmation: MS10a applies the registration, runs the gate, and continues to GH and E
+only if the gate passes. MS10b to MS18e stay behind MS10a as before.
+
+**Owner confirmation (2026-11-16 06:23 +07:00, on the command line: "Sudoku - xác nhận đổi remote pairs"): confirmed,
+recorded as S-OD9.** The recorded prior changes as answered above: `remotePairs` is registered at order 116, weight
+350, base cost 35 (R13's 132/440/44 becomes history). SA2 and SA1 checked the answer before the confirmation and
+accepted it (2026-11-16 06:20-06:25); SA2 records their execution details (gate log names and cut-off from the
+registry, curated-source format, a caged Killer model for the soundness test, the GH fallback and document
+ownership) in the pack. Moved here unchanged with this confirmation; the temporary `clarifications` branch is deleted.
+
+---
+
 ## Owner decisions — current resume register
 
 This register is a navigation aid, not a rewrite of the questions or answers above. The later decision governs
@@ -1971,6 +2273,7 @@ where an earlier recovery/process rule conflicts. The pause commit is a historic
 | S-OD6 | Owner delegated both MS05e D1 decisions to Fable on 2026-11-14 at 16:38 through `ask_user`. **Outcome, Fable's CV6-05 answer:** **Q1(b)** withdraw the pool; **Q2(a)** keep the contracts and let final qualification decide the offer. MS05e closes "measured, set aside", not an accepted repair. Preserve `docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch` and all measurements; restore `f7be90f` (runtime `00647f9`) and prove fingerprinted-source/artifact identity without a run, as the orchestrator has reported. S-AV01 stays open at 5,209 ms against 1,400 ms and 10.6 s p95 on 7000-7039, with the three fixed final endings in CV6-05; S-AV16/S-AV17 are withdrawn current-source items, retained as history; S-AV08 returns to 648.0 s. MS06 transports but does not consume the target in the first-allowed sign dig, with no edit to `greater-than.js`. No present contract/qualification change, second strategy or future improvement feature is authorized. Diagnosis gates require the exact-predicate table and orchestrator review before the first production edit. |
 | S-OD7 | Owner, 2026-11-15 14:42, through `ask_user` and email; Q-MS07e-1 in `docs/difficulty-v3/qualification-checkpoint-2026-11-15.md` section 7. **"Hidden until later":** Killer Hard (0/14 exact, p95 6.6 s) and Expert (1/14 exact, p95 17.8 s) stay hidden until a later calibration; no Killer weight recalibration inside v3. S-AV05/S-AV06 route to that later calibration and MS18e's audit. MS18c owns publication; both cells remain in the full 135-cell final qualification with raw verdicts preserved. If either later qualifies, show the owner-directed withholding separately instead of rewriting that verdict or re-offering it. This is the narrow later restriction on offers, not an exception allowing an unqualified cell; all six S3 groups and the qualification protocol remain. No interim live-list edit is assigned by this record. |
 | S-OD8 | Owner, same time/channel; approve the S-AV08 quick-tier proposal in `docs/difficulty-v3/qualification-checkpoint-2026-11-15.md` section 9. Move the three `pipeline` generation event-cost ratio tests to `generator/tests/manual/perf.test.js`; split the Generator `player` replay case so classic9 Hell 1 seed 3 stays quick and mega16 Nightmare seed 478576959 plus Hell 1 seed 2422420669 move to `generator/tests/manual/variants.test.js`. Preserve requests, seeds, limits, attempts, timeouts and assertions byte for byte. The loss of these ratios and two mega16 replays from PR CI is accepted; structural event checks, short digging/full-grid cost tests and G01-G14 goldens stay quick. MS07f is scheduled after the already-running MS08a and before MS08b; it owns the r6c manifest/group metadata, both developer guides/design and actual before/after per-app quick costs. No other tier move is approved. MS18e audits the disposition and checks the four relocated manual cases on the final source; "about 300 s" is a projection, not a promised result. |
+| S-OD9 | Owner, 2026-11-16 06:23 (+07:00), on the command line ("Sudoku - xác nhận đổi remote pairs"); RP-01. Confirms Fable's answer (A) with a corrected prior: `remotePairs` at order 116, weight 350, base cost 35 (R13's 132/440/44 superseded, kept as history); group wing, Hard tier, unscoped, no uniqueness assumption. R13 and the R10 cost row are amended; GH, IR72 H1, bundle B, the discovery ceiling and SA2-Q-S11 are unchanged. MS10a runs the seed-4242 reachability gate (30,000 positions after the prefix below 116, 20,000 complete solves) before E; a failed gate stops before E and goes to the owner ((B) or removing the ID), not to Fable. S-AV32 stays open for MS18e. MS10b-MS18e stay behind MS10a. |
 
 **Q-MS07e-2 — pack-author ruling (SA2, 2026-11-15), not another owner decision:** no change to
 the projection rule and no speculative one-off launch of the six unexecuted cells. Route
