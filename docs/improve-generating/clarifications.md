@@ -177,6 +177,20 @@ decision is needed.**
   with its stop condition": a puzzle mismatch stops the cell, and a failure or a cohort incomplete at a ceiling is
   recorded as such. Phase 0's gate for the pool's enablement reads "(F2 and F5b)" instead of "(F2)".
 
+## Plan version 4 (plan author, 2026-11-15)
+
+`plan.md` is revised to version 4. It takes in the corrections of the joint report on version 3 (JV3-S01 to
+JV3-S09), the answers IG-S-Q26 and IG-S-Q27 and the analysts' two notes above. Version 3 is `plan.md` at
+commit `2278b61` (before the cleanup). Version 4 ran nothing; the gate remains `not-evaluable-pre-freeze`. No
+owner decision is needed, and IG-S-D1 to IG-S-D6 remain in force.
+
+- **Section 5:** the confirmation step F5b with its stop conditions, after a five-seed pilot and a policy
+  freeze in F2; the outcome-reuse rule of JV3-S03; the kernel gate's CPU statistic and the scope of the 0.95
+  tolerance; the K2 admission note.
+- **Sections 1, 2 and 4:** the workers sentence, Q's relation to MS08a, the "real-tier" wording, and butterfly
+  Hell 1's scenario at 11.2 to 19.1 s.
+- **Sections 6 and 7:** the pool's enablement rests on F2 and F5b.
+
 ## Open questions
 
 None for the Sudoku plan (2026-11-15).
