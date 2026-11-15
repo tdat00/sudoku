@@ -1,25 +1,26 @@
 # Improve generating (Sudoku): a faster generator for the upper levels
 
-> **Version 3 (2026-11-15), after the analysts' review of version 2 and the owner's decisions.** Version 2 with
-> its section 9 addendum is this file at commit `adb7184`; version 1 is at `1437774`. Version 3 folds in the
-> joint report on version 2 ([plan-v2-joint-report.md](plan-v2-joint-report.md): its answers, its corrections
-> JV2-S01 to JV2-S16, its candidate table and its frozen-round scope), the plan-author answers IG-S-Q19 to
-> IG-S-Q25 and the owner decisions IG-S-D1 to IG-S-D6 ([clarifications.md](clarifications.md)).
-> The full mechanism text of the items that version 3 parks or drops stays in version 2.
+> **Version 4 (2026-11-15), after the analysts' review of version 3.** Version 3 is this file at commit
+> `2278b61`, version 2 with its section 9 addendum at `adb7184`, version 1 at `1437774`. Version 4 keeps
+> version 3's scope and the owner decisions IG-S-D1 to IG-S-D6. It takes in the corrections of the joint report
+> on version 3 ([plan-v3-joint-report.md](plan-v3-joint-report.md), JV3-S01 to JV3-S09) and the plan-author
+> answers IG-S-Q26 and IG-S-Q27 ([clarifications.md](clarifications.md); the full text of the answered
+> questions is in that file at commit `477cd53`). The full mechanism text of the parked and dropped items stays in
+> version 2.
 >
-> **Version 3 is smaller and retargeted.** On the rating-v3 source the Nightmare cells that versions 1 and 2
-> aimed at pass by the rating change alone. What remains for this feature is tail and failure time, robustness
+> **Since version 3 the plan is smaller and retargeted.** On the rating-v3 source the Nightmare cells that
+> versions 1 and 2 aimed at pass by the rating change alone. What remains for this feature is tail and failure time, robustness
 > and the diagnosis of what still fails.
 >
 > **No number here is a gate result or an offer.** The generator measurements are provisional and stale (the
 > MS05e-era runtime `f7be90f`, three paired seeds per cell). The baseline is a difficulty-v3 checkpoint on a
 > source that MS08 to MS18 will still change. The formal gate is `not-evaluable-pre-freeze`.
 
-Plan author: claude-fable-5-2; version 1 on 2026-11-14, versions 2 and 3 on 2026-11-15. Analysts: Opus
+Plan author: claude-fable-5-2; version 1 on 2026-11-14, versions 2 to 4 on 2026-11-15. Analysts: Opus
 (claude-opus-5.5) and Astra (gpt-6-astra). Status: **proposal; nothing implemented in production**; the
 prototypes are test-side harnesses under `generator/tests/artifacts/improve-generating/`. This plan is the
 input of a later feature ("improve-generating"), which starts after difficulty-v3 closes (MS18e), on the
-frozen catalogue; architects turn it into a design and a task pack. Version 3 ran nothing.
+frozen catalogue; architects turn it into a design and a task pack. Version 4 ran nothing.
 
 Labels: **M** measured record; **D** derived arithmetic or an implication of the source's control flow; **P**
 projection with assumptions. Projected ranges are scenarios, not confidence intervals. Sources of the measured
@@ -52,7 +53,8 @@ withheld until a later calibration (S-OD7).
 **Constraints.**
 
 - Classic scripts on the `SG` global, no build step, pages work from `file://` (AGENTS.md). That excludes
-  `SharedArrayBuffer` and makes a fetched `.wasm` unreliable; workers with message passing are fine.
+  `SharedArrayBuffer` and makes a fetched `.wasm` unreliable; message-passing workers are usable where workers
+  are available; the default `file://` path remains the serial main-thread lane.
 - Determinism: a request (variant, level, seed, options) gives the same puzzle on every machine, whatever the
   number of workers. A timed result (S6) is the stated exception and is never the seed's canonical result.
 - A changed search path changes recorded recipes, regression hashes and help snapshots, so it ships under a
@@ -69,6 +71,10 @@ four workers inside a request. It holds **129 of 135 cells and 4,311 requests**,
 expansion; forty was the first-round target, not the count in every cell. It publishes no live offer change.
 "Pass" below is the observed checkpoint verdict. MS08 to MS18 can change it again.
 
+Q predates MS08a (Skyscraper), already present at the checked source `75b99e6`. Its recorded E update changed
+66 of 520 hashes and four reference ratings, with no level change. F1 re-derives the baseline on the final
+catalogue.
+
 The cause of the change is the rating, not the search: with the short-chain cutoff at 4, a proof of five or
 more links is in the Nightmare tier, so a dug puzzle is usually exact at the first attempt
 (`docs/difficulty-v3/chain-window-2026-11-15.md` at `75b99e6`). The generator still runs every request in one worker,
@@ -78,7 +84,7 @@ and the size-default attempts are still 8, 4 and 2.
 
 | Group | Evidence | Treatment in this feature |
 |---|---|---|
-| Passing Nightmare controls | classic9, wordoku, mega12, samurai, sohei, flower, butterfly, Greater-Than and the other executed non-Killer cells pass (40 of 40 each on those named) | keep their path; no frontier experiment and no larger attempt count; regression controls |
+| Passing Nightmare controls | classic9, wordoku, mega12, samurai, sohei, flower, butterfly, Greater-Than and the other executed non-Killer real-tier cells pass (40 of 40 each on those named) | keep their path; no frontier experiment and no larger attempt count; regression controls |
 | A demonstrated time target | Greater-Than Master: 40 of 40 exact, p95 14.478 s against 10 s | attribute its four slow exact requests before projecting any pool gain |
 | Margin | Greater-Than Normal: 40 of 40, p95 9.627 s of 10 s; its separate CV6 Normal timing failure remains | keep the budgets and cohorts distinct |
 | Missing qualification | mega16 Nightmare (pilot 4 of 4 exact, 4.8 to 26.5 s, mean 11.8 s); mega12, mega16, Greater-Than and butterfly Hell 1; Greater-Than Expert (pilot 1 of 2) | all six stay explicit; a pilot is not a qualification; their routing is MS18c |
@@ -291,7 +297,7 @@ device can leave no gain or a regression. The last column holds only credited wo
 | hyper, Jigsaw, diagonalX Hell 1 | p95 13.111, 15.498, 25.909; no hits | 3.8 to 6.3, 4.5 to 7.5, 7.6 to 12.5 | the same |
 | Killer Hell 1 | 26.066 / 50.222; 0 of 9 | p95 sensitivity 19.0 to 24.3 | the same; above 10 s |
 | samurai, sohei, flower Hell 1 | p95 37.925, 33.126, 27.429; 0 of 14 each | 19.3 to 22.8, 16.9 to 20.0, 14.0 to 16.5 | the same; a time margin is not offerability |
-| mega12, Greater-Than, butterfly Hell 1 | pilots 36.5, 37.6 to 40.1, 38.3 to 39.5; no hits | completed-request scenarios 10.6 to 17.6, 11.0 to 19.4, 19.5 to 23.8 | the same scenarios |
+| mega12, Greater-Than, butterfly Hell 1 | pilots 36.5, 37.6 to 40.1, 38.3 to 39.5; no hits | completed-request scenarios 10.6 to 17.6, 11.0 to 19.4, 11.2 to 19.1 (butterfly is a four-attempt board) | the same scenarios |
 | mega16 Hell 1 | censored beyond the 120 s guard | unknown | unknown |
 | Jigsaw Expert, the tail | p95 2.29, maximum 2.63, 38 of 40; seed 1111 censored at 240 on the old source | no routine gain | S7's ceiling to be sized; no seconds forecast |
 
@@ -326,6 +332,7 @@ The repair must show actual native and no-op puzzle parity and never falls back 
 | F3: profiles | a small named cohort of classic-size Hell 1, multigrid Hell 1 and Killer, plus the Greater-Than tail: family and stage attribution, negative and capped calls, clone bytes and time, checks | sampling can choose a hotspot; it proves neither dependencies nor check equality. No cache or backend build without a material, eligible share |
 | F4: the full-grid tail | the node distribution on the frozen catalogue, the exceptional path, restarts and censored cases | a total count ceiling sized, with the explicit unknown outcome |
 | F5: the conditional floor diagnostic (K4) | a small Hell floor and proposal comparison, canonical disposition, fallback accounting | no production filter; no exact-yield forecast from final-request misses |
+| F5b: pool confirmation (IG-S-Q26) | at least 20 independent held-out pairs per admitted cell and per control: width one against width four under the frozen early-hit policy, at outer `--jobs=1`; the same puzzle checked on every pair | a puzzle mismatch stops the cell; a failure, or a cohort left incomplete at a ceiling, is recorded as such and is not a pass |
 | F6: admitted prototypes only | K2 if copying is material; S4 or S5b only when their profiles justify them | a new costed plan; guard-binding equivalence; requalification of changed output |
 
 **Not carried:** the old broad Nightmare population, a full frontier composition, the 81-cell attempt
@@ -337,8 +344,11 @@ cheap-finder rewrite, K3, K5, a bank and the background stock.
 - Paired timing and budget verdicts: inner width four at outer `--jobs=1`; the serial control at width one and
   outer `--jobs=1`. Every condition of IG-S-Q02 stays, the serial `file://` caveat included.
 - A throughput study at a higher outer count is labelled as one and never pooled into a p95 with these.
-- Q's `--jobs=4` records are context, not matched timing controls. Puzzles and exact flags do not depend on
-  the outer concurrency, so a final record with full identity can serve for outcomes.
+- Q's `--jobs=4` records are context, not matched timing controls. A completed, uncensored request with
+  matching source, catalogue and full effective request identity may supply the stored puzzle's intrinsic
+  validity and exactness facts. A timeout or an error is not reused as a proved non-exact outcome, and hit,
+  on-time or qualification rates are not carried across different guard or concurrency protocols. A needed
+  completion or timing outcome without a matching protocol is measured again.
 - Nothing here changes difficulty-v3's qualification, its sample counts or the 120 s request-wall guard.
 
 ### 5.3 Telemetry and populations (IG-S-Q24)
@@ -356,6 +366,22 @@ Nightmare if it is still unqualified. Classic9 and mega12 Nightmare are the earl
 This is a proposal to cost after the repair. It does not replace the official 40-request round and launches
 none of the six omitted difficulty-v3 cells.
 
+**Where the cohorts run (IG-S-Q26).**
+
+- *Pilot, in F2.* About five seeds per confirmation cell with all four arms (native, widths 1, 2 and 4). It
+  checks native and no-op parity and the invariance of the puzzle, the keeper and the events. The early-hit
+  policy is chosen from it. Its seeds are fitting seeds and are not reused in the confirmation.
+- *Freeze, at the end of F2.* The per-cell early-hit policy (a head start for attempt 1, or serial), the warm
+  and cold operating protocol and the confirmation's statistic are written down before any confirmation seed
+  runs. A cell whose pilot shows no gain at width four is recorded as serial and is not confirmed.
+- *Confirmation, F5b.* Two arms, as in the table of 5.1. Width two and native are not repeated. Classic9 and
+  mega12 Nightmare get the same 20 pairs as controls.
+- *The Hell 1 cells* stay in for the bounded diagnostic only: their pairs time completed misses and are not
+  expected to give an exact hit. Their inclusion opens no wider live-search programme (IG-S-D3).
+- *A kernel confirmation* of admitted F6 work is priced on its own, against the same post-phase-2 generator,
+  quotas and pool, never against serial S5a.
+- *Count.* Per cell about 20 pilot executions and 40 confirmation executions, against 80 for four full arms.
+
 **Budget.** The manifest enumerates commands, populations, stopping limits, validation, startup and cleanup,
 wrapper grace and permitted concurrency. Median request times are not an upper bound.
 
@@ -364,15 +390,27 @@ wrapper grace and permitted concurrency. Median request times are not an upper b
 - **Unit and comparator.** Each named target cell, paired on the same seeds, against the same post-phase-2
   generator, quotas and pool. The arms differ in the kernel only, so the pool's gain is not counted twice.
 - **Statistic.** Ready wall time binds: the geometric mean of the per-request paired ratio, per target cell.
-  CPU and cold wall are reported apart, and CPU may not rise. A kernel microbenchmark is never the gate.
+  A kernel microbenchmark is never the gate.
 - **Thresholds.** 1.5 for the large items (S3's chain work, K1, S10). 1.15 for a medium-sized equal-result
   item with a complete equivalence proof (K2).
-- **Controls.** Named cells that call the kernel must not be slower (ratio at least 0.95). A cell that never
-  calls it is checked for identical puzzles only.
-- **Order.** Targets, controls and the statistic are named after F3 and before the optimisation is evaluated.
+- **Controls.** Named cells that call the kernel must not be slower: a ratio of at least 0.95, which allows
+  the new arm about 5.3 % more ready wall time as a noise allowance. A cell that never calls it is checked for
+  identical puzzles only.
+- **Scope of 0.95 (IG-S-Q27).** It belongs to this kernel comparison only. The pool's serial check (S5a at
+  width one against the native serial path) stays "not slower"; its statistic is fixed in F2's manifest before
+  F2 runs.
+- **CPU (IG-S-Q27).** Per cell, the geometric mean of the per-request paired ratio (reference over new) of
+  host CPU time, speculative and discarded work included. At least 1.0 on a target and at least 0.95 on a
+  control. Cohort totals of CPU and the cold wall time are reported beside these and are not judged.
+- **Order.** Targets and controls are named after F3 and before the optimisation is evaluated. The statistics
+  and thresholds above are the default; they may be changed at that naming, and not once a result has been
+  seen.
 - **Admission from the profile.** For a kernel of share `f` sped up by `s` with overhead `u`, the request
   factor is `1 / (1 - f + f/s + u)`. A factor of 1.5 needs `f` of at least one third even for an unbounded
-  `s`, and two thirds at `s` = 2. An item whose profile cannot reach its threshold is not built.
+  `s`, and two thirds at `s` = 2. For K2's 1.15, admission needs `f >= (1 - 1/1.15 + u)/(1 - 1/s)`: at zero
+  overhead 13.04 % in the unbounded-gain limit, 26.09 % at `s` = 2 and 72.33 % at `s` = 1.22. The last value
+  assumes that kernel gain; it is not a hard share cutoff. An item whose profile cannot reach its threshold is
+  not built.
 
 ### 5.5 Hell 1 (IG-S-D3, IG-S-Q23)
 
@@ -391,13 +429,13 @@ the cost.
 
 | Phase | Content | Version | Gate to continue |
 |---|---|---|---|
-| 0. Frozen round | section 5, after the repair; no runtime change | none | the targets named on the final catalogue (F1); the pool's invariance, CPU and timing known (F2); the profile and the admissions of 5.4 (F3); the full-grid ceiling sized (F4) |
+| 0. Frozen round | section 5, after the repair; no runtime change | none | the targets named on the final catalogue (F1); the pool's invariance, CPU and timing known (F2 and F5b); the profile and the admissions of 5.4 (F3); the full-grid ceiling sized (F4) |
 | 1. Equal results | `generatorVersion`, history v2 and wire v2; S5a, selective | identical puzzles | regression hashes unchanged; the same puzzle at widths 1, 2 and 4 and in the main-thread mode; serial time not slower; pooled and serial times reported; the phone-class check before mobile enablement |
 | 2. Generator version 2 | S7 (the full-grid ceiling first); S6; S4 if admitted; S5b only if its evidence and serial quota reference exist | new version | qualification of every changed cell under the protocol of 5.2; the time-guard tests |
 | 3. Kernel | K2 if admitted; the parked chain work or S10 only if reopened | identical, with check parity | step and check-sequence equality on guard-binding cases; the gate of 5.4 |
 | 4. Residual | Hell 1's route by 5.5; S9 or S8 only by an owner decision | per item | per item |
 
-The design of phase 1 does not wait for phase 0. Its default enablement does: it needs F2.
+The design of phase 1 does not wait for phase 0. Its default enablement does: it needs F2 and F5b.
 
 **Tests every phase keeps or adds.**
 
@@ -438,14 +476,16 @@ The design of phase 1 does not wait for phase 0. Its default enablement does: it
 | The repair and the manifest | The cost of the repair, then the price and envelope of the frozen round and its confirmation cohorts | after MS18e |
 | OD-S1 | A new generator-algorithm version for phase 2; old seeds give other puzzles | before phase 2; the plan author's proposal is yes |
 | OD-S2 | At the time guard, return the best validated puzzle with a warning (S6) | before phase 2; proposal: yes, stored with `timed: true` |
-| OD-S5, enablement | Default and mobile enablement of the pool | with F2's results |
+| OD-S5, enablement | Default and mobile enablement of the pool | with the results of F2 and F5b |
 | OD-S3, route | Hell 1: a live-search programme or a bank feasibility plan, if the diagnosis points to one | after F5 |
 | OD-S4 | More attempts by default | only if an 81-cell cell fails on the final catalogue |
 
 **Plan-author answers in force** (the text is in `clarifications.md`): IG-S-Q03 (virtual checks; narrowed by
 Q19), Q04 (S4 under the version), Q05 (the S1 gate), Q07 (S7 under the version, total ceiling), Q08 to Q11
 (S1's floor, uniqueness, frontier semantics and allowlist, if S1 is reopened), Q13 (timed results), Q14 (S8),
-Q15 (S9), Q16 (Greater-Than as a diagnostic only), Q19 to Q25. IG-S-Q06 (the S1 prototype in phase 0) and
+Q15 (S9), Q16 (Greater-Than as a diagnostic only), Q19 to Q25, Q26 (the pilot in F2 and the confirmation
+F5b), Q27 (the scope of 0.95 and the CPU statistic). The outcome-reuse sentence of Q24 is replaced by the rule
+of section 5.2 (JV3-S03). IG-S-Q06 (the S1 prototype in phase 0) and
 IG-S-Q12 (the attempt sweep) are superseded by the retirement of both. The phrase about a widened window in
 the answer to IG-S-Q08 is withdrawn (IG-S-Q21).
 
