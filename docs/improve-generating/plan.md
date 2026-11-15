@@ -8,6 +8,11 @@
 > MS05e-era runtime (`f7be90f`) on the rating-version-2 catalogue, Node, three paired seeds per cell (eight grid
 > clusters for SM2), no browser run. Rating v3 (MS06, MS07) has since changed tiers, weights and the chain
 > kernels. The formal gate is `not-evaluable-pre-freeze`; nothing here is a gate result or an offer.
+>
+> **Addendum, section 9 (2026-11-15): read it first.** On the `rating-v3` source (`7fe14fb`) the Nightmare cells
+> this plan targets now pass by the rating change alone, so section 9 supersedes sections 0.1, 1 and 4 where
+> they name the failing cells and their times. It also lists five further candidates (K1 to K5) and questions
+> for the analysts.
 
 Plan author: claude-fable-5-2, 2026-11-14; version 2 on 2026-11-15. Written with the answer to **PR-S2**
 ([clarifications.md](../difficulty-v3/clarifications.md)). Status: **proposal; nothing implemented in production**;
@@ -648,3 +653,147 @@ Tests that every phase must keep or add:
 - **The harness no longer fits the source.** Three adapters fail on rating v3 and MS08 to MS16 add about 14
   finders before the freeze; the frozen round's cost is open until the repair is scoped.
 - **Browser against Node**: every number here is Node. The browser gates decide what is offered there.
+
+## 9. Addendum (2026-11-15): against the `rating-v3` source, and further candidates for analysis
+
+Written by the plan author after reading the `rating-v3` branch at `7fe14fb` (MS07e). Nothing was run for this
+section. 9.1 to 9.3 are a reading of committed records and of the source; 9.4 is a list of **hypotheses for the
+analysts (Opus, Astra) to examine**, not decisions. Code references are to `rating-v3` at `7fe14fb`: this branch
+still carries the older runtime (`f7be90f`), where `core/js/engine/tech-chain.js` differs.
+
+**This addendum supersedes sections 0.1, 1 and 4 where they name the failing cells and their times.** A version
+3 of the plan should be written after the analysts' review; until then sections 3 and 6 stand as mechanisms and
+order, not as targets.
+
+### 9.1 What `rating-v3` changes: the baseline of this plan no longer exists
+
+Eleven runtime files differ from the measured source (+808 / -208 lines), chiefly `core/js/engine/tech-chain.js`
+(windowed chain kernels, `forcingChainLong`, `nishioDeep`, short-chain cutoff C = 4) and
+`generator/js/engine/digger.js` (the target policy of MS06). `generator/js/worker/` is unchanged: requests still
+run in one worker, and the size-default attempts are still 8 / 4 / 2.
+
+The first qualification checkpoint (`docs/difficulty-v3/qualification-checkpoint-2026-11-15.md`; 129 of 135
+cells, 40 requests each, `--jobs=4`, so four requests run side by side) against the source this plan measured:
+
+| Cell | Measured source (sections 0.1 and 2.1) | `rating-v3` |
+|---|---|---|
+| classic9 Nightmare | 4.98 s; 21 of 100 exact | p50 0.14 s, p95 0.26 s; 40 of 40, offered |
+| wordoku Nightmare | 4.96 s; 4 of 20 | p95 0.44 s; 40 of 40, offered |
+| mega12 Nightmare | 23.4 s; 0 of 7 | p50 0.19 s, p95 1.05 s; 40 of 40, offered |
+| samurai, sohei, flower, butterfly Nightmare | 23 to 33 s; 0 of 2 each | p95 7.6, 7.6, 5.9 and 2.0 s; 40 of 40 each, offered |
+| mega16 Nightmare | 107.5 s; 0 of 7 | not run (cost rule); pilot 4 of 4 exact, 4.8 to 26.5 s, mean 11.8 s (budget 30 s) |
+| Greater-Than Nightmare | 11.6 s | p50 1.33 s, p95 5.18 s; 40 of 40, offered |
+| Killer Nightmare | 21.1 s; 1 of 8 | p50 4.1 s, p95 24.9 s; 19 of 24; hidden on time (budget 10 s) |
+
+The cause is the rating, not the search: with C = 4 a proof of five or more links is in the Nightmare tier, so
+a dug puzzle is usually exact at the first attempt, with about a fifteenth of the work
+(`docs/difficulty-v3/chain-window-2026-11-15.md`: 13 to 14 attempts for 12 requests, 2,182 full ratings against
+32,300 at C = 6). Section 0.2 expected this; it is now measured.
+
+**What still fails on `rating-v3`:**
+
+| Group | Cells | Kind of failure |
+|---|---|---|
+| Hell 1 | 0 exact in 112 requests on the nine cells run (classic9, wordoku, diagonalX, hyper, jigsaw9, killer, samurai, sohei, flower); p50 5.6 to 28.9 s, p95 8.1 to 50 s; every result in band and shallow (no `nishioDeep` proof). mega16 Hell 1 exceeded the 120 s guard in its pilot; mega12, Greater-Than and butterfly pilots 36 to 40 s, 0 exact | hit rate, and time |
+| Killer | Hard 0 of 14, Expert 1 of 14 (p95 17.8 s), Master 5 of 13 (22.8 s), Nightmare 19 of 24 (24.9 s), Hell 1 0 of 9 (50 s) | hit rate (weights, owner question Q-MS07e-1), and time |
+| Time only | Greater-Than Master 40 of 40 but p95 14.5 s over 10 s; Greater-Than Normal p95 9.63 s of 10 s; mega16 Expert p95 9.7 s; mega16 Nightmare by its pilot | time |
+| Easy | diagonalX 28 of 40, hyper 29 of 40, samurai 10 of 22, sohei 4 of 18, butterfly 1 of 15, flower 0 of 14 (shallow) | hit rate at sub-second times; not a speed matter |
+| Mid levels | flower Expert 23 of 35 and Master 29 of 40, wordoku Normal 35 of 46 | hit rate |
+
+The 325 s Jigsaw Expert request was not reproduced in 40 seeds (max 2.63 s); `full-grid.js` is unchanged, so the
+unbounded search S7 names is still there.
+
+### 9.2 What the plan's items are worth on `rating-v3` (Projection, nothing measured on this source)
+
+- **S5a.** The pool helps a request in proportion to the attempts it uses. The Nightmare cells that now pass
+  mostly hit at the first attempt, so their median is about unchanged (the old pairs showed x0.89 to 0.91 on
+  first-attempt hits) and only their tail gains. Requests that run all their attempts still gain x1.8 to 3.2:
+  that is now the failing requests (Hell 1, Killer) and the tails.
+- **Cells S5a might move across a budget:** Greater-Than Master (p95 14.5 s; about 5 to 6 s if its tail is
+  made of later attempts, unchanged if it is one long attempt or its local search); Greater-Than Normal and
+  mega16 Expert gain margin. Killer Master and Nightmare would come near 9 to 10 s at p95 but stay below 90 %
+  hits. No hit rate changes.
+- **mega16 Nightmare.** Two attempts: S5a gives at most x1.9 on requests that use both (26.5 s to about 14 s).
+  S5b on the samples could bring the mean of 11.8 s to about 4 to 6 s, if samples are still about 90 % of the
+  request, which is not known on this source.
+- **Hell 1.** Speed turns a 6 to 50 s failure into a 2 to 25 s failure. It offers nothing until exact puzzles
+  exist; difficulty-v3 expects its later finder groups to add the missing proofs.
+- **S1 and S2.** Their target cells (Nightmare on classic9, mega12, mega16, the multigrids) now pass without
+  them. As designed they have no remaining target except, possibly, Hell 1 (9.4, K4).
+- **S3's chain part and S10.** The chain kernels were rewritten; the 53 to 81 % share of section 2.3 is stale.
+  The long Hell 1 requests are the place to profile first.
+- **S9.** Its candidate cells change from "Nightmare on the large boards" to "Hell 1 everywhere", if the owner
+  wants Hell 1 before the finders arrive.
+
+### 9.3 Consequences for the plan (for version 3, after the analysts' review)
+
+1. Section 1's list of failing cells is replaced by the table of 9.1.
+2. Phase 1 (the version field, history v2, S5a) stays worth doing, but S5a is now a tail and failure-time item,
+   not the plan's main gain; the head start for early-hit cells (section 3, S5) becomes necessary, not optional.
+3. The frozen SM2 screen on Nightmare loses its purpose where the cell passes; the stop rule of S1 applies at
+   once to those cells.
+4. The frozen SM1 profile should be taken on Hell 1 requests and Killer, not on the old Nightmare cells.
+5. The harness adapters that fail on this source (three of eight) need repair before any of it (decision D10).
+
+### 9.4 Further candidates (hypotheses, unmeasured)
+
+The rating is not frozen yet, but difficulty-v3 owns it: an item that changes a finding, the order of findings
+or what a work unit counts is a rating change and belongs to that feature. "Same result" below means the same
+findings and the same work and check sequence.
+
+| Id | Candidate | Same result? | Guess of the gain | First check |
+|---|---|---|---|---|
+| K1 | A negative cache for `nishioDeep` trials across solver steps | only with the work and check sequence reproduced; otherwise a rating change | x2 to 5 on Hell 1 requests, if `nishioDeep` is their hot spot | a profile of three Hell 1 requests by finder |
+| K2 | Trail and undo instead of a state copy in `refutes` | yes: same trials, same units | x1.2 to 2 on the nishio kernels, more on 256-cell boards | time of `cloneState` in that profile |
+| K3 | Bit-parallel breadth-first search for the forcing chains | no: the work count decides the 50,000-unit cap | x5 to 20 on that kernel | only as a proposal to difficulty-v3 |
+| K4 | A cheap "stuck without `nishioDeep`" screen before a candidate is rated, for Hell 1 | new generator version | unknown; it is a hit-rate item | whether the digger already does it; the share of Hell 1 candidates that pass |
+| K5 | Killer's uniqueness search: cage-sum combination masks and fewest-candidate ordering | only if the node order is kept (`UNIQUE_NODES`, `REPAIR_NODES`) | x1.3 to 2 on Killer's search share | a Killer profile on this source |
+
+**K1. Negative cache for `nishioDeep`.** `scanNishio` (`tech-chain.js:685`) tries every open cell and digit by
+iterative deepening; at depth 2 `refutes` (`:643`) makes, inside each trial, nested trials on every cell of two
+or three candidates and repeats until nothing changes. Each trial is a state copy and a propagation, one work
+unit, up to `NEW_FINDER_WORK_LIMIT` = 50,000 per call. The solver restarts its ladder after every applied step,
+so the finder runs again from nothing on a state that differs by one elimination. A trial that was not refuted,
+and whose propagation touched no cell changed since, is still not refuted. Obligations: the footprint of a
+trial (the cells its propagation read, nested trials included); the work units and `ctx.check()` calls a
+skipped trial would have made, charged virtually as section 3's S3 note describes, so that the 50,000-unit cap
+and the caller's budget bind at the same place; the same first refutation in the same order. If the footprint
+of a depth-2 trial is most of the grid, the cache never hits: that is the first thing to measure.
+
+**K2. Trail and undo.** `refutes` copies the whole state for each trial (`SG.model.cloneState(base, trial)`).
+Recording the changed candidates and values and undoing them costs in proportion to what the trial touched. The
+trials, their order and the units are unchanged, so this is an implementation change. It needs
+`SG.constraints.place`, `eliminate` and `propagate` to write through a trail, which reaches shared code of both
+apps.
+
+**K3. Bit-parallel chains.** `scanForcing` (`:554`) runs one breadth-first search (`search`, `:480`) from every
+literal and truth value, up to 12 links for `forcingChainLong`. Packing 32 starts into a word shares the
+frontier work. But `run.work` counts the edges of the serial search and decides when `WORK_CAP` is thrown, and
+the shortest proof with its tie order is what the rating records. A bit-parallel search does not reproduce that
+count, so capped cases would change. It is recorded here as an idea for difficulty-v3, not for this feature.
+
+**K4. A screen for Hell 1.** Every Hell 1 result is in band and shallow: the candidate did not need
+`nishioDeep`. Before paying for a canonical rating, a candidate could be solved once with `nishioDeep` switched
+off; only a candidate that gets stuck can be exact. The question for the analysts is whether the oracles of the
+digger already amount to this, and what share of candidates pass. If almost none pass, the search is not
+steering toward the tier at all, and Hell 1 is a matter for the bank (S9) or for difficulty-v3's finders, not
+for speed.
+
+**K5. Killer.** On the old source 45 % of a Killer Nightmare request was the depth-first search (section 2.3).
+Precomputed masks of the digit combinations that reach a cage sum, and a fewest-candidates cell choice, are the
+standard tools. The guards count nodes, so the node order must be kept or the change ships under the version.
+Killer's hit rates are a weight question (Q-MS07e-1) that this does not touch.
+
+### 9.5 Questions for the analysts
+
+1. An independent reading of 9.1: which cells are this feature's targets on `rating-v3`, and which belong to
+   difficulty-v3 (weights, finders) rather than to the generator's speed.
+2. For S5a on `rating-v3`: from the MS07e shard records, which over-budget requests are multi-attempt (the
+   records carry no `stats`; say what must be recorded to know).
+3. For K1 and K2: where a Hell 1 request spends its time by finder and by stage; the footprint of a depth-2
+   trial; whether a proof of equal work and check sequence is feasible.
+4. For K4: what the digger already filters, read from `digger.js` on `rating-v3`.
+5. Whether S1, S2 and the Nightmare SM2 screen should be dropped from the frozen round now, and what replaces
+   them in its budget.
+6. An estimate, with its envelope, of what Hell 1 and the Killer levels can reach in time, kept apart from
+   what they can reach in hits.
